@@ -58,6 +58,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -323,9 +324,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		myShelfVerPanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
-				treeChildSelectedItem = event.getSelectedItem();
-				((ShelfCollection) treeChildSelectedItem.getWidget()).openFolderItem();
-				setFolderActiveStatus();
+				ShelfCollection shelfCollection = (ShelfCollection) event.getSelectedItem().getWidget();
+				if(!shelfCollection.getCollectionDo().getCollectionType().equals("assessment/url")){
+					treeChildSelectedItem = event.getSelectedItem();
+					((ShelfCollection) treeChildSelectedItem.getWidget()).openFolderItem();
+					setFolderActiveStatus();
+				}
 			}
 		});
 		myShelfVerPanelHolder.add(myShelfVerPanel);
@@ -680,6 +684,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				final ShelfCollection shelfCollection = new ShelfCollection(folderDo,1); 
 				SHELF_COLLECTIONS.add(folderDo);
 				myShelfVerPanel.insertItem(0, new TreeItem(shelfCollection.asWidget()));
+				shelfCollection.showAssessmentUrlInfo(folderDo);
 				if(refreshType.equals(RefreshType.INSERT)){
 					/** Changed to new API call for fetching resources in a order **/
 					AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
@@ -1032,11 +1037,20 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 
 	public FolderDo getFolderDo(CollectionDo collectionDo) {
 		FolderDo folderDo = new FolderDo();
+		CollectionSettingsDo collectionSettingsDo = new CollectionSettingsDo();
 		folderDo.setGooruOid(collectionDo.getGooruOid());
 		folderDo.setTitle(collectionDo.getTitle());
 		folderDo.setType(collectionDo.getCollectionType());
 		folderDo.setSharing(collectionDo.getSharing());
 		folderDo.setCollectionType(collectionDo.getCollectionType());
+		folderDo.setSettings(collectionSettingsDo);
+		
+		folderDo.setUrl(StringUtil.isEmpty(collectionDo.getUrl())?"":collectionDo.getUrl());
+		folderDo.setGoals(StringUtil.isEmpty(collectionDo.getGoals())?"":collectionDo.getGoals());
+		folderDo.setSharing(StringUtil.isEmpty(collectionDo.getSharing())?"":collectionDo.getSharing());
+		if(collectionDo.getSettings()!=null && collectionDo.getSettings().getIsLoginRequired()!=null){
+			collectionSettingsDo.setIsLoginRequired(StringUtil.isEmpty(collectionDo.getSettings().getIsLoginRequired())?"":collectionDo.getSettings().getIsLoginRequired());
+		}
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
 		folderDo.setThumbnails(thumbnailDo);
@@ -1576,29 +1590,32 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	public void setFolderActiveStatus() { 
 		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
-		if(shelfCollection.getCollectionDo().getType().equals("folder")) {
-			TreeItem parent = treeChildSelectedItem.getParentItem();
-			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
-			if(parent != null)parent.setSelected(false);
-			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-			getUiHandlers().getChildFolderItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getFolderOpenedStatus());
-			shelfCollection.setFolderOpenedStatus(true);
-		} else {
-			getUiHandlers().getCollectionItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getCollectionOpenedStatus()); 
-			shelfCollection.setCollectionOpenedStatus(true);
-		}
-		if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF))) {
-			shelfCollection.setActiveStyle(true);
-		}
-		
-		ShelfCollection previousShelfCollection = (ShelfCollection) previousTreeChildSelectedItem.getWidget();
-		if(previousShelfCollection==null) {
+		if(!shelfCollection.getCollectionDo().getCollectionType().equals("assessment/url")){
+			
+			if(shelfCollection.getCollectionDo().getType().equals("folder")) {
+				TreeItem parent = treeChildSelectedItem.getParentItem();
+				treeChildSelectedItem.getTree().setSelectedItem(parent, false);
+				if(parent != null)parent.setSelected(false);
+				treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+				getUiHandlers().getChildFolderItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getFolderOpenedStatus());
+				shelfCollection.setFolderOpenedStatus(true);
+			} else {
+				getUiHandlers().getCollectionItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getCollectionOpenedStatus()); 
+				shelfCollection.setCollectionOpenedStatus(true);
+			}
+			if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF))) {
+				shelfCollection.setActiveStyle(true);
+			}
+			
+			ShelfCollection previousShelfCollection = (ShelfCollection) previousTreeChildSelectedItem.getWidget();
+			if(previousShelfCollection==null) {
+				previousTreeChildSelectedItem = treeChildSelectedItem;
+			}
+			if(previousShelfCollection!=null&&(shelfCollection.getCollectionDo().getGooruOid()!=previousShelfCollection.getCollectionDo().getGooruOid())) {
+				previousShelfCollection.setActiveStyle(false);
+			}
 			previousTreeChildSelectedItem = treeChildSelectedItem;
 		}
-		if(previousShelfCollection!=null&&(shelfCollection.getCollectionDo().getGooruOid()!=previousShelfCollection.getCollectionDo().getGooruOid())) {
-			previousShelfCollection.setActiveStyle(false);
-		}
-		previousTreeChildSelectedItem = treeChildSelectedItem;
 	}
 	
 	public class CreateNewCollection implements ClickHandler {

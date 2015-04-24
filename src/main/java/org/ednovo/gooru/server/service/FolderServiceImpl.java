@@ -332,6 +332,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public void deleteCollectionsFolder(String folderId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_FOLDER, folderId);
+		getLogger().info("deleteCollectionsFolder:::::::"+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -362,6 +363,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		CollectionDo collectionDo = null;
 		JSONObject collectionDataObject=new JSONObject();
 		JSONObject courseIdObj=new JSONObject();
+		JSONObject settingsObj=new JSONObject();
 		JSONObject FolderDataObject=new JSONObject();
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER);
 		try {
@@ -378,8 +380,18 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				taxonomyArray.add(courseIdObj);
 				collectionDataObject.put("taxonomySet", taxonomyArray);
 			}
+			if(data.getSettings()!=null && data.getSettings().getIsLoginRequired()!=null){
+				settingsObj.put("comment", "turn-on");
+				settingsObj.put("isLoginRequired", data.getSettings().getIsLoginRequired());
+				collectionDataObject.put("settings", settingsObj);
+			}
+			
 			FolderDataObject.put("collection", collectionDataObject);
 			FolderDataObject.put("parentId", folderId);
+			
+			
+			
+			
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),FolderDataObject.toString());
 			logger.info("FolderDataObject.toString() : "+FolderDataObject.toString());
 			logger.info("createCollectionInParent : "+url);
@@ -507,7 +519,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+		if(!fromPPP){
 		params.put(GooruConstants.SHARING, GooruConstants.PUBLIC);
+		}
 //		url=url+"&sharing=public";
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("-- Folder toc API - - - - "+url);

@@ -1338,4 +1338,16 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			}
 		}
 	}
+
+	
+	/**
+	 * Updates assessment/url widget.
+	 */
+	@Override
+	public void updateAssessmentUrl(FolderDo folderDo) {
+		ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(folderDo.getGooruOid());
+		if(shelfFolderItemChildView!=null){
+			shelfFolderItemChildView.showAssessmentUrlInfo(folderDo);
+		}
+	}
 }

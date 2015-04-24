@@ -32,8 +32,6 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #7AB075, #4e9746);
 	
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746');
 }
 
 .popup .closeButton {

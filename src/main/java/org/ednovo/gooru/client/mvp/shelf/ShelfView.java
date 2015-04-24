@@ -1455,11 +1455,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
 			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
-		}	
+		}else{	
+			selectedFolderId="";
+		}
 		params.put("id", collectionDo.getGooruOid());
 		if(!selectedFolderId.isEmpty())
 		{
-		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,false, new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,true, new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				for(int i=0;i<folderListDo.getCollectionItems().size();i++)
@@ -1468,12 +1470,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					{
 						params.put("folderId", selectedFolderId);
 						params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+						AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 						break;
 					}
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				
 			}
 		});
 		}

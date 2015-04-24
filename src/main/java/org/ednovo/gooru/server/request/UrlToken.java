@@ -494,7 +494,7 @@ public enum UrlToken {
 	
 	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?"),
 	
-	V1_EXPORTSUMMARYATHWAY("/v1/classpage/{0}/summary/export.xls?"),
+	V1_EXPORTSUMMARYATHWAY("/v1/classpage/{0}/summary/export.xls?sessionToken={1}"),// don't remove session token
 	
 	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}"),//Not Used.
 	
@@ -502,11 +502,11 @@ public enum UrlToken {
 	
 	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?"),
 	
-	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?"),
+	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}"),// don't remove session token
 	
 	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?"),
 	
-	V2_DOWNLOADFILE("/v2/media/download?url={0}&filename={1}"),
+	V2_DOWNLOADFILE("/v2/media/download?url={0}&filename={1}&sessionToken={2}"),
 		
 	V2_FOLDER_META_DATA("/v2/folder/{0}?"),
 	
@@ -520,7 +520,7 @@ public enum UrlToken {
 	
 	SUGGEST_CENTURY_BY_QUERY("/search/skills?"),
 
-	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?");
+	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}");// don't remove session token
 
 	
 

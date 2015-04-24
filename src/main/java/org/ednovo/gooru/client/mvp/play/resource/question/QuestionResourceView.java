@@ -114,8 +114,8 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
 			String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText());
 			openEndedQuestionText.setHTML(removeHtmlTags(titlelbl1));
-			openEndedQuestionText.getElement().setAttribute("alt",removeHtmlTags(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
-			openEndedQuestionText.getElement().setAttribute("title",removeHtmlTags(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
+			openEndedQuestionText.getElement().setAttribute("alt",StringUtil.removeAllHtmlCss(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
+			openEndedQuestionText.getElement().setAttribute("title",StringUtil.removeAllHtmlCss(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
 			if(collectionItemDo.getResource().getHints()!=null && collectionItemDo.getResource().getHints().size()>0){
 				hintsButton.setText(" "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
