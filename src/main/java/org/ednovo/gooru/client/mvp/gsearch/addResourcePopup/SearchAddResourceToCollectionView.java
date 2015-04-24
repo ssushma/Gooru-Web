@@ -7,6 +7,7 @@ import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -40,7 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<SearchAddResourceToCollectionUiHandlers> implements IsSearchAddResourceToCollectionView {
+public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<SearchAddResourceToCollectionUiHandlers> implements IsSearchAddResourceToCollectionView,ClientConstants {
 
 	private static SearchAddResourceToCollectionViewUiBinder uiBinder = GWT
 			.create(SearchAddResourceToCollectionViewUiBinder.class);
@@ -49,7 +50,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			UiBinder<Widget, SearchAddResourceToCollectionView> {
 	}
 	
-	@UiField HTMLPanel floderTreeContainer;
+	@UiField HTMLPanel floderTreeContainer,myCollDefault;
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
@@ -63,6 +64,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private FolderTreeItem currentFolderSelectedTreeItem = null;
 	private CollectionTreeItem cureentcollectionTreeItem = null;
 	String currentsearchType;
+	
+	HashMap<String,String> urlparams ;
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
+	private static final String O3_LEVEL = "o3";
+	
+	boolean isTopMostSelected =true;
 	
 	PopupPanel appPopUp;
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
@@ -86,36 +94,58 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
+		urlparams= new HashMap<String, String>();
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
+			   isTopMostSelected = false;
 			   final TreeItem item = (TreeItem) event.getSelectedItem();
 			    Widget folderWidget= item.getWidget();
 			    FolderTreeItem folderTreeItemWidget=null;
 			    if(folderWidget instanceof FolderTreeItem){
-			    	removePreviousSelectedItem();
-			    	folderTreeItemWidget=(FolderTreeItem)folderWidget;
-			    	currentFolderSelectedTreeItem = folderTreeItemWidget;
-			    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
-			    	previousSelectedItem = cureentcollectionTreeItem = null;
-			    	currentFolderSelectedTreeItem.addStyleName("selected");
-			    	if(folderTreeItemWidget.isOpen()){
-			    		folderTreeItemWidget.setOpen(false);
-			    		folderTreeItemWidget.removeStyleName("open");
-			    	}else{
-			    		folderTreeItemWidget.addStyleName("open");
-			    		folderTreeItemWidget.setOpen(true);
-			    	}
-				    TreeItem parent = item.getParentItem();
-				    item.getTree().setSelectedItem(parent, false); 
-				    if(!folderTreeItemWidget.isApiCalled()){
-				    	folderTreeItemWidget.setApiCalled(true);
-				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
-				    }
-				    if(parent != null)
-				    	parent.setSelected(false);   
-				    item.setState(!item.getState(), false);
-			    }else if(folderWidget instanceof CollectionTreeItem){
+					folderTreeItemWidget = (FolderTreeItem) folderWidget;
+					if (folderTreeItemWidget.isOpen()) {
+						folderTreeItemWidget
+								.removeStyleName("open");
+						folderTreeItemWidget.setOpen(false);
+					} else {
+						folderTreeItemWidget
+								.addStyleName("open");
+						folderTreeItemWidget.setOpen(true);
+					}
+					removePreviousSelectedItem();
+					currentFolderSelectedTreeItem = folderTreeItemWidget;
+					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
+					currentFolderSelectedTreeItem
+							.addStyleName("selected");
+					previousSelectedItem = cureentcollectionTreeItem = null;
+					TreeItem parent = item.getParentItem();
+					item.getTree().setSelectedItem(parent, false); // TODO FIX
+																	// ME
+					if (!folderTreeItemWidget.isApiCalled()) {
+						folderTreeItemWidget.setApiCalled(true);
+						getFolderItems(item, folderTreeItemWidget.getGooruOid());
+					}
+					if(currentFolderSelectedTreeItem.getFolerLevel()==1) {
+						urlparams.clear();
+						urlparams.put(O1_LEVEL, folderTreeItemWidget.getGooruOid());
+					}
+					if(currentFolderSelectedTreeItem.getFolerLevel()==2) {
+						urlparams.put(O1_LEVEL, urlparams.get(O1_LEVEL));
+						urlparams.put(O2_LEVEL, folderTreeItemWidget.getGooruOid());
+					}
+					if(currentFolderSelectedTreeItem.getFolerLevel()==3) {
+						urlparams.put(O1_LEVEL, urlparams.get(O1_LEVEL));
+						urlparams.put(O2_LEVEL, urlparams.get(O2_LEVEL));
+						urlparams.put(O3_LEVEL, folderTreeItemWidget.getGooruOid());
+					}
+					if(currentFolderSelectedTreeItem.getFolerLevel()==4) {
+					}
+					
+					if (parent != null)
+						parent.setSelected(false); // TODO FIX ME
+					item.setState(!item.getState(), false);
+				}else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
 			    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
 			    	previousSelectedItem = cureentcollectionTreeItem;
@@ -337,7 +367,20 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
+		if(cureentcollectionTreeItem != null)
+		{
 		getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+		}
+		else
+		{
+			if(isTopMostSelected) {
+				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
+			}
+			else
+			{
+			getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+			}
+		}
 	}
 	@Override
 	public Button getAddButton(){
@@ -345,14 +388,25 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@Override
 	public void hidePopup(){
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null)
+		{
+		element.removeAttribute("style");
+		}
 		hide();
 		enableTopFilters();
 	}
 
 	@Override
-	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params) {
+	public void setDefaultPanelVisibility(Boolean blnVal){
+		myCollDefault.setVisible(blnVal);
+		btnAddNew.setVisible(!blnVal);
+	}
+
+	@Override
+	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params,String searchType) {
 		hide();
-		successPopup.setData(collectionName, selectedGooruOid,params);
+		successPopup.setData(collectionName, selectedGooruOid,params,searchType);
 		successPopup.setGlassEnabled(true);
 		successPopup.getCloseButton().addClickHandler(new ClickHandler() {
 			@Override
@@ -370,5 +424,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			element.removeAttribute("style");
 		}
 		Window.enableScrolling(true);
+	}
+	
+	@Override
+	public void restrictionToAddResourcesData(String message) {
+		// TODO Auto-generated method stub
+		//displayErrorLabel.setText(message);
 	}
 }

@@ -22,7 +22,6 @@
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-md-6 col-sm-7">
 							<g:HTMLPanel styleName="seachRightNavigation">
-								<g:InlineLabel styleName="preHeader" text="{i18n.GL3207}" title="{i18n.GL3207}"/>
 								<g:HTMLPanel styleName="btn-group grade" ui:field="gradesDropDown">
 									<g:Button styleName="btn btn-primary" text="{i18n.GL0325}" title="{i18n.GL0325}"/>
 									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" >
@@ -89,80 +88,68 @@
 				<div class="col-md-12 col-sm-10">
 					<div class="seachLeftNavigation">
   						<panel:UlPanel styleName="resourceTypes" ui:field="ulCategoryPanel"/>
-						<!-- <ul class="resourceTypes">
-							<li class="active">
-								<a class="videos" href="">(234)</a>
-							</li>
-							<li>
-								<a class="interactives" href="">(537)</a>
-							</li>
-							<li>
-								<a class="webpage" href="">(337)</a>
-							</li>
-							<li>
-								<a class="questions" href="">(337)</a>
-							</li>
-							<li>
-								<a class="images" href="">(337)</a>
-							</li>
-							<li>
-								<a class="texts" href="">(337)</a>
-							</li>
-							<li>
-								<a class="audio" href="">(337)</a>
-							</li>
-						</ul> -->
-						<div class="ratingandGrid">
+   						 <div class="ratingandGrid">
 							<div class="ratingDetails">
 								<panel:UlPanel styleName="rating playerrating" ui:field="ulRatingsPanel"/>
-		               			    <!-- <g:HTMLPanel > 
-		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
-		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
-		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
-		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
-		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
-		                			</g:HTMLPanel> -->
-
                                 <g:Label ui:field="ratingsLbl" visible="false">and up</g:Label>
 							</div>
-							<div class="gridToggle">
+							<g:HTMLPanel styleName="gridToggle">
 
 								<!-- Split button -->
-								<div class="btn-group">
-									<button type="button" class="btn btn-primary">
-										<span class="glyphicon glyphicon-align-justify"
-											aria-hidden="true"></span>
-									</button>
-									<button type="button" class="btn btn-primary dropdown-toggle"
-										data-toggle="dropdown" aria-expanded="false">
-										<span class="caret"></span>
-										<span class="sr-only">Toggle Dropdown</span>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="#">Action</a>
-										</li>
-										<li>
-											<a href="#">Another action</a>
-										</li>
-										<li>
-											<a href="#">Something else here</a>
-										</li>
-										<li class="divider"></li>
-										<li>
-											<a href="#">Separated link</a>
-										</li>
-									</ul>
-								</div>
+								<g:HTMLPanel styleName="btn-group">
+								    <panel:HTMLEventPanel ui:field="resourceFiltersDropDwn">
+										<button type="button" class="btn btn-primary">
+											<span class="glyphicon glyphicon-align-justify"
+												aria-hidden="true"></span>
+										</button>
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-expanded="false">
+											<span class="caret"></span>
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+									</panel:HTMLEventPanel>
+									 <g:HTMLPanel styleName="dropdown-menu" ui:field="moreFilterPanel">
+									   <div class="resourceDropdown">
+									 	 <div class="paddingBlock">
+											<panel:PPanel ui:field="panelNotMobileFriendly"/>
+									 	 </div>
+									    <div class="paddingBlock">
+											<p>Publisher <g:Image url="images/mos/questionmark.png" ui:field="publisherTooltip"/></p>
++								 			<p><panel:AppSuggestBox styleName="form-control" ui:field="publisherSgstBox"/></p>
++											<g:Label ui:field="sourcesNotFoundLbl"/>
++											<g:FlowPanel ui:field="sourceContainerFloPanel" />
+										 </div>
+									  
+									    <div class="paddingBlock">
+											<p>Aggregator <g:Image url="images/mos/questionmark.png" ui:field="aggregatorTooltip"/></p>
++											<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
++											<g:Label ui:field="aggregatorNotFoundLbl"/>
+									   </div>
+									  
+									    <div class="paddingBlock no-gutter">
+											<p>Access Mode <img src="images/mos/questionmark.png"/></p>
+											<!-- <div class="col-md-6">
+												<p><input name="" type="checkbox" value="" /> Auditory</p>
+												<p><input name="" type="checkbox" value="" /> Tactile</p>
+												<p><input name="" type="checkbox" value="" /> Visual</p>
+											</div>
+											<div class="col-md-6">
+												<p><input name="" type="checkbox" value="" /> Color Dependent</p>
+												<p><input name="" type="checkbox" value="" /> Text on Image</p>
+												<p><input name="" type="checkbox" value="" /> Textural</p>
+											</div>
+ -->											<panel:PPanel styleName="col-md-6" ui:field="accessModeLeftPanel" />
+ 												<panel:PPanel styleName="col-md-6" ui:field="accessModeRightPanel" />
+										</div>
 
-							</div>
+									</div>
 
 
-						</div>
+						</g:HTMLPanel>
 
 
-					</div>
-				</div>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
 
 				<!-- <div class="col-md-1 col-sm-2">
 
@@ -184,10 +171,11 @@
 
 
 		</div>
+		</div>
+		</div>
+		</div>
 
 	</g:HTMLPanel>
-			     
-			
 			<!-- Resource search filters End -->
 			
 		</g:HTMLPanel>

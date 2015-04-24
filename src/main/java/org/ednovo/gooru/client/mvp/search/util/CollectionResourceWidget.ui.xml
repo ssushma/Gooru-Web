@@ -9,11 +9,9 @@
 					<div class="resultRating">
 						<g:FlowPanel ui:field="ratingWidgetPanel"/>
 					</div>
-					<div class="addthis">
-						<span>+</span>31
-					</div>
 				</div>
 				<div class="col-md-4 col-sm-4 col-xs-4 viewContainer">
+				<span>+</span><g:Label ui:field="lbladdCount" styleName="authorName"></g:Label>
 					<span>
 						<img src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 					</span>
@@ -40,18 +38,18 @@
 					<div class="clearfix"></div>
 					<g:FlowPanel ui:field="standardsDataPanel"/>
 				</div>
-				<div class="usedDetails">
-					User by 4 people
+				<g:HTMLPanel styleName="usedDetails">
+				<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
 					<a href="">View More</a>
-				</div>
+				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
-					<div class="col-md-8 col-xs-8 col-sm-8 user">
-						<g:Image ui:field="creatorImage"/>
-						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitle"></g:InlineLabel>
+					<div class="col-md-8 col-xs-8 col-sm-8 collectionResources">
+						<g:Image ui:field="relatedCollectionImage" />					
+						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitleforResource"></g:InlineLabel>
 					</div>
-					<div class="col-md-4 col-xs-4 col-sm-4 collectionResources">
+					<div class="col-md-4 col-xs-4 col-sm-4 user">
 						<a href="#">
-							<g:Image ui:field="relatedCollectionImage" />
+						<g:Image ui:field="creatorImage"/>
 						</a>
 					</div>
 					<div class="clearfix"></div>
