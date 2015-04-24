@@ -319,7 +319,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			
-	    	showRatingsFilter();
 	    	renderStarRatings();
 	    	renderAccessModeValues();
 	    	publisherSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
@@ -518,6 +517,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showGradesFilter();
 		showCategoryFilter();
 		showSubjectsFilter();
+		showRatingsFilter();
 		showAuthorFilter();
 		showStandardsFilter();
 		showMobileFriendlyFilter();
@@ -802,6 +802,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(oerTag.equalsIgnoreCase("1"))
 			{
 				pnlAddFilters.add(createTagsLabel("OER","oerPanel"));
+				oerLbl.setStyleName("active");
 			}
 
 		}
@@ -813,9 +814,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	private void showRatingsFilter() {
 
-		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.RATINGS_FLT);
 		if(ratingTag!=null){
-			pnlAddFilters.setVisible(true);
 			if(ratingTag.equalsIgnoreCase("5,4,3,2,1,0"))
 			{
 				pnlAddFilters.add(createTagsLabel("All Ratings","ratingPanel"));
@@ -1060,7 +1060,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(oerLbl.getElement().getStyle().equals("active")){
+			if(oerLbl.getStyleName().equals("active")){
 				removeFilter("OER");
 				oerLbl.removeStyleName("active");
 			}else{
@@ -1191,12 +1191,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 if(getSelectedFilter(panelNotMobileFriendly) != null)
 			 {
 				 if (getSelectedFilter(panelNotMobileFriendly).equalsIgnoreCase("not_ipad_friendly")){
-					 filtersMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
+					 filtersMap.put(IsGooruSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 				 }
 			 }
 			 String selectedAccessMode = getSelectedFilter(accessModePanel);
 			 if (!selectedAccessMode.isEmpty()) {
-				 filtersMap.put(IsSearchView.ACCESS_MODE_FLT, selectedAccessMode);
+				 filtersMap.put(IsGooruSearchView.ACCESS_MODE_FLT, selectedAccessMode);
 			 }
 			 if(!selectedPublisheValues.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.PUBLISHER_FLT, selectedPublisheValues);

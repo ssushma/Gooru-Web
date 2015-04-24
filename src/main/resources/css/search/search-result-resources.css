@@ -295,13 +295,18 @@ margin:0 0 0 -20px !important;
   cursor:pointer;
   line-height: 43px;
 }
-#gooruSearchMainContainer .oerStyle:hover{
+#gooruSearchMainContainer .oerStyle div{
+	border: 2px solid #fff;
+}
+#gooruSearchMainContainer .oerStyle div:hover{
   border: 2px solid #87badd;
   text-decoration: none;
 }
-#gooruSearchMainContainer .oerStyle .active{
+#gooruSearchMainContainer .oerStyle div.active{
   border: 2px solid #87badd;
   text-decoration: none;
+  box-shadow: none !important;
+  background: none;
 }
 
 @media (min-width: 240px) and (max-width: 319px){
