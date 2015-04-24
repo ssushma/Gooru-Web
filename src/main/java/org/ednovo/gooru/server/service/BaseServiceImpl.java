@@ -417,7 +417,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	 *
 	 */
 	protected String getPropertyByKey(String keyName) {
-		return PropertiesCache.getInstance().getProperty(keyName);
+//		return PropertiesCache.getInstance().getProperty(keyName);
+		return "ASERTYUIOMNHBGFDXSDWERT123RTGHYT";
 	}
 	
 	
