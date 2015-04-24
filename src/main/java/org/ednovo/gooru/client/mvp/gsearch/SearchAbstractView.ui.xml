@@ -22,7 +22,6 @@
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-md-6 col-sm-7">
 							<g:HTMLPanel styleName="seachRightNavigation">
-								<g:InlineLabel styleName="preHeader" text="{i18n.GL3207}" title="{i18n.GL3207}"/>
 								<g:HTMLPanel styleName="btn-group grade" ui:field="gradesDropDown">
 									<g:Button styleName="btn btn-primary" text="{i18n.GL0325}" title="{i18n.GL0325}"/>
 									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" >
@@ -99,8 +98,7 @@
 								<!-- Split button -->
 								<panel:HTMLEventPanel styleName="btn-group" ui:field="resourceFiltersPnl">
 									<button type="button" class="btn btn-primary">
-										<span class="glyphicon glyphicon-align-justify"
-											aria-hidden="true"></span>
+										<g:Image styleName="gliphIconImage"></g:Image>
 									</button>
 									<button type="button" class="btn btn-primary dropdown-toggle"
 										data-toggle="dropdown" aria-expanded="false">

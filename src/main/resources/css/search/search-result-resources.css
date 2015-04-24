@@ -7,9 +7,9 @@
 }
 
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes {
-    display: inline-block;
-    margin: 10px 0;
-    padding: 0;
+     display: inline-block;
+  margin: 16px 0;
+  padding: 0;
 }
 #gooruSearchMainContainer .resourceDetails .seachRightNavigation {
 	text-align: right;
@@ -21,10 +21,22 @@
     margin: 0;
     padding: 0;
 }
+
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li.active {
+    background:none !important;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li.active a {
+  border: 2px solid #87badd;
+  text-decoration: none;
+}
 #gooruSearchMainContainer .gliphIconImage {
     background: url("../images/gridicon.png") no-repeat scroll 0 0 transparent;
     width:11px;
     height:14px;
+}
+.resourceDropdown input[type="checkbox"]
+{
+margin:0 0 0 -20px !important;
 }
 
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a {
@@ -78,11 +90,12 @@
     padding: 7px 16px;
 }
 #gooruSearchMainContainer .gridToggle{
-    border-right: 1px solid #cccccc;
-    display: inline-block;
-	min-height: 40px;
-    padding: 0 16px;
-	position:relative;
+    border-right: 1px solid #ccc;
+  display: inline-block;
+  min-height: 40px;
+  padding: 4px 16px;
+  position: relative;
+  vertical-align: top;
 }
 #gooruSearchMainContainer .gridToggle .dropdown-menu {
 	left: auto;
@@ -100,8 +113,6 @@
 }
 #gooruSearchMainContainer .gridToggle .btn-primary:hover,#gooruSearchMainContainer  .gridToggle .btn-primary:focus,#gooruSearchMainContainer  .gridToggle .btn-primary:active,#gooruSearchMainContainer  .gridToggle .btn-primary.active,#gooruSearchMainContainer  .gridToggle .open .dropdown-toggle.btn-primary {
 	color: #fff;
-	background-color: #515151;
-	border-color: #434242;
 }
 #gooruSearchMainContainer .noResultsContainer .mainHeadingBlock .h2 {
     display: inline-block;
@@ -193,6 +204,11 @@
 	font-size: 13px;
 	padding-left: 7px;
 }
+#gooruSearchMainContainer .userDetailsResources .collectionResources .collectionTitleforResource{
+	font-size: 13px;
+	color:#0C74BE;
+	}
+
 #gooruSearchMainContainer .userDetailsResources .user .collectionTitleNoCollection{
 	overflow: hidden;
 	white-space: nowrap;
