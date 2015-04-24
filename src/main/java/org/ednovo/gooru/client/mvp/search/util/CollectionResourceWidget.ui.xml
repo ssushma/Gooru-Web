@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<g:HTMLPanel styleName="col-md-4 col-sm-4">
+	<g:HTMLPanel styleName="col-md-4 col-sm-4 visibleElement">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="no-gutter">
