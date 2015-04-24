@@ -5,18 +5,7 @@
 			<g:HTMLPanel styleName="panel panel-default">
 				<g:HTMLPanel styleName="panel-heading">
 					<div class="no-gutter">
-						<g:HTMLPanel styleName="col-md-7 col-sm-7 col-xs-6 ratings">
-							<g:HTMLPanel styleName="circleBlocks">
-								<ul>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-								</ul>
-							</g:HTMLPanel>
-						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-5 col-sm-5 col-xs-6 viewContainer">
+						<g:HTMLPanel styleName="col-md-12 col-sm-12 col-xs-12 viewContainer">
 							<span>
 								<img src="images/rev-arrows.png"/> 31
 							</span>

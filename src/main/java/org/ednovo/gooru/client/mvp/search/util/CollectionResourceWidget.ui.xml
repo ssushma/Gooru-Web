@@ -43,13 +43,13 @@
 					<a href="">View More</a>
 				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
-					<div class="col-md-7 col-xs-7 col-sm-7 user">
-						<g:Image ui:field="creatorImage"/>
-						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitle"></g:InlineLabel>
+					<div class="col-md-8 col-xs-8 col-sm-8 collectionResources">
+						<g:Image ui:field="relatedCollectionImage" />					
+						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitleforResource"></g:InlineLabel>
 					</div>
-					<div class="col-md-5 col-xs-5 col-sm-5 collectionResources">
+					<div class="col-md-4 col-xs-4 col-sm-4 user">
 						<a href="#">
-							<g:Image ui:field="relatedCollectionImage" />
+						<g:Image ui:field="creatorImage"/>
 						</a>
 					</div>
 					<div class="clearfix"></div>

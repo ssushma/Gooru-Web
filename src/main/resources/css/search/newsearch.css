@@ -17,7 +17,7 @@
 	border-bottom:1px solid #979797;
 }
 #gooruSearchMainContainer .viewContainer{
-	text-align:right;
+	text-align:center;
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 	margin:0 0;
@@ -30,6 +30,10 @@
 	display:inline-block;
 	margin-bottom:-1px;
 }
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li:last-child{
+	border-right: 1px solid #979797;
+}
+
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a{
 	text-align:left;
 }
@@ -40,8 +44,8 @@
 	background:#d8d8d8;
 	border-left:1px solid #979797;
 	font-size:13px;
-	height:47px;
-	line-height:15px;
+	height: 57px;
+	line-height: 23px;
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:hover, #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:focus{
 	opacity:0.75;
@@ -72,6 +76,11 @@
 	display:inline-block;
 
 }
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li.active{
+	background:none !important;
+
+}
+
 #gooruSearchMainContainer .collectionDetails  .seachRightNavigation  button.primary{
 	padding:7px 25px;
 }
@@ -102,7 +111,7 @@
 }
 #gooruSearchMainContainer .seachRightNavigation{
 	text-align:right;
-	margin:5px 0;
+	margin:11px 0;
 }
 #gooruSearchMainContainer .collectionDetails{
 	margin-bottom:10px;
@@ -117,7 +126,7 @@
 	font-size:13px;
 }
 #gooruSearchMainContainer .authorDetails .input-group {
-	margin:12px 0;
+	
 }
 #gooruSearchMainContainer .authorDetails .input-group .form-control{
 	display:inline-block;
@@ -337,11 +346,11 @@
 	color:#515151;
 }
 #gooruSearchMainContainer .SmallWidthContainer{
-	margin:0 auto;
-	padding:2px 10px;
-	background:#ffffff;
-	border-radius:6px 6px;
-	margin-top: 130px;
+	 margin: 0 auto;
+  padding: 2px 10px;
+  background: #fafafa;
+  border-radius: 6px 6px;
+  margin-top: 130px;
 	
 }
 #gooruSearchMainContainer .remixButton{
@@ -357,9 +366,6 @@
 }
 #gooruSearchMainContainer .borderBox{
 	padding:20px 8px;
-	border:1px solid #dddddd;
-	margin:20px 8px;
-	border-radius:5px 5px;
 }
 
 #gooruSearchMainContainer .ratingsBlock .img-responsive{
@@ -370,7 +376,7 @@
 	width: 170px !important;
 }
 #gooruSearchMainContainer .collectionDesc{
-	width: 59% !important;
+	width: 57% !important;
 }
 #gooruSearchMainContainer .searchQuestionMark {
 	background: url("../images/mos/questionmark.png") no-repeat 4px 4px;
@@ -501,7 +507,7 @@ Back to top button
 
 
 #gooruSearchMainContainer .grade ul{
-	margin:0 0 15px 0;
+	margin:0 0 8px 0;
 	padding:0 0;
 	text-align:left;
 	display:block;
@@ -549,7 +555,7 @@ Back to top button
 }
 #gooruSearchMainContainer .gradesContainer{
 	background:#e8e7e7;
-	padding:20px 20px;
+	padding:20px 20px 10px 20px;
 }
 
 
@@ -647,7 +653,7 @@ Back to top button
 	#gooruSearchMainContainer .fixedPosition{
 		position: relative;
 		width: 100%;
-		z-index: 9999;
+		z-index: 96 !important;
     }
 }
 
@@ -758,7 +764,7 @@ Back to top button
 		text-align:center;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:right;
+		text-align:center;
 		margin: 5px 0 5px 0;
 	}
 	#gooruSearchMainContainer .circleBlocks ul li {
@@ -934,7 +940,7 @@ Back to top button
 		text-align:center;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:right;
+		text-align:center;
 	}
 	
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu:before {
@@ -1042,7 +1048,7 @@ Back to top button
 		padding:0 10px;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:right;
+		text-align:center;
 	}
 	#gooruSearchMainContainer .resourceImage{
 		width:21%;
