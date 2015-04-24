@@ -96,15 +96,18 @@
 							<g:HTMLPanel styleName="gridToggle">
 
 								<!-- Split button -->
-								<panel:HTMLEventPanel styleName="btn-group" ui:field="resourceFiltersPnl">
-									<button type="button" class="btn btn-primary">
-										<g:Image styleName="gliphIconImage"></g:Image>
-									</button>
-									<button type="button" class="btn btn-primary dropdown-toggle"
-										data-toggle="dropdown" aria-expanded="false">
-										<span class="caret"></span>
-										<span class="sr-only">Toggle Dropdown</span>
-									</button>
+								<g:HTMLPanel styleName="btn-group">
+								    <panel:HTMLEventPanel ui:field="resourceFiltersDropDwn">
+										<button type="button" class="btn btn-primary">
+											<span class="glyphicon glyphicon-align-justify"
+												aria-hidden="true"></span>
+										</button>
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-expanded="false">
+											<span class="caret"></span>
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+									</panel:HTMLEventPanel>
 									 <g:HTMLPanel styleName="dropdown-menu" ui:field="moreFilterPanel">
 									   <div class="resourceDropdown">
 									 	 <div class="paddingBlock">
@@ -142,7 +145,7 @@
 						</g:HTMLPanel>
 
 
-					</panel:HTMLEventPanel>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 
 				<!-- <div class="col-md-1 col-sm-2">

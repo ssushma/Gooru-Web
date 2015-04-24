@@ -264,6 +264,10 @@ margin:0 0 0 -20px !important;
 	border-radius:0 0;
 }
 #gooruSearchMainContainer .accessStyle{
+  display: inline-block;
+}
+
+#gooruSearchMainContainer .accessStyle span{
   width: 47%;
   display: inline-block;
 }
