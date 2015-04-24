@@ -52,7 +52,7 @@
         </g:HTMLPanel>
         
          
-        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="questionHotTextAnswerChoiceContainer">
+        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceContainer}" ui:field="questionHotTextAnswerChoiceContainer">
          	
         </g:HTMLPanel>
         <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice"></g:Anchor>

@@ -89,9 +89,9 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		highlightRDButton.getElement().setAttribute("alt", i18n.GL3217());
 		highlightRDButton.getElement().setAttribute("title", i18n.GL3217());
 		inLbl.getElement().setId("inLbl");
-		inLbl.setText(i18n.GL3218());
-		inLbl.getElement().setAttribute("alt", i18n.GL3218());
-		inLbl.getElement().setAttribute("title", i18n.GL3218());
+		inLbl.setText(i18n.GL3225());
+		inLbl.getElement().setAttribute("alt", i18n.GL3225());
+		inLbl.getElement().setAttribute("title", i18n.GL3225());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219());
 		wordRDButton.getElement().setAttribute("alt", i18n.GL3219());
@@ -143,9 +143,9 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		highlightRDButton.getElement().setAttribute("alt", i18n.GL3217());
 		highlightRDButton.getElement().setAttribute("title", i18n.GL3217());
 		inLbl.getElement().setId("inLbl");
-		inLbl.setText(i18n.GL3218());
-		inLbl.getElement().setAttribute("alt", i18n.GL3218());
-		inLbl.getElement().setAttribute("title", i18n.GL3218());
+		inLbl.setText(i18n.GL3225());
+		inLbl.getElement().setAttribute("alt", i18n.GL3225());
+		inLbl.getElement().setAttribute("title", i18n.GL3225());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219());
 		wordRDButton.getElement().setAttribute("alt", i18n.GL3219());
@@ -234,7 +234,8 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		highlightTextArea.setVisible(false);
 		wordRDButton.setVisible(false);
 		sentenceRDButton.setVisible(false);
-		inLbl.setVisible(false);
+		//inLbl.setVisible(false);
+		inLbl.addStyleName("htQInLbl");
 		correctAnswerTypeContainer.setVisible(false);
 	}
 	
@@ -257,7 +258,9 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 	
 	
 	public void reorderRDButtonClick(){
-		inLbl.setVisible(false);
+		inLbl.setText(i18n.GL3225());
+		inLbl.addStyleName("htQInLbl");
+		//inLbl.setVisible(false);
 		wordRDButton.setVisible(false);
 		sentenceRDButton.setVisible(false);
 		highlightTextArea.setVisible(false);
@@ -266,8 +269,9 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		correctAnswerTypeContainer.setVisible(false);
 	}
 	public void highlightRDButtonClick(){
-		
-		inLbl.setVisible(true);
+		inLbl.setText(i18n.GL3218());
+		inLbl.removeStyleName("htQInLbl");
+		//inLbl.setVisible(true);
 		wordRDButton.setVisible(true);
 		sentenceRDButton.setVisible(true);
 		highlightTextArea.setVisible(true);

@@ -20,7 +20,7 @@
 	        <g:RadioButton ui:field="singleRDButton" name="ansType" styleName="htQAnswerHeadings"></g:RadioButton>
 	         <g:RadioButton ui:field="multiRDButton" name="ansType" styleName="htQAnswerHeadings"></g:RadioButton>
 	     </g:FlowPanel>
-              <g:Label styleName="{addWebResourceStyle.addResourceFormAlphaText}" ui:field="labelChoice"></g:Label>
+              <g:Label styleName="htQLabelNum" ui:field="labelChoice"></g:Label>
               <g:HTMLPanel styleName="htQAnswerInputControl answerChoiceAndHintsTextcontainer" ui:field="tinyOrTextBoxConatiner">
 	              <tinyMce:TinyMCE ui:field="answerTextBox" characterLimit="150"></tinyMce:TinyMCE>
 	              <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormAnswerDeletebg}" ui:field="deleteButtonContainer"></g:HTMLPanel>

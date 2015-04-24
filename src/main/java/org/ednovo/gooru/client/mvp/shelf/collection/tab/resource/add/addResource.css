@@ -690,6 +690,7 @@ width: 100%;
 }
 .addResourceThumbimgContainer {
 	width: 100%;
+	display: inline-block;
 }
 .addResourceThumbimgHeading {
 	font-family: Arial, Helvetica, sans-serif;
