@@ -1271,6 +1271,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		resultCountVal=0;
 		pageNumber=1;
 		lblLoadingText.setVisible(true);
+		hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
+		previousCount=0;
 	}
 	
 	/**
