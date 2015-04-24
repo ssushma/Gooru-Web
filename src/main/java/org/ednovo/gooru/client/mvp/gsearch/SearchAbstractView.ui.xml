@@ -114,13 +114,16 @@
 											<panel:PPanel ui:field="panelNotMobileFriendly"/>
 									 	 </div>
 									    <div class="paddingBlock">
-											<p>Publisher <img src="images/mos/questionmark.png"/></p>
-								 			<p><input type="text" class="form-control"></input></p>
+											<p>Publisher <g:Image url="images/mos/questionmark.png" ui:field="publisherTooltip"/></p>
++								 			<p><panel:AppSuggestBox styleName="form-control" ui:field="publisherSgstBox"/></p>
++											<g:Label ui:field="sourcesNotFoundLbl"/>
++											<g:FlowPanel ui:field="sourceContainerFloPanel" />
 										 </div>
 									  
 									    <div class="paddingBlock">
-											<p>Aggregator <img src="images/mos/questionmark.png"/></p>
-											<p><input type="text" class="form-control"/></p>
+											<p>Aggregator <g:Image url="images/mos/questionmark.png" ui:field="aggregatorTooltip"/></p>
++											<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
++											<g:Label ui:field="aggregatorNotFoundLbl"/>
 									   </div>
 									  
 									    <div class="paddingBlock no-gutter">
@@ -173,8 +176,6 @@
 		</div>
 
 	</g:HTMLPanel>
-			     
-			
 			<!-- Resource search filters End -->
 			
 		</g:HTMLPanel>
