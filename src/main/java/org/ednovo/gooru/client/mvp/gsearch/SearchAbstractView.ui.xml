@@ -98,7 +98,7 @@
 
 								<!-- Split button -->
 								<g:HTMLPanel styleName="btn-group">
-								    <panel:HTMLEventPanel ui:field="resourceFiltersPnl">
+								    <panel:HTMLEventPanel ui:field="resourceFiltersDropDwn">
 										<button type="button" class="btn btn-primary">
 											<span class="glyphicon glyphicon-align-justify"
 												aria-hidden="true"></span>

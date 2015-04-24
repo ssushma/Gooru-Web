@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -93,6 +92,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -129,7 +129,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField
 	PPanel panelNotMobileFriendly,accessModePanel;
 	
-	@UiField HTMLEventPanel resourceFiltersPnl;
+	@UiField HTMLEventPanel resourceFiltersDropDwn;
 	
 	@UiField Image publisherTooltip,aggregatorTooltip;
 	
@@ -156,6 +156,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private static final String SUBJECTS_SEPARATOR = "~~";
 	
 	private static final String NO_MATCH_FOUND = i18n.GL0723();
+	
+	private boolean isClickedOnDropDwn=false;
 	
 	String[] accessModeArray = new String[]{i18n.GL2094(),i18n.GL2097(),i18n.GL2095(),i18n.GL2098(),i18n.GL2099(),i18n.GL2096()};
 	
@@ -252,7 +254,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
 		btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
 		gradesDropDown.addDomHandler(new GradesDropDownHandler(), ClickEvent.getType());
-		resourceFiltersPnl.addClickHandler(new ResourceFiltersDropDown());
+		resourceFiltersDropDwn.addClickHandler(new ResourceFiltersDropDown());
 		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
@@ -269,7 +271,24 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		});
 		
+		ClickHandler rootHandler= new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!isClickedOnDropDwn &&(ulSubjectPanel.isVisible() || gradesPanel.isVisible() ||moreFilterPanel.isVisible())){
+					ulSubjectPanel.setVisible(false);
+					gradesPanel.setVisible(false);
+					moreFilterPanel.setVisible(false);
+				}else if(!isClickedOnDropDwn){
+					ulSubjectPanel.setVisible(false);
+					gradesPanel.setVisible(false);
+					moreFilterPanel.setVisible(false);
+				}else{
+					isClickedOnDropDwn=false;
+				}
+			}
+		};
 		
+		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
@@ -326,6 +345,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			isClickedOnDropDwn=true;
+			if (gradesPanel.isVisible()){
+				gradesPanel.setVisible(false);
+			}
+			if (moreFilterPanel.isVisible()){
+				moreFilterPanel.setVisible(false);
+			}
 			if(value==1){
 				String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
 				if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
@@ -1070,11 +1096,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private class GradesDropDownHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			isClickedOnDropDwn=true;
+			if (ulSubjectPanel.isVisible()){
+				ulSubjectPanel.setVisible(false);
+			}
+			if (moreFilterPanel.isVisible()){
+				moreFilterPanel.setVisible(false);
+			}
 			String displayValue=gradesPanel.getElement().getStyle().getDisplay();
 			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
 				gradesPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+				gradesDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
 			}else{
 				gradesPanel.getElement().getStyle().setDisplay(Display.NONE);
+				gradesDropDown.getElement().getStyle().clearBackgroundColor();
 			}
 		}
 	} 
@@ -1083,11 +1118,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 		@Override
 		public void onClick(ClickEvent event) {
+			isClickedOnDropDwn=true;
+			if (ulSubjectPanel.isVisible()){
+				ulSubjectPanel.setVisible(false);
+			}
+			if (gradesPanel.isVisible()){
+				gradesPanel.setVisible(false);
+			}
 			String displayValue=moreFilterPanel.getElement().getStyle().getDisplay();
 			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
 				moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+				resourceFiltersDropDwn.getElement().getStyle().setBackgroundColor("#999");
 			}else{
 				moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
+				resourceFiltersDropDwn.getElement().getStyle().clearBackgroundColor();
 			}
 		}
 		
