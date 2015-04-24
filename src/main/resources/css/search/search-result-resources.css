@@ -247,6 +247,10 @@
 	height:26px;
 	border-radius:0 0;
 }
+#gooruSearchMainContainer .accessStyle{
+  width: 47%;
+  display: inline-block;
+}
 
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .resourceDetails .seachRightNavigation {

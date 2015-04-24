@@ -45,7 +45,6 @@ import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
@@ -181,7 +180,37 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		});
 		
 		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
+		
+		if (getViewToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
+			setSourceSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
 
+				@Override
+				protected void run(SearchDo<String> searchDo) {
+					getSearchService().getSuggestSource(searchDo, this);
+
+				}
+
+				@Override
+				public void onCallSuccess(SearchDo<String> result) {
+					getView().setSourceSuggestions(result);
+				}
+			});
+			setAggregatorSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
+
+				@Override
+				protected void run(SearchDo<String> searchDo) {
+					getSearchService().getSuggestedAggregator(searchDo, this);
+
+				}
+
+				@Override
+				public void onCallSuccess(SearchDo<String> result) {
+					getView().setAggregatorSuggestions(result);
+
+				}
+
+			});
+		}
 	}
 
 	@Override
@@ -445,6 +474,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		if (isCurrentView()) {
 			getSourceSuggestionAsyncCallback().execute(searchDo);
 		}
+		
+	}
+	@Override
+	public void requestSourceSuggestions(SearchDo<String> searchDo){
+		getSourceSuggestionAsyncCallback().execute(searchDo);
 	}
 
 	@Override
@@ -452,6 +486,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		if (isCurrentView()) {
 			getAggregatorSuggestionAsyncCallback().execute(searchDo);
 		}
+	}
+	
+	@Override
+	public void requestAggregatorSuggestions(SearchDo<String> searchDo){
+		getAggregatorSuggestionAsyncCallback().execute(searchDo);
 	}
 
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
