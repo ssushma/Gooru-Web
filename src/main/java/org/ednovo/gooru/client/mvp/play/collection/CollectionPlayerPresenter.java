@@ -563,11 +563,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
                     }else{
                         sessionId=GwtUUIDGenerator.uuid();
                     }
+                    
                     if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
                     	isItem_lodRefreshed = null;
     				}else{
-    					triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-    					
+    					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
     				}
 				}
 				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
@@ -1999,7 +1999,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(playLoad.toString()));
-		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog); 
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 			updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
 		}
