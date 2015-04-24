@@ -22,7 +22,6 @@
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-md-6 col-sm-7">
 							<g:HTMLPanel styleName="seachRightNavigation">
-								<g:InlineLabel styleName="preHeader" text="{i18n.GL3207}" title="{i18n.GL3207}"/>
 								<g:HTMLPanel styleName="btn-group grade" ui:field="gradesDropDown">
 									<g:Button styleName="btn btn-primary" text="{i18n.GL0325}" title="{i18n.GL0325}"/>
 									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" >
@@ -115,16 +114,13 @@
 											<panel:PPanel ui:field="panelNotMobileFriendly"/>
 									 	 </div>
 									    <div class="paddingBlock">
-											<p>Publisher <g:Image url="images/mos/questionmark.png" ui:field="publisherTooltip"/></p>
-								 			<p><panel:AppSuggestBox styleName="form-control" ui:field="publisherSgstBox"/></p>
-											<g:Label ui:field="sourcesNotFoundLbl"/>
-											<g:FlowPanel ui:field="sourceContainerFloPanel" />
+											<p>Publisher <img src="images/mos/questionmark.png"/></p>
+								 			<p><input type="text" class="form-control"></input></p>
 										 </div>
 									  
 									    <div class="paddingBlock">
-											<p>Aggregator <g:Image url="images/mos/questionmark.png" ui:field="aggregatorTooltip"/></p>
-											<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
-											<g:Label ui:field="aggregatorNotFoundLbl"/>
+											<p>Aggregator <img src="images/mos/questionmark.png"/></p>
+											<p><input type="text" class="form-control"/></p>
 									   </div>
 									  
 									    <div class="paddingBlock no-gutter">
@@ -139,8 +135,8 @@
 												<p><input name="" type="checkbox" value="" /> Text on Image</p>
 												<p><input name="" type="checkbox" value="" /> Textural</p>
 											</div>
- -->											<panel:PPanel styleName="col-md-12 accessStyle" ui:field="accessModePanel" />
- 												
+ -->											<panel:PPanel styleName="col-md-6" ui:field="accessModeLeftPanel" />
+ 												<panel:PPanel styleName="col-md-6" ui:field="accessModeRightPanel" />
 										</div>
 
 									</div>
