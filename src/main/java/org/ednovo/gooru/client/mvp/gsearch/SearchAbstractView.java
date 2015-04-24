@@ -235,23 +235,31 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
-						isInsertTems=true;
-						pageNumber--;
-						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
+					//if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
+					if(event.getScrollTop()==0)
+					{
+						if(pageNumber>3){
+							isInsertTems=true;
+							pageNumber--;
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
+							}else{
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 8);
+							}
+							Window.scrollTo(0, getWidgetHeight());
 						}else{
-							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 8);
+							Window.scrollTo(0, 0);
 						}
-						if(getWidgetHeight()!=0){
+						
+					/*	if(getWidgetHeight()!=0){
 							int getTotalScrolltop=getWidgetHeight()*4;
 							hideScrollDiv.getElement().getStyle().setHeight((hideScrollDiv.getOffsetHeight()-getTotalScrolltop), Unit.PX);
-						}
+						}*/
 						previousCount=previousCount-4;
-						if((pageNumber-2)==1){
+					/*	if((pageNumber-2)==1){
 							hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
 							previousCount=0;
-						}
+						}*/
 					}
 					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8){
@@ -264,10 +272,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}else{
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
 							}
-							if(getWidgetHeight()!=0){
+		/*					if(getWidgetHeight()!=0){
 								hideScrollDiv.getElement().getStyle().setHeight(getWidgetHeight()*(previousCount), Unit.PX);
 								previousCount=previousCount+4;
-							}
+							}*/
 						}
 					}
 					previousScrollValue=event.getScrollTop();
