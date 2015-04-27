@@ -128,7 +128,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField TextBox authorTxtBox;
 	
 	@UiField
-	PPanel panelNotMobileFriendly,accessModePanel;
+	PPanel panelNotMobileFriendly,accessModePanel,reviewPanelUc;
 	
 	@UiField HTMLEventPanel resourceFiltersDropDwn,moreFilterPanel;
 	
@@ -177,7 +177,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	boolean isInsertTems=false;
 	
 	
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedPublisheValues,selectedAuggreValues;
 	
 	private HandlerRegistration handlerRegistration=null;
 
@@ -316,6 +316,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
+			renderCheckBox(reviewPanelUc,"1", "Only Resources with Reviews");
 			
 	    	renderStarRatings();
 	    	renderAccessModeValues();
@@ -530,6 +531,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showPublisherFilter();
 		showAggregatorFilter();
 		showOERFilter();
+		showReviewFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -770,6 +772,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	
 	/**
+	 * To show the Reviews values in search page
+	 */
+	private void showReviewFilter() {
+		reviewTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
+		if(reviewTag!=null){
+			if(reviewTag.equalsIgnoreCase("1"))
+			{
+				pnlAddFilters.add(createTagsLabel("Only Resources with Reviews","onlyReviewPanel"));
+				setSelectedFilter(panelNotMobileFriendly,reviewTag,COMMA_SEPARATOR);
+			}
+
+		}
+	}
+	
+	/**
 	 * Pre-Selected Standards showing in search page
 	 */
 	private void showMobileFriendlyFilter() {
@@ -995,7 +1012,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						removeSelectedFilter(accessModePanel,newFilterVal);
 					}
 					if(panelName.equals("mobileFirendlyPanel")){
-						removeSelectedFilter(panelNotMobileFriendly,newFilterVal);
+						removeSelectedFilter(panelNotMobileFriendly,"not_ipad_friendly");
+					}
+					if(panelName.equals("onlyReviewPanel")){
+						removeSelectedFilter(reviewPanelUc,"1");
 					}
 					if(panelName.equals("oerPanel")){
 						oerLbl.removeStyleName("active");
@@ -1089,7 +1109,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedStandards="";
 		selectedCategories="";
 		selectedStars="";
-		selectedAccessMode="";
 		selectedPublisheValues="";
 		selectedAuggreValues="";
 	    oerValue="";
@@ -1149,10 +1168,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					selectedAuggreValues +=closeLabelSetting.getSourceText();
 				}
 				if("oerPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
-					
 					oerValue="1";
 				}
-
 			}
 		}
 	}
@@ -1192,11 +1209,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 }else{
 				 filtersMap.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 			 }
-
-			 if(getSelectedFilter(panelNotMobileFriendly) != null)
+			 String selectedMobile=getSelectedFilter(panelNotMobileFriendly);
+			 if(!selectedMobile.isEmpty())
 			 {
 				 if (getSelectedFilter(panelNotMobileFriendly).equalsIgnoreCase("not_ipad_friendly")){
-					 filtersMap.put(IsGooruSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
+					 filtersMap.put(IsGooruSearchView.MEDIATYPE_FLT, selectedMobile);
 				 }
 			 }
 			 String selectedAccessMode = getSelectedFilter(accessModePanel);
@@ -1212,6 +1229,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 }
 			 if(!oerValue.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OER_FLT, oerValue);
+			 }
+			 String reviewValue=getSelectedFilter(reviewPanelUc);
+			 if(!reviewValue.isEmpty())
+			 {
+				 filtersMap.put(IsGooruSearchView.REVIEWS_FLT, reviewValue);
 			 }
 
 		 }
@@ -1411,7 +1433,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				  }
 			  }	
 		}
-		
 	}
 	
 	/**
