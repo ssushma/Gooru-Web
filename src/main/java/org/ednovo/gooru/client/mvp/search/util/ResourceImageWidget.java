@@ -1,6 +1,5 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -29,8 +28,15 @@ public class ResourceImageWidget extends Composite {
 	public ResourceImageWidget(final ResourceDo resourceDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		final String categoryValue=StringUtil.getCategory(resourceDo.getCategory()!=null?resourceDo.getCategory():"");
-		if(resourceDo.getThumbnail() != null){
-			imgResourceImg.setUrl(resourceDo.getAssetURI()+resourceDo.getThumbnail());
+		if(resourceDo.getThumbnails()!= null){
+			String thumbnailAssetURI=resourceDo.getThumbnails().getThumbnailAssetURI()!=null?resourceDo.getThumbnails().getThumbnailAssetURI():"";
+			String thumbnailFolder=resourceDo.getThumbnails().getThumbnailFolder()!=null?resourceDo.getThumbnails().getThumbnailFolder():"";
+			String thumbnailName=resourceDo.getThumbnails().getThumbnailName()!=null?resourceDo.getThumbnails().getThumbnailName():"";
+			if("video".equalsIgnoreCase(categoryValue.toLowerCase())){
+				imgResourceImg.setUrl(thumbnailName);
+			}else{
+				imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
+			}
 		}else{
 			imgResourceImg.setUrl("../images/default-"+categoryValue.toLowerCase()+".png");
 		}
