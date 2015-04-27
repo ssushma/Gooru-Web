@@ -72,7 +72,14 @@ public class SearchResourceView extends
 		collectionResourceWidget.getAddResoruce().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+<<<<<<< HEAD
 
+=======
+				Element element = Document.get().getElementById("fixedFilterSearchID");
+				if(element!=null)				{
+					element.setAttribute("style", "opacity:0.1;");
+				}
+>>>>>>> 8f5f3706a96323ccc280da4719e934e0f9172ad5
 				Window.enableScrolling(false);
 				if(AppClientFactory.isAnonymous()){
 					LoginPopupUc loginPopupUc=new LoginPopupUc();
@@ -90,6 +97,7 @@ public class SearchResourceView extends
 				}
 			}
 		});
+		collectionResourceWidget.getElement().setId(resourceSearchResultDo.getGooruOid());
 		return collectionResourceWidget;
 	}
 }

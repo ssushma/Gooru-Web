@@ -127,6 +127,20 @@ public class CollectionResourceWidget extends Composite {
 				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
 			}
 		});
+		
+		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
+		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
+		StringUtil.setAttributes(resourceTitle.getElement(), "lblResourceTitle", "", "");
+		StringUtil.setAttributes(lblViewCount.getElement(), "lblViewCount", "", "");
+		StringUtil.setAttributes(lbladdCount.getElement(), "lbladdCount", "", "");
+		StringUtil.setAttributes(lblUserCount.getElement(), "lbladdCount", "", "");
+		StringUtil.setAttributes(creatorImage.getElement(), "imgCreator", "", "");
+		StringUtil.setAttributes(relatedCollectionImage.getElement(), "imgRelatedCollection", "", "");
+		StringUtil.setAttributes(relatedCollectionTitle.getElement(), "lblRelatedCollectionTitle", "", "");
+		StringUtil.setAttributes(resourceDescription.getElement(), "pnlResourceDescription", "", "");
+		StringUtil.setAttributes(imageOverlay.getElement(), "imageOverlay", "", "");
+		StringUtil.setAttributes(btnAddResource.getElement(), "btnAddResource", "", "");
+		StringUtil.setAttributes(resourseImage.getElement(), "imgResoruce", "", "");
 	}
 	/**
 	 * This inner class will handle the click event on the resource image click and it will play that resoruce
