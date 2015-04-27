@@ -7,7 +7,7 @@
 		<g:HTMLPanel>
 	<div id="addCollectionPopup">
 		<div class="popHeader">
-		<div class="col-md-10 popHeading">Add this collection to one of your existing or new collection</div>
+		<g:Label styleName="col-md-10 popHeading" ui:field="addtocollHeaderText"></g:Label>
 		<div class="col-md-2"><g:Anchor ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Anchor></div>
 		<div class="clearfix"></div>
 		</div>
