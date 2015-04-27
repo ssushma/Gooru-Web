@@ -111,7 +111,7 @@
 											<span class="sr-only">Toggle Dropdown</span>
 										</button>
 									</panel:HTMLEventPanel>
-									 <g:HTMLPanel styleName="dropdown-menu" ui:field="moreFilterPanel">
+									 <panel:HTMLEventPanel styleName="dropdown-menu" ui:field="moreFilterPanel">
 									   <div class="resourceDropdown">
 									 	 <div class="paddingBlock">
 											<panel:PPanel ui:field="panelNotMobileFriendly"/>
@@ -147,7 +147,7 @@
 									</div>
 
 
-						</g:HTMLPanel>
+						</panel:HTMLEventPanel>
 
 
 					</g:HTMLPanel>

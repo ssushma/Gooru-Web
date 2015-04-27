@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -118,7 +117,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown,moreFilterPanel;
+	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 	
 	@UiField Label lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
 	
@@ -131,7 +130,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField
 	PPanel panelNotMobileFriendly,accessModePanel;
 	
-	@UiField HTMLEventPanel resourceFiltersDropDwn;
+	@UiField HTMLEventPanel resourceFiltersDropDwn,moreFilterPanel;
 	
 	@UiField Image publisherTooltip,aggregatorTooltip;
 	
@@ -160,6 +159,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private static final String NO_MATCH_FOUND = i18n.GL0723();
 	
 	private boolean isClickedOnDropDwn=false;
+	
+	private boolean isClickOnMoreFilter=false;
 	
 	String[] accessModeArray = new String[]{i18n.GL2094(),i18n.GL2097(),i18n.GL2095(),i18n.GL2098(),i18n.GL2099(),i18n.GL2096()};
 	
@@ -311,7 +312,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if(!isClickedOnDropDwn &&(ulSubjectPanel.isVisible() || gradesPanel.isVisible() ||moreFilterPanel.isVisible())){
 					ulSubjectPanel.setVisible(false);
 					gradesPanel.setVisible(false);
-					moreFilterPanel.setVisible(false);
+					if(moreFilterPanel.getElement().getStyle().getDisplay().equalsIgnoreCase("block") && isClickOnMoreFilter){
+						moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+						isClickOnMoreFilter=false;
+					}else{
+						moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
+					}
+					
 				}else if(!isClickedOnDropDwn){
 					ulSubjectPanel.setVisible(false);
 					gradesPanel.setVisible(false);
@@ -1496,5 +1503,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			aggregatorSgstBox.getElement().setAttribute("title","");
 			aggregatorSuggestOracle.clear();
 		}
+	}
+	
+	@UiHandler("moreFilterPanel")
+	public void clickOnMorefilterPnl(ClickEvent clickEvent){
+		moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+		isClickOnMoreFilter=true;
 	}
 }
