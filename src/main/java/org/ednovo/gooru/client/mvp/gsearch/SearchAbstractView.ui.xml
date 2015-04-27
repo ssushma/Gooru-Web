@@ -141,7 +141,7 @@
 												<p><input name="" type="checkbox" value="" /> Text on Image</p>
 												<p><input name="" type="checkbox" value="" /> Textural</p>
 											</div>
- -->											<panel:PPanel styleName="col-md-6" ui:field="accessModePanel" />
+ -->											<panel:PPanel styleName="col-md-6 accessStyle" ui:field="accessModePanel" />
 										</div>
 
 									</div>
