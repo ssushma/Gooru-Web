@@ -58,6 +58,7 @@ import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -97,6 +98,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -119,7 +121,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 	
-	@UiField Label lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
+	@UiField Label lblLoadingTextPrevious,lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
 	
 	@UiField InlineLabel searchResults;
 	
@@ -128,7 +130,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField TextBox authorTxtBox;
 	
 	@UiField
-	PPanel panelNotMobileFriendly,accessModePanel,reviewPanelUc;
+	PPanel panelNotMobileFriendly,accessModePanel;
 	
 	@UiField HTMLEventPanel resourceFiltersDropDwn,moreFilterPanel;
 	
@@ -175,9 +177,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
 	
 	boolean isInsertTems=false;
+	boolean firstTime = false;
 	
 	
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedPublisheValues,selectedAuggreValues;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
 	
 	private HandlerRegistration handlerRegistration=null;
 
@@ -225,6 +228,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
 		fixedFilterSearch.getElement().setAttribute("id", "fixedFilterSearchID");
+		lblLoadingTextPrevious.setVisible(false);
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
@@ -235,11 +239,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}else{
 						pnlBackToTop.setVisible(false);
 					}
+					
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+					String htParam = placeRequest.getParameter("ht", null);
+					if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)&&htParam==null){
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
 					if(event.getScrollTop()==0){
 						if(pageNumber>3){
 							isInsertTems=true;
 							pageNumber--;
+							lblLoadingTextPrevious.setVisible(true);
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
 							}else{
@@ -252,7 +261,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8){
-						if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
+						if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
 							isInsertTems=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
@@ -263,6 +272,51 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}
 						}
 					}
+				}
+				else
+				{
+					if(!firstTime)
+					{
+						firstTime = true;
+						Window.scrollTo(0, 934);
+					}
+					if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
+						isInsertTems=true;
+						pageNumber--;
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
+						}else{
+							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 8);
+						}
+						if(getWidgetHeight()!=0){
+							int getTotalScrolltop=getWidgetHeight()*4;
+							hideScrollDiv.getElement().getStyle().setHeight((hideScrollDiv.getOffsetHeight()-getTotalScrolltop), Unit.PX);
+						}
+						previousCount=previousCount-4;
+						if((pageNumber-2)==1){
+							hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
+							previousCount=0;
+						}
+					}
+					//This condition is used to check that the user is scrolling top to bottom
+					if(resultCountVal>=8){
+						if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+							isInsertTems=false;
+							lblLoadingText.setVisible(true);
+							pageNumber++;
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 9);
+							}else{
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+							}
+							if(getWidgetHeight()!=0){
+								hideScrollDiv.getElement().getStyle().setHeight(getWidgetHeight()*(previousCount), Unit.PX);
+								previousCount=previousCount+4;
+							}
+						}
+					}
+					previousScrollValue=event.getScrollTop();
+				}
 				}
 			}
 		});
@@ -292,23 +346,31 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		ClickHandler rootHandler= new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if(!isClickedOnDropDwn &&(ulSubjectPanel.isVisible() || gradesPanel.isVisible() ||moreFilterPanel.isVisible())){
-					ulSubjectPanel.setVisible(false);
-					gradesPanel.setVisible(false);
-					if(moreFilterPanel.getElement().getStyle().getDisplay().equalsIgnoreCase("block") && isClickOnMoreFilter){
-						moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-						isClickOnMoreFilter=false;
-					}else{
-						moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
+				GWT.runAsync(new RunAsyncCallback() {
+					@Override
+					public void onFailure(Throwable reason) {
 					}
-					
-				}else if(!isClickedOnDropDwn){
-					ulSubjectPanel.setVisible(false);
-					gradesPanel.setVisible(false);
-					moreFilterPanel.setVisible(false);
-				}else{
-					isClickedOnDropDwn=false;
-				}
+					@Override
+					public void onSuccess() {
+						if(!isClickedOnDropDwn &&(ulSubjectPanel.isVisible() || gradesPanel.isVisible() ||moreFilterPanel.isVisible())){
+							ulSubjectPanel.setVisible(false);
+							gradesPanel.setVisible(false);
+							if(moreFilterPanel.getElement().getStyle().getDisplay().equalsIgnoreCase("block") && isClickOnMoreFilter){
+								moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+								isClickOnMoreFilter=false;
+							}else{
+								moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
+							}
+							
+						}else if(!isClickedOnDropDwn){
+							ulSubjectPanel.setVisible(false);
+							gradesPanel.setVisible(false);
+							moreFilterPanel.setVisible(false);
+						}else{
+							isClickedOnDropDwn=false;
+						}
+					}
+				});
 			}
 		};
 		
@@ -316,7 +378,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
-			renderCheckBox(reviewPanelUc,"1", "Only Resources with Reviews");
 			
 	    	renderStarRatings();
 	    	renderAccessModeValues();
@@ -376,26 +437,35 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			isClickedOnDropDwn=true;
-			if (gradesPanel.isVisible()){
-				gradesPanel.setVisible(false);
-			}
-			if (moreFilterPanel.isVisible()){
-				moreFilterPanel.setVisible(false);
-			}
-			if(value==1){
-				String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
-				if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
-					ulSubjectPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-					subjectDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
-				}else{
-					ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
-					subjectDropDown.getElement().getStyle().clearBackgroundColor();
+			GWT.runAsync(new RunAsyncCallback(){
+				@Override
+				public void onSuccess() {
+					isClickedOnDropDwn=true;
+					if (gradesPanel.isVisible()){
+						gradesPanel.setVisible(false);
+					}
+					if (moreFilterPanel.isVisible()){
+						moreFilterPanel.setVisible(false);
+					}
+					if(value==1){
+						String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
+						if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
+							ulSubjectPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+							subjectDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
+						}else{
+							ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+							subjectDropDown.getElement().getStyle().clearBackgroundColor();
+						}
+					}
+					if(value==2){
+						getUiHandlers().getAddStandards();
+					}
 				}
-			}
-			if(value==2){
-				getUiHandlers().getAddStandards();
-			}
+				@Override
+				public void onFailure(Throwable reason) {
+					
+				}
+			});
 		}
 	}
 	/**
@@ -405,7 +475,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public class BackToTopClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			callAnimation();
+			GWT.runAsync(new RunAsyncCallback(){
+				@Override
+				public void onFailure(Throwable reason) {
+				}
+				@Override
+				public void onSuccess() {
+					callAnimation();
+				}
+			});
 		}
 	}
 	
@@ -423,22 +501,38 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiHandler("resourcePanel")
 	public void clickOnResource(ClickEvent clickEvent){
-		collectionPanel.removeStyleName("active");
-		resourcePanel.setStyleName("active");
-		resourceSearchPanel.setVisible(true);
-		collectionSearchPanel.setVisible(false);
-		resetData();
-		getUiHandlers().setSearchType(false);
+		GWT.runAsync(new RunAsyncCallback(){
+			@Override
+			public void onFailure(Throwable reason) {
+			}
+			@Override
+			public void onSuccess() {
+				collectionPanel.removeStyleName("active");
+				resourcePanel.setStyleName("active");
+				resourceSearchPanel.setVisible(true);
+				collectionSearchPanel.setVisible(false);
+				resetData();
+				getUiHandlers().setSearchType(false);
+			}
+		});
 	}
 	
 	@UiHandler("collectionPanel")
 	protected void clickOnCollection(ClickEvent clickEvent){
-		collectionPanel.setStyleName("active");
-		resourcePanel.removeStyleName("active");
-		resourceSearchPanel.setVisible(false);
-		collectionSearchPanel.setVisible(true);
-		resetData();
-		getUiHandlers().setSearchType(true);
+		GWT.runAsync(new RunAsyncCallback(){
+			@Override
+			public void onFailure(Throwable reason) {
+			}
+			@Override
+			public void onSuccess() {
+				collectionPanel.setStyleName("active");
+				resourcePanel.removeStyleName("active");
+				resourceSearchPanel.setVisible(false);
+				collectionSearchPanel.setVisible(true);
+				resetData();
+				getUiHandlers().setSearchType(true);
+			}
+		});
 	}
 	public void removeTopWidgets(boolean isBottomOrTop){
 		try{
@@ -475,7 +569,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						searchResultPanel.remove(widget);
 						widgetCount++;
 					}
-					Window.scrollTo(0, getWidgetHeight()*(searchResultPanel.getWidgetCount()/3));
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+					String htParam = placeRequest.getParameter("ht", null);
+					if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)&&htParam==null){
+						Window.scrollTo(0, getWidgetHeight()*(searchResultPanel.getWidgetCount()/3));
+					}
+					
 				}
 			}
 		}catch(Exception e){
@@ -496,6 +595,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 					searchResultPanel.insert(renderSearchResult(searchResult),0);
 				}
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+				String htParam = placeRequest.getParameter("ht", null);
+				if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)&&htParam==null){
+					if(pageNumber>3){
+						Window.scrollTo(0, getWidgetHeight());
+					}else{
+						Window.scrollTo(0, 0);
+					}
+				}
+				lblLoadingTextPrevious.setVisible(false);
 			}else{
 				for (T searchResult : searchDo.getSearchResults()) {
 					searchResultPanel.add(renderSearchResult(searchResult));
@@ -531,7 +640,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showPublisherFilter();
 		showAggregatorFilter();
 		showOERFilter();
-		showReviewFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -655,25 +763,32 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if(previousValue!=0 && previousValue==ratingValue){
-				setStyleForRatings(0+"", ulRatingsPanel);
-				removeFilter(ratingValue+"Stars");
-				previousValue=0;
-			}else{
-				setStyleForRatings(ratingValue+"", ulRatingsPanel);
-				removeFilter(ratingValue+"Stars");
-				if(ratingValue==5){
-					ratingsLbl.setVisible(false);
-					pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
-				}else{
-					ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
-					ratingsLbl.setVisible(true);
-					pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
 				}
-				previousValue=ratingValue;
-			}
-			
-			callSearch();
+				@Override
+				public void onSuccess() {
+					if(previousValue!=0 && previousValue==ratingValue){
+						setStyleForRatings(0+"", ulRatingsPanel);
+						removeFilter(ratingValue+"Stars");
+						previousValue=0;
+					}else{
+						setStyleForRatings(ratingValue+"", ulRatingsPanel);
+						removeFilter(ratingValue+"Stars");
+						if(ratingValue==5){
+							ratingsLbl.setVisible(false);
+							pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
+						}else{
+							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
+							ratingsLbl.setVisible(true);
+							pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
+						}
+						previousValue=ratingValue;
+					}
+					callSearch();
+				}
+			});
 		}
 	}
 	
@@ -690,17 +805,25 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if(liPanel.getStyleName().equals("active")){
-				liPanel.removeStyleName("active");
-				removeFilter(subjectVal);
-			}else{
-				liPanel.setStyleName("active");
-				pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
-			}
-			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
-			subjectDropDown.removeStyleName("active");
-			subjectDropDown.getElement().getStyle().clearBackgroundColor();
-			callSearch();
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
+				}
+				@Override
+				public void onSuccess() {
+					if(liPanel.getStyleName().equals("active")){
+						liPanel.removeStyleName("active");
+						removeFilter(subjectVal);
+					}else{
+						liPanel.setStyleName("active");
+						pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
+					}
+					ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+					subjectDropDown.removeStyleName("active");
+					subjectDropDown.getElement().getStyle().clearBackgroundColor();
+					callSearch();
+				}
+			});
 		}
 	}
 	/**
@@ -717,14 +840,23 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if(liPanel.getStyleName().equals("active")){
-				liPanel.removeStyleName("active");
-				removeFilter(categoryValue);
-			}else{
-				liPanel.setStyleName("active");
-				pnlAddFilters.add(createTagsLabel(categoryKey,"categoryPanel"));
-			}
-			callSearch();
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
+				}
+
+				@Override
+				public void onSuccess() {
+					if(liPanel.getStyleName().equals("active")){
+						liPanel.removeStyleName("active");
+						removeFilter(categoryValue);
+					}else{
+						liPanel.setStyleName("active");
+						pnlAddFilters.add(createTagsLabel(categoryKey,"categoryPanel"));
+					}
+					callSearch();
+				}
+			});
 		}
 		
 	}
@@ -768,21 +900,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			for(int i=0; i<split.length; i++){
 				pnlAddFilters.add(createTagsLabel(split[i],"authorPanel"));
 			}
-		}
-	}
-	
-	/**
-	 * To show the Reviews values in search page
-	 */
-	private void showReviewFilter() {
-		reviewTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
-		if(reviewTag!=null){
-			if(reviewTag.equalsIgnoreCase("1"))
-			{
-				pnlAddFilters.add(createTagsLabel("Only Resources with Reviews","onlyReviewPanel"));
-				setSelectedFilter(panelNotMobileFriendly,reviewTag,COMMA_SEPARATOR);
-			}
-
 		}
 	}
 	
@@ -1012,10 +1129,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						removeSelectedFilter(accessModePanel,newFilterVal);
 					}
 					if(panelName.equals("mobileFirendlyPanel")){
-						removeSelectedFilter(panelNotMobileFriendly,"not_ipad_friendly");
-					}
-					if(panelName.equals("onlyReviewPanel")){
-						removeSelectedFilter(reviewPanelUc,"1");
+						removeSelectedFilter(panelNotMobileFriendly,newFilterVal);
 					}
 					if(panelName.equals("oerPanel")){
 						oerLbl.removeStyleName("active");
@@ -1082,20 +1196,26 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	
 	public class ClickOnOER implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			if(oerLbl.getStyleName().equals("active")){
-				removeFilter("OER");
-				oerLbl.removeStyleName("active");
-			}else{
-				oerLbl.setStyleName("active");
-				pnlAddFilters.add(createTagsLabel("OER", "oerPanel"));
-			}
-			
-			callSearch();
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
+					
+				}
+				@Override
+				public void onSuccess() {
+					if(oerLbl.getStyleName().equals("active")){
+						removeFilter("OER");
+						oerLbl.removeStyleName("active");
+					}else{
+						oerLbl.setStyleName("active");
+						pnlAddFilters.add(createTagsLabel("OER", "oerPanel"));
+					}
+					callSearch();
+				}
+			});
 		}
-		
 	}
 
 	/**
@@ -1109,6 +1229,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedStandards="";
 		selectedCategories="";
 		selectedStars="";
+		selectedAccessMode="";
 		selectedPublisheValues="";
 		selectedAuggreValues="";
 	    oerValue="";
@@ -1168,8 +1289,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					selectedAuggreValues +=closeLabelSetting.getSourceText();
 				}
 				if("oerPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					
 					oerValue="1";
 				}
+
 			}
 		}
 	}
@@ -1209,11 +1332,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 }else{
 				 filtersMap.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 			 }
-			 String selectedMobile=getSelectedFilter(panelNotMobileFriendly);
-			 if(!selectedMobile.isEmpty())
+
+			 if(getSelectedFilter(panelNotMobileFriendly) != null)
 			 {
 				 if (getSelectedFilter(panelNotMobileFriendly).equalsIgnoreCase("not_ipad_friendly")){
-					 filtersMap.put(IsGooruSearchView.MEDIATYPE_FLT, selectedMobile);
+					 filtersMap.put(IsGooruSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 				 }
 			 }
 			 String selectedAccessMode = getSelectedFilter(accessModePanel);
@@ -1230,11 +1353,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 if(!oerValue.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OER_FLT, oerValue);
 			 }
-			 String reviewValue=getSelectedFilter(reviewPanelUc);
-			 if(!reviewValue.isEmpty())
-			 {
-				 filtersMap.put(IsGooruSearchView.REVIEWS_FLT, reviewValue);
-			 }
 
 		 }
 
@@ -1244,45 +1362,60 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private class GradesDropDownHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			isClickedOnDropDwn=true;
-			if (ulSubjectPanel.isVisible()){
-				ulSubjectPanel.setVisible(false);
-			}
-			if (moreFilterPanel.isVisible()){
-				moreFilterPanel.setVisible(false);
-			}
-			String displayValue=gradesPanel.getElement().getStyle().getDisplay();
-			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
-				gradesPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-				gradesDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
-			}else{
-				gradesPanel.getElement().getStyle().setDisplay(Display.NONE);
-				gradesDropDown.getElement().getStyle().clearBackgroundColor();
-			}
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
+				}
+				@Override
+				public void onSuccess() {
+					isClickedOnDropDwn=true;
+					if (ulSubjectPanel.isVisible()){
+						ulSubjectPanel.setVisible(false);
+					}
+					if (moreFilterPanel.isVisible()){
+						moreFilterPanel.setVisible(false);
+					}
+					String displayValue=gradesPanel.getElement().getStyle().getDisplay();
+					if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
+						gradesPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+						gradesDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
+					}else{
+						gradesPanel.getElement().getStyle().setDisplay(Display.NONE);
+						gradesDropDown.getElement().getStyle().clearBackgroundColor();
+					}
+				}
+			});
 		}
 	} 
 	
 	private class ResourceFiltersDropDown implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			isClickedOnDropDwn=true;
-			if (ulSubjectPanel.isVisible()){
-				ulSubjectPanel.setVisible(false);
-			}
-			if (gradesPanel.isVisible()){
-				gradesPanel.setVisible(false);
-			}
-			String displayValue=moreFilterPanel.getElement().getStyle().getDisplay();
-			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
-				moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-				resourceFiltersDropDwn.getElement().getStyle().setBackgroundColor("#999");
-			}else{
-				moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
-				resourceFiltersDropDwn.getElement().getStyle().clearBackgroundColor();
-			}
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
+					
+				}
+				@Override
+				public void onSuccess() {
+					isClickedOnDropDwn=true;
+					if (ulSubjectPanel.isVisible()){
+						ulSubjectPanel.setVisible(false);
+					}
+					if (gradesPanel.isVisible()){
+						gradesPanel.setVisible(false);
+					}
+					String displayValue=moreFilterPanel.getElement().getStyle().getDisplay();
+					if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
+						moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+						resourceFiltersDropDwn.getElement().getStyle().setBackgroundColor("#999");
+					}else{
+						moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
+						resourceFiltersDropDwn.getElement().getStyle().clearBackgroundColor();
+					}
+				}
+			});
 		}
-		
 	}
 	
 	/**
@@ -1298,7 +1431,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		resultCountVal=0;
 		pageNumber=1;
 		lblLoadingText.setVisible(true);
-		hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
+		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
 		previousCount=0;
 	}
 	
@@ -1433,6 +1566,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				  }
 			  }	
 		}
+		
 	}
 	
 	/**

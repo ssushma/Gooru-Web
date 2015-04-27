@@ -84,11 +84,13 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	
 	GooruGradesPresenter gooruGradesPresenter;
 	
-	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter = null;
+	
+	ViewMorePeoplePresenter viewmorePeoplePresenter = null;
 	
 	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 	
-	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+	RatingAndReviewPopupPresenter ratingAndReviewPopup;
 	
 	AppPopUp appPopUp=new AppPopUp();
 	
@@ -99,14 +101,15 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Inject
-	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter);
+	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter);
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		this.addCenturyPresenter=addCenturyPresenter;
 		this.gooruGradesPresenter=gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
+		this.viewmorePeoplePresenter = viewmorePeoplePresenter;
 		getView().setUiHandlers(this);
 	}
 

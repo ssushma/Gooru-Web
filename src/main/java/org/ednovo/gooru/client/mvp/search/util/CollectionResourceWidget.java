@@ -17,6 +17,7 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -173,10 +174,18 @@ public class CollectionResourceWidget extends Composite {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", resoruceId);
-			params.put("pn", PLAYER_NAME);
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);	
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
+				}
+				@Override
+				public void onSuccess() {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("id", resoruceId);
+					params.put("pn", PLAYER_NAME);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);	
+				}
+			});
 		}
 	}
 	/**

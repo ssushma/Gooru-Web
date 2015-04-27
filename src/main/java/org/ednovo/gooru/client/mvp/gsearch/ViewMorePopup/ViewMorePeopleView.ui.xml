@@ -1,0 +1,115 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<g:HTMLPanel>
+	<div id="morePeoplePopWrapper">
+  <div class="popHeader">
+    <div class="col-md-10 popHeading">More People</div>
+    <div class="col-md-2 closeButton"><a href=""><img src="images/close-button.png" /></a></div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="popBody">
+    <h4>Used by 4 people</h4>
+          <div class="peopleGroup">
+    <div class="scrollDiv">
+      <div class="peopleBlock">
+        <div class="col-md-4">
+          <div class="userDetContainer"><a href="#"><img src="images/author.png"/> Sample Name</a></div>
+        </div>
+        <div class="col-md-4">
+          <div class="gradeDetContaner">
+            <p>5th Grade</p>
+            <p>Laungage Arts</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="colleDetContaner"> <a href="#"><img src="images/library-image.png"/> Collection Name</a> </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="peopleBlock">
+        <div class="col-md-4">
+          <div class="userDetContainer"><a href="#"><img src="images/author.png"/> Sample Name</a></div>
+        </div>
+        <div class="col-md-4">
+          <div class="gradeDetContaner">
+            <p>5th Grade</p>
+            <p>Laungage Arts</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="colleDetContaner"> <a href="#"><img src="images/library-image.png"/> Collection Name</a> </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      
+      <div class="peopleBlock">
+        <div class="col-md-4">
+          <div class="userDetContainer"><a href="#"><img src="images/author.png"/> Sample Name</a></div>
+        </div>
+        <div class="col-md-4">
+          <div class="gradeDetContaner">
+            <p>5th Grade</p>
+            <p>Laungage Arts</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="colleDetContaner"> <a href="#"><img src="images/library-image.png"/> Collection Name</a> </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      
+      <div class="peopleBlock">
+        <div class="col-md-4">
+          <div class="userDetContainer"><a href="#"><img src="images/author.png"/> Sample Name</a></div>
+        </div>
+        <div class="col-md-4">
+          <div class="gradeDetContaner">
+            <p>5th Grade</p>
+            <p>Laungage Arts</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="colleDetContaner"> <a href="#"><img src="images/library-image.png"/> Collection Name</a> </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="peopleBlock">
+        <div class="col-md-4">
+          <div class="userDetContainer"><a href="#"><img src="images/author.png"/> Sample Name</a></div>
+        </div>
+        <div class="col-md-4">
+          <div class="gradeDetContaner">
+            <p>5th Grade</p>
+            <p>Laungage Arts</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="colleDetContaner"> <a href="#"><img src="images/library-image.png"/> Collection Name</a> </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="peopleBlock">
+        <div class="col-md-4">
+          <div class="userDetContainer"><a href="#"><img src="images/author.png"/> Sample Name</a></div>
+        </div>
+        <div class="col-md-4">
+          <div class="gradeDetContaner">
+            <p>5th Grade</p>
+            <p>Laungage Arts</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="colleDetContaner"> <a href="#"><img src="images/library-image.png"/> Collection Name</a> </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+       </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  
+
+</div>
+</g:HTMLPanel>
+</ui:UiBinder> 
