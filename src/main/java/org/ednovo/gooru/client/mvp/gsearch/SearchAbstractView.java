@@ -117,9 +117,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
+	@UiField HTMLPanel fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 	
-	@UiField Label lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
+	@UiField Label lblLoadingTextPrevious,lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
 	
 	@UiField InlineLabel searchResults;
 	
@@ -225,6 +225,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
 		fixedFilterSearch.getElement().setAttribute("id", "fixedFilterSearchID");
+		lblLoadingTextPrevious.setVisible(false);
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
@@ -236,8 +237,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()==0){
+					if(event.getScrollTop()<=0){
 						if(pageNumber>3){
+							lblLoadingTextPrevious.setVisible(true);
 							isInsertTems=true;
 							pageNumber--;
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
@@ -245,9 +247,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}else{
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 8);
 							}
-							Window.scrollTo(0, getWidgetHeight());
-						}else{
-							Window.scrollTo(0, 0);
 						}
 					}
 					//This condition is used to check that the user is scrolling top to bottom
@@ -495,6 +494,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 					searchResultPanel.insert(renderSearchResult(searchResult),0);
 				}
+				if(pageNumber>3){
+					Window.scrollTo(0, getWidgetHeight());
+				}else{
+					Window.scrollTo(0, 0);
+				}
+				lblLoadingTextPrevious.setVisible(false);
 			}else{
 				for (T searchResult : searchDo.getSearchResults()) {
 					searchResultPanel.add(renderSearchResult(searchResult));
@@ -1276,7 +1281,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		resultCountVal=0;
 		pageNumber=1;
 		lblLoadingText.setVisible(true);
-		hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
+		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
 		previousCount=0;
 	}
 	
