@@ -278,7 +278,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if(!firstTime)
 					{
 						firstTime = true;
-						Window.scrollTo(0, 934);
+						Window.scrollTo(0, 1200);
 					}
 					if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
 						isInsertTems=true;
@@ -309,7 +309,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}else{
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
 							}
-							if(getWidgetHeight()!=0){
+							if(getWidgetHeight()!=0 && pageNumber>3){
 								hideScrollDiv.getElement().getStyle().setHeight(getWidgetHeight()*(previousCount), Unit.PX);
 								previousCount=previousCount+4;
 							}
@@ -595,15 +595,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 					searchResultPanel.insert(renderSearchResult(searchResult),0);
 				}
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-				String htParam = placeRequest.getParameter("ht", null);
-				if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)&&htParam==null){
 					if(pageNumber>3){
 						Window.scrollTo(0, getWidgetHeight());
 					}else{
 						Window.scrollTo(0, 0);
 					}
-				}
 				lblLoadingTextPrevious.setVisible(false);
 			}else{
 				for (T searchResult : searchDo.getSearchResults()) {
