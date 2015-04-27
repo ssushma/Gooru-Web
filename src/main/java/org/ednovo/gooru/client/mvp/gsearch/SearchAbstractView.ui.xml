@@ -116,6 +116,9 @@
 									 	 <div class="paddingBlock">
 											<panel:PPanel ui:field="panelNotMobileFriendly"/>
 									 	 </div>
+									 	 <div class="paddingBlock">
+											<panel:PPanel ui:field="reviewPanelUc"/>
+									 	 </div>
 									    <div class="paddingBlock">
 											<p>Publisher <g:Image url="images/mos/questionmark.png" ui:field="publisherTooltip"/></p>
 								 			<p><panel:AppSuggestBox styleName="form-control" ui:field="publisherSgstBox"/></p>
@@ -140,8 +143,8 @@
 												<p><input name="" type="checkbox" value="" /> Color Dependent</p>
 												<p><input name="" type="checkbox" value="" /> Text on Image</p>
 												<p><input name="" type="checkbox" value="" /> Textural</p>
-											</div>
- -->											<panel:PPanel styleName="col-md-6" ui:field="accessModePanel" />
+											</div> -->
+											<panel:PPanel styleName="col-md-6" ui:field="accessModePanel" />
 										</div>
 
 									</div>

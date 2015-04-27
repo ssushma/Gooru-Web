@@ -88,13 +88,13 @@ margin:0 0 0 -20px !important;
     display: inline-block;
     font-size: 13px;
     min-height: 40px;
-    padding: 7px 16px;
+    padding: 7px 9px;
 }
 #gooruSearchMainContainer .gridToggle{
     border-right: 1px solid #ccc;
   display: inline-block;
   min-height: 40px;
-  padding: 4px 16px;
+  padding: 3px 9px;
   position: relative;
   vertical-align: top;
 }
@@ -293,7 +293,7 @@ margin:0 0 0 -20px !important;
   padding: 0px 7px;
   vertical-align: top;
   cursor:pointer;
-  line-height: 43px;
+  line-height: 36px;
 }
 #gooruSearchMainContainer .oerStyle div{
 	border: 2px solid #fff;
@@ -307,6 +307,10 @@ margin:0 0 0 -20px !important;
   text-decoration: none;
   box-shadow: none !important;
   background: none;
+}
+#gooruSearchMainContainer .playerrating .star{
+	font-size:25px !important;
+    color:#999;
 }
 
 @media (min-width: 240px) and (max-width: 319px){
