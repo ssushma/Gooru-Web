@@ -49,21 +49,10 @@ public class DistrictFeaturedView extends Composite {
 	
 	private String courseId;
 	
-	private final static String DEFAULT_USER_IMG = "../images/settings/setting-user-image.png";
 	
 	private final static String COURSE_100_75_IMG = "../images/library/course-100x75.png";
 	
 	private final static String COURSE_100_75_CROP = "-100x75.";
-	
-	private static final String PNG = ".png";
-	
-	private final static String MR =i18n.GL_GRR_BYMR()+" ";
-	
-	private final static String MS =i18n.GL_GRR_BYMS()+" ";
-
-	private final static String FEMALE = "female";
-
-	private final static String MALE = "male";
 	
 	private String parentId;
 	
@@ -100,69 +89,7 @@ public class DistrictFeaturedView extends Composite {
 			}
 		});
 
-		/*		contributorImage.setHeight("46px");
-		contributorImage.setWidth("46px");
-		
-		if(courseDo.getCreator()!=null) {
-			courseAuthor.setVisible(true);
-			String authorName = "";
-			String contributorProfileImage = "";
-			/// In User Object is null
-			if (courseDo.getUser()!=null &&  courseDo.getUser().size()>0){
-				int j=0;
-				for (int i=0;i<courseDo.getUser().size();i++){
-					j = i;
-					if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
-						break;
-					}
-				}
-				
-				if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
-					authorName = MR+courseDo.getUser().get(j).getLastName();
-				} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
-			 	    authorName = MS+courseDo.getUser().get(j).getLastName();
-				} else {
-					authorName = courseDo.getUser().get(j).getLastName();
-				}
-				
-				if (courseDo.getUser().size()>1){
-					courseAuthor.setText(authorName +" "+GL_GRR_AND+" "+GL1117);
-				}else{
-					courseAuthor.setText(authorName);
-				}
-				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
-			}else{
-				if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-					authorName = MR+courseDo.getCreator().getLastName();
-				} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-					authorName = MS+courseDo.getCreator().getLastName();
-				} else {
-					authorName = courseDo.getCreator().getLastName();
-					if(courseDo.getCreator().getLastName().contains("RUSD")) {
-						authorName = GL1747 +" "+authorName;
-					}
-				}
-				courseAuthor.setText(authorName);
-				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
-			}
-			contributorImage.setUrl(contributorProfileImage);			
-			contributorImage.addErrorHandler(new ErrorHandler() {
-				@Override
-				public void onError(ErrorEvent event) {
-					contributorImage.setUrl(DEFAULT_USER_IMG);
-				}
-			});
-		} else {
-			courseAuthor.setVisible(false);
-			contributorImage.setUrl(DEFAULT_USER_IMG);
-		}
-		if(courseDo.getCodeId()!=null) {
-			setCourseId(courseDo.getCodeId());
-		} else {
-			setParentId(courseDo.getParentId());
-		}
-		contributorImage.setUrl(DEFAULT_USER_IMG);
-*/		courseAuthor.setVisible(false);
+		courseAuthor.setVisible(false);
 		contributorImage.setVisible(false);
 		setCourseId(profileLibraryDo.getGooruOid());
 		featuredCourse.getElement().setId("epnlFeaturedCourse");

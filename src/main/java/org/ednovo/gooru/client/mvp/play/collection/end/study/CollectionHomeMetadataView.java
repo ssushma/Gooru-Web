@@ -173,7 +173,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					}
 					catch(Exception ex)
 					{
-						
+						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				}
 				if(collectionItems!=null&&collectionItems.size()>0){

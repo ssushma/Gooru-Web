@@ -33,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -49,7 +51,7 @@ public class TaxonomyDeSerializer extends DeSerializer {
 	private static final String CODE_ID = "codeId";
 	private static final String TYPE = "type";
 	private static final String DEPTH = "depth";
-
+	private static final Logger logger = LoggerFactory.getLogger(TaxonomyDeSerializer.class);
 	/**
 	 * Deserialize json object to {@link LibraryCodeDo}
 	 * @param depthLimit of Taxonomy
@@ -63,6 +65,7 @@ public class TaxonomyDeSerializer extends DeSerializer {
 			JSONObject rootNode = taxonomyJsonObject.getJSONObject(NODE);
 			codeDo = convertNodeToDo(rootNode, depthLimit);
 		} catch (Exception e) {
+			logger.error("Exception::", e);
 		}
 		return codeDo;
 
@@ -99,6 +102,7 @@ public class TaxonomyDeSerializer extends DeSerializer {
 				libraryCodeDo.setNode(codeDos);
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return libraryCodeDo;
 	}
@@ -115,6 +119,7 @@ public class TaxonomyDeSerializer extends DeSerializer {
 				libraryCodeDo = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<LibraryCodeDo>>() {
 				});
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}	
 		}
 		return libraryCodeDo; 	

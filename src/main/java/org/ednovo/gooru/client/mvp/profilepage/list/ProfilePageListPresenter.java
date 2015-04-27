@@ -69,7 +69,6 @@ public class ProfilePageListPresenter extends PresenterWidget<IsProfilePageListV
 	@Override
 	public void onReset() {
 		//super.onReset();
-		String currentRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 			if(!(userId==version)||(folderId==null)) {

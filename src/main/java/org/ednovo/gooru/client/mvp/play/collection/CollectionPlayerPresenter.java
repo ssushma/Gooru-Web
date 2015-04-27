@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.servlet.http.Cookie;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -66,7 +68,6 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
-import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
@@ -82,6 +83,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -90,12 +92,15 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -153,6 +158,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     private String collectionSummaryId=null;
     
     private String collectionActivityEventId=null;
+    
+    private String collectionActivityEventIdTemp=null;
     
     private String resourceActivityEventId=null;
     
@@ -249,6 +256,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     public static final  Object METADATA_PRESENTER_SLOT = new Object();
     
     private Long totalTimeSpendInMs=0L;
+    
+    private String isRefreshed = null;
+    
+    private String isItem_lodRefreshed = null;
     
     int count=0;
     
@@ -481,8 +492,48 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		super.prepareFromRequest(request);
 		getCollectionDetails();
 	}
+	
+	/**
+     * This method is used to remove cookie values after reading the values.
+     */
+    public void removeCookieValues(){
+        Cookies.removeCookie("sessionId");
+        Cookies.removeCookie("collectionDataLogEventId");
+        Cookies.removeCookie("collectionNewDataLogEventId");
+        Cookies.removeCookie("collectionStartTime");
+        Cookies.removeCookie("isRefreshed");
+        Cookies.removeCookie("collectionActivityEventId");
+    }
+    /**
+     * This method is used to set cookies values when page is refreshed.
+     */
+    public void setCookieValues(){
+         Cookies.setCookie("sessionId", sessionId);
+         
+         Cookies.setCookie("collectionActivityEventId",collectionActivityEventId);
+         Cookies.setCookie("collectionDataLogEventId",collectionDataLogEventId);
+         Cookies.setCookie("collectionNewDataLogEventId",collectionNewDataLogEventId);
+         Cookies.setCookie("collectionStartTime",String.valueOf(collectionStartTime));
+         Cookies.setCookie("isRefreshed","true");
+    }
+    
+    /**
+     * Checks whether the player is refreshed or not.
+     */
+    private void isPlayerRefreshed(){
+    	//This will handle the refresh event of the browser.
+        Window.addCloseHandler(new CloseHandler<Window>() {
+               @Override
+               public void onClose(CloseEvent<Window> event){
+            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null){
+            		   setCookieValues();
+            	   }
+             }
+        });
+    }
 
 	private void getClassPageDetails(String classItemId) {
+		isPlayerRefreshed();
 		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
@@ -493,8 +544,31 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				if(getPlaceManager().getRequestParameter("view")!=null){
 				}else{
 					String collectionId=getPlaceManager().getRequestParameter("id", null);
-					sessionId=GwtUUIDGenerator.uuid();
-					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+					
+					String sessionOldId=Cookies.getCookie("sessionId");
+					String oldCollectionDataLogEventId=Cookies.getCookie("collectionDataLogEventId");
+					String oldCollectionNewDataLogEventId=Cookies.getCookie("collectionNewDataLogEventId");
+					String oldCollectionStartTime=Cookies.getCookie("collectionStartTime");
+					String refreshed=Cookies.getCookie("isRefreshed");
+					collectionActivityEventIdTemp = Cookies.getCookie("collectionActivityEventId");
+					
+                    if(!StringUtil.isEmpty(sessionOldId) && !StringUtil.isEmpty(oldCollectionNewDataLogEventId)){
+                        sessionId=sessionOldId;
+                        collectionNewDataLogEventId = oldCollectionNewDataLogEventId;
+                        collectionDataLogEventId = oldCollectionDataLogEventId;
+                        collectionStartTime = collectionStartTime.valueOf(oldCollectionStartTime);
+                        isRefreshed = refreshed;
+                        isItem_lodRefreshed = refreshed;
+                        removeCookieValues();
+                    }else{
+                        sessionId=GwtUUIDGenerator.uuid();
+                    }
+                    
+                    if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
+                    	isItem_lodRefreshed = null;
+    				}else{
+    					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+    				}
 				}
 				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
 			}
@@ -984,13 +1058,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void updatCollectionViewsCount(){
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null && !StringUtil.isEmpty(collectionDo.getViews())){
 				String viewsCount=collectionDo.getViews();
-				Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+				Integer viewsCounts=Integer.parseInt(viewsCount);
 				collectionDo.setViews(StringUtil.toString(viewsCounts));
 				metadataPresenter.setViewCount(StringUtil.toString(viewsCounts));
 				try{
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(collectionDo.getViews(), collectionDo.getGooruOid(), "views"));
 		         }
-				catch(Exception ex){}
+				catch(Exception ex){
+					AppClientFactory.printSevereLogger(ex.getMessage());
+				}
 		}
 	}
 	public void updateViewCount(String collectionItemId){
@@ -1135,7 +1211,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		         }
 			}   
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}
@@ -1198,10 +1274,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			createSessionItem();
 		}else{
 			if(collectionDo!=null){
-				collectionActivityEventId=GwtUUIDGenerator.uuid();
-				collectionDataLogEventId=GwtUUIDGenerator.uuid();
-				collectionNewDataLogEventId=GwtUUIDGenerator.uuid();
-				collectionStartTime=PlayerDataLogEvents.getUnixTime();
+				if(!StringUtil.isEmpty(collectionActivityEventIdTemp)){
+					collectionActivityEventId = collectionActivityEventIdTemp;
+				}
+				if(StringUtil.isEmpty(collectionNewDataLogEventId)||StringUtil.isEmpty(collectionActivityEventId)){
+					collectionActivityEventId=GwtUUIDGenerator.uuid();
+					collectionNewDataLogEventId=GwtUUIDGenerator.uuid();
+					collectionStartTime=PlayerDataLogEvents.getUnixTime();
+					collectionDataLogEventId=GwtUUIDGenerator.uuid();
+				}
 				newCollectionStartTime=collectionStartTime;
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(), 
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
@@ -1211,6 +1292,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				createSession(collectionDo.getGooruOid());
 				sessionIdCreationCount=1;
 			}	
+			
 		}
 	}
 
@@ -1327,7 +1409,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			@Override
 			public void onSuccess(String sessionId) {
 				CollectionPlayerPresenter.this.sessionId=sessionId;
-				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+				if(GooruConstants.TRUE.equals(isRefreshed)){
+					isRefreshed = null;
+				}else{
+					triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+					
+				}
 				createResourceDataLog();
 				if(collectionItemDo!=null){
 					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid());
@@ -1698,6 +1785,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			collectionItemDo=null;
 			collectionMetadataId=null;
 			collectionSummaryId=null;
+			isRefreshed = null;
+			isItem_lodRefreshed = null;
 			collectionActivityEventId=null;
 			collectionEndTime=0L;
 			newCollectionStartTime=0L;
@@ -1825,6 +1914,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionActivityEventId=null;
 		collectionEndTime=0L;
 		totalTimeSpentOnSummaryPage=0L;
+		this.collectionNewDataLogEventId=null;
+		this.collectionStartTime=0L;
+		this.collectionDataLogEventId=null;
 	}
 
 	/**
@@ -1907,13 +1999,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(playLoad.toString()));
-		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog); 
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 			updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
 		}
 		}
 		catch(Exception ex)
 		{
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
@@ -1948,6 +2041,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		
 	}

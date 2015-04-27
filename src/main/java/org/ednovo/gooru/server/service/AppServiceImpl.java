@@ -103,7 +103,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 			postData.put(PASSWORD, decryptedPwd);
 			 
 			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN);
-			String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.API_KEY,getApiKey());
+			String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.APIKEY,"");
 			getLogger().info("sign in API -- "+url);
 			getLogger().info("sign in API payload -- "+postData.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());
@@ -151,7 +151,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	
 	@Override
 	public UserDo v2Signout() {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNOUT, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNOUT);
 		ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		deleteLoggedInInfo();
 		UserDo user = v2GuestSignIn();

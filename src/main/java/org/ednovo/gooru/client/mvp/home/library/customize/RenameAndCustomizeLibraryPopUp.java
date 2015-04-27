@@ -18,7 +18,6 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -40,7 +39,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
@@ -152,7 +150,6 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		copycollectionTextbox.setMaxLength(50);
 		Window.enableScrolling(false);
 		this.getElement().getStyle().setZIndex(99999);
-		//this.getElement().setAttribute("style", "z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		
@@ -246,9 +243,6 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 	@UiHandler("editCollection")
 	public void onEditcollectionbuttonClicked(ClickEvent clickEvent) {
 		
-		//String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-		//String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-		
 		Storage stockStore = Storage.getLocalStorageIfSupported();
 
 		if (stockStore != null) {
@@ -267,11 +261,9 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 							String collectionTitle = copycollectionTextbox.getText();
 							if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
 							{
-
 								hide();
 								LibraryTopicListView.isCustomizePopup=false;
 								ProfileTopicListView.isCustomizePopup=false;
-								//	closePoup();
 								if(!isCustomizePopup){
 									isCustomizePopup=true;
 									Boolean loginFlag = false;

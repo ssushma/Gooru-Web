@@ -174,13 +174,10 @@ public class LibraryLessonUc extends Composite{
 						AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
 						AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
 						AppClientFactory.fireEvent(new SetConceptQuizDataEvent(conceptDo.getCollection(),topicId,lessonId+"",lessonLabel,lessonCode,conceptId,libraryGooruOid));
-						//getConceptDetails(conceptId);
 					}
 				});
 			}
 		} else {
-			
-				
 			for(int i = 0; i<conceptDoList.size(); i++) {
 				String conceptTitle = "";
 				final ConceptDo conceptDo = conceptDoList.get(i);
@@ -191,7 +188,6 @@ public class LibraryLessonUc extends Composite{
 				} else {
 					conceptTitle = conceptDo.getTitle();
 				}
-				
 				Label conceptTitleLbl = new Label(conceptTitle);
 				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
 				lessonList.add(conceptTitleLbl);

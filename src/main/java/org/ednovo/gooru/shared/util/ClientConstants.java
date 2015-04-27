@@ -37,6 +37,19 @@ public interface ClientConstants {
 	
 	String GOORU_ANONYMOUS = "ANONYMOUS";
 	
+	String PERMISSIONS = "permissions";
+	
+	String SEQUENCE = "sequence";
+	
+	String POPULAR_LOWER_CASE = "popular";
+	
+	String PUBLIC = "public";
+	
+	String GRADE = "grade";
+	
+	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
+	
+	
 	/* ****************** Base service Impl Constants Start ******************** */
 	
 
@@ -69,6 +82,8 @@ public interface ClientConstants {
 	String CLASSIC_ENDPOINT = "classic.endpoint";
 
 	String GOORU_SESSION_TOKEN = "gooru-session-token";
+	
+	String HEADER_GOORU_APIKEY = "Gooru-Apikey";
 	
 	String GOORU_ACCESS_TOKEN = "google-access-token";
 	
@@ -319,5 +334,9 @@ public interface ClientConstants {
 	String CHILD_REG = "childReg";
 	
 	String FULLSCREEN = "fullscreen";
-	
+	String NOTHING ="Nothing";
+	String ASSETQUESTION ="asset-question";
+	String BUFFERIMAGE ="bufferImage";
+
+	String WELCOME = "welcome";
 }

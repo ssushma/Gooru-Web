@@ -22,19 +22,34 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
-package org.ednovo.gooru.client;
+import java.util.HashMap;
 
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
-import com.google.gwt.core.ext.typeinfo.JClassType;
-import com.google.gwt.user.rebind.rpc.ProxyCreator;
-import com.google.gwt.user.rebind.rpc.ServiceInterfaceProxyGenerator;
+import com.google.gwt.event.shared.GwtEvent;
 
-public class GooruServiceInterfaceProxyGenerator extends ServiceInterfaceProxyGenerator{
+public class UpdateAssmntUrlOnShelfListEvent extends GwtEvent<UpdateAssmntUrlOnShelfListEventHandler>{
+
+	public static final Type<UpdateAssmntUrlOnShelfListEventHandler> TYPE = new Type<UpdateAssmntUrlOnShelfListEventHandler>();
+	
+	private FolderDo folderDo;
+	private HashMap<String, String> params;
+	
+	public UpdateAssmntUrlOnShelfListEvent(FolderDo folderDo, HashMap<String, String> params){
+		this.folderDo = folderDo;
+		this.params = params;
+	}
+	
 	@Override
-    protected ProxyCreator createProxyCreator(JClassType remoteService) {
-        return new GooruProxyCreator(remoteService);
-    }
-	
-	
+	public com.google.gwt.event.shared.GwtEvent.Type<UpdateAssmntUrlOnShelfListEventHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(UpdateAssmntUrlOnShelfListEventHandler handler) {
+		handler.updateAssmntUrl(folderDo, params);
+	}
+
 }

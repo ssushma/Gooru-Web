@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -65,9 +66,15 @@ import org.restlet.ext.html.FormDataSet;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
+import org.springframework.stereotype.Service;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.restlet.data.Header;
+import org.restlet.util.Series;
+import org.restlet.data.Preference;
+import org.restlet.engine.header.HeaderConstants;
+
 
 /**
  * @author Search Team
@@ -85,14 +92,12 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	private static final long serialVersionUID = -8673556966040594979L;
 	private static final String ADDED = "added";
 	private static final Logger logger = LoggerFactory.getLogger(MediaUploadServiceImpl.class);
-
+	private static final String HEADER_GOORU_SESSION_TOKEN = "Gooru-Session-Token";
 	@Override
 	public MediaUploadDo imageWebUpload(String imageURL) {
 		MediaUploadDo mediaUploadDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator
-				.generateUrl(getRestEndPoint(), UrlToken.MEDIA_FILE_UPLOAD,
-						getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.MEDIA_FILE_UPLOAD);
 		JSONObject jsonObj=new JSONObject();
 		try {
 			jsonObj.put("imageURL", imageURL);
@@ -102,7 +107,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		} catch (JSONException e1) {
 			getLogger().error(e1.getMessage());
 		}		
-
 		String responseText ="";
 			try {
 				responseText = fileUploadImage(jsonObj.toString(), url);
@@ -123,11 +127,9 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	public String saveImageCollection(String gooruOid, String fileName) {
 		String filePath = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),fileName);
-	
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
-				getRestPassword());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.MEDIA_FILE_SAVE, gooruOid);
+		String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.MEDIA_FILE_NAME,fileName);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			filePath = jsonRep.getText(); 
@@ -140,7 +142,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	@Override
 	public CollectionItemDo saveImage(String gooruOid, String resourceId, String fileName) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_ITEM,gooruOid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_ITEM,gooruOid);
 		try{
 		JSONObject createCollectionJsonObject=new JSONObject();
 		JSONObject itemTypeJsonObject=new JSONObject();
@@ -153,7 +155,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			createCollectionJsonObject.put("mediaFileName", fileName);
 		}
 		
-//		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}catch(Exception e){
@@ -175,11 +176,16 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public String cropImage(String fileName, String height, String width,
-			String xPosition, String yPosition, String imageUrl) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),
-				height, width, xPosition, yPosition);
+	public String cropImage(String fileName, String height, String width,String xPosition, String yPosition, String imageUrl) {
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.IMAGE_CROP, fileName);
+		Map<String,String> params = new HashMap<String, String>();
+		params.put(GooruConstants.HEIGHT,height);
+		params.put(GooruConstants.WIDTH,width);
+		params.put(GooruConstants.XPOSITION,xPosition);
+		params.put(GooruConstants.YPOSITION,yPosition);
+		params.put(GooruConstants.CROPENGINE,GooruConstants.BUFFERIMAGE);
+		String url=AddQueryParameter.constructQueryParams(partialUrl,params);
 
 		try
 		{
@@ -199,7 +205,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 
 	}
-
 	@Override
 	public MediaUploadDo imageFileUpload(String response) {
 		MediaUploadDo mediaUploadDo = null;
@@ -213,9 +218,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 		return mediaUploadDo;
 	}
-
-	// Request
-	// URL:http://www.goorulearning.org/gooruapi/rest/quiz-question/newQuestion/media?sessionToken=f6ded446-a9a9-11e2-ba82-123141016e2a&mediaFileName=bbda9546-cb15-453e-a107-f073b09eccdc.jpg&assetKey=asset-question
 	public CollectionItemDo saveQuestionImage(String collectionItemId, String fileName) {
 	
 		CollectionItemDo collItemDo = getCollectionItem(collectionItemId);
@@ -228,7 +230,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		CollectionItemDo collectionItemDoNew=new CollectionItemDo();
 		
 
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId());
 		
 		collItemDo.getQuestionInfo().setLicense(null);
 		collItemDo.getQuestionInfo().setResourceFormat(null);
@@ -342,8 +344,8 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	public CollectionItemDo getCollectionItem(String collectionItemId) {
 		
 		JsonRepresentation jsonRep = null;		
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
-	
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLLECTION_ITEM, collectionItemId);
+		String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.INCLUDE_ADDITIONAL_INFO,GooruConstants.TRUE); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -351,25 +353,31 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 	@Override
 	public String uploadProfileImage(String fileNameWithOurRespository,String fileName) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPLOAD_PROFILE_IMAGE, getLoggedInUserUid(), getLoggedInSessionToken(),fileNameWithOurRespository);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPLOAD_PROFILE_IMAGE, getLoggedInUserUid());
+		String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.MEDIA_FILE_NAME,fileNameWithOurRespository);
 		Form form = new Form();
 		form.add("sessionToken",getLoggedInSessionToken());
 		ServiceProcessor.post(url, getRestUsername(),getRestPassword(),form);
 		return fileName;
 	}
 	
-	public String fileUploadImage(String data,String webServiceUrl)
-			throws Exception {
+	public String fileUploadImage(String data,String webServiceUrl)throws Exception {
 		String respStr = "";
 		FormData fd = new FormData("data", data);        
 	    FormDataSet fds = new FormDataSet();
-	    fds.setMultipart(true);
 	    String boundary = "boundary";
 	    fds.setMediaType(MediaType.MULTIPART_FORM_DATA);
 	    fds.setMultipartBoundary(boundary);
 	    fds.setMultipart(true);
 	    fds.getEntries().add(fd);
 	    ClientResource c = new ClientResource(webServiceUrl);
+	    Series<Header> headers = (Series<Header>)c.getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+	    if (headers == null) { 
+			headers = new Series<Header>(Header.class);
+			c.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, headers);
+		}
+	    headers.add(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+	    c.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, headers);
 		c.setEntityBuffering(true);
 	    Representation cr = c.post(fds, MediaType.MULTIPART_FORM_DATA);
 		respStr = cr.getText();

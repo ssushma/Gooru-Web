@@ -780,13 +780,13 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void updateViewCount(){
 		if(collectionItemDo!=null){
 			String viewsCount=collectionItemDo.getResource().getViews();
-			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
-			collectionItemDo.getResource().setViews(viewsCounts.toString());
-			resourceInfoPresenter.updateViewsCount(viewsCounts.toString());
+			resourceInfoPresenter.updateViewsCount(viewsCount);
 		      try{
-		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCounts.toString(), collectionItemDo.getResource().getGooruOid(), "views"));
+		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCount, collectionItemDo.getResource().getGooruOid(), "views"));
 		         }
-		      catch(Exception ex){}
+		      catch(Exception ex){
+		    	  AppClientFactory.printSevereLogger(ex.getMessage());
+		      }
 		}
 	}
 

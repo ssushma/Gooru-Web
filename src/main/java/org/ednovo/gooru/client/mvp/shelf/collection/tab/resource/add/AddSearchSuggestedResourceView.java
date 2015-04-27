@@ -427,7 +427,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		public void updateSearchResultMetaData(String count, String resourceId,
 				String whatToUpdate) {
 			if(count!=null){
-//				updateViews(count, resourceId, whatToUpdate);
 			}
 		}
 	};
@@ -453,7 +452,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			public void onSuccess(CollectionItemDo result) {
 				Window.enableScrolling(true);
 				closePopup();
-				//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(result, RefreshType.INSERT));
 				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 			}

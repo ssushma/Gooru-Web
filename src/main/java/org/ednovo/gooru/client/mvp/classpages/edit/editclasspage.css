@@ -122,7 +122,6 @@
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 	border: 1px solid #ddd;
 	margin: 0px 21px 0px 26px;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
 }
 
 .tabsli {
@@ -149,7 +148,6 @@
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
 	background: linear-gradient(to bottom, rgba(239, 239, 239, 1) 0%,
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
 }
 
 .tabsli:hover {
@@ -179,9 +177,6 @@
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
 	background: linear-gradient(to bottom, rgba(239, 239, 239, 1) 0%,
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
-	/*filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#efefef',
-		endColorstr='#efefef', GradientType=0);*/
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
 }
 
 .addAsAnAssignmentMarginBlue {
@@ -435,10 +430,6 @@
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius: 4px;
 	background: #1076bb;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0);
 }
 .classPageEditTitle {
 	color: #fff;
@@ -580,12 +571,12 @@
 
 .addAssignment{
 	margin-top: -50px;
-	margin-left:0px !imporant;
+	margin-left:0px !important;
 }
 
 .addAssignmentStyle{
 	margin-top: 20px;
-	margin-left:0px !imporant;
+	margin-left:0px !important;
 }
 
 .addAssignment:hover{

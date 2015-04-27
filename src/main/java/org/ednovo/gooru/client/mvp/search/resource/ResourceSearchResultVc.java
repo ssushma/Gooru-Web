@@ -363,15 +363,12 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 
 		wrapperVcr.setData(resourceSearchResultDo);
-		String description = resourceSearchResultDo.getDescription();
+		String description = stripHtmlRegex(resourceSearchResultDo.getDescription());
+		resourceSearchResultDo.setDescription(description);
 		String title = "";
 		String resourceTitle;
-		if (resourceSearchResultDo.getResourceTitle().contains("class")) {
-			title = resourceSearchResultDo.getResourceTitle();
-		} else {
-			title = StringUtil.truncateText(
-					resourceSearchResultDo.getResourceTitle(), 38);
-		}
+		title = resourceSearchResultDo.getResourceTitle();
+	
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO)
 				|| category.equalsIgnoreCase(QUESTION) ? true : false;
 
@@ -435,9 +432,10 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 			SearchUiUtil.renderMetaData(metaDataFloPanel,
 					resourceSearchResultDo.getNumOfPages() + PAGES);
 		}
-		title = title.replaceAll("<p>", "").replaceAll("</p>", "");
+		title = stripHtmlRegex(title);
+		resourceSearchResultDo.setResourceTitle(title);
 
-		lblResourceTitle.setHTML(title.trim());
+		lblResourceTitle.setHTML(title);
 		resourceTitle = resourceSearchResultDo.getResourceTitle().trim();
 		lblResourceTitle.getElement().setId(
 				resourceSearchResultDo.getGooruOid());
@@ -688,5 +686,37 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 	public boolean isTagsPanelOpen(){
 		return wrapperVcr.isTagsDisclosurePanelOpen();
 	}
+	
+	public String stripHtmlRegex(String html) {
+		 // Replace all tag characters with an empty string.
+		 final StringBuilder sbText = new StringBuilder();
+		    final StringBuilder sbHtml = new StringBuilder();
+
+		    boolean isText = true;
+
+		    for (char ch : html.toCharArray()) {
+		        if (isText) { // outside html
+		            if (ch != '<') {
+		                sbText.append(ch);
+		                continue;
+		            } else {   // switch mode             
+		                isText = false;      
+		                sbHtml.append(ch); 
+		                continue;
+		            }
+		        }else { // inside html
+		            if (ch != '>') {
+		                sbHtml.append(ch);
+		                continue;
+		            } else {      // switch mode    
+		                isText = true;     
+		                sbHtml.append(ch); 
+		                continue;
+		            }
+		        }
+		    }
+
+		    return sbText.toString();
+	    }
 	
 }

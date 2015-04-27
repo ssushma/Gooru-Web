@@ -24,5 +24,11 @@ public interface IsFolderItemTabView extends IsViewWithHandlers<FolderItemTabUiH
 	 * This method is used to reset the widget positions after deleting the assessement
 	 * @param folderDo
 	 */
-	void resetCollectionsAfterDeletingAssessment(FolderDo folderDo);
+	void resetCollectionsAfterDeletingAssessment(FolderDo folderDo, String assessmentId);
+	/**
+	 * It forward to view for updating assessment widget
+	 * @param folderDo {@link FolderDo}
+	 */
+	public void updateAssessmentUrl(FolderDo folderDo); 
+	
 }

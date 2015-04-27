@@ -57,8 +57,6 @@ public class ResetPwdSuccessVc extends Composite{
 	Label resetPasswordLbl;
 	@UiField FlowPanel buttonContainer;
 	
-//	private static final String LOGIN_WITH_NEW_PWD = i18n.GL_SPL_EXCLAMATION+" "+i18n.GL1256;
-
 	private static resetPasswordSuccessVcUiBinder uiBinder = GWT
 			.create(resetPasswordSuccessVcUiBinder.class);
 

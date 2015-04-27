@@ -64,7 +64,6 @@ public class ProfileBiographyEditUC extends Composite implements
 
 	@UiField
 	protected FocusPanel focusPanel;
-//	@UiField Label errorLabel;
 	protected String placeholder = "";
 
 	private InlineLabel biographyLabel;
@@ -85,7 +84,6 @@ public class ProfileBiographyEditUC extends Composite implements
 		biographyLabel = new InlineLabel();
 		biographyEditImage = new InlineLabel();
 		biographyEditImage.setStyleName(res.css().editImage());
-		//errorLabel.setVisible(false);
 		
 		editTextBox.setHeight("146px");
 		editTextBox.setWidth("200px");
@@ -104,72 +102,10 @@ public class ProfileBiographyEditUC extends Composite implements
 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			//errorLabel.setVisible(false);
 			checkCharacterLimit(editTextBox.getText());
 		}
 	}
 
-	/**
-	 * Change to editable view
-	 */
-	/*public void switchToEdit() {
-		if (deckPanel.getVisibleWidget() == 1)
-			return;
-		editTextBox.setText(getValue());
-		deckPanel.showWidget(1);
-		editTextBox.setFocus(true);
-		
-	}
-
-	*//**
-	 * Change to label
-	 *//*
-	public void switchToLabel() {
-
-		if (deckPanel.getVisibleWidget() == 0)
-			
-			return;
-
-		if (editTextBox.getText().trim().length() > 0) {
-			setValue(editTextBox.getText().trim(), true); // fires events, too
-
-		}
-
-		else {
-			
-			deckPanel.showWidget(0);
-			//errorLabel.setVisible(true);
-			//new AlertContentUc("Oops", "Title Shouldn't be empty!");
-			//return;
-		}
-
-		if ((getText() != null && text.trim().length() > 0)) {
-			//errorLabel.setVisible(false);
-			deckPanel.showWidget(0);
-			setText(editTextBox.getText());
-			onEditDisabled(editTextBox.getText());
-			// Element
-			// characterlimit=(Element)getWidget().getParent().getParent().getParent().getParent().getParent().getElement().getLastChild();
-			// characterlimit.getFirstChildElement().getStyle().setOpacity(-15);
-
-		}
-
-		String text = getValue();
-
-		if ((getText() != null && text.trim().length() > 0)) {
-		//	errorLabel.setVisible(false);
-			deckPanel.showWidget(0);
-			setText(editTextBox.getText());
-			onEditDisabled(editTextBox.getText());
-			}
-
-	}
-
-	public void cancel() {
-		editTextBox.setText(biographyLabel.getText());
-		//errorLabel.setVisible(false);
-		deckPanel.showWidget(0);
-	}*/
 
 	// Override this method to catch on blur
 	/**
@@ -240,9 +176,5 @@ public class ProfileBiographyEditUC extends Composite implements
 	public TextArea getTextBoxSource() {
 		return editTextBox;
 	}
-
-	
-	
-	
 
 }

@@ -30,6 +30,10 @@ import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.Date;
 
+import org.ednovo.gooru.server.deserializer.AutoCompleteDeSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @SuppressWarnings("rawtypes")
 public final class ArrayListSorter implements Comparator, Serializable {    
 	private static final long serialVersionUID = -2293914106471884607L;	
@@ -44,6 +48,9 @@ public final class ArrayListSorter implements Comparator, Serializable {
 	private static final String DATATYPE_LONG = "java.lang.Long";
 	private static final String DATATYPE_FLOAT = "java.lang.Float";
 	private static final String DATATYPE_DOUBLE = "java.lang.Double";
+	
+	private static final Logger logger = LoggerFactory.getLogger(ArrayListSorter.class);
+	
 	private enum CompareMode { EQUAL, LESS_THAN, GREATER_THAN, DEFAULT }
 
 	// generic comparator attributes
@@ -85,6 +92,7 @@ public final class ArrayListSorter implements Comparator, Serializable {
 		
 			response = compareActual(v1, v2, returnType);
 		} catch (Exception e) {
+			logger.error("Exception::", e);
 		}
 		return response;
 	}

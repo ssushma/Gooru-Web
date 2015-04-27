@@ -305,6 +305,7 @@ public class ResourceRegister extends PopupPanel{
 									}
 								});
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}
@@ -319,9 +320,9 @@ public class ResourceRegister extends PopupPanel{
 				.getInjector()
 				.getUserService()
 				.resendConfirmationMail(params,
-						new SimpleAsyncCallback<Object>() {
+						new SimpleAsyncCallback<Void>() {
 							@Override
-							public void onSuccess(Object result) {
+							public void onSuccess(Void result) {
 								if (parentRegisterVc != null) {
 									parentRegisterVc.getPopupPanel().hide();
 								}

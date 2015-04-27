@@ -1,5 +1,8 @@
+package org.ednovo.gooru.shared.util;
+
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -23,29 +26,55 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.ednovo.gooru.client;
-
-
-import com.google.gwt.core.ext.typeinfo.JClassType;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.impl.RemoteServiceProxy;
-import com.google.gwt.user.client.rpc.impl.RequestCallbackAdapter.ResponseReader;
-import com.google.gwt.user.client.rpc.impl.RpcStatsContext;
-import com.google.gwt.user.client.rpc.impl.Serializer;
-import com.google.gwt.user.rebind.rpc.ProxyCreator;
-
-
-public class GooruProxyCreator extends ProxyCreator{
-
-	public GooruProxyCreator(JClassType serviceIntf) {
-		super(serviceIntf);
-	}
-	
-	@Override
-    protected Class<? extends RemoteServiceProxy> getProxySupertype() {
-        return GooruRpcInterceptor.class;
-    }
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.Set;
+ 
+public class PropertiesCache
+{
+   private final Properties configProp = new Properties();
+    
+   private PropertiesCache()
+   {
+      //Private constructor to restrict new instances
+      InputStream in = this.getClass().getClassLoader().getResourceAsStream("config/config.properties");
+      try {
+          configProp.load(in);
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+   }
+ 
+   //Bill Pugh Solution for singleton pattern
+   private static class LazyHolder
+   {
+      private static final PropertiesCache INSTANCE = new PropertiesCache();
+   }
+ 
+   public static PropertiesCache getInstance()
+   {
+      return LazyHolder.INSTANCE;
+   }
+    
+   public String getProperty(String key){
+	   String value = configProp.getProperty(key);
+	   return value;
+   }
+    
+   public Set<String> getAllPropertyNames(){
+      return configProp.stringPropertyNames();
+   }
+    
+   public boolean containsKey(String key){
+      return configProp.containsKey(key);
+   }
+   
+   
+//   public static void main(String[] args)
+//   {
+//     //Get individual properties
+//      
+//     //All property names
+//   }
 }

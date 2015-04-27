@@ -137,20 +137,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField HTMLPanel browseStantardContainer;
 
 	@UiField Anchor addQuestionImg;
-
-/*	@UiField HTMLPanel educationalUsePanel,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText;
-*/	
 	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText,noLabelText;
 
 	@UiField HTMLPanel addQuestImgContainer,panelContentRights,rightsContent,errorContainer;
-	/*@UiField ListBox questionTypeTextBox;*/
 	@UiField BlueButtonUc addbutton;
-	/*@UiField TextArea explainationTextArea;*/
 	@UiField TinyMCE questionNameTextArea,explainationTextArea;
 	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer,centuryPanel;
 	
-	/*@UiField Button questionNameTextAreaToolBarButton;*/
 	@UiField Button cancelButton,browseStandards,browseCentury;
 	@UiField
 	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
@@ -378,7 +371,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
 		setTextForTheFields();
 		errorContainer.setVisible(false);
-		//browseStantardContainer.getElement().getStyle().setMarginTop(-2, Unit.PCT);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -442,7 +434,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 			}
 		});
-		//questionTypeTextBox.getElement().setId("lbQuestion Type*");
 		for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
 			final AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
 			addQuestionAnswerChoice.optionSelectedButton.addClickHandler(new ClickHandler() {
@@ -465,7 +456,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			});
 		}
 		setTrueOrFalseFields();
-		//questionNameTextAreaToolBarButton.addClickHandler(new ShowTinyMceToolBar(questionNameTextArea));
 		setCenturyData();
 	}
 	public AddQuestionResourceView(CollectionItemDo collectionItemDo){
@@ -663,7 +653,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
-				//standardsPreferenceOrganizeToolTip.hide();
 				errorContainer.setVisible(false);
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
@@ -676,7 +665,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
 					errorContainer.setVisible(false);
-				//	standardsPreferenceOrganizeToolTip.hide();
 					if(standardPreflist!=null){
 						for(int count=0; count<standardPreflist.size();count++) {
 							if(text.contains(standardPreflist.get(count))) {
@@ -689,7 +677,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					}
 					if(standardsPrefDisplayPopup){
 						errorContainer.setVisible(false);
-						//standardsPreferenceOrganizeToolTip.hide();
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							@Override
 							public void onSuccess(SearchDo<CodeDo> result) {
@@ -704,10 +691,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						errorContainer.setVisible(true);
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
-						/*standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
-					*/	//standardSuggestOracle.add(i18n.GL1613);
 					}
 					}
 			}
@@ -723,7 +706,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
 					errorContainer.setVisible(false);
-				//standardsPreferenceOrganizeToolTip.hide();
 				}
 			}
 		};
@@ -738,7 +720,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void keyAction(String text, KeyUpEvent event) {
 				text=text.toUpperCase();
-				//standardsPreferenceOrganizeToolTip.hide();
 				centurySearchDo.setSearchResults(null);
 				centurySearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
@@ -767,7 +748,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
-				//standardsPreferenceOrganizeToolTip.hide();
 					errorContainer.setVisible(false);
 				}
 			}
@@ -781,30 +761,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addCentury(centurySgstBox.getValue(), getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults()));
 				centurySgstBox.setText("");
 				centurySuggestOracle.clear();
-				//updateCenturyAdvancedSetupStyle();
 				
 			}
 		});
 	}
 	public void setTextForTheFields(){
-		/*educationalTitle.getElement().setInnerHTML(i18n.GL1664);
-		activityText.getElement().setInnerHTML(i18n.GL1665);
-		handoutText.getElement().setInnerHTML(i18n.GL0907);
-		homeworkText.getElement().setInnerHTML(i18n.GL1666);
-		gameText.getElement().setInnerHTML(i18n.GL1667);
-		presentationText.getElement().setInnerHTML(i18n.GL1668);
-		referenceMaterialText.getElement().setInnerHTML(i18n.GL1669);
-		quizText.getElement().setInnerHTML(i18n.GL1670);
-		curriculumPlanText.getElement().setInnerHTML(i18n.GL1671);
-		lessonPlanText.getElement().setInnerHTML(i18n.GL1672);
-		unitPlanText.getElement().setInnerHTML(i18n.GL1673);
-		projectPlanText.getElement().setInnerHTML(i18n.GL1674);
-		readingText.getElement().setInnerHTML(i18n.GL1675);
-		textbookText.getElement().setInnerHTML(i18n.GL0909);
-		articleText.getElement().setInnerHTML(i18n.GL1676);
-		bookText.getElement().setInnerHTML(i18n.GL1677);
-		educationalUsePanel.setVisible(false);
-		resourceEducationalLabel.setText(i18n.GL1684);*/
 		standardsDefaultText.setText(i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
@@ -1130,24 +1091,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 	
 	public void addStyleToBody(AddQuestionAnswerChoice addQuestionAnswerChoice){
-//		try{
-//			if(addQuestionAnswerChoice!=null){
-//				if(addQuestionAnswerChoice.answerTextBox!=null){
-//					addQuestionAnswerChoice.answerTextBox.addStyleToBody();
-//				}
-//			}
-//		}catch(Exception e){
-//		}
 	}
 	public void removeStyleToBody(AddQuestionAnswerChoice addQuestionAnswerChoice){
-//		try{
-//			if(addQuestionAnswerChoice!=null){
-//				if(addQuestionAnswerChoice.answerTextBox!=null){
-//					addQuestionAnswerChoice.answerTextBox.removeStyleToBody();
-//				}
-//			}
-//		}catch(Exception e){
-//		}
 	}
 	@Override
 	public void onLoad() {
@@ -1158,7 +1103,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void clickedOnCancelButton(ClickEvent clickEvent){
 		
 		resetToHints();
-		//resetToAnswers();
 		if(isEditResource){
 			if(deletedStandardsDo.size()>0){
 	        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new SimpleAsyncCallback<Void>() {
@@ -1174,7 +1118,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 	public void setTrueOrFalseFields(){
 		questionTrueOrFalseAnswerChoiceContainer.clear();
-		//addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		for(int i=0;i<2;i++){
 			int widgetCount=questionTrueOrFalseAnswerChoiceContainer.getWidgetCount();
 			final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
@@ -1202,15 +1145,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	}
 	public void selectTrueOrFallseCorrectAnswerOption(int answerIndex,boolean isAnswerCorrect){
-//		int widgetCount=questionTrueOrFalseAnswerChoiceContainer.getWidgetCount();
-		//for(int i=0;i<widgetCount;i++){
 			final AddQuestionAnswerChoice addQuestionAnswer=(AddQuestionAnswerChoice)questionTrueOrFalseAnswerChoiceContainer.getWidget(answerIndex);
 			if(isAnswerCorrect){
 				addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
 			}else{
 				addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
 			}
-		//}
 	}
 	public void setMultipleChoiceAnswerFields(){
 		questionAnswerChoiceContainer.clear();
@@ -1339,7 +1279,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		int widgetsCount=hintsContainer.getWidgetCount();
 		for(int i=0;i<widgetsCount;){
 			AddHintsView addHintsView =(AddHintsView) hintsContainer.getWidget(i);
-			//addHintsView.hintTextBox.setText("");
 			if(i<0){			
 			if(i==0){
 				addHintsView.hintsTextLblVal.setText("");
@@ -1354,56 +1293,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		
 		}
 	}
-	/*public void resetToAnswers(){
-		int widgetsCount=questionAnswerChoiceContainer.getWidgetCount();
-		for(int i=0; i< widgetsCount;){
-			AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
-			if(i<2){
-				if(i==0){
-					addQuestionAnswerChoice.answerTextBox.setText("");
-					addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
-				}else{
-					addQuestionAnswerChoice.answerTextBox.setText("");
-					addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
-				}
-				i++;
-			}
-			else{
-				addQuestionAnswerChoice.removeFromParent();
-				widgetsCount=questionAnswerChoiceContainer.getWidgetCount();
-				addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
-			}
-			
-		}
-	}*/
-	
-	/*public void resetAllFields(){
-		int widgetsCount=questionAnswerChoiceContainer.getWidgetCount();
-		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
-		for(int i=0; i< widgetsCount;){
-			AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
-			if(i<2){
-				if(i==0){
-					//addQuestionAnswerChoice.answerTextBox.setReadOnly(true);
-					addQuestionAnswerChoice.answerTextBox.setText("True");
-					addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
-				}else{
-					//addQuestionAnswerChoice.answerTextBox.setReadOnly(true);
-					addQuestionAnswerChoice.answerTextBox.setText("False");
-					addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
-				}
-				i++;
-			}
-			else{
-				addQuestionAnswerChoice.removeFromParent();
-				widgetsCount=questionAnswerChoiceContainer.getWidgetCount();
-			}
-			
-		}
-		
-	}*/
-	
-	
     @UiHandler("addHintsLabel")
     public void clickOnHintsLabel(ClickEvent event){
     	Window.enableScrolling(false);
@@ -1411,9 +1300,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
         final AddHintsView addHints = new AddHintsView(widgetCount+1);
         addHintsTextArea(addHints);
     }
-    
-    
-    
     private void addHintsTextArea(final AddHintsView addHints){
     	
 	       hintsContainer.add(addHints); 
@@ -1512,7 +1398,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     			fieldValidationCheck = false;
 				isAddBtnClicked=true;
 			}
-    	
 			if(!isHintsAdded(hintsContainer)){
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
@@ -1927,7 +1812,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				AddHintsView addHints = (AddHintsView)hintsContainer.getWidget(i);
 				QuestionHintsDo questionHintsDo=new QuestionHintsDo();
 				String hintText=addHints.hintTextBox.getText();
-				if(hintText!=null&&!hintText.trim().equals("")){
+				if(hintText!=null&&!hintText.trim().equals("")&&!hintText.isEmpty()){
 					hintText=addHints.hintTextBox.getRawContent().trim();
 				}
 				questionHintsDo.setHintText(hintText); 
@@ -1949,37 +1834,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
-			
-			/*HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse = new HashMap<String,ArrayList<checkboxSelectedDo>>();
-			ArrayList<checkboxSelectedDo> arrayList=new ArrayList<checkboxSelectedDo>();
-			if(!isEditResource){
-				checkboxSelectedDo checkObj=new checkboxSelectedDo();
-				checkObj.setSelected(true);
-				checkObj.setValue(resourceEducationalLabel.getText());
-				arrayList.add(checkObj);
-			}else{
-				if(collectionItemDo.getResource().getEducationalUse() != null)
-				{
-				for(int eduI=0; eduI<collectionItemDo.getResource().getEducationalUse().size(); eduI++)
-				{
-					if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue().trim()))
-					{
-						checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
-						eduUseObjPrevious.setSelected(false);
-						eduUseObjPrevious.setValue(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue());
-						arrayList.add(eduUseObjPrevious);
-					}else{
-						checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
-						eduUseObjPrevious.setSelected(true);
-						eduUseObjPrevious.setValue(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue());
-						arrayList.add(eduUseObjPrevious);
-					}
-				}
-				}
-			}
-			educationalUse.put("educationalUse", arrayList);
-			if(!resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684))
-			collectionQuestionItemDo.setEducationalUse(educationalUse);*/
+
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				if (getQuestionType().equalsIgnoreCase("T/F")) {
@@ -2089,7 +1944,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			
 			@Override
 			public void onSuccess(List<ProfanityCheckDo> result) {
-				//addFunctionality(fieldValidationStaus,answersListFIB,mediaFileName);
 				  for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
 					  final AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
 					  addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
@@ -2183,7 +2037,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        	 
   	        	 String hintText=addHints.hintTextBox.getContent().toString().trim().replaceAll("&nbsp;", " ");
   	        	 hintText=hintText.replaceAll("\\<.*?>","");
-  	        	  if(hintText!=null && !hintText.trim().equals("")){
+  	        	  if(hintText!=null && !hintText.trim().equals("") && !hintText.isEmpty()){
   	        		 String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");	
   	        		  if(hintsText.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
   	        			  Document.get().getElementById(addHints.hintTextBox.getID()+"_message").setInnerText("");
@@ -2201,24 +2055,16 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS);
 	        		  hintsAdded=true;
             	      isAddBtnClicked=true;
+            	      return false;
   	        	  }
   	        	  hintsListForProfanity.add(profanitymodel);
   	        }
     	}
         return hintsAdded;
 }
-     /*public void resetAllErrorFields(){
-    		errorMessageForQuestion.setText("");
-    		ansChoiceErrMsg.setText("");
-    		errorMessageForExplanation.setText("");
-    		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
-         		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);   
-                 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");       
-    		 }
-     }*/
-     
 	@UiHandler("addQuestionImg")
 	public void clickOnAddQuestImg(ClickEvent event){
+		Window.enableScrolling(false);
 		uploadQuestionImage();
 	}
 	public void setEditQuestionImage(){
@@ -2449,6 +2295,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			
 		}
 		catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		
 		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
@@ -2534,16 +2381,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
-		/*if(collectionItemDo.getResource().getEducationalUse()!=null){
-		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
-			   if(item.isSelected()){
-				    resourceEducationalLabel.setText(item.getValue());
-					educationalUsePanel.setVisible(false);
-					educationalDropDownLblOpen = false;
-					mandatoryEducationalLbl.setVisible(false);
-			   }
-		}
-		}*/
 		if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 		int checkBoxCount=0;
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
@@ -2805,152 +2642,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 	
 	}
-	/*@UiHandler("activityPanel")
-	void activityPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
-		resourceEducationalLabel.setText(i18n.GL1665);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("handoutPanel")
-	void handoutPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_handout_selected");
-		resourceEducationalLabel.setText(i18n.GL0907);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("homeworkPanel")
-	void homeworkPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_homework_selected");
-		resourceEducationalLabel.setText(i18n.GL1666);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("gamePanel")
-	void gamePanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_game_selected");
-		resourceEducationalLabel.setText(i18n.GL1667);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("presentationPanel")
-	void presentationPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_presentation_selected");
-		resourceEducationalLabel.setText(i18n.GL1668);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("referenceMaterialPanel")
-	void referenceMaterialPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_reference_material_selected");
-		resourceEducationalLabel.setText(i18n.GL1669);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("quizPanel")
-	void quizPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_quiz_selected");
-		resourceEducationalLabel.setText(i18n.GL1670);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("curriculumPlanPanel")
-	void curriculumPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_curriculum_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1671);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("lessonPlanPanel")
-	void lessonPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_lesson_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1672);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("unitPlanPanel")
-	void unitPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_unit_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1673);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("projectPlanPanel")
-	void projectPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_project_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1674);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("readingPanel")
-	void readingPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_reading_selected");
-		resourceEducationalLabel.setText(i18n.GL1675);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("textbookPanel")
-	void textbookPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_textbook_selected");
-		resourceEducationalLabel.setText(i18n.GL0909);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("articlePanel")
-	void articlePanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_article_selected");
-		resourceEducationalLabel.setText(i18n.GL1676);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	@UiHandler("bookPanel")
-	void bookPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_book_selected");
-		resourceEducationalLabel.setText(i18n.GL1677);
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-	}
-	
-	@UiHandler("educationalDropDownLbl")
-	public void educationalDropDownClick(ClickEvent event) {
-		if (educationalDropDownLblOpen == false) {
-			educationalUsePanel.setVisible(true);
-			educationalDropDownLblOpen = true;
-		} else {
-			educationalUsePanel.setVisible(false);
-			educationalDropDownLblOpen = false;
-		}
-	}*/
+
 	/**
      * Gets the name of the used browser.
      */
      public static native String getBrowserName() /*-{
          return navigator.userAgent.toLowerCase();
      }-*/;
-     /*
-     */
-    /* public static boolean isFirefoxBrowser() {
-         return getBrowserName().toLowerCase().contains("firefox");
-     }
-     public static boolean isIEBrowser() {
-         return getBrowserName().toLowerCase().contains("msie");
-     }*/
-     
      public void setYesOrNoLabelStyles(){
     	 correctText.setStyleName(addWebResourceStyle.yesNoTextStyle());
     	 noLabelText.setStyleName(addWebResourceStyle.yesNoTextStyle());
@@ -3059,19 +2757,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			     depthObj.setValue(chkLevelExtendedThinking.getText());
 			     depthOfKnowledges.add(depthObj);  
 		     }
-		     
-		 /*    if(checked){
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(checkBox.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }else{
-		    	 for (checkboxSelectedDo currentElement : depthOfKnowledges) {
-		    		if( currentElement.getValue().equalsIgnoreCase(checkBox.getText())){
-		    			depthOfKnowledges.remove(currentElement);
-		    		}
-		    	}
-		     }*/
+
 		}
      }
      
@@ -3128,7 +2814,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
  					}
  				}
  			}
- 		}catch(Exception ex){}
+ 		}catch(Exception ex){
+ 			AppClientFactory.printSevereLogger(ex.getMessage());
+ 		}
  	}
  	
  	private boolean eventTargetsPopup(NativeEvent event) {
@@ -3136,7 +2824,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
  		if (Element.is(target)) {
  			try{
  				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
- 			}catch(Exception ex){}
+ 			}catch(Exception ex){
+ 				AppClientFactory.printSevereLogger(ex.getMessage());
+ 			}
  		}
  		return false;
  	}

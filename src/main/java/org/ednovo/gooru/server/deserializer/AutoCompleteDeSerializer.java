@@ -27,12 +27,15 @@ package org.ednovo.gooru.server.deserializer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.server.service.AnalyticsServiceImpl;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -50,7 +53,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 	private static final String CODE_ID = "codeId";
 	private static final String AGGREGATOR = "values";
 
-
+	private static final Logger logger = LoggerFactory.getLogger(AutoCompleteDeSerializer.class);
 	/**
 	 * Deserialize json object to List of Standards
 	 * @param jsonRep instance of {@link JsonRepresentation}
@@ -71,7 +74,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
+			logger.error("Exception::", e);
 		}
 		return centurysList;
 	}
@@ -95,6 +98,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				standards.add(codeDo);
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return standards;
 	}
@@ -119,6 +123,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				}
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return sources;
 	}
@@ -147,6 +152,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 			}
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return aggregator;
 	}

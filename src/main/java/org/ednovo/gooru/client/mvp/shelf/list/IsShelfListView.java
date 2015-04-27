@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.list;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
@@ -167,5 +168,9 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
 			RefreshFolderType refreshFolderType, HashMap<String, String> params);
 
-	void reorderShelfItems(String itemId, int toBeMovedPos,String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);   
+	void reorderShelfItems(String itemId, int toBeMovedPos,String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);
+
+	void removeAssessment(HashMap<String, String> params, String assessment, FolderDo folderDo);
+
+	void updateAssessmentUrlDetails(FolderDo folderDo, HashMap<String, String> params);
 }

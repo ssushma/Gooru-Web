@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateAssmntUrlOnMycollEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
@@ -47,6 +48,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		addRegisteredHandler(UpdateFolderItemEvent.TYPE, this);
+		addRegisteredHandler(UpdateAssmntUrlOnMycollEvent.TYPE, this);
 	}
 
 	@Override
@@ -165,18 +167,24 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 				getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 			}
 		});
-		
-//		getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 	}
 
-
 	@Override
-	public void deletAssessment(String assessmentId,final FolderDo folderDo) {
+	public void deletAssessment(final String assessmentId,final FolderDo folderDo) {
 		AppClientFactory.getInjector().getResourceService().deleteCollection(assessmentId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getView().resetCollectionsAfterDeletingAssessment(folderDo);
+				getView().resetCollectionsAfterDeletingAssessment(folderDo,assessmentId);
 			}
 		});
+	}
+
+
+	/**
+	 * Receives the triggered event and throws to view.
+	 */
+	@Override
+	public void updateMyCollAssmntUrl(FolderDo folderDo) {
+		getView().updateAssessmentUrl(folderDo);
 	}
 }

@@ -28,7 +28,6 @@
 package org.ednovo.gooru.server.deserializer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,15 +55,15 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.user.CreatorDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gwt.dev.jjs.ast.js.JsonObject;
 
 /**
  * @author Search Team
@@ -189,12 +188,15 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String PUBLISHER="publisher";
 	
 	public static final String HOST="host";
+	
+	private static final Logger logger = LoggerFactory.getLogger(ResourceCollectionDeSerializer.class);
 
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 		try {
 				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setFolder((getJsonString(recordJsonObject, FOLDER)));
@@ -261,6 +263,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				}
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		resourceSearchResultDo.setAverageTime(getJsonString(recordJsonObject, AVERAGE_TIME));
 		resourceSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
@@ -311,6 +314,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			
 			collectionItemDo.setStandards(recordJsonObject.getStandards());
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		collectionItemDo.setResource(resourceDo);
 		return collectionItemDo;
@@ -328,6 +332,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			resourceDo.setResourceSource(resourceSourceDo);
 			
 		} catch (JSONException e1) {
+			logger.error("Exception::", e1);
 		}
 		
 		try {
@@ -335,6 +340,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			resourceDo.setThumbnails(JsonDeserializer.deserialize(thumbnailJson.toString(), ThumbnailDo.class));
 			
 		} catch (JSONException e1) {
+			logger.error("Exception::", e1);
 		}
 		
 		resourceDo.setTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
@@ -371,6 +377,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				resourceDo.setTaxonomySet(taxonomySet);
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		resourceDo.setUrl(getJsonString(recordJsonObject, URL));
 		resourceDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
@@ -385,6 +392,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			resourceDo.setPublisher(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(PUBLISHER).toString(), new TypeReference<List<String>>() {
 			}));
 		} catch (JSONException e2) {
+			logger.error("Exception::", e2);
 		}
 
 		try {
@@ -394,12 +402,14 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			}
 			
 		} catch (JSONException e2) {
+			logger.error("Exception::", e2);
 		}
 		
 		try {
 			resourceDo.setAggregator(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(AGGREGATOR).toString(), new TypeReference<List<String>>() {
 			}));
 		} catch (JSONException e2) {
+			logger.error("Exception::", e2);
 		}
 		
 		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
@@ -410,21 +420,22 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				resourceDo.setCreator(ownerDo);
 				resourceDo.setUser(ownerDo);
 			} catch (JSONException e1) {
+				logger.error("Exception::", e1);
 			}
 		try{
 			resourceDo.setCustomFieldValues(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(CUSTOM_FIELDS).toString(), customFieldValuesDO.class));
 		}catch(Exception e){
-			
+			logger.error("Exception::", e);
 		}
 		try{
 			resourceDo.setResourceFormat(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RESOURCE_FORMAT).toString(), ResourceFormatDo.class));
 		}catch(Exception e){
-			
+			logger.error("Exception::", e);
 		}
 		try{
 			resourceDo.setRatings(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RATINGS).toString(), SearchRatingsDo.class));
 		}catch(Exception e){
-			
+			logger.error("Exception::", e);
 		}
 		/*JSONObject resourceRating = recordJsonObject.getJSONObject(RATINGS);
 		SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
@@ -432,11 +443,13 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		try{
 			resourceDo.setHasFrameBreaker(recordJsonObject.isNull(HAS_FRAME_BREAKER)?null:recordJsonObject.getBoolean(HAS_FRAME_BREAKER));
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		
 		try{
 			resourceDo.setLicense(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(LICENSE).toString(), LicenseDo.class));
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		
 		try{
@@ -446,6 +459,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				resourceDo.setUserRating(ratingObject.isNull(CONTENT_USER_RATING)?0:ratingObject.getInt(CONTENT_USER_RATING));
 			collectionItemDo.setRating(ratindDo);
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		
 		try{
@@ -497,6 +511,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			
 			
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		collectionItemDo.setResource(resourceDo);
 		return collectionItemDo;

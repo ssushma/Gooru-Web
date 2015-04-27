@@ -106,6 +106,7 @@ public class ResourcePlayView extends
 			doc.getElementById("headerMainPanel").getStyle().setZIndex(0);
 			doc.getElementById("goToClasicInnerPanel").getStyle().setZIndex(0);
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		
 		gooruResourcePlayer.getAddNewCollectionLabel().addClickHandler(
@@ -124,8 +125,11 @@ public class ResourcePlayView extends
 				}	
 				}
 				catch(NumberFormatException exe){
+					AppClientFactory.printSevereLogger(exe.getMessage());
 				}
-				catch(NullPointerException ex){}
+				catch(NullPointerException ex){
+					AppClientFactory.printSevereLogger(ex.getMessage());
+				}
 				gooruResourcePlayer.stopResourcePlayerDataLogEvent();
 
 				try {
@@ -135,6 +139,7 @@ public class ResourcePlayView extends
 						ifrmaeElement.setAttribute("src", "");
 					}
 				} catch (Exception exception) {
+					AppClientFactory.printSevereLogger(exception.getMessage());
 				}
 
 				gooruResourcePlayer.getResourcePlayerContainer().clear();
@@ -147,7 +152,7 @@ public class ResourcePlayView extends
 					doc.getElementById("headerMainPanel").getStyle().clearZIndex();
 					doc.getElementById("goToClasicInnerPanel").getStyle().clearZIndex();
 				}catch(Exception ex){
-					
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 			
 				doc.getElementById("uvTab").getStyle()
@@ -219,6 +224,7 @@ public class ResourcePlayView extends
 			doc.getElementById("headerMainPanel").getStyle().setZIndex(0);
 			doc.getElementById("goToClasicInnerPanel").getStyle().setZIndex(0);
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		
 		EventBus bus = AppClientFactory.getEventBus();

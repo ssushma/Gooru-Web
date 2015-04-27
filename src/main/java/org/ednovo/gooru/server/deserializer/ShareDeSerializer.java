@@ -32,6 +32,8 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,7 +45,7 @@ public class ShareDeSerializer extends DeSerializer {
 	private static final String RAW_URL = "rawUrl";
 	private static final String SHORTEN_URL = "shortenUrl";
 	private static final String DECODE_RAW_URL = "decodeRawUrl";
-
+	private static final Logger logger = LoggerFactory.getLogger(ShareDeSerializer.class);
 	/**
 	 * Deserialize json object to map that contains rawUrl and shortenUrl
 	 * @param jsonRep instance of {@link JsonRepresentation}
@@ -57,7 +59,9 @@ public class ShareDeSerializer extends DeSerializer {
 			shortenUrl.put(RAW_URL, URLEncoder.encode(getJsonString(shortenUrlJsonObject, RAW_URL),"UTF-8"));
 			shortenUrl.put(SHORTEN_URL, getJsonString(shortenUrlJsonObject, SHORTEN_URL));
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception::", e);
 		}
 		return shortenUrl;
 	}
@@ -67,6 +71,7 @@ public class ShareDeSerializer extends DeSerializer {
 			JSONObject shortenUrlJsonObject = jsonRep.getJsonObject();
 			shortenUrl=getJsonString(shortenUrlJsonObject, SHORTEN_URL);
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		} 
 		return shortenUrl;
 	}

@@ -10,9 +10,11 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveAssessment;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateAssmntUrlOnShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
@@ -127,7 +129,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
 		setFolderDo(folderDo);
-//		setItemNo(folderNumber);
 		setFolderData(folderDo);
 		reorderTxtBox.addMouseOverHandler(new OnMouseOver());
 		reorderTxtBox.addMouseOutHandler(new OnMouseOut());
@@ -161,13 +162,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public void setFolderData(final FolderDo folderDo) {
 		itemTitle.addStyleName(folderStyle.folderTitleElipses());
 		final String folderType = folderDo.getType();
-		/*
-		if(getItemNo() == 1){
-			moveUpBtn.setVisible(false);
-		}else{
-			moveUpBtn.setVisible(true); 
-		}*/
-			
 		if(folderType.equals(FOLDER)) {
 			folderImage.setVisible(true);
 			collectionImage.setVisible(false);
@@ -196,7 +190,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		List<FolderItemDo> folderItemDo = folderDo.getCollectionItems();
 		if(!ASSESSMENT_URL.equals(folderDo.getCollectionType()) && folderItemDo!=null&&folderItemDo.size()>0) {
 			for(int i=0;i<folderItemDo.size();i++) {
-				FolderItemDo folderItem = folderItemDo.get(i);
+				final FolderItemDo folderItem = folderItemDo.get(i);
 				Label folderItemLbl = new Label(folderItem.getTitle());
 
 				if(folderItem.getType().equals(FOLDER)) {
@@ -209,7 +203,17 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 					}else{
 						folderItemLbl.addStyleName(folderStyle.collection());
 					}
-					folderItemLbl.addClickHandler(new OpenChildFolderInContent(SCOLLECTION, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
+					if(folderItem.getCollectionType().equals(ASSESSMENT_URL)){
+						folderItemLbl.addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								Window.open(folderItem.getUrl(), "", "");
+							}
+						});
+					}else{
+						folderItemLbl.addClickHandler(new OpenChildFolderInContent(SCOLLECTION, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
+					}
+					
 					contents.add(folderItemLbl);
 				} else {
 					HTMLEventPanel resourcePanel = new HTMLEventPanel("");
@@ -223,7 +227,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 						resourcePanel.add(resourceCategoryPanel);
 					}
 					HTML resourceTitle = new HTML(StringUtil.getRefinedQuestionText(folderItem.getTitle()));
-				//	resourceTitle.setStyleName(folderStyle.shelfFolderItemTitle());
 					resourceTitle.setStyleName("shelfFolderItemTitle");
 					resourcePanel.add(resourceTitle);
 					contents.add(resourcePanel);
@@ -281,8 +284,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				contents.addStyleName(folderStyle.empty());
 			}
 		}
-		/*reorderTxtBox.setText(getItemNo()+""); 
-		itemNumber.setText(getItemNo()+"");*/ 
 		itemTitle.setText(folderDo.getTitle());	
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
@@ -314,20 +315,17 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			Window.enableScrolling(false);
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
+				public
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					if(result!=null){
-						folderDo.setTitle(result.getTitle());
-						folderDo.setUrl(result.getUrl());
-						folderDo.setGoals(result.getGoals());
-						folderDo.setSharing(result.getSharing());
-						folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
-						itemTitle.setText(folderDo.getTitle());
+						showAssessmentUrlInfo(result);
+						triggerUpdateAssessmentUrl(result);
 					}
 					editAssessmentPopup.hide();
 					Window.enableScrolling(true);
 				}
 				@Override
-				void clickEventOnCancelAssessmentHandler(ClickEvent event) {
+				public void clickEventOnCancelAssessmentHandler(ClickEvent event) {
 					editAssessmentPopup.hide();
 					Window.enableScrolling(true);
 				}
@@ -340,6 +338,39 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 		}
 	}
+	
+	/**
+	 * Displays the updated info.
+	 * @param result {@link FolderDo}
+	 */
+	public void showAssessmentUrlInfo(FolderDo result) {
+		folderDo.setTitle(result.getTitle());
+		folderDo.setUrl(result.getUrl());
+		folderDo.setGoals(result.getGoals());
+		folderDo.setSharing(result.getSharing());
+		folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+		itemTitle.setText(folderDo.getTitle());
+	}
+
+	protected void triggerUpdateAssessmentUrl(FolderDo result) {
+		HashMap<String,String> params = new HashMap<String,String>();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			params.put("o3",AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}else{
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}
+	}
+
 	@UiHandler("collectionImage")
 	public void clickOnCollectionImage(ClickEvent event) {
 		getEditAssessmentPoupOrPlayCollection();
@@ -380,19 +411,16 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@Override
 	public DRAG_TYPE getDragType() {
 		throw new RuntimeException("Not implemented");
-//		return DRAG_TYPE.COLLECTION_ITEM;
 	}
 
 	@Override
 	public int getDragTopCorrection() {
 		throw new RuntimeException("Not implemented");
-//		return 5;
 	}
 
 	@Override
 	public int getDragLeftCorrection() {
 		throw new RuntimeException("Not implemented");
-//		return 225;
 	}
 	
 	private HashMap<String,String> urlParams(String assetType, String folderId) {
@@ -754,9 +782,4 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public void setReorderPanel(FlowPanel reorderPanel) {
 		this.reorderPanel = reorderPanel;
 	}
-	
-
-	/*public void reorderCollectionItem(int widgetIndex) { 
-		
-	}*/
 }

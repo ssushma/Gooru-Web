@@ -116,15 +116,9 @@ public class CollectionFormView extends
 
 	@UiField
 	FlowPanel buttonFloPanel;
-
-	/*@UiField
-	Anchor cancelAnr;*/
 	
 	@UiField
 	Button cancelAnr,btnCancelAssessment;
-
-	/*@UiField
-	BlueButtonUc btnOk;*/
 	
 	@UiField
 	Button btnOk,btnExistingAssessment,btnNewAssessment,btnCreateAssessment;
@@ -243,7 +237,6 @@ public class CollectionFormView extends
 		  
 		
 		collectionTitleTxtBox.getElement().setAttribute("maxlength", "50");
-//		collectionTitleTxtBox.getElement().setAttribute("placeholder", MessageProperties.i18n.GL0319);
 		radioButtonPublic.getElement().setId("rdPublic");
 		radioButtonShare.getElement().setId("rdShare");
 		radioButtonPrivate.getElement().setId("rdPrivate");
@@ -276,7 +269,6 @@ public class CollectionFormView extends
 								mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0554());
 								mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0554());
 								mandatoryErrorLbl.setVisible(true);
-							/*	mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);*/
 							}else{
 								collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
@@ -312,7 +304,6 @@ public class CollectionFormView extends
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
-//						btnOk.getElement().addClassName("disabled");
 						if (value){
 							collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
 							mandatoryErrorLbl.setText(i18n.GL0554());
@@ -332,13 +323,11 @@ public class CollectionFormView extends
 								final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 								final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 								final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-							//	final String resourceidonclick 	= AppClientFactory.getPlaceManager().getRequestParameter("resourceidfromAddResourcePresenter");
 								final String resourceidonclick 	= AppClientFactory.getPlaceManager().getRequestParameter("resourceid");
 								final String fromAddresourcePresenter 	= 	AppClientFactory.getPlaceManager().getRequestParameter("fromAddresource");
 								
 								
 								btnOk.setEnabled(false);
-//								btnOk.getElement().addClassName("disabled");
 								buttonMainContainer.setVisible(false);
 								loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK); 
 								if(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE).equalsIgnoreCase("")){
@@ -468,7 +457,6 @@ public class CollectionFormView extends
 				subheadingForAssessment.setVisible(true);
 				subheadingForAssessment.setText(i18n.GL3200());
 				subheadingForAssessmentNote.setVisible(false);
-				//subheadingForAssessmentNote.setText(i18n.GL3202());
 				isAssessmentEditClicked=false;
 				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
 				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
@@ -488,7 +476,7 @@ public class CollectionFormView extends
 				if(isAddBtnClicked){
 					isAddBtnClicked=false;
 					if(isAssessmentEditClicked){
-						//Code when edit assessment selected
+						//Code when external assessment selected
 						String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
 						assessmentURL=txtExistingAssessmentURL.getText();
 						if(StringUtil.isEmpty(assessmentExistingTitle)){
@@ -822,8 +810,6 @@ public class CollectionFormView extends
 		
 		btnOk.getElement().setId("btnOk");
 		cancelAnr.getElement().setId("lnkCancel");
-		/*btnOk.setText(i18n.GL0636);
-		cancelAnr.setText(MessageProperties.i18n.GL0142);*/
 		shelfItemContent.getElement().setId("pnlShelfItemContent");
 		collPopUpMainheading.getElement().setId("lblCollPopUpMainheading");
 		collPopUpSubheading.getElement().setId("lblCollPopUpSubheading");
@@ -1056,22 +1042,6 @@ public class CollectionFormView extends
 				}
 			});
 			shelfItemContent.getElement().removeAttribute("style");	
-		   /*collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
-			collPopUpMainheading.setText(i18n.GL3009());
-			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL3009());
-			collPopUpMainheading.getElement().setAttribute("title",i18n.GL3009());
-			collPopUpSubheading.setText(i18n.GL1033());
-			collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1033());
-			collPopUpSubheading.getElement().setAttribute("title",i18n.GL1033());
-			collTitleLbl.setText(i18n.GL3009()+i18n.GL_SPL_SEMICOLON()+" ");
-			collTitleLbl.getElement().setAttribute("alt",i18n.GL3009());
-			collTitleLbl.getElement().setAttribute("title",i18n.GL3009());
-			btnOk.setText(i18n.GL0141());
-			btnOk.getElement().setAttribute("alt",i18n.GL0141());
-			btnOk.getElement().setAttribute("title",i18n.GL0141());
-			cancelAnr.setText(i18n.GL0142());
-			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
-			cancelAnr.getElement().setAttribute("title",i18n.GL0142());*/
 		}else if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
 				collPopUpMainheading.setText(i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
@@ -1113,7 +1083,6 @@ public class CollectionFormView extends
 		if(AppClientFactory.getPlaceManager().getRequestParameter("resourceId")!=null&&!AppClientFactory.getPlaceManager().getRequestParameter("resourceId").equalsIgnoreCase("")){
 			appPopUp.setViewTitle(i18n.GL0322());
 		}
-//		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
 		courseLisBox=new GroupedListBox();
 		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
@@ -1164,11 +1133,6 @@ public class CollectionFormView extends
 	public CollectionDo setData(CollectionDo collection) {
 		this.collectionDo = collection;
 		collectionTitleTxtBox.setText(collection.getTitle());
-		/*
-		 * if (collection.getGrade() != null) {
-		 * collectionGradeTxtBox.setText(collection.getGrade()); }
-		 */
-
 		setCourseData();
 	
 		return collection;
@@ -1269,7 +1233,9 @@ public class CollectionFormView extends
 			}
 			return null;
 		} catch (Exception e) {
-			return null;}
+			AppClientFactory.printSevereLogger(e.getMessage());
+			return null;
+			}
 	}
 /**
  * This method is for default page view 

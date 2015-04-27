@@ -88,8 +88,6 @@ public class ResetPasswordVc extends Composite{
 	@UiField
 	Label newPasswordText,newPwdLbl,confirmPwdLbl,tokenExpireErrorLabel;
 	
-	
-
 	private String resetToken;
 
 	private AppPopUp appPopUp;
@@ -106,13 +104,8 @@ public class ResetPasswordVc extends Composite{
 	 */
 	public ResetPasswordVc(String resetToken) {
 		appPopUp = new AppPopUp();
-		
-		
 		AppClientFactory.getInjector().getSearchService()
 		.getHomeEndPointUrl(new SimpleAsyncCallback<String>() {
-
-			
-
 			@Override
 			public void onSuccess(String result) {
 				homeEndPoint = result;
@@ -122,7 +115,6 @@ public class ResetPasswordVc extends Composite{
 		if(!appPopUp.isShowing()){
 			this.resetToken = resetToken;
 			appPopUp.setContent(i18n.GL0062(), uiBinder.createAndBindUi(this));
-			//appPopUp.addStyleName(HomeCBundle.INSTANCE.css().resetPasswordPopup());
 			appPopUp.show();
 			appPopUp.center();
 			appPopUp.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
@@ -166,8 +158,6 @@ public class ResetPasswordVc extends Composite{
 			confirmPwdValidationUc.setVisible(false);
 			sendMailBtnUc.getElement().setId("btnSave");
 			resetPwdCancelAnr.getElement().setId("lnkCancel");
-			//resetNewPwd.addBlurHandler(new OnPasswordBlur());
-			//resetConfirmPwd.addBlurHandler(new OnPasswordBlur());
 			resetNewPwdTxtBox.addFocusHandler(new OnNewPasswordFocus());
 			resetConfirmPwdTxtBox.addFocusHandler(new OnConfirmPasswordFocus());
 			
@@ -184,17 +174,11 @@ public class ResetPasswordVc extends Composite{
 	public void onCancelClick(ClickEvent clickEvent) {
 		if (validatePassword()) {
 			tokenExpireErrorLabel.setText("");
-			/*JSONObject obj = new JSONObject();
-			obj.put("token", new JSONString(resetToken));
-			obj.put("password", new JSONString(this.getresetConfirmPwd()));
-			obj.put("mailConfirmationUrl", new JSONString(homeEndPoint));*/
 			String cryptoData = StringUtil.getCryptoData(this.getresetConfirmPwd());
 			AppClientFactory.getInjector().getUserService().resetCredential(resetToken,cryptoData,homeEndPoint,new SimpleAsyncCallback<Map<String, Object>>() {
-
 				@Override
 				public void onSuccess(Map<String, Object> result) {
 					if(result!=null){
-						
 						int httpStatusCode = result.get("statusCode") != null ? Integer.parseInt(result.get("statusCode").toString()) : 200;
 						String errorCode = result.get("errorCode") != null ? result.get("errorCode").toString() : "";
 						String statusMessage = result.get("statusMessage") != null ?  result.get("statusMessage").toString() : "";
@@ -211,7 +195,6 @@ public class ResetPasswordVc extends Composite{
 							appPopUp.hide();
 							new ResetPwdSuccessVc(result.get("username").toString());
 						}
-						
 					}else{
 						Window.enableScrolling(true);
 						AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -237,17 +220,6 @@ public class ResetPasswordVc extends Composite{
 	}
 
 	/**
-	 * @return {@link BlueButtonUc} widget
-	 *//*
-	protected BlueButtonUc getConfirmationButton() {
-		return sendMailBtnUc;
-	}
-
-	protected boolean hasValidateData() {
-		return true;
-	}
-*/
-	/**
 	 * @return password 
 	 */
 	protected String getresetConfirmPwd() {
@@ -263,9 +235,6 @@ public class ResetPasswordVc extends Composite{
 		String confirmPassword = resetConfirmPwdTxtBox.getText();
 		boolean isValid = true;
 		try {
-			/*RegExp reg = RegExp.compile(PASSWORD_PATTERN, "gi");
-			boolean pwdChck =reg.test(newPassword);*/
-			
 			boolean pwdChck =checkPassword(newPassword);
 			if ((newPassword == null || (newPassword != null && newPassword
 					.isEmpty()))) {
@@ -318,8 +287,6 @@ public class ResetPasswordVc extends Composite{
 				newPwdValidationUc.setVisible(true);
 				isValid = false;
 			}
-
-			
 			else if (!pwdChck) { 
 				if(isDigiSpclChars){
 					isDigiSpclChars=false;
@@ -337,12 +304,8 @@ public class ResetPasswordVc extends Composite{
 					newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0073(),"Password"));
 					newPwdValidationUc.setVisible(true);
 				}
-				
 				isValid = false;
 			}
-			
-			
-
 			else if ((!confirmPassword.equals(newPassword))) {
 				confirmPwdValidationUc.setVisible(true);
 				resetConfirmPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
@@ -370,18 +333,10 @@ public class ResetPasswordVc extends Composite{
 			}
 
 		} catch (Exception e) {
-
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return isValid;
 	}
-/*
-	private class OnPasswordBlur implements BlurHandler {
-		@Override
-		public void onBlur(BlurEvent event) {
-			validatePassword();
-		}
-	}*/
-
 	/**
 	 * @author Search Team
 	 * Focus on new password text box 
@@ -416,14 +371,10 @@ public class ResetPasswordVc extends Composite{
 	
 	private  boolean checkPassword(String pwd) {
 		boolean isLetterIncluded=false,isDigiIncluded=false,isSpecialCharIncluded=false,isValidPwd=false; 
-		
-		
 		boolean isLetters=false,isDigits=false,isSpclChars=false;
 		String digiOnly="";
 		String letterOnly="";
 		String spclCharsOnly="";
-		
-		
 		for(int i=0;i<pwd.length();i++)
 		{
 			if(Character.isLetter(pwd.charAt(i))){
@@ -438,8 +389,6 @@ public class ResetPasswordVc extends Composite{
 				digiOnly+=pwd.charAt(i);
 			}
 		}
-		
-
 		if(isLetterIncluded){
 			if(isDigiIncluded){
 				isValidPwd=true;
@@ -452,8 +401,6 @@ public class ResetPasswordVc extends Composite{
 			isValidPwd=false;
 			isDigiSpclChars=true;
 		}
-
 		return isValidPwd;
 	}
-
 }

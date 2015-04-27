@@ -62,7 +62,8 @@
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
- filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc, endColorstr=#ff1076bb, GradientType=0);
+ /* filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc, endColorstr=#ff1076bb, GradientType=0); */
+ filter: progid \:DXImageTransform \.Microsoft \.gradient(startColorstr \='#ff4c98cc', endColorstr \='#ff1076bb',GradientType \=0 ); /* IE6-8 */
 }
 .classPageSearchButtonText {
 	font-family: Arial, Helvetica, sans-serif;
