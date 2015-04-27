@@ -276,6 +276,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .accessStyle{
   display: inline-block;
+  width: 100%;
 }
 
 #gooruSearchMainContainer .accessStyle span{
