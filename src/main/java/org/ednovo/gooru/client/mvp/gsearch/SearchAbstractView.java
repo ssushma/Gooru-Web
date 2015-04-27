@@ -274,7 +274,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if(!firstTime)
 					{
 						firstTime = true;
-						Window.scrollTo(0, 934);
+						Window.scrollTo(0, 1200);
 					}
 					if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
 						isInsertTems=true;
