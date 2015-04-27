@@ -100,6 +100,33 @@
 	padding: 0 1% 0 4%;
 }
 
+.ancTab {
+	color: #1076b8;
+	padding: 5px 18px;
+	border: 1px solid #ddd;
+	background: #fff url(../images/NewResourcePopup/sprite-new-resource.png)
+		no-repeat -4px 2px;
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.ancTab:hover {
+	border-color: #1076bb;
+}
+.ancTabActive {
+	background: #fff url(../images/NewResourcePopup/sprite-new-resource.png)
+		no-repeat -4px -24px;
+	position: relative;
+	padding: 5px 18px;
+    display: inline-block;
+    margin-top: 10px;
+	border: 1px solid #4c9645;
+	color: #4c9645;
+}
+.ancTabActive:hover {
+	border-color: #4c9645;
+}
+
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
 		float: left;

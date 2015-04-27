@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.shelf.event.AddResourceImageHandler;
 
 
 
@@ -8,6 +9,10 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  * @author Hari
  *
  */
-public interface QuestionTypeUiHandlers extends BaseUiHandlers{
+
+public interface QuestionTypeUiHandlers extends BaseUiHandlers,AddResourceImageHandler{
 	
+	void removeQuestionImage(String collectionItemId);
+	void questionImageUpload();
+	void questionImageUpload(String collectionItemId);
 }

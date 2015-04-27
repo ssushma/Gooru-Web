@@ -10,5 +10,7 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHandlers>{
 	
 	void getRevealType();
+	
+	void setImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage, boolean isUserOwnResourceImage);
 
 }

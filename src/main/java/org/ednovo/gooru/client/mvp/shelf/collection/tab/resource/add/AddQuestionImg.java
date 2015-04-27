@@ -93,6 +93,36 @@ public class AddQuestionImg extends Composite
 	public void setQuetionDefaultImage(ErrorEvent event){
 		questionImageContainer.setUrl(DEFAULT_QUESTION_IMAGE);
 	}
+
+
+	public HTMLEventPanel geteHearderIconImage() {
+		return eHearderIconImage;
+	}
+
+
+	public void seteHearderIconImage(HTMLEventPanel eHearderIconImage) {
+		this.eHearderIconImage = eHearderIconImage;
+	}
+
+
+	public Label getChangeImgLbl() {
+		return changeImgLbl;
+	}
+
+
+	public Label getRemoveImgLbl() {
+		return removeImgLbl;
+	}
+
+
+	public void setChangeImgLbl(Label changeImgLbl) {
+		this.changeImgLbl = changeImgLbl;
+	}
+
+
+	public void setRemoveImgLbl(Label removeImgLbl) {
+		this.removeImgLbl = removeImgLbl;
+	}
 	 
 
 }

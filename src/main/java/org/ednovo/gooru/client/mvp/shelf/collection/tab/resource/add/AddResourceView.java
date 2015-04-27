@@ -879,7 +879,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 						deleteConfirmationPopup=new DeleteConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT);
 					}else{
 						addQuestionResourceWidget.addQuestImgContainer.clear();
-						addQuestionResourceWidget.addQuestionImg.getElement().getStyle().setDisplay(Display.BLOCK);
+						addQuestionResourceWidget.addQuestionImg.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 					}
 				}
 			});
