@@ -71,14 +71,14 @@ public class SearchResourceView extends
 			@Override
 			public void onClick(ClickEvent event) {
 				Element element = Document.get().getElementById("fixedFilterSearchID");
-				if(element!=null)
-				{
-				element.setAttribute("style", "opacity:0.1;");
+				if(element!=null)				{
+					element.setAttribute("style", "opacity:0.1;");
 				}
 				Window.enableScrolling(false);
 				getUiHandlers().displayAddResourcePoup(resourceSearchResultDo);
 			}
 		});
+		collectionResourceWidget.getElement().setId(resourceSearchResultDo.getGooruOid());
 		return collectionResourceWidget;
 	}
 }
