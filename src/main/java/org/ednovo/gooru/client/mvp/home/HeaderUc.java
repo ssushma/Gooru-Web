@@ -1307,9 +1307,9 @@ public class HeaderUc extends Composite implements
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.COLLECTION_SEARCH)) {
+					PlaceTokens.SEARCH_RESOURCE)) {
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
+						PlaceTokens.SEARCH_RESOURCE, params);
 			} else {
 				String queryVal = params.get("query");
 				// queryVal = queryVal.replaceAll("%5C1", "&");
@@ -1461,7 +1461,7 @@ public class HeaderUc extends Composite implements
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
-		if(currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH))
+		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE))
 		{
 			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 			params.put("category", "All");
@@ -1872,9 +1872,9 @@ public class HeaderUc extends Composite implements
 			params = updateParams(params);
 			savePlaceRequest();
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.COLLECTION_SEARCH)) {
+					PlaceTokens.SEARCH_RESOURCE)) {
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
+						PlaceTokens.SEARCH_RESOURCE, params);
 			} else {
 				String queryVal = params.get("query");
 				// queryVal = queryVal.replaceAll("%5C1", "&");
@@ -1900,7 +1900,7 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", "*");
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 		}
 
