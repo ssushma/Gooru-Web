@@ -252,7 +252,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8){
-						if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+						if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
 							isInsertTems=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
