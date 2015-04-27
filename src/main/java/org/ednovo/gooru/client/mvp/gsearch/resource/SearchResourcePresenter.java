@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
