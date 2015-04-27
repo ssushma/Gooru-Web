@@ -480,7 +480,7 @@ Back to top button
 	display: block;
 }
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:hover,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:focus {
-	background-color: #87badd;
+	background: #87badd url(../images/checkmark.png) no-repeat 95% -23px;
 	color: #ffffff;
 }
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a {
