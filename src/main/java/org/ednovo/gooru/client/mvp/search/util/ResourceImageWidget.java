@@ -27,23 +27,23 @@ public class ResourceImageWidget extends Composite {
 	
 	public ResourceImageWidget(final ResourceDo resourceDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		final String categoryValue=StringUtil.getCategory(resourceDo.getCategory()!=null?resourceDo.getCategory():"");
+		final String categoryValue=StringUtil.getCategory(resourceDo.getCategory()!=null?resourceDo.getCategory().toLowerCase():"");
 		if(resourceDo.getThumbnails()!= null){
 			String thumbnailAssetURI=resourceDo.getThumbnails().getThumbnailAssetURI()!=null?resourceDo.getThumbnails().getThumbnailAssetURI():"";
 			String thumbnailFolder=resourceDo.getThumbnails().getThumbnailFolder()!=null?resourceDo.getThumbnails().getThumbnailFolder():"";
 			String thumbnailName=resourceDo.getThumbnails().getThumbnailName()!=null?resourceDo.getThumbnails().getThumbnailName():"";
-			if("video".equalsIgnoreCase(categoryValue.toLowerCase())){
+			if("video".equalsIgnoreCase(categoryValue)){
 				imgResourceImg.setUrl(thumbnailName);
 			}else{
 				imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
 			}
 		}else{
-			imgResourceImg.setUrl("../images/default-"+categoryValue.toLowerCase()+".png");
+			imgResourceImg.setUrl("../images/default-"+categoryValue+".png");
 		}
 		imgResourceImg.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
-				imgResourceImg.setUrl("../images/default-"+categoryValue.toLowerCase()+".png");
+				imgResourceImg.setUrl("../images/default-"+categoryValue+".png");
 			}
 		});
 		imageOverlay.addStyleName(categoryValue.toLowerCase()+"Small");
