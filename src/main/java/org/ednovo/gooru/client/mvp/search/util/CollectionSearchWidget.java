@@ -19,6 +19,7 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -230,11 +231,20 @@ public class CollectionSearchWidget extends Composite {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", gooruOid);
-			Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onFailure(Throwable reason) {
+				}
+
+				@Override
+				public void onSuccess() {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("id", gooruOid);
+					Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				}
+			});
 		}
 	}
 	public Button getRemixBtn() {
