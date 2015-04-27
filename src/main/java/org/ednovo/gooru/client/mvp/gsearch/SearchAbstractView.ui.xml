@@ -189,6 +189,7 @@
 				</div>
 				<div class="borderBox">
 					<g:Label ui:field="lblLoadingTextPrevious" styleName="loadingText" text="{i18n.GL3206}" title="{i18n.GL3206}"/>
+					<g:HTMLPanel ui:field="hideScrollDiv" />
 					<g:FlowPanel ui:field="searchResultPanel" styleName="less-gutter libraryMainContainerBlock" />
 					<g:Label ui:field="lblLoadingText" styleName="loadingText" text="{i18n.GL3206}" title="{i18n.GL3206}"/>
 					<div class="clearfix"></div>
