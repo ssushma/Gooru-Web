@@ -3,8 +3,11 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -40,6 +43,7 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<SearchAddResourceToCollectionUiHandlers> implements IsSearchAddResourceToCollectionView,ClientConstants {
 
@@ -54,6 +58,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
+	@UiField Label addtocollHeaderText;
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
@@ -71,6 +76,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private static final String O3_LEVEL = "o3";
 	
 	boolean isTopMostSelected =true;
+	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	PopupPanel appPopUp;
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
@@ -95,6 +102,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
 		urlparams= new HashMap<String, String>();
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
+			addtocollHeaderText.setText(i18n.GL3213());
+		}
+		else
+		{
+			addtocollHeaderText.setText(i18n.GL3214());
+		}		
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {

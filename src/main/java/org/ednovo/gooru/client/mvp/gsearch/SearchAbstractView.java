@@ -236,9 +236,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					//if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
-					if(event.getScrollTop()==0)
-					{
+					if(event.getScrollTop()==0){
 						if(pageNumber>3){
 							isInsertTems=true;
 							pageNumber--;
@@ -251,20 +249,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						}else{
 							Window.scrollTo(0, 0);
 						}
-						
-					/*	if(getWidgetHeight()!=0){
-							int getTotalScrolltop=getWidgetHeight()*4;
-							hideScrollDiv.getElement().getStyle().setHeight((hideScrollDiv.getOffsetHeight()-getTotalScrolltop), Unit.PX);
-						}*/
-						previousCount=previousCount-4;
-					/*	if((pageNumber-2)==1){
-							hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
-							previousCount=0;
-						}*/
 					}
 					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8){
-						if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+						if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
 							isInsertTems=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
@@ -273,13 +261,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}else{
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
 							}
-		/*					if(getWidgetHeight()!=0){
-								hideScrollDiv.getElement().getStyle().setHeight(getWidgetHeight()*(previousCount), Unit.PX);
-								previousCount=previousCount+4;
-							}*/
 						}
 					}
-					previousScrollValue=event.getScrollTop();
 				}
 			}
 		});
@@ -459,8 +442,14 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	public void removeTopWidgets(boolean isBottomOrTop){
 		try{
+			int removeableWidgetCount=8;
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+				removeableWidgetCount=9;
+			}else{
+				removeableWidgetCount=8;
+			}
 			if(isBottomOrTop){
-				int widgetCount=searchResultPanel.getWidgetCount()-8;
+				int widgetCount=searchResultPanel.getWidgetCount()-removeableWidgetCount;
 				int totalWidgetCount=searchResultPanel.getWidgetCount();
 				int removeWidgetCount=searchResultPanel.getWidgetCount();
 				if(searchResultPanel.getWidgetCount()>24){
@@ -479,13 +468,14 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if(searchResultPanel.getWidgetCount()>24){
 					Iterator<Widget> widgets=searchResultPanel.iterator();
 					while (widgets.hasNext()){
-						if(widgetCount>8){
+						if(widgetCount>removeableWidgetCount){
 							break;
 						}
 						final Widget widget = widgets.next();
 						searchResultPanel.remove(widget);
 						widgetCount++;
 					}
+					Window.scrollTo(0, getWidgetHeight()*(searchResultPanel.getWidgetCount()/3));
 				}
 			}
 		}catch(Exception e){
