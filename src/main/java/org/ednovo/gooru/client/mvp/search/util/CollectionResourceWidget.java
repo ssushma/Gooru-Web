@@ -7,6 +7,12 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEventHandler;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -41,10 +47,10 @@ public class CollectionResourceWidget extends Composite {
 			.create(CollectionResourceWidgetUiBinder.class);
 
 	interface CollectionResourceWidgetUiBinder extends
-			UiBinder<Widget, CollectionResourceWidget> {
+	UiBinder<Widget, CollectionResourceWidget> {
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField Label resourceTitle,lblViewCount,lbladdCount;
 	@UiField InlineLabel lblUserCount;
 	@UiField HTMLPanel resourceDescription,imageOverlay;
@@ -52,23 +58,25 @@ public class CollectionResourceWidget extends Composite {
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	@UiField InlineLabel relatedCollectionTitle;
 	@UiField Button btnAddResource;
-	
+
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
-	
+
 	private boolean failedThumbnailGeneration = false;
-	
+
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
-	
+
 	private static String DEFULT_IMAGE = "images/default-collection-image.png";
-	
+
 	private static final String NULL = "null";
-	
+
 	private static final String PLAYER_NAME = "resource";
-	
+
 	private int updateReviewCount = 0;
-	
+
+	private ResourceSearchResultDo resourceSearchResultDo;
+
 	private RatingWidgetView ratingWidgetView = null;
-	
+
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		String resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?resourceSearchResultDo.getResourceTitle():"";
@@ -103,11 +111,11 @@ public class CollectionResourceWidget extends Composite {
 			ratingWidgetView.getRatingCountLabel().setVisible(false);
 		}
 		ratingWidgetPanel.add(ratingWidgetView);
-		
+
 		resourseImage.addClickHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()));
 		resourceTitle.addClickHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()));
 		imageOverlay.addDomHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()),ClickEvent.getType());
-		
+
 		usedInSearchDo = new SearchDo<CollectionSearchResultDo>();
 		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());  
 		usedInSearchDo.setPageSize(1);
@@ -134,7 +142,7 @@ public class CollectionResourceWidget extends Composite {
 				}
 			}
 		});
-		
+
 		relatedCollectionImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -147,7 +155,7 @@ public class CollectionResourceWidget extends Composite {
 				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
 			}
 		});
-		
+
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
 		StringUtil.setAttributes(resourceTitle.getElement(), "lblResourceTitle", "", "");
@@ -161,6 +169,13 @@ public class CollectionResourceWidget extends Composite {
 		StringUtil.setAttributes(imageOverlay.getElement(), "imageOverlay", "", "");
 		StringUtil.setAttributes(btnAddResource.getElement(), "btnAddResource", "", "");
 		StringUtil.setAttributes(resourseImage.getElement(), "imgResoruce", "", "");
+
+		AppClientFactory.getEventBus().addHandler(
+				UpdateResourceRatingCountEvent.TYPE, setRatingCount);
+		AppClientFactory.getEventBus().addHandler(
+				DeletePlayerStarReviewEvent.TYPE, deleteStarRating);
+		AppClientFactory.getEventBus().addHandler(
+				UpdateResourceReviewCountEvent.TYPE, setReviewCount);
 	}
 	/**
 	 * This inner class will handle the click event on the resource image click and it will play that resoruce
@@ -242,23 +257,23 @@ public class CollectionResourceWidget extends Composite {
 		// TODO Auto-generated method stub
 		this.updateReviewCount = updateReviewCount;
 		ratingWidgetView.getRatingCountLabel().getElement()
-				.removeAttribute("class");
+		.removeAttribute("class");
 		if (updateReviewCount > 0) {
 			ratingWidgetView
-					.getRatingCountLabel()
-					.getElement()
-					.setAttribute("style",
-							"cursor: pointer;text-decoration: none !important;color: #1076bb;");
+			.getRatingCountLabel()
+			.getElement()
+			.setAttribute("style",
+					"cursor: pointer;text-decoration: none !important;color: #1076bb;");
 			ratingWidgetView.getRatingCountLabel().getElement().getStyle()
-					.setPadding(4, Unit.PX);
+			.setPadding(4, Unit.PX);
 		} else {
 			ratingWidgetView
-					.getRatingCountLabel()
-					.getElement()
-					.setAttribute("style",
-							"cursor: none;text-decoration: none !important;color: #4e9746;");
+			.getRatingCountLabel()
+			.getElement()
+			.setAttribute("style",
+					"cursor: none;text-decoration: none !important;color: #4e9746;");
 		}
-		
+
 	}
 	/**
 	 * @return the ratingWidgetView
@@ -284,6 +299,69 @@ public class CollectionResourceWidget extends Composite {
 	public void setUpdateReviewCount(int updateReviewCount) {
 		this.updateReviewCount = updateReviewCount;
 	}
-	
-	
+
+	UpdateResourceReviewCountEventHandler setReviewCount = new UpdateResourceReviewCountEventHandler() {
+		@Override
+		public void setReviewCount(String resourceId,Integer count) {
+			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
+				if(count!=0){
+					ratingWidgetView.getRatingCountLabel().setVisible(true); 
+					setUpdateReviewCount(count);
+					if(count==1){
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL3006()); 
+					}else{
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+					}
+				}else{
+					ratingWidgetView.getRatingCountLabel().setVisible(false);
+				}
+				ratingWidgetView.getAverageRatingLabel().setVisible(false);
+
+			}
+		}
+
+	};
+
+	UpdateResourceRatingCountEventHandler setRatingCount = new UpdateResourceRatingCountEventHandler() {
+		@Override
+		public void setResourceRatingCount(String resourceId, double avg,
+				Integer count) {
+			if (resourceSearchResultDo.getGooruOid().equals(resourceId)) {
+				ratingWidgetView.setAvgStarRating(avg);
+			}
+		}
+
+	};
+
+	DeletePlayerStarReviewHandler deleteStarRating = new DeletePlayerStarReviewHandler() {
+		@Override
+		public void deleteStarRatings(String resourceGooruOid) {
+			if(resourceSearchResultDo.getGooruOid().equals(resourceGooruOid)){
+				if(ratingWidgetView!=null){
+					String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
+					if(Integer.parseInt(revCount[1].trim())==1){
+						ratingWidgetView.setAvgStarRating(0);
+						ratingWidgetView.getRatingCountLabel().setVisible(false);	
+						/**
+						 * Commented the following code as 0 reviews we should not show.
+						 */
+						/*ratingWidgetView.getRatingCountLabel().setText(" "+ (Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
+						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);*/
+					}else{
+						ratingWidgetView.getRatingCountLabel().setVisible(true); 
+						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
+						if((Integer.parseInt(revCount[1])-1)==1){
+							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL3006());  
+						}else{
+							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
+						}
+
+					}
+				}
+			}
+		}
+
+	};
+
+
 }
