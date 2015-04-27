@@ -147,6 +147,9 @@ import org.ednovo.gooru.client.mvp.gsearch.IsSearchMainView;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter.IsSearchMainProxy;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainView;
+import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.IsViewMorePeopleView;
+import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
+import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeopleView;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.IsSearchAddResourceToCollectionView;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionView;
@@ -547,6 +550,10 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(SearchAddResourceToCollectionPresenter.class,
 				IsSearchAddResourceToCollectionView.class,
 				SearchAddResourceToCollectionView.class);
+		
+		bindPresenterWidget(ViewMorePeoplePresenter.class,
+				IsViewMorePeopleView.class,
+				ViewMorePeopleView.class);
 		
 		bindPresenter(ClassCodePresenter.class, IsClassCodeView.class,
 				ClassCodeView.class, IsClassCodeProxy.class);
