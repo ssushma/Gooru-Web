@@ -25,7 +25,9 @@
 
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -70,13 +72,22 @@ public class SearchCollectionView extends
 		collectionSearchWidget.getRemixBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Element element = Document.get().getElementById("fixedFilterSearchID");
-				if(element!=null)
-				{
-				element.setAttribute("style", "opacity:0.1;");
-				}
+
 				Window.enableScrolling(false);
+				if(AppClientFactory.isAnonymous()){
+					LoginPopupUc loginPopupUc=new LoginPopupUc();
+					loginPopupUc.show();
+					loginPopupUc.setGlassEnabled(true);
+				}
+				else
+				{
+					Element element = Document.get().getElementById("fixedFilterSearchID");
+					if(element!=null)
+					{
+					element.setAttribute("style", "opacity:0.1;");
+					}
 				getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo);
+				}
 			}
 		});
 		return collectionSearchWidget;
