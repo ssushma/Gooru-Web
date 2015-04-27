@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -16,9 +15,7 @@ import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -139,6 +136,16 @@ public class CollectionSearchWidget extends Composite {
 				}
 		}
 		SearchUiUtil.renderStandards(standardsDataPanel, collectionSearchResultDo);
+		
+		StringUtil.setAttributes(pnlResourceWidget.getElement(), "pnlResourceWidget", "", "");
+		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
+		StringUtil.setAttributes(imgCollection.getElement(), "imgCollection", "", "");
+		StringUtil.setAttributes(remixBtn.getElement(), "btnRemix", "", "");
+		StringUtil.setAttributes(pResourceText.getElement(), "pResourceText", resourceText, resourceText);
+		StringUtil.setAttributes(authorName.getElement(), "lblAuthorName", collectionSearchResultDo.getOwner().getUsername(), collectionSearchResultDo.getOwner().getUsername());
+		StringUtil.setAttributes(lblViewCount.getElement(), "lblViewCount", collectionSearchResultDo.getTotalViews()+"", collectionSearchResultDo.getTotalViews()+"");
+		StringUtil.setAttributes(collectionDescription.getElement(), "pnlCollectionDescription", collectionDesc, collectionDesc);
+		StringUtil.setAttributes(collectionTitle.getElement(), "lblCollectionTitle", collectionSearchResultDo.getResourceTitle(), collectionSearchResultDo.getResourceTitle());
 	}
 	/**
 	 * 
@@ -231,6 +238,4 @@ public class CollectionSearchWidget extends Composite {
 	public Button getRemixBtn() {
 		return remixBtn;
 	}
-
-	
 }
