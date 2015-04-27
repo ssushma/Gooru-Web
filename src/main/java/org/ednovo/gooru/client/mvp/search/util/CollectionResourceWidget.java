@@ -18,6 +18,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -57,13 +58,16 @@ public class CollectionResourceWidget extends Composite {
 	private boolean failedThumbnailGeneration = false;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
+	
 	private static String DEFULT_IMAGE = "images/default-collection-image.png";
 	
 	private static final String NULL = "null";
 	
 	private static final String PLAYER_NAME = "resource";
 	
-	RatingWidgetView ratingWidgetView;
+	private int updateReviewCount = 0;
+	
+	private RatingWidgetView ratingWidgetView = null;
 	
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -83,6 +87,21 @@ public class CollectionResourceWidget extends Composite {
 		SearchUiUtil.renderStandards(standardsDataPanel, resourceSearchResultDo);
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
+		Integer reviewCount = resourceSearchResultDo.getRatings().getReviewCount();
+		if (reviewCount == null) {
+			reviewCount = 0;
+		}
+
+		if(reviewCount!=0){
+			ratingWidgetView.getRatingCountLabel().setVisible(true);
+			if(reviewCount==1){
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL3006()); 
+			}else{
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024()); 
+			}
+		}else{
+			ratingWidgetView.getRatingCountLabel().setVisible(false);
+		}
 		ratingWidgetPanel.add(ratingWidgetView);
 		
 		resourseImage.addClickHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()));
@@ -219,4 +238,52 @@ public class CollectionResourceWidget extends Composite {
 	public Button getAddResoruce(){
 		return btnAddResource;
 	}
+	public void setUpdateReviewCount(Integer updateReviewCount) {
+		// TODO Auto-generated method stub
+		this.updateReviewCount = updateReviewCount;
+		ratingWidgetView.getRatingCountLabel().getElement()
+				.removeAttribute("class");
+		if (updateReviewCount > 0) {
+			ratingWidgetView
+					.getRatingCountLabel()
+					.getElement()
+					.setAttribute("style",
+							"cursor: pointer;text-decoration: none !important;color: #1076bb;");
+			ratingWidgetView.getRatingCountLabel().getElement().getStyle()
+					.setPadding(4, Unit.PX);
+		} else {
+			ratingWidgetView
+					.getRatingCountLabel()
+					.getElement()
+					.setAttribute("style",
+							"cursor: none;text-decoration: none !important;color: #4e9746;");
+		}
+		
+	}
+	/**
+	 * @return the ratingWidgetView
+	 */
+	public RatingWidgetView getRatingWidgetView() {
+		return ratingWidgetView;
+	}
+	/**
+	 * @param ratingWidgetView the ratingWidgetView to set
+	 */
+	public void setRatingWidgetView(RatingWidgetView ratingWidgetView) {
+		this.ratingWidgetView = ratingWidgetView;
+	}
+	/**
+	 * @return the updateReviewCount
+	 */
+	public int getUpdateReviewCount() {
+		return updateReviewCount;
+	}
+	/**
+	 * @param updateReviewCount the updateReviewCount to set
+	 */
+	public void setUpdateReviewCount(int updateReviewCount) {
+		this.updateReviewCount = updateReviewCount;
+	}
+	
+	
 }

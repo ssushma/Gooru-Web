@@ -29,8 +29,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
-import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.dom.client.Document;
@@ -56,7 +54,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class SearchResourceView extends
 		SearchAbstractView<ResourceSearchResultDo> implements
 		IsSearchResourceView {
-
+	
+	CollectionResourceWidget collectionResourceWidget;
 
 	public SearchResourceView() {
 		super(false);
@@ -68,7 +67,7 @@ public class SearchResourceView extends
 	 */
 	@Override
 	public Widget renderSearchResult(final ResourceSearchResultDo resourceSearchResultDo) {
-		CollectionResourceWidget collectionResourceWidget=new CollectionResourceWidget(resourceSearchResultDo);
+		final CollectionResourceWidget collectionResourceWidget=new CollectionResourceWidget(resourceSearchResultDo);
 		collectionResourceWidget.getAddResoruce().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -90,6 +89,34 @@ public class SearchResourceView extends
 			}
 		});
 		collectionResourceWidget.getElement().setId(resourceSearchResultDo.getGooruOid());
+		
+		setCollectionResourceWidget(collectionResourceWidget);
+		collectionResourceWidget.setUpdateReviewCount(resourceSearchResultDo.getRatings().getReviewCount());
+		collectionResourceWidget.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(collectionResourceWidget.getUpdateReviewCount()>0){
+					getUiHandlers().showRatingAndReviewPopup(resourceSearchResultDo);
+				}
+			}
+		});
+		
+		
 		return collectionResourceWidget;
 	}
+	/**
+	 * @return the collectionResourceWidget
+	 */
+	public CollectionResourceWidget getCollectionResourceWidget() {
+		return collectionResourceWidget;
+	}
+	/**
+	 * @param collectionResourceWidget the collectionResourceWidget to set
+	 */
+	public void setCollectionResourceWidget(
+			CollectionResourceWidget collectionResourceWidget) {
+		this.collectionResourceWidget = collectionResourceWidget;
+	}
+	
+	
 }
