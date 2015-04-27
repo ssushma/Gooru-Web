@@ -181,4 +181,9 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
 		
 	}
+	@Override
+	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

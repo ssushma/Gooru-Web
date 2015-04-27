@@ -113,6 +113,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			appPopUp.setGlassStyleName("setGlassPanelZIndex");
 		}
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
+		appPopUp.getElement().getStyle().setZIndex(9999);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		reviewsContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 		reviewScrollPanel.setHeight("500px");
@@ -126,11 +127,11 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);
 		}
-		if (currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			Window.enableScrolling(false);
+		/*if (currentToken.equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || currentToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
+			Window.enableScrolling(true);
 		}else{
 			Window.enableScrolling(true);
-		}
+		}*/
 	}
 
 	@Override
@@ -309,13 +310,13 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 					break;
 				}
 			}
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				rateResourceBtn.setVisible(true);
 			}else{
 				rateResourceBtn.setVisible(false);
 			}
 		}else{
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				userRatingContainer.setVisible(true);
 			}
 		}
