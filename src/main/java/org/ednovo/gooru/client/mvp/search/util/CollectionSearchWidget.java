@@ -131,7 +131,9 @@ public class CollectionSearchWidget extends Composite {
 					if(count>=4){
 						break;
 					}
-					pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo.getResource()));
+					ResourceImageWidget resourceImageWidget=new ResourceImageWidget(collectionItemSearchResultDo.getResource());
+					resourceImageWidget.getElement().setId(collectionItemSearchResultDo.getResource().getGooruOid());
+					pnlResourceWidget.add(resourceImageWidget);
 					count++;
 				}
 		}
