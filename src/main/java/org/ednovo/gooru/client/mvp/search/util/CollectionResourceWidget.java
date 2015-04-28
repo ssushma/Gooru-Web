@@ -388,7 +388,6 @@ public class CollectionResourceWidget extends Composite {
 			
 			@Override
 			public void onFailure(Throwable reason) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
