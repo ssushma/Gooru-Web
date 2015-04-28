@@ -40,6 +40,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionResourceWidget extends Composite {
 
@@ -128,6 +129,8 @@ public class CollectionResourceWidget extends Composite {
 					if(!StringUtil.isEmpty(result.getSearchResults().get(0).getUrl())){
 						relatedCollectionImage.setUrl(result.getSearchResults().get(0).getUrl());
 						relatedCollectionTitle.setStyleName("collectionTitle");
+						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(result.getSearchResults().get(0).getGooruOid()));
+						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(result.getSearchResults().get(0).getGooruOid()));
 						relatedCollectionTitle.setText(result.getSearchResults().get(0).getResourceTitle());
 						relatedCollectionTitle.setTitle(result.getSearchResults().get(0).getResourceTitle());
 						creatorImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+result.getSearchResults().get(0).getGooruUId()+".png");
@@ -155,6 +158,8 @@ public class CollectionResourceWidget extends Composite {
 				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
 			}
 		});
+		
+		//relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler());
 
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
@@ -362,6 +367,34 @@ public class CollectionResourceWidget extends Composite {
 		}
 
 	};
+	
+ public class ResourceCollectionHandler implements ClickHandler{
+    String gooruOid;
+	public ResourceCollectionHandler(String gooruOid) {
+		this.gooruOid=gooruOid;
+	}
+
+	@Override
+	public void onClick(ClickEvent event) {
+		GWT.runAsync(new RunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("id", gooruOid);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
+			
+			@Override
+			public void onFailure(Throwable reason) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	 
+ }
 
 
 }

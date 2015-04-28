@@ -211,6 +211,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 #gooruSearchMainContainer .userDetails img{
@@ -1076,6 +1077,7 @@ Back to top button
 	    overflow: hidden;
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
+	    cursor: pointer;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon {
 	    background: url("../images/folderIcon-sprite.png") no-repeat scroll 8px -36px rgba(0, 0, 0, 0);
