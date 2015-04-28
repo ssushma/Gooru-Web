@@ -250,7 +250,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
 						}else{
 							if(Storage.isLocalStorageSupported()){
-								pageCountForStorage--;
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-2)+""),true);
 							}
 						}
