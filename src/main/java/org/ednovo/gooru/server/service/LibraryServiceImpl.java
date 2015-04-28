@@ -27,6 +27,7 @@ package org.ednovo.gooru.server.service;
 
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -161,6 +162,26 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeCollaborators(jsonRepresentation);
 	}
+	
+	
+	@Override
+	public String getLibraryContributorsUsers(String libraryName) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_FEATURED_USERS);
+		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		
+		String jsonResponse;
+		try {
+			jsonResponse = jsonRepresentation.getJsonArray().toString();
+		} catch (JSONException e) {
+			throw new RuntimeException("message", e); 
+		}
+		
+		return jsonResponse;
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.service.LibraryService#getSubjects()
@@ -1079,6 +1100,50 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	}
 	
 	/** New Library Optimized APIs Implementation**/
+	@Override
+	public HashMap<String, SubjectDo> deserializeLibrarySubjects(String subjectName, String courseId, String libraryName, String jsonString) throws GwtException {
+		ArrayList<SubjectDo> subjectList = new ArrayList<SubjectDo>();
+		HashMap<String, SubjectDo> subjectMap = new HashMap<String, SubjectDo>();
+		
+		if (jsonString != null) {
+			try {
+				String jsonRepStr = jsonString;
+				subjectList = JsonDeserializer.deserialize(jsonRepStr, new TypeReference<ArrayList<SubjectDo>>() {});
+				for (SubjectDo object : subjectList) {
+					subjectMap.put(object.getLabel(), object);
+				}
+			} catch (Exception e) {
+				logger.error("Exception::", e);
+			}
+		}
+		if(subjectName!=null) {
+			ArrayList<CourseDo> courseList = getLibraryCourses(subjectName, libraryName);
+			subjectMap.get(subjectName).setData(courseList);
+			if(courseId==null) {
+				courseId = courseList.get(0).getCodeId()+"";
+			}
+			ArrayList<UnitDo> unitListDo = getLibraryUnits(subjectName, courseId, libraryName);
+			subjectMap.get(subjectName).getData().get(getCourseDoFromCourseId(courseList, courseId)).setUnit(unitListDo);
+		}
+		return subjectMap;
+	}
+	
+	@Override
+	public String getLibrarySubjectsJson(String subjectName, String courseId, String libraryName) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_SUBJECTS_OPTIMIZED);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.LIBRARY_NAME, libraryName);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		String response;
+		try {
+			response = jsonRepresentation.getText();
+		} catch (IOException e) {
+			throw new RuntimeException("message", e); 
+		}
+		return response;
+	}
+	
 	@Override
 	public HashMap<String, SubjectDo> getLibrarySubjects(String subjectName, String courseId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
