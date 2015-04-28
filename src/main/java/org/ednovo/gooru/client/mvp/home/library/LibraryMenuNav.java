@@ -60,6 +60,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
@@ -100,10 +101,6 @@ public class LibraryMenuNav extends Composite{
 	
 	public boolean checkRefreshVal = false;
 	
-//    StorageExt localStorage = StorageExt.getLocalStorage();
-
-//    StorageKey<HashMap<String, ArrayList<CourseDo>>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
-
 	Map<String,CourseDo> courseDoMap = new LinkedHashMap<String,CourseDo>();
 	
 	Map<String,UnitDo> unitsDoMap = new LinkedHashMap<String,UnitDo>();
@@ -120,9 +117,7 @@ public class LibraryMenuNav extends Composite{
 	
 	private boolean isStandardToolTipShow=false;
 	
-//	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
-
-//	private Storage stockStore = Storage.getLocalStorageIfSupported();
+	private Storage stockStore = Storage.getLocalStorageIfSupported();
 
 	HashMap<String, SubjectDo> courseMap = new HashMap<String, SubjectDo>();
 
@@ -475,77 +470,76 @@ public class LibraryMenuNav extends Composite{
 								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, standardCourseList);
 							}
 						}
-						
 					});
-					
-/*					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
-
-						@Override
-						public void onSuccess(HashMap<String, StandardsDo> result) {
-						//	setSubjectPanelIdsForStandards(result);
-						//	AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
-							if(!getSubjectSelected(STANDARDS)) {
-								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
-							}
-						}
-					});*/
-					
 				}
 				else
 				{
-/*					final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
-					final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
+					final String libraryToken = StringUtil.getPublicLibraryName(getPlaceToken());
 					String map = null;
 					if(stockStore!=null&&stockStore.getItem(subjectCode)!=null){
 						map = stockStore.getItem(subjectCode);
-						courseMap = courseMapReader.read(map);
-						//String subjectName = getSubjectNameBySubjectId(courseMap, subjectCode);
 						AppClientFactory.fireEvent(new SetSubjectDoEvent(subjectName,courseMap.get(subjectName)));
 						setTaxonomyData(subjectName, subjectCode, courseId, courseMap.get(subjectName).getData());
+						
+						deserializeAndDisplay(subjectCode, subjectName, libraryToken, map, courseId);
 					} else {
-*/						
+						
 						if(subjectName==null) {
-							AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(null, null, StringUtil.getPublicLibraryName(getPlaceToken()), new AsyncCallback<HashMap<String, SubjectDo>>() {
+							AppClientFactory.getInjector().getLibraryService().getLibrarySubjectsJson(null, null, StringUtil.getPublicLibraryName(getPlaceToken()), new SimpleAsyncCallback<String>() {
 								@Override
-								public void onFailure(Throwable caught) {
-									
-								}
-								@Override
-								public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
-									setSubjectPanelIds(subjectDoList);
-									if(subjectIdList.size()<=0) {
-										setSubjectPanelIds(subjectDoList);
+								public void onSuccess(String subjectDoList) {
+									if(stockStore!=null) {
+										stockStore.setItem(subjectCode, subjectDoList);
 									}
-									getSubjects(subjectCode, subjectName, courseId);
+									deserializeAndDisplay(subjectCode, subjectName, libraryToken, subjectDoList, courseId);
 								}
 							});
 						} else {
 							getSubjects(subjectCode, subjectName, courseId);
 						}
-/*
-						AppClientFactory.getInjector().getLibraryService().getSubjects(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
-							@Override
-							public void onSuccess(HashMap<String, SubjectDo> subjectListDo) {
-								String courseMapWriterString = courseMapWriter.write(subjectListDo);
-								if(stockStore!=null) {
-									stockStore.setItem(subjectCode, courseMapWriterString);
-								}							
-								if(subjectIdList.size()<=0) {
-									setSubjectPanelIds(subjectListDo);
-								}
-								AppClientFactory.fireEvent(new SetSubjectDoEvent(subjectName,subjectListDo.get(subjectName)));
-								if(!getSubjectSelected(subjectName)) {
-									setTaxonomyData(subjectName, subjectCode, courseId, subjectListDo.get(subjectName).getData());
-								}
-							}
-						});
-*/					}
-/*				}
-*/			}
-/*			}
-		} catch (Exception e) {
-		}
-*/	}
+					}
+				}
+			}
+	}
+	
+	/**
+	 * 
+	 * @function deserializeAndDisplay 
+	 * 
+	 * @created_date : 28-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param featuredLabel
+	 * @parm(s) : @param isNotHomePage
+	 * @parm(s) : @param libraryToken
+	 * @parm(s) : @param jsonResponse
+	 * @parm(s) : @param onRefCourseId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void deserializeAndDisplay(final String subjectCode, final String subjectName, String libraryToken, String jsonResponse, final String onRefCourseId){
+		
+		AppClientFactory.getInjector().getLibraryService().deserializeLibrarySubjects(subjectName, onRefCourseId, libraryToken, jsonResponse, new SimpleAsyncCallback<HashMap<String,SubjectDo>>() {
+
+			@Override
+			public void onSuccess(
+					HashMap<String, SubjectDo> result) {
+				setSubjectPanelIds(result);
+				if(subjectIdList.size()<=0) {
+					setSubjectPanelIds(result);
+				}
+				getSubjects(subjectCode, subjectName, onRefCourseId);
+			}
+		});
+	}
 
 	public void getSubjects(final String subjectCode, final String subjectName, final String courseId) {
 		AppClientFactory.getInjector().getLibraryService().getLibraryCourses(subjectCode, StringUtil.getPublicLibraryName(getPlaceToken()), new AsyncCallback<ArrayList<CourseDo>>() {
