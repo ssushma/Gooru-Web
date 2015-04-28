@@ -31,7 +31,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SearchAsyncCallback;
+import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
@@ -154,12 +154,20 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
 		
 	}
-		
+	@Override
+	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
+		getSearchDo().setPageSize(9);
+		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallback());
+	}
+	@Override
+	protected void requestSearchFormJson(String result,SearchDo<ResourceSearchResultDo> searchDo2) {
+		getSearchService().descralizeResourceSearchResults(result, getSearchDo(), getSearchAsyncCallback());
+	}
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
-		getSearchService().getResourceSearchResults(getSearchDo(),getSearchAsyncCallback());
+		getSearchService().getResourceSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallback());
 	}
 	
 	/**
@@ -174,12 +182,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		}
 		return filters;
 	}
-	@Override
-	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallback<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
-		getSearchDo().setPageSize(9);
-		getSearchService().getResourceSearchResults(searchDo, searchAsyncCallback);
-	}
-
 	@Override
 	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo) {
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"resoruce");
@@ -214,7 +216,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	@Override
 	public void displayRemixForCollectionsPoup(
 			CollectionSearchResultDo collectionsearchResultDo) {
-		// TODO Auto-generated method stub
 		
 	}
 }

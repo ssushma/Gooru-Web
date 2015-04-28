@@ -28,7 +28,6 @@
 package org.ednovo.gooru.server.service;
 
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +55,6 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -67,7 +65,6 @@ import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
@@ -76,6 +73,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 /**
  * @author Search Team
@@ -316,7 +314,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		params.put(GooruConstants.SHOW_CANONICAL_ONLY, "false");
 		
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
-		getLogger().info("urlresourceinfotab getResourceCollectionsList search::"+url);
+		//getLogger().info("urlresourceinfotab getResourceCollectionsList search::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo,"");
@@ -825,5 +823,127 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public String isClientSideLoggersEnabled() throws GwtException,	ServerDownException {
 		String loggersStatus = getClientSideLoggersStatus();
 		return loggersStatus;
+	}
+
+	@Override
+	public String getCollectionSearchResultsJson(SearchDo<CollectionSearchResultDo> searchDo) throws GwtException, ServerDownException {
+		String query1=searchDo.getSearchQuery();
+		collectionQuery= query1 ;
+		try{
+			if(searchDo.getFilters()!=null){
+			for (String key : searchDo.getFilters().keySet()) {
+					  String value = searchDo.getFilters().get(key);
+					  value=value.replaceAll("&", "%26");
+					  searchDo.getFilters().put(key, value);
+				}
+			 }
+			JsonRepresentation jsonRep=null;
+			if(collectionQuery.equalsIgnoreCase("'*'")){
+				collectionQuery = "*";
+			}
+			String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH,getLoggedInSessionToken());
+			Map<String,String> params = searchDo.getFilters();
+			
+			params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
+			params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
+			params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
+			params.put(GooruConstants.Q, collectionQuery);
+			params.put(GooruConstants.INCLUDECIMETADATA, "true");
+			params.put(GooruConstants.PRETTY, "1");
+			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+			
+			if(getHomeEndPoint().contains(HTTPS)){
+				url = appendHttpsURL(url);
+			}
+			getLogger().info("collection search url::::::"+url);
+			
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			return jsonRep.getJsonObject().toString();
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return null;
+	}
+
+	@Override
+	public SearchDo<CollectionSearchResultDo> descralizeCollectionSearchResults(String response,SearchDo<CollectionSearchResultDo> searchDo) throws GwtException, ServerDownException {
+		SearchDo<CollectionSearchResultDo> searchDOEmpty = new SearchDo<CollectionSearchResultDo>();
+		if(response!=null){
+			collectionSearchResultDeSerializer.deserializeJsonObject(response, searchDo,getProfileImageUrl());
+			return searchDo;
+		}
+		return searchDOEmpty;
+	}
+
+	@Override
+	public String getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchDo) throws GwtException,
+			ServerDownException {
+		String query1=searchDo.getSearchQuery();
+	
+		 query= query1;
+		 try{
+				if(searchDo.getFilters()!=null){
+					for (String key : searchDo.getFilters().keySet()) {
+					  String value = searchDo.getFilters().get(key);
+					  value = value.replaceAll("&", "%26");
+					  searchDo.getFilters().put(key, value);
+					 }
+				}
+				if(query.equalsIgnoreCase("'*'"))
+				{
+					query = "*";
+				}
+				
+			JsonRepresentation jsonRep=null;
+			Map<String,String> filtersMap=searchDo.getFilters();
+			if(filtersMap!=null){
+		        String category=filtersMap.get("category");
+		        if(category!=null&&category.equalsIgnoreCase("All")){
+		                filtersMap.remove("category");
+		        }
+		        else if(category!=null){
+		        	if(category.equalsIgnoreCase("Website")){
+		               	category=category.replaceAll("Website", "webpage");
+		                filtersMap.remove("category");
+		                filtersMap.put("flt.resourceFormat",category);
+		        	}
+		        	else {
+		        		 filtersMap.remove("category");
+		                 filtersMap.put("flt.resourceFormat",category);
+		        	}
+		        }
+			}
+			String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_SEARCH,getLoggedInSessionToken());
+			filtersMap.put(GooruConstants.Q, query);
+			filtersMap.put(GooruConstants.START,  String.valueOf(searchDo.getPageNum()));
+			filtersMap.put(GooruConstants.LENGTH,  String.valueOf(searchDo.getPageSize()));
+			filtersMap.put(GooruConstants.QUERY_TYPE,  SINGLE);
+			filtersMap.put(GooruConstants.ALLOW_DUPLICATES,  "false");
+			filtersMap.put(GooruConstants.FETCH_HITS_IN_MULTI,  TRUE);
+			filtersMap.put(GooruConstants.ALLOW_SCRIPTING,  TRUE);
+			filtersMap.put(GooruConstants.PROTOCOL_SUPPORTED, "http,https");
+			String url = AddQueryParameter.constructQueryParams(partialUrl, filtersMap);
+			
+			getLogger().info("url search resource results:::::"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			return jsonRep.getJsonObject().toString();
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return null;
+	}
+
+	@Override
+	public SearchDo<ResourceSearchResultDo> descralizeResourceSearchResults(String response, SearchDo<ResourceSearchResultDo> searchDo)	throws GwtException, ServerDownException {
+		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
+		try{
+			resourceSearchResultDeSerializer.deserializeJsonObject(response, searchDo,"");	
+			return searchDo;
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return searchDOEmpty;
 	}
 }

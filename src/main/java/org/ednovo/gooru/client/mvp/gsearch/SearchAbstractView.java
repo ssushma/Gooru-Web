@@ -81,6 +81,7 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -143,7 +144,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField(provided = true)
 	AppSuggestBox aggregatorSgstBox;
 
-	
 	LiPanel liPanel;
 	
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
@@ -180,11 +180,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	boolean isInsertTems=false;
 	boolean firstTime = false;
 	
-	
 	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
 	
 	private HandlerRegistration handlerRegistration=null;
 
+	private Storage localStore = null;
+	 
+	int pageCountForStorage=1;
 	/**
 	 * Assign new instance for 
 	 * 
@@ -225,6 +227,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		};
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFeildsIds();
+		localStore=Storage.getLocalStorageIfSupported();
 		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
@@ -276,8 +279,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				else
 				{
-					if(!firstTime)
-					{
+					if(!firstTime){
 						firstTime = true;
 						Window.scrollTo(0, 1200);
 					}
@@ -287,7 +289,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
 						}else{
-							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 8);
+							if(Storage.isLocalStorageSupported()){
+								pageCountForStorage--;
+								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-2)+""),true);
+							}
 						}
 						if(getWidgetHeight()!=0){
 							int getTotalScrolltop=getWidgetHeight()*4;
@@ -310,7 +315,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}else{
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
 							}
-							if(getWidgetHeight()!=0 && pageNumber>3){
+							if(getWidgetHeight()!=0){
 								hideScrollDiv.getElement().getStyle().setHeight(getWidgetHeight()*(previousCount), Unit.PX);
 								previousCount=previousCount+4;
 							}
@@ -584,7 +589,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	
 	@Override
-	public void postSearch(SearchDo<T> searchDo) {
+	public void postSearch(SearchDo<T> searchDo,boolean isApiCalled) {
 		removeTopWidgets(isInsertTems);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
@@ -596,11 +601,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 					searchResultPanel.insert(renderSearchResult(searchResult),0);
 				}
-					if(pageNumber>3){
-						Window.scrollTo(0, getWidgetHeight());
-					}else{
-						Window.scrollTo(0, 0);
-					}
 				lblLoadingTextPrevious.setVisible(false);
 			}else{
 				for (T searchResult : searchDo.getSearchResults()) {
@@ -1470,6 +1470,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		lblLoadingText.setVisible(true);
 		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
 		previousCount=0;
+		pageCountForStorage=1;
+		localStore.clear();
 	}
 	
 	/**
@@ -1692,5 +1694,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		isClickOnMoreFilter=true;
 	}
-		
+	@Override
+	public void setJsonResponseInStorage(String data,boolean isApiCalled){
+		if(Storage.isLocalStorageSupported() && !isApiCalled){
+			localStore.setItem(pageCountForStorage+"", data);
+			pageCountForStorage++;
+		}
+	}
 }
