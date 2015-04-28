@@ -243,46 +243,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}else{
 						pnlBackToTop.setVisible(false);
 					}
-					
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-					String htParam = placeRequest.getParameter("ht", null);
-					if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)&&htParam==null){
-					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()==0){
-						if(pageNumber>3){
-							isInsertTems=true;
-							pageNumber--;
-							lblLoadingTextPrevious.setVisible(true);
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
-							}else{
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 8);
-							}
-							Window.scrollTo(0, getWidgetHeight());
-						}else{
-							Window.scrollTo(0, 0);
-						}
-					}
-					//This condition is used to check that the user is scrolling top to bottom
-					if(resultCountVal>=8){
-						if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
-							isInsertTems=false;
-							lblLoadingText.setVisible(true);
-							pageNumber++;
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 9);
-							}else{
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
-							}
-						}
-					}
-				}
-				else
-				{
-					if(!firstTime){
-						firstTime = true;
-						Window.scrollTo(0, 1200);
-					}
 					if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
 						isInsertTems=true;
 						pageNumber--;
@@ -322,7 +282,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						}
 					}
 					previousScrollValue=event.getScrollTop();
-				}
+				
 				}
 			}
 		});
@@ -574,13 +534,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						final Widget widget = widgets.next();
 						searchResultPanel.remove(widget);
 						widgetCount++;
-					}
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-					String htParam = placeRequest.getParameter("ht", null);
-					if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)&&htParam==null){
-						Window.scrollTo(0, getWidgetHeight()*(searchResultPanel.getWidgetCount()/3));
-					}
-					
+					}				
 				}
 			}
 		}catch(Exception e){
