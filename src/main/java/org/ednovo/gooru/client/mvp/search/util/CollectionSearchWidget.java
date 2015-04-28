@@ -121,10 +121,12 @@ public class CollectionSearchWidget extends Composite {
 		//imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
 		lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
 		String resourceText="";
-		if(collectionSearchResultDo.getResourceCount()>4){
-			resourceText="4 "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+collectionSearchResultDo.getResourceCount()+" "+i18n.GL1094();
+		if(collectionSearchResultDo.getResourceCount()>=4 && collectionSearchResultDo.getQuestionCount()>=4){
+			resourceText="4 "+i18n.GL3215()+" "+i18n.GL3219()+" 4 "+i18n.GL3216()+" "+i18n.GL3220();
+		}else if(collectionSearchResultDo.getResourceCount()<=1 && collectionSearchResultDo.getQuestionCount()<=1){
+			resourceText=collectionSearchResultDo.getResourceCount()+" "+i18n.GL3217()+" "+i18n.GL3219()+" "+collectionSearchResultDo.getQuestionCount()+" "+i18n.GL3218() +" "+i18n.GL3220();
 		}else{
-			resourceText=collectionSearchResultDo.getResourceCount()+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+collectionSearchResultDo.getResourceCount()+" "+i18n.GL1094();
+			resourceText=collectionSearchResultDo.getResourceCount()+" "+i18n.GL3215()+" "+i18n.GL3219()+" "+collectionSearchResultDo.getQuestionCount()+" "+i18n.GL3216()+" "+i18n.GL3220();
 		}
 		pResourceText.setText(resourceText);
 		if(collectionSearchResultDo.getCollectionItems().size()>0){

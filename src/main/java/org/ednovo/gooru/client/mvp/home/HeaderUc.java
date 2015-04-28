@@ -1461,10 +1461,10 @@ public class HeaderUc extends Composite implements
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
+		params.put("category", "All");
 		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE))
 		{
 			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
-			params.put("category", "All");
 		}
 		
 		return params;

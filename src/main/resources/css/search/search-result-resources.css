@@ -49,6 +49,10 @@ margin:0 0 0 -20px !important;
 	padding:8px 8px;
 }
 
+#gooruSearchMainContainer .resourceCollectionImage {
+	cursor:pointer;
+}
+
 #gooruSearchMainContainer  .resourceDetails .seachLeftNavigation ul.resourceTypes li a.videos {
     background: url("../images/resource-type-icons.png") no-repeat scroll 4px 7px;
 	    padding: 8px 6px 8px 35px;
@@ -156,6 +160,7 @@ margin:0 0 0 -20px !important;
 	color: #0c74be;
 	margin-top: 4px;
 	line-height: 18px;
+	cursor: pointer;
 }
 #gooruSearchMainContainer .resourceDesc .resourceAuthorDetails{
 	color: #0c74be;
@@ -209,6 +214,7 @@ margin:0 0 0 -20px !important;
 #gooruSearchMainContainer .userDetailsResources .collectionResources .collectionTitleforResource{
 	font-size: 13px;
 	color:#0C74BE;
+	cursor:pointer;
 }
 
 #gooruSearchMainContainer .userDetailsResources .user .collectionTitleNoCollection{
@@ -276,6 +282,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .accessStyle{
   display: inline-block;
+  width: 100%;
 }
 
 #gooruSearchMainContainer .accessStyle span{
