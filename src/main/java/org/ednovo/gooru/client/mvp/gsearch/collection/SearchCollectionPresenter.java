@@ -190,4 +190,10 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void displayUsersList(ResourceSearchResultDo resourceSearchResultDo) {
+		// TODO Auto-generated method stub
+		
+	}
 }
