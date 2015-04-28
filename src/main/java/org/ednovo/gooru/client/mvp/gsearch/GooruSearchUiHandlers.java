@@ -65,6 +65,7 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	void setSearchType(boolean isCollectionSearch);
 	
 	void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo);
+	void displayUsersList(ResourceSearchResultDo resourceSearchResultDo);
 	
 	void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo);
 	

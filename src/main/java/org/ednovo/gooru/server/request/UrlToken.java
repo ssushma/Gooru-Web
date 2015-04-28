@@ -546,7 +546,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
 	
 	SUGGEST_CENTURY_BY_QUERY("/search/skills?sessionToken={0}"),
-
+	
+	V2_GET_RESOURCE_BASED_USERS("/v2/collection/resource/moreinfo/{0}?sessionToken={1}&offset={2}&limit={3}"),
+	
 	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}");
 
 	

@@ -26,8 +26,16 @@ package org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ResourceCollDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
@@ -52,6 +60,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class ViewMorePeoplePresenter extends PresenterWidget<IsViewMorePeopleView> implements ViewMorePeopleUiHandlers,ClientConstants{
 
 	HashMap<String,String> successparams = new HashMap<String, String>();
+	ResourceSearchResultDo searchResultDo =null;
 	
 	@Inject
 	public ViewMorePeoplePresenter(EventBus eventBus, IsViewMorePeopleView view) {
@@ -65,24 +74,19 @@ public class ViewMorePeoplePresenter extends PresenterWidget<IsViewMorePeopleVie
 		super.onBind();
 	}
 	
-	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
-		/*if(COLLECTION.equalsIgnoreCase(searchType)){
-			type= FOLDER;
-			accessType = ACESSTEXT;
-		}else{
-			type=null;
-			accessType = ACESSTEXT;
-		}
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
+	@Override
+	public void getResourceDataByResource(ResourceSearchResultDo searchResultDo,String searchType) {
+		this.searchResultDo =searchResultDo;
+		getWorkspaceData(0,20,searchResultDo.getGooruOid());
+	}
+	
+	public void getWorkspaceData(int offset,int limit, String resourceId){
+		AppClientFactory.getInjector().getResourceService().getResourceBasedUsersDetails(resourceId, offset, limit, new SimpleAsyncCallback<ArrayList<ResourceCollDo>>() {
 			@Override
-			public void onSuccess(FolderListDo folderListDo) {
-				if(folderListDo.getCount()==0){
-					getView().displayNoCollectionsMsg();
-				}else{
-					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
-				}
+			public void onSuccess(ArrayList<ResourceCollDo> userCollectionsList) {
+					getView().displayContents(userCollectionsList);
 			}
-		});*/
+		});
 	}
 
 

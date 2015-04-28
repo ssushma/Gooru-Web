@@ -26,6 +26,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -52,6 +53,7 @@ public class CollectionResourceWidget extends Composite {
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	@UiField InlineLabel relatedCollectionTitle;
 	@UiField Button btnAddResource;
+	@UiField Anchor ancViewMore;
 	
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
 	
@@ -78,7 +80,23 @@ public class CollectionResourceWidget extends Composite {
 			resourceDesc=resourceDesc.substring(0, 120)+"...";
 		}
 		resourceDescription.getElement().setInnerText(resourceDesc);
-		lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" poeple");
+		if(resourceSearchResultDo.getResourceUsedUserCount()>1)
+		{
+			ancViewMore.setVisible(true);
+		}
+		else
+		{
+			ancViewMore.setVisible(false);
+		}
+		if(resourceSearchResultDo.getResourceUsedUserCount()>0)
+		{
+			lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" poeple");
+		}
+		else
+		{
+			lblUserCount.setText("");
+		}
+		
 		lbladdCount.setText(resourceSearchResultDo.getResourceAddedCount()+"");
 		lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
@@ -147,6 +165,7 @@ public class CollectionResourceWidget extends Composite {
 				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
 			}
 		});
+
 		
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
@@ -284,6 +303,9 @@ public class CollectionResourceWidget extends Composite {
 	public void setUpdateReviewCount(int updateReviewCount) {
 		this.updateReviewCount = updateReviewCount;
 	}
-	
+	public Anchor getAncViewMore() {
+		return ancViewMore;
+	}
+
 	
 }

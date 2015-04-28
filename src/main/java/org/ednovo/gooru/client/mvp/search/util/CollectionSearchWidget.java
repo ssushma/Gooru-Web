@@ -116,6 +116,7 @@ public class CollectionSearchWidget extends Composite {
 			}
 		});
 		imgCollection.addClickHandler(new OnCollectionImageClick(collectionSearchResultDo.getGooruOid()));
+		collectionTitle.addClickHandler(new OnCollectionImageClick(collectionSearchResultDo.getGooruOid()));
 		imgCollection.getElement().getStyle().setZIndex(9999);
 		//imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
 		lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
