@@ -112,7 +112,7 @@ user agent stylesheetdiv {
 	/* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+ */
 	box-shadow: inset 0px 0px 0px rgba(0,0,0,0.2);
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ffffffff,GradientType=0)";
-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endColorstr=#ffffffff, GradientType=0);
+
 }
 .addResourceUrlbg:hover {
 	/* Firefox v3.6+ */
@@ -131,7 +131,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endCo
 	/* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+ */
 	box-shadow: inset -2px 1px 4px rgba(0,0,0,0.2);
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ffffffff,GradientType=0)";
-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endColorstr=#ffffffff, GradientType=0);
+
 }
 .addResourceUrlbgTitle {
 	font-family: Arial, Helvetica, sans-serif;
@@ -726,7 +726,7 @@ width: 100%;
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius: 4px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ff999999,GradientType=0)";
-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endColorstr=#ff999999, GradientType=0);
+
 }
 
 /*image css*/

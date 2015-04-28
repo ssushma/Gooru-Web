@@ -182,7 +182,7 @@ background: -webkit-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ff
 background: -o-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* Opera 11.10+ */
 background: -ms-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
 }
  .userPhoto {
     margin-right:10px;
@@ -332,7 +332,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', end
 
 .insightsFrame .buttonGroup button {
     padding:4px;
-    //color:#999;
     font-size:16px;
 }
 

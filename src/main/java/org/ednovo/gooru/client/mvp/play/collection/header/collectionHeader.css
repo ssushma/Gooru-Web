@@ -26,8 +26,8 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #515151, #333);
 	
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#515151', EndColorStr='#333333');
+	
+	
 	
 }
 
@@ -73,8 +73,8 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #515151, #333);
 	
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#515151', EndColorStr='#333333');
+	
+	
 }
 .player_buttons{
 	float: right;

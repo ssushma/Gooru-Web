@@ -91,8 +91,8 @@ body.popupBG {
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
 	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666',
-		EndColorStr='#515151');
+	
+		
 }
 
 .popupHeader h1 {
@@ -324,8 +324,6 @@ fieldset {
 
 .ratingContainer {
 	height: 60px;
-	white-space: nowrap; //
-	overflow: hidden; //
 	text-align: center;
 	-webkit-font-smoothing: antialiased !important;
 	margin: 10px;

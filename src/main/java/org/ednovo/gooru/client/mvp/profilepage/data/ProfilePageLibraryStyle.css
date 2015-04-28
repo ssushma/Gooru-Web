@@ -92,8 +92,8 @@
 	/* Opera 11.10+ */
 	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 10px 13px, -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
+	
+	
 
 }
 
@@ -104,7 +104,7 @@
 	height:238px;
 	overflow-y:scroll;
 	padding: 0 1%;
-	-moz-scrollbars-vertical;
+	/* -moz-scrollbars-vertical; */
 }
 
 .lessonTitle {
@@ -146,11 +146,6 @@
 
 	/* Opera 11.10+ */
 	background: url('../images/folders/panel/folder-icon.png') no-repeat 24px 8px, -o-linear-gradient(top, #FFFFFF, #FFFFFF);
-
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
-	-ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ffdddddd,Strength=11)";
-	filter:progid:DXImageTransform.Microsoft.Glow(Color=#ffdddddd,Strength=11);
 	
 }
 

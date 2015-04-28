@@ -18,8 +18,8 @@
 		rgb(81, 81, 81) 100%);
 	background-color: #515151;
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff666666,endColorstr=#ff515151,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff666666,
-		endColorstr=#ff515151, GradientType=0);
+	
+		
 }
 
 .cpEmailHeaderDesc {
@@ -135,8 +135,8 @@
 	margin: 3px 0px 0px 0px;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#fff0f0f0,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,
-		endColorstr=#fff0f0f0, GradientType=0);
+	
+		
 }
 
 .cpEmailCheckBoxBg:hover {
@@ -215,8 +215,8 @@
 	background-color: #1076bb;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0);
+	
+		
 }
 
 .cpEmailButtonBg:hover {
@@ -239,8 +239,8 @@
 	background-color: #1076bb;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff1076bb,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff1076bb,
-		endColorstr=#ff1076bb, GradientType=0);
+	
+		
 }
 
 .cpEmailButtonTitle {
