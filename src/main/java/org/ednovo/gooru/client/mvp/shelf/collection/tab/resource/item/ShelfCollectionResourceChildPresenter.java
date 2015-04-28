@@ -149,7 +149,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	}
 
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null,false, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
