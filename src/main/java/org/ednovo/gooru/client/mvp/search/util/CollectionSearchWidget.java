@@ -7,19 +7,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.client.uc.UserProfileUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -61,12 +66,16 @@ public class CollectionSearchWidget extends Composite {
 	public static boolean isCustomizePopup = false;
 	String CUSTOMIZE = "customize";
 
-	@UiField HTMLPanel pnlResourceWidget,collectionDescription;
+	@UiField HTMLPanel pnlResourceWidget,collectionDescription,creatorPanel;
 	@UiField Label collectionTitle,authorName,lblViewCount;
 	@UiField Paragraph pResourceText;
 	@UiField Image imgAuthor,imgCollection;
 	@UiField FlowPanel standardsDataPanel;
 	@UiField Button remixBtn;
+	
+	private final FlowPanel profilePanel=new FlowPanel();
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
 	
 	private static String DEFULT_IMAGE = "images/default-collection-image.png";
 	
@@ -105,6 +114,9 @@ public class CollectionSearchWidget extends Composite {
 			collectionDescription.getElement().setInnerText(collectionDesc);
 		}
 		authorName.setText(collectionSearchResultDo.getOwner().getUsername());
+		if ((collectionSearchResultDo.getOwner().isProfileUserVisibility())){
+			 collectionCreatorDetails(collectionSearchResultDo);
+		}
 		if(!StringUtil.isEmpty(collectionSearchResultDo.getUrl())){
 			imgCollection.setUrl(StringUtil.formThumbnailName(collectionSearchResultDo.getUrl(), "-160x120."));
 		}
@@ -144,6 +156,7 @@ public class CollectionSearchWidget extends Composite {
 		SearchUiUtil.renderStandards(standardsDataPanel, collectionSearchResultDo);
 		
 		StringUtil.setAttributes(pnlResourceWidget.getElement(), "pnlResourceWidget", "", "");
+		StringUtil.setAttributes(creatorPanel.getElement(), "pnlcreatorPanel", "", "");
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(imgCollection.getElement(), "imgCollection", "", "");
 		StringUtil.setAttributes(remixBtn.getElement(), "btnRemix", "", "");
@@ -250,6 +263,76 @@ public class CollectionSearchWidget extends Composite {
 			});
 		}
 	}
+	/**
+	 * To show collection creator/partner info
+	 * @param collectionSearchResultDo 
+	 */
+	private void collectionCreatorDetails(final CollectionSearchResultDo collectionSearchResultDo) {
+		if(StringUtil.isPartnerUser(collectionSearchResultDo.getOwner().getUsername())) {
+			authorName.getElement().getStyle().setColor("#1076bb");
+			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
+			authorName.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					MixpanelUtil.Click_Username();
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("pid", collectionSearchResultDo.getOwner().getGooruUId());
+					AppClientFactory.getPlaceManager().revealPlace(collectionSearchResultDo.getOwner().getUsername());
+				}
+			});
+			
+			authorName.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					
+					AppClientFactory.getInjector().getUserService().getUserProfileV2Details(collectionSearchResultDo.getOwner().getGooruUId(), USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>(){
+
+						@Override
+						public void onSuccess(ProfileDo result) {
+							String username=result.getUser().getUsernameDisplay();
+							String aboutMe=result.getAboutMe();
+							UserProfileUc userProfileUc = new UserProfileUc(username,aboutMe, result.getUser().getProfileImageUrl());
+							profilePanel.clear();
+							profilePanel.add(userProfileUc);
+							
+						}
+						
+					});
+					
+					creatorPanel.clear();
+					creatorPanel.add(profilePanel);
+				}
+			});
+			
+			authorName.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					//profilePanel.clear();
+					creatorPanel.clear();
+				}
+			});
+			
+		}else{
+			authorName.getElement().getStyle().setColor("#1076bb");
+			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
+			
+			authorName.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					MixpanelUtil.Click_Username();
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("id", collectionSearchResultDo.getOwner().getGooruUId());
+					params.put("user", collectionSearchResultDo.getOwner().getUsername());
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE,params);
+				}
+			});
+		}
+	}
+	
 	public Button getRemixBtn() {
 		return remixBtn;
 	}
