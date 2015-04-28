@@ -76,7 +76,7 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	 * Set post search view
 	 * @param searchDo instance of {@link SearchDo}
 	 */
-	void postSearch(SearchDo<T> searchDo);
+	void postSearch(SearchDo<T> searchDo,boolean isApiCalled);
 
 	/**
 	 * This method will set the search Filters
@@ -106,4 +106,6 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	void setSourceSuggestions(SearchDo<String> result);
 
 	void setAggregatorSuggestions(SearchDo<String> result);
+	
+	void setJsonResponseInStorage(String data,boolean isApiCalled);
 }

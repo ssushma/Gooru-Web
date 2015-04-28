@@ -150,6 +150,40 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 			throw new RuntimeException(e.getCause());
 		}
 	}
+	public void deserializeJsonObject(String jsonRepObj, SearchDo<T> searchDo, String profileEndPoint) {
+		JSONObject jsonRep;
+		searchDo.setSearchResults(new ArrayList<T>());
+		try {
+			jsonRep=new JSONObject(jsonRepObj);
+			if (jsonRep != null) {
+				if(!jsonRep.isNull("spellCheckQueryString"))
+				{
+				searchDo.setSpellCheckQueryString(jsonRep.getString("spellCheckQueryString"));
+				searchDo.setUserQueryString(jsonRep.getString("userQueryString"));
+				}
+				else
+				{
+				searchDo.setSpellCheckQueryString(null);
+				searchDo.setUserQueryString(null);
+				}
+				searchDo.setSearchHits(stringtoInteger(jsonRep, SEARCH_HITS, 0));
+				JSONArray searchResultJsonArray = jsonRep.getJSONArray(SEARCH_RESULTS);
+				List<T> collectionSearchResults = searchDo.getSearchResults();
+				for (int pointer = 0; pointer < searchResultJsonArray.length(); pointer++) {
+					T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
+					if (record != null) {
+						if(!profileEndPoint.isEmpty()){					
+							record.setAssetURI(profileEndPoint);
+						}
+						collectionSearchResults.add(record);
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+			throw new RuntimeException(e.getCause());
+		}
+	}
 	public void deserializeSuggestedResources(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
 		searchDo.setSuggestResults(new ArrayList<T>());
 		try {

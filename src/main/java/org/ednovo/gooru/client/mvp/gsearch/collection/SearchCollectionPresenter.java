@@ -32,13 +32,15 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SearchAsyncCallback;
+import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter.IsSearchCollectionProxy;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
@@ -48,6 +50,7 @@ import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.restlet.ext.json.JsonRepresentation;
 
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -143,22 +146,23 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	
 	@Override
 	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void requestSearch(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
-		//searchDo.setQuery("cells");
-		getSearchService().getCollectionSearchResults(searchDo, searchAsyncCallback);
+	protected void requestSearch(final SearchDo<CollectionSearchResultDo> searchDo,final SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
+		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallback());
 	}
-		
+	@Override
+	protected void requestSearchFormJson(String result,SearchDo<CollectionSearchResultDo> searchDo2) {
+		getSearchService().descralizeCollectionSearchResults(result, searchDo2, getSearchAsyncCallback());
+	}
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
 		//getSearchDo().setQuery("cells");
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
-		getSearchService().getCollectionSearchResults(getSearchDo(),getSearchAsyncCallback());
+		getSearchService().getCollectionSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallback());
 	}
 	
 	/**
@@ -187,6 +191,11 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	}
 	@Override
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo) {
+		
+	}
+
+	@Override
+	public void displayUsersList(ResourceSearchResultDo resourceSearchResultDo) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -33,6 +33,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
+import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
+import org.ednovo.gooru.client.SearchAsyncCallbackForString;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.RegisterTabDndEvent;
@@ -64,6 +66,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.restlet.ext.json.JsonRepresentation;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
@@ -94,7 +97,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	private SearchDo<T> searchDo = new SearchDo<T>();
 
-	private SearchAsyncCallback<SearchDo<T>> searchAsyncCallback;
+	private SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallback;
 
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionAsyncCallback;
 
@@ -104,6 +107,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
 
+	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback;
+	
 	protected static final String ALL = "*";
 
 	SignUpPresenter signUpViewPresenter = null;
@@ -156,7 +161,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			addRegisteredHandler(SourceSuggestionEvent.TYPE, this);
 			addRegisteredHandler(AggregatorSuggestionEvent.TYPE, this);
 		}
-
 	}
 
 	@Override
@@ -167,18 +171,28 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	public void onBind() {
 		super.onBind();
-		setSearchAsyncCallback(new SearchAsyncCallback<SearchDo<T>>() {
+		setSearchAsyncCallback(new SearchAsyncCallbackForString<SearchDo<T>>() {
+			@Override
+			protected void run(boolean isApiCalled,String representation, SearchDo<T> searchDo) {
+				getView().setJsonResponseInStorage(representation,isApiCalled);
+				requestSearchFormJson(representation,searchDo);
+			}
+			@Override
+			public void onCallSuccess(SearchDo<T> result,boolean isApiCalled) {
+				setSearchDo(result);
+				getView().postSearch(result,isApiCalled);
+			}
+		});
+		setSearchResultsJsonAsyncCallback(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
 			@Override
 			protected void run(SearchDo<T> searchDo) {
 				requestSearch(searchDo, this);
 			}
 			@Override
-			public void onCallSuccess(SearchDo<T> result) {
-				setSearchDo(result);
-				getView().postSearch(result);
+			public void onCallSuccess(String result) {
+				getSearchAsyncCallback().execute(false,result,getSearchDo());
 			}
 		});
-		
 		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
 		
 		if (getViewToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
@@ -238,7 +252,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		if (getSearchDo().getSearchQuery() != null
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
-			getSearchAsyncCallback().execute(getSearchDo());
+			getSearchResultsJsonAsyncCallback().execute(getSearchDo());
 		}
 		if(AppClientFactory.getPlaceManager().refreshPlace()) {
 			if (setFilter) {
@@ -364,15 +378,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 		}
 		return filters;
-	}
-
-	public SearchAsyncCallback<SearchDo<T>> getSearchAsyncCallback() {
-		return searchAsyncCallback;
-	}
-
-	public void setSearchAsyncCallback(
-			SearchAsyncCallback<SearchDo<T>> searchAsyncCallback) {
-		this.searchAsyncCallback = searchAsyncCallback;
 	}
 
 	/**
@@ -518,7 +523,9 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		this.aggregatorSuggestionAsyncCallback = aggregatorSuggestionAsyncCallback;
 	}
 
-	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallback<SearchDo<T>> searchAsyncCallback);
+	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
+
+	protected abstract void requestSearchFormJson(String result,SearchDo<T> searchDo2);
 
 	/**
 	 * @return the standardSuggestionInfoAsyncCallback
@@ -623,5 +630,27 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setPageNum(1);
 		params.put(QUERY, getSearchDo().getUrlQuery());
 		getPlaceManager().revealPlace(viewToken, params, true);
+	}
+
+	public SearchAsyncCallbackForSearch<SearchDo<T>> getSearchResultsJsonAsyncCallback() {
+		return searchResultsJsonAsyncCallback;
+	}
+
+	public void setSearchResultsJsonAsyncCallback(SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback) {
+		this.searchResultsJsonAsyncCallback = searchResultsJsonAsyncCallback;
+	}
+
+	public SearchAsyncCallbackForString<SearchDo<T>> getSearchAsyncCallback() {
+		return searchAsyncCallback;
+	}
+
+	public void setSearchAsyncCallback(
+			SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallback) {
+		this.searchAsyncCallback = searchAsyncCallback;
+	}
+
+	@Override
+	public void setDataReterivedFromStorage(String data,boolean isApiCalled) {
+		getSearchAsyncCallback().execute(isApiCalled,data, getSearchDo());
 	}
 }
