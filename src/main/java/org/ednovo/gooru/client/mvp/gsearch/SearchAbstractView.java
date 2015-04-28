@@ -246,13 +246,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
 						isInsertTems=true;
 						pageNumber--;
-						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
-						}else{
-							if(Storage.isLocalStorageSupported()){
-								pageCountForStorage--;
-								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-4)+""),true);
-							}
+						if(Storage.isLocalStorageSupported()){
+							pageCountForStorage--;
+							getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-4)+""),true);
 						}
 						if(getWidgetHeight()!=0){
 							int getTotalScrolltop=getWidgetHeight()*4;
