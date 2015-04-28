@@ -188,6 +188,12 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid()));
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
 	}
+	@Override
+	public void displayUsersList(ResourceSearchResultDo resourceSearchResultDo) {
+		viewmorePeoplePresenter.getResourceDataByResource(resourceSearchResultDo,"resoruce");
+		//viewmorePeoplePresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid()));
+		addToPopupSlot(viewmorePeoplePresenter);
+	}
 	public class ShowNewCollectionWidget implements ClickHandler{
 		private String resourceId;
 		public ShowNewCollectionWidget(String resourceId){

@@ -40,11 +40,11 @@
 				</div>
 				<g:HTMLPanel styleName="usedDetails">
 				<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
-					<a href="">View More</a>
+					<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
 				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
 					<div class="col-md-8 col-xs-8 col-sm-8 collectionResources">
-						<g:Image ui:field="relatedCollectionImage" />					
+						<g:Image styleName="resourceCollectionImage" ui:field="relatedCollectionImage" />					
 						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitleforResource"></g:InlineLabel>
 					</div>
 					<div class="col-md-4 col-xs-4 col-sm-4 user">

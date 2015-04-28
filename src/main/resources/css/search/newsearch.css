@@ -211,6 +211,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor:pointer;
 }
 
 #gooruSearchMainContainer .userDetails img{
@@ -559,6 +560,70 @@ Back to top button
 	padding:20px 20px 10px 20px;
 }
 
+#morePeoplePopWrapper {
+	width: 600px;
+	margin: 0 auto;
+	border: 1px solid #ddd;
+	box-shadow: 0 6px 10px rgba(0, 0, 0, 0.176);
+	background: #fff;
+}
+#morePeoplePopWrapper .popFooter {
+	background: #dddddd;
+	padding: 10px 0;
+}
+#morePeoplePopWrapper .popHeader {
+	padding: 10px 0;
+	background: #515151;
+	border-bottom: 1px solid #ddd;
+	color: #ffffff;
+}
+#morePeoplePopWrapper .popBody h4{
+	font-size:15px;
+	margin:10px 8px;
+}
+#morePeoplePopWrapper .closeButton {
+	text-align:right;
+ 	background: url(../images/login/close-button.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+ 	height: 17px;
+ 	width: 17px;
+ 	display: inline-block;
+    cursor: pointer;
+}
+#morePeoplePopWrapper .peopleBlock {
+	border: 1px solid #dddddd;
+	padding: 15px 0;
+	margin: 0 8px;
+}
+
+#morePeoplePopWrapper  .peopleGroup{
+	margin-bottom:5px;
+}
+#morePeoplePopWrapper .peopleBlock a:hover, #morePeoplePopWrapper .peopleBlock a:focus{
+	text-decoration:none;
+}
+#morePeoplePopWrapper .userDetContainer img {
+  border-radius: 50px;
+  box-shadow: 0 0 0 2px #87badd;
+  width: 30px;
+  height: 30px;
+}
+#morePeoplePopWrapper .gradeDetContaner p {
+	margin-bottom: 0;
+	line-height: 15px;
+}
+#morePeoplePopWrapper .colleDetContaner img {
+  width: 40px;
+  height: 28px;
+  border-left: 3px solid #1076bb;
+}
+#morePeoplePopWrapper .addToNewButton {
+	text-align: right;
+}
+#morePeoplePopWrapper .scrollDiv {
+	height: 300px;
+	overflow-y: auto;
+}
+
 
 
 @media (min-width: 240px) and (max-width: 319px){
@@ -656,6 +721,10 @@ Back to top button
 		width: 100%;
 		z-index: 96 !important;
     }
+    #morePeoplePopWrapper {
+	width: 100%;
+	background: #fff;
+	}
 }
 
 @media (min-width: 320px) and (max-width: 479px){
@@ -863,6 +932,10 @@ Back to top button
 		width: 100%;
 		z-index: 9999;
     }
+    #morePeoplePopWrapper {
+	width: 100%;
+	background: #fff;
+	}
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
@@ -981,6 +1054,10 @@ Back to top button
 	#gooruSearchMainContainer .seachRightNavigation .grade .gradesContainer{
 		padding:15px 15px;
 	}
+	#morePeoplePopWrapper {
+	width: 100%;
+	background: #fff;
+	}
 }
 
 
@@ -1076,6 +1153,7 @@ Back to top button
 	    overflow: hidden;
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
+	    cursor: pointer;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon {
 	    background: url("../images/folderIcon-sprite.png") no-repeat scroll 8px -36px rgba(0, 0, 0, 0);

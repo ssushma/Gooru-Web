@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
+import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -719,6 +720,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				pnlAddFilters.add(createTagsLabel(split[i],"accessModePanel"));
 				setSelectedFilter(accessModePanel,accessMode,COMMA_SEPARATOR);
 			}
+		}else{
+			clearPPanelFilter(accessModePanel);
 		}
 	}
 	
@@ -910,9 +913,26 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				pnlAddFilters.add(createTagsLabel("Mobile Friendly","mobileFirendlyPanel"));
 				setSelectedFilter(panelNotMobileFriendly,mobileFirendlyTag,COMMA_SEPARATOR);
 			}
-
+		}else{
+			clearPPanelFilter(panelNotMobileFriendly);
 		}
 	}
+	
+	/**
+	 * Clear all selected filter values
+	 * @param gradePanelUc instance {@link DisclosurePanelUc} which has selected filter values
+	 */
+	public void clearPPanelFilter(PPanel pPanel) {
+		
+	//	if(resourceSearch){
+		for(int i=0;i<pPanel.getWidgetCount();i++){
+			Widget filterWidget = pPanel.getWidget(i);
+			if (filterWidget instanceof CheckBox) {
+				((CheckBox) filterWidget).setValue(false);
+			}
+		}
+	}
+
 
 	/**
 	 * Pre-Selected Subjects showing in search page
@@ -939,7 +959,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				pnlAddFilters.add(createTagsLabel("OER","oerPanel"));
 				oerLbl.setStyleName("active");
 			}
-
+		}else{
+			oerLbl.removeStyleName("active");
 		}
 	}
 
@@ -1066,7 +1087,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private void showCategoryFilter() {
 		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
 		if(categories!=null){
-			pnlAddFilters.setVisible(true);
 			String[] split = categories.split(",");
 			for(int i=0; i<split.length; i++){
 				if(!split[i].equalsIgnoreCase("all"))
@@ -1074,11 +1094,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
 					pnlAddFilters.add(createTagsLabel(filterName,"categoryPanel"));
 					setStyleSelectedFilters(filterName,ulCategoryPanel);
+				}else{
+					clearFilter(ulCategoryPanel);
 				}
 			} 
 		}
 	}
 	
+	private void clearFilter(UlPanel ulCategoryPanel) {
+		for(int i=0;i<ulCategoryPanel.getWidgetCount();i++){
+			Widget filterWidget = ulCategoryPanel.getWidget(i);
+			if (filterWidget instanceof LiPanel) {
+				((LiPanel) filterWidget).removeStyleName("active");
+			}
+		}
+	}
 	/**
 	 * To show the publisher values in search page
 	 */
@@ -1304,14 +1334,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		return category;
 	}
 	@Override
-	public Map<String, String> getSearchFilters() {
+	public Map<String, String> getSearchFilters(String viewToken) {
 		 getSelectedFilters();
 		 Map<String, String> filtersMap = new HashMap<String, String>();
 		 if(!selectedSubjects.isEmpty()){
 			 filtersMap.put(IsGooruSearchView.SUBJECT_FLT, selectedSubjects);
-		 }
-		 if(!selectedAuthors.isEmpty()){
-			 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
 		 }
 		 if(!selectedGrades.isEmpty()){
 			 filtersMap.put(IsGooruSearchView.GRADE_FLT, selectedGrades);
@@ -1319,10 +1346,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		 if(!selectedStandards.isEmpty()){
 			 filtersMap.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
 		 }
-		 if(!selectedCategories.isEmpty()){
-			 filtersMap.put(IsGooruSearchView.CATEGORY_FLT, selectedCategories);
-		 }
-		 if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+		 if (!selectedCategories.isEmpty() && viewToken.equals(PlaceTokens.SEARCH_RESOURCE) && !selectedCategories.equals("onlyQuestion")) {
+			 filtersMap.put(IsSearchView.CATEGORY_FLT, selectedCategories);
+			}else{
+				filtersMap.put(IsSearchView.CATEGORY_FLT, "all");					
+			}
+		
+		 if(viewToken.equals(PlaceTokens.SEARCH_RESOURCE)){
 			 if(!selectedStars.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.RATINGS_FLT, selectedStars);
 			 }else{
@@ -1348,6 +1378,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 }
 			 if(!oerValue.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OER_FLT, oerValue);
+			 }
+			 filtersMap.remove(IsSearchView.OWNER_FLT);
+
+		 }else{
+
+			 filtersMap.remove(IsSearchView.MEDIATYPE_FLT);
+			 filtersMap.remove(IsSearchView.OER_FLT);
+			 filtersMap.remove(IsSearchView.ACCESS_MODE_FLT);
+			 filtersMap.remove(IsSearchView.REVIEWS_FLT);
+			 
+			 if(!selectedAuthors.isEmpty()){
+				 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
 			 }
 
 		 }
@@ -1425,7 +1467,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void resetData(){
 		searchResultPanel.clear();
 		resultCountVal=0;
-		pageNumber=1;
 		lblLoadingText.setVisible(true);
 		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
 		previousCount=0;

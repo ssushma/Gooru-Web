@@ -193,4 +193,10 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo) {
 		
 	}
+
+	@Override
+	public void displayUsersList(ResourceSearchResultDo resourceSearchResultDo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

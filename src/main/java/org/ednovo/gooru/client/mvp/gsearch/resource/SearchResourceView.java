@@ -88,6 +88,22 @@ public class SearchResourceView extends
 				}
 			}
 		});
+		
+		collectionResourceWidget.getAncViewMore().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.enableScrolling(false);
+				
+					Element element = Document.get().getElementById("fixedFilterSearchID");
+					if(element!=null)
+					{
+					element.setAttribute("style", "opacity:0.1;");
+					}
+				getUiHandlers().displayUsersList(resourceSearchResultDo);
+				
+			}
+		});
+		
 		collectionResourceWidget.getElement().setId(resourceSearchResultDo.getGooruOid());
 		
 		setCollectionResourceWidget(collectionResourceWidget);

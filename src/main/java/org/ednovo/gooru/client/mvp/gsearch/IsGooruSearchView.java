@@ -86,9 +86,10 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 
 	/**
 	 * Get filters for search
+	 * @param viewToken current palce token 
 	 * @return search filters
 	 */
-	Map<String,String> getSearchFilters();
+	Map<String,String> getSearchFilters(String viewToken);
 	/**
 	 * This method will reset the all the values
 	 */

@@ -95,10 +95,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	private final String QUERY = "query";
 
-	private final String PAGE_NUM = "pageNum";
-
-	private final String PAGE_SIZE = "pageSize";
-
 	private SearchDo<T> searchDo = new SearchDo<T>();
 
 	private SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallback;
@@ -423,8 +419,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void refreshSearch(String query) {
 		if(query!=null){
 			getSearchDo().setQuery(query);
-			getSearchDo().setPageNum(null);
-			getSearchDo().setPageSize(null);
 			onSearchRequest(null);
 		}
 	}
@@ -459,7 +453,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			viewToken = getCurrentPlaceToken();
 		}
 		if (getViewToken().equalsIgnoreCase(viewToken)) {
-			Map<String, String> params = getView().getSearchFilters();
+			Map<String, String> params = getView().getSearchFilters(viewToken);
 			params.put(QUERY, getSearchDo().getUrlQuery());
 			getPlaceManager().revealPlace(viewToken, params, true);
 		}
@@ -626,14 +620,13 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	public void setSearchType(boolean isCollectionSearch) {
 		String viewToken;
-		Map<String, String> params = getView().getSearchFilters();
 		if(isCollectionSearch){
 			viewToken=PlaceTokens.SEARCH_COLLECTION;
 		}else{
 			viewToken=PlaceTokens.SEARCH_RESOURCE;
-			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		}
-
+		Map<String, String> params = getView().getSearchFilters(viewToken);
+        //onSearchRequest(viewToken);
 		getSearchDo().setPageNum(1);
 		params.put(QUERY, getSearchDo().getUrlQuery());
 		getPlaceManager().revealPlace(viewToken, params, true);

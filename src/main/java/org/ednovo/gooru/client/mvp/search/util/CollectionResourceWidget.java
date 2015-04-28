@@ -32,6 +32,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -40,6 +41,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionResourceWidget extends Composite {
 
@@ -58,6 +60,7 @@ public class CollectionResourceWidget extends Composite {
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	@UiField InlineLabel relatedCollectionTitle;
 	@UiField Button btnAddResource;
+	@UiField Anchor ancViewMore;
 
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
 
@@ -86,7 +89,23 @@ public class CollectionResourceWidget extends Composite {
 			resourceDesc=resourceDesc.substring(0, 120)+"...";
 		}
 		resourceDescription.getElement().setInnerText(resourceDesc);
-		lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" poeple");
+		if(resourceSearchResultDo.getResourceUsedUserCount()>1)
+		{
+			ancViewMore.setVisible(true);
+		}
+		else
+		{
+			ancViewMore.setVisible(false);
+		}
+		if(resourceSearchResultDo.getResourceUsedUserCount()>0)
+		{
+			lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" poeple");
+		}
+		else
+		{
+			lblUserCount.setText("");
+		}
+		
 		lbladdCount.setText(resourceSearchResultDo.getResourceAddedCount()+"");
 		lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
@@ -128,6 +147,8 @@ public class CollectionResourceWidget extends Composite {
 					if(!StringUtil.isEmpty(result.getSearchResults().get(0).getUrl())){
 						relatedCollectionImage.setUrl(result.getSearchResults().get(0).getUrl());
 						relatedCollectionTitle.setStyleName("collectionTitle");
+						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(result.getSearchResults().get(0).getGooruOid()));
+						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(result.getSearchResults().get(0).getGooruOid()));
 						relatedCollectionTitle.setText(result.getSearchResults().get(0).getResourceTitle());
 						relatedCollectionTitle.setTitle(result.getSearchResults().get(0).getResourceTitle());
 						creatorImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+result.getSearchResults().get(0).getGooruUId()+".png");
@@ -155,6 +176,9 @@ public class CollectionResourceWidget extends Composite {
 				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
 			}
 		});
+
+		
+		//relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler());
 
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
@@ -300,6 +324,10 @@ public class CollectionResourceWidget extends Composite {
 		this.updateReviewCount = updateReviewCount;
 	}
 
+	public Anchor getAncViewMore() {
+		return ancViewMore;
+	}
+
 	UpdateResourceReviewCountEventHandler setReviewCount = new UpdateResourceReviewCountEventHandler() {
 		@Override
 		public void setReviewCount(String resourceId,Integer count) {
@@ -362,6 +390,33 @@ public class CollectionResourceWidget extends Composite {
 		}
 
 	};
+	
+ public class ResourceCollectionHandler implements ClickHandler{
+    String gooruOid;
+	public ResourceCollectionHandler(String gooruOid) {
+		this.gooruOid=gooruOid;
+	}
 
+	@Override
+	public void onClick(ClickEvent event) {
+		GWT.runAsync(new RunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("id", gooruOid);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
+			
+			@Override
+			public void onFailure(Throwable reason) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	 
+ }
 
 }

@@ -38,6 +38,7 @@ package org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup;
 *
 */
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
 
@@ -49,5 +50,7 @@ public interface ViewMorePeopleUiHandlers extends BaseUiHandlers, EventHandler{
 	 */
 
 	public void hidePopup();
+	void getResourceDataByResource(ResourceSearchResultDo searchResultDo,String searchType);
+	
 
 }

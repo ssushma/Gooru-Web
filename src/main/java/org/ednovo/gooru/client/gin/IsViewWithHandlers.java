@@ -27,6 +27,10 @@
  */
 package org.ednovo.gooru.client.gin;
 
+import java.util.ArrayList;
+
+import org.ednovo.gooru.shared.model.content.ResourceCollDo;
+
 import com.gwtplatform.mvp.client.HasUiHandlers;
 
 /**
@@ -45,5 +49,6 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
  * @Reviewer:
  */
 public interface IsViewWithHandlers<H extends BaseUiHandlers> extends IsView, HasUiHandlers<H> {
+
 
 }
