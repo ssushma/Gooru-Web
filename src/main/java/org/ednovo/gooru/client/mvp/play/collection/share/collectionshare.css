@@ -9,7 +9,7 @@
 .collection-narration-wrapper{
 	min-height: 126px;
 	padding:10px;
-	background-color: #rgb(77,77,77);
+	background-color: rgb(77,77,77);
 	/*width:940px;*/
 	position: relative;
 	margin:0 auto;
