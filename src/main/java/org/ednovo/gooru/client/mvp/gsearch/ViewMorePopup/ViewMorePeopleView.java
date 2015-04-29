@@ -110,6 +110,7 @@ public class ViewMorePeopleView extends PopupViewWithUiHandlers<ViewMorePeopleUi
 	@Override
 	public void displayContents(ArrayList<ResourceCollDo> userCollectionsList) {
 		UsedByStr.setText("Used by "+userCollectionsList.size()+" people");
+		scrollContainer.clear();
 		for(int i=0; i<userCollectionsList.size(); i++)
 		{
 			ResourceCollectionUserWidget resourceCollwidget = new ResourceCollectionUserWidget(userCollectionsList.get(i));
