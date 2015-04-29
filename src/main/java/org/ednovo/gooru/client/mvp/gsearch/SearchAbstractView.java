@@ -100,7 +100,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -247,8 +246,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						isInsertTems=true;
 						pageNumber--;
 						if(Storage.isLocalStorageSupported()){
-							pageCountForStorage--;
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-4)+""),true);
+							pageCountForStorage--;
 						}
 						if(getWidgetHeight()!=0){
 							int getTotalScrolltop=getWidgetHeight()*4;
