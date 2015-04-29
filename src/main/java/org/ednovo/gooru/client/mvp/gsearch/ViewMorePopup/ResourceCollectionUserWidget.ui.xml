@@ -5,14 +5,11 @@
         <div class="col-md-4 col-sm-4">
           <g:HTMLPanel styleName="userDetContainer"><g:Image ui:field="creatorImage"/><g:InlineLabel ui:field="relatedUserName" styleName="userNameforCollection"></g:InlineLabel></g:HTMLPanel>
         </div>
-        <div class="col-md-4 col-sm-4">
-          <div class="gradeDetContaner">
-            <gg:PPanel ui:field="gradePanel"></gg:PPanel>
+        <div class="col-md-6 col-sm-6">
+          <div class="colleDetContaner"><g:Image ui:field="collectionImage"/><g:InlineLabel ui:field="relatedCollectionTitle" styleName="userNameforCollection"></g:InlineLabel> 
+               <gg:PPanel ui:field="gradePanel"></gg:PPanel>
             <gg:PPanel ui:field="coursePanel"></gg:PPanel>
           </div>
-        </div>
-        <div class="col-md-6 col-sm-6">
-          <div class="colleDetContaner"><g:Image ui:field="collectionImage"/><g:InlineLabel ui:field="relatedCollectionTitle" styleName="userNameforCollection"></g:InlineLabel> </div>
         </div>
         <div class="clearfix"></div>
       </g:HTMLPanel>
