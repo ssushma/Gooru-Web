@@ -66,7 +66,6 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.restlet.ext.json.JsonRepresentation;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
@@ -230,24 +229,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		AppClientFactory.fireEvent(new RegisterTabDndEvent());
-		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
-	}
-
-	@Override
-	protected void onReset() {
-		super.onReset();
 		getView().resetData();
-/*
-		String count = Cookies.getCookie("MyCookie");
-		if (count != null && Integer.parseInt(count) == 7) {
-			Window.enableScrolling(false);
-			Cookies.setCookie("MyCookie", "8");
-		} else {
-			Window.enableScrolling(false);
-			// Window.enableScrolling(true);
-		}*/
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		if (getSearchDo().getSearchQuery() != null
@@ -270,7 +252,26 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				 //initiateSearch();
 			}
 		}
-		if (getPlaceManager().getRequestParameter("callback") != null
+
+		AppClientFactory.fireEvent(new RegisterTabDndEvent());
+		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
+	}
+
+	@Override
+	protected void onReset() {
+		super.onReset();
+		//getView().resetData();
+/*
+		String count = Cookies.getCookie("MyCookie");
+		if (count != null && Integer.parseInt(count) == 7) {
+			Window.enableScrolling(false);
+			Cookies.setCookie("MyCookie", "8");
+		} else {
+			Window.enableScrolling(false);
+			// Window.enableScrolling(true);
+		}*/
+				if (getPlaceManager().getRequestParameter("callback") != null
 				&& getPlaceManager().getRequestParameter("callback")
 						.equalsIgnoreCase("signup")) {
 			// To show SignUp (Registration popup)
