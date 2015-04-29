@@ -47,19 +47,12 @@
 	margin-top: 5px;
 	box-sizing: content-box;
 }
-.ancImage {
-	color: #1076b8;
-	padding: 5px 18px;
-	border: 1px solid #ddd;
-	background: #fff url(../images/NewResourcePopup/sprite-new-resource.png)
-		no-repeat -4px 2px;
-	display: inline-block;
+.ansContainer {
 	margin-top: 10px;
 }
 
-.ancImage:hover {
-	border-color: #1076bb;
-}
+
+
 
 .no-gutter > [class*='col-']{
 	padding-left:0;

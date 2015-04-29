@@ -32,8 +32,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.HasMouseOverHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -50,12 +48,18 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 
-	@UiField Label hintNumLbl;
-	@UiField TinyMCE hintTextBox;
-	@UiField Label hintsTextLblVal,errorMessageforHints;
+	@UiField
+	public Label hintNumLbl;
+	@UiField
+	public TinyMCE hintTextBox;
+	@UiField
+	public Label hintsTextLblVal;
+	@UiField
+	Label errorMessageforHints;
 	@UiField HTMLPanel deleteButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
-	@UiField HTMLEventPanel eHearderIconHint;
+	@UiField
+	public HTMLEventPanel eHearderIconHint;
 	
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	public Label hintDelLbl=new Label();

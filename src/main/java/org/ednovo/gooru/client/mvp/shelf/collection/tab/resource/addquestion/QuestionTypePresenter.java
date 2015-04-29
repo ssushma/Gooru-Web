@@ -1,9 +1,15 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -20,16 +26,29 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
 	@Inject
 	private ResourceServiceAsync resourceService;
+	
+    private static final String USER_META_ACTIVE_FLAG = "0";
+   	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	private boolean isQuestionResource = false;
+	private boolean isUserResource = false;
+	
+	AddStandardsPresenter addStandardsPresenter = null;
 	/**
 	 * Class Constructor
 	 * @param eventBus {@link EventBus}
 	 * @param view {@link View}
 	 */
 	@Inject
-	public QuestionTypePresenter(EventBus eventBus, IsQuestionTypeView view) {
+	public QuestionTypePresenter(EventBus eventBus, IsQuestionTypeView view,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		addRegisteredHandler(AddResouceImageEvent.TYPE, this);
+		this.addStandardsPresenter = addStandardsPresenter;
 	}
 
 	@Override
@@ -99,6 +118,63 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
+	}
+
+	@Override
+	public void browseStandardsInfo(final boolean isQuestion,final boolean isUserOwnResource) {
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+						
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									isQuestionResource = isQuestion;
+									isUserResource = isUserOwnResource;
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addToPopupSlot(addStandardsPresenter);
+									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+					}
+						
+					}
+
+				});
+	}
+
+	@Override
+	public void addUpdatedBrowseStandards() {
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc());
+	}
+
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
 	}
 
 

@@ -15,4 +15,7 @@ public interface QuestionTypeUiHandlers extends BaseUiHandlers,AddResourceImageH
 	void removeQuestionImage(String collectionItemId);
 	void questionImageUpload();
 	void questionImageUpload(String collectionItemId);
+	void browseStandardsInfo(boolean isQuestion, boolean isUserResource);
+	void addUpdatedBrowseStandards();
+	void closeStandardsPopup();
 }
