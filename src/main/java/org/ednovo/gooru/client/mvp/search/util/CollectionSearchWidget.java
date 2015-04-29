@@ -132,15 +132,7 @@ public class CollectionSearchWidget extends Composite {
 		imgCollection.getElement().getStyle().setZIndex(9999);
 		//imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
 		lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
-		String resourceText="";
-		if(collectionSearchResultDo.getResourceCount()>=4 && collectionSearchResultDo.getQuestionCount()>=4){
-			resourceText="4 "+i18n.GL3215()+" "+i18n.GL3219()+" 4 "+i18n.GL3216()+" "+i18n.GL3220();
-		}else if(collectionSearchResultDo.getResourceCount()<=1 && collectionSearchResultDo.getQuestionCount()<=1){
-			resourceText=collectionSearchResultDo.getResourceCount()+" "+i18n.GL3217()+" "+i18n.GL3219()+" "+collectionSearchResultDo.getQuestionCount()+" "+i18n.GL3218() +" "+i18n.GL3220();
-		}else{
-			resourceText=collectionSearchResultDo.getResourceCount()+" "+i18n.GL3215()+" "+i18n.GL3219()+" "+collectionSearchResultDo.getQuestionCount()+" "+i18n.GL3216()+" "+i18n.GL3220();
-		}
-		pResourceText.setText(resourceText);
+		setResourceAndQuestionCount(collectionSearchResultDo);
 		if(collectionSearchResultDo.getCollectionItems().size()>0){
 			int count=0;
 				for (CollectionItemDo collectionItemSearchResultDo :collectionSearchResultDo.getCollectionItems()) {
@@ -160,7 +152,6 @@ public class CollectionSearchWidget extends Composite {
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(imgCollection.getElement(), "imgCollection", "", "");
 		StringUtil.setAttributes(remixBtn.getElement(), "btnRemix", "", "");
-		StringUtil.setAttributes(pResourceText.getElement(), "pResourceText", resourceText, resourceText);
 		StringUtil.setAttributes(authorName.getElement(), "lblAuthorName", collectionSearchResultDo.getOwner().getUsername(), collectionSearchResultDo.getOwner().getUsername());
 		StringUtil.setAttributes(lblViewCount.getElement(), "lblViewCount", collectionSearchResultDo.getTotalViews()+"", collectionSearchResultDo.getTotalViews()+"");
 		StringUtil.setAttributes(collectionDescription.getElement(), "pnlCollectionDescription", collectionDesc, collectionDesc);
@@ -335,5 +326,41 @@ public class CollectionSearchWidget extends Composite {
 	
 	public Button getRemixBtn() {
 		return remixBtn;
+	}
+	/**
+	 * To set the resource and questions count in the collection.
+	 * @param collectionSearchResultDo
+	 */
+	private void setResourceAndQuestionCount(CollectionSearchResultDo collectionSearchResultDo) {
+		// TODO Auto-generated method stub
+		if(collectionSearchResultDo!=null){
+			String collectionText = "",resourceText = "",questionsText = "";
+			int resourceCount =collectionSearchResultDo.getResourceCount();
+			int questionsCount=collectionSearchResultDo.getQuestionCount();
+			if(resourceCount>0){
+				if(resourceCount==1){
+					resourceText=resourceCount+" "+i18n.GL3217()+" ";
+				}else{
+					resourceText=resourceCount+" "+i18n.GL3215()+" ";
+				}
+			}
+			if(questionsCount>0){
+				if(questionsCount==1){
+					questionsText=" "+questionsCount+" "+i18n.GL3218()+" ";
+				}else{
+					questionsText=" "+questionsCount+" "+i18n.GL3216()+" ";
+				}
+			}
+			if(questionsText.isEmpty() && !resourceText.isEmpty()){
+				collectionText = resourceText+i18n.GL3220();
+			}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
+				collectionText=questionsText+i18n.GL3220();
+			}else{
+				collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3220();
+			}
+			pResourceText.setText(collectionText);
+			StringUtil.setAttributes(pResourceText.getElement(), "pResourceText", resourceText, resourceText);
+		}
+		
 	}
 }
