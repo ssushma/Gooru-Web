@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
@@ -47,11 +48,20 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 
-	@UiField Label hintNumLbl;
-	@UiField TinyMCE hintTextBox;
-	@UiField Label hintsTextLblVal,errorMessageforHints;
+	@UiField
+	public Label hintNumLbl;
+	@UiField
+	public TinyMCE hintTextBox;
+	@UiField
+	public Label hintsTextLblVal;
+	@UiField
+	Label errorMessageforHints;
 	@UiField HTMLPanel deleteButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
+
+	@UiField
+	public HTMLEventPanel eHearderIconHint;
+
 	
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	public Label hintDelLbl=new Label();

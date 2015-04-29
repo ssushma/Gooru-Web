@@ -1,0 +1,43 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style field= "addWebResourceStyle" src="addResource.css" type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceBundle"/>
+	
+	<g:HTMLPanel>
+	     <g:Label ui:field="answerHeadLbl" styleName="answerHeadLbl"></g:Label>
+	     <g:FlowPanel  ui:field="answerHeadContainer" styleName="containerBottom">
+	        <g:HTMLPanel styleName="col-md-5 colmdPadding">
+	         <g:Label  ui:field="answerHeadingTypeLbl" styleName="htQAnswerHeadings htQAnswerTypeLbl"></g:Label>
+	        <g:RadioButton ui:field="imageRDButton" name="ansTypeGroup" styleName="htQAnswerHeadings"></g:RadioButton>
+	         <g:RadioButton ui:field="textRDButton" name="ansTypeGroup" styleName="htQAnswerHeadings"></g:RadioButton>
+	     </g:HTMLPanel>
+	           <g:HTMLPanel styleName="col-md-7 colmdPadding textRight">
+	         <g:Label  ui:field="correctLbl" styleName="htQAnswerHeadings"></g:Label>
+	         <g:RadioButton ui:field="singleRDButton" name="ansType" styleName="htQAnswerHeadings"></g:RadioButton>
+	         <g:RadioButton ui:field="multiRDButton" name="ansType" styleName="htQAnswerHeadings"></g:RadioButton>
+	          </g:HTMLPanel>
+	          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	     </g:FlowPanel>
+	<g:HTMLPanel styleName=" htQanswerContainer">
+	     <g:HTMLPanel ui:field="imgContainer" styleName="containerMarginTop">
+	         
+	         <g:HTMLPanel styleName="col-md-2 colmdPadding">
+	              <g:HTMLPanel styleName="imgBlockContainer">
+	                  <g:Image ui:field="addAnsPlusImage"></g:Image>
+	                     <g:Anchor ui:field="ansImage" styleName="ansAnchImageText"></g:Anchor>
+	              </g:HTMLPanel>
+	         </g:HTMLPanel>
+	         
+	           <g:HTMLPanel styleName="col-md-10 colmdPadding">
+	                 <g:HTMLPanel styleName="imgAnsContainer">
+	                     
+	                 </g:HTMLPanel>
+	           </g:HTMLPanel>
+	          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	     </g:HTMLPanel>
+	     <g:HTMLPanel ui:field="textAnsContainer" styleName="containerBottom"/>
+	      <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	      <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice"></g:Anchor>
+       </g:HTMLPanel>
+       </g:HTMLPanel>
+</ui:UiBinder>
