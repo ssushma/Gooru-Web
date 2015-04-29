@@ -66,7 +66,6 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.restlet.ext.json.JsonRepresentation;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
@@ -230,6 +229,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		getView().resetData();
+		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
+				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+		if (getSearchDo().getSearchQuery() != null
+				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
+			getSearchResultsJsonAsyncCallback().execute(getSearchDo());
+		}
+
 		AppClientFactory.fireEvent(new RegisterTabDndEvent());
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
@@ -238,8 +245,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReset() {
 		super.onReset();
-		getView().resetData();
-/*
+		//getView().resetData();
+		/*
 		String count = Cookies.getCookie("MyCookie");
 		if (count != null && Integer.parseInt(count) == 7) {
 			Window.enableScrolling(false);
@@ -248,39 +255,34 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			Window.enableScrolling(false);
 			// Window.enableScrolling(true);
 		}*/
-		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
-				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		if (getSearchDo().getSearchQuery() != null
-				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
-			getSearchResultsJsonAsyncCallback().execute(getSearchDo());
-		}
+
 		if(AppClientFactory.getPlaceManager().refreshPlace()) {
 			if (setFilter) {
 				searchDo.setPageNum(1);
 				getSearchService().getSearchFilters(getCurrentPlaceToken(),
 						new SimpleAsyncCallback<SearchFilterDo>() {
 
-							@Override
-							public void onSuccess(SearchFilterDo searchFilterDo) {
-								getView().setSearchFilter(searchFilterDo);
-							}
-						});
+					@Override
+					public void onSuccess(SearchFilterDo searchFilterDo) {
+						getView().setSearchFilter(searchFilterDo);
+					}
+				});
 				setFilter = false;
 			} else {
-				 //initiateSearch();
+				initiateSearch();
 			}
 		}
 		if (getPlaceManager().getRequestParameter("callback") != null
 				&& getPlaceManager().getRequestParameter("callback")
-						.equalsIgnoreCase("signup")) {
+				.equalsIgnoreCase("signup")) {
 			// To show SignUp (Registration popup)
 			Window.enableScrolling(false);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			String type = getPlaceManager().getRequestParameter("type");
 			int displayScreen = getPlaceManager().getRequestParameter("type") != null ? Integer
 					.parseInt(type) : 1;
-			signUpViewPresenter.displayPopup(displayScreen);
-			addToPopupSlot(signUpViewPresenter);
+					signUpViewPresenter.displayPopup(displayScreen);
+					addToPopupSlot(signUpViewPresenter);
 		}
 
 		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
@@ -321,6 +323,18 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			AppClientFactory
 					.setBrowserWindowTitle(SeoTokens.RESOURCE_SEARCH_TITLE
 							+ searchQuery);
+		}
+	}
+	
+	
+	public void initiateSearch() {
+		setPageTitle(getSearchDo().getSearchQuery());
+		AppClientFactory
+				.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
+		getView().resetData();
+		if (getSearchDo().getSearchQuery() != null
+				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
+			getSearchResultsJsonAsyncCallback().execute(getSearchDo());
 		}
 	}
 
