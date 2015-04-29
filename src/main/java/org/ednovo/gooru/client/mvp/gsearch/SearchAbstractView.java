@@ -243,7 +243,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()<=100){
+					if(event.getScrollTop()==0){
 						if(pageNumber>3){
 							isInsertTems=true;
 							pageNumber--;
