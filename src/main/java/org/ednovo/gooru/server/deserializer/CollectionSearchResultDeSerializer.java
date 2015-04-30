@@ -62,6 +62,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 	private static final String COLLECTION_ITEM_COUNT="collectionItemCount";
 	private static final String QUESTION_COUNT="questionCount";
 	private static final String RESOURCE_COUNT="resourceCount";
+	private static String COLLECTION_TYPE  = "collectionType";
 
 	private static final String GOORU_OID = "id";
 	
@@ -72,6 +73,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 		CollectionSearchResultDo searchResult = new CollectionSearchResultDo();
 		searchResult.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		searchResult.setCreatorName(getJsonString(recordJsonObject, CREATORNAME));
+		searchResult.setCollectionType(getJsonString(recordJsonObject, COLLECTION_TYPE));
 		searchResult.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
 		
 		searchResult.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));

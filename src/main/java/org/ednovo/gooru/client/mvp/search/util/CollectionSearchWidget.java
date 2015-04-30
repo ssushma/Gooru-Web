@@ -73,6 +73,12 @@ public class CollectionSearchWidget extends Composite {
 	@UiField FlowPanel standardsDataPanel;
 	@UiField Button remixBtn;
 	
+	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
+	
+	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
+	
+	private static final String ASSESSMENT = "assessment";
+	
 	private final FlowPanel profilePanel=new FlowPanel();
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
@@ -117,6 +123,8 @@ public class CollectionSearchWidget extends Composite {
 		if ((collectionSearchResultDo.getOwner().isProfileUserVisibility())){
 			 collectionCreatorDetails(collectionSearchResultDo);
 		}
+		final String collectionType=StringUtil.isEmpty(collectionSearchResultDo.getCollectionType())?null:collectionSearchResultDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, imgCollection, "high");
 		if(!StringUtil.isEmpty(collectionSearchResultDo.getUrl())){
 			imgCollection.setUrl(StringUtil.formThumbnailName(collectionSearchResultDo.getUrl(), "-160x120."));
 		}
@@ -124,7 +132,7 @@ public class CollectionSearchWidget extends Composite {
 
 			@Override
 			public void onError(ErrorEvent event) {
-				imgCollection.setUrl(DEFULT_IMAGE);
+				StringUtil.setDefaultImages(collectionType, imgCollection, "high");
 			}
 		});
 		imgCollection.addClickHandler(new OnCollectionImageClick(collectionSearchResultDo.getGooruOid()));
