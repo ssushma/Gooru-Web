@@ -185,7 +185,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	private Storage localStore = null;
 	 
-	int pageCountForStorage=1;
+	int pageCountForStorage=1,previousScroll;
 	/**
 	 * Assign new instance for 
 	 * 
@@ -243,7 +243,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()<=100){
+					if(event.getScrollTop()<=100 && previousScroll>event.getScrollTop()){
 						if(pageNumber>3){
 							isInsertTems=true;
 							pageNumber--;
@@ -271,6 +271,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						}
 					}
 				}
+				previousScroll=event.getScrollTop();
 			}
 		});
 		pnlBackToTop.getElement().setId("back-top");
