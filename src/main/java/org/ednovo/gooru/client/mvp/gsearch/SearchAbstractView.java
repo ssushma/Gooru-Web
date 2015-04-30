@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -128,6 +127,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField FlowPanel pnlAddFilters,searchResultPanel,sourceContainerFloPanel;
 	
 	@UiField TextBox authorTxtBox;
+	
+	@UiField LiPanel collectionsBtn,assessmentsBtn;
 	
 	@UiField
 	PPanel panelNotMobileFriendly,accessModePanel,reviewPanelUc;
@@ -591,6 +592,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showAggregatorFilter();
 		showOERFilter();
 		showReviewFilter();
+		setStyleForCollectionType();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -637,6 +639,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			liPanel.add(lblSubject);
 			liPanel.addClickHandler(new SubjectItemClickHandler(subject,liPanel));
 			ulSubjectPanel.add(liPanel);
+		}
+	}
+	/**
+	 * To set style for collections/Assessments
+	 */
+	public void setStyleForCollectionType(){
+		String collectionType=AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT);
+		if(collectionType!=null){
+			if(collectionType.equals("assessment")){
+				assessmentsBtn.addStyleName("active");
+				collectionsBtn.removeStyleName("active");
+			}else{
+				assessmentsBtn.removeStyleName("active");
+				collectionsBtn.addStyleName("active");
+			}
 		}
 	}
 	
@@ -1319,9 +1336,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 filtersMap.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
 		 }
 		 if (!selectedCategories.isEmpty() && viewToken.equals(PlaceTokens.SEARCH_RESOURCE) && !selectedCategories.equals("onlyQuestion")) {
-			 filtersMap.put(IsSearchView.CATEGORY_FLT, selectedCategories);
+			 filtersMap.put(IsGooruSearchView.CATEGORY_FLT, selectedCategories);
 			}else{
-				filtersMap.put(IsSearchView.CATEGORY_FLT, "all");					
+				filtersMap.put(IsGooruSearchView.CATEGORY_FLT, "all");					
 			}
 		
 		 if(viewToken.equals(PlaceTokens.SEARCH_RESOURCE)){
@@ -1358,14 +1375,14 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 {
 				 filtersMap.put(IsGooruSearchView.REVIEWS_FLT, reviewValue);
 			 }
-			 filtersMap.remove(IsSearchView.OWNER_FLT);
+			 filtersMap.remove(IsGooruSearchView.OWNER_FLT);
 
 		 }else{
 
-			 filtersMap.remove(IsSearchView.MEDIATYPE_FLT);
-			 filtersMap.remove(IsSearchView.OER_FLT);
-			 filtersMap.remove(IsSearchView.ACCESS_MODE_FLT);
-			 filtersMap.remove(IsSearchView.REVIEWS_FLT);
+			 filtersMap.remove(IsGooruSearchView.MEDIATYPE_FLT);
+			 filtersMap.remove(IsGooruSearchView.OER_FLT);
+			 filtersMap.remove(IsGooruSearchView.ACCESS_MODE_FLT);
+			 filtersMap.remove(IsGooruSearchView.REVIEWS_FLT);
 			 
 			 if(!selectedAuthors.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
@@ -1696,5 +1713,26 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			pageCountForStorage++;
 		}
 		printLoclStoreSize();
+	}
+	
+	@UiHandler("assessmentsBtn")
+	public void clickOnAssessments(ClickEvent clickEvent){
+		assessmentsBtn.addStyleName("active");
+		collectionsBtn.removeStyleName("active");
+		Map<String, String> params = getSearchFilters(AppClientFactory.getCurrentPlaceToken());
+		params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "assessment");
+		params.put("query", AppClientFactory.getPlaceManager().getRequestParameter("query"));
+		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
+	}
+	
+	@UiHandler("collectionsBtn")
+	public void clickOnCollections(ClickEvent clickEvent){
+		assessmentsBtn.removeStyleName("active");
+		collectionsBtn.addStyleName("active");
+		Map<String, String> params = getSearchFilters(AppClientFactory.getCurrentPlaceToken());
+		params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
+		params.put("query", AppClientFactory.getPlaceManager().getRequestParameter("query"));
+		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
+		
 	}
 }

@@ -71,6 +71,8 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	String RATINGS_FLT = "flt.rating";
 	
 	String REVIEWS_FLT = "flt.isReviewed";
+	
+	String COLLECTIONTYPE_FLT = "flt.collectionType";
 
 	/**
 	 * Set post search view

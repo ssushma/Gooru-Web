@@ -48,7 +48,6 @@ import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
@@ -376,51 +375,57 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	protected Map<String, String> getSearchFilters() {
 		Map<String, String> filters = new HashMap<String, String>();
 		String category = getPlaceManager().getRequestParameter(
-				IsSearchView.CATEGORY_FLT);
+				IsGooruSearchView.CATEGORY_FLT);
 		if (category != null) {
-			filters.put(IsSearchView.CATEGORY_FLT, category);
+			filters.put(IsGooruSearchView.CATEGORY_FLT, category);
 		}
 		String subject = getPlaceManager().getRequestParameter(
-				IsSearchView.SUBJECT_FLT);
+				IsGooruSearchView.SUBJECT_FLT);
 		if (subject != null) {
-			filters.put(IsSearchView.SUBJECT_FLT, subject);
+			filters.put(IsGooruSearchView.SUBJECT_FLT, subject);
 		}
 		String grade = getPlaceManager().getRequestParameter(
-				IsSearchView.GRADE_FLT);
+				IsGooruSearchView.GRADE_FLT);
 		if (grade != null) {
-			filters.put(IsSearchView.GRADE_FLT, grade);
+			filters.put(IsGooruSearchView.GRADE_FLT, grade);
 		}
 		String standard = getPlaceManager().getRequestParameter(
-				IsSearchView.STANDARD_FLT);
+				IsGooruSearchView.STANDARD_FLT);
 		if (standard != null) {
-			filters.put(IsSearchView.STANDARD_FLT, standard);
+			filters.put(IsGooruSearchView.STANDARD_FLT, standard);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest()
 				.getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)) {
 			String notFriendly = getPlaceManager().getRequestParameter(
-					IsSearchView.MEDIATYPE_FLT);
+					IsGooruSearchView.MEDIATYPE_FLT);
 			if (notFriendly != null
 					&& notFriendly.equalsIgnoreCase("not_ipad_friendly")) {
-				filters.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
+				filters.put(IsGooruSearchView.MEDIATYPE_FLT, notFriendly);
 			}
 			String oer = getPlaceManager().getRequestParameter(
-					IsSearchView.OER_FLT);
+					IsGooruSearchView.OER_FLT);
 			String ratings= getPlaceManager().getRequestParameter(
-					IsSearchView.RATINGS_FLT);
+					IsGooruSearchView.RATINGS_FLT);
 			String accessMode = getPlaceManager().getRequestParameter(
-					IsSearchView.ACCESS_MODE_FLT);
+					IsGooruSearchView.ACCESS_MODE_FLT);
 			if (oer != null && oer.equalsIgnoreCase("1")) {
-				filters.put(IsSearchView.OER_FLT, oer);
+				filters.put(IsGooruSearchView.OER_FLT, oer);
 			}
 			if (accessMode != null) {
-				filters.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+				filters.put(IsGooruSearchView.ACCESS_MODE_FLT, accessMode);
 			}
 			if(ratings != null){
-				filters.put(IsSearchView.RATINGS_FLT, ratings);
+				filters.put(IsGooruSearchView.RATINGS_FLT, ratings);
 			}else{
-				filters.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+				filters.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 			}
 
+		}else{
+			String collectionType = getPlaceManager().getRequestParameter(
+					IsGooruSearchView.COLLECTIONTYPE_FLT);
+			if (collectionType != null) {
+				filters.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
+			}
 		}
 		return filters;
 	}
@@ -455,7 +460,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setNotFriendly(null);
 		getSearchDo().setQuery(searchQuery);
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		params.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		getSearchDo().setFilters(params);
 		onSearchRequest(viewToken);
 	}
