@@ -148,18 +148,22 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 
 	@Override
 	protected void requestSearch(final SearchDo<CollectionSearchResultDo> searchDo,final SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
-		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallback());
+		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
+	}
+	@Override
+	protected void requestSearchLoad(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchResultsJsonAsyncCallback) {
+		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
 	}
 	@Override
 	protected void requestSearchFormJson(String result,SearchDo<CollectionSearchResultDo> searchDo2) {
 		getSearchService().descralizeCollectionSearchResults(result, searchDo2, getSearchAsyncCallback());
 	}
+
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
-		//getSearchDo().setQuery("cells");
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
-		getSearchService().getCollectionSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallback());
+		getSearchService().getCollectionSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallbackLoadInStore());
 	}
 	
 	/**

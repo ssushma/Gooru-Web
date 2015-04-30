@@ -105,7 +105,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
 
-	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback;
+	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackFirstLoad;
+	
+	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackLoadInStore;
+	
+	private SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallbackLoadInStore;
 	
 	protected static final String ALL = "*";
 
@@ -169,6 +173,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	public void onBind() {
 		super.onBind();
+		//first time data store
 		setSearchAsyncCallback(new SearchAsyncCallbackForString<SearchDo<T>>() {
 			@Override
 			protected void run(boolean isApiCalled,String representation, SearchDo<T> searchDo) {
@@ -181,7 +186,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				getView().postSearch(result,isApiCalled);
 			}
 		});
-		setSearchResultsJsonAsyncCallback(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
+		setSearchResultsJsonAsyncCallbackFirstLoad(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
 			@Override
 			protected void run(SearchDo<T> searchDo) {
 				requestSearch(searchDo, this);
@@ -189,6 +194,29 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(String result) {
 				getSearchAsyncCallback().execute(false,result,getSearchDo());
+			}
+		});
+		//Next time it will add to local store
+		setSearchAsyncCallbackLoadInStore(new SearchAsyncCallbackForString<SearchDo<T>>() {
+			@Override
+			protected void run(boolean isApiCalled, String representation,SearchDo<T> searchDo) {
+				getView().setJsonResponseInStorage(representation,isApiCalled);
+			}
+
+			@Override
+			public void onCallSuccess(SearchDo<T> result, boolean isApiCalled) {
+				setSearchDo(result);
+			}
+		});
+		setSearchResultsJsonAsyncCallbackLoadInStore(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
+			@Override
+			protected void run(SearchDo<T> searchDo) {
+				requestSearchLoad(searchDo, this);
+			}
+
+			@Override
+			public void onCallSuccess(String result) {
+				getSearchAsyncCallbackLoadInStore().execute(false,result,getSearchDo());
 			}
 		});
 		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
@@ -233,7 +261,9 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		if (getSearchDo().getSearchQuery() != null
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
-			getSearchResultsJsonAsyncCallback().execute(getSearchDo());
+			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
+			getSearchDo().setPageNum(2);
+			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
 		}
 
 		AppClientFactory.fireEvent(new RegisterTabDndEvent());
@@ -333,7 +363,9 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getView().resetData();
 		if (getSearchDo().getSearchQuery() != null
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
-			getSearchResultsJsonAsyncCallback().execute(getSearchDo());
+			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
+			getSearchDo().setPageNum(2);
+			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
 		}
 	}
 
@@ -543,6 +575,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	}
 
 	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
+	
+	protected abstract void requestSearchLoad(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
 
 	protected abstract void requestSearchFormJson(String result,SearchDo<T> searchDo2);
 
@@ -651,12 +685,13 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getPlaceManager().revealPlace(viewToken, params, true);
 	}
 
-	public SearchAsyncCallbackForSearch<SearchDo<T>> getSearchResultsJsonAsyncCallback() {
-		return searchResultsJsonAsyncCallback;
+	public SearchAsyncCallbackForSearch<SearchDo<T>> getSearchResultsJsonAsyncCallbackFirstLoad() {
+		return searchResultsJsonAsyncCallbackFirstLoad;
 	}
 
-	public void setSearchResultsJsonAsyncCallback(SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback) {
-		this.searchResultsJsonAsyncCallback = searchResultsJsonAsyncCallback;
+	public void setSearchResultsJsonAsyncCallbackFirstLoad(
+			SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackFirstLoad) {
+		this.searchResultsJsonAsyncCallbackFirstLoad = searchResultsJsonAsyncCallbackFirstLoad;
 	}
 
 	public SearchAsyncCallbackForString<SearchDo<T>> getSearchAsyncCallback() {
@@ -666,6 +701,24 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void setSearchAsyncCallback(
 			SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallback) {
 		this.searchAsyncCallback = searchAsyncCallback;
+	}
+
+	public SearchAsyncCallbackForSearch<SearchDo<T>> getSearchResultsJsonAsyncCallbackLoadInStore() {
+		return searchResultsJsonAsyncCallbackLoadInStore;
+	}
+
+	public void setSearchResultsJsonAsyncCallbackLoadInStore(
+			SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackLoadInStore) {
+		this.searchResultsJsonAsyncCallbackLoadInStore = searchResultsJsonAsyncCallbackLoadInStore;
+	}
+
+	public SearchAsyncCallbackForString<SearchDo<T>> getSearchAsyncCallbackLoadInStore() {
+		return searchAsyncCallbackLoadInStore;
+	}
+
+	public void setSearchAsyncCallbackLoadInStore(
+			SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallbackLoadInStore) {
+		this.searchAsyncCallbackLoadInStore = searchAsyncCallbackLoadInStore;
 	}
 
 	@Override

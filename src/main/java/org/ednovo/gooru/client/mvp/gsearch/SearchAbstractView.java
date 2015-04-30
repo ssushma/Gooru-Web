@@ -177,7 +177,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
 	
 	boolean isInsertTems=false;
-	boolean firstTime = false;
+	boolean firstTime = false,isApiInProgress=true;
 	
 	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
 	
@@ -249,6 +249,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
 							if(Storage.isLocalStorageSupported()){
+								System.out.println("localStore.getLength();::"+localStore.getLength());
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-4)+""),true);
 								pageCountForStorage--;
 							}
@@ -258,16 +259,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						}
 					}
 					//This condition is used to check that the user is scrolling top to bottom
-					if(resultCountVal>=8){
+					if(resultCountVal>=8 && isApiInProgress){
 						if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
 							isInsertTems=false;
+							isApiInProgress=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 9);
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 							}else{
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
 							}
+							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 						}
 					}
 				}
@@ -541,14 +544,19 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				Collections.reverse(searchDo.getSearchResults());
+				HTMLPanel widgetsContainer=new HTMLPanel("");
+				searchResultPanel.insert(widgetsContainer,0);
 				for (T searchResult : searchDo.getSearchResults()) {
-					searchResultPanel.insert(renderSearchResult(searchResult),0);
+					widgetsContainer.add(renderSearchResult(searchResult));
 				}
 				lblLoadingTextPrevious.setVisible(false);
 			}else{
+				HTMLPanel widgetsContainer=new HTMLPanel("");
+				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
-					searchResultPanel.add(renderSearchResult(searchResult));
+					widgetsContainer.add(renderSearchResult(searchResult));
 				}
+				isApiInProgress=true;
 			}
 			lblLoadingText.setVisible(false);
 		}else{
@@ -1544,6 +1552,22 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	/**
+	 * This method is used to find the local storage size	
+	 */
+	public static native void printLoclStoreSize() /*-{
+	 	var data = '';
+        console.log('Current local storage: ');
+        for(var key in window.localStorage){
+            if(window.localStorage.hasOwnProperty(key)){
+                data += window.localStorage[key];
+                console.log( key + " = " + ((window.localStorage[key].length * 16)/(8 * 1024)).toFixed(2) + ' KB' );
+            }
+        }
+        console.log(data ? '\n' + 'Total space used: ' + ((data.length * 16)/(8 * 1024)).toFixed(2) + ' KB' : 'Empty (0 KB)');
+        console.log(data ? 'Approx. space remaining: ' + (5120 - ((data.length * 16)/(8 * 1024)).toFixed(2)) + ' KB' : '5 MB');
+	}-*/;
+
+	/**
 	 * This native method is used to get the number of visible items on the screen, based on this we are calling the top scroll functionality
 	 */
 	public static native int getVisibleItems() /*-{
@@ -1685,6 +1709,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			localStore.setItem(pageCountForStorage+"", data);
 			pageCountForStorage++;
 		}
+		printLoclStoreSize();
 	}
 	
 	@UiHandler("assessmentsBtn")
