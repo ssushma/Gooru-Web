@@ -543,13 +543,17 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				Collections.reverse(searchDo.getSearchResults());
+				HTMLPanel widgetsContainer=new HTMLPanel("");
+				searchResultPanel.insert(widgetsContainer,0);
 				for (T searchResult : searchDo.getSearchResults()) {
-					searchResultPanel.insert(renderSearchResult(searchResult),0);
+					widgetsContainer.add(renderSearchResult(searchResult));
 				}
 				lblLoadingTextPrevious.setVisible(false);
 			}else{
+				HTMLPanel widgetsContainer=new HTMLPanel("");
+				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
-					searchResultPanel.add(renderSearchResult(searchResult));
+					widgetsContainer.add(renderSearchResult(searchResult));
 				}
 				isApiInProgress=true;
 			}
