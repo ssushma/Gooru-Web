@@ -157,7 +157,11 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
 		getSearchDo().setPageSize(9);
-		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallback());
+		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
+	}
+	@Override
+	protected void requestSearchLoad(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchResultsJsonAsyncCallback) {
+		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
 	}
 	@Override
 	protected void requestSearchFormJson(String result,SearchDo<ResourceSearchResultDo> searchDo2) {
@@ -167,7 +171,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
-		getSearchService().getResourceSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallback());
+		getSearchService().getResourceSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallbackLoadInStore());
 	}
 	
 	/**
