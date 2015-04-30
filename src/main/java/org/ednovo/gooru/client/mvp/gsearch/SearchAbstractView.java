@@ -177,7 +177,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
 	
 	boolean isInsertTems=false;
-	boolean firstTime = false,isApiInProgress=true;
+	boolean firstTime = false,isApiInProgress=true,isApiInProgressBack=true;
 	
 	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
 	
@@ -244,12 +244,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
 					if(event.getScrollTop()<=100 && previousScroll>event.getScrollTop()){
-						if(pageNumber>3){
+						if(pageCountForStorage>3 && isApiInProgressBack && (searchResultPanel.getWidgetCount()>=3)){
+							isApiInProgressBack=false;
 							isInsertTems=true;
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
 							if(Storage.isLocalStorageSupported()){
-								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-4)+""),true);
+								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-3)+""),true);
 								pageCountForStorage--;
 							}
 							Window.scrollTo(0, getWidgetHeight()*4);
@@ -499,12 +500,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	public void removeTopWidgets(boolean isBottomOrTop){
 		try{
-			int removeableWidgetCount=8;
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-				removeableWidgetCount=9;
-			}else{
-				removeableWidgetCount=8;
-			}
+			int removeableWidgetCount=1;
 			if(isBottomOrTop){
 				int widgetCount=searchResultPanel.getWidgetCount()-removeableWidgetCount;
 				int totalWidgetCount=searchResultPanel.getWidgetCount();
@@ -549,13 +545,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			searchResults.setText(i18n.GL3210()+"  "+"("+searchDo.getSearchHits()+")");
 			searchDo.getSearchHits();
 			if(isInsertTems){
-				Collections.reverse(searchDo.getSearchResults());
 				HTMLPanel widgetsContainer=new HTMLPanel("");
 				searchResultPanel.insert(widgetsContainer,0);
 				for (T searchResult : searchDo.getSearchResults()) {
 					widgetsContainer.add(renderSearchResult(searchResult));
 				}
 				lblLoadingTextPrevious.setVisible(false);
+				isApiInProgressBack=true;
 			}else{
 				HTMLPanel widgetsContainer=new HTMLPanel("");
 				searchResultPanel.add(widgetsContainer);
