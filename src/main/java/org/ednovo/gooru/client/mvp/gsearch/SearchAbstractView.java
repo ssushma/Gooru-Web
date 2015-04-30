@@ -249,7 +249,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
 							if(Storage.isLocalStorageSupported()){
-								System.out.println("localStore.getLength();::"+localStore.getLength());
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-4)+""),true);
 								pageCountForStorage--;
 							}
@@ -379,10 +378,17 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	public int getWidgetHeight(){
 		if(searchResultPanel.iterator().hasNext()){
-			return searchResultPanel.iterator().next().getElement().getOffsetHeight();
+			return searchResultPanel.iterator().next().getElement().getFirstChildElement().getOffsetHeight();
 		}
 		return 0;
 	}
+	public void removeFromLocalStorage(){
+		if(Storage.isLocalStorageSupported() && localStore.getLength()>=11){
+			int keyVal=pageNumber-9;
+			localStore.removeItem(keyVal+"");
+		}
+	}
+	
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
 	 * @author Gooru
@@ -503,7 +509,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				int widgetCount=searchResultPanel.getWidgetCount()-removeableWidgetCount;
 				int totalWidgetCount=searchResultPanel.getWidgetCount();
 				int removeWidgetCount=searchResultPanel.getWidgetCount();
-				if(searchResultPanel.getWidgetCount()>24){
+				if(searchResultPanel.getWidgetCount()>3){
 					Iterator<Widget> widgets=searchResultPanel.iterator();
 					while (widgets.hasNext()){
 						if(widgetCount==totalWidgetCount){
@@ -516,7 +522,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}else{
 				int widgetCount=1;
-				if(searchResultPanel.getWidgetCount()>24){
+				if(searchResultPanel.getWidgetCount()>3){
 					Iterator<Widget> widgets=searchResultPanel.iterator();
 					while (widgets.hasNext()){
 						if(widgetCount>removeableWidgetCount){
@@ -526,7 +532,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						searchResultPanel.remove(widget);
 						widgetCount++;
 					}
-					Window.scrollTo(0, getWidgetHeight()*(searchResultPanel.getWidgetCount()/3));
+					Window.scrollTo(0, getWidgetHeight()*(searchResultPanel.getWidgetCount()*4));
 				}
 			}
 		}catch(Exception e){
@@ -556,6 +562,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 					widgetsContainer.add(renderSearchResult(searchResult));
 				}
+				removeFromLocalStorage();
 				isApiInProgress=true;
 			}
 			lblLoadingText.setVisible(false);

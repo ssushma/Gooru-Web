@@ -411,7 +411,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			if (oer != null && oer.equalsIgnoreCase("1")) {
 				filters.put(IsGooruSearchView.OER_FLT, oer);
 			}
-
 			if (accessMode != null) {
 				filters.put(IsGooruSearchView.ACCESS_MODE_FLT, accessMode);
 			}
