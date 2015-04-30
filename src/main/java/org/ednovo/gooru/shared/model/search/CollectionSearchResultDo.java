@@ -56,6 +56,8 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	
 	private Integer onlyResourceCount;
 	
+	private String collectionType;
+	
 	private List<CollectionItemDo> collectionItems;
  	
 	public CollectionSearchResultDo() {
@@ -117,4 +119,19 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	public void setCollectionItems(List<CollectionItemDo> collectionItems) {
 		this.collectionItems = collectionItems;
 	}
+
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+	
 }
