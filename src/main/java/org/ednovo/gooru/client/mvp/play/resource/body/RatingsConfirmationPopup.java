@@ -26,7 +26,7 @@ public class RatingsConfirmationPopup extends PopupPanel{
 	String assocGooruOId,createrName;
 	@UiField Label reviewRatingText,saveAndPsotLbl;
 	@UiField HTMLPanel averageRationPanel,buttonsContainer;
-	@UiField HTMLPanel imgSuccessIcon;
+	@UiField HTMLPanel imgSuccessIcon,ratingsMainContainer;
 	
 	private static RatingsConfirmationPopupUiBinder uiBinder = GWT
 			.create(RatingsConfirmationPopupUiBinder.class);
@@ -42,6 +42,7 @@ public class RatingsConfirmationPopup extends PopupPanel{
 			setWidget(uiBinder.createAndBindUi(this));
 			this.assocGooruOId=assocGooruOId;
 			this.createrName = createrName;
+			ratingsMainContainer.getElement().setId("fpnlWrapperContainerField");
 			reviewRatingText.setText(i18n.GL1856());
 			reviewRatingText.getElement().setId("lblReviewRatingText");
 			reviewRatingText.getElement().setAttribute("alt",i18n.GL1856());
