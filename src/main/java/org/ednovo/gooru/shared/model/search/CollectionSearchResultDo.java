@@ -58,6 +58,8 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	
 	private String collectionType;
 	
+	private Integer scollectionRemixCount;
+	
 	private List<CollectionItemDo> collectionItems;
  	
 	public CollectionSearchResultDo() {
@@ -133,5 +135,21 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
 	}
+
+	/**
+	 * @return the scollectionRemixCount
+	 */
+	public Integer getScollectionRemixCount() {
+		return scollectionRemixCount;
+	}
+
+	/**
+	 * @param scollectionRemixCount the scollectionRemixCount to set
+	 */
+	public void setScollectionRemixCount(Integer scollectionRemixCount) {
+		this.scollectionRemixCount = scollectionRemixCount;
+	}
+	
+	
 	
 }
