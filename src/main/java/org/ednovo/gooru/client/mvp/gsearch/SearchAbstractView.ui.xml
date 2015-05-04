@@ -12,10 +12,10 @@
 							<g:HTMLPanel styleName="seachLeftNavigation">
 								<panel:UlPanel>
 									<panel:LiPanel styleName="active" ui:field="collectionPanel">
-										<g:Anchor text="{i18n.GL0645}" title="{i18n.GL0645}"/> 
+										<g:Anchor text="{i18n.GL1754}" title="{i18n.GL1754}"/> 
 									</panel:LiPanel>
 									<panel:LiPanel ui:field="resourcePanel">
-										<g:Anchor text="{i18n.GL1110}" title="{i18n.GL1110}"/>
+										<g:Anchor text="{i18n.GL1755}" title="{i18n.GL1755}"/>
 									</panel:LiPanel>
 								</panel:UlPanel>
 							</g:HTMLPanel>

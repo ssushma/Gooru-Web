@@ -395,6 +395,8 @@
 	display: inline-block;
 }
 #gooruSearchMainContainer .collectionDescription{
+	max-height: 44px;
+	overflow: hidden;
 }
 
 /*
