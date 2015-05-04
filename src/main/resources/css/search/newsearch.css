@@ -404,6 +404,7 @@ Back to top button
 	position: fixed;
 	bottom: 100px;
 	margin-left: 950px;
+	display: none;
 }
 #gooruSearchMainContainer  #back-top a {
 	width: 85px;
