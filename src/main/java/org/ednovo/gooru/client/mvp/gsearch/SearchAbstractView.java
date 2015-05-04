@@ -267,7 +267,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-3)+""),true);
 								pageCountForStorage--;
 							}
-							Window.scrollTo(0, getLastWidgetHeight()*4);
+							Window.scrollTo(0, getWidgetHeight()*4);
 						}else{
 							Window.scrollTo(0, 0);
 						}
@@ -400,16 +400,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		return 0;
 	}
-	public int getLastWidgetHeight(){
-		if(searchResultPanel.getWidgetCount()>1){
-			int offSetHeight=searchResultPanel.getWidget((searchResultPanel.getWidgetCount()-1)).getElement().getFirstChildElement().getOffsetHeight();
-			return offSetHeight!=0?offSetHeight:404;
-		}
-		return 0;
-	}
-	public void removeFromLocalStorage(){
+	public void removeFromLocalStorageForward(){
 		if(Storage.isLocalStorageSupported() && localStore.getLength()>=11){
 			int keyVal=pageNumber-9;
+			localStore.removeItem(keyVal+"");
+		}
+	}
+	public void removeFromLocalStorageBackword(){
+		if(Storage.isLocalStorageSupported() && localStore.getLength()>=11){
+			int keyVal=pageNumber+9;
 			localStore.removeItem(keyVal+"");
 		}
 	}
@@ -580,14 +579,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				lblLoadingTextPrevious.setVisible(false);
 				isApiInProgressBack=true;
+				removeFromLocalStorageBackword();
 			}else{
 				HTMLPanel widgetsContainer=new HTMLPanel("");
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 					widgetsContainer.add(renderSearchResult(searchResult));
 				}
-				removeFromLocalStorage();
 				isApiInProgress=true;
+				removeFromLocalStorageForward();
 			}
 			lblLoadingText.setVisible(false);
 			lblLoadingTextPrevious.setVisible(false);
