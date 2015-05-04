@@ -289,7 +289,7 @@
 #gooruSearchMainContainer .textSmall {
     background: url("../images/Text_1.png") no-repeat scroll 0 0 transparent;
 }
-#gooruSearchMainContainer .webSmall {
+#gooruSearchMainContainer .webpageSmall {
     background: url("../images/Website_1.png") no-repeat scroll 0 0 transparent;
 }
 
@@ -299,7 +299,7 @@
 #gooruSearchMainContainer .resourceImage a:hover .textSmall{
 		display:none;
 }
-#gooruSearchMainContainer .resourceImage a:hover .webSmall{
+#gooruSearchMainContainer .resourceImage a:hover .webpageSmall{
 		display:none;
 }
 #gooruSearchMainContainer .libraryMainContainerBlock .panel-default > .panel-heading{
@@ -340,10 +340,10 @@
 }
 
 #gooruSearchMainContainer .viewContainer{
-	margin:12px 0 6px 0;
+	margin:7px 0 6px 0;
 }
 #gooruSearchMainContainer .viewContainer span{
-	margin-right:8px;
+	margin-right:5px;
 	font-size:13px;
 	color:#515151;
 }

@@ -29,7 +29,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -96,7 +96,7 @@ public class ResourceFrameBreakerView extends Composite implements ClientConstan
 	 * @param collectionItemDo
 	 */
 	@UiConstructor
-	public ResourceFrameBreakerView(final CollectionItemDo collectionItemDo,boolean isGoogleFile){
+	public ResourceFrameBreakerView(CollectionItemDo collectionItemDo,boolean isGoogleFile){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo = collectionItemDo;
@@ -114,7 +114,9 @@ public class ResourceFrameBreakerView extends Composite implements ClientConstan
 			}
 		}
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
-			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnails().getUrl());
+			if(collectionItemDo.getResource().getThumbnails()!=null){
+				imgFieldTrip.setUrl(StringUtil.isEmpty(collectionItemDo.getResource().getThumbnails().getUrl())?"":collectionItemDo.getResource().getThumbnails().getUrl());
+			}
 			if(collectionItemDo.getResource().getResourceFormat()!=null){
 				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():"";
 				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():""));
