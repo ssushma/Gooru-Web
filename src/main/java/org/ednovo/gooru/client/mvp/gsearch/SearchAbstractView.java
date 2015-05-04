@@ -162,6 +162,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private boolean isClickedOnDropDwn=false;
 	
+	private boolean isForwardScroll=true;
+	
 	private boolean isClickOnMoreFilter=false;
 	
 	SearchDo<T> searchDoGbl = new SearchDo<T>();
@@ -251,23 +253,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isInsertTems=true;
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
-							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=2)
-							{
-								if(searchDoGbl.getTotalPages()>=(pageNumber-1))
-								{
-								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 9);
-								}else{
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 8);
-								}
+							isForwardScroll = false;
+							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=2){
+								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
+									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 9);
+									}else{
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 8);
+									}
 								}
 							}
-							
 							if(Storage.isLocalStorageSupported()){
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-3)+""),true);
 								pageCountForStorage--;
 							}
-							Window.scrollTo(0, getWidgetHeight()*4);
+							Window.scrollTo(0, getLastWidgetHeight()*4);
 						}else{
 							Window.scrollTo(0, 0);
 						}
@@ -279,13 +279,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isApiInProgress=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
-							if(searchDoGbl.getTotalPages()>=(pageNumber+1))
-							{
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
-							}else{
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
-							}
+							isForwardScroll = true;
+							if(searchDoGbl.getTotalPages()>=(pageNumber+1)){
+								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
+								}else{
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
+								}
 							}
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 						}
@@ -372,7 +372,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * To render the Access Mode values
 	 */
 	private void renderAccessModeValues() {
-		// TODO Auto-generated method stub
 		for(int i=0;i<accessModeArray.length;i++){
 			renderAccessModeCheckBox(accessModePanel,accessModeArray[i].toLowerCase(),accessModeArray[i]);
 		}
@@ -396,7 +395,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	public int getWidgetHeight(){
 		if(searchResultPanel.iterator().hasNext()){
-			return searchResultPanel.iterator().next().getElement().getFirstChildElement().getOffsetHeight();
+			int offSetHeight=searchResultPanel.iterator().next().getElement().getFirstChildElement().getOffsetHeight();
+			return offSetHeight!=0?offSetHeight:404;
+		}
+		return 0;
+	}
+	public int getLastWidgetHeight(){
+		if(searchResultPanel.getWidgetCount()>1){
+			int offSetHeight=searchResultPanel.getWidget((searchResultPanel.getWidgetCount()-1)).getElement().getFirstChildElement().getOffsetHeight();
+			return offSetHeight!=0?offSetHeight:404;
 		}
 		return 0;
 	}
@@ -568,6 +575,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 					widgetsContainer.add(renderSearchResult(searchResult));
 				}
+				if(pageCountForStorage>3){
+					Window.scrollTo(0, getWidgetHeight()*4);
+				}
 				lblLoadingTextPrevious.setVisible(false);
 				isApiInProgressBack=true;
 			}else{
@@ -580,11 +590,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				isApiInProgress=true;
 			}
 			lblLoadingText.setVisible(false);
-		}else{
+			lblLoadingTextPrevious.setVisible(false);
+		}else if(pageNumber==1){
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
 			searchResults.setText(i18n.GL3210()+"  (0) ");
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
+		}else{
+			lblLoadingText.setVisible(false);
+			lblLoadingTextPrevious.setVisible(false);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 			collectionPanel.setStyleName("active");
@@ -1727,12 +1741,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void setJsonResponseInStorage(String data,boolean isApiCalled){
 		if(Storage.isLocalStorageSupported() && !isApiCalled){
+			if(isForwardScroll)
+			{
 			localStore.setItem(pageCountForStorage+"", data);
 			pageCountForStorage++;
+			}
+			else
+			{
+			localStore.setItem((pageCountForStorage-3)+"", data);
+
+			//pageCountForStorage--;
+			}
 		}
 		printLoclStoreSize();
-	}
-	
+	}	
 	@UiHandler("assessmentsBtn")
 	public void clickOnAssessments(ClickEvent clickEvent){
 		assessmentsBtn.addStyleName("active");
