@@ -279,13 +279,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isApiInProgress=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
-							if(searchDoGbl.getTotalPages()>=(pageNumber+1))
-							{
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
-							}else{
-								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
-							}
+							if(searchDoGbl.getTotalPages()>=(pageNumber+1)){
+								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
+								}else{
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
+								}
 							}
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 						}
@@ -580,11 +579,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				isApiInProgress=true;
 			}
 			lblLoadingText.setVisible(false);
-		}else{
+		}else if(pageNumber==1){
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
 			searchResults.setText(i18n.GL3210()+"  (0) ");
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
+		}else{
+			lblLoadingText.setVisible(false);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 			collectionPanel.setStyleName("active");
