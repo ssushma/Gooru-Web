@@ -149,7 +149,6 @@ public class CollectionSearchWidget extends Composite {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							// TODO Auto-generated method stub
 							Map<String, String> params = new HashMap<String, String>();
 							params.put("id", collectionSearchResultDo.getGooruOid());
 							params.put("rid",collectionItemSearchResultDo.getCollectionItemId());
@@ -349,7 +348,6 @@ public class CollectionSearchWidget extends Composite {
 	 * @param collectionSearchResultDo
 	 */
 	private void setResourceAndQuestionCount(CollectionSearchResultDo collectionSearchResultDo) {
-		// TODO Auto-generated method stub
 		if(collectionSearchResultDo!=null){
 			String collectionText = "",resourceText = "",questionsText = "";
 			int resourceCount =collectionSearchResultDo.getResourceCount();
@@ -372,7 +370,7 @@ public class CollectionSearchWidget extends Composite {
 				collectionText = resourceText+i18n.GL3220();
 			}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
 				collectionText=questionsText+i18n.GL3220();
-			}else{
+			}else if(!questionsText.isEmpty() && !resourceText.isEmpty()){
 				collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3220();
 			}
 			pResourceText.setText(collectionText);
