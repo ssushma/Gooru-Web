@@ -254,23 +254,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
 							isForwardScroll = false;
-							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=2)
-							{
-								if(searchDoGbl.getTotalPages()>=(pageNumber-1))
-								{
-								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 9);
-								}else{
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 8);
-								}
+							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=2){
+								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
+									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 9);
+									}else{
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 8);
+									}
 								}
 							}
-							
 							if(Storage.isLocalStorageSupported()){
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-3)+""),true);
 								pageCountForStorage--;
 							}
-							Window.scrollTo(0, getWidgetHeight()*4);
+							Window.scrollTo(0, getLastWidgetHeight()*4);
 						}else{
 							Window.scrollTo(0, 0);
 						}
@@ -375,7 +372,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * To render the Access Mode values
 	 */
 	private void renderAccessModeValues() {
-		// TODO Auto-generated method stub
 		for(int i=0;i<accessModeArray.length;i++){
 			renderAccessModeCheckBox(accessModePanel,accessModeArray[i].toLowerCase(),accessModeArray[i]);
 		}
@@ -399,7 +395,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	public int getWidgetHeight(){
 		if(searchResultPanel.iterator().hasNext()){
-			return searchResultPanel.iterator().next().getElement().getFirstChildElement().getOffsetHeight();
+			int offSetHeight=searchResultPanel.iterator().next().getElement().getFirstChildElement().getOffsetHeight();
+			return offSetHeight!=0?offSetHeight:404;
+		}
+		return 0;
+	}
+	public int getLastWidgetHeight(){
+		if(searchResultPanel.getWidgetCount()>1){
+			int offSetHeight=searchResultPanel.getWidget((searchResultPanel.getWidgetCount()-1)).getElement().getFirstChildElement().getOffsetHeight();
+			return offSetHeight!=0?offSetHeight:404;
 		}
 		return 0;
 	}
@@ -570,6 +574,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				searchResultPanel.insert(widgetsContainer,0);
 				for (T searchResult : searchDo.getSearchResults()) {
 					widgetsContainer.add(renderSearchResult(searchResult));
+				}
+				if(pageCountForStorage>3){
+					Window.scrollTo(0, getWidgetHeight()*4);
 				}
 				lblLoadingTextPrevious.setVisible(false);
 				isApiInProgressBack=true;
