@@ -162,6 +162,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private boolean isClickedOnDropDwn=false;
 	
+	private boolean isForwardScroll=true;
+	
 	private boolean isClickOnMoreFilter=false;
 	
 	SearchDo<T> searchDoGbl = new SearchDo<T>();
@@ -251,6 +253,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isInsertTems=true;
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
+							isForwardScroll = false;
 							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=2)
 							{
 								if(searchDoGbl.getTotalPages()>=(pageNumber-1))
@@ -279,6 +282,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isApiInProgress=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
+							isForwardScroll = true;
 							if(searchDoGbl.getTotalPages()>=(pageNumber+1)){
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
@@ -579,6 +583,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				isApiInProgress=true;
 			}
 			lblLoadingText.setVisible(false);
+			lblLoadingTextPrevious.setVisible(false);
 		}else if(pageNumber==1){
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
@@ -586,6 +591,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{
 			lblLoadingText.setVisible(false);
+			lblLoadingTextPrevious.setVisible(false);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 			collectionPanel.setStyleName("active");
@@ -1728,12 +1734,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void setJsonResponseInStorage(String data,boolean isApiCalled){
 		if(Storage.isLocalStorageSupported() && !isApiCalled){
+			if(isForwardScroll)
+			{
 			localStore.setItem(pageCountForStorage+"", data);
 			pageCountForStorage++;
+			}
+			else
+			{
+			localStore.setItem((pageCountForStorage-3)+"", data);
+
+			//pageCountForStorage--;
+			}
 		}
 		printLoclStoreSize();
-	}
-	
+	}	
 	@UiHandler("assessmentsBtn")
 	public void clickOnAssessments(ClickEvent clickEvent){
 		assessmentsBtn.addStyleName("active");
