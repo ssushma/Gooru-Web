@@ -48,4 +48,13 @@ public class ResourceImageWidget extends Composite {
 		});
 		imageOverlay.addStyleName(categoryValue.toLowerCase()+"Small");
 	}
+
+	/**
+	 * @return the imgResourceImg
+	 */
+	public Image getImgResourceImg() {
+		return imgResourceImg;
+	}
+	
+	
 }

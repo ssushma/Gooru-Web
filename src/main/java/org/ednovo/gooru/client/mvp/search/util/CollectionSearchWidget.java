@@ -67,20 +67,14 @@ public class CollectionSearchWidget extends Composite {
 	String CUSTOMIZE = "customize";
 
 	@UiField HTMLPanel pnlResourceWidget,collectionDescription,creatorPanel;
-	@UiField Label collectionTitle,authorName,lblViewCount;
+	@UiField Label collectionTitle,authorName,lblViewCount,remixCountLbl;
 	@UiField Paragraph pResourceText;
 	@UiField Image imgAuthor,imgCollection;
 	@UiField FlowPanel standardsDataPanel;
 	@UiField Button remixBtn;
 	
-	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
-	
-	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
-	
-	private static final String ASSESSMENT = "assessment";
-	
 	private final FlowPanel profilePanel=new FlowPanel();
-	
+		
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
 	private static String DEFULT_IMAGE = "images/default-collection-image.png";
@@ -123,6 +117,7 @@ public class CollectionSearchWidget extends Composite {
 		if ((collectionSearchResultDo.getOwner().isProfileUserVisibility())){
 			 collectionCreatorDetails(collectionSearchResultDo);
 		}
+		remixCountLbl.setText(collectionSearchResultDo.getScollectionRemixCount()+"");
 		final String collectionType=StringUtil.isEmpty(collectionSearchResultDo.getCollectionType())?null:collectionSearchResultDo.getCollectionType();
 		StringUtil.setDefaultImages(collectionType, imgCollection, "high");
 		if(!StringUtil.isEmpty(collectionSearchResultDo.getUrl())){
@@ -143,13 +138,26 @@ public class CollectionSearchWidget extends Composite {
 		setResourceAndQuestionCount(collectionSearchResultDo);
 		if(collectionSearchResultDo.getCollectionItems().size()>0){
 			int count=0;
-				for (CollectionItemDo collectionItemSearchResultDo :collectionSearchResultDo.getCollectionItems()) {
+				for (final CollectionItemDo collectionItemSearchResultDo :collectionSearchResultDo.getCollectionItems()) {
 					if(count>=4){
 						break;
 					}
 					ResourceImageWidget resourceImageWidget=new ResourceImageWidget(collectionItemSearchResultDo.getResource());
 					resourceImageWidget.getElement().setId(collectionItemSearchResultDo.getResource().getGooruOid());
 					pnlResourceWidget.add(resourceImageWidget);
+					resourceImageWidget.getImgResourceImg().addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							// TODO Auto-generated method stub
+							Map<String, String> params = new HashMap<String, String>();
+							params.put("id", collectionSearchResultDo.getGooruOid());
+							params.put("rid",collectionItemSearchResultDo.getCollectionItemId());
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+							
+						}
+					});
 					count++;
 				}
 		}
@@ -162,6 +170,7 @@ public class CollectionSearchWidget extends Composite {
 		StringUtil.setAttributes(remixBtn.getElement(), "btnRemix", "", "");
 		StringUtil.setAttributes(authorName.getElement(), "lblAuthorName", collectionSearchResultDo.getOwner().getUsername(), collectionSearchResultDo.getOwner().getUsername());
 		StringUtil.setAttributes(lblViewCount.getElement(), "lblViewCount", collectionSearchResultDo.getTotalViews()+"", collectionSearchResultDo.getTotalViews()+"");
+		StringUtil.setAttributes(remixCountLbl.getElement(), "remixCountLbl", collectionSearchResultDo.getScollectionRemixCount()+"", collectionSearchResultDo.getScollectionRemixCount()+"");
 		StringUtil.setAttributes(collectionDescription.getElement(), "pnlCollectionDescription", collectionDesc, collectionDesc);
 		StringUtil.setAttributes(collectionTitle.getElement(), "lblCollectionTitle", collectionSearchResultDo.getResourceTitle(), collectionSearchResultDo.getResourceTitle());
 	}
