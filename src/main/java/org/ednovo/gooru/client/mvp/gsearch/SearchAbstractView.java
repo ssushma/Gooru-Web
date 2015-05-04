@@ -408,7 +408,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	public void removeFromLocalStorageBackword(){
 		if(Storage.isLocalStorageSupported() && localStore.getLength()>=11){
-			int keyVal=pageNumber+9;
+			int keyVal;
+			if(pageCountForStorage>=11){
+				 keyVal=pageCountForStorage;
+			}else{
+				keyVal=pageCountForStorage+7;
+			}
 			localStore.removeItem(keyVal+"");
 		}
 	}
