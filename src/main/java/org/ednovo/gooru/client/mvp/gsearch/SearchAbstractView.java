@@ -164,6 +164,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private boolean isClickOnMoreFilter=false;
 	
+	SearchDo<T> searchDoGbl = new SearchDo<T>();
+	
 	String[] accessModeArray = new String[]{i18n.GL2094(),i18n.GL2097(),i18n.GL2095(),i18n.GL2098(),i18n.GL2099(),i18n.GL2096()};
 	
 	CheckBox chkAccessMode = null;
@@ -249,6 +251,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isInsertTems=true;
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
+							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=2)
+							{
+								if(searchDoGbl.getTotalPages()>=(pageNumber-1))
+								{
+								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 9);
+								}else{
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 8);
+								}
+								}
+							}
+							
 							if(Storage.isLocalStorageSupported()){
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-3)+""),true);
 								pageCountForStorage--;
@@ -265,10 +279,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isApiInProgress=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
+							if(searchDoGbl.getTotalPages()>=(pageNumber+1))
+							{
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 							}else{
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
+							}
 							}
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 						}
@@ -539,6 +556,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void postSearch(SearchDo<T> searchDo,boolean isApiCalled) {
 		removeTopWidgets(isInsertTems);
+		searchDoGbl = searchDo;
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
