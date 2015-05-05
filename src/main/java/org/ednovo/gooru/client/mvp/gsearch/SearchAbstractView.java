@@ -254,7 +254,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
 							isForwardScroll = false;
-							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=2){
+							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=1){
 								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 9);
@@ -267,9 +267,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-3)+""),true);
 								pageCountForStorage--;
 							}
-							Window.scrollTo(0, getWidgetHeight()*4);
+							//Window.scrollTo(0, getWidgetHeight()*4);
 						}else{
-							Window.scrollTo(0, 0);
+							//Window.scrollTo(0, 0);
 						}
 					}
 					//This condition is used to check that the user is scrolling top to bottom
