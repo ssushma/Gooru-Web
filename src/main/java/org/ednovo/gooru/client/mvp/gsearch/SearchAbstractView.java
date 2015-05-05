@@ -403,6 +403,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void removeFromLocalStorageForward(){
 		if(Storage.isLocalStorageSupported() && localStore.getLength()>=11){
 			int keyVal=pageNumber-9;
+			if(keyVal>1)
 			localStore.removeItem(keyVal+"");
 		}
 	}
@@ -414,6 +415,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}else{
 				keyVal=pageCountForStorage+7;
 			}
+			if(keyVal>1)
 			localStore.removeItem(keyVal+"");
 		}
 	}
@@ -1505,6 +1507,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		previousCount=0;
 		pageCountForStorage=1;
 		localStore.clear();
+		isForwardScroll=true;
 	}
 	
 	/**
