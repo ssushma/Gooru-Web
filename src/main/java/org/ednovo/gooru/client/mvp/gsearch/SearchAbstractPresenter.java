@@ -261,6 +261,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		if (getSearchDo().getSearchQuery() != null
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
+			getSearchDo().setPageNum(1);
 			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
 			getSearchDo().setPageNum(2);
 			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
@@ -363,6 +364,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getView().resetData();
 		if (getSearchDo().getSearchQuery() != null
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
+			getSearchDo().setPageNum(1);
 			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
 			getSearchDo().setPageNum(2);
 			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
