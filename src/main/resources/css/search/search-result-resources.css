@@ -186,6 +186,7 @@ margin:0 0 0 -20px !important;
 #gooruSearchMainContainer .usedDetails{
 	padding:10px 10px;
 	font-size:13px;
+	min-height: 35px;
 }
 #gooruSearchMainContainer .usedDetails a:hover{
 	text-decoration:none;
@@ -217,7 +218,7 @@ margin:0 0 0 -20px !important;
 	cursor:pointer;
 }
 
-#gooruSearchMainContainer .userDetailsResources .user .collectionTitleNoCollection{
+#gooruSearchMainContainer .userDetailsResources .collectionResources .collectionTitleNoCollection{
 	overflow: hidden;
 	white-space: nowrap;
 	height: 29px;
