@@ -55,6 +55,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 	@UiField
 	public Label hintsTextLblVal;
 	@UiField
+	public
 	Label errorMessageforHints;
 	@UiField HTMLPanel deleteButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;

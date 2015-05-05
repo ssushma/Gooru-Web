@@ -7,26 +7,28 @@
 		field="res" />
 <ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 
-	<g:HTMLPanel styleName="{res.assessmentContentBlock}">
+	<g:HTMLPanel styleName="assessmentContentBlock">
 
 
 	<g:HTMLPanel styleName="">
-		<g:Label ui:field="questionTypeHeader" styleName="{res.questionTypeHeaderTitle}"/>
-		<g:Label ui:field="questionTypeText" styleName="col-md-12 colmdPadding {res.questionTypeTextStyle}"/>
+		<g:Label ui:field="questionTypeHeader" styleName="questionTypeHeaderTitle"/>
+		<g:Label ui:field="questionTypeText" styleName="col-md-12 colmdPadding questionTypeTextStyle"/>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>
 
-	<g:HTMLPanel styleName="{res.ansContainer}">
-		<g:HTMLPanel styleName="{res.addAnswerHeadTitle}" ui:field="questionText"></g:HTMLPanel>
-		<g:Label styleName="{res.charLimit}" ui:field="charLimitLbl"></g:Label>
+	<g:HTMLPanel styleName="containerMarginTop">
+		<g:HTMLPanel styleName="answerHeadLbl" ui:field="questionText"></g:HTMLPanel>
+		<g:Label styleName="charLimit" ui:field="charLimitLbl"></g:Label>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>
 	
-	<g:HTMLPanel styleName="{res.questionTextContainerBlock} questionTextcontainer">
+	<g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
 		<tinyMce:TinyMCE width="1" height="1"
 			ui:field="questionNameTextArea" characterLimit="500"></tinyMce:TinyMCE>
 		<g:Label ui:field="questionNameErrorLbl"></g:Label>
 	</g:HTMLPanel>
+	
+     <g:Label styleName="errorText errorMessage" ui:field="errorMessageForQuestion"></g:Label>
 
 	<g:HTMLPanel styleName="">
 		<g:Anchor styleName="ancTab" ui:field="addQuestionImg"></g:Anchor>
@@ -35,7 +37,7 @@
 	
 	<g:HTMLPanel ui:field="addQuestImgContainer" styleName="containerMarginTop"/> 
 
- <g:HTMLPanel styleName="" ui:field="questionHotSpotAnswerChoiceContainer"/>
+ <g:HTMLPanel styleName="containerMarginTop" ui:field="questionHotSpotAnswerChoiceContainer" />
  
   <g:HTMLPanel  ui:field="advancedContainer" styleName="addAdvancedHeaderTextContainer">
           <g:Label ui:field="advancedLbl"></g:Label>
@@ -142,7 +144,42 @@
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addCenturyAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           
       </g:HTMLPanel>
+      
+ <!-- Terms Policy Start -->
  
+     <g:HTMLPanel styleName="termPolicyContainer">
+        	<g:CheckBox ui:field="rightsChkBox" styleName="checkBoxlevels" checked="true" ></g:CheckBox>
+        	<g:Label ui:field="rightsLbl" styleName="copyRightText"></g:Label> 
+     <uc:HTMLEventPanel ui:field="lblContentRights" styleName="copyRightIcon">
+	        	<g:HTMLPanel styleName="copyRightPopupContainer" ui:field="panelContentRights">
+					<g:HTMLPanel styleName="copyRightTootlTipArrowShadow"></g:HTMLPanel>
+					<g:HTMLPanel styleName="copyRightTootlTipArrowBorder"></g:HTMLPanel>
+					<g:HTMLPanel styleName="copyRightTootlTipArrow"></g:HTMLPanel>
+					<g:HTMLPanel styleName="copyRightInnerPopup">
+						<g:HTMLPanel ui:field="rightsContent">
+							<g:InlineLabel ui:field="agreeText"/>
+     						<g:InlineLabel styleName="anchorText" ui:field="commuGuideLinesAnr"/>
+     						<g:InlineLabel styleName="anchorText" ui:field="termsAndPolicyAnr"/>
+     						<g:InlineLabel styleName="anchorText" ui:field="privacyAnr"/>
+     		 				<g:InlineLabel ui:field="andText"  />
+     		 				<g:InlineLabel styleName="anchorText" ui:field="copyRightAnr"/>
+     		 				<g:InlineLabel ui:field="additionalText" />
+     		 		</g:HTMLPanel>
+    	 				
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+        	</uc:HTMLEventPanel>
+         </g:HTMLPanel>
+  <!-- Terms Policy End -->
+  
+  <g:HTMLPanel styleName="addButtonContainer inlineBlock" ui:field="buttonContainer">
+         <uc:HTMLEventPanel styleName="inlineBlock" ui:field="addQuestionResourceButton">
+          <uc:BlueButtonUc styleName="primary" ui:field="addbutton"></uc:BlueButtonUc>
+        </uc:HTMLEventPanel>
+     	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
+        
+      </g:HTMLPanel>
+      <g:Label  styleName="addButtonContainer" ui:field="loadingTextLbl"></g:Label>
 
 	</g:HTMLPanel>
 </ui:UiBinder> 

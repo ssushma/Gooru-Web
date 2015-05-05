@@ -7,6 +7,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -23,6 +24,7 @@ import com.gwtplatform.mvp.client.View;
 public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> implements QuestionTypeUiHandlers {
 
 	private ImageUploadPresenter imageUploadPresenter;
+	private IsAddResourceView isAddResourceView;
 	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
 	@Inject
 	private ResourceServiceAsync resourceService;
@@ -74,8 +76,9 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	}
 	
 	
-	public void ImageUpload(ImageUploadPresenter imageUploadPresenter){
+	public void ImageUpload(ImageUploadPresenter imageUploadPresenter,IsAddResourceView view){
 		this.imageUploadPresenter=imageUploadPresenter;
+		this.isAddResourceView =view;
 	}
 	
 	
@@ -118,6 +121,18 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
+	}
+	
+	@Override
+	public void answerImageUpload() {
+		addToPopupSlot(imageUploadPresenter);
+		imageUploadPresenter.setCollectionImage(false);
+		imageUploadPresenter.setQuestionImage(false);
+		imageUploadPresenter.setEditResourceImage(false);
+		imageUploadPresenter.setUserOwnResourceImage(false);
+		imageUploadPresenter.setEditUserOwnResourceImage(false);
+		imageUploadPresenter.setAnswerImage(true);
+		imageUploadPresenter.getView().isFromEditQuestion(false);
 	}
 
 	@Override
@@ -176,6 +191,22 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	public void closeStandardsPopup() {
 		addStandardsPresenter.hidePopup();
 	}
+
+	@Override
+	public void hidePopup() {
+		isAddResourceView.hidePopup();
+	}
+
+	@Override
+	public void removeAnswerImage(String collectionItemId) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public void answerImageUpload(String collectionItemId) {
+		throw new RuntimeException("Not implemented");
+	}
+
 
 
 }
