@@ -247,8 +247,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()<=100 && previousScroll>event.getScrollTop()){
-						if(pageCountForStorage>3 && isApiInProgressBack && (searchResultPanel.getWidgetCount()>=3)){
+					if(event.getScrollTop()<=(Window.getClientHeight()/4) && previousScroll>event.getScrollTop()){
+						if(pageCountForStorage>3 && isApiInProgressBack && (searchResultPanel.getWidgetCount()>=10)){
 							isApiInProgressBack=false;
 							isInsertTems=true;
 							pageNumber--;
@@ -274,7 +274,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8 && isApiInProgress){
-						if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
+						if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Window.getClientHeight()/3))) {
 							isInsertTems=false;
 							isApiInProgress=false;
 							lblLoadingText.setVisible(true);
@@ -535,7 +535,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				int widgetCount=searchResultPanel.getWidgetCount()-removeableWidgetCount;
 				int totalWidgetCount=searchResultPanel.getWidgetCount();
 				int removeWidgetCount=searchResultPanel.getWidgetCount();
-				if(searchResultPanel.getWidgetCount()>3){
+				if(searchResultPanel.getWidgetCount()>10){
 					Iterator<Widget> widgets=searchResultPanel.iterator();
 					while (widgets.hasNext()){
 						if(widgetCount==totalWidgetCount){
@@ -548,7 +548,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}else{
 				int widgetCount=1;
-				if(searchResultPanel.getWidgetCount()>3){
+				if(searchResultPanel.getWidgetCount()>10){
 					Iterator<Widget> widgets=searchResultPanel.iterator();
 					while (widgets.hasNext()){
 						if(widgetCount>removeableWidgetCount){
