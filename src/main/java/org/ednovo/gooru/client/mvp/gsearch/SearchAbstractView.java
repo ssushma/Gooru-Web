@@ -247,7 +247,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()<=(Window.getClientHeight()/4) && previousScroll>event.getScrollTop()){
+					 int topScrollBuffer = 500;
+                     int viewTop = Window.getScrollTop();
+                     int containerTop = searchResultPanel.getElement().getOffsetTop();
+                     if (previousScroll>event.getScrollTop() && ((containerTop + topScrollBuffer) >= viewTop)){
 						if(pageCountForStorage>3 && isApiInProgressBack && (searchResultPanel.getWidgetCount()>=10)){
 							isApiInProgressBack=false;
 							isInsertTems=true;
@@ -280,6 +283,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							lblLoadingText.setVisible(true);
 							pageNumber++;
 							isForwardScroll = true;
+							System.out.println("pageNumberin the if down::"+pageNumber);
+							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 							if(searchDoGbl.getTotalPages()>=(pageNumber+1)){
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
@@ -287,7 +292,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
 								}
 							}
-							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
+							
 						}
 					}
 				}
@@ -1503,6 +1508,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		searchResultPanel.clear();
 		resultCountVal=0;
 		lblLoadingText.setVisible(true);
+		isApiInProgress = true;
+		isApiInProgressBack = true;
+		pageNumber = 1;
 		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
 		previousCount=0;
 		pageCountForStorage=1;
@@ -1767,7 +1775,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void clickOnAssessments(ClickEvent clickEvent){
 		assessmentsBtn.addStyleName("active");
 		collectionsBtn.removeStyleName("active");
-		Map<String, String> params = getSearchFilters(AppClientFactory.getCurrentPlaceToken());
+		Map<String, String> params = getSearchFilters(AppClientFactory.getCurrentPlaceToken());		
 		params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "assessment");
 		params.put("query", AppClientFactory.getPlaceManager().getRequestParameter("query"));
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
