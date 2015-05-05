@@ -247,10 +247,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					 int topScrollBuffer = 500;
-                     int viewTop = Window.getScrollTop();
-                     int containerTop = searchResultPanel.getElement().getOffsetTop();
-                     if (previousScroll>event.getScrollTop() && ((containerTop + topScrollBuffer) >= viewTop)){
+					if(event.getScrollTop()<=(Window.getClientHeight()/4) && previousScroll>event.getScrollTop()){
 						if(pageCountForStorage>3 && isApiInProgressBack && (searchResultPanel.getWidgetCount()>=10)){
 							isApiInProgressBack=false;
 							isInsertTems=true;
@@ -283,7 +280,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							lblLoadingText.setVisible(true);
 							pageNumber++;
 							isForwardScroll = true;
-							System.out.println("pageNumberin the if down::"+pageNumber);
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 							if(searchDoGbl.getTotalPages()>=(pageNumber+1)){
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
