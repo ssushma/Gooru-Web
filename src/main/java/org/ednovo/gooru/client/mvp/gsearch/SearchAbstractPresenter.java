@@ -65,6 +65,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
@@ -374,11 +375,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	 */
 	protected Map<String, String> getSearchFilters() {
 		Map<String, String> filters = new HashMap<String, String>();
-		String category = getPlaceManager().getRequestParameter(
-				IsGooruSearchView.CATEGORY_FLT);
-		if (category != null) {
-			filters.put(IsGooruSearchView.CATEGORY_FLT, category);
-		}
 		String subject = getPlaceManager().getRequestParameter(
 				IsGooruSearchView.SUBJECT_FLT);
 		if (subject != null) {
@@ -398,6 +394,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				.getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)) {
 			String notFriendly = getPlaceManager().getRequestParameter(
 					IsGooruSearchView.MEDIATYPE_FLT);
+			String category = getPlaceManager().getRequestParameter(
+					IsGooruSearchView.CATEGORY_FLT);
+			if (category != null) {
+				filters.put(IsGooruSearchView.CATEGORY_FLT, category);
+			}
 			if (notFriendly != null
 					&& notFriendly.equalsIgnoreCase("not_ipad_friendly")) {
 				filters.put(IsGooruSearchView.MEDIATYPE_FLT, notFriendly);
@@ -408,6 +409,23 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 					IsGooruSearchView.RATINGS_FLT);
 			String accessMode = getPlaceManager().getRequestParameter(
 					IsGooruSearchView.ACCESS_MODE_FLT);
+			String publisher = getPlaceManager().getRequestParameter(
+					IsGooruSearchView.PUBLISHER_FLT);
+			String aggregator = getPlaceManager().getRequestParameter(
+					IsGooruSearchView.AGGREGATOR_FLT);
+			String reviews = getPlaceManager().getRequestParameter(
+					IsGooruSearchView.REVIEWS_FLT);
+			if(!StringUtil.isEmpty(publisher)){
+				filters.put(IsGooruSearchView.PUBLISHER_FLT, publisher);
+			}
+			if(!StringUtil.isEmpty(reviews) && reviews.equalsIgnoreCase("1"))
+			{
+				filters.put(IsGooruSearchView.REVIEWS_FLT, reviews);
+			}
+
+			if(!StringUtil.isEmpty(aggregator)){
+				filters.put(IsGooruSearchView.AGGREGATOR_FLT, aggregator);
+			}
 			if (oer != null && oer.equalsIgnoreCase("1")) {
 				filters.put(IsGooruSearchView.OER_FLT, oer);
 			}
