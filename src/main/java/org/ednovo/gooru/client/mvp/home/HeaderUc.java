@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
@@ -1461,7 +1462,14 @@ public class HeaderUc extends Composite implements
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
+		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT,null);
+		if(collectionType!=null){
+			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
+		}else{
+			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
+		}
 		params.put("category", "All");
+		
 		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE))
 		{
 			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");

@@ -844,12 +844,12 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH,getLoggedInSessionToken());
 			Map<String,String> params = searchDo.getFilters();
 			
-			params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
+			//params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
 			params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
 			params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
 			params.put(GooruConstants.Q, collectionQuery);
 			params.put(GooruConstants.INCLUDECIMETADATA, "true");
-			params.put(GooruConstants.PRETTY, "1");
+			//params.put(GooruConstants.PRETTY, "1");
 			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 			
 			if(getHomeEndPoint().contains(HTTPS)){
