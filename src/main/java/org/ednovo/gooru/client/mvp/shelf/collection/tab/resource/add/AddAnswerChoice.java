@@ -57,7 +57,7 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 	
 	
 	@UiField Label errorMessageforAnswerChoice,labelChoice,optionSelectedButton;
-	@UiField TinyMCE answerTextBox;
+	@UiField public TinyMCE answerTextBox;
 	@UiField HTMLPanel tinyOrTextBoxConatiner,deleteButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
 	

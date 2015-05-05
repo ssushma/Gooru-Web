@@ -2,58 +2,6 @@
 /* CSS Document */
 
 
-.assessmentContentBlock{
-	padding: 10px 10px 10px 10px;
-}
-.questionTypeHeaderTitle {
-	font-family: Arial, sans-serif;
-	font-size: 13px;
-	font-weight: bold;
-	color: #515151;
-}
-
-.questionTypeTextStyle  {
-	margin-top: 5px;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	font-style: italic;
-	color: #999;
-}
-.addAnswerHeadTitle {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
-	color: #515151;
-	text-align: left;
-	display: inline-block;
-	padding: 0 0 7px 0;
-}
-
-.charLimit {
-	display: inline-block;
-	margin-left: 10px;
-	color: #999;
-}
-.questionTextContainerBlock {
-	background-color: transparent;
-	border-color: #ddd;
-	border-width: 1px;
-	-moz-border-radius: 1px;
-	-webkit-border-radius: 1px;
-	border-radius: 1px;
-	border-style: solid;
-	height: 85px !important;
-	min-height: 85px !important;
-	width: 100%;
-	margin-top: 5px;
-	box-sizing: content-box;
-}
-.ansContainer {
-	margin-top: 10px;
-}
-
-
-
-
 .no-gutter > [class*='col-']{
 	padding-left:0;
 	padding-right:0;

@@ -24,11 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
+import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageHandler;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -47,7 +52,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AddHotSpotQuestionAnswerChoice extends Composite {
+public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnswerImageHandler{
 	
 	public interface AddHotSpotQuestionAnswerChoiceUiBinder extends UiBinder<Widget, AddHotSpotQuestionAnswerChoice>{
 		
@@ -60,11 +65,15 @@ public class AddHotSpotQuestionAnswerChoice extends Composite {
 	private static final String PLUS_IMAGE="images/add-symbol.png";
 	
 	@UiField Label answerHeadLbl,answerHeadingTypeLbl,correctLbl;
-	@UiField HTMLPanel imgContainer,textAnsContainer;
+
+	@UiField
+	public Label errorMessageforAnswerChoice;
+	@UiField public HTMLPanel imgContainer,textAnsContainer,ansImageContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
 	@UiField FlowPanel answerHeadContainer;
 	@UiField Anchor ansImage,addAnswerChoice;
 	@UiField Image addAnsPlusImage;
+	@UiField HTMLEventPanel ansImageBlock;
 	@UiField
 	public RadioButton imageRDButton;
 
@@ -81,8 +90,13 @@ public class AddHotSpotQuestionAnswerChoice extends Composite {
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
-	public AddHotSpotQuestionAnswerChoice(){
+	private String widgetId;
+	
+	QuestionTypeView questionTypeView;
+	public AddHotSpotQuestionAnswerChoice(QuestionTypeView questionTypeView){
 		initWidget(uiBinder.createAndBindUi(this));
+		AppClientFactory.getEventBus().addHandler(AddAnswerImageEvent.TYPE, this);
+		this.questionTypeView=questionTypeView;
 		answerHeadLbl.getElement().setId("lblAnswerHead");
 		answerHeadLbl.setText(i18n.GL3214());
 		answerHeadLbl.getElement().setAttribute("alt", i18n.GL3214());
@@ -126,17 +140,23 @@ public class AddHotSpotQuestionAnswerChoice extends Composite {
 		addAnswerChoice.getElement().setAttribute("alt", i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("title", i18n.GL0866());
 		addAnswerChoice.getElement().setId("lnkAnswerChoice");
+		ansImageBlock.getElement().setId("pnlAnsImageBlock");
+		ansImageBlock.addClickHandler(new panelsClickHandler());
+		ansImageContainer.getElement().setId("pnlAnsImageContainer");
+		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		setAnswerFields(true);
 	}
 	
 	public void setAnswerFields(boolean val){
 		
 		if(val){
+			imageRDButton.setValue(true);
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 			textAnsContainer.setVisible(false);
 			imgContainer.setVisible(true);
 			
 		}else {
+			textRDButton.setValue(true);
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 			textAnsContainer.setVisible(true);
 			imgContainer.setVisible(false);
@@ -216,5 +236,79 @@ public class AddHotSpotQuestionAnswerChoice extends Composite {
 	public void clickedOnAddChoiceButton(ClickEvent clickEvent){
 		addAnswerChoice();
 	}
+	
+	private class panelsClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(ansImageContainer.getWidgetCount()<5){
+			questionTypeView.uploadAnswerImage();
+			}
+		}
+	}
+
+	@Override
+	public void setAnswerImageUrl(String fileName,	String fileNameWithoutRepository, boolean isAnswerImage) {
+		double randNumber = Math.random();
+		final AddAnswerImg addAnswerImage = new AddAnswerImg();
+		addAnswerImage.setAnswerImage(fileName+"?"+randNumber);
+		addAnswerImage.setFileName(fileNameWithoutRepository);
+		errorMessageforAnswerChoice.setText("");
+		ansImageContainer.getElement().removeClassName("errorBorderMessage");
+		if(widgetId!=null){
+			addAnswerImage.setId(Integer.parseInt(widgetId));
+			ansImageContainer.addAndReplaceElement(addAnswerImage,widgetId);
+			widgetId=null;
+		}else{
+			addAnswerImage.setId(ansImageContainer.getWidgetCount());
+			ansImageContainer.add(addAnswerImage);
+		}
+		
+		
+		addAnswerImage.changeImgLbl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				System.out.println("change---click--");
+             widgetId=addAnswerImage.getElement().getId();
+				
+				questionTypeView.uploadAnswerImage();
+			}
+		});
+		
+		addAnswerImage.removeImgLbl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				addAnswerImage.removeFromParent();
+				refreshImageContainer();
+			}
+		});
+		
+		updateImageContainer();
+	}
+	
+	
+	public void updateImageContainer(){
+		
+		if(ansImageContainer.getWidgetCount()==5){
+			ansImageBlock.getElement().getStyle().setOpacity(0.5);
+			ansImage.getElement().getStyle().setCursor(Cursor.DEFAULT);
+			ansImageBlock.getElement().getStyle().setCursor(Cursor.DEFAULT);
+		}else{
+			ansImage.getElement().getStyle().setCursor(Cursor.POINTER);
+			ansImageBlock.getElement().getStyle().setCursor(Cursor.POINTER);
+			ansImageBlock.getElement().getStyle().clearOpacity();
+		}
+		
+	}
+	
+	public void refreshImageContainer(){
+		for(int i=0;i<ansImageContainer.getWidgetCount();i++){
+			AddAnswerImg answerImg=	(AddAnswerImg) ansImageContainer.getWidget(i);
+			answerImg.getElement().setId(String.valueOf(i));
+		}
+		updateImageContainer();
+	}
+	
 	
 }

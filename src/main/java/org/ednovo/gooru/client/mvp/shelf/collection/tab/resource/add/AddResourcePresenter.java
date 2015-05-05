@@ -650,9 +650,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Override
 	public void addSelectedQuestionType(String type) {
-		if(type.equalsIgnoreCase("EQ")){
+		if(type.equalsIgnoreCase("HS")){
 		addToSlot(SLOT_QUESTION_TYPE, questionTypePresenter);
-		questionTypePresenter.ImageUpload(imageUploadPresenter);
+		questionTypePresenter.ImageUpload(imageUploadPresenter,getView());
 		}else {
 			clearSlot(SLOT_QUESTION_TYPE);
 			getView().clearQuestionSlot();

@@ -18,4 +18,8 @@ public interface QuestionTypeUiHandlers extends BaseUiHandlers,AddResourceImageH
 	void browseStandardsInfo(boolean isQuestion, boolean isUserResource);
 	void addUpdatedBrowseStandards();
 	void closeStandardsPopup();
+	void hidePopup();
+	void removeAnswerImage(String collectionItemId);
+	void answerImageUpload();
+	void answerImageUpload(String collectionItemId);
 }

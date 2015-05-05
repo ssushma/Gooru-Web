@@ -2203,13 +2203,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					enteredAnswers.add(questionAnswerDo);
 				}
 			}else if(getQuestionType().equalsIgnoreCase("HT")){
-				System.out.println("ht add functionality");
 				for(int i=0;i<questionHotTextAnswerChoiceContainer.getWidgetCount();i++)
 				{
 					QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
 					AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(i);
-					System.out.println("addQuestionAnswerChoice.answerTextBox.getRawContent()"+addQuestionAnswerChoice.answerTextBox.getRawContent());
-					System.out.println("addQuestionAnswerChoice--"+addQuestionAnswerChoice.highlightTextArea.getText());
 					questionAnswerDo.setAnswerText(addQuestionAnswerChoice.answerTextBox.getRawContent());
 					//questionAnswerDo.setAnswerText(addQuestionAnswerChoice.answerTextBox.getRawContent()); 
 					questionAnswerDo.setAnswerType("text");

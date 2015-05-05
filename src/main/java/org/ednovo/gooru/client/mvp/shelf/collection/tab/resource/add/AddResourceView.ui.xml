@@ -80,10 +80,10 @@
 						</uc:HTMLEventPanel>
 						
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
-							ui:field="equationTabButton">
-							<g:RadioButton name="questionTypeGrouop" ui:field="equationRadioButton"
+							ui:field="hotSpotTabButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="hotSpotRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
-							<g:Anchor  ui:field="equation" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
+							<g:Anchor  ui:field="hotSpot" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 						
 						
@@ -138,7 +138,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel ui:field="tabViewContainer" styleName="col-md-10 col-sm-10 colmdPadding">
 					</g:HTMLPanel>
-					<g:SimplePanel ui:field="questionContainerPnl" styleName="col-md-10 col-sm-10 questionRightMain"></g:SimplePanel>
+					<g:SimplePanel ui:field="questionContainerPnl" styleName="col-md-10 col-sm-10 colmdPadding questionRightMain"></g:SimplePanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"/>
