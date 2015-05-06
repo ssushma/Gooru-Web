@@ -247,14 +247,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						pnlBackToTop.setVisible(false);
 					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()<=(Window.getClientHeight()/4) && previousScroll>event.getScrollTop()){
-						if(pageCountForStorage>3 && isApiInProgressBack && (searchResultPanel.getWidgetCount()>=10)){
+					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/12) && previousScroll>event.getScrollTop()){
+						if(pageCountForStorage>9 && isApiInProgressBack && (searchResultPanel.getWidgetCount()>=10)){
 							isApiInProgressBack=false;
 							isInsertTems=true;
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
 							isForwardScroll = false;
-							if(localStore.getItem((pageCountForStorage-4)+"") == null && (pageNumber-1)>=1){
+							System.out.println("(pageCountForStorage)::"+(pageCountForStorage));
+							if(localStore.getItem((pageCountForStorage-10)+"") == null && (pageNumber-1)>=1){
 								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-1, 9);
@@ -263,8 +264,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 									}
 								}
 							}
+				
+							System.out.println("(pageCountForStorage-9)::"+(pageCountForStorage-9));
 							if(Storage.isLocalStorageSupported()){
-								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-3)+""),true);
+								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-9)+""),true);
 								pageCountForStorage--;
 							}
 							//Window.scrollTo(0, getWidgetHeight()*4);
@@ -274,7 +277,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8 && isApiInProgress){
-						if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Window.getClientHeight()/3))) {
+						if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 							isInsertTems=false;
 							isApiInProgress=false;
 							lblLoadingText.setVisible(true);
@@ -412,7 +415,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if(Storage.isLocalStorageSupported() && localStore.getLength()>=11){
 			int keyVal;
 			if(pageCountForStorage>=11){
-				 keyVal=pageCountForStorage;
+				keyVal=pageCountForStorage;
 			}else{
 				keyVal=pageCountForStorage+7;
 			}
@@ -1753,15 +1756,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void setJsonResponseInStorage(String data,boolean isApiCalled){
 		if(Storage.isLocalStorageSupported() && !isApiCalled){
-			if(isForwardScroll)
-			{
-			localStore.setItem(pageCountForStorage+"", data);
-			pageCountForStorage++;
-			}
-			else
-			{
-			localStore.setItem((pageCountForStorage-3)+"", data);
-
+			if(isForwardScroll){
+				localStore.setItem(pageCountForStorage+"", data);
+				pageCountForStorage++;
+			}else{
+				System.out.println("pageCountForStorageasdasd::"+pageCountForStorage);
+				System.out.println("pageCountFeasdasd::"+(pageCountForStorage-3));
+				localStore.setItem((pageCountForStorage-3)+"", data);
 			//pageCountForStorage--;
 			}
 		}

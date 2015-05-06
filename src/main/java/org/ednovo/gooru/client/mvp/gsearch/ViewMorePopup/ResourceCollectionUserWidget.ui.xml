@@ -3,12 +3,12 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	      <g:HTMLPanel styleName="peopleBlock">
         <div class="col-md-4 col-sm-4">
-          <g:HTMLPanel styleName="userDetContainer"><g:Image ui:field="creatorImage"/><g:InlineLabel ui:field="relatedUserName" styleName="userNameforCollection"></g:InlineLabel></g:HTMLPanel>
+          <g:HTMLPanel styleName="userDetContainer"><g:Image ui:field="creatorImage"/><g:InlineLabel ui:field="relatedUserName" styleName="userNameforCollection"></g:InlineLabel>
+            <gg:PPanel styleName="userGrades" ui:field="gradePanel"></gg:PPanel>
+          </g:HTMLPanel>
         </div>
         <div class="col-md-6 col-sm-6">
           <div class="colleDetContaner"><g:Image ui:field="collectionImage"/><g:InlineLabel ui:field="relatedCollectionTitle" styleName="userNameforCollection"></g:InlineLabel> 
-               <gg:PPanel ui:field="gradePanel"></gg:PPanel>
-            <gg:PPanel ui:field="coursePanel"></gg:PPanel>
           </div>
         </div>
         <div class="clearfix"></div>

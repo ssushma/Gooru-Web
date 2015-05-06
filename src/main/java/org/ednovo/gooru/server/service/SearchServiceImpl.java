@@ -869,7 +869,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public SearchDo<CollectionSearchResultDo> descralizeCollectionSearchResults(String response,SearchDo<CollectionSearchResultDo> searchDo) throws GwtException, ServerDownException {
 		SearchDo<CollectionSearchResultDo> searchDOEmpty = new SearchDo<CollectionSearchResultDo>();
-		if(response!=null){
+		if(response!=null && !response.trim().isEmpty()){
 			collectionSearchResultDeSerializer.deserializeJsonObject(response, searchDo,getProfileImageUrl());
 			return searchDo;
 		}
@@ -939,8 +939,10 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<ResourceSearchResultDo> descralizeResourceSearchResults(String response, SearchDo<ResourceSearchResultDo> searchDo)	throws GwtException, ServerDownException {
 		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
 		try{
-			resourceSearchResultDeSerializer.deserializeJsonObject(response, searchDo,"");	
-			return searchDo;
+			if(response!=null && !response.trim().isEmpty()){
+				resourceSearchResultDeSerializer.deserializeJsonObject(response, searchDo,"");	
+				return searchDo;
+			}
 		}catch(Exception e){
 			logger.error("Exception::", e);
 		}
