@@ -26,6 +26,9 @@ package org.ednovo.gooru.shared.model.user;
 
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.ednovo.gooru.shared.model.library.CourseDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -37,6 +40,8 @@ public class UserMetaDo implements Serializable {
 	
 	private UserTaxonomyPreferenceDo taxonomyPreference;
 	private UserSummaryDo summary;
+	private String grade;
+	private List<CourseDo> course;
 	
 	public UserMetaDo(){}
 
@@ -55,5 +60,23 @@ public class UserMetaDo implements Serializable {
 	public void setSummary(UserSummaryDo summary) {
 		this.summary = summary;
 	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public List<CourseDo> getCourse() {
+		return course;
+	}
+
+	public void setCourse(List<CourseDo> course) {
+		this.course = course;
+	}
+
+
 	
 }

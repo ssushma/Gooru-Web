@@ -5,7 +5,7 @@
 	<div id="morePeoplePopWrapper">
   <div class="popHeader">
     <div class="col-md-10 popHeading">More People</div>
-    <div class="col-md-2"><g:Anchor ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Anchor></div>
+    <div class="col-md-1"><g:Anchor ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Anchor></div>
     <div class="clearfix"></div>
   </div>
   <div class="popBody">

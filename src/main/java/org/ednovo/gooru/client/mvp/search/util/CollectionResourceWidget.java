@@ -99,7 +99,14 @@ public class CollectionResourceWidget extends Composite {
 		}
 		if(resourceSearchResultDo.getResourceUsedUserCount()>0)
 		{
-			lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" poeple");
+			if(resourceSearchResultDo.getResourceUsedUserCount()==1)
+			{
+			lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" person");
+			}
+			else
+			{
+			lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" people");
+			}
 		}
 		else
 		{

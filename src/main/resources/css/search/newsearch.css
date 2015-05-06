@@ -588,6 +588,7 @@ Back to top button
 	background: #515151;
 	border-bottom: 1px solid #ddd;
 	color: #ffffff;
+	font-size: 16px;
 }
 #morePeoplePopWrapper .popBody h4{
 	font-size:15px;
@@ -600,6 +601,7 @@ Back to top button
  	width: 17px;
  	display: inline-block;
     cursor: pointer;
+    margin-left: 54px;
 }
 #morePeoplePopWrapper .peopleBlock {
 	border: 1px solid #dddddd;
@@ -619,9 +621,20 @@ Back to top button
   width: 30px;
   height: 30px;
 }
-#morePeoplePopWrapper .gradeDetContaner p {
+#morePeoplePopWrapper .userDetContainer p {
 	margin-bottom: 0;
 	line-height: 15px;
+}
+#morePeoplePopWrapper .colleDetContaner .userNameforCollection{
+	margin-left: 5%;
+}
+
+#morePeoplePopWrapper .userDetContainer .userNameforCollection{
+	margin-left: 10%;
+}
+#morePeoplePopWrapper .userDetContainer .userGrades{
+	margin-left: 29%;
+margin-top: -5%;
 }
 #morePeoplePopWrapper .colleDetContaner img {
   width: 40px;
