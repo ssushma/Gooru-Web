@@ -118,7 +118,7 @@ public class SearchUiUtil{
 					else
 					{
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandardResource());
 					standardsContainer.add(toolTipUc);
 					}
 				}
