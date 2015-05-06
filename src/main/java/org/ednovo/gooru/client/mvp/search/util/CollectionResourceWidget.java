@@ -118,7 +118,7 @@ public class CollectionResourceWidget extends Composite {
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
-		SearchUiUtil.renderStandards(standardsDataPanel, resourceSearchResultDo);
+		SearchUiUtil.renderStandardsForresourceSearch(standardsDataPanel, resourceSearchResultDo);
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
 		Integer reviewCount = resourceSearchResultDo.getRatings().getReviewCount();
