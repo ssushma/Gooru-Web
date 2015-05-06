@@ -446,7 +446,7 @@ ul {
 }
 
 .folders li:hover {
-	//background-color:#CFE3F1;
+	/* background-color:#CFE3F1; */
 	cursor: pointer;
 }
 

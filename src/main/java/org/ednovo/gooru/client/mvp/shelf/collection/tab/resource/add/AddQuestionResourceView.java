@@ -44,7 +44,6 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAdvancedCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
@@ -232,6 +231,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	ArrayList<String> isValidHintsList = new ArrayList<String>();
 	
 	public AddQuestionResourceView(){
 		initializeAutoSuggestedBox();
@@ -1301,7 +1301,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
         addHintsTextArea(addHints);
     }
     private void addHintsTextArea(final AddHintsView addHints){
-    	
 	       hintsContainer.add(addHints); 
 	       addHints.hintDelLbl.addClickHandler(new ClickHandler() {
 		        
@@ -1314,7 +1313,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		            isAddBtnClicked=true;
 		        }
 	       });
-	    
+	       
 	    addHints.addMouseOverHandler(new MouseOverHandler() {
 	        
 	        @Override
@@ -1330,6 +1329,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	            addHints.hintDelLbl.getElement().getStyle().setDisplay(Display.NONE);
 	        }
 	    });
+  
 	    showRemoveToolTip(addHints.hintDelLbl);
 	    
 	    if(hintsContainer.getWidgetCount()>=5){
@@ -1893,34 +1893,40 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
      }
 	 public boolean profanityCheckForHints(final boolean fieldValidationStaus,final List<String> answersListFIB,final String mediaFileName){
 		 validationValue=false;
-		 AppClientFactory.getInjector().getResourceService().checkProfanityForList(hintsListForProfanity, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
-				
-				@Override
-				public void onSuccess(List<ProfanityCheckDo> result) {
-					 for(int i=0;i<hintsContainer.getWidgetCount();i++){
-						 final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
-						 addHints.errorMessageforHints.setText("");
-						 SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addHints.hintTextBox, addHints.errorMessageforHints, result.get(i).questionValue);
-						  if(result.get(i).questionValue==true){
-							  addHints.errorMessageforHints.getElement().setAttribute("style", "float: left;left: 24px;");
-			                  validationValue=true;
-			                  isAddBtnClicked=true;
+		 isValidHintsList.clear();
+		 for(int i=0;i<hintsListForProfanity.size();i++){
+			 isValidHintsList.add(hintsListForProfanity.get(i).getQuestionText());
+		 }
+		 if(!isValidHintsList.toString().contains("undefined")){
+			 AppClientFactory.getInjector().getResourceService().checkProfanityForList(hintsListForProfanity, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
+					
+					@Override
+					public void onSuccess(List<ProfanityCheckDo> result) {
+						 for(int i=0;i<hintsContainer.getWidgetCount();i++){
+							 final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
+							 addHints.errorMessageforHints.setText("");
+							 SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addHints.hintTextBox, addHints.errorMessageforHints, result.get(i).questionValue);
+							  if(result.get(i).questionValue==true){
+								  addHints.errorMessageforHints.getElement().setAttribute("style", "float: left;left: 24px;");
+				                  validationValue=true;
+				                  isAddBtnClicked=true;
+							  }
 						  }
-					  }
-					 if(validationValue){
-						  return;
-					  }else{
-						  if(!isRightsClicked){
-								rightsLbl.getElement().getStyle().setColor("orange");
-								isAddBtnClicked=true;
-							}else{
-								if(fieldValidationStaus){
-									 addFunctionality(!validationValue,answersListFIB,mediaFileName);
+						 if(validationValue){
+							  return;
+						  }else{
+							  if(!isRightsClicked){
+									rightsLbl.getElement().getStyle().setColor("orange");
+									isAddBtnClicked=true;
+								}else{
+									if(fieldValidationStaus){
+										 addFunctionality(!validationValue,answersListFIB,mediaFileName);
+									}
 								}
-							}
-					  }
-				}
-			});
+						  }
+					}
+				});
+		 }
 		 return validationValue;
 	 }
 	 /**
@@ -1958,6 +1964,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				  if(validationValue && fieldValidationStaus){
 					  return;
 				  }else{
+					  isValidHintsList.clear();
+					  for(int i=0;i<hintsListForProfanity.size();i++){
+							 isValidHintsList.add(hintsListForProfanity.get(i).getQuestionText());
+						 }
+					  if(!isValidHintsList.toString().contains("undefined")){
 						AppClientFactory.getInjector().getResourceService().checkProfanityForList(hintsListForProfanity, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
 							
 							@Override
@@ -1986,6 +1997,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 							}
 						});
 				  }
+			   }
 			}
 		});
 		return validationValue;
@@ -2055,7 +2067,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS);
 	        		  hintsAdded=true;
             	      isAddBtnClicked=true;
-            	      return false;
   	        	  }
   	        	  hintsListForProfanity.add(profanitymodel);
   	        }

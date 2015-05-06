@@ -1250,7 +1250,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public List<ProfanityCheckDo> checkProfanityForList(
 			List<ProfanityCheckDo> profanityList) {
 		Map<String, String> parms = new HashMap<String, String>();
-		if(profanityList!=null){
+		if(profanityList!=null && profanityList.size()>0){
 		for (int i = 0; i < profanityList.size(); i++) {
 			parms.put("text", profanityList.get(i).getQuestionText());
 			profanityList.get(i).setQuestionValue(checkProfanityForLsit(parms));
