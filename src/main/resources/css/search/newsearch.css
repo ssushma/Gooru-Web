@@ -18,7 +18,7 @@
 	padding-top: 5px;
 }
 #gooruSearchMainContainer .viewContainer{
-	text-align:center;
+	text-align:right;
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 	margin:0 0;
@@ -128,7 +128,6 @@
 	padding:0 20px;
 	min-height:45px;
 	border-left:1px solid #cccccc;
-	border-right:1px solid #cccccc;
 	font-size:13px;
 }
 #gooruSearchMainContainer .authorDetails .input-group {
@@ -142,7 +141,7 @@
 }
 #gooruSearchMainContainer .authorDetails .input-group  span{
 	display:inline-block;
-	margin-right: 6px;
+	margin-right: 10px;
 }
 #gooruSearchMainContainer .no-gutter > [class*='col-md-']{
 	padding-left:0px;
@@ -492,6 +491,7 @@ Back to top button
 	color: #515151;
 	padding: 8px 20px;
 	display: block;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
 }
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:hover,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:focus {
 	background: #87badd url(../images/checkmark.png) no-repeat 95% -23px;
@@ -859,7 +859,7 @@ margin-top: -5%;
 		text-align:center;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:center;
+		text-align: right;
 		margin: 5px 0 5px 0;
 	}
 	#gooruSearchMainContainer .circleBlocks ul li {
@@ -1039,7 +1039,7 @@ margin-top: -5%;
 		text-align:center;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:center;
+		text-align:right;
 	}
 	
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu:before {
@@ -1151,7 +1151,7 @@ margin-top: -5%;
 		padding:0 10px;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:center;
+		text-align:right;
 	}
 	#gooruSearchMainContainer .resourceImage{
 		width:21%;
