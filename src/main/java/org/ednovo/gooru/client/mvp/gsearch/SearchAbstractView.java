@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.gsearch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -507,7 +506,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				resourceSearchPanel.setVisible(true);
 				collectionSearchPanel.setVisible(false);
 				resetData();
-				getUiHandlers().setSearchType(false);
+				getUiHandlers().setSearchType(false,getSearchText());
 			}
 		});
 	}
@@ -525,7 +524,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				resourceSearchPanel.setVisible(false);
 				collectionSearchPanel.setVisible(true);
 				resetData();
-				getUiHandlers().setSearchType(true);
+				getUiHandlers().setSearchType(true,getSearchText());
 			}
 		});
 	}
