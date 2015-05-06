@@ -479,7 +479,7 @@ public enum UrlToken {
 	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?"),
 
 	RESOURCE_TAGS("/v2/content/resource/tag/{0}?"),
-	
+
 	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?"),
 	
 	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?"),
@@ -499,8 +499,34 @@ public enum UrlToken {
 	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}"),//Not Used.
 	
 	V2_GET_ASSIGNMENT_PARENT_DETAILS("/v2/class/assignment/{0}?sessionToken={1}"), // Not Used.
-	
+
 	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?"),
+
+GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={4}&offset={5}"),
+	
+	REORDER_PATHWAY_SEQUENCE("/v2/class/{0}/pathway/{1}/reorder/{2}?sessionToken={3}"),
+
+	PATHWAYS_CLASS_OPTIMIZED("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&optimize=true&type=pathway"),
+	
+	PATHWAYS_CLASS("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&type=pathway"),
+	
+	PATHWAYS_CLASS_REORDER("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
+	
+	PATHWAYS_CREATE("/v2/class/{0}/pathway?sessionToken={1}"),
+	
+	V2_ASSIGN_COLLECTION_TO_PATHWAY("/v2/class/{0}/pathway/{1}/assign/{2}?sessionToken={3}"),
+	
+	ASSIGN_STATUS_UPDATE("/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
+	
+	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
+	
+	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
+	
+	V2_UPDATE_UNIT_STATUS("/v2/class/item/{0}?sessionToken={1}"),
+	
+//	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22},%22collectionGooruOId%22:%22{3}%22,%22pathwayId%22:%22{3}%22,%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
+	GET_INSIGHTS_DATA("/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,views,avgTimeSpent,text,questionType,type,score,attemptStatus,resourceGooruOId,userName,gooruUId,avgReaction,reaction,collectionGooruOId,title,description,lastModified,category,thumbnail,options,metaData,userData,skip,totalAttemptUserCount,attempts,totalCorrectCount,totalInCorrectCount,status,userCount,itemSequence,gradeInPercentage,totalQuestionCount,answerObject,feedbackStatus,feedbackText,feedbackProviderUId,feedbackTimestamp,feedbackTeacherName,isRequired,minimumScore,estimatedTime%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22,%22pathwayId%22:%22{3}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
+
 	
 	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}"),// don't remove session token
 	
@@ -517,11 +543,12 @@ public enum UrlToken {
 	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?"),
 	
 	V2_21CENTURYSKILLS("/v2/taxonomy/skills?"),
-	
+
 	SUGGEST_CENTURY_BY_QUERY("/search/skills?"),
 
-	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}");// don't remove session token
-
+	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}"),// don't remove session token
+	
+	V2_GET_RESOURCE_BASED_USERS("/v2/resource/{0}/collection?sessionToken={1}&offset={2}&limit={3}");
 	
 
 	private String url;

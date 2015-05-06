@@ -293,13 +293,12 @@
 		}
 
 		.menu:hover{
-		background-color: #393939;
-		color: white;
-		float:
-		left;
-		cursor: pointer;
-		padding: 16px;
-		cursor: pointer;
+		background-color: #393939 !important;
+		color: white !important;
+		float:left !important;
+		cursor: pointer !important;
+		padding: 16px !important;
+		cursor: pointer !important;
 		}
 		.menuUser{
 		color:

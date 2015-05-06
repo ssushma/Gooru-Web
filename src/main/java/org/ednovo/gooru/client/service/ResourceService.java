@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +39,7 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
+import org.ednovo.gooru.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
@@ -45,7 +47,6 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -414,4 +415,5 @@ public interface ResourceService extends BaseService {
 	 * @return
 	 */
 	public CollectionDo update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData);
+	public ArrayList<ResourceCollDo> getResourceBasedUsersDetails(String resourceId,int offset,int limit)  throws GwtException, ServerDownException;
 }

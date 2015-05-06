@@ -27,6 +27,10 @@
  */
 package org.ednovo.gooru.shared.model.search;
 
+import java.util.List;
+
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 
 /**
  * @author Search Team
@@ -52,6 +56,12 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	
 	private Integer onlyResourceCount;
 	
+	private String collectionType;
+	
+	private Integer scollectionRemixCount;
+	
+	private List<CollectionItemDo> collectionItems;
+ 	
 	public CollectionSearchResultDo() {
 
 	}
@@ -104,4 +114,42 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 		this.onlyResourceCount = onlyResourceCount;
 	}
 
+	public List<CollectionItemDo> getCollectionItems() {
+		return collectionItems;
+	}
+
+	public void setCollectionItems(List<CollectionItemDo> collectionItems) {
+		this.collectionItems = collectionItems;
+	}
+
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
+	/**
+	 * @return the scollectionRemixCount
+	 */
+	public Integer getScollectionRemixCount() {
+		return scollectionRemixCount;
+	}
+
+	/**
+	 * @param scollectionRemixCount the scollectionRemixCount to set
+	 */
+	public void setScollectionRemixCount(Integer scollectionRemixCount) {
+		this.scollectionRemixCount = scollectionRemixCount;
+	}
+	
+	
+	
 }

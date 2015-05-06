@@ -542,9 +542,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 					}
 					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 					getEditSearchTxtBox().hideSuggestionList();
-					
-					
-			
 				}
 			}
 		}
@@ -701,16 +698,16 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 					.toLowerCase(), "LandingPage");
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
-			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
+						PlaceTokens.SEARCH_COLLECTION, params);
 			}else{
 				String queryVal = params.get("query");
 				//queryVal = queryVal.replaceAll("%5C1", "&");
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 			getEditSearchTxtBox().hideSuggestionList();
@@ -719,7 +716,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	
 	public void savePlaceRequest(){
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH)||currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(currentPlaceToken.equals(PlaceTokens.SEARCH_COLLECTION)||currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE)){
 		}else{
 			AppClientFactory.getPlaceManager().setSearchMovedPlaceRequest(AppClientFactory.getPlaceManager().getCurrentPlaceRequest());
 		}
@@ -934,7 +931,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				Map<String, String> map = params;
 				map.put("query", queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 			txtSearch.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
