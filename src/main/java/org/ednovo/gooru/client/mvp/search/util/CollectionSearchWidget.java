@@ -134,7 +134,14 @@ public class CollectionSearchWidget extends Composite {
 		collectionTitle.addClickHandler(new OnCollectionImageClick(collectionSearchResultDo.getGooruOid()));
 		imgCollection.getElement().getStyle().setZIndex(9999);
 		//imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
+		if(String.valueOf(collectionSearchResultDo.getTotalViews()).length()>4)
+		{
+		lblViewCount.setText(String.valueOf(collectionSearchResultDo.getTotalViews()).substring(0,4));
+		}
+		else
+		{
 		lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
+		}
 		setResourceAndQuestionCount(collectionSearchResultDo);
 		if(collectionSearchResultDo.getCollectionItems().size()>0){
 			int count=0;
