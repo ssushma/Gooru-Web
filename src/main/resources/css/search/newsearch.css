@@ -14,7 +14,8 @@
 	margin-top: 20px;
 }
 #gooruSearchMainContainer .subNavigation{
-	border-bottom:1px solid #979797;
+	background: #e8e7e7;
+	padding-top: 5px;
 }
 #gooruSearchMainContainer .viewContainer{
 	text-align:center;
@@ -30,22 +31,24 @@
 	display:inline-block;
 	margin-bottom:-1px;
 }
-#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li:last-child{
-	border-right: 1px solid #979797;
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li:last-child a{
+	border-right: 1px solid #d1cfcf;
 }
 
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a{
 	text-align:left;
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a{
-	display:block;
+    display:block;
 	padding:16px 45px;
 	color:#515151;
-	background:#d8d8d8;
-	border-left:1px solid #979797;
+	background:#dddddd;
+	border-left:1px solid #d1cfcf;
 	font-size:13px;
 	height: 57px;
 	line-height: 23px;
+	border-radius: 6px 6px 0 0 !important;
+	
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:hover, #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:focus{
 	opacity:0.75;
@@ -53,6 +56,9 @@
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li.active{
 	border-bottom:1px solid #ffffff;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	background: none;
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li.active a{
 	background:#ffffff;
@@ -136,6 +142,7 @@
 }
 #gooruSearchMainContainer .authorDetails .input-group  span{
 	display:inline-block;
+	margin-right: 6px;
 }
 #gooruSearchMainContainer .no-gutter > [class*='col-md-']{
 	padding-left:0px;
