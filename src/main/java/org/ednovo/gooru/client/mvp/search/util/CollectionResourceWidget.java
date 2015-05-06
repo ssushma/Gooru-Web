@@ -114,7 +114,14 @@ public class CollectionResourceWidget extends Composite {
 		}
 		
 		lbladdCount.setText(resourceSearchResultDo.getResourceAddedCount()+"");
+		if(String.valueOf(resourceSearchResultDo.getTotalViews()).length()>4)
+		{
+		lblViewCount.setText(String.valueOf(resourceSearchResultDo.getTotalViews()).substring(0,4));
+		}
+		else
+		{
 		lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
+		}
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
