@@ -3,16 +3,16 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style field= "style" src="ratingandreview.css"/>
-	<g:FlowPanel styleName="rating">
-	    <g:InlineLabel styleName="{style.ratingCountLabel}" ui:field="avgRatingLabel"></g:InlineLabel>
-		<g:InlineLabel ui:field="star_1" styleName="{style.star}"></g:InlineLabel> 
-		<g:InlineLabel ui:field="star_2" styleName="{style.star}"></g:InlineLabel>
-		<g:InlineLabel ui:field="star_3" styleName="{style.star}"></g:InlineLabel>
-		<g:InlineLabel ui:field="star_4" styleName="{style.star}"></g:InlineLabel>
-		<g:InlineLabel ui:field="star_5" styleName="{style.star}"></g:InlineLabel>
+	<!-- <ui:style field= "style" src="ratingandreview.css"/> -->
+	<g:FlowPanel styleName="rating" ui:field="maincontainer">
+	    <g:InlineLabel styleName="ratingCountLabel" ui:field="avgRatingLabel"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_1" styleName="star"></g:InlineLabel> 
+		<g:InlineLabel ui:field="star_2" styleName="star"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_3" styleName="star"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_4" styleName="star"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_5" styleName="star"></g:InlineLabel>
 		<g:InlineLabel styleName="" ui:field="ratingCountOpenBrace"></g:InlineLabel>
-		<g:InlineLabel styleName="{style.ratingCountLabel}" ui:field="ratingCountLabel"></g:InlineLabel>
+		<g:InlineLabel styleName="ratingCountLabel" ui:field="ratingCountLabel"></g:InlineLabel>
 		<g:InlineLabel styleName="" ui:field="ratingCountCloseBrace"></g:InlineLabel>
 	</g:FlowPanel>
 </ui:UiBinder>

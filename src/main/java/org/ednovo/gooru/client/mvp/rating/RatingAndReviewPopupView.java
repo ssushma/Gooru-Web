@@ -113,10 +113,12 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			appPopUp.setGlassStyleName("setGlassPanelZIndex");
 		}
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
+		maincontainer.getElement().setId("epnlReviewContainer");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		reviewsContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 		reviewScrollPanel.setHeight("500px");
 		reviewScrollPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
+		
 	}
 
 	@UiHandler("closeButton")
