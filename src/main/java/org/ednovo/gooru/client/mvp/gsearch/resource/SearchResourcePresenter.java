@@ -51,6 +51,8 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -213,6 +215,11 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo){
 		Window.enableScrolling(false);
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null)
+		{
+		element.setAttribute("style", "opacity:0.1;z-index:1;");
+		}
 		ratingAndReviewPopup.displayPopup(searchResultDo.getResourceTitle(), searchResultDo.getGooruOid(),null);
 		addToPopupSlot(ratingAndReviewPopup);
 	}
