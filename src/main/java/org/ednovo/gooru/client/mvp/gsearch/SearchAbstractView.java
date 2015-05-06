@@ -254,7 +254,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pageNumber--;
 							lblLoadingTextPrevious.setVisible(true);
 							isForwardScroll = false;
-							System.out.println("(pageCountForStorage)::"+(pageCountForStorage));
 							if(localStore.getItem((pageCountForStorage-10)+"") == null && (pageNumber-1)>=1){
 								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
@@ -264,8 +263,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 									}
 								}
 							}
-				
-							System.out.println("(pageCountForStorage-9)::"+(pageCountForStorage-9));
 							if(Storage.isLocalStorageSupported()){
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-9)+""),true);
 								pageCountForStorage--;
@@ -1760,8 +1757,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				localStore.setItem(pageCountForStorage+"", data);
 				pageCountForStorage++;
 			}else{
-				System.out.println("pageCountForStorageasdasd::"+pageCountForStorage);
-				System.out.println("pageCountFeasdasd::"+(pageCountForStorage-3));
 				localStore.setItem((pageCountForStorage-3)+"", data);
 			//pageCountForStorage--;
 			}
