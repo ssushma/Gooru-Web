@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.gin;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Cookies;
@@ -77,13 +78,16 @@ public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extend
 	public void hide() {
 		super.hide();
 		String count = Cookies.getCookie("MyCookie");
+		String scrollVal = Cookies.getCookie("getScrollTop");
 		if(count!= null && Integer.parseInt(count)==7){
 			
 		}
 		else{
 			Document.get().getDocumentElement().getStyle().setProperty("overflow", "");
 		}
-		
+		if(!StringUtil.isEmpty(scrollVal) && AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+			Window.scrollTo(0, Integer.parseInt(scrollVal));
+		}
 	}
 	
 	public void hideFromPopup(boolean isHideFromCloseButton){

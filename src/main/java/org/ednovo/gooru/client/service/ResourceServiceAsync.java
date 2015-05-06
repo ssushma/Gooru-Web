@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
+import org.ednovo.gooru.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
@@ -44,7 +45,6 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -179,4 +179,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     void updateAssessmentDetails(String assessmentId,String title,String assessmentUrl,String description,String sharing,String requireLogin,AsyncCallback<FolderDo> callback);
     
     void update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData,AsyncCallback<CollectionDo> callback);
+    
+    void getResourceBasedUsersDetails(String resourceId,int offset,int limit,AsyncCallback<ArrayList<ResourceCollDo>> callback);
 }
