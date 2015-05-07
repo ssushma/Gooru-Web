@@ -495,7 +495,7 @@ Back to top button
 	border-bottom: 1px solid rgba(0,0,0,0.15);
 }
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:hover,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:focus {
-	background: #87badd url(../images/checkmark.png) no-repeat 95% -23px;
+	background: #87badd url(../images/checkmark.png) no-repeat 95% 5px;
 	color: #ffffff;
 }
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a {

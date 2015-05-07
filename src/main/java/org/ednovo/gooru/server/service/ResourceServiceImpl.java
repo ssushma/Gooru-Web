@@ -79,6 +79,7 @@ import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserDoMorePeople;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1937,13 +1938,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				JSONArray myCollectionArryObj=jsonRep.getJsonArray();
 				for(int i=0;i<myCollectionArryObj.length();i++){
 					JSONObject myCollectionObj=myCollectionArryObj.getJSONObject(i);
-					UserDo userObj=new UserDo();
+					UserDoMorePeople userObj=new UserDoMorePeople();
 					ThumbnailDo thumbnailsDo=new ThumbnailDo();
 					String myCollectionTitle=myCollectionObj.isNull("title")?"":myCollectionObj.getString("title").toString();
 					String mycollectionGid=myCollectionObj.isNull("gooruOid")?"":myCollectionObj.getString("gooruOid").toString();
 					String myCollectionType=myCollectionObj.isNull("collectionType")?"":myCollectionObj.getString("collectionType").toString();
 					if(!myCollectionObj.isNull("user")){
-						userObj = JsonDeserializer.deserialize(myCollectionObj.getJSONObject("user").toString(), UserDo.class);			
+						userObj = JsonDeserializer.deserialize(myCollectionObj.getJSONObject("user").toString(), UserDoMorePeople.class);			
 					}
 					if(!myCollectionObj.isNull("thumbnails")){
 						thumbnailsDo = JsonDeserializer.deserialize(myCollectionObj.getJSONObject("thumbnails").toString(), ThumbnailDo.class);			

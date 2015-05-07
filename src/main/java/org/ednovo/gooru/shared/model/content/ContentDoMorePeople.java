@@ -25,107 +25,66 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.user.UserDoMorePeople;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class ResourceCollDo extends ResourceDoMorePeople implements Serializable{
+public class ContentDoMorePeople implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3298220423508874309L;
-
-	private String collectionType;
-	private ThumbnailDo thumbnails;
-	private String title;
-	private String description;
+	private static final long serialVersionUID = -4726217674900854767L;
+	
 	private String gooruOid;
 	private UserDoMorePeople user;
-	private String grade;
+	private UserDoMorePeople creator;
+	private Set<CodeDo> taxonomySet = new HashSet<CodeDo>();
+	private String sharing;
 	
-	
-	public ResourceCollDo(){
-		
-	}
-
-
-	public String getCollectionType() {
-		return collectionType;
-	}
-
-
-	public void setCollectionType(String collectionType) {
-		this.collectionType = collectionType;
-	}
-
-
-	public ThumbnailDo getThumbnails() {
-		return thumbnails;
-	}
-
-
-	public void setThumbnails(ThumbnailDo thumbnails) {
-		this.thumbnails = thumbnails;
-	}
-
-
-	public String getTitle() {
-		return title;
-	}
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-
-	public String getDescription() {
-		return description;
-	}
-
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
+	public ContentDoMorePeople(){}
 
 	public String getGooruOid() {
 		return gooruOid;
 	}
 
-
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
-
-
-
-
-	public String getGrade() {
-		return grade;
-	}
-
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
 
 	public UserDoMorePeople getUser() {
 		return user;
 	}
 
-
 	public void setUser(UserDoMorePeople user) {
 		this.user = user;
 	}
 
-	
-	
-	
+	public UserDoMorePeople getCreator() {
+		return creator;
+	}
+
+	public void setCreator(UserDoMorePeople creator) {
+		this.creator = creator;
+	}
+
+	public void setTaxonomySet(Set<CodeDo> taxonomySet) {
+		this.taxonomySet = taxonomySet;
+	}
+
+	public Set<CodeDo> getTaxonomySet() {
+		return taxonomySet;
+	}
+
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
+	}
+
+	public String getSharing() {
+		return sharing;
+	}
 
 }

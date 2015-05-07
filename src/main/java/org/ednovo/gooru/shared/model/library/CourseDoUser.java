@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class CourseDo implements Serializable {
+public class CourseDoUser implements Serializable {
 	
 	private static final long serialVersionUID = 2411080367742513414L;
 	private Integer codeId;
@@ -46,9 +46,10 @@ public class CourseDo implements Serializable {
 	private List<LibraryUserDo> user;
 	private String parentId;
 	private Integer grade;
+	private CodeDo code;
 	
 	
-	public CourseDo(){}
+	public CourseDoUser(){}
 
 	/** 
 	 * This method is to get the codeId
@@ -159,6 +160,14 @@ public class CourseDo implements Serializable {
 	 */
 	public void setGrade(Integer grade) {
 		this.grade = grade;
+	}
+
+	public CodeDo getCode() {
+		return code;
+	}
+
+	public void setCode(CodeDo code) {
+		this.code = code;
 	}
 
 
