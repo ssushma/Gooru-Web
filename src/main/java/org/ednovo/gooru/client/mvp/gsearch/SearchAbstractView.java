@@ -555,10 +555,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						searchResultPanel.remove(widget);
 						widgetCount++;
 					}
+					//This code is used to scroll automatically after loading the bottom results.
 					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
-						Window.scrollTo(0, getWidgetHeight()*30);
+						Window.scrollTo(0, Window.getScrollTop()-(getWidgetHeight()*4));
 					}else{
-						Window.scrollTo(0, getWidgetHeight()*40);
+						Window.scrollTo(0, Window.getScrollTop()-(getWidgetHeight()*3));
 					}
 				}
 			}
