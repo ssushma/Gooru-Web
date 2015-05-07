@@ -23,8 +23,10 @@
 	</g:HTMLPanel>
 	
 	<g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
-		<tinyMce:TinyMCE width="1" height="1"
-			ui:field="questionNameTextArea" characterLimit="500"></tinyMce:TinyMCE>
+	    <g:HTMLPanel ui:field="questionNameTextAreaContainer"></g:HTMLPanel>
+	    
+		<!-- <tinyMce:TinyMCE width="1" height="1"
+			ui:field="questionNameTextArea" characterLimit="500"></tinyMce:TinyMCE> -->
 		<g:Label ui:field="questionNameErrorLbl"></g:Label>
 	</g:HTMLPanel>
 	
@@ -50,7 +52,8 @@
           <g:Label styleName="containerTitle" ui:field="explanationLabel"></g:Label>
           <g:Label styleName="charLimitExplanationStyle" ui:field="charLimitExplanation"></g:Label>
           <g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
-          <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="500"></tinyMce:TinyMCE>
+               <g:HTMLPanel ui:field="explainationTextAreaContainer"></g:HTMLPanel>
+      <!--     <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="500"></tinyMce:TinyMCE> -->
           <g:Label ui:field="explainationErrorLbl"></g:Label>
           </g:HTMLPanel>
     </g:FlowPanel>

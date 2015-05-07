@@ -406,6 +406,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		tabViewContainer.add(addWebResourceWidget);
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		urlTabButton.setStyleName(res.css().buttonSelected());
+		getUiHandlers().addSelectedQuestionType("MC");
 //		myComputerTabButton.setStyleName(res.css().buttonSelected());
 //		questionTabButton.setStyleName(res.css().buttonDeSelected());
 //		searchTabButton.setStyleName(res.css().buttonDeSelected());
@@ -1257,6 +1258,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				getUiHandlers().addSelectedQuestionType("HS");
 				highlightSelectedTab("HS");
 				hotSpotRadioButton.setValue(true);
+				
 			}
 		}
 		

@@ -1,3 +1,19 @@
+.assessmentContentBlock{
+	padding: 10px 20px 10px 20px;
+}
+.questionTypeHeaderTitle {
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #515151;
+}
+.questionTypeTextStyle  {
+	margin-top: 5px;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	color: #999;
+}
 .multipleAnswerInputControl {
 	float: left;
 	width: 87%;
@@ -46,12 +62,26 @@
 	padding: 0 4% 0 4%;
 }
 
+.hsQAnswerHeadings {
+	display: inline-block;
+	color: #999;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 0 4% 0 4%;
+}
+
+
 .htQAnswerTypeLbl {
 	font-style: italic;
 	padding-left: 0;
 }
 
 .htQAnswerHeadings input[type="radio"] {
+	vertical-align: bottom;
+	margin-right: 1.0ex !important;
+}
+
+.hsQAnswerHeadings input[type="radio"] {
 	vertical-align: bottom;
 	margin-right: 1.0ex !important;
 }
@@ -72,6 +102,11 @@
 	font-size: 12px;
 	font-weight: normal;
 }
+.hsQAnswerHeadings label {
+	font-size: 12px;
+	font-weight: normal;
+}
+
 
 .htQhighlightTextArea {
 	width: 100%;
@@ -130,6 +165,7 @@
 	margin-right: 15px;
 	padding: 10px 10px;
 	text-align: center;
+	cursor: pointer;
 }
 .imgAnsContainer {
 	border: 1px solid #ccc;
@@ -144,8 +180,8 @@
 .ansAnchImageText  {
 	color: #1076BA;
 	margin-top: 8px;
-	margin-left: 10px;
-	margin-right: 10px;
+	display: inline-block;
+	vertical-align: bottom;
 }
 .containerBottom {
 	margin-bottom: 15px;
@@ -267,6 +303,11 @@
 	display: inline-block;
 	padding: 0px 0px 7px 0px;
 }
+.charLimit{
+	display: inline-block;
+	margin-left: 10px;
+	color: #999;
+}
 
 .charLimitExplanationStyle{
 	display: inline-flex;	
@@ -336,7 +377,7 @@
 	float:left;
 }
 .checkBoxlevels{
-	float:left;
+	display: inline-block;
 	padding: 3px 0px;
 	color:black;
 }
@@ -392,7 +433,188 @@
 	float: left;
 }
 
+.termPolicyContainer {
+	width: 100%;
+	text-align: center;
+	margin-top:47px;
+	display: inline-block;
+}
 
+.copyRightText {
+	display: inline-block;
+	font-size: 13px;
+}
+
+.copyRightIcon {
+	position: relative;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	background: url("${cdn.endpoint}/images/Classpage/sprite-classpage-type.png") no-repeat
+		left top;
+	background-position: 0px -46px;
+	vertical-align: middle;
+}
+.copyRightIcon:hover {
+	cursor: pointer;
+}
+.copyRightPopupContainer {
+	width: 286px;
+	position: absolute;
+	left: -243px;
+	top:25px;
+}
+
+.copyRightTootlTipArrowShadow {
+	background-color: transparent;
+	width: 6px;
+	height: 17px;
+	position: absolute;
+	top: -7px;
+	left: 193px;
+	z-index: -10;
+	box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
+.copyRightTootlTipArrowBorder {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: absolute;
+	top: -10px;
+	left: 244px;
+	border-top: none;
+}
+
+.copyRightTootlTipArrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: absolute;
+	left: 242px;
+	top: -9px;
+	border-top: none;
+}
+
+.copyRightInnerPopup {
+	clear: both;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 11px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+.anchorText {
+	text-decoration: none !important;
+	cursor: pointer;
+	color: #0066cc;
+}
+.addButtonContainer {
+	text-align: center;
+	width: 100%;
+	margin-top: 10px;
+}
+.inlineBlock {
+	display: inline-block;
+}
+.ansImageBlock {
+	position: relative;
+	display: inline-block;
+	margin: 8px;
+}
+.ansImageBlock .changeImageLbl, .ansImageBlock .removeImageLbl{
+	display:none;
+}
+.ansImageBlock:hover .changeImageLbl, .ansImageBlock:hover .removeImageLbl{
+	display:block;
+}
+.ansImageBlockSel {
+	border:1px solid #4e9746;
+}
+.ansImageBlock:hover {
+	border:1px solid #0066cc;
+}
+.ansImageDimensions {
+	height: 70px;
+	width: 80px;
+}
+.changeImageLbl {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #c7c7c7;
+    text-align: center;
+    padding: 2px;
+    cursor: pointer;
+}
+.removeImageLbl {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #c7c7c7;
+    text-align: center;
+    padding: 2px;
+    cursor: pointer;
+}
+.answerMarkbg {
+	float: right;
+	margin-right: 1%;
+	padding: 3px 0px 0px 3px;
+}
+.answerMarkDeselected,.answerMarkSelected, .answerMarkDelete {
+	width: 640px;
+	height: 480px;
+	background: url("${cdn.endpoint}/images/sprites.png") no-repeat;
+}
+
+.answerMarkDeselected {
+	background-position: 0px -50px;
+	width: 20px;
+	height: 18px;
+	cursor:pointer;
+}
+.answerMarkDeselected:hover {
+    background-position: -20px -50px;
+    width: 20px;
+    height: 18px;
+}
+.answerMarkSelected{
+	background-position: -20px -50px;
+    width: 20px;
+    height: 18px;
+    cursor:pointer;
+}
+.answerMarkDelete {
+	background-position: 11px -67px;
+	width: 30px;
+	height: 30px;
+	cursor:pointer;
+}
+.imageSelectedContainer {
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+.imageSelectedLbl {
+	position: relative;
+	margin: 33% 0 0 33%;
+}
 
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
@@ -436,6 +658,18 @@
 		vertical-align: bottom;
 		margin-right: 0.5ex !important;
 	}
+	.hsQAnswerHeadings {
+		display: inline-block;
+		color: #999;
+		font-size: 13px;
+		font-weight: normal;
+		padding: 0 1% 0 1%;
+	}
+	.hsQAnswerHeadings input[type="radio"] {
+		vertical-align: bottom;
+		margin-right: 0.5ex !important;
+	}
+	
 	.htQInLbl {
 		padding: 0;
         margin-top: 2px;
