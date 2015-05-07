@@ -122,6 +122,10 @@ public class ResourceSearchResultDo implements Serializable {
 	
 	private int resourceCount;
 	
+	private int resourceAddedCount;
+	
+	private int resourceUsedUserCount;
+	
 	private int questionCount;
 	
 	private SearchRatingsDo ratings;
@@ -513,6 +517,22 @@ public class ResourceSearchResultDo implements Serializable {
 	 */
 	public void setResourceTags(List<SearchResultsTagsDo> resourceTags) {
 		this.resourceTags = resourceTags;
+	}
+
+	public int getResourceAddedCount() {
+		return resourceAddedCount;
+	}
+
+	public void setResourceAddedCount(int resourceAddedCount) {
+		this.resourceAddedCount = resourceAddedCount;
+	}
+
+	public int getResourceUsedUserCount() {
+		return resourceUsedUserCount;
+	}
+
+	public void setResourceUsedUserCount(int resourceUsedUserCount) {
+		this.resourceUsedUserCount = resourceUsedUserCount;
 	}
 
 	

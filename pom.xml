@@ -578,7 +578,12 @@
 						<configuration>
 							<charset>utf-8</charset>
 							<jsEngine>closure</jsEngine>
-							<cssSourceDir>css</cssSourceDir>
+							<cssSourceDir>css</cssSourceDir>							
+							<cssSourceFiles>
+                                    <cssSourceFile>search/newsearch.css</cssSourceFile>
+                                    <cssSourceFile>search/searchnoresults.css</cssSourceFile>
+                                    <cssSourceFile>search/search-result-resources.css</cssSourceFile>
+                                </cssSourceFiles>
 							<cssSourceIncludes>
 								<cssSourceInclude>*.css</cssSourceInclude>
 							</cssSourceIncludes>
@@ -699,7 +704,7 @@
 	</build>
 
 	<!-- <reporting> <plugins> <plugin> <groupId>org.codehaus.mojo</groupId> 
-		<artifactId>gwt-maven-plugin</artifactId> <version>2.5.0</version> <reportSets> 
+		<artifactId>gwt-maven-plugin</artifactId> <version>2.7.0</version> <reportSets> 
 		<reportSet> <reports> <report>compile-report</report> </reports> </reportSet> 
 		</reportSets> </plugin> </plugins> </reporting> -->
 
