@@ -463,8 +463,13 @@ margin:0 0 0 -20px !important;
   	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 14px 8px rgba(0, 0, 0, 0);
     padding: 10px 50px;
 	border-bottom:1px solid #dddddd;
+	border:1px solid #dddddd;
 }
-
+#addCollectionPopup .remixMenuTitle{
+  	background-color: #ddd;
+	padding: 13px 29px;
+	border-bottom: 1px solid #ddd;
+ }
 #addCollectionPopup .foldermenuLevel{
 	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 32px 8px;
     padding:10px 50px 10px 66px;
