@@ -42,7 +42,8 @@
 							<g:HTMLPanel styleName="btn-group" ui:field="btnStandardsBrowse">
 								<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-									<g:Image styleName="gliphIconImage"></g:Image>
+									<span class="glyphicon gliphIconImage"
+												aria-hidden="true"></span>
 									<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 								</g:HTMLPanel>
 							</g:HTMLPanel>

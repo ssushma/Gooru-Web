@@ -2682,32 +2682,30 @@ public interface MessageProperties extends Constants {
 	String GL2170();
 	String GL2171();
 	String GL2172();
-
-	
-	//New Labels for Assign Tab in Collection Edit 
+	String GL2173();
+	String GL2174();
 	String GL2175();
 	String GL2176();
 	String GL2177();
-	String GL2173();
-	String GL2174();
 	String GL2178();
 	String GL2179();
 	String GL2180();
 	String GL2181();
-
 	String GL2182();
 	String GL2183();
 	String GL2184();
 	String GL2185();
 	String GL2186();
 	String GL2187();
-
 	String GL2188();
 
+	String GL2188_4();
+	String GL2188_3();
+
+	
 	String GL2189();
 	String GL2190();
 	String GL2191();
-
 	String GL2192();
 	String GL2193();
 	String GL2194();
@@ -2717,13 +2715,54 @@ public interface MessageProperties extends Constants {
 	String GL2198();
 	String GL2199();
 	String GL2200();
-
+	
+	//Analytics Static data
+		 String GL2256();
+		 String GL2257();
+		 String GL2258();
+		 String GL2259();
+		 String GL2260();
+		 String GL2261();
+		 String GL2262();
+		 String GL2263();
+		 String GL2264();
+		 String GL2265();
+		 String GL2266();
+		 String GL2267();
+		 String GL2268();
+		 String GL2269();
+		 String GL2270();
+		 String GL2271();
+		 String GL2272();
+		 String GL2273();
+		 String GL2274();
+		 String GL2275();
+		 String GL2276();
+		 String GL2277();
+		 String GL2278();
+		 String GL2279();
+		 String GL2280();
+		 String GL2281();
+		 String GL2282();
+		 String GL2283();
+		 String GL2284();
+		 String GL2285();
+		 String GL2286();
+		 String GL2287();
+		 String GL2288();
+		 String GL2289();
+		 String GL2290();
+		 String GL2291();
+		 String GL2292();
+		 String GL2293();
+	
+	
 	String GL2201();
 	String GL2202();
 	String GL2203();
 	String GL2204();
 	String GL2205();
-
+	
 	String GL3000();
 	String GL3001();
 	String GL3002();
@@ -2951,157 +2990,26 @@ public interface MessageProperties extends Constants {
 	String GL3202();
 	String GL3203();
 	String GL3204();
+	String GL3205();
 
-	String GL2206();
-	String GL2207();
-	String GL2208();
-
-	String GL2209();
-	String GL2210();
-	String GL2211();
-	String GL2212();
-	String GL2213();
-	String GL2214();
-	String GL2215();
-	String GL2216();
-	String GL2217();
-	String GL2218();
-	String GL2219();
-	String GL2220();
-	
-	String GL2221();
-	String GL2222();
-	String GL2223();
-	String GL2224();
-
-	String GL2225();
-
-	String GL2226();
-
-	String GL2231();
-	String GL2232();
-	String GL2233();
-	String GL2234();
-	String GL2235();
-	String GL2236();
-	String GL2237();
-	String GL2238();
-	String GL2239();
-	String GL2240();
-	String GL2241();
-	String GL2242();
-	String GL2243();
-
-	String GL2244();
-	String GL2245();
-	String GL2246();
-	String GL2247();
-	
-	String GL2248();
-	
-	String GL2249();
-	
-	String GL2250();
-	String GL2251();
-	String GL2252();
-	String GL2253();
-	String GL2254();
-	String GL2255();
-	
-	String GL2174_1();
-	String GL2175_1();
-	String GL2176_1();
-	String GL2177_1();
-	String GL2178_1();
-	String GL2179_1();
-	String GL2180_1(); 
-	String GL2181_1();
-	String GL2182_1();
-	String GL2183_1();
-	String GL2184_1();
-	String GL2185_1();
-	String GL2186_1();
-	String GL2187_1();
-	String GL2188_1();
-
-	String GL2188_4();
-	String GL2188_3();
-	
-	//Analytics Static data
-	 String GL2256();
-	 String GL2257();
-	 String GL2258();
-	 String GL2259();
-	 String GL2260();
-	 String GL2261();
-	 String GL2262();
-	 String GL2263();
-	 String GL2264();
-	 String GL2265();
-	 String GL2266();
-	 String GL2267();
-	 String GL2268();
-	 String GL2269();
-	 String GL2270();
-	 String GL2271();
-	 String GL2272();
-	 String GL2273();
-	 String GL2274();
-	 String GL2275();
-	 String GL2276();
-	 String GL2277();
-	 String GL2278();
-	 String GL2279();
-	 String GL2280();
-	 String GL2281();
-	 String GL2282();
-	 String GL2283();
-	 String GL2284();
-	 String GL2285();
-	 String GL2286();
-	 String GL2287();
-	 String GL2288();
-	 String GL2289();
-	 String GL2290();
-	 String GL2291();
-	 String GL2292();
-	 String GL2293();
-	 String GL3205();
-	 String GL2189_1();
-	 String GL2190_1();
-	 String GL2191_1();
-	 String GL2192_1();
-	 String GL2193_1();
-	 String GL2194_1();
-	 String GL2195_1();
-	 String GL2196_1();
-	 String GL2197_1();
-	 String GL2198_1();
-	 String GL2199_1();
-	 String GL2200_1();
-	 String GL2201_1();
-	 String GL2202_1();
-	 String GL2203_1();
-	 String GL2204_1();
-	 String GL2205_1();
 	 String GL3206();
-	 String GL3207();
-	 String GL3208();
-	 String GL3209();
-	 String GL3210();
-	 String GL3211();
-	 String GL3212();
-	 String GL3213();
-	 String GL3214();
-	 String GL3215();
-	 String GL3216();
-	 String GL3217();
-	 String GL3218();
-	 String GL3219();
-	 String GL3220();
-	 
-	 String GL3221();
-	 String GL3222();
-	 String GL3223();
-	 String GL3224();
+		 String GL3207();
+		 String GL3208();
+		 String GL3209();
+		 String GL3210();
+		 String GL3211();
+		 String GL3212();
+		 String GL3213();
+		 String GL3214();
+		 String GL3215();
+		 String GL3216();
+		 String GL3217();
+		 String GL3218();
+		 String GL3219();
+		 String GL3220();
+		 
+		 String GL3221();
+		 String GL3222();
+		 String GL3223();
+		 String GL3224();
 }

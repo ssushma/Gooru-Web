@@ -22,110 +22,61 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.content;
+package org.ednovo.gooru.shared.model.user;
+
 
 import java.io.Serializable;
+import java.util.List;
 
-import org.ednovo.gooru.shared.model.user.UserDoMorePeople;
+import org.ednovo.gooru.shared.model.library.CourseDoUser;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class ResourceCollDo extends ResourceDoMorePeople implements Serializable{
+public class UserMetaDoPeople implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3298220423508874309L;
-
-	private String collectionType;
-	private ThumbnailDo thumbnails;
-	private String title;
-	private String description;
-	private String gooruOid;
-	private UserDoMorePeople user;
+	private static final long serialVersionUID = 8598215298047619076L;
+	
+	private UserTaxonomyPreferenceDo taxonomyPreference;
+	private UserSummaryDo summary;
 	private String grade;
+	private List<CourseDoUser> course;
 	
-	
-	public ResourceCollDo(){
-		
+	public UserMetaDoPeople(){}
+
+	public UserTaxonomyPreferenceDo getTaxonomyPreference() {
+		return taxonomyPreference;
 	}
 
-
-	public String getCollectionType() {
-		return collectionType;
+	public void setTaxonomyPreference(UserTaxonomyPreferenceDo taxonomyPreference) {
+		this.taxonomyPreference = taxonomyPreference;
 	}
 
-
-	public void setCollectionType(String collectionType) {
-		this.collectionType = collectionType;
+	public UserSummaryDo getSummary() {
+		return summary;
 	}
 
-
-	public ThumbnailDo getThumbnails() {
-		return thumbnails;
+	public void setSummary(UserSummaryDo summary) {
+		this.summary = summary;
 	}
-
-
-	public void setThumbnails(ThumbnailDo thumbnails) {
-		this.thumbnails = thumbnails;
-	}
-
-
-	public String getTitle() {
-		return title;
-	}
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-
-	public String getDescription() {
-		return description;
-	}
-
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-
-	public String getGooruOid() {
-		return gooruOid;
-	}
-
-
-	public void setGooruOid(String gooruOid) {
-		this.gooruOid = gooruOid;
-	}
-
-
-
 
 	public String getGrade() {
 		return grade;
 	}
 
-
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
 
+	public List<CourseDoUser> getCourse() {
+		return course;
+	}
 
-	public UserDoMorePeople getUser() {
-		return user;
+	public void setCourse(List<CourseDoUser> course) {
+		this.course = course;
 	}
 
 
-	public void setUser(UserDoMorePeople user) {
-		this.user = user;
-	}
-
 	
-	
-	
-
 }
