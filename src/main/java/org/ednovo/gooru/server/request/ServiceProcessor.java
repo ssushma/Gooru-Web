@@ -119,6 +119,13 @@ public class ServiceProcessor {
         	   setClientResource(setContext(url, username, password));
         	   setMediaType(MediaType.TEXT_HTML);
                setEncodings(Encoding.GZIP);
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               setCustomHttpHeader(map);
                Representation decodedRep = new DecodeRepresentation(getClientResource().get()); 
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
