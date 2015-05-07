@@ -18,7 +18,7 @@
 		<!-- resource player versions -->
 		<player.resource.version>SNAPSHOT-5.11.2</player.resource.version>
 		<!-- Convenience property to set the GWT version -->
-		<gwtVersion>2.5.0</gwtVersion>
+		<gwtVersion>2.7.0</gwtVersion>
 		<!-- <project.build.directory>/home/rajam/pandoraspace</project.build.directory> 
 			<project.build.finalName>/beta</project.build.finalName> -->
 		<!-- GWT needs at least java 1.6 -->
@@ -275,7 +275,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>2.5.0</version>
+			<version>2.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
@@ -526,7 +526,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.5.0</version>
+				<version>2.7.0</version>
 				<executions>
 					<execution>
 						<phase>prepare-package</phase>
@@ -561,7 +561,7 @@
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-dev</artifactId>
-						<version>2.5.0</version>
+						<version>2.7.0</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -704,7 +704,7 @@
 	</build>
 
 	<!-- <reporting> <plugins> <plugin> <groupId>org.codehaus.mojo</groupId> 
-		<artifactId>gwt-maven-plugin</artifactId> <version>2.5.0</version> <reportSets> 
+		<artifactId>gwt-maven-plugin</artifactId> <version>2.7.0</version> <reportSets> 
 		<reportSet> <reports> <report>compile-report</report> </reports> </reportSet> 
 		</reportSets> </plugin> </plugins> </reporting> -->
 
