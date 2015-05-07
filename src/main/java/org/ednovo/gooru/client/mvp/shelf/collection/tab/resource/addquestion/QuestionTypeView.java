@@ -16,7 +16,6 @@ import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerChoice;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHintsView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHotSpotQuestionAnswerChoice;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionAnswerChoice;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionImg;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -106,8 +105,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	loadingTextLbl;
 	@UiField Anchor addQuestionImg,addExplanationAnc,addHintsAnc,addDepthOfKnowledgeAnc,addStandardsAnc,addCenturyAnc;
 	@UiField HTMLPanel questionText,addQuestImgContainer,questionHotSpotAnswerChoiceContainer,advancedContainer,hintsContainer,
-	errorContainer,panelContentRights,rightsContent,buttonContainer;
-	@UiField TinyMCE questionNameTextArea,explainationTextArea;
+	errorContainer,panelContentRights,rightsContent,buttonContainer,questionNameTextAreaContainer,explainationTextAreaContainer;
+	TinyMCE questionNameTextArea,explainationTextArea;
 	@UiField FlowPanel explanationContainer,depthOfKnowledgeContainer,standardContainer,standardsPanel,centuryContainer,
 	centuryPanel;
 	@UiField HTMLEventPanel eHearderIconExplanation,eHearderIconDepthOfKnowledge,eHearderIconStandards,eHearderIconCentury,
@@ -182,9 +181,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		questionText.getElement().setInnerHTML(" "+i18n.GL0863());
 		questionText.getElement().setAttribute("alt", i18n.GL0863());
 		questionText.getElement().setAttribute("title", i18n.GL0863());
-		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
+		/*questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
-		questionNameTextArea.markAsBlankPanel.setVisible(false);
+		questionNameTextArea.markAsBlankPanel.setVisible(false);*/
+		questionNameTextAreaContainer.getElement().setId("questionNameTextAreaContainer");
+		explainationTextAreaContainer.getElement().setId("explainationTextAreaContainer");
 		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
 		errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
 		addQuestionImg.setText(i18n.GL0860());
@@ -475,8 +476,27 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	@Override
 	public void getRevealType() {
+		questionNameTextArea=new TinyMCE(500);
+		explainationTextArea= new TinyMCE();
+		
+		questionNameTextAreaContainer.clear();
+		explainationTextAreaContainer.clear();
+		
+		questionNameTextArea.setCharacterLimit(500);
+		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
+		questionNameTextArea.getElement().setAttribute("maxlength", "500");
+		questionNameTextArea.markAsBlankPanel.setVisible(false);
+		
+		questionNameTextAreaContainer.add(questionNameTextArea);
+		explainationTextAreaContainer.add(explainationTextArea);
+		
+		
+		
+		
+		
 		getHideRightsToolTip();
 	}
+	
 
 	@Override
 	public void setImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage){

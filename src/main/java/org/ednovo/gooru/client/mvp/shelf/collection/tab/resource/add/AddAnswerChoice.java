@@ -47,11 +47,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 	
-	public interface AddHotSpotQuestionAnswerChoiceUiBinder extends UiBinder<Widget, AddAnswerChoice>{
+	public interface AddAnswerChoiceUiBinder extends UiBinder<Widget, AddAnswerChoice>{
 		
 	}
 	
-	public static AddHotSpotQuestionAnswerChoiceUiBinder uiBinder=GWT.create(AddHotSpotQuestionAnswerChoiceUiBinder.class);
+	public static AddAnswerChoiceUiBinder uiBinder=GWT.create(AddAnswerChoiceUiBinder.class);
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -59,7 +59,6 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 	@UiField Label errorMessageforAnswerChoice,labelChoice,optionSelectedButton;
 	@UiField public TinyMCE answerTextBox;
 	@UiField HTMLPanel tinyOrTextBoxConatiner,deleteButtonContainer;
-	@UiField AddResourceBundle addWebResourceStyle;
 	
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
@@ -69,7 +68,7 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 		labelChoice.getElement().setId("lblLabelChoice");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
-		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
+		ansChoiceDeleteButton.setStyleName("answerMarkDelete");
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
@@ -82,7 +81,7 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
-		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
+		ansChoiceDeleteButton.setStyleName("answerMarkDelete");
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
@@ -96,7 +95,7 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 		this.richTextData=richTextData;
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
-		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
+		ansChoiceDeleteButton.setStyleName("answerMarkDelete");
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		deleteButtonContainer.add(ansChoiceDeleteButton);
