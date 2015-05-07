@@ -12,10 +12,10 @@
 							<g:HTMLPanel styleName="seachLeftNavigation">
 								<panel:UlPanel>
 									<panel:LiPanel styleName="active" ui:field="collectionPanel">
-										<g:Anchor text="{i18n.GL1754}" title="{i18n.GL1754}"/> 
+										<g:Anchor text="{i18n.GL0645}" title="{i18n.GL0645}"/> 
 									</panel:LiPanel>
 									<panel:LiPanel ui:field="resourcePanel">
-										<g:Anchor text="{i18n.GL1755}" title="{i18n.GL1755}"/>
+										<g:Anchor text="{i18n.GL1110}" title="{i18n.GL1110}"/>
 									</panel:LiPanel>
 								</panel:UlPanel>
 							</g:HTMLPanel>
@@ -70,7 +70,7 @@
 									<div class="input-group">
 										<g:InlineLabel text="{i18n.GL0573}" title="{i18n.GL0573}"></g:InlineLabel>
 										<g:TextBox  styleName="form-control" ui:field="authorTxtBox" />
-										<g:Label styleName="searchQuestionMark"></g:Label>
+										<g:Image url="images/mos/questionmark.png" styleName="searchQuestionMark" ui:field="authorQuestionTooltip"/>
 									</div>
 								</div>
 							</div>

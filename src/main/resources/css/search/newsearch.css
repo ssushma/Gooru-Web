@@ -395,14 +395,8 @@
 	width: 57% !important;
 }
 #gooruSearchMainContainer .searchQuestionMark {
-	background: url("../images/mos/questionmark.png") no-repeat 4px 4px;
-	width: 19px;
-	height: 24px;
-	position: relative;
 	display: inline-block;
-	padding-top: -76px;
-	padding: 0;
-	top: 9px;
+	margin-left: 5px;
 }
 
 #gooruSearchMainContainer .authorName{

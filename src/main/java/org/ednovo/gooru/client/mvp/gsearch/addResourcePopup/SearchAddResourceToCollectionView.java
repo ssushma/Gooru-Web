@@ -54,11 +54,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			UiBinder<Widget, SearchAddResourceToCollectionView> {
 	}
 	
-	@UiField HTMLPanel floderTreeContainer,myCollDefault;
+	@UiField HTMLPanel floderTreeContainer;
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText;
+	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl;
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
@@ -104,11 +104,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		urlparams= new HashMap<String, String>();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
-			addtocollHeaderText.setText(i18n.GL3213());
+			addtocollHeaderText.setText(i18n.GL3223());
+			addingTextLbl.setText(i18n.GL3213());
 		}
 		else
 		{
-			addtocollHeaderText.setText(i18n.GL3214());
+			addtocollHeaderText.setText(i18n.GL3224());
+			addingTextLbl.setText(i18n.GL3214());
 		}		
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override

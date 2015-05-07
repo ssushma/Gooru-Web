@@ -134,7 +134,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField HTMLEventPanel resourceFiltersDropDwn,moreFilterPanel;
 	
-	@UiField Image publisherTooltip,aggregatorTooltip;
+	@UiField Image publisherTooltip,aggregatorTooltip,authorQuestionTooltip;
 	
 	@UiField(provided = true)
 	AppSuggestBox publisherSgstBox;
@@ -361,6 +361,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	    	renderAccessModeValues();
 	    	publisherSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 	    	publisherSgstBox.getElement().setId("asSourceSgst");
+	    	authorQuestionTooltip.addMouseOverHandler(new MouseOverOnImage(i18n.GL3222()));
+	    	authorQuestionTooltip.addMouseOutHandler(new MouseOutOnImage());
 	    	aggregatorSgstBox.getElement().setId("asAggregatorSgst");
 			aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
 			
