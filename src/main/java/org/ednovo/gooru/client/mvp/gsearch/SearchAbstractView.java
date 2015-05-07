@@ -257,10 +257,14 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}
 							if(pageCountForStorage>11 && localStore.getItem((pageCountForStorage-11)+"") == null && (pageNumber-1)>=1){
 								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
-									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
+									if((pageCountForStorage-11)<=2){
+										if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+											getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
+										}else{
+											getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
+										}
 									}else{
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 6);
 									}
 								}
 								pageNumber--;
@@ -278,11 +282,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isForwardScroll = true;
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 							if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStore.getItem((pageNumber+1)+"") == null){
-								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+								/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 								}else{
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
-								}
+								}*/
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 6);
 							}else{
 								isApiInProgress=isApiInProgressLoad=true;
 							}
@@ -559,7 +564,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 						Window.scrollTo(0, Window.getScrollTop()-(getWidgetHeight()*4));
 					}else{
-						Window.scrollTo(0, Window.getScrollTop()-(getWidgetHeight()*3));
+						Window.scrollTo(0, Window.getScrollTop()-(getWidgetHeight()*2));
 					}
 				}
 			}
