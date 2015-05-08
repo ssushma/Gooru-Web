@@ -67,7 +67,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private CollectionTreeItem previousSelectedItem = null;
 	private FolderTreeItem currentFolderSelectedTreeItem = null;
 	private CollectionTreeItem cureentcollectionTreeItem = null;
-	String currentsearchType;
+	String currentsearchType = "collection";
 	
 	HashMap<String,String> urlparams ;
 	private static final String O1_LEVEL = "o1";
