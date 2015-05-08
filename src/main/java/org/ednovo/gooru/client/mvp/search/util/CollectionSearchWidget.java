@@ -95,7 +95,7 @@ public class CollectionSearchWidget extends Composite {
 		remixBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		remixBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 	
-		collectionTitle.setText(collectionSearchResultDo.getResourceTitle());
+		collectionTitle.setText(StringUtil.removeAllHtmlCss(collectionSearchResultDo.getResourceTitle()));
 		
 /*		remixBtn.addClickHandler(new ClickHandler() {
 			
@@ -105,7 +105,7 @@ public class CollectionSearchWidget extends Composite {
 				
 			}
 		});*/
-		String collectionDesc=collectionSearchResultDo.getDescription();
+		String collectionDesc=StringUtil.removeAllHtmlCss(collectionSearchResultDo.getDescription());
 		collectionDescription.getElement().setAttribute("title", collectionDesc);
 		if(!StringUtil.isEmpty(collectionDesc)){
 			if(collectionDesc.length()>=120){
@@ -134,13 +134,10 @@ public class CollectionSearchWidget extends Composite {
 		collectionTitle.addClickHandler(new OnCollectionImageClick(collectionSearchResultDo.getGooruOid()));
 		imgCollection.getElement().getStyle().setZIndex(9999);
 		//imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
-		if(String.valueOf(collectionSearchResultDo.getTotalViews()).length()>4)
-		{
-		lblViewCount.setText(String.valueOf(collectionSearchResultDo.getTotalViews()).substring(0,4));
-		}
-		else
-		{
-		lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
+		if(String.valueOf(collectionSearchResultDo.getTotalViews()).length()>4){
+			lblViewCount.setText(String.valueOf(collectionSearchResultDo.getTotalViews()).substring(0,4));
+		}else{
+			lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
 		}
 		setResourceAndQuestionCount(collectionSearchResultDo);
 		if(collectionSearchResultDo.getCollectionItems().size()>0){
