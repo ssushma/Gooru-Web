@@ -17,8 +17,5 @@
 				
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<div id="back-top" style="display: block;">
-			<a href="#top"><span></span></a>
-		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -84,45 +84,33 @@ public class CollectionResourceWidget extends Composite {
 
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		String resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?resourceSearchResultDo.getResourceTitle():"";
+		String resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
 		resourceTitle.setText(resourceTitleText);
-		String resourceDesc=!StringUtil.isEmpty(resourceSearchResultDo.getDescription())?resourceSearchResultDo.getDescription():"";
+		String resourceDesc=!StringUtil.isEmpty(resourceSearchResultDo.getDescription())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getDescription()):"";
 		if(resourceDesc.length()>=120){
 			resourceDesc=resourceDesc.substring(0, 120)+"...";
 		}
 		resourceDescription.getElement().setInnerText(resourceDesc);
-		if(resourceSearchResultDo.getResourceUsedUserCount()>1)
-		{
+		if(resourceSearchResultDo.getResourceUsedUserCount()>1)		{
 			ancViewMore.setVisible(true);
-		}
-		else
-		{
+		}else{
 			ancViewMore.setVisible(false);
 		}
-		if(resourceSearchResultDo.getResourceUsedUserCount()>0)
-		{
-			if(resourceSearchResultDo.getResourceUsedUserCount()==1)
-			{
-			lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" person");
+		if(resourceSearchResultDo.getResourceUsedUserCount()>0){
+			if(resourceSearchResultDo.getResourceUsedUserCount()==1){
+				lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" person");
+			}else{
+				lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" people");
 			}
-			else
-			{
-			lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" people");
-			}
-		}
-		else
-		{
+		}else{
 			lblUserCount.setText("");
 		}
 		
 		lbladdCount.setText(resourceSearchResultDo.getResourceAddedCount()+"");
-		if(String.valueOf(resourceSearchResultDo.getTotalViews()).length()>4)
-		{
-		lblViewCount.setText(String.valueOf(resourceSearchResultDo.getTotalViews()).substring(0,4));
-		}
-		else
-		{
-		lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
+		if(String.valueOf(resourceSearchResultDo.getTotalViews()).length()>4){
+			lblViewCount.setText(String.valueOf(resourceSearchResultDo.getTotalViews()).substring(0,4));
+		}else{
+			lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
 		}
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
