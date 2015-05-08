@@ -4,8 +4,8 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.ClasspageListPopupViewCBundle"
 		field="res" />
-	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
-		field="res1" />
+	
+	<g:HTMLPanel ui:field="mainContainer">
 	<g:FlowPanel ui:field="panelMainContainer">
 		<!-- <g:Label ui:field="lblClasspageList" styleName="{res.css.classpageListTitle}"></g:Label> 
 			<g:HTMLPanel styleName="{res.css.classpageBottomLine}"/> -->
@@ -20,7 +20,7 @@
 		<!-- <g:HTMLPanel styleName="{res.css.classpageBottomLine}"/> -->
 		
 	
-		<panel:UlPanel styleName="dropdown-menu {res1.css.dropdowDisplay} {res1.css.classpageListContainer}">
+		<panel:UlPanel styleName="dropdown-menu dropdowDisplay classpageListContainer">
 			<panel:LiPanel>
 				<g:Anchor ui:field="ancNewClasspage" styleName="{res.css.newClasspageLink}"></g:Anchor>
 			</panel:LiPanel>
@@ -35,4 +35,6 @@
 			</panel:LiPanel>
 		</panel:UlPanel>
 	</g:FlowPanel>
+	</g:HTMLPanel>
+	
 </ui:UiBinder> 

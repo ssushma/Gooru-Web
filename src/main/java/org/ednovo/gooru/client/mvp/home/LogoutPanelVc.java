@@ -39,6 +39,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -61,6 +62,7 @@ public class LogoutPanelVc extends Composite{
 	@UiField
 	FlowPanel logPanel;
 	
+	@UiField HTMLPanel mainContainer;
 	
 	public LogoutPopupVc logoutPopupVc;
 	
@@ -121,6 +123,8 @@ public class LogoutPanelVc extends Composite{
 		
 		logPanel.getElement().setId("fpnlLogPanel");
 		triggerUserVoice();
+		
+		mainContainer.getElement().setId("headerMainPanel");
 	}
 
 	/**

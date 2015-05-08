@@ -3,29 +3,30 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="toolTip" src="ToolTip.css" />
-	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
-		field="res" />
-	<g:HTMLPanel styleName="{res.css.tooltipContainer}" ui:field="panelCode">
+	
+	<g:HTMLPanel ui:field="mainContainer" >
+	<g:HTMLPanel styleName="tooltipContainer"  ui:field="panelCode">
 		<!-- <g:HTMLPanel styleName="{toolTip.myCollectoinTooltipContent}" ui:field="tooltipPanel">
 			<g:Label styleName="{toolTip.collectionToolTipLabel}" ui:field="lblCreateCollection" />
 			<g:Label styleName="{toolTip.collectionToolTipLabel}" ui:field="lblCreateAsseement" />
 			<g:Label styleName="{toolTip.folderToolTipLabel} {toolTip.folderIcon} {toolTip.textPadding}" ui:field="lblCreateFolder" />
 			<g:Label styleName="{toolTip.mycollectionsToolTipLabel} {toolTip.mycollectionsToolTipLabel}" ui:field="lblEditMyCollections" />
 		</g:HTMLPanel> -->
-		<uc:UlPanel ui:field="tooltipPanel" styleName="dropdown-menu {res.css.dropdowDisplay}">
+		<uc:UlPanel ui:field="tooltipPanel" styleName="dropdown-menu dropdowDisplay">
 		<uc:LiPanel>
-				<g:Anchor styleName="{res.css.folderToolTipLabel} " ui:field="lblCreateFolder" />
+				<g:Anchor styleName="folderToolTipLabel " ui:field="lblCreateFolder" />
 		    </uc:LiPanel>
 		    <uc:LiPanel>
-		       <g:Anchor styleName="{res.css.collectionToolTipLabel}" ui:field="lblCreateCollection" />		        
+		       <g:Anchor styleName="collectionToolTipLabel" ui:field="lblCreateCollection" />		        
 		    </uc:LiPanel>
 		    <uc:LiPanel>
-		    	<g:Anchor styleName="{res.css.assessmentToolTipLabel}" ui:field="lblCreateAsseement" />
+		    	<g:Anchor styleName="assessmentToolTipLabel" ui:field="lblCreateAsseement" />
 		    </uc:LiPanel>
 		    <uc:LiPanel>
 		        <g:Anchor ui:field="lblEditMyCollections" />
 		    </uc:LiPanel>
 		</uc:UlPanel>
+	</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
 

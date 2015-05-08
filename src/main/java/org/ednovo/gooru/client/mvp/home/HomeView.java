@@ -109,7 +109,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries;
+	@UiField HTMLPanel gooruPanel,homeContainer, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 
 	@UiField H2Panel lblHeading;
@@ -270,7 +270,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		panelCopyRightR.setText(copyRightTxt);
 		panelCopyRightR.getElement().setId("lblCopyRightYearText");
 		StringUtil.setAttributes(panelCopyRightR.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
-		
+		homeContainer.getElement().setId("headerMainPanel");
 	}
 	
 	

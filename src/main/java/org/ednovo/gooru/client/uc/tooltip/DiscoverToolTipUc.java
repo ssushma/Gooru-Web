@@ -93,9 +93,8 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	@UiField HTMLEventPanel  partnerLibContainer, districtLibContainer;
 	
 	
-	@UiField HTMLPanel dropdownImg,dropdownImgLib;
+	@UiField HTMLPanel dropdownImg,dropdownImgLib,mainContainer;
 	@UiField UlPanel tooltipPanel;
-	@UiField HomeCBundle res;
 //	@UiField LibraryStyleBundle libraryStyleUc;
 	/**
 	 * Because this class has a default constructor, it can
@@ -111,8 +110,7 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	 */
 	public DiscoverToolTipUc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.res = HomeCBundle.INSTANCE;
-		res.css().ensureInjected();
+		mainContainer.getElement().setId("headerMainPanel");
 		panelCode.getElement().setId("pnlPanelCode");
 		lblDistrictLibrary.getElement().setInnerHTML(i18n.GL0515());
 		lblDistrictLibrary.getElement().setId("epnlLblDistrictLibrary");
@@ -148,8 +146,8 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 		final HashMap<String,String> publicPartnerList = getPublicLibraryPartners();
 		UlPanel ulPanel=new UlPanel();
 		ulPanel.addStyleName("dropdown-menu");
-		ulPanel.addStyleName(res.css().dropdowDisplay());
-		ulPanel.addStyleName(res.css().partnersDropdown());
+		ulPanel.addStyleName("dropdowDisplay");
+		ulPanel.addStyleName("partnersDropdown");
 		for (final Object key : publicPartnerList.keySet()) {
 			final Anchor partnerTitle = new Anchor(key.toString());
 			LiPanel liPanel=new LiPanel();
@@ -284,8 +282,8 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
 		UlPanel ulPanel=new UlPanel();
 		ulPanel.addStyleName("dropdown-menu");
-		ulPanel.addStyleName(res.css().dropdowDisplay());
-		ulPanel.addStyleName(res.css().districDropDown());
+		ulPanel.addStyleName("dropdowDisplay");
+		ulPanel.addStyleName("districDropDown");
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
 			 LiPanel  liPanel=new LiPanel();

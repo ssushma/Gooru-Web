@@ -81,7 +81,7 @@ public class OrganizeToolTip extends Composite implements HasMouseOutHandlers{
 	
 	@UiField Anchor lblCreateFolder,lblCreateCollection, lblEditMyCollections,lblCreateAsseement;
 	
-	@UiField HTMLPanel panelCode;
+	@UiField HTMLPanel panelCode,mainContainer;
 	@UiField UlPanel tooltipPanel;
 	
 	public OrganizeToolTip() {
@@ -196,6 +196,7 @@ public class OrganizeToolTip extends Composite implements HasMouseOutHandlers{
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 			}
 		});
+        mainContainer.getElement().setId("headerMainPanel");
 	}
 	
 	@Override
