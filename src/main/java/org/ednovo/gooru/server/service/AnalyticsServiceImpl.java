@@ -261,14 +261,17 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				String boolVal="";
 				if(!jsonRep.getJsonObject().isNull("message")){
-					JSONObject messageArr=jsonRep.getJsonObject().getJSONObject("message");
-					boolVal=messageArr.getString("aggregateData");
+					JSONArray messageArr=jsonRep.getJsonObject().getJSONArray("message");
+					if(messageArr.length()>0)
+					{
+					boolVal=messageArr.getJSONObject(0).getString("aggregateData");
 					if(boolVal.equalsIgnoreCase("true")){
 						collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
 					}else{
 						GradeJsonData gradeData=new GradeJsonData();
 						gradeData.setAggregateData(boolVal);
 						collectionResourcesList.add(gradeData);
+					}
 					}
 				}
 				
