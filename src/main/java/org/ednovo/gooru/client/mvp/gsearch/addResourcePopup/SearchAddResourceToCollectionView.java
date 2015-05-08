@@ -425,16 +425,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		hide();
 		successPopup.setData(collectionName, selectedGooruOid,params,searchType);
 		successPopup.setGlassEnabled(true);
-		successPopup.getCloseButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				successPopup.hide();
-				enableTopFilters();
-			}
-		});
 		successPopup.show();
 		successPopup.center();
 	}
+		
 	public void enableTopFilters(){
 		Element element = Document.get().getElementById("fixedFilterSearchID");
 		if(element!=null){
@@ -442,7 +436,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		Window.enableScrolling(true);
 	}
-	
 	@Override
 	public void restrictionToAddResourcesData(String message) {
 		// TODO Auto-generated method stub
