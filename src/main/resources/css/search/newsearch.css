@@ -961,8 +961,8 @@ word-wrap: break-word;
 		z-index: 9;
     }
     #morePeoplePopWrapper {
-	width: 100%;
-	background: #fff;
+		width: 100%;
+		background: #fff;
 	}
 }
 
@@ -1127,7 +1127,11 @@ word-wrap: break-word;
 
 
 @media (min-width: 768px) and (max-width: 991px) {
-	
+	#gooruSearchMainContainer .fixedPosition {
+		position: relative;
+		width: 100%;
+		z-index: 9;
+	}
 	#gooruSearchMainContainer .resourcesInside{
 	
 	}
