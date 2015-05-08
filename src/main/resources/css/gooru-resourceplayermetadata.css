@@ -106,7 +106,7 @@
 	background-position: -54px -19px;
 }
 #fpnlWrapperContainerField .spriteType {
-	background: url(/images/emotics.png) no-repeat;
+	background: url(../images/emotics.png) no-repeat;
 }
 #fpnlWrapperContainerField .iconOuter {
 	display: inline-block;

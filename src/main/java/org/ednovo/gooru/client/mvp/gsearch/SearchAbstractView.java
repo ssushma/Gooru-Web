@@ -240,13 +240,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void onWindowScroll(ScrollEvent event) {
 				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
-					if(event.getScrollTop()>=200){
-						pnlBackToTop.setVisible(true);
-					}else{
-						pnlBackToTop.setVisible(false);
-					}
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
-					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/12) && previousScroll>event.getScrollTop()){
+					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
 						if(pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
 							isApiInProgressBack=isApiInProgressBackLoad=false;
 							isInsertTems=true;

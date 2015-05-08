@@ -378,7 +378,7 @@
 #gooruSearchMainContainer .fixedPosition{
 	position: fixed;
 	width: 100%;
-	z-index: 9999;
+	z-index: 9;
 }
 #gooruSearchMainContainer .borderBox{
 	padding:20px 8px;
@@ -747,7 +747,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .fixedPosition{
 		position: relative;
 		width: 100%;
-		z-index: 96 !important;
+		z-index: 9 !important;
     }
     #morePeoplePopWrapper {
 	width: 100%;
@@ -958,7 +958,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .fixedPosition{
 		position: relative;
 		width: 100%;
-		z-index: 9999;
+		z-index: 9;
     }
     #morePeoplePopWrapper {
 	width: 100%;
@@ -970,7 +970,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .fixedPosition{
 		position: relative;
 		width: 100%;
-		z-index: 9999;
+		z-index: 9;
     }
 	#gooruSearchMainContainer .collectionImg{
 	  	 width:170px !important;
