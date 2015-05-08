@@ -1427,11 +1427,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 filtersMap.remove(IsGooruSearchView.OER_FLT);
 			 filtersMap.remove(IsGooruSearchView.ACCESS_MODE_FLT);
 			 filtersMap.remove(IsGooruSearchView.REVIEWS_FLT);
-			 
+			 String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(
+						IsGooruSearchView.COLLECTIONTYPE_FLT,null);
+				if (collectionType != null) {
+					filtersMap.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
+				}else{
+					filtersMap.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
+				}
 			 if(!selectedAuthors.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
 			 }
-
 		 }
 
 		 return filtersMap; 
