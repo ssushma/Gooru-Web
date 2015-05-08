@@ -43,11 +43,11 @@
 					<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
 				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
-					<div class="col-md-8 col-xs-8 col-sm-8 collectionResources">
+					<div class="col-md-9 col-xs-9 col-sm-9 collectionResources">
 						<g:Image styleName="resourceCollectionImage" ui:field="relatedCollectionImage" />					
 						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitleforResource"></g:InlineLabel>
 					</div>
-					<div class="col-md-4 col-xs-4 col-sm-4 user">
+					<div class="col-md-3 col-xs-3 col-sm-3 user">
 						<a href="#">
 						<g:Image ui:field="creatorImage"/>
 						</a>
