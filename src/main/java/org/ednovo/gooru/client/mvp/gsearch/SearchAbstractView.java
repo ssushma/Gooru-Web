@@ -663,9 +663,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private void renderCategories(UlPanel ulCategoryPanel, String key,
 			String value) {
 		liPanel = new LiPanel();
-		Anchor lblSubject=new Anchor(value);
-		lblSubject.setStyleName(value.toLowerCase().replaceAll(" ",""));
-		liPanel.add(lblSubject);
+		Anchor lblCategory=new Anchor(key);
+		lblCategory.setStyleName(value.toLowerCase().replaceAll(" ",""));
+		liPanel.add(lblCategory);
 		liPanel.addClickHandler(new CategoryClickHandler(key,value,liPanel));
 		ulCategoryPanel.add(liPanel);
 		
@@ -862,7 +862,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				public void onSuccess() {
 					if(liPanel.getStyleName().equals("active")){
 						liPanel.removeStyleName("active");
-						removeFilter(categoryValue);
+						removeFilter(categoryKey);
 					}else{
 						liPanel.setStyleName("active");
 						pnlAddFilters.add(createTagsLabel(categoryKey,"categoryPanel"));
@@ -1121,7 +1121,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			for(int i=0; i<split.length; i++){
 				if(!split[i].equalsIgnoreCase("all"))
 				{
-					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
+					//String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
+					String filterName=split[i];
 					pnlAddFilters.add(createTagsLabel(filterName,"categoryPanel"));
 					setStyleSelectedFilters(filterName,ulCategoryPanel);
 				}else{
