@@ -534,9 +534,9 @@ margin:0 0 0 -20px !important;
 	text-align:right !important;
 	width: 49%;
 }
-#addCollectionPopup .rightAlign button.primary{
+/* #addCollectionPopup .rightAlign button.primary{
 	padding: 7px 30px;
-}
+} */
 #addCollectionPopup .dropdownListContainerScrollPanel{
 	border: 1px solid #ddd;
 	list-style-type: none;
