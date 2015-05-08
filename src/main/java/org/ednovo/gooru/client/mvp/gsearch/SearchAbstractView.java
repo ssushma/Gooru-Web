@@ -361,8 +361,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	    	renderAccessModeValues();
 	    	publisherSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 	    	publisherSgstBox.getElement().setId("asSourceSgst");
-	    	authorQuestionTooltip.addMouseOverHandler(new MouseOverOnImage(i18n.GL3222()));
-	    	authorQuestionTooltip.addMouseOutHandler(new MouseOutOnImage());
 	    	aggregatorSgstBox.getElement().setId("asAggregatorSgst");
 			aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
 			
@@ -371,6 +369,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	    }
 		publisherTooltip.addMouseOverHandler(new MouseOverOnImage(i18n.GL1769()));
 		publisherTooltip.addMouseOutHandler(new MouseOutOnImage());
+		authorQuestionTooltip.addMouseOverHandler(new MouseOverOnImage(i18n.GL3222()));
+    	authorQuestionTooltip.addMouseOutHandler(new MouseOutOnImage());
 		aggregatorTooltip.addMouseOverHandler(new MouseOverOnImage(i18n.GL1768()));
 		aggregatorTooltip.addMouseOutHandler(new MouseOutOnImage());
 	}

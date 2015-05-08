@@ -1,11 +1,12 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
 	<div id="addCollectionPopup">
 		<div class="popHeader">
-			<div class="col-md-10 popHeading">Thank you!</div>
-				<div class="col-md-2"><g:Anchor ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Anchor></div>
+			<g:Label styleName="col-md-10 popHeading" ui:field="headerLbl">Thank you!</g:Label>
+				<div class="col-md-2"><g:Label ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Label></div>
 			<div class="clearfix"></div>
 		</div>
 	    <g:HTMLPanel styleName="popBody">
@@ -14,8 +15,8 @@
 	    </g:HTMLPanel>
 		<div class="clearfix"></div>
 		<div class="popFooter">
-			<div class="addButton leftAlign"><g:Button styleName="primary" ui:field="btnContinueSearching">Continue Searching</g:Button></div>
-			<div class="addButton rightAlign"><g:Button styleName="primary" ui:field="btnViewInMyCollections">View in My Collections</g:Button></div>
+			<div class="addButton leftAlign"><g:Button styleName="secondary" ui:field="btnContinueSearching" text="{i18n.GL3191}" title="{i18n.GL3191}"/></div>
+			<div class="addButton rightAlign"><g:Button styleName="primary" ui:field="btnViewInMyCollections" text="{i18n.GL1630}" title="{i18n.GL1630}"/></div>
 		</div>
 		<div class="clearfix"></div>
 	</div>
