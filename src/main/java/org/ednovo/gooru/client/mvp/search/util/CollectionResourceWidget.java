@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEventH
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -152,21 +154,23 @@ public class CollectionResourceWidget extends Composite {
 		usedInSearchDo = new SearchDo<CollectionSearchResultDo>();
 		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());  
 		usedInSearchDo.setPageSize(1);
-		AppClientFactory.getInjector().getSearchService().getResourceCollections(usedInSearchDo,new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
+		AppClientFactory.getInjector().getResourceService().getResourceBasedUsersDetails(resourceSearchResultDo.getGooruOid(), 0, 1, new SimpleAsyncCallback<ArrayList<ResourceCollDo>>() {
 			@Override
-			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
-				if(result.getSearchResults().size()>0){
+			public void onSuccess(ArrayList<ResourceCollDo> userCollectionsList) {
+					//getView().displayContents(userCollectionsList,searchResultDo);
+				if(userCollectionsList.size()>0)
+				{
 					relatedCollectionImage.setVisible(true);
 					creatorImage.setVisible(true);
-					if(!StringUtil.isEmpty(result.getSearchResults().get(0).getUrl())){
-						relatedCollectionImage.setUrl(result.getSearchResults().get(0).getUrl());
+
+						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
+						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
+						relatedCollectionTitle.setText(userCollectionsList.get(0).getTitle());
+						relatedCollectionTitle.setTitle(userCollectionsList.get(0).getTitle());
+						creatorImage.setUrl(userCollectionsList.get(0).getUser().getProfileImageUrl());
+						relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
 						relatedCollectionTitle.setStyleName("collectionTitle");
-						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(result.getSearchResults().get(0).getGooruOid()));
-						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(result.getSearchResults().get(0).getGooruOid()));
-						relatedCollectionTitle.setText(result.getSearchResults().get(0).getResourceTitle());
-						relatedCollectionTitle.setTitle(result.getSearchResults().get(0).getResourceTitle());
-						creatorImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+result.getSearchResults().get(0).getGooruUId()+".png");
-					}
+					
 				}
 				else
 				{
@@ -176,8 +180,7 @@ public class CollectionResourceWidget extends Composite {
 					relatedCollectionTitle.setText(i18n.GL3212());
 				}
 			}
-		});
-
+		});		
 		relatedCollectionImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {

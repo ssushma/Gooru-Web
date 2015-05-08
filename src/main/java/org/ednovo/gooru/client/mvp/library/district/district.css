@@ -1113,3 +1113,10 @@ margin-bottom: 15px;
 	float:right;
 	margin: -25px -7px 0 0;
 }
+.subTag {
+	color:white;
+	font-size:12px;
+	text-align:center;
+	margin-top:10px;
+	/* height: 19px; */
+}
