@@ -50,7 +50,7 @@ import com.gwtplatform.mvp.client.PopupView;
 public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWithHandlers<SearchAddResourceToCollectionUiHandlers>{
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType);
 	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
-	public void displayNoCollectionsMsg();
+	public void displayNoCollectionsMsg(String searchType);
 	public Button getAddButton();
 	public void hidePopup();
 	void setDefaultPanelVisibility(Boolean blnVal);

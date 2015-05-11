@@ -18,6 +18,7 @@
 		<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListContainerScrollPanel">
 	          <g:HTMLPanel ui:field="floderTreeContainer" styleName="popBody"/>
 		</g:ScrollPanel>
+		 <g:Label ui:field="lblEmptyErrorMessage" styleName="noTextMessage"/>
 			<div class="clearfix"></div>
 			<div class="popFooter">
 				<div class="addButton leftAlign"><g:Button styleName="addNewCollectionStyle" ui:field="btnAddNew" text="{i18n.GL3226}" title="{i18n.GL3226}"/></div>
