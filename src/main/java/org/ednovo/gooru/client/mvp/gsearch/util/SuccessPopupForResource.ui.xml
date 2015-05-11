@@ -5,7 +5,7 @@
 	<g:HTMLPanel>
 	<div id="addCollectionPopup">
 		<div class="popHeader">
-			<g:Label styleName="col-md-10 popHeading" ui:field="headerLbl"/>
+			<g:Label styleName="col-md-10 col-xs-10 popHeading" ui:field="headerLbl"/>
 				<div class="col-md-2"><g:Label ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Label></div>
 			<div class="clearfix"></div>
 		</div>

@@ -154,12 +154,16 @@ margin:0 0 0 -20px !important;
 #gooruSearchMainContainer .resourceDesc {
     width: 57% !important;
 }
+#gooruSearchMainContainer .resourceDesc1 {
+    width: 57% !important;
+    height:3.375em;
+}
 #gooruSearchMainContainer .resourceDesc .collectionTitle {
-	font-size: 18px;
-	font-weight: 500;
+	font-size: 17px;
+	font-weight: 400;
 	color: #0c74be;
 	margin-top: 4px;
-	line-height: 18px;
+	line-height: 17px;
 	cursor: pointer;
 }
 #gooruSearchMainContainer .resourceDesc .resourceAuthorDetails{
@@ -205,7 +209,7 @@ margin:0 0 0 -20px !important;
 #gooruSearchMainContainer .userDetailsResources .user .collectionTitle{
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	white-space: normal;
 	height: 32px;
 	display: inline-block;
 	width: 80%;
