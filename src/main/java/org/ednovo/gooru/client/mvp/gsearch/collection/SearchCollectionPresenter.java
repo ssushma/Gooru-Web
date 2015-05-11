@@ -188,7 +188,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	public void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo) {
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionsearchResultDo, "collection");
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
-		
 	}
 	@Override
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo) {
@@ -197,7 +196,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 
 	@Override
 	public void displayUsersList(ResourceSearchResultDo resourceSearchResultDo) {
-		// TODO Auto-generated method stub
 		
 	}
 }
