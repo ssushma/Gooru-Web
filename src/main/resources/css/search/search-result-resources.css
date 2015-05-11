@@ -172,7 +172,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .resourceDescription{
 	padding:10px 10px;
-	min-height:80px;
+	height:80px;
 }
 #gooruSearchMainContainer .resourcesStanders{
 	text-align:center;
@@ -434,6 +434,11 @@ margin:0 0 0 -20px !important;
 	background:#dddddd;
 	padding:8px 10px;
 }
+#addCollectionPopup .noTextMessage{
+	text-align: center;
+	padding: 62px;
+	font-weight: bold;
+}
 #addCollectionPopup .popHeader{
 	padding:10px 15px;
 	color:white;
@@ -469,6 +474,7 @@ margin:0 0 0 -20px !important;
     padding: 10px 50px;
 	border-bottom:1px solid #dddddd;
 	border:1px solid #dddddd;
+	cursor:pointer;
 }
 #addCollectionPopup .remixMenuTitle{
   	background-color: #ddd;

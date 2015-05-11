@@ -117,7 +117,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo.getCount()==0){
-					getView().displayNoCollectionsMsg();
+					getView().displayNoCollectionsMsg(searchType);
 				}else{
 					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 				}
@@ -189,7 +189,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						}
 						params.put("from", "SearchAddResourcePresenter");
 						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
-						getView().displaySuccessPopup(folderDo.getTitle(), result.getGooruOid(), successparams,"collection");
+						getView().displaySuccessPopup(title, result.getGooruOid(), successparams,"collection");
 					}
 				});
 			}else{

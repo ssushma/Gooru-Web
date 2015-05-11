@@ -57,7 +57,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl;
+	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage;
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
@@ -100,14 +100,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
+		lblEmptyErrorMessage.setVisible(false);
+		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		urlparams= new HashMap<String, String>();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 			addtocollHeaderText.setText(i18n.GL3223());
 			addingTextLbl.setText(i18n.GL3213());
-		}
-		else
-		{
+		}else{
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3214());
 		}		
@@ -130,6 +130,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						folderTreeItemWidget.setOpen(true);
 					}
 					removePreviousSelectedItem();
+					highlightStyles();
 					currentFolderSelectedTreeItem = folderTreeItemWidget;
 					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
 					currentFolderSelectedTreeItem
@@ -163,6 +164,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					item.setState(!item.getState(), false);
 				}else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
+			    	highlightStyles();
 			    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
 			    	previousSelectedItem = cureentcollectionTreeItem;
 			    	cureentcollectionTreeItem.addStyleName("selected");
@@ -215,6 +217,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		currentsearchType=searchType;
 		totalHitCount = folderListDo.getCount();
+		btnAddExisting.setVisible(true);
+		dropdownListContainerScrollPanel.setVisible(true);
+		lblEmptyErrorMessage.setVisible(false);
+		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
@@ -266,8 +272,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public void displayNoCollectionsMsg() {
-		
+	public void displayNoCollectionsMsg(String searchType){
+		if(!COLLECTION.equalsIgnoreCase(searchType)){
+			dropdownListContainerScrollPanel.setVisible(false);
+			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
+			lblEmptyErrorMessage.setVisible(true);
+			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
+			btnAddExisting.setVisible(false);
+		}
 	}
 	private  void adjustTreeItemStyle(final UIObject uiObject) {
 	      if (uiObject instanceof TreeItem) {
@@ -297,7 +309,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	public class FolderTreeItem extends Composite{
 		private FlowPanel folderContainer=null;
-		private String gooruOid=null;
+		private String gooruOid=null,folderTitle=null;
 		Label floderName=null;
 		Label arrowLabel=null;
 		private boolean isOpen=false;
@@ -313,6 +325,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				folderContainer.addStyleName("foldermenuLevel"+levelStyleName);
 			}
 			this.gooruOid=gooruOid;
+			this.folderTitle=folderTitle;
 			folderContainer.getElement().setInnerText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -323,6 +336,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		public String getGooruOid(){
 			return gooruOid;
+		}
+		public String getFolderTitle(){
+			return folderTitle;
 		}
 		public boolean isApiCalled() {
 			return isApiCalled;
@@ -383,18 +399,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-		if(cureentcollectionTreeItem != null)
-		{
-		getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
-		}
-		else
-		{
+		if(cureentcollectionTreeItem != null){
+			getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+		}else{
 			if(isTopMostSelected) {
 				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
-			}
-			else
-			{
-			getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+			}else{
+				getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
 			}
 		}
 	}
@@ -439,5 +450,23 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void restrictionToAddResourcesData(String message) {
 		// TODO Auto-generated method stub
 		//displayErrorLabel.setText(message);
+	}
+	
+	@UiHandler("myCollDefault")
+	public void clickOnMyCollection(ClickEvent clickEvent){
+		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
+			myCollDefault.getElement().getStyle().clearBackgroundColor();
+		}else{
+			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
+			isTopMostSelected=true;
+			removePreviousSelectedItem();
+		}
+		
+	}
+	
+	protected void highlightStyles(){
+		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
+			myCollDefault.getElement().getStyle().clearBackgroundColor();
+		}
 	}
 }
