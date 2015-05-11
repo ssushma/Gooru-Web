@@ -152,7 +152,7 @@ margin:0 0 0 -20px !important;
     display: none;
 }
 #gooruSearchMainContainer .resourceDesc {
-    width: 57% !important;
+    width: 57%;
 }
 #gooruSearchMainContainer .resourceDesc .collectionTitle {
 	font-size: 18px;
