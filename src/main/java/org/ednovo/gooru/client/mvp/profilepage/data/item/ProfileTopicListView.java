@@ -1677,7 +1677,7 @@ public class ProfileTopicListView extends Composite{
 		@Override
 		public void onClick(ClickEvent event) {
 		
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, updateParams(searchTitle));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, updateParams(searchTitle));
 			
 
 		}
