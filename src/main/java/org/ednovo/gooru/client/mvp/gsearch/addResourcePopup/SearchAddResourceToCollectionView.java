@@ -400,7 +400,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-		System.out.println("isAddingInProgress;::"+isAddingInProgress);
 		if(isAddingInProgress){
 			isAddingInProgress=false;
 			if(cureentcollectionTreeItem != null){
