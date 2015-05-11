@@ -41,22 +41,6 @@ public interface HomeCBundle extends ClientBundle{
 	@Source("Home.css")
 	HomeCss css();
 	
-	@NotStrict
-	@Source("res_homestyle.css")
-	HomeCss getResponsiveStyle();
-	
-	@NotStrict
-	@Source("res_home2style.css")
-	HomeCss getResponsive1Style();
-	
-	@NotStrict
-	@Source("res_home3style.css")
-	HomeCss getResponsive2Style();
-
-	@NotStrict
-	@Source("res_home4style.css")
-	HomeCss getResponsive3Style();
-	
 	public interface HomeCss extends CssResource{
 		
 		/*HomeView*/
@@ -137,8 +121,6 @@ public interface HomeCBundle extends ClientBundle{
 		String customizeTxt();
 		
 		String shareTxt();
-		
-		String logoutText();
 		
 		String logPanel();
 		
@@ -500,10 +482,8 @@ public interface HomeCBundle extends ClientBundle{
 		
 		String playerAddToolTipGlassStyle();
 		
-		String userMenuBottomLine();
 		
 		/* ClasspageList VC CSS*/
-		String classpageListContainer();
 		
 		String htmlPanelNoClasspageContainer();
 		
@@ -542,7 +522,6 @@ public interface HomeCBundle extends ClientBundle{
 		String header();
 
 		String subheader();
-		String btnBlock();
 		String secondary();
 		String learnMoreContainer();
 
@@ -563,23 +542,17 @@ public interface HomeCBundle extends ClientBundle{
 		String errorMessageStyle();
 		String errorMessageContainer();
 
-		String banner();
-		String shadow();
-		String bannerInner();
 		String caption();
 		/*String h2();
 		String p();*/
 		String btn();
 
-		@ClassName("navbar-default")
-		String navbar_default();
-		@ClassName("navbar-collapse")
-		String navbar_collapse();
-		@ClassName("navbar-nav")
-		String navbar_nav();
-		String small();
-		@ClassName("container-fluid")
-		String container_fluid();
+		/*@ClassName("navbar-collapse")
+		String navbar_collapse();*/
+		/*@ClassName("navbar-nav")
+		String navbar_nav();*/
+		/*@ClassName("container-fluid")
+		String container_fluid();*/
 		String communityblock();
 		String getStart();
 		String getInner();
@@ -600,26 +573,10 @@ public interface HomeCBundle extends ClientBundle{
 		String noMargin();
 		String logo();
 		String searchbox();
-		String mainmenu();
-		String sInner();
-		String searchContainer();
-		String signup();
-		String dropdowDisplay();
-		String districDropDown();
-		String partnersDropdown();
-		String rightArrow();
-		String resourceRightsPopupContainer();
-		String collectionToolTipLabel();
-		String assessmentToolTipLabel();
-		String folderToolTipLabel();
-		String tooltipContainer();
 		String menuActive();
 		String menu();
 		String logoutPanel();
 		String loggedInfo();
-		String login();
-		String logoutDownArrow();
-		String searchButton();
 		String dataTableResultHeading();
 		String menuHeader();
 		String blueBand();
@@ -629,21 +586,7 @@ public interface HomeCBundle extends ClientBundle{
 		String districtLibraryContainer();
 		String blockHeader();
 		String last();
-		String arrowLable();
-		String displayRight();
 
-		
-		String sprite();
-
-		String spriteFind();
-
-		String spriteMonitor();
-
-		String spriteRemix();
-
-		String spriteShare();
-		
-		String spacing();
 		
 		String contributors();
 	}

@@ -72,6 +72,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -96,6 +97,8 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	Label lblTitle;
 	@UiField
 	Anchor ancNewClasspage;
+	
+	@UiField HTMLPanel mainContainer;
 
 	@UiField
 	Button enterLbl;
@@ -177,6 +180,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 		setLabels();
 		toClear = true;
+		mainContainer.getElement().setId("headerMainPanel");
 	}
 
 	/**

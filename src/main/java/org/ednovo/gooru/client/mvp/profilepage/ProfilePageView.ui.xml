@@ -24,16 +24,16 @@
 		 			   	  <g:Label ui:field="profilePageViewMsg" visible="false"></g:Label>
 					   <!--  Profile On/Off container start -->
 					   		<g:HTMLPanel ui:field="gooruProfileOnOffContainer" styleName="{ProfilePageStyle.gooruProfileOnOffContainer}">
-					   		    <g:Label styleName="{settingsStyle.publicProfileTitle}" ui:field="profilePageText"></g:Label>
+					   		    <g:Label styleName="publicProfileTitle" ui:field="profilePageText"></g:Label>
 								<g:HTMLPanel styleName="{ProfilePageStyle.qmark}">
 							        <g:HTMLPanel styleName="{ProfilePageStyle.profileVisiblityPopup}">
 							          <g:HTMLPanel styleName="{ProfilePageStyle.bubble-arrow-style}"></g:HTMLPanel>
 							          <g:HTML styleName="{ProfilePageStyle.standards-inner} {ProfilePageStyle.standards-Popup}" ui:field="profileVisiblityMessage"></g:HTML>
 							        </g:HTMLPanel>
 							    </g:HTMLPanel>
-					   		    <g:HTMLPanel styleName="{settingsStyle.publicProfileOnButtonContent}">
-										<g:Button styleName="{settingsStyle.publicProfileOnButtonActive}" ui:field="profileOnButton"></g:Button>
-										<g:Button styleName="{settingsStyle.publicProfileOffButtonsDeActive}" ui:field="profileOffButton"></g:Button>
+					   		    <g:HTMLPanel styleName="publicProfileOnButtonContent">
+										<g:Button styleName="publicProfileOnButtonActive" ui:field="profileOnButton"></g:Button>
+										<g:Button styleName="publicProfileOffButtonsDeActive" ui:field="profileOffButton"></g:Button>
 								</g:HTMLPanel>
 							   <!--  Social container start -->
 							   <g:HTMLPanel ui:field="gooruSocialButtonsContainer" styleName="{ProfilePageStyle.gooruSocialButtonsContainer}">
@@ -68,7 +68,7 @@
 								</g:FlowPanel>
 								<g:FlowPanel styleName="{ProfilePageStyle.profileGradeContentContainer}">
 									<g:FlowPanel styleName="{ProfilePageStyle.profileGradeGartenContainer}" ui:field="KinderGarten" />
-									<g:FlowPanel styleName="{ccb.css.gradeListCont}">
+									<g:FlowPanel styleName="gradeListCont">
 										<g:FlowPanel ui:field="gradeTopList" styleName="{ProfilePageStyle.gradeBoxStyle}"/>
 										<g:FlowPanel styleName="{ProfilePageStyle.profileGradeHigherContainer}" ui:field="higherEducation" />
 										<g:FlowPanel ui:field="gradeMiddleList" styleName="{ProfilePageStyle.gradeBoxStyle}"/>
@@ -80,9 +80,9 @@
 									<g:Label ui:field="courseLabel" styleName="{ProfilePageStyle.profileCourseInfoTitle}"/>
 								</g:FlowPanel>
 								<g:FlowPanel styleName="{ProfilePageStyle.floatLeftCollectionInputBox}" ui:field="courseData">
-									<g:FlowPanel styleName="{ccb.css.collectionCourseLstPanel}" ui:field="collectionCourseLstPanel" />
+									<g:FlowPanel styleName="collectionCourseLstPanel" ui:field="collectionCourseLstPanel" />
 									<g:Button styleName="secondary {ProfilePageStyle.addCourseBtnStyle}" ui:field="addCourseBtn" />
-									<g:Label styleName="{ccb.css.courseMaxMsg}" ui:field="courseMaxMsg" />
+									<g:Label styleName="courseMaxMsg" ui:field="courseMaxMsg" />
 								</g:FlowPanel>	
 								<g:FlowPanel styleName="{ProfilePageStyle.addedCoursesList}" ui:field="coursesPanel">
 								</g:FlowPanel>
@@ -101,16 +101,16 @@
 				                <g:HTMLPanel ui:field="profilePageEditBioPanel" styleName="{ProfilePageStyle.profilePageEditBioPanel}">
 				                    <g:Label styleName="{ProfilePageStyle.profileDescCharLimit}" ui:field="lblDescCharLimit"></g:Label>
 					                <panel:HTMLEventPanel ui:field="profileDescriptionlabel" styleName="{ProfilePageStyle.bioTextAreaContainer}">
-										<uc:ProfilePageDescriptionEditUc styleName="{settingsStyle.profileDescription}" ui:field="profileTextArea" />
+										<uc:ProfilePageDescriptionEditUc styleName="profileDescription" ui:field="profileTextArea" />
 									</panel:HTMLEventPanel>
-									<g:FocusPanel styleName="{settingsStyle.publicProfileTextarea}" ui:field="noAboutUsContainer">
-							    	    <panel:HTMLEventPanel ui:field="pencilTextAreaImage"  styleName="{settingsStyle.publicProfilePencil-IconNew}"/>
+									<g:FocusPanel styleName="publicProfileTextarea" ui:field="noAboutUsContainer">
+							    	    <panel:HTMLEventPanel ui:field="pencilTextAreaImage"  styleName="publicProfilePencil-IconNew"/>
 					       			</g:FocusPanel>
-									<g:HTMLPanel styleName="{settingsStyle.publicProfileSaveButtonContent}">
-										<g:Button styleName="{settingsStyle.publicProfileSaveButtonText} {settingsStyle.publicProfileSaveButtonBg}" ui:field="btnSave"></g:Button>
-										<g:Button styleName="{settingsStyle.publicProfileCancelText}" ui:field="biographyCancelButton"></g:Button>
+									<g:HTMLPanel styleName="publicProfileSaveButtonContent">
+										<g:Button styleName="publicProfileSaveButtonText publicProfileSaveButtonBg" ui:field="btnSave"></g:Button>
+										<g:Button styleName="publicProfileCancelText" ui:field="biographyCancelButton"></g:Button>
 									</g:HTMLPanel>
-									<g:Label styleName="{settingsStyle.mandatoryAboutUsLabel}" ui:field="aboutUsCharacterValidation"></g:Label>
+									<g:Label styleName="mandatoryAboutUsLabel" ui:field="aboutUsCharacterValidation"></g:Label>
 				                </g:HTMLPanel>
 			                <!-- Profile page user Bio TextArea Edit stop -->
 		                 </g:HTMLPanel>

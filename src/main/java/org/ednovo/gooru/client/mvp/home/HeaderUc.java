@@ -235,6 +235,8 @@ public class HeaderUc extends Composite implements
 
 	@UiField
 	Button editSearchBtn, registerLinkLbl;
+	
+	@UiField HTMLPanel parentContainer;
 
 	@UiField
 	Anchor resendEmailAncr;
@@ -305,9 +307,6 @@ public class HeaderUc extends Composite implements
 	@UiField
 	FlowPanel headerSearchBarFloPanel;
 
-	@UiField(provided = true)
-	GooruCBundle res;
-
 	@UiField
 	Label lblBeta;
 
@@ -371,8 +370,6 @@ public class HeaderUc extends Composite implements
 	 */
 	@SuppressWarnings("deprecation")
 	public HeaderUc() {
-		this.res = GooruCBundle.INSTANCE;
-		res.css().ensureInjected();
 		autokeySuggestOracle = new AppMultiWordSuggestOracle(true);
 		setEditSearchTxtBox(new AppSuggestBox(autokeySuggestOracle) {
 
@@ -595,10 +592,8 @@ public class HeaderUc extends Composite implements
 		loginLink.getElement().setAttribute("alt", i18n.GL0187());
 		loginLink.getElement().setAttribute("title", i18n.GL0187());
 
-		headerSearchBarVerPanel.getElement()
-				.setId("vsbHeaderSearchBarVerPanel");
-		headerSearchBarFloPanel.getElement().setId(
-				"fpnlHeaderSearchBarFloPanel");
+		headerSearchBarVerPanel.getElement().setId("vsbHeaderSearchBarVerPanel");
+		headerSearchBarFloPanel.getElement().setId("fpnlHeaderSearchBarFloPanel");
 		editSearchTxtBox.getElement().setId("tbautoEditSearchTxtBox");
 		StringUtil.setAttributes(editSearchTxtBox, true);
 		mainDotsPanel.getElement().setId("pnlMainDotsPanel");
@@ -715,6 +710,8 @@ public class HeaderUc extends Composite implements
 			editSearchBtn.setVisible(true);
 			headerMainPanel.getElement().getStyle().setWidth(50, Unit.PX);
 		}
+		
+		parentContainer.getElement().setId("gooruHeader");
 	}
 
 
@@ -873,10 +870,9 @@ public class HeaderUc extends Composite implements
 				HomeCBundle.INSTANCE.css().menu());
 		teachLink.getParent().setStyleName(HomeCBundle.INSTANCE.css().menu());
 		studyLink.getParent().setStyleName(HomeCBundle.INSTANCE.css().menu());
-		loggedInfoLbl.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
-		discoverLink.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
+		loggedInfoLbl.getParent().setStyleName(HomeCBundle.INSTANCE.css().menu());
+		loggedInfoLbl.getParent().addStyleName("usernameContainer");
+		discoverLink.getParent().addStyleName(HomeCBundle.INSTANCE.css().menu());
 		if (logoutPanelVc != null) {
 			if (logoutPanelVc.isShowing()) {
 				logoutPanelVc.hide();
