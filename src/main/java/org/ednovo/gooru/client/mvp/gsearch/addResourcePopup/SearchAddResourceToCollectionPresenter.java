@@ -117,7 +117,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo.getCount()==0){
-					getView().displayNoCollectionsMsg();
+					getView().displayNoCollectionsMsg(searchType);
 				}else{
 					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 				}

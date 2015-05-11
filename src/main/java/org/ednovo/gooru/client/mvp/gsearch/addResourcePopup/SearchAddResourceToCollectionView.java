@@ -57,7 +57,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl;
+	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage;
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
@@ -215,6 +215,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		currentsearchType=searchType;
 		totalHitCount = folderListDo.getCount();
+		btnAddExisting.setVisible(true);
+		dropdownListContainerScrollPanel.setVisible(true);
+		lblEmptyErrorMessage.setVisible(false);
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
@@ -266,8 +269,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public void displayNoCollectionsMsg() {
-		
+	public void displayNoCollectionsMsg(String searchType){
+		if(!COLLECTION.equalsIgnoreCase(searchType)){
+			dropdownListContainerScrollPanel.setVisible(false);
+			lblEmptyErrorMessage.setVisible(true);
+			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
+			btnAddExisting.setVisible(false);
+		}
 	}
 	private  void adjustTreeItemStyle(final UIObject uiObject) {
 	      if (uiObject instanceof TreeItem) {
