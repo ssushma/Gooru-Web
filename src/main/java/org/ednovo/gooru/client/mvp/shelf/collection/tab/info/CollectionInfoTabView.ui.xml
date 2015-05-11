@@ -30,7 +30,7 @@
 						ui:field="GradeUpdate"  />
 					<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}"
 						ui:field="KinderGarten" />
-					<g:FlowPanel styleName="{res.css.gradeListCont}">
+					<g:FlowPanel styleName="gradeListCont">
 						<g:FlowPanel ui:field="gradeTopList" />
 						<g:FlowPanel ui:field="gradeMiddleList" />
 						<g:FlowPanel ui:field="gradeBottomList" />
@@ -44,7 +44,7 @@
 					</g:FlowPanel>
 					<g:Label styleName="{res.css.shelfGradeSelectResources}"
 						ui:field="selectCourseLbl" />
-					<g:FlowPanel styleName="{res.css.floatLeftCollectionInputBox}"
+					<g:FlowPanel styleName="floatLeftCollectionInputBox"
 						ui:field="courseData">
 						<!-- <g:Label styleName="{res.css.addedCoursesList}" ui:field="courseLbl" /> -->
 					</g:FlowPanel>
@@ -147,7 +147,7 @@
 							<g:Label ui:field="languageObjectiveerrLabel" styleName="{res.css.errorLabelColor}"></g:Label>
 							<g:Label ui:field="charLimitErrLbl" styleName="{res.css.learningObjErrStyle}"></g:Label>
 					</g:FlowPanel>
-					<g:FlowPanel styleName="{res.css.gradeListCont}">
+					<g:FlowPanel styleName="gradeListCont">
 						<g:FlowPanel />
 						<g:FlowPanel />
 						<g:FlowPanel />
@@ -182,7 +182,7 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:FlowPanel>
-					<g:FlowPanel styleName="{res.css.gradeListCont}">
+					<g:FlowPanel styleName="gradeListCont">
 						<g:FlowPanel />
 						<g:FlowPanel />
 						<g:FlowPanel />
@@ -212,7 +212,7 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:FlowPanel>
-					<g:FlowPanel styleName="{res.css.gradeListCont}">
+					<g:FlowPanel styleName="gradeListCont">
 						<g:FlowPanel />
 						<g:FlowPanel />
 						<g:FlowPanel />
@@ -240,7 +240,7 @@
 							</g:ScrollPanel>
 						</g:HTMLPanel>
 					</g:FlowPanel>
-					<g:FlowPanel styleName="{res.css.gradeListCont}">
+					<g:FlowPanel styleName="gradeListCont">
 						<g:FlowPanel />
 						<g:FlowPanel />
 						<g:FlowPanel />
@@ -266,7 +266,7 @@
 							</g:ScrollPanel>
 						</g:HTMLPanel>
 					</g:FlowPanel>
-					<g:FlowPanel styleName="{res.css.gradeListCont}">
+					<g:FlowPanel styleName="gradeListCont">
 						<g:FlowPanel />
 						<g:FlowPanel />
 						<g:FlowPanel />
