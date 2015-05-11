@@ -68,6 +68,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private CollectionTreeItem previousSelectedItem = null;
 	private FolderTreeItem currentFolderSelectedTreeItem = null;
 	private CollectionTreeItem cureentcollectionTreeItem = null;
+	private static final String ASSESSMENT = "assessment";
 	String currentsearchType = "collection";
 	
 	HashMap<String,String> urlparams ;
@@ -235,7 +236,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -258,7 +260,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid()));
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -301,11 +304,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	private String  getTreeItemStyleName(int folderLevel){
 		if(folderLevel==1){
-			return "foldercollection1";
+			return "parent";
 		}else if(folderLevel==2){
-			return "foldercollection2";
+			return "child";
 		}else{
-			return "foldercollection3";
+			return "innerchild";
 		}
 	}
 	public class FolderTreeItem extends Composite{
@@ -368,8 +371,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			this();
 			folderContainer.addStyleName(levelStyleName);
 		}
-		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid){
+		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,String collectionType){
 			this();
+			if(ASSESSMENT.equals(collectionType)){
+				folderContainer.setStyleName("folderAssessment");
+			}
 			if(levelStyleName!=null){
 				folderContainer.addStyleName(levelStyleName);
 			}
