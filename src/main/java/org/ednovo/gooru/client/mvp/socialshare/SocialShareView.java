@@ -309,9 +309,9 @@ IsSocialShareView,ClientConstants{
 	@UiHandler("fbPanel")
 	public void onFbClickEvent(ClickEvent event) {
 		if(!(PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Facebook_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}
 			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
@@ -332,9 +332,9 @@ IsSocialShareView,ClientConstants{
 	@UiHandler("fbIconPanel")
 	public void onFbIconClickEvent(ClickEvent event){
 		if(!isProfilePageView || !(PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Facebook_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -357,9 +357,9 @@ IsSocialShareView,ClientConstants{
 	@UiHandler("emailPanel")
 	public void onEmailClickEvent(ClickEvent event){
 		if(!(PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Email_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Email_FromCollection();
 			}
 			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
@@ -379,9 +379,9 @@ IsSocialShareView,ClientConstants{
 	@UiHandler("emailIconPanel")
 	public void onEmailIconClickEvent(ClickEvent event){
 		if(!isProfilePageView || !(PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Email_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Email_FromCollection();
 
 			}
@@ -404,9 +404,9 @@ IsSocialShareView,ClientConstants{
 	@UiHandler("twitterPanel")
 	public void onTwitterClickEvent(ClickEvent event) {
 		if(!(PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Twitter_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 			}
 			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
@@ -427,9 +427,9 @@ IsSocialShareView,ClientConstants{
 	@UiHandler("twIconPanel")
 	public void onTwitterIconClickEvent(ClickEvent event) {
 		if(!isProfilePageView || !(PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Twitter_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 
 			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){

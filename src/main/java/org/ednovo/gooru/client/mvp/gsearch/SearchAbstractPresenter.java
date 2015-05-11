@@ -160,10 +160,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		addRegisteredHandler(StandardsSuggestionEvent.TYPE, this);
 		//addRegisteredHandler(StandardsSuggestionInfoEvent.TYPE, this);
 		
-		if (getViewToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			addRegisteredHandler(SourceSuggestionEvent.TYPE, this);
-			addRegisteredHandler(AggregatorSuggestionEvent.TYPE, this);
-		}
 	}
 
 	@Override
@@ -346,11 +342,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void setPageTitle(String searchQuery) {
 		String pageToken = AppClientFactory.getPlaceManager()
 				.getCurrentPlaceRequest().getNameToken();
-		if (pageToken.equals(PlaceTokens.COLLECTION_SEARCH)) {
+		if (pageToken.equals(PlaceTokens.SEARCH_COLLECTION)) {
 			AppClientFactory
 					.setBrowserWindowTitle(SeoTokens.COLLECTION_SEARCH_TITLE
 							+ searchQuery);
-		} else if (pageToken.equals(PlaceTokens.RESOURCE_SEARCH)) {
+		} else if (pageToken.equals(PlaceTokens.SEARCH_RESOURCE)) {
 			AppClientFactory
 					.setBrowserWindowTitle(SeoTokens.RESOURCE_SEARCH_TITLE
 							+ searchQuery);

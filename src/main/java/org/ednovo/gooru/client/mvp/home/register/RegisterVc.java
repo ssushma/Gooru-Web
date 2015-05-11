@@ -235,7 +235,7 @@ public class RegisterVc extends PopupPanel {
 	public void onCancelClicked(ClickEvent clickEvent) {
 		String currentPlaceToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY)||currentPlaceToken.equals(PlaceTokens.PREVIEW_PLAY) || currentPlaceToken.equals(PlaceTokens.RESOURCE_PLAY) ||
-			currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH) || currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH) ){
+			currentPlaceToken.equals(PlaceTokens.SEARCH_COLLECTION) || currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE) ){
 			
 		}else{
 			hide();

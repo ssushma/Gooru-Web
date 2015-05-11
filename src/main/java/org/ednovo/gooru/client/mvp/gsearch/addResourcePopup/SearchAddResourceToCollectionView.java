@@ -57,7 +57,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl;
+	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage;
+	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
@@ -75,7 +76,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
 	
-	boolean isTopMostSelected =true;
+	boolean isTopMostSelected =true,isAddingInProgress=true;
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -101,14 +102,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
+		lblEmptyErrorMessage.setVisible(false);
+		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		urlparams= new HashMap<String, String>();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 			addtocollHeaderText.setText(i18n.GL3223());
 			addingTextLbl.setText(i18n.GL3213());
-		}
-		else
-		{
+		}else{
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3214());
 		}		
@@ -218,6 +219,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		currentsearchType=searchType;
 		totalHitCount = folderListDo.getCount();
+		btnAddExisting.setVisible(true);
+		dropdownListContainerScrollPanel.setVisible(true);
+		lblEmptyErrorMessage.setVisible(false);
+		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
@@ -271,8 +276,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public void displayNoCollectionsMsg() {
-		
+	public void displayNoCollectionsMsg(String searchType){
+		if(!COLLECTION.equalsIgnoreCase(searchType)){
+			dropdownListContainerScrollPanel.setVisible(false);
+			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
+			lblEmptyErrorMessage.setVisible(true);
+			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
+			btnAddExisting.setVisible(false);
+		}
 	}
 	private  void adjustTreeItemStyle(final UIObject uiObject) {
 	      if (uiObject instanceof TreeItem) {
@@ -395,13 +406,16 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-		if(cureentcollectionTreeItem != null){
-			getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
-		}else{
-			if(isTopMostSelected) {
-				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
+		if(isAddingInProgress){
+			isAddingInProgress=false;
+			if(cureentcollectionTreeItem != null){
+				getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
 			}else{
-				getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+				if(isTopMostSelected) {
+					getUiHandlers().addCollectionToMyCollections("",currentsearchType);
+				}else{
+					getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+				}
 			}
 		}
 	}
@@ -428,6 +442,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params,String searchType) {
+		isAddingInProgress=true;
 		hide();
 		successPopup.setData(collectionName, selectedGooruOid,params,searchType);
 		successPopup.setGlassEnabled(true);

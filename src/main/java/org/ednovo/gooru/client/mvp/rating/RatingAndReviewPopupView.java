@@ -135,7 +135,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);
 		}
-		if (currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+		if (currentToken.equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || currentToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 			Window.enableScrolling(false);
 		}else{
 			Window.enableScrolling(true);
@@ -318,13 +318,13 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 					break;
 				}
 			}
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				rateResourceBtn.setVisible(true);
 			}else{
 				rateResourceBtn.setVisible(false);
 			}
 		}else{
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				userRatingContainer.setVisible(true);
 			}
 		}

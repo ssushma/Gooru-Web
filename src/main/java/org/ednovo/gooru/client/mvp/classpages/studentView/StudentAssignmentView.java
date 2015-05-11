@@ -590,7 +590,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										@Override
 										public void onClickPositiveButton(
 												ClickEvent event) {
-											if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+											if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 												Window.enableScrolling(false);
 											}else{
 												Window.enableScrolling(true);
@@ -716,7 +716,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 														Window.enableScrolling(false);
 													}else{
 														Window.enableScrolling(true);
@@ -1212,7 +1212,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									@Override
 									public void onClickPositiveButton(
 											ClickEvent event) {
-										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 											Window.enableScrolling(false);
 										}else{
 											Window.enableScrolling(true);
@@ -1438,7 +1438,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								@Override
 								public void onClickPositiveButton(
 										ClickEvent event) {
-									if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 										Window.enableScrolling(false);
 									}else{
 										Window.enableScrolling(true);
@@ -1613,7 +1613,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 														Window.enableScrolling(false);
 													}else{
 														Window.enableScrolling(true);
@@ -1823,7 +1823,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														@Override
 														public void onClickPositiveButton(
 																ClickEvent event) {
-															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 																Window.enableScrolling(false);
 															}else{
 																Window.enableScrolling(true);
@@ -1948,7 +1948,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														@Override
 														public void onClickPositiveButton(
 																ClickEvent event) {
-															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 																Window.enableScrolling(false);
 															}else{
 																Window.enableScrolling(true);
