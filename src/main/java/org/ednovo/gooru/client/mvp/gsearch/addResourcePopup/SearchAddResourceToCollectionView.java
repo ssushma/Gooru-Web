@@ -130,6 +130,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						folderTreeItemWidget.setOpen(true);
 					}
 					removePreviousSelectedItem();
+					highlightStyles();
 					currentFolderSelectedTreeItem = folderTreeItemWidget;
 					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
 					currentFolderSelectedTreeItem
@@ -163,6 +164,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					item.setState(!item.getState(), false);
 				}else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
+			    	highlightStyles();
 			    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
 			    	previousSelectedItem = cureentcollectionTreeItem;
 			    	cureentcollectionTreeItem.addStyleName("selected");
@@ -438,5 +440,23 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void restrictionToAddResourcesData(String message) {
 		// TODO Auto-generated method stub
 		//displayErrorLabel.setText(message);
+	}
+	
+	@UiHandler("myCollDefault")
+	public void clickOnMyCollection(ClickEvent clickEvent){
+		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
+			myCollDefault.getElement().getStyle().clearBackgroundColor();
+		}else{
+			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
+			isTopMostSelected=true;
+			removePreviousSelectedItem();
+		}
+		
+	}
+	
+	protected void highlightStyles(){
+		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
+			myCollDefault.getElement().getStyle().clearBackgroundColor();
+		}
 	}
 }
