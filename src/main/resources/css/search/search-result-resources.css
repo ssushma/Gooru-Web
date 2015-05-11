@@ -27,7 +27,7 @@
     box-shadow: none !important;
 }
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li.active a {
-  border: 2px solid #87badd;
+  border: 2px solid #87badd !important;
   text-decoration: none;
 }
 #gooruSearchMainContainer .gliphIconImage {
@@ -41,7 +41,7 @@ margin:0 0 0 -20px !important;
 }
 
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a {
-    border: 2px solid #ffffff;
+    border: 2px solid #ffffff !important;
     border-radius: 3px;
     color: #515151;
     display: block;
@@ -156,7 +156,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .resourceDesc1 {
     width: 57% !important;
-    height:3.375em;
+    min-height:61px;
 }
 #gooruSearchMainContainer .resourceDesc .collectionTitle {
 	font-size: 17px;

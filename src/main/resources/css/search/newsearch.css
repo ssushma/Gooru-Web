@@ -1134,9 +1134,9 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .resourcesInside{
 	
 	}
-	
 	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
+		margin-top: 0px;
 	}
 		
 	#gooruSearchMainContainer .collectionDesc {
