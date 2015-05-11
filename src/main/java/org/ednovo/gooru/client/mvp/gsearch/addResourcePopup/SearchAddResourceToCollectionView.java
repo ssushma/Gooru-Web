@@ -100,14 +100,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
+		lblEmptyErrorMessage.setVisible(false);
+		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		urlparams= new HashMap<String, String>();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 			addtocollHeaderText.setText(i18n.GL3223());
 			addingTextLbl.setText(i18n.GL3213());
-		}
-		else
-		{
+		}else{
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3214());
 		}		
@@ -218,6 +218,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		btnAddExisting.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);
 		lblEmptyErrorMessage.setVisible(false);
+		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
@@ -272,6 +273,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void displayNoCollectionsMsg(String searchType){
 		if(!COLLECTION.equalsIgnoreCase(searchType)){
 			dropdownListContainerScrollPanel.setVisible(false);
+			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
 			lblEmptyErrorMessage.setVisible(true);
 			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
 			btnAddExisting.setVisible(false);
