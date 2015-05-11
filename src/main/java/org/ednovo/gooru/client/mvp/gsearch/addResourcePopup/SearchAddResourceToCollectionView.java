@@ -299,7 +299,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	public class FolderTreeItem extends Composite{
 		private FlowPanel folderContainer=null;
-		private String gooruOid=null;
+		private String gooruOid=null,folderTitle=null;
 		Label floderName=null;
 		Label arrowLabel=null;
 		private boolean isOpen=false;
@@ -315,6 +315,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				folderContainer.addStyleName("foldermenuLevel"+levelStyleName);
 			}
 			this.gooruOid=gooruOid;
+			this.folderTitle=folderTitle;
 			folderContainer.getElement().setInnerText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -325,6 +326,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		public String getGooruOid(){
 			return gooruOid;
+		}
+		public String getFolderTitle(){
+			return folderTitle;
 		}
 		public boolean isApiCalled() {
 			return isApiCalled;
@@ -385,18 +389,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-		if(cureentcollectionTreeItem != null)
-		{
-		getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
-		}
-		else
-		{
+		if(cureentcollectionTreeItem != null){
+			getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+		}else{
 			if(isTopMostSelected) {
 				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
-			}
-			else
-			{
-			getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+			}else{
+				getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
 			}
 		}
 	}

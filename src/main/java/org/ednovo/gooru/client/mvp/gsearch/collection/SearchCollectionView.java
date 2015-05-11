@@ -76,15 +76,12 @@ public class SearchCollectionView extends
 					LoginPopupUc loginPopupUc=new LoginPopupUc();
 					loginPopupUc.show();
 					loginPopupUc.setGlassEnabled(true);
-				}
-				else
-				{
+				}else{
 					Element element = Document.get().getElementById("fixedFilterSearchID");
-					if(element!=null)
-					{
-					element.setAttribute("style", "opacity:0.1;");
+					if(element!=null){
+						element.setAttribute("style", "opacity:0.1;");
 					}
-				getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo);
+					getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo);
 				}
 			}
 		});
