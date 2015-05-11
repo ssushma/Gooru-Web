@@ -856,7 +856,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public void setOpenStatus(boolean isNewPage) {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
 			disPanel.getElement().getStyle().setDisplay(Display.NONE);
-		} else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)||AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+		} else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)||AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 			disPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 //			if(folderDo.getItemCount()==null || folderDo.getItemCount()==0){
 			
@@ -1108,7 +1108,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			addSuccessMsg.setVisible(false);
 			contentVerPanel.setVisible(true);
 			shelfResource.glowTitle();
-	            if(contentVerPanel.getWidgetCount()==2 && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH))){
+	            if(contentVerPanel.getWidgetCount()==2 && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE))){
 	        		AppClientFactory.fireEvent(new UserInfoMsgShelfEvent(CONGRATS_MSG));
 	        	}
 		}

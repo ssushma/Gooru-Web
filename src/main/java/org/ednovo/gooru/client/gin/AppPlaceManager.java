@@ -396,7 +396,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		public String getPageLocation(){
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
-			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(pageLocation.equals(PlaceTokens.SEARCH_COLLECTION)||pageLocation.equals(PlaceTokens.SEARCH_RESOURCE)){
 				pageLocation=getSeachEventPageLocation();
 			}else{
 				if(pageLocation.equals(PlaceTokens.HOME)){
@@ -468,7 +468,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			String mode=PlayerDataLogEvents.PREVIEW;
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
-			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(pageLocation.equals(PlaceTokens.SEARCH_COLLECTION)||pageLocation.equals(PlaceTokens.SEARCH_RESOURCE)){
 				 mode=PlayerDataLogEvents.STUDY;
 			}
 			return mode;
@@ -477,7 +477,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			String mode=PlayerDataLogEvents.PREVIEW;
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
-			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(pageLocation.equals(PlaceTokens.SEARCH_COLLECTION)||pageLocation.equals(PlaceTokens.SEARCH_RESOURCE)){
 				 mode=PlayerDataLogEvents.STUDY;
 			}
 			return mode;

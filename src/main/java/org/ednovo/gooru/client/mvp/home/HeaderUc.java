@@ -1384,8 +1384,8 @@ public class HeaderUc extends Composite implements
 	public void savePlaceRequest() {
 		String currentPlaceToken = AppClientFactory.getPlaceManager()
 				.getCurrentPlaceRequest().getNameToken();
-		if (currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH)
-				|| currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH)) {
+		if (currentPlaceToken.equals(PlaceTokens.SEARCH_COLLECTION)
+				|| currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE)) {
 		} else {
 			AppClientFactory.getPlaceManager()
 					.setSearchMovedPlaceRequest(
@@ -1656,7 +1656,7 @@ public class HeaderUc extends Composite implements
 						Map<String, String> map = params;
 						map.put("query", queryVal);
 						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.RESOURCE_SEARCH, params);
+								PlaceTokens.SEARCH_RESOURCE, params);
 					}
 
 					if ((AppClientFactory.getCurrentPlaceToken()
@@ -2054,7 +2054,7 @@ public class HeaderUc extends Composite implements
 				map.put("query", queryVal);
 				editSearchTxtBox.setText(queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_RESOURCE, map);
 			}
 			editSearchTxtBox.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
@@ -2072,7 +2072,7 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", "*");
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_RESOURCE, map);
 			}
 		}
 		

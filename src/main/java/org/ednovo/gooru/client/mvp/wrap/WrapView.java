@@ -142,7 +142,7 @@ public class WrapView extends BaseView implements IsWrapView {
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			if(AppClientFactory.getPlaceManager().getRequestParameter("query")!=null)
 			{
 			if(AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("*"))
@@ -161,7 +161,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		if (slot == WrapPresenter.TYPE_VIEW) {
 			if (content != null) {
 				String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!place.equals(PlaceTokens.FOLDER_TOC)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
+				if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.SEARCH_COLLECTION)||!place.equals(PlaceTokens.FOLDER_TOC)||!(place.equals(PlaceTokens.SEARCH_RESOURCE)))))){
 					if (place.equals(PlaceTokens.SHELF)
 							|| place.equalsIgnoreCase(PlaceTokens.COMMUNITY)
 							|| place.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)

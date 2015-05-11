@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
@@ -91,6 +92,10 @@ public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extend
 	}
 	
 	public void hideFromPopup(boolean isHideFromCloseButton){
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null){
+			element.removeAttribute("style");
+		}
 		this.isHideFromCloseButton=isHideFromCloseButton;
 	}
 
