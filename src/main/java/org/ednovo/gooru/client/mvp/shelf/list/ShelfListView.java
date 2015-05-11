@@ -2172,6 +2172,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
 			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+		if(params!=null){
+			isFromAddResourcePresenter	=params.containsKey("from");
+		}
 		if(refreshFolderType.equals(RefreshFolderType.INSERT)) {
 		if(params!=null) {
 			if(params.get(O3_LEVEL)!=null) {
