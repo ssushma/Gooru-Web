@@ -72,6 +72,10 @@ public interface SearchService extends BaseService {
 	 */
 	SearchDo<ResourceSearchResultDo> getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
 
+	String getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
+	
+	SearchDo<ResourceSearchResultDo> descralizeResourceSearchResults(String response,SearchDo<ResourceSearchResultDo> searchDo) throws GwtException, ServerDownException;
+	
 	/**
 	 * Get collection search result
 	 * @param searchInput instance of {@link SearchDo} type of {@link CollectionSearchResultDo}
@@ -80,6 +84,9 @@ public interface SearchService extends BaseService {
 	 */
 	SearchDo<CollectionSearchResultDo> getCollectionSearchResults(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException, ServerDownException;
 
+	String getCollectionSearchResultsJson(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException, ServerDownException;
+	
+	SearchDo<CollectionSearchResultDo> descralizeCollectionSearchResults(String response,SearchDo<CollectionSearchResultDo> searchDo) throws GwtException, ServerDownException;
 	/**
 	 * Get resources which are as collection item of specific collection
 	 * @param searchDo instance of {@link SearchDo} type of {@link ResourceSearchResultDo}

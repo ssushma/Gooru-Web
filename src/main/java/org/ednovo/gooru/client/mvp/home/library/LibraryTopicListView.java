@@ -737,9 +737,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			} else {
 				MixpanelUtil.mixpanelEvent("LandingPage_search_topic");
 			}
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, updateParams(searchTitle));
-			
-
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_COLLECTION, updateParams(searchTitle));
 		}
 	}
 	
@@ -767,9 +765,10 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		Map<String, String> params = new HashMap<String,String>();
 		params.put("category", "All");
 		params.put("query", searchQuery);
-		params.put("pageSize", "8");
+		params.put("flt.collectionType","collection");
+		/*params.put("pageSize", "8");
 		params.put("pageNum", "1");
-		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");*/
 		return params;
 	}
 

@@ -1,15 +1,15 @@
-.collectionPlayerWrapper{
+#fpnlWrapperContainerField .collectionPlayerWrapper{
 	width: 960px;
 	height: 525px;
 	margin: 0 auto;
 }
-.collectionPlayerWrapperPadding{
+#fpnlWrapperContainerField .collectionPlayerWrapperPadding{
 	width: 960px;
 	/* height: 525px; This is remove to se the content height to 100%*/
 	margin: 0 auto;
 	margin-top:50px;
 }
-.resourcePlayerLeftArrowContainer{
+#fpnlWrapperContainerField .resourcePlayerLeftArrowContainer{
 	margin-top: 100px;
 	float: left;
 	width: 60px;
@@ -17,12 +17,12 @@
 	margin-left: -75px;
 	position: absolute;
 }
-.leftArrowButtonNormal, .rightArrowButtonNormal{
+#fpnlWrapperContainerField .leftArrowButtonNormal,#fpnlWrapperContainerField .rightArrowButtonNormal{
 	background-image: url(images/player_images.png);
 	width: 60px;
 	height: 60px;
 }
-.leftArrowButtonNormal{
+#fpnlWrapperContainerField .leftArrowButtonNormal{
 	background-position: -63px -33px;
 	width: 60px;
 	height: 60px;
@@ -30,18 +30,18 @@
 	outline: none;
 	border: 0;
 }
-.leftArrowButtonNormal:hover{
+#fpnlWrapperContainerField .leftArrowButtonNormal:hover{
 	background-position: 0 -33px;
 	cursor:pointer;
 }
-.collectionPlayerContainer{
+#fpnlWrapperContainerField .collectionPlayerContainer{
 	width: 1000px;
 	margin: 0 auto;
 	height: 95%;
 	float:left;
 	/* margin-top: 141px; */
 }
-.resourcePlayerRightArrowContainer{
+#fpnlWrapperContainerField .resourcePlayerRightArrowContainer{
 	margin-top: 100px;
 	float: right;
 	margin-left: 975px;
@@ -49,7 +49,7 @@
 	height: 60px;
 	position: absolute;
 }
-.rightArrowButtonNormal{
+#fpnlWrapperContainerField .rightArrowButtonNormal{
 	background-position: -191px -33px;
 	width: 60px;
 	height: 60px;
@@ -57,14 +57,14 @@
 	outline: none;
 	border: 0;
 }
-.rightArrowButtonNormal:hover{
+#fpnlWrapperContainerField .rightArrowButtonNormal:hover{
 	background-position: -127px -33px;
 	cursor:pointer;
 }
 
 /* Emotics css */
 
-.collectionContainer {
+#fpnlWrapperContainerField .collectionContainer {
 	width: 952px;
 	margin: 0 auto;
 	padding-bottom: 13px;
@@ -72,7 +72,7 @@
     top: 42px; */
 }
 
-.collectionHeader {
+#fpnlWrapperContainerField .collectionHeader {
 	background-color: rgb(238,238,238);
 	width: 952px;
 	padding: 15px 0px;
@@ -84,13 +84,13 @@
 	height: 32px;
 	margin-top: 10px;
 }
-.collectionHeaderTitle {
+#fpnlWrapperContainerField .collectionHeaderTitle {
 	font-size: 16px;
 	color: rgb(81,81,81);
 	display: inline-block;
 	vertical-align: top;
 }
-.collectionNormalTxt {
+#fpnlWrapperContainerField .collectionNormalTxt {
 	font-size: 12px;
 	color: rgb(81,81,81);
 	display: inline-block;
@@ -98,17 +98,17 @@
 	padding-left: 5px;
 	padding-top: 2px;
 }
-.icon {
+#fpnlWrapperContainerField .icon {
 	position: absolute;
 	bottom: 0px;
 	width: 23px;
 	height: 21px;
 	background-position: -54px -19px;
 }
-.spriteType {
-	background: url(/images/emotics.png) no-repeat;
+#fpnlWrapperContainerField .spriteType {
+	background: url(../images/emotics.png) no-repeat;
 }
-.iconOuter {
+#fpnlWrapperContainerField .iconOuter {
 	display: inline-block;
 	vertical-align: top;
 	/* float: left; */
@@ -116,25 +116,25 @@
 	position: relative;
 }
 
-.icons {
+#fpnlWrapperContainerField .icons {
 	background-position: -3px -1px;
 	width: 35px;
 	height: 35px;
 }
 
-.emoticon_i {
+#fpnlWrapperContainerField .emoticon_i {
 	background-position: -7px -4px;
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
 }
-.emoticon_ii {
+#fpnlWrapperContainerField .emoticon_ii {
 	background-position: -53px -4px;
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
 }
-.emoticon_iii {
+#fpnlWrapperContainerField .emoticon_iii {
 
 	background-position: -141px -4px;
 	width: 35px;
@@ -142,31 +142,31 @@
 	cursor: pointer;
 	
 }
-.emoticon_iv {
+#fpnlWrapperContainerField .emoticon_iv {
 	background-position: -184px -4px;
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
 }
-.emoticon_v {
+#fpnlWrapperContainerField .emoticon_v {
 	background-position: -232px -4px;
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
 }
-.emoticon_vi {
+#fpnlWrapperContainerField .emoticon_vi {
 	background-position: -267px -4px;
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
 }
-.emoticon_vii {
+#fpnlWrapperContainerField .emoticon_vii {
 	background-position: -184px -51px;
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
 }
-.emoticon_viii {
+#fpnlWrapperContainerField .emoticon_viii {
 	
 	background-position: -95px -4px;
 	width: 35px;
@@ -174,13 +174,13 @@
 	cursor: pointer;
 
 }
-.emoticon_ix {
+#fpnlWrapperContainerField .emoticon_ix {
 	background-position:-143px -52px;
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
 }
-.emoticon_x {
+#fpnlWrapperContainerField .emoticon_x {
 	background-position:-223px -52px;
 	width: 35px;
 	height: 35px;
@@ -190,7 +190,7 @@
 
 
 
-.arrowOuter {
+#fpnlWrapperContainerField .arrowOuter {
 	display: inline-block;
 	vertical-align: top;
 	float: right;
@@ -199,25 +199,25 @@
 	top: -4px;
 	padding-right: 10px;
 }
-.arrowOuter:hover {
+#fpnlWrapperContainerField .arrowOuter:hover {
 	cursor: pointer;
 }
-.prev {
+#fpnlWrapperContainerField .prev {
 	background-position: -56px -44px;
 	width: 45px;
 	height: 43px;
 	cursor: pointer;
 }
-.next {
+#fpnlWrapperContainerField .next {
 	background-position: -4px -44px;
 	width: 45px;
 	height: 43px;
 	cursor: pointer;
 }
-.next:hover, .prev:hover{
+#fpnlWrapperContainerField .next:hover,#fpnlWrapperContainerField .prev:hover{
 	opacity:.6;
 }
-.emoticonPopup {
+#fpnlWrapperContainerField .emoticonPopup {
 	display: none;
 	position: absolute;
 	left: -45px;
@@ -225,7 +225,7 @@
 	z-index: 99999;
 	width: 150px;
 }
-.emoticonArrow {
+#fpnlWrapperContainerField .emoticonArrow {
 	width: 25px;
 	height: 11px;
 	position: relative;
@@ -236,7 +236,7 @@
 	-webkit-transform: rotateX(360deg);
 	background-position: -110px -63px;
 }
-.emoticonPopupInner {
+#fpnlWrapperContainerField .emoticonPopupInner {
 	color: #515151;
 	background-color: #FFF;
 	border: 1px solid #DDD;
@@ -248,7 +248,7 @@
 	border-radius: 4px;
 }
 
-.emoticsContainer{
+#fpnlWrapperContainerField .emoticsContainer{
 	text-align: center;
 	position: relative;
 	width:75%;
@@ -257,49 +257,49 @@
 #resourcePlayerContainer{
 	min-height: 85%;
 }
-.truncate {
+#fpnlWrapperContainerField .truncate {
 	width: 250px;
   white-space: nowrap;
   max-height:23px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.truncate:after{
+#fpnlWrapperContainerField .truncate:after{
 content:â€�â€¦â€�;
 }
 
 /*//////////////////// ratings and reviews ////////*/
-.ratingVisualizations {
+#fpnlWrapperContainerField .ratingVisualizations {
 	overflow: hidden;
 }
 
-.rating {
+#fpnlWrapperContainerField .rating {
 	margin: 3px 10px 3px 0px;
 	font-size: 12px; 
 	vertical-align: middle;
 	line-height: 1.4em;
 }
 
-.rating .star,.userRating .star {
+#fpnlWrapperContainerField .rating .star,#fpnlWrapperContainerField .userRating .star {
 	font-size: 14px;
 	color: #999;
 }
 
-.rating .star.filled {
+#fpnlWrapperContainerField .rating .star.filled {
 	color: #4e9746;
 }
 
 //
-.rating .star:before,.userRating .star:before {
+#fpnlWrapperContainerField .rating .star:before,#fpnlWrapperContainerField .userRating .star:before {
 	content: '\2606';
 }
 
 //
-.rating .star.filled:before,.userRating .star.filled:before {
+#fpnlWrapperContainerField .rating .star.filled:before,#fpnlWrapperContainerField .userRating .star.filled:before {
 	content: '\2605';
 }
 
-.star:before {
+#fpnlWrapperContainerField .star:before {
 	display: inline-block;
 	font-family: FontAwesome;
 	font-style: normal;
@@ -310,11 +310,11 @@ content:â€�â€¦â€�;
 	content: '\f006';
 }
 
-.star.filled:before {
+#fpnlWrapperContainerField .star.filled:before {
 	content: "\f005";
 }
 
-.userRating .star.filled {
+#fpnlWrapperContainerField .userRating .star.filled {
 	color: #1076BB;
 }
 
@@ -323,18 +323,18 @@ body.popupBG {
 	background-color: rgba(0, 0, 0, .6);
 }
 
-.popup {
+#fpnlWrapperContainerField .popup {
 	background-color: white;
 	width: 450px;
 	margin: 50px auto;
 	padding: 3px;
 }
 
-.popupInner {
+#fpnlWrapperContainerField .popupInner {
 	border: 1px solid #DDD;
 }
 
-.popupHeader {
+#fpnlWrapperContainerField .popupHeader {
 	position: relative;
 	padding: 10px 15px;
 	color: white;
@@ -352,18 +352,18 @@ body.popupBG {
 	background: -o-linear-gradient(top, #666, #515151);
 }
 
-.popupHeader h1 {
+#fpnlWrapperContainerField .popupHeader h1 {
 	font-size: 16px;
 	font-weight: normal;
 }
 
-.popupContent {
+#fpnlWrapperContainerField .popupContent {
 	padding: 12px;
 	height: 400px;
 	overflow: auto;
 }
 
-.closeButton {
+#fpnlWrapperContainerField .closeButton {
 	width: 17px;
 	height: 17px;
 	background: url("../_images/close-button.png") no-repeat;
@@ -372,12 +372,12 @@ body.popupBG {
 	right: 10px;
 }
 
-.closeButton:hover {
+#fpnlWrapperContainerField .closeButton:hover {
 	opacity: .6;
 }
 
 /*//////////////////////////////// distribution graph////////////*/
-.distribution {
+#fpnlWrapperContainerField .distribution {
 	float: left;
 	width: 120px;
 	white-space: nowrap;
@@ -385,18 +385,18 @@ body.popupBG {
 	margin-right: 120px;
 }
 
-.average {
+#fpnlWrapperContainerField .average {
 	float: left;
 	width: 150px;
 }
 
-h3 {
+#fpnlWrapperContainerField h3 {
 	font-size: 12px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 
-.barGraph .label {
+#fpnlWrapperContainerField .barGraph .label {
 	display: inline-block;
 	width: 60px;
 	line-height: 12px;
@@ -405,41 +405,41 @@ h3 {
 	vertical-align: middle;
 }
 
-.barGraph .bar {
+#fpnlWrapperContainerField .barGraph .bar {
 	display: inline-block;
 	width: 100px; /* this is the max width for the bars */
 }
 
-.bar {
+#fpnlWrapperContainerField .bar {
 	height: 10px;
 	background-color: #8CC63E; 
 	display: inline-block;
 	vertical-align: middle;
 }
 
-.barGraph .bar:nth-child(7) {
+#fpnlWrapperContainerField .barGraph .bar:nth-child(7) {
 	background-color: #57B53B;
 }
 
-.barGraph .bar:nth-child(11) {
+#fpnlWrapperContainerField .barGraph .bar:nth-child(11) {
 	background-color: #4E9746;
 }
 
-.barGraph .bar:nth-child(15) {
+#fpnlWrapperContainerField .barGraph .bar:nth-child(15) {
 	background-color: #45843E;
 }
 
-.barGraph .bar:nth-child(19) {
+#fpnlWrapperContainerField .barGraph .bar:nth-child(19) {
 	background-color: #0F7A42;
 }
 
-.count {
+#fpnlWrapperContainerField .count {
 	display: inline-block;
 	font-size: 11px;
 }
 
 /*//////////////////// ratings and reviews ////////*/
-.userRating {
+#fpnlWrapperContainerField .userRating {
 	clear: both;
 	background: #f0f0f0;
 	padding: 10px 15px;
@@ -447,22 +447,22 @@ h3 {
 	line-height: 29px;
 }
 
-.userRating.reviewContainer {
+#fpnlWrapperContainerField .userRating.reviewContainer {
 	line-height: 1.2em;
 	padding: 15px;
 	position: relative;
 }
 
-.userRating.editContainer {
+#fpnlWrapperContainerField .userRating.editContainer {
 	line-height: 1.2em;
 	padding: 15px;
 }
 
-.userRating button {
+#fpnlWrapperContainerField .userRating button {
 	float: right;
 }
 
-.reviewContainer button {
+#fpnlWrapperContainerField .reviewContainer button {
 	float: none;
 	display: block;
 	visibility: hidden;
@@ -472,60 +472,60 @@ h3 {
 	-o-transition: visibility 0.2s linear, opacity 0.2s linear;
 }
 
-.reviewContainer:hover button {
+#fpnlWrapperContainerField .reviewContainer:hover button {
 	visibility: visible;
 	opacity: 1;
 }
 
-.userRating.reviewContainer .username,.userRating.reviewContainer .timestamp,.userRating.reviewContainer .rating,.userRating.reviewContainer .review
+#fpnlWrapperContainerField .userRating.reviewContainer .username,#fpnlWrapperContainerField .userRating.reviewContainer .timestamp,#fpnlWrapperContainerField .userRating.reviewContainer .rating,#fpnlWrapperContainerField .userRating.reviewContainer .review
 	{
 	opacity: 1;
 	transition: opacity .2s;
 }
 
-.userRating.reviewContainer:hover .username,.userRating.reviewContainer:hover .timestamp,.userRating.reviewContainer:hover .rating,.userRating.reviewContainer:hover .review
+#fpnlWrapperContainerField .userRating.reviewContainer:hover .username,#fpnlWrapperContainerField .userRating.reviewContainer:hover .timestamp,#fpnlWrapperContainerField .userRating.reviewContainer:hover .rating,#fpnlWrapperContainerField .userRating.reviewContainer:hover .review
 	{
 	opacity: .4;
 }
 
-.userRating.reviewContainer {
+#fpnlWrapperContainerField .userRating.reviewContainer {
 	background: #f0f0f0;
 	transition: background .2s;
 }
 
-.userRating.reviewContainer:hover {
+#fpnlWrapperContainerField .userRating.reviewContainer:hover {
 	background: #f6f6f6;
 	cursor: default;
 }
 
-.reviewContainer {
+#fpnlWrapperContainerField .reviewContainer {
 	margin-bottom: 25px;
 	position: relative;
 }
 
-.reviewContainer .username,.editContainer .username {
+#fpnlWrapperContainerField .reviewContainer .username,#fpnlWrapperContainerField .editContainer .username {
 	width: 200px;
 	float: left;
 }
 
-.reviewContainer .timestamp,.editContainer .timestamp {
+#fpnlWrapperContainerField .reviewContainer .timestamp,#fpnlWrapperContainerField.editContainer .timestamp {
 	float: right;
 }
 
-.reviewContainer hr,.editContainer hr {
+#fpnlWrapperContainerField .reviewContainer hr,#fpnlWrapperContainerField .editContainer hr {
 	clear: both;
 	border: none;
 	border-bottom: 1px solid #ddd;
 	margin: 3px 0px;
 }
 
-.rating:not (:checked ) >input {
+#fpnlWrapperContainerField .rating:not (:checked ) >input {
 	position: absolute;
 	top: -9999px;
 	clip: rect(0, 0, 0, 0);
 }
 
-.rating:not (:checked ) >label {
+#fpnlWrapperContainerField .rating:not (:checked ) >label {
 	float: right;
 	width: 16px;
 	overflow: hidden;
@@ -537,7 +537,7 @@ h3 {
 	transition: color .2s;
 }
 
-.rating:not (:checked ) >label:before {
+#fpnlWrapperContainerField .rating:not (:checked ) >label:before {
 	line-height: 1;
 	display: inline-block;
 	text-decoration: inherit;
@@ -551,7 +551,7 @@ h3 {
 	content: '\f006';
 }
 
-.rating>input:checked  ~ label:before,.rating:not (:checked ) >label:hover:before,.rating:not
+#fpnlWrapperContainerField .rating>input:checked  ~ label:before,#fpnlWrapperContainerField .rating:not (:checked ) >label:hover:before,#fpnlWrapperContainerField .rating:not
 	(:checked ) >label:hover  ~ label:before {
 	display: inline-block;
 	font-family: FontAwesome;
@@ -563,18 +563,18 @@ h3 {
 	content: '\f005';;
 }
 
-.rating>input:checked  ~ label {
+#fpnlWrapperContainerField .rating>input:checked  ~ label {
 	color: #579ECF;
 }
 
-.rating:not (:checked ) >label:hover,.rating:not (:checked ) >label:hover 
+#fpnlWrapperContainerField .rating:not (:checked ) >label:hover,#fpnlWrapperContainerField .rating:not (:checked ) >label:hover 
 	~ label {
 	color: #1076BB;
 }
 
-.rating>input:checked+label:hover,.rating>input:checked+label:hover  ~
-	label,.rating>input:checked  ~ label:hover,.rating>input:checked  ~
-	label:hover  ~ label,.rating>label:hover  ~ input:checked  ~ label {
+#fpnlWrapperContainerField .rating>input:checked+label:hover,#fpnlWrapperContainerField .rating>input:checked+label:hover  ~
+	label,#fpnlWrapperContainerField .rating>input:checked  ~ label:hover,#fpnlWrapperContainerField .rating>input:checked  ~
+	label:hover  ~ label,#fpnlWrapperContainerField .rating>label:hover  ~ input:checked  ~ label {
 	color: #1076BB;
 }
 
@@ -583,7 +583,7 @@ fieldset {
 	display: inline-block;
 }
 
-.ratingContainer {
+#fpnlWrapperContainerField .ratingContainer {
 	height: 60px;
 	white-space: nowrap; 
 	-webkit-font-smoothing: antialiased !important;
@@ -591,7 +591,7 @@ fieldset {
 	position: relative;
 }
 
-.editRatingContainer {
+#fpnlWrapperContainerField .editRatingContainer {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -599,7 +599,7 @@ fieldset {
 	left: 0px;
 }
 
-.userRating .editRatingContainer {
+#fpnlWrapperContainerField .userRating .editRatingContainer {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -607,28 +607,28 @@ fieldset {
 	left: 0px;
 }
 
-.editRatingContainer {
+#fpnlWrapperContainerField .editRatingContainer {
 	background: none;
 	transition: background .2s;
 }
 
-.editRatingContainer:hover {
+#fpnlWrapperContainerField .editRatingContainer:hover {
 	background: rgba(255, 255, 255, .6);
 }
 
-.userRating .editRatingContainer {
+#fpnlWrapperContainerField .userRating .editRatingContainer {
 	background: none;
 }
 
-.userRating:hover .editRatingContainer {
+#fpnlWrapperContainerField .userRating:hover .editRatingContainer {
 	background: none;
 }
 
-.editRating {
+#fpnlWrapperContainerField .editRating {
 	margin: 44px auto 0px auto;
 }
 
-.editContainer textarea {
+#fpnlWrapperContainerField .editContainer textarea {
 	width: 100%;
 	height: 72px;
 	display: block;
@@ -640,59 +640,59 @@ fieldset {
 	font-size: 12px;
 }
 
-.saveCancelContainer {
+#fpnlWrapperContainerField .saveCancelContainer {
 	text-align: center;
 	float:right;
 }
 
-.saveCancelContainer button {
+#fpnlWrapperContainerField .saveCancelContainer button {
 	float: none;
 	margin: 10px 2px 0px 2px;
 }
 
-.timestamp .edited {
+#fpnlWrapperContainerField .timestamp .edited {
 	color: #999;
 }
 
-.editRatingContainer {
+#fpnlWrapperContainerField .editRatingContainer {
 	text-align: center;
 }
 
-.editRatingContainer button {
+#fpnlWrapperContainerField .editRatingContainer button {
 	text-align: center;
 	margin-top: 10px;
 	display: inline-block;
 }
 
-.userRating .editRatingContainer button {
+#fpnlWrapperContainerField .userRating .editRatingContainer button {
 	margin-top: 25px;
 }
 
-.editRatingContainer .dropdownButtonContainer {
+#fpnlWrapperContainerField .editRatingContainer .dropdownButtonContainer {
 	margin: 25px auto;
 	display: block;
 	width: 150px;
 	position: relative;
 }
 
-.userRating .editRatingContainer .dropdownButtonContainer {
+#fpnlWrapperContainerField .userRating .editRatingContainer .dropdownButtonContainer {
 	margin: 0px auto;
 }
 
-.editRatingContainer .dropdownButtonContainer .dropdown {
+#fpnlWrapperContainerField .editRatingContainer .dropdownButtonContainer .dropdown {
 	width: 150px;
 	position: absolute;
 	right: 0px;
 	text-align: left;
 }
 
-.userRating.deleting {
+#fpnlWrapperContainerField .userRating.deleting {
 	text-align: center;
 	color: #999;
 	padding: 30px;
 }
 
-.ratingConfirmationContainer {
+#fpnlWrapperContainerField .ratingConfirmationContainer {
 	padding: 20px;
 	border: 1px solid #ddd;
 	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
@@ -708,24 +708,24 @@ fieldset {
 	background-color: white;
 }
 
-.ratingConfirmationContainer h1 {
+#fpnlWrapperContainerField .ratingConfirmationContainer h1 {
 	font-size: 20px;
 	font-weight: normal;
 	margin-bottom: 20px;
 }
 
-.ratingConfirmationContainer .rating {
+#fpnlWrapperContainerField .ratingConfirmationContainer .rating {
 	margin-bottom: 6px;
 }
 
-.ratingConfirmationContainer label {
+#fpnlWrapperContainerField .ratingConfirmationContainer label {
 	display: block;
 	font-weight: bold;
 	text-align: left;
 	margin: 5px 0px;
 }
 
-.ratingConfirmationContainer textarea {
+#fpnlWrapperContainerField .ratingConfirmationContainer textarea {
 	width: 100%;
 	height: 150px;
 	display: block;
@@ -736,7 +736,7 @@ fieldset {
 	box-sizing: border-box;
 }
 
-.arrowBorder {
+#fpnlWrapperContainerField .arrowBorder {
 	top: -13px;
 	width: 0;
 	height: 0;
@@ -748,7 +748,7 @@ fieldset {
 	border-bottom: 15px solid #ddd;
 }
 
-.arrow {
+#fpnlWrapperContainerField .arrow {
 	top: -11px;
 	width: 0;
 	height: 0;
@@ -760,45 +760,45 @@ fieldset {
 	border-bottom: 15px solid #fff;
 }
 
-.confirmationIcon {
+#fpnlWrapperContainerField .confirmationIcon {
 	width: 55px;
 	height: 55px;
 	margin: 0px auto 20px auto;
 	background: url('../_images/checkmark.png') center no-repeat;
 }
 
-.calltoAction {
+#fpnlWrapperContainerField .calltoAction {
 	margin: 0px;
 	padding: 0px;
 	font-family: Arial, sans-serif !important;
 }
 
-.ratingValue{
+#fpnlWrapperContainerField .ratingValue{
 	text-align: left;
 	margin-left: 15px;
 	margin-bottom: 2px;
 	font-style: italic;
 }
-.ratingConfirmationContainer .icon {
+#fpnlWrapperContainerField .ratingConfirmationContainer .icon {
     width:55px;
     height:55px;
     margin:10px auto 20px auto;
 }
 
-.ratingConfirmationContainer .icon.delete {
+#fpnlWrapperContainerField .ratingConfirmationContainer .icon.delete {
     background: url('images/popup/exclamation-mark.png') no-repeat center;
     position: relative;
 }
-.ratingConfirmationContainer .icon.complete {
+#fpnlWrapperContainerField .ratingConfirmationContainer .icon.complete {
     background: url('images/popup/checkmark.png') no-repeat center;
     position: relative;
 }
-.okContainer{
+#fpnlWrapperContainerField .okContainer{
 	text-align: center;
 	margin-top: 8px;
 }
 
-.errorLblBottomText {
+#fpnlWrapperContainerField .errorLblBottomText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: rgb(250,176,58);
@@ -809,22 +809,22 @@ fieldset {
 	width:230px; */
 }
 
-.thankYouLbl{
+#fpnlWrapperContainerField .thankYouLbl{
 	font-style: normal;
 	font-size: 16px;
 	margin-bottom: 11px;
 }
-.alignTextleft{
+#fpnlWrapperContainerField .alignTextleft{
 	text-align:left;
 }
-.ratingText{
+#fpnlWrapperContainerField .ratingText{
 	font-size: 12px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 
 
-.ratingPoorConfirmationContainer {
+#fpnlWrapperContainerField .ratingPoorConfirmationContainer {
 	padding: 20px;
 	border: 1px solid #ddd;
 	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
@@ -839,13 +839,13 @@ fieldset {
 	background-color: white;
 }
 
-.ratingPoorHeader{
+#fpnlWrapperContainerField .ratingPoorHeader{
 	text-align: center;
 	font-size: 16px;
 }
 /*==============New Player css==================*/
 
-.blocksmall{
+#fpnlWrapperContainerField .blocksmall{
 	float: left;
     padding: 5px 10px;
     width: 1000px;
@@ -854,15 +854,15 @@ fieldset {
     border-bottom: 1px solid #ddd;
 }
 
-.blocksmall:before, .blocksmall:after {
+#fpnlWrapperContainerField .blocksmall:before,#fpnlWrapperContainerField .blocksmall:after {
 	box-sizing: border-box;
 }
-.mainDisc{
+#fpnlWrapperContainerField .mainDisc{
 	display:inline-block;
 	vertical-align:top;
 	width:80%;
 }
-.resourceTitleStyle{
+#fpnlWrapperContainerField .resourceTitleStyle{
 	font-size: 16px;
 	font-weight: bold;
 	margin-bottom: -2px;
@@ -875,10 +875,10 @@ fieldset {
 	overflow: hidden;
 	
 }
-.tagsWrapperStyle{
+#fpnlWrapperContainerField .tagsWrapperStyle{
 	position: relative;
 }
-.selectedTags{
+#fpnlWrapperContainerField .selectedTags{
 	padding: 4px 5px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -886,10 +886,10 @@ fieldset {
 	display: inline-block;
 	margin-right: 5px;
 }
-.plusAddButton{
+#fpnlWrapperContainerField .plusAddButton{
 	padding:3px 3px !important;
 }
-.collectionPlayerImage{
+#fpnlWrapperContainerField .collectionPlayerImage{
 	text-align: center;
 	height: 448px;
 	display: table-cell;
@@ -898,21 +898,21 @@ fieldset {
 }
 
 
-.ratingPoorSaveCancelContainer {
+#fpnlWrapperContainerField .ratingPoorSaveCancelContainer {
 	text-align: center;
 	margin-top:8px;
 }
 
-.savePostLbl{
+#fpnlWrapperContainerField .savePostLbl{
 	font-style: italic;
 	text-align: center;
 }
 
-.btnSpace{
+#fpnlWrapperContainerField .btnSpace{
 	margin-left: 10px;
 }
 
-.eductaionalUseDesign{
+#fpnlWrapperContainerField .eductaionalUseDesign{
 	padding: 4px 4px;
 border-radius: 4px;
 -moz-border-radius: 4px;
@@ -920,7 +920,7 @@ background: #a6cba2;
 float:left;
 margin:2px 2px;
 }
-.educationalUseMoretags{
+#fpnlWrapperContainerField .educationalUseMoretags{
 color: #0f76bb;
 cursor: pointer;
 float:left;
@@ -928,13 +928,13 @@ margin-top: 5px;
 margin-right: 5px;
 
 }
-.reactiontext{
+#fpnlWrapperContainerField .reactiontext{
 	font-size: 12px;
 	color: #333;
 	/* line-height: 1.3; */
 	margin-bottom: 2px;
 }
-.reviewPopup{
+#fpnlWrapperContainerField .reviewPopup{
 	left: 63%;
 	top: 287px;
 	z-index: 999999;
@@ -942,7 +942,7 @@ margin-right: 5px;
 	position: absolute;
 	overflow: visible;
 }
-.green{
+#fpnlWrapperContainerField .green{
 	color: white;
 	background-color: rgb(78, 151, 70);
 	border-radius: 4px;
@@ -955,7 +955,7 @@ margin-right: 5px;
 	background:rgb(78, 151, 70);
 	
 }
-	.green:hover{
+#fpnlWrapperContainerField .green:hover{
 	color:white;
 	background:rgb(78, 151, 70);
 	cursor:pointer;

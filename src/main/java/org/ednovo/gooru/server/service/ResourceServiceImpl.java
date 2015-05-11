@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.service.ResourceService;
 import org.ednovo.gooru.player.resource.server.CreateContentReportController;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.server.annotation.ServiceURL;
+import org.ednovo.gooru.server.deserializer.ResourceCollectionDeSerializer;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.server.form.ResourceFormFactory;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
@@ -51,6 +52,7 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.content.CollectionItemsListDo;
 import org.ednovo.gooru.shared.model.content.CollectionProfileItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
@@ -59,6 +61,7 @@ import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.NewResourceDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
+import org.ednovo.gooru.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
@@ -76,6 +79,7 @@ import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserDoMorePeople;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,12 +88,10 @@ import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gwt.http.client.URL;
 
 
 @Service("resourceService")
@@ -752,6 +754,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url);
 		String urlStr = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CHECK_SHORTENED_URL, GooruConstants.TRUE);
 		getLogger().info("--- checkResourceExists --  "+urlStr);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceItem(jsonRep);
@@ -1917,5 +1920,48 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			logger.error("Exception::", e);
 		}
 		return new FolderDo();
+	}
+	
+	@Override
+	public ArrayList<ResourceCollDo> getResourceBasedUsersDetails(String resourceId, int offSet, int limit) {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_RESOURCE_BASED_USERS,resourceId, getLoggedInSessionToken(),String.valueOf(offSet),String.valueOf(limit));
+		//getLogger().info("getResourceBasedUsersDetails::"+url);
+		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation= jsonResponseRep.getJsonRepresentation();
+		return deserializeUserCollections(jsonRepresentation);
+	}
+	public ArrayList<ResourceCollDo> deserializeUserCollections(JsonRepresentation jsonRep){
+		ArrayList<ResourceCollDo> resourceModelList=new ArrayList<ResourceCollDo>();
+		try {
+			if(jsonRep!=null){
+				JSONArray myCollectionArryObj=jsonRep.getJsonArray();
+				for(int i=0;i<myCollectionArryObj.length();i++){
+					JSONObject myCollectionObj=myCollectionArryObj.getJSONObject(i);
+					UserDoMorePeople userObj=new UserDoMorePeople();
+					ThumbnailDo thumbnailsDo=new ThumbnailDo();
+					String myCollectionTitle=myCollectionObj.isNull("title")?"":myCollectionObj.getString("title").toString();
+					String mycollectionGid=myCollectionObj.isNull("gooruOid")?"":myCollectionObj.getString("gooruOid").toString();
+					String myCollectionType=myCollectionObj.isNull("collectionType")?"":myCollectionObj.getString("collectionType").toString();
+					if(!myCollectionObj.isNull("user")){
+						userObj = JsonDeserializer.deserialize(myCollectionObj.getJSONObject("user").toString(), UserDoMorePeople.class);			
+					}
+					if(!myCollectionObj.isNull("thumbnails")){
+						thumbnailsDo = JsonDeserializer.deserialize(myCollectionObj.getJSONObject("thumbnails").toString(), ThumbnailDo.class);			
+					}
+					ResourceCollDo collectionDetails=new ResourceCollDo();
+					collectionDetails.setTitle(myCollectionTitle);
+					collectionDetails.setGooruOid(mycollectionGid);
+					collectionDetails.setCollectionType(myCollectionType);
+					collectionDetails.setUser(userObj);
+					collectionDetails.setThumbnails(thumbnailsDo);
+					resourceModelList.add(collectionDetails);
+				}//main for loop
+			}			
+		}//try end
+		catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return resourceModelList;
 	}
 }

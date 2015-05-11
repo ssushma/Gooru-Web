@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
@@ -1303,9 +1304,9 @@ public class HeaderUc extends Composite implements
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.COLLECTION_SEARCH)) {
+					PlaceTokens.SEARCH_RESOURCE)) {
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
+						PlaceTokens.SEARCH_RESOURCE, params);
 			} else {
 				String queryVal = params.get("query");
 				// queryVal = queryVal.replaceAll("%5C1", "&");
@@ -1317,7 +1318,7 @@ public class HeaderUc extends Composite implements
 				}
 				
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, params);
+						PlaceTokens.SEARCH_COLLECTION, params);
 			}
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 			getEditSearchTxtBox().hideSuggestionList();
@@ -1332,7 +1333,7 @@ public class HeaderUc extends Composite implements
 				String queryVal = params.get("query");
 				map.put("query", "*");
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 		}
 		
@@ -1453,15 +1454,22 @@ public class HeaderUc extends Composite implements
 				}
 			}
 		}
-		params.put("category", "All");
+		
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(!currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH))
-		{
-		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
+		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT,null);
+		if(collectionType!=null){
+			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
+		}else{
+			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
 		}
-		params.put("pageNum", "1");
-		params.put("pageSize", "8");
+		params.put("category", "All");
+		
+		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE))
+		{
+			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		}
 		
 		return params;
 	}
@@ -1868,9 +1876,9 @@ public class HeaderUc extends Composite implements
 			params = updateParams(params);
 			savePlaceRequest();
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.COLLECTION_SEARCH)) {
+					PlaceTokens.SEARCH_RESOURCE)) {
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
+						PlaceTokens.SEARCH_RESOURCE, params);
 			} else {
 				String queryVal = params.get("query");
 				// queryVal = queryVal.replaceAll("%5C1", "&");
@@ -1878,7 +1886,7 @@ public class HeaderUc extends Composite implements
 				map.put("query", queryVal);
 				editSearchTxtBox.setText(queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 			editSearchTxtBox.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
@@ -1896,7 +1904,7 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", "*");
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 		}
 

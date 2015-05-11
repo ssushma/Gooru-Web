@@ -100,7 +100,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel;
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel,
+	folderTocMainPnl;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
@@ -148,6 +149,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	
 	public FolderTocView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		folderTocMainPnl.getElement().setId("folderTocMainPnl");
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 		setData();
 		bannerImage.setVisible(false);

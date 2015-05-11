@@ -81,7 +81,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
 			resourceSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
 			resourceSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
-			
+			resourceSearchResultDo.setGooruUId(getJsonString(recordJsonObject, "gooruUId"));
 			JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 			ResourceSourceDo resourceSourceDo=JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);
 			resourceSearchResultDo.setResourceSource(resourceSourceDo);
@@ -170,6 +170,8 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
+		resourceSearchResultDo.setResourceAddedCount(getJsonInteger(recordJsonObject, ADD_COUNT));
+		resourceSearchResultDo.setResourceUsedUserCount(getJsonInteger(recordJsonObject, USER_COUNT));
 
 		try {
 			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {

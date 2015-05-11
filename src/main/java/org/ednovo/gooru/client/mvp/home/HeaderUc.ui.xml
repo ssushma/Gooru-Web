@@ -4,6 +4,7 @@
 	xmlns:cc="urn:import:org.ednovo.gooru.client.mvp.home" xmlns:event="urn:import:org.ednovo.gooru.client.ui">
 
 	<g:HTMLPanel ui:field="parentContainer">
+
 		<!-- New Header -->
 		<uc:HeaderPanel ui:field="headerMainPanel">
 			<g:HTMLPanel styleName="container">

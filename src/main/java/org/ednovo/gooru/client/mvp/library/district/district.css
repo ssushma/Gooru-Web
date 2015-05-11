@@ -304,7 +304,6 @@
 	float:left;
 	height:223px;
 	overflow-y:scroll;
-	-moz-scrollbars-vertical;
 }
 
 #contentScroll .topicBlock .conceptList .lessonTitle {
@@ -1113,4 +1112,11 @@ margin-bottom: 15px;
 .listViewBtnStyle{
 	float:right;
 	margin: -25px -7px 0 0;
+}
+.subTag {
+	color:white;
+	font-size:12px;
+	text-align:center;
+	margin-top:10px;
+	/* height: 19px; */
 }

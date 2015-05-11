@@ -1,30 +1,27 @@
-.ratingVisualizations {
+#starRatingsPanel .ratingVisualizations {
     overflow:hidden;
 }
 
-.rating {
+#starRatingsPanel .rating {
     margin: 3px 10px 3px 0px;
     font-size:12px;
-    
-    
- 
     vertical-align:middle;
     line-height: 1.4em;
 }
 
-.rating .star, .userRating .star {
+#starRatingsPanel .rating .star,#starRatingsPanel .userRating .star {
     font-size:14px;
     color:#999;
 }
 
-.rating .star.filled {
+#starRatingsPanel .rating .star.filled {
     color:#4e9746;
 }
 
 //.rating .star:before, .userRating .star:before {content:'\2606';}
 //.rating .star.filled:before, .userRating .star.filled:before {content:'\2605';}
 
-.star:before {
+#starRatingsPanel .star:before {
     display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
@@ -35,11 +32,11 @@
     content:'\f006';
 }
 
-.star.filled:before {
+#starRatingsPanel .star.filled:before {
     content: "\f005";
 }
 
-.userRating .star.filled {
+#starRatingsPanel .userRating .star.filled {
     color:#1076BB;
 }
 
@@ -49,18 +46,18 @@ body.popupBG {
     background-color:rgba(0,0,0,.6);
 }
 
-.popup {
+#starRatingsPanel .popup {
 	background-color:white;
 	width: 450px;
 	margin:50px auto;
 	padding:3px;
 }
 
-.popupInner {
+#starRatingsPanel .popupInner {
 	border: 1px solid #DDD;
 }
 
-.popupHeader {
+#starRatingsPanel .popupHeader {
     position:relative;
 	padding:10px 15px;
 	color:white;
@@ -84,18 +81,18 @@ body.popupBG {
 	
 }
 
-.popupHeader h1 {
+#starRatingsPanel .popupHeader h1 {
     font-size:16px;
     font-weight:normal;
 }
 
-.popupContent {
+#starRatingsPanel .popupContent {
 	padding:15px;
     height:400px;
     overflow:auto;
 }
 
-.closeButton {
+#starRatingsPanel .closeButton {
     width: 17px;
     height: 17px;
     background: url("../_images/close-button.png") no-repeat;
@@ -104,13 +101,13 @@ body.popupBG {
     right: 10px;
 }
 
-.closeButton:hover {
+#starRatingsPanel .closeButton:hover {
     opacity:.6;
 }
 
 /*//////////////////////////////// distribution graph////////////*/
 
-.distribution {
+#starRatingsPanel .distribution {
     float: left;
     width: 120px;
     white-space: nowrap;
@@ -118,18 +115,18 @@ body.popupBG {
     margin-right: 120px;
 }
 
-.average {
+#starRatingsPanel .average {
     float:left;
     width:150px;
 }
 
-h3 {
+#starRatingsPanel h3 {
     font-size:12px;
     font-weight:bold;
     margin-bottom:10px;
 }
 
-.barGraph .label { 
+#starRatingsPanel .barGraph .label { 
     display:inline-block;
     width:60px;
     line-height:12px;
@@ -138,12 +135,12 @@ h3 {
     vertical-align:middle;
 }
 
-.barGraph .bar { 
+#starRatingsPanel .barGraph .bar { 
     display:inline-block;
     width:100px; /* this is the max width for the bars */
 }
 
-.bar {
+#starRatingsPanel .bar {
     height:10px;
     background-color: #8CC63E;
   
@@ -151,30 +148,30 @@ h3 {
     vertical-align:middle;
 }
 
-.barGraph .bar:nth-child(7) {
+#starRatingsPanel .barGraph .bar:nth-child(7) {
     background-color: #57B53B;
 }
 
-.barGraph .bar:nth-child(11) {
+#starRatingsPanel .barGraph .bar:nth-child(11) {
     background-color: #4E9746;
 }
 
-.barGraph .bar:nth-child(15) {
+#starRatingsPanel .barGraph .bar:nth-child(15) {
     background-color: #45843E;
 }
 
-.barGraph .bar:nth-child(19) {
+#starRatingsPanel .barGraph .bar:nth-child(19) {
     background-color: #0F7A42;
 }
 
-.count {
+#starRatingsPanel .count {
     display:inline-block;
     font-size:11px;
 }
 
 /*//////////////////// ratings and reviews ////////*/
 
-.userRating {
+#starRatingsPanel .userRating {
     clear:both;
     background:#f0f0f0;
     padding:10px 15px;
@@ -182,22 +179,22 @@ h3 {
     line-height:29px;
 }
 
-.userRating.reviewContainer {
+#starRatingsPanel .userRating.reviewContainer {
     line-height:1.2em;
     padding:15px;
     position:relative;
 }
 
-.userRating.editContainer {
+#starRatingsPanel .userRating.editContainer {
     line-height:1.2em;
     padding:15px;
 }
 
-.userRating button {
+#starRatingsPanel .userRating button {
     float:right;
 }
 
-.reviewContainer button {
+#starRatingsPanel .reviewContainer button {
     float:none;
     display:block;
     visibility:hidden;
@@ -207,79 +204,65 @@ h3 {
     -o-transition: visibility 0.2s linear, opacity 0.2s linear;
 }
 
-.reviewContainer:hover button {
+#starRatingsPanel .reviewContainer:hover button {
     visibility:visible;
     opacity:1;
 }
 
-.userRating.reviewContainer .username,
-.userRating.reviewContainer .timestamp,
-.userRating.reviewContainer .rating,
-.userRating.reviewContainer .review {
+#starRatingsPanel .userRating.reviewContainer .username,
+#starRatingsPanel .userRating.reviewContainer .timestamp,
+#starRatingsPanel .userRating.reviewContainer .rating,
+#starRatingsPanel .userRating.reviewContainer .review {
     opacity:1;
     transition:opacity .2s;
 }
 
-.userRating.reviewContainer:hover .username,
-.userRating.reviewContainer:hover .timestamp,
-.userRating.reviewContainer:hover .rating,
-.userRating.reviewContainer:hover .review {
+#starRatingsPanel .userRating.reviewContainer:hover .username,
+#starRatingsPanel .userRating.reviewContainer:hover .timestamp,
+#starRatingsPanel .userRating.reviewContainer:hover .rating,
+#starRatingsPanel .userRating.reviewContainer:hover .review {
     opacity:.4;
 }
 
-.userRating.reviewContainer {
+#starRatingsPanel .userRating.reviewContainer {
     background:#f0f0f0;
     transition:background .2s;
 }
 
-.userRating.reviewContainer:hover {
+#starRatingsPanel .userRating.reviewContainer:hover {
     background:#f6f6f6;
     cursor:default;
 }
 
-.reviewContainer {
+#starRatingsPanel .reviewContainer {
     margin-bottom:25px;
     position:relative;
 }
 
-.reviewContainer .username,
-.editContainer .username {
+#starRatingsPanel .reviewContainer .username,
+#starRatingsPanel .editContainer .username {
     width:200px;
     float:left;
 }
 
-.reviewContainer .timestamp, 
-.editContainer .timestamp {
+#starRatingsPanel .reviewContainer .timestamp, 
+#starRatingsPanel .editContainer .timestamp {
     float:right;
 }
 
-.reviewContainer hr, .editContainer hr {
+#starRatingsPanel .reviewContainer hr,#starRatingsPanel .editContainer hr {
     clear:both;
     border:none;
     border-bottom: 1px solid #ddd;
     margin:3px 0px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.rating:not(:checked) > input {
+#starRatingsPanel .rating:not(:checked) > input {
     position:absolute;
     top:-9999px;
     clip:rect(0,0,0,0);
 }
 
-.rating:not(:checked) > label {
+#starRatingsPanel .rating:not(:checked) > label {
     float:right;
     width:16px;
     overflow:hidden;
@@ -291,7 +274,7 @@ h3 {
     transition: color .2s;
 }
 
-.rating:not(:checked) > label:before {
+#starRatingsPanel .rating:not(:checked) > label:before {
     line-height: 1;
     display: inline-block;
     text-decoration: inherit;
@@ -305,9 +288,9 @@ h3 {
     content:'\f006';
 }
 
-.rating > input:checked ~ label:before,
-.rating:not(:checked) > label:hover:before,
-.rating:not(:checked) > label:hover ~ label:before{
+#starRatingsPanel .rating > input:checked ~ label:before,
+#starRatingsPanel .rating:not(:checked) > label:hover:before,
+#starRatingsPanel .rating:not(:checked) > label:hover ~ label:before{
     display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
@@ -318,20 +301,20 @@ h3 {
     content:'\f005';;
 }
 
-.rating > input:checked ~ label {
+#starRatingsPanel .rating > input:checked ~ label {
     color: #579ECF;
 }
 
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
+#starRatingsPanel .rating:not(:checked) > label:hover,
+#starRatingsPanel .rating:not(:checked) > label:hover ~ label {
     color: #1076BB;
 }
 
-.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
+#starRatingsPanel .rating > input:checked + label:hover,
+#starRatingsPanel .rating > input:checked + label:hover ~ label,
+#starRatingsPanel .rating > input:checked ~ label:hover,
+#starRatingsPanel .rating > input:checked ~ label:hover ~ label,
+#starRatingsPanel .rating > label:hover ~ input:checked ~ label {
     color: #1076BB;
 }
 
@@ -340,7 +323,7 @@ fieldset {
     display:inline-block;
 }
 
-.ratingContainer {
+#starRatingsPanel .ratingContainer {
     height:60px;
     white-space:nowrap;
    
@@ -350,7 +333,7 @@ fieldset {
     position:relative;
 }
 
-.editRatingContainer {
+#starRatingsPanel .editRatingContainer {
     position: absolute;
     width: 100%;
     height:100%;
@@ -358,7 +341,7 @@ fieldset {
     left: 0px;
 }
 
-.userRating .editRatingContainer {
+#starRatingsPanel .userRating .editRatingContainer {
     position: absolute;
     width: 100%;
     height:100%;
@@ -366,28 +349,28 @@ fieldset {
     left: 0px;
 }
 
-.editRatingContainer {
+#starRatingsPanel .editRatingContainer {
     background:none;
     transition: background .2s;
 }
 
-.editRatingContainer:hover {
+#starRatingsPanel .editRatingContainer:hover {
     background:rgba(255,255,255,.6);
 }
 
-.userRating .editRatingContainer {
+#starRatingsPanel .userRating .editRatingContainer {
     background:none;
 }
 
-.userRating:hover .editRatingContainer {
+#starRatingsPanel .userRating:hover .editRatingContainer {
     background:none;
 }
 
-.editRating {
+#starRatingsPanel .editRating {
     margin:44px auto 0px auto;
 }
 
-.editContainer textarea {
+#starRatingsPanel .editContainer textarea {
     width:100%;
     height:72px;
     display:block;
@@ -399,58 +382,58 @@ fieldset {
     font-size:12px;
 }
 
-.saveCancelContainer {
+#starRatingsPanel .saveCancelContainer {
     text-align:center;
 }
 
-.saveCancelContainer button {
+#starRatingsPanel .saveCancelContainer button {
     float:none;
     margin:10px 2px 0px 2px;
 }
 
-.timestamp .edited {
+#starRatingsPanel .timestamp .edited {
     color:#999;
 }
 
-.editRatingContainer {
+#starRatingsPanel .editRatingContainer {
     text-align:center;
 }
 
-.editRatingContainer button {
+#starRatingsPanel .editRatingContainer button {
     text-align:center;
     margin-top:10px;
     display:inline-block;
 }
 
-.userRating .editRatingContainer button {
+#starRatingsPanel .userRating .editRatingContainer button {
     margin-top:25px;
 }
 
-.editRatingContainer .dropdownButtonContainer {
+#starRatingsPanel .editRatingContainer .dropdownButtonContainer {
     margin: 25px auto;
     display: block;
     width: 150px;
     position:relative;
 }
 
-.userRating .editRatingContainer .dropdownButtonContainer {
+#starRatingsPanel .userRating .editRatingContainer .dropdownButtonContainer {
     margin: 0px auto;
 }
 
-.editRatingContainer .dropdownButtonContainer .dropdown {
+#starRatingsPanel .editRatingContainer .dropdownButtonContainer .dropdown {
     width:150px;
     position:absolute;
     right:0px;
     text-align:left;
 }
 
-.userRating.deleting {
+#starRatingsPanel .userRating.deleting {
     text-align:center;
     color:#999;
     padding:30px;
 }
 
-.ratingConfirmationContainer {
+#starRatingsPanel .ratingConfirmationContainer {
     padding:20px;
     border:1px solid #ddd;
     -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
@@ -465,24 +448,24 @@ fieldset {
     white-space:normal;
 }
 
-.ratingConfirmationContainer h1 {
+#starRatingsPanel .ratingConfirmationContainer h1 {
     font-size:20px;
     font-weight:normal;
     margin-bottom:20px;
 }
 
-.ratingConfirmationContainer .rating {
+#starRatingsPanel .ratingConfirmationContainer .rating {
     margin-bottom:20px;
 }
 
-.ratingConfirmationContainer label {
+#starRatingsPanel .ratingConfirmationContainer label {
     display:block;
     font-weight:bold;
     text-align:left;
     margin:5px 0px;
 }
 
-.ratingConfirmationContainer textarea {
+#starRatingsPanel .ratingConfirmationContainer textarea {
     width:100%;
     height:150px;
     display:block;
@@ -493,7 +476,7 @@ fieldset {
     box-sizing:border-box;
 }
 
-.arrowBorder {
+#starRatingsPanel .arrowBorder {
 width: 0px;
 height: 0px;
 border: 10px solid;
@@ -506,7 +489,7 @@ border-left: none;
 left: -10px;
 }
 
-.arrow {
+#starRatingsPanel .arrow {
 width: 0px;
 height: 0px;
 border: 10px solid;
@@ -520,14 +503,14 @@ z-index: 100;
 left: -9px;
 }
 
-.confirmationIcon {
+#starRatingsPanel .confirmationIcon {
     width:55px;
     height:55px;
     margin:0px auto 20px auto;
     background: url('../_images/checkmark.png') center no-repeat;
 }
 
-.ratingValue{
+#starRatingsPanel .ratingValue{
 	text-align: left;
 	margin-left: 15px;
 	margin-bottom: 2px;

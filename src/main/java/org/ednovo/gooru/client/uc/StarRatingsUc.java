@@ -40,6 +40,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -64,6 +65,7 @@ public abstract class StarRatingsUc extends Composite {
 	public SimpleCheckBox starOne,starTwo,starThree,starFour,starFive;
 	
 	@UiField Label starValue,mouseOverStarValue; 
+	@UiField HTMLPanel starRatingsPnl;
 	
 	private static final String POOR="Poor";
 	private static final String FAIR="Fair";
@@ -87,6 +89,7 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	public StarRatingsUc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		starRatingsPnl.getElement().setId("starRatingsPanel");
 		starValue.setVisible(false);
 		starValue.getElement().setId("lblStarValue");
 		mouseOverStarValue.getElement().setId("lblMouseOverStarValue");

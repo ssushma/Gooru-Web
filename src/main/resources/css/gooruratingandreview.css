@@ -1,8 +1,8 @@
-.ratingVisualizations {
+#epnlReviewContainer .ratingVisualizations {
 	overflow: hidden;
 }
 
-.rating {
+#epnlReviewContainer .rating {
 	margin: 3px 10px 3px 0px;
 	font-size: 12px;
 	/* //width: 95px; used in search
@@ -12,33 +12,33 @@
 	line-height: 1.4em;
 }
 
-.ratingValue {
+#epnlReviewContainer .ratingValue {
 	text-align: left;
 	margin-left: 15px;
 	margin-bottom: 2px;
 	font-style: italic;
 }
 
-.ratingValuemouseover{
+#epnlReviewContainer .ratingValuemouseover{
 	text-align: left;
 	margin-bottom: 2px;
 	font-style: italic;
 	display:inline-block;
 }
 
-.rating .star,.userRating .star {
+#epnlReviewContainer .rating .star,#epnlReviewContainer .userRating .star {
 	font-size: 14px;
 	color: #999;
 }
 
-.rating .star.filled {
+#epnlReviewContainer .rating .star.filled {
 	color: #4e9746;
 }
 
 /* //.rating .star:before, .userRating .star:before {content:'\2606';}
 //.rating .star.filled:before, .userRating .star.filled:before {content:'\2605';}
  */
-.star:before {
+#epnlReviewContainer .star:before {
 	display: inline-block;
 	font-family: FontAwesome;
 	font-style: normal;
@@ -50,12 +50,12 @@
 	cursor: pointer;
 }
 
-.star.filled:before {
+#epnlReviewContainer .star.filled:before {
 	content: "\f005";
 	cursor: pointer;
 }
 
-.userRating .star.filled {
+#epnlReviewContainer .userRating .star.filled {
 	color: #1076BB;
 	cursor: pointer;
 }
@@ -65,16 +65,16 @@ body.popupBG {
 	background-color: rgba(0, 0, 0, .6);
 }
 
-.popup {
+#epnlReviewContainer .popup {
 	background-color: white;
 	width: 460px;
 }
 
-.popupInner {
+#epnlReviewContainer .popupInner {
 	border: 1px solid #DDD;
 }
 
-.popupHeader {
+#epnlReviewContainer .popupHeader {
 	position: relative;
 	padding: 10px 15px;
 	color: white;
@@ -95,19 +95,19 @@ body.popupBG {
 		
 }
 
-.popupHeader h1 {
+#epnlReviewContainer .popupHeader h1 {
 	font-size: 16px;
 	font-weight: normal;
 }
 
-.popupContent {
+#epnlReviewContainer .popupContent {
 	padding: 12px;
 	height: 400px;
 /* 	overflow: auto; */
 	width: 94%;
 }
 
-.closeButton {
+#epnlReviewContainer .closeButton {
 	width: 17px;
 	height: 17px;
 	background: url("images/login/close-button.png") no-repeat;
@@ -116,13 +116,13 @@ body.popupBG {
 	right: 10px;
 }
 
-.closeButton:hover {
+#epnlReviewContainer .closeButton:hover {
 	opacity: .6;
 	cursor: pointer;
 }
 
 /*//////////////////////////////// distribution graph////////////*/
-.distribution {
+#epnlReviewContainer .distribution {
 	float: left;
 	/* width: 120px; */
 	white-space: nowrap;
@@ -130,18 +130,18 @@ body.popupBG {
 	margin-right: 50px;
 }
 
-.average {
+#epnlReviewContainer .average {
 	float: left;
 	width: 150px;
 }
 
-h3 {
+#epnlReviewContainer h3 {
 	font-size: 12px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 
-.barGraph .label {
+#epnlReviewContainer .barGraph .label {
 	display: inline-block;
 	width: 60px;
 	line-height: 12px;
@@ -150,41 +150,41 @@ h3 {
 	vertical-align: middle;
 }
 
-.barGraph .bar {
+#epnlReviewContainer .barGraph .bar {
 	display: inline-block;
 	width: 0px; /* this is the max width for the bars */
 }
 
-.bar {
+#epnlReviewContainer .bar {
 	height: 10px;
 	background-color: #8CC63E;
 	display: inline-block;
 	vertical-align: middle;
 }
 
-.data-two {
+#epnlReviewContainer .data-two {
 	background-color: #57B53B;
 }
 
-.data-three {
+#epnlReviewContainer .data-three {
 	background-color: #4E9746;
 }
 
-.data-four {
+#epnlReviewContainer .data-four {
 	background-color: #45843E;
 }
 
-.data-five {
+#epnlReviewContainer .data-five {
 	background-color: #0F7A42;
 }
 
-.count {
+#epnlReviewContainer .count {
 	display: inline-block;
 	font-size: 11px;
 }
 
 /*//////////////////// ratings and reviews ////////*/
-.userRating {
+#epnlReviewContainer .userRating {
 	clear: both;
 	background: #f0f0f0;
 	padding: 10px 15px;
@@ -192,79 +192,79 @@ h3 {
 	height: 33px;
 }
 
-.userRating.reviewContainer {
+#epnlReviewContainer .userRating.reviewContainer {
 	line-height: 1.2em;
 	padding: 15px;
 	position: relative;
 }
 
-.userRating.editContainer {
+#epnlReviewContainer .userRating.editContainer {
 	line-height: 1.2em;
 	padding: 15px;
 }
 
-.userRatingPreviewBtn {
+#epnlReviewContainer .userRatingPreviewBtn {
 	float: right;
 	margin-right: 11px;
 	margin-top: -34px;
 	width: 168px;
 }
 
-.reviewContainer:hover .editReview {
+#epnlReviewContainer .reviewContainer:hover .editReview {
 	visibility: visible;
 	opacity: 1;
 }
 
-.userRating.reviewContainer .username,.userRating.reviewContainer .timestamp,.userRating.reviewContainer .rating,.userRating.reviewContainer .review
+#epnlReviewContainer .userRating.reviewContainer .username,#epnlReviewContainer .userRating.reviewContainer .timestamp,#epnlReviewContainer .userRating.reviewContainer .rating,#epnlReviewContainer .userRating.reviewContainer .review
 	{
 	opacity: 1;
 	transition: opacity .2s;
 }
 
-.userRating.reviewContainer:hover .username,.userRating.reviewContainer:hover .timestamp,.userRating.reviewContainer:hover .rating,.userRating.reviewContainer:hover .review
+#epnlReviewContainer .userRating.reviewContainer:hover .username,#epnlReviewContainer .userRating.reviewContainer:hover .timestamp,#epnlReviewContainer .userRating.reviewContainer:hover .rating,#epnlReviewContainer .userRating.reviewContainer:hover .review
 	{
 	opacity: .4;
 }
 
-.userRating.reviewContainer {
+#epnlReviewContainer .userRating.reviewContainer {
 	background: #f0f0f0;
 	transition: background .2s;
 }
 
-.userRating.reviewContainer:hover {
+#epnlReviewContainer .userRating.reviewContainer:hover {
 	background: #f6f6f6;
 	cursor: default;
 }
 
-.reviewContainer {
+#epnlReviewContainer .reviewContainer {
 	position: relative;
 	padding: 15px;
 	width: 397px;
 }
 
-.reviewContainer .username,.editContainer .username {
+#epnlReviewContainer .reviewContainer .username,#epnlReviewContainer .editContainer .username {
 	width: 200px;
 	float: left;
 }
 
-.reviewContainer .timestamp,.editContainer .timestamp {
+#epnlReviewContainer .reviewContainer .timestamp,#epnlReviewContainer .editContainer .timestamp {
 	float: right;
 }
 
-.reviewContainer hr,.editContainer hr {
+#epnlReviewContainer .reviewContainer hr,#epnlReviewContainer .editContainer hr {
 	clear: both;
 	border: none;
 	border-bottom: 1px solid #ddd;
 	margin: 3px 0px;
 }
 
-.rating:not (:checked ) >input {
+#epnlReviewContainer .rating:not (:checked ) >input {
 	position: absolute;
 	top: -9999px;
 	clip: rect(0, 0, 0, 0);
 }
 
-.rating:not (:checked ) >label {
+#epnlReviewContainer .rating:not (:checked ) >label {
 	float: right;
 	width: 16px;
 	overflow: hidden;
@@ -276,7 +276,7 @@ h3 {
 	transition: color .2s;
 }
 
-.rating:not (:checked ) >label:before {
+#epnlReviewContainer .rating:not (:checked ) >label:before {
 	line-height: 1;
 	display: inline-block;
 	text-decoration: inherit;
@@ -290,7 +290,7 @@ h3 {
 	content: '\f006';
 }
 
-.rating>input:checked  ~ label:before,.rating:not (:checked ) >label:hover:before,.rating:not
+#epnlReviewContainer .rating>input:checked  ~ label:before,#epnlReviewContainer .rating:not (:checked ) >label:hover:before,#epnlReviewContainer .rating:not
 	(:checked ) >label:hover  ~ label:before {
 	display: inline-block;
 	font-family: FontAwesome;
@@ -302,18 +302,18 @@ h3 {
 	content: '\f005';;
 }
 
-.rating>input:checked  ~ label {
+#epnlReviewContainer .rating>input:checked  ~ label {
 	color: #579ECF;
 }
 
-.rating:not (:checked ) >label:hover,.rating:not (:checked ) >label:hover 
+#epnlReviewContainer .rating:not (:checked ) >label:hover,#epnlReviewContainer .rating:not (:checked ) >label:hover 
 	~ label {
 	color: #1076BB;
 }
 
-.rating>input:checked+label:hover,.rating>input:checked+label:hover  ~
-	label,.rating>input:checked  ~ label:hover,.rating>input:checked  ~
-	label:hover  ~ label,.rating>label:hover  ~ input:checked  ~ label {
+#epnlReviewContainer .rating>input:checked+label:hover,#epnlReviewContainer .rating>input:checked+label:hover  ~
+	label,#epnlReviewContainer .rating>input:checked  ~ label:hover,#epnlReviewContainer .rating>input:checked  ~
+	label:hover  ~ label,#epnlReviewContainer .rating>label:hover  ~ input:checked  ~ label {
 	color: #1076BB;
 }
 
@@ -322,7 +322,7 @@ fieldset {
 	display: inline-block;
 }
 
-.ratingContainer {
+#epnlReviewContainer .ratingContainer {
 	height: 60px;
 	text-align: center;
 	-webkit-font-smoothing: antialiased !important;
@@ -330,7 +330,7 @@ fieldset {
 	position: relative;
 }
 
-.editRatingContainer {
+#epnlReviewContainer .editRatingContainer {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -338,7 +338,7 @@ fieldset {
 	left: 0px;
 }
 
-.userRating .editRatingContainer {
+#epnlReviewContainer .userRating .editRatingContainer {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -346,28 +346,28 @@ fieldset {
 	left: 0px;
 }
 
-.editRatingContainer {
+#epnlReviewContainer .editRatingContainer {
 	background: none;
 	transition: background .2s;
 }
 
-.editRatingContainer:hover {
+#epnlReviewContainer .editRatingContainer:hover {
 	background: rgba(255, 255, 255, .6);
 }
 
-.userRating .editRatingContainer {
+#epnlReviewContainer .userRating .editRatingContainer {
 	background: none;
 }
 
-.userRating:hover .editRatingContainer {
+#epnlReviewContainer .userRating:hover .editRatingContainer {
 	background: none;
 }
 
-.editRating {
+#epnlReviewContainer .editRating {
 	margin: 44px auto 0px auto;
 }
 
-.editContainer textarea {
+#epnlReviewContainer .editContainer textarea {
 	width: 100%;
 	height: 72px;
 	display: block;
@@ -379,58 +379,58 @@ fieldset {
 	font-size: 12px;
 }
 
-.saveCancelContainer {
+#epnlReviewContainer .saveCancelContainer {
 	text-align: center;
 }
 
-.saveCancelContainer button {
+#epnlReviewContainer .saveCancelContainer button {
 	float: none;
 	margin: 10px 2px 0px 2px;
 }
 
-.timestamp .edited {
+#epnlReviewContainer .timestamp .edited {
 	color: #999;
 }
 
-.editRatingContainer {
+#epnlReviewContainer .editRatingContainer {
 	text-align: center;
 }
 
-.editRatingContainer button {
+#epnlReviewContainer .editRatingContainer button {
 	text-align: center;
 	margin-top: 10px;
 	display: inline-block;
 }
 
-.userRating .editRatingContainer button {
+#epnlReviewContainer .userRating .editRatingContainer button {
 	margin-top: 25px;
 }
 
-.editRatingContainer .dropdownButtonContainer {
+#epnlReviewContainer .editRatingContainer .dropdownButtonContainer {
 	margin: 25px auto;
 	display: block;
 	width: 150px;
 	position: relative;
 }
 
-.userRating .editRatingContainer .dropdownButtonContainer {
+#epnlReviewContainer .userRating .editRatingContainer .dropdownButtonContainer {
 	margin: 0px auto;
 }
 
-.editRatingContainer .dropdownButtonContainer .dropdown {
+#epnlReviewContainer .editRatingContainer .dropdownButtonContainer .dropdown {
 	width: 150px;
 	position: absolute;
 	right: 0px;
 	text-align: left;
 }
 
-.userRating.deleting {
+#epnlReviewContainer .userRating.deleting {
 	text-align: center;
 	color: #999;
 	padding: 30px;
 }
 
-.ratingConfirmationContainer {
+#epnlReviewContainer .ratingConfirmationContainer {
 	padding: 20px;
 	border: 1px solid #ddd;
 	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
@@ -445,24 +445,24 @@ fieldset {
 	white-space: normal;
 }
 
-.ratingConfirmationContainer h1 {
+#epnlReviewContainer .ratingConfirmationContainer h1 {
 	font-size: 20px;
 	font-weight: normal;
 	margin-bottom: 20px;
 }
 
-.ratingConfirmationContainer .rating {
+#epnlReviewContainer .ratingConfirmationContainer .rating {
 	margin-bottom: 20px;
 }
 
-.ratingConfirmationContainer label {
+#epnlReviewContainer .ratingConfirmationContainer label {
 	display: block;
 	font-weight: bold;
 	text-align: left;
 	margin: 5px 0px;
 }
 
-.ratingConfirmationContainer textarea {
+#epnlReviewContainer .ratingConfirmationContainer textarea {
 	width: 100%;
 	height: 150px;
 	display: block;
@@ -473,7 +473,7 @@ fieldset {
 	box-sizing: border-box;
 }
 
-.arrowBorder {
+#epnlReviewContainer .arrowBorder {
 	width: 0px;
 	height: 0px;
 	border: 10px solid;
@@ -486,7 +486,7 @@ fieldset {
 	left: -10px;
 }
 
-.arrow {
+#epnlReviewContainer .arrow {
 	width: 0px;
 	height: 0px;
 	border: 10px solid;
@@ -500,50 +500,50 @@ fieldset {
 	left: -9px;
 }
 
-.confirmationIcon {
+#epnlReviewContainer .confirmationIcon {
 	width: 55px;
 	height: 55px;
 	margin: 0px auto 20px auto;
 	background: url('../_images/checkmark.png') center no-repeat;
 }
 
-.ratingCountLabel {
+#epnlReviewContainer .ratingCountLabel {
 	cursor: none !important;
 	text-decoration: none !important;
 	color: grey;
 	/* padding: 0px 5px; */
 }
 
-.ratingCountLabelHighlighted {
+#epnlReviewContainer .ratingCountLabelHighlighted {
 	cursor: pointer;
 	text-decoration: none !important;
 	color: #1076bb;
 }
 
-.userNameLbl {
+#epnlReviewContainer .userNameLbl {
 	font-size: 12px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 
-.creatorReviewPanel {
+#epnlReviewContainer .creatorReviewPanel {
 	background: #f0f0f0;
 	margin-top: 15px;
 	width: 391px;
 }
 
-.rateMsg {
+#epnlReviewContainer .rateMsg {
 	float: left;
 	margin-top: 10px;
 }
 
-.floatRight {
+#epnlReviewContainer .floatRight {
 	float: right;
 	margin-top: -41px;
 	margin-right: 29px;
 }
 
-.textAreaReviewEdit {
+#epnlReviewContainer .textAreaReviewEdit {
 	width: 96%;
 	resize: none;
 	height: 50px;
@@ -551,7 +551,7 @@ fieldset {
 	margin-bottom: 6px;
 }
 
-.truncate {
+#epnlReviewContainer .truncate {
 	width: 390px;
 	white-space: nowrap;
 	max-height: 23px;
@@ -559,11 +559,11 @@ fieldset {
 	text-overflow: ellipsis;
 }
 
-.deleteButtonAlign{
+#epnlReviewContainer .deleteButtonAlign{
 	float: right;
 	margin-right: 30px;
 }
-.deletePanel{
+#epnlReviewContainer .deletePanel{
 	height:80px;
 	float: left;
 	/* margin-left: 101px;
@@ -571,19 +571,19 @@ fieldset {
 	background: #f0f0f0;
 	width: 396px;
 }
-.hrline
+#epnlReviewContainer .hrline
 {
 	clear: both;
 	border: none;
 	border-bottom: 1px solid #ddd;
 	margin: 3px 0px;
 }
-.lbldeleteMsg{
+#epnlReviewContainer .lbldeleteMsg{
  	margin-left: 101px;
 	margin-top:25px;
 }
 
-.errorLblBottomText {
+#epnlReviewContainer .errorLblBottomText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: rgb(250,176,58);
@@ -595,25 +595,25 @@ fieldset {
 	float: right;
 }
 
-.editReviewBtn{
+#epnlReviewContainer .editReviewBtn{
 	position: absolute;
 	left: 179px;
 	top: 23px;
 }
 
-.panelRatingLabels{
+#epnlReviewContainer .panelRatingLabels{
 	float: left;	
 }
 
-.panelRatingValues{
+#epnlReviewContainer .panelRatingValues{
 	border-left: #ccc 1px solid;
 	float: left;
 	width: 135px;
 }
 
-.posValue{
+#epnlReviewContainer .posValue{
 	margin-left: 10px;
 }
-.displayInlineBLock{
+#epnlReviewContainer .displayInlineBLock{
 	display:inline-block;
 }

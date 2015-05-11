@@ -37,6 +37,10 @@ public class ThumbnailDo implements Serializable{
 	private boolean defaultImage;
 	private String dimensions;
 	private String url;
+	private String thumbnailAssetURI;
+	private String thumbnailFolder;
+	private String thumbnailName;
+	
 	public ThumbnailDo(){}
 	public boolean isDefaultImage() {
 		return defaultImage;
@@ -58,5 +62,23 @@ public class ThumbnailDo implements Serializable{
 			url = "images/defaultRes.png";
 		}
 		this.url = url;
+	}
+	public String getThumbnailAssetURI() {
+		return thumbnailAssetURI;
+	}
+	public void setThumbnailAssetURI(String thumbnailAssetURI) {
+		this.thumbnailAssetURI = thumbnailAssetURI;
+	}
+	public String getThumbnailFolder() {
+		return thumbnailFolder;
+	}
+	public void setThumbnailFolder(String thumbnailFolder) {
+		this.thumbnailFolder = thumbnailFolder;
+	}
+	public String getThumbnailName() {
+		return thumbnailName;
+	}
+	public void setThumbnailName(String thumbnailName) {
+		this.thumbnailName = thumbnailName;
 	}
 }

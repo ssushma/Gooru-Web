@@ -49,13 +49,13 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	AnalyticsCssBundle res;
+	/*AnalyticsCssBundle res;*/
 	
 	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses;
 	
 	@UiField ListBox loadCollections;
 	
-	@UiField HTMLPanel pnlMainContainer,collectionProgressSlot,collectionSummarySlot;
+	@UiField HTMLPanel pnlMainContainer,collectionProgressSlot,collectionSummarySlot,analyticsViewPnl;
 	
 	@UiField Image collectionProgressQuestionimg,collectionSummaryQuestionimg,collectionExportQuestionimg;
 	
@@ -75,9 +75,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 * Default constructor
 	 */
 	public AnalyticsView() {
-		this.res = AnalyticsCssBundle.INSTANCE;
-		res.unitAssignment().ensureInjected();
-		setWidget(uiBinder.createAndBindUi(this));	
+		/*this.res = AnalyticsCssBundle.INSTANCE;
+		res.unitAssignment().ensureInjected();*/
+		setWidget(uiBinder.createAndBindUi(this));
+		analyticsViewPnl.getElement().setId("analyticsViewPnl");
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
 		btnCollectionResponses.addClickHandler(new ViewAssignmentClickEvent(""));
