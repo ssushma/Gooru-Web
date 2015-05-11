@@ -465,6 +465,7 @@ margin:0 0 0 -20px !important;
     padding: 10px 50px;
 	border-bottom:1px solid #dddddd;
 	border:1px solid #dddddd;
+	cursor:pointer;
 }
 #addCollectionPopup .remixMenuTitle{
   	background-color: #ddd;
