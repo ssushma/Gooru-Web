@@ -1119,7 +1119,7 @@
 		margin-top: 10PX;
 		margin-bottom: 10PX;
 	}
-	#headerMainPanel .caption p button, #btnHomeSignUp {
+	#headerMainPanel .caption p button #btnHomeSignUp {
 		font-size: 12px;
 		margin-top: -1px;
 	}
