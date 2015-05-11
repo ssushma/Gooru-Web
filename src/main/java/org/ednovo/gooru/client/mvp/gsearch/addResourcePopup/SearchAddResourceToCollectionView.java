@@ -58,6 +58,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
 	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage;
+	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
@@ -74,7 +75,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
 	
-	boolean isTopMostSelected =true;
+	boolean isTopMostSelected =true,isAddingInProgress=true;
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -399,13 +400,16 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-		if(cureentcollectionTreeItem != null){
-			getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
-		}else{
-			if(isTopMostSelected) {
-				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
+		if(isAddingInProgress){
+			isAddingInProgress=false;
+			if(cureentcollectionTreeItem != null){
+				getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
 			}else{
-				getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+				if(isTopMostSelected) {
+					getUiHandlers().addCollectionToMyCollections("",currentsearchType);
+				}else{
+					getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+				}
 			}
 		}
 	}
@@ -432,6 +436,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params,String searchType) {
+		isAddingInProgress=true;
 		hide();
 		successPopup.setData(collectionName, selectedGooruOid,params,searchType);
 		successPopup.setGlassEnabled(true);
