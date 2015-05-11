@@ -583,18 +583,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if (isToEnabled) {
 			this.profileOnStatus = "true";
 			MixpanelUtil.Click_Profile_On();
-			profileOnButton.setStyleName(settingsStyle.publicProfileOnButtonActive());
-			profileOnButton.removeStyleName(settingsStyle.publicProfileOnButtonDeActive());
-			profileOffButton.setStyleName(settingsStyle.publicProfileOffButtonsDeActive());
-			profileOffButton.removeStyleName(settingsStyle.publicProfileOffButtonsActive());
+			profileOnButton.setStyleName("publicProfileOnButtonActive");
+			profileOnButton.removeStyleName("publicProfileOnButtonDeActive");
+			profileOffButton.setStyleName("publicProfileOffButtonsDeActive");
+			profileOffButton.removeStyleName("publicProfileOffButtonsActive");
 			setPublicShareDo("public");
 		} else {
 			this.profileOnStatus = "false";
 			MixpanelUtil.Click_Profile_Off();
-			profileOffButton.setStyleName(settingsStyle.publicProfileOffButtonsActive());
-			profileOffButton.removeStyleName(settingsStyle.publicProfileOffButtonsDeActive());
-			profileOnButton.setStyleName(settingsStyle.publicProfileOnButtonDeActive());
-			profileOnButton.removeStyleName(settingsStyle.publicProfileOnButtonActive());
+			profileOffButton.setStyleName("publicProfileOffButtonsActive");
+			profileOffButton.removeStyleName("publicProfileOffButtonsDeActive");
+			profileOnButton.setStyleName("publicProfileOnButtonDeActive");
+			profileOnButton.removeStyleName("publicProfileOnButtonActive");
 			setPublicShareDo("private");
 		}
 	}
@@ -1321,8 +1321,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				.infoTextBox());
 		addCourseBtn.setStyleName(CollectionCBundle.INSTANCE.css()
 				.infoAddButton());
-		courseMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css()
-				.courseMaxMsg());
+		courseMaxMsg.setStyleName("courseMaxMsg");
 		courseMaxMsg.getElement().getStyle().setFloat(Float.LEFT);
 	}
 

@@ -104,7 +104,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		this.searchResultDo =collectionsearchResultDo;
 		getView().setDefaultPanelVisibility(true);
 		getWorkspaceData(0,20,true,searchType);
-		//getView().setCollectionSearchResultDo(this.collectionsearchResultDo);
 	}
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
 		if(COLLECTION.equalsIgnoreCase(searchType)){
@@ -157,50 +156,46 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 	@Override
 	public void addCollectionToFolder(final String selectedFolderOrCollectionid,String searchType, final String title, final int folerLevel,HashMap<String, String> urlparams) {
-		this.urlParameters=urlparams;
-		final CollectionDo collection = new CollectionDo();
-		if(searchType.equalsIgnoreCase("collection")){
-		collection.setGooruOid(searchResultDo.getGooruOid());
-		collection.setSharing("anyonewithlink");
-		if(selectedFolderOrCollectionid!=null){
-			successparams.put("o1", selectedFolderOrCollectionid);
-			O1_LEVEL_VALUE = urlparams.get("o1");
-			O2_LEVEL_VALUE = urlparams.get("o2");
-			O3_LEVEL_VALUE = urlparams.get("o3");
-			
-			if(O3_LEVEL_VALUE!=null){
-				parentId=O3_LEVEL_VALUE;
-			}else if(O2_LEVEL_VALUE!=null){
-				parentId=O2_LEVEL_VALUE;
-			}else if(O1_LEVEL_VALUE!=null){
-				parentId=O1_LEVEL_VALUE;
-			}
-			AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
-				@Override
-				public void onSuccess(CollectionDo result) {
-					FolderDo folderDo=getFolderDo(result);
-					HashMap<String,String> params = new HashMap<String,String>();
-					if(O3_LEVEL_VALUE!=null) {
-						params.put("o3", O3_LEVEL_VALUE);
-					}
-					if(O2_LEVEL_VALUE!=null) {
-						params.put("o2", O2_LEVEL_VALUE);
-					}
-					if(O1_LEVEL_VALUE!=null) {
-						params.put("o1", O1_LEVEL_VALUE);
-					}
-					AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
-					getView().displaySuccessPopup(folderDo.getTitle(), result.getGooruOid(), successparams,"collection");
-			
+			this.urlParameters=urlparams;
+			final CollectionDo collection = new CollectionDo();
+			if(searchType.equalsIgnoreCase("collection")){
+			collection.setGooruOid(searchResultDo.getGooruOid());
+			collection.setSharing("anyonewithlink");
+			if(selectedFolderOrCollectionid!=null){
+				successparams.put("o1", selectedFolderOrCollectionid);
+				O1_LEVEL_VALUE = urlparams.get("o1");
+				O2_LEVEL_VALUE = urlparams.get("o2");
+				O3_LEVEL_VALUE = urlparams.get("o3");
+				if(O3_LEVEL_VALUE!=null){
+					parentId=O3_LEVEL_VALUE;
+				}else if(O2_LEVEL_VALUE!=null){
+					parentId=O2_LEVEL_VALUE;
+				}else if(O1_LEVEL_VALUE!=null){
+					parentId=O1_LEVEL_VALUE;
 				}
-			});
-			
-		}else{
-			getView().restrictionToAddResourcesData("Please select a folder to add collection");
-			//getView().getButtonVisiblity();
+				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
+					@Override
+					public void onSuccess(CollectionDo result) {
+						FolderDo folderDo=getFolderDo(result);
+						HashMap<String,String> params = new HashMap<String,String>();
+						if(O3_LEVEL_VALUE!=null) {
+							params.put("o3", O3_LEVEL_VALUE);
+						}
+						if(O2_LEVEL_VALUE!=null) {
+							params.put("o2", O2_LEVEL_VALUE);
+						}
+						if(O1_LEVEL_VALUE!=null) {
+							params.put("o1", O1_LEVEL_VALUE);
+						}
+						params.put("from", "SearchAddResourcePresenter");
+						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+						getView().displaySuccessPopup(folderDo.getTitle(), result.getGooruOid(), successparams,"collection");
+					}
+				});
+			}else{
+				getView().restrictionToAddResourcesData("Please select a folder to add collection");
+			}
 		}
-	}
-		
 	}
 	public FolderDo getFolderDo(CollectionDo collectionDo) {
 		FolderDo folderDo = new FolderDo();

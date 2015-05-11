@@ -494,6 +494,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			assessmentAnswer.put("attemptItemTryStatus",attemptResult);
 			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);
+			getLogger().info("--->>  createSessionItemAttemptTry --- "+url);
+			getLogger().info("--->>  createSessionItemAttemptTry payload  --- "+sessionItemAttemptTry.toString());
 			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemAttemptTry.toString());
 		} catch (JSONException e) {
 			logger.error("Exception::", e);

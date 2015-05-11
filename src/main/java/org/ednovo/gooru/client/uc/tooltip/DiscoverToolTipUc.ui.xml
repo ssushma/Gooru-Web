@@ -2,27 +2,26 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="toolTip" src="ToolTip.css" />
-		<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
-		field="res" />
 
 	<ui:style>
 		/* Add CSS here. See the GWT docs on UI Binder for more details */
 	</ui:style>
+	<g:HTMLPanel ui:field="mainContainer">
 	<g:HTMLPanel ui:field="panelCode">
 		<!-- <g:HTMLPanel styleName="{toolTip.arrowBorder}"></g:HTMLPanel> -->
-		<uc:UlPanel styleName="dropdown-menu {res.css.dropdowDisplay}" ui:field="tooltipPanel">
+		<uc:UlPanel styleName="dropdown-menu dropdowDisplay" ui:field="tooltipPanel">
 		    <uc:LiPanel>
 		        <g:Anchor ui:field="lblGooruLibrary"></g:Anchor> 
 		    </uc:LiPanel>
 		    <uc:LiPanel>
 		        <g:Anchor ui:field="lblDistrictLibrary"></g:Anchor> 
-		        <g:HTMLPanel ui:field="dropdownImgLib" styleName="right-caret {res.css.rightArrow}"></g:HTMLPanel>
+		        <g:HTMLPanel ui:field="dropdownImgLib" styleName="right-caret rightArrow"></g:HTMLPanel>
 				<uc:HTMLEventPanel  ui:field="districtLibContainer">
   				</uc:HTMLEventPanel>
 			</uc:LiPanel>
 			<uc:LiPanel>
 				<g:Anchor styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
-				<g:HTMLPanel ui:field="dropdownImg" styleName="right-caret  {res.css.rightArrow}"></g:HTMLPanel>
+				<g:HTMLPanel ui:field="dropdownImg" styleName="right-caret  rightArrow"></g:HTMLPanel>
 				<uc:HTMLEventPanel ui:field="partnerLibContainer">
 				</uc:HTMLEventPanel>
 			</uc:LiPanel>
@@ -40,6 +39,7 @@
  	<!-- 	<g:HTMLPanel styleName="{toolTip.districtLibrayCOntainerInfo}">
  			<panel:HTMLEventPanel styleName="{toolTip.districtLibraryContainer}" ui:field="districtLibContainer"/>
  		</g:HTMLPanel> -->
+	</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
 
