@@ -85,6 +85,9 @@ public class CollectionResourceWidget extends Composite {
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		String resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
+		if(resourceTitleText.length()>=25){
+			resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+		}
 		resourceTitle.setText(resourceTitleText);
 		String resourceDesc=!StringUtil.isEmpty(resourceSearchResultDo.getDescription())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getDescription()):"";
 		if(resourceDesc.length()>=120){
