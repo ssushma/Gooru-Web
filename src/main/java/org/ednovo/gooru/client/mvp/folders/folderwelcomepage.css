@@ -444,48 +444,10 @@ text-decoration: none;
 	font-weight: normal;
 	font-size: 20px;
 }
-.h2, .h3 {
-	margin-bottom: 10px;
-}
-.container {
-	width: 1000px;
-	margin: auto;
-	background: #fff;
-	min-height: 100%;
-	padding: 20px;
-	padding-top: 50px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-}
 
-.startsection {
-	float: left;
-	padding: 20px;
-	min-height: 100px;
-	margin-right: 21px;
-}
-.fright {
-	float: right;
-}
-.title {
-	font-family: 'Arvo', serif !important;
-	font-weight: bold;
-	font-size: 29px;
-	padding: 10px 0px;
-}
-.subtitle {
-	font-size: 16px;
-	width: 420px
-}
 #createClass {
 	font-size: 14px;
 	padding: 10px 12px;
-}
-.codeBg {
-	padding: 10px;
-	background: #f1efef;
-	width: 310px;
 }
 .codeTitle {
 	font-size: 18px;
@@ -500,62 +462,7 @@ text-decoration: none;
 	display: inline-block;
 	background-color: #f9f9f9;
 }
-.clearfix {
-	clear: both;
-	margin-bottom: 10px;
-}
-.leftPanel {
-	display: inline-block;
-	vertical-align: top;
-	width: 250px;
-	padding: 0px 10px 10px 10px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	min-height: 200px;
-}
-.navBox {
-	position: relative;
-	display: block;
-	padding: 30px 10px 30px 30px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	min-height: 200px;
-	margin-bottom: 20px;
-	background: #f1efef;
-	border: 1px solid #ddd;
-}
-.navBox .h3 {
-	font-size: 20px;
-	text-align: left;
-	font-weight: bold;
-	font-family: 'Arvo', serif !important;
-}
-.navBox .desc {
-	font-size: 16px;
-	text-align: left;
-	padding-top: 0px;
-}
-.hoverCircle {
-	position: absolute;
-	top: -12px;
-	left: -15px;
-	width: 40px;
-	height: 40px;
-	background: #fbb03b;
-	border-radius: 20px;
-	-moz-border-radius: 20px;
-}
-.circleTitle {
-	color: #fff;
-	font-size: 20px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-}
-.rightPanel {
-	display: inline-block;
-	vertical-align: top;
-}
+
 #img {
 	padding-left: 10px;
 }
@@ -605,46 +512,12 @@ text-decoration: none;
 	margin-right: 10px;
 }
 
-.resourceImg {
-	width: 170px;
-	line-height: 30px;
-	text-align: left;
-	font-size: 20px;
-	font-weight: bold;
-	color: #515151;
-	font-family: 'Arvo', serif !important;
-}
-.desc-emphasis {
-	color: #4E9746;
-	float: left;
-	width: 55%;
-}
+
 .align {
 	margin-top: 13px;
 }
 
 
-.collectionContainer{
-	vertical-align: top;
-	margin-left: 15px;
-	text-align: right;
-	cursor: pointer;
-}
-
-.sampleCollection{
-	color: #4e9746;
-	font-size: 16px;
-	float: left;
-	margin-top: 6px;
-	font-weight: bold;
-	font-family: 'Arvo', serif !important;
-}
-
-.arrowContainer{
-	position: absolute;
-margin-left: 137px;
-margin-top: 32px;
-}
 
 .thumbnailImage{
 	

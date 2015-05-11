@@ -144,7 +144,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	//@UiField TextBox tbLastName,tbFirstName;
 	@UiField Button settingsSaveButton,profileOnButton,profileOffButton, btnSave, btnSeeMyProfile,btnViewAdmin;
 	@UiField HTMLPanel radioButtonContainer,settingsText,appearText,emailtext;
-	@UiField UserSettingStyle Settings;
 	@UiField Label courseLabel,courseMaxMsg,courseLbl,gradeLbl,SavingTextLabel,EduSavingTextLabel,lbMaleText,lbFemaleText,lbOtherText;
 	@UiField FlowPanel KinderGarten,gradeTopList,gradeMiddleList,higherEducation,courseData,collectionCourseLstPanel,coursesPanel,collectionCourseDefaultLstPanel;
 	@UiField Label uploadProfilImageButton,accountSavingTextLabel,notToShareText,gradeText;
@@ -152,7 +151,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiField FocusPanel noAboutUsContainer;
 	@UiField HTMLEventPanel profileImageContainer,userCoursePopup;
 	@UiField Image uploadProfileImage;
-	@UiField HTMLPanel editButtonContainerAccount,editButtonContainerEdu,editButtonContainerContact,buttonContainer,emailbuttonContainer,EduInfoButtonContainer,gradeContainer,DefaultGardeContainer,courseContainer, panelToolTipContent,panelTooltipContainer;
+	@UiField HTMLPanel editButtonContainerAccount,settingsMainContainer,editButtonContainerEdu,editButtonContainerContact,buttonContainer,emailbuttonContainer,EduInfoButtonContainer,gradeContainer,DefaultGardeContainer,courseContainer, panelToolTipContent,panelTooltipContainer;
 	@UiField Button editButtonAccount,editButtonEdu,editButtonContact,settingCancelButton,emailCancelButton,emailSaveButton,eduInfoCancelButton,eduInfoSaveButton,standardsSaveButton,standardsCancelButton,standardsEditButton, btnConnect;
 	
 	@UiField Label panelHeading, lblPleaseWait,lblCommonCore,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss,lblImageSubHeading, lblHeading, lblSubHeading,lblDisconnect;
@@ -695,11 +694,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		ngssChk.setText(i18n.GL1655());
 		ngssChk.setName("77271");
 		
-		commonCoreChk.setStyleName(Settings.standardsCheckBox());
+		commonCoreChk.setStyleName("standardsCheckBox");
 	
-		texasChk.setStyleName(Settings.standardsCheckBox());
+		texasChk.setStyleName("standardsCheckBox");
 
-		ngssChk.setStyleName(Settings.standardsCheckBox());
+		ngssChk.setStyleName("standardsCheckBox");
 		//added in 6.5
 		lblCSS.setText(i18n.GL2105());
 		lblCaliforniaSocialSciencesStandards.setText(i18n.GL2106());
@@ -724,10 +723,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		CaliforniaSocialSciencesStandardsChk.setText(i18n.GL2106());
 		CaliforniaELDSChk.setText(i18n.GL2107());
 		
-		CSSChk.setStyleName(Settings.standardsCheckBox());
-		CaliforniaSocialSciencesStandardsChk.setStyleName(Settings.substandardsCheckBox());
-		CaliforniaELDSChk.setStyleName(Settings.substandardsCheckBox());
-		californiaStandChk.setStyleName(Settings.substandardsCheckBox());
+		CSSChk.setStyleName("standardsCheckBox");
+		CaliforniaSocialSciencesStandardsChk.setStyleName("substandardsCheckBox");
+		CaliforniaELDSChk.setStyleName("substandardsCheckBox");
+		californiaStandChk.setStyleName("substandardsCheckBox");
 		
 		userStandardTextPanel.add(CSSChk);
 		//CSSLabel.getElement().setAttribute("style", "margin-left: 14px;");
@@ -890,6 +889,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		if (AppClientFactory.isAnonymous()){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		}
+		
+		settingsMainContainer.getElement().setId("gooruSettings");
 	}
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
 		@Override
@@ -1475,10 +1476,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	}
 	
 	public String getSelectedButton(){
-		return Settings.radioButtonSelected();
+		return "radioButtonSelected";
 	}
 	public String getRadioButton(){
-		return Settings.radio();
+		return "settingsRadio";
 	}
 
 	@Override
@@ -1511,19 +1512,19 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 	@Override
 	public Button getprofileOnButton() {
-		profileOnButton.setStyleName(Settings.publicProfileOnButtonActive());
-		profileOnButton.removeStyleName(Settings.publicProfileOnButtonDeActive());
-		profileOffButton.setStyleName(Settings.publicProfileOffButtonsDeActive());
-		profileOffButton.removeStyleName(Settings.publicProfileOffButtonsActive());
+		profileOnButton.setStyleName("publicProfileOnButtonActive");
+		profileOnButton.removeStyleName("publicProfileOnButtonDeActive");
+		profileOffButton.setStyleName("publicProfileOffButtonsDeActive");
+		profileOffButton.removeStyleName("publicProfileOffButtonsActive");
 		return profileOnButton;
 	}
 
 	@Override
 	public Button getProfileOffButton() {
-		profileOffButton.setStyleName(Settings.publicProfileOffButtonsActive());
-		profileOffButton.removeStyleName(Settings.publicProfileOffButtonsDeActive());
-		profileOnButton.setStyleName(Settings.publicProfileOnButtonDeActive());
-		profileOnButton.removeStyleName(Settings.publicProfileOnButtonActive());
+		profileOffButton.setStyleName("publicProfileOffButtonsActive");
+		profileOffButton.removeStyleName("publicProfileOffButtonsDeActive");
+		profileOnButton.setStyleName("publicProfileOnButtonDeActive");
+		profileOnButton.removeStyleName("publicProfileOnButtonActive");
 	
 		return profileOffButton;
 	}
@@ -1631,12 +1632,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			//collectionCourseDefaultLstPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
 			defaultCoursePanel=new HTML(code.getCode().getLabel());
 			collectionCourseDefaultLstPanel.add(defaultCoursePanel);
-			defaultCoursePanel.setStyleName(Settings.deafaultCourse());
+			defaultCoursePanel.setStyleName("deafaultCourse");
 			
 		}
 		if(profileDo.getCourses().size()==0){
 			Label defaultCourseLabel=new Label();
-			defaultCourseLabel.setStyleName(Settings.defaultTextcss());
+			defaultCourseLabel.setStyleName("defaultTextcss");
 			defaultCourseLabel.getElement().setAttribute("style","margin-left: 0px !important");
 			defaultCourseLabel.setText(i18n.GL1476());
 			collectionCourseDefaultLstPanel.add(defaultCourseLabel);
@@ -1699,7 +1700,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		{
 			DefaultGardeContainer.clear();
 			Label defaulTextLabel=new Label();
-			defaulTextLabel.setStyleName(Settings.defaultTextcss());
+			defaulTextLabel.setStyleName("defaultTextcss");
 			defaulTextLabel.setText(i18n.GL1476());
 			DefaultGardeContainer.add(defaulTextLabel);
 			
@@ -1842,8 +1843,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				.infoTextBox());
 		/*addCourseBtn.setStyleName(CollectionCBundle.INSTANCE.css()
 				.infoAddButton());*/
-		courseMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css()
-				.courseMaxMsg());
+		courseMaxMsg.setStyleName("courseMaxMsg");
 		courseMaxMsg.getElement().getStyle().setFloat(Float.LEFT);
 	}
 	

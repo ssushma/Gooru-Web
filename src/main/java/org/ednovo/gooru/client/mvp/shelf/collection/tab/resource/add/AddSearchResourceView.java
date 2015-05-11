@@ -357,21 +357,17 @@ public abstract class AddSearchResourceView extends Composite {
 		if(!subjectDoFilter.isEmpty()) {
 			filterResourceParams.put(IsSearchView.SUBJECT_FLT, subjectDoFilter);
 		}
-		filterResourceParams.put("pageSize", "8");
-		filterResourceParams.put("pageNum", "1");
 		filterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, filterResourceParams);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, filterResourceParams);
 	}
 
 	private void redirectSearchNoFiltersPage() {
 		Map<String,String> noFilterResourceParams = new HashMap<String,String>();
 		noFilterResourceParams.put("query",searchBox.getText());
 		noFilterResourceParams.put("category", "All");
-		noFilterResourceParams.put("pageSize", "8");
-		noFilterResourceParams.put("pageNum", "1");
 		noFilterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, noFilterResourceParams);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, noFilterResourceParams);
 	}
 }

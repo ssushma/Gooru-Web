@@ -148,7 +148,7 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:FlowPanel>
-					<g:FlowPanel styleName="{res1.css.gradeListCont}">
+					<g:FlowPanel styleName="gradeListCont">
 						<g:FlowPanel />
 						<g:FlowPanel />
 						<g:FlowPanel />

@@ -109,7 +109,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries;
+	@UiField HTMLPanel gooruPanel,homeContainer, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 
 	@UiField H2Panel lblHeading;
@@ -270,7 +270,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		panelCopyRightR.setText(copyRightTxt);
 		panelCopyRightR.getElement().setId("lblCopyRightYearText");
 		StringUtil.setAttributes(panelCopyRightR.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
-		
+		homeContainer.getElement().setId("headerMainPanel");
 	}
 	
 	
@@ -529,16 +529,15 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 							.toLowerCase(), "LandingPage");
 					Map<String, String> params = new HashMap<String, String>();
 					params = updateParams(params);
-					if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+					if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.COLLECTION_SEARCH, params);
+								PlaceTokens.SEARCH_RESOURCE, params);
 					}else{
 						String queryVal = params.get("query");
-						//queryVal = queryVal.replaceAll("%5C1", "&");
 						Map<String, String> map = params;
 						map.put("query", queryVal);	
 						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.RESOURCE_SEARCH, map);
+								PlaceTokens.SEARCH_COLLECTION, map);
 					}
 					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 					getEditSearchTxtBox().hideSuggestionList();
@@ -698,12 +697,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 					.toLowerCase(), "LandingPage");
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
-			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.SEARCH_COLLECTION, params);
+						PlaceTokens.SEARCH_RESOURCE, params);
 			}else{
 				String queryVal = params.get("query");
-				//queryVal = queryVal.replaceAll("%5C1", "&");
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
 				AppClientFactory.getPlaceManager().revealPlace(
@@ -732,8 +730,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public Map<String, String> updateParams(Map<String, String> params) {
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
-		params.put("pageNum", "1");
-		params.put("pageSize", "8");
 		return params;
 	}
 	/**
