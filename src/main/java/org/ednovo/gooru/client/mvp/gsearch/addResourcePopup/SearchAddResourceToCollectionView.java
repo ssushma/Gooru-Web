@@ -158,8 +158,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						urlparams.put(O2_LEVEL, urlparams.get(O2_LEVEL));
 						urlparams.put(O3_LEVEL, folderTreeItemWidget.getGooruOid());
 					}
-					if(currentFolderSelectedTreeItem.getFolerLevel()==4) {
-					}
 					
 					if (parent != null)
 						parent.setSelected(false); 
@@ -483,6 +481,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}else{
 			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 			isTopMostSelected=true;
+			urlparams.clear();
 			removePreviousSelectedItem();
 		}
 		

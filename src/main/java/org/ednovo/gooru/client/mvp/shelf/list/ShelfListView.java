@@ -2469,12 +2469,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void highlightRemixedItem(HashMap<String, String> params, String itemid) {
 		if(params.get(O3_LEVEL)!=null) {
+			organizeRootPnl.removeStyleName(folderStyle.active());
 			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
 			if(level1Item!=null) {
 				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
 				if(level2Item!=null) {
 					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
-					level3Item.setState(true);
 					isDragged=true;	
 					onDragOverOpenFolder(params.get(O1_LEVEL),false);
 					isDragged=true;
@@ -2484,6 +2484,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				}
 			}
 		}else if(params.get(O2_LEVEL)!=null) {
+			organizeRootPnl.removeStyleName(folderStyle.active());
 			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
 			if(level1Item!=null ) {
 				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
@@ -2493,6 +2494,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				onDragOverOpenFolder(params.get(O2_LEVEL),false);
 			}
 		}else if(params.get(O1_LEVEL)!=null) {
+			organizeRootPnl.removeStyleName(folderStyle.active());
 			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
 			isDragged=true;
 			onDragOverOpenFolder(params.get(O1_LEVEL),false);
