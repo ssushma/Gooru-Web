@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,18 +23,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.player;
+package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEventHandler;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayHandler;
-import org.ednovo.gooru.player.collection.client.view.collectionoverview.event.ShareListEventHandler;
-import org.ednovo.gooru.player.collection.client.view.collectionoverview.event.UpdateSearchResultMetaDataHandler;
+import java.util.HashMap;
 
-/**
- * @author Search Team
- *
- */
-public interface CollectionPlayUiHandlers extends BaseUiHandlers,SetUserDetailsInCollectionPlayEventHandler,RefreshCollectionInShelfListInPlayHandler,ShareListEventHandler,UpdateSearchResultMetaDataHandler{
-	public void displayNewCollectionPopupView(String resourceId);
+import com.google.gwt.event.shared.EventHandler;
+
+public interface HighlightRemixedItemEventHandler extends EventHandler {
+
+	void highlightItem(HashMap<String, String> params, String itemId);
+
 }

@@ -370,6 +370,8 @@ public class CollectionSearchWidget extends Composite {
 			pResourceText.setText(collectionText);
 			StringUtil.setAttributes(pResourceText.getElement(), "pResourceText", resourceText, resourceText);
 		}
-		
+	}
+	public Label getRemixCountLbl() {
+		return remixCountLbl;
 	}
 }

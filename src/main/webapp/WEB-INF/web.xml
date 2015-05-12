@@ -43,26 +43,6 @@
 		<url-pattern>/newgooru/gwt-service/*</url-pattern>
 		<url-pattern>/embed/*</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>resourcePlayerPlayServlet</servlet-name>
-		<servlet-class>org.ednovo.gooru.player.resource.server.ResourcePlayerComponentServiceImpl
-		</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>resourcePlayerPlayServlet</servlet-name>
-		<url-pattern>/newgooru/resourcePlayerPlayServletAction
-		</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>collection</servlet-name>
-		<servlet-class>org.ednovo.gooru.player.collection.server.CollectionServiceImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>collection</servlet-name>
-		<url-pattern>/newgooru/actionServlet</url-pattern>
-	</servlet-mapping>
-	
 	<servlet>
     <servlet-name>uploadServlet</servlet-name>
     <servlet-class>org.ednovo.gooru.server.service.uploadServlet</servlet-class>

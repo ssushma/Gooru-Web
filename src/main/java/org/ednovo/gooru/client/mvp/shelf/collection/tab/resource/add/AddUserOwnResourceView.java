@@ -140,7 +140,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	HTMLEventPanel lblContentRights;
 	
 	@UiField 
-	org.ednovo.gooru.client.uc.HTMLEventPanel eHearderIconCentury,preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
+	HTMLEventPanel eHearderIconCentury,preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,defaultPanel,defaultPanelMomentsOfLearningPnl;
 
 
@@ -184,7 +184,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 	@UiField Label lblAdding,standardMaxMsg;
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr,moblieFriendly;
-	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel,AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
+	@UiField HTMLEventPanel imageResourcePanel,textsResourcePanel,AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,mediaLabelContainer,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 	
 	@UiField(provided = true)

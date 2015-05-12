@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a="urn:import:aj.org.objectweb.asm"
 	xmlns:gt="urn:import:com.tractionsoftware.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle"
 		field="res" />

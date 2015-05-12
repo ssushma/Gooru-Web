@@ -22,43 +22,35 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.uc;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.HasMouseOutHandlers;
-import com.google.gwt.event.dom.client.HasMouseOverHandlers;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HTMLPanel;
+package org.ednovo.gooru.client;
 
-public class HTMLEventPanel extends HTMLPanel implements HasClickHandlers,HasMouseOutHandlers,HasMouseOverHandlers {
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
+/**
+ * 
+ * @fileName : SimpleRunAsyncCallback.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 28-April-2015
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
+public abstract class SimpleRunAsyncCallback implements RunAsyncCallback {
+
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-
-	public HTMLEventPanel(String html) {
-		super(html);
+	@Override
+	public void onFailure(Throwable caught) {
+		
 	}
-
-	public HandlerRegistration addClickHandler(ClickHandler handler) {
-		return addDomHandler(handler, ClickEvent.getType());
-	}
-
-	
-	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
-		// TODO Auto-generated method stub
-		return addDomHandler(handler, MouseOverEvent.getType());
-	}
-
-	
-	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
-		// TODO Auto-generated method stub
-		return addDomHandler(handler, MouseOutEvent.getType());
-	}
-
 
 }

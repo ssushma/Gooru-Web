@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,36 +23,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.player;
+package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import java.util.HashMap;
 
-import com.gwtplatform.mvp.client.PopupView;
+import com.google.gwt.event.shared.GwtEvent;
 
-/**
- * @author Search Team
- *
- */
-public interface IsCollectionPlayView extends PopupView, IsViewWithHandlers<CollectionPlayUiHandlers> {
+public class HighlightRemixedItemEvent extends GwtEvent<HighlightRemixedItemEventHandler> {
+
+	public static final Type<HighlightRemixedItemEventHandler> TYPE = new Type<HighlightRemixedItemEventHandler>();
 	
-	/**
-	 * Set collection info while collection play
-	 * @param gooruOid of the collection 
-	 * @param token of the collection
-	 */
-	void setData(String gooruOid, String token,boolean isEmbededCollection,boolean isShare);
+	HashMap<String, String> params;
+	private String itemId;
 	
-	/**
-	 * to set data for mobile player.
-	 * @param gooruOid of the collection 
-	 * @param token of the collection
-	 */
-	void setMobileData(String gooruOid, String token);
+	public HighlightRemixedItemEvent(HashMap<String, String> params, String itemId){
+		this.params = params;
+		this.itemId = itemId;
+	}
 	
-    public void setUserLoginDetails(String sessionToken,String gooruUserId);
-	
-	public void refreshShelfCollectionInPlay(String collectionId);
-	
-	public void addShareWidgetInPlay(String link, String rawUrl, String title, String desc, String shortenUrl, String type, String shareType);
-    public void updateViewCount(String count,String contentId,String whatToUpdate);
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<HighlightRemixedItemEventHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(HighlightRemixedItemEventHandler handler) {
+		handler.highlightItem(params, itemId);
+	}  
 }

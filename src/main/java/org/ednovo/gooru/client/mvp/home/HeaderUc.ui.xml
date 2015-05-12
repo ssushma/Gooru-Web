@@ -45,52 +45,53 @@
 											ui:field="mainInnerDotsPanel">
 											<uc:UlPanel ui:field="dotsPanel" styleName="nav navbar-nav">
 												<uc:LiPanel styleName="dropdown">
-													<uc:HTMLEventPanel ui:field="discoverLinkMain">
-														<uc:HTMLEventPanel ui:field="discoverLinkContainer">
+													<event:HTMLEventPanel ui:field="discoverLinkMain">
+														<event:HTMLEventPanel ui:field="discoverLinkContainer">
 															<g:Anchor ui:field="discoverLink" styleName="dropdown-toggle" />
 															<uc:BPanel styleName="caret" ui:field="dropDownImg" />
 															<!-- <div style="border-right: 1px solid #616161; height: 
 																34px; /* margin-left: 69px; */ position: absolute; margin-left: 80px; margin-top: 
 																-9px;"></div> -->
 
-														</uc:HTMLEventPanel>
+														</event:HTMLEventPanel>
 														<g:HTMLPanel ui:field="discovertooltippop"></g:HTMLPanel>
-													</uc:HTMLEventPanel>
+													</event:HTMLEventPanel>
 												</uc:LiPanel>
 												<uc:LiPanel styleName="noborder">
-													<uc:HTMLEventPanel ui:field="organizeLinkMain">
-														<uc:HTMLEventPanel ui:field="organizeLinkContainer">
+													<event:HTMLEventPanel ui:field="organizeLinkMain">
+														<event:HTMLEventPanel ui:field="organizeLinkContainer">
 															<g:Anchor ui:field="organizeLink" />
-														</uc:HTMLEventPanel>
+														</event:HTMLEventPanel>
 														<g:HTMLPanel ui:field="myCollectionsPop"></g:HTMLPanel>
-													</uc:HTMLEventPanel>
+													</event:HTMLEventPanel>
 												</uc:LiPanel>
 												<uc:LiPanel styleName="noborder">
-													<uc:HTMLEventPanel ui:field="teachLinkMain">
-														<uc:HTMLEventPanel ui:field="teachLinkContainer">
+													<event:HTMLEventPanel ui:field="teachLinkMain">
+														<event:HTMLEventPanel ui:field="teachLinkContainer">
 															<g:Anchor ui:field="teachLink" />
-														</uc:HTMLEventPanel>
+														</event:HTMLEventPanel>
 														<g:HTMLPanel ui:field="myClassesPop"></g:HTMLPanel>
-													</uc:HTMLEventPanel>
+													</event:HTMLEventPanel>
 												</uc:LiPanel>
 												<!-- This is hidden -->
 												<uc:LiPanel>
-													<uc:HTMLEventPanel ui:field="studyLinkContainer">
+													<event:HTMLEventPanel ui:field="studyLinkContainer">
 														<g:Anchor ui:field="studyLink" />
-													</uc:HTMLEventPanel>
+													</event:HTMLEventPanel>
 												</uc:LiPanel>
 												<uc:LiPanel>
-													<uc:HTMLEventPanel styleName="menu borderRightMenu"
+													<event:HTMLEventPanel styleName="menu borderRightMenu"
 														ui:field="LoginLinkContainer">
 														<g:Image styleName="profileImage hidden-sm hidden-xs"
 															ui:field="imgUserProfile"></g:Image>
 														<g:Anchor styleName="username" ui:field="loggedInfoLbl" />
 														<g:HTMLPanel styleName="discoverDropDown" ui:field="dropDownImgforDashboard"/>
 														<g:HTMLPanel styleName="" ui:field="myDashBoardPop" />
-													</uc:HTMLEventPanel>
 														<g:HTMLPanel styleName="teachUserNameArrowContainerNew" ui:field="panelArrow">
 								                         	<g:HTMLPanel styleName="downArrow"></g:HTMLPanel>
 														</g:HTMLPanel>
+													</event:HTMLEventPanel>
+														
 												</uc:LiPanel>
 											
 												<uc:LiPanel styleName="noborder">
@@ -123,7 +124,7 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 
-			<uc:HTMLEventPanel styleName="resourceRightsPopupContainer hidden-sm hidden-xs"	ui:field="acctActivationPl">
+			<event:HTMLEventPanel styleName="resourceRightsPopupContainer hidden-sm hidden-xs"	ui:field="acctActivationPl">
 				<g:HTMLPanel styleName="resourceRightsInnerPopup">
 					<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
 					<g:HTMLPanel styleName="container">
@@ -132,7 +133,7 @@
 						<g:Label ui:field="thanksLbl"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-			</uc:HTMLEventPanel>
+			</event:HTMLEventPanel>
 		</uc:HeaderPanel>
 		<!-- New Header End -->
 	</g:HTMLPanel>
