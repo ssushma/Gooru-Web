@@ -127,19 +127,14 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void closeRatingAndReviewPopup(ClickEvent event){
 		String currentToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		Element element = Document.get().getElementById("fixedFilterSearchID");
-		if(element!=null)
-		{
-		element.removeAttribute("style");
+		if(element!=null){
+			element.removeAttribute("style");
 		}
 		hide();
 		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);
 		}
-		if (currentToken.equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || currentToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
-			Window.enableScrolling(false);
-		}else{
-			Window.enableScrolling(true);
-		}
+		Window.enableScrolling(true);
 	}
 
 	@Override

@@ -158,7 +158,6 @@ public class CollectionSearchWidget extends Composite {
 							params.put("rid",collectionItemSearchResultDo.getCollectionItemId());
 							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-							
 						}
 					});
 					count++;
@@ -294,12 +293,9 @@ public class CollectionSearchWidget extends Composite {
 			});
 			
 			authorName.addMouseOverHandler(new MouseOverHandler() {
-				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					
 					AppClientFactory.getInjector().getUserService().getUserProfileV2Details(collectionSearchResultDo.getOwner().getGooruUId(), USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>(){
-
 						@Override
 						public void onSuccess(ProfileDo result) {
 							String username=result.getUser().getUsernameDisplay();
@@ -307,18 +303,14 @@ public class CollectionSearchWidget extends Composite {
 							UserProfileUc userProfileUc = new UserProfileUc(username,aboutMe, result.getUser().getProfileImageUrl());
 							profilePanel.clear();
 							profilePanel.add(userProfileUc);
-							
 						}
-						
 					});
-					
 					creatorPanel.clear();
 					creatorPanel.add(profilePanel);
 				}
 			});
 			
 			authorName.addMouseOutHandler(new MouseOutHandler() {
-				
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
 					//profilePanel.clear();
@@ -329,9 +321,7 @@ public class CollectionSearchWidget extends Composite {
 		}else{
 			authorName.getElement().getStyle().setColor("#1076bb");
 			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
-			
 			authorName.addClickHandler(new ClickHandler() {
-				
 				@Override
 				public void onClick(ClickEvent event) {
 					MixpanelUtil.Click_Username();
@@ -354,7 +344,7 @@ public class CollectionSearchWidget extends Composite {
 	private void setResourceAndQuestionCount(CollectionSearchResultDo collectionSearchResultDo) {
 		if(collectionSearchResultDo!=null){
 			String collectionText = "",resourceText = "",questionsText = "";
-			int resourceCount =collectionSearchResultDo.getResourceCount();
+			int resourceCount =collectionSearchResultDo.getOnlyResourceCount();
 			int questionsCount=collectionSearchResultDo.getQuestionCount();
 			if(resourceCount>0){
 				if(resourceCount==1){

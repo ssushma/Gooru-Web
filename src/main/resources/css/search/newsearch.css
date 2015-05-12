@@ -309,6 +309,9 @@
 #gooruSearchMainContainer .resourceImage a:hover .videoSmall{
 		display:none;
 }
+#gooruSearchMainContainer .resourceImage a:hover .questionSmall{
+		display:none;
+}
 #gooruSearchMainContainer .resourceImage a:hover .textSmall{
 		display:none;
 }
@@ -1157,11 +1160,11 @@ word-wrap: break-word;
 		padding:0 10px;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:right;
+		text-align: left;
+		width: 100%;
 	}
 	#gooruSearchMainContainer .resourceImage{
 		width:21%;
-	
 	}
 	#gooruSearchMainContainer .resourceImage img {
 	    height: 100%;

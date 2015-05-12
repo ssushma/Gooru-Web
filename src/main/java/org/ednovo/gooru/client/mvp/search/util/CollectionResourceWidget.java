@@ -265,19 +265,19 @@ public class CollectionResourceWidget extends Composite {
 	public void setUrl(final String thumbnailUrl, final String realUrl, final String category, final String title, final boolean generateYoutube) {
 		failedThumbnailGeneration = false;
 		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category;
+		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
+			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
+		} else {
+			resourseImage.setUrl(thumbnailUrl);
+		}
 		resourseImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
 				setDefaultThumbnail(thumbnailUrl, realUrl, categoryString, generateYoutube);
 				failedThumbnailGeneration = true;
 			}
-		});
-		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
-			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
-		} else {
-			resourseImage.setUrl(thumbnailUrl);
-		}
-		resourseImage.setAltText(title);
+		});		
+		//resourseImage.setAltText(title);
 		resourseImage.setTitle(title);
 	}
 	/**
@@ -288,7 +288,6 @@ public class CollectionResourceWidget extends Composite {
 	 * @param generateYoutube
 	 */
 	private void setDefaultThumbnail(String thumbnailUrl, String url, String categoryString, boolean generateYoutube) {
-		categoryString = StringUtil.getCategory(categoryString.trim().replaceAll("gooru_classplan", "webpage"));
 		if(generateYoutube) {
 			resourseImage.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(url), Window.Location.getProtocol()));
 		}else if (!failedThumbnailGeneration && thumbnailUrl!=null && thumbnailUrl.endsWith("/")) {

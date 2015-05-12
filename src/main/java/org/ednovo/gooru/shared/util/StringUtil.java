@@ -697,6 +697,9 @@ public class StringUtil implements ClientConstants {
 		      resourceCategory = "webpage";
 		  }else if(resourceCategory.equalsIgnoreCase("audio")) {
 		      resourceCategory = "audio";
+		  }
+		  else if(resourceCategory.equalsIgnoreCase("question")) {
+		      resourceCategory = "question";
 		  }else{
 			  resourceCategory="other";
 		  }
