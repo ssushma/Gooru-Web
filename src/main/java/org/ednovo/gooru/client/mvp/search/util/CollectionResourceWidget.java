@@ -90,6 +90,7 @@ public class CollectionResourceWidget extends Composite {
 
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.resourceSearchResultDo=resourceSearchResultDo;
 		resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
 		if(Window.getClientWidth()<=768)
 		{
