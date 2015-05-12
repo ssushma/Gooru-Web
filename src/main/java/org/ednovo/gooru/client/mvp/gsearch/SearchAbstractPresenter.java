@@ -49,13 +49,10 @@ import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -269,7 +266,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			// Window.enableScrolling(true);
 		}*/
 
-		if(AppClientFactory.getPlaceManager().refreshPlace()) {
+		if(AppClientFactory.getPlaceManager().refreshPlace()){
 			if (setFilter) {
 				searchDo.setPageNum(1);
 				getSearchService().getSearchFilters(getCurrentPlaceToken(),

@@ -647,6 +647,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				renderCategories(ulCategoryPanel, entry.getKey(), entry.getValue());
 			}
 		}
+		getUiHandlers().initiateSearch();
 	}
 	
 	/**
