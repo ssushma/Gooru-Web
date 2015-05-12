@@ -449,32 +449,29 @@ public class CollectionResourceWidget extends Composite {
 		}
 
 	};
-	
- public class ResourceCollectionHandler implements ClickHandler{
-    String gooruOid;
-	public ResourceCollectionHandler(String gooruOid) {
-		this.gooruOid=gooruOid;
+	 public class ResourceCollectionHandler implements ClickHandler{
+	    String gooruOid;
+		public ResourceCollectionHandler(String gooruOid) {
+			this.gooruOid=gooruOid;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			GWT.runAsync(new RunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("id", gooruOid);
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				}
+				@Override
+				public void onFailure(Throwable reason) {
+					
+				}
+			});
+		}
+	 }
+	public Label getLbladdCount() {
+		return lbladdCount;
 	}
-
-	@Override
-	public void onClick(ClickEvent event) {
-		GWT.runAsync(new RunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("id", gooruOid);
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-			}
-			
-			@Override
-			public void onFailure(Throwable reason) {
-				
-			}
-		});
-	}
-	 
- }
-
 }
