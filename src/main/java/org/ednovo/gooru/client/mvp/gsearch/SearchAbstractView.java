@@ -877,7 +877,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	private void showGradesFilter() {
 	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
-		if(grades!=null){
+		if(!StringUtil.isEmpty(grades)){
 			pnlAddFilters.setVisible(true);
 			String[] gradesSplit = grades.split(",");
 			for(int i=0; i<gradesSplit.length; i++){
