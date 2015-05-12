@@ -114,6 +114,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3214());
 		}		
+		myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
@@ -226,6 +227,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		dropdownListContainerScrollPanel.setVisible(true);
 		lblEmptyErrorMessage.setVisible(false);
 		lblError.setVisible(false);
+		if(searchType.equals("collection")){
+			isTopMostSelected =true;
+			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
+		}else{
+			isAddingInProgress=true;
+			cureentcollectionTreeItem=null;
+		}
 		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		if(clearShelfPanel){
 			folderTreePanel.clear();
