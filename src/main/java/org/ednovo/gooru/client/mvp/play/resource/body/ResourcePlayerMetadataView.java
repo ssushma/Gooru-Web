@@ -1678,7 +1678,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){  
-				thankYouResourceStarRatings.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+				thankYouResourceStarRatings.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-73),three_star.getElement().getAbsoluteTop()+40);
 			}else{
 				thankYouResourceStarRatings.setPopupPosition(800,Window.getScrollTop()+153);
 			}
@@ -1694,7 +1694,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-				thankYouResourceStarRatingsPoor.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+				thankYouResourceStarRatingsPoor.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-73),three_star.getElement().getAbsoluteTop()+40);
 			}else{
 				thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
 			}
@@ -1725,7 +1725,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
 		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-73),three_star.getElement().getAbsoluteTop()+40);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
