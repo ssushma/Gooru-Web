@@ -436,11 +436,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void hidePopup(){
 		Element element = Document.get().getElementById("fixedFilterSearchID");
-		if(element!=null)
-		{
-		element.removeAttribute("style");
+		if(element!=null){
+			element.removeAttribute("style");
 		}
 		hide();
+		isAddingInProgress=true;
 		enableTopFilters();
 	}
 
