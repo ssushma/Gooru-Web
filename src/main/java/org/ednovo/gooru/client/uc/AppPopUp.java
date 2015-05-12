@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

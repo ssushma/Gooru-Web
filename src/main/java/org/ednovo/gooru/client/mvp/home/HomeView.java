@@ -35,6 +35,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -43,7 +44,6 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
-
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
@@ -220,46 +220,21 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		generateStandardLibraries();
 		generateDistrictLibraries();
-//		generatePartnerLibraries();
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
-	//	StringUtil.consoleLog("emailId..in home."+emailId);
 		if(emailId!=null)
 		{
 			
-			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new SimpleAsyncCallback<String>() {
 				
 				@Override
 				public void onSuccess(String result) {
-					//StringUtil.consoleLog("Header UC RefershToken..."+result);
-						UserDo user = AppClientFactory.getLoggedInUser();
-						user.setRefreshToken(result);
-						AppClientFactory.setLoggedInUser(user);
-									
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-				//	StringUtil.consoleLog("Header UC onFailure...");				
+					UserDo user = AppClientFactory.getLoggedInUser();
+					user.setRefreshToken(result);
+					AppClientFactory.setLoggedInUser(user);
 				}
 			});
 		}		
-
-		/*ClickHandler rootClick = new ClickHandler(){
-
-			@Override
-			public void onClick(ClickEvent event) {
-				if(!isArrowIcon && preFilter!=null){
-					isOpenPrefilterPopup=true;
-					preFilter.hide();
-				}else{
-					isArrowIcon=false;
-				}
-			}
-			
-		};*/
-		
-//		RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
 		Date todaysYear = new Date();
 		String copyRightTxt = i18n.GL1246() + "" + (todaysYear.getYear() + 1900);
 		
@@ -519,30 +494,37 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	private class SearchKeyDownHandler implements KeyDownHandler{
 
 		@Override
-		public void onKeyDown(KeyDownEvent event) {
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-				if (getEditSearchTxtBox().getText() != null
-						&& getEditSearchTxtBox().getText().length() > 0) {
-					savePlaceRequest();
-					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
-							.toLowerCase(), "LandingPage");
-					Map<String, String> params = new HashMap<String, String>();
-					params = updateParams(params);
-					if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.SEARCH_RESOURCE, params);
-					}else{
-						String queryVal = params.get("query");
-						Map<String, String> map = params;
-						map.put("query", queryVal);	
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.SEARCH_COLLECTION, map);
+		public void onKeyDown(final KeyDownEvent event) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+					if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+						if (getEditSearchTxtBox().getText() != null
+								&& getEditSearchTxtBox().getText().length() > 0) {
+							savePlaceRequest();
+							MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
+									.toLowerCase(), "LandingPage");
+							Map<String, String> params = new HashMap<String, String>();
+							params = updateParams(params);
+							if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
+								AppClientFactory.getPlaceManager().revealPlace(
+										PlaceTokens.SEARCH_RESOURCE, params);
+							}else{
+								String queryVal = params.get("query");
+								Map<String, String> map = params;
+								map.put("query", queryVal);	
+								AppClientFactory.getPlaceManager().revealPlace(
+										PlaceTokens.SEARCH_COLLECTION, map);
+							}
+							AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
+							getEditSearchTxtBox().hideSuggestionList();
+						}
 					}
-					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
-					getEditSearchTxtBox().hideSuggestionList();
 				}
-			}
+			});
+			
 		}
 	}
 	private void generateCourseData() {
@@ -688,28 +670,35 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiHandler("btnSearch")
 	public void onClickSearch(ClickEvent event){
 
-//		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		if (getEditSearchTxtBox().getText() != null
-				&& getEditSearchTxtBox().getText().length() > 0) {
-			savePlaceRequest();
-			MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
-					.toLowerCase(), "LandingPage");
-			Map<String, String> params = new HashMap<String, String>();
-			params = updateParams(params);
-			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.SEARCH_RESOURCE, params);
-			}else{
-				String queryVal = params.get("query");
-				Map<String, String> map = params;
-				map.put("query", queryVal);	
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.SEARCH_COLLECTION, map);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				if (getEditSearchTxtBox().getText() != null
+						&& getEditSearchTxtBox().getText().length() > 0) {
+					savePlaceRequest();
+					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
+							.toLowerCase(), "LandingPage");
+					Map<String, String> params = new HashMap<String, String>();
+					params = updateParams(params);
+					if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_RESOURCE, params);
+					}else{
+						String queryVal = params.get("query");
+						Map<String, String> map = params;
+						map.put("query", queryVal);	
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_COLLECTION, map);
+					}
+					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
+					getEditSearchTxtBox().hideSuggestionList();
+				}
 			}
-			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
-			getEditSearchTxtBox().hideSuggestionList();
-		}	
+		});
+
+			
 	}
 	
 	public void savePlaceRequest(){
@@ -746,88 +735,134 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	
 	@UiHandler("btnMoreOnCollections")
 	public void onClickMoreOnCollections(ClickEvent event){
-		AppClientFactory.setPreviousPlaceRequest(AppClientFactory
-				.getPlaceManager().getCurrentPlaceRequest());
-		Storage stockStore = Storage.getLocalStorageIfSupported();
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				AppClientFactory.setPreviousPlaceRequest(AppClientFactory
+						.getPlaceManager().getCurrentPlaceRequest());
+				Storage stockStore = Storage.getLocalStorageIfSupported();
 
-		if (stockStore != null) {
-			stockStore.setItem("tabKey", "resourceTab");
-		}
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+				if (stockStore != null) {
+					stockStore.setItem("tabKey", "resourceTab");
+				}
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+			}
+		});
+		
 	}
 	
 	@UiHandler("btnMoreOnClasses")
 	public void onClickMoreOnClasses(ClickEvent event){
-		if (!AppClientFactory.isAnonymous()){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-			AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
-				@Override
-				public void onSuccess(ClasspageListDo result) {
-					if(result.getSearchResults()!=null){
-						if (result.getSearchResults().size()>0){
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
-					}else{
-						AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-					}
-				}else
-				{
+			@Override
+			public void onSuccess() {
+
+				if (!AppClientFactory.isAnonymous()){
+					
+					AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+							if(result.getSearchResults()!=null){
+								if (result.getSearchResults().size()>0){
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+							}else{
+								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+							}
+						}else
+						{
+							AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+						}
+						}
+				});
+					
+					//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+				} else {
 					AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 				}
-				}
-		});
 			
-			//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
-		} else {
-			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-		}
+			}
+		});
 	}
 	@UiHandler("achLearn")
 	public void onClickLearn(ClickEvent event){
-		int scrollTop =0;
-		try{
-			scrollTop = Document.get().getElementById("getStarted").getAbsoluteTop();
-		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
-		}
-		
-		Window.scrollTo(0, scrollTop-40);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				int scrollTop =0;
+				try{
+					scrollTop = Document.get().getElementById("getStarted").getAbsoluteTop();
+				}catch(Exception e){
+					AppClientFactory.printSevereLogger(e.getMessage());
+				}
+				
+				Window.scrollTo(0, scrollTop-40);
+			}
+		});
 	}
 
 	@UiHandler("viewSampleResportsBtn")
 	public void onClickViewSampleReportBtn(ClickEvent event){
-		Window.scrollTo(0, 0);
-		SampleReportView sampleReportView= new SampleReportView();
+		GWT.runAsync(new SimpleRunAsyncCallback(
+				) {
+			
+			@Override
+			public void onSuccess() {
+				Window.scrollTo(0, 0);
+				SampleReportView sampleReportView= new SampleReportView();
+			}
+		});
+		
 	}
 	@UiHandler("achTerms")
 	public void onClickTermsLink(ClickEvent envent){
-		Window.enableScrolling(false);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
-		
-		termsOfUse=new TermsOfUse(){
-
-			@Override
-			public void openParentPopup() {
-				// TODO Auto-generated method stub
-				
-			}
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-		};
-		termsOfUse.show();
-		termsOfUse.center();
+			@Override
+			public void onSuccess() {
+
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
+				
+				termsOfUse=new TermsOfUse(){
+
+					@Override
+					public void openParentPopup() {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				};
+				termsOfUse.show();
+				termsOfUse.center();
+			
+			}
+		});
 	}
 	@UiHandler("achPrivacy")
 	public void onClickPrivacyLink(ClickEvent envent){
-		Window.enableScrolling(false);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
-		TermsAndPolicyVc termsAndPolicyVc = new TermsAndPolicyVc(false) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
-			public void openParentPopup() {
-				
+			public void onSuccess() {
+
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
+				TermsAndPolicyVc termsAndPolicyVc = new TermsAndPolicyVc(false) {
+					
+					@Override
+					public void openParentPopup() {
+						
+					}
+				};
+				termsAndPolicyVc.show();
+				termsAndPolicyVc.center();
+			
 			}
-		};
-		termsAndPolicyVc.show();
-		termsAndPolicyVc.center();
+		});
 	}
 //	@UiHandler("achDataPolicy")
 //	public void onClickDataPolicyLink(ClickEvent envent){
@@ -835,19 +870,27 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 //	}
 	@UiHandler("achCopyright")
 	public void onClickCopyrightLink(ClickEvent envent){
-		Window.enableScrolling(false);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
-		
-		CopyRightPolicyVc copyRightPolicy = new CopyRightPolicyVc() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
-			public void openParentPopup() {
-				//No need to set.
-			}
-		};
-		copyRightPolicy.center();
-		copyRightPolicy.show();
+			public void onSuccess() {
 
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
+				
+				CopyRightPolicyVc copyRightPolicy = new CopyRightPolicyVc() {
+					
+					@Override
+					public void openParentPopup() {
+						//No need to set.
+					}
+				};
+				copyRightPolicy.center();
+				copyRightPolicy.show();
+
+			
+			}
+		});
 	}
 	
 	public AppSuggestBox getEditSearchTxtBox() {
@@ -907,35 +950,43 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
-		String searchText = txtSearch.getText();
-		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
-		txtSearch.setText(searchText.trim());
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		if (txtSearch.getText() != null && txtSearch.getText().length() > 0) {
-			MixpanelUtil.Perform_Search(txtSearch.getText().trim().toLowerCase(),"HeaderUc");
-			Map<String, String> params = new HashMap<String, String>();
-			params = updateParams(params);
-			savePlaceRequest();
-			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.COLLECTION_SEARCH)) {
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
-			} else {
-				String queryVal = params.get("query");
-				//queryVal = queryVal.replaceAll("%5C1", "&");
-				Map<String, String> map = params;
-				map.put("query", queryVal);
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.SEARCH_COLLECTION, map);
-			}
-			txtSearch.setText("");
-			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
-			txtSearch.hideSuggestionList();
-		}
-		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
-		getEditSearchTxtBox().setText(searchText.trim());
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 
+				String searchText = txtSearch.getText();
+				searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
+				txtSearch.setText(searchText.trim());
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				if (txtSearch.getText() != null && txtSearch.getText().length() > 0) {
+					MixpanelUtil.Perform_Search(txtSearch.getText().trim().toLowerCase(),"HeaderUc");
+					Map<String, String> params = new HashMap<String, String>();
+					params = updateParams(params);
+					savePlaceRequest();
+					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+							PlaceTokens.COLLECTION_SEARCH)) {
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.COLLECTION_SEARCH, params);
+					} else {
+						String queryVal = params.get("query");
+						//queryVal = queryVal.replaceAll("%5C1", "&");
+						Map<String, String> map = params;
+						map.put("query", queryVal);
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_COLLECTION, map);
+					}
+					txtSearch.setText("");
+					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+					txtSearch.hideSuggestionList();
+				}
+				MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
+				getEditSearchTxtBox().setText(searchText.trim());
+
+			
+			}
+		});
 	}
 	/** 
 	 * This method is to get the btnSignUp
@@ -967,49 +1018,54 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 */
 	public class showPrefilterPopup implements ClickHandler{
 
-		/* (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 */
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			if(preFilter!=null && preFilter.isShowing()){
-				preFilter.hide();
-				isArrowIcon=true;
-			}else{
-				isArrowIcon=true;
-				//if(preFilter==null){
-					preFilter =	new PreFilterPopup();
-					preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
-						
-						@Override
-						public void onClick(ClickEvent event) {
-							preFilter.ShowSTandardsPanel().clear();
-							getAddStandards();
-							preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
-							
-						//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
-							addStandardsPresenter.getAddBtn().setVisible(false);
-							
-						}
-					});
-				//}
-				HeaderUc.setPrefilterObj(preFilter);
-			//	preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+40);
-				preFilter.setFilter();
-				preFilter.show();
-				preFilter.hidePlanels();
-				ClickHandler handler = new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						preFilter.show();
-						isArrowIcon = true;
-					}
-				};
-				preFilter.addDomHandler(handler, ClickEvent.getType());
+			GWT.runAsync(new SimpleRunAsyncCallback() {
 				
-			}
-			
+				@Override
+				public void onSuccess() {
+
+					if(preFilter!=null && preFilter.isShowing()){
+						preFilter.hide();
+						isArrowIcon=true;
+					}else{
+						isArrowIcon=true;
+						//if(preFilter==null){
+							preFilter =	new PreFilterPopup();
+							preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
+								
+								@Override
+								public void onClick(ClickEvent event) {
+									preFilter.ShowSTandardsPanel().clear();
+									getAddStandards();
+									preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
+									
+								//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+									addStandardsPresenter.getAddBtn().setVisible(false);
+									
+								}
+							});
+						//}
+						HeaderUc.setPrefilterObj(preFilter);
+					//	preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+40);
+						preFilter.setFilter();
+						preFilter.show();
+						preFilter.hidePlanels();
+						ClickHandler handler = new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								preFilter.show();
+								isArrowIcon = true;
+							}
+						};
+						preFilter.addDomHandler(handler, ClickEvent.getType());
+						
+					}
+					
+				
+				}
+			});
 		}
 		
 	}

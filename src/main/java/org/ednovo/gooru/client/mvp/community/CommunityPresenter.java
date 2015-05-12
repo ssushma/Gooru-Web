@@ -17,7 +17,6 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompletePr
 import org.ednovo.gooru.client.mvp.authentication.uc.StudentSignUpUc;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
-import org.ednovo.gooru.client.mvp.home.ImprovedGooruPopUpView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.SearchHomeFilterVc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -34,7 +33,6 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.player.collection.client.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
@@ -43,6 +41,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
