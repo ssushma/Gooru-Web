@@ -22,39 +22,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.player;
+package org.ednovo.gooru.shared.model.content;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-import com.gwtplatform.mvp.client.PopupView;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-/**
- * @author Search Team
- *
- */
-public interface IsResourcePlayView extends PopupView, IsViewWithHandlers<ResourcePlayUiHandlers> {
-	
+@JsonInclude(Include.NON_NULL)
+public class GetFlagContentDO implements Serializable {
+
 	/**
-	 * Set Resource info while resource play
-	 * @param gooruOid of the resource
-	 * @param token of the resource
-	 * @param playerName name of the player
+	 * 
 	 */
-	void setData(String gooruOid, String token, String playerName,boolean isEmbededResource,boolean isShare);
-	
-	/**
-	 * to set data for mobile resource player.
-	 * @param gooruOid of the resource
-	 * @param token of the resource
-	 * @param playerName name of the player
-	 */
-	void setMobileData(String gooruOid, String token, String playerName);
-	
-	
-	public void setUserLoginDetails(String sessionToken);
-	
-	public void refreshShelfCollectionInPlay(String collectionId);
-	
-	public void addShareWidgetInPlay(String link, String rawUrl,String title, String desc, String shortenUrl, String type, String shareType);
-	public void updateResourceView(String count,String resourceId,String type);
+	private static final long serialVersionUID = -7831809316614745170L;
+	ArrayList<String> getTypeList = new ArrayList<String>();
+	ArrayList<String> getAsscociatedId = new ArrayList<String>();
+	private String userId;
+
+	public ArrayList<String> getGetTypeList() {
+		return getTypeList;
+	}
+
+	public void setGetTypeList(ArrayList<String> getTypeList) {
+		this.getTypeList = getTypeList;
+	}
+
+	public ArrayList<String> getGetAsscociatedId() {
+		return getAsscociatedId;
+	}
+
+	public void setGetAsscociatedId(ArrayList<String> getAsscociatedId) {
+		this.getAsscociatedId = getAsscociatedId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 }

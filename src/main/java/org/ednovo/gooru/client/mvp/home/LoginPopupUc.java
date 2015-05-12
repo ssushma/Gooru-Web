@@ -116,12 +116,6 @@ public class LoginPopupUc extends PopupPanel{
 	protected UserDo userDo;
 
 	private SimpleAsyncCallback<UserDo> signedInDataAsyncCallback;
-
-//	private static final String LOGIN_ERROR = i18n.GL0347;
-
-//	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = i18n.GL0348;
-
-//	private static final String OOPS = i18n.GL0061;
 	
 	private String nameToken = "";
 	
@@ -203,8 +197,6 @@ public class LoginPopupUc extends PopupPanel{
 		this.getElement().getStyle().setZIndex(99999);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-       // this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
-//        lblKeepMeLogedIn.getElement().setId("chkLogin");
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
 		setHandlers();

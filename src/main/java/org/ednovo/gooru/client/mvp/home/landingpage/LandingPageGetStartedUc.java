@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.home.landingpage;
 
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 

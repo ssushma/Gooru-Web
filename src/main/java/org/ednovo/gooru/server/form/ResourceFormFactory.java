@@ -27,7 +27,6 @@
  */
 package org.ednovo.gooru.server.form;
 
-import org.ednovo.gooru.server.deserializer.TaxonomyDeSerializer;
 import org.ednovo.gooru.server.serializer.JsonSerializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
