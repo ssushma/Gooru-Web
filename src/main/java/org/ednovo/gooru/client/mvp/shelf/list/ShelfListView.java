@@ -1591,7 +1591,6 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	public void setFolderActiveStatus() { 
 		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
 		if(!shelfCollection.getCollectionDo().getCollectionType().equals("assessment/url")){
-			
 			if(shelfCollection.getCollectionDo().getType().equals("folder")) {
 				TreeItem parent = treeChildSelectedItem.getParentItem();
 				treeChildSelectedItem.getTree().setSelectedItem(parent, false);
@@ -2462,6 +2461,46 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				 selectedItem.showAssessmentUrlInfo(folderDo);
 			 }
 		 }
+	}
+
+	/**
+	 * To highlight the remixed collection/assessment
+	 */
+	@Override
+	public void highlightRemixedItem(HashMap<String, String> params, String itemid) {
+		if(params.get(O3_LEVEL)!=null) {
+			organizeRootPnl.removeStyleName(folderStyle.active());
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				if(level2Item!=null) {
+					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
+					isDragged=true;	
+					onDragOverOpenFolder(params.get(O1_LEVEL),false);
+					isDragged=true;
+					onDragOverOpenFolder(params.get(O2_LEVEL),false);
+					isDragged=true;
+					onDragOverOpenFolder(params.get(O3_LEVEL),false);
+				}
+			}
+		}else if(params.get(O2_LEVEL)!=null) {
+			organizeRootPnl.removeStyleName(folderStyle.active());
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null ) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				isDragged=true;
+				onDragOverOpenFolder(params.get(O1_LEVEL),false);
+				isDragged=true;
+				onDragOverOpenFolder(params.get(O2_LEVEL),false);
+			}
+		}else if(params.get(O1_LEVEL)!=null) {
+			organizeRootPnl.removeStyleName(folderStyle.active());
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			isDragged=true;
+			onDragOverOpenFolder(params.get(O1_LEVEL),false);
+		}else{
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+		}
 	}
 
 }

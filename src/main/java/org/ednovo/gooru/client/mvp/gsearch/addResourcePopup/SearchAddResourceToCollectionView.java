@@ -126,12 +126,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			    if(folderWidget instanceof FolderTreeItem){
 					folderTreeItemWidget = (FolderTreeItem) folderWidget;
 					if (folderTreeItemWidget.isOpen()) {
-						folderTreeItemWidget
-								.removeStyleName("open");
+						folderTreeItemWidget.removeStyleName("open");
 						folderTreeItemWidget.setOpen(false);
 					} else {
-						folderTreeItemWidget
-								.addStyleName("open");
+						folderTreeItemWidget.addStyleName("open");
 						folderTreeItemWidget.setOpen(true);
 					}
 					removePreviousSelectedItem();
@@ -161,11 +159,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						urlparams.put(O2_LEVEL, urlparams.get(O2_LEVEL));
 						urlparams.put(O3_LEVEL, folderTreeItemWidget.getGooruOid());
 					}
-					if(currentFolderSelectedTreeItem.getFolerLevel()==4) {
-					}
 					
 					if (parent != null)
-						parent.setSelected(false); // TODO FIX ME
+						parent.setSelected(false); 
 					item.setState(!item.getState(), false);
 				}else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
@@ -325,6 +321,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	public class FolderTreeItem extends Composite{
 		private FlowPanel folderContainer=null;
+		private String selectedFolderName=null;
 		private String gooruOid=null,folderTitle=null;
 		Label floderName=null;
 		Label arrowLabel=null;
@@ -341,6 +338,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				folderContainer.addStyleName("foldermenuLevel"+levelStyleName);
 			}
 			this.gooruOid=gooruOid;
+			this.selectedFolderName = folderTitle;
 			this.folderTitle=folderTitle;
 			folderContainer.getElement().setInnerText(folderTitle);
 		}
@@ -364,6 +362,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		public int getFolerLevel() {
 			return folerLevel;
+		}
+		public String getSelectedFolerTitle() {
+			return selectedFolderName;
 		}
 		public void setFolerLevel(int folerLevel) {
 			this.folerLevel = folerLevel;
@@ -432,7 +433,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				if(isTopMostSelected){
 					getUiHandlers().addCollectionToMyCollections("",currentsearchType);
 				}else{
-					getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+					getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getSelectedFolerTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
 				}
 			}
 		}
@@ -488,6 +489,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}else{
 			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 			isTopMostSelected=true;
+			urlparams.clear();
 			removePreviousSelectedItem();
 		}
 		
