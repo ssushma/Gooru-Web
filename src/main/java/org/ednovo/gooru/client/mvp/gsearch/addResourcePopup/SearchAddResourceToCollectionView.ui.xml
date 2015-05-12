@@ -8,7 +8,7 @@
 		<g:HTMLPanel>
 	<div id="addCollectionPopup">
 		<div class="popHeader">
-		<g:Label styleName="col-md-10 popHeading" ui:field="addtocollHeaderText"></g:Label>
+		<g:Label styleName="col-md-10 col-xs-10 popHeading" ui:field="addtocollHeaderText"></g:Label>
 		<div class="col-md-2"><g:Anchor ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Anchor></div>
 		<div class="clearfix"></div>
 		</div>
@@ -18,8 +18,10 @@
 		<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListContainerScrollPanel">
 	          <g:HTMLPanel ui:field="floderTreeContainer" styleName="popBody"/>
 		</g:ScrollPanel>
+		 <g:Label ui:field="lblEmptyErrorMessage" styleName="noTextMessage"/>
 			<div class="clearfix"></div>
 			<div class="popFooter">
+				<div class="addButton leftAlign"><g:Label styleName="addNewCollectionErrorStyle" ui:field="lblError" text="{i18n.GL1134}" title="{i18n.GL1134}"/></div>
 				<div class="addButton leftAlign"><g:Button styleName="addNewCollectionStyle" ui:field="btnAddNew" text="{i18n.GL3226}" title="{i18n.GL3226}"/></div>
 				<div class="addButton rightAlign"><g:Button styleName="primary" ui:field="btnAddExisting" text="{i18n.GL0590}" title="{i18n.GL0590}"/></div>
 			</div>

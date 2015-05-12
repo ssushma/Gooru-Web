@@ -74,6 +74,8 @@ import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -519,7 +521,6 @@ public class HeaderUc extends Composite implements
 		
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
-
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");
 		editSearchBtn.getElement().setId("btnEditSearch");
 		editSearchBtn.getElement().setAttribute("style","padding:7px 9px 9px 7px");
@@ -1383,8 +1384,8 @@ public class HeaderUc extends Composite implements
 	public void savePlaceRequest() {
 		String currentPlaceToken = AppClientFactory.getPlaceManager()
 				.getCurrentPlaceRequest().getNameToken();
-		if (currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH)
-				|| currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH)) {
+		if (currentPlaceToken.equals(PlaceTokens.SEARCH_COLLECTION)
+				|| currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE)) {
 		} else {
 			AppClientFactory.getPlaceManager()
 					.setSearchMovedPlaceRequest(
@@ -1655,7 +1656,7 @@ public class HeaderUc extends Composite implements
 						Map<String, String> map = params;
 						map.put("query", queryVal);
 						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.RESOURCE_SEARCH, params);
+								PlaceTokens.SEARCH_RESOURCE, params);
 					}
 
 					if ((AppClientFactory.getCurrentPlaceToken()
@@ -1978,6 +1979,15 @@ public class HeaderUc extends Composite implements
 	protected void onLoad() {
 		super.onLoad();
 		getEditSearchTxtBox().setFocus(true);
+		//This will set the search keyword after refreshing the page
+	    Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+			@Override
+			public void execute() {
+				String queryVal=AppClientFactory.getPlaceManager().getRequestParameter("query");
+				getEditSearchTxtBox().setText(queryVal);
+				editSearchTxtBox.setText(queryVal);
+			}
+	     });
 	}
 
 	/**
@@ -2044,7 +2054,7 @@ public class HeaderUc extends Composite implements
 				map.put("query", queryVal);
 				editSearchTxtBox.setText(queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_RESOURCE, map);
 			}
 			editSearchTxtBox.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
@@ -2062,7 +2072,7 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", "*");
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_RESOURCE, map);
 			}
 		}
 		
@@ -2092,6 +2102,7 @@ public class HeaderUc extends Composite implements
 		invokeToggleMenuContainer();
 	}
 	public static native void invokeToggleMenuContainer() /*-{
-	$wnd.showToggleMenu();
-}-*/;
+		$wnd.showToggleMenu();
+	}-*/;
+	
 }

@@ -1138,7 +1138,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		String keyword=null;
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousPlayerRequestUrl();
 		if(placeRequest!=null){
-			if(placeRequest.getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			if(placeRequest.getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 				keyword=placeRequest.getParameter("query", null);
 				keyword=URL.encodeQueryString(keyword);
 			}

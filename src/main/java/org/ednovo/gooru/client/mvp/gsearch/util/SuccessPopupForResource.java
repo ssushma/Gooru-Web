@@ -69,11 +69,11 @@ public class SuccessPopupForResource extends PopupPanel {
 	}
 	public void setData(final String collectionName,final String selectedGooruOid,final HashMap<String, String> params,String type){
 		if(type.equalsIgnoreCase("resource")){
-			lblSuccessText.setText(i18n.GL3192()+collectionName+".");
+			lblSuccessText.setText(i18n.GL3192()+" "+collectionName+".");
 			headerLbl.setText(i18n.GL3224());
 		}else{
 			headerLbl.setText(i18n.GL3223());
-			lblSuccessText.setText(i18n.GL3225()+collectionName+".");
+			lblSuccessText.setText(i18n.GL3225()+" "+collectionName+".");
 		}
 		btnViewInMyCollections.addClickHandler(new ClickHandler() {
 			@Override

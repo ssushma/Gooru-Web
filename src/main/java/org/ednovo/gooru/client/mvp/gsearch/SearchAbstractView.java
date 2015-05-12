@@ -571,7 +571,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
-			searchResults.setText(i18n.GL3210()+"  "+"("+searchDo.getSearchHits()+")");
+			searchResults.setText(i18n.GL3210());
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
@@ -647,6 +647,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				renderCategories(ulCategoryPanel, entry.getKey(), entry.getValue());
 			}
 		}
+		getUiHandlers().initiateSearch();
 	}
 	
 	/**
@@ -876,11 +877,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	private void showGradesFilter() {
 	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
-		if(grades!=null){
+		if(!StringUtil.isEmpty(grades)){
 			pnlAddFilters.setVisible(true);
 			String[] gradesSplit = grades.split(",");
 			for(int i=0; i<gradesSplit.length; i++){
-				pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
+				if(gradesSplit[i].equals("12gte")){
+					pnlAddFilters.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
+				}else{
+					pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
+				}
 			}
 		}
 	}
@@ -1309,7 +1314,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (!selectedGrades.isEmpty()) {
 						selectedGrades += COMMA_SEPARATOR;
 					}
-					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").trim();
+					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").replace("Higher Ed", "12gte").trim();
 				}
 				if("standardPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 					if (!selectedStandards.isEmpty()) {

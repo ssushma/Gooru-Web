@@ -27,7 +27,7 @@
     box-shadow: none !important;
 }
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li.active a {
-  border: 2px solid #87badd;
+  border: 2px solid #87badd !important;
   text-decoration: none;
 }
 #gooruSearchMainContainer .gliphIconImage {
@@ -41,7 +41,7 @@ margin:0 0 0 -20px !important;
 }
 
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a {
-    border: 2px solid #ffffff;
+    border: 2px solid #ffffff !important;
     border-radius: 3px;
     color: #515151;
     display: block;
@@ -152,14 +152,18 @@ margin:0 0 0 -20px !important;
     display: none;
 }
 #gooruSearchMainContainer .resourceDesc {
-    width: 57% !important;
+    width: 57%;
+}
+#gooruSearchMainContainer .resourceDesc1 {
+    width: 54%;
+    max-height:60px;
 }
 #gooruSearchMainContainer .resourceDesc .collectionTitle {
-	font-size: 18px;
-	font-weight: 500;
+	font-size: 17px;
+	font-weight: 400;
 	color: #0c74be;
 	margin-top: 4px;
-	line-height: 18px;
+	line-height: 17px;
 	cursor: pointer;
 }
 #gooruSearchMainContainer .resourceDesc .resourceAuthorDetails{
@@ -168,7 +172,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .resourceDescription{
 	padding:10px 10px;
-	min-height:80px;
+	height:80px;
 }
 #gooruSearchMainContainer .resourcesStanders{
 	text-align:center;
@@ -205,7 +209,7 @@ margin:0 0 0 -20px !important;
 #gooruSearchMainContainer .userDetailsResources .user .collectionTitle{
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	white-space: normal;
 	height: 32px;
 	display: inline-block;
 	width: 80%;
@@ -246,7 +250,7 @@ margin:0 0 0 -20px !important;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 75%;
+	width: 66%;
 	margin-top: 0;
 }
 #gooruSearchMainContainer .collectionResources img{
@@ -408,7 +412,10 @@ margin:0 0 0 -20px !important;
 		}
 }
 @media (min-width: 768px) and (max-width: 991px) {
-	
+	#gooruSearchMainContainer .resourceDesc1{
+		width: 50%;
+		max-height: 60px;
+	}
 }
 @media (min-width: 992px) and (max-width: 1199px) {
 	
@@ -429,6 +436,11 @@ margin:0 0 0 -20px !important;
 #addCollectionPopup .popFooter{
 	background:#dddddd;
 	padding:8px 10px;
+}
+#addCollectionPopup .noTextMessage{
+	text-align: center;
+	padding: 62px;
+	font-weight: bold;
 }
 #addCollectionPopup .popHeader{
 	padding:10px 15px;
@@ -465,6 +477,7 @@ margin:0 0 0 -20px !important;
     padding: 10px 50px;
 	border-bottom:1px solid #dddddd;
 	border:1px solid #dddddd;
+	cursor:pointer;
 }
 #addCollectionPopup .remixMenuTitle{
   	background-color: #ddd;
@@ -509,20 +522,43 @@ margin:0 0 0 -20px !important;
     padding:10px 50px 10px 66px;
 	border-bottom:1px solid #dddddd;
 }
-#addCollectionPopup .foldercollection1{
+#addCollectionPopup .foldercollection.parent{
 	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 50px 8px;
     padding:10px 50px 10px 83px;
 	border-bottom:1px solid #dddddd;
 }
-#addCollectionPopup .foldercollection2{
+#addCollectionPopup .foldercollection.child{
 	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 71px 8px;
     padding:10px 50px 10px 105px;
 	border-bottom:1px solid #dddddd;
 }
-#addCollectionPopup .foldercollection3{
+#addCollectionPopup .foldercollection.innerchild{
 	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 96px 8px;
     padding:10px 50px 10px 133px;
 	border-bottom:1px solid #dddddd;
+}
+.folderAssessment { /* grandparent level - default */
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 33px 8px;
+    background-size: 22px 18px;
+    padding:10px 50px 10px 66px;
+	border-bottom:1px solid #dddddd;
+}
+
+#addCollectionPopup .folderAssessment.parent {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 50px 8px;
+    padding:10px 50px 10px 83px;
+    background-size: 22px 18px;
+}
+
+#addCollectionPopup .folderAssessment.child {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 71px 8px;
+    padding:10px 50px 10px 105px;
+    background-size: 22px 18px;
+}
+#addCollectionPopup .folderAssessment.innerchild {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 96px 8px;
+    background-size: 22px 18px;
+    padding:10px 50px 10px 133px;
 }
 #addCollectionPopup .addButton{
 	display: inline-block;
@@ -554,7 +590,7 @@ margin:0 0 0 -20px !important;
 	background-size: 24px 18px;
 }
 #addResourcefolderTreePanel .selected{
-	background-color: #cfe3f1;
+	background-color: #cfe3f1 !important;
 }
 #addCollectionPopup .lblSuccessText{
 	text-align: center;
@@ -570,5 +606,10 @@ margin:0 0 0 -20px !important;
 	color: #1076bb;
 	margin-left: 10px;
 }
-
+#addCollectionPopup .addNewCollectionErrorStyle{
+	font-weight: bold;
+	height: 10px;
+	color: #fab03a;
+	font: 12px arial;
+}
 /*Add Resource to collection popup end*/

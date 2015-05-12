@@ -205,7 +205,6 @@
 	
 	border-radius:3px 3px;
 	font-size:10px;
-	color:#ffffff;
 	padding:3px 3px;
 	display:inline-block;
 	margin:8px 0;
@@ -215,15 +214,15 @@
 
 
 #gooruSearchMainContainer .libraryMainContainerBlock .collectionTitle{
-	font-size:18px;
-	font-weight:500;
+	font-size:17px;
+	font-weight:400;
 	color:#0c74be;
-	margin-top:8px;
-	max-height:21px;
+	margin-top:2px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
     cursor:pointer;
+    max-height:20px;
 }
 
 #gooruSearchMainContainer .userDetails img{
@@ -264,7 +263,7 @@
 }
 #gooruSearchMainContainer .resourcesInside {
 	padding:8px 8px;
-	min-height: 106px;
+	min-height: 8.9547em;
 }
 #gooruSearchMainContainer .resourcesInside p {
 	margin-left: 2.5%;
@@ -308,6 +307,9 @@
 }
 
 #gooruSearchMainContainer .resourceImage a:hover .videoSmall{
+		display:none;
+}
+#gooruSearchMainContainer .resourceImage a:hover .questionSmall{
 		display:none;
 }
 #gooruSearchMainContainer .resourceImage a:hover .textSmall{
@@ -364,7 +366,7 @@
 #gooruSearchMainContainer .SmallWidthContainer{
   margin: 0 auto;
   padding: 2px 10px;
-  background: #fafafa;
+  background: #F7F6F6;
   border-radius: 6px 6px;
   margin-top: 135px;
 	
@@ -1135,13 +1137,13 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .resourcesInside{
 	
 	}
-	
 	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
+		margin-top: 0px;
 	}
 		
 	#gooruSearchMainContainer .collectionDesc {
-	    width: 45% !important;
+	    width: 42% !important;
 	}	
 	
 	#gooruSearchMainContainer .collectionImg {
@@ -1158,11 +1160,11 @@ word-wrap: break-word;
 		padding:0 10px;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:right;
+		text-align: left;
+		width: 100%;
 	}
 	#gooruSearchMainContainer .resourceImage{
 		width:21%;
-	
 	}
 	#gooruSearchMainContainer .resourceImage img {
 	    height: 100%;
@@ -1184,7 +1186,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .libraryMainContainerBlock .collectionTitle {
 	    overflow: hidden;
 	    text-overflow: ellipsis;
-	    white-space: nowrap;
+	    white-space: normal;
 	    cursor: pointer;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon {

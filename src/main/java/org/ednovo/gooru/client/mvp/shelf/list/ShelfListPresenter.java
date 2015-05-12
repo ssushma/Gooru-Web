@@ -227,7 +227,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("resourceId", resourceUid);
 		
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 			String mediaType = AppClientFactory.getPlaceManager().getRequestParameter(FLT_NOT_MEDIA_TYPE);
 			if(mediaType!=null) {
 				params.put("mediaType", IPAD_FRIENDLY);

@@ -442,7 +442,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 */
 	public void homeSearch(boolean isResourceSearch, Map<String, String> params) {
 		updateParams(isResourceSearch() ? getResourceSearchDo() : getCollectionSearchDo(), params);
-		getPlaceManager().revealPlace(isResourceSearch ? PlaceTokens.RESOURCE_SEARCH : PlaceTokens.COLLECTION_SEARCH, params);
+		getPlaceManager().revealPlace(isResourceSearch ? PlaceTokens.SEARCH_RESOURCE : PlaceTokens.SEARCH_COLLECTION, params);
 	}
 
 	/**

@@ -49,13 +49,10 @@ import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -160,10 +157,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		addRegisteredHandler(StandardsSuggestionEvent.TYPE, this);
 		//addRegisteredHandler(StandardsSuggestionInfoEvent.TYPE, this);
 		
-		if (getViewToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			addRegisteredHandler(SourceSuggestionEvent.TYPE, this);
-			addRegisteredHandler(AggregatorSuggestionEvent.TYPE, this);
-		}
 	}
 
 	@Override
@@ -241,15 +234,12 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				@Override
 				protected void run(SearchDo<String> searchDo) {
 					getSearchService().getSuggestedAggregator(searchDo, this);
-
 				}
 
 				@Override
 				public void onCallSuccess(SearchDo<String> result) {
 					getView().setAggregatorSuggestions(result);
-
 				}
-
 			});
 		}
 	}
@@ -257,17 +247,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		getView().resetData();
-		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
-				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		if (getSearchDo().getSearchQuery() != null
-				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
-			getSearchDo().setPageNum(1);
-			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
-			getSearchDo().setPageNum(2);
-			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
-		}
-
 		AppClientFactory.fireEvent(new RegisterTabDndEvent());
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
@@ -287,12 +266,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			// Window.enableScrolling(true);
 		}*/
 
-		if(AppClientFactory.getPlaceManager().refreshPlace()) {
+		if(AppClientFactory.getPlaceManager().refreshPlace()){
 			if (setFilter) {
 				searchDo.setPageNum(1);
 				getSearchService().getSearchFilters(getCurrentPlaceToken(),
 						new SimpleAsyncCallback<SearchFilterDo>() {
-
 					@Override
 					public void onSuccess(SearchFilterDo searchFilterDo) {
 						getView().setSearchFilter(searchFilterDo);
@@ -346,18 +324,18 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void setPageTitle(String searchQuery) {
 		String pageToken = AppClientFactory.getPlaceManager()
 				.getCurrentPlaceRequest().getNameToken();
-		if (pageToken.equals(PlaceTokens.COLLECTION_SEARCH)) {
+		if (pageToken.equals(PlaceTokens.SEARCH_COLLECTION)) {
 			AppClientFactory
 					.setBrowserWindowTitle(SeoTokens.COLLECTION_SEARCH_TITLE
 							+ searchQuery);
-		} else if (pageToken.equals(PlaceTokens.RESOURCE_SEARCH)) {
+		} else if (pageToken.equals(PlaceTokens.SEARCH_RESOURCE)) {
 			AppClientFactory
 					.setBrowserWindowTitle(SeoTokens.RESOURCE_SEARCH_TITLE
 							+ searchQuery);
 		}
 	}
 	
-	
+	@Override
 	public void initiateSearch() {
 		setPageTitle(getSearchDo().getSearchQuery());
 		AppClientFactory

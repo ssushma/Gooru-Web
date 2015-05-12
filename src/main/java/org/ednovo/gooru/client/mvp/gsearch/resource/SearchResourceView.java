@@ -76,13 +76,10 @@ public class SearchResourceView extends
 					LoginPopupUc loginPopupUc=new LoginPopupUc();
 					loginPopupUc.show();
 					loginPopupUc.setGlassEnabled(true);
-				}
-				else
-				{
+				}else{
 					Element element = Document.get().getElementById("fixedFilterSearchID");
-					if(element!=null)
-					{
-					element.setAttribute("style", "opacity:0.1;");
+					if(element!=null){
+						element.setAttribute("style", "opacity:0.1;");
 					}
 				getUiHandlers().displayAddResourcePoup(resourceSearchResultDo);
 				}
@@ -92,20 +89,15 @@ public class SearchResourceView extends
 		collectionResourceWidget.getAncViewMore().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.enableScrolling(false);
-				
+					Window.enableScrolling(false);
 					Element element = Document.get().getElementById("fixedFilterSearchID");
-					if(element!=null)
-					{
-					element.setAttribute("style", "opacity:0.1;");
+					if(element!=null){
+						element.setAttribute("style", "opacity:0.1;");
 					}
 				getUiHandlers().displayUsersList(resourceSearchResultDo);
-				
 			}
 		});
-		
 		collectionResourceWidget.getElement().setId(resourceSearchResultDo.getGooruOid());
-		
 		setCollectionResourceWidget(collectionResourceWidget);
 		collectionResourceWidget.setUpdateReviewCount(resourceSearchResultDo.getRatings().getReviewCount());
 		collectionResourceWidget.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
@@ -116,8 +108,6 @@ public class SearchResourceView extends
 				}
 			}
 		});
-		
-		
 		return collectionResourceWidget;
 	}
 	/**
@@ -133,6 +123,4 @@ public class SearchResourceView extends
 			CollectionResourceWidget collectionResourceWidget) {
 		this.collectionResourceWidget = collectionResourceWidget;
 	}
-	
-	
 }

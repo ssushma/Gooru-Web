@@ -293,7 +293,7 @@ public class EmailShareUc extends PopupPanel{
 			   msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0219_1(), socialShareDo.getCategoryType(), socialShareDo.getTitle(), socialShareDo.getBitlylink(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 
 		}else{
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				subTxt.setText(StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
 				subTxt.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
 				subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
@@ -301,7 +301,7 @@ public class EmailShareUc extends PopupPanel{
 				msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 				msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) ){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) ){
 				subTxt.setText(StringUtil.generateMessage(i18n.GL1997(),i18n.GL2001()));
 				subTxt.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL1997(),i18n.GL2001()));
 				subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2001()));
@@ -341,7 +341,7 @@ public class EmailShareUc extends PopupPanel{
 		if(!placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)|| !placeToken.equals(PlaceTokens.RESOURCE_PLAY)) {
 			Window.enableScrolling(true);
 		}
-		if (placeToken.equals(PlaceTokens.RESOURCE_SEARCH) || placeToken.equals(PlaceTokens.COLLECTION_SEARCH)){
+		if (placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
 			Window.enableScrolling(false);
 		}else{
 			Window.enableScrolling(true);

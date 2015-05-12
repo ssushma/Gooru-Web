@@ -111,15 +111,12 @@ public class SearchUiUtil{
 						toolTipwidgets.add(standardItem);
 					}
 				} else {
-					if(stdCode.length()>25 && count==0)
-					{
+					if(stdCode.length()>25 && count==0){
 						standardsfirstVal = stdCode;
-					}
-					else
-					{
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandardResource());
-					standardsContainer.add(toolTipUc);
+					}else{
+						DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
+						toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandardResource());
+						standardsContainer.add(toolTipUc);
 					}
 				}
 				count++;
@@ -130,19 +127,14 @@ public class SearchUiUtil{
 			}
 			if (searchResultDo.getStandards().size() > 2) {
 				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
-				if(!standardsfirstVal.isEmpty())
-				{
+				if(!standardsfirstVal.isEmpty()){
 					moreStandardsCount = moreStandardsCount+1;
-				}
-				else
-				{					
+				}else{					
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
 					toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLink());
 					standardsContainer.add(toolTipUc);
 					toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
 				}
-
-				
 			}
 		}
 	}

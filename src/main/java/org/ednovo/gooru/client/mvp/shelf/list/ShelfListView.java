@@ -458,7 +458,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void resetDragImage() {
 		
-		if (AppClientFactory.getCurrentPlaceToken().equals(	PlaceTokens.RESOURCE_SEARCH)) {
+		if (AppClientFactory.getCurrentPlaceToken().equals(	PlaceTokens.SEARCH_RESOURCE)) {
 			enableNoCollectionMessage(false);
 			totWidgets = setUserShelfMsg();
 			setDiplayShelfMsg(totWidgets);
@@ -469,15 +469,15 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 				dragImageSimPanel.clear();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 				dragImageSimPanel.clear();
 			}
 			
 		} else {
-			if (AppClientFactory.getCurrentPlaceToken().equals(	PlaceTokens.COLLECTION_SEARCH)) {
+			if (AppClientFactory.getCurrentPlaceToken().equals(	PlaceTokens.SEARCH_COLLECTION)) {
 				displayFoldersPanel(false);
 				dragImageSimPanel.setWidget(new NoCollectionInShelfListView());
-			} else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			} else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 				displayFoldersPanel(false);
 			} else {
 				enableNoCollectionMessage(true);
@@ -606,16 +606,16 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 
 	@Override
 	public void registerDropController() {
-		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH) 
-				|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION) 
+				|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 			AppClientFactory.fireEvent(new RegisterSearchDropEvent(getDropController(),RegisterSearchDropEvent.DROP_AREA.SHELF));
 		}
 	}
 
 	@Override
 	public void unregisterDropController() {
-		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)
-				|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)
+				|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 			AppClientFactory.fireEvent(new UnregisterSearchDropEvent(getDropController(),RegisterSearchDropEvent.DROP_AREA.SHELF));
 		}
 	}
@@ -921,7 +921,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	public void setNewCollectionPanel() {
 		if(treeChildSelectedItem!=null){
 			ShelfCollection treeItemShelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
-			if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 				setNewCollectionPanelCss(false, NEW_RESOURCE_DRAG_MSG);
 				enableDisableOrganizePnl(false);
 				organizeButtonPanel.setVisible(false);
@@ -930,7 +930,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				if(treeItemShelfCollection!=null) {
 					treeItemShelfCollection.setActiveStyle(false);
 				}
-			} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)) {
+			} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 				setNewCollectionPanelCss(false, NEW_COLLECTION_DRAG_MSG);
 				enableDisableOrganizePnl(false);
 				organizeButtonPanel.setVisible(false);

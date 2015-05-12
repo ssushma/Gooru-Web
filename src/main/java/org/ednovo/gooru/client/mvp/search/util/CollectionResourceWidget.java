@@ -31,6 +31,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -65,12 +67,16 @@ public class CollectionResourceWidget extends Composite {
 	@UiField Anchor ancViewMore;
 
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
+	
+	String resourceTitleText = "";
 
 	private boolean failedThumbnailGeneration = false;
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
-	private static String DEFULT_IMAGE = "images/default-collection-image.png";
+	private static String DEFULT_COLLECTIONIMAGE = "images/default-collection-image.png";
+	
+	private static String DEFULT_ASSESSMENTIMAGE = "images/default-assessment-image.png";
 
 	private static final String NULL = "null";
 
@@ -84,7 +90,20 @@ public class CollectionResourceWidget extends Composite {
 
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		String resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
+		this.resourceSearchResultDo=resourceSearchResultDo;
+		resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
+		if(Window.getClientWidth()<=768)
+		{
+			if(resourceTitleText.length()>=15){
+				resourceTitleText=resourceTitleText.substring(0, 15)+"...";
+			}
+		}
+		else
+		{
+		if(resourceTitleText.length()>=25){
+			resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+		}
+		}
 		resourceTitle.setText(resourceTitleText);
 		String resourceDesc=!StringUtil.isEmpty(resourceSearchResultDo.getDescription())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getDescription()):"";
 		if(resourceDesc.length()>=120){
@@ -112,6 +131,26 @@ public class CollectionResourceWidget extends Composite {
 		}else{
 			lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
 		}
+		
+		Window.addResizeHandler(new ResizeHandler() {
+			
+			@Override
+			public void onResize(ResizeEvent event) {
+				if(Window.getClientWidth()<=768)
+				{
+					if(resourceTitleText.length()>=15){
+						resourceTitleText=resourceTitleText.substring(0, 15)+"...";
+					}
+				}
+				else
+				{
+				if(resourceTitleText.length()>=25){
+					resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+				}
+				}
+				
+			}
+		});
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
@@ -156,8 +195,16 @@ public class CollectionResourceWidget extends Composite {
 						relatedCollectionTitle.setText(userCollectionsList.get(0).getTitle());
 						relatedCollectionTitle.setTitle(userCollectionsList.get(0).getTitle());
 						creatorImage.setUrl(userCollectionsList.get(0).getUser().getProfileImageUrl());
+						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
+						setDefaultCollectionImage(collectionType);
 						relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
 						relatedCollectionTitle.setStyleName("collectionTitle");
+						relatedCollectionImage.addErrorHandler(new ErrorHandler() {
+							@Override
+							public void onError(ErrorEvent event) {
+								setDefaultCollectionImage(collectionType);
+							}
+						});
 					
 				}
 				else
@@ -169,12 +216,7 @@ public class CollectionResourceWidget extends Composite {
 				}
 			}
 		});		
-		relatedCollectionImage.addErrorHandler(new ErrorHandler() {
-			@Override
-			public void onError(ErrorEvent event) {
-				relatedCollectionImage.setUrl(DEFULT_IMAGE);
-			}
-		});
+		
 		creatorImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -205,6 +247,19 @@ public class CollectionResourceWidget extends Composite {
 				DeletePlayerStarReviewEvent.TYPE, deleteStarRating);
 		AppClientFactory.getEventBus().addHandler(
 				UpdateResourceReviewCountEvent.TYPE, setReviewCount);
+	}
+	/**
+	 * To set default collection type image.
+	 * @param collectionType {@link String}
+	 */
+	protected void setDefaultCollectionImage(String collectionType) {
+		if(collectionType!=null && collectionType.equals("assessment")){
+			relatedCollectionImage.setUrl(DEFULT_ASSESSMENTIMAGE);
+			relatedCollectionImage.getElement().setAttribute("style", "border-left: 3px solid #feae29;");
+		}else{
+			relatedCollectionImage.setUrl(DEFULT_COLLECTIONIMAGE);
+			relatedCollectionImage.getElement().setAttribute("style", "border-left: 3px solid #1076bb;");
+		}
 	}
 	/**
 	 * This inner class will handle the click event on the resource image click and it will play that resoruce
@@ -243,19 +298,19 @@ public class CollectionResourceWidget extends Composite {
 	public void setUrl(final String thumbnailUrl, final String realUrl, final String category, final String title, final boolean generateYoutube) {
 		failedThumbnailGeneration = false;
 		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category;
+		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
+			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
+		} else {
+			resourseImage.setUrl(thumbnailUrl);
+		}
 		resourseImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
 				setDefaultThumbnail(thumbnailUrl, realUrl, categoryString, generateYoutube);
 				failedThumbnailGeneration = true;
 			}
-		});
-		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
-			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
-		} else {
-			resourseImage.setUrl(thumbnailUrl);
-		}
-		resourseImage.setAltText(title);
+		});		
+		//resourseImage.setAltText(title);
 		resourseImage.setTitle(title);
 	}
 	/**
@@ -266,7 +321,6 @@ public class CollectionResourceWidget extends Composite {
 	 * @param generateYoutube
 	 */
 	private void setDefaultThumbnail(String thumbnailUrl, String url, String categoryString, boolean generateYoutube) {
-		categoryString = StringUtil.getCategory(categoryString.trim().replaceAll("gooru_classplan", "webpage"));
 		if(generateYoutube) {
 			resourseImage.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(url), Window.Location.getProtocol()));
 		}else if (!failedThumbnailGeneration && thumbnailUrl!=null && thumbnailUrl.endsWith("/")) {

@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
+import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
@@ -46,7 +48,9 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
@@ -81,6 +85,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view, CollectionFormPresenter collectionFormPresenter) {
@@ -117,7 +122,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo.getCount()==0){
-					getView().displayNoCollectionsMsg();
+					getView().displayNoCollectionsMsg(searchType);
 				}else{
 					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 				}
@@ -149,6 +154,10 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType);
 							}
 						});
+					}else{
+						getView().hidePopup();
+						Window.enableScrolling(false);
+						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),i18n.GL0302());
 					}
 				}
 			});
@@ -188,7 +197,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							params.put("o1", O1_LEVEL_VALUE);
 						}
 						params.put("from", "SearchAddResourcePresenter");
-//						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
 						getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection");
 					}
 				});

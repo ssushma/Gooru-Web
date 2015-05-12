@@ -114,7 +114,7 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 				}else if(playerType.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 					fireEvent(new RefreshCollectionInShelfListInResourcePlayEvent(result.getGooruOid()));
 					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
-				}else if(playerType.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+				}else if(playerType.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
 				}
 			}
