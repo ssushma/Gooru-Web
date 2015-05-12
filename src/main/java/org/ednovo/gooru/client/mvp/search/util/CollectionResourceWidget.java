@@ -70,7 +70,9 @@ public class CollectionResourceWidget extends Composite {
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
-	private static String DEFULT_IMAGE = "images/default-collection-image.png";
+	private static String DEFULT_COLLECTIONIMAGE = "images/default-collection-image.png";
+	
+	private static String DEFULT_ASSESSMENTIMAGE = "images/default-assessment-image.png";
 
 	private static final String NULL = "null";
 
@@ -159,8 +161,16 @@ public class CollectionResourceWidget extends Composite {
 						relatedCollectionTitle.setText(userCollectionsList.get(0).getTitle());
 						relatedCollectionTitle.setTitle(userCollectionsList.get(0).getTitle());
 						creatorImage.setUrl(userCollectionsList.get(0).getUser().getProfileImageUrl());
+						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
+						setDefaultCollectionImage(collectionType);
 						relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
 						relatedCollectionTitle.setStyleName("collectionTitle");
+						relatedCollectionImage.addErrorHandler(new ErrorHandler() {
+							@Override
+							public void onError(ErrorEvent event) {
+								setDefaultCollectionImage(collectionType);
+							}
+						});
 					
 				}
 				else
@@ -172,12 +182,7 @@ public class CollectionResourceWidget extends Composite {
 				}
 			}
 		});		
-		relatedCollectionImage.addErrorHandler(new ErrorHandler() {
-			@Override
-			public void onError(ErrorEvent event) {
-				relatedCollectionImage.setUrl(DEFULT_IMAGE);
-			}
-		});
+		
 		creatorImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -208,6 +213,19 @@ public class CollectionResourceWidget extends Composite {
 				DeletePlayerStarReviewEvent.TYPE, deleteStarRating);
 		AppClientFactory.getEventBus().addHandler(
 				UpdateResourceReviewCountEvent.TYPE, setReviewCount);
+	}
+	/**
+	 * To set default collection type image.
+	 * @param collectionType {@link String}
+	 */
+	protected void setDefaultCollectionImage(String collectionType) {
+		if(collectionType!=null && collectionType.equals("assessment")){
+			relatedCollectionImage.setUrl(DEFULT_ASSESSMENTIMAGE);
+			relatedCollectionImage.getElement().setAttribute("style", "border-left: 3px solid #feae29;");
+		}else{
+			relatedCollectionImage.setUrl(DEFULT_COLLECTIONIMAGE);
+			relatedCollectionImage.getElement().setAttribute("style", "border-left: 3px solid #1076bb;");
+		}
 	}
 	/**
 	 * This inner class will handle the click event on the resource image click and it will play that resoruce
