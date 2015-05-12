@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -28,6 +29,8 @@ import java.util.HashMap;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.HighlightRemixedItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -64,7 +67,7 @@ public class SuccessPopupForResource extends PopupPanel {
 	public SuccessPopupForResource() {
 		setWidget(uiBinder.createAndBindUi(this));
 	}
-	public void setData(String collectionName,String selectedGooruOid,final HashMap<String, String> params,String type){
+	public void setData(final String collectionName,final String selectedGooruOid,final HashMap<String, String> params,String type){
 		if(type.equalsIgnoreCase("resource")){
 			lblSuccessText.setText(i18n.GL3192()+collectionName+".");
 			headerLbl.setText(i18n.GL3224());
@@ -76,8 +79,9 @@ public class SuccessPopupForResource extends PopupPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.SHELF, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params); 
+				AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionName));
+				AppClientFactory.fireEvent(new HighlightRemixedItemEvent(params,selectedGooruOid));
 				Element element = Document.get().getElementById("fixedFilterSearchID");
 				if(element!=null){
 					element.removeAttribute("style");

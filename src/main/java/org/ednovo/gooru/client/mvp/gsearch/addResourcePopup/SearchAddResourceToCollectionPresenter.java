@@ -188,8 +188,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							params.put("o1", O1_LEVEL_VALUE);
 						}
 						params.put("from", "SearchAddResourcePresenter");
-						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
-						getView().displaySuccessPopup(folderDo.getTitle(), result.getGooruOid(), successparams,"collection");
+//						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+						getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection");
 					}
 				});
 			}else{

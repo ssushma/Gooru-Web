@@ -121,12 +121,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			    if(folderWidget instanceof FolderTreeItem){
 					folderTreeItemWidget = (FolderTreeItem) folderWidget;
 					if (folderTreeItemWidget.isOpen()) {
-						folderTreeItemWidget
-								.removeStyleName("open");
+						folderTreeItemWidget.removeStyleName("open");
 						folderTreeItemWidget.setOpen(false);
 					} else {
-						folderTreeItemWidget
-								.addStyleName("open");
+						folderTreeItemWidget.addStyleName("open");
 						folderTreeItemWidget.setOpen(true);
 					}
 					removePreviousSelectedItem();
@@ -159,7 +157,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					}
 					
 					if (parent != null)
-						parent.setSelected(false); // TODO FIX ME
+						parent.setSelected(false); 
 					item.setState(!item.getState(), false);
 				}else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
@@ -298,6 +296,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public class FolderTreeItem extends Composite{
 		private FlowPanel folderContainer=null;
 		private String gooruOid=null;
+		private String selectedFolderName=null;
 		Label floderName=null;
 		Label arrowLabel=null;
 		private boolean isOpen=false;
@@ -313,6 +312,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				folderContainer.addStyleName("foldermenuLevel"+levelStyleName);
 			}
 			this.gooruOid=gooruOid;
+			this.selectedFolderName = folderTitle;
 			folderContainer.getElement().setInnerText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -332,6 +332,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		public int getFolerLevel() {
 			return folerLevel;
+		}
+		public String getSelectedFolerTitle() {
+			return selectedFolderName;
 		}
 		public void setFolerLevel(int folerLevel) {
 			this.folerLevel = folerLevel;
@@ -383,18 +386,15 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-		if(cureentcollectionTreeItem != null)
-		{
-		getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+		if(cureentcollectionTreeItem != null){
+			getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
 		}
-		else
-		{
+		else{
 			if(isTopMostSelected) {
 				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
 			}
-			else
-			{
-			getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+			else{
+				getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getSelectedFolerTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
 			}
 		}
 	}
