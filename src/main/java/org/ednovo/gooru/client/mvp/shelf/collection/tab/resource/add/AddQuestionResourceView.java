@@ -1464,14 +1464,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						    		mediaFileName=addQuestionImage.getFileName();
     						    	}
     						    	clearErrorQuestionMessage();
-    						        if(questionNameTextArea.getText()==null||questionNameTextArea.getText().trim().equals("")){
+    						    	String questionNameText = questionNameTextArea.getText().replaceAll("\\<.*?>","");
+    						    	String questionName=questionNameText.replaceAll("&nbsp;", " ").trim();
+    						        if(questionName==null||questionName.trim().equals("")){
     						        	showErrorQuestionMessage(ERROR_MSG_QUESTION);
     						        	fieldValidationStaus=false;
     						        	isQuestEnteredFlag=false;
     						        	isAddBtnClicked=true;
     						        }
     						        //This regex is used to get text count with out html tags
-    						        String questionNameText = questionNameTextArea.getText().replaceAll("\\<.*?>","");
     						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
     						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
