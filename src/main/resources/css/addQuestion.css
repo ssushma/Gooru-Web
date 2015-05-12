@@ -615,6 +615,93 @@
 	position: relative;
 	margin: 33% 0 0 33%;
 }
+.htAnswerChoiceDragLabel {
+	background: #eee;
+	padding: 5px 10px 5px 10px;
+	font-size: 12px;
+	border-radius: 4px;
+	word-wrap: break-word;
+}
+.htAnswerChoiceDragLabel:hover {
+	border: 1px solid #ddd;
+	border-radius: 4px 4px 4px 4px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.htAnswerChoiceDragContainer {
+	float: left;
+	width: 100%;
+	min-height: 30px;
+	height: auto;
+}
+.moveSelectDisable {
+	cursor: move;
+	-webkit-user-select: none; /* Chrome all / Safari all */
+	/*-moz-user-select: none;  Firefox all */
+	-ms-user-select: none; /* IE 10+ */
+	/* No support for these yet, use at own risk */
+	-o-user-select: none;
+	user-select: none;
+}
+
+.answerDrag {
+	position: absolute;
+	z-index: 90;
+	top: 10px;
+	left: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px 5px 5px 5px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	-webkit-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-o-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-khtml-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-ms-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	float: left;
+	padding: 4px;
+	height: 20px;
+	border: 1px solid #DDDDDD;
+	box-sizing: content-box;
+}
+.answerDragTitle {
+	display: block;
+	float: left;
+	font-size: 12px;
+	height: 15px;
+	margin-left: 5px;
+	color: #000000;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-top: 3px;
+}
+
+.answerDragdropPositioner {
+	float: left;
+	margin-bottom: 11px;
+	padding: 1px 0;
+	position: relative;
+	background-color: #dbeaf5;
+	height: 30px;
+	border-radius: 7px 7px 7px 7px;
+	zoom: 1; /* IE gain hasLayout */
+	z-index: 100;
+}
+.dragDropSpacer {
+	float: left;
+	margin-bottom: 11px;
+	position: relative;
+	height: 30px;
+	zoom: 1;
+	z-index: 98;
+}
 
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {

@@ -66,6 +66,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private MultipleAnswersQuestionWidget multipleAnswersQuestionWidget=null;
 	private OpendEndedQuestionWidget opendEndedQuestionWidget=null;
 	private FillInTheBlankQuestionWidget fillInTheBlankQuestionWidget=null;
+	private HotTextQuestionWidget HotTextQuestionWidget=null;
 	
 	private static QuestionResourceViewUiBinder uiBinder = GWT.create(QuestionResourceViewUiBinder.class);
 
@@ -135,6 +136,11 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private void renderAnswerView(AttemptedAnswersDo attemptedAnswerDo){
 		clearAnswerOptionsContainer();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			
+			if(collectionItemDo.getResource().getType()==null){
+				collectionItemDo.getResource().setType(8);
+			}
+			
 			if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
 				multipleChoicesQuestionWidget=new MultipleChoicesQuestionWidget(collectionItemDo,attemptedAnswerDo);
 				questionContainer.add(multipleChoicesQuestionWidget);
@@ -148,6 +154,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			}else if(collectionItemDo.getResource().getType()==7){
 				multipleAnswersQuestionWidget=new MultipleAnswersQuestionWidget(collectionItemDo,attemptedAnswerDo);
 				questionContainer.add(multipleAnswersQuestionWidget);
+			}else{
+				HotTextQuestionWidget=new HotTextQuestionWidget(collectionItemDo, attemptedAnswerDo);
+				questionContainer.add(HotTextQuestionWidget);
 			}
 		}
 	}
@@ -465,4 +474,14 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	public FlowPanel getQuestionContainer(){
 		return questionContainer;
 	}
+	
+	public class HotTextQuestionWidget extends HotTextAnswersQuestionView{
+		private AttemptedAnswersDo attemptedAnswerDo=null;
+		public HotTextQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+			super(collectionItemDo,attemptedAnswerDo);
+			this.attemptedAnswerDo=attemptedAnswerDo;
+		}
+	}
+	
+	
 }
