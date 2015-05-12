@@ -155,8 +155,8 @@ margin:0 0 0 -20px !important;
     width: 57%;
 }
 #gooruSearchMainContainer .resourceDesc1 {
-    width: 57%;
-    min-height:61px;
+    width: 54%;
+    max-height:60px;
 }
 #gooruSearchMainContainer .resourceDesc .collectionTitle {
 	font-size: 17px;
@@ -250,7 +250,7 @@ margin:0 0 0 -20px !important;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 75%;
+	width: 66%;
 	margin-top: 0;
 }
 #gooruSearchMainContainer .collectionResources img{
