@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -180,11 +181,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	}
 
 	@Override
-	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo) {
-		
-	}
-
-	@Override
 	public void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo) {
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionsearchResultDo, "collection");
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
@@ -196,6 +192,13 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 
 	@Override
 	public void displayUsersList(ResourceSearchResultDo resourceSearchResultDo) {
+		
+	}
+
+	@Override
+	public void displayAddResourcePoup(
+			ResourceSearchResultDo resourceSearchResultDo,
+			CollectionResourceWidget displayAddResourcePoup) {
 		
 	}
 }

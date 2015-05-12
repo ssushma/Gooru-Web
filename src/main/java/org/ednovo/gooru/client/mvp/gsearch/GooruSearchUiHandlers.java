@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionHandler;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionHandler;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -65,7 +66,8 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	 */
 	void setSearchType(boolean isCollectionSearch, String query);
 	
-	void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo);
+	void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo,CollectionResourceWidget displayAddResourcePoup);
+	
 	void displayUsersList(ResourceSearchResultDo resourceSearchResultDo);
 	
 	void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo);

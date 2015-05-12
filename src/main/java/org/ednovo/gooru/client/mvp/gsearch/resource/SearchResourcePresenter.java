@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.uc.AppPopUp;
@@ -189,9 +190,9 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		return filters;
 	}
 	@Override
-	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo) {
-		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"resoruce");
-		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid()));
+	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo,CollectionResourceWidget collectionResourceWidget) {
+		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"resoruce",collectionResourceWidget);
+		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid(),collectionResourceWidget));
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
 	}
 	@Override
@@ -202,14 +203,17 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 	public class ShowNewCollectionWidget implements ClickHandler{
 		private String resourceId;
-		public ShowNewCollectionWidget(String resourceId){
+		CollectionResourceWidget collectionResourceWidget;
+		public ShowNewCollectionWidget(String resourceId,CollectionResourceWidget collectionResourceWidget){
 			this.resourceId=resourceId;
+			this.collectionResourceWidget=collectionResourceWidget;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			searchAddResourceToCollectionPresenter.hidePopup();
 			addToPopupSlot(collectionFormInPlayPresenter);
 			collectionFormInPlayPresenter.setResourceUid(resourceId);
+			collectionFormInPlayPresenter.setResourceWidget(collectionResourceWidget);
 		}
 	}
 	
@@ -224,8 +228,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Override
-	public void displayRemixForCollectionsPoup(
-			CollectionSearchResultDo collectionsearchResultDo) {
-		
+	public void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo) {
 	}
 }

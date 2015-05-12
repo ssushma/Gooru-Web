@@ -33,6 +33,7 @@ import java.util.List;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -81,7 +82,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	HashMap<String, String>  urlParameters;
 	 private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	CollectionFormPresenter collectionFormPresenter;
-
+	CollectionResourceWidget collectionResourceWidget=null;
+	
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
@@ -99,8 +101,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		super.onBind();
 	}
 	@Override
-	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType) {
+	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType,CollectionResourceWidget collectionResourceWidget) {
 		this.searchResultDo =searchResultDo;
+		this.collectionResourceWidget=collectionResourceWidget;
 		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}
@@ -151,6 +154,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							@Override
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
+								if(collectionResourceWidget!=null){
+									collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
+								}
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType);
 							}
 						});

@@ -81,7 +81,7 @@ public class SearchResourceView extends
 					if(element!=null){
 						element.setAttribute("style", "opacity:0.1;");
 					}
-				getUiHandlers().displayAddResourcePoup(resourceSearchResultDo);
+				getUiHandlers().displayAddResourcePoup(resourceSearchResultDo,collectionResourceWidget);
 				}
 			}
 		});
