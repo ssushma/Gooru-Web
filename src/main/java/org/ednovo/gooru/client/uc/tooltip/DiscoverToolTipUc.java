@@ -33,10 +33,9 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.HomeCBundle;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
@@ -93,7 +92,7 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	@UiField HTMLEventPanel  partnerLibContainer, districtLibContainer;
 	
 	
-	@UiField HTMLPanel dropdownImg,dropdownImgLib,mainContainer;
+	@UiField HTMLPanel dropdownImg,dropdownImgLib;
 	@UiField UlPanel tooltipPanel;
 //	@UiField LibraryStyleBundle libraryStyleUc;
 	/**
@@ -110,7 +109,6 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	 */
 	public DiscoverToolTipUc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		mainContainer.getElement().setId("headerMainPanel");
 		panelCode.getElement().setId("pnlPanelCode");
 		lblDistrictLibrary.getElement().setInnerHTML(i18n.GL0515());
 		lblDistrictLibrary.getElement().setId("epnlLblDistrictLibrary");

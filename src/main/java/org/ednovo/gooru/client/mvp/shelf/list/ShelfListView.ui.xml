@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:sl="urn:import:org.ednovo.gooru.client.mvp.shelf.list"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle" field="res1"></ui:with>
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.list.ShelfListCBundle"	field="res" />
 	<ui:style field="folderStyle" src="../folderList.css" type="org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle" />

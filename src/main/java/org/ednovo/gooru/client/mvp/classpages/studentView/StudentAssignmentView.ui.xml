@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"  xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 
 	<ui:style field="StudentStyle" src="StudentStyles.css" />
@@ -40,18 +40,18 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.css.containerProgress} {style.css.containerProgressWidth}" ui:field="panelProgressContainer">
-		    <uc:HTMLEventPanel styleName="{style.css.nextStudent}" ui:field="panelPrevious">
+		    <panel:HTMLEventPanel styleName="{style.css.nextStudent}" ui:field="panelPrevious">
 		        <g:Label styleName="{style.css.leftArrow}" ui:field="lblPrevious"></g:Label>
-		    </uc:HTMLEventPanel>
+		    </panel:HTMLEventPanel>
 			<g:HTMLPanel styleName="{style.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
 			    <g:Label styleName="{style.css.assignmentProgressStudent}" ui:field="lblAssignmentProgress" />
 			    <g:HTMLPanel styleName="{style.css.path}">
 					<g:FlowPanel styleName="{style.css.assignmentPath}" ui:field="panelAssignmentProgress" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<uc:HTMLEventPanel styleName="{style.css.previousStudent}" ui:field="panelNext">
+			<panel:HTMLEventPanel styleName="{style.css.previousStudent}" ui:field="panelNext">
 			    <g:Label styleName="{style.css.rightArrow}" ui:field="lblNext"></g:Label>
-			</uc:HTMLEventPanel>
+			</panel:HTMLEventPanel>
 		</g:HTMLPanel>
 		<!-- <g:HTMLPanel styleName="{StudentStyle.assignmentDotsContainer}" ui:field="panelAssignmentPath">
 			<g:Label styleName="{style.css.assignmentProgress}" ui:field="lblAssignmentProgress" />

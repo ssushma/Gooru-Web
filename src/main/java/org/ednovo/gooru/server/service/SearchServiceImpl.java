@@ -73,7 +73,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 /**
  * @author Search Team

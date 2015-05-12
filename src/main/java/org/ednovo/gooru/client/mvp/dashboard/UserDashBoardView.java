@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.dashboard;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
