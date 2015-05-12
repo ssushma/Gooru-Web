@@ -22,18 +22,35 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.player;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEventHandler;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayHandler;
-import org.ednovo.gooru.player.collection.client.view.collectionoverview.event.ShareListEventHandler;
-import org.ednovo.gooru.player.collection.client.view.collectionoverview.event.UpdateSearchResultMetaDataHandler;
+package org.ednovo.gooru.client;
 
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
 /**
- * @author Search Team
+ * 
+ * @fileName : SimpleRunAsyncCallback.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 28-April-2015
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
  */
-public interface CollectionPlayUiHandlers extends BaseUiHandlers,SetUserDetailsInCollectionPlayEventHandler,RefreshCollectionInShelfListInPlayHandler,ShareListEventHandler,UpdateSearchResultMetaDataHandler{
-	public void displayNewCollectionPopupView(String resourceId);
+public abstract class SimpleRunAsyncCallback implements RunAsyncCallback {
+
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@Override
+	public void onFailure(Throwable caught) {
+		
+	}
+
 }
