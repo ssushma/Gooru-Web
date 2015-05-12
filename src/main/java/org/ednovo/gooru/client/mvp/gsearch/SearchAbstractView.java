@@ -235,7 +235,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		ulSubjectPanel.setStyleName("dropdown-menu");
 		fixedFilterSearch.getElement().setAttribute("id", "fixedFilterSearchID");
 		lblLoadingTextPrevious.setVisible(false);
-		searchResults.setVisible(false);
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
@@ -570,9 +569,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void postSearch(SearchDo<T> searchDo,boolean isApiCalled) {
 		searchDoGbl = searchDo;
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
-			//searchResults.setVisible(true);
+			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
-			searchResults.setText(i18n.GL3210()+"  "+"("+searchDo.getSearchHits()+")");
+			searchResults.setText(i18n.GL3210());
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
@@ -600,7 +599,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			removeTopWidgets(isInsertTems);
 		}else if(pageNumber==1){
 			lblLoadingText.setVisible(false);
-			//searchResults.setVisible(true);
+			searchResults.setVisible(true);
 			searchResults.setText(i18n.GL3210()+"  (0) ");
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{

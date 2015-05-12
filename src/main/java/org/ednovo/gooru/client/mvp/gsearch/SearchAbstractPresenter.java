@@ -237,15 +237,12 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				@Override
 				protected void run(SearchDo<String> searchDo) {
 					getSearchService().getSuggestedAggregator(searchDo, this);
-
 				}
 
 				@Override
 				public void onCallSuccess(SearchDo<String> result) {
 					getView().setAggregatorSuggestions(result);
-
 				}
-
 			});
 		}
 	}
@@ -253,17 +250,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		getView().resetData();
-		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
-				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		if (getSearchDo().getSearchQuery() != null
-				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
-			getSearchDo().setPageNum(1);
-			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
-			getSearchDo().setPageNum(2);
-			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
-		}
-
 		AppClientFactory.fireEvent(new RegisterTabDndEvent());
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
@@ -288,7 +274,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				searchDo.setPageNum(1);
 				getSearchService().getSearchFilters(getCurrentPlaceToken(),
 						new SimpleAsyncCallback<SearchFilterDo>() {
-
 					@Override
 					public void onSuccess(SearchFilterDo searchFilterDo) {
 						getView().setSearchFilter(searchFilterDo);
