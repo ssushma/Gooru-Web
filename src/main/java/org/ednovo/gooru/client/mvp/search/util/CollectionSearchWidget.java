@@ -163,7 +163,7 @@ public class CollectionSearchWidget extends Composite {
 					count++;
 				}
 		}
-		SearchUiUtil.renderStandards(standardsDataPanel, collectionSearchResultDo);
+		SearchUiUtil.renderStandardsforCollection(standardsDataPanel, collectionSearchResultDo);
 		
 		StringUtil.setAttributes(pnlResourceWidget.getElement(), "pnlResourceWidget", "", "");
 		StringUtil.setAttributes(creatorPanel.getElement(), "pnlcreatorPanel", "", "");

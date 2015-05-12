@@ -15,6 +15,15 @@
 	text-align: right;
 	margin: 12px 0;
 }
+#pnlStandards{
+	padding-left:10px;
+}
+#pnlStandards .blueLink{
+display: inline-block;
+  float: left;
+  padding-right: 10px;
+  padding-left: 10px;
+}
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li {
     display: inline-block;
     list-style: outside none none;
