@@ -29,12 +29,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceCollDo;

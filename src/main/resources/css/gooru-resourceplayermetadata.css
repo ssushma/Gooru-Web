@@ -584,10 +584,10 @@ fieldset {
 }
 
 #fpnlWrapperContainerField .ratingContainer {
-	height: 60px;
+	height: 53px;
 	white-space: nowrap; 
 	-webkit-font-smoothing: antialiased !important;
-	margin: 10px;
+	/* margin: 10px; */
 	position: relative;
 }
 
