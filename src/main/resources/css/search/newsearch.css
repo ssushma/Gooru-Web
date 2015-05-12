@@ -309,6 +309,9 @@
 #gooruSearchMainContainer .resourceImage a:hover .videoSmall{
 		display:none;
 }
+#gooruSearchMainContainer .resourceImage a:hover .questionSmall{
+		display:none;
+}
 #gooruSearchMainContainer .resourceImage a:hover .textSmall{
 		display:none;
 }
