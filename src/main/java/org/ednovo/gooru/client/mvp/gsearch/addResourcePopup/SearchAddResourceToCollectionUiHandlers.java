@@ -40,6 +40,8 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.HashMap;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
+import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
@@ -56,13 +58,10 @@ public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers,
 	public void getFolderItems(final TreeItem item,String parentId);
 	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel,String searchType);
 	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title);
-	void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType);
+	void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType,CollectionResourceWidget collectionResourceWidget);
 	public Button getAddButton();
 	public void hidePopup();
-	void getUserShelfCollectionsData(
-			CollectionSearchResultDo collectionsearchResultDo, String searchType);
-	void addCollectionToFolder(String selectedFolderOrCollectionid,
-			String searchType, String title, int folerLevel,
-			HashMap<String, String> urlparams);
+	void getUserShelfCollectionsData(CollectionSearchResultDo collectionsearchResultDo, String searchType,CollectionSearchWidget collectionSearchWidget);
+	void addCollectionToFolder(String selectedFolderOrCollectionid,String searchType, String title, int folerLevel,HashMap<String, String> urlparams);
 	void addCollectionToMyCollections(String object, String currentsearchType);
 }

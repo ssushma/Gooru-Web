@@ -32,9 +32,9 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
+import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -81,7 +81,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	HashMap<String, String>  urlParameters;
 	 private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	CollectionFormPresenter collectionFormPresenter;
-
+	CollectionResourceWidget collectionResourceWidget=null;
+	CollectionSearchWidget collectionSearchWidget=null;
+	
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
@@ -99,14 +101,16 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		super.onBind();
 	}
 	@Override
-	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType) {
+	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType,CollectionResourceWidget collectionResourceWidget) {
 		this.searchResultDo =searchResultDo;
+		this.collectionResourceWidget=collectionResourceWidget;
 		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}
 	@Override
-	public void getUserShelfCollectionsData(CollectionSearchResultDo collectionsearchResultDo,String searchType) {
+	public void getUserShelfCollectionsData(CollectionSearchResultDo collectionsearchResultDo,String searchType,CollectionSearchWidget collectionSearchWidget) {
 		this.searchResultDo =collectionsearchResultDo;
+		this.collectionSearchWidget=collectionSearchWidget;
 		getView().setDefaultPanelVisibility(true);
 		getWorkspaceData(0,20,true,searchType);
 	}
@@ -151,6 +155,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							@Override
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
+								if(collectionResourceWidget!=null){
+									collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
+								}
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType);
 							}
 						});
@@ -197,8 +204,11 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							params.put("o1", O1_LEVEL_VALUE);
 						}
 						params.put("from", "SearchAddResourcePresenter");
-						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
-						getView().displaySuccessPopup(title, result.getGooruOid(), successparams,"collection");
+						if(collectionSearchWidget!=null){
+							collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
+						}
+//						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+						getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection");
 					}
 				});
 			}else{
@@ -256,10 +266,11 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 
 				@Override
 				public void onSuccess(CollectionDo result) {
-					//success msg
+					if(collectionSearchWidget!=null){
+						collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
+					}
 					getView().displaySuccessPopup("My Collections", result.getGooruOid(), successparams,"collection");
 					//hidePopup();
-
 				}
 			};
 		}
