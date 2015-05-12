@@ -335,7 +335,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		}
 	}
 	
-	
+	@Override
 	public void initiateSearch() {
 		setPageTitle(getSearchDo().getSearchQuery());
 		AppClientFactory
