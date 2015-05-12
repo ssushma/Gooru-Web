@@ -606,5 +606,10 @@ margin:0 0 0 -20px !important;
 	color: #1076bb;
 	margin-left: 10px;
 }
-
+#addCollectionPopup .addNewCollectionErrorStyle{
+	font-weight: bold;
+	height: 10px;
+	color: #fab03a;
+	font: 12px arial;
+}
 /*Add Resource to collection popup end*/

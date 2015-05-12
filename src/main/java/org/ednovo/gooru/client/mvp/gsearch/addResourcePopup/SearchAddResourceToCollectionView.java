@@ -57,7 +57,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage;
+	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage,lblError;
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
@@ -104,6 +104,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
 		lblEmptyErrorMessage.setVisible(false);
 		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
+		lblError.setVisible(false);
 		urlparams= new HashMap<String, String>();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
@@ -117,6 +118,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
 			   isTopMostSelected = false;
+				lblError.setVisible(false);
 			   final TreeItem item = (TreeItem) event.getSelectedItem();
 			    Widget folderWidget= item.getWidget();
 			    FolderTreeItem folderTreeItemWidget=null;
@@ -207,7 +209,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void onLoad() {
-		
+		isAddingInProgress=true;
+		cureentcollectionTreeItem=null;
 	}
 
 	@Override
@@ -222,6 +225,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		btnAddExisting.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);
 		lblEmptyErrorMessage.setVisible(false);
+		lblError.setVisible(false);
 		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		if(clearShelfPanel){
 			folderTreePanel.clear();
@@ -408,10 +412,16 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void addResourceToCollection(ClickEvent event){
 		if(isAddingInProgress){
 			isAddingInProgress=false;
-			if(cureentcollectionTreeItem != null){
-				getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+			if(currentsearchType.equalsIgnoreCase("resoruce")){
+				if(cureentcollectionTreeItem!=null){
+					lblError.setVisible(false);
+					getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+				}else{
+					lblError.setVisible(true);
+					isAddingInProgress=true;
+				}
 			}else{
-				if(isTopMostSelected) {
+				if(isTopMostSelected){
 					getUiHandlers().addCollectionToMyCollections("",currentsearchType);
 				}else{
 					getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getFolderTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
