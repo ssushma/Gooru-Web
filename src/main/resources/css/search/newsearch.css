@@ -205,7 +205,6 @@
 	
 	border-radius:3px 3px;
 	font-size:10px;
-	color:#ffffff;
 	padding:3px 3px;
 	display:inline-block;
 	margin:8px 0;
@@ -223,6 +222,7 @@
     text-overflow: ellipsis;
     white-space: normal;
     cursor:pointer;
+    max-height:20px;
 }
 
 #gooruSearchMainContainer .userDetails img{
