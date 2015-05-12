@@ -106,7 +106,9 @@ public class ThankYouResourceStarRatings extends PopupPanel implements ClientCon
 		setWidget(uiBinder.createAndBindUi(this));
 		setUserReview(review);
 		setAvgRatingWidget();
-		this.setStyleName("reviewPopup");
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			this.setStyleName("reviewPopup");
+		}
 		setGlassEnabled(true);
 		thankYouRatingLbl.setText(i18n.GL1854());
 		ratingsConfirmationMainPanel.getElement().setId("fpnlWrapperContainerField");
