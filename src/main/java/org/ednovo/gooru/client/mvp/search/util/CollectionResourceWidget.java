@@ -31,6 +31,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -65,6 +67,8 @@ public class CollectionResourceWidget extends Composite {
 	@UiField Anchor ancViewMore;
 
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
+	
+	String resourceTitleText = "";
 
 	private boolean failedThumbnailGeneration = false;
 
@@ -87,9 +91,18 @@ public class CollectionResourceWidget extends Composite {
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.resourceSearchResultDo=resourceSearchResultDo;
-		String resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
+		resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
+		if(Window.getClientWidth()<=768)
+		{
+			if(resourceTitleText.length()>=15){
+				resourceTitleText=resourceTitleText.substring(0, 15)+"...";
+			}
+		}
+		else
+		{
 		if(resourceTitleText.length()>=25){
 			resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+		}
 		}
 		resourceTitle.setText(resourceTitleText);
 		String resourceDesc=!StringUtil.isEmpty(resourceSearchResultDo.getDescription())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getDescription()):"";
@@ -118,6 +131,26 @@ public class CollectionResourceWidget extends Composite {
 		}else{
 			lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
 		}
+		
+		Window.addResizeHandler(new ResizeHandler() {
+			
+			@Override
+			public void onResize(ResizeEvent event) {
+				if(Window.getClientWidth()<=768)
+				{
+					if(resourceTitleText.length()>=15){
+						resourceTitleText=resourceTitleText.substring(0, 15)+"...";
+					}
+				}
+				else
+				{
+				if(resourceTitleText.length()>=25){
+					resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+				}
+				}
+				
+			}
+		});
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
