@@ -29,7 +29,7 @@
 				</div>
 				<div class="col-md-6 col-sm-6 resourceDesc1">
 					<g:Label styleName="collectionTitle" ui:field="resourceTitle"/>	
-					<div class="resourceAuthorDetails">NASA</div>		
+					<g:Label styleName="resourceAuthorDetails" ui:field="lblResourcePublisher"/>	
 				</div>
 				<div class="clearfix"></div>
 				<g:HTMLPanel styleName="resourceDescription" ui:field="resourceDescription"/>
