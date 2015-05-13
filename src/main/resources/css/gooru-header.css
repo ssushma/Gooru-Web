@@ -808,7 +808,7 @@
 		margin-left: 3%;
 	}
 	#headerMainPanel .arrowLable {
-		background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+		background: url("${cdn.endpoint}/images/ratings/down-arrow.png") 0 12px no-repeat;
 		position: absolute;
 		top: 3px;
 		right: 15px;
@@ -913,7 +913,7 @@
 		position: relative;
 	}
 	#headerMainPanel .banner {
-		margin-top: -36px;
+		/* margin-top: -36px; */
 	}
 	#headerMainPanel .bannerInner .caption {
 		left: 4%;
@@ -1055,7 +1055,7 @@
 		white-space: normal !important;
 	}
 	#headerMainPanel .arrowLable {
-		background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+		background: url("${cdn.endpoint}/images/ratings/down-arrow.png") 0 12px no-repeat;
 		position: absolute;
 		top: 3px;
 		right: 15px;

@@ -208,6 +208,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void onLoad() {
 		isAddingInProgress=true;
 		cureentcollectionTreeItem=null;
+		currentFolderSelectedTreeItem=null;
 	}
 
 	@Override
@@ -226,6 +227,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		if(searchType.equals("collection")){
 			isTopMostSelected =true;
 			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
+			currentFolderSelectedTreeItem=null;
 		}else{
 			isAddingInProgress=true;
 			cureentcollectionTreeItem=null;
