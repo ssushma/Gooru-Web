@@ -38,8 +38,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sun.security.action.GetLongAction;
-
 /**
  * @author Search Team
  * 
