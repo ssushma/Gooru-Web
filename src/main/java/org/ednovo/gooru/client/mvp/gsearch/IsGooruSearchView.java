@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
@@ -103,7 +104,7 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 
 	void OnStandardsClickEvent(Button addBtn);
 
-	void setUpdatedStandards(String setStandardsVal);
+	void setUpdatedStandards(List<Map<String, String>> list);
 	
 	void setSourceSuggestions(SearchDo<String> result);
 

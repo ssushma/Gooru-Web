@@ -17,7 +17,7 @@
 		
 		.popupInner {
 			border: 1px solid #DDD;
-			height: 500px;
+			position: relative;
 		}
 		
 		.popupHeader {

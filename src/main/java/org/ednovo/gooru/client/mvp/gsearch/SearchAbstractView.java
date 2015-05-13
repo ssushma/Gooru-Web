@@ -44,11 +44,11 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -600,7 +600,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}else if(pageNumber==1){
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
-			searchResults.setText(i18n.GL3210()+"  (0) ");
+			searchResults.setText(i18n.GL3210());
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{
 			lblLoadingText.setVisible(false);
@@ -883,10 +883,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			for(int i=0; i<gradesSplit.length; i++){
 				if(gradesSplit[i].equals("12gte")){
 					pnlAddFilters.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
+				}else if(gradesSplit[i].equals("Pre-K")){
+					pnlAddFilters.add(createTagsLabel("Pre-K","gradePanel"));
 				}else{
 					pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
 				}
 			}
+			getUiHandlers().getGooruGradesPresenter().getView().showGradesFilter();
 		}
 	}
 	/**
@@ -1174,9 +1177,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						//newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
 						removeSelectedFilterStyle(newFilterVal,ulCategoryPanel);
 					}
-					if(filterValue.contains("Grade"))
+					if(panelName.equals("gradePanel"))
 					{
 						newFilterVal = filterValue.replaceAll("Grade ", "");
+						if(filterValue.equals("12gte")){
+							newFilterVal = i18n.GL3084();
+						}
 						getUiHandlers().getGooruGradesPresenter().updateFilterStyle(newFilterVal);
 					}
 					if(panelName.equals("subjectsPanel")){
@@ -1602,10 +1608,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		});
 	}
 	@Override
-	public void setUpdatedStandards(String standardsCode){
+	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
 		getUiHandlers().closeStandardsPopup();
-		if(!standardsCode.isEmpty()){
-			pnlAddFilters.add(createTagsLabel(standardsCode,"standardPanel"));
+		if(standsListArray.size()!=0){
+			for(int i=0; i<standsListArray.size(); i++){
+				pnlAddFilters.add(createTagsLabel(standsListArray.get(i).get("selectedCodeVal"),"standardPanel"));
+			}
 			callSearch();
 		}
 	}

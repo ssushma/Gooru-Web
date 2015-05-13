@@ -65,6 +65,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	
 	@UiField HTMLPanel gradeContainer;
 	
+	@UiField LiPanel preKLiPnl,higherLiPnl;
+	
 	public static final String GRADE_FLT = "flt.grade";
 	
 	public static final String ADD = "add";
@@ -86,6 +88,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		renderGradesLiPanel(middlePanel,middleGrades);
 		renderGradesLiPanel(higherPanel,higherGrades);
 		showGradesFilter();
+		preKLiPnl.addClickHandler(new ClickOnGradeLiPnl(preKLiPnl,"Pre-K"));
+		higherLiPnl.addClickHandler(new ClickOnGradeLiPnl(higherLiPnl,"12gte"));
 	}
 	/**
 	 * To render the grade values.
@@ -142,11 +146,15 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	/**
 	 * Pre-Selected grades showing in search page
 	 */
-	private void showGradesFilter() {
+	@Override
+	public void showGradesFilter() {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT);
 		if(grades!=null){
 			String[] gradesSplit = grades.split(",");
 			for(int i=0; i<gradesSplit.length; i++){
+				if(gradesSplit[i].equals("12gte")){
+					gradesSplit[i] = i18n.GL3084();
+				}
 				updateFilterStyle(gradesSplit[i], "add");
 			}
 		}
@@ -220,6 +228,31 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			return true;
 		}
 		return false;
+	}
+	/**
+	 * Handled clickevent for Pre-K/Higher-ed grades
+	 *
+	 */
+	private class ClickOnGradeLiPnl implements ClickHandler{
+		LiPanel liPanel;
+		String gradeText;
+
+		public ClickOnGradeLiPnl(LiPanel preKLiPnl, String gradeText) {
+			liPanel=preKLiPnl;	
+			this.gradeText=gradeText;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if(liPanel.getWidget(0).getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
+				liPanel.getWidget(0).getElement().getStyle().clearBackgroundColor();
+				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, REMOVE));
+			}else{
+				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, ADD));
+				liPanel.getWidget(0).getElement().getStyle().setBackgroundColor("#1076bb");
+			}
+		}
+		
 	}
 	
 }

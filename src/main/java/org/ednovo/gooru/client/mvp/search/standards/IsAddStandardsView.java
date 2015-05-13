@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.search.standards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -71,5 +72,7 @@ public interface IsAddStandardsView extends PopupView, IsViewWithHandlers<AddSta
 			boolean isCAAvailable);
 
 	void setStandardsStyles(String standardVal);
+
+	List<Map<String, String>> getStandListArray();
 	
 }

@@ -380,7 +380,7 @@ public class HeaderUc extends Composite implements
 	private static final String ACCOUNT_TYPE = "accountType";
 	private AppMultiWordSuggestOracle autokeySuggestOracle;
 	String searchData = "";
-	private String GOORU_SEARCH = " -<n> Gooru Search</n>";
+	private String GOORU_SEARCH = "";
 
 	private String discoverLinkUrl = null;
 
