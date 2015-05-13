@@ -779,7 +779,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		params.put(GooruConstants.LIMIT, limit);
 		params.put(GooruConstants.GOORUUID, userIdVal);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
-
+		logger.info("getResourcesByTag::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeResourcesByTag(jsonRep);

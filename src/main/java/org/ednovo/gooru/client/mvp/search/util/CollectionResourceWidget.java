@@ -57,7 +57,7 @@ public class CollectionResourceWidget extends Composite {
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField Label resourceTitle,lblViewCount,lbladdCount;
+	@UiField Label lblResourcePublisher,resourceTitle,lblViewCount,lbladdCount;
 	@UiField InlineLabel lblUserCount;
 	@UiField HTMLPanel resourceDescription,imageOverlay;
 	@UiField Image resourseImage,relatedCollectionImage,creatorImage;
@@ -92,19 +92,19 @@ public class CollectionResourceWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.resourceSearchResultDo=resourceSearchResultDo;
 		resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
-		if(Window.getClientWidth()<=768)
-		{
+		if(Window.getClientWidth()<=768){
 			if(resourceTitleText.length()>=15){
 				resourceTitleText=resourceTitleText.substring(0, 15)+"...";
 			}
-		}
-		else
-		{
-		if(resourceTitleText.length()>=25){
-			resourceTitleText=resourceTitleText.substring(0, 25)+"...";
-		}
+		}else{
+			if(resourceTitleText.length()>=25){
+				resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+			}
 		}
 		resourceTitle.setText(resourceTitleText);
+		if(resourceSearchResultDo.getPublisher()!=null && resourceSearchResultDo.getPublisher().size()>0){
+			lblResourcePublisher.setText(resourceSearchResultDo.getPublisher().get(0));
+		}
 		String resourceDesc=!StringUtil.isEmpty(resourceSearchResultDo.getDescription())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getDescription()):"";
 		if(resourceDesc.length()>=120){
 			resourceDesc=resourceDesc.substring(0, 120)+"...";
