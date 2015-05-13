@@ -39,6 +39,7 @@
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="resourcesInside" ui:field="pnlResourceWidget">
 							<ucp:Paragraph ui:field="pResourceText"/>
+							<g:Label styleName="noResourcesText" ui:field="noResourcesText"/>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					</g:HTMLPanel>

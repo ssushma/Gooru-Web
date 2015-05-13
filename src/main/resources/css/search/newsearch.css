@@ -280,6 +280,13 @@
 #gooruSearchMainContainer .resourcesInside p {
 	margin-left: 2.5%;
 }
+#gooruSearchMainContainer .noResourcesText{
+	text-align: center;
+  	font-weight: bold;
+  	color: grey;
+ 	vertical-align: middle;
+ 	margin-top: 35px;
+  }
 #gooruSearchMainContainer .resourceImage {
    display: inline-block;
 	height: 60px;
