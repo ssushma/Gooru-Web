@@ -169,7 +169,7 @@ public class CollectionSearchWidget extends Composite {
 			if(collectionType!=null){
 				noResourcesText.setVisible(true);
 				if(collectionType.contains(ASSESSMENT)){
-					noResourcesText.setText(i18n.GL3227());
+					noResourcesText.setText(i18n.GL3233());
 				}else{
 					noResourcesText.setText(i18n.GL0684());
 				}
