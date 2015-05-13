@@ -832,8 +832,6 @@
 	}
 	/* Home Page CSS Sprite */
 	
-	
-	
 	#headerMainPanel .spacing {
 		margin-bottom: 7px !important;
 	}
@@ -849,7 +847,7 @@
 	#headerMainPanel .spriteLandingPageGooruBadge {
 		width: 162px;
 		height: 162px;
-		background: url(/images/landing-page/landingpageSprite.png) -104px -2px
+		background: url(../images/landing-page/landingpageSprite.png) -104px -2px
 			no-repeat;
 		display: block;
 	}
