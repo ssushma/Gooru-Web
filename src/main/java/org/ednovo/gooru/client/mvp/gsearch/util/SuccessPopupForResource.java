@@ -80,14 +80,14 @@ public class SuccessPopupForResource extends PopupPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			hide();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
-			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
-			AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
 			Element element = Document.get().getElementById("fixedFilterSearchID");
 			if(element!=null){
 				element.removeAttribute("style");
 			}
+			hide();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
+			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
+			AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
 		}
 	}
 	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type){
