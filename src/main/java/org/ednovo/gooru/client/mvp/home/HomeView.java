@@ -129,7 +129,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	private AppMultiWordSuggestOracle autokeySuggestOracle;
 	String searchData = "";
-	private String GOORU_SEARCH = " -<n> Gooru Search</n>";
+	private String GOORU_SEARCH = "";
 	
 	@UiField(provided = true)
 	public AppSuggestBox txtSearch;
