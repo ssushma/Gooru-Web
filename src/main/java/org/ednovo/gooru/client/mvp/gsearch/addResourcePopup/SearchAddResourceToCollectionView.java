@@ -291,6 +291,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			lblEmptyErrorMessage.setVisible(true);
 			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
 			btnAddExisting.setVisible(false);
+		}else if(COLLECTION.equalsIgnoreCase(searchType)){
+			urlparams.clear();
+			folderTreePanel.clear();
 		}
 	}
 	private  void adjustTreeItemStyle(final UIObject uiObject) {
