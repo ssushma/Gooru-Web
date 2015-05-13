@@ -600,7 +600,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}else if(pageNumber==1){
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
-			searchResults.setText(i18n.GL3210()+"  (0) ");
+			searchResults.setText(i18n.GL3210());
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{
 			lblLoadingText.setVisible(false);
