@@ -156,7 +156,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
 								if(collectionResourceWidget!=null){
-									collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
+									//collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
 								}
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType);
 							}
@@ -205,7 +205,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						}
 						params.put("from", "SearchAddResourcePresenter");
 						if(collectionSearchWidget!=null){
-							collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
+							//collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
 						}
 //						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
 						getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection");
@@ -267,7 +267,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				@Override
 				public void onSuccess(CollectionDo result) {
 					if(collectionSearchWidget!=null){
-						collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
+						//collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
 					}
 					getView().displaySuccessPopup("My Collections", result.getGooruOid(), successparams,"collection");
 					//hidePopup();
