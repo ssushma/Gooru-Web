@@ -1529,7 +1529,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId){
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETNEXTTOCCOLLECTION, folderId, collectionItemId);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETNEXTTOCCOLLECTION, collectionItemId);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.SHARING, GooruConstants.PUBLIC);
 		getLogger().info("-- FolderWhatsNextCollectionDo API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());

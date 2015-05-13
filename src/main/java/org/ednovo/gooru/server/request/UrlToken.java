@@ -538,7 +538,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V2_FOLDER_ROUTE_NODES("/v2/folder/{0}/node?"),
 	
-	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?"),
+	V2_GETNEXTTOCCOLLECTION("/v2/folder/item/{0}/next?"),
 
 	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?"),
 	
