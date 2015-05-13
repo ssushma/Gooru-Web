@@ -3,12 +3,18 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 		<g:HTMLPanel>
-			<div class="gradeHeader">Select a single or multiple grade(s).</div>
-
+			<g:Label styleName="gradeHeader" text="{i18n.GL3232}" title="{i18n.GL3232}"/>
+			
 			<g:HTMLPanel styleName="gradesContainer" ui:field="gradeContainer">
+			    <uc:UlPanel>
+			        <uc:LiPanel styleName="gradeTypes" ui:field="preKLiPnl"><g:Anchor text="{i18n.GL3070}" title="{i18n.GL3070}"/></uc:LiPanel>
+			    </uc:UlPanel>
 				<uc:UlPanel ui:field="elementryPanel"></uc:UlPanel>
 				<uc:UlPanel ui:field="middlePanel"></uc:UlPanel>
 				<uc:UlPanel ui:field="higherPanel"></uc:UlPanel>
+				<uc:UlPanel>
+			        <uc:LiPanel styleName="gradeTypes" ui:field="higherLiPnl"><g:Anchor text="{i18n.GL3084}" title="{i18n.GL3084}"/></uc:LiPanel>
+			    </uc:UlPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 </ui:UiBinder>
