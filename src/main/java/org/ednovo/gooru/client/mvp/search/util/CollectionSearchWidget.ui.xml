@@ -24,7 +24,7 @@
 							</a>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-md-6 col-sm-6 collectionDesc">
-							<g:Label styleName="collectionTitle" ui:field="collectionTitle"/> 
+							<g:Label styleName="collectionTitleincoll" ui:field="collectionTitle"/> 
 							<g:HTMLPanel styleName="userDetails">
 								<g:Image ui:field="imgAuthor"/> <g:Label ui:field="authorName" styleName="authorName"></g:Label> 
 								<g:HTMLPanel ui:field="creatorPanel"></g:HTMLPanel>

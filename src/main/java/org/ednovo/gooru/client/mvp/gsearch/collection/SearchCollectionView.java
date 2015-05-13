@@ -66,8 +66,7 @@ public class SearchCollectionView extends
 	 */
 	@Override
 	public Widget renderSearchResult(final CollectionSearchResultDo collectionSearchResultDo) {
-		
-		CollectionSearchWidget collectionSearchWidget=new CollectionSearchWidget(collectionSearchResultDo);
+		final CollectionSearchWidget collectionSearchWidget=new CollectionSearchWidget(collectionSearchResultDo);
 		collectionSearchWidget.getRemixBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -81,7 +80,7 @@ public class SearchCollectionView extends
 					if(element!=null){
 						element.setAttribute("style", "opacity:0.1;");
 					}
-					getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo);
+					getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo,collectionSearchWidget);
 				}
 			}
 		});
