@@ -913,7 +913,7 @@
 		position: relative;
 	}
 	#headerMainPanel .banner {
-		margin-top: -36px;
+		/* margin-top: -36px; */
 	}
 	#headerMainPanel .bannerInner .caption {
 		left: 4%;
