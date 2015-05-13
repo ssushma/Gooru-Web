@@ -883,10 +883,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			for(int i=0; i<gradesSplit.length; i++){
 				if(gradesSplit[i].equals("12gte")){
 					pnlAddFilters.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
+				}else if(gradesSplit[i].equals("Pre-K")){
+					pnlAddFilters.add(createTagsLabel("Pre-K","gradePanel"));
 				}else{
 					pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
 				}
 			}
+			getUiHandlers().getGooruGradesPresenter().getView().showGradesFilter();
 		}
 	}
 	/**
@@ -1174,9 +1177,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						//newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
 						removeSelectedFilterStyle(newFilterVal,ulCategoryPanel);
 					}
-					if(filterValue.contains("Grade"))
+					if(panelName.equals("gradePanel"))
 					{
 						newFilterVal = filterValue.replaceAll("Grade ", "");
+						if(filterValue.equals("12gte")){
+							newFilterVal = i18n.GL3084();
+						}
 						getUiHandlers().getGooruGradesPresenter().updateFilterStyle(newFilterVal);
 					}
 					if(panelName.equals("subjectsPanel")){
