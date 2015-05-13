@@ -44,11 +44,11 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -1608,10 +1608,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		});
 	}
 	@Override
-	public void setUpdatedStandards(String standardsCode){
+	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
 		getUiHandlers().closeStandardsPopup();
-		if(!standardsCode.isEmpty()){
-			pnlAddFilters.add(createTagsLabel(standardsCode,"standardPanel"));
+		if(standsListArray.size()!=0){
+			for(int i=0; i<standsListArray.size(); i++){
+				pnlAddFilters.add(createTagsLabel(standsListArray.get(i).get("selectedCodeVal"),"standardPanel"));
+			}
 			callSearch();
 		}
 	}

@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.standards;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.user.client.ui.Button;
@@ -53,6 +56,8 @@ public interface AddStandardsUiHandlers extends BaseUiHandlers {
 	Integer setStandardsIdVal();
 
 	String setStandardDesc();
+
+	List<Map<String, String>> getStandardListArray();
 
 
 }
