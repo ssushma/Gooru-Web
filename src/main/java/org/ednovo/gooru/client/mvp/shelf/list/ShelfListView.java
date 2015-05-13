@@ -1236,7 +1236,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	
 	@Override
-	public void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params,CollectionDo collDo) { 
+	public void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params,CollectionDo collDo) {  
 
 		String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 		String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");

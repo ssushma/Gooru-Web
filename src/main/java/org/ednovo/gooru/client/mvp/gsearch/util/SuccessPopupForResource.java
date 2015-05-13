@@ -29,9 +29,12 @@ import java.util.HashMap;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.HighlightRemixedItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -66,7 +69,7 @@ public class SuccessPopupForResource extends PopupPanel {
 	
 	private HashMap<String, String> params;
 	private String selectedGooruOid,collectionName;
-
+	private FolderDo folderDo;
 	public SuccessPopupForResource() {
 		setWidget(uiBinder.createAndBindUi(this));
 		btnViewInMyCollections.addClickHandler(new ViewinMyCollection());
@@ -82,6 +85,7 @@ public class SuccessPopupForResource extends PopupPanel {
 		public void onClick(ClickEvent event) {
 			hide();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
+			AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
 			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
 			AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
 			Element element = Document.get().getElementById("fixedFilterSearchID");
@@ -90,10 +94,11 @@ public class SuccessPopupForResource extends PopupPanel {
 			}
 		}
 	}
-	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type){
+	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type,FolderDo folderDo){
 		setCollectionName(collectionName);
 		setSelectedGooruOid(selectedGooruOid);
 		setParams(params);
+		this.folderDo = folderDo;
 		StringBuffer buffer = new StringBuffer();
 		if(type.equalsIgnoreCase("resource")){
 			buffer.append(i18n.GL3192());
