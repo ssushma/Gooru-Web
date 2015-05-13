@@ -32,9 +32,11 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -156,7 +158,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
 								if(collectionResourceWidget!=null){
-									collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
+									//collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
 								}
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType);
 							}
@@ -178,7 +180,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			collection.setGooruOid(searchResultDo.getGooruOid());
 			collection.setSharing("anyonewithlink");
 			if(selectedFolderOrCollectionid!=null){
-				successparams.put("o1", selectedFolderOrCollectionid);
 				O1_LEVEL_VALUE = urlparams.get("o1");
 				O2_LEVEL_VALUE = urlparams.get("o2");
 				O3_LEVEL_VALUE = urlparams.get("o3");
@@ -189,6 +190,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}else if(O1_LEVEL_VALUE!=null){
 					parentId=O1_LEVEL_VALUE;
 				}
+
 				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
 					@Override
 					public void onSuccess(CollectionDo result) {
@@ -205,9 +207,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						}
 						params.put("from", "SearchAddResourcePresenter");
 						if(collectionSearchWidget!=null){
-							collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
+							//collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
 						}
-//						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+						AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
 						getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection");
 					}
 				});
@@ -244,16 +246,11 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 	
 	@Override
-	public void addCollectionToMyCollections(String object,
-			String currentsearchType) {
+	public void addCollectionToMyCollections(String object,String currentsearchType) {
 		final CollectionDo collection = new CollectionDo();
 		if(currentsearchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(searchResultDo.getGooruOid());
-			AppClientFactory
-			.getInjector()
-			.getResourceService()
-			.copyCollection(collection, "true", null,
-					getSaveCollectionAsyncCallback());			
+			AppClientFactory.getInjector().getResourceService().copyCollection(collection, "true", null,getSaveCollectionAsyncCallback());			
 	}
 		
 }
@@ -267,10 +264,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				@Override
 				public void onSuccess(CollectionDo result) {
 					if(collectionSearchWidget!=null){
-						collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
+						//collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
 					}
-					getView().displaySuccessPopup("My Collections", result.getGooruOid(), successparams,"collection");
-					//hidePopup();
+					getView().displaySuccessPopup("My Collections", result.getGooruOid(),null ,"collection");
 				}
 			};
 		}

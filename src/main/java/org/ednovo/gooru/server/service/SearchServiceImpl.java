@@ -391,7 +391,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}else{
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL.getUrl(), contentGooruOid));
 			}
-		}else if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
+		}else if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)) {	
 			if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
 			}else{

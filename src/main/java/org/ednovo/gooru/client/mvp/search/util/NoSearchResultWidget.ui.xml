@@ -5,9 +5,10 @@
 		<div class="noResultsContainer">		
 			<div class="clearfix"></div>
 			
-			<div class="borderBox">
+			<div class="borderBox noSearchResultsTextContainer">
 			
-			<h2 class="h3 text-center">Sorry, we did not find any results for your search.<br/> Try browsing our libraries below.</h2>
+			<tbp:H2Panel styleName="h3 text-center" ui:field="searchNoResultsHeader"></tbp:H2Panel>
+			<tbp:H2Panel styleName="h3 text-center" ui:field="searchNoResultssubHeader"></tbp:H2Panel>
 			<p class="text-center"><span>Suggested Tips:</span> <span class="dot">•</span> Remove some filters <span class="dot">•</span> Check the spelling <span class="dot">•</span> Use a different keyword <span class="dot">•</span> Switch between collection and resource search</p>
 			</div>
 		</div>
@@ -16,6 +17,11 @@
 			<g:HTMLPanel ui:field="libraryWidgetsContainer" styleName="less-gutter">
 				
 			</g:HTMLPanel>
+			<g:HTMLPanel ui:field="libraryWidgetsContainerViewMore" styleName="less-gutter">
+				
+			</g:HTMLPanel>
 		</g:HTMLPanel>
+		<g:HTMLPanel styleName="text-center"><g:Button styleName="secondary" ui:field="viewMoreBtn">View More</g:Button></g:HTMLPanel>
+		
 	</g:HTMLPanel>
 </ui:UiBinder> 

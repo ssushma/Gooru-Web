@@ -63,31 +63,53 @@ public class SuccessPopupForResource extends PopupPanel {
 
 	@UiField Button btnContinueSearching,btnViewInMyCollections;
 	@UiField Label lblSuccessText,cancelResourcePopupBtnLbl,headerLbl;
+	
+	private HashMap<String, String> params;
+	private String selectedGooruOid,collectionName;
 
 	public SuccessPopupForResource() {
 		setWidget(uiBinder.createAndBindUi(this));
+		btnViewInMyCollections.addClickHandler(new ViewinMyCollection());
 	}
-	public void setData(final String collectionName,final String selectedGooruOid,final HashMap<String, String> params,String type){
+	
+	
+	/**
+	 * Inner class
+	 */
+	public class ViewinMyCollection implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			Element element = Document.get().getElementById("fixedFilterSearchID");
+			if(element!=null){
+				element.removeAttribute("style");
+			}
+			hide();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
+			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
+			AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
+		}
+	}
+	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type){
+		setCollectionName(collectionName);
+		setSelectedGooruOid(selectedGooruOid);
+		setParams(params);
+		StringBuffer buffer = new StringBuffer();
 		if(type.equalsIgnoreCase("resource")){
-			lblSuccessText.setText(i18n.GL3192()+" "+collectionName+".");
+			buffer.append(i18n.GL3192());
+			buffer.append(" ");
+			buffer.append(collectionName);
+			buffer.append(i18n.GL_SPL_FULLSTOP());
+			lblSuccessText.setText(String.valueOf(buffer)); 
 			headerLbl.setText(i18n.GL3224());
 		}else{
+			buffer.append(i18n.GL3225());
+			buffer.append(" ");
+			buffer.append(collectionName);
+			buffer.append(i18n.GL_SPL_FULLSTOP());
 			headerLbl.setText(i18n.GL3223());
-			lblSuccessText.setText(i18n.GL3225()+" "+collectionName+".");
+			lblSuccessText.setText(String.valueOf(buffer)); 
 		}
-		btnViewInMyCollections.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				hide();
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params); 
-				AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionName));
-				AppClientFactory.fireEvent(new HighlightRemixedItemEvent(params,selectedGooruOid));
-				Element element = Document.get().getElementById("fixedFilterSearchID");
-				if(element!=null){
-					element.removeAttribute("style");
-				}
-			}
-		});
 	}
 		
 	public void enableTopFilters(){
@@ -108,6 +130,48 @@ public class SuccessPopupForResource extends PopupPanel {
 	public void clickOnCloseBtn (ClickEvent clickevent){
 		this.hide();
 		enableTopFilters();
+	}
+
+	/**
+	 * @return the params
+	 */
+	public HashMap<String, String> getParams() {
+		return params;
+	}
+
+	/**
+	 * @param params the params to set
+	 */
+	public void setParams(HashMap<String, String> params) {
+		this.params = params;
+	}
+
+	/**
+	 * @return the collectionName
+	 */
+	public String getCollectionName() {
+		return collectionName;
+	}
+
+	/**
+	 * @param collectionName the collectionName to set
+	 */
+	public void setCollectionName(String collectionName) {
+		this.collectionName = collectionName;
+	}
+
+	/**
+	 * @return the selectedGooruOid
+	 */
+	public String getSelectedGooruOid() {
+		return selectedGooruOid;
+	}
+
+	/**
+	 * @param selectedGooruOid the selectedGooruOid to set
+	 */
+	public void setSelectedGooruOid(String selectedGooruOid) {
+		this.selectedGooruOid = selectedGooruOid;
 	}
 	
 }
