@@ -1109,8 +1109,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}else if(questionTypeNum==4){
 					highlightSelectedTab("FIB");
 					fillInTheBlankRadioButton.setValue(true);
-				}else {
-					highlightSelectedTab("HT");
+				}else if(questionTypeNum==8){
+					highlightSelectedTab("HT_HL");
+					hotTextRadioButton.setValue(true);
+				}else if(questionTypeNum==9){
+					highlightSelectedTab("HT_RO");
 					hotTextRadioButton.setValue(true);
 				}
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
@@ -1269,11 +1272,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!hotTextRadioButton.getValue()){
-				getUiHandlers().addSelectedQuestionType("HT");
+				getUiHandlers().addSelectedQuestionType("HT_RO");
 				displayQuestionWidget();
 				hotTextRadioButton.setValue(true);
-				highlightSelectedTab("HT");
-				addQuestionResourceWidget.setQuestionType("HT");
+				highlightSelectedTab("HT_RO");
+				addQuestionResourceWidget.setQuestionType("HT_RO");
 				addQuestionResourceWidget.showHotTextQuestion();
 			}
 		}
@@ -1332,7 +1335,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			searchTabButton.setStyleName(res.css().buttonSelected());
 		}else if(tabType.equals("HS")){
 			hotSpotTabButton.setStyleName(res.css().buttonSelected());
-		}else if(tabType.equals("HT")){
+		}else if(tabType.equals("HT_HL") || (tabType.equals("HT_RO"))){
 			hotTextTabButton.setStyleName(res.css().buttonSelected());
 		}
 	}

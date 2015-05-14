@@ -35,12 +35,16 @@ import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -60,6 +64,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private CollectionItemDo collectionItemDo;
 	
 	private AttemptedAnswersDo attemptedAnswerDo=null;
+	
+	 String regex = "["; 
 	
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
 
@@ -89,6 +95,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
 		answerContainer.getElement().setId("answerContainerPnl");
 		optionsContainerFpnl.clear();
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null && collectionItemDo.getResource().getType()==9){
 		optionsContainer=new HTAnswerDragPanelVc();
 		optionsContainerFpnl.add(optionsContainer);
 		Label label = new Label("");
@@ -97,25 +104,62 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		Label toplabel = new Label("");
 		toplabel.setStyleName("dragDropSpacer");
 		optionsContainer.add(toplabel);
+		}
 		renderQuestionAnswerOptions();
 	}
 	
 	private void renderQuestionAnswerOptions(){
+		
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null){
 			TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
 			Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 			int i=0;
 			while (answersList.hasNext()) {
-				QuestionAnswerDo questionAnswerDo=answersList.next();
-			    HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
-				htAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
-				htAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());
-				int k=i+1;
-				optionsContainer.addDraggable(htAnswerOptionView,k);
-				showPreviousResult(questionAnswerDo.getAnswerId(),htAnswerOptionView);
-				i++;
+				
+				if(collectionItemDo.getResource().getType()==8){
+					QuestionAnswerDo questionAnswerDo=answersList.next();
+					System.out.println("answersList.s"+answersSet.size());
+					String text=questionAnswerDo.getAnswerText();
+					System.out.println("text"+text);
+					if(text.contains("[")){
+						text=text.replaceAll("\\[", "").replaceAll("\\]","");
+				}
+					String[] temp;
+					 temp = text.split(" ");
+					for(int k=0;k<temp.length;k++){
+						final HTML lbl=new HTML(temp[k]+" ");
+						lbl.addStyleName("htPlayerAns");
+						lbl.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								
+								if(lbl.getElement().getStyle().getBackgroundColor().equalsIgnoreCase("rgb(142, 204, 142)")){
+									lbl.getElement().getStyle().clearBackgroundColor();
+								}else{
+								
+								lbl.getElement().getStyle().setBackgroundColor("#8ecc8e");
+								}
+								enableCheckAnswerButton();
+							}
+						});
+						
+						
+						optionsContainerFpnl.add(lbl);
+					}
+				}else{
+					QuestionAnswerDo questionAnswerDo=answersList.next();
+				    HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
+				    /*htAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
+					htAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());*/
+					int k=i+1;
+					optionsContainer.addDraggable(htAnswerOptionView,k);
+					//showPreviousResult(questionAnswerDo.getAnswerId(),htAnswerOptionView);
+					i++;
+				}
 			}
 		}
+		
 	}
 	public void showPreviousResult(int answerId,HTAnswerChoiceOptionView htAnswerOptionView){
 		if(attemptedAnswerDo!=null){
@@ -138,6 +182,40 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		}
 	}
 	
+	
+	@UiHandler("checkAnswer")
+	public void checkButtonClickEvent(ClickEvent event){
+		if(isCheckButtonEnabled){
+			//showCorrectResult();
+			isCheckButtonEnabled=false;
+			checkAnswer.removeStyleName("primary");
+			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+		}
+	}
+	
+	private void enableCheckAnswerButton(){
+		boolean isOptionSelected=false;
+		
+		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
+			
+			HTML widget=(HTML) optionsContainerFpnl.getWidget(i);
+			
+			if(widget.getElement().getStyle().getBackgroundColor().equalsIgnoreCase("rgb(142, 204, 142)")){
+				isOptionSelected=true;
+			}
+		}
+			
+			
+		if(isOptionSelected){
+			isCheckButtonEnabled=true;
+			checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
+			checkAnswer.addStyleName("primary");
+		}else{
+			isCheckButtonEnabled=false;
+			checkAnswer.removeStyleName("primary");
+			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+		}
+	}
 	
 	
 	
