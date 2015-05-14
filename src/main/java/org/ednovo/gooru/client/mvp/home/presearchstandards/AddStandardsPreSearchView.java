@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -503,7 +502,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
+							LiPanel clickedObject = (LiPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
 							selectedCodeDesc = codeDesc;
