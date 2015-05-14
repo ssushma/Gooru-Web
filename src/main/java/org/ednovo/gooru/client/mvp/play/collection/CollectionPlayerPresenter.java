@@ -1312,7 +1312,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	
 	public void stopResourceDataLogFromHomePage(){
-		AppClientFactory.printInfoLogger("---In stopResourceDataLogFromHomePage -- resourceActivityResourceId --- "+resourceActivityResourceId+"\n\n\n");
+		AppClientFactory.printInfoLogger("---In stopResourceDataLogFromHomePage() method \n"); 
 		if(resourceActivityResourceId!=null){
 			String resourceContext=PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid()+"/"+resourceActivityResourceId;
 			stopResourceInsightDataLog();
@@ -1321,6 +1321,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			collectionActivityEventId=null;
 			collectionEndTime=0L;
 			totalTimeSpentOnSummaryPage=0L;
+		}else{
+			AppClientFactory.printInfoLogger("---In stopResourceDataLogFromHomePage -- resourceActivityResourceId is NULL --- \n"); // shld remove this else part later as it is added for debugging purpose
 		}
 	}
 
@@ -1334,6 +1336,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(), 
 					PlayerDataLogEvents.STOP_EVENT_TYPE, collectionStartTime, collectionEndTime, collectionEndTime-collectionStartTime-totalTimeSpentOnSummaryPage, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
 			triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionEndTime,PlayerDataLogEvents.STOP_EVENT_TYPE,0);// TODO need to implement score
+		}else{
+			AppClientFactory.printInfoLogger("---In stopCollectionDataLog -- collectionActivityEventId is NULL --- \n");// shld remove this else part later as it is added for debugging purpose
 		}
 	}
 	
