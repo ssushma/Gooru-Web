@@ -73,7 +73,12 @@ public class SearchResourceView extends
 			public void onClick(ClickEvent event) {
 				Window.enableScrolling(false);
 				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
+					LoginPopupUc loginPopupUc=new LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							
+						}
+					};
 					loginPopupUc.show();
 					loginPopupUc.setGlassEnabled(true);
 				}else{

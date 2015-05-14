@@ -2468,6 +2468,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	 */
 	@Override
 	public void highlightRemixedItem(HashMap<String, String> params, String itemid) {
+		if(params!=null)
+		{
 		if(params.get(O3_LEVEL)!=null) {
 			organizeRootPnl.removeStyleName(folderStyle.active());
 			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
@@ -2499,6 +2501,11 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			isDragged=true;
 			onDragOverOpenFolder(params.get(O1_LEVEL),false);
 		}else{
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+		}
+		}
+		else
+		{
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 		}
 	}
