@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
@@ -1654,7 +1655,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}else{
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.show();
 		popup.setGlassEnabled(true);
 		}
@@ -1669,7 +1675,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}
 		else{
-			LoginPopupUc popup =new LoginPopupUc();
+			LoginPopupUc popup =new  LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					
+				}
+			};
 			popup.show();
 			popup.setGlassEnabled(true);
 		}

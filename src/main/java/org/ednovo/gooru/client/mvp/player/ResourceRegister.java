@@ -264,7 +264,12 @@ public class ResourceRegister extends PopupPanel{
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		MixpanelUtil.Click_HaveAnAccount_ResourceRegisterPopup();
-		LoginPopupUc popup = new LoginPopupUc(new HeaderUc());
+		LoginPopupUc popup = new  LoginPopupUc(new HeaderUc()) {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setGlassEnabled(true);
 		popup.show();
 		popup.center();	 

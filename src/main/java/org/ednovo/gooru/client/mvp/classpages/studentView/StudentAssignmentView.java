@@ -650,7 +650,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 
 				mainContainer.setVisible(false);
-				LoginPopupUc loginPopupUc=new LoginPopupUc();
+				LoginPopupUc loginPopupUc=new LoginPopupUc() {
+					
+					@Override
+					public void onLoginSuccess() {
+						// TODO Auto-generated method stub
+						
+					}
+				};
 				
 			}else{
 			if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
@@ -1179,11 +1186,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 		if(AppClientFactory.isAnonymous()){
 	
-			LoginPopupUc loginPopupUc=new LoginPopupUc();
-			
-			
-			
-			
+			LoginPopupUc loginPopupUc=new LoginPopupUc() {
+				
+				@Override
+				public void onLoginSuccess() {
+					// TODO Auto-generated method stub
+					
+				}
+			};
 		}else{
 			if(!isJoinPopupButtonclick){
 				isJoinPopupButtonclick=true;
@@ -1407,7 +1417,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	if(AppClientFactory.isAnonymous()){
 
-		LoginPopupUc loginPopupUc=new LoginPopupUc();
+		LoginPopupUc loginPopupUc=new LoginPopupUc() {
+			
+			@Override
+			public void onLoginSuccess() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
 		
 		
 	}else{
@@ -1881,7 +1898,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 
 						mainContainer.setVisible(false);
-						LoginPopupUc loginPopupUc=new LoginPopupUc();
+						LoginPopupUc loginPopupUc=new  LoginPopupUc() {
+							
+							@Override
+							public void onLoginSuccess() {
+								// TODO Auto-generated method stub
+								
+							}
+						};
 						
 					}else{
 					if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
