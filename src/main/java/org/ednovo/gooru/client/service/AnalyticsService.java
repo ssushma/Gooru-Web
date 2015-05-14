@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -70,4 +71,7 @@ public interface AnalyticsService extends BaseService {
 	public String exportTeacherSummary(String collectionGooruOId,String pathwayId,String classId,String timeZone); 
 	
 	public String exportProgress(String collectionId,String classpageId,String timeZone);
+
+	HashMap<String, String> getResourceAndCollectionCounts(String Id,
+			String searchType);
 }

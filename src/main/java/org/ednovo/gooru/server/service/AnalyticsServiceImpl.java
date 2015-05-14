@@ -524,8 +524,91 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}
 		return collectionResourcesList;
 	}
-
-
+	@Override
+	public HashMap<String,String> getResourceAndCollectionCounts(String Id,String searchType){
+		try {
+			JsonRepresentation jsonRep = null;
+			String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V2_GET_VIEW_COUNTS, getLoggedInSessionToken());
+			JSONObject jsonStr = generateViewCountData(Id,searchType);
+			String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr.toString());
+			logger.info("getResourceAndCollectionCounts url:+"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			if(jsonResponseRep.getStatusCode()==200 && !jsonRep.getJsonObject().isNull("content")){
+				JSONArray jsonArray=jsonRep.getJsonObject().getJSONArray("content");
+				if(jsonArray!=null&&jsonArray.length()>0){
+					return deserializeViewsCount(jsonArray);
+				}
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return new HashMap<String, String>();
+	}
+	public HashMap<String,String> deserializeViewsCount(JSONArray jsonArray){
+		HashMap<String, String> resultMap=new HashMap<String, String>();
+		try {
+			JSONObject jsonObj=jsonArray.getJSONObject(0);
+			resultMap.put("copyCount", Integer.toString(jsonObj.getInt("copyCount")));
+			resultMap.put("viewsCount", Integer.toString(jsonObj.getInt("viewsCount")));
+			resultMap.put("gooruOid", jsonObj.getString("gooruOid"));
+		}catch(JSONException e){
+			logger.error("Exception::", e);
+		}
+		return resultMap;
+	}
+	/**
+	 * This method will construct the json object for the view count
+	 * @param Id
+	 * @param searchType
+	 * @return
+	 */
+	public JSONObject generateViewCountData(String Id,String searchType){
+		JSONObject jsonDataObject=new JSONObject(); 
+		try {
+			String requiredFields=GOORUOid+","+VIEWSCOUNT+","+COPYCOUNT;
+			jsonDataObject.put(FIELDS, requiredFields);
+			jsonDataObject.put(DATASOURCE, CONTENT);
+			jsonDataObject.put(GRANULARITY, "");
+			JSONArray filtersArray=new JSONArray();
+				JSONObject jsonFilterObject=new JSONObject(); 
+				jsonFilterObject.put(LOGICALOPERATORPREFIX, AND);
+					JSONArray fieldsArray=new JSONArray();
+					JSONObject jsonFirstObject=new JSONObject(); 
+					jsonFirstObject.put(TYPE, SELECTOR);
+					jsonFirstObject.put(VALUETYPE, STRING);
+					jsonFirstObject.put(FIELDNAME, RESOURCEFORMATID);
+					jsonFirstObject.put(OPERATOR, IN);
+					jsonFirstObject.put(VALUE, RESOURCEVALUE);
+					fieldsArray.put(jsonFirstObject);
+					JSONObject jsonSecondObject=new JSONObject(); 
+					jsonSecondObject.put(TYPE, SELECTOR);
+					jsonSecondObject.put(VALUETYPE, STRING);
+					jsonSecondObject.put(FIELDNAME, GOORUOid);
+					jsonSecondObject.put(OPERATOR, IN);
+					jsonSecondObject.put(VALUE, Id);
+					fieldsArray.put(jsonSecondObject);
+					jsonFilterObject.put(FIELDS, fieldsArray);
+			filtersArray.put(jsonFilterObject);
+			jsonDataObject.put(FILTER, filtersArray);
+			JSONObject paginateJsonObject=new JSONObject();
+			paginateJsonObject.put(OFFSET, 0);
+			paginateJsonObject.put(LIMIT, 1);
+			JSONArray orderArray=new JSONArray();
+			JSONObject jsonOrderObject=new JSONObject();
+			jsonOrderObject.put(SORTBY, CREATEDON);
+			jsonOrderObject.put(SORT_ORDER, "DESC");
+			orderArray.put(jsonOrderObject);
+			paginateJsonObject.put(ORDER, orderArray);
+			jsonDataObject.put(PAGINATION, paginateJsonObject);
+			
+			jsonDataObject.put(AGGREGATIONS, new JSONArray());
+			jsonDataObject.put(GROUPBY, "");
+		} catch (JSONException e) {
+				e.printStackTrace();
+		}
+		return jsonDataObject;
+	}
 	@Override
 	public void sendEmail(String to, String subject, String message,String displayName, String fileName, String path) {
 		JsonRepresentation jsonRep = null;

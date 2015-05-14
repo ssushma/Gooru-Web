@@ -1393,10 +1393,8 @@ public class HeaderUc extends Composite implements
 	@UiHandler("editSearchBtn")
 	public void OnSearchClick(ClickEvent clickEvent) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
 			@Override
 			public void onSuccess() {
-
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {

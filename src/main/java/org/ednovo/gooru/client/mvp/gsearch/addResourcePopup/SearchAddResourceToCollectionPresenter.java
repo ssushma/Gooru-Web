@@ -29,6 +29,7 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -156,6 +157,12 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
 								if(collectionResourceWidget!=null){
+									AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(selectedFolderOrCollectionid, searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
+										@Override
+										public void onSuccess(HashMap<String, String> result) {
+										
+										}
+									});
 									//collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
 								}
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType,null);
