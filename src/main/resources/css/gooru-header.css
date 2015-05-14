@@ -707,7 +707,8 @@
 		display: none;
 	}
 	#headerMainPanel .header-mainmenu {
-		width: 100% !important;
+		width: 10% !important;
+		float:right;
 	}
 	#headerMainPanel .header-mainmenu .navbar-collapse {
 		width: 100%;
