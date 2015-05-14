@@ -552,6 +552,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V2_DELETE_CONTENT_REPORT("/v2/report/{0}?sessionToken={1}"),
 	
+	V2_GET_VIEW_COUNTS("/v2/query?sessionToken={0}"),
+	
 	V2_GET_RESOURCE_BASED_USERS("/v2/resource/{0}/collection?sessionToken={1}&offset={2}&limit={3}");
 	
 

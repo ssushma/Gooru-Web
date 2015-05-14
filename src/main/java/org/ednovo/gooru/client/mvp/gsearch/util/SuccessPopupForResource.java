@@ -130,6 +130,7 @@ public class SuccessPopupForResource extends PopupPanel {
 	public void clickOnContinue(ClickEvent clickevent){
 		this.hide();
 		enableTopFilters();
+		AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
 	}
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void clickOnCloseBtn (ClickEvent clickevent){

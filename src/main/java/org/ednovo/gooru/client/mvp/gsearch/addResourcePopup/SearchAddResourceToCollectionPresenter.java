@@ -29,15 +29,13 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
-
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -159,6 +157,12 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
 								if(collectionResourceWidget!=null){
+									AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(selectedFolderOrCollectionid, searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
+										@Override
+										public void onSuccess(HashMap<String, String> result) {
+										
+										}
+									});
 									//collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
 								}
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType,null);

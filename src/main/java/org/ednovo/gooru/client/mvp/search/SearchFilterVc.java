@@ -2589,10 +2589,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 			}
 		}
-		if(filters.length==0)
+		/*if(filters.length==0)
 		{
-			HeaderUc.setStandardsCode(null,0,null);
-		}
+			HeaderUc.setStandardsCode(null);
+		}*/
 	}
 	
 	@UiHandler("arrowLblCategory")
