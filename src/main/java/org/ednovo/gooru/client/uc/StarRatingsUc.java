@@ -305,7 +305,12 @@ public abstract class StarRatingsUc extends Composite {
 	 * Invokes Log-in pop-up
 	 */
 	private void showLoginPopupWidget() { 
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setWidgetMode("ratingWidget");
 		popup.setGlassEnabled(true);
 	}

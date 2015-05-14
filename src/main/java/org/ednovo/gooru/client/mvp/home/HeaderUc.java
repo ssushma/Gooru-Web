@@ -845,7 +845,12 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("loginLink")
 	public void onLinkPopupClicked(ClickEvent clickEvent) {
-		popup = new LoginPopupUc(this);
+		popup = new LoginPopupUc(this) {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override

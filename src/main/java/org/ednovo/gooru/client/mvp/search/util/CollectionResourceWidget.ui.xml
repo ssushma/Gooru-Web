@@ -48,7 +48,7 @@
 						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitleforResource"></g:InlineLabel>
 					</div>
 					<div class="col-md-3 col-xs-3 col-sm-3 user">
-						<a href="#">
+						<a>
 						<g:Image ui:field="creatorImage"/>
 						</a>
 					</div>

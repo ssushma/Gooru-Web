@@ -681,7 +681,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 	}
 	private void showLoginPopupWidget(String widgetType) { 
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		if(widgetType.equals(REACTIONS_WIDGET)){
 			popup.setWidgetMode("reactionWidget");
 		}else if(widgetType.equals(RATINGS_WIDGET)){
