@@ -1597,7 +1597,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	@Override
 	public void showLoginPopupWidget(String widgetMode){
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setWidgetMode(widgetMode);
 		popup.setGlassEnabled(true);
 	}

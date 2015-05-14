@@ -85,7 +85,12 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 			@Override
 			public void onClick(ClickEvent event) {
 				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
+					LoginPopupUc loginPopupUc=new  LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							
+						}
+					};
 				}else{
 					getUiHandlers().showAddResourceToShelfView(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
 					getUiHandlers().showAndHideDisclosurePanelOnCLick(resourceSearchResultVc.getDisclosurePanelClose());
@@ -97,7 +102,12 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 			@Override
 			public void onClick(ClickEvent event) {
 				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
+					LoginPopupUc loginPopupUc=new  LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							
+						}
+					};
 				}else{
 					getUiHandlers().setAnalyticsTabData(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
 				}

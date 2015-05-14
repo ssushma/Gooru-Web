@@ -1412,7 +1412,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 
 	@Override
 	public void showLoginPopupWidget(String widgetMode){
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setWidgetMode(widgetMode);
 		popup.setGlassEnabled(true);
 	}

@@ -36,26 +36,19 @@ import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFo
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
-
-import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
+import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -82,8 +75,6 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourceContainerPresenter extends PresenterWidget<IsAddResourceContainerView> implements AddResourceContainerUiHandlers,ClientConstants{
 	
 	ResourceSearchResultDo searchResultDo =null;
-	
-	
 	String type =null;
 	String accessType =null;
 
