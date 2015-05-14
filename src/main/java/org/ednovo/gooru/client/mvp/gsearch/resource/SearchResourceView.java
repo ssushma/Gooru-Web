@@ -73,15 +73,16 @@ public class SearchResourceView extends
 			public void onClick(ClickEvent event) {
 				Window.enableScrolling(false);
 				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
+					LoginPopupUc loginPopupUc=new LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							callRemixPopup(resourceSearchResultDo,collectionResourceWidget);
+						}
+					};
 					loginPopupUc.show();
 					loginPopupUc.setGlassEnabled(true);
 				}else{
-					Element element = Document.get().getElementById("fixedFilterSearchID");
-					if(element!=null){
-						element.setAttribute("style", "opacity:0.1;");
-					}
-				getUiHandlers().displayAddResourcePoup(resourceSearchResultDo,collectionResourceWidget);
+					callRemixPopup(resourceSearchResultDo,collectionResourceWidget);
 				}
 			}
 		});
@@ -94,7 +95,7 @@ public class SearchResourceView extends
 					if(element!=null){
 						element.setAttribute("style", "opacity:0.1;");
 					}
-				getUiHandlers().displayUsersList(resourceSearchResultDo);
+					getUiHandlers().displayUsersList(resourceSearchResultDo);
 			}
 		});
 		collectionResourceWidget.getElement().setId(resourceSearchResultDo.getGooruOid());
@@ -109,6 +110,14 @@ public class SearchResourceView extends
 			}
 		});
 		return collectionResourceWidget;
+	}
+	protected void callRemixPopup(ResourceSearchResultDo resourceSearchResultDo,CollectionResourceWidget collectionResourceWidget2) {
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null){
+			element.setAttribute("style", "opacity:0.1;");
+		}
+		getUiHandlers().displayAddResourcePoup(resourceSearchResultDo,collectionResourceWidget);
+		
 	}
 	/**
 	 * @return the collectionResourceWidget

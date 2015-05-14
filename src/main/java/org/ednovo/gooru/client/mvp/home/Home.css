@@ -2216,14 +2216,14 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 }
 
 .getStart .getInnerRight {
-	background: #ffffff;
-	padding: 20px 15px;
-	margin-bottom: 23px;
-	border-radius: 4px 4px;
+	background: #fff;
+  padding: 10px 15px;
+  margin-bottom: 23px;
+  border-radius: 4px 4px;
 }
 
 .getStart .getContentContainer {
-	padding: 10px 10px;
+	padding: 40px 10px;
 }
 
 .getContentContainer p {
@@ -2314,6 +2314,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 .yourSupport {
 	margin-bottom: 50px;
 	width: 100%;
+	text-align: center;
 }
 
 .yourSupport h1 {
@@ -2339,7 +2340,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 }
 
 .yourSupport p {
-	font-size: 14px;
+	font-size: 16px;
 	margin-bottom: 10px;
 }
 
@@ -2380,9 +2381,10 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 }
 
 .badgepadd {
-	display: table-cell;
-	height: 182px;
 	vertical-align: middle;
+	display: block;
+	height: auto;
+	margin: 25px 0;
 }
 
 .social {

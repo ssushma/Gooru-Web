@@ -157,7 +157,10 @@ public class PlayerDataLogEvents {
 	
 	
 	public static void collectionStartStopEvent(JSONObject collectionDataLogEventMap){
+		AppClientFactory.printInfoLogger("--- "+collectionDataLogEventMap.get("eventName")+" event data --->> \n"+collectionDataLogEventMap.toString()+"\n");
+		AppClientFactory.printInfoLogger("--- All data is sent to trigger et.data push --- \n");
 		triggerDataLogCall(collectionDataLogEventMap);
+		AppClientFactory.printInfoLogger("--- Triggered "+collectionDataLogEventMap.get("eventName")+" event successfully --- \n\n");
 	}
 	public static void collectionItemStartStopEvent(){
 		

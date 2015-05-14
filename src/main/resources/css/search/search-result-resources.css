@@ -22,7 +22,7 @@
 display: inline-block;
   float: left;
   padding-right: 10px;
-  padding-left: 10px;
+  padding-left: 2px;
 }
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li {
     display: inline-block;
@@ -123,6 +123,7 @@ margin:0 0 0 -20px !important;
 	color: #fff;
 	background-color: #999999;
 	border-color: #908f8f;
+	margin-right: -11%;
 }
 #gooruSearchMainContainer .gridToggle .btn-primary:hover,#gooruSearchMainContainer  .gridToggle .btn-primary:focus,#gooruSearchMainContainer  .gridToggle .btn-primary:active,#gooruSearchMainContainer  .gridToggle .btn-primary.active,#gooruSearchMainContainer  .gridToggle .open .dropdown-toggle.btn-primary {
 	color: #fff;
@@ -437,7 +438,7 @@ margin:0 0 0 -20px !important;
 		color: grey;
 		width: 100%;
 		white-space: normal;
-		height: 27px;
+		height: 31px;
 		margin-left: 10%;
 	}
 }

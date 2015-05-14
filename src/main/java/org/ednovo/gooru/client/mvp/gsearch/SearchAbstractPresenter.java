@@ -221,7 +221,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				@Override
 				protected void run(SearchDo<String> searchDo) {
 					getSearchService().getSuggestSource(searchDo, this);
-
 				}
 
 				@Override
@@ -603,7 +602,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	
 	@Override
 	public void setUpdatedStandards() {
-		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal());
+		getView().setUpdatedStandards(addStandardsPresenter.getStandardListArray());
 	}
 	
 	@Override

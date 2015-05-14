@@ -493,7 +493,14 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			if (user.isAvailability()) {
 				if (user.getConfirmStatus() == 1 && userType.equalsIgnoreCase("Parent")) {
 					if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
-						LoginPopupUc login = new LoginPopupUc(user.getEmailId());
+						LoginPopupUc login = new LoginPopupUc(user.getEmailId()) {
+							
+							@Override
+							public void onLoginSuccess() {
+								// TODO Auto-generated method stub
+								
+							}
+						};
 					} else if(AppClientFactory.getLoggedInUser().getUserUid().equalsIgnoreCase(parentGooruUID)||AppClientFactory.getLoggedInUser().getUserUid()==parentGooruUID){
 						userRegistrationPresenter.setAccountType(userType);
 						userRegistrationPresenter.setUser(user);

@@ -67,7 +67,7 @@ public class CollectionSearchWidget extends Composite {
 	String CUSTOMIZE = "customize";
 
 	@UiField HTMLPanel pnlResourceWidget,collectionDescription,creatorPanel;
-	@UiField Label collectionTitle,authorName,lblViewCount,remixCountLbl;
+	@UiField Label collectionTitle,authorName,lblViewCount,remixCountLbl,noResourcesText;
 	@UiField Paragraph pResourceText;
 	@UiField Image imgAuthor,imgCollection;
 	@UiField FlowPanel standardsDataPanel;
@@ -78,6 +78,8 @@ public class CollectionSearchWidget extends Composite {
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
 	private static String DEFULT_IMAGE = "images/default-collection-image.png";
+	
+	private static final String ASSESSMENT = "assessment";
 	
 	public CollectionSearchWidget(final CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -141,6 +143,7 @@ public class CollectionSearchWidget extends Composite {
 		}
 		setResourceAndQuestionCount(collectionSearchResultDo);
 		if(collectionSearchResultDo.getCollectionItems().size()>0){
+			noResourcesText.setVisible(false);
 			int count=0;
 				for (final CollectionItemDo collectionItemSearchResultDo :collectionSearchResultDo.getCollectionItems()) {
 					if(count>=4){
@@ -162,6 +165,15 @@ public class CollectionSearchWidget extends Composite {
 					});
 					count++;
 				}
+		}else{
+			if(collectionType!=null){
+				noResourcesText.setVisible(true);
+				if(collectionType.contains(ASSESSMENT)){
+					noResourcesText.setText(i18n.GL3233());
+				}else{
+					noResourcesText.setText(i18n.GL0684());
+				}
+			}
 		}
 		SearchUiUtil.renderStandardsforCollection(standardsDataPanel, collectionSearchResultDo);
 		

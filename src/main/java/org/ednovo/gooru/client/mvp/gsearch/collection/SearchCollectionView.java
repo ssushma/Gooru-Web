@@ -72,20 +72,28 @@ public class SearchCollectionView extends
 			public void onClick(ClickEvent event) {
 				Window.enableScrolling(false);
 				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
+					LoginPopupUc loginPopupUc=new LoginPopupUc() {
+						@Override
+						public	void onLoginSuccess(){
+							Window.enableScrolling(false);
+							displayRemixPopup(collectionSearchResultDo,collectionSearchWidget);
+						}
+					};
 					loginPopupUc.show();
 					loginPopupUc.setGlassEnabled(true);
 				}else{
-					Element element = Document.get().getElementById("fixedFilterSearchID");
-					if(element!=null){
-						element.setAttribute("style", "opacity:0.1;");
-					}
-					getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo,collectionSearchWidget);
+					displayRemixPopup(collectionSearchResultDo,collectionSearchWidget);
 				}
 			}
 		});
 		collectionSearchWidget.getElement().setId(collectionSearchResultDo.getGooruOid());
 		return collectionSearchWidget;
 	}
-
+	public void displayRemixPopup(CollectionSearchResultDo collectionSearchResultDo,CollectionSearchWidget collectionSearchWidget){
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null){
+			element.setAttribute("style", "opacity:0.1;");
+		}
+		getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo,collectionSearchWidget);
+	}
 }

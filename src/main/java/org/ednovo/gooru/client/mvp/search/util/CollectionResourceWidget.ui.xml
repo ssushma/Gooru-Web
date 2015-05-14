@@ -29,7 +29,7 @@
 				</div>
 				<div class="col-md-6 col-sm-6 resourceDesc1">
 					<g:Label styleName="collectionTitle" ui:field="resourceTitle"/>	
-					<div class="resourceAuthorDetails">NASA</div>		
+					<g:Label styleName="resourceAuthorDetails" ui:field="lblResourcePublisher"/>	
 				</div>
 				<div class="clearfix"></div>
 				<g:HTMLPanel styleName="resourceDescription" ui:field="resourceDescription"/>
@@ -48,7 +48,7 @@
 						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitleforResource"></g:InlineLabel>
 					</div>
 					<div class="col-md-3 col-xs-3 col-sm-3 user">
-						<a href="#">
+						<a>
 						<g:Image ui:field="creatorImage"/>
 						</a>
 					</div>

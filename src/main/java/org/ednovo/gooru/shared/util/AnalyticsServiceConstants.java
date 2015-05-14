@@ -97,4 +97,30 @@ public interface AnalyticsServiceConstants {
 	
 	
 	String FIELDS_USER_SESSION_DATA_BY_USER = "answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,type,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence";
+	
+	String VIEWSCOUNT="viewsCount";
+	String COPYCOUNT="copyCount";
+	String DATASOURCE = "dataSource";
+	String CONTENT = "content";
+	String GRANULARITY="granularity";
+	String LOGICALOPERATORPREFIX="logicalOperatorPrefix";
+	String AND="AND";
+	String SELECTOR="selector";
+	String VALUETYPE="valueType";
+	String STRING="string";
+	String FIELDNAME="fieldName";
+	String RESOURCEFORMATID="resourceFormatId";
+	String OPERATOR="operator";
+	String IN="in";
+	String VALUE="value";
+	String RESOURCEVALUE="103,101,104,106,102,105,100";
+	String PAGINATION="pagination";
+	String OFFSET="offset";
+	String LIMIT="limit";
+	String CREATEDON="createdOn";
+	String ORDER="order";
+	String AGGREGATIONS="aggregations";
+	String GROUPBY="groupBy";
+	String GOORUOid="gooruOid";
+	String FILTER="filter";
 }

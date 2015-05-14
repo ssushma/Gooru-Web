@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.GooruCBundle;
@@ -44,6 +45,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
@@ -75,6 +77,8 @@ import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -281,7 +285,7 @@ public class HeaderUc extends Composite implements
 	
 	static PreFilterPopup prefilter=null;
 	
-	static String stadardCode;
+	static String stadardCode="";
 
 	boolean isGooruGuidePanelOpen = false;
 
@@ -313,6 +317,8 @@ public class HeaderUc extends Composite implements
 	private ClasspageListVc classpageListVc;
 
 	private SaveSharePanel saveSharePanel;
+	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
 	@Inject
 	HomeUiHandlers homeUiHandlers;
@@ -378,9 +384,11 @@ public class HeaderUc extends Composite implements
 	private static final String ACCOUNT_TYPE = "accountType";
 	private AppMultiWordSuggestOracle autokeySuggestOracle;
 	String searchData = "";
-	private String GOORU_SEARCH = " -<n> Gooru Search</n>";
+	private String GOORU_SEARCH = "";
 
 	private String discoverLinkUrl = null;
+	
+	private String stadardsListCode= "";
 
 
 	private static String DEFAULT_PROFILE_IMAGE = "images/settings/setting-user-image.png";
@@ -837,7 +845,12 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("loginLink")
 	public void onLinkPopupClicked(ClickEvent clickEvent) {
-		popup = new LoginPopupUc(this);
+		popup = new LoginPopupUc(this) {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
@@ -1380,10 +1393,8 @@ public class HeaderUc extends Composite implements
 	@UiHandler("editSearchBtn")
 	public void OnSearchClick(ClickEvent clickEvent) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
 			@Override
 			public void onSuccess() {
-
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
@@ -1528,22 +1539,45 @@ public class HeaderUc extends Composite implements
 			String standardsUrlParam = null;
 			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
 			{
-				if(stadardCode!=null && !stadardCode.equals("")){
-					params.put(IsSearchView.STANDARD_FLT, stadardCode);
-					stadardCode=null;
-				}
-				else
-				{
+				stadardsListCode="";
 				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
-				params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
+				if(addStandardsPresenter!=null){
+					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
+					int standardArraySize = standardsList.size();
+					if(standardArraySize!=0){
+						for(int i=0; i<standardArraySize; i++){
+							if(!stadardsListCode.isEmpty()){
+								stadardsListCode += ",";
+							}
+							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
+						}
+						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
+					}
+					
+				}
+				if(!stadardsListCode.isEmpty()){
+					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam+","+stadardsListCode);
+				}else{
+					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
 				}
 			}
 			else
 			{
-				if(stadardCode!=null && !stadardCode.equals("")){
-				params.put(IsSearchView.STANDARD_FLT, stadardCode);
-				stadardCode=null;
+				stadardsListCode="";
+				if(addStandardsPresenter!=null){
+					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
+					int standardArraySize = standardsList.size();
+					if(standardArraySize!=0){
+						for(int i=0; i<standardArraySize; i++){
+							if(!stadardsListCode.isEmpty()){
+								stadardsListCode += ",";
+							}
+							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
+						}
+						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
+					}
 				}
+				
 			}
 		}
 		
@@ -2107,6 +2141,15 @@ public class HeaderUc extends Composite implements
 	protected void onLoad() {
 		super.onLoad();
 		getEditSearchTxtBox().setFocus(true);
+		//This will set the search keyword after refreshing the page
+		Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+			@Override
+			public void execute() {
+				String queryVal=AppClientFactory.getPlaceManager().getRequestParameter("query");
+				getEditSearchTxtBox().setText(queryVal);
+				editSearchTxtBox.setText(queryVal);
+			}
+		});
 	}
 
 	/**
@@ -2208,10 +2251,6 @@ public class HeaderUc extends Composite implements
 		prefilter=prefilterObj;
 	}
 
-	public static void setStandardsCode(String stadardCodeId, int id, String code){
-		stadardCode=stadardCodeId;
-	}
-
 	public void updateHeaderProfileImage(String imageUrl) {
 		imgUserProfile.setUrl(imageUrl+ "?" + Math.random());
 	}
@@ -2223,4 +2262,9 @@ public class HeaderUc extends Composite implements
 	public static native void invokeToggleMenuContainer() /*-{
 		$wnd.showToggleMenu();
 	}-*/;
+
+	public void setAddStandardsPresenter(
+			AddStandardsPreSearchPresenter addStandardsPresenter) {
+		this.addStandardsPresenter=addStandardsPresenter;
+	}
 }

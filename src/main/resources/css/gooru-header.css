@@ -707,7 +707,8 @@
 		display: none;
 	}
 	#headerMainPanel .header-mainmenu {
-		width: 100% !important;
+		width: 10% !important;
+		float:right;
 	}
 	#headerMainPanel .header-mainmenu .navbar-collapse {
 		width: 100%;
@@ -808,7 +809,7 @@
 		margin-left: 3%;
 	}
 	#headerMainPanel .arrowLable {
-		background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+		background: url("${cdn.endpoint}/images/ratings/down-arrow.png") 0 12px no-repeat;
 		position: absolute;
 		top: 3px;
 		right: 15px;
@@ -832,8 +833,6 @@
 	}
 	/* Home Page CSS Sprite */
 	
-	
-	
 	#headerMainPanel .spacing {
 		margin-bottom: 7px !important;
 	}
@@ -849,7 +848,7 @@
 	#headerMainPanel .spriteLandingPageGooruBadge {
 		width: 162px;
 		height: 162px;
-		background: url(/images/landing-page/landingpageSprite.png) -104px -2px
+		background: url(../images/landing-page/landingpageSprite.png) -104px -2px
 			no-repeat;
 		display: block;
 	}
@@ -859,25 +858,25 @@
 	#headerMainPanel .spriteLandingPageFacebookIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -22px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -22px -2px
 			no-repeat;
 	}
 	#headerMainPanel .spriteLandingPageGooglePlusIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -63px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -63px -2px
 			no-repeat;
 	}
 	#headerMainPanel .spriteLandingPageTwitterIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -438px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -438px -2px
 			no-repeat;
 	}
 	#headerMainPanel .spriteLandingPageYoutubeIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -479px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -479px -2px
 			no-repeat;
 	}
 }
@@ -915,7 +914,7 @@
 		position: relative;
 	}
 	#headerMainPanel .banner {
-		margin-top: -36px;
+		/* margin-top: -36px; */
 	}
 	#headerMainPanel .bannerInner .caption {
 		left: 4%;
@@ -1057,7 +1056,7 @@
 		white-space: normal !important;
 	}
 	#headerMainPanel .arrowLable {
-		background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+		background: url("${cdn.endpoint}/images/ratings/down-arrow.png") 0 12px no-repeat;
 		position: absolute;
 		top: 3px;
 		right: 15px;

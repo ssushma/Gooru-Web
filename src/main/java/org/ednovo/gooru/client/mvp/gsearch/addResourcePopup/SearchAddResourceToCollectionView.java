@@ -208,6 +208,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void onLoad() {
 		isAddingInProgress=true;
 		cureentcollectionTreeItem=null;
+		currentFolderSelectedTreeItem=null;
 	}
 
 	@Override
@@ -226,6 +227,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		if(searchType.equals("collection")){
 			isTopMostSelected =true;
 			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
+			currentFolderSelectedTreeItem=null;
 		}else{
 			isAddingInProgress=true;
 			cureentcollectionTreeItem=null;
@@ -292,6 +294,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
 			btnAddExisting.setVisible(false);
 		}else if(COLLECTION.equalsIgnoreCase(searchType)){
+			urlparams.clear();
 			folderTreePanel.clear();
 		}
 	}
@@ -462,10 +465,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params,String searchType) {
+	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params,String searchType,FolderDo folderDo) {
 		isAddingInProgress=true;
 		hide();
-		successPopup.setData(collectionName, selectedGooruOid,params,searchType);
+		successPopup.setData(collectionName, selectedGooruOid,params,searchType,folderDo); 
 		successPopup.setGlassEnabled(true);
 		successPopup.show();
 		successPopup.center();

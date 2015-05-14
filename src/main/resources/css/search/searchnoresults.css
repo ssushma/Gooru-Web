@@ -47,7 +47,7 @@
 	outline:none;
 }
 #pnlNoSearchResults .noResultsContainer p span{
-	color:#4c98cc;
+	color:#599B4F;
 	font-weight:bold;
 	display:inline-block;
 }
@@ -70,14 +70,16 @@
 	background:#e8e7e7;
 	border-radius:6px 6px;
 	border:1px solid #dddddd;
-	padding:20px 10px;
+	padding:5px 10px;
 	margin-bottom:15px;
+	min-height: 72px;
 }
 #pnlNoSearchResults .featuredLibrariesContainer .greyBox span{
-	font-size:18px;
-	float:left;
-	width:68%;
-	height: 84px;
+	width: 68%;
+	line-height: 18px;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
 }
 #pnlNoSearchResults .featuredLibrariesContainer .greyBox img{
 	width:50px;
@@ -186,6 +188,8 @@
 	height:49px;
 
 	display:inline-block;
+	vertical-align: middle;
+	  margin-right: 7px;
 }
 .overallDiv{
 	cursor:pointer;
