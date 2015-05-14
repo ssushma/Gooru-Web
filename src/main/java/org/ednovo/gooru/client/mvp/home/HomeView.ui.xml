@@ -943,7 +943,7 @@
 						<div class="{res.css.getInnerRight}">
 						    <tbp:H3Panel  text="{i18n.GL2144}"/>
 							<h4>
-								<g:Anchor href="http://about.goorulearning.org/community/stories"
+								<g:Anchor href="http://about.goorulearning.org/educators/stories/"
 									target="_blank" text="{i18n.GL2145}"/>
 							</h4>
 							<tbp:PPanel text="{i18n.GL2146}"/>

@@ -106,8 +106,6 @@ public class CollectionUploadImageUc extends Composite {
 	public void setUrl(String url, String collectionType) {
 		this.collectionType=collectionType;
 		if(url!=null&&url.trim().isEmpty()) {
-			setDefaultImage();
-		} else {
 			if(url.equalsIgnoreCase("images/defaultRes.png")){
 				changeImgLbl.setText(i18n.GL1087());
 				StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL1087(), i18n.GL1087());
@@ -121,6 +119,9 @@ public class CollectionUploadImageUc extends Composite {
 				collectionImg.setStyleName(CollectionCBundle.INSTANCE.css().collectionThumbnails());
 			}
 			collectionImg.setUrl(url);
+			
+		} else {
+			setDefaultImage();
 		}
 	}
 
