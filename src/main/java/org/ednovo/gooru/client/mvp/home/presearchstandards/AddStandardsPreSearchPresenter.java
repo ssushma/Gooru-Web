@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -194,6 +195,11 @@ public class AddStandardsPreSearchPresenter extends PresenterWidget<IsAddStandar
 	@Override
 	public String setStandardDesc() {
 		return getView().setStandardsDesc();
+	}
+	
+	@Override
+	public List<Map<String, String>> getStandardListArray() {
+		return getView().getStandListArray();
 	}
 	
 	@Override
