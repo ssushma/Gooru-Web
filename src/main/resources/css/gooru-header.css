@@ -857,25 +857,25 @@
 	#headerMainPanel .spriteLandingPageFacebookIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -22px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -22px -2px
 			no-repeat;
 	}
 	#headerMainPanel .spriteLandingPageGooglePlusIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -63px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -63px -2px
 			no-repeat;
 	}
 	#headerMainPanel .spriteLandingPageTwitterIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -438px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -438px -2px
 			no-repeat;
 	}
 	#headerMainPanel .spriteLandingPageYoutubeIco {
 		width: 37px;
 		height: 37px;
-		background: url(/images/landing-page/landingpageSprite.png) -479px -2px
+		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -479px -2px
 			no-repeat;
 	}
 }
