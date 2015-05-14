@@ -60,6 +60,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
@@ -71,7 +72,6 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.google.gwt.core.ext.linker.impl.StandardScriptReference;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -1143,6 +1143,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else if(questionTypeNum==7){
 			setQuestionType("MA");
 			showMulipleAnswerChoiceOptions();
+		}else if(questionTypeNum==8){
+			setQuestionType("HT_HL");
+			showHotTextQuestion();
+		}else if(questionTypeNum==9){
+			setQuestionType("HT_RO");
+			showHotTextQuestion();
 		}
 	}
 	public void refreshOptionNames(){
@@ -1349,6 +1355,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				@Override
 				public void onClick(ClickEvent event) {
 					addQuestionAnswer.reorderRDButtonClick();
+					questionType="HT_RO";
 					addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 				}
 			});
@@ -1357,7 +1364,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					
+					questionType="HT_HL";
 					int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
 					for(int i=0;i<widgetCount;i++){
 						if(i==0){
@@ -1415,7 +1422,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("addAnswerChoice")
 	public void clickedOnAddChoiceButton(ClickEvent clickEvent){
 		
-		if(questionType.equals("HT")){
+		if(questionType.equals("HT_HL")|| questionType.equals("HT_RO") ){
 			int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
 			final AddHotTextQuestionAnswerChoice addHotTextQuestionAnswer=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[widgetCount]);
 			addHotTextQuestionAnswer.setHeadLabelFields(false);
@@ -1814,7 +1821,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
 			}
-    	} else if(getQuestionType().equalsIgnoreCase("HT")){
+    	} else if(getQuestionType().equalsIgnoreCase("HT_HL") ||getQuestionType().equalsIgnoreCase("HT_RO")){
     		if (isHotTextAnswerChoiceEmpty(questionHotTextAnswerChoiceContainer)) {
     			fieldValidationCheck = false;
 				isAddBtnClicked=true;
@@ -2017,7 +2024,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     										profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
     									}
     								}
-    								else if(fieldValidationStaus && getQuestionType().equalsIgnoreCase("HT")){
+    								else if(fieldValidationStaus && getQuestionType().equalsIgnoreCase("HT_HL") || fieldValidationStaus && getQuestionType().equalsIgnoreCase("HT_RO")){
     									if(!isHintsAdded(hintsContainer)){
     										profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
     									}
@@ -2202,7 +2209,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					questionAnswerDo.setIsCorrect(false);
 					enteredAnswers.add(questionAnswerDo);
 				}
-			}else if(getQuestionType().equalsIgnoreCase("HT")){
+			}else if(getQuestionType().equalsIgnoreCase("HT_RO")){
 				for(int i=0;i<questionHotTextAnswerChoiceContainer.getWidgetCount();i++)
 				{
 					QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
@@ -2213,6 +2220,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					questionAnswerDo.setSequence(i+1);
 					enteredAnswers.add(questionAnswerDo);
 				}
+			}else if(getQuestionType().equalsIgnoreCase("HT_HL")){
+				QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
+				AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(0);
+				questionAnswerDo.setAnswerText(addQuestionAnswerChoice.highlightTextArea.getRawContent());
+				questionAnswerDo.setAnswerType("text");
+				questionAnswerDo.setSequence(1);
+				enteredAnswers.add(questionAnswerDo);
 			}
 			
 			answerMap.put("answer",enteredAnswers);
@@ -2231,6 +2245,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 			hintsMap.put("hint",enteredHints);
 			
+			
 			collectionQuestionItemDo.setTypeName(getQuestionType()); 
 			collectionQuestionItemDo.setQuestionText(questionText);
 			collectionQuestionItemDo.setAnswers(answerMap);
@@ -2244,6 +2259,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+			
+			if(getQuestionType().equalsIgnoreCase("HT_HL") || getQuestionType().equalsIgnoreCase("HT_RO") ){
+				CollectionHTQuestionItemDo HTObj=new CollectionHTQuestionItemDo();
+				HTObj.setHlType("word or sentence");
+				HTObj.setSingleCorrectAnswer(true);
+				collectionQuestionItemDo.setAttributes(HTObj);
+			}
 			
 			/*HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			ArrayList<checkboxSelectedDo> arrayList=new ArrayList<checkboxSelectedDo>();
@@ -2678,7 +2700,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 */
 	
 	public void showHotTextQuestion(){ 
-		setHeaderAndBodyText("HT");
+		setHeaderAndBodyText("HT_HL");
 		clearErrorMessageForAnswer();
 		clearErrorQuestionMessage();
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
@@ -2736,7 +2758,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0358());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0358());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
-		}else if(tabType.equals("HT")){
+		}else if(tabType.equals("HT_HL") || tabType.equals("HT_RO")){
 			questionTypeHeader.setText(i18n.GL3224());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3224());
 			questionTypeHeader.getElement().setAttribute("title", i18n.GL3224());

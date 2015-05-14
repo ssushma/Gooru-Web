@@ -22,50 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.user;
+package org.ednovo.gooru.shared.model.content;
+
+
+import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-
 @JsonInclude(Include.NON_NULL)
-public class UserGroupDo extends PartyDo {
+public class CollectionHTQuestionItemDo implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6364841728640681100L;
-
-	private boolean activeFlag;
-
-	private String userGroupType;
-
-	private OrganizationDo organization;
+	private static final long serialVersionUID = 1L;
 	
-	public UserGroupDo(){}
-
-	public OrganizationDo getOrganization() {
-		return organization;
+	private String hlType;
+	private boolean singleCorrectAnswer;
+	public String getHlType() {
+		return hlType;
 	}
-
-	public void setOrganization(OrganizationDo organization) {
-		this.organization = organization;
+	public boolean isSingleCorrectAnswer() {
+		return singleCorrectAnswer;
 	}
-
-	public boolean isActiveFlag() {
-		return activeFlag;
+	public void setHlType(String hlType) {
+		this.hlType = hlType;
 	}
-
-	public void setActiveFlag(boolean activeFlag) {
-		this.activeFlag = activeFlag;
+	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
+		this.singleCorrectAnswer = singleCorrectAnswer;
 	}
-
-	public String getUserGroupType() {
-		return userGroupType;
-	}
-
-	public void setUserGroupType(String userGroupType) {
-		this.userGroupType = userGroupType;
-	}
-
+	
+	
+	
+	
 }

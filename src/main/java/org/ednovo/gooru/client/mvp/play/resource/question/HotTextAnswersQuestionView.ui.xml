@@ -13,7 +13,7 @@
           	 <g:HTMLPanel  ui:field="answerContainer"></g:HTMLPanel>
           	  </g:HTMLPanel>
           	  <g:FlowPanel ui:field="optionsContainerFpnl"></g:FlowPanel>
-          	  <!-- <sr:HTAnswerDragPanelVc ui:field="optionsContainer" /> -->
+          	 <!--  <sr:HTAnswerDragPanelVc ui:field="optionsContainer" /> -->
           	   <g:FlowPanel styleName="{oeStyle.questionSubmitButton}">
           	  		<g:Button styleName="{oeStyle.hintsInActiveButton} {oeStyle.adjustCheckAnswerButton}" ui:field="checkAnswer"></g:Button>
           	  	</g:FlowPanel>
