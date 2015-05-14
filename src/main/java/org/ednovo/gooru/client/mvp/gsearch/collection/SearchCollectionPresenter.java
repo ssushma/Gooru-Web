@@ -197,9 +197,7 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	}
 
 	@Override
-	public void displayAddResourcePoup(
-			ResourceSearchResultDo resourceSearchResultDo,
-			CollectionResourceWidget displayAddResourcePoup) {
+	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo,CollectionResourceWidget displayAddResourcePoup) {
 		
 	}
 }

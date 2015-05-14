@@ -506,7 +506,12 @@ IsSocialShareView,ClientConstants{
 				}
 			});
 		}else{
-			LoginPopupUc popup = new LoginPopupUc();
+			LoginPopupUc popup = new  LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					
+				}
+			};
 			popup.setGlassEnabled(true);
 			popup.show();
 			popup.center();
