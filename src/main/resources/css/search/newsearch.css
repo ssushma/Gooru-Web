@@ -688,6 +688,16 @@ word-wrap: break-word;
 
 
 @media (min-width: 240px) and (max-width: 319px){
+	#morePeoplePopWrapper .peopleBlock {
+		width:100%;
+	}
+	#morePeoplePopWrapper .peopleBlock .viewMore{
+		width:50%;
+		float: left;
+	}
+	#morePeoplePopWrapper .closeButton {
+	    margin-left: 0px;
+	}
 	#gooruSearchMainContainer .collectionImg{
 		width:160px;
 		float:none;
@@ -789,6 +799,16 @@ word-wrap: break-word;
 }
 
 @media (min-width: 320px) and (max-width: 479px){
+	#morePeoplePopWrapper .peopleBlock {
+		width:100%;
+	}
+	#morePeoplePopWrapper .peopleBlock .viewMore{
+		width:50%;
+		float: left;
+	}
+	#morePeoplePopWrapper .closeButton {
+	    margin-left: 0px;
+	}
 	#gooruSearchMainContainer .collectionImg{
 		width:100% !important;
 		float:none;
@@ -1000,6 +1020,16 @@ word-wrap: break-word;
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
+	#morePeoplePopWrapper .peopleBlock {
+		width:100%;
+	}
+	#morePeoplePopWrapper .peopleBlock .viewMore{
+		width:50%;
+		float: left;
+	}
+	#morePeoplePopWrapper .closeButton {
+	    margin-left: 0px;
+	}
 	#gooruSearchMainContainer .fixedPosition{
 		position: relative;
 		width: 100%;
