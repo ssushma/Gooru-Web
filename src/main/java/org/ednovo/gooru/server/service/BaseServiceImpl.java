@@ -72,7 +72,11 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	private static final Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
 	
-	private String headerApiKey = null; 
+	private String headerApiKey = null;
+	
+	private String youtubeApiKey = null;
+	
+	private String youtubeApiUrl = null;
 	
 	
 	private String apiKey = null;
@@ -159,6 +163,21 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return restConstants.getProperty(SEARCH_PASSWORD);
 	}
 
+	public String getYouTubeApiUrl(){
+		if (youtubeApiUrl == null){
+			youtubeApiUrl = getPropertyByKey(YOUTUBE_API_URL);
+		}
+		return youtubeApiUrl;
+		
+	}
+	
+	public String getYoutubeApiKey(){
+		if (youtubeApiKey == null){
+			youtubeApiKey = getPropertyByKey(YOUTUBE_API_KEY);
+		}
+		return youtubeApiKey;
+	}
+	
 	public String getApiKey() {
 		if (headerApiKey == null){
 			headerApiKey = getPropertyByKey(API_KEY);
@@ -384,6 +403,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		Cookie cookie = new Cookie(GOORU_SESSION_TOKEN, sessionToken);
 		cookie.setDomain(AppSessionHolder.getInstance().getRequest().getServerName());
 		cookie.setPath(COOKIE_PATH);
+//		cookie.setHttpOnly(true);
 		if (sessionToken != null && sessionToken.length() > 0) {
 			cookie.setMaxAge(COOKIE_AGE);
 		} else {

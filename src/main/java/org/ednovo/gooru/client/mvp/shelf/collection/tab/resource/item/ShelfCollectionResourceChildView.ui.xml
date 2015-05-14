@@ -89,7 +89,7 @@
 		<g:FlowPanel styleName="{res.css.panelAlignRight}">
 			 <g:Button styleName="{res.css.gEditButton}" ui:field="EditBtn"></g:Button>
 		 </g:FlowPanel>
-		 <g:FlowPanel styleName="{res.css.editButtonContainer}" ui:field="ResourceEditButtonContainer">
+		 <g:FlowPanel styleName="{res.css.editButtonContainer}" ui:field="resourceEditButtonContainer">
 		      <g:Label styleName="{res.css.editButtonText}" ui:field="updateResourceBtn"/>
 		     <g:Label styleName="{res.css.editButtonText}" ui:field="editInfoLbl" />
 		     <g:Label styleName="{res.css.editButtonText}" ui:field="editVideoTimeLbl" />

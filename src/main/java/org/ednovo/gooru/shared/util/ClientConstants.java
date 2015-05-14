@@ -66,6 +66,10 @@ public interface ClientConstants {
 	String SEARCH_PASSWORD = "search.password";
 
 	String API_KEY = "api.key";
+	
+	String YOUTUBE_API_KEY= "youtube.api.key";
+	
+	String YOUTUBE_API_URL= "youtube.url";
 
 	String HOME_ENDPOINT = "home.endpoint";
 	
