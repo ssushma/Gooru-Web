@@ -915,17 +915,9 @@
 						    </div>
 							<div class="{res.css.getContentContainer}">
 								<h4>
-								    <g:Anchor href="https://drive.google.com/file/d/0Bx97a7QgWf0HdndiRGY0UTJrTzY0N1NyNU5kT2VVVWdUM2hN/view" target="_blank" text="{i18n.GL2134}"></g:Anchor>
+								    <g:Anchor href="http://about.goorulearning.org/educators/get-started/" target="_blank" text="{i18n.GL2134}"></g:Anchor>
 								</h4>
 								<tbp:PPanel  text="{i18n.GL2136}"/>
-								<h4>
-								    <g:Anchor href="http://support.goorulearning.org/hc/en-us/articles/201853348" target="_blank" text="{i18n.GL2135}"></g:Anchor>
-								</h4>
-								<tbp:PPanel  text="{i18n.GL2137}"/>
-								<h4>
-								    <g:Anchor href="http://www.goorulearning.org/#profilepage&amp;pageSize=5&amp;id=9aeb031a-4c43-4d4b-9b30-84261e39fdb2&amp;user=GooruTutorials&amp;pageNum=0&amp;pos=1" target="_blank" text="{i18n.GL2138}"></g:Anchor>
-								</h4>
-								<tbp:PPanel  text="{i18n.GL2139}"/>
 							</div>
 						</div>
 					</div>
