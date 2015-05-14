@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.user.client.ui.Button;
@@ -51,6 +54,8 @@ public interface AddStandardsPreSearchUiHandlers extends BaseUiHandlers {
 	Integer setStandardsIdVal();
 
 	String setStandardDesc();
+
+	List<Map<String, String>> getStandardListArray();
 
 
 }
