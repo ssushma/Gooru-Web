@@ -578,14 +578,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 					jsonFirstObject.put(TYPE, SELECTOR);
 					jsonFirstObject.put(VALUETYPE, STRING);
 					jsonFirstObject.put(FIELDNAME, RESOURCEFORMATID);
-					jsonFirstObject.put(OPERATOR, IN);
+					jsonFirstObject.put(OPERATOR, EQ);
 					jsonFirstObject.put(VALUE, RESOURCEVALUE);
 					fieldsArray.put(jsonFirstObject);
 					JSONObject jsonSecondObject=new JSONObject(); 
 					jsonSecondObject.put(TYPE, SELECTOR);
 					jsonSecondObject.put(VALUETYPE, STRING);
 					jsonSecondObject.put(FIELDNAME, GOORUOid);
-					jsonSecondObject.put(OPERATOR, IN);
+					jsonSecondObject.put(OPERATOR, EQ);
 					jsonSecondObject.put(VALUE, Id);
 					fieldsArray.put(jsonSecondObject);
 					jsonFilterObject.put(FIELDS, fieldsArray);
