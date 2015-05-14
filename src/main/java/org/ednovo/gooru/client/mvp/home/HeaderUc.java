@@ -1543,16 +1543,19 @@ public class HeaderUc extends Composite implements
 			{
 				stadardsListCode="";
 				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
-				List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
-				int standardArraySize = standardsList.size();
-				if(standardArraySize!=0){
-					for(int i=0; i<standardArraySize; i++){
-						if(!stadardsListCode.isEmpty()){
-							stadardsListCode += ",";
+				if(addStandardsPresenter!=null){
+					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
+					int standardArraySize = standardsList.size();
+					if(standardArraySize!=0){
+						for(int i=0; i<standardArraySize; i++){
+							if(!stadardsListCode.isEmpty()){
+								stadardsListCode += ",";
+							}
+							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
 						}
-						stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
+						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
 					}
-					params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
+					
 				}
 				if(!stadardsListCode.isEmpty()){
 					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam+","+stadardsListCode);
@@ -1563,17 +1566,20 @@ public class HeaderUc extends Composite implements
 			else
 			{
 				stadardsListCode="";
-				List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
-				int standardArraySize = standardsList.size();
-				if(standardArraySize!=0){
-					for(int i=0; i<standardArraySize; i++){
-						if(!stadardsListCode.isEmpty()){
-							stadardsListCode += ",";
+				if(addStandardsPresenter!=null){
+					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
+					int standardArraySize = standardsList.size();
+					if(standardArraySize!=0){
+						for(int i=0; i<standardArraySize; i++){
+							if(!stadardsListCode.isEmpty()){
+								stadardsListCode += ",";
+							}
+							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
 						}
-						stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
+						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
 					}
-					params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
 				}
+				
 			}
 		}
 		
