@@ -32,7 +32,10 @@ public class NoSearchResultWidget extends Composite {
 	
 	@UiField HTMLPanel pnlNoSearchResults,libraryWidgetsContainer,libraryWidgetsContainerViewMore;
 	@UiField Button viewMoreBtn;
-	@UiField H2Panel searchNoResultsHeader,searchNoResultssubHeader;
+	@UiField static H2Panel searchNoResultsHeader;
+
+	@UiField
+	H2Panel searchNoResultssubHeader;
 	
 	private NoSearchResultWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -40,35 +43,29 @@ public class NoSearchResultWidget extends Composite {
 		searchNoResultsHeader.setText(i18n.GL3229());
 		searchNoResultssubHeader.setText(i18n.GL3230());
 		searchNoResultssubHeader.getElement().getStyle().setMarginTop(-13, Unit.PX);
-		String queryVal=AppClientFactory.getPlaceManager().getRequestParameter("query", null);
-		if(queryVal!= null && !queryVal.equalsIgnoreCase("*"))
-		{
-			searchNoResultsHeader.setText(i18n.GL3231()+" "+queryVal);
-		}
 		int i=0;
 		for (Map.Entry<String,List<String>> entry : LibraryImagesMap.getInstance().getLibraryMap().entrySet()){
-		   if(i<8)
-		   {
+		   if(i<8){
 			libraryWidgetsContainer.add(new NoResultsLibraryWidget(entry.getValue().get(0),entry.getValue().get(1),entry.getValue().get(2)));
-		   }
-		   else
-		   {
+		   }else{
 			libraryWidgetsContainerViewMore.add(new NoResultsLibraryWidget(entry.getValue().get(0),entry.getValue().get(1),entry.getValue().get(2))); 
 		   }
 		   i=i+1;
 		}
 		libraryWidgetsContainerViewMore.setVisible(false);
 		viewMoreBtn.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				libraryWidgetsContainerViewMore.setVisible(true);
 				viewMoreBtn.setVisible(false);
-				
 			}
 		});
 	}
 	public static NoSearchResultWidget getInstance(){
+		String queryVal=AppClientFactory.getPlaceManager().getRequestParameter("query", null);
+		if(queryVal!= null && !queryVal.equalsIgnoreCase("*")){
+			searchNoResultsHeader.setText(i18n.GL3231()+" "+queryVal);
+		}
 		return searchResult;
 	}
 }
