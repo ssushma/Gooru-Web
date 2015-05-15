@@ -21,8 +21,8 @@
 #pnlStandards .blueLink{
 display: inline-block;
   float: left;
-  padding-right: 10px;
   padding-left: 2px;
+  color: rgb(12, 116, 190);
 }
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li {
     display: inline-block;
