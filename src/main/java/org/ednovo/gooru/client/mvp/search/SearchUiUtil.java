@@ -165,6 +165,10 @@ public class SearchUiUtil{
 				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
 				if(!standardsfirstVal.isEmpty()){
 					moreStandardsCount = moreStandardsCount+1;
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
+					toolTipUc.setStyleName("blueLink");
+					standardsContainer.add(toolTipUc);
+					toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
 				}else{					
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
 					toolTipUc.setStyleName("blueLink");
