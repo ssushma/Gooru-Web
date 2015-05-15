@@ -199,6 +199,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	public void SetData(final StandardsLevel1DO levelOneData, int valArr)
 	{
 		instantVal = false;
+		standListArray.clear();
 		LiPanel liPanel=new LiPanel();
 		Anchor levelOneStandardsInner = new Anchor();
 		liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
