@@ -658,7 +658,7 @@
 			    <executions>
 			      <execution>
 			        <id>rename-file</id>
-			        <phase>compile</phase>
+			        <phase>validate</phase>
 			        <goals>
 			          <goal>rename</goal>
 			        </goals>
