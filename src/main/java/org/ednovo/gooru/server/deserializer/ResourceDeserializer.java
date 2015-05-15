@@ -151,7 +151,8 @@ public class ResourceDeserializer extends DeSerializer {
 			int min = dur.getMinutes();
 			int sec = dur.getSeconds();
 			int milliseconds = (hours * 60 * 60) + (min * 60) + sec;
-			videoDuration = milliseconds +"";
+			
+			videoDuration =  String.valueOf(milliseconds);
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
