@@ -61,6 +61,7 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.TextAlign;
@@ -708,6 +709,37 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		categoryChk.setStyleName("checkbox");
 		//categoryChk.addStyleName(value.toLowerCase());
 		filterPanel.add(categoryChk);
+		if(value.equalsIgnoreCase("Mobile Friendly")){
+		final Image mobilefriendly = new Image();
+		mobilefriendly.setUrl("images/mos/questionmark.png");
+		mobilefriendly.getElement().getStyle().setCursor(Cursor.POINTER);
+		mobilefriendly.setAltText(i18n.GL0732());
+		mobilefriendly.setTitle(i18n.GL0732());
+		mobilefriendly.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
+				toolTip.getElement().getStyle().setBackgroundColor("transparent");
+				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+				toolTip.setPopupPosition(mobilefriendly.getAbsoluteLeft()-(50+22), mobilefriendly.getAbsoluteTop()+22);
+				toolTip.show();
+			}
+		});
+		mobilefriendly.addMouseOutHandler(new MouseOutHandler() {
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				EventTarget target = event.getRelatedTarget();
+				  if (Element.is(target)) {
+					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+						  toolTip.hide();
+					  }
+				  }
+			}
+		});
+		filterPanel.add(mobilefriendly);
+		categoryChk.getElement().setAttribute("style", "display: inline-block;");
+		}
 		categoryChk.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
 			@Override
@@ -1529,6 +1561,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageCountForStorage=1;
 		localStore.clear();
 		isForwardScroll=true;
+		previousValue=0;
 	}
 	
 	/**

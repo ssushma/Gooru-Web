@@ -29,7 +29,6 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -73,7 +72,6 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  * @Reviewer: Gooru Team
  */
 public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSearchAddResourceToCollectionView> implements SearchAddResourceToCollectionUiHandlers,ClientConstants{
-
 
 	ResourceSearchResultDo searchResultDo =null;
 	String type =null;
@@ -157,13 +155,12 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
 								if(collectionResourceWidget!=null){
-									AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(selectedFolderOrCollectionid, searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
+									AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(searchResultDo.getGooruOid(), searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
 										@Override
 										public void onSuccess(HashMap<String, String> result) {
-										
+											collectionResourceWidget.getLbladdCount().setText(result.get("copyCount"));
 										}
 									});
-									//collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
 								}
 								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType,null);
 							}
@@ -178,7 +175,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		}
 	}
 	@Override
-	public void addCollectionToFolder(final String selectedFolderOrCollectionid,String searchType, final String title, final int folerLevel,HashMap<String, String> urlparams) {
+	public void addCollectionToFolder(final String selectedFolderOrCollectionid,final String searchType, final String title, final int folerLevel,HashMap<String, String> urlparams) {
 			this.urlParameters=urlparams;
 			final CollectionDo collection = new CollectionDo();
 			if(searchType.equalsIgnoreCase("collection")){
@@ -211,11 +208,15 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							params.put("o1", O1_LEVEL_VALUE);
 						}
 						params.put("from", "SearchAddResourcePresenter");
-						if(collectionSearchWidget!=null){
-							//collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
-						}
+						AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(searchResultDo.getGooruOid(),searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
+							@Override
+							public void onSuccess(HashMap<String, String> result) {
+								if(collectionSearchWidget!=null){
+									collectionSearchWidget.getRemixCountLbl().setText(result.get("copyCount"));
+								}
+							}
+						});
 						getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection",folderDo);
-
 					}
 				});
 			}else{
@@ -265,13 +266,17 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public SimpleAsyncCallback<CollectionDo> getSaveCollectionAsyncCallback() {
 		if (saveCollectionAsyncCallback == null) {
 			saveCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
-
 				@Override
 				public void onSuccess(CollectionDo result) {
 					FolderDo folderDo=getFolderDo(result);
-					if(collectionSearchWidget!=null){
-						//collectionSearchWidget.getRemixCountLbl().setText((Integer.parseInt(collectionSearchWidget.getRemixCountLbl().getText())+1)+"");
-					}
+					AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(searchResultDo.getGooruOid(),"collection", new SimpleAsyncCallback<HashMap<String,String>>() {
+						@Override
+						public void onSuccess(HashMap<String, String> result) {
+							if(collectionSearchWidget!=null){
+								collectionSearchWidget.getRemixCountLbl().setText(result.get("copyCount"));
+							}
+						}
+					});
 					getView().displaySuccessPopup("My Collections", result.getGooruOid(),null ,"collection",folderDo);
 				}
 			};

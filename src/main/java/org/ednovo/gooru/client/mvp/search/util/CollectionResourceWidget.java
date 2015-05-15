@@ -65,6 +65,7 @@ public class CollectionResourceWidget extends Composite {
 	@UiField InlineLabel relatedCollectionTitle;
 	@UiField Button btnAddResource;
 	@UiField Anchor ancViewMore;
+	String gooruOid;
 
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
 	
@@ -91,6 +92,7 @@ public class CollectionResourceWidget extends Composite {
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.resourceSearchResultDo=resourceSearchResultDo;
+		setGooruOid(resourceSearchResultDo.getGooruOid());
 		resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
 		if(Window.getClientWidth()<=768){
 			if(resourceTitleText.length()>=15){
@@ -232,7 +234,7 @@ public class CollectionResourceWidget extends Composite {
 		StringUtil.setAttributes(resourceTitle.getElement(), "lblResourceTitle", "", "");
 		StringUtil.setAttributes(lblViewCount.getElement(), "lblViewCount", "", "");
 		StringUtil.setAttributes(lbladdCount.getElement(), "lbladdCount", "", "");
-		StringUtil.setAttributes(lblUserCount.getElement(), "lbladdCount", "", "");
+		StringUtil.setAttributes(lblUserCount.getElement(), "lblUserCount", "", "");
 		StringUtil.setAttributes(creatorImage.getElement(), "imgCreator", "", "");
 		StringUtil.setAttributes(relatedCollectionImage.getElement(), "imgRelatedCollection", "", "");
 		StringUtil.setAttributes(relatedCollectionTitle.getElement(), "lblRelatedCollectionTitle", "", "");
@@ -473,5 +475,11 @@ public class CollectionResourceWidget extends Composite {
 	 }
 	public Label getLbladdCount() {
 		return lbladdCount;
+	}
+	public String getGooruOid() {
+		return gooruOid;
+	}
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
 	}
 }
