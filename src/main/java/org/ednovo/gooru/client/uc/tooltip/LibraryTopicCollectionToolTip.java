@@ -104,6 +104,22 @@ public class LibraryTopicCollectionToolTip extends Composite {
 		setAvgRatingWidget(ratingCount,average);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
+	public LibraryTopicCollectionToolTip(String title, String category,String type){
+		initWidget(discoverToolTipUiBinder.createAndBindUi(this));
+		arowPanel.getElement().setId("pnlArowPanel");
+		organizePopupTextContainer.getElement().setId("fpnlOrganizePopupTextContainer");
+		textFlowPanel.getElement().setId("fpnlTextFlowPanel");
+		arowPanel.setVisible(true);
+		descPanel.setVisible(true);
+		descPanel.setHTML(title);
+		descPanel.getElement().setId("htmlDescPanel");
+		descPanel.getElement().setAttribute("alt", title);
+		descPanel.getElement().setAttribute("title", title);
+		categoryLbl.setHTML(category);
+		categoryLbl.getElement().setId("htmlCategoryLbl");
+		categoryLbl.getElement().setAttribute("alt", category);
+		categoryLbl.getElement().setAttribute("title", category);
+	}
 	
 	public LibraryTopicCollectionToolTip(String content){
 		initWidget(discoverToolTipUiBinder.createAndBindUi(this));
