@@ -435,6 +435,10 @@
 	display: inline-block;
 	vertical-align: middle;
 }
+#gooruSearchMainContainer .authorName .authorNameAddLeft{
+	margin-left: 4%;
+}
+
 #gooruSearchMainContainer .collectionDescription{
 	max-height: 44px;
 	overflow: hidden;
