@@ -108,9 +108,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 	private static final String PARENT_ID = "parentId";
 	
-	private static final String YOUTUBE_BEGIN_URL = "http://gdata.youtube.com/feeds/api/videos/";
-	
-	private static final String YOUTUBE_END_URL = "?v=2&alt=jsonc";
+	private static final String YOUTUBE_PART_DETAILS = "contentDetails";
 	
 	private static final String RESOURCE_ID = "resourceId";
 	
@@ -621,12 +619,18 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public String getYoutubeDuration(String videoId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String youtubeDuration = "0";
-		String url = YOUTUBE_BEGIN_URL+videoId+YOUTUBE_END_URL;
+		
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.ID, videoId);
+		params.put(GooruConstants.YOUTUBE_KEY, getYoutubeApiKey());
+		params.put(GooruConstants.YOUTUBE_PART, YOUTUBE_PART_DETAILS);
+		String url=AddQueryParameter.constructQueryParams(getYouTubeApiUrl(), params);
+		
 		try {
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			if(jsonRep != null && jsonRep.getSize() != -1){
-			return resourceDeserializer.serializeYoutubeInfo(jsonRep);
+				return resourceDeserializer.serializeYoutubeInfo(jsonRep);
 			}
 		} catch(Exception e) {
 			logger.error("Exception::", e);

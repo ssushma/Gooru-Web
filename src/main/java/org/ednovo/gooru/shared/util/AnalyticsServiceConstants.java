@@ -111,7 +111,7 @@ public interface AnalyticsServiceConstants {
 	String FIELDNAME="fieldName";
 	String RESOURCEFORMATID="resourceFormatId";
 	String OPERATOR="operator";
-	String IN="in";
+	String EQ="eq";
 	String VALUE="value";
 	String RESOURCEVALUE="103,101,104,106,102,105,100";
 	String PAGINATION="pagination";

@@ -42,6 +42,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.xml.datatype.*;
+
 @Component
 public class ResourceDeserializer extends DeSerializer {
 
@@ -64,6 +66,8 @@ public class ResourceDeserializer extends DeSerializer {
 	private static final String YOUTUBE_URL = "url";
 	private static final String THUMBNAILS = "thumbnails";
 	private static final String DATA = "data";
+	private static final String ITEMS = "items";
+	private static final String CONTENTDETAILS = "contentDetails";
 	private static final String DURATION = "duration";
 	private static final String ERROR = "error";
 	private static final String ERROR_MESSAGE = "errorMessage";
@@ -134,9 +138,20 @@ public class ResourceDeserializer extends DeSerializer {
 		JSONObject resourceJsonObject;
 		String videoDuration = null;
 		try {
-			resourceJsonObject = jsonRep.getJsonObject().getJSONObject(DATA);
+			resourceJsonObject = jsonRep.getJsonObject().getJSONArray(ITEMS).getJSONObject(0).getJSONObject(CONTENTDETAILS);
 			videoDuration =getJsonString(resourceJsonObject, DURATION);
-			
+
+			Duration dur;
+			try {
+				dur = DatatypeFactory.newInstance().newDuration(videoDuration);
+			} catch (DatatypeConfigurationException e) {
+				throw new RuntimeException("message", e); 
+			}
+			int hours = dur.getHours();
+			int min = dur.getMinutes();
+			int sec = dur.getSeconds();
+			int milliseconds = (hours * 60 * 60) + (min * 60) + sec;
+			videoDuration = milliseconds +"";
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}

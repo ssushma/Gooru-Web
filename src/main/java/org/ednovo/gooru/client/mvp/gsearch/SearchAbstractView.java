@@ -1561,6 +1561,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageCountForStorage=1;
 		localStore.clear();
 		isForwardScroll=true;
+		previousValue=0;
 	}
 	
 	/**

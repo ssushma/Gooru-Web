@@ -138,4 +138,8 @@ public interface ApiKeyParams {
 	
 	
 	String CHECK_SHORTENED_URL = "checkShortenedUrl";
+	
+	String YOUTUBE_KEY="key";
+	String YOUTUBE_PART="part";
+	
 }
