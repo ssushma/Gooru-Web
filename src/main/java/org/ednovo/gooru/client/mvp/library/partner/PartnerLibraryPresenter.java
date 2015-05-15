@@ -87,7 +87,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber,final String libraryGooruOid) {
 		final long startTime = System.currentTimeMillis();
 		AppClientFactory.printInfoLogger("Lib unit API call start --- "+AppClientFactory.getCurrentPlaceToken()+" ---- "+startTime);
-		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 20,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
 				AppClientFactory.printInfoLogger("Lib unit API call consumed on success @ client --- "+(System.currentTimeMillis() - startTime));
