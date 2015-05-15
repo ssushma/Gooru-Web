@@ -671,7 +671,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * This method is used to render subjects and it will handle the click events on subjects.
 	 */
 	public void renderSubjects(List<String> list){
-		InlineLabel text=new InlineLabel("Try selecting from this cool subjecs:");
+		InlineLabel text=new InlineLabel(i18n.GL3234()+i18n.GL_SPL_SEMICOLON());
 		ulSubjectPanel.add(text);
 		for (String subject : list) {
 			liPanel = new LiPanel();
@@ -1120,7 +1120,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				countStar=filterPanel.getWidgetIndex(widget)+1;
 				if(countStar<=filterStar){
 					((LiPanel) widget).addStyleName(FILLED_GREEN);
-					
 				}else{
 					((LiPanel) widget).removeStyleName(FILLED_GREEN);
 				}
