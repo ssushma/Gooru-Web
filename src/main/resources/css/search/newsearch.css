@@ -435,7 +435,7 @@
 	display: inline-block;
 	vertical-align: middle;
 }
-#gooruSearchMainContainer .authorName .authorNameAddLeft{
+#gooruSearchMainContainer .authorNameAddLeft{
 	margin-left: 4%;
 }
 
@@ -577,7 +577,7 @@ Back to top button
 	text-align:center;
 	color:#ffffff;
 	font-size:12px;
-	background:#4099ce;
+	background:#87badd;
 	display:block;
 	margin: 2px;
 	line-height:22px;
