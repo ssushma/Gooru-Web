@@ -179,7 +179,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 				}
 				if(Count>=1){
 					if(isFireFox && Count>=1){
-						tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-50,getWidget().getAbsoluteTop()+10);
+						tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-80,getWidget().getAbsoluteTop()+10);
 					}
 				}
 			}
