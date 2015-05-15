@@ -178,6 +178,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			public void onCallSuccess(SearchDo<T> result,boolean isApiCalled) {
 				setSearchDo(result);
 				getView().postSearch(result,isApiCalled);
+				if(getSearchDo().getPageNum()==1){
+					getSearchDo().setPageNum(2);
+					getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
+				}
 			}
 		});
 		setSearchResultsJsonAsyncCallbackFirstLoad(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
@@ -344,8 +348,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
 			getSearchDo().setPageNum(1);
 			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
-			getSearchDo().setPageNum(2);
-			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
 		}
 	}
 
