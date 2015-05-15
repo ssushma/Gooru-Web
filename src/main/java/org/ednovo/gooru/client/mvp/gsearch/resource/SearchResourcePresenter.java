@@ -195,6 +195,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"resoruce",collectionResourceWidget);
 		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid(),collectionResourceWidget));
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
+		Window.enableScrolling(false);
 	}
 	@Override
 	public void displayUsersList(ResourceSearchResultDo resourceSearchResultDo) {
@@ -215,6 +216,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 			addToPopupSlot(collectionFormInPlayPresenter);
 			collectionFormInPlayPresenter.setResourceUid(resourceId);
 			collectionFormInPlayPresenter.setResourceWidget(collectionResourceWidget);
+			Window.enableScrolling(false);
 		}
 	}
 	
