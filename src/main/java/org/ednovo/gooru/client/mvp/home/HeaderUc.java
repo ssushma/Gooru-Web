@@ -1963,11 +1963,11 @@ public class HeaderUc extends Composite implements
 					if (AppClientFactory.getCurrentPlaceToken().equals(
 							PlaceTokens.EDIT_CLASSPAGE)) {
 					} else {
-						if (studyNowToolTip != null) {
+						/*if (studyNowToolTip != null) {
 							studyNowToolTip.removeClasspageItem(classpageId);
 						} else {
 							studyNowToolTip = new StudyNowToolTip();
-						}
+						}*/
 					}
 
 				
