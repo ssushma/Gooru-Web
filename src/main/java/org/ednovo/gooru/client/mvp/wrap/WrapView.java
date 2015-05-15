@@ -304,7 +304,7 @@ public class WrapView extends BaseView implements IsWrapView {
 						
 					//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
 						addStandardsPresenter.getAddBtn().setVisible(false);
-						headerUc.setAddStandardsPresenter(addStandardsPresenter);
+						headerUc.setAddStandardsPresenter(addStandardsPresenter,true);
 						
 					}
 				});

@@ -1528,10 +1528,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					String displayValue=moreFilterPanel.getElement().getStyle().getDisplay();
 					if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
 						moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-						resourceFiltersDropDwn.getElement().getStyle().setBackgroundColor("#999");
 					}else{
 						moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
-						resourceFiltersDropDwn.getElement().getStyle().clearBackgroundColor();
 					}
 				}
 			});

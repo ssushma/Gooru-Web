@@ -717,6 +717,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 * @return pagination values
 	 */
 	public Map<String, String> updateParams(Map<String, String> params) {
+		HeaderUc.editSearchTxtBox.setText(getEditSearchText());
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
 		return params;

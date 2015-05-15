@@ -292,6 +292,8 @@ public class HeaderUc extends Composite implements
 	private boolean isOpenSettingDropDown = true;
 
 	private boolean isSettingIcon = false;
+	
+	private boolean isClicked = false;
 
 	boolean isEnter = false;
 
@@ -1541,7 +1543,7 @@ public class HeaderUc extends Composite implements
 			{
 				stadardsListCode="";
 				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
-				if(addStandardsPresenter!=null){
+				if(addStandardsPresenter!=null && isClicked){
 					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
 					int standardArraySize = standardsList.size();
 					if(standardArraySize!=0){
@@ -1553,7 +1555,7 @@ public class HeaderUc extends Composite implements
 						}
 						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
 					}
-					
+					isClicked=false;
 				}
 				if(!stadardsListCode.isEmpty()){
 					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam+","+stadardsListCode);
@@ -1564,7 +1566,7 @@ public class HeaderUc extends Composite implements
 			else
 			{
 				stadardsListCode="";
-				if(addStandardsPresenter!=null){
+				if(addStandardsPresenter!=null && isClicked){
 					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
 					int standardArraySize = standardsList.size();
 					if(standardArraySize!=0){
@@ -1576,6 +1578,7 @@ public class HeaderUc extends Composite implements
 						}
 						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
 					}
+					isClicked=false;
 				}
 				
 			}
@@ -1963,11 +1966,11 @@ public class HeaderUc extends Composite implements
 					if (AppClientFactory.getCurrentPlaceToken().equals(
 							PlaceTokens.EDIT_CLASSPAGE)) {
 					} else {
-						if (studyNowToolTip != null) {
+						/*if (studyNowToolTip != null) {
 							studyNowToolTip.removeClasspageItem(classpageId);
 						} else {
 							studyNowToolTip = new StudyNowToolTip();
-						}
+						}*/
 					}
 
 				
@@ -2264,7 +2267,8 @@ public class HeaderUc extends Composite implements
 	}-*/;
 
 	public void setAddStandardsPresenter(
-			AddStandardsPreSearchPresenter addStandardsPresenter) {
+			AddStandardsPreSearchPresenter addStandardsPresenter, boolean isClicked) {
 		this.addStandardsPresenter=addStandardsPresenter;
+		this.isClicked=isClicked;
 	}
 }
