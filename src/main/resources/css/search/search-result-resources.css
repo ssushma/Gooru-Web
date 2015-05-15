@@ -179,6 +179,8 @@ margin:0 0 0 -20px !important;
 #gooruSearchMainContainer .resourceDesc .resourceAuthorDetails{
 	color: #0c74be;
 	margin-top: 4px;
+	overflow: hidden;
+	height: 17px;
 }
 #gooruSearchMainContainer .resourceDescription{
 	padding:10px 10px;

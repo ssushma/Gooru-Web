@@ -221,11 +221,10 @@
 	font-weight:400;
 	color:#0c74be;
 	margin-top:2px;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
     cursor:pointer;
-    max-height:20px;
+    max-height:42px;
 }
 
 #gooruSearchMainContainer .libraryMainContainerBlock .collectionTitleincoll{
