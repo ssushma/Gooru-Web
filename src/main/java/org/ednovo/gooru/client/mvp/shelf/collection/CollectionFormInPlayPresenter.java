@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -103,6 +104,7 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 		setSaveCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
+				Window.enableScrolling(true);
 				getView().hide();
 				getView().reset();
 				fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
