@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsBundle;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -343,18 +344,21 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							Map<String,String> selectedStadDetails= new HashMap<String,String>();
-							selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
-							selectedStadDetails.put("selectedCodeVal", codeVal);
-							selectedStadDetails.put("selectedCodeDesc", codeDesc);
-							standListArray.add(selectedStadDetails);
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							}
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -504,18 +508,23 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							Map<String,String> selectedStadDetails= new HashMap<String,String>();
-							selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
-							selectedStadDetails.put("selectedCodeVal", codeVal);
-							selectedStadDetails.put("selectedCodeDesc", codeDesc);
-							standListArray.add(selectedStadDetails);
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							}	
+							
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -592,18 +601,24 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						@Override
 						public void onClick(ClickEvent event) {
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							Map<String,String> selectedStadDetails= new HashMap<String,String>();
-							selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
-							selectedStadDetails.put("selectedCodeVal", codeVal);
-							selectedStadDetails.put("selectedCodeDesc", codeDesc);
-							standListArray.add(selectedStadDetails);
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+							
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							}	
+							
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -648,18 +663,22 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							Map<String,String> selectedStadDetails= new HashMap<String,String>();
-							selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
-							selectedStadDetails.put("selectedCodeVal", codeVal);
-							selectedStadDetails.put("selectedCodeDesc", codeDesc);
-							standListArray.add(selectedStadDetails);
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							}	
+							
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
