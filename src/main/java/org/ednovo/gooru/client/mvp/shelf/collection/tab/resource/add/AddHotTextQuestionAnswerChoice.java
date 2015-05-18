@@ -256,7 +256,12 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		this.answerTextBox = answerTextBox;
 	}
 	
-	
+	public TinyMCE getHighlightTextArea() {
+		return highlightTextArea;
+	}
+	public void setHighlightTextArea(TinyMCE highlightTextArea) {
+		this.highlightTextArea = highlightTextArea;
+	}
 	public void reorderRDButtonClick(){
 		inLbl.setText(i18n.GL3225());
 		inLbl.addStyleName("htQInLbl");

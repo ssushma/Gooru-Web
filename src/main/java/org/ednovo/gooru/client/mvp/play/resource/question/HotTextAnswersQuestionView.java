@@ -118,9 +118,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				
 				if(collectionItemDo.getResource().getType()==8){
 					QuestionAnswerDo questionAnswerDo=answersList.next();
-					System.out.println("answersList.s"+answersSet.size());
 					String text=questionAnswerDo.getAnswerText();
-					System.out.println("text"+text);
 					if(text.contains("[")){
 						text=text.replaceAll("\\[", "").replaceAll("\\]","");
 				}
@@ -149,7 +147,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					}
 				}else{
 					QuestionAnswerDo questionAnswerDo=answersList.next();
-				    HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
+					
+					HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
 				    /*htAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
 					htAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());*/
 					int k=i+1;
