@@ -246,7 +246,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						if(pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
 							isApiInProgressBack=isApiInProgressBackLoad=false;
 							isInsertTems=true;
-							lblLoadingTextPrevious.setVisible(true);
+							//lblLoadingTextPrevious.setVisible(true);
 							isForwardScroll = false;
 							if(Storage.isLocalStorageSupported()){
 								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-10)+""),true);
