@@ -2025,8 +2025,19 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}
     								}
     								else if(fieldValidationStaus && getQuestionType().equalsIgnoreCase("HT_HL") || fieldValidationStaus && getQuestionType().equalsIgnoreCase("HT_RO")){
+    									
+    									clearErrorMessageForAnswer();
+    									if (isHotTextAnswerChoiceEmpty(questionHotTextAnswerChoiceContainer)) {
+    										fieldValidationStaus = false;
+    										isAddBtnClicked=true;
+    									}else{
+    									
     									if(!isHintsAdded(hintsContainer)){
+    										isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
+    										
+    									}else{
     										profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
+    									}
     									}
     								}
     							}
@@ -2144,7 +2155,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 * If all validations successful, question is added to the collection.
 	 */
 	public void addFunctionality(boolean fieldValidationStaus,List<String> answersListFIB,String mediaFileName){
-		
     	if(fieldValidationStaus){
     		buttonContainer.getElement().getStyle().setDisplay(Display.NONE);
     		loadingTextLbl.setVisible(true);
@@ -2407,6 +2417,28 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onSuccess(List<ProfanityCheckDo> result) {
 				//addFunctionality(fieldValidationStaus,answersListFIB,mediaFileName);
+				if(getQuestionType().equalsIgnoreCase("HT_HL") || getQuestionType().equalsIgnoreCase("HT_RO")){
+					for(int i=0;i<questionHotTextAnswerChoiceContainer.getWidgetCount();i++){
+						  final AddHotTextQuestionAnswerChoice addHTQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(i);
+						  addHTQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+						  
+						  if(getQuestionType().equalsIgnoreCase("HT_HL")){
+							  addHTQuestionAnswerChoice.getHighlightTextArea().getElement().removeClassName("errorBorderMessage");
+							  SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addHTQuestionAnswerChoice.highlightTextArea, addHTQuestionAnswerChoice.errorMessageforAnswerChoice, result.get(i).questionValue);
+						  }else{
+							  addHTQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
+							  SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addHTQuestionAnswerChoice.answerTextBox, addHTQuestionAnswerChoice.errorMessageforAnswerChoice, result.get(i).questionValue);
+						  }
+						  
+						  
+						  if(result.get(i)!=null && result.get(i).questionValue==true){
+							  addHTQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "float: left;left: 24px;");
+			                     validationValue=true;
+			                     isAddBtnClicked=true;
+						  }
+					  }
+				}else{
+				
 				  for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
 					  final AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
 					  addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
@@ -2418,6 +2450,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		                     isAddBtnClicked=true;
 					  }
 				  }
+				}
 				  if(validationValue && fieldValidationStaus){
 					  return;
 				  }else{
@@ -2528,13 +2561,24 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     
     public boolean isHotTextAnswerChoiceEmpty(HTMLPanel questionAnswerChoiceContainer){
   		profanityList=new ArrayList<ProfanityCheckDo>();
+  		boolean isReorder=false;
            for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
                    final AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
                    String answerChoiceValue=null;
                    addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
                    addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
-                   
+                   if(i==0){
+                	   if(addQuestionAnswerChoice.reorderRDButton.getValue()){
+                		   isReorder=true;
+                	   }else{
+                		   isReorder=false;
+                	   }
+                   }
+                   if(isReorder){
                    answerChoiceValue=addQuestionAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
+                   }else{
+                	   answerChoiceValue=addQuestionAnswerChoice.highlightTextArea.getContent().replaceAll("\\<.*?>","");
+                   }
                   	 
                    ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
                    if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
