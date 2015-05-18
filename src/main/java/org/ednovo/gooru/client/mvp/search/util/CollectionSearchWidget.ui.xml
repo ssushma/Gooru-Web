@@ -7,10 +7,10 @@
 					<div class="no-gutter">
 						<g:HTMLPanel styleName="col-md-12 col-sm-12 col-xs-12 viewContainer">
 							<span>
-								<img src="images/rev-arrows.png"/> <g:Label styleName="authorName" ui:field="remixCountLbl"></g:Label>
+								<img title="Number of Remixes" src="images/rev-arrows.png"/> <g:Label styleName="authorName" ui:field="remixCountLbl"></g:Label>
 							</span>
 							<span>
-								<img src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
+								<img title="Number of Views" src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 							</span>
 						</g:HTMLPanel>
 						<div class="clearfix"></div>

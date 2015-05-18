@@ -232,7 +232,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		searchFeildsIds();
 		localStore=Storage.getLocalStorageIfSupported();
 		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-		pnlBackToTop.setVisible(false);
+		//pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
 		fixedFilterSearch.getElement().setAttribute("id", "fixedFilterSearchID");
 		lblLoadingTextPrevious.setVisible(false);
@@ -470,6 +470,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				@Override
 				public void onSuccess() {
+					Window.scrollTo(0, 0);
 					callAnimation();
 				}
 			});
@@ -549,8 +550,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						if(widgetCount>removeableWidgetCount){
 							break;
 						}
+					
 						final Widget widget = widgets.next();
+						if(!widget.getElement().getId().equalsIgnoreCase("1")&&!widget.getElement().getId().equalsIgnoreCase("2"))
+						{
 						searchResultPanel.remove(widget);
+						}
 						widgetCount++;
 					}
 					//This code is used to scroll automatically after loading the bottom results.
@@ -577,7 +582,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
 					HTMLPanel widgetsContainer=new HTMLPanel("");
-					searchResultPanel.insert(widgetsContainer,0);
+					widgetsContainer.getElement().setId(pageNumber+"");
+					searchResultPanel.insert(widgetsContainer,2);
 					for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
 					}
@@ -589,6 +595,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				isApiInProgressBack=true;
 			}else{
 				HTMLPanel widgetsContainer=new HTMLPanel("");
+				widgetsContainer.getElement().setId(pageNumber+"");
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
@@ -602,6 +609,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
 			searchResults.setText(i18n.GL3210());
+			pnlBackToTop.setVisible(false);
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{
 			lblLoadingText.setVisible(false);
@@ -1546,6 +1554,22 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void resetData(){
 		searchResultPanel.clear();
+		resultCountVal=0;
+		lblLoadingText.setVisible(true);
+		isApiInProgress = true;
+		isApiInProgressBack = true;
+		isApiInProgressBackLoad=true;
+		isApiInProgressLoad=true;
+		pageNumber = 1;
+		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
+		previousCount=0;
+		pageCountForStorage=1;
+		localStore.clear();
+		isForwardScroll=true;
+		previousValue=0;
+	}
+
+	public void resetDataBacktoTop(){
 		resultCountVal=0;
 		lblLoadingText.setVisible(true);
 		isApiInProgress = true;
