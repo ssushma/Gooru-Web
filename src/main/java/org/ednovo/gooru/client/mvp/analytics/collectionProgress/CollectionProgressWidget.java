@@ -393,9 +393,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		}
 		if(minutes!=0){
 			if(createdTime!=null){
-				createdTime=createdTime+((minutes<10)?"0"+minutes:minutes)+":";
+				createdTime=createdTime+minutes+":";
 			}else{
-				createdTime=((minutes<10)?"0"+minutes:minutes)+":";
+				createdTime=minutes+":";
 			}
 		}
 		if(seconds!=0){
@@ -403,6 +403,8 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			String formattedTime="";
 			if(secondsInMille > 0 && secondsInMille<1){
 				formattedTime="<1";
+			}else if( secondsInMille>=1 &&  secondsInMille<10){
+				formattedTime="0"+((int) Math.round(secondsInMille))+"";
 			}else{
 				formattedTime=((int) Math.round(secondsInMille))+"";
 			}
