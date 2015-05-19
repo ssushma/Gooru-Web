@@ -123,4 +123,8 @@ public interface AnalyticsServiceConstants {
 	String GROUPBY="groupBy";
 	String GOORUOid="gooruOid";
 	String FILTER="filter";
+	String RESOURCEADDED="resourceAdded";
+	String RESOURCEUSEDUSER="resourceUsedUser";
+	String RESOURCEADDEDPUBLIC="resourceAddedPublic";
+	String RESOURCEUSEDUSERPUBLIC="resourceUsedUserPublic";
 }

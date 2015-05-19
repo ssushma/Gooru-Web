@@ -143,7 +143,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		});
 	}
 	@Override
-	public void addResourceToCollection(final String selectedFolderOrCollectionid,final String searchType,final String title,final HashMap<String, String> urlparams ) {
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,final String searchType,final String title,final HashMap<String, String> urlparams) {
 		if(selectedFolderOrCollectionid!=null){
 			urlparams.put("id",selectedFolderOrCollectionid);
 			//This will check the resource count
@@ -160,7 +160,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 									AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(searchResultDo.getGooruOid(), searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
 										@Override
 										public void onSuccess(HashMap<String, String> result) {
-											collectionResourceWidget.getLbladdCount().setText(result.get("copyCount"));
+											collectionResourceWidget.getLbladdCount().setText(result.get("resourceAdded"));
 										}
 									});
 								}

@@ -551,6 +551,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			JSONObject jsonObj=jsonArray.getJSONObject(0);
 			resultMap.put("copyCount", Integer.toString(jsonObj.getInt("copyCount")));
 			resultMap.put("viewsCount", Integer.toString(jsonObj.getInt("viewsCount")));
+			resultMap.put("resourceAdded", Integer.toString(jsonObj.getInt("resourceAdded")));
 			resultMap.put("gooruOid", jsonObj.getString("gooruOid"));
 		}catch(JSONException e){
 			logger.error("Exception::", e);
@@ -566,7 +567,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public JSONObject generateViewCountData(String Id,String searchType){
 		JSONObject jsonDataObject=new JSONObject(); 
 		try {
-			String requiredFields=GOORUOid+","+VIEWSCOUNT+","+COPYCOUNT;
+			String requiredFields=VIEWSCOUNT+","+COPYCOUNT+","+RESOURCEADDED+","+RESOURCEUSEDUSER+","+RESOURCEADDEDPUBLIC+","+RESOURCEUSEDUSERPUBLIC;
 			jsonDataObject.put(FIELDS, requiredFields);
 			jsonDataObject.put(DATASOURCE, CONTENT);
 			jsonDataObject.put(GRANULARITY, "");
