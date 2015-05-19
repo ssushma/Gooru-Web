@@ -527,10 +527,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	@Override
 	public HashMap<String,String> getResourceAndCollectionCounts(String Id,String searchType){
 		try {
+			String requiredFields=VIEWSCOUNT+","+COPYCOUNT+","+RESOURCEADDED+","+RESOURCEUSEDUSER+","+RESOURCEADDEDPUBLIC+","+RESOURCEUSEDUSERPUBLIC;
 			JsonRepresentation jsonRep = null;
-			String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V2_GET_VIEW_COUNTS, getLoggedInSessionToken());
-			JSONObject jsonStr = generateViewCountData(Id,searchType);
-			String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr.toString());
+			String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V2_GET_VIEW_COUNTS, getLoggedInSessionToken(),Id);
+			String url = AddQueryParameter.constructQueryParams(partialUrl, FIELDS, requiredFields);
 			logger.info("getResourceAndCollectionCounts url:+"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 			jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -557,51 +557,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			logger.error("Exception::", e);
 		}
 		return resultMap;
-	}
-	/**
-	 * This method will construct the json object for the view count
-	 * @param Id
-	 * @param searchType
-	 * @return
-	 */
-	public JSONObject generateViewCountData(String Id,String searchType){
-		JSONObject jsonDataObject=new JSONObject(); 
-		try {
-			String requiredFields=VIEWSCOUNT+","+COPYCOUNT+","+RESOURCEADDED+","+RESOURCEUSEDUSER+","+RESOURCEADDEDPUBLIC+","+RESOURCEUSEDUSERPUBLIC;
-			jsonDataObject.put(FIELDS, requiredFields);
-			jsonDataObject.put(DATASOURCE, CONTENT);
-			jsonDataObject.put(GRANULARITY, "");
-			JSONArray filtersArray=new JSONArray();
-				JSONObject jsonFilterObject=new JSONObject(); 
-				jsonFilterObject.put(LOGICALOPERATORPREFIX, AND);
-					JSONArray fieldsArray=new JSONArray();
-					JSONObject jsonFirstObject=new JSONObject(); 
-						jsonFirstObject.put(TYPE, SELECTOR);
-						jsonFirstObject.put(VALUETYPE, STRING);
-						jsonFirstObject.put(FIELDNAME, GOORUOid);
-						jsonFirstObject.put(OPERATOR, EQ);
-						jsonFirstObject.put(VALUE, Id);
-					fieldsArray.put(jsonFirstObject);
-					jsonFilterObject.put(FIELDS, fieldsArray);
-			filtersArray.put(jsonFilterObject);
-			jsonDataObject.put(FILTER, filtersArray);
-			JSONObject paginateJsonObject=new JSONObject();
-			paginateJsonObject.put(OFFSET, 0);
-			paginateJsonObject.put(LIMIT, 1);
-			JSONArray orderArray=new JSONArray();
-			JSONObject jsonOrderObject=new JSONObject();
-			jsonOrderObject.put(SORTBY, CREATEDON);
-			jsonOrderObject.put(SORT_ORDER, "DESC");
-			orderArray.put(jsonOrderObject);
-			paginateJsonObject.put(ORDER, orderArray);
-			jsonDataObject.put(PAGINATION, paginateJsonObject);
-			
-			jsonDataObject.put(AGGREGATIONS, new JSONArray());
-			jsonDataObject.put(GROUPBY, "");
-		} catch (JSONException e) {
-				e.printStackTrace();
-		}
-		return jsonDataObject;
 	}
 	@Override
 	public void sendEmail(String to, String subject, String message,String displayName, String fileName, String path) {
