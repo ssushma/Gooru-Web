@@ -114,6 +114,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		getWorkspaceData(0,20,true,searchType);
 	}
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
+		getView().clearUrlParams();
 		if(COLLECTION.equalsIgnoreCase(searchType)){
 			type= FOLDER;
 			accessType = ACESSTEXT;
@@ -142,8 +143,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		});
 	}
 	@Override
-	public void addResourceToCollection(final String selectedFolderOrCollectionid,final String searchType,final String title) {
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,final String searchType,final String title,final HashMap<String, String> urlparams ) {
 		if(selectedFolderOrCollectionid!=null){
+			urlparams.put("id",selectedFolderOrCollectionid);
 			//This will check the resource count
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
@@ -162,7 +164,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 										}
 									});
 								}
-								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType,null);
+								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
 							}
 						});
 					}else{

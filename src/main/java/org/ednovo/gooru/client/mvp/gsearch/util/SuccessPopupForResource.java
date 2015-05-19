@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.HighlightRemixedItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -68,7 +69,7 @@ public class SuccessPopupForResource extends PopupPanel {
 	@UiField Label lblSuccessText,cancelResourcePopupBtnLbl,headerLbl;
 	
 	private HashMap<String, String> params;
-	private String selectedGooruOid,collectionName;
+	private String selectedGooruOid,collectionName,searchType;
 	private FolderDo folderDo;
 	public SuccessPopupForResource() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -89,9 +90,13 @@ public class SuccessPopupForResource extends PopupPanel {
 			}
 			hide();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
-			AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
 			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
-			AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
+			if("resource".equals(searchType)){
+				AppClientFactory.fireEvent(new SetFolderCollectionStyleEvent(params,"collection"));  
+			}else{
+				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
+				AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
+			}
 		}
 	}
 	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type,FolderDo folderDo){
@@ -99,6 +104,7 @@ public class SuccessPopupForResource extends PopupPanel {
 		setSelectedGooruOid(selectedGooruOid);
 		setParams(params);
 		this.folderDo = folderDo;
+		this.searchType = type;
 		StringBuffer buffer = new StringBuffer();
 		if(type.equalsIgnoreCase("resource")){
 			buffer.append(i18n.GL3192());
