@@ -99,8 +99,8 @@ public class CollectionResourceWidget extends Composite {
 				resourceTitleText=resourceTitleText.substring(0, 15)+"...";
 			}
 		}else{
-			if(resourceTitleText.length()>=25){
-				resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+			if(resourceTitleText.length()>33){
+				resourceTitleText=resourceTitleText.substring(0, 33)+"...";
 			}
 		}
 		resourceTitle.setText(resourceTitleText);

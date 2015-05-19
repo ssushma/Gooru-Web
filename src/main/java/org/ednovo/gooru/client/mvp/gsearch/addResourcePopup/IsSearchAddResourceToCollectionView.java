@@ -57,4 +57,5 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	void setDefaultPanelVisibility(Boolean blnVal);
 	public void displaySuccessPopup(String title,String selectedGooruOid,HashMap<String, String> params,String searchType, FolderDo folderDo);
 	void restrictionToAddResourcesData(String message);
+	public void clearUrlParams();
 }
