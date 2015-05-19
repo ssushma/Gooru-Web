@@ -264,7 +264,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8 && isApiInProgress && isApiInProgressLoad && !isBackToTopClicked){
-						System.out.println("?isBackToTopClicked:"+isBackToTopClicked);
 						if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 							isInsertTems=false;
 							isApiInProgress=isApiInProgressLoad=false;
