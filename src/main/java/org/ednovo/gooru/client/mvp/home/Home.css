@@ -2217,18 +2217,18 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 
 .getStart .getInnerRight {
 	background: #fff;
-  padding: 10px 15px;
-  margin-bottom: 23px;
+  padding: 5px 15px;
+  margin-bottom: 17px;
   border-radius: 4px 4px;
 }
 
 .getStart .getContentContainer {
-	padding: 40px 10px;
+	padding: 20px 10px;
 }
 
 .getContentContainer p {
 	font-size: 14px;
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 }
 
 .getStart .getContentContainer h4 {
@@ -2245,7 +2245,6 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 .getStart .getInnerRight .first {
 	font-family: 'Arvo', serif;
 	float: left;
-	width: 62%;
 	font-size: 24px;
 }
 
