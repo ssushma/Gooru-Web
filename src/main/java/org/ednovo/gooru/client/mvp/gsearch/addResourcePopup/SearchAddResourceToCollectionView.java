@@ -140,8 +140,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 							.addStyleName("selected");
 					previousSelectedItem = cureentcollectionTreeItem = null;
 					TreeItem parent = item.getParentItem();
-					item.getTree().setSelectedItem(parent, false); // TODO FIX
-																	// ME
+					item.getTree().setSelectedItem(parent, false); 
 					if (!folderTreeItemWidget.isApiCalled()) {
 						folderTreeItemWidget.setApiCalled(true);
 						getFolderItems(item, folderTreeItemWidget.getGooruOid());
@@ -167,9 +166,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			    	removePreviousSelectedItem();
 			    	highlightStyles();
 			    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
-			    	previousSelectedItem = cureentcollectionTreeItem;
+			    	previousSelectedItem = cureentcollectionTreeItem;																			
 			    	cureentcollectionTreeItem.addStyleName("selected");
 			    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
+			    	
+			    	String style = cureentcollectionTreeItem.getStyleName();
+					if(style != null && !style.contains("parent") && !style.contains("child") && !style.contains("innerchild")){
+						urlparams.clear();
+					}
 			    }
 			  }
 		});
@@ -429,7 +433,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			if(currentsearchType.equalsIgnoreCase("resoruce")){
 				if(cureentcollectionTreeItem!=null){
 					lblError.setVisible(false);
-					getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+					getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams);
 				}else{
 					lblError.setVisible(true);
 					isAddingInProgress=true;
@@ -504,5 +508,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
 			myCollDefault.getElement().getStyle().clearBackgroundColor();
 		}
+	}
+
+	@Override
+	public void clearUrlParams() {
+		urlparams.clear();
 	}
 }
