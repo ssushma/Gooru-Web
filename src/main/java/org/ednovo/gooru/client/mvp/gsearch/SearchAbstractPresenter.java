@@ -221,24 +221,20 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		
 		if (getViewToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 			setSourceSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
-
 				@Override
 				protected void run(SearchDo<String> searchDo) {
 					getSearchService().getSuggestSource(searchDo, this);
 				}
-
 				@Override
 				public void onCallSuccess(SearchDo<String> result) {
 					getView().setSourceSuggestions(result);
 				}
 			});
 			setAggregatorSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
-
 				@Override
 				protected void run(SearchDo<String> searchDo) {
 					getSearchService().getSuggestedAggregator(searchDo, this);
 				}
-
 				@Override
 				public void onCallSuccess(SearchDo<String> result) {
 					getView().setAggregatorSuggestions(result);
@@ -350,7 +346,16 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
 		}
 	}
-
+	@Override
+	public void resetLocalStorageData() {
+		setPageTitle(getSearchDo().getSearchQuery());
+		if (getSearchDo().getSearchQuery() != null && getSearchDo().getSearchQuery().trim().length() >= 0) {
+			getSearchDo().setPageNum(1);
+			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
+			getSearchDo().setPageNum(2);
+			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
+		}
+	}
 	/**
 	 * @return search filters such as category, subject, grade, etc..
 	 */

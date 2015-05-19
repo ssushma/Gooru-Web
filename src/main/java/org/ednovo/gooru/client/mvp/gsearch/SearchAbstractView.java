@@ -160,11 +160,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private static final String NO_MATCH_FOUND = i18n.GL0723();
 	
-	private boolean isClickedOnDropDwn=false;
-	
-	private boolean isForwardScroll=true;
-	
-	private boolean isClickOnMoreFilter=false;
+	private boolean isClickedOnDropDwn=false,isForwardScroll=true,isClickOnMoreFilter=false,isBackToTopClicked=false;
 	
 	SearchDo<T> searchDoGbl = new SearchDo<T>();
 	
@@ -190,6 +186,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private Storage localStore = null;
 	 
 	int pageCountForStorage=1,previousScroll;
+	
+	HTMLPanel pnlFirstTempData=new HTMLPanel("");
 	/**
 	 * Assign new instance for 
 	 * 
@@ -243,7 +241,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
 					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
-						if(pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
+						if(!isBackToTopClicked && pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
 							isApiInProgressBack=isApiInProgressBackLoad=false;
 							isInsertTems=true;
 							//lblLoadingTextPrevious.setVisible(true);
@@ -265,7 +263,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						}
 					}
 					//This condition is used to check that the user is scrolling top to bottom
-					if(resultCountVal>=8 && isApiInProgress && isApiInProgressLoad){
+					if(resultCountVal>=8 && isApiInProgress && isApiInProgressLoad && !isBackToTopClicked){
+						System.out.println("?isBackToTopClicked:"+isBackToTopClicked);
 						if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 							isInsertTems=false;
 							isApiInProgress=isApiInProgressLoad=false;
@@ -470,8 +469,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				@Override
 				public void onSuccess() {
-					Window.scrollTo(0, 0);
-					callAnimation();
+					isBackToTopClicked=true;
+					resetDataBacktoTop();
 				}
 			});
 		}
@@ -552,10 +551,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						}
 					
 						final Widget widget = widgets.next();
-						if(!widget.getElement().getId().equalsIgnoreCase("1")&&!widget.getElement().getId().equalsIgnoreCase("2"))
-						{
 						searchResultPanel.remove(widget);
-						}
 						widgetCount++;
 					}
 					//This code is used to scroll automatically after loading the bottom results.
@@ -582,8 +578,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
 					HTMLPanel widgetsContainer=new HTMLPanel("");
-					widgetsContainer.getElement().setId(pageNumber+"");
-					searchResultPanel.insert(widgetsContainer,2);
+					widgetsContainer.getElement().setId((pageNumber-10)+"");
+					searchResultPanel.insert(widgetsContainer,0);
 					for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
 					}
@@ -599,6 +595,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
+						if(pageNumber==1){
+							System.out.println("in");
+							pnlFirstTempData.add(renderSearchResult(searchResult));
+						}
 				}
 				isApiInProgress=true;
 			}
@@ -1561,28 +1561,26 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		isApiInProgressBackLoad=true;
 		isApiInProgressLoad=true;
 		pageNumber = 1;
-		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
 		previousCount=0;
 		pageCountForStorage=1;
 		localStore.clear();
 		isForwardScroll=true;
 		previousValue=0;
 	}
-
 	public void resetDataBacktoTop(){
-		resultCountVal=0;
-		lblLoadingText.setVisible(true);
+		searchResultPanel.clear();
+		lblLoadingText.setVisible(false);
 		isApiInProgress = true;
 		isApiInProgressBack = true;
 		isApiInProgressBackLoad=true;
 		isApiInProgressLoad=true;
 		pageNumber = 1;
-		//hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
-		previousCount=0;
 		pageCountForStorage=1;
 		localStore.clear();
 		isForwardScroll=true;
-		previousValue=0;
+		getUiHandlers().resetLocalStorageData();
+		searchResultPanel.add(pnlFirstTempData);
+		callAnimation();
 	}
 	
 	/**
@@ -1836,6 +1834,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				localStore.setItem((pageCountForStorage-10)+"", data);
 				removeFromLocalStorageBackword();
 			}
+			isBackToTopClicked=false;
 		}
 	}	
 	@UiHandler("assessmentsBtn")
@@ -1856,6 +1855,5 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
 		params.put("query", AppClientFactory.getPlaceManager().getRequestParameter("query"));
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
-		
 	}
 }
