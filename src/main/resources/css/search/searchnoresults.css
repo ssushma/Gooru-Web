@@ -72,14 +72,14 @@
 	border:1px solid #dddddd;
 	padding:5px 10px;
 	margin-bottom:15px;
-	min-height: 72px;
+	min-height: 102px;
 }
 #pnlNoSearchResults .featuredLibrariesContainer .greyBox span{
 	width: 68%;
 	line-height: 18px;
 	display: inline-block;
 	vertical-align: middle;
-	font-size: 16px;
+	font-size: 12px;
 }
 #pnlNoSearchResults .featuredLibrariesContainer .greyBox img{
 	width:50px;

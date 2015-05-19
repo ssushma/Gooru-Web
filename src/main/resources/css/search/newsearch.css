@@ -450,7 +450,7 @@ Back to top button
 #gooruSearchMainContainer  #back-top {
 	position: fixed;
 	bottom: 100px;
-	margin-left: 950px;
+	margin-left: 76%;
 }
 #gooruSearchMainContainer  #back-top a {
 	width: 85px;
@@ -706,6 +706,9 @@ word-wrap: break-word;
 		margin:0 auto 20px;
 		text-align:center;
 	}
+	#gooruSearchMainContainer  #back-top {
+	margin-left: 81%;
+	}
 	#gooruSearchMainContainer .collectionDesc{
 		text-align:center;
 	}
@@ -803,6 +806,9 @@ word-wrap: break-word;
 @media (min-width: 320px) and (max-width: 479px){
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
+	}
+		#gooruSearchMainContainer  #back-top {
+	margin-left: 81%;
 	}
 	#morePeoplePopWrapper .peopleBlock .viewMore{
 		width:50%;
@@ -1025,10 +1031,14 @@ word-wrap: break-word;
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}
+	#gooruSearchMainContainer  #back-top {
+	margin-left: 88%;
+	}
 	#morePeoplePopWrapper .peopleBlock .viewMore{
 		width:50%;
 		float: left;
 	}
+	
 	#morePeoplePopWrapper .closeButton {
 	    margin-left: 0px;
 	}
@@ -1197,6 +1207,9 @@ word-wrap: break-word;
 		width: 100%;
 		z-index: 9;
 	}
+		#gooruSearchMainContainer  #back-top {
+	margin-left: 92%;
+	}
 	#gooruSearchMainContainer .resourcesInside{
 	
 	}
@@ -1281,11 +1294,16 @@ word-wrap: break-word;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-	
+	#gooruSearchMainContainer  #back-top {
+	margin-left: 920px;
+	}
 }
 
-@media (min-width: 1201px) and (max-width: 1800px) {
+@media (min-width: 1200px) and (max-width: 1800px) {
 	#gooruSearchMainContainer .container{
 		
+	}
+	#gooruSearchMainContainer  #back-top {
+	margin-left: 950px;
 	}
 }
