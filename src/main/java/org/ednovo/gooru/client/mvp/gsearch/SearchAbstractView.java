@@ -572,7 +572,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
-			searchResults.setText(i18n.GL3210());
+			searchResults.setText(i18n.GL3257()+"  "+searchDo.getQuery()+"  "+"("+searchDo.getSearchHits()+")");
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
@@ -825,9 +825,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						setStyleForRatings(ratingValue+"", ulRatingsPanel);
 						removeFilter(ratingValue+"Stars");
 						if(ratingValue==5){
-							ratingsLbl.setVisible(false);
+							ratingsLbl.setText(ratingValue+" Stars");
 							pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
 						}else{
+							ratingsLbl.setText(ratingValue+"+ Stars");
 							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
 							ratingsLbl.setVisible(true);
 							pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
