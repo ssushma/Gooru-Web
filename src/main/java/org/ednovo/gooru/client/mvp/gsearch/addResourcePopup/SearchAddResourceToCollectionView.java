@@ -466,6 +466,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void setDefaultPanelVisibility(Boolean blnVal){
 		myCollDefault.setVisible(blnVal);
 		btnAddNew.setVisible(!blnVal);
+		pageNum=1;
 	}
 
 	@Override
