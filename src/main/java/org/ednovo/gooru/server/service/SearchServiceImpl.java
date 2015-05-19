@@ -268,11 +268,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		params.put(GooruConstants.INCLUDECIMETADATA, "true");
 		params.put(GooruConstants.PRETTY, "1");
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
-		
+			
 		if(getHomeEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		getLogger().info("collection search url::::::"+url);
+		getLogger().info("CollectionSearchResults:"+url);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
@@ -835,11 +835,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		collectionQuery= query1 ;
 		try{
 			if(searchDo.getFilters()!=null){
-			for (String key : searchDo.getFilters().keySet()) {
+			/*for (String key : searchDo.getFilters().keySet()) {
 					  String value = searchDo.getFilters().get(key);
 					  value=value.replaceAll("&", "%26");
 					  searchDo.getFilters().put(key, value);
-				}
+				}*/
 			 }
 			JsonRepresentation jsonRep=null;
 			if(collectionQuery.equalsIgnoreCase("'*'")){
@@ -847,7 +847,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}
 			String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH,getLoggedInSessionToken());
 			Map<String,String> params = searchDo.getFilters();
-			
+						
 			//params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
 			params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
 			params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
@@ -888,11 +888,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		 query= query1;
 		 try{
 				if(searchDo.getFilters()!=null){
-					for (String key : searchDo.getFilters().keySet()) {
+					/*for (String key : searchDo.getFilters().keySet()) {
 					  String value = searchDo.getFilters().get(key);
 					  value = value.replaceAll("&", "%26");
 					  searchDo.getFilters().put(key, value);
-					 }
+					 }*/
 				}
 				if(query.equalsIgnoreCase("'*'"))
 				{

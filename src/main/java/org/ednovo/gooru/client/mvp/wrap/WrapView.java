@@ -142,7 +142,7 @@ public class WrapView extends BaseView implements IsWrapView {
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 			if(AppClientFactory.getPlaceManager().getRequestParameter("query")!=null)
 			{
 			if(AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("*"))

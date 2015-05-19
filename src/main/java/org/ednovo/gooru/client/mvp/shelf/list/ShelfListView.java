@@ -394,15 +394,21 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	}
 	
 	public void setBackToSearch() {
-		boolean visible = false;
+		boolean visibleSearch = false,visibleClassPage = false;
 		try{
 			searchRequest = AppClientFactory.getPlaceManager().getPreviousRequest();
 			if (searchRequest != null) {
 				String query = searchRequest.getParameter("query", null);
 				String classpageId=searchRequest.getParameter("classpageid", null);
-				visible = searchRequest != null && query != null;
-				boolean 	isVisible = searchRequest != null && classpageId != null;
-				if (visible) {
+				if(query != null)
+				{
+				visibleSearch = true;
+				}
+				else if(classpageId != null)
+				{
+				visibleSearch = true;
+				}
+				if (visibleSearch) {
 					if ((query.length()) >= 30) {
 						query = query.substring(0, 30) + "...";
 						backArrowButton.setHTML(PRE_SEARCH_LINK);
@@ -411,15 +417,14 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					}
 					backArrowButton.getElement().setAttribute("alt", PRE_SEARCH_LINK);
 					backArrowButton.getElement().setAttribute("title", PRE_SEARCH_LINK);
+					backArrowButton.setVisible(visibleSearch);
 				}
-				
-				backArrowButton.setVisible(visible);
-
-				if(isVisible){
+				else if(visibleClassPage)
+				{
 					backArrowButton.setHTML(PRE_CLASSPAGE_LINK);
 					backArrowButton.getElement().setAttribute("alt", PRE_CLASSPAGE_LINK);
 					backArrowButton.getElement().setAttribute("title", PRE_CLASSPAGE_LINK);
-					backArrowButton.setVisible(isVisible);
+					backArrowButton.setVisible(visibleClassPage);
 				}
 			}
 		}

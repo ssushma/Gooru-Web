@@ -73,9 +73,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	
 	public static final String REMOVE = "remove";
 	
-	String[] elementaryGrades = new String[]{"Elementary",i18n.GL3071(),i18n.GL3072(),i18n.GL3073(),i18n.GL3074(),i18n.GL3075(),i18n.GL3076()};
-	String[] middleGrades = new String[]{"Middle School",i18n.GL3077(),i18n.GL3078(),i18n.GL3079()};
-	String[] higherGrades = new String[]{"High School",i18n.GL3080(),i18n.GL3081(),i18n.GL3082(),i18n.GL3083()};
+	String[] elementaryGrades = new String[]{i18n.GL2076(),i18n.GL3071(),i18n.GL3072(),i18n.GL3073(),i18n.GL3074(),i18n.GL3075(),i18n.GL3076()};
+	String[] middleGrades = new String[]{i18n.GL0167(),i18n.GL3077(),i18n.GL3078(),i18n.GL3079()};
+	String[] higherGrades = new String[]{i18n.GL0168(),i18n.GL3080(),i18n.GL3081(),i18n.GL3082(),i18n.GL3083()};
 	String backgroundColor="rgb(16, 118, 187)";
 	/**
 	 * Class constructor 
@@ -195,6 +195,10 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 */
 	private void selectAllGrades(String[] gradeArray, String addOrRemove) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT, null);
+		grades=grades.replace(i18n.GL3070(), "").replace("12gte", "");
+		if(!gradeArray[0].equals(i18n.GL0168())){
+			grades=grades.replace(i18n.GL3081(), "").replace(i18n.GL3082(), "").replace(i18n.GL3083(), "");
+		}
 		for(int i=1; i<gradeArray.length; i++){
 			if(grades!=null && !grades.contains(gradeArray[i])){
 				updateFilterStyle(gradeArray[i],addOrRemove);
@@ -237,8 +241,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		LiPanel liPanel;
 		String gradeText;
 
-		public ClickOnGradeLiPnl(LiPanel preKLiPnl, String gradeText) {
-			liPanel=preKLiPnl;	
+		public ClickOnGradeLiPnl(LiPanel liPanel, String gradeText) {
+			this.liPanel=liPanel;	
 			this.gradeText=gradeText;
 		}
 
@@ -246,6 +250,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		public void onClick(ClickEvent event) {
 			if(liPanel.getWidget(0).getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
 				liPanel.getWidget(0).getElement().getStyle().clearBackgroundColor();
+				gradeText = gradeText.equals("12gte")?i18n.GL3084():gradeText;
 				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, REMOVE));
 			}else{
 				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, ADD));

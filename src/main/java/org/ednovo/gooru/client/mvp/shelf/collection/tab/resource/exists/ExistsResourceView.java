@@ -216,7 +216,7 @@ public class ExistsResourceView extends AppPopUp {
 		this.existsResourceDo = existsResourceDo;
 		setCollectionDo(collectionDo);
 		
-		idStr = existsResourceDo.getId();
+		idStr = existsResourceDo.getGooruOid();
 		url = existsResourceDo.getUrl();
 		title = existsResourceDo.getTitle();
 		description = existsResourceDo.getDescription();
