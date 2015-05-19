@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
@@ -94,33 +95,48 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	public class loadCollectionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
-			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
-			if(!StringUtil.isEmpty(classpageId)&& !StringUtil.isEmpty(selectedCollectionId)){
-				getUiHandlers().checkCollectionStaus(classpageId, selectedCollectionId);
-				btnCollectionProgress.setText(i18n.GL2296());
-				btnCollectionSummary.setText(i18n.GL2296());
-			}
-			//when changing the collections drop down reset all the changes.
-			/*getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,"","");
-			getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,"","");*/
+			
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+					String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
+					if(!StringUtil.isEmpty(classpageId)&& !StringUtil.isEmpty(selectedCollectionId)){
+						getUiHandlers().checkCollectionStaus(classpageId, selectedCollectionId);
+						btnCollectionProgress.setText(i18n.GL2296());
+						btnCollectionSummary.setText(i18n.GL2296());
+					}				
+				}
+			});
 			
 		}
 	}
 	@Override
-	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
-		pnlMainContainer.setVisible(true);
-		setNoDataText.setVisible(false);
-		loadcollectionsmap.clear();
-		loadCollections.clear();
-		if(gradeData!=null && !gradeData.isEmpty() ){
-			for (GradeJsonData gradeJsonData : gradeData) {
-				if(!StringUtil.isEmpty(gradeJsonData.getTitle())){ 
-					loadcollectionsmap.put(gradeJsonData.getResourceGooruOId(), gradeJsonData);
-					loadCollections.addItem(gradeJsonData.getTitle(), gradeJsonData.getResourceGooruOId());
+	public void setGradeCollectionData(final ArrayList<GradeJsonData> gradeData) {
+		
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				pnlMainContainer.setVisible(true);
+				setNoDataText.setVisible(false);
+				loadcollectionsmap.clear();
+				loadCollections.clear();
+				if(gradeData!=null && !gradeData.isEmpty() ){
+					for (GradeJsonData gradeJsonData : gradeData) {
+						if(!StringUtil.isEmpty(gradeJsonData.getTitle())){ 
+							loadcollectionsmap.put(gradeJsonData.getResourceGooruOId(), gradeJsonData);
+							loadCollections.addItem(gradeJsonData.getTitle(), gradeJsonData.getResourceGooruOId());
+						}
+					}
 				}
+			
 			}
-		}
+		});
+		
 	}
 	/**
 	 * This method is used to set static text.
@@ -152,13 +168,23 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	public class QuestionMouseOutToolTip implements MouseOutHandler{
 		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			EventTarget target = event.getRelatedTarget();
-			  if (Element.is(target)) {
-				  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
-					  toolTip.hide();
-				  }
-			  }
+		public void onMouseOut(final MouseOutEvent event) {
+			
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					EventTarget target = event.getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }
+				
+				}
+			});
+			
 		}
 	}
 	/**
@@ -173,20 +199,30 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			String setText="";
-			if(ONE.equalsIgnoreCase(fromString)){ 
-				setText=i18n.GL3089();
-			}else if(TWO.equalsIgnoreCase(fromString)){
-				setText=i18n.GL3088(); 
-			}else{
-				setText=i18n.GL3090();
-			}
-			toolTip = new ToolTip(setText,"");
-			toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
-			toolTip.getElement().getStyle().setBackgroundColor("transparent");
-			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			toolTip.setPopupPosition(image.getAbsoluteLeft()-(50+22), image.getAbsoluteTop()+22);
-			toolTip.show();
+			
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					String setText="";
+					if(ONE.equalsIgnoreCase(fromString)){ 
+						setText=i18n.GL3089();
+					}else if(TWO.equalsIgnoreCase(fromString)){
+						setText=i18n.GL3088(); 
+					}else{
+						setText=i18n.GL3090();
+					}
+					toolTip = new ToolTip(setText,"");
+					toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(image.getAbsoluteLeft()-(50+22), image.getAbsoluteTop()+22);
+					toolTip.show();
+				
+				}
+			});
+			
 		}
 	}
 	public class ViewAssignmentClickEvent implements ClickHandler{
@@ -196,48 +232,60 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
-			String selectedCollectionTitle=loadCollections.getItemText(loadCollections.getSelectedIndex());
-			try {
-				if(PROGRESS.equalsIgnoreCase(clicked )){ 
-					//Clearing the summary
-					getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
-					isSummayClicked=false;
-					btnCollectionSummary.setText(i18n.GL2296());
-					
-					if(isProgressClicked){
-						isProgressClicked=false;
-						btnCollectionProgress.setText(i18n.GL2296());
-						getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
-					}else{
-						isProgressClicked=true;
-						btnCollectionProgress.setText(i18n.GL2297());
-						getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId,selectedCollectionTitle);
-					}
-				}else if(clicked.equalsIgnoreCase(SUMMARY)){
-					//Clearing the progress
-					getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
-					isProgressClicked=false;
-					btnCollectionProgress.setText(i18n.GL2296());
-					
-					if(isSummayClicked){
-						isSummayClicked=false;
-						btnCollectionSummary.setText(i18n.GL2296());
-						getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
-					}else{
-						isSummayClicked=true;
-						btnCollectionSummary.setText(i18n.GL2297());
-						getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId,selectedCollectionTitle);
-					}
-				}else{
-					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-					getUiHandlers().exportOEPathway(classpageId, "",AnalyticsUtil.getTimeZone());
-				}
+			
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
-			}
+					String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
+					String selectedCollectionTitle=loadCollections.getItemText(loadCollections.getSelectedIndex());
+					try {
+						if(PROGRESS.equalsIgnoreCase(clicked )){ 
+							//Clearing the summary
+							getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
+							isSummayClicked=false;
+							btnCollectionSummary.setText(i18n.GL2296());
+							
+							if(isProgressClicked){
+								isProgressClicked=false;
+								btnCollectionProgress.setText(i18n.GL2296());
+								getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
+							}else{
+								isProgressClicked=true;
+								btnCollectionProgress.setText(i18n.GL2297());
+								getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId,selectedCollectionTitle);
+							}
+						}else if(clicked.equalsIgnoreCase(SUMMARY)){
+							//Clearing the progress
+							getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
+							isProgressClicked=false;
+							btnCollectionProgress.setText(i18n.GL2296());
+							
+							if(isSummayClicked){
+								isSummayClicked=false;
+								btnCollectionSummary.setText(i18n.GL2296());
+								getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
+							}else{
+								isSummayClicked=true;
+								btnCollectionSummary.setText(i18n.GL2297());
+								getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId,selectedCollectionTitle);
+							}
+						}else{
+							String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+							getUiHandlers().exportOEPathway(classpageId, "",AnalyticsUtil.getTimeZone());
+						}
+
+					} catch (Exception e) {
+						AppClientFactory.printSevereLogger(e.getMessage());
+					}
+				
+				}
+			});
+			
 		}
+		
+		
 	}
 
 	/* (non-Javadoc)

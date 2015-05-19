@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.analytics;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
@@ -36,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Frame;
@@ -77,76 +79,96 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 	@Override
 	public void getGradeCollectionJson() {
-		clearSlot(COLLECTION_PROGRESS_SLOT);
-		setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
-		getView().getCollectionProgressSlot().clear();
 		
-		clearSlot(COLLECTION_SUMMARY_SLOT);
-		setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
-		getView().getCollectionSummarySlot().clear();
-		getView().getLoadCollections().clear();
-		
-		getView().resetData();
-		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		try {
-			if(classpageId!=null && !classpageId.isEmpty()){
-				AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
-					@Override
-					public void onSuccess(final ArrayList<GradeJsonData> result) {
-						if(result.size()>0){
-							if(result.get(0).getAggregateData()!=null && result.get(0).getAggregateData().equalsIgnoreCase("false")){
-								getView().setNoDataText();
-							}else{
-								getView().setGradeCollectionData(result);
-								AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", result.get(0).getResourceGooruOId(), new AsyncCallback<CollectionSummaryMetaDataDo>() {
-									@Override
-									public void onSuccess(CollectionSummaryMetaDataDo collectionData) {
-										if(collectionData!=null && collectionData.getViews()!=0){
-										}else{
-											getView().setNoDataText();
-										}
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				clearSlot(COLLECTION_PROGRESS_SLOT);
+				setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
+				getView().getCollectionProgressSlot().clear();
+				
+				clearSlot(COLLECTION_SUMMARY_SLOT);
+				setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
+				getView().getCollectionSummarySlot().clear();
+				getView().getLoadCollections().clear();
+				
+				getView().resetData();
+				final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				try {
+					if(classpageId!=null && !classpageId.isEmpty()){
+						AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
+							@Override
+							public void onSuccess(final ArrayList<GradeJsonData> result) {
+								if(result.size()>0){
+									if(result.get(0).getAggregateData()!=null && result.get(0).getAggregateData().equalsIgnoreCase("false")){
+										getView().setNoDataText();
+									}else{
+										getView().setGradeCollectionData(result);
+										AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", result.get(0).getResourceGooruOId(), new AsyncCallback<CollectionSummaryMetaDataDo>() {
+											@Override
+											public void onSuccess(CollectionSummaryMetaDataDo collectionData) {
+												if(collectionData!=null && collectionData.getViews()!=0){
+												}else{
+													getView().setNoDataText();
+												}
+											}
+											@Override
+											public void onFailure(Throwable caught) {
+											}
+										});
 									}
-									@Override
-									public void onFailure(Throwable caught) {
-									}
-								});
+								}
 							}
-						}
+							@Override
+							public void onFailure(Throwable caught) {
+							}
+						});
 					}
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-				});
+				} catch (Exception e) {
+					AppClientFactory.printSevereLogger(e.getMessage());
+				}
+			
 			}
-		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
-		}
+		});
+		
 	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#setClickedTabPresenter(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle) {
-			if(SUMMARY.equalsIgnoreCase(clickedTab)){ 
-				clearSlot(COLLECTION_SUMMARY_SLOT);	
-				collectionSummaryPresenter.clearFrames();
-				collectionSummaryPresenter.setCollectionSummaryData(collectionId,"");
-				setInSlot(COLLECTION_SUMMARY_SLOT, collectionSummaryPresenter,false);
-			}else if(PROGRESS.equalsIgnoreCase(clickedTab)){
-				clearSlot(COLLECTION_PROGRESS_SLOT);
-				collectionProgressPresenter.setCollectionProgressData(collectionId,"",false,selectedCollectionTitle);
-				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
-			}else if(CLEARPROGRESS.equalsIgnoreCase(clickedTab)){
-				clearSlot(COLLECTION_PROGRESS_SLOT);
-				setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
-				getView().getCollectionProgressSlot().clear();
-			}else if(CLEARSUMMARY.equalsIgnoreCase(clickedTab)){
-				collectionSummaryPresenter.clearFrames();
-				clearSlot(COLLECTION_SUMMARY_SLOT);
-				setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
-				getView().getCollectionSummarySlot().clear();
+	public void setClickedTabPresenter(final String clickedTab,final String collectionId,final String selectedCollectionTitle) {
+		
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				if(SUMMARY.equalsIgnoreCase(clickedTab)){ 
+					clearSlot(COLLECTION_SUMMARY_SLOT);	
+					collectionSummaryPresenter.clearFrames();
+					collectionSummaryPresenter.setCollectionSummaryData(collectionId,"");
+					setInSlot(COLLECTION_SUMMARY_SLOT, collectionSummaryPresenter,false);
+				}else if(PROGRESS.equalsIgnoreCase(clickedTab)){
+					clearSlot(COLLECTION_PROGRESS_SLOT);
+					collectionProgressPresenter.setCollectionProgressData(collectionId,"",false,selectedCollectionTitle);
+					setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
+				}else if(CLEARPROGRESS.equalsIgnoreCase(clickedTab)){
+					clearSlot(COLLECTION_PROGRESS_SLOT);
+					setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
+					getView().getCollectionProgressSlot().clear();
+				}else if(CLEARSUMMARY.equalsIgnoreCase(clickedTab)){
+					collectionSummaryPresenter.clearFrames();
+					clearSlot(COLLECTION_SUMMARY_SLOT);
+					setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
+					getView().getCollectionSummarySlot().clear();
+				}
+		
 			}
+		});
+		
 	}
 	
 	/**
@@ -194,21 +216,31 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#exportOEPathway(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void exportOEPathway(String classpageId, String pathwayId,String timeZone) {
-		if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(timeZone)){
-			this.analyticService.exportPathwayOE(classpageId, pathwayId,timeZone,new AsyncCallback<String>() {
-				
-				@Override
-				public void onSuccess(String result) {
-					getView().getFrame().setUrl(result);
-					//Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
+	public void exportOEPathway(final String classpageId, final String pathwayId,final String timeZone) {
+		
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(timeZone)){
+					analyticService.exportPathwayOE(classpageId, pathwayId,timeZone,new AsyncCallback<String>() {
+						
+						@Override
+						public void onSuccess(String result) {
+							getView().getFrame().setUrl(result);
+							//Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+					});
 				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-			});
-		}
+			
+			}
+		});
+		
 	}
 	
 	/* (non-Javadoc)
@@ -229,24 +261,34 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 	
 	@Override
-	public void checkCollectionStaus(String classpageId, String collectionId) {
-		if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(collectionId)){
-			AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", collectionId, new AsyncCallback<CollectionSummaryMetaDataDo>() {
-				@Override
-				public void onSuccess(CollectionSummaryMetaDataDo result) {
-					if(result!=null && result.getViews()!=0){
-						setClickedTabPresenter(CLEARPROGRESS,"","");
-						setClickedTabPresenter(CLEARSUMMARY,"","");
-						getView().resetDataText();
-					}else{
-						getView().setNoDataText();
-					}
+	public void checkCollectionStaus(final String classpageId, final String collectionId) {
+		
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(collectionId)){
+					AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", collectionId, new AsyncCallback<CollectionSummaryMetaDataDo>() {
+						@Override
+						public void onSuccess(CollectionSummaryMetaDataDo result) {
+							if(result!=null && result.getViews()!=0){
+								setClickedTabPresenter(CLEARPROGRESS,"","");
+								setClickedTabPresenter(CLEARSUMMARY,"","");
+								getView().resetDataText();
+							}else{
+								getView().setNoDataText();
+							}
+						}
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+					});
 				}
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-			});
-		}
+			
+			}
+		});
+		
 	}
 	@Override
 	public Frame getIframe() {
