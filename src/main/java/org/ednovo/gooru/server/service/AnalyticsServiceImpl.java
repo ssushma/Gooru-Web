@@ -566,7 +566,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public JSONObject generateViewCountData(String Id,String searchType){
 		JSONObject jsonDataObject=new JSONObject(); 
 		try {
-			String requiredFields=GOORUOid+","+VIEWSCOUNT+","+COPYCOUNT;
+			String requiredFields=VIEWSCOUNT+","+COPYCOUNT+","+RESOURCEADDED+","+RESOURCEUSEDUSER+","+RESOURCEADDEDPUBLIC+","+RESOURCEUSEDUSERPUBLIC;
 			jsonDataObject.put(FIELDS, requiredFields);
 			jsonDataObject.put(DATASOURCE, CONTENT);
 			jsonDataObject.put(GRANULARITY, "");
