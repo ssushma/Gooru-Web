@@ -57,7 +57,7 @@ public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers,
 	 */
 	public void getFolderItems(final TreeItem item,String parentId);
 	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel,String searchType);
-	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title);
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title,HashMap<String, String> urlparams);
 	void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType,CollectionResourceWidget collectionResourceWidget);
 	public Button getAddButton();
 	public void hidePopup();

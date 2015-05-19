@@ -2072,6 +2072,17 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				isDragged=true;
 				onDragOverOpenFolder(params.get(O1_LEVEL),false);
 				setMovedCollectionStyle(params.get("id")); 
+			}else{
+				if(!params.isEmpty()){
+					for(int i = 0; i < myShelfVerPanel.getItemCount(); i++) {
+						TreeItem item = myShelfVerPanel.getItem(i);
+						ShelfCollection deletedItem = (ShelfCollection) item.getWidget();
+						if(params.get("id").equalsIgnoreCase(deletedItem.getCollectionDo().getGooruOid())) {
+							getMovedCollectionWidget(item,params.get("id"));
+							params.clear();
+						}
+					}
+				}
 			}
 		}
 	}
@@ -2511,8 +2522,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		}
 		else
 		{
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF); 
 		}
 	}
-
 }

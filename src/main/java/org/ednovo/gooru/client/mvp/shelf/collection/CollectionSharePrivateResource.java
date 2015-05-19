@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.mvp.search.NoSearchResultBundle;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -142,11 +143,10 @@ public class CollectionSharePrivateResource extends Composite {
 		}
 		final String url = collectionItemDo.getResource().getThumbnails().getUrl();
 		if(url!=null) {
-			resourceImageUc.setUrl(collectionItemDo.getResource().getThumbnails().getUrl());
+			resourceImageUc.setUrl(ResourceImageUtil.ensure_has_protocol(url));
 		} else {
 			resourceImageUc.setUrl(DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG);
 		}
-		
 		resourceImageUc.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
