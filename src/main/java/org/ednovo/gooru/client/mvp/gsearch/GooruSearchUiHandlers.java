@@ -80,5 +80,8 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	void showRatingAndReviewPopup(ResourceSearchResultDo resourceSearchResultDo);
 	
 	void setDataReterivedFromStorage(String data,boolean isApiCalled);
+	
 	void initiateSearch();
+	
+	void resetLocalStorageData();
 }

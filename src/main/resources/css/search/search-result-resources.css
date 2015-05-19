@@ -123,7 +123,8 @@ margin:0 0 0 -20px !important;
 	color: #fff;
 	background-color: #999999;
 	border-color: #908f8f;
-	margin-right: -11%;
+	margin-right: -12%;
+	padding: 6px 7px;
 }
 #gooruSearchMainContainer .gridToggle .btn-primary:hover,#gooruSearchMainContainer  .gridToggle .btn-primary:focus,#gooruSearchMainContainer  .gridToggle .btn-primary:active,#gooruSearchMainContainer  .gridToggle .btn-primary.active,#gooruSearchMainContainer  .gridToggle .open .dropdown-toggle.btn-primary {
 	color: #fff;
