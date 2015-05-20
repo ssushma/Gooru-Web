@@ -41,4 +41,6 @@ public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandl
 
 	void showGradesFilter();
 
+	void highlightGradeLevel(String filterName);
+
 }

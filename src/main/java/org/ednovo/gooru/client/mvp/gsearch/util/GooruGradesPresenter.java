@@ -59,6 +59,7 @@ public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> imp
 	}
 	
 	public void updateFilterStyle(String filterName){
+		getView().highlightGradeLevel(filterName);
 		getView().updateFilterStyle(filterName, "remove");
 	}
 	
