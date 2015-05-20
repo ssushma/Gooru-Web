@@ -66,14 +66,14 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private AttemptedAnswersDo attemptedAnswerDo=null;
 	
 	private boolean isCheckButtonEnabled=true;
-
-	private boolean isChekcAnswerButtonClicked=false;
 	
 	String[] correctAnsSequence;
 	String[] attemptAnsSequence;
-	String highlightAnswerText;
 	
 	private static String SPACE=" ";
+	private static String STYLE_HIGHLIGHT="htHiglightText";
+	private static String STYLE_CORRECT="correct";
+	private static String STYLE_INCORRECT="incorrect";
 	
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
@@ -130,27 +130,30 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 				while (answersList.hasNext()) {
 					QuestionAnswerDo questionAnswerDo=answersList.next();
-					System.out.println("answersList.s"+answersSet.size());
-					highlightAnswerText=questionAnswerDo.getAnswerText().replaceAll("\\<.*?>","");
 					String text=questionAnswerDo.getAnswerText();
-					System.out.println("text"+text);
-					if(text.contains("[")){
-						text=text.replaceAll("\\[", "").replaceAll("\\]","");
-					}
 					String[] temp;
 					temp = text.split(" ");
 					for(int k=0;k<temp.length;k++){
 						final HTML lbl=new HTML(temp[k]+SPACE);
+						if(lbl.getText().startsWith("[") && lbl.getText().endsWith("]"+SPACE) ){
+							String lblText=lbl.getText().replaceAll("\\[", "").replaceAll("\\]","");
+							lbl.setText(lblText);
+							lbl.getElement().setId(STYLE_CORRECT);
+						}else{
+							lbl.getElement().setId(STYLE_INCORRECT);
+						}
+						
 						lbl.addStyleName("htPlayerAns");
 						lbl.addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
+								clearAnswers();
 
-								if(lbl.getElement().getStyle().getBackgroundColor().equalsIgnoreCase("rgb(142, 204, 142)")){
-									lbl.getElement().getStyle().clearBackgroundColor();
+								if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+									lbl.removeStyleName(STYLE_HIGHLIGHT);
 								}else{
 
-									lbl.getElement().getStyle().setBackgroundColor("#8ecc8e");
+									lbl.addStyleName(STYLE_HIGHLIGHT);
 								}
 								enableCheckAnswerButton();
 							}
@@ -204,16 +207,12 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 	@UiHandler("checkAnswer")
 	public void checkButtonClickEvent(ClickEvent event){
-		System.out.println("checkButtonClickEvent");
-		/*if(isCheckButtonEnabled){
+		if(isCheckButtonEnabled){
 			showCorrectResult();
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("primary");
 			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
-		}*/
-		optionsContainerFpnl.removeStyleName("correct");
-		optionsContainerFpnl.removeStyleName("inCorrect");
-		showCorrectResult();
+		}
 		
 	}
 
@@ -225,8 +224,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
 				HTML widget=(HTML) optionsContainerFpnl.getWidget(i);
-
-				if(widget.getElement().getStyle().getBackgroundColor().equalsIgnoreCase("rgb(142, 204, 142)")){
+				if(widget.getStyleName().contains(STYLE_HIGHLIGHT)){
 					isOptionSelected=true;
 				}
 			}
@@ -261,40 +259,45 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		boolean isCorrect=Compare(correctAnsSequence,attemptAnsSequence);
 		
 		if(isCorrect){
-			optionsContainerFpnl.addStyleName("correct");
+			optionsContainerFpnl.addStyleName(STYLE_CORRECT);
 		}else{
-			optionsContainerFpnl.addStyleName("inCorrect");
+			optionsContainerFpnl.addStyleName(STYLE_INCORRECT);
 		}
-		
-
-		System.out.println("isCorrect--"+isCorrect);
 		}else{
-		String attemptAns="";
-		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
-			
-			HTML lbl=(HTML) optionsContainerFpnl.getWidget(i);
-			String s;
-			
-			if(lbl.getElement().getStyle().getBackgroundColor().equalsIgnoreCase("rgb(142, 204, 142)")){
-				System.out.println("lbl.getText()"+lbl.getText()+"11");
-				s="["+lbl.getText().trim()+"]"+SPACE;
-			}else {
-				s=lbl.getText();
+			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
+
+				HTML lbl=(HTML) optionsContainerFpnl.getWidget(i);
+
+				if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+
+					if(lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
+						lbl.addStyleName(STYLE_CORRECT);
+					}else {
+						lbl.addStyleName(STYLE_INCORRECT);
+					}
+				}
+
 			}
-			attemptAns=attemptAns.concat(s);
-			
-		}
-		
-		System.out.println("highlightAnswerText--"+highlightAnswerText+"11");
-		System.out.println("attemptAns--"+attemptAns+"11");
-		
-		if(highlightAnswerText.concat(SPACE).equalsIgnoreCase(attemptAns)){
-			System.out.println("equal");
-		}else{
-			System.out.println("not equal");
-		}
 		}
 
+	}
+	
+	private void clearAnswers(){
+		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
+
+			HTML lbl=(HTML) optionsContainerFpnl.getWidget(i);
+
+			if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+
+				if(lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
+					lbl.removeStyleName(STYLE_CORRECT);
+				}else {
+					lbl.removeStyleName(STYLE_INCORRECT);
+				}
+			}
+
+		}
+		
 	}
 	
 	private static boolean Compare(String[] a,String[] b)
