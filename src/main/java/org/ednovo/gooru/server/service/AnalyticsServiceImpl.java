@@ -552,7 +552,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			resultMap.put("copyCount", Integer.toString(jsonObj.getInt("copyCount")));
 			resultMap.put("viewsCount", Integer.toString(jsonObj.getInt("viewsCount")));
 			resultMap.put("resourceAdded", Integer.toString(jsonObj.getInt("resourceAdded")));
-			resultMap.put("gooruOid", jsonObj.getString("gooruOid"));
 		}catch(JSONException e){
 			logger.error("Exception::", e);
 		}
