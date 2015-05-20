@@ -707,7 +707,14 @@
 }
 .htPlayerAns {
 	display: inline-block;
-	margin-right: 5px;
+	margin-right: 3px;
+	border: 1px solid #fff;
+}
+.htPlayerAns:hover {
+	background-color: #fefecf;
+	outline: none;
+	border: 1px solid #8a7300;
+	cursor: pointer;
 }
 
 .htPlayerAns p {
@@ -724,6 +731,66 @@
 }
 .drapDropContainer.inCorrect {
 	border: 2px solid #FBB03B;
+}
+.htHiglightText {
+	background-color: #FBFB9C;
+	border: 1px solid #8a7300;
+	outline: 0;
+}
+.htHiglightText.correct {
+	background-color: #e7f4e1;
+    border: 1px solid  #62ae41;
+	padding-right: 0.5em;
+	cursor: pointer;
+}
+.htHiglightText.inCorrect {
+	background-color: #fbdddd;
+    border: 1px solid  #da1919;
+	padding-right: 0.5em;
+	cursor: pointer;
+}
+.htPlayerQuestionAnswerTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	color: #5c8b57;
+	width:100%;
+}
+.htPlayerMessageStyle{
+	margin-bottom: 20px;
+	width: 100%;
+	font-size: 12px;
+	font-style: italic;
+	color: #999;
+	float:left;
+}
+.htPlayerSubmitButton {
+	width: 100%;
+	text-align: center;
+	display: inline-block;
+}
+
+.htPlayerSubmitInActiveButton{
+	color: #999999;
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: #EFEFEF;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FDFDFD), to(#DDD));
+	background: -webkit-linear-gradient(top, #FDFDFD, #DDD);
+	background: -moz-linear-gradient(top, #FDFDFD, #DDD);
+	background: -ms-linear-gradient(top, #FDFDFD, #DDD);
+	background: -o-linear-gradient(top, #FDFDFD, #DDD);
+	border: 1px solid #DDD;
+	/* float:left; */
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.marginTop20 {
+	margin-top:20%;
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {

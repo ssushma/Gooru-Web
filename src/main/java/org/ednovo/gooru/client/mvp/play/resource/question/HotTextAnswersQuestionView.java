@@ -57,7 +57,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainerFpnl;
 	HTAnswerDragPanelVc optionsContainer;
-	@UiField QuestionStyleResource oeStyle;
 	@UiField Label messageBodyText;
 	@UiField HTMLPanel answerText;
 
@@ -73,7 +72,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private static String SPACE=" ";
 	private static String STYLE_HIGHLIGHT="htHiglightText";
 	private static String STYLE_CORRECT="correct";
-	private static String STYLE_INCORRECT="incorrect";
+	private static String STYLE_INCORRECT="inCorrect";
+	private static String STYLE_INACTIVE_BUTTON="htPlayerSubmitInActiveButton";
+	
 	
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
@@ -104,6 +105,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
 		optionsContainerFpnl.clear();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null && collectionItemDo.getResource().getType()==9){
+			messageBodyText.setText(i18n.GL3234()+i18n.GL_SPL_FULLSTOP());
 			optionsContainerFpnl.addStyleName("drapDropContainer");
 			optionsContainer=new HTAnswerDragPanelVc();
 			optionsContainerFpnl.add(optionsContainer);
@@ -211,7 +213,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			showCorrectResult();
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("primary");
-			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+			checkAnswer.addStyleName(STYLE_INACTIVE_BUTTON);
 		}
 		
 	}
@@ -235,12 +237,12 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 		if(isOptionSelected){
 			isCheckButtonEnabled=true;
-			checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
+			checkAnswer.removeStyleName(STYLE_INACTIVE_BUTTON);
 			checkAnswer.addStyleName("primary");
 		}else{
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("primary");
-			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+			checkAnswer.addStyleName(STYLE_INACTIVE_BUTTON);
 		}
 	}
 
