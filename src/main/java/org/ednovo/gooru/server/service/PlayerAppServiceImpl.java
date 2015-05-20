@@ -497,12 +497,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			assessmentAnswer.put("assessmentAnswer",jsonanswerId);
 			assessmentAnswer.put("attemptItemTryStatus",attemptResult);
 			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);*/
+			
 			sessionItemAttemptTry.put("contentGooruId",contentGooruOid);
 			sessionItemAttemptTry.put("answerId",answerId);
 			sessionItemAttemptTry.put("answerStatus",attemptResult);
 			sessionItemAttemptTry.put("sessionActivityId",Long.parseLong(sessionTrackerId));
-			sessionItemAttemptTry.put("answerText","");
-			sessionItemAttemptTry.put("answerOptionSequence","");
 			
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId);
 			getLogger().info("--->>  createSessionItemAttemptTry --- "+url);
@@ -526,7 +525,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			sessionItemAttemptTry.put("answerStatus",attemptStatus);
 			sessionItemAttemptTry.put("sessionActivityId",Long.parseLong(sessionTrackerId));
 			sessionItemAttemptTry.put("answerText",attemptAnswerResult);
-			sessionItemAttemptTry.put("answerOptionSequence","");
+			//sessionItemAttemptTry.put("answerOptionSequence","");
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);
 			getLogger().info("--->>  createSessionItemAttemptTryOE --- "+url);
 			getLogger().info("--->>  createSessionItemAttemptTry payloadOE  --- "+sessionItemAttemptTry.toString());
