@@ -616,7 +616,8 @@
 	margin: 33% 0 0 33%;
 }
 .htAnswerChoiceDragLabel {
-	background: #eee;
+	background: #fff;
+	border: 1px dashed #ddd;
 	padding: 5px 10px 5px 10px;
 	margin-bottom: 10px;
 	font-size: 12px;
@@ -625,7 +626,7 @@
 }
 .htAnswerChoiceDragLabel:hover {
 	background: #8ecc8e;
-	border: 1px solid #ddd;
+	border: 1px dashed #72CB72;
 	border-radius: 4px 4px 4px 4px;
 	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -711,6 +712,18 @@
 
 .htPlayerAns p {
 	margin-bottom: 0px;
+}
+.drapDropContainer {
+	border: 2px solid #eaeaea;
+	background: #f5f5f5;
+	padding: 0 10px;
+	display: inline-block;
+}
+.drapDropContainer.correct {
+	border: 2px solid #8ecc8e;
+}
+.drapDropContainer.inCorrect {
+	border: 2px solid #FBB03B;
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {
