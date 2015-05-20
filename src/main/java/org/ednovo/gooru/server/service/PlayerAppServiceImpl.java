@@ -469,11 +469,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			sessionItemPayloadObj.put("status", status);
 			sessionItemPayloadObj.put("questionType", questionType);
 			getLogger().info("createSessionItemInCollection payload -- "+sessionItemPayloadObj.toString());
-			/*resource.put("gooruOid",resourceGooruOid);
-			collectionItem.put("collectionItemId",collectionItemId);
-			sessionItem.put("resource",resource);
-			sessionItem.put("collectionItem",collectionItem);
-			sessionItemObj.put("sessionItem",sessionItem);*/
+			
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionTrackerId);
 			getLogger().info("createSessionItemInCollection URL -- "+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemPayloadObj.toString());
@@ -1568,6 +1564,27 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			logger.error("Exception::", e);
 		}
 		return new FolderWhatsNextCollectionDo();
+	}
+
+	@Override
+	public void updateSessionActivityItem(String gooruOid, String status, String sessionTrackerId) throws GwtException, ServerDownException {
+
+		JSONObject updateSessionActivityItemObject=new JSONObject();
+		JsonRepresentation jsonRepresentation = null;
+		try {
+			updateSessionActivityItemObject.put("status", status);
+			updateSessionActivityItemObject.put("contentGooruId", gooruOid);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionTrackerId);
+			getLogger().info("updateSessionActivityItem URL -- "+url);
+			getLogger().info("updateSessionActivityItem payload -- "+updateSessionActivityItemObject.toString());
+			
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateSessionActivityItemObject.toString());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			getLogger().info("updateSessionActivityItem Resp --"+jsonRepresentation.getJsonObject().toString());
+			
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
 	}
 
 }
