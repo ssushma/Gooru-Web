@@ -327,6 +327,12 @@
     background: url("../images/Website_1.png") no-repeat scroll 0 0 transparent;
 }
 
+#gooruSearchMainContainer .resourceImage a:hover .imageSmall{
+		display:none;
+}
+#gooruSearchMainContainer .resourceImage a:hover .audioSmall{
+		display:none;
+}
 #gooruSearchMainContainer .resourceImage a:hover .videoSmall{
 		display:none;
 }
