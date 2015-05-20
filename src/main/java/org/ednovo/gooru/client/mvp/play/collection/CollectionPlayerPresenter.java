@@ -1289,10 +1289,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
-				createSession(collectionDo.getGooruOid());
+				String parentGooruOid=null,mode="collection";
+				if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
+					parentGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+					mode="class";
+				}
+				createSession(collectionDo.getGooruOid(),parentGooruOid,mode);
 				sessionIdCreationCount=1;
 			}	
-			
 		}
 	}
 
@@ -1413,8 +1417,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	}
 
-	public void createSession(String collectionGooruOid){
-		this.playerAppService.createSessionTracker(collectionGooruOid, sessionId, new SimpleAsyncCallback<String>() {
+	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
+		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
 				CollectionPlayerPresenter.this.sessionId=sessionId;
@@ -1443,15 +1447,17 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		});
 	}
 
-	public void createSessionItemAttempt(int answerId, String attemptResult){
-		this.playerAppService.createSessionItemAttemptTry(sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttempt(String contentGooruOid,int answerId, String attemptResult){
+		this.playerAppService.createSessionItemAttemptTry(contentGooruOid,sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
 			@Override
-			public void onSuccess(String sessionItemId) {}
+			public void onSuccess(String sessionItemId) {
+				
+			}
 		});
 	}
 
-	public void createSessionItemAttemptOe(String answerId,String attemptStatus,String attemptAnswerResult){
-		this.playerAppService.createSessionItemAttemptTryForOe(sessionId, sessionItemId,answerId, attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttemptOe(String contentGooruOid,String answerId,String attemptStatus,String attemptAnswerResult){
+		this.playerAppService.createSessionItemAttemptTryForOe(contentGooruOid,sessionId, sessionItemId,answerId, attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
 				

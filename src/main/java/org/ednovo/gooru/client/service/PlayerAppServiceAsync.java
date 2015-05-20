@@ -65,15 +65,15 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent,AsyncCallback<String> callback);
 	
-	public void createSessionTracker(String collectionGooruOid,String sessionId,AsyncCallback<String> callback);
+	public void createSessionTracker(String collectionGooruOid,String sessionId,String mode,AsyncCallback<String> callback);
 	
 	public void updateSessionInCollection(String sessionTrackerId,AsyncCallback<String> callback);
 	
 	public void createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid,AsyncCallback<String> callback);
 	
-	public void createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
+	public void createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
 	
-	public void createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId,String answerId, String attemptStatus,String attemptAnswerResult,AsyncCallback<String> callback);
+	public void createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId,String answerId, String attemptStatus,String attemptAnswerResult,AsyncCallback<String> callback);
 	
 	public void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message,AsyncCallback<String> callback);
 	

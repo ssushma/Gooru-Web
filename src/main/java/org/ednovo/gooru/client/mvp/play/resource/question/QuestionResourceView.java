@@ -269,7 +269,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
-			getUiHandlers().createSessionItemAttempt(answerId, answerAttemptStatus);	
+			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);	
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
@@ -300,7 +300,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
-			getUiHandlers().createSessionItemAttempt(answerId, answerAttemptStatus);	
+			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);	
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
@@ -348,7 +348,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						}
 					}
 			}	
-			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
 		}
 		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
@@ -361,7 +361,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSesstionItemAttemptOe(String answerId,String answerText){
-			getUiHandlers().createSesstionItemAttemptOe(answerId, "pending",answerText);
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId, "pending",answerText);
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			attemptAnswerDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -423,7 +423,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 					}
 				}
 			}
-			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
 		}
 		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
 			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,4);
