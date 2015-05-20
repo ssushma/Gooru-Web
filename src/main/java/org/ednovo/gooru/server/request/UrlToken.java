@@ -252,7 +252,7 @@ public enum UrlToken {
     
     CREATE_SESSION_ITEM("/v2/session/{0}/item?"),
     
-    CREATE_SESSION_ITEM_ATTEMPT("/v2/session/{0}/item/{1}/attempt?"),
+    CREATE_SESSION_ITEM_ATTEMPT("/v2/session/{0}/attempt?"),
     
     V2_SOCIAL_EMAIL("/v2/share/mail?"),
     

@@ -81,15 +81,15 @@ public interface PlayerAppService extends BaseService {
 	
 	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent) throws GwtException, ServerDownException;
 	
-	public String createSessionTracker(String collectionGooruOid,String sessionId) throws GwtException, ServerDownException;
+	public String createSessionTracker(String collectionGooruOid,String sessionId,String mode) throws GwtException, ServerDownException;
 	
 	public String updateSessionInCollection(String sessionTrackerId) throws GwtException, ServerDownException;
 	
 	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
+	public String createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult) throws GwtException, ServerDownException;
+	public String createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult) throws GwtException, ServerDownException;
 	
 	public String sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message) throws GwtException, ServerDownException;
 	

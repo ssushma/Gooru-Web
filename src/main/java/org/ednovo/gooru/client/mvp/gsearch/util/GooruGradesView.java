@@ -90,7 +90,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		showGradesFilter();
 		preKLiPnl.addClickHandler(new ClickOnGradeLiPnl(preKLiPnl,"Pre-K"));
 		higherLiPnl.addClickHandler(new ClickOnGradeLiPnl(higherLiPnl,"12gte"));
+		setStyleForGradeLevel();
 	}
+	
 	/**
 	 * To render the grade values.
 	 * @param ulPanel {@link UlPanel}
@@ -126,7 +128,6 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 								gradePanel.getParent().getElement().getFirstChildElement().getFirstChildElement().getStyle().setBackgroundColor(backgroundColor);
 							}
 							
-						}else{
 						}
 						if(lblGrade.getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
 							lblGrade.getElement().getStyle().clearBackgroundColor();
@@ -156,6 +157,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 					gradesSplit[i] = i18n.GL3084();
 				}
 				updateFilterStyle(gradesSplit[i], "add");
+			    if(!gradesSplit[i].equals("Pre-K") && !gradesSplit[i].equals("12gte")){
+			    	highlightGradeLevel(gradesSplit[i]);
+			    }
 			}
 		}
 	}
@@ -259,5 +263,49 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		}
 		
 	}
-	
+	/**
+	 * Highlight gradeLevel if select all grades of particular gradeArray.
+	 */
+	@Override
+	public void highlightGradeLevel(String filterName){
+		String[] gradesArray = null;
+		UlPanel gradesPanel = null;
+		if(Arrays.toString(elementaryGrades).contains(filterName)){
+			gradesArray = elementaryGrades;
+			gradesPanel = elementryPanel;
+		}else if(Arrays.toString(middleGrades).contains(filterName)){
+			gradesArray = middleGrades;
+			gradesPanel = middlePanel;
+		}else if(Arrays.toString(higherGrades).contains(filterName)){
+			gradesArray = higherGrades;
+			gradesPanel = higherPanel;
+		}
+		boolean value=checkSelectedGrades(gradesArray, filterName);
+		updateGradeLevelStyle(gradesPanel,value);
+	}
+	/**
+	 * update the grade level style
+	 * @param gradePanel {@link UlPanel}
+	 * @param value 
+	 */
+	private void updateGradeLevelStyle(UlPanel gradePanel, boolean value){
+		if(value){
+			gradePanel.getElement().getFirstChildElement().getFirstChildElement().getStyle().setBackgroundColor(backgroundColor);
+		}else{
+			gradePanel.getElement().getFirstChildElement().getFirstChildElement().getStyle().clearBackgroundColor();
+		}
+		
+	}
+	/**
+	 * To set style for Elementary/middle/higher when refresh the page.
+	 */
+	private void setStyleForGradeLevel() {
+		boolean isElementaryLevel=false,isMiddleLevel=false,isHigherLevel=false;
+		isElementaryLevel=checkSelectedGrades(elementaryGrades, "");
+		isMiddleLevel=checkSelectedGrades(middleGrades, "");
+		isHigherLevel=checkSelectedGrades(higherGrades, "");
+		updateGradeLevelStyle(elementryPanel,isElementaryLevel);
+		updateGradeLevelStyle(middlePanel,isMiddleLevel);
+		updateGradeLevelStyle(higherPanel,isHigherLevel);
+	}
 }
