@@ -1449,7 +1449,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	 * @param resourceGooruOid
 	 */
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){
-		AppClientFactory.printInfoLogger("session id --- "+sessionTrackerId);
 		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType,status, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {

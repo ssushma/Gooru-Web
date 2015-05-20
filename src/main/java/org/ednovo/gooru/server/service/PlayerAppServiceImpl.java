@@ -480,11 +480,9 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			getLogger().info("jsonRepresentation o/p  -- "+jsonRepresentation.getJsonObject().toString());
 			if(jsonRepresentation!=null && jsonRepresentation.getSize()!=-1){
-				getLogger().info("inside if -- ");
-				
 				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
-				if(createSessionResponse.has("sessionItemId")){
-					sessionItemId=createSessionResponse.getString("sessionItemId");
+				if(createSessionResponse.has("sessionActivityId")){
+					sessionItemId=String.valueOf(createSessionResponse.getLong("sessionActivityId"));
 				}
 			}
 			
