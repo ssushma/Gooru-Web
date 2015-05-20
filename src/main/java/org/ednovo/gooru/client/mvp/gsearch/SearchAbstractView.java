@@ -995,7 +995,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * @param gradePanelUc instance {@link DisclosurePanelUc} which has selected filter values
 	 */
 	public void clearPPanelFilter(PPanel pPanel) {
-		
 	//	if(resourceSearch){
 		for(int i=0;i<pPanel.getWidgetCount();i++){
 			Widget filterWidget = pPanel.getWidget(i);
@@ -1017,6 +1016,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
 				setStyleSelectedFilters(split[i],ulSubjectPanel);
 			}
+		}else{
+			clearFilter(ulSubjectPanel);
 		}
 	}
 	
@@ -1079,7 +1080,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if(filterName.equalsIgnoreCase(widget.getElement().getInnerText())){
 					((LiPanel) widget).addStyleName("active");
 				}
-				
 			}
 		}
 	}
@@ -1160,8 +1160,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if(categories!=null){
 			String[] split = categories.split(",");
 			for(int i=0; i<split.length; i++){
-				if(!split[i].equalsIgnoreCase("all"))
-				{
+				if(!split[i].equalsIgnoreCase("all")){
 					//String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
 					String filterName=split[i];
 					pnlAddFilters.add(createTagsLabel(filterName,"categoryPanel"));
