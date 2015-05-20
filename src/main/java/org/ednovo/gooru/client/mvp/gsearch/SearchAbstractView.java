@@ -1254,8 +1254,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
 			if(widget instanceof CloseLabelSetting){
-				System.out.println("gettext::"+((CloseLabelSetting) widget).getSourceText());
-				System.out.println("filterName::"+filterName);
 				if(filterName.equalsIgnoreCase(((CloseLabelSetting) widget).getSourceText())){
 					widget.removeFromParent();
 				}
@@ -1312,9 +1310,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				@Override
 				public void onSuccess() {
-					System.out.println("oerstyle::"+oerLbl.getStyleName());
 					if(oerLbl.getStyleName().equals("active")){
-						System.out.println("inin");
 						removeFilter("OER");
 						oerLbl.removeStyleName("active");
 					}else{
