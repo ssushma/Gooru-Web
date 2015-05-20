@@ -86,9 +86,9 @@ public interface PlayerAppService extends BaseService {
 	
 	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
+	public String createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult) throws GwtException, ServerDownException;
+	public String createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult) throws GwtException, ServerDownException;
 	
 	public String sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message) throws GwtException, ServerDownException;
 	

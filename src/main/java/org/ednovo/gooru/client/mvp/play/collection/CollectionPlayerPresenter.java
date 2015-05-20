@@ -1447,8 +1447,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		});
 	}
 
-	public void createSessionItemAttempt(int answerId, String attemptResult){
-		this.playerAppService.createSessionItemAttemptTry(sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttempt(String contentGooruOid,int answerId, String attemptResult){
+		this.playerAppService.createSessionItemAttemptTry(contentGooruOid,sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
 				
@@ -1456,8 +1456,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		});
 	}
 
-	public void createSessionItemAttemptOe(String answerId,String attemptStatus,String attemptAnswerResult){
-		this.playerAppService.createSessionItemAttemptTryForOe(sessionId, sessionItemId,answerId, attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttemptOe(String contentGooruOid,String answerId,String attemptStatus,String attemptAnswerResult){
+		this.playerAppService.createSessionItemAttemptTryForOe(contentGooruOid,sessionId, sessionItemId,answerId, attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
 				
