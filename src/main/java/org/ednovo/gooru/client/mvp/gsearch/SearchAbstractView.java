@@ -628,16 +628,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showGradesFilter();
 		showCategoryFilter();
 		showSubjectsFilter();
-		showRatingsFilter();
+		showOERFilter();
 		showAuthorFilter();
 		showStandardsFilter();
 		showMobileFriendlyFilter();
 		showAccessModeFilter();
 		showPublisherFilter();
 		showAggregatorFilter();
-		showOERFilter();
 		showReviewFilter();
 		setStyleForCollectionType();
+		showRatingsFilter();
 	}
 	/**
 	 * This method will set the search Filters 
