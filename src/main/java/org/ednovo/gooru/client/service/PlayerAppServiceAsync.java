@@ -178,6 +178,8 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void getNextCollectionFromToc(String folderId,String collectionItemId,AsyncCallback<FolderWhatsNextCollectionDo> callback);
 
+	public void updateSessionActivityItem(String gooruOid, String status,String updateSessionId,AsyncCallback<Void> callback);
+
 	
 	
 }

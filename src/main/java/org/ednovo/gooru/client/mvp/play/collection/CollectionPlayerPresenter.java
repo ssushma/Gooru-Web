@@ -183,6 +183,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     
     private String STATUS_OPEN = "open";
     
+    private String STATUS_ARCHIVE = "archive";
+    
     private Long collectionEndTime=0L;
     
     private Long totalTimeSpentOnSummaryPage=0L;
@@ -240,6 +242,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	private boolean isUserAttemptedAnswer=false;
 	
 	private int userAttemptedQuestionType=0;
+	
+	private String contentResourceGooruOId=null;
 	
 	private String questionType=RESULT.toUpperCase();
 	
@@ -1375,12 +1379,32 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		triggerCollectionItemNewDataLogStartStopEvent(resourceActivityResourceId,resourceStartTime, resourceStartTime, PlayerDataLogEvents.START_EVENT_TYPE, 0,questionType);
 	}
 
+	/**
+	 * Triggers the collection.resource.stop event
+	 */
 	public void stopResourceInsightDataLog(){
+		
 		stopHintOrExplanationEvent();
 		Long resourceEndTime=PlayerDataLogEvents.getUnixTime();
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, collectionDataLogEventId,resourceActivityResourceId,collectionDo.getGooruOid(), PlayerDataLogEvents.STOP_EVENT_TYPE, resourceStartTime,
 				resourceEndTime,resourceEndTime-resourceStartTime,AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length());
 		triggerCollectionItemNewDataLogStartStopEvent(resourceActivityResourceId,resourceStartTime, resourceEndTime, PlayerDataLogEvents.STOP_EVENT_TYPE, 0, questionType);
+		updateSessionActivityItem(contentResourceGooruOId,STATUS_ARCHIVE,sessionId);
+	}
+
+	/**
+	 * Updates session item on navigating from one resource to another resource.
+	 * 
+	 * @param gooruOid 
+	 * @param status
+	 */
+	private void updateSessionActivityItem(String gooruOid,	String status, String updateSessionId) {
+		AppClientFactory.getInjector().getPlayerAppService().updateSessionActivityItem(gooruOid,status,updateSessionId, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+			}
+		});
 	}
 
 	public void createSessionItem(){
@@ -1449,6 +1473,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	 * @param resourceGooruOid
 	 */
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){
+		if(!StringUtil.isEmpty(resourceGooruOid)){ 
+			this.contentResourceGooruOId = resourceGooruOid;
+		}
 		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType,status, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
