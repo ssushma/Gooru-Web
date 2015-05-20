@@ -132,7 +132,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 				while (answersList.hasNext()) {
 					QuestionAnswerDo questionAnswerDo=answersList.next();
-					String text=questionAnswerDo.getAnswerText();
+					String text=removeHtmlTags(questionAnswerDo.getAnswerText());
 					String[] temp;
 					temp = text.split(" ");
 					for(int k=0;k<temp.length;k++){
@@ -311,5 +311,17 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			if (!a[i].equalsIgnoreCase(b[i]))  	return false;
 
 		return true;
+	}
+	/**
+	 * This method is used to remove HTMLTags from the String
+	 * @param text
+	 * @return
+	 */
+	private String removeHtmlTags(String text){
+		/**
+		 * Commented the following line to fix issue with displaying math symbols. 
+		 */
+		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		return text;
 	}
 }
