@@ -573,7 +573,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void createResourceDataLogs(){
 		resourceActivityEventId=GwtUUIDGenerator.uuid();
-		createSession(collectionItemDo.getResource().getGooruOid());
+		createSession(collectionItemDo.getResource().getGooruOid(),null,null);
 	}
 	public void startResourceInsightDataLog(){
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
@@ -610,8 +610,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		}
 	}
 	
-	public void createSession(String collectionGooruOid){
-		this.playerAppService.createSessionTracker(collectionGooruOid,null, new SimpleAsyncCallback<String>() {
+	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
+		this.playerAppService.createSessionTracker(collectionGooruOid,parentGooruOid,mode, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
 				ResourcePlayerPresenter.this.sessionId=sessionId;

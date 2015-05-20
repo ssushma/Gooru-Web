@@ -399,26 +399,27 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return activityEventId;
 	}
 	
-	public String createSessionTracker(String collectionGooruOid,String clientsSessionId){
+	public String createSessionTracker(String collectionGooruOid,String clientsSessionId,String mode){
 		String seesionId="";
 		JSONObject createSessionObject=new JSONObject();
-		JSONObject sessionObject=new JSONObject();
-		JSONObject collectionObject=new JSONObject();
 		JsonRepresentation jsonRepresentation = null;
 		try {
-			collectionObject.put("gooruOid", collectionGooruOid);
-			sessionObject.put("resource", collectionObject);
-			sessionObject.put("mode", "test");
+			createSessionObject.put("contentGooruId", collectionGooruOid);
 			if(clientsSessionId!=null){
-				sessionObject.put("sessionId", clientsSessionId);
+				createSessionObject.put("parentGooruId", clientsSessionId);
+			}else{
+				createSessionObject.put("parentGooruId", "");
 			}
-			createSessionObject.put("session", sessionObject);
+			createSessionObject.put("mode", "test");
+			createSessionObject.put("type", mode);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createSessionObject.toString());
+			logger.info("createSessionTracker url::"+url);
+			logger.info("createSessionObject::"+createSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			if(jsonRepresentation!=null&&jsonRepresentation.getSize()!=-1){
 				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
-				seesionId=createSessionResponse.getString("sessionId");
+				seesionId=createSessionResponse.getString("sessionActivityId");
 			}
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
