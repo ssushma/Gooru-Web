@@ -625,6 +625,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			collectionSearchPanel.setVisible(false);
 		}
 		pnlAddFilters.clear();
+		clearUlPanels(ulSubjectPanel);
 		showGradesFilter();
 		showCategoryFilter();
 		showSubjectsFilter();
@@ -1275,6 +1276,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					((LiPanel) widget).removeStyleName("active");
 					callSearch();
 				}
+			}
+		}
+	}
+	
+	/**
+	 * This method is used to clear subjects active styles
+	 * @param filterPanel
+	 */
+	public void clearUlPanels(UlPanel filterPanel){
+		Iterator<Widget> widgets= filterPanel.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				((LiPanel) widget).removeStyleName("active");
 			}
 		}
 	}
