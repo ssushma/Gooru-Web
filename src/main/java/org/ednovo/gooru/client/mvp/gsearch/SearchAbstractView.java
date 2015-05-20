@@ -625,6 +625,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			collectionSearchPanel.setVisible(false);
 		}
 		pnlAddFilters.clear();
+		clearUlPanels(ulSubjectPanel);
 		showGradesFilter();
 		showCategoryFilter();
 		showSubjectsFilter();
@@ -1281,6 +1282,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	
 	/**
+	 * This method is used to clear subjects active styles
+	 * @param filterPanel
+	 */
+	public void clearUlPanels(UlPanel filterPanel){
+		Iterator<Widget> widgets= filterPanel.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				((LiPanel) widget).removeStyleName("active");
+			}
+		}
+	}
+	
+	/**
      * Remove the selected search filter and search results when user click on 'X'.
      * @param filterNamePanel {@link HTMLPanel} 
      * @param filterName {@link String} grade/subject search filter name 
@@ -1466,7 +1481,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 filtersMap.remove(IsGooruSearchView.OWNER_FLT);
 
 		 }else{
-
 			 filtersMap.remove(IsGooruSearchView.MEDIATYPE_FLT);
 			 filtersMap.remove(IsGooruSearchView.OER_FLT);
 			 filtersMap.remove(IsGooruSearchView.ACCESS_MODE_FLT);
@@ -1482,7 +1496,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
 			 }
 		 }
-
 		 return filtersMap; 
 	}
 	
@@ -1670,37 +1683,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			callSearch();
 		}
 	}
-	/**
-	 * This method is used to find the local storage size	
-	 */
-	public static native void printLoclStoreSize() /*-{
-	 	var data = '';
-        console.log('Current local storage: ');
-        for(var key in window.localStorage){
-            if(window.localStorage.hasOwnProperty(key)){
-                data += window.localStorage[key];
-                console.log( key + " = " + ((window.localStorage[key].length * 16)/(8 * 1024)).toFixed(2) + ' KB' );
-            }
-        }
-        console.log(data ? '\n' + 'Total space used: ' + ((data.length * 16)/(8 * 1024)).toFixed(2) + ' KB' : 'Empty (0 KB)');
-        console.log(data ? 'Approx. space remaining: ' + (5120 - ((data.length * 16)/(8 * 1024)).toFixed(2)) + ' KB' : '5 MB');
-	}-*/;
-
-	/**
-	 * This native method is used to get the number of visible items on the screen, based on this we are calling the top scroll functionality
-	 */
-	public static native int getVisibleItems() /*-{
-		var detectPartial = 'complete';
-		var count=0;
-		$wnd.$('.libraryMainContainerBlock .visibleElement').each(function(){
-			var visible = $wnd.$(this).visible(true, false, 'vertical');
-			if(visible){
-				count++;
-			}
-		});
-		return count;
-	}-*/;
-	
 	public class MouseOverOnImage implements MouseOverHandler{
 		String mouseOverTxt;
 
@@ -1710,7 +1692,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			// TODO Auto-generated method stub
 			toolTip = new ToolTip(mouseOverTxt);
 			toolTip.getLblLink().setVisible(false);
 			toolTip.getElement().getStyle().setBackgroundColor("transparent");

@@ -456,26 +456,33 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		
 	}
 
-	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid) {
+	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status) {
 		String sessionItemId="";
+		JSONObject sessionItemPayloadObj=new JSONObject();
 		JSONObject resource=new JSONObject();
 		JSONObject collectionItem=new JSONObject();
 		JSONObject sessionItem=new JSONObject();
 		JSONObject sessionItemObj=new JSONObject();
 		JsonRepresentation jsonRepresentation = null;
 		try {
-			resource.put("gooruOid",resourceGooruOid);
+			sessionItemPayloadObj.put("contentGooruId", resourceGooruOid);
+			sessionItemPayloadObj.put("status", status);
+			sessionItemPayloadObj.put("questionType", questionType);
+			getLogger().info("createSessionItemInCollection payload -- "+sessionItemPayloadObj.toString());
+			/*resource.put("gooruOid",resourceGooruOid);
 			collectionItem.put("collectionItemId",collectionItemId);
 			sessionItem.put("resource",resource);
 			sessionItem.put("collectionItem",collectionItem);
-			sessionItemObj.put("sessionItem",sessionItem);
+			sessionItemObj.put("sessionItem",sessionItem);*/
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionTrackerId);
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemObj.toString());
+			getLogger().info("createSessionItemInCollection URL -- "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemPayloadObj.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			getLogger().info("jsonRepresentation o/p  -- "+jsonRepresentation.getJsonObject().toString());
 			if(jsonRepresentation!=null && jsonRepresentation.getSize()!=-1){
 				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
-				if(createSessionResponse.has("sessionItemId")){
-					sessionItemId=createSessionResponse.getString("sessionItemId");
+				if(createSessionResponse.has("sessionActivityId")){
+					sessionItemId=String.valueOf(createSessionResponse.getLong("sessionActivityId"));
 				}
 			}
 			
@@ -494,12 +501,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			assessmentAnswer.put("assessmentAnswer",jsonanswerId);
 			assessmentAnswer.put("attemptItemTryStatus",attemptResult);
 			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);*/
+			
 			sessionItemAttemptTry.put("contentGooruId",contentGooruOid);
 			sessionItemAttemptTry.put("answerId",answerId);
 			sessionItemAttemptTry.put("answerStatus",attemptResult);
 			sessionItemAttemptTry.put("sessionActivityId",Long.parseLong(sessionTrackerId));
-			sessionItemAttemptTry.put("answerText","");
-			sessionItemAttemptTry.put("answerOptionSequence","");
 			
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId);
 			getLogger().info("--->>  createSessionItemAttemptTry --- "+url);
@@ -523,7 +529,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			sessionItemAttemptTry.put("answerStatus",attemptStatus);
 			sessionItemAttemptTry.put("sessionActivityId",Long.parseLong(sessionTrackerId));
 			sessionItemAttemptTry.put("answerText",attemptAnswerResult);
-			sessionItemAttemptTry.put("answerOptionSequence","");
+			//sessionItemAttemptTry.put("answerOptionSequence","");
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);
 			getLogger().info("--->>  createSessionItemAttemptTryOE --- "+url);
 			getLogger().info("--->>  createSessionItemAttemptTry payloadOE  --- "+sessionItemAttemptTry.toString());
@@ -1562,4 +1568,5 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 		return new FolderWhatsNextCollectionDo();
 	}
+
 }
