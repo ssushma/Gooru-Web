@@ -181,6 +181,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     
     private Long newCollectionStartTime=0L;
     
+    private String STATUS_OPEN = "open";
+    
     private Long collectionEndTime=0L;
     
     private Long totalTimeSpentOnSummaryPage=0L;
@@ -1045,6 +1047,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			if(collectionDo.getCollectionItems()!=null &&collectionDo.getCollectionItems().size()>0){
 					for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 						CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
+
 						if(collectionItemId.equalsIgnoreCase(collectionItemDo.getCollectionItemId())){
 							collectionItemDo.setItemSequence(i+1);
 							return collectionItemDo;
@@ -1378,7 +1381,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void createSessionItem(){
 		if(collectionItemDo!=null){
-			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid());
+			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 		}
 	}
 
@@ -1428,14 +1431,22 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}
 				createResourceDataLog();
 				if(collectionItemDo!=null){
-					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid());
+
+					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 				}
 			}
 		});
 	}
 
-	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid){
-		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid, new SimpleAsyncCallback<String>() {
+	/**
+	 * This is to create session activity item.
+	 * @param sessionTrackerId
+	 * @param collectionItemId
+	 * @param resourceGooruOid
+	 */
+	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){
+		AppClientFactory.printInfoLogger("session id --- "+sessionTrackerId);
+		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType,status, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
 				CollectionPlayerPresenter.this.sessionItemId=sessionItemId;

@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
@@ -69,7 +70,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void updateSessionInCollection(String sessionTrackerId,AsyncCallback<String> callback);
 	
-	public void createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid,AsyncCallback<String> callback);
+	public void createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status,AsyncCallback<String> callback);
 	
 	public void createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
 	
@@ -176,6 +177,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId,AsyncCallback<InsightsCollectionDo> callback);
 	
 	public void getNextCollectionFromToc(String folderId,String collectionItemId,AsyncCallback<FolderWhatsNextCollectionDo> callback);
+
 	
 	
 }

@@ -151,6 +151,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	
 	public static final String TYPE="type";
 	
+	public static final String TYPENAME="typeName";
+	
 	public static final String ASSESTS="assets";
 	
 	public static final String SEQUENCE="sequence";
@@ -495,6 +497,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				resourceDo.setQuestionText(getJsonString(recordJsonObject, QUESTION_TEXT));
 				resourceDo.setExplanation(getJsonString(recordJsonObject, EXPLANATION));
 				resourceDo.setType(recordJsonObject.isNull(TYPE)?null:recordJsonObject.getInt(TYPE));
+				resourceDo.setType(recordJsonObject.isNull(TYPENAME)?null:recordJsonObject.getInt(TYPENAME));
 				
 				ArrayList<AssetsDo> assetsList=new ArrayList<AssetsDo>();
 				JSONArray assetArray=quizObject.isNull(ASSESTS)?null:quizObject.getJSONArray(ASSESTS);

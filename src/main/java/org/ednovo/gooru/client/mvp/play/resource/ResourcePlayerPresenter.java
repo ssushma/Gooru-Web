@@ -617,14 +617,14 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 				ResourcePlayerPresenter.this.sessionId=sessionId;
 				startResourceInsightDataLog();
 				if(collectionItemDo!=null){
-					createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid());
+					createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),"open");
 				}
 			}
 		});
 	}
 	
-	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid){
-		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid, new SimpleAsyncCallback<String>() {
+	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){
+		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType, status, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
 				ResourcePlayerPresenter.this.sessionItemId=sessionItemId;
