@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
@@ -36,6 +37,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -122,18 +124,26 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			String setText="";
-			if(ONE.equalsIgnoreCase(fromString)){
-				setText=i18n.GL3091();
-			}else if(TWO.equalsIgnoreCase(fromString)){
-				setText=i18n.GL3088();
-			}
-			toolTip = new ToolTip(setText,"");
-			toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
-			toolTip.getElement().getStyle().setBackgroundColor("transparent");
-			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			toolTip.setPopupPosition(image.getAbsoluteLeft()-(50+22), image.getAbsoluteTop()+22);
-			toolTip.show();
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					String setText="";
+					if(ONE.equalsIgnoreCase(fromString)){
+						setText=i18n.GL3091();
+					}else if(TWO.equalsIgnoreCase(fromString)){
+						setText=i18n.GL3088();
+					}
+					toolTip = new ToolTip(setText,"");
+					toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(image.getAbsoluteLeft()-(50+22), image.getAbsoluteTop()+22);
+					toolTip.show();
+				
+				}
+			});
 		}
 	}
 	/**
@@ -141,68 +151,100 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	public class QuestionMouseOutToolTip implements MouseOutHandler{
 		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			EventTarget target = event.getRelatedTarget();
-			  if (Element.is(target)) {
-				  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
-					  toolTip.hide();
-				  }
-			  }
+		public void onMouseOut(final MouseOutEvent event) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					EventTarget target = event.getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }
+				
+				}
+			});
 		}
 	}
     public class StudentsListChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
-			errorMessage.setVisible(false);
-			int selectedIndex=studentsListDropDown.getSelectedIndex();
-			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			if(selectedIndex==0){
-				sessionspnl.setVisible(false);
-				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
-				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
-			}else{
-				printUserDataDO.setUserName(studentsListDropDown.getItemText(studentsListDropDown.getSelectedIndex()));
-				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId,printUserDataDO);
-				sessionspnl.setVisible(true);
-				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(false);
-			}
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					errorMessage.setVisible(false);
+					int selectedIndex=studentsListDropDown.getSelectedIndex();
+					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+					if(selectedIndex==0){
+						sessionspnl.setVisible(false);
+						collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
+						getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
+					}else{
+						printUserDataDO.setUserName(studentsListDropDown.getItemText(studentsListDropDown.getSelectedIndex()));
+						getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId,printUserDataDO);
+						sessionspnl.setVisible(true);
+						collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(false);
+					}
+				
+				}
+			});
 		}
     }
     public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
-				int selectedSessionIndex=sessionsDropDown.getSelectedIndex();
-				int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
-				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-                setSessionStartTime(selectedSessionIndex);
-                printUserDataDO.setUserName(studentsListDropDown.getItemText(selectedStudentIndex));
-                printUserDataDO.setSession(sessionsDropDown.getItemText(selectedSessionIndex));
-				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					int selectedSessionIndex=sessionsDropDown.getSelectedIndex();
+					int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
+					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+	                setSessionStartTime(selectedSessionIndex);
+	                printUserDataDO.setUserName(studentsListDropDown.getItemText(selectedStudentIndex));
+	                printUserDataDO.setSession(sessionsDropDown.getItemText(selectedSessionIndex));
+					getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
+			
+				}
+			});
 		}
     }
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setUsersData(java.util.ArrayList)
 	 */
 	@Override
-	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
-		errorMessage.setVisible(false);
-		studentsListDropDown.clear();
-		studentsListDropDown.addItem(ALL_STUDENTS);
-		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
-			if(!StringUtil.isEmpty(collectionSummaryUsersDataDo.getUserName()) && !StringUtil.isEmpty(collectionSummaryUsersDataDo.getGooruUId())){
-				studentsListDropDown.addItem(collectionSummaryUsersDataDo.getUserName(),collectionSummaryUsersDataDo.getGooruUId());
+	public void setUsersData(final ArrayList<CollectionSummaryUsersDataDo> result) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				errorMessage.setVisible(false);
+				studentsListDropDown.clear();
+				studentsListDropDown.addItem(ALL_STUDENTS);
+				for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
+					if(!StringUtil.isEmpty(collectionSummaryUsersDataDo.getUserName()) && !StringUtil.isEmpty(collectionSummaryUsersDataDo.getGooruUId())){
+						studentsListDropDown.addItem(collectionSummaryUsersDataDo.getUserName(),collectionSummaryUsersDataDo.getGooruUId());
+					}
+				}
+				sessionspnl.setVisible(false);
+				String tabReports=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+				if(REPORTS.equalsIgnoreCase(tabReports)){ 
+					exportImage.setVisible(true);
+					subText.setVisible(true);
+				}else{
+					exportImage.setVisible(false);
+					subText.setVisible(false);
+				}
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
+			
 			}
-		}
-		sessionspnl.setVisible(false);
-		String tabReports=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
-		if(REPORTS.equalsIgnoreCase(tabReports)){ 
-			exportImage.setVisible(true);
-			subText.setVisible(true);
-		}else{
-			exportImage.setVisible(false);
-			subText.setVisible(false);
-		}
-		collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
+		} );
 	}
 
 	/* (non-Javadoc)
@@ -210,14 +252,21 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	@Override
 	public void setCollectionMetaData(
-			CollectionSummaryMetaDataDo result,String pathwayId,String classpageId) {
+			final CollectionSummaryMetaDataDo result,String pathwayId,String classpageId) {
 		this.classpageId=classpageId;
 		this.pathwayId=pathwayId;
-		if(!StringUtil.checkNull(result)){
-			collectionId=result.getGooruOId();
-			collectionSummaryWidget.setData(result);
-			collectionSummaryDetails.add(collectionSummaryWidget);
-		}
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if(!StringUtil.checkNull(result)){
+					collectionId=result.getGooruOId();
+					collectionSummaryWidget.setData(result);
+					collectionSummaryDetails.add(collectionSummaryWidget);
+				}
+			}
+		});
+		
 	}
 
 	/* (non-Javadoc)
@@ -231,16 +280,24 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setUserSessionsData(java.util.ArrayList)
 	 */
 	@Override
-	public void setUserSessionsData(
+	public void setUserSessionsData(final 
 			ArrayList<CollectionSummaryUsersDataDo> result) {
-		sessionsDropDown.clear();
-		sessionData.clear();
-		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
-			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), AnalyticsUtil.getSessionsCreatedTime(Long.toString(collectionSummaryUsersDataDo.getTimeStamp())));
-			int day=collectionSummaryUsersDataDo.getFrequency();
-			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",collectionSummaryUsersDataDo.getSessionId());
-		}
-		setSessionStartTime(0);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				sessionsDropDown.clear();
+				sessionData.clear();
+				for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
+					sessionData.put(collectionSummaryUsersDataDo.getSessionId(), AnalyticsUtil.getSessionsCreatedTime(Long.toString(collectionSummaryUsersDataDo.getTimeStamp())));
+					int day=collectionSummaryUsersDataDo.getFrequency();
+					sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",collectionSummaryUsersDataDo.getSessionId());
+				}
+				setSessionStartTime(0);
+			
+			}
+		});
 	}
 	/* (non-Javadoc)
 	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
@@ -279,7 +336,15 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	
 	@UiHandler("exportImage")
 	public void clickedOnExport(ClickEvent e){
-		getUiHandlers().exportCollectionSummary(collectionId, classpageId, "", "", pathwayId, AnalyticsUtil.getTimeZone());
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				getUiHandlers().exportCollectionSummary(collectionId, classpageId, "", "", pathwayId, AnalyticsUtil.getTimeZone());
+			
+			}
+		});
 	}
 	@Override
 	public Frame getFrame() {
@@ -287,9 +352,17 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	}
 	@Override
 	public void resetDataIfNoSessions() {
-		lastModifiedTime.setText("");
-		sessionspnl.setVisible(false);
-		errorMessage.setVisible(true);
-		collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				lastModifiedTime.setText("");
+				sessionspnl.setVisible(false);
+				errorMessage.setVisible(true);
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
+			
+			}
+		});
 	}
 }

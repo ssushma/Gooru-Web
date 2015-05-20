@@ -95,7 +95,7 @@
    						    </g:HTMLPanel>
 							<div class="ratingDetails">
 								<panel:UlPanel styleName="rating playerrating" ui:field="ulRatingsPanel"/>
-                                <g:Label ui:field="ratingsLbl" visible="false">and up</g:Label>
+                                <g:Label ui:field="ratingsLbl" visible="false">+ Stars</g:Label>
 							</div>
 							<g:HTMLPanel styleName="gridToggle">
 
