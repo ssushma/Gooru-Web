@@ -595,7 +595,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
 						if(pageNumber==1){
-							System.out.println("in");
 							pnlFirstTempData.add(renderSearchResult(searchResult));
 						}
 				}

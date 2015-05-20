@@ -1079,7 +1079,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
-				createSession(collectionDo.getGooruOid());
+				String parentGooruOid=null,mode="collection";
+				if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
+					parentGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+					mode="class";
+				}
+				createSession(collectionDo.getGooruOid(),parentGooruOid,mode);
 				sessionIdCreationCount=1;
 			}	
 		}
@@ -1203,8 +1208,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			String context,String userAgent){
 	}
 	
-	public void createSession(String collectionGooruOid){
-		this.playerAppService.createSessionTracker(collectionGooruOid, sessionId,new SimpleAsyncCallback<String>() {
+	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
+		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode,new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
 				PreviewPlayerPresenter.this.sessionId=sessionId;

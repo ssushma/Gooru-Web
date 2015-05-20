@@ -80,7 +80,7 @@ public interface PlayerAppService extends BaseService {
 	
 	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent) throws GwtException, ServerDownException;
 	
-	public String createSessionTracker(String collectionGooruOid,String sessionId) throws GwtException, ServerDownException;
+	public String createSessionTracker(String collectionGooruOid,String sessionId,String mode) throws GwtException, ServerDownException;
 	
 	public String updateSessionInCollection(String sessionTrackerId) throws GwtException, ServerDownException;
 	

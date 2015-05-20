@@ -65,7 +65,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent,AsyncCallback<String> callback);
 	
-	public void createSessionTracker(String collectionGooruOid,String sessionId,AsyncCallback<String> callback);
+	public void createSessionTracker(String collectionGooruOid,String sessionId,String mode,AsyncCallback<String> callback);
 	
 	public void updateSessionInCollection(String sessionTrackerId,AsyncCallback<String> callback);
 	
