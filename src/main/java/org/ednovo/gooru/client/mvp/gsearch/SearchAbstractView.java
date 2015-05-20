@@ -153,7 +153,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private SearchDo<String> aggregatorSearchDo = new SearchDo<String>();
 	
-	
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
@@ -187,7 +186,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 
 	int pageCountForStorage=1,previousScroll;
 	
-	HTMLPanel pnlFirstTempData=new HTMLPanel("");
+	Widget pnlFirstTempData=null;
 	/**
 	 * Assign new instance for 
 	 * 
@@ -594,9 +593,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
-						if(pageNumber==1){
-							pnlFirstTempData.add(renderSearchResult(searchResult));
-						}
+				}
+				if(pageNumber==1){
+					pnlFirstTempData=searchResultPanel.getWidget(0);
 				}
 				isApiInProgress=true;
 			}
@@ -1578,7 +1577,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		localStore.clear();
 		isForwardScroll=true;
 		getUiHandlers().resetLocalStorageData();
-		searchResultPanel.add(pnlFirstTempData);
+		if(pnlFirstTempData!=null){
+			searchResultPanel.add(pnlFirstTempData);
+		}
 		callAnimation();
 	}
 	
