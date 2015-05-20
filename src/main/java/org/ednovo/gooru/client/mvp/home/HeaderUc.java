@@ -1003,35 +1003,28 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onClick(final ClickEvent event) {
-			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
-				@Override
-				public void onSuccess() {
 
-					Window.enableScrolling(true);
-					Cookies.setCookie("searchvalue", "");
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
-					Element e = null;
-					if ((e = event.getRelativeElement()) != null) {
-						if (e.getInnerHTML() != null
-								&& e.getInnerHTML().contains("gwt-Label"))
-							MixpanelUtil.Click_Discover_LandingPage();
-					}
-					manageDotsMenuSelection(discoverLink);
-					if ((discoverLinkUrl != null)
-							&& (!discoverLinkUrl.contains("featured-contributors"))) {
-						Map<String, String> params = StringUtil
-								.splitQuery(discoverLinkUrl);
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.DISCOVER, params);
-					} else {
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.DISCOVER);
-					}
-				
-				}
-			});
-			
+			Window.enableScrolling(true);
+			Cookies.setCookie("searchvalue", "");
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
+			Element e = null;
+			if ((e = event.getRelativeElement()) != null) {
+				if (e.getInnerHTML() != null
+						&& e.getInnerHTML().contains("gwt-Label"))
+					MixpanelUtil.Click_Discover_LandingPage();
+			}
+			manageDotsMenuSelection(discoverLink);
+			if ((discoverLinkUrl != null)
+					&& (!discoverLinkUrl.contains("featured-contributors"))) {
+				Map<String, String> params = StringUtil
+						.splitQuery(discoverLinkUrl);
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.DISCOVER, params);
+			} else {
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.DISCOVER);
+			}
+		
 		}
 
 	}
