@@ -149,6 +149,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 */
 	@Override
 	public void showGradesFilter() {
+		clearGradesStyles();
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT);
 		if(grades!=null){
 			String[] gradesSplit = grades.split(",");
@@ -199,9 +200,11 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 */
 	private void selectAllGrades(String[] gradeArray, String addOrRemove) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT, null);
-		grades=grades.replace(i18n.GL3070(), "").replace("12gte", "");
-		if(!gradeArray[0].equals(i18n.GL0168())){
-			grades=grades.replace(i18n.GL3081(), "").replace(i18n.GL3082(), "").replace(i18n.GL3083(), "");
+		if(grades!=null){
+			grades=grades.replace(i18n.GL3070(), "").replace("12gte", "");
+			if(!gradeArray[0].equals(i18n.GL0168())){
+				grades=grades.replace(i18n.GL3081(), "").replace(i18n.GL3082(), "").replace(i18n.GL3083(), "");
+			}
 		}
 		for(int i=1; i<gradeArray.length; i++){
 			if(grades!=null && !grades.contains(gradeArray[i])){
@@ -226,7 +229,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
      */
 	private boolean checkSelectedGrades(String[] stringArray, String selectedValue) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT);
-		if(grades!=null){
+		if(grades!=null && stringArray!=null){
 			grades+=selectedValue;
 			for(int i=1;i<stringArray.length;i++){
 				if(!grades.contains(stringArray[i])){
@@ -281,7 +284,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			gradesPanel = higherPanel;
 		}
 		boolean value=checkSelectedGrades(gradesArray, filterName);
-		updateGradeLevelStyle(gradesPanel,value);
+		if(gradesPanel!=null){
+			updateGradeLevelStyle(gradesPanel,value);
+		}
 	}
 	/**
 	 * update the grade level style
@@ -307,5 +312,26 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		updateGradeLevelStyle(elementryPanel,isElementaryLevel);
 		updateGradeLevelStyle(middlePanel,isMiddleLevel);
 		updateGradeLevelStyle(higherPanel,isHigherLevel);
+	}
+	
+	/**
+	 * This method clear grade active style
+	 * @param filterName {@link String}
+	 */
+	public void clearGradesStyles(){
+		Iterator<Widget> widgets= gradeContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof UlPanel){
+				Iterator<Widget>  liwidgets = ((UlPanel) widget).iterator();
+				while(liwidgets.hasNext()){
+					Widget liwidget = liwidgets.next();
+					if(liwidget instanceof LiPanel){
+						((LiPanel) liwidget).getWidget(0).getElement().getStyle().clearBackgroundColor();
+					}
+				}
+
+			}
+		}
 	}
 }
