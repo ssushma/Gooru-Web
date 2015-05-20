@@ -9,10 +9,7 @@
 		<g:FlowPanel styleName="col-md-6 col-sm-6">
           	  <g:HTMLPanel styleName="{oeStyle.openEndedQuestionAnswerTitle}" ui:field="answerText"></g:HTMLPanel>
           	  <g:Label styleName="{oeStyle.systemMessageStyle}" ui:field="messageBodyText"></g:Label>
-          	  <g:HTMLPanel styleName="{oeStyle.yesnotextContainer}">
-          	 <g:HTMLPanel  ui:field="answerContainer"></g:HTMLPanel>
-          	  </g:HTMLPanel>
-          	  <g:FlowPanel ui:field="optionsContainerFpnl"></g:FlowPanel>
+          	  <g:FlowPanel ui:field="optionsContainerFpnl" ></g:FlowPanel>
           	 <!--  <sr:HTAnswerDragPanelVc ui:field="optionsContainer" /> -->
           	   <g:FlowPanel styleName="{oeStyle.questionSubmitButton}">
           	  		<g:Button styleName="{oeStyle.hintsInActiveButton} {oeStyle.adjustCheckAnswerButton}" ui:field="checkAnswer"></g:Button>
