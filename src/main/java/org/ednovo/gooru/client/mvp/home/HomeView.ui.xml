@@ -927,8 +927,10 @@
 								<div class="spriteLandingPage spriteLandingPageMonitorIco"></div>
 							<div class="clearfix"></div>
 							<p style="margin-top:10px;">
+							    <h4>
 								<g:Anchor href="http://about.goorulearning.org/community/events"
 									text="{i18n.GL2143}" target="_blank"></g:Anchor>
+								</h4>
 							</p>
 							<tbp:PPanel styleName="p" text="{i18n.GL2142}"/>
 						</div>
