@@ -71,9 +71,9 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid,AsyncCallback<String> callback);
 	
-	public void createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
+	public void createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
 	
-	public void createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId,String answerId, String attemptStatus,String attemptAnswerResult,AsyncCallback<String> callback);
+	public void createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId,String answerId, String attemptStatus,String attemptAnswerResult,AsyncCallback<String> callback);
 	
 	public void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message,AsyncCallback<String> callback);
 	
