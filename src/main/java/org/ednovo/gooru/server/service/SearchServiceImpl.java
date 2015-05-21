@@ -28,6 +28,7 @@
 package org.ednovo.gooru.server.service;
 
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +67,7 @@ import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -379,6 +381,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public Map<String, String> getShortenShareUrl(String contentGooruOid, Map<String, String> params) {
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
+		JSONObject fullUrlObject = new JSONObject();
         //This is used for to generate folder toc shorten url
 		if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.FOLDER_TOC)) {	
 			if(params.containsKey(LIBRARY_NAME)){
@@ -406,18 +409,26 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 			}
 		}
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid);
-
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		/*String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid);
+		getLogger().info("getShortenShareUrl :::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());*/
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SHARE_SHORTEN_URL,contentGooruOid);
+		try {
+			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
+		} catch (JSONException e1) {
+			logger.error("Exception-----"+e1);
+		}
+		getLogger().info("-------getShortenShareUrl url-------------"+url);
+		getLogger().info("---------getShortenShareUrl payload----------"+fullUrlObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestUsername(), fullUrlObject.toString());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
 		shortenUrl = shareDeSerializer.deserializeShortenUrl(jsonRep);
 		}
 		catch(Exception e)
 		{
-			logger.error("Exception::", e);
+			logger.error("Exception----", e);
 		}
-		
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			shortenUrl.put(SHORTEN_URL, shortenUrl.get(SHORTEN_URL).replaceAll(HTTP, HTTPS));
 		}
@@ -428,6 +439,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,String classpageItemId) {
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
+		JSONObject fullUrlObject = new JSONObject();
 			if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
 				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
@@ -447,16 +459,25 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URLAssign.getUrl()+"%26share=true", contentGooruOid));
 				}
 			}
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid);
-		getLogger().info("SHARE_SHORTEN_URL getShortenShareUrl111:::::::"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		/*String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid);
+		getLogger().info("SHARE_SHORTEN_URL getShortenShareUrl getShortenShareUrlforAssign:::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());*/
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SHARE_SHORTEN_URL,contentGooruOid);
+		try {
+			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
+		} catch (JSONException e1) {
+			logger.error("Exception----"+e1);
+		}
+		getLogger().info("-----------getShortenShareUrlforAssign url--------------"+url);
+		getLogger().info("----------getShortenShareUrlforAssign payload---------"+fullUrlObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestUsername(), fullUrlObject.toString());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
-		shortenUrl = shareDeSerializer.deserializeShortenUrl(jsonRep);
+			shortenUrl = shareDeSerializer.deserializeShortenUrl(jsonRep);
 		}
 		catch(Exception e)
 		{
-			logger.error("Exception::", e);
+			logger.error("Exception----", e);
 		}
 		
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
