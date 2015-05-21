@@ -1218,7 +1218,7 @@ word-wrap: break-word;
 		z-index: 9;
 	}
 		#gooruSearchMainContainer  #back-top {
-	margin-left: 92%;
+	margin-left: 90%;
 	}
 	#gooruSearchMainContainer .resourcesInside{
 	
@@ -1305,7 +1305,7 @@ word-wrap: break-word;
 
 @media (min-width: 992px) and (max-width: 1199px) {
 	#gooruSearchMainContainer  #back-top {
-	margin-left: 920px;
+	margin-left: 902px;
 	}
 }
 
