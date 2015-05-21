@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
+import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -38,6 +41,7 @@ import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.RandomIterator;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -74,7 +78,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private static String STYLE_CORRECT="correct";
 	private static String STYLE_INCORRECT="inCorrect";
 	private static String STYLE_INACTIVE_BUTTON="htPlayerSubmitInActiveButton";
-	
+	private static String STYLE_DND_CORRECT="dragDropAnsCorrect";
+	private static String STYLE_DND_INCORRECT="dragDropAnsInCorrect";
 	
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
@@ -92,6 +97,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	@UiConstructor
 	public HotTextAnswersQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
+		AppClientFactory.getEventBus().addHandler(ResetDragDropEvent.TYPE,resetReorderData);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo=collectionItemDo;
 		this.attemptedAnswerDo=attemptedAnswerDo;
@@ -132,7 +138,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 				while (answersList.hasNext()) {
 					QuestionAnswerDo questionAnswerDo=answersList.next();
-					String text=questionAnswerDo.getAnswerText();
+					String text=removeHtmlTags(questionAnswerDo.getAnswerText());
 					String[] temp;
 					temp = text.split(" ");
 					for(int k=0;k<temp.length;k++){
@@ -171,6 +177,16 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					int randomSeq=(Integer) rList.get(i);
 					QuestionAnswerDo questionAnswerDo=answerListSet.get(randomSeq);
 					HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
+					
+					htAnswerOptionView.addDomHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							clearReorderAnswers();
+							enableCheckAnswerButton();
+						}
+					}, ClickEvent.getType());
+					
 					/*htAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
 					htAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());*/
 					htAnswerOptionView.getElement().setId(String.valueOf(randomSeq));
@@ -251,20 +267,34 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		if(collectionItemDo.getResource().getType()==9){
 
 		int j=0;
+		
 		for(int i=0;i<optionsContainer.getWidgetCount();i++){
 			Widget widget=optionsContainer.getWidget(i);
-			if(widget.getElement().getId()!=null && !widget.getElement().getId().equalsIgnoreCase("")){
-				attemptAnsSequence[j]=widget.getElement().getId();
+			
+			Element el=(Element) widget.getElement().getLastChild();
+			
+			if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+				if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
+					el.addClassName(STYLE_DND_CORRECT);
+				}else{
+					el.addClassName(STYLE_DND_INCORRECT);
+				}
 				j++;
 			}
+			
+			
+			/*if(widget.getElement().getId()!=null && !widget.getElement().getId().equalsIgnoreCase("")){
+				attemptAnsSequence[j]=widget.getElement().getId();
+				j++;
+			}*/
 		}
-		boolean isCorrect=Compare(correctAnsSequence,attemptAnsSequence);
+		/*boolean isCorrect=Compare(correctAnsSequence,attemptAnsSequence);
 		
 		if(isCorrect){
 			optionsContainerFpnl.addStyleName(STYLE_CORRECT);
 		}else{
 			optionsContainerFpnl.addStyleName(STYLE_INCORRECT);
-		}
+		}*/
 		}else{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
@@ -302,6 +332,22 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		
 	}
 	
+	private void clearReorderAnswers(){
+		
+		for(int i=0;i<optionsContainer.getWidgetCount();i++){
+			Widget widget=optionsContainer.getWidget(i);
+			
+			Element el=(Element) widget.getElement().getLastChild();
+			
+			if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+					el.removeClassName(STYLE_DND_CORRECT);
+					el.removeClassName(STYLE_DND_INCORRECT);
+			}
+			
+		}
+		
+	}
+	
 	private static boolean Compare(String[] a,String[] b)
 	{
 		if (a.length != b.length) 	return false;
@@ -312,4 +358,28 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 		return true;
 	}
+	/**
+	 * This method is used to remove HTMLTags from the String
+	 * @param text
+	 * @return
+	 */
+	private String removeHtmlTags(String text){
+		/**
+		 * Commented the following line to fix issue with displaying math symbols. 
+		 */
+		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		return text;
+	}
+	
+	ResetDragDropHandler resetReorderData=new ResetDragDropHandler() {
+		
+		@Override
+		public void resetReorder(int widgetIndex) {
+			
+			if(checkAnswer.getStyleName().contains(STYLE_INACTIVE_BUTTON)){
+				clearReorderAnswers();
+				enableCheckAnswerButton();
+			}
+		}
+	};
 }
