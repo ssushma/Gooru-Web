@@ -769,14 +769,14 @@
 
 .htHiglightText.inCorrect {
 	background-color: #fbdddd;
-    border: 1px solid  #da1919;
+    border: 1px solid  #FBB03B;
 	cursor: pointer;
 	position:relative;
 }
 .htHiglightText.inCorrect:after {
 	display: inline-block;
 	content: "\2717";
-	color: #da1919;
+	color: #FBB03B;
 }
 .htPlayerQuestionAnswerTitle {
 	float: left;
@@ -820,6 +820,14 @@
 }
 .marginTop20 {
 	margin-top:20%;
+}
+.dragDropAnsCorrect{
+	border-left: 3px solid #62ae41;
+	background: #D5FDC3;
+}
+.dragDropAnsInCorrect{
+	border-left: 3px solid #FBB03B;
+	background: #FFDBA1;
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {

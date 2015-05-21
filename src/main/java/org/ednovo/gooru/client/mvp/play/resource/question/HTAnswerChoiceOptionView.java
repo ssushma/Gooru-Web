@@ -25,13 +25,16 @@
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,6 +44,7 @@ public class HTAnswerChoiceOptionView extends Composite implements IsDraggable{
 
 	}
 	@UiField HTML answerOptionText;
+	@UiField FlowPanel htAnsDragFpnl;
 	private int answerId;
 	private boolean isAnswerCorrect;
 	private String answerText="";
@@ -53,6 +57,7 @@ public class HTAnswerChoiceOptionView extends Composite implements IsDraggable{
 		this.answerText=ansText;
 		answerOptionText.setHTML(removeHtmlTags(ansText!=null?ansText:""));
 		answerOptionText.getElement().setId("htmlAnswerOptionText");
+		htAnsDragFpnl.getElement().setId("htAnsDragFpnl");
 	}
 	/**
 	 * This method is used to remove HTMLTags from the String
@@ -112,5 +117,14 @@ public class HTAnswerChoiceOptionView extends Composite implements IsDraggable{
 		return 225;
 	}
 	public void reorderCollectionItem(int widgetIndex) {
+		AppClientFactory.fireEvent(new ResetDragDropEvent(widgetIndex));
 	}
+	public FlowPanel getHtAnsDragFpnl() {
+		return htAnsDragFpnl;
+	}
+	public void setHtAnsDragFpnl(FlowPanel htAnsDragFpnl) {
+		this.htAnsDragFpnl = htAnsDragFpnl;
+	}
+	
+	
 }
