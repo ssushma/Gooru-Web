@@ -829,7 +829,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							ratingsLbl.setText(ratingValue+" Stars");
 							pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
 						}else{
-							ratingsLbl.setText(ratingValue+"+ Stars");
+							ratingsLbl.setText(ratingValue+"+ Stars");	
 							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
 							ratingsLbl.setVisible(true);
 							pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
@@ -930,8 +930,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
 				}
 			}
-			getUiHandlers().getGooruGradesPresenter().getView().showGradesFilter();
 		}
+		getUiHandlers().getGooruGradesPresenter().getView().showGradesFilter();
 	}
 	/**
 	 * Pre-Selected standards showing in search page
@@ -1064,6 +1064,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					pnlAddFilters.add(createTagsLabel(ratingsSplit[ratingsSplit.length-1]+"+ Stars","ratingPanel"));
 					previousValue=Integer.parseInt(ratingsSplit[ratingsSplit.length-1]);
 					ratingsLbl.setVisible(true);
+					ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
+					ratingsLbl.setText(ratingsSplit[ratingsSplit.length-1]+"+ Stars");
 				}
 				setStyleForRatings(ratingsSplit[ratingsSplit.length-1]+"", ulRatingsPanel);
 			}
