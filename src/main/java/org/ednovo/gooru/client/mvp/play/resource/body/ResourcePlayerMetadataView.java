@@ -194,7 +194,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	private static final String REACTION = "reaction";
 	
-	private static final String RATING = "rating";
 	
 	public SectionTag getCollectionContainer(){
 		return collectionContainer;
