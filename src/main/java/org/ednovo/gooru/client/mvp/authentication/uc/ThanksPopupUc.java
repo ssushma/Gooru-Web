@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -37,7 +38,6 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -229,44 +229,62 @@ public class ThanksPopupUc extends PopupPanel{
 	
 	@UiHandler("btnStartUsingGooru")
 	public void clickOnStartGooru(ClickEvent event){
-		Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
-		map.remove("callback");
-		map.remove("type");
-		map.remove("privateGooruUId");
-		map.remove("dob");
-		map.remove("userName");
-		map.remove("emailId");
-		map.remove("email");
-		String revealPlace = map.get("rp") !=null && !map.get("rp").equalsIgnoreCase("") ? map.get("rp") : null;
-		String collId = map.get("id") !=null && !map.get("id").equalsIgnoreCase("") ? map.get("id") : null;
-		
-		String viewToken =  revealPlace != null ? revealPlace : AppClientFactory.getCurrentPlaceToken();		
-		map.remove("rp");
-		
-		AppClientFactory.getPlaceManager().revealPlace(viewToken, map);
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		hide();
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
+				map.remove("callback");
+				map.remove("type");
+				map.remove("privateGooruUId");
+				map.remove("dob");
+				map.remove("userName");
+				map.remove("emailId");
+				map.remove("email");
+				String revealPlace = map.get("rp") !=null && !map.get("rp").equalsIgnoreCase("") ? map.get("rp") : null;
+				String collId = map.get("id") !=null && !map.get("id").equalsIgnoreCase("") ? map.get("id") : null;
+				
+				String viewToken =  revealPlace != null ? revealPlace : AppClientFactory.getCurrentPlaceToken();		
+				map.remove("rp");
+				
+				AppClientFactory.getPlaceManager().revealPlace(viewToken, map);
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				hide();
+			}
+		});
 	}
 	
 	@UiHandler("lblClose")
 	public void clickOnClose(ClickEvent event){
-		if (account.equalsIgnoreCase("parent")){ 
-			startCreatingStudent();
-		}
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-		}else{
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		}
-		hide();
+			@Override
+			public void onSuccess() {
+				if (account.equalsIgnoreCase("parent")){ 
+					startCreatingStudent();
+				}
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+					
+				}else{
+					Window.enableScrolling(true);
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				}
+				hide();
+			}
+		});
 	}
 
 	@UiHandler("btnStartCreatingStudent")
 	public void clickOnStartCreatingStudent(ClickEvent event){
-		hide();
-		startCreatingStudent();
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				hide();
+				startCreatingStudent();
+			}
+		});
 	}
 	/**
 	 * 
@@ -288,18 +306,24 @@ public class ThanksPopupUc extends PopupPanel{
 	 *
 	 */
 	private void startCreatingStudent(){
-		String externalId = AppClientFactory.getLoggedInUser().getExternalId();
-		String email = AppClientFactory.getLoggedInUser().getEmailId();
-		parentEmailId = externalId != null ? externalId : email != null ? email : null;
-		privateGooruUId = AppClientFactory.getLoggedInUser().getGooruUId();
-		AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void onSuccess(UserDo userDo) {
-				AppClientFactory.setLoggedInUser(userDo);
-				AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
-				StudentSignUpUc studentSignUp = new StudentSignUpUc(parentEmailId, userName, dob, privateGooruUId);
-				studentSignUp.center();
-				studentSignUp.show();
+			public void onSuccess() {
+				String externalId = AppClientFactory.getLoggedInUser().getExternalId();
+				String email = AppClientFactory.getLoggedInUser().getEmailId();
+				parentEmailId = externalId != null ? externalId : email != null ? email : null;
+				privateGooruUId = AppClientFactory.getLoggedInUser().getGooruUId();
+				AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
+					@Override
+					public void onSuccess(UserDo userDo) {
+						AppClientFactory.setLoggedInUser(userDo);
+						AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
+						StudentSignUpUc studentSignUp = new StudentSignUpUc(parentEmailId, userName, dob, privateGooruUId);
+						studentSignUp.center();
+						studentSignUp.show();
+					}
+				});
 			}
 		});
 	}

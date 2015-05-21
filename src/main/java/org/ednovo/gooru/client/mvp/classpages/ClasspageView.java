@@ -252,11 +252,11 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 	public void OnClickNewClasspage(ClickEvent event){
 		MixpanelUtil.Click_Add_NewClasspage();
 		newPopup = new NewClasspagePopupView() {
-			
+
 			@Override
 			public void createNewClasspage(String title) {
 				MixpanelUtil.Create_NewClasspage();
-				CollectionDo collectionDo =new CollectionDo();
+				CollectionDo collectionDo = new CollectionDo();
 				collectionDo.setTitle(title);
 				collectionDo.setCollectionType("classpage");
 				getUiHandlers().createClasspage(collectionDo);
