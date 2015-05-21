@@ -224,7 +224,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		        //This is used for segrate data based on the category
 		        for (UserDataDo userDataDo : resourcesData) {
 		        	if(userDataDo.getStatus()==0){
-						if(QUESTION.equalsIgnoreCase( userDataDo.getCategory())){
+						if(QUESTION.equalsIgnoreCase( userDataDo.getResourceFormat())){
 							if(OE.equalsIgnoreCase(userDataDo.getType())){
 								openendedData.add(userDataDo);
 							}else{
@@ -465,7 +465,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	         	if(result.get(i).getStatus()==0){
 	        	data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	        	 String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
+	        	 String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 	              String categoryStyle="";
 	              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 				      resourceCategory = "webpage";
@@ -583,12 +583,11 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	}
 	        }
 	        data.addRows(rowCount);
-	        
 	        for(int i=0;i<result.size();i++) {
 	        	if(result.get(i).getStatus()==0){
 	        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
+	              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 	              String categoryStyle="";
 	              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 				      resourceCategory = "webpage";

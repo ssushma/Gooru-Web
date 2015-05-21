@@ -162,7 +162,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			defaultUserDataForUsers=collectionProgressDataDo;
 			if(collectionProgressDataDo.getStatus()==0){
 				rowCount=rowCount+1;
-				if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+				if(collectionProgressDataDo.getResourceFormat()!=null && collectionProgressDataDo.getResourceFormat().equalsIgnoreCase(QUESTION)){
 					 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
 					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
 						 noOfQuestions++;
@@ -193,7 +193,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	        		  if(collectionProgressData.get(j).getStatus()==0){
 	        		  	  String color=WHITE;
 	        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
-		        		  if(collectionProgressData.get(j).getCategory()!=null && !collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
+		        		  if(collectionProgressData.get(j).getResourceFormat()!=null && !collectionProgressData.get(j).getResourceFormat().equalsIgnoreCase(QUESTION)){
 		        			  int reaction=collectionProgressData.get(j).getUserData().get(i).getReaction();
 		        			  Label reactionlbl=new Label();
 				        		 if(reaction == 0){
@@ -403,7 +403,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			String formattedTime="";
 			if(secondsInMille > 0 && secondsInMille<1){
 				formattedTime="<1";
-			}else if( secondsInMille>=1 &&  secondsInMille<10){
+			}else if( Math.round(secondsInMille)>=1 &&  Math.round(secondsInMille)<10){
 				formattedTime="0"+((int) Math.round(secondsInMille))+"";
 			}else{
 				formattedTime=((int) Math.round(secondsInMille))+"";
