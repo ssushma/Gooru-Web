@@ -178,10 +178,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			public void onCallSuccess(SearchDo<T> result,boolean isApiCalled) {
 				setSearchDo(result);
 				getView().postSearch(result,isApiCalled);
-				if(getSearchDo().getPageNum()==1){
-					getSearchDo().setPageNum(2);
-					getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
-				}
+
 			}
 		});
 		setSearchResultsJsonAsyncCallbackFirstLoad(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
@@ -192,6 +189,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(String result) {
 				getSearchAsyncCallback().execute(false,result,getSearchDo());
+				if(getSearchDo().getPageNum()==1){
+					getSearchDo().setPageNum(2);
+					getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
+				}
 			}
 		});
 		//Next time it will add to local store
