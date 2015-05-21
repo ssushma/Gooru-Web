@@ -94,6 +94,7 @@ public class CollectionResourceWidget extends Composite {
 		this.resourceSearchResultDo=resourceSearchResultDo;
 		setGooruOid(resourceSearchResultDo.getGooruOid());
 		resourceTitleText=!StringUtil.isEmpty(resourceSearchResultDo.getResourceTitle())?StringUtil.removeAllHtmlCss(resourceSearchResultDo.getResourceTitle()):"";
+		StringUtil.setAttributes(resourceTitle.getElement(), "lblResourceTitle", resourceTitleText, resourceTitleText);
 		if(Window.getClientWidth()<=768){
 			if(resourceTitleText.length()>=15){
 				resourceTitleText=resourceTitleText.substring(0, 15)+"...";
@@ -231,7 +232,6 @@ public class CollectionResourceWidget extends Composite {
 
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
-		StringUtil.setAttributes(resourceTitle.getElement(), "lblResourceTitle", "", "");
 		StringUtil.setAttributes(lblViewCount.getElement(), "lblViewCount", "", "");
 		StringUtil.setAttributes(lbladdCount.getElement(), "lbladdCount", "", "");
 		StringUtil.setAttributes(lblUserCount.getElement(), "lblUserCount", "", "");

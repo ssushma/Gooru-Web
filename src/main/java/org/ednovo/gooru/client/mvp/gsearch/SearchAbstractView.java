@@ -930,8 +930,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
 				}
 			}
-			getUiHandlers().getGooruGradesPresenter().getView().showGradesFilter();
 		}
+		getUiHandlers().getGooruGradesPresenter().getView().showGradesFilter();
 	}
 	/**
 	 * Pre-Selected standards showing in search page
