@@ -226,7 +226,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        });
 				for (UserDataDo userDataDo : result) {
 					if(userDataDo.getStatus()==0){
-						if(QUESTION.equalsIgnoreCase(userDataDo.getCategory())){
+						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
 							}else{
@@ -288,7 +288,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				         	if(result.get(i).getStatus()==0){
 				        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 				            //set Format
-				              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
+				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 				              String categoryStyle="";
 				    		  if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory)){
 							      resourceCategory = WEBPAGE;
@@ -401,7 +401,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        	if(result.get(i).getStatus()==0){
 			        		data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 				            //set Format
-				              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
+				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 				              String categoryStyle="";
 				              if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory)){
 							      resourceCategory = WEBPAGE;
