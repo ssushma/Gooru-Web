@@ -431,12 +431,12 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public String updateSessionInCollection(String sessionTrackerId) {
 		String sessionItemId="";
 		JSONObject updateSessionObject=new JSONObject();
-		JSONObject sessionStatus=new JSONObject();
 		JsonRepresentation jsonRepresentation = null;
 		try {
-			sessionStatus.put("status", "archive");
-			updateSessionObject.put("session",sessionStatus);
+			updateSessionObject.put("status", "archive");
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_SESSION, sessionTrackerId);
+			getLogger().info("---- update session URL -- "+url);
+			getLogger().info("---- update session payload -- "+updateSessionObject.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			if(jsonRepresentation !=null && jsonRepresentation.getSize()!=-1){
@@ -1581,6 +1581,33 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			getLogger().info("updateSessionActivityItem Resp --"+jsonRepresentation.getJsonObject().toString());
 			
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+	}
+
+	@Override
+	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions, String sessionId) throws GwtException, ServerDownException {        
+
+		JSONObject updateSessionActivityItemObject=new JSONObject();
+		JsonRepresentation jsonRepresentation = null;
+		try {
+			
+			if("reaction".equals(isRatingsReactions)){
+				updateSessionActivityItemObject.put("reaction", emoticRatingNumber);
+			}else if("rating".equals(isRatingsReactions)){
+				updateSessionActivityItemObject.put("rating", emoticRatingNumber);
+			}
+			updateSessionActivityItemObject.put("contentGooruId", gooruOid);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionId);
+
+			getLogger().info("getUpdateSessionActivityItemForRatReac URL -- "+url);
+			getLogger().info("getUpdateSessionActivityItemForRatReac payload -- "+updateSessionActivityItemObject.toString());
+
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateSessionActivityItemObject.toString());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			getLogger().info("getUpdateSessionActivityItemForRatReac Resp --"+jsonRepresentation.getJsonObject().toString());
+
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}

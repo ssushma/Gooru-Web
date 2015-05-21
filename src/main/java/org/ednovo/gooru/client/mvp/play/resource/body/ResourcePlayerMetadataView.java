@@ -180,6 +180,21 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	int currentRating=0;
 	
+	private static final int EMOTIC_ZERO = 0;
+	
+	private static final int EMOTIC_ONE = 1;
+	
+	private static final int EMOTIC_TWO = 2;
+	
+	private static final int EMOTIC_THREE = 3;
+	
+	private static final int EMOTIC_FOUR = 4;
+	
+	private static final int EMOTIC_FIVE = 5;
+	
+	private static final String REACTION = "reaction";
+	
+	
 	public SectionTag getCollectionContainer(){
 		return collectionContainer;
 	}
@@ -533,6 +548,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(isCanExplainSelected){
 				canExplainEmoticButton.setStyleName("spriteType");
 				canExplainEmoticButton.addStyleName("emoticon_i");
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				getUiHandlers().deleteReaction(gooruReactionId);
 				deleteReactionTriggerEvent();
 				setDefaultReaction();
@@ -540,7 +556,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				canExplainEmoticButton.setStyleName("spriteType");
 				canExplainEmoticButton.addStyleName("emoticon_vi");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_EXPLAIN,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_EXPLAIN,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_FIVE);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_CAN_EXPLAIN,PlayerDataLogEvents.REACTION_CREATE);
 			}
 			 
@@ -564,6 +580,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(isCanUnderstandSelected){
 				understandEmoticButton.setStyleName("spriteType");
 				understandEmoticButton.addStyleName("emoticon_ii");
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				getUiHandlers().deleteReaction(gooruReactionId);
 				deleteReactionTriggerEvent();
 				setDefaultReaction();
@@ -571,7 +588,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				understandEmoticButton.setStyleName("spriteType");
 				understandEmoticButton.addStyleName("emoticon_vii");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_FOUR);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_CAN_UNDERSTAND,PlayerDataLogEvents.REACTION_CREATE);
 			}
 		}
@@ -595,13 +612,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				mehEmoticButton.setStyleName("spriteType");
 				mehEmoticButton.addStyleName("emoticon_viii");
 				getUiHandlers().deleteReaction(gooruReactionId);
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				deleteReactionTriggerEvent();
 				setDefaultReaction();
 			}else{
 				mehEmoticButton.setStyleName("spriteType");
 				mehEmoticButton.addStyleName("emoticon_v");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_MEH,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_MEH,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_THREE);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_MEH,PlayerDataLogEvents.REACTION_CREATE);
 			}
 			
@@ -627,12 +645,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				doNotUnderstandEmoticButton.addStyleName("emoticon_iii");
 				getUiHandlers().deleteReaction(gooruReactionId);
 				deleteReactionTriggerEvent();
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				setDefaultReaction();
 			}else{
 				doNotUnderstandEmoticButton.setStyleName("spriteType");
 				doNotUnderstandEmoticButton.addStyleName("emoticon_ix");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_DONOT_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_DONOT_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_TWO);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_DONOT_UNDERSTAND,PlayerDataLogEvents.REACTION_CREATE);
 			}
 		}
@@ -656,12 +675,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				needHelpButton.addStyleName("emoticon_iv");
 				deleteReactionTriggerEvent();
 				getUiHandlers().deleteReaction(gooruReactionId);
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				setDefaultReaction();
 			}else{
 				needHelpButton.setStyleName("spriteType");
 				needHelpButton.addStyleName("emoticon_x");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_NEED_HELP,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_NEED_HELP,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(),EMOTIC_ONE);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_NEED_HELP,PlayerDataLogEvents.REACTION_CREATE);
 			}
 		}
@@ -958,13 +978,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 * @param gooruReactionId {@link String}
 	 * @param collectionId {@link String}
 	 * @param playerName {@link String}
+	 * @param emoticZero 
 	 */
-	private void createReaction(String resourceGooruId,String reactionText,String gooruReactionId,String collectionId,String playerName){
+	private void createReaction(String resourceGooruId,String reactionText,String gooruReactionId,String collectionId,String playerName, int emoticNumber){ 
 		if(playerName.trim().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){ 
-			getUiHandlers().createReaction(resourceGooruId,reactionText,gooruReactionId,collectionId,CREATE_STUDY_PLAYER_REACTION);
-		}else if(playerName.trim().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			getUiHandlers().createReaction(resourceGooruId,reactionText,gooruReactionId,collectionId,CREATE_STUDY_PLAYER_REACTION,emoticNumber);
+		}/*else if(playerName.trim().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			getUiHandlers().createReaction(resourceGooruId,reactionText,gooruReactionId,collectionId,CREATE_PREVIEW_PLAYER_REACTION);
-		}
+		}*/
 		
 	}
 	

@@ -45,6 +45,7 @@ public class CollectionProgressDataDo implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String category;
+	private String resourceFormat;
 	private String title;
 	private int status;
 	private String description;
@@ -108,5 +109,10 @@ public class CollectionProgressDataDo implements Serializable{
 	public void setMetaData(ArrayList<MetaDataDo> metaData) {
 		this.metaData = metaData;
 	}
-	
+	public String getResourceFormat() {
+		return resourceFormat;
+	}
+	public void setResourceFormat(String resourceFormat) {
+		this.resourceFormat = resourceFormat;
+	}
 }
