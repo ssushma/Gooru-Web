@@ -176,6 +176,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
 	
 	boolean isInsertTems=false;
+	boolean pageFlag=false;
 	boolean firstTime = false,isApiInProgress=true,isApiInProgressLoad=true,isApiInProgressBack=true,isApiInProgressBackLoad=true;
 	
 	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
@@ -253,7 +254,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
 									}else{
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 6);
 									}
 								}
 								pageNumber--;
@@ -274,7 +275,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 								}else{
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 6);
 								}
 							}else{
 								isApiInProgress=isApiInProgressLoad=true;
@@ -1806,12 +1807,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void setJsonResponseInStorage(String data,boolean isApiCalled){
 		if(Storage.isLocalStorageSupported() && !isApiCalled){
 			if(isForwardScroll){
-				localStore.setItem(pageCountForStorage+"", data);
+				if(pageNumber==1 && !pageFlag)
+				{
+				pageFlag = true;
+				localStore.setItem((pageNumber)+"", data);
+				}
+				else
+				{
+					pageFlag = false;
+				localStore.setItem((pageNumber+1)+"", data);
+				}
 				pageCountForStorage++;
 				removeFromLocalStorageForward();
 				isApiInProgressLoad=true;
 			}else{
-				isApiInProgressBackLoad=true;
+				isApiInProgressBackLoad=true;				
 				localStore.setItem((pageCountForStorage-10)+"", data);
 				removeFromLocalStorageBackword();
 			}
