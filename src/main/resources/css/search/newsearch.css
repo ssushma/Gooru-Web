@@ -238,7 +238,11 @@
     cursor:pointer;
     max-height:20px;
 }
-
+#gooruSearchMainContainer .libraryMainContainerBlock .resourceAuthorDetails{
+	white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 #gooruSearchMainContainer .userDetails img{
 	width:30px;
 	height:30px;
