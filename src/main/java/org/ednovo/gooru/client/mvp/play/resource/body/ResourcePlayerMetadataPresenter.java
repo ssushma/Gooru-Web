@@ -87,6 +87,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	private static final String REACTION = "reaction";
 	
+	private static final String RATING = "rating";
+	
 	@Inject
 	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(eventBus, view);
@@ -267,7 +269,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * @param clickEvent {@link ClickEvent}
 	 */
 	@Override
-	public void createStarRatings(String associateGooruOid, int starRatingValue, final boolean showThankYouToolTip,String userReview,String resourceGooruId) {
+	public void createStarRatings(String associateGooruOid, final int starRatingValue, final boolean showThankYouToolTip,String userReview, final String resourceGooruId) {
 		if(showThankYouToolTip){
 			triggerCreateRatingEvent(resourceGooruId, starRatingValue, getView().getPreviousRating());
 		}else{
@@ -276,6 +278,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			AppClientFactory.getInjector().getPlayerAppService().createStarRatings(associateGooruOid,starRatingValue,userReview,new SimpleAsyncCallback<StarRatingsDo>() {
 				@Override
 				public void onSuccess(StarRatingsDo result) { 
+					collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
 					getView().setUserStarRatings(result,showThankYouToolTip);
 				}
 			});
@@ -325,6 +328,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	@Override
 	public void updateStarRatings(String gooruOid, int starRatingValue,boolean showThankYouToolTip,String resourceGooruId) {
 		triggerCreateRatingEvent(resourceGooruId, starRatingValue, getView().getPreviousRating());
+		collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarRatings(gooruOid, starRatingValue, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
 
 			@Override
