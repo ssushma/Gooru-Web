@@ -85,6 +85,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 
 	private String resourceTitle = null;
 	
+	private static final String REACTION = "reaction";
+	
 	@Inject
 	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(eventBus, view);
@@ -195,15 +197,17 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		getView().removeRatingContainer(flag);
 	}
 	@Override
-	public void createReaction(String resourceId,final String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) {
-			AppClientFactory.getInjector().getPlayerAppService().createReaction(resourceId,reactionText,gooruReactionId,collectionId,createStudyPlayerReaction, new SimpleAsyncCallback<ReactionDo>() {
-				@Override
-				public void onSuccess(ReactionDo result) {
-					if(result!=null){
+	public void createReaction(final String resourceId,final String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction,final int emoticNum) {   
+		AppClientFactory.getInjector().getPlayerAppService().createReaction(resourceId,reactionText,gooruReactionId,collectionId,createStudyPlayerReaction, new SimpleAsyncCallback<ReactionDo>() {
+			@Override
+			public void onSuccess(ReactionDo result) {
+				if(result!=null){
 					getView().setReaction(result,result.getDeleteReactionGooruOid());
-					}
+					collectionPlayerPresenter.updateRatReacSessionActivityItem(emoticNum, resourceId, REACTION);
+					
 				}
-			});
+			}
+		});
 	}
 
 	/**
@@ -536,5 +540,10 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	@Override
 	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration) {
 		getView().setFullScreen(isFullScreen,pnlFullScreenNarration);
+	}
+
+	@Override
+	public void updateSessionActivityItemForReactions(int emoticRatingNumber,String gooruOid, String isRatingsReactions) {
+		collectionPlayerPresenter.updateRatReacSessionActivityItem(emoticRatingNumber, gooruOid, isRatingsReactions);
 	}
 }
