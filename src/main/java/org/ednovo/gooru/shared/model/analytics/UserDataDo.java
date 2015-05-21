@@ -77,6 +77,7 @@ public class UserDataDo implements Serializable{
 	
 	//This are add for getting the resource data in the teacher summary
 	private String category;
+	private String resourceFormat;
 	private String title;
 	
 	public int getReaction() {
@@ -264,5 +265,11 @@ public class UserDataDo implements Serializable{
 	}
 	public void setItemSequence(int itemSequence) {
 		this.itemSequence = itemSequence;
+	}
+	public String getResourceFormat() {
+		return resourceFormat;
+	}
+	public void setResourceFormat(String resourceFormat) {
+		this.resourceFormat = resourceFormat;
 	}
 }

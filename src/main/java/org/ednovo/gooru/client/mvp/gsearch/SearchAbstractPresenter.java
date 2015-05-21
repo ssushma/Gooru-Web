@@ -255,22 +255,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReset() {
 		super.onReset();
-		//getView().resetData();
-		/*
-		String count = Cookies.getCookie("MyCookie");
-		if (count != null && Integer.parseInt(count) == 7) {
-			Window.enableScrolling(false);
-			Cookies.setCookie("MyCookie", "8");
-		} else {
-			Window.enableScrolling(false);
-			// Window.enableScrolling(true);
-		}*/
-
 		if(AppClientFactory.getPlaceManager().refreshPlace()){
 			if (setFilter) {
 				searchDo.setPageNum(1);
-				getSearchService().getSearchFilters(getCurrentPlaceToken(),
-						new SimpleAsyncCallback<SearchFilterDo>() {
+				getSearchService().getSearchFilters(getCurrentPlaceToken(),new SimpleAsyncCallback<SearchFilterDo>() {
 					@Override
 					public void onSuccess(SearchFilterDo searchFilterDo) {
 						getView().setSearchFilter(searchFilterDo);
@@ -338,8 +326,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	public void initiateSearch() {
 		setPageTitle(getSearchDo().getSearchQuery());
-		AppClientFactory
-				.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
+		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		getView().resetData();
 		if (getSearchDo().getSearchQuery() != null
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {

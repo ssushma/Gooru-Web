@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -84,7 +85,7 @@ public interface PlayerAppService extends BaseService {
 	
 	public String updateSessionInCollection(String sessionTrackerId) throws GwtException, ServerDownException;
 	
-	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid) throws GwtException, ServerDownException;
+	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status) throws GwtException, ServerDownException;
 	
 	public String createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
 	
@@ -187,5 +188,6 @@ public interface PlayerAppService extends BaseService {
 	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId) throws GwtException, ServerDownException;
 	
 	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId) throws GwtException, ServerDownException;
-	
+
+	public void updateSessionActivityItem(String gooruOid, String status,String updateSessionId) throws GwtException, ServerDownException;
 }
