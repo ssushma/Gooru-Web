@@ -180,6 +180,8 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 
 	public void updateSessionActivityItem(String gooruOid, String status,String updateSessionId,AsyncCallback<Void> callback);
 
+	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions,String sessionId, AsyncCallback<Void> callback);
+
 	
 	
 }

@@ -403,7 +403,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			String formattedTime="";
 			if(secondsInMille > 0 && secondsInMille<1){
 				formattedTime="<1";
-			}else if( secondsInMille>=1 &&  secondsInMille<10){
+			}else if( Math.round(secondsInMille)>=1 &&  Math.round(secondsInMille)<10){
 				formattedTime="0"+((int) Math.round(secondsInMille))+"";
 			}else{
 				formattedTime=((int) Math.round(secondsInMille))+"";

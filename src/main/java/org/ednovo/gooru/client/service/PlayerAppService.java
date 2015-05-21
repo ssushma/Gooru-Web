@@ -190,4 +190,6 @@ public interface PlayerAppService extends BaseService {
 	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId) throws GwtException, ServerDownException;
 
 	public void updateSessionActivityItem(String gooruOid, String status,String updateSessionId) throws GwtException, ServerDownException;
+	
+	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions,String sessionId) throws GwtException, ServerDownException;
 }
