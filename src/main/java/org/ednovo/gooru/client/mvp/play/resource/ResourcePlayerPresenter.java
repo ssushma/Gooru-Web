@@ -1160,4 +1160,17 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		
 	}
 	
+	
+	public void updateRatReacSessionActivityItem(int emoticRatingNumber,String gooruOid, String isRatingsReactions) {
+
+		AppClientFactory.getInjector().getPlayerAppService().getUpdateSessionActivityItemForRatReac(emoticRatingNumber, gooruOid, isRatingsReactions,sessionId, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				// Current not required to handle any thing on success.
+				
+			}
+		});
+	}
+	
 }

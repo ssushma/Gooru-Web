@@ -60,7 +60,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -278,8 +277,16 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			AppClientFactory.getInjector().getPlayerAppService().createStarRatings(associateGooruOid,starRatingValue,userReview,new SimpleAsyncCallback<StarRatingsDo>() {
 				@Override
 				public void onSuccess(StarRatingsDo result) { 
-					collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
 					getView().setUserStarRatings(result,showThankYouToolTip);
+					if(collectionPlayerPresenter!=null){
+						collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
+					}
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
+						if(resourcePlayerPresenter!=null){
+							resourcePlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
+						}
+					}
+					
 				}
 			});
 	}
@@ -328,7 +335,15 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	@Override
 	public void updateStarRatings(String gooruOid, int starRatingValue,boolean showThankYouToolTip,String resourceGooruId) {
 		triggerCreateRatingEvent(resourceGooruId, starRatingValue, getView().getPreviousRating());
-		collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
+		}
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
+			if(resourcePlayerPresenter!=null){
+				resourcePlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
+			}
+		}
+		
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarRatings(gooruOid, starRatingValue, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
 
 			@Override
@@ -548,6 +563,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 
 	@Override
 	public void updateSessionActivityItemForReactions(int emoticRatingNumber,String gooruOid, String isRatingsReactions) {
-		collectionPlayerPresenter.updateRatReacSessionActivityItem(emoticRatingNumber, gooruOid, isRatingsReactions);
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateRatReacSessionActivityItem(emoticRatingNumber, gooruOid, isRatingsReactions);
+		}
 	}
 }

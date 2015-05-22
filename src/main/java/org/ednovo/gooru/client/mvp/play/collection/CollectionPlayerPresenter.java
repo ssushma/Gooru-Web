@@ -34,8 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.servlet.http.Cookie;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -1298,7 +1296,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}
 				String parentGooruOid=null,mode="collection";
 				if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
-					parentGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+					parentGooruOid=classpageId;
 					mode="class";
 				}
 				createSession(collectionDo.getGooruOid(),parentGooruOid,mode);

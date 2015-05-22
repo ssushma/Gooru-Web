@@ -63,7 +63,6 @@ public class ResourceImageWidget extends Composite {
 		imgResourceImg.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				// TODO Auto-generated method stub
 				toolTipPopupPanel.clear();
 				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(resourceDo.getTitle(),categoryValue,""));
 				toolTipPopupPanel.setStyleName("");

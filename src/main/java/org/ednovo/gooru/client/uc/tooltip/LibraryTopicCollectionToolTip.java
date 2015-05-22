@@ -11,6 +11,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.WhiteSpace;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -115,6 +116,7 @@ public class LibraryTopicCollectionToolTip extends Composite {
 		descPanel.getElement().setId("htmlDescPanel");
 		descPanel.getElement().setAttribute("alt", title);
 		descPanel.getElement().setAttribute("title", title);
+		descPanel.getElement().getStyle().setWhiteSpace(WhiteSpace.NORMAL);
 		categoryLbl.setHTML(category);
 		categoryLbl.getElement().setId("htmlCategoryLbl");
 		categoryLbl.getElement().setAttribute("alt", category);

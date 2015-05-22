@@ -512,6 +512,8 @@ public class HeaderUc extends Composite implements
 		/*myCollectionsPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		myCollectionsPop.getElement().getStyle().setZIndex(99);*/
 		myCollectionsPop.setVisible(false);
+		organizeToolTip.getElement().getStyle().setMarginLeft(78, Unit.PCT);
+		organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 
 		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
 		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
