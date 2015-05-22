@@ -28,14 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
@@ -106,20 +104,12 @@ public class SignupGradeLabel extends Anchor implements ClickHandler {
 	 *
 	 *
 	 */
-	private void updateGrade(final String grade){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				AppClientFactory.getInjector().getProfilePageService().addGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
-						@Override
-						public void onSuccess(Void result) {
-							
-						}
-				});
-			
-			}
+	private void updateGrade(String grade){
+		AppClientFactory.getInjector().getProfilePageService().addGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
+				@Override
+				public void onSuccess(Void result) {
+					
+				}
 		});
 	}
 	/**
@@ -141,20 +131,12 @@ public class SignupGradeLabel extends Anchor implements ClickHandler {
 	 *
 	 *
 	 */
-	private void removeGrade(final String grade){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				AppClientFactory.getInjector().getProfilePageService().deleteGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
-						@Override
-						public void onSuccess(Void result) {
-							
-						}
-				});
-			
-			}
+	private void removeGrade(String grade){
+		AppClientFactory.getInjector().getProfilePageService().deleteGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
+				@Override
+				public void onSuccess(Void result) {
+					
+				}
 		});
 	}
 

@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -131,61 +130,53 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 	 *
 	 */
 	public void setUiAndIds() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
+		lblTitle.setText(i18n.GL0480()
+				+ i18n.GL_SPL_QUESTION());
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",i18n.GL0480());
+		lblTitle.getElement().setAttribute("title",i18n.GL0480());
+		
+		lblCancel.getElement().setId("lblCancel");
 
-				lblTitle.setText(i18n.GL0480()
-						+ i18n.GL_SPL_QUESTION());
-				lblTitle.getElement().setId("lblTitle");
-				lblTitle.getElement().setAttribute("alt",i18n.GL0480());
-				lblTitle.getElement().setAttribute("title",i18n.GL0480());
-				
-				lblCancel.getElement().setId("lblCancel");
-
-				panelSignUp.getElement().setId("pnlSignUp");
-				
-				lblHeading.setText(i18n.GL0477());
-				lblHeading.getElement().setId("lblHeading");
-				lblHeading.getElement().setAttribute("alt",i18n.GL0477());
-				lblHeading.getElement().setAttribute("title",i18n.GL0477());
-				lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
-				
-				lblSubHeading.setText(i18n.GL0478());
-				lblSubHeading.getElement().setId("lblSubHeading");
-				lblSubHeading.getElement().setAttribute("alt",i18n.GL0478());
-				lblSubHeading.getElement().setAttribute("title",i18n.GL0478());
-				
-				btnLeave.setText(i18n.GL0480());
-				btnLeave.getElement().setId("btnLeave");
-				btnLeave.getElement().setAttribute("alt",i18n.GL0480());
-				btnLeave.getElement().setAttribute("title",i18n.GL0480());
-				
-				btnContinue.getElement().setId("btnContinue");
-				btnLeave.getElement().setAttribute("alt",i18n.GL0479());
-				btnLeave.getElement().setAttribute("title",i18n.GL0479());
-				btnContinue.setText(i18n.GL0479());
-				btnContinue.getElement().setAttribute("style", "margin-left: 20px");
-				
-				quriesText.setText(i18n.GL1139()+i18n.GL_GRR_COMMA());
-				quriesText.getElement().setId("lblQuriesText");
-				quriesText.getElement().setAttribute("alt",i18n.GL1139());
-				quriesText.getElement().setAttribute("title",i18n.GL1139());
-				
-				pleaseContactText.setText(i18n.GL1145());
-				pleaseContactText.getElement().setId("spnPleaseContactText");
-				pleaseContactText.getElement().setAttribute("alt",i18n.GL1145());
-				pleaseContactText.getElement().setAttribute("title",i18n.GL1145());
-				
-				supportLink.setText(i18n.GL0299());
-				supportLink.getElement().setId("lnkSupportLink");
-				supportLink.getElement().setAttribute("alt",i18n.GL0299());
-				supportLink.getElement().setAttribute("title",i18n.GL0299());
-				supportLink.setHref(i18n.GL1055());
-			
-			}
-		});
+		panelSignUp.getElement().setId("pnlSignUp");
+		
+		lblHeading.setText(i18n.GL0477());
+		lblHeading.getElement().setId("lblHeading");
+		lblHeading.getElement().setAttribute("alt",i18n.GL0477());
+		lblHeading.getElement().setAttribute("title",i18n.GL0477());
+		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
+		
+		lblSubHeading.setText(i18n.GL0478());
+		lblSubHeading.getElement().setId("lblSubHeading");
+		lblSubHeading.getElement().setAttribute("alt",i18n.GL0478());
+		lblSubHeading.getElement().setAttribute("title",i18n.GL0478());
+		
+		btnLeave.setText(i18n.GL0480());
+		btnLeave.getElement().setId("btnLeave");
+		btnLeave.getElement().setAttribute("alt",i18n.GL0480());
+		btnLeave.getElement().setAttribute("title",i18n.GL0480());
+		
+		btnContinue.getElement().setId("btnContinue");
+		btnLeave.getElement().setAttribute("alt",i18n.GL0479());
+		btnLeave.getElement().setAttribute("title",i18n.GL0479());
+		btnContinue.setText(i18n.GL0479());
+		btnContinue.getElement().setAttribute("style", "margin-left: 20px");
+		
+		quriesText.setText(i18n.GL1139()+i18n.GL_GRR_COMMA());
+		quriesText.getElement().setId("lblQuriesText");
+		quriesText.getElement().setAttribute("alt",i18n.GL1139());
+		quriesText.getElement().setAttribute("title",i18n.GL1139());
+		
+		pleaseContactText.setText(i18n.GL1145());
+		pleaseContactText.getElement().setId("spnPleaseContactText");
+		pleaseContactText.getElement().setAttribute("alt",i18n.GL1145());
+		pleaseContactText.getElement().setAttribute("title",i18n.GL1145());
+		
+		supportLink.setText(i18n.GL0299());
+		supportLink.getElement().setId("lnkSupportLink");
+		supportLink.getElement().setAttribute("alt",i18n.GL0299());
+		supportLink.getElement().setAttribute("title",i18n.GL0299());
+		supportLink.setHref(i18n.GL1055());
 	}
 
 	@UiHandler("lblCancel")

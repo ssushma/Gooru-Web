@@ -25,13 +25,11 @@
 package org.ednovo.gooru.client.mvp.authentication.uc;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.springframework.aop.aspectj.SimpleAspectInstanceFactory;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -156,38 +154,27 @@ public class ThankPopUpForUpdateProfile extends PopupPanel{
 
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+		MixpanelUtil.close_signUp();
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			
-			@Override
-			public void onSuccess() {
-				MixpanelUtil.close_signUp();
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-					
-				}else{
-					Window.enableScrolling(true);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				}
-				hide();
-			}
-		});
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
+		this.hide();
 	}
 
 	@UiHandler("btnOk")
 	public void onClickButtonLeave(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+		MixpanelUtil.close_signUp();
+		this.hide();
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			
-			@Override
-			public void onSuccess() {
-				MixpanelUtil.close_signUp();
-				hide();
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-					
-				}else{
-					Window.enableScrolling(true);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				}
-			}
-		});
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
+
 	}
 
 }

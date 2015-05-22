@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -182,27 +181,15 @@ public class SignUpRoleView extends PopupPanel{
 	 *
 	 */
 	public void closeSignUpRoleView() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
-				Window.enableScrolling(true);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				hide();
-			}
-		});
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		this.hide();
 	}
 	
 	@UiHandler("lblCancel")
 	public void onCancelClick(ClickEvent clickEvent) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				closeSignUpRoleView();
-			}
-		});
+		closeSignUpRoleView();
 	}
 	/**
 	 * 
@@ -272,19 +259,13 @@ public class SignUpRoleView extends PopupPanel{
 	 * @param type 
 	 * 
 	 */
-	public void checkUserAvailability(final String userName, final String type) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getUserService().getEmailId(userName, type, new SimpleAsyncCallback<UserDo>()
-						{
-								@Override
-								public void onSuccess(UserDo result) {					
-									checkUserNameAvailability(result);
-								}
-						});
-					}
+	public void checkUserAvailability(String userName, String type) {
+		AppClientFactory.getInjector().getUserService().getEmailId(userName, type, new SimpleAsyncCallback<UserDo>()
+		{
+				@Override
+				public void onSuccess(UserDo result) {					
+					checkUserNameAvailability(result);
+				}
 		});
 	}
 
@@ -293,42 +274,35 @@ public class SignUpRoleView extends PopupPanel{
 	 * @param result {{@link UserDo}
 	 */
 
-	public void checkUserNameAvailability(final UserDo result) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+	public void checkUserNameAvailability(UserDo result) {
+		if (result != null && result.isAvailability() && loginTxtBox.getText() != null) {
 			
-			@Override
-			public void onSuccess() {
-
-				if (result != null && result.isAvailability() && loginTxtBox.getText() != null) {
-					
-				}
-				else
-				{
-					String userName = loginTxtBox.getText();
-					final UserDo userDo = AppClientFactory.getLoggedInUser();
-					
-					AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new SimpleAsyncCallback<Void>(){
+		}
+		else
+		{
+			String userName = loginTxtBox.getText();
+			String userRole = this.userRole;
+			final UserDo userDo = AppClientFactory.getLoggedInUser();
+			
+			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new SimpleAsyncCallback<Void>(){
+				@Override
+				public void onSuccess(Void result) {
+					AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
 						@Override
-						public void onSuccess(Void result) {
-							AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
-								@Override
-								public void onSuccess(UserDo newUser) {
-									UserDo userDo = AppClientFactory.getLoggedInUser();
-									userDo.setViewFlag(newUser.getViewFlag());
-									AppClientFactory.setLoggedInUser(userDo);
-									AppClientFactory.fireEvent(new SetHeaderEvent(newUser));
-									closeSignUpRoleView();
-									SignUpGradeCourseView signUpGradeCourseView = new SignUpGradeCourseView(userDo);
-								}
-							});
-							Window.enableScrolling(false);
-							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
+						public void onSuccess(UserDo newUser) {
+							UserDo userDo = AppClientFactory.getLoggedInUser();
+							userDo.setViewFlag(newUser.getViewFlag());
+							AppClientFactory.setLoggedInUser(userDo);
+							AppClientFactory.fireEvent(new SetHeaderEvent(newUser));
+							closeSignUpRoleView();
+							SignUpGradeCourseView signUpGradeCourseView = new SignUpGradeCourseView(userDo);
 						}
 					});
+					Window.enableScrolling(false);
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
 				}
-			
-			}
-		});
+			});
+		}
 	}
 
 }
