@@ -11,11 +11,6 @@
 	        <g:RadioButton ui:field="imageRDButton" name="ansTypeGroup" styleName="hsQAnswerHeadings"></g:RadioButton>
 	         <g:RadioButton ui:field="textRDButton" name="ansTypeGroup" styleName="hsQAnswerHeadings"></g:RadioButton>
 	     </g:HTMLPanel>
-	           <g:HTMLPanel styleName="col-md-7 col-sm-6 colmdPadding textRight">
-	         <g:Label  ui:field="correctLbl" styleName="htQAnswerHeadings"></g:Label>
-	         <g:RadioButton ui:field="singleRDButton" name="ansType" styleName="hsQAnswerHeadings"></g:RadioButton>
-	         <g:RadioButton ui:field="multiRDButton" name="ansType" styleName="hsQAnswerHeadings"></g:RadioButton>
-	          </g:HTMLPanel>
 	          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	     </g:FlowPanel>
 	<g:HTMLPanel styleName=" htQanswerContainer">
