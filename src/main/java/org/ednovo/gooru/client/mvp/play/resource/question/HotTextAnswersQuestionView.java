@@ -51,8 +51,8 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -80,7 +80,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private static String STYLE_INACTIVE_BUTTON="htPlayerSubmitInActiveButton";
 	private static String STYLE_DND_CORRECT="dragDropAnsCorrect";
 	private static String STYLE_DND_INCORRECT="dragDropAnsInCorrect";
-	
+	private static String DOT=".";
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
 
@@ -140,9 +140,13 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					QuestionAnswerDo questionAnswerDo=answersList.next();
 					String text=removeHtmlTags(questionAnswerDo.getAnswerText());
 					String[] temp;
-					temp = text.split(" ");
+					if(collectionItemDo.getResource().getAttributes().getHlType().equalsIgnoreCase(i18n.GL3219())){
+						temp = text.split(" ");
+					
 					for(int k=0;k<temp.length;k++){
-						final HTML lbl=new HTML(temp[k]+SPACE);
+						
+						final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
+						
 						if(lbl.getText().startsWith("[") && lbl.getText().endsWith("]"+SPACE) ){
 							String lblText=lbl.getText().replaceAll("\\[", "").replaceAll("\\]","");
 							lbl.setText(lblText);
@@ -167,6 +171,41 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							}
 						});
 						optionsContainerFpnl.add(lbl);
+					}
+					}else{
+						temp = text.split("\\.");
+						for(int k=0;k<temp.length;k++){
+							if(temp[k].trim().length()>0){
+							final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
+							
+							if(lbl.getText().startsWith("[") ||  lbl.getText().startsWith(" [") ){
+								String lblText=lbl.getText().replaceAll("\\[", "").replaceAll("\\]","");
+								lbl.setText(lblText);
+								lbl.getElement().setId(STYLE_CORRECT);
+							}else{
+								String lblText=lbl.getText().replaceAll("\\]","");
+								lbl.setText(lblText);
+								lbl.getElement().setId(STYLE_INCORRECT);
+							}
+							lbl.addStyleName("htPlayerAns");
+							lbl.addClickHandler(new ClickHandler() {
+								@Override
+								public void onClick(ClickEvent event) {
+									clearAnswers();
+
+									if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+										lbl.removeStyleName(STYLE_HIGHLIGHT);
+									}else{
+
+										lbl.addStyleName(STYLE_HIGHLIGHT);
+									}
+									enableCheckAnswerButton();
+								}
+							});
+							optionsContainerFpnl.add(lbl);
+								
+						}
+					}
 					}
 				}
 			}else{
@@ -241,7 +280,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
-				HTML widget=(HTML) optionsContainerFpnl.getWidget(i);
+				InlineLabel widget=(InlineLabel) optionsContainerFpnl.getWidget(i);
 				if(widget.getStyleName().contains(STYLE_HIGHLIGHT)){
 					isOptionSelected=true;
 				}
@@ -298,7 +337,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		}else{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
-				HTML lbl=(HTML) optionsContainerFpnl.getWidget(i);
+				InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
 
 				if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
 
@@ -317,7 +356,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private void clearAnswers(){
 		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
-			HTML lbl=(HTML) optionsContainerFpnl.getWidget(i);
+			InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
 
 			if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
 

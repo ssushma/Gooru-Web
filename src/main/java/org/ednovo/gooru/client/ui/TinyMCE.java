@@ -63,7 +63,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class TinyMCE extends Composite{
 	private static List<String> richTextsList=new ArrayList<String>();
 	private static String lastButtonId="";
-    private TextArea tinyMceTextArea=null;
+    public TextArea tinyMceTextArea=null;
     private static final String BUTTONID="_richtext_button";
     private String id=null;
     private Button toolBarOpenButton=null;
@@ -486,13 +486,14 @@ public class TinyMCE extends Composite{
 	}
 	public int countCharcters(String content,String tinyMceId){
 		AddQuestionResourceView.errorMessageForQuestion.setText("");
+		int charLimit=AddQuestionResourceView.questionCharcterLimit;
 		//This regex is used to get text count with out html tags
 		String noHTMLString = content.replaceAll("\\<.*?>","");
 		if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
 			setErrorMessage(ERROR_MESSAGE,tinyMceId);
-			if(noHTMLString.length()>=503)
+			if(noHTMLString.length()>=charLimit+3)
 			{
-			setContent(tinyMceId,content.substring(0, 503));
+			setContent(tinyMceId,content.substring(0, charLimit+3));
 			}
 		}else{
 			clearErrorMessage(tinyMceId);
