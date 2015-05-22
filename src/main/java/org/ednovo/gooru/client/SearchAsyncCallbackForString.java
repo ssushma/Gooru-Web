@@ -7,8 +7,6 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.AbstractSearchDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.restlet.ext.json.JsonRepresentation;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;

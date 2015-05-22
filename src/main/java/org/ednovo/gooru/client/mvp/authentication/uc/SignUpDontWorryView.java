@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -168,35 +169,49 @@ public class SignUpDontWorryView extends PopupPanel{
 
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
-		MixpanelUtil.close_signUp();
-		this.hide();
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-		}else{
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		}
-		
+			@Override
+			public void onSuccess() {
+				MixpanelUtil.close_signUp();
+				hide();
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+					
+				}else{
+					Window.enableScrolling(true);
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				}
+			}
+		});
 	}
+	
 
 	@UiHandler("btnOk")
 	public void onClickButtonLeave(ClickEvent event) {
-		MixpanelUtil.close_signUp();
-		this.hide();
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-		}else{
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		}
-
+			@Override
+			public void onSuccess() {
+				MixpanelUtil.close_signUp();
+				hide();
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+					
+				}else{
+					Window.enableScrolling(true);
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				}
+			}
+		});
 	}
 	@UiHandler("btnGoToSetting")
 	public void onClickbtnGoToSetting(ClickEvent event) {
-		this.hide();
-		AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.SETTINGS);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
+			@Override
+			public void onSuccess() {
+				hide();
+				AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.SETTINGS);
+			}
+		});
 	}
-
-
 }

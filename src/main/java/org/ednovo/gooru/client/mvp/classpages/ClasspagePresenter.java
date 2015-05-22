@@ -38,6 +38,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.classpages.ClasspagePresenter.IsClasspageProxy;
@@ -116,11 +117,17 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			
 			@Override
 			public void onScroll(ScrollEvent event) {
-				if (getView().getClassPageScrollPanel().getVerticalScrollPosition() == getView().getClassPageScrollPanel().getMaximumVerticalScrollPosition() &&resultSize>=10){
-					offSet=offSet+10;
-					toClear=false;
-					getAllClasspages(limit, String.valueOf(offSet));	
-				}
+				GWT.runAsync(new SimpleRunAsyncCallback() {
+					
+					@Override
+					public void onSuccess() {
+						if (getView().getClassPageScrollPanel().getVerticalScrollPosition() == getView().getClassPageScrollPanel().getMaximumVerticalScrollPosition() &&resultSize>=10){
+							offSet=offSet+10;
+							toClear=false;
+							getAllClasspages(limit, String.valueOf(offSet));	
+						}
+					}
+				});
 			}
 		});
 		
@@ -194,11 +201,17 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 		setGetAllClasspagesAsyncCallback(new SimpleAsyncCallback<ClasspageListDo>() {
 
 			@Override
-			public void onSuccess(ClasspageListDo result) {
-				int resultSize = result.getSearchResults().size();
-				if (resultSize>0){
-					OpenClasspageEdit(result.getSearchResults().get(0).getGooruOid());					
-				}
+			public void onSuccess(final ClasspageListDo result) {
+				GWT.runAsync(new SimpleRunAsyncCallback() {
+					
+					@Override
+					public void onSuccess() {
+						int resultSize = result.getSearchResults().size();
+						if (resultSize>0){
+							OpenClasspageEdit(result.getSearchResults().get(0).getGooruOid());					
+						}
+					}
+				});
 			}
 		});
 	}
@@ -221,26 +234,38 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	 * 
 	 * 
 	 */
-	private void OpenClasspageEdit(String gooruOId) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", gooruOId);
-		params.put("pageNum", "0");
-		params.put("pageSize", "10");
-		params.put("pos", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				PlaceTokens.EDIT_CLASSPAGE, params);
+	private void OpenClasspageEdit(final String gooruOId) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("classpageid", gooruOId);
+				params.put("pageNum", "0");
+				params.put("pageSize", "10");
+				params.put("pos", "1");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.EDIT_CLASSPAGE, params);
+			}
+		});
 	}
 	@Override
 	public void refreshClasspageResourceItemList(
-			CollectionDo classpageResourceItem, RefreshType refreshType) {
-			classpageHash.remove(classpageResourceItem.getGooruOid());
-			if(classpageHash.size()==0)
-			{
-				offSet=0;
-				getAllClasspages(limit, String.valueOf(offSet));		
-			}
-			toClear = true;
-			refreshClasspage();
+			final CollectionDo classpageResourceItem, final RefreshType refreshType) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				classpageHash.remove(classpageResourceItem.getGooruOid());
+				if(classpageHash.size()==0)
+				{
+					offSet=0;
+					getAllClasspages(limit, String.valueOf(offSet));		
+				}
+				toClear = true;
+				refreshClasspage();
+		}
+		});
 	}
 	/**
 	 * 
@@ -262,50 +287,68 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	 *
 	 */
 	void refreshClasspage(){
-	  List<CollectionDo> tmpClasspageList = new ArrayList<CollectionDo>();
-		
-	  if (toClear){
-		  getView().clearClasspageListPanel();  
-	  }
-	  	
-		getView().getLoadingPanel().setVisible(false);
-	
-		resultSize = classpageHash.size();
-	
-		Collection classpageCollection = classpageHash.values();
-		
-		   
-	    //obtain an Iterator for Collection
-	    Iterator itr = classpageCollection.iterator();
-	   
-	    //iterate through LinkedHashMap values iterator
-	  
-	     
-	    while(itr.hasNext()){
-	    	tmpClasspageList.add((CollectionDo) itr.next());	    	
-	    }
-	    
-		for (int i = resultSize-1; i >= 0 ; i--) {
-			getView().insertClasspage(tmpClasspageList.get(i), false);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-			
-		}
-		if(getView().getClasspageListPanel().getWidgetCount()>0) {
-		} else {
-			getView().showPlaceHolderForEmptyTeach(true);
-			getView().getClassPageScrollPanel().setVisible(false);
-		}
-		
+			@Override
+			public void onSuccess() {
+				  List<CollectionDo> tmpClasspageList = new ArrayList<CollectionDo>();
+					
+				  if (toClear){
+					  getView().clearClasspageListPanel();  
+				  }
+				  	
+					getView().getLoadingPanel().setVisible(false);
+				
+					resultSize = classpageHash.size();
+				
+					Collection classpageCollection = classpageHash.values();
+					
+					   
+				    //obtain an Iterator for Collection
+				    Iterator itr = classpageCollection.iterator();
+				   
+				    //iterate through LinkedHashMap values iterator
+				  
+				     
+				    while(itr.hasNext()){
+				    	tmpClasspageList.add((CollectionDo) itr.next());	    	
+				    }
+				    
+					for (int i = resultSize-1; i >= 0 ; i--) {
+						getView().insertClasspage(tmpClasspageList.get(i), false);
+						
+						
+					}
+					if(getView().getClasspageListPanel().getWidgetCount()>0) {
+					} else {
+						getView().showPlaceHolderForEmptyTeach(true);
+						getView().getClassPageScrollPanel().setVisible(false);
+					}
+					
+				}
+		});
 	}
 	@Override
-	public void createClasspage(CollectionDo collectionDo) {
-		getClasspageService().v2CreateClasspage(collectionDo, getCollectionAsyncCallback());
-		 getView().getClassPageScrollPanel().scrollToTop();
+	public void createClasspage(final CollectionDo collectionDo) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				getClasspageService().v2CreateClasspage(collectionDo, getCollectionAsyncCallback());
+				 getView().getClassPageScrollPanel().scrollToTop();
+			}
+		});
 	}
 	
 	@Override
-	public void getAllClasspages(String limit, String offSet) {
-		getClasspageService().v2GetAllClasspages(limit, offSet, getGetAllClasspagesAsyncCallback());
+	public void getAllClasspages(final String limit,final String offSet) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				getClasspageService().v2GetAllClasspages(limit, offSet, getGetAllClasspagesAsyncCallback());
+			}
+		} );
 	}
 	
 	//// Setters and Getters //

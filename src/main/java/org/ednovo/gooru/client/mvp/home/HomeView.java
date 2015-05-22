@@ -118,7 +118,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright;//achDataPolicy
-	@UiField TextBox txtEmbedLink;
+//	@UiField TextBox txtEmbedLink;
 	@UiField HTML htmlDescription;
 	
 	LibraryView libraryView = null;
@@ -599,21 +599,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				
 		StringUtil.setAttributes(lblHeading.getElement(), "lblHeading", i18n.GL2046(), i18n.GL2046());
 		StringUtil.setAttributes(lblSubHeading.getElement(), "lblSubHeading", i18n.GL2047(), i18n.GL2047());
-		String currentUrl = Window.Location.getHref();
-		String protocol = currentUrl.startsWith("https") ? "https" : "http";
-				
-		String url = "<a href=\""+protocol+"://www.goorulearning.org/\"><img src=\"http://partners.goorulearning.org/_images/badges/01_goorubutton-honor.png\" width=\"250\" height=\"250\"/></a>";
 		
-		txtEmbedLink.setText(url);
-		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", "", "");
-		txtEmbedLink.setReadOnly(true);
-		txtEmbedLink.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				txtEmbedLink.selectAll();
-			}
-		});
 		getEditSearchTxtBox().getElement().setAttribute("placeholder", i18n.GL2073());
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");		
 		

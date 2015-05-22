@@ -1352,16 +1352,16 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("loggedInfoLbl")
 	public void signoutPanel(final ClickEvent clickEvent) {
+		final Element e = clickEvent.getRelativeElement();
+		
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
 			public void onSuccess() {
-
-
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
-				Element e = null;
-				if ((e = clickEvent.getRelativeElement()) != null) {
+				
+				if (e  != null) {
 					if (e.getInnerHTML() != null
 							&& e.getInnerHTML().contains("gwt-Label"))
 						MixpanelUtil.Click_Discover_LandingPage();
@@ -1373,10 +1373,11 @@ public class HeaderUc extends Composite implements
 				MixpanelUtil.Click_On_UserName();
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.PROFILE_PAGE, params);
-
-			
 			}
 		});
+
+		
+	
 	}
 
 	/**
