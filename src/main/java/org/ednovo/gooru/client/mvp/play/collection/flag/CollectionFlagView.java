@@ -566,7 +566,6 @@ public class CollectionFlagView extends
 		appPopUp.hide();
 		clearAll();
 		flagThankYouPopUpView=new FlagThankYouPopUpView();
-//		flagThankYouPopUpView.getCloseButton().addClickHandler(new CloseFlagPopupEvent());
 		flagThankYouPopUpView.getOkButton().addClickHandler(new CloseFlagPopupEvent());
 		flagThankYouPopUpView.show();
 		flagThankYouPopUpView.center();
