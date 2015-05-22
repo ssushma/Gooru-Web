@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
@@ -66,6 +65,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -189,14 +189,20 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
 		lblMediaPlaceHolder.getElement().setAttribute("data-toggle","dropdown");
-
+		/*htmlMediaFeatureListContainer.setHeight("100px");
+		htmlMediaFeatureListContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);*/
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
-
+		//		this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
 		}else{
-			this.getElement().setAttribute("style", "z-index:999999;");
+			
+			//	this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+				//this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+				this.getElement().setAttribute("style", "z-index:999999;");
 		}
 	
-		this.center();		
+		//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
+		this.center();
+		
 		
 		standardsPanel.getElement().setId("pnlStandards");
 		standardsPanel.getElement().setAttribute("alt","");
@@ -472,13 +478,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		lblMediaPlaceHolder.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						OpenMediaFeatureDropdown();
-					}
-				});
+				OpenMediaFeatureDropdown();
 			}
 		});
 		getTagsServiceRequest(resourceId);
@@ -531,17 +531,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		ClickHandler tagHandler= new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						if(!isClickedOnDropDwn){
-							spanelMediaFeaturePanel.setVisible(false);
-						}else{
-							isClickedOnDropDwn=false;
-						}
-					}
-				});
+				if(!isClickedOnDropDwn){
+					spanelMediaFeaturePanel.setVisible(false);
+				}else{
+					isClickedOnDropDwn=false;
+				}
 			}
 		};
 		
@@ -549,73 +543,48 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		centbrowseBtn.addClickHandler(new ClickHandler() {
 					@Override
 			public void onClick(ClickEvent event) {
-						GWT.runAsync(new SimpleRunAsyncCallback() {
-							
-							@Override
-							public void onSuccess() {
-								centuryPopup.clear();
-								centuryPresenterWidget.setAddResourceDataAddTags(centuryDo);
-								centuryPopup.add(centuryPresenterWidget.getWidget());
-								centuryPopup.show();
-								centuryPopup.center();
-								centuryPopup.getElement().getStyle().setZIndex(999999);
-							}
-						});
-					}
+				centuryPopup.clear();
+				centuryPresenterWidget.setAddResourceDataAddTags(centuryDo);
+				centuryPopup.add(centuryPresenterWidget.getWidget());
+				centuryPopup.show();
+				centuryPopup.center();
+				centuryPopup.getElement().getStyle().setZIndex(999999);
+			}
 		});
 		//This will hide the popup when clicked on the cancel button
 		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-							centuryDo.add(entry.getValue());
-						}
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					centuryDo.add(entry.getValue());
+				}
+				
 						hideCenturyPopup();
-					}
-				});
 			}
 		});
 		//This will hide the popup when clicked on close button
 		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-							centuryDo.add(entry.getValue());
-						}
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					centuryDo.add(entry.getValue());
+				}
 						hideCenturyPopup();
-					}
-				});
 			}
 		});
 		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						
-						centuryPanel.clear();
-						centuryDo.clear();
-						centurySelectedValues=centuryPresenterWidget.getSelectedValues();
-						if(centurySelectedValues!=null && centurySelectedValues.size()>0){
-							for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-								centuryDo.add(entry.getValue());
-								centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
-							}
-						}
-						hideCenturyPopup();
-					
+			public void onClick(ClickEvent event) {		
+				centuryPanel.clear();
+				centuryDo.clear();
+				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
+				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+						centuryDo.add(entry.getValue());
+						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 					}
-				});
+				}
+				hideCenturyPopup();
 			}
 			
 		});
@@ -633,19 +602,13 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						for(int i=0;i<centuryDo.size();i++){
-							if(centuryDo.get(i).toString().equalsIgnoreCase(centuryCode)){
-								centurySelectedValues.remove(i);
-								centuryDo.remove(centuryDo.get(i).toString());
-							}
-						}
-						getParent().removeFromParent();
+				for(int i=0;i<centuryDo.size();i++){
+					if(centuryDo.get(i).toString().equalsIgnoreCase(centuryCode)){
+						centurySelectedValues.remove(i);
+						centuryDo.remove(centuryDo.get(i).toString());
 					}
-				});
+				}
+				this.getParent().removeFromParent();
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
@@ -678,58 +641,50 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
 			public void keyAction(String text,KeyUpEvent event) {
-				final String textCaps=text.toUpperCase();
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-
-						
-						standardsPreferenceOrganizeToolTip.hide();
-						standardSearchDo.setSearchResults(null);
-						boolean standardsPrefDisplayPopup = false;
-						standardSgstBox.hideSuggestionList();
-						if(!courseCode.isEmpty()) {
-							Map<String,String> filters = new HashMap<String, String>();
-							filters.put(FLT_CODE_ID,courseCode);
-							standardSearchDo.setFilters(filters);
-						}
-						standardSearchDo.setQuery(textCaps);
-						if (textCaps != null && textCaps.trim().length() > 0) {
-							standardsPreferenceOrganizeToolTip.hide();
-							if(standardPreflist!=null){
-								for(int count=0; count<standardPreflist.size();count++) {
-									if(textCaps.contains(standardPreflist.get(count))) {
-										standardsPrefDisplayPopup = true;
-										break;
-									} else {
-										standardsPrefDisplayPopup = false;
-									}
-								}						
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
 							}
-							if(standardsPrefDisplayPopup){
-								standardsPreferenceOrganizeToolTip.hide();
-								AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
-									@Override
-									public void onSuccess(SearchDo<CodeDo> result) {
-										setStandardSuggestions(result);
-									}
-								});
-								
-								standardSgstBox.showSuggestionList();
-								standardSgstBox.getElement().setAttribute("style", "z-index: 999999;");
-							}else{
-									standardSgstBox.hideSuggestionList();
-									standardSuggestOracle.clear();
-									standardsPreferenceOrganizeToolTip.show();
-									standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-									standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
-									//standardSuggestOracle.add(i18n.GL1613);
-							}
-						}
-					
+						}						
 					}
-				});
+					if(standardsPrefDisplayPopup){
+						standardsPreferenceOrganizeToolTip.hide();
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
+							@Override
+							public void onSuccess(SearchDo<CodeDo> result) {
+								setStandardSuggestions(result);
+							}
+						});
+						
+						standardSgstBox.showSuggestionList();
+						standardSgstBox.getElement().setAttribute("style", "z-index: 999999;");
+						}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
+						//standardSuggestOracle.add(i18n.GL1613);
+					}
+					}
 			}
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
@@ -747,35 +702,26 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			
 			@Override
 			public void keyAction(String text, KeyUpEvent event) {
-				final String textCaps=text.toUpperCase();
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
+				text=text.toUpperCase();
+				//standardsPreferenceOrganizeToolTip.hide();
+				centurySearchDo.setSearchResults(null);
+				centurySearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+						AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new AsyncCallback<SearchDo<StandardFo>>() {
+							
+							@Override
+							public void onSuccess(SearchDo<StandardFo> result) {
+								setCenturySuggestions(result);
+								
+							}
 
-						
-						//standardsPreferenceOrganizeToolTip.hide();
-						centurySearchDo.setSearchResults(null);
-						centurySearchDo.setQuery(textCaps);
-						if (textCaps != null && textCaps.trim().length() > 0) {
-								AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new AsyncCallback<SearchDo<StandardFo>>() {
-									
-									@Override
-									public void onSuccess(SearchDo<StandardFo> result) {
-										setCenturySuggestions(result);
-										
-									}
-
-									@Override
-									public void onFailure(Throwable caught) {
-										
-									}							
-								});
-								centurySgstBox.showSuggestionList();
-								}
-					
-					}
-				});
+							@Override
+							public void onFailure(Throwable caught) {
+								
+							}							
+						});
+						centurySgstBox.showSuggestionList();
+						}
 			}
 
 			@Override
@@ -914,47 +860,31 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 * @param standard
 	 *            which to be added for the collection
 	 */
-	public void addStandard(final String standard, final String id) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if (standardsPanel.getWidgetCount() <5) {
-					if (standard != null && !standard.isEmpty()) {
-						standardsDo.add(standard);
-						standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
-					}
-				} else {
-					standardMaxShow();
-					standardSgstBox.setText("");
-				}
+	public void addStandard(String standard, String id) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standard != null && !standard.isEmpty()) {
+				standardsDo.add(standard);
+				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
-		});
+		} else {
+			standardMaxShow();
+			standardSgstBox.setText("");
+		}
 	}
-	public void addCentury(final String centuryTag, final String id) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if (centuryTag != null && !centuryTag.isEmpty()) {
-					String tagCentruy = centuryTag.trim();
-					centurySelectedValues.put(Long.parseLong(id), tagCentruy);
-					centuryDo.add(tagCentruy);
-					centuryPanel.add(create21CenturyLabel(tagCentruy, id, centuryCodesMap.get(tagCentruy)));
-				}
+	public void addCentury(String centuryTag, String id) {
+			if (centuryTag != null && !centuryTag.isEmpty()) {
+				centuryTag = centuryTag.trim();
+				centurySelectedValues.put(Long.parseLong(id), centuryTag);
+				//String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
+				centuryDo.add(centuryTag);
+				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(centuryTag)));
 			}
-		});
 	}
 	public void standardMaxShow() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
-				standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
-				new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
-			}
-		});
+		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
+		standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
+		/*standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());*/
+		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
 	/**
 	 * new label is created for the standard which needs to be added
@@ -968,18 +898,12 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						for(int i=0;i<standardsDo.size();i++){
-							if(standardsDo.get(i).toString().equalsIgnoreCase(standardCode)){
-								standardsDo.remove(standardsDo.get(i).toString());
-							}
-						}
-						getParent().removeFromParent();
+				for(int i=0;i<standardsDo.size();i++){
+					if(standardsDo.get(i).toString().equalsIgnoreCase(standardCode)){
+						standardsDo.remove(standardsDo.get(i).toString());
 					}
-				});
+				}
+				this.getParent().removeFromParent();
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
@@ -996,203 +920,146 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	@UiHandler("kindergarden")
 	public void onKindergardenClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(kindergarden.getStyleName().toString().contains("selected")){
-					kindergarden.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					kindergarden.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(kindergarden.getStyleName().toString().contains("selected"))
+		{
+			kindergarden.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			kindergarden.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level1")
 	public void onLevel1Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level1.getStyleName().toString().contains("selected")){
-					level1.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level1.getStyleName().toString().contains("selected"))
+		{
+			level1.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level2")
 	public void onLevel2Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level2.getStyleName().toString().contains("selected")){
-					level2.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level2.getStyleName().toString().contains("selected"))
+		{
+			level2.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level3")
 	public void onLevel3Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level3.getStyleName().toString().contains("selected")){
-					level3.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					level3.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level3.getStyleName().toString().contains("selected"))
+		{
+			level3.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level3.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level4")
 	public void onLevel4Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level4.getStyleName().toString().contains("selected")){
-					level4.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					level4.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level4.getStyleName().toString().contains("selected"))
+		{
+			level4.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level4.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level5")
 	public void onLevel5Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level5.getStyleName().toString().contains("selected")){
-					level5.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					level5.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level5.getStyleName().toString().contains("selected"))
+		{
+			level5.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level5.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level6")
 	public void onLevel6Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level6.getStyleName().toString().contains("selected")){
-					level6.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					level6.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level6.getStyleName().toString().contains("selected"))
+		{
+			level6.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level6.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level7")
 	public void onLevel7Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level7.getStyleName().toString().contains("selected"))
-				{
-					level7.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					level7.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level7.getStyleName().toString().contains("selected"))
+		{
+			level7.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level7.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level8")
 	public void onLevel8Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level8.getStyleName().toString().contains("selected"))
-				{
-					level8.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					level8.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level8.getStyleName().toString().contains("selected"))
+		{
+			level8.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level8.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level9")
 	public void onLevel9Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level9.getStyleName().toString().contains("selected"))
-				{
-					level9.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					level9.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level9.getStyleName().toString().contains("selected"))
+		{
+			level9.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level9.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level10")
 	public void onLevel10Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level10.getStyleName().toString().contains("selected"))
-				{
-					level10.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					level10.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level10.getStyleName().toString().contains("selected"))
+		{
+			level10.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level10.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level11")
 	public void onLevel11Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level11.getStyleName().toString().contains("selected"))
-				{
-					level11.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					level11.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level11.getStyleName().toString().contains("selected"))
+		{
+			level11.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level11.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("level12")
 	public void onLevel12Click(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(level12.getStyleName().toString().contains("selected"))
-				{
-					level12.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(level12.getStyleName().toString().contains("selected"))
+		{
+			level12.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	/**
 	 * 
@@ -1214,290 +1081,189 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 */
 	public void removeClassNameForAllEducationalUse(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-				 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			}
-		});
+		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
+		 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 	}
 	
 	@UiHandler("activity")
 	public void onactivityClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				
-				if(activity.getStyleName().toString().contains("selected"))
-				{
-					activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					activity.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		
+		if(activity.getStyleName().toString().contains("selected"))
+		{
+			activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			activity.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("handout")
 	public void onhandoutClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(handout.getStyleName().toString().contains("selected"))
-				{
-					handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					handout.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(handout.getStyleName().toString().contains("selected"))
+		{
+			handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			handout.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("homework")
 	public void onhomeworkClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(homework.getStyleName().toString().contains("selected"))
-				{
-					homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					homework.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(homework.getStyleName().toString().contains("selected"))
+		{
+			homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			homework.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("game")
 	public void ongameClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(game.getStyleName().toString().contains("selected"))
-				{
-					game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					game.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(game.getStyleName().toString().contains("selected"))
+		{
+			game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			game.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("presentation")
 	public void onpresentationClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				if(presentation.getStyleName().toString().contains("selected"))
-				{
-					presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					presentation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			
-			}
-		});
+		if(presentation.getStyleName().toString().contains("selected"))
+		{
+			presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			presentation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("refMaterial")
 	public void onrefMaterialClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(refMaterial.getStyleName().toString().contains("selected"))
-				{
-					refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					refMaterial.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(refMaterial.getStyleName().toString().contains("selected"))
+		{
+			refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			refMaterial.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("quiz")
 	public void onquizClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(quiz.getStyleName().toString().contains("selected"))
-				{
-					quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					quiz.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(quiz.getStyleName().toString().contains("selected"))
+		{
+			quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			quiz.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("currPlan")
 	public void oncurrPlanClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(currPlan.getStyleName().toString().contains("selected"))
-				{
-					currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					currPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(currPlan.getStyleName().toString().contains("selected"))
+		{
+			currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			currPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("lessonPlan")
 	public void onlessonPlanClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				if(lessonPlan.getStyleName().toString().contains("selected"))
-				{
-					lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					lessonPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			
-			}
-		});
+		if(lessonPlan.getStyleName().toString().contains("selected"))
+		{
+			lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			lessonPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("unitPlan")
 	public void onunitPlanClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				if(unitPlan.getStyleName().toString().contains("selected"))
-				{
-					unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					unitPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			
-			}
-		});
+		if(unitPlan.getStyleName().toString().contains("selected"))
+		{
+			unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			unitPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("projectPlan")
 	public void onprojectPlanClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
+		if(projectPlan.getStyleName().toString().contains("selected"))
+		{
+			projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 
-				if(projectPlan.getStyleName().toString().contains("selected"))
-				{
-					projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-
-				}
-				else
-				{
-					projectPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			
-			}
-		});
+		}
+		else
+		{
+			projectPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("reading")
 	public void onreadingClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(reading.getStyleName().toString().contains("selected")){
-					reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}else{
-					reading.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(reading.getStyleName().toString().contains("selected"))
+		{
+			reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			reading.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("textbook")
 	public void ontextbookClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(textbook.getStyleName().toString().contains("selected"))
-				{
-					textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					textbook.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(textbook.getStyleName().toString().contains("selected"))
+		{
+			textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			textbook.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("article")
 	public void onarticleClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(article.getStyleName().toString().contains("selected"))
-				{
-					article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(article.getStyleName().toString().contains("selected"))
+		{
+			article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("book")
 	public void onbookClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(book.getStyleName().toString().contains("selected"))
-				{
-					book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(book.getStyleName().toString().contains("selected"))
+		{
+			book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	public void closeFunction()
 	{
@@ -1531,20 +1297,12 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 */
 	private void OpenMediaFeatureDropdown() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				isClickedOnDropDwn=true;
-				if (spanelMediaFeaturePanel.isVisible()){
-					spanelMediaFeaturePanel.setVisible(false);
-				}else{
-					spanelMediaFeaturePanel.setVisible(true);
-				}
-			
-			}
-		});
+		isClickedOnDropDwn=true;
+		if (spanelMediaFeaturePanel.isVisible()){
+			spanelMediaFeaturePanel.setVisible(false);
+		}else{
+			spanelMediaFeaturePanel.setVisible(true);
+		}
 	}
 	/**
 	 * 
@@ -1566,82 +1324,58 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 */
 	public void removeClassNameForAllAds(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			}
-		});
+		noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 	}
 	@UiHandler("noAds")
 	public void onnoAdsClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(noAds.getStyleName().toString().contains("selected"))
-				{
-					noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(modAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
-				{
-					removeClassNameForAllAds();
-					noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		} );
+		if(noAds.getStyleName().toString().contains("selected"))
+		{
+			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(modAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
+		{
+			removeClassNameForAllAds();
+			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("modAds")
 	public void onmodAdsClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(modAds.getStyleName().toString().contains("selected"))
-				{
-					modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(noAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
-				{
-					removeClassNameForAllAds();
-					modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		if(modAds.getStyleName().toString().contains("selected"))
+		{
+			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(noAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
+		{
+			removeClassNameForAllAds();
+			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 
-				}
-				else
-				{
-					modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		}
+		else
+		{
+			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	@UiHandler("aggreAds")
 	public void onaggreAdsClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(aggreAds.getStyleName().toString().contains("selected"))
-				{
-					aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(noAds.getStyleName().toString().contains("selected") || modAds.getStyleName().toString().contains("selected"))
-				{
-					removeClassNameForAllAds();
-					aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else
-				{
-					aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());		
-				}
-			}
-		});
+		if(aggreAds.getStyleName().toString().contains("selected"))
+		{
+			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(noAds.getStyleName().toString().contains("selected") || modAds.getStyleName().toString().contains("selected"))
+		{
+			removeClassNameForAllAds();
+			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else
+		{
+			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());		
+		}
 	}
 	/**
 	 * 
@@ -1663,144 +1397,122 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 */
 	public void removeClassNamesForAllAccessHazard(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-				flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-				motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			}
-		});
+		soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 	}
 
 	@UiHandler("flashingHazard")
 	public void onflashingHazardClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(flashingHazard.getStyleName().toString().contains("select"))
-				{
-					flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-				}
-				/*else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
-				{
-					removeClassNamesForAllAccessHazard();
-					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-				}*/
-				else
-				{
-					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-				}
-			}
-		});
+		if(flashingHazard.getStyleName().toString().contains("select"))
+		{
+			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		/*else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
+		{
+			removeClassNamesForAllAccessHazard();
+			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}*/
+		else
+		{
+			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
 	}
 
 	@UiHandler("motionSimulationHazard")
 	public void onmotionSimulationHazardClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				if(motionSimulationHazard.getStyleName().toString().contains("select"))
-				{
-					motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-				}else{
-					motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-				}
-			
-			}
-		});
+		if(motionSimulationHazard.getStyleName().toString().contains("select"))
+		{
+			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		/*else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
+		{
+			removeClassNamesForAllAccessHazard();
+			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}*/
+		else
+		{
+			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
 	}
 
 	@UiHandler("soundHazard")
 	public void onsoundHazardClick(ClickEvent click){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				if(soundHazard.getStyleName().toString().contains("select"))
-				{
-					soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-				}
-				else
-				{
-					soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-				}
-			
-			}
-		});
+		if(soundHazard.getStyleName().toString().contains("select"))
+		{
+			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		/*else if(sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
+		{
+			removeClassNamesForAllAccessHazard();
+			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}*/
+		else
+		{
+			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
 	}
 	
 	@UiHandler("addTagsBtn")
 	public void onaddTagsBtnClick(ClickEvent click)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				String frameTagsStr = "";
-				String adsStr = "";
-				List<String> tagList = new ArrayList<String>();
-				
-				String[] educationArr = setEducationalUseString();
-				if(educationArr != null)
-				{
-					for(int i=0;i<educationArr.length;i++)
-					{
-						tagList.add("\"" + educationArr[i].toString() +"\"");
-					}
-				}
-				String[] lexileMainarr = setLexileLevel();
-				if(lexileMainarr != null)
-				{
-					for(int i=0;i<lexileMainarr.length;i++)
-					{
-						tagList.add("\"" + lexileMainarr[i].toString() +"\"");
-					}
-				}
-				adsStr = setAdsString();
-				
-				if(!adsStr.isEmpty())
-				{
-					tagList.add("\"" + adsStr +"\"");
-				}
-				
-				String hazardArr[] = setAccessHazards();
-				if(hazardArr != null)
-				{
-					for(int i=0;i<hazardArr.length;i++)
-					{
-						tagList.add("\"" + hazardArr[i].toString() +"\"");
-					}
-				}
-				for(final String codeObj:centuryDo){
-					tagList.add("\"" +CENTURYSKILLS+" : "+codeObj+"\"");
-				}
-				for(final String codeObj:standardsDo){
-					tagList.add("\"" +standardsDefaultText.getText()+" : "+codeObj+"\"");
-				}
-				
-				if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
-				{
-					tagList.add("\"" +mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText() +"\"");
-				}
-				
-				if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
-				{
-					tagList.add("\"" +"Mobile Friendly"+" : "+mobileYes.getText() +"\"");
-				}
-				else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
-				{
-					tagList.add("\"" +"Mobile Friendly"+" : "+mobileNo.getText() +"\"");
-				}
-				
-				deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
+		String frameTagsStr = "";
+		String adsStr = "";
+		List<String> tagList = new ArrayList<String>();
+		
+		String[] educationArr = setEducationalUseString();
+		if(educationArr != null)
+		{
+			for(int i=0;i<educationArr.length;i++)
+			{
+				tagList.add("\"" + educationArr[i].toString() +"\"");
 			}
-		});
+		}
+		String[] lexileMainarr = setLexileLevel();
+		if(lexileMainarr != null)
+		{
+			for(int i=0;i<lexileMainarr.length;i++)
+			{
+				tagList.add("\"" + lexileMainarr[i].toString() +"\"");
+			}
+		}
+		adsStr = setAdsString();
+		
+		if(!adsStr.isEmpty())
+		{
+			tagList.add("\"" + adsStr +"\"");
+		}
+		
+		String hazardArr[] = setAccessHazards();
+		if(hazardArr != null)
+		{
+			for(int i=0;i<hazardArr.length;i++)
+			{
+				tagList.add("\"" + hazardArr[i].toString() +"\"");
+			}
+		}
+		for(final String codeObj:centuryDo){
+			tagList.add("\"" +CENTURYSKILLS+" : "+codeObj+"\"");
+		}
+		for(final String codeObj:standardsDo){
+			tagList.add("\"" +standardsDefaultText.getText()+" : "+codeObj+"\"");
+		}
+		
+		if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
+		{
+			tagList.add("\"" +mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText() +"\"");
+		}
+		
+		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			tagList.add("\"" +"Mobile Friendly"+" : "+mobileYes.getText() +"\"");
+		}
+		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			tagList.add("\"" +"Mobile Friendly"+" : "+mobileNo.getText() +"\"");
+		}
+		
+		deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
 	}
 	/**
 	 * 
@@ -1822,23 +1534,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 *
 	 */
-	public void addTagsServiceRequest(final String frameTagsStr,final String resourceId){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void addTagsServiceRequest(String frameTagsStr, String resourceId){
+		
+		AppClientFactory.getInjector().getResourceService().addTagsToResource(resourceId, frameTagsStr, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
 			@Override
-			public void onSuccess() {
-				
-				AppClientFactory.getInjector().getResourceService().addTagsToResource(resourceId, frameTagsStr, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
-					@Override
-					public void onSuccess(List<ResourceTagsDo> result) {
-					//	bindObjectsToUI(result);
-						closeFunction();
-						getAddedResourceTags();
-					}
-				});
-			
+			public void onSuccess(List<ResourceTagsDo> result) {
+			//	bindObjectsToUI(result);
+				closeFunction();
+				getAddedResourceTags();
 			}
 		});
+	
 	}
 	/**
 	 * 
@@ -1860,19 +1566,14 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 *
 	 */
-	public void deleteTagsServiceRequest(final String frameTagsStr, final String addingNewTags)
+	public void deleteTagsServiceRequest(String frameTagsStr, final String addingNewTags)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+		AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(resourceId, frameTagsStr, new SimpleAsyncCallback<Void>() {
 			
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(resourceId, frameTagsStr, new SimpleAsyncCallback<Void>() {
-					
-					@Override
-					public void onSuccess(Void result) {
-						addTagsServiceRequest(addingNewTags.toString(), resourceId);
-					}
-				});
+			public void onSuccess(Void result) {
+				addTagsServiceRequest(addingNewTags.toString(), resourceId);
+				//getAddedResourceTags();
 			}
 		});
 	}
@@ -1895,18 +1596,12 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 *
 	 */
-	public void getTagsServiceRequest(final String resourceId)
+	public void getTagsServiceRequest(String resourceId)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+		AppClientFactory.getInjector().getResourceService().getTagsToResource(resourceId, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getResourceService().getTagsToResource(resourceId, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
-					@Override
-					public void onSuccess(List<ResourceTagsDo> result) {
-						bindObjectsToUI(result);
-					}
-				});
+			public void onSuccess(List<ResourceTagsDo> result) {
+				bindObjectsToUI(result);
 			}
 		});
 	}
@@ -1929,54 +1624,48 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 *
 	 */
-	public void bindObjectsToUI(final List<ResourceTagsDo> resultResourceTags)
+	public void bindObjectsToUI(List<ResourceTagsDo> resultResourceTags)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				tagListGlobal.clear();
-				standardsDo.clear();
-				centuryDo.clear();
-				centuryPanel.clear();
-				for(int objVal=0;objVal<resultResourceTags.size();objVal++)
-				{
-					tagListGlobal.add("\""+resultResourceTags.get(objVal).getLabel()+"\"");
-					if(resultResourceTags.get(objVal).getLabel().contains(headerEducationalUse.getText()))
-					{
-						setEducationalObjectVal(resultResourceTags.get(objVal).getLabel());
-					}
-					if(resultResourceTags.get(objVal).getLabel().contains(lexileHeader.getText()))
-					{
-						setLexileObjectVal(resultResourceTags.get(objVal).getLabel());
-					}
-					if(resultResourceTags.get(objVal).getLabel().contains(AdsHeader.getText()))
-					{
-						setAdsObjectVal(resultResourceTags.get(objVal).getLabel());
-					}
-					if(resultResourceTags.get(objVal).getLabel().contains(accessHazard.getText()))
-					{
-						setAccessHazardObjectVal(resultResourceTags.get(objVal).getLabel());
-					}
-					if(resultResourceTags.get(objVal).getLabel().contains(standardsDefaultText.getText()))
-					{
-						setStandardObjectVal(resultResourceTags.get(objVal).getLabel());
-					}
-					if(resultResourceTags.get(objVal).getLabel().contains(CENTURYSKILLS))
-					{
-						setCenturyObjectVal(resultResourceTags.get(objVal).getLabel(),objVal);
-					}
-					if(resultResourceTags.get(objVal).getLabel().contains(mediaLabel.getText()))
-					{
-						setMediaFeatureObjectVal(resultResourceTags.get(objVal).getLabel());
-					}
-					if(resultResourceTags.get(objVal).getLabel().contains("Mobile Friendly"))
-					{
-						setMobileFriendlyObjectVal(resultResourceTags.get(objVal).getLabel());
-					}
-				}
+		tagListGlobal.clear();
+		standardsDo.clear();
+		centuryDo.clear();
+		centuryPanel.clear();
+		for(int objVal=0;objVal<resultResourceTags.size();objVal++)
+		{
+			tagListGlobal.add("\""+resultResourceTags.get(objVal).getLabel()+"\"");
+			if(resultResourceTags.get(objVal).getLabel().contains(headerEducationalUse.getText()))
+			{
+				setEducationalObjectVal(resultResourceTags.get(objVal).getLabel());
 			}
-		});
+			if(resultResourceTags.get(objVal).getLabel().contains(lexileHeader.getText()))
+			{
+				setLexileObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(AdsHeader.getText()))
+			{
+				setAdsObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(accessHazard.getText()))
+			{
+				setAccessHazardObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(standardsDefaultText.getText()))
+			{
+				setStandardObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(CENTURYSKILLS))
+			{
+				setCenturyObjectVal(resultResourceTags.get(objVal).getLabel(),objVal);
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(mediaLabel.getText()))
+			{
+				setMediaFeatureObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains("Mobile Friendly"))
+			{
+				setMobileFriendlyObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+		}
 	}
 	/**
 	 * 
@@ -1997,24 +1686,18 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 *
 	 */
-	public void setMobileFriendlyObjectVal(final String mobileFriendlyVal)
+	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(mobileFriendlyVal.contains(mobileYes.getText()))
-				{
-					mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-					mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
-				}
-				else if(mobileFriendlyVal.contains(mobileNo.getText()))
-				{
-					mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-					mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
-				}
-			}
-		});
+		if(mobileFriendlyVal.contains(mobileYes.getText()))
+		{
+			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		}
+		else if(mobileFriendlyVal.contains(mobileNo.getText()))
+		{
+			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		}
 	}
 	/**
 	 * 
@@ -2035,18 +1718,13 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 *
 	 */
-	public void setMediaFeatureObjectVal(final String mediaFeatureVal)
+	public void setMediaFeatureObjectVal(String mediaFeatureVal)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(mediaFeatureVal != null){
-					String mediaFeatureValConcat = mediaFeatureVal.replace(mediaLabel.getText()+" : ", "");
-					lblMediaPlaceHolder.setText(mediaFeatureValConcat);
-				}
-			}
-		});
+		if(mediaFeatureVal != null)
+		{
+			mediaFeatureVal = mediaFeatureVal.replace(mediaLabel.getText()+" : ", "");
+			lblMediaPlaceHolder.setText(mediaFeatureVal);
+		}
 	}
 	/**
 	 * 
@@ -2062,15 +1740,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void setCenturyObjectVal(final String standardStr,final int keyVal){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				String[] standardArray=standardStr.split(":");
-				addCentury(standardArray[1], String.valueOf(keyVal));
-			}
-		});
+	public void setCenturyObjectVal(String standardStr,int keyVal){
+		String[] standardArray=standardStr.split(":");
+		addCentury(standardArray[1], String.valueOf(keyVal));
 	}
 	/**
 	 * @function setStandardObjectVal 
@@ -2085,16 +1757,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void setStandardObjectVal(final String standardStr)
+	public void setStandardObjectVal(String standardStr)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				String[] standardArray=standardStr.split(":");
-				addStandard(standardArray[1], "0");
-			}
-		});
+		String[] standardArray=standardStr.split(":");
+		//standardsDo.add(standardArray[1]);
+		addStandard(standardArray[1], "0");
 	}
 	/**
 	 * 
@@ -2110,29 +1777,23 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void setAccessHazardObjectVal(final String accessHazardStr)
+	public void setAccessHazardObjectVal(String accessHazardStr)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				String[] stringArry=accessHazardStr.split(":");
-				if(stringArry.length!=0){
-					if(stringArry[1].trim().equalsIgnoreCase(flashingHazard.getText()))
-					{
-							flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-					}
-					if(stringArry[1].trim().equalsIgnoreCase(motionSimulationHazard.getText()))
-					{
-						motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-					}
-					if(stringArry[1].trim().equalsIgnoreCase(soundHazard.getText()))
-					{
-						soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-					}
-				}
+		String[] stringArry=accessHazardStr.split(":");
+		if(stringArry.length!=0){
+			if(stringArry[1].trim().equalsIgnoreCase(flashingHazard.getText()))
+			{
+					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
-		});
+			if(stringArry[1].trim().equalsIgnoreCase(motionSimulationHazard.getText()))
+			{
+				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(soundHazard.getText()))
+			{
+				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+		}
 	}
 	/**
 	 * @function setAdsObjectVal 
@@ -2147,26 +1808,20 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void setAdsObjectVal(final String adsStr)
+	public void setAdsObjectVal(String adsStr)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(adsStr.contains(noAds.getText()))
-				{
-					noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(adsStr.contains(modAds.getText()))
-				{
-					modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(adsStr.contains(aggreAds.getText()))
-				{
-					aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(adsStr.contains(noAds.getText()))
+		{
+			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(adsStr.contains(modAds.getText()))
+		{
+			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(adsStr.contains(aggreAds.getText()))
+		{
+			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	/**
 	 * @function setLexileObjectVal 
@@ -2181,73 +1836,66 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void setLexileObjectVal(final String lexileStr)
+	public void setLexileObjectVal(String lexileStr)
 	{
-		
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(lexileStr.contains(kindergarden.getText()))
-				{
-					kindergarden.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level1.getText()))
-				{
-					String[] stringArry=lexileStr.split(":");
-					if(stringArry[1].trim().equalsIgnoreCase(i18n.GL_GRR_NUMERIC_ONE())){
-						level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-					}
-				}
-				if(lexileStr.contains(level2.getText()))
-				{
-					String[] stringArry=lexileStr.split(":");
-					if(stringArry[1].trim().equalsIgnoreCase(i18n.GL_GRR_NUMERIC_TWO())){
-						level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-					}
-				}
-				if(lexileStr.contains(level3.getText()))
-				{
-					level3.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level4.getText()))
-				{
-					level4.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level5.getText()))
-				{
-					level5.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level6.getText()))
-				{
-					level6.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level7.getText()))
-				{
-					level7.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level8.getText()))
-				{
-					level8.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level9.getText()))
-				{
-					level9.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level10.getText()))
-				{
-					level10.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level11.getText()))
-				{
-					level11.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				if(lexileStr.contains(level12.getText()))
-				{
-					level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
+		if(lexileStr.contains(kindergarden.getText()))
+		{
+			kindergarden.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level1.getText()))
+		{
+			String[] stringArry=lexileStr.split(":");
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL_GRR_NUMERIC_ONE())){
+				level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 			}
-		});
+		}
+		if(lexileStr.contains(level2.getText()))
+		{
+			String[] stringArry=lexileStr.split(":");
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL_GRR_NUMERIC_TWO())){
+				level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			}
+		}
+		if(lexileStr.contains(level3.getText()))
+		{
+			level3.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level4.getText()))
+		{
+			level4.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level5.getText()))
+		{
+			level5.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level6.getText()))
+		{
+			level6.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level7.getText()))
+		{
+			level7.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level8.getText()))
+		{
+			level8.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level9.getText()))
+		{
+			level9.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level10.getText()))
+		{
+			level10.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level11.getText()))
+		{
+			level11.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(lexileStr.contains(level12.getText()))
+		{
+			level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	/**
 	 * @function setEducationalObjectVal 
@@ -2263,74 +1911,68 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void setEducationalObjectVal(final String educationalStr)
+	public void setEducationalObjectVal(String educationalStr)
 	{
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(educationalStr.contains(activity.getText()))
-				{
-					activity.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(handout.getText()))
-				{
-					handout.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());	
-				}
-				else if(educationalStr .contains(homework.getText()))
-				{
-					homework.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if( educationalStr.contains(game.getText()))
-				{
-					game.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(presentation.getText()))
-				{
-					presentation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(refMaterial.getText()))
-				{
-					refMaterial.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(quiz.getText()))
-				{
-					quiz.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(currPlan.getText()))
-				{
-					currPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(lessonPlan.getText()))
-				{
-					lessonPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(unitPlan.getText()))
-				{
-					unitPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(projectPlan.getText()))
-				{
-					projectPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(reading.getText()))
-				{
-					reading.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(textbook.getText()))
-				{
-					textbook.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(article.getText()))
-				{
-					article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-				else if(educationalStr.contains(book.getText()))
-				{
-					book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-				}
-			}
-		});
+		if(educationalStr.contains(activity.getText()))
+		{
+			activity.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(handout.getText()))
+		{
+			handout.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());	
+		}
+		else if(educationalStr .contains(homework.getText()))
+		{
+			homework.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if( educationalStr.contains(game.getText()))
+		{
+			game.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(presentation.getText()))
+		{
+			presentation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(refMaterial.getText()))
+		{
+			refMaterial.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(quiz.getText()))
+		{
+			quiz.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(currPlan.getText()))
+		{
+			currPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(lessonPlan.getText()))
+		{
+			lessonPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(unitPlan.getText()))
+		{
+			unitPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(projectPlan.getText()))
+		{
+			projectPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(reading.getText()))
+		{
+			reading.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(textbook.getText()))
+		{
+			textbook.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(article.getText()))
+		{
+			article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		else if(educationalStr.contains(book.getText()))
+		{
+			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
 	}
 	/**
 	 * @function setAdsString 

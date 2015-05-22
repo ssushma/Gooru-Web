@@ -28,7 +28,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
@@ -37,7 +36,6 @@ import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -102,27 +100,22 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 			
 			@Override
 			public void onError(ErrorEvent event) {
-				GWT.runAsync(new SimpleRunAsyncCallback() {
+				if (subjectName.equalsIgnoreCase(SCIENCE_LBL)){
+					//courseImage.setUrl("images/course/"+SCIENCE_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+SCIENCE_LBL.replaceAll(" ", "_")+"-default-course.png");
+				}else if (subjectName.equalsIgnoreCase(MATH_LBL)){
+					//courseImage.setUrl("images/course/"+MATH_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+MATH_LBL.replaceAll(" ", "_")+"-default-course.png");
+				}else if (subjectName.equalsIgnoreCase(SOCIAL_LBL)){
+					//courseImage.setUrl("images/course/"+SOCIAL_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+SOCIAL_LBL.replaceAll(" ", "_")+"-default-course.png");
+				}else if (subjectName.equalsIgnoreCase(ELA_LBL)){
+					//courseImage.setUrl("images/course/"+ELA_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+ELA_LBL.replaceAll(" ", "_")+"-default-course.png");
+				}else{
+					courseImage.setUrl("images/course/default-course.png");
+				}
 					
-					@Override
-					public void onSuccess() {
-						if (subjectName.equalsIgnoreCase(SCIENCE_LBL)){
-							//courseImage.setUrl("images/course/"+SCIENCE_LBL.replaceAll(" ", "_")+"-default-course.gif");
-							courseImage.setUrl("images/course/"+SCIENCE_LBL.replaceAll(" ", "_")+"-default-course.png");
-						}else if (subjectName.equalsIgnoreCase(MATH_LBL)){
-							//courseImage.setUrl("images/course/"+MATH_LBL.replaceAll(" ", "_")+"-default-course.gif");
-							courseImage.setUrl("images/course/"+MATH_LBL.replaceAll(" ", "_")+"-default-course.png");
-						}else if (subjectName.equalsIgnoreCase(SOCIAL_LBL)){
-							//courseImage.setUrl("images/course/"+SOCIAL_LBL.replaceAll(" ", "_")+"-default-course.gif");
-							courseImage.setUrl("images/course/"+SOCIAL_LBL.replaceAll(" ", "_")+"-default-course.png");
-						}else if (subjectName.equalsIgnoreCase(ELA_LBL)){
-							//courseImage.setUrl("images/course/"+ELA_LBL.replaceAll(" ", "_")+"-default-course.gif");
-							courseImage.setUrl("images/course/"+ELA_LBL.replaceAll(" ", "_")+"-default-course.png");
-						}else{
-							courseImage.setUrl("images/course/default-course.png");
-						}
-					}
-				});
 			}
 		});
 		
@@ -157,19 +150,13 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 	 *
 	 *
 	 */
-	private void setCodeDo(final int codeId) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				profileCodeDoSet = new HashSet<ProfileCodeDo>();
-				ProfileCodeDo profileCodeDo = new ProfileCodeDo();
-				codeDo = new CodeDo();
-				codeDo.setCodeId(codeId);
-				profileCodeDo.setCode(codeDo);
-				profileCodeDoSet.add(profileCodeDo);
-			}
-		});
+	private void setCodeDo(int codeId) {
+		profileCodeDoSet = new HashSet<ProfileCodeDo>();
+		ProfileCodeDo profileCodeDo = new ProfileCodeDo();
+		codeDo = new CodeDo();
+		codeDo.setCodeId(codeId);
+		profileCodeDo.setCode(codeDo);
+		profileCodeDoSet.add(profileCodeDo);
 	}
 	
 	@Override
@@ -210,16 +197,10 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 	 *
 	 *
 	 */
-	public void addCourse(final Set<ProfileCodeDo> profileCodeDoSet) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void addCourse(Set<ProfileCodeDo> profileCodeDoSet) {
+		AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDoSet, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDoSet, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			public void onSuccess(Void result) {
 			}
 		});
 	}
@@ -242,16 +223,10 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 	 *
 	 *
 	 */
-	public void deleteCourse(final CodeDo codeDo) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void deleteCourse(CodeDo codeDo) {
+		AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			public void onSuccess(Void result) {
 			}
 		});
 	}

@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.authentication.uc.SignUpDontWorryView;
@@ -122,13 +121,22 @@ public class SignUpCompleteProfileView extends
 	public void displayView() {
 		appPopUp = new AppPopUp(i18n.GL0697());
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
+		/*appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
+				.registerPopupStyle());
+*/
 		appPopUp.setGlassEnabled(true);
 		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+		//appPopUp.setAutoHideOnHistoryEventsEnabled(false);
+
+		//appPopUp.getElement().getStyle().setZIndex(99);
 		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-				
+		//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
+	//	appPopUp.getElement().getStyle().setBackgroundColor("transparent");
+		
+		
 		setUiAndIds();
 		appPopUp.center();
 	}
@@ -295,20 +303,15 @@ public class SignUpCompleteProfileView extends
 
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+		MixpanelUtil.close_signUp();
+		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			
-			@Override
-			public void onSuccess() {
-				MixpanelUtil.close_signUp();
-				Window.enableScrolling(true);
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-					
-				}else{
-					Window.enableScrolling(true);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				}
-			}
-		});
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
+		
 	}
 
 	@UiHandler("lblchangePassword")
@@ -323,36 +326,25 @@ public class SignUpCompleteProfileView extends
 
 	@UiHandler("btnSubmit")
 	public void onClickbtnSubmit(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+		if (validateUserInput()) {
+			MixpanelUtil.Registration_turns13_submit_profile();
+			appPopUp.hide();
+			lblUpdating.setText(i18n.GL1138());
+			lblUpdating.setVisible(true);
+			btnSubmit.setVisible(false);
+			getUiHandlers().updateProfile(txtFirstName.getText(),
+					txtlastName.getText(), txtAreaAbout.getText(),txtConfirmPassword.getText()
+			);
 			
-			@Override
-			public void onSuccess() {
-				if (validateUserInput()) {
-					MixpanelUtil.Registration_turns13_submit_profile();
-					appPopUp.hide();
-					lblUpdating.setText(i18n.GL1138());
-					lblUpdating.setVisible(true);
-					btnSubmit.setVisible(false);
-					getUiHandlers().updateProfile(txtFirstName.getText(),
-							txtlastName.getText(), txtAreaAbout.getText(),txtConfirmPassword.getText()
-					);
-					
-				}
-			}
-		});
+		}
 	}
 
 	@UiHandler("btnUpdateProfileLater")
 	public void onClickbtnUpdateProfileLater(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				appPopUp.hide();
-				SignUpDontWorryView signUpDontWorryView = new SignUpDontWorryView();
-				signUpDontWorryView.show();
-			}
-		});
+		appPopUp.hide();
+		SignUpDontWorryView signUpDontWorryView = new SignUpDontWorryView();
+		signUpDontWorryView.show();
+		
 	}
 
 	@Override
@@ -362,61 +354,73 @@ public class SignUpCompleteProfileView extends
 
 	@Override
 	public void center() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void hide() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setAutoHideOnNavigationEventEnabled(boolean autoHide) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setCloseHandler(PopupViewCloseHandler popupViewCloseHandler) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setPosition(int left, int top) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void show() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void addToSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void removeFromSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void reset() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoad() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUnload() {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -553,27 +557,21 @@ public class SignUpCompleteProfileView extends
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
-		public void onKeyUp(final KeyUpEvent event) {
-			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
-				@Override
-				public void onSuccess() {
-					passwordValidUc.setVisible(false);
-					if (event.getSource() == txtFirstName) {
-						txtFirstName.removeStyleName(res.css().errorMsgDisplay());
-						firstNameValidUc.setVisible(false);
-					} else if (event.getSource() == txtlastName) {
-						txtlastName.removeStyleName(res.css().errorMsgDisplay());
-						lastNameValidUc.setVisible(false);
-					} else if (event.getSource() == txtPassword) {
-						txtPassword.removeStyleName(res.css().errorMsgDisplay());
-						passwordValidUc.setVisible(false);
-					} else if (event.getSource() == txtConfirmPassword) {
-						txtConfirmPassword.removeStyleName(res.css().errorMsgDisplay());
-						passwordValidUc.setVisible(false);
-					} 
-				}
-			});
+		public void onKeyUp(KeyUpEvent event) {
+			passwordValidUc.setVisible(false);
+			if (event.getSource() == txtFirstName) {
+				txtFirstName.removeStyleName(res.css().errorMsgDisplay());
+				firstNameValidUc.setVisible(false);
+			} else if (event.getSource() == txtlastName) {
+				txtlastName.removeStyleName(res.css().errorMsgDisplay());
+				lastNameValidUc.setVisible(false);
+			} else if (event.getSource() == txtPassword) {
+				txtPassword.removeStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setVisible(false);
+			} else if (event.getSource() == txtConfirmPassword) {
+				txtConfirmPassword.removeStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setVisible(false);
+			} 
 		}
 
 	}

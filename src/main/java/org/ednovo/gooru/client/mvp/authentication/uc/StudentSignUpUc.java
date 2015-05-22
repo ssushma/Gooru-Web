@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -182,15 +181,9 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	}
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				hide();
-				LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(i18n.GL1394(),lblParentEmailId.getText(),txtChooseUsername.getValue(),dateBoxUc.getDateBox().getText());
-				leaveRegistrationPopUpUc.show();
-			}
-		});
+		this.hide();
+		LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(i18n.GL1394(),lblParentEmailId.getText(),txtChooseUsername.getValue(),dateBoxUc.getDateBox().getText());
+		leaveRegistrationPopUpUc.show();
 	}
 	/**
 	 * 
@@ -384,25 +377,19 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	
 	@UiHandler("ancTermsAndPrivacy")
 	public void onClickTrems(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+		Window.enableScrolling(false);
+		termsOfUse = new TermsOfUse() {
 			@Override
-			public void onSuccess() {
+			public void openParentPopup() {
 				Window.enableScrolling(false);
-				termsOfUse = new TermsOfUse() {
-					@Override
-					public void openParentPopup() {
-						Window.enableScrolling(false);
-						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
-					}
-				};
-				
-				termsOfUse.show();
-				termsOfUse.center();
-				termsOfUse.getElement().getStyle().setZIndex(999);
-			
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
 			}
-		});
+		};
+		
+		termsOfUse.show();
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999);
+	
 	}
 	
 	/**
@@ -413,25 +400,19 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	
 	@UiHandler("ancPrivacy")
 	public void onClickPrivacy(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+		Window.enableScrolling(false);
+		termsAndPolicyVc = new TermsAndPolicyVc(false) {
 			@Override
-			public void onSuccess() {
+			public void openParentPopup() {
 				Window.enableScrolling(false);
-				termsAndPolicyVc = new TermsAndPolicyVc(false) {
-					@Override
-					public void openParentPopup() {
-						Window.enableScrolling(false);
-						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
-					}
-				};
-				
-				termsAndPolicyVc.show();
-				termsAndPolicyVc.center();
-				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
-			
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
 			}
-		});
+		};
+		
+		termsAndPolicyVc.show();
+		termsAndPolicyVc.center();
+		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
+	
 	}
 	
 	/**
@@ -442,24 +423,18 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	
 	@UiHandler("ancCopyRight")
 	public void onClickCopyright(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+		Window.enableScrolling(false);
+		copyRightPolicy = new  CopyRightPolicyVc() {
 			@Override
-			public void onSuccess() {
+			public void openParentPopup() {
 				Window.enableScrolling(false);
-				copyRightPolicy = new  CopyRightPolicyVc() {
-					@Override
-					public void openParentPopup() {
-						Window.enableScrolling(false);
-						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
-					}
-				};
-				
-				copyRightPolicy.show();
-				copyRightPolicy.center();
-				copyRightPolicy.getElement().getStyle().setZIndex(999);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
 			}
-		});
+		};
+		
+		copyRightPolicy.show();
+		copyRightPolicy.center();
+		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}
 	/**
 	 * 
@@ -601,20 +576,14 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	}
 	@UiHandler("btnSignUp")
 	public void onClickSignUp(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				lblPleaseWait.setVisible(true);
-				btnSignUp.setVisible(false);
-				if (validateUserInput()){
-					checkUserNameAvailability();
-				}else{
-					lblPleaseWait.setVisible(false);
-					btnSignUp.setVisible(true);
-				}
-			}
-		});
+		lblPleaseWait.setVisible(true);
+		btnSignUp.setVisible(false);
+		if (validateUserInput()){
+			checkUserNameAvailability();
+		}else{
+			lblPleaseWait.setVisible(false);
+			btnSignUp.setVisible(true);
+		}
 	}
 	/**
 	 * 
@@ -636,49 +605,43 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	 *
 	 */
 	public void checkUserNameAvailability() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				MixpanelUtil.sign_up_Child_registration();
-				String userRole = "student";
+		MixpanelUtil.sign_up_Child_registration();
+		String userRole = "student";
 
-				final String userName = txtChooseUsername.getText();
-				String emilId = lblParentEmailId.getText();
-				final String password = StringUtil.getCryptoData(txtChoosePassword.getText().trim()); 
-				String confirmPassword = txtConfirmPassword.getText().trim();
-				Map<String, String> registrationDetailsParams = new HashMap<String, String>();
-				registrationDetailsParams.put(USER_NAME, userName);
-				registrationDetailsParams.put(EMAIL_ID, emilId);
-				registrationDetailsParams.put(ORGANIZATION_CODE, GOORU);
-				registrationDetailsParams.put(FIRST_NAME, "Child");
-				registrationDetailsParams.put(LAST_NAME, "User");
-				
-				registrationDetailsParams.put(PASSWORD, password); 
-				registrationDetailsParams.put("gooruBaseUrl", homeEndPoint + "#discover");
-				registrationDetailsParams.put("role", userRole);
-				registrationDetailsParams.put("dateOfBirth", dateBoxUc.getDateBox().getText());
-				
-				registrationDetailsParams.put("accountType", "Child");
-				registrationDetailsParams.put("userParentId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
-				
-				AppClientFactory.getInjector().getUserService().createUser(registrationDetailsParams,CHILD_REG,new SimpleAsyncCallback<UserDo>() {
-						@Override
-						public void onSuccess(UserDo result) {
-							if (result.getGooruUId() != null && !result.getGooruUId().equalsIgnoreCase("")) {
-								AppClientFactory.getInjector().getAppService().v2Signin(userName,password,new SimpleAsyncCallback<UserDo>() {
-									@Override
-									public void onSuccess(UserDo result) {
-										hide();
-										AppClientFactory.setLoggedInUser(result);
-										AppClientFactory.fireEvent(new SetHeaderEvent(result));
-										SignUpGradeCourseView gradeCourseView = new SignUpGradeCourseView(result);
-									}
-								});
+		final String userName = txtChooseUsername.getText();
+		String emilId = lblParentEmailId.getText();
+		final String password = StringUtil.getCryptoData(txtChoosePassword.getText().trim()); 
+		String confirmPassword = txtConfirmPassword.getText().trim();
+		Map<String, String> registrationDetailsParams = new HashMap<String, String>();
+		registrationDetailsParams.put(USER_NAME, userName);
+		registrationDetailsParams.put(EMAIL_ID, emilId);
+		registrationDetailsParams.put(ORGANIZATION_CODE, GOORU);
+		registrationDetailsParams.put(FIRST_NAME, "Child");
+		registrationDetailsParams.put(LAST_NAME, "User");
+		
+		registrationDetailsParams.put(PASSWORD, password); 
+		registrationDetailsParams.put("gooruBaseUrl", homeEndPoint + "#discover");
+		registrationDetailsParams.put("role", userRole);
+		registrationDetailsParams.put("dateOfBirth", dateBoxUc.getDateBox().getText());
+		
+		registrationDetailsParams.put("accountType", "Child");
+		registrationDetailsParams.put("userParentId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
+		
+		AppClientFactory.getInjector().getUserService().createUser(registrationDetailsParams,CHILD_REG,new SimpleAsyncCallback<UserDo>() {
+				@Override
+				public void onSuccess(UserDo result) {
+					if (result.getGooruUId() != null && !result.getGooruUId().equalsIgnoreCase("")) {
+						AppClientFactory.getInjector().getAppService().v2Signin(userName,password,new SimpleAsyncCallback<UserDo>() {
+							@Override
+							public void onSuccess(UserDo result) {
+								hide();
+								AppClientFactory.setLoggedInUser(result);
+								AppClientFactory.fireEvent(new SetHeaderEvent(result));
+								SignUpGradeCourseView gradeCourseView = new SignUpGradeCourseView(result);
 							}
-						}
-					});
-			}
-		});
+						});
+					}
+				}
+			});
 	}
 }

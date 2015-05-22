@@ -149,7 +149,13 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		setWidget(uiBinder.createAndBindUi(this));
 		ancNewClasspage.getElement().setId("lnkNewClasspage");
 
-		
+		SetSelectedClasspageListHandler setSelectedHandler = new SetSelectedClasspageListHandler() {
+			@Override
+			public void setClasspageTitle(String classpageId) {
+				setClasspageSetSelected(classpageId);
+			}
+		};
+
 		RefreshClasspageListHandler refreshHandler = new RefreshClasspageListHandler() {
 
 			@Override
@@ -168,6 +174,8 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		};
 
 		AppClientFactory.getEventBus().addHandler(
+				SetSelectedClasspageListEvent.TYPE, setSelectedHandler);
+		AppClientFactory.getEventBus().addHandler(
 				RefreshClasspageListEvent.TYPE, refreshHandler);
 		AppClientFactory.getEventBus().addHandler(
 				UpdateClasspageTitleEvent.TYPE, updateTitleHandler);
@@ -177,6 +185,35 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		mainContainer.getElement().setId("headerMainPanel");
 	}
 
+	/**
+	 * 
+	 * @function updateTitle
+	 * 
+	 * @created_date : Aug 21, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param classpageTitle
+	 * 
+	 * @return : void
+	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+
+	private void updateTitle(String classpageId, String classpageTitle) {
+		// Update the ClasspageObject inside classpageList object.
+
+		CollectionDo classpageDo = classpageList.get(classpageId);
+		classpageDo.setTitle(classpageTitle);
+		classpageList.put(classpageId, classpageDo);
+
+	}
 
 	/**
 	 * 
@@ -510,19 +547,19 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			
 			@Override
 			public void onSuccess() {
-				AppClientFactory
-						.getInjector()
-						.getClasspageService()
-						.v2GetAllClass(String.valueOf(limit), offSet,
-								new SimpleAsyncCallback<ClasspageListDo>() {
-									@Override
-									public void onSuccess(ClasspageListDo result) {
-										classpageListDo = result;
-										listClasspages(result, isClasspageRefreshed,
-												deletedClasspageId);
-									}
-								});
-			}
+		AppClientFactory
+				.getInjector()
+				.getClasspageService()
+				.v2GetAllClass(String.valueOf(limit), offSet,
+						new SimpleAsyncCallback<ClasspageListDo>() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								classpageListDo = result;
+								listClasspages(result, isClasspageRefreshed,
+										deletedClasspageId);
+							}
+						});
+	}
 		});
 	}
 
@@ -570,6 +607,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 								.getSearchResults().get(i));
 						listClasspage.add(classpageId);
 					}
+					generateClasspageList();
 				} else {
 					// Set no classpage info, if there are not classpages.
 					if (toClear) {
@@ -591,7 +629,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		});
 	}
 
-	
+	/**
+	 * 
+	 * @function generateClasspageList
+	 * 
+	 * @created_date : Aug 18, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) :
+	 * 
+	 * @return : void
+	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	public void generateClasspageList() {
+	}
 
 	/**
 	 * 
@@ -669,6 +727,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 																			AssignmentDo result) {
 																		// Assig to
 																		// classpage.
+																		generateClasspageList();
 																		OpenClasspageEdit(classpageId);
 																		newPopup.ClosePopup();
 																	}
@@ -778,6 +837,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	}
 	
 
+	/**
+	 * 
+	 * @function setClasspageSetSelected
+	 * 
+	 * @created_date : Aug 21, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * 
+	 * @return : void
+	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	private void setClasspageSetSelected(String classpageId) {
+	}
 
 	/**
 	 * 
@@ -823,6 +903,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 						nextClasspageId = listClasspage.get(0);
 					}
 				}
+				generateClasspageList();
 				if (nextClasspageId != null) {
 					OpenClasspageEdit(nextClasspageId);
 				} else {

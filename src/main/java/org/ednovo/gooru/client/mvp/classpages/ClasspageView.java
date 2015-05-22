@@ -76,6 +76,9 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 	
 	NewClasspagePopupView newPopup=null;
 	
+	
+	@UiField FlowPanel mainFlowPanel;
+
 	@UiField Button btnNewClasspage;
 	
 	@UiField HTMLPanel classpageListPanel,classPageLbl,teachLbl,assignLbl,createLbl;
@@ -129,7 +132,7 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 
 	private static ClasspageViewUiBinder uiBinder = GWT.create(ClasspageViewUiBinder.class);
 	
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	interface ClasspageViewUiBinder extends UiBinder<Widget, ClasspageView>{
 		
@@ -249,11 +252,11 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 	public void OnClickNewClasspage(ClickEvent event){
 		MixpanelUtil.Click_Add_NewClasspage();
 		newPopup = new NewClasspagePopupView() {
-
+			
 			@Override
 			public void createNewClasspage(String title) {
 				MixpanelUtil.Create_NewClasspage();
-				CollectionDo collectionDo = new CollectionDo();
+				CollectionDo collectionDo =new CollectionDo();
 				collectionDo.setTitle(title);
 				collectionDo.setCollectionType("classpage");
 				getUiHandlers().createClasspage(collectionDo);

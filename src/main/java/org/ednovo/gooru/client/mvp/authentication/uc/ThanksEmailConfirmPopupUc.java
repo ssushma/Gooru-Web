@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -215,26 +214,20 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
 	 *
 	 */
 	public void closePopUp(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				Window.enableScrolling(true);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				
-				Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
-				params.remove("gooruuid");
-				params.remove("dob");
-				params.remove("callback");
-				params.remove("sessionid");
-				params.remove("type");
-				
-				AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params);
-				
-				hide();
-				appPopUp.hide();
-			}
-		});
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		
+		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+		params.remove("gooruuid");
+		params.remove("dob");
+		params.remove("callback");
+		params.remove("sessionid");
+		params.remove("type");
+		
+		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params);
+		
+		hide();
+		appPopUp.hide();
 	}
 
 }

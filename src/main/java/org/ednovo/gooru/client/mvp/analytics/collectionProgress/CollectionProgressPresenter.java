@@ -25,14 +25,12 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -57,17 +55,13 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressUiHandlers#setCollectionProgressData(java.lang.String, java.lang.String, boolean, java.lang.String)
 	 */
 	@Override
-	public void setCollectionProgressData(final String collectionId,final String pathwayId,final boolean isCollectionView,final String collectionTitle) {
+	public void setCollectionProgressData(String collectionId,String pathwayId,final boolean isCollectionView,final String collectionTitle) {
 		this.collectionId=collectionId;
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				getView().getFrame().setUrl("");
-				getView().getLoadingImage().setVisible(true);
-				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
-							
+		getView().getFrame().setUrl("");
+		getView().getLoadingImage().setVisible(true);
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
+					
 					@Override
 					public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
 						getView().setData(result,isCollectionView,collectionTitle);
@@ -78,8 +72,6 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 						
 					}
 				});
-			}
-		});
 	}
 
 	/**
@@ -99,26 +91,20 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	}
 
 	@Override
-	public void exportCollectionProgress(final String collectionId,final String classpageId,final String timeZone) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+	public void exportCollectionProgress(String collectionId,String classpageId, String timeZone) {
+		String classpage=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		this.analyticService.exportProgress(this.collectionId, classpage, timeZone, new AsyncCallback<String>() {
 			
 			@Override
-			public void onSuccess() {
-				String classpage=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				analyticService.exportProgress(collectionId, classpage, timeZone, new AsyncCallback<String>() {
-					
-					@Override
-					public void onSuccess(String result) {
-						if(!StringUtil.isEmpty(result)){
-							getView().getFrame().setUrl(result);
-						}
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						
-					}
-				});
+			public void onSuccess(String result) {
+				if(!StringUtil.isEmpty(result)){
+					getView().getFrame().setUrl(result);
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
 			}
 		});
 	}

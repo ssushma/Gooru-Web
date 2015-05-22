@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
@@ -62,7 +61,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * 
@@ -221,18 +219,12 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	public void senEmail(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-	        	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), ClientConstants.WELCOME, new SimpleAsyncCallback<Void>() {
-					@Override
-					public void onSuccess(Void result) {
+        	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), ClientConstants.WELCOME, new SimpleAsyncCallback<Void>() {
+				@Override
+				public void onSuccess(Void result) {
 
-					}
-				});
-	        }
-		});
+				}
+			});
 	}
 	
 	/**
@@ -255,18 +247,12 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	public void closeSignUpGradeCourseView() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
-				final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-				if(!AppClientFactory.isAnonymous() &&  loginType.equalsIgnoreCase("Credential")) {
-					senEmail();
-				}
-				OpenThanksPopup();
+			AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
+			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+			if(!AppClientFactory.isAnonymous() &&  loginType.equalsIgnoreCase("Credential")) {
+				senEmail();
 			}
-		});
+			OpenThanksPopup();
 	}
 	/**
 	 * 
@@ -288,29 +274,23 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void OpenThanksPopup(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+		this.hide();
+		
+		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 			@Override
-			public void onSuccess() {
-				hide();
-				
-				AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
-					@Override
-					public void onSuccess(UserDo newUser) {
-						UserDo user = AppClientFactory.getLoggedInUser();
-						user.setViewFlag(newUser.getViewFlag());
-						AppClientFactory.setLoggedInUser(user);
-					}
-				});
-				
-				ThanksPopupUc thanks = new ThanksPopupUc();
-				if (AppClientFactory.getLoggedInUser().getAccountTypeId() == null || AppClientFactory.getLoggedInUser().getAccountTypeId() == 2){
-					thanks.setAccountType("normal");
-				}
-				thanks.center();
-				thanks.show();
+			public void onSuccess(UserDo newUser) {
+				UserDo user = AppClientFactory.getLoggedInUser();
+				user.setViewFlag(newUser.getViewFlag());
+				AppClientFactory.setLoggedInUser(user);
 			}
 		});
+		
+		ThanksPopupUc thanks = new ThanksPopupUc();
+		if (AppClientFactory.getLoggedInUser().getAccountTypeId() == null || AppClientFactory.getLoggedInUser().getAccountTypeId() == 2){
+			thanks.setAccountType("normal");
+		}
+		thanks.center();
+		thanks.show();
 	}
 	
 	/**
@@ -333,26 +313,20 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void setRegisterGradeList() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				UlPanel ulPanel=new UlPanel();
-				ulPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().Grades());
-				LiPanel liPanel1=new LiPanel();
-				liPanel1.add(new SignupGradeLabel("Kindergarten", new ProfileDo()));
-				ulPanel.add(liPanel1);
-				for (int i = 1; i <= 12; i++) {
-					LiPanel liPanel=new LiPanel();
-					liPanel.add(new SignupGradeLabel(i + "", new ProfileDo()));
-					ulPanel.add(liPanel);
-				}
-				LiPanel liPanel3=new LiPanel();
-				liPanel3.add(new SignupGradeLabel("Higher Education",new ProfileDo()));
-				ulPanel.add(liPanel3);
-				registerGradeList.add(ulPanel);
-			}
-		});
+		UlPanel ulPanel=new UlPanel();
+		ulPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().Grades());
+		LiPanel liPanel1=new LiPanel();
+		liPanel1.add(new SignupGradeLabel("Kindergarten", new ProfileDo()));
+		ulPanel.add(liPanel1);
+		for (int i = 1; i <= 12; i++) {
+			LiPanel liPanel=new LiPanel();
+			liPanel.add(new SignupGradeLabel(i + "", new ProfileDo()));
+			ulPanel.add(liPanel);
+		}
+		LiPanel liPanel3=new LiPanel();
+		liPanel3.add(new SignupGradeLabel("Higher Education",new ProfileDo()));
+		ulPanel.add(liPanel3);
+		registerGradeList.add(ulPanel);
 	}
 
 	/**
@@ -375,25 +349,19 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void setRegisterCourseList() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				mathCourseLbl.setHTML("<span>"+MATH_LBL+"</span>");
-				scienceCourseLbl.setHTML("<span>"+SCIENCE_LBL+"</span>");
-				elaCourseLbl.setHTML("<span>"+ELA_LBL+"</span>");
-				socialCourseLbl.setHTML("<span>"+SOCIAL_LBL+"</span>");
+		mathCourseLbl.setHTML("<span>"+MATH_LBL+"</span>");
+		scienceCourseLbl.setHTML("<span>"+SCIENCE_LBL+"</span>");
+		elaCourseLbl.setHTML("<span>"+ELA_LBL+"</span>");
+		socialCourseLbl.setHTML("<span>"+SOCIAL_LBL+"</span>");
 
-				imgLoading.setVisible(true);
-				AppClientFactory.getInjector().getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
-					@Override
-					public void onSuccess(List<LibraryCodeDo> result) {
-						libraryDo = result;
-						if (libraryDo != null) {
-							setCourseData(libraryDo.get(0),libraryDo.get(0).getLabel());
-						}
-					}
-				});
+		imgLoading.setVisible(true);
+		AppClientFactory.getInjector().getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+			@Override
+			public void onSuccess(List<LibraryCodeDo> result) {
+				libraryDo = result;
+				if (libraryDo != null) {
+					setCourseData(libraryDo.get(0),libraryDo.get(0).getLabel());
+				}
 			}
 		});
 	}
@@ -418,67 +386,61 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 *
 	 */
-	private void setCourseData(final LibraryCodeDo libraryCodeDo, final String courseLabel) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				selectedCoureses.clear();
-				List<LibraryCodeDo> liCodeDo = libraryCodeDo.getNode();
-				for(int i = 0; i < liCodeDo.size(); i++) {
-					final int codeID=liCodeDo.get(i).getCodeId();
-					SignupCourseLabel signupCourseLabel = new SignupCourseLabel(liCodeDo.get(i).getCodeId(), liCodeDo.get(i).getLabel().trim(), new ProfileDo(), "images/course/"+courseLabel.trim().toLowerCase().replaceAll(" ", "_")+"/"+liCodeDo.get(i).getLabel().trim().replaceAll(" ", "_")+".png", courseLabel) {
-							@Override
-							public int selectCourseLabel(boolean isSelected) {
-									if(isSelected == true) {
-										if(selectedCourseCount<5) {
-											selectedCourseCount++;
-											ProfileCodeDo profileCodeDo = new ProfileCodeDo();
-											CodeDo codeDo = new CodeDo();
-											codeDo.setCodeId(codeID);
-											profileCodeDo.setCode(codeDo);
-											selectedCoureses.add(profileCodeDo);
-										}
-									} else {
-										selectedCourseCount--;
-									}
-								return selectedCourseCount;
+	private void setCourseData(LibraryCodeDo libraryCodeDo, String courseLabel) {
+		selectedCoureses.clear();
+		List<LibraryCodeDo> liCodeDo = libraryCodeDo.getNode();
+		for(int i = 0; i < liCodeDo.size(); i++) {
+			final int codeID=liCodeDo.get(i).getCodeId();
+			SignupCourseLabel signupCourseLabel = new SignupCourseLabel(liCodeDo.get(i).getCodeId(), liCodeDo.get(i).getLabel().trim(), new ProfileDo(), "images/course/"+courseLabel.trim().toLowerCase().replaceAll(" ", "_")+"/"+liCodeDo.get(i).getLabel().trim().replaceAll(" ", "_")+".png", courseLabel) {
+					@Override
+					public int selectCourseLabel(boolean isSelected) {
+							if(isSelected == true) {
+								if(selectedCourseCount<5) {
+									selectedCourseCount++;
+									ProfileCodeDo profileCodeDo = new ProfileCodeDo();
+									CodeDo codeDo = new CodeDo();
+									codeDo.setCodeId(codeID);
+									profileCodeDo.setCode(codeDo);
+									selectedCoureses.add(profileCodeDo);
+								}
+							} else {
+								selectedCourseCount--;
 							}
-
-							@Override
-							public void showErrorMessage(boolean value) {
-								lblErrorMessage.setVisible(value);
-							}
-
-							@Override
-							public int getCourseCount() {
-								return selectedCourseCount;
-							}
-					};
-					
-					if(courseLabel.equalsIgnoreCase(MATH_LBL)) {
-						mathCourseContainer.add(signupCourseLabel);
-					} else if(courseLabel.equalsIgnoreCase(SCIENCE_LBL)) {
-						scienceCourseContainer.add(signupCourseLabel);
-					} else if(courseLabel.equalsIgnoreCase(ELA_LBL)) {
-						elaCourseContainer.add(signupCourseLabel);
-					} else if(courseLabel.equalsIgnoreCase(SOCIAL_LBL)) {
-						socialCourseContainer.add(signupCourseLabel);
+						return selectedCourseCount;
 					}
-				}
-				imgLoading.setVisible(false);
-				if(courseLabel.equalsIgnoreCase(MATH_LBL)) {
-					courseContainer.add(mathCourseContainer);
-				} else if(courseLabel.equalsIgnoreCase(SCIENCE_LBL)) {
-					courseContainer.add(scienceCourseContainer);
-				} else if(courseLabel.equalsIgnoreCase(ELA_LBL)) {
-					courseContainer.add(elaCourseContainer);
-				} else if(courseLabel.equalsIgnoreCase(SOCIAL_LBL)) {
-					courseContainer.add(socialCourseContainer);
-				}
-						
+
+					@Override
+					public void showErrorMessage(boolean value) {
+						lblErrorMessage.setVisible(value);
+					}
+
+					@Override
+					public int getCourseCount() {
+						return selectedCourseCount;
+					}
+			};
+			
+			if(courseLabel.equalsIgnoreCase(MATH_LBL)) {
+				mathCourseContainer.add(signupCourseLabel);
+			} else if(courseLabel.equalsIgnoreCase(SCIENCE_LBL)) {
+				scienceCourseContainer.add(signupCourseLabel);
+			} else if(courseLabel.equalsIgnoreCase(ELA_LBL)) {
+				elaCourseContainer.add(signupCourseLabel);
+			} else if(courseLabel.equalsIgnoreCase(SOCIAL_LBL)) {
+				socialCourseContainer.add(signupCourseLabel);
 			}
-		});
+		}
+		imgLoading.setVisible(false);
+		if(courseLabel.equalsIgnoreCase(MATH_LBL)) {
+			courseContainer.add(mathCourseContainer);
+		} else if(courseLabel.equalsIgnoreCase(SCIENCE_LBL)) {
+			courseContainer.add(scienceCourseContainer);
+		} else if(courseLabel.equalsIgnoreCase(ELA_LBL)) {
+			courseContainer.add(elaCourseContainer);
+		} else if(courseLabel.equalsIgnoreCase(SOCIAL_LBL)) {
+			courseContainer.add(socialCourseContainer);
+		}
+				
 	}
 	/* Ui Hanlders*/
 	/**
@@ -502,18 +464,12 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 */
 	@UiHandler("scienceCourseLbl")
 	public void clickScienceLbl(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				removeStyleNames();
-				scienceCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().sceinceActive());
-				if(!(scienceCourseContainer.getWidgetCount()>0)) {
-					setCourseData(libraryDo.get(0), libraryDo.get(0).getLabel());
-				}
-				setCourseContainerVisibility(SCIENCE_LBL);
-			}
-		});
+		removeStyleNames();
+		scienceCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().sceinceActive());
+		if(!(scienceCourseContainer.getWidgetCount()>0)) {
+			setCourseData(libraryDo.get(0), libraryDo.get(0).getLabel());
+		}
+		setCourseContainerVisibility(SCIENCE_LBL);
 	}
 	/**
 	 * 
@@ -536,18 +492,12 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 */
 	@UiHandler("mathCourseLbl")
 	public void clickMathLbl(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				removeStyleNames();
-				mathCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().mathActive());
-				if(!(mathCourseContainer.getWidgetCount()>0)) {
-					setCourseData(libraryDo.get(1), MATH_LBL);
-				}
-				setCourseContainerVisibility(MATH_LBL);
-			}
-		});
+		removeStyleNames();
+		mathCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().mathActive());
+		if(!(mathCourseContainer.getWidgetCount()>0)) {
+			setCourseData(libraryDo.get(1), MATH_LBL);
+		}
+		setCourseContainerVisibility(MATH_LBL);
 	}
 	 /**
 	  * 
@@ -570,20 +520,12 @@ public class SignUpGradeCourseView extends PopupPanel{
 	  */
 	@UiHandler("socialCourseLbl")
 	public void clickSocialLbl(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				removeStyleNames();
-				socialCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().ssActive());
-				if(!(socialCourseContainer.getWidgetCount()>0)) {
-					setCourseData(libraryDo.get(2), SOCIAL_LBL);
-				}
-				setCourseContainerVisibility(SOCIAL_LBL);
-			
-			}
-		});
+		removeStyleNames();
+		socialCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().ssActive());
+		if(!(socialCourseContainer.getWidgetCount()>0)) {
+			setCourseData(libraryDo.get(2), SOCIAL_LBL);
+		}
+		setCourseContainerVisibility(SOCIAL_LBL);
 	}
 	/**
 	 * 
@@ -606,18 +548,12 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 */
 	@UiHandler("elaCourseLbl")
 	public void clickElaLbl(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				removeStyleNames();
-				elaCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().elaActive());
-				if(!(elaCourseContainer.getWidgetCount()>0)) {
-					setCourseData(libraryDo.get(3), ELA_LBL);
-				}
-				setCourseContainerVisibility(ELA_LBL);
-			}
-		});
+		removeStyleNames();
+		elaCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().elaActive());
+		if(!(elaCourseContainer.getWidgetCount()>0)) {
+			setCourseData(libraryDo.get(3), ELA_LBL);
+		}
+		setCourseContainerVisibility(ELA_LBL);
 	}
 	
 
@@ -627,13 +563,8 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 */
 	@UiHandler("lblCancel")
 	public void onCancelClick(ClickEvent clickEvent) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				closeSignUpGradeCourseView();
-			}
-		});
+		closeSignUpGradeCourseView();
+		
 	}
 	/**
 	 * 
@@ -656,23 +587,17 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 */
 	@UiHandler("skipBtn")
 	public void onSkipClick(ClickEvent clickEvent) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(selectedCoureses.size()>0){
-					for(int i=0;i<selectedCoureses.size();i++){
-						AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(selectedCoureses.get(i).getCode(), REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+		if(selectedCoureses.size()>0){
+			for(int i=0;i<selectedCoureses.size();i++){
+				AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(selectedCoureses.get(i).getCode(), REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
+					@Override
+					public void onSuccess(Void result) {
 					}
-				}
-				MixpanelUtil.skip_grade_course();
-				closeSignUpGradeCourseView();
+				});
 			}
-		});
+		}
+		MixpanelUtil.skip_grade_course();
+		closeSignUpGradeCourseView();
 	}
 	/**
 	 * 
@@ -695,14 +620,8 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 */
 	@UiHandler("submitBtn")
 	public void onSubmitClick(ClickEvent clickEvent) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				MixpanelUtil.submit_grade_course();
-				closeSignUpGradeCourseView();
-			}
-		});
+		MixpanelUtil.submit_grade_course();
+		closeSignUpGradeCourseView();
 	}
 	
 	
@@ -758,22 +677,16 @@ public class SignUpGradeCourseView extends PopupPanel{
 	}
 	@UiHandler("menuIcon")
 	public void menuIconClickEvent(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				
-				if(isSubjectMenuOpened){
-					menuIcon.removeStyleName("active");
-					isSubjectMenuOpened=false;
-					subject.setVisible(false);
-				}else{
-					menuIcon.addStyleName("active");
-					subject.getElement().getStyle().setDisplay(Display.BLOCK);
-					isSubjectMenuOpened=true;
-				}
-				
-			}
-		});
+		
+		if(isSubjectMenuOpened){
+			menuIcon.removeStyleName("active");
+			isSubjectMenuOpened=false;
+			subject.setVisible(false);
+		}else{
+			menuIcon.addStyleName("active");
+			subject.getElement().getStyle().setDisplay(Display.BLOCK);
+			isSubjectMenuOpened=true;
+		}
+		
 	}
 }
