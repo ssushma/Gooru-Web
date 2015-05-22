@@ -1,7 +1,9 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -13,6 +15,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -39,17 +42,25 @@ public class ResourceImageWidget extends Composite {
 			String thumbnailAssetURI=resourceDo.getThumbnails().getThumbnailAssetURI()!=null?resourceDo.getThumbnails().getThumbnailAssetURI():"";
 			String thumbnailFolder=resourceDo.getThumbnails().getThumbnailFolder()!=null?resourceDo.getThumbnails().getThumbnailFolder():"";
 			String thumbnailName=resourceDo.getThumbnails().getThumbnailName()!=null?resourceDo.getThumbnails().getThumbnailName():"";
-			if(thumbnailName.startsWith("http"))
-			{
-				if("video".equalsIgnoreCase(categoryValue)){
-					imgResourceImg.setUrl(thumbnailName);
+			String resourceUrl = resourceDo.getUrl() != null ? resourceDo.getUrl() : null;
+			AppClientFactory.printInfoLogger("ResourceImageUtil.getYoutubeVideoId(resourceUrl) : "+ResourceImageUtil.getYoutubeVideoId(resourceUrl));
+			if ("video".equalsIgnoreCase(categoryValue) && (ResourceImageUtil.getYoutubeVideoId(resourceUrl) != null)){
+				String thumbnailUrl = ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(resourceUrl),Window.Location.getProtocol());
+				imgResourceImg.setUrl(thumbnailUrl);
+				AppClientFactory.printInfoLogger("resourceUrl : "+resourceUrl+"---categoryValue : "+categoryValue+"---thumbnailUrl : "+thumbnailUrl);
+			}else{
+				if(thumbnailName.startsWith("http"))
+				{
+					if("video".equalsIgnoreCase(categoryValue)){
+						imgResourceImg.setUrl(thumbnailName);
+					}
+					else{
+						imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
+					}
 				}
 				else{
 					imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
 				}
-			}
-			else{
-				imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
 			}
 		}else{
 			imgResourceImg.setUrl("../images/default-"+categoryValue+".png");
