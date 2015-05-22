@@ -424,10 +424,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,
-			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session,String contentItemId,String parentItemId,String classCode) {
+			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session,String contentItemId,String parentItemId,String classCode,String feedbackProvidedUserUid) {
 		JsonRepresentation jsonRep = null;
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, session);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, ("AS".equals(session)?"0":session));
 		//String url ="http://www.goorulearning.org/gooruapi/rest/v2/session/AS/item/feedback?sessionToken=08a99a16-4ea5-11e4-8d6c-123141016e2a";
 		logger.info("postTeacherFeedBackToStudent URL --- :"+url);
 		JSONObject mainObj=new JSONObject();
@@ -440,19 +440,22 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			setPlayLoadObj.put("pathwayId", pathwayId);
 			setPlayLoadObj.put("classId",classpageId);
 			setPlayLoadObj.put("sessionId",session);
+			setPlayLoadObj.put("userId", userId);
+			setPlayLoadObj.put("collectionId", collectionId);
 			if(contentItemId.equalsIgnoreCase("commentsDelete")){
 				setPlayLoadObj.put("active","false");
 			}else{
 				setPlayLoadObj.put("active","true");
 			}
 			
-			mainObj.put("contentGooruOId",resourceId);
-			mainObj.put("status","");
-			mainObj.put("contentItemId",contentItemId);
-			mainObj.put("feedbackProvidedUserUid", userId);
-			mainObj.put("sessionActivityId", session);
+			mainObj.put("contentGooruId",resourceId);
+//			mainObj.put("contentItemId",contentItemId);
+			mainObj.put("feedbackProvidedUserUid",feedbackProvidedUserUid);
+			if(!"AS".equals(session)){
+				mainObj.put("sessionActivityId", session);
+			}
+			mainObj.put("parentGooruId",collectionId);
 //			mainObj.put("parentItemId",parentItemId);
-//			mainObj.put("parentGooruOId",collectionId);
 			mainObj.put("feedbackText",freeText);
 			mainObj.put("payLoadObject",setPlayLoadObj.toString());
 //			mainObj.put("user",userObj);
