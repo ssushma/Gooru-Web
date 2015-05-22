@@ -184,7 +184,7 @@ public abstract class AddSearchResourceView extends Composite {
 		
 		Set<CodeDo> codeDoSet = collectionDo.getTaxonomySet();
 		
-		if(codeDoSet!=null & codeDoSet.size()>0) {
+		if(codeDoSet!=null && codeDoSet.size()>0) {
 			setSubject(collectionDo.getTaxonomySet());
 		} else {
 			filterSearchDo.setFilters(filterMap);

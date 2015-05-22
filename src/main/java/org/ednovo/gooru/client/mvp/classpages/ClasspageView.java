@@ -76,9 +76,6 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 	
 	NewClasspagePopupView newPopup=null;
 	
-	
-	@UiField FlowPanel mainFlowPanel;
-
 	@UiField Button btnNewClasspage;
 	
 	@UiField HTMLPanel classpageListPanel,classPageLbl,teachLbl,assignLbl,createLbl;
@@ -132,7 +129,7 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 
 	private static ClasspageViewUiBinder uiBinder = GWT.create(ClasspageViewUiBinder.class);
 	
-	public MessageProperties i18n = GWT.create(MessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	interface ClasspageViewUiBinder extends UiBinder<Widget, ClasspageView>{
 		
