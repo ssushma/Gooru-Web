@@ -64,7 +64,9 @@ public enum UrlToken {
 			
 	V2_DELETE_COLLECTION_ITEM("/v2/collection/item/{0}?"),
 
-	SHARE_SHORTEN_URL("/url/shorten/{0}?"),
+	SHARE_SHORTEN_URL("/url/shorten/{0}?"), // Not used v1 shorten API call
+	
+	V2_SHARE_SHORTEN_URL("/v2/share/url/shorten/{0}?"),
 	
 	SHARE_SHORTEN_URL_PLAY("/url/shorten/{0}?"),
 	

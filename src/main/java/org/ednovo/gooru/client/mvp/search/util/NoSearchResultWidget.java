@@ -30,8 +30,12 @@ public class NoSearchResultWidget extends Composite {
 	}
 	final static NoSearchResultWidget searchResult=new NoSearchResultWidget();
 	
-	@UiField HTMLPanel pnlNoSearchResults,libraryWidgetsContainer,libraryWidgetsContainerViewMore;
-	@UiField Button viewMoreBtn;
+	@UiField HTMLPanel pnlNoSearchResults,libraryWidgetsContainer;
+
+	@UiField
+	static HTMLPanel libraryWidgetsContainerViewMore;
+	@UiField
+	static Button viewMoreBtn;
 	@UiField static H2Panel searchNoResultsHeader;
 
 	@UiField
@@ -52,7 +56,6 @@ public class NoSearchResultWidget extends Composite {
 		   }
 		   i=i+1;
 		}
-		libraryWidgetsContainerViewMore.setVisible(false);
 		viewMoreBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -62,6 +65,8 @@ public class NoSearchResultWidget extends Composite {
 		});
 	}
 	public static NoSearchResultWidget getInstance(){
+		libraryWidgetsContainerViewMore.setVisible(false);
+		viewMoreBtn.setVisible(true);
 		String queryVal=AppClientFactory.getPlaceManager().getRequestParameter("query", null);
 		if(queryVal!= null && !queryVal.equalsIgnoreCase("*")){
 			searchNoResultsHeader.setText(i18n.GL3231()+" "+queryVal);
