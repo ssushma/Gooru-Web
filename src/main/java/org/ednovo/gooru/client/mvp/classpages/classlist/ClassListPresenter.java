@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -19,7 +18,6 @@ import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -95,32 +93,21 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 		});
 	}
 	@Override
-	public void updateClassPageInfo(final String classPageId,final String collectionType,final String title, final String shareType){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void updateClassPageInfo(String classPageId,String collectionType, String title, String shareType){
+		AppClientFactory.getInjector().getClasspageService().v2UpdateClassPageByid(classPageId,collectionType, title, shareType, new SimpleAsyncCallback<CollectionDo>() {
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getClasspageService().v2UpdateClassPageByid(classPageId,collectionType, title, shareType, new SimpleAsyncCallback<CollectionDo>() {
-					@Override
-					public void onSuccess(CollectionDo result) {
-					}
-				});
+			public void onSuccess(CollectionDo result) {
 			}
 		});
+		
 	}
 	
 	@Override
-	public void removeUserFromClass(final ClasspageDo classpageDo,final  String emailId, final int pendingOffSet, final boolean pendingFlag,final MembersViewVc membersViewVc){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId, final int pendingOffSet, final boolean pendingFlag,final MembersViewVc membersViewVc){
+		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId,  new SimpleAsyncCallback<Void>() {
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId,  new SimpleAsyncCallback<Void>() {
-					@Override
-					public void onSuccess(Void result) {
-						getView().removePendiUserWidget(membersViewVc,pendingFlag);
-					}
-				});
+			public void onSuccess(Void result) {
+				getView().removePendiUserWidget(membersViewVc,pendingFlag);
 			}
 		});
 	}
@@ -147,29 +134,23 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	 *
 	 *
 	 */
-	public void insertUserAfterDeletionForPending(final String gooruOid,final int offSet, int pageSize,final String statusType, final boolean pendingFlag){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-		        classpageServiceAsync.getAssociatedStudentListByCode(gooruOid, offSet, 1, statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
-		                @Override
-		                public void onSuccess(StudentsAssociatedListDo result) {
-		                	if(result.getSearchResults().size()>0){  
-		                		if(pendingFlag)
-		                		{
-		                			getView().insertPendingUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0,false);
-		                		}
-		                		else
-		                		{
-		                			getView().insertActiveUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0);
-		                		}
-		                	}
-		                }
-		        });
-			}
-		});
-	}
+	public void insertUserAfterDeletionForPending(final String gooruOid,final int offSet, int pageSize,String statusType, final boolean pendingFlag){
+        this.classpageServiceAsync.getAssociatedStudentListByCode(gooruOid, offSet, 1, statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
+                @Override
+                public void onSuccess(StudentsAssociatedListDo result) {
+                	if(result.getSearchResults().size()>0){  
+                		if(pendingFlag)
+                		{
+                		getView().insertPendingUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0,false);
+                		}
+                		else
+                		{
+                		getView().insertActiveUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0);
+                		}
+                	}
+                }
+        });
+}
 	
 	/** 
 	 * This method is to get the collabAsyncCallback
@@ -202,20 +183,14 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	 * 
 	 */
 	@Override
-	public void getMembersListByCollectionId(final String classCode,final  int offSet, final int pageSize, final String statusType,final boolean increasePageNum) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				getClasspageServiceAsync().getAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
+	public void getMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum) {
+		getClasspageServiceAsync().getAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
 
-					@Override
-					public void onSuccess(StudentsAssociatedListDo result) {
-						//Display all members in pending list.
-						getView().displayPendingMembersList(result.getSearchResults(), false, result.getTotalHitCount(),increasePageNum,false);
-						
-					}
-				});
+			@Override
+			public void onSuccess(StudentsAssociatedListDo result) {
+				//Display all members in pending list.
+				getView().displayPendingMembersList(result.getSearchResults(), false, result.getTotalHitCount(),increasePageNum,false);
+				
 			}
 		});
 	}
@@ -240,21 +215,15 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	 * @see org.ednovo.gooru.client.mvp.classpages.classlist.ClassListUiHandlers#getActiveMembersListByCollectionId(java.lang.String, int, int, java.lang.String)
 	 */
 	@Override
-	public void getActiveMembersListByCollectionId(final String classCode,final int offSet,final int pageSize,final String statusType,final boolean increasePageNum,final boolean getPendingMembers) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void getActiveMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum,final boolean getPendingMembers) {
+		getClasspageServiceAsync().getActiveAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
 			@Override
-			public void onSuccess() {
-				getClasspageServiceAsync().getActiveAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
-					@Override
-					public void onSuccess(StudentsAssociatedListDo result) {
-						//Display all members in active list.
-						getView().displayActiveMembersList(result.getSearchResults(), false, result.getTotalHitCount(),increasePageNum);
-						if(getPendingMembers){
-							getView().getPendingMembersList();
-						}
-					}
-				});
+			public void onSuccess(StudentsAssociatedListDo result) {
+				//Display all members in active list.
+				getView().displayActiveMembersList(result.getSearchResults(), false, result.getTotalHitCount(),increasePageNum);
+				if(getPendingMembers){
+					getView().getPendingMembersList();
+				}
 			}
 		});
 	}
