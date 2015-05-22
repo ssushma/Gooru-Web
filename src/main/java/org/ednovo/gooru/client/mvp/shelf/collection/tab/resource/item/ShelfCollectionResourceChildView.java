@@ -334,7 +334,10 @@ public class ShelfCollectionResourceChildView extends
 		String gooruUId = "";
 		if(collectionItemDo.getResource().getUser()==null){
 			 gooruUId=collectionItemDo.getGooruUId();
+		}else{
+			 gooruUId=collectionItemDo.getResource().getUser().getGooruUId();
 		}
+		
 		if (AppClientFactory.getLoggedInUser().getGooruUId().equalsIgnoreCase(gooruUId)) {
 			isValid = true;
 		} else {

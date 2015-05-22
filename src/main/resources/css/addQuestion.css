@@ -646,6 +646,7 @@
 .htAnswerChoiceDragContainer {
 	float: left;
 	width: 100%;
+	min-width: 410px;
 	min-height: 40px;
 	border: 1px dashed #ddd;
 	height: auto;
@@ -724,8 +725,8 @@
 	z-index: 98;
 }
 .htPlayerAns {
-	display: inline-block;
 	margin-right: 3px;
+	line-height: 20px;
 	border: 1px solid #fff;
 }
 .htPlayerAns:hover {
