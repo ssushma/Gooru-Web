@@ -82,10 +82,7 @@ public class GooruEntry implements EntryPoint {
 	private HandlerRegistration nativePreviewHandlerRegistration;
 	
 	private static final String GOORU_USER_INACTIVE = "in-active";
-	
-	static{
-		
-	}
+
 	
 	public void onModuleLoad() {
 		

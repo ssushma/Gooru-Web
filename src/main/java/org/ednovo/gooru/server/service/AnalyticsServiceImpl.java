@@ -427,14 +427,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session,String contentItemId,String parentItemId,String classCode) {
 		JsonRepresentation jsonRep = null;
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ITEMFEEDBACK, session);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, session);
 		//String url ="http://www.goorulearning.org/gooruapi/rest/v2/session/AS/item/feedback?sessionToken=08a99a16-4ea5-11e4-8d6c-123141016e2a";
-		logger.info("url:+"+url);
+		logger.info("postTeacherFeedBackToStudent URL --- :"+url);
 		JSONObject mainObj=new JSONObject();
 		JSONObject userObj=new JSONObject();
 		JSONObject setPlayLoadObj=new JSONObject();
 		try {
-			userObj.put("partyUid", userId);
+			
 			
 			setPlayLoadObj.put("classCode", classCode);
 			setPlayLoadObj.put("pathwayId", pathwayId);
@@ -447,17 +447,20 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			}
 			
 			mainObj.put("contentGooruOId",resourceId);
+			mainObj.put("status","");
 			mainObj.put("contentItemId",contentItemId);
-			mainObj.put("parentItemId",parentItemId);
-			mainObj.put("parentGooruOId",collectionId);
-			mainObj.put("freeText",freeText);
+			mainObj.put("feedbackProvidedUserUid", userId);
+			mainObj.put("sessionActivityId", session);
+//			mainObj.put("parentItemId",parentItemId);
+//			mainObj.put("parentGooruOId",collectionId);
+			mainObj.put("feedbackText",freeText);
 			mainObj.put("payLoadObject",setPlayLoadObj.toString());
-			mainObj.put("user",userObj);
-			logger.info("mainObj.toString()::"+mainObj.toString());
+//			mainObj.put("user",userObj);
+			logger.info("postTeacherFeedBackToStudent payload --- "+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			if(jsonResponseRep.getStatusCode()==200){
-				feedBackResponseDataDO=deserializeTeacherResponse(jsonRep.getJsonObject());
+				feedBackResponseDataDO=deserializeTeacherResponse(jsonRep.getJsonObject(),freeText);
 			}else{
 			}
 		} catch (JSONException e) {
@@ -467,7 +470,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	private FeedBackResponseDataDO deserializeTeacherResponse(
-			JSONObject jsonObject) {
+			JSONObject jsonObject, String freeText) {
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
 			try {
 				if(!jsonObject.isNull("contentGooruOId"))
@@ -476,14 +479,13 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				if(!jsonObject.isNull("contentItemId"))
 					feedBackResponseDataDO.setContentItemId(jsonObject.getString("contentItemId"));
 				
-				if(!jsonObject.isNull("createdOn"))
-				  feedBackResponseDataDO.setCreatedOn(jsonObject.getLong("createdOn"));
+				if(!jsonObject.isNull("startTime"))
+				  feedBackResponseDataDO.setCreatedOn(jsonObject.getLong("startTime"));
 				
 				if(!jsonObject.isNull("feedbackProvidedBy") )
 					feedBackResponseDataDO.setFeedbackProvidedByGooruId(jsonObject.getJSONObject("feedbackProvidedBy").getString("gooruUId"));
 				
-				if(!jsonObject.isNull("freeText"))
-					feedBackResponseDataDO.setFreeText(jsonObject.getString("freeText"));
+					feedBackResponseDataDO.setFreeText(freeText);
 				
 				if(!jsonObject.isNull("parentGooruOId"))
 					feedBackResponseDataDO.setParentGooruOId(jsonObject.getString("parentGooruOId"));

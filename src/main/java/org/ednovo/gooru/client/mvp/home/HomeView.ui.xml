@@ -992,12 +992,12 @@
 								</div>
 								<div class="col-md-6 {res.css.goorubadge}">
 									<div class="col-md-6 col-sm-6 text-center">
-										<div class="{res.css.badgepadd}">
+										<!-- <div class="{res.css.badgepadd}">
 										    <tbp:PPanel text="{i18n.GL2160}"/>
 											<p>
 												<g:TextBox styleName="form-control" ui:field="txtEmbedLink" />
 											</p>
-										</div>
+										</div> -->
 									</div>
 									<div class="col-md-6 col-sm-6 text-center">
 										<p>

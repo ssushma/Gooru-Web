@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
@@ -65,8 +66,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -353,29 +352,36 @@ public abstract class CreateAccountUc extends PopupPanel{
 	
 	@UiHandler("ancParentRegister")
 	public void onClickParentRegister(ClickEvent event) {
-		String userName = txtChooseUsername.getText();
-		if (userName.equalsIgnoreCase("") || userName == null) {
-			txtChooseUsername.addStyleName(res.css().errorMsgDisplay());
-		}else{
-			MixpanelUtil.register_as_a_parent();
-			closePoup();
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("callback", "signup");
-			params.put("type", "3");
-			params.put("account", "parent");
-	
-			String dob = dateBoxUc.getDateBox().getText().toString().trim()
-					.replaceAll("\\/", "D");
-						
-			if (dob != null) {
-				params.put("dob", dob);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				String userName = txtChooseUsername.getText();
+				if (userName.equalsIgnoreCase("") || userName == null) {
+					txtChooseUsername.addStyleName(res.css().errorMsgDisplay());
+				}else{
+					MixpanelUtil.register_as_a_parent();
+					closePoup();
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("callback", "signup");
+					params.put("type", "3");
+					params.put("account", "parent");
+			
+					String dob = dateBoxUc.getDateBox().getText().toString().trim()
+							.replaceAll("\\/", "D");
+								
+					if (dob != null) {
+						params.put("dob", dob);
+					}
+					if (userName != null) {
+						params.put("userName", userName);
+					}
+					AppClientFactory.getPlaceManager()
+							.revealPlace(PlaceTokens.HOME, params);
+				}
 			}
-			if (userName != null) {
-				params.put("userName", userName);
-			}
-			AppClientFactory.getPlaceManager()
-					.revealPlace(PlaceTokens.HOME, params);
-		}
+		});
 	}
 
 	/**
@@ -408,88 +414,94 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 	@UiHandler("btnSignUp")
 	public void onClickSignUp(ClickEvent event) {
-		final Map<String, String> parms = new HashMap<String, String>();
-		parms.put("text", txtChooseUsername.getValue());
-		lblPleaseWait.setVisible(true);
-		btnSignUp.setVisible(false);
-		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void onSuccess(Boolean value) {
-				if(value){
-					SetStyleForProfanity.SetStyleForProfanityForTextBox(txtChooseUsername, errorLblForUsername, value);
-				}else{
-					parms.put("text", txtFirstName.getValue());
-					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			public void onSuccess() {
+				final Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", txtChooseUsername.getValue());
+				lblPleaseWait.setVisible(true);
+				btnSignUp.setVisible(false);
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
-						@Override
-						public void onSuccess(Boolean value) {
-							if(value){
-								SetStyleForProfanity.SetStyleForProfanityForTextBox(txtFirstName, errorLblForFirstName, value);
-							}else{
-								parms.put("text", txtLastName.getValue());
-								AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					@Override
+					public void onSuccess(Boolean value) {
+						if(value){
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(txtChooseUsername, errorLblForUsername, value);
+						}else{
+							parms.put("text", txtFirstName.getValue());
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
-									@Override
-									public void onSuccess(Boolean value) {
-										if(value){
-											SetStyleForProfanity.SetStyleForProfanityForTextBox(txtLastName, errorLblForLastName, value);
-										}else{
-											String userName = txtChooseUsername.getText().trim();
-											String firstName = txtFirstName.getText().trim();
-											String lastName = txtLastName.getText().trim();
-											String emilId = txtChooseEmail.getText().trim();
-											String password = StringUtil.getCryptoData(txtChoosePassword.getText().trim()); 
-											String confirmPassword = txtConfirmPassword.getText().trim();
-											String dob = dateBoxUc.getDateBox().getValue().trim();
-											String parentEmailId = txtParentEmailId.getText().trim();
-											
-											Map<String, String> registrationDetailsParams = new HashMap<String, String>();
-											registrationDetailsParams.put(FIRST_NAME, firstName);
-											registrationDetailsParams.put(LAST_NAME, lastName);
-											registrationDetailsParams.put(USER_NAME, userName);
-											registrationDetailsParams.put(EMAIL_ID, emilId);
-											registrationDetailsParams.put(ORGANIZATION_CODE, GOORU);
-											registrationDetailsParams.put(PASSWORD, password);
-											registrationDetailsParams.put("gooruBaseUrl", homeEndPoint +"#discover");
-											registrationDetailsParams.put("role", selectedRole);
-											registrationDetailsParams.put("dateOfBirth", dob);
-											
-											if (validateUserInput()) {
-												lblPleaseWait.setVisible(true);
-												btnSignUp.setVisible(false);
-												if (!underThirtheen) {
-													MixpanelUtil.sign_up_over_Thrteen();
-													CreateUser(registrationDetailsParams, userName,password);
-												} else {
-													MixpanelUtil.continue_Child_registration();
-													closePoup();
-													Map<String, String> params = new HashMap<String, String>();
-													params.put("callback", "registerChild");
-													params.put("type", "4");
-													params.put("privateGooruUId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
+								@Override
+								public void onSuccess(Boolean value) {
+									if(value){
+										SetStyleForProfanity.SetStyleForProfanityForTextBox(txtFirstName, errorLblForFirstName, value);
+									}else{
+										parms.put("text", txtLastName.getValue());
+										AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+											@Override
+											public void onSuccess(Boolean value) {
+												if(value){
+													SetStyleForProfanity.SetStyleForProfanityForTextBox(txtLastName, errorLblForLastName, value);
+												}else{
+													String userName = txtChooseUsername.getText().trim();
+													String firstName = txtFirstName.getText().trim();
+													String lastName = txtLastName.getText().trim();
+													String emilId = txtChooseEmail.getText().trim();
+													String password = StringUtil.getCryptoData(txtChoosePassword.getText().trim()); 
+													String confirmPassword = txtConfirmPassword.getText().trim();
+													String dob = dateBoxUc.getDateBox().getValue().trim();
+													String parentEmailId = txtParentEmailId.getText().trim();
 													
-													if (dob != null) {
-														params.put("dob", dob);
+													Map<String, String> registrationDetailsParams = new HashMap<String, String>();
+													registrationDetailsParams.put(FIRST_NAME, firstName);
+													registrationDetailsParams.put(LAST_NAME, lastName);
+													registrationDetailsParams.put(USER_NAME, userName);
+													registrationDetailsParams.put(EMAIL_ID, emilId);
+													registrationDetailsParams.put(ORGANIZATION_CODE, GOORU);
+													registrationDetailsParams.put(PASSWORD, password);
+													registrationDetailsParams.put("gooruBaseUrl", homeEndPoint +"#discover");
+													registrationDetailsParams.put("role", selectedRole);
+													registrationDetailsParams.put("dateOfBirth", dob);
+													
+													if (validateUserInput()) {
+														lblPleaseWait.setVisible(true);
+														btnSignUp.setVisible(false);
+														if (!underThirtheen) {
+															MixpanelUtil.sign_up_over_Thrteen();
+															CreateUser(registrationDetailsParams, userName,password);
+														} else {
+															MixpanelUtil.continue_Child_registration();
+															closePoup();
+															Map<String, String> params = new HashMap<String, String>();
+															params.put("callback", "registerChild");
+															params.put("type", "4");
+															params.put("privateGooruUId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
+															
+															if (dob != null) {
+																params.put("dob", dob);
+															}
+															if (userName != null) {
+																params.put("userName", userName);
+															}
+															if(parentEmailId!=null){
+																params.put("emailId",parentEmailId);
+															}
+															AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+														}
+													} else {
+														toggleButtons();
 													}
-													if (userName != null) {
-														params.put("userName", userName);
-													}
-													if(parentEmailId!=null){
-														params.put("emailId",parentEmailId);
-													}
-													AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 												}
-											} else {
-												toggleButtons();
 											}
-										}
+										});
 									}
-								});
-							}
+								}
+							});
 						}
-					});
-				}
+					}
+				});
 			}
 		});
 	}
@@ -766,374 +778,381 @@ public abstract class CreateAccountUc extends PopupPanel{
 	 *
 	 */
 	private void setUiAndIds() {
-		lblPleaseFill.getElement().setId("lblPleaseFill");
-		if (account != null) {
-			lblPleaseFill.setText(i18n.GL0471());
-			lblPleaseFill.getElement().getStyle().setColor("#000000");
-			lblPleaseFill.getElement().getStyle().setFontSize(18, Unit.PX);
-			lblPleaseFill.getElement().setAttribute("alt",i18n.GL0471());
-			lblPleaseFill.getElement().setAttribute("title",i18n.GL0471());
-		} else {
-			lblPleaseFill.setText(i18n.GL0409());
-			lblPleaseFill.getElement().getStyle().clearColor();
-			lblPleaseFill.getElement().getStyle().clearFontSize();
-			lblPleaseFill.getElement().setAttribute("alt",i18n.GL0409());
-			lblPleaseFill.getElement().setAttribute("title",i18n.GL0409());
-		}
-		
-		lblPickWisely.setText(i18n.GL0410());
-		lblPickWisely.getElement().setId("lblPickWisely");
-		lblPickWisely.getElement().setAttribute("alt",i18n.GL0410());
-		lblPickWisely.getElement().setAttribute("title",i18n.GL0410());
-		
-		lblQuestionMark.setText(i18n.GL_SPL_QUESTION());
-		lblQuestionMark.getElement().setId("lblQuestionMark");
-		lblQuestionMark.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
-		lblQuestionMark.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
-		
-		lblWhyEnterBirthday.setText(i18n.GL0411()
-				+i18n.GL_SPL_QUESTION());
-		lblWhyEnterBirthday.getElement().setId("lblWhyEnterBirthday");
-		lblWhyEnterBirthday.getElement().setAttribute("alt",i18n.GL0411());
-		lblWhyEnterBirthday.getElement().setAttribute("title",i18n.GL0411());
-		
-		lblWhyEnterBirthdayDesc.setText(i18n.GL0412());
-		lblWhyEnterBirthdayDesc.getElement().setId("lblWhyEnterBirthdayDesc");
-		lblWhyEnterBirthdayDesc.getElement().setAttribute("alt",i18n.GL0412());
-		lblWhyEnterBirthdayDesc.getElement().setAttribute("title",i18n.GL0412());
-		
-		lblNameTooltipContent.setText(i18n.GL0413());
-		lblNameTooltipContent.getElement().setId("lblNameTooltipContent");
-		lblNameTooltipContent.getElement().setAttribute("alt",i18n.GL0413());
-		lblNameTooltipContent.getElement().setAttribute("title",i18n.GL0413());
-		
-		lblEmailTooltipContent.setText(i18n.GL0414());
-		lblEmailTooltipContent.getElement().setId("lblEmailTooltipContent");
-		lblEmailTooltipContent.getElement().setAttribute("alt",i18n.GL0414());
-		lblEmailTooltipContent.getElement().setAttribute("title",i18n.GL0414());
-		
-		lblPasswordTooltipContent.setText(i18n.GL0415());
-		lblPasswordTooltipContent.getElement().setId("lblPasswordTooltipContent");
-		lblPasswordTooltipContent.getElement().setAttribute("alt",i18n.GL0415());
-		lblPasswordTooltipContent.getElement().setAttribute("title",i18n.GL0415());
-		
-		lblPleaseWait.setVisible(false);
-		lblPleaseWait.setText(i18n.GL0339());
-		lblPleaseWait.getElement().setId("lblPleaseWait");
-		lblPleaseWait.getElement().setAttribute("alt",i18n.GL0339());
-		lblPleaseWait.getElement().setAttribute("title",i18n.GL0339());
+//		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+//			@Override
+//			public void onSuccess() {
 
-		lblTeacher.setText(i18n.GL0416());
-		lblTeacher.getElement().setId("lblTeacher");
-		lblTeacher.getElement().setAttribute("alt",i18n.GL0416());
-		lblTeacher.getElement().setAttribute("title",i18n.GL0416());
-		
-		lblStudent.setText(i18n.GL0417());
-		lblStudent.getElement().setId("lblStudent");
-		lblStudent.getElement().setAttribute("alt",i18n.GL0417());
-		lblStudent.getElement().setAttribute("title",i18n.GL0417());
-		
-		lblParent.setText(i18n.GL0418());
-		lblParent.getElement().setId("lblParent");
-		lblParent.getElement().setAttribute("alt",i18n.GL0418());
-		lblParent.getElement().setAttribute("title",i18n.GL0418());
-		
-		lblOther.setText(i18n.GL0419());
-		lblOther.getElement().setId("lblOther");
-		lblOther.getElement().setAttribute("alt",i18n.GL0419());
-		lblOther.getElement().setAttribute("title",i18n.GL0419());
-		
-		lblAgree.setText(i18n.GL0420()+" ");
-		lblAgree.getElement().setId("lblAgree");
-		lblAgree.getElement().setAttribute("alt",i18n.GL0420());
-		lblAgree.getElement().setAttribute("title",i18n.GL0420());
-
-		txtChooseUsername.setPlaceholder(i18n.GL0423());
-		txtChooseUsername.getElement().setId("txtChooseUsername");
-		txtChooseUsername.setMaxLength(20);
-		
-		txtFirstName.setPlaceholder(i18n.GL0424());
-		txtFirstName.getElement().setId("txtFirstName");
-		
-		txtLastName.setPlaceholder(i18n.GL0425());
-		txtLastName.getElement().setId("txtLastName");
-		
-		txtChooseEmail.setPlaceholder(i18n.GL0426());
-		txtChooseEmail.getElement().setId("txtChooseEmail");
-		
-		txtChoosePassword.setPlaceholder(i18n.GL0204());
-		txtChoosePassword.getElement().setId("txtChoosePassword");
-		txtChoosePassword.setMaxLength(14);
-		
-		txtConfirmPassword.setPlaceholder(i18n.GL0427());
-		txtConfirmPassword.getElement().setId("txtConfirmPassword");
-		txtConfirmPassword.setMaxLength(14);
-		
-		panelDataOfBirth.getElement().setId("pnlDataOfBirth");
-		
-		errorLblForUsername.getElement().setId("errlblUserName");
-
-		userNameValidUc.getElement().setId("errlblUserNameValidUc");
-		userNameValidUc.getElement().setAttribute("alt",i18n.GL0473());
-		userNameValidUc.getElement().setAttribute("title",i18n.GL0473());
-		
-		txtChooseUsername.addKeyUpHandler(new OnKeyUpHandler());
-		txtFirstName.addKeyUpHandler(new OnKeyUpHandler());
-		txtLastName.addKeyUpHandler(new OnKeyUpHandler());
-		txtChooseEmail.addKeyUpHandler(new OnKeyUpHandler());
-		txtChoosePassword.addKeyUpHandler(new OnKeyUpHandler());
-		txtConfirmPassword.addKeyUpHandler(new OnKeyUpHandler());
-
-		txtChooseUsername.addBlurHandler(new OnBlurHandler());
-		txtChooseEmail.addBlurHandler(new OnBlurHandler());
-		txtParentEmailId.addBlurHandler(new OnBlurHandler());
-		txtParentEmailId.addKeyUpHandler(new OnKeyUpHandler());
-
-		txtChooseUsername.addMouseOverHandler(new OnMouseOver());
-		txtFirstName.addMouseOverHandler(new OnMouseOver());
-		txtLastName.addMouseOverHandler(new OnMouseOver());
-		txtChooseEmail.addMouseOverHandler(new OnMouseOver());
-		txtChoosePassword.addMouseOverHandler(new OnMouseOver());
-		txtConfirmPassword.addMouseOverHandler(new OnMouseOver());
-		panelDataOfBirth.addMouseOverHandler(new OnMouseOver());
-		lblQuestionMarkNeedParentAccount.addMouseOverHandler(new OnMouseOver());
-
-		txtChooseUsername.addMouseOutHandler(new OnMouseOut());
-		txtFirstName.addMouseOutHandler(new OnMouseOut());
-		txtLastName.addMouseOutHandler(new OnMouseOut());
-		txtChooseEmail.addMouseOutHandler(new OnMouseOut());
-		txtChoosePassword.addMouseOutHandler(new OnMouseOut());
-		txtConfirmPassword.addMouseOutHandler(new OnMouseOut());
-		panelDataOfBirth.addMouseOutHandler(new OnMouseOut());
-		lblQuestionMarkNeedParentAccount.addMouseOutHandler(new OnMouseOut());
-
-		txtFirstName.setMaxLength(20);
-		txtLastName.setMaxLength(20);		
-		
-		panelUserNamePopUp.setVisible(false);
-		panelUserNamePopUp.getElement().setId("pnlUserNamePopUp");
-		
-		panelPublic.setVisible(false);
-		panelPublic.getElement().setId("pnlPublic");
-		
-		panelEmail.setVisible(false);
-		panelEmail.getElement().setId("pnlEmail");
-		
-		panelPassword.setVisible(false);
-		panelPassword.getElement().setId("pnlPassword");
-		
-		ancCopyRight.setText(i18n.GL0421() + ",");
-		ancCopyRight.getElement().setId("lnkCopyRight");
-		ancCopyRight.getElement().setAttribute("alt",i18n.GL0421());
-		ancCopyRight.getElement().setAttribute("title",i18n.GL0421());
-		
-		ancTermsAndPrivacy.setText(i18n.GL0422());
-		ancTermsAndPrivacy.getElement().setId("lnkTermsAndPrivacy");
-		ancTermsAndPrivacy.getElement().setAttribute("alt",i18n.GL0422());
-		ancTermsAndPrivacy.getElement().setAttribute("title",i18n.GL0422());
-		
-		ancPrivacy.setText(i18n.GL0452());
-		ancPrivacy.getElement().setId("lnkPrivacy");
-		ancPrivacy.getElement().setAttribute("alt",i18n.GL0452());
-		ancPrivacy.getElement().setAttribute("title",i18n.GL0452());
-		
-		btnSignUp.setText(i18n.GL0186());
-		btnSignUp.getElement().setId("btnSignUp");
-		btnSignUp.getElement().setAttribute("alt",i18n.GL0186());
-		btnSignUp.getElement().setAttribute("title",i18n.GL0186());
-		btnSignUp.setEnabled(false);
-		btnSignUp.getElement().addClassName("disabled");
-
-		lblNeedParentsAccount.setText(i18n.GL0455());
-		lblNeedParentsAccount.getElement().setId("lblNeedParentsAccount");
-		lblNeedParentsAccount.getElement().setAttribute("alt",i18n.GL0455());
-		lblNeedParentsAccount.getElement().setAttribute("title",i18n.GL0455());
-		
-		lblMyParentHasGooruAccount.setText(i18n.GL0456());
-		lblMyParentHasGooruAccount.getElement().setId("lblMyParentHasGooruAccount");
-		lblMyParentHasGooruAccount.getElement().setAttribute("alt",i18n.GL0456());
-		lblMyParentHasGooruAccount.getElement().setAttribute("title",i18n.GL0456());
-		
-		txtParentEmailId.setPlaceholder(i18n.GL0457());
-		txtParentEmailId.getElement().setId("txtParentEmailId");
-		
-		lblOr.setText(i18n.GL0466());
-		lblOr.getElement().setId("lblOr");
-		lblOr.getElement().setAttribute("alt",i18n.GL0466());
-		lblOr.getElement().setAttribute("title",i18n.GL0466());
-		
-		lblMyParentDontHaveAccount.setText(i18n.GL0458());
-		lblMyParentDontHaveAccount.getElement().setId("lblMyParentDontHaveAccount");
-		lblMyParentDontHaveAccount.getElement().setAttribute("alt",i18n.GL0458());
-		lblMyParentDontHaveAccount.getElement().setAttribute("title",i18n.GL0458());
-		
-		ancParentRegister.setText(i18n.GL0459());
-		ancParentRegister.getElement().setId("lnkParentRegister");
-		ancParentRegister.getElement().setAttribute("alt",i18n.GL0459());
-		ancParentRegister.getElement().setAttribute("title",i18n.GL0459());
-		
-		lblQuestionMarkNeedParentAccount
-				.setText(i18n.GL_SPL_QUESTION());
-		lblQuestionMarkNeedParentAccount.getElement().setId("lblQuestionMarkNeedParentAccount");
-		lblQuestionMarkNeedParentAccount.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
-		lblQuestionMarkNeedParentAccount.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
-		
-		lblWhyNeedParentDesc.setText(i18n.GL0461());
-		lblWhyNeedParentDesc.getElement().setId("lblWhyNeedParentDesc");
-		lblWhyNeedParentDesc.getElement().setAttribute("alt",i18n.GL0461());
-		lblWhyNeedParentDesc.getElement().setAttribute("title",i18n.GL0461());
-		
-		lblWhyNeedParent.setText(i18n.GL0462()
-				+ i18n.GL_SPL_QUESTION());
-		lblWhyNeedParent.getElement().setId("lblWhyNeedParent");
-		lblWhyNeedParent.getElement().setAttribute("alt",i18n.GL0462());
-		lblWhyNeedParent.getElement().setAttribute("title",i18n.GL0462());
-		
-		tootltipContainer.getElement().setAttribute("style", "left:311px");
-		tootltipContainer.getElement().setId("pnlTootltipContainer");
-		
-		panelBelowThirteen.setVisible(false);
-		panelBelowThirteen.getElement().setId("pnlBelowThirteen");
-		
-		panelAboveThirteen.setVisible(true);
-		panelAboveThirteen.getElement().setId("pnlAboveThirteen");
-
-		lblGetCorrectEmail.setVisible(false);
-		lblGetCorrectEmail.getElement().setId("lblGetCorrectEmail");
-		lblGetCorrectEmail.getElement().setAttribute("alt","");
-		lblGetCorrectEmail.getElement().setAttribute("title","");
-		
-
-		dateValidationUc.setText(StringUtil.generateMessage(
-			i18n.GL0082(), BIRTH_DAY));
-		dateValidationUc.getElement().setId("errlblDateValidationUc");
-		dateValidationUc.getElement().setAttribute("alt",i18n.GL0473());
-		dateValidationUc.getElement().setAttribute("title",i18n.GL0473());
-		
-		lblSelectRole.setText(i18n.GL1146());
-		lblSelectRole.setVisible(false);
-		lblSelectRole.getElement().setId("lblSelectRole");
-		lblSelectRole.getElement().setAttribute("alt",i18n.GL1146());
-		lblSelectRole.getElement().setAttribute("title",i18n.GL1146());
-		
-		parentEmailValidUc.getElement().setId("errlblParentEmailValidUc");
-		parentEmailValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
-		parentEmailValidUc.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-		firstNameValidUc.getElement().setId("errlblFirstNameValidUc");
-		errorLblForFirstName.getElement().setId("errlblFirstName");
-		
-		lastNameValidUc.getElement().setId("errlblLastNameValidUc");
-		errorLblForLastName.getElement().setId("errlblLastName");
-		
-		emailFieldContainer.getElement().setId("pnlEmailFieldContainer");
-		emailValidUc.getElement().setId("errlblEmailValidUc");
-		passwordValidUc.getElement().setId("errlblPasswordValidUc");
-		
-		panelTeacher.getElement().setId("pnlTeacher");
-		panelStudent.getElement().setId("pnlStudent");
-		panelParent.getElement().setId("pnlParent");
-		panelOther.getElement().setId("pnlOther");
-		
-		andText.setText(i18n.GL_GRR_AND()+" ");
-		andText.getElement().setId("spnAndText");
-		andText.getElement().setAttribute("alt",i18n.GL_GRR_AND());
-		andText.getElement().setAttribute("title",i18n.GL_GRR_AND());
-		
-		rbTeacher = new RadioButton("roleOption", "");
-		rbStudent = new RadioButton("roleOption", "");
-		rbParent = new RadioButton("roleOption", "");
-		rbOther = new RadioButton("roleOption", "");
-		
-		rbTeacher.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				MixpanelUtil.select_teacher();
-				selectedRole = "teacher";
-				lblSelectRole.setVisible(false);
-				if (rbTeacher.getValue()){
-					//Remove normal and Set Selected Image
-					panelTeacher.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
+				lblPleaseFill.getElement().setId("lblPleaseFill");
+				if (account != null) {
+					lblPleaseFill.setText(i18n.GL0471());
+					lblPleaseFill.getElement().getStyle().setColor("#000000");
+					lblPleaseFill.getElement().getStyle().setFontSize(18, Unit.PX);
+					lblPleaseFill.getElement().setAttribute("alt",i18n.GL0471());
+					lblPleaseFill.getElement().setAttribute("title",i18n.GL0471());
+				} else {
+					lblPleaseFill.setText(i18n.GL0409());
+					lblPleaseFill.getElement().getStyle().clearColor();
+					lblPleaseFill.getElement().getStyle().clearFontSize();
+					lblPleaseFill.getElement().setAttribute("alt",i18n.GL0409());
+					lblPleaseFill.getElement().setAttribute("title",i18n.GL0409());
 				}
-				//Remove selected image and set normal
-				panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
-//				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
-				panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
-				panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
-			}
-		});
-		rbStudent.addClickHandler(new ClickHandler() {
+				
+				lblPickWisely.setText(i18n.GL0410());
+				lblPickWisely.getElement().setId("lblPickWisely");
+				lblPickWisely.getElement().setAttribute("alt",i18n.GL0410());
+				lblPickWisely.getElement().setAttribute("title",i18n.GL0410());
+				
+				lblQuestionMark.setText(i18n.GL_SPL_QUESTION());
+				lblQuestionMark.getElement().setId("lblQuestionMark");
+				lblQuestionMark.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
+				lblQuestionMark.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
+				
+				lblWhyEnterBirthday.setText(i18n.GL0411()
+						+i18n.GL_SPL_QUESTION());
+				lblWhyEnterBirthday.getElement().setId("lblWhyEnterBirthday");
+				lblWhyEnterBirthday.getElement().setAttribute("alt",i18n.GL0411());
+				lblWhyEnterBirthday.getElement().setAttribute("title",i18n.GL0411());
+				
+				lblWhyEnterBirthdayDesc.setText(i18n.GL0412());
+				lblWhyEnterBirthdayDesc.getElement().setId("lblWhyEnterBirthdayDesc");
+				lblWhyEnterBirthdayDesc.getElement().setAttribute("alt",i18n.GL0412());
+				lblWhyEnterBirthdayDesc.getElement().setAttribute("title",i18n.GL0412());
+				
+				lblNameTooltipContent.setText(i18n.GL0413());
+				lblNameTooltipContent.getElement().setId("lblNameTooltipContent");
+				lblNameTooltipContent.getElement().setAttribute("alt",i18n.GL0413());
+				lblNameTooltipContent.getElement().setAttribute("title",i18n.GL0413());
+				
+				lblEmailTooltipContent.setText(i18n.GL0414());
+				lblEmailTooltipContent.getElement().setId("lblEmailTooltipContent");
+				lblEmailTooltipContent.getElement().setAttribute("alt",i18n.GL0414());
+				lblEmailTooltipContent.getElement().setAttribute("title",i18n.GL0414());
+				
+				lblPasswordTooltipContent.setText(i18n.GL0415());
+				lblPasswordTooltipContent.getElement().setId("lblPasswordTooltipContent");
+				lblPasswordTooltipContent.getElement().setAttribute("alt",i18n.GL0415());
+				lblPasswordTooltipContent.getElement().setAttribute("title",i18n.GL0415());
+				
+				lblPleaseWait.setVisible(false);
+				lblPleaseWait.setText(i18n.GL0339());
+				lblPleaseWait.getElement().setId("lblPleaseWait");
+				lblPleaseWait.getElement().setAttribute("alt",i18n.GL0339());
+				lblPleaseWait.getElement().setAttribute("title",i18n.GL0339());
 
-			@Override
-			public void onClick(ClickEvent event) {
-				MixpanelUtil.select_student();
-				selectedRole = "student";
+				lblTeacher.setText(i18n.GL0416());
+				lblTeacher.getElement().setId("lblTeacher");
+				lblTeacher.getElement().setAttribute("alt",i18n.GL0416());
+				lblTeacher.getElement().setAttribute("title",i18n.GL0416());
+				
+				lblStudent.setText(i18n.GL0417());
+				lblStudent.getElement().setId("lblStudent");
+				lblStudent.getElement().setAttribute("alt",i18n.GL0417());
+				lblStudent.getElement().setAttribute("title",i18n.GL0417());
+				
+				lblParent.setText(i18n.GL0418());
+				lblParent.getElement().setId("lblParent");
+				lblParent.getElement().setAttribute("alt",i18n.GL0418());
+				lblParent.getElement().setAttribute("title",i18n.GL0418());
+				
+				lblOther.setText(i18n.GL0419());
+				lblOther.getElement().setId("lblOther");
+				lblOther.getElement().setAttribute("alt",i18n.GL0419());
+				lblOther.getElement().setAttribute("title",i18n.GL0419());
+				
+				lblAgree.setText(i18n.GL0420()+" ");
+				lblAgree.getElement().setId("lblAgree");
+				lblAgree.getElement().setAttribute("alt",i18n.GL0420());
+				lblAgree.getElement().setAttribute("title",i18n.GL0420());
+
+				txtChooseUsername.setPlaceholder(i18n.GL0423());
+				txtChooseUsername.getElement().setId("txtChooseUsername");
+				txtChooseUsername.setMaxLength(20);
+				
+				txtFirstName.setPlaceholder(i18n.GL0424());
+				txtFirstName.getElement().setId("txtFirstName");
+				
+				txtLastName.setPlaceholder(i18n.GL0425());
+				txtLastName.getElement().setId("txtLastName");
+				
+				txtChooseEmail.setPlaceholder(i18n.GL0426());
+				txtChooseEmail.getElement().setId("txtChooseEmail");
+				
+				txtChoosePassword.setPlaceholder(i18n.GL0204());
+				txtChoosePassword.getElement().setId("txtChoosePassword");
+				txtChoosePassword.setMaxLength(14);
+				
+				txtConfirmPassword.setPlaceholder(i18n.GL0427());
+				txtConfirmPassword.getElement().setId("txtConfirmPassword");
+				txtConfirmPassword.setMaxLength(14);
+				
+				panelDataOfBirth.getElement().setId("pnlDataOfBirth");
+				
+				errorLblForUsername.getElement().setId("errlblUserName");
+
+				userNameValidUc.getElement().setId("errlblUserNameValidUc");
+				userNameValidUc.getElement().setAttribute("alt",i18n.GL0473());
+				userNameValidUc.getElement().setAttribute("title",i18n.GL0473());
+				
+				txtChooseUsername.addKeyUpHandler(new OnKeyUpHandler());
+				txtFirstName.addKeyUpHandler(new OnKeyUpHandler());
+				txtLastName.addKeyUpHandler(new OnKeyUpHandler());
+				txtChooseEmail.addKeyUpHandler(new OnKeyUpHandler());
+				txtChoosePassword.addKeyUpHandler(new OnKeyUpHandler());
+				txtConfirmPassword.addKeyUpHandler(new OnKeyUpHandler());
+
+				txtChooseUsername.addBlurHandler(new OnBlurHandler());
+				txtChooseEmail.addBlurHandler(new OnBlurHandler());
+				txtParentEmailId.addBlurHandler(new OnBlurHandler());
+				txtParentEmailId.addKeyUpHandler(new OnKeyUpHandler());
+
+				txtChooseUsername.addMouseOverHandler(new OnMouseOver());
+				txtFirstName.addMouseOverHandler(new OnMouseOver());
+				txtLastName.addMouseOverHandler(new OnMouseOver());
+				txtChooseEmail.addMouseOverHandler(new OnMouseOver());
+				txtChoosePassword.addMouseOverHandler(new OnMouseOver());
+				txtConfirmPassword.addMouseOverHandler(new OnMouseOver());
+				panelDataOfBirth.addMouseOverHandler(new OnMouseOver());
+				lblQuestionMarkNeedParentAccount.addMouseOverHandler(new OnMouseOver());
+
+				txtChooseUsername.addMouseOutHandler(new OnMouseOut());
+				txtFirstName.addMouseOutHandler(new OnMouseOut());
+				txtLastName.addMouseOutHandler(new OnMouseOut());
+				txtChooseEmail.addMouseOutHandler(new OnMouseOut());
+				txtChoosePassword.addMouseOutHandler(new OnMouseOut());
+				txtConfirmPassword.addMouseOutHandler(new OnMouseOut());
+				panelDataOfBirth.addMouseOutHandler(new OnMouseOut());
+				lblQuestionMarkNeedParentAccount.addMouseOutHandler(new OnMouseOut());
+
+				txtFirstName.setMaxLength(20);
+				txtLastName.setMaxLength(20);		
+				
+				panelUserNamePopUp.setVisible(false);
+				panelUserNamePopUp.getElement().setId("pnlUserNamePopUp");
+				
+				panelPublic.setVisible(false);
+				panelPublic.getElement().setId("pnlPublic");
+				
+				panelEmail.setVisible(false);
+				panelEmail.getElement().setId("pnlEmail");
+				
+				panelPassword.setVisible(false);
+				panelPassword.getElement().setId("pnlPassword");
+				
+				ancCopyRight.setText(i18n.GL0421() + ",");
+				ancCopyRight.getElement().setId("lnkCopyRight");
+				ancCopyRight.getElement().setAttribute("alt",i18n.GL0421());
+				ancCopyRight.getElement().setAttribute("title",i18n.GL0421());
+				
+				ancTermsAndPrivacy.setText(i18n.GL0422());
+				ancTermsAndPrivacy.getElement().setId("lnkTermsAndPrivacy");
+				ancTermsAndPrivacy.getElement().setAttribute("alt",i18n.GL0422());
+				ancTermsAndPrivacy.getElement().setAttribute("title",i18n.GL0422());
+				
+				ancPrivacy.setText(i18n.GL0452());
+				ancPrivacy.getElement().setId("lnkPrivacy");
+				ancPrivacy.getElement().setAttribute("alt",i18n.GL0452());
+				ancPrivacy.getElement().setAttribute("title",i18n.GL0452());
+				
+				btnSignUp.setText(i18n.GL0186());
+				btnSignUp.getElement().setId("btnSignUp");
+				btnSignUp.getElement().setAttribute("alt",i18n.GL0186());
+				btnSignUp.getElement().setAttribute("title",i18n.GL0186());
+				btnSignUp.setEnabled(false);
+				btnSignUp.getElement().addClassName("disabled");
+
+				lblNeedParentsAccount.setText(i18n.GL0455());
+				lblNeedParentsAccount.getElement().setId("lblNeedParentsAccount");
+				lblNeedParentsAccount.getElement().setAttribute("alt",i18n.GL0455());
+				lblNeedParentsAccount.getElement().setAttribute("title",i18n.GL0455());
+				
+				lblMyParentHasGooruAccount.setText(i18n.GL0456());
+				lblMyParentHasGooruAccount.getElement().setId("lblMyParentHasGooruAccount");
+				lblMyParentHasGooruAccount.getElement().setAttribute("alt",i18n.GL0456());
+				lblMyParentHasGooruAccount.getElement().setAttribute("title",i18n.GL0456());
+				
+				txtParentEmailId.setPlaceholder(i18n.GL0457());
+				txtParentEmailId.getElement().setId("txtParentEmailId");
+				
+				lblOr.setText(i18n.GL0466());
+				lblOr.getElement().setId("lblOr");
+				lblOr.getElement().setAttribute("alt",i18n.GL0466());
+				lblOr.getElement().setAttribute("title",i18n.GL0466());
+				
+				lblMyParentDontHaveAccount.setText(i18n.GL0458());
+				lblMyParentDontHaveAccount.getElement().setId("lblMyParentDontHaveAccount");
+				lblMyParentDontHaveAccount.getElement().setAttribute("alt",i18n.GL0458());
+				lblMyParentDontHaveAccount.getElement().setAttribute("title",i18n.GL0458());
+				
+				ancParentRegister.setText(i18n.GL0459());
+				ancParentRegister.getElement().setId("lnkParentRegister");
+				ancParentRegister.getElement().setAttribute("alt",i18n.GL0459());
+				ancParentRegister.getElement().setAttribute("title",i18n.GL0459());
+				
+				lblQuestionMarkNeedParentAccount
+						.setText(i18n.GL_SPL_QUESTION());
+				lblQuestionMarkNeedParentAccount.getElement().setId("lblQuestionMarkNeedParentAccount");
+				lblQuestionMarkNeedParentAccount.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
+				lblQuestionMarkNeedParentAccount.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
+				
+				lblWhyNeedParentDesc.setText(i18n.GL0461());
+				lblWhyNeedParentDesc.getElement().setId("lblWhyNeedParentDesc");
+				lblWhyNeedParentDesc.getElement().setAttribute("alt",i18n.GL0461());
+				lblWhyNeedParentDesc.getElement().setAttribute("title",i18n.GL0461());
+				
+				lblWhyNeedParent.setText(i18n.GL0462()
+						+ i18n.GL_SPL_QUESTION());
+				lblWhyNeedParent.getElement().setId("lblWhyNeedParent");
+				lblWhyNeedParent.getElement().setAttribute("alt",i18n.GL0462());
+				lblWhyNeedParent.getElement().setAttribute("title",i18n.GL0462());
+				
+				tootltipContainer.getElement().setAttribute("style", "left:311px");
+				tootltipContainer.getElement().setId("pnlTootltipContainer");
+				
+				panelBelowThirteen.setVisible(false);
+				panelBelowThirteen.getElement().setId("pnlBelowThirteen");
+				
+				panelAboveThirteen.setVisible(true);
+				panelAboveThirteen.getElement().setId("pnlAboveThirteen");
+
+				lblGetCorrectEmail.setVisible(false);
+				lblGetCorrectEmail.getElement().setId("lblGetCorrectEmail");
+				lblGetCorrectEmail.getElement().setAttribute("alt","");
+				lblGetCorrectEmail.getElement().setAttribute("title","");
+				
+
+				dateValidationUc.setText(StringUtil.generateMessage(
+					i18n.GL0082(), BIRTH_DAY));
+				dateValidationUc.getElement().setId("errlblDateValidationUc");
+				dateValidationUc.getElement().setAttribute("alt",i18n.GL0473());
+				dateValidationUc.getElement().setAttribute("title",i18n.GL0473());
+				
+				lblSelectRole.setText(i18n.GL1146());
 				lblSelectRole.setVisible(false);
-				if (rbStudent.getValue()){
-					//Remove normal and Set Selected Image
-					panelStudent.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
+				lblSelectRole.getElement().setId("lblSelectRole");
+				lblSelectRole.getElement().setAttribute("alt",i18n.GL1146());
+				lblSelectRole.getElement().setAttribute("title",i18n.GL1146());
+				
+				parentEmailValidUc.getElement().setId("errlblParentEmailValidUc");
+				parentEmailValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
+				parentEmailValidUc.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+				firstNameValidUc.getElement().setId("errlblFirstNameValidUc");
+				errorLblForFirstName.getElement().setId("errlblFirstName");
+				
+				lastNameValidUc.getElement().setId("errlblLastNameValidUc");
+				errorLblForLastName.getElement().setId("errlblLastName");
+				
+				emailFieldContainer.getElement().setId("pnlEmailFieldContainer");
+				emailValidUc.getElement().setId("errlblEmailValidUc");
+				passwordValidUc.getElement().setId("errlblPasswordValidUc");
+				
+				panelTeacher.getElement().setId("pnlTeacher");
+				panelStudent.getElement().setId("pnlStudent");
+				panelParent.getElement().setId("pnlParent");
+				panelOther.getElement().setId("pnlOther");
+				
+				andText.setText(i18n.GL_GRR_AND()+" ");
+				andText.getElement().setId("spnAndText");
+				andText.getElement().setAttribute("alt",i18n.GL_GRR_AND());
+				andText.getElement().setAttribute("title",i18n.GL_GRR_AND());
+				
+				rbTeacher = new RadioButton("roleOption", "");
+				rbStudent = new RadioButton("roleOption", "");
+				rbParent = new RadioButton("roleOption", "");
+				rbOther = new RadioButton("roleOption", "");
+				
+				rbTeacher.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						MixpanelUtil.select_teacher();
+						selectedRole = "teacher";
+						lblSelectRole.setVisible(false);
+						if (rbTeacher.getValue()){
+							//Remove normal and Set Selected Image
+							panelTeacher.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
+						}
+						//Remove selected image and set normal
+						panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
+//						panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
+						panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
+						panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+					}
+				});
+				rbStudent.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						MixpanelUtil.select_student();
+						selectedRole = "student";
+						lblSelectRole.setVisible(false);
+						if (rbStudent.getValue()){
+							//Remove normal and Set Selected Image
+							panelStudent.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
+						}
+						//Remove selected image and set normal
+						panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
+						panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
+//						panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
+						panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+					}
+				});
+				rbParent.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						MixpanelUtil.select_parent();
+						selectedRole = "parent";
+						lblSelectRole.setVisible(false);
+						if (rbParent.getValue()){
+							//Remove normal and Set Selected Image
+							panelParent.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+						}
+						//Remove selected image and set normal
+						panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
+						panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
+						panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
+						//panelParent.getElement().removeClassName(res.css().parentRoleSelected());
+					}
+				});
+				rbOther.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						MixpanelUtil.select_other();
+						selectedRole = "other";
+						lblSelectRole.setVisible(false);
+						if (rbOther.getValue()){
+							//Remove normal and Set Selected Image
+							panelOther.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
+						}
+						//Remove selected image and set normal
+						//panelOther.getElement().removeClassName(res.css().otherRoleSelected());
+						panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
+						panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
+						panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+					}
+				});
+
+				rdTeacher.add(rbTeacher);
+				rdTeacher.getElement().setId("rdTeacher");
+				rdStudent.add(rbStudent);
+				rdStudent.getElement().setId("rdStudent");
+				rdParent.add(rbParent);
+				rdParent.getElement().setId("rdParent");
+				rdOther.add(rbOther);
+				rdOther.getElement().setId("rdOther");
+
+				if (account != null && account.equalsIgnoreCase("parent")) {
+					rbParent.setChecked(true);
+					selectedRole = "parent";
+				} else {
+					rbParent.setChecked(false);
+					selectedRole = null;
 				}
-				//Remove selected image and set normal
-				panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
-				panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
-//				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
-				panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
-			}
-		});
-		rbParent.addClickHandler(new ClickHandler() {
 
-			@Override
-			public void onClick(ClickEvent event) {
-				MixpanelUtil.select_parent();
-				selectedRole = "parent";
-				lblSelectRole.setVisible(false);
-				if (rbParent.getValue()){
-					//Remove normal and Set Selected Image
-					panelParent.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
-				}
-				//Remove selected image and set normal
-				panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
-				panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
-				panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
-				//panelParent.getElement().removeClassName(res.css().parentRoleSelected());
-			}
-		});
-		rbOther.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				MixpanelUtil.select_other();
-				selectedRole = "other";
-				lblSelectRole.setVisible(false);
-				if (rbOther.getValue()){
-					//Remove normal and Set Selected Image
-					panelOther.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
-				}
-				//Remove selected image and set normal
-				//panelOther.getElement().removeClassName(res.css().otherRoleSelected());
-				panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
-				panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
-				panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
-			}
-		});
-
-		rdTeacher.add(rbTeacher);
-		rdTeacher.getElement().setId("rdTeacher");
-		rdStudent.add(rbStudent);
-		rdStudent.getElement().setId("rdStudent");
-		rdParent.add(rbParent);
-		rdParent.getElement().setId("rdParent");
-		rdOther.add(rbOther);
-		rdOther.getElement().setId("rdOther");
-
-		if (account != null && account.equalsIgnoreCase("parent")) {
-			rbParent.setChecked(true);
-			selectedRole = "parent";
-		} else {
-			rbParent.setChecked(false);
-			selectedRole = null;
-		}
-
+//			}
+//		});
 	}
 	/**
 	 * 
@@ -1154,19 +1173,26 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-
-			if (event.getSource() == txtChooseUsername
-					|| event.getSource() == panelDataOfBirth) {
-				panelUserNamePopUp.setVisible(true);
-			} else if (event.getSource() == txtFirstName
-					|| event.getSource() == txtLastName) {
-				panelPublic.setVisible(true);
-			} else if (event.getSource() == txtChooseEmail) {
-				panelEmail.setVisible(true);
-			} else if (event.getSource() == txtChoosePassword
-					|| event.getSource() == txtConfirmPassword) {
-				panelPassword.setVisible(true);
-			}
+			
+			final TextBox txtField = (TextBox) event.getSource();
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					if (txtField == txtChooseUsername) {
+						panelUserNamePopUp.setVisible(true);
+					} else if (txtField == txtFirstName
+							|| txtField == txtLastName) {
+						panelPublic.setVisible(true);
+					} else if (txtField == txtChooseEmail) {
+						panelEmail.setVisible(true);
+					} else if (txtField == txtChoosePassword
+							|| txtField == txtConfirmPassword) {
+						panelPassword.setVisible(true);
+					}
+				}
+			});
+			
 		}
 	}
 	/**
@@ -1188,10 +1214,18 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			panelUserNamePopUp.setVisible(false);
-			panelPublic.setVisible(false);
-			panelEmail.setVisible(false);
-			panelPassword.setVisible(false);
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					panelUserNamePopUp.setVisible(false);
+					panelPublic.setVisible(false);
+					panelEmail.setVisible(false);
+					panelPassword.setVisible(false);
+				
+				}
+			});
 		}
 
 	}
@@ -1214,84 +1248,67 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onBlur(BlurEvent event) {
-			btnSignUp.setEnabled(false);
-			btnSignUp.getElement().addClassName("disabled");
-			
-			if (event.getSource() == txtChooseEmail
-					&& txtChooseEmail.getText() != null
-					&& !txtChooseEmail.getText().equalsIgnoreCase("")) {
-				boolean isValidFrom = txtChooseEmail.getText().matches(EMAIL_REGEX);
-				if (isValidFrom) {
-					isValidEmailId = checkUserAvailability(
-							txtChooseEmail.getText(), "emailId");
-					emailValidUc.setVisible(false);
-					txtChooseEmail.removeStyleName(res.css().errorMsgDisplay());
-				} else {
-					txtChooseEmail.addStyleName(res.css().errorMsgDisplay());
-					emailValidUc.addStyleName(res.css().errorLbl());
-					emailValidUc.setText(i18n.GL0464());
-					emailValidUc.getElement().setAttribute("alt",i18n.GL0464());
-					emailValidUc.getElement().setAttribute("title",i18n.GL0464());
-					emailValidUc.setVisible(true);
-				}
-			} else if (event.getSource() == txtChooseUsername
-					&& txtChooseUsername.getText().trim() != null
-					&& !txtChooseUsername.getText().equalsIgnoreCase("")) {
-					/*
-					//Check for Bad Words
-					Map<String, String> parms = new HashMap<String, String>();
-					parms.put("text", txtChooseUsername.getText().trim());
-					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-		
-						@Override
-						public void onSuccess(Boolean value) {
-							boolean isHavingBadWords = value;
-							if (value){
-								txtChooseUsername.getElement().getStyle().setBorderColor("orange");
-								userNameValidUc.setText(i18n.GL0554);
+			final TextBox txtField = (TextBox) event.getSource();
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {	
+
+					btnSignUp.setEnabled(false);
+					btnSignUp.getElement().addClassName("disabled");
+					
+					if (txtField == txtChooseEmail
+							&& txtChooseEmail.getText() != null
+							&& !txtChooseEmail.getText().equalsIgnoreCase("")) {
+						boolean isValidFrom = txtChooseEmail.getText().matches(EMAIL_REGEX);
+						if (isValidFrom) {
+							isValidEmailId = checkUserAvailability(
+									txtChooseEmail.getText(), "emailId");
+							emailValidUc.setVisible(false);
+							txtChooseEmail.removeStyleName(res.css().errorMsgDisplay());
+						} else {
+							txtChooseEmail.addStyleName(res.css().errorMsgDisplay());
+							emailValidUc.addStyleName(res.css().errorLbl());
+							emailValidUc.setText(i18n.GL0464());
+							emailValidUc.getElement().setAttribute("alt",i18n.GL0464());
+							emailValidUc.getElement().setAttribute("title",i18n.GL0464());
+							emailValidUc.setVisible(true);
+						}
+					} else if (txtField == txtChooseUsername
+							&& txtChooseUsername.getText().trim() != null
+							&& !txtChooseUsername.getText().equalsIgnoreCase("")) {
+										
+							if (txtChooseUsername.getText().length() < 4 || txtChooseUsername.getText().length() > 20){
+								userNameValidUc.addStyleName(res.css().errorLbl());
+								userNameValidUc.setText(i18n.GL0473());
 								userNameValidUc.setVisible(true);
 								isValidUserName = false;
-							}else{
-								txtChooseUsername.getElement().getStyle().clearBackgroundColor();
-								txtChooseUsername.getElement().getStyle().setBorderColor("#ddd");
-								userNameValidUc.setVisible(false);*/
-								
-								/// Words are clear then continue the next steps
-								
-								if (txtChooseUsername.getText().length() < 4 || txtChooseUsername.getText().length() > 20){
-									userNameValidUc.addStyleName(res.css().errorLbl());
-									userNameValidUc.setText(i18n.GL0473());
-									userNameValidUc.setVisible(true);
-									isValidUserName = false;
+							}
+							else{
+								isValidUserName = checkUserAvailability(
+									txtChooseUsername.getText(), "username");
+							}
+							Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
+							if(!userNameValidate){
+								userNameValidUc.addStyleName(res.css().errorLbl());
+								 if(!txtChooseUsername.getText().contains(" ")){
+										if (txtChooseUsername.isVisible()){
+											userNameValidUc.setText(i18n.GL0475());
+											}
+								}else if(txtChooseUsername.getText().contains(" ")){
+									userNameValidUc.setText(i18n.GL1635());
 								}
-								else{
-									isValidUserName = checkUserAvailability(
-										txtChooseUsername.getText(), "username");
-								}
-								Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
-								if(!userNameValidate){
-									userNameValidUc.addStyleName(res.css().errorLbl());
-									 if(!txtChooseUsername.getText().contains(" ")){
-											if (txtChooseUsername.isVisible()){
-												userNameValidUc.setText(i18n.GL0475());
-												}
-									}else if(txtChooseUsername.getText().contains(" ")){
-										userNameValidUc.setText(i18n.GL1635());
-									}
-									userNameValidUc.setVisible(true);
-									isValidUserName = false;	
-								}
-								
-								/*}
-						}
-					});*/
-					
-			} else if (event.getSource() == txtParentEmailId
-					&& txtParentEmailId.getText() != null
-					&& !txtParentEmailId.getText().equalsIgnoreCase("")) {
-				isValidEmailId = checkUserRegisteredWithGooru(
-						txtParentEmailId.getText(), "emailId");
-			}
+								userNameValidUc.setVisible(true);
+								isValidUserName = false;	
+							}
+					} else if (txtField == txtParentEmailId
+							&& txtParentEmailId.getText() != null
+							&& !txtParentEmailId.getText().equalsIgnoreCase("")) {
+						isValidEmailId = checkUserRegisteredWithGooru(
+								txtParentEmailId.getText(), "emailId");
+					}
+				}
+			});
 		}
 	}
 	/**
@@ -1313,28 +1330,36 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			passwordValidUc.setVisible(false);
-			if (event.getSource() == txtChooseUsername) {
-				txtChooseUsername.removeStyleName(res.css().errorMsgDisplay());
-				txtChooseUsername.getElement().getStyle().clearBackgroundColor();
-				txtChooseUsername.getElement().getStyle().setBorderColor("#ddd");
-				userNameValidUc.setText("");
-				userNameValidUc.setVisible(false);
-			} else if (event.getSource() == txtFirstName) {
-				txtFirstName.removeStyleName(res.css().errorMsgDisplay());
-			} else if (event.getSource() == txtLastName) {
-				txtLastName.removeStyleName(res.css().errorMsgDisplay());
-			} else if (event.getSource() == txtChooseEmail) {
-				txtChooseEmail.removeStyleName(res.css().errorMsgDisplay());
-				emailValidUc.setVisible(false);
-			} else if (event.getSource() == txtChoosePassword) {
-				txtChoosePassword.removeStyleName(res.css().errorMsgDisplay());
-			} else if (event.getSource() == txtConfirmPassword) {
-				txtConfirmPassword.removeStyleName(res.css().errorMsgDisplay());
-			} else if (event.getSource() == txtParentEmailId) {
-				txtParentEmailId.removeStyleName(res.css().errorMsgDisplay());
-				parentEmailValidUc.setVisible(false);
-			}
+			final TextBox txtField = (TextBox) event.getSource();
+			
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					passwordValidUc.setVisible(false);
+					if (txtField == txtChooseUsername) {
+						txtChooseUsername.removeStyleName(res.css().errorMsgDisplay());
+						txtChooseUsername.getElement().getStyle().clearBackgroundColor();
+						txtChooseUsername.getElement().getStyle().setBorderColor("#ddd");
+						userNameValidUc.setText("");
+						userNameValidUc.setVisible(false);
+					} else if (txtField == txtFirstName) {
+						txtFirstName.removeStyleName(res.css().errorMsgDisplay());
+					} else if (txtField == txtLastName) {
+						txtLastName.removeStyleName(res.css().errorMsgDisplay());
+					} else if (txtField == txtChooseEmail) {
+						txtChooseEmail.removeStyleName(res.css().errorMsgDisplay());
+						emailValidUc.setVisible(false);
+					} else if (txtField == txtChoosePassword) {
+						txtChoosePassword.removeStyleName(res.css().errorMsgDisplay());
+					} else if (txtField == txtConfirmPassword) {
+						txtConfirmPassword.removeStyleName(res.css().errorMsgDisplay());
+					} else if (txtField == txtParentEmailId) {
+						txtParentEmailId.removeStyleName(res.css().errorMsgDisplay());
+						parentEmailValidUc.setVisible(false);
+					}
+				}
+			});
 		}
 
 	}
@@ -1413,9 +1438,13 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			// TODO Auto-generated method stub
-		
-			toolTip.getElement().getStyle().setDisplay(Display.BLOCK);
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					toolTip.getElement().getStyle().setDisplay(Display.BLOCK);
+				}
+			});
 		}
 		
 	}
@@ -1438,12 +1467,14 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			// TODO Auto-generated method stub
-			toolTip.getElement().getStyle().setDisplay(Display.NONE);
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					toolTip.getElement().getStyle().setDisplay(Display.NONE);
+				}
+			});
 		}
-
-	
-		
 	}
 
 	
@@ -1503,36 +1534,44 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox()
-					.getText().isEmpty())
-					&& dateBoxUc.hasValidateDate()) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-				Date date = dateBoxUc.getValue();
-				int age = getAge(date);
-				if (age < 13) {
-					MixpanelUtil.create_Child_account();
-					dob = dateBoxUc.getDate();
-					underThirtheen = true;
-					panelBelowThirteen.setVisible(true);
-					popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-					userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
-					if (panelAboveThirteen.isVisible()) {
-						btnSignUp.setText(i18n.GL0460());
+					if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox()
+							.getText().isEmpty())
+							&& dateBoxUc.hasValidateDate()) {
+
+						Date date = dateBoxUc.getValue();
+						int age = getAge(date);
+						if (age < 13) {
+							MixpanelUtil.create_Child_account();
+							dob = dateBoxUc.getDate();
+							underThirtheen = true;
+							panelBelowThirteen.setVisible(true);
+							popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+							userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+							if (panelAboveThirteen.isVisible()) {
+								btnSignUp.setText(i18n.GL0460());
+							}
+							panelAboveThirteen.setVisible(false);
+						}else{
+							underThirtheen = false;
+							panelBelowThirteen.setVisible(false);
+							popupbody.removeStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+							popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().userInfoContainer());
+							userDetailscontainer.removeStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+
+							panelAboveThirteen.setVisible(true);
+							btnSignUp.setText(i18n.GL0186());
+						}
+					} else {
+//						dateBoxUc.getDatePickerUc().hide();
 					}
-					panelAboveThirteen.setVisible(false);
-				}else{
-					underThirtheen = false;
-					panelBelowThirteen.setVisible(false);
-					popupbody.removeStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-					popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().userInfoContainer());
-					userDetailscontainer.removeStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
-
-					panelAboveThirteen.setVisible(true);
-					btnSignUp.setText(i18n.GL0186());
+				
 				}
-			} else {
-//				dateBoxUc.getDatePickerUc().hide();
-			}
+			});
 		}
 		
 	}
@@ -1554,14 +1593,19 @@ public abstract class CreateAccountUc extends PopupPanel{
 	private class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
-			dateBoxUc.removeStyleName(NewRegisterCBundle.INSTANCE.css()
-					.gooruDateBoxError());
-			dateBoxUc.getDateBox().removeStyleName(
-					NewRegisterCBundle.INSTANCE.css().gooruDateError());
-			if (dateValidationUc.isVisible()) {
-				dateValidationUc.setVisible(false);
-			}
-
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					dateBoxUc.removeStyleName(NewRegisterCBundle.INSTANCE.css()
+							.gooruDateBoxError());
+					dateBoxUc.getDateBox().removeStyleName(
+							NewRegisterCBundle.INSTANCE.css().gooruDateError());
+					if (dateValidationUc.isVisible()) {
+						dateValidationUc.setVisible(false);
+					}
+				}
+			});
 		}
 	}
 	/**
@@ -1582,37 +1626,42 @@ public abstract class CreateAccountUc extends PopupPanel{
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			dateBoxUc.getDateBox().removeStyleName(res.css().errorMsgDisplay());
-			if (dateBoxUc.dateValidation()) {
-				if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox()
-						.getText().isEmpty())
-						&& dateBoxUc.hasValidateDate()) {
-						Date date = dateBoxUc.getValue();
-						int age = getAge(date);
-						if (age < 13) {
-							if (account != null && !underThirtheen){
-								dateValidationUc.setText(i18n.GL0503());
-								dateValidationUc.setVisible(true);
-								isValidUserName = false;
-							}else{
-								MixpanelUtil.create_Child_account();
-								dob = dateBoxUc.getDate();
-								// TODO set the parent user details.
-								underThirtheen = true;
-								panelBelowThirteen.setVisible(true);
-								popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-								userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
-								if (panelAboveThirteen.isVisible()) {
-									btnSignUp.setText(i18n.GL0460());
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					dateBoxUc.getDateBox().removeStyleName(res.css().errorMsgDisplay());
+					if (dateBoxUc.dateValidation()) {
+						if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox()
+								.getText().isEmpty())
+								&& dateBoxUc.hasValidateDate()) {
+								Date date = dateBoxUc.getValue();
+								int age = getAge(date);
+								if (age < 13) {
+									if (account != null && !underThirtheen){
+										dateValidationUc.setText(i18n.GL0503());
+										dateValidationUc.setVisible(true);
+										isValidUserName = false;
+									}else{
+										MixpanelUtil.create_Child_account();
+										dob = dateBoxUc.getDate();
+										underThirtheen = true;
+										panelBelowThirteen.setVisible(true);
+										popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+										userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+										if (panelAboveThirteen.isVisible()) {
+											btnSignUp.setText(i18n.GL0460());
+										}
+										panelAboveThirteen.setVisible(false);
+									}
 								}
-								panelAboveThirteen.setVisible(false);
-							}
+							
+						} else {
+							dateBoxUc.getDatePickerUc().hide();
 						}
-					
-				} else {
-					dateBoxUc.getDatePickerUc().hide();
+					}
 				}
-			}
+			});
 		}
 	}
 	
@@ -1635,33 +1684,41 @@ public abstract class CreateAccountUc extends PopupPanel{
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
-			dateBoxUc.removeStyleName(NewRegisterCBundle.INSTANCE.css()
-					.gooruDateBoxError());
-			dateBoxUc.getDateBox().removeStyleName(
-					NewRegisterCBundle.INSTANCE.css().gooruDateError());
-			if (dateBoxUc.getValue() != null){
-				Date date = dateBoxUc.getValue();
-				int age = getAge(date);
-				if (age < 13) {
-					if (account != null && !underThirtheen){
-						dateValidationUc.setText(i18n.GL0503());
-						dateValidationUc.setVisible(true);
-						isValidUserName = false;
-					}else{
-						MixpanelUtil.create_Child_account();
-						dob = dateBoxUc.getDate();
-						// TODO set the parent user details.
-						underThirtheen = true;
-						panelBelowThirteen.setVisible(true);
-						popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-						userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
-						if (panelAboveThirteen.isVisible()) {
-							btnSignUp.setText(i18n.GL0460());
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					dateBoxUc.removeStyleName(NewRegisterCBundle.INSTANCE.css()
+							.gooruDateBoxError());
+					dateBoxUc.getDateBox().removeStyleName(
+							NewRegisterCBundle.INSTANCE.css().gooruDateError());
+					if (dateBoxUc.getValue() != null){
+						Date date = dateBoxUc.getValue();
+						int age = getAge(date);
+						if (age < 13) {
+							if (account != null && !underThirtheen){
+								dateValidationUc.setText(i18n.GL0503());
+								dateValidationUc.setVisible(true);
+								isValidUserName = false;
+							}else{
+								MixpanelUtil.create_Child_account();
+								dob = dateBoxUc.getDate();
+								// TODO set the parent user details.
+								underThirtheen = true;
+								panelBelowThirteen.setVisible(true);
+								popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+								userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+								if (panelAboveThirteen.isVisible()) {
+									btnSignUp.setText(i18n.GL0460());
+								}
+								panelAboveThirteen.setVisible(false);
+							}
 						}
-						panelAboveThirteen.setVisible(false);
 					}
+				
 				}
-			}
+			});
 		}
 	}
 	/**
@@ -1734,40 +1791,48 @@ public abstract class CreateAccountUc extends PopupPanel{
 	 * @param emailId
 	 *            of user
 	 */
-	private void validateAvailability(UserDo user, String accountType,
-			String emailId) {
-		if (!user.isAvailability() && user.getConfirmStatus() == 0) {
-			this.hide();
-			if (parentRegisterVc != null) {
-				parentRegisterVc.getPopupPanel().hide();
-			}
-			new RegistrationConfirmationVc();
-			// registerUser(accountType, emailId, dob);
-		} else if (user.isAvailability() && user.getConfirmStatus() == 0) {
-			this.hide();
-			Map<String, String> params = new HashMap<String, String>();
-			params.put(GOORU_UID, user.getGooruUId());
-			params.put(ACCOUNT_TYPE, accountType);
-			sendConfirmationMail(params);
-			new AlertContentUc(i18n.GL0065(),
-					i18n.GL0092());
+	private void validateAvailability(final UserDo user, final String accountType,
+			final String emailId) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 
-		} else if (user.isAvailability() && user.getConfirmStatus() == 1) {
-			if (!accountType.equalsIgnoreCase(PARENT)) {
-				new AlertContentUc(i18n.GL0065(),
-						i18n.GL0214());
-			} else {
-				Map<String, String> params = new HashMap<String, String>();
-				params.put(GOORU_UID, user.getGooruUId());
-				params.put(ACCOUNT_TYPE, accountType);
-				params.put(DATE_OF_BIRTH, dob);
-				sendConfirmationMail(params);
-				if (parentRegisterVc != null) {
-					parentRegisterVc.getPopupPanel().hide();
+				if (!user.isAvailability() && user.getConfirmStatus() == 0) {
+					hide();
+					if (parentRegisterVc != null) {
+						parentRegisterVc.getPopupPanel().hide();
+					}
+					new RegistrationConfirmationVc();
+					// registerUser(accountType, emailId, dob);
+				} else if (user.isAvailability() && user.getConfirmStatus() == 0) {
+					hide();
+					Map<String, String> params = new HashMap<String, String>();
+					params.put(GOORU_UID, user.getGooruUId());
+					params.put(ACCOUNT_TYPE, accountType);
+					sendConfirmationMail(params);
+					new AlertContentUc(i18n.GL0065(),
+							i18n.GL0092());
+
+				} else if (user.isAvailability() && user.getConfirmStatus() == 1) {
+					if (!accountType.equalsIgnoreCase(PARENT)) {
+						new AlertContentUc(i18n.GL0065(),
+								i18n.GL0214());
+					} else {
+						Map<String, String> params = new HashMap<String, String>();
+						params.put(GOORU_UID, user.getGooruUId());
+						params.put(ACCOUNT_TYPE, accountType);
+						params.put(DATE_OF_BIRTH, dob);
+						sendConfirmationMail(params);
+						if (parentRegisterVc != null) {
+							parentRegisterVc.getPopupPanel().hide();
+						}
+						new RegistrationConfirmationVc();
+					}
 				}
-				new RegistrationConfirmationVc();
+			
 			}
-		}
+		});
 	}
 
 	/**
@@ -1822,49 +1887,53 @@ public abstract class CreateAccountUc extends PopupPanel{
 		}
 		@Override
 		public void onBlur(BlurEvent event) {
-
-			
-			Map<String, String> parms = new HashMap<String, String>();
-			if(textBox!=null){
-				parms.put("text", textBox.getValue());
-			}else{
-				parms.put("text", richTextArea.getText());
-			}
-			btnSignUp.setEnabled(false);
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
 				@Override
-				public void onSuccess(Boolean value) {
-					btnSignUp.setEnabled(true);
-					SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+				public void onSuccess() {
+					Map<String, String> parms = new HashMap<String, String>();
 					if(textBox!=null){
-						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
-						label.getElement().getStyle().setWidth(87, Unit.PCT);
-						errorLblForFirstName.getElement().getStyle().setTop(-3, Unit.PX);
+						parms.put("text", textBox.getValue());
+					}else{
+						parms.put("text", richTextArea.getText());
 					}
+					btnSignUp.setEnabled(false);
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+						@Override
+						public void onSuccess(Boolean value) {
+							btnSignUp.setEnabled(true);
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+							if(textBox!=null){
+								label.getElement().getStyle().setPosition(Position.ABSOLUTE);
+								label.getElement().getStyle().setWidth(87, Unit.PCT);
+								errorLblForFirstName.getElement().getStyle().setTop(-3, Unit.PX);
+							}
+							
+							if(userNameValidUc.isVisible() && errorLblForUsername.isVisible())
+							{
+								userNameValidUc.setVisible(false);
+								label.getElement().getStyle().clearPosition();
+							}
+							else
+							{
+								label.getElement().getStyle().setPosition(Position.ABSOLUTE);
+							}
 					
-					if(userNameValidUc.isVisible() && errorLblForUsername.isVisible())
-					{
-						userNameValidUc.setVisible(false);
-						label.getElement().getStyle().clearPosition();
-					}
-					else
-					{
-						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
-					}
-			
-					if(errorLblForLastName.isVisible()|| errorLblForFirstName.isVisible())
-					{
-						emailFieldContainer.getElement().setAttribute("style", "margin-top:30px;");
-					}			 
-					else
-					{
-						emailFieldContainer.getElement().removeAttribute("style");
-					}
-					if(errorLblForUsername.isVisible()){
-						errorLblForUsername.getElement().getStyle().setTop(-8, Unit.PX);
-						errorLblForUsername.getElement().getStyle().setLeft(16,  Unit.PX);
-					}
+							if(errorLblForLastName.isVisible()|| errorLblForFirstName.isVisible())
+							{
+								emailFieldContainer.getElement().setAttribute("style", "margin-top:30px;");
+							}			 
+							else
+							{
+								emailFieldContainer.getElement().removeAttribute("style");
+							}
+							if(errorLblForUsername.isVisible()){
+								errorLblForUsername.getElement().getStyle().setTop(-8, Unit.PX);
+								errorLblForUsername.getElement().getStyle().setLeft(16,  Unit.PX);
+							}
+						}
+					});
 				}
 			});
 		}
@@ -1888,8 +1957,13 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			// TODO Auto-generated method stub
-			tootltipContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					tootltipContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+				}
+			});
 		}
 		
 	}
@@ -1912,12 +1986,13 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			// TODO Auto-generated method stub
-			tootltipContainer.getElement().getStyle().setDisplay(Display.NONE);
-
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					tootltipContainer.getElement().getStyle().setDisplay(Display.NONE);
+				}
+			});
 		}
-
-		
-		
 	}
 }

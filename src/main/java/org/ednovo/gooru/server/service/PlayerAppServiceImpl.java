@@ -405,10 +405,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		try {
 			createSessionObject.put("contentGooruId", collectionGooruOid);
-			if(clientsSessionId!=null){
+			if(clientsSessionId!=null && !clientsSessionId.isEmpty()){
 				createSessionObject.put("parentGooruId", clientsSessionId);
-			}else{
-				createSessionObject.put("parentGooruId", "");
 			}
 			createSessionObject.put("mode", "test");
 			createSessionObject.put("type", mode);

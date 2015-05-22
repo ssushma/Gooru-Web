@@ -103,7 +103,7 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
-				if(result!=null &result.size()>0){
+				if(result!=null && result.size()>0){
 					for(int i =0;i<result.size();i++){
 						 if(result.get(i).getDeleteContentGooruOid()!=null){
 						  gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
