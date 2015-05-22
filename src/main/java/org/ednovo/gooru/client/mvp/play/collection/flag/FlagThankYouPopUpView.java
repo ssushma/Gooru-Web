@@ -4,8 +4,10 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
@@ -60,6 +62,10 @@ public class FlagThankYouPopUpView extends PopupPanel
 		
 		closeButton.getElement().setId("epnlCloseButton");
 	}
+	@UiHandler("popUpCloseButton")
+	public void closePopupOnCloseButton(ClickEvent event){
+		hide();
+	}
 	
 	public HTMLEventPanel getCloseButton(){
 		return closeButton;
@@ -67,6 +73,4 @@ public class FlagThankYouPopUpView extends PopupPanel
 	public Button getOkButton(){
 		return okButton;
 	}
-	
-
 }

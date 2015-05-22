@@ -9,7 +9,6 @@
 		   	<div class="{res.css.popupgreyHeader}">
 		   	    <g:HTMLPanel styleName="row">
 		   			<g:Label styleName="col-md-8 col-xs-8" ui:field="flagHeaderText"></g:Label>
-		   			
 	           		<panel:HTMLEventPanel ui:field="closeButton" styleName="col-md-4 col-xs-4 {res.css.closeContainer}">
 	        	    	<g:Anchor ui:field="popUpCloseButton" styleName="{res.css.closeButton}"/>
 	        		</panel:HTMLEventPanel> 
