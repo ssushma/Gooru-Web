@@ -44,10 +44,7 @@ import com.google.gwt.core.client.RunAsyncCallback;
  *
  * @Reviewer:
  */
-public abstract class SimpleRunAsyncCallback implements RunAsyncCallback {
-
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+public abstract class SimpleRunAsyncCallback implements RunAsyncCallback {	
 	@Override
 	public void onFailure(Throwable caught) {
 		

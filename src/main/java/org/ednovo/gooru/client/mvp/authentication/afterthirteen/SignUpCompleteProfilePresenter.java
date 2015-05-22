@@ -26,12 +26,14 @@ package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThankPopUpForUpdateProfile;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -72,12 +74,12 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 		super.onReveal();
 	}
 	public void showUploadProfileImageWidget(){
-	imageUploadPresenter.showUploadTypeWidgets(false);
-	addToPopupSlot(imageUploadPresenter);
-	imageUploadPresenter.setProfileImage(false);
-	imageUploadPresenter.setCollectionImage(false);
-	imageUploadPresenter.setEditResourceImage(false);
-	imageUploadPresenter.setUdateProfileImage(true);
+		imageUploadPresenter.showUploadTypeWidgets(false);
+		addToPopupSlot(imageUploadPresenter);
+		imageUploadPresenter.setProfileImage(false);
+		imageUploadPresenter.setCollectionImage(false);
+		imageUploadPresenter.setEditResourceImage(false);
+		imageUploadPresenter.setUdateProfileImage(true);
 	}
 	@Override
 	public void displayView(){
@@ -88,14 +90,20 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 		getView().setUpdateProfileImage(imageUrl);
 	}
 	@Override
-	public void updateProfile(String fname,String lname,String aboutMe,String password) {
-		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, null, new SimpleAsyncCallback<V2UserDo>() {
-
+	public void updateProfile(final String fname,final String lname,final String aboutMe,final String password) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void onSuccess(V2UserDo result) {
-				getView().getUpdateButton().setVisible(false);
-				ThankPopUpForUpdateProfile thankPopUpForUpdateProfile=new ThankPopUpForUpdateProfile();
-				thankPopUpForUpdateProfile.show();
+			public void onSuccess() {
+				AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, null, new SimpleAsyncCallback<V2UserDo>() {
+
+					@Override
+					public void onSuccess(V2UserDo result) {
+						getView().getUpdateButton().setVisible(false);
+						ThankPopUpForUpdateProfile thankPopUpForUpdateProfile=new ThankPopUpForUpdateProfile();
+						thankPopUpForUpdateProfile.show();
+					}
+				});
 			}
 		});
 	}
