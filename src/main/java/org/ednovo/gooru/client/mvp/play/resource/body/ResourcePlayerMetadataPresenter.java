@@ -281,6 +281,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 					if(collectionPlayerPresenter!=null){
 						collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
 					}
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
+						if(resourcePlayerPresenter!=null){
+							resourcePlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
+						}
+					}
 					
 				}
 			});
@@ -333,6 +338,12 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		if(collectionPlayerPresenter!=null){
 			collectionPlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
 		}
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
+			if(resourcePlayerPresenter!=null){
+				resourcePlayerPresenter.updateRatReacSessionActivityItem(starRatingValue, resourceGooruId, RATING);
+			}
+		}
+		
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarRatings(gooruOid, starRatingValue, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
 
 			@Override
