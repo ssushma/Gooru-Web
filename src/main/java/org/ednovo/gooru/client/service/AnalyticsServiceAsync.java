@@ -64,7 +64,7 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
     
     void getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId,AsyncCallback<ArrayList<OetextDataDO>> callback);
     
-    void postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode,AsyncCallback<FeedBackResponseDataDO> callback);
+    void postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode,String feedbackProvidedUserUid,AsyncCallback<FeedBackResponseDataDO> callback);
 	
     void sendEmail(String to,String subject,String message,String displayName,String fileName,String path,AsyncCallback<Void> callback);
 
