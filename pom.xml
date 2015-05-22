@@ -720,7 +720,7 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<reporting>
+	<!-- <reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -735,6 +735,6 @@
 				</reportSets>
 			</plugin>
 		</plugins>
-	</reporting>
+	</reporting> -->
 
 </project>
