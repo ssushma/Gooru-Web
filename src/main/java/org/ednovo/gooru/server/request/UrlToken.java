@@ -144,7 +144,7 @@ public enum UrlToken {
 
 	LIST_MY_FOLDER_LEVELS("/folder/{0}/item?"),
 	
-	GET_A_FOLDER_INFORMATION("/folder/{0}"),
+	GET_A_FOLDER_INFORMATION("/v2/folder/{0}"),
 
 	CREATE_CLASSPAGE("/classpage"),
 	
