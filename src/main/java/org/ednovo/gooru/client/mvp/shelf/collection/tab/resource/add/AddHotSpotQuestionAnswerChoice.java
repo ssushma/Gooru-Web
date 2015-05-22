@@ -64,7 +64,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	
 	private static final String PLUS_IMAGE="images/add-symbol.png";
 	
-	@UiField Label answerHeadLbl,answerHeadingTypeLbl,correctLbl;
+	@UiField Label answerHeadLbl,answerHeadingTypeLbl;
 
 	@UiField
 	public Label errorMessageforAnswerChoice;
@@ -78,12 +78,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	@UiField
 	public RadioButton textRDButton;
-
-	@UiField
-	public RadioButton singleRDButton;
-
-	@UiField
-	public	RadioButton multiRDButton;
 	
 	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 	public String fieldValue;
@@ -112,20 +106,8 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		textRDButton.setText(i18n.GL3229());
 		textRDButton.getElement().setAttribute("alt", i18n.GL3229());
 		textRDButton.getElement().setAttribute("title", i18n.GL3229());
-		correctLbl.getElement().setId("correctLbl");
-		correctLbl.setText(i18n.GL0314());
-		correctLbl.getElement().setAttribute("alt", i18n.GL0314());
-		correctLbl.getElement().setAttribute("title", i18n.GL0314());
 		imgContainer.getElement().setId("pnlImgBoxContainer");
 		textAnsContainer.getElement().setId("pnlTextBoxContainer");
-		singleRDButton.getElement().setId("rdSingle");
-		singleRDButton.setText(i18n.GL3222());
-		singleRDButton.getElement().setAttribute("alt", i18n.GL3222());
-		singleRDButton.getElement().setAttribute("title", i18n.GL3222());
-		multiRDButton.getElement().setId("rdMultiple");
-		multiRDButton.setText(i18n.GL3223());
-		multiRDButton.getElement().setAttribute("alt", i18n.GL3223());
-		multiRDButton.getElement().setAttribute("title", i18n.GL3223());
 		answerHeadContainer.getElement().setId("pnlAnswerHeadConatiner");
 		ansChoiceDeleteButton.setStyleName("answerMarkDelete");
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -144,7 +126,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		ansImageContainer.getElement().setId("pnlAnsImageContainer");
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		setAnswerFields(true);
-		selectedChoiceAnswer(true);
 	}
 	
 	public void setAnswerFields(boolean val){
@@ -163,16 +144,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		}
 		
 	}
-	public void selectedChoiceAnswer(boolean single){
-		
-		if(single){
-			singleRDButton.setChecked(true);
-			
-		}else{
-			multiRDButton.setChecked(true);
-		}
-		
-	}
 	
 	@UiHandler("imageRDButton")
 	public void imageRDButtonClick(ClickEvent event){
@@ -184,21 +155,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		textAnsContainer.clear();
 		addAnswerChoice();
 		
-	}
-	@UiHandler("singleRDButton")
-	public void singleRDButtonClick(ClickEvent event){
-		singleRDButton.setValue(true);
-		multiRDButton.setValue(false);
-		singleRDButton.setChecked(true);
-		multiRDButton.setChecked(false);
-		setSelectedAnswers();
-	}
-	@UiHandler("multiRDButton")
-	public void multiRDButtonClick(ClickEvent event){
-		singleRDButton.setValue(false);
-		multiRDButton.setValue(true);
-		singleRDButton.setChecked(false);
-		multiRDButton.setChecked(true);
 	}
 	
 	public void setAnswerChoices(){
@@ -250,14 +206,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		int widgetCount=textAnsContainer.getWidgetCount();
 		for(int i=0;i<widgetCount;i++){
 			final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)textAnsContainer.getWidget(i);
-			
-			if(singleRDButton.isChecked()){
-				addAnswerChoice.optionSelectedButton.removeStyleName("answerMarkSelected");
-				addAnswerChoice.optionSelectedButton.addStyleName("answerMarkDeselected");
-				
-			}else{
-				
-			}
 			
 		}
 	}
