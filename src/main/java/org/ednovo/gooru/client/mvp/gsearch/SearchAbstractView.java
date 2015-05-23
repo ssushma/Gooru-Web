@@ -254,7 +254,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
 									}else{
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 6);
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
 									}
 								}
 								pageNumber--;
@@ -275,7 +275,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 								}else{
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 6);
+									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
 								}
 							}else{
 								isApiInProgress=isApiInProgressLoad=true;
@@ -1580,6 +1580,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		localStore.clear();
 		isForwardScroll=true;
 		previousValue=0;
+		pageFlag=false;
 	}
 	public void resetDataBacktoTop(){
 		searchResultPanel.clear();
@@ -1590,6 +1591,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		isApiInProgressLoad=true;
 		pageNumber = 1;
 		pageCountForStorage=1;
+		pageFlag=false;
 		localStore.clear();
 		isForwardScroll=true;
 		getUiHandlers().resetLocalStorageData();
