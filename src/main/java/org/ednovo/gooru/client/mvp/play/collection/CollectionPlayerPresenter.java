@@ -564,9 +564,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
                         isRefreshed = refreshed;
                         isItem_lodRefreshed = refreshed;
                         removeCookieValues();
-                    }else{
+                    }/*else{
                         sessionId=GwtUUIDGenerator.uuid();
-                    }
+                    }*/
                     
                     if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
                     	isItem_lodRefreshed = null;
@@ -1446,10 +1446,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
-				CollectionPlayerPresenter.this.sessionId=sessionId;
+				
 				if(GooruConstants.TRUE.equals(isRefreshed)){
 					isRefreshed = null;
 				}else{
+					CollectionPlayerPresenter.this.sessionId=sessionId;
 					/**
 					 * Triggers collection start event.
 					 */
