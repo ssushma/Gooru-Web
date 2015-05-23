@@ -553,20 +553,21 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					String oldCollectionDataLogEventId=Cookies.getCookie("collectionDataLogEventId");
 					String oldCollectionNewDataLogEventId=Cookies.getCookie("collectionNewDataLogEventId");
 					String oldCollectionStartTime=Cookies.getCookie("collectionStartTime");
+					String oldcollectionActivityEventId= Cookies.getCookie("collectionActivityEventId");
 					String refreshed=Cookies.getCookie("isRefreshed");
 					collectionActivityEventIdTemp = Cookies.getCookie("collectionActivityEventId");
-					
                     if(!StringUtil.isEmpty(sessionOldId) && !StringUtil.isEmpty(oldCollectionNewDataLogEventId)){
                         sessionId=sessionOldId;
                         collectionNewDataLogEventId = oldCollectionNewDataLogEventId;
                         collectionDataLogEventId = oldCollectionDataLogEventId;
+                        collectionActivityEventId=oldcollectionActivityEventId;
                         collectionStartTime = collectionStartTime.valueOf(oldCollectionStartTime);
                         isRefreshed = refreshed;
                         isItem_lodRefreshed = refreshed;
                         removeCookieValues();
-                    }else{
+                    }/*else{
                         sessionId=GwtUUIDGenerator.uuid();
-                    }
+                    }*/
                     
                     if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
                     	isItem_lodRefreshed = null;
@@ -1446,10 +1447,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
-				CollectionPlayerPresenter.this.sessionId=sessionId;
+				
 				if(GooruConstants.TRUE.equals(isRefreshed)){
 					isRefreshed = null;
 				}else{
+					CollectionPlayerPresenter.this.sessionId=sessionId;
 					/**
 					 * Triggers collection start event.
 					 */
