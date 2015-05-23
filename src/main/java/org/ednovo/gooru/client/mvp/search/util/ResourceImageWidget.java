@@ -75,7 +75,7 @@ public class ResourceImageWidget extends Composite {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				toolTipPopupPanel.clear();
-				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(resourceDo.getTitle(),categoryValue,""));
+				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(StringUtil.removeAllHtmlCss(resourceDo.getTitle()),categoryValue,""));
 				toolTipPopupPanel.setStyleName("");
 				toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 				toolTipPopupPanel.show();
@@ -96,6 +96,4 @@ public class ResourceImageWidget extends Composite {
 	public Image getImgResourceImg() {
 		return imgResourceImg;
 	}
-	
-	
 }
