@@ -553,14 +553,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					String oldCollectionDataLogEventId=Cookies.getCookie("collectionDataLogEventId");
 					String oldCollectionNewDataLogEventId=Cookies.getCookie("collectionNewDataLogEventId");
 					String oldCollectionStartTime=Cookies.getCookie("collectionStartTime");
-					String oldcollectionActivityEventId= Cookies.getCookie("collectionActivityEventId");
+//					String oldcollectionActivityEventId= Cookies.getCookie("collectionActivityEventId");
 					String refreshed=Cookies.getCookie("isRefreshed");
 					collectionActivityEventIdTemp = Cookies.getCookie("collectionActivityEventId");
                     if(!StringUtil.isEmpty(sessionOldId) && !StringUtil.isEmpty(oldCollectionNewDataLogEventId)){
                         sessionId=sessionOldId;
                         collectionNewDataLogEventId = oldCollectionNewDataLogEventId;
                         collectionDataLogEventId = oldCollectionDataLogEventId;
-                        collectionActivityEventId=oldcollectionActivityEventId;
+//                        collectionActivityEventId=oldcollectionActivityEventId;
                         collectionStartTime = collectionStartTime.valueOf(oldCollectionStartTime);
                         isRefreshed = refreshed;
                         isItem_lodRefreshed = refreshed;
