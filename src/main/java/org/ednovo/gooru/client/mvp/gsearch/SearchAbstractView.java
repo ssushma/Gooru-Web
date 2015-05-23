@@ -1580,7 +1580,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		localStore.clear();
 		isForwardScroll=true;
 		previousValue=0;
-		pageFlag=false;
 	}
 	public void resetDataBacktoTop(){
 		searchResultPanel.clear();
@@ -1591,7 +1590,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		isApiInProgressLoad=true;
 		pageNumber = 1;
 		pageCountForStorage=1;
-		pageFlag=false;
 		localStore.clear();
 		isForwardScroll=true;
 		getUiHandlers().resetLocalStorageData();
