@@ -327,7 +327,7 @@ float: left;
 
 .input1 {
 	color: #515151;
-	width: 72px !important;
+	width: 76px !important;
 	height: 15px !important;
 	margin-top: 10px;
 	margin-bottom: 15px !important;
@@ -591,7 +591,7 @@ float: left;
 .shareTextboxLink {
 	width: 300px;
 	height: 31px !important;
-	padding: 5px;
+	padding: 8px;
 	border: 1px solid #DDD;
 	font-family: arial, sans-serif;
 	font-size: 12px;
