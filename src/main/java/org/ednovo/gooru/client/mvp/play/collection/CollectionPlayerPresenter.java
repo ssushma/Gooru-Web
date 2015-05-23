@@ -1444,26 +1444,32 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionId) {
-				
-				if(GooruConstants.TRUE.equals(isRefreshed)){
-					isRefreshed = null;
-				}else{
-					CollectionPlayerPresenter.this.sessionId=sessionId;
-					/**
-					 * Triggers collection start event.
-					 */
-					triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-				}
-				createResourceDataLog();
-				if(collectionItemDo!=null){
-
-					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
-				}
+		if(GooruConstants.TRUE.equals(isRefreshed)){
+			isRefreshed = null;
+			createResourceDataLog();
+			if(collectionItemDo!=null){
+				createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 			}
-		});
+		}else{
+			this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String sessionId) {
+					if(GooruConstants.TRUE.equals(isRefreshed)){
+						isRefreshed = null;
+					}else{
+						CollectionPlayerPresenter.this.sessionId=sessionId;
+						/**
+						 * Triggers collection start event.
+						 */
+						triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+					}
+					createResourceDataLog();
+					if(collectionItemDo!=null){
+						createSessionItem(CollectionPlayerPresenter.this.sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
+					}
+				}
+			});
+		}
 	}
 
 	/**
