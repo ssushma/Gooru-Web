@@ -156,7 +156,11 @@ public class CollectionResourceWidget extends Composite {
 		});
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
-		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
+		if(resourceSearchResultDo.getResourceType()!=null&&resourceSearchResultDo.getResourceType().getName().equalsIgnoreCase("video/youtube")) {
+			setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, true);
+		}else{
+			setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
+		}
 		SearchUiUtil.renderStandardsForresourceSearch(standardsDataPanel, resourceSearchResultDo);
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
