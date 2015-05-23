@@ -336,6 +336,17 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	}
 	@Override
 	public void resetLocalStorageData() {
+
+		if (getPlaceManager().getRequestParameter(QUERY) != null) {
+			getSearchDo().setQuery(getPlaceManager().getRequestParameter(QUERY));
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+				getSearchDo().setPageSize(9);
+			}else{
+				getSearchDo().setPageSize(8);
+			}
+			/* queryVal = queryVal.replaceAll("%5C1", "&"); */
+		}
+		getSearchDo().setFilters(getSearchFilters());
 		setPageTitle(getSearchDo().getSearchQuery());
 		if (getSearchDo().getSearchQuery() != null && getSearchDo().getSearchQuery().trim().length() >= 0) {
 			getSearchDo().setPageNum(1);
