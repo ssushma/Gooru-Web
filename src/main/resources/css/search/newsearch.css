@@ -225,6 +225,7 @@
     white-space: normal;
     cursor:pointer;
     max-height:42px;
+    overflow: hidden;
 }
 
 #gooruSearchMainContainer .libraryMainContainerBlock .collectionTitleincoll{
@@ -276,8 +277,8 @@
 #gooruSearchMainContainer .standerdContainer{
 	padding:5px 10px;
 	border-bottom:1px solid #dddddd;
-	max-height: 55px;
-  	min-height: 55px;
+	max-height: 34px;
+  	min-height: 34px;
 }
 #gooruSearchMainContainer .resourcesInside {
 	padding:8px 8px;
@@ -1293,6 +1294,7 @@ word-wrap: break-word;
 	    text-overflow: ellipsis;
 	    white-space: normal;
 	    cursor: pointer;
+	    overflow: hidden;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon {
 	    background: url("../images/folderIcon-sprite.png") no-repeat scroll 8px -36px rgba(0, 0, 0, 0);
