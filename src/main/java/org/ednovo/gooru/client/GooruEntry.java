@@ -82,10 +82,7 @@ public class GooruEntry implements EntryPoint {
 	private HandlerRegistration nativePreviewHandlerRegistration;
 	
 	private static final String GOORU_USER_INACTIVE = "in-active";
-	
-	static{
-		
-	}
+
 	
 	public void onModuleLoad() {
 		
@@ -136,13 +133,6 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");
 		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
-		
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+HomeCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-		StyleInjector.injectAtEnd("@media (max-width: 767px){"+HomeCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+ HomeCBundle.INSTANCE.getResponsive2Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px) {"+ HomeCBundle.INSTANCE.getResponsive3Style().getText()+"}");
-	
-		HomeCBundle.INSTANCE.css().ensureInjected();
 		
 		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
@@ -225,7 +215,7 @@ public class GooruEntry implements EntryPoint {
 					}
 					else if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) && AppClientFactory.isUserflag()){
 						AppClientFactory.setUserflag(false)	;
-						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.FOLDER_TOC)|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDY)){
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.FOLDER_TOC)|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDY)){
 							userLoggedOutheader();
 						}
 						else{

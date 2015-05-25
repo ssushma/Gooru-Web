@@ -461,6 +461,7 @@ public interface UcCBundle extends ClientBundle {
 		String paddingClear();
 		String closeLabelCentury();
 		String closeLabelRemoveInCentury();
+		String searchStandardResource();
 	}
 
 	@Source("Uc.css")

@@ -26,13 +26,10 @@ package org.ednovo.gooru.server.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.ednovo.gooru.client.service.FolderService;
 import org.ednovo.gooru.server.ArrayListSorter;
@@ -48,7 +45,6 @@ import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
@@ -64,7 +60,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.itextpdf.text.log.SysoCounter;
 
 @Service("folderService")
 @ServiceURL("/folderService")

@@ -1541,6 +1541,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionImageShelfUc.setUrl(url, collectionDo.getCollectionType());
 		collectionImageShelfUc.getCollectionImg().setAltText(collectionDo.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collectionDo.getTitle());
+		if(url!=null)
 		categoryImage.setUrl(url);
 		AppClientFactory.fireEvent(new UpdateSocialShareMetaDataEvent(
 				collectionTitleUc.getText(), collectionDescriptionUc.getText(),

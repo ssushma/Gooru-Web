@@ -83,7 +83,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Clien
 	
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
-	@UiField HTMLPanel buttonsContainer;
+	@UiField HTMLPanel buttonsContainer,poorRatingsMainPanel;
 	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,poorRatingHeaderLbl,poorRatingSubHeaderLbl,errorLbl;
 	
 	@UiField Label incorporateresourceText, unavailableresourceText,inaccurateTextresource,otherReason;
@@ -120,7 +120,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Clien
 		this.createrName = createrName;
 		setWidget(uiBinder.createAndBindUi(this));
 		this.setStyleName("reviewPopupPoor");
-		
+		poorRatingsMainPanel.getElement().setId("fpnlWrapperContainerField");
 		ratingCommentTxtArea.getElement().setAttribute("maxlength", "500");
 		incorporateresourceText.setText(i18n.GL0612());
 		incorporateresourceText.getElement().setId("lblIncorporateresourceText");

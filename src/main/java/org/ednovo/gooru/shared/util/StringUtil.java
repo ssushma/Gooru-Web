@@ -682,4 +682,27 @@ public class StringUtil implements ClientConstants {
 		value=value.replaceAll("<(a)([^>]+)>", "<$1 target=\"_blank\"$2>");
 		return value;
 	}
+	public static String getCategory(String resourceCategory){
+		if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
+		      resourceCategory = "webpage";
+		  } else if(resourceCategory.equalsIgnoreCase("slide") || resourceCategory.equalsIgnoreCase("image")){
+		      resourceCategory = "image";
+		  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")|| resourceCategory.equalsIgnoreCase("text")) {
+		      resourceCategory = "text";
+		  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
+		      resourceCategory = "webpage";
+		  } else if(resourceCategory.equalsIgnoreCase("video")) {
+		      resourceCategory = "video";
+		  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
+		      resourceCategory = "interactive";
+		  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+		      resourceCategory = "audio";
+		  }
+		  else if(resourceCategory.equalsIgnoreCase("question")) {
+		      resourceCategory = "question";
+		  }else{
+			  resourceCategory="other";
+		  }
+		return resourceCategory;
+	}
 }

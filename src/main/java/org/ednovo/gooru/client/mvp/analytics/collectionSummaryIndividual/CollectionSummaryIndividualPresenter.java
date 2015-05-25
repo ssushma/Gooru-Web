@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
@@ -34,6 +35,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -77,40 +79,47 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setIndividualData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, com.google.gwt.user.client.ui.HTMLPanel, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
 	 */
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
+	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
 		this.pathwayId=pathwayId;
 		this.classpageId=classpageId;
 		this.collectionId=collectionId;
 		this.userId=userId;
 		this.sessionId=sessionId;
 		this.isSummary=isSummary;
-		getView().enableAndDisableEmailButton(isSummary);
-		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
-			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				if(!StringUtil.checkNull(result)){
-					getView().setIndividualCollectionMetaData(result,printUserDataDO);
-				}
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			
-			}
-		});
-		this.analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<UserDataDo> result) {
-				if(!StringUtil.checkNull(result)){
-					getView().setIndividualData(result,loadingImage);
-				}
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				
+			public void onSuccess() {
+
+				getView().enableAndDisableEmailButton(isSummary);
+				analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+						if(!StringUtil.checkNull(result)){
+							getView().setIndividualCollectionMetaData(result,printUserDataDO);
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+					
+					}
+				});
+				analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<UserDataDo> result) {
+						if(!StringUtil.checkNull(result)){
+							getView().setIndividualData(result,loadingImage);
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
 			}
 		});
 	}
@@ -119,22 +128,31 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setHtmltopdf(java.lang.String, boolean)
 	 */
 	@Override
-	public void setHtmltopdf(String htmlString,String fileName,final boolean isClickedOnEmail) {
-		this.analyticService.setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
-
-				if(!StringUtil.checkNull(result)){
-					if(isClickedOnEmail){
-						getView().setPdfForEmail(result);
-					}else{
-						getView().getFrame().setUrl(result);
-					}
-				}
-			}
+	public void setHtmltopdf(final String htmlString,final String fileName,final boolean isClickedOnEmail) {
+		
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
-			public void onFailure(Throwable caught) {
+			public void onSuccess() {
+
+				analyticService.setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
+					@Override
+					public void onSuccess(String result) {
+
+						if(!StringUtil.checkNull(result)){
+							if(isClickedOnEmail){
+								getView().setPdfForEmail(result);
+							}else{
+								getView().getFrame().setUrl(result);
+							}
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
+			
 			}
 		});
 	}
@@ -144,15 +162,23 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	 */
 	@Override
 	public void setOEtextData(final String resourceGooruId, final String questionType) {
-		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void onSuccess(ArrayList<OetextDataDO> result) {
-				if(!StringUtil.checkNull(result)){
-					getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId,classpageItemDo);
-				}
-			}
-			@Override
-			public void onFailure(Throwable caught) {
+			public void onSuccess() {
+
+				analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {
+					@Override
+					public void onSuccess(ArrayList<OetextDataDO> result) {
+						if(!StringUtil.checkNull(result)){
+							getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId,classpageItemDo);
+						}
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
+			
 			}
 		});
 	}

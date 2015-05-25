@@ -25,18 +25,18 @@
 package org.ednovo.gooru.client.mvp.search.standards;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
-
-import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
-import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
-
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
-
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
@@ -45,11 +45,9 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -60,13 +58,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
-
 import com.google.gwt.user.client.ui.Anchor;
-
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -108,6 +103,9 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	Integer selectedCodeId = 0;
 	String selectedCodeDesc = "";
+	
+	List<Map<String, String>> standListArray= new ArrayList<Map<String,String>>();
+	
 	private static AddStandardsViewUiBinder uiBinder = GWT.create(AddStandardsViewUiBinder.class);
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -365,8 +363,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				if(j==0){
 				for(int k=0;k<levelOneData.getNode().get(i).getNode().get(j).getNode().size();k++)
 				{
-				
-					
 					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
@@ -386,17 +382,31 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							if(standListArray.size()!=0){
+								addBtn.setEnabled(true);
+								addBtn.removeStyleName("secondary");
+								addBtn.addStyleName("primary");
+							}else{
+								addBtn.setEnabled(false);
+								addBtn.removeStyleName("primary");
+								addBtn.addStyleName("secondary");
+							}
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -442,6 +452,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		levelTwoStandards.clear();
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
+		standListArray.clear();
 		
 		for(int i=0;i<levelOneData.size();i++)
 		{
@@ -526,17 +537,31 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							if(standListArray.size()!=0){
+								addBtn.setEnabled(true);
+								addBtn.removeStyleName("secondary");
+								addBtn.addStyleName("primary");
+							}else{
+								addBtn.setEnabled(false);
+								addBtn.removeStyleName("primary");
+								addBtn.addStyleName("secondary");
+							}
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -556,6 +581,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	{
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
+		standListArray.clear();
 		
 			for(int j=0;j<levelOneData.size();j++)
 			{
@@ -608,17 +634,32 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						@Override
 						public void onClick(ClickEvent event) {
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							if(standListArray.size()!=0){
+								addBtn.setEnabled(true);
+								addBtn.removeStyleName("secondary");
+								addBtn.addStyleName("primary");
+							}else{
+								addBtn.setEnabled(false);
+								addBtn.removeStyleName("primary");
+								addBtn.addStyleName("secondary");
+							}
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -636,6 +677,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	public void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> levelOneData)
 	{
 		levelFourStandards.clear();
+		standListArray.clear();
 		
 
 				for(int k=0;k<levelOneData.size();k++)
@@ -660,17 +702,31 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							if(standListArray.size()!=0){
+								addBtn.setEnabled(true);
+								addBtn.removeStyleName("secondary");
+								addBtn.addStyleName("primary");
+							}else{
+								addBtn.setEnabled(false);
+								addBtn.removeStyleName("primary");
+								addBtn.addStyleName("secondary");
+							}
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -697,6 +753,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	public void reset() {
 		// TODO Auto-generated method stub
 		//addBtn.setText("Add");
+		standListArray.clear();
 		levelOneStandards.clear();
 		levelTwoStandards.clear();
 		levelThreeStandards.clear();
@@ -856,6 +913,14 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	@Override
 	public String setStandardsDesc() {
 			return selectedCodeDesc;
+	}
+
+	/**
+	 * @return the standArray
+	 */
+	@Override
+	public List<Map<String, String>> getStandListArray() {
+		return standListArray;
 	}
 
 	public void setDefaultTEKS() {

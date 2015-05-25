@@ -1,9 +1,12 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 
 @JsonInclude(Include.NON_NULL)
 public class ClasspageItemDo implements Serializable{
@@ -25,7 +28,21 @@ public class ClasspageItemDo implements Serializable{
 	private String classpageId;
 	private String status;
 	private Integer sequenceNumber;
+	private Boolean isRequired;
+	private Integer itemSequence;
+	private String estimatedTime;
+	private String minimumScore;
+	private String narration;
 	private String collectionType;
+	
+	private ResourceDo resource;
+	
+	private Integer minimumScoreByUser;
+	private Integer assignmentCompleted;
+	private Integer timeStudying;
+	
+	
+	private Set<StandardFo> standards = new HashSet<StandardFo>();
 	
 	
 	public String getUserNameDispaly() {
@@ -174,6 +191,66 @@ public class ClasspageItemDo implements Serializable{
 	 */
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
+	}
+	public Boolean getIsRequired() {
+		return isRequired;
+	}
+	public void setIsRequired(Boolean isRequired) {
+		this.isRequired = isRequired;
+	}
+	public Integer getItemSequence() {
+		return itemSequence;
+	}
+	public void setItemSequence(Integer itemSequence) {
+		this.itemSequence = itemSequence;
+	}
+	public String getEstimatedTime() {
+		return estimatedTime;
+	}
+	public void setEstimatedTime(String estimatedTime) {
+		this.estimatedTime = estimatedTime;
+	}
+	public String getMinimumScore() {
+		return minimumScore;
+	}
+	public void setMinimumScore(String minimumScore) {
+		this.minimumScore = minimumScore;
+	}
+	public String getNarration() {
+		return narration;
+	}
+	public void setNarration(String narration) {
+		this.narration = narration;
+	}
+	public ResourceDo getResource() {
+		return resource;
+	}
+	public void setResource(ResourceDo resource) {
+		this.resource = resource;
+	}
+	public Integer getMinimumScoreByUser() {
+		return minimumScoreByUser;
+	}
+	public void setMinimumScoreByUser(Integer minimumScoreByUser) {
+		this.minimumScoreByUser = minimumScoreByUser;
+	}
+	public Integer getAssignmentCompleted() {
+		return assignmentCompleted;
+	}
+	public void setAssignmentCompleted(Integer assignmentCompleted) {
+		this.assignmentCompleted = assignmentCompleted;
+	}
+	public Integer getTimeStudying() {
+		return timeStudying;
+	}
+	public void setTimeStudying(Integer timeStudying) {
+		this.timeStudying = timeStudying;
+	}
+	public Set<StandardFo> getStandards() {
+		return standards;
+	}
+	public void setStandards(Set<StandardFo> standards) {
+		this.standards = standards;
 	}
 	
 

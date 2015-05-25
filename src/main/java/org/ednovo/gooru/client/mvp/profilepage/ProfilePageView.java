@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
@@ -583,18 +584,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if (isToEnabled) {
 			this.profileOnStatus = "true";
 			MixpanelUtil.Click_Profile_On();
-			profileOnButton.setStyleName(settingsStyle.publicProfileOnButtonActive());
-			profileOnButton.removeStyleName(settingsStyle.publicProfileOnButtonDeActive());
-			profileOffButton.setStyleName(settingsStyle.publicProfileOffButtonsDeActive());
-			profileOffButton.removeStyleName(settingsStyle.publicProfileOffButtonsActive());
+			profileOnButton.setStyleName("publicProfileOnButtonActive");
+			profileOnButton.removeStyleName("publicProfileOnButtonDeActive");
+			profileOffButton.setStyleName("publicProfileOffButtonsDeActive");
+			profileOffButton.removeStyleName("publicProfileOffButtonsActive");
 			setPublicShareDo("public");
 		} else {
 			this.profileOnStatus = "false";
 			MixpanelUtil.Click_Profile_Off();
-			profileOffButton.setStyleName(settingsStyle.publicProfileOffButtonsActive());
-			profileOffButton.removeStyleName(settingsStyle.publicProfileOffButtonsDeActive());
-			profileOnButton.setStyleName(settingsStyle.publicProfileOnButtonDeActive());
-			profileOnButton.removeStyleName(settingsStyle.publicProfileOnButtonActive());
+			profileOffButton.setStyleName("publicProfileOffButtonsActive");
+			profileOffButton.removeStyleName("publicProfileOffButtonsDeActive");
+			profileOnButton.setStyleName("publicProfileOnButtonDeActive");
+			profileOnButton.removeStyleName("publicProfileOnButtonActive");
 			setPublicShareDo("private");
 		}
 	}
@@ -1321,8 +1322,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				.infoTextBox());
 		addCourseBtn.setStyleName(CollectionCBundle.INSTANCE.css()
 				.infoAddButton());
-		courseMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css()
-				.courseMaxMsg());
+		courseMaxMsg.setStyleName("courseMaxMsg");
 		courseMaxMsg.getElement().getStyle().setFloat(Float.LEFT);
 	}
 
@@ -1655,7 +1655,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}else{
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.show();
 		popup.setGlassEnabled(true);
 		}
@@ -1670,7 +1675,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}
 		else{
-			LoginPopupUc popup =new LoginPopupUc();
+			LoginPopupUc popup =new  LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					
+				}
+			};
 			popup.show();
 			popup.setGlassEnabled(true);
 		}

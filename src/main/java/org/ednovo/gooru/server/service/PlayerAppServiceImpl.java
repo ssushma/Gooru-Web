@@ -399,26 +399,25 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return activityEventId;
 	}
 	
-	public String createSessionTracker(String collectionGooruOid,String clientsSessionId){
+	public String createSessionTracker(String collectionGooruOid,String clientsSessionId,String mode){
 		String seesionId="";
 		JSONObject createSessionObject=new JSONObject();
-		JSONObject sessionObject=new JSONObject();
-		JSONObject collectionObject=new JSONObject();
 		JsonRepresentation jsonRepresentation = null;
 		try {
-			collectionObject.put("gooruOid", collectionGooruOid);
-			sessionObject.put("resource", collectionObject);
-			sessionObject.put("mode", "test");
-			if(clientsSessionId!=null){
-				sessionObject.put("sessionId", clientsSessionId);
+			createSessionObject.put("contentGooruId", collectionGooruOid);
+			if(clientsSessionId!=null && !clientsSessionId.isEmpty()){
+				createSessionObject.put("parentGooruId", clientsSessionId);
 			}
-			createSessionObject.put("session", sessionObject);
+			createSessionObject.put("mode", "test");
+			createSessionObject.put("type", mode);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createSessionObject.toString());
+			logger.info("createSessionTracker url::"+url);
+			logger.info("createSessionObject::"+createSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			if(jsonRepresentation!=null&&jsonRepresentation.getSize()!=-1){
 				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
-				seesionId=createSessionResponse.getString("sessionId");
+				seesionId=createSessionResponse.getString("sessionActivityId");
 			}
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
@@ -430,12 +429,12 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public String updateSessionInCollection(String sessionTrackerId) {
 		String sessionItemId="";
 		JSONObject updateSessionObject=new JSONObject();
-		JSONObject sessionStatus=new JSONObject();
 		JsonRepresentation jsonRepresentation = null;
 		try {
-			sessionStatus.put("status", "archive");
-			updateSessionObject.put("session",sessionStatus);
+			updateSessionObject.put("status", "archive");
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_SESSION, sessionTrackerId);
+			getLogger().info("---- update session URL -- "+url);
+			getLogger().info("---- update session payload -- "+updateSessionObject.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			if(jsonRepresentation !=null && jsonRepresentation.getSize()!=-1){
@@ -455,26 +454,29 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		
 	}
 
-	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid) {
+	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status) {
 		String sessionItemId="";
+		JSONObject sessionItemPayloadObj=new JSONObject();
 		JSONObject resource=new JSONObject();
 		JSONObject collectionItem=new JSONObject();
 		JSONObject sessionItem=new JSONObject();
 		JSONObject sessionItemObj=new JSONObject();
 		JsonRepresentation jsonRepresentation = null;
 		try {
-			resource.put("gooruOid",resourceGooruOid);
-			collectionItem.put("collectionItemId",collectionItemId);
-			sessionItem.put("resource",resource);
-			sessionItem.put("collectionItem",collectionItem);
-			sessionItemObj.put("sessionItem",sessionItem);
+			sessionItemPayloadObj.put("contentGooruId", resourceGooruOid);
+			sessionItemPayloadObj.put("status", status);
+			sessionItemPayloadObj.put("questionType", questionType);
+			getLogger().info("createSessionItemInCollection payload -- "+sessionItemPayloadObj.toString());
+			
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionTrackerId);
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemObj.toString());
+			getLogger().info("createSessionItemInCollection URL -- "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemPayloadObj.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			getLogger().info("jsonRepresentation o/p  -- "+jsonRepresentation.getJsonObject().toString());
 			if(jsonRepresentation!=null && jsonRepresentation.getSize()!=-1){
 				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
-				if(createSessionResponse.has("sessionItemId")){
-					sessionItemId=createSessionResponse.getString("sessionItemId");
+				if(createSessionResponse.has("sessionActivityId")){
+					sessionItemId=String.valueOf(createSessionResponse.getLong("sessionActivityId"));
 				}
 			}
 			
@@ -484,16 +486,24 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return sessionItemId;
 	}
 
-	public String createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) {
+	public String createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) {
 		JSONObject sessionItemAttemptTry=new JSONObject();
 		JSONObject assessmentAnswer=new JSONObject();
 		JSONObject jsonanswerId=new JSONObject();
 		try {
-			jsonanswerId.put("answerId",answerId);
+			/*jsonanswerId.put("answerId",answerId);
 			assessmentAnswer.put("assessmentAnswer",jsonanswerId);
 			assessmentAnswer.put("attemptItemTryStatus",attemptResult);
-			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);
+			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);*/
+			
+			sessionItemAttemptTry.put("contentGooruId",contentGooruOid);
+			sessionItemAttemptTry.put("answerId",answerId);
+			sessionItemAttemptTry.put("answerStatus",attemptResult);
+			sessionItemAttemptTry.put("sessionActivityId",Long.parseLong(sessionTrackerId));
+			
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId);
+			getLogger().info("--->>  createSessionItemAttemptTry --- "+url);
+			getLogger().info("--->>  createSessionItemAttemptTry payload  --- "+sessionItemAttemptTry.toString());
 			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemAttemptTry.toString());
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
@@ -501,14 +511,22 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return "";
 	}
 	@Override
-	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId,String answerId,String attemptStatus,String attemptAnswerResult) {
+	public String createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId,String answerId,String attemptStatus,String attemptAnswerResult) {
 		JSONObject sessionItemAttemptTry=new JSONObject();
-		JSONObject assessmentAnswer=new JSONObject();
 		try {
-			assessmentAnswer.put("attemptItemTryStatus",attemptStatus);
+			/*assessmentAnswer.put("attemptItemTryStatus",attemptStatus);
 			assessmentAnswer.put("answerText",attemptAnswerResult);
-			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);
+			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);*/
+			
+			sessionItemAttemptTry.put("contentGooruId", contentGooruOid);
+			//sessionItemAttemptTry.put("answerId",answerId);
+			sessionItemAttemptTry.put("answerStatus",attemptStatus);
+			sessionItemAttemptTry.put("sessionActivityId",Long.parseLong(sessionTrackerId));
+			sessionItemAttemptTry.put("answerText",attemptAnswerResult);
+			//sessionItemAttemptTry.put("answerOptionSequence","");
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);
+			getLogger().info("--->>  createSessionItemAttemptTryOE --- "+url);
+			getLogger().info("--->>  createSessionItemAttemptTry payloadOE  --- "+sessionItemAttemptTry.toString());
 			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemAttemptTry.toString());
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
@@ -1527,7 +1545,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId){
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETNEXTTOCCOLLECTION, folderId, collectionItemId);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETNEXTTOCCOLLECTION, collectionItemId);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.SHARING, GooruConstants.PUBLIC);
 		getLogger().info("-- FolderWhatsNextCollectionDo API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -1544,4 +1562,53 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 		return new FolderWhatsNextCollectionDo();
 	}
+
+	@Override
+	public void updateSessionActivityItem(String gooruOid, String status, String sessionTrackerId) throws GwtException, ServerDownException {
+
+		JSONObject updateSessionActivityItemObject=new JSONObject();
+		JsonRepresentation jsonRepresentation = null;
+		try {
+			updateSessionActivityItemObject.put("status", status);
+			updateSessionActivityItemObject.put("contentGooruId", gooruOid);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionTrackerId);
+			getLogger().info("updateSessionActivityItem URL -- "+url);
+			getLogger().info("updateSessionActivityItem payload -- "+updateSessionActivityItemObject.toString());
+			
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateSessionActivityItemObject.toString());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			getLogger().info("updateSessionActivityItem Resp --"+jsonRepresentation.getJsonObject().toString());
+			
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+	}
+
+	@Override
+	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions, String sessionId) throws GwtException, ServerDownException {        
+
+		JSONObject updateSessionActivityItemObject=new JSONObject();
+		JsonRepresentation jsonRepresentation = null;
+		try {
+			
+			if("reaction".equals(isRatingsReactions)){
+				updateSessionActivityItemObject.put("reaction", emoticRatingNumber);
+			}else if("rating".equals(isRatingsReactions)){
+				updateSessionActivityItemObject.put("rating", emoticRatingNumber);
+			}
+			updateSessionActivityItemObject.put("contentGooruId", gooruOid);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionId);
+
+			getLogger().info("getUpdateSessionActivityItemForRatReac URL -- "+url);
+			getLogger().info("getUpdateSessionActivityItemForRatReac payload -- "+updateSessionActivityItemObject.toString());
+
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateSessionActivityItemObject.toString());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			getLogger().info("getUpdateSessionActivityItemForRatReac Resp --"+jsonRepresentation.getJsonObject().toString());
+
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+	}
+
 }

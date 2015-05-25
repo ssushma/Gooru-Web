@@ -265,7 +265,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 							String placeToken = AppClientFactory.getCurrentPlaceToken();
 							if(placeToken.equals(PlaceTokens.SHELF)) {
 								MixpanelUtil.mixpanelEvent("Organize_add_collection_to_folder");	
-							} else if(placeToken.equals(PlaceTokens.RESOURCE_SEARCH) || placeToken.equals(PlaceTokens.COLLECTION_SEARCH)) {
+							} else if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)) {
 								MixpanelUtil.mixpanelEvent("Search_add_collection_to_folder");
 							}
 							

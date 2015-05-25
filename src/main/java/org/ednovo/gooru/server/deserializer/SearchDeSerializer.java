@@ -94,6 +94,10 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String COLLECTION_ITEMS="collectionItems";
 	
 	public static final String MEDIA_TYPE = "mediaType";
+	
+	public static final String USER_COUNT = "resourceUsedUserCount";
+	
+	public static final String ADD_COUNT = "resourceAddedCount";
 
 	public static final String RESOURCE_FORMAT = "resourceFormat";
 	
@@ -112,7 +116,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	 * @param searchDo instance of {@link SearchDo}
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(SearchDeSerializer.class);
-	public void deserialize(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
+	public void deserialize(JsonRepresentation jsonRep, SearchDo<T> searchDo, String profileEndPoint) {
 		searchDo.setSearchResults(new ArrayList<T>());
 		try {
 			if (jsonRep != null) {
@@ -132,6 +136,43 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				for (int pointer = 0; pointer < searchResultJsonArray.length(); pointer++) {
 					T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
 					if (record != null) {
+						if(!profileEndPoint.isEmpty()){					
+							record.setAssetURI(profileEndPoint);
+						}
+						collectionSearchResults.add(record);
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+			throw new RuntimeException(e.getCause());
+		}
+	}
+	public void deserializeJsonObject(String jsonRepObj, SearchDo<T> searchDo, String profileEndPoint) {
+		JSONObject jsonRep;
+		searchDo.setSearchResults(new ArrayList<T>());
+		try {
+			jsonRep=new JSONObject(jsonRepObj);
+			if (jsonRep != null) {
+				if(!jsonRep.isNull("spellCheckQueryString"))
+				{
+				searchDo.setSpellCheckQueryString(jsonRep.getString("spellCheckQueryString"));
+				searchDo.setUserQueryString(jsonRep.getString("userQueryString"));
+				}
+				else
+				{
+				searchDo.setSpellCheckQueryString(null);
+				searchDo.setUserQueryString(null);
+				}
+				searchDo.setSearchHits(stringtoInteger(jsonRep, SEARCH_HITS, 0));
+				JSONArray searchResultJsonArray = jsonRep.getJSONArray(SEARCH_RESULTS);
+				List<T> collectionSearchResults = searchDo.getSearchResults();
+				for (int pointer = 0; pointer < searchResultJsonArray.length(); pointer++) {
+					T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
+					if (record != null) {
+						if(!profileEndPoint.isEmpty()){					
+							record.setAssetURI(profileEndPoint);
+						}
 						collectionSearchResults.add(record);
 					}
 				}

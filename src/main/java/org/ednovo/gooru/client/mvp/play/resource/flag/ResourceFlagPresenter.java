@@ -33,7 +33,7 @@ import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;

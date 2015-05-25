@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -45,6 +46,7 @@ public class CourseDo implements Serializable {
 	private List<LibraryUserDo> user;
 	private String parentId;
 	private Integer grade;
+	
 	
 	public CourseDo(){}
 
@@ -158,5 +160,9 @@ public class CourseDo implements Serializable {
 	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
+
+
+	
+	
 	
 }

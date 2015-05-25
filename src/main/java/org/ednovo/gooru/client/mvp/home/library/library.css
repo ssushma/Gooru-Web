@@ -306,7 +306,6 @@
 	float:left;
 	height:223px;
 	overflow-y:scroll;
-	-moz-scrollbars-vertical;
 }
 
 #contentScroll .topicBlock .conceptList .lessonTitle {
@@ -666,12 +665,6 @@
 
 .conceptTitle:hover {
 	background-color:#E1EEF6;
-	color: #515151;
-}
-
-.
- {
-	background-color:#CFE3F1;
 	color: #515151;
 }
 

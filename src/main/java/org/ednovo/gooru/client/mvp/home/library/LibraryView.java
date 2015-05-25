@@ -147,7 +147,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	HashMap<String, StandardsDo> standardsMap = new HashMap<String, StandardsDo>();
 	
 	CourseDo subjectCourseDo = new CourseDo();
-	
+	String onRefCourseId=null;
 	List<UnitDo> unitDoListTemp;
 	
 	private static final String COURSE_PAGE = "course-page";
@@ -161,6 +161,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 	private static final String FEATURED_LABEL = "featured";
 	private static final String ACTIVE_STYLE = "active";
 	private static final String CALLBACK = "callback";
+	
+	private static final String COURSEMAPDATASERIALIZEDSTR = "courseMapDataSerializedStr";
 	
 	private String defaultCourseId = "";
 	private String previousCallBack = "";
@@ -612,8 +614,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			else
 			{
-//				final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
-//				final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
 				String map = null;
 				final String libraryToken = StringUtil.getPublicLibraryName(getPlaceToken());
 				Map<String, String> params = new HashMap<String,String>();
@@ -623,37 +623,69 @@ public class LibraryView extends Composite implements  ClickHandler {
 					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 				
-				if(stockStore!=null&&stockStore.getItem(libraryToken+"courseMapDataSerializedStr")!=null&&params.size()==0){
-					map = stockStore.getItem(libraryToken+"courseMapDataSerializedStr");
-//					courseMap = courseMapReader.read(map);
-					setLibraryInitialData(featuredLabel,isNotHomePage);
+				if(stockStore!=null&&stockStore.getItem(libraryToken+COURSEMAPDATASERIALIZEDSTR)!=null&&params.size()==0){
+					map = stockStore.getItem(libraryToken+COURSEMAPDATASERIALIZEDSTR);
+					
+					deserializeAndDisplay(featuredLabel, isNotHomePage, libraryToken, map, onRefCourseId);
 				} else {
-					String onRefCourseId=null;
+					
 					if((AppClientFactory.getPlaceManager().getRequestParameter("page")!=null?AppClientFactory.getPlaceManager().getRequestParameter("page"):"").equals("featured-course")){
 						onRefCourseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId")!=null?AppClientFactory.getPlaceManager().getRequestParameter("courseId"):null;
 					}else{
 						onRefCourseId=null;
 					}
 					
-					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, onRefCourseId, libraryToken, new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+					AppClientFactory.getInjector().getLibraryService().getLibrarySubjectsJson(featuredLabel, onRefCourseId, libraryToken, new SimpleAsyncCallback<String>() {
+						
 						@Override
-						public void onFailure(Throwable caught) {
-							
-						}
-						@Override
-						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
-//							String courseMapWriterString = courseMapWriter.write(subjectDoList);
+						public void onSuccess(String subjectDoList) {
 							if(stockStore!=null) {
-//								stockStore.setItem(libraryToken+"courseMapDataSerializedStr", courseMapWriterString);
+								stockStore.setItem(libraryToken+COURSEMAPDATASERIALIZEDSTR, subjectDoList);
 							}
-							courseMap = subjectDoList;
-							setLibraryInitialData(featuredLabel,isNotHomePage);
+							deserializeAndDisplay(featuredLabel, isNotHomePage, libraryToken, subjectDoList, onRefCourseId);
 						}
 					});
 					}
 				}
 		}
 	}
+	
+	/**
+	 * 
+	 * @function deserializeAndDisplay 
+	 * 
+	 * @created_date : 28-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param featuredLabel
+	 * @parm(s) : @param isNotHomePage
+	 * @parm(s) : @param libraryToken
+	 * @parm(s) : @param jsonResponse
+	 * @parm(s) : @param onRefCourseId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void deserializeAndDisplay(final String featuredLabel, final boolean isNotHomePage, String libraryToken, String jsonResponse, String onRefCourseId){
+		
+		AppClientFactory.getInjector().getLibraryService().deserializeLibrarySubjects(featuredLabel, onRefCourseId, libraryToken, jsonResponse, new SimpleAsyncCallback<HashMap<String,SubjectDo>>() {
+
+			@Override
+			public void onSuccess(
+					HashMap<String, SubjectDo> result) {
+				courseMap = result;
+				setLibraryInitialData(featuredLabel,isNotHomePage);
+			}
+		});
+	}
+	
 	
 	void setLibraryInitialData(String featuredLabel, boolean isNotHomePage) {
 		libraryMenuNavigation.setSubjectPanelIds(courseMap);
@@ -1402,7 +1434,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	}
 	
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
-		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 20,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
 				//getView().setTopicListData(result.getSearchResult(), folderId);

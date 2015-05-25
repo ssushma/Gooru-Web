@@ -31,7 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountHandler;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;

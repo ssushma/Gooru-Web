@@ -25,15 +25,18 @@
 package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.HeaderUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsBundle;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
@@ -92,6 +95,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 
 	private String scienceStrCode = "";
 	private CollectionDo collectionDo;
+	
+	List<Map<String, String>> standListArray= new ArrayList<Map<String,String>>();
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
@@ -195,6 +200,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	public void SetData(final StandardsLevel1DO levelOneData, int valArr)
 	{
 		instantVal = false;
+		standListArray.clear();
 		LiPanel liPanel=new LiPanel();
 		Anchor levelOneStandardsInner = new Anchor();
 		liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -338,18 +344,21 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -413,6 +422,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		levelTwoStandards.clear();
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
+		standListArray.clear();
 		
 		for(int i=0;i<levelOneData.size();i++)
 		{
@@ -497,19 +507,24 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
+							LiPanel clickedObject = (LiPanel)event.getSource();
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							}	
+							
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -532,6 +547,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	{
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
+		standListArray.clear();
 		
 			for(int j=0;j<levelOneData.size();j++)
 			{
@@ -585,18 +601,24 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						@Override
 						public void onClick(ClickEvent event) {
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
+							
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							}	
+							
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -617,7 +639,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	public void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> levelOneData)
 	{
 		levelFourStandards.clear();
-		
+		standListArray.clear();
 
 				for(int k=0;k<levelOneData.size();k++)
 				{
@@ -641,18 +663,22 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							selectedCodeVal = codeVal;
-							selectedCodeId=codeIdVal;
-							selectedCodeDesc = codeDesc;
-							addBtn.setEnabled(true);
-							addBtn.removeStyleName("secondary");
-							addBtn.addStyleName("primary");
-							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
-							{
-								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
+							if(clickedObject.getStyleName().contains("dropMenuSelected")){
+								for(int i=0; i<standListArray.size(); i++){
+									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+										standListArray.remove(i);
+									}
+								}
+								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							}else{
+								Map<String,String> selectedStadDetails= new HashMap<String,String>();
+								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedCodeDesc", codeDesc);
+								standListArray.add(selectedStadDetails);
+								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							}	
+							
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -685,6 +711,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	public void reset() {
 		// TODO Auto-generated method stub
 		//addBtn.setText("Add");
+		standListArray.clear();
 		levelOneStandards.clear();
 		levelTwoStandards.clear();
 		levelThreeStandards.clear();
@@ -730,6 +757,13 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	@Override
 	public Button getAddBtn() {
 		return addBtn;
+	}
+	/**
+	 * @return the standArray
+	 */
+	@Override
+	public List<Map<String, String>> getStandListArray() {
+		return standListArray;
 	}
 	/**
 	 * set the addBtn

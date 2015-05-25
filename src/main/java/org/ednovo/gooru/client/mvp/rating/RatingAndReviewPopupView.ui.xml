@@ -3,7 +3,7 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style field="style" src="ratingandreview.css"/>
+	<!-- <ui:style field="style" src="ratingandreview.css"/> -->
 <ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res" />
 	<g:HTMLPanel styleName="{res.css.PopupMainVSmall}" ui:field="maincontainer">
@@ -36,19 +36,19 @@
                                 	   <g:Label ui:field="excellentScore" styleName="{res.css.count}"></g:Label>
                                 	</g:HTMLPanel>
 									<g:HTMLPanel styleName="{res.css.ratingLabel}" >
-										<g:HTMLPanel styleName="{res.css.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> 
+										<g:HTMLPanel styleName="{res.css.bar} data-two" ui:field="dataFour"></g:HTMLPanel> 
                                 		<g:Label ui:field="verygoodScore" styleName="{res.css.count}"></g:Label>
 									</g:HTMLPanel>													                                
                                    	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
-                                   		<g:HTMLPanel styleName="{res.css.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> 
+                                   		<g:HTMLPanel styleName="{res.css.bar} data-three" ui:field="dataThree"></g:HTMLPanel> 
                                    		<g:Label ui:field="goodScore" styleName="{res.css.count}"></g:Label>    
                                    	</g:HTMLPanel>
                                    	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
-                                   		<g:HTMLPanel styleName="{res.css.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> 
+                                   		<g:HTMLPanel styleName="{res.css.bar} data-four" ui:field="dataTwo"></g:HTMLPanel> 
                                    		<g:Label ui:field="fairScore" styleName="{res.css.count}"></g:Label>    
                                    	</g:HTMLPanel>
                                    	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
-                                   		<g:HTMLPanel styleName="{res.css.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> 
+                                   		<g:HTMLPanel styleName="{res.css.bar} data-five" ui:field="dataOne"></g:HTMLPanel> 
                                    		<g:Label ui:field="poorScore" styleName="{res.css.count}"></g:Label>
                                    	</g:HTMLPanel>
                                   	
@@ -62,8 +62,8 @@
                         </g:HTMLPanel>
                         <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
                        	</g:HTMLPanel>
-						<g:HTMLPanel styleName="{style.userRating}" ui:field="userRatingContainer">
-					   		<g:Label styleName="{style.rateMsg}" ui:field="rateMsg"></g:Label>
+						<g:HTMLPanel styleName="userRating" ui:field="userRatingContainer">
+					   		<g:Label styleName="rateMsg" ui:field="rateMsg"></g:Label>
 					  		 <!-- <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button> -->
 						</g:HTMLPanel>
                     </g:HTMLPanel>

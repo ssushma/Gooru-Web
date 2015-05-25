@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:htmlevents="urn:import:org.ednovo.gooru.client.ui">
-	<ui:style field="playerStyle" src="resourceplayermetadata.css"
-		type="org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataBundle" />
+	<!-- <ui:style field="playerStyle" src="resourceplayermetadata.css"
+		type="org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataBundle" /> -->
 	<ui:style field="flagPopUpstyle" src="poor-ratingflag-popup.css" />
-	<g:HTMLPanel>
-		<g:HTMLPanel styleName="{playerStyle.ratingPoorConfirmationContainer}">
-			<g:HTMLPanel styleName="{playerStyle.arrowBorder} hidden-xs"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{playerStyle.arrow} hidden-xs"></g:HTMLPanel>
-			<g:Label ui:field="poorRatingHeaderLbl" styleName ="{playerStyle.ratingPoorHeader}"></g:Label>
+	<g:HTMLPanel ui:field="poorRatingsMainPanel">
+		<g:HTMLPanel styleName="ratingPoorConfirmationContainer">
+			<g:HTMLPanel styleName="arrowBorder hidden-xs"></g:HTMLPanel>
+			<g:HTMLPanel styleName="arrow hidden-xs"></g:HTMLPanel>
+			<g:Label ui:field="poorRatingHeaderLbl" styleName ="ratingPoorHeader"></g:Label>
 			<g:Label ui:field="poorRatingSubHeaderLbl" styleName ="{flagPopUpstyle.ratingPoorSubHeader}"></g:Label>
 			<g:HTMLPanel styleName="{flagPopUpstyle.playerflagradiobutton}">
 				<g:CheckBox ui:field="resourceCheckBox3"
@@ -39,13 +39,13 @@
 			<g:Label styleName="{flagPopUpstyle.reviewTxtareaTitle}" ui:field="reviewTextAreaTitle"></g:Label>
 			<g:TextArea styleName="{flagPopUpstyle.poorRatingTxtarea}" ui:field="ratingCommentTxtArea"></g:TextArea>
 			<g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
-			<g:Label styleName="{playerStyle.errorLblBottomText}" ui:field="errorLbl"></g:Label>
-			<g:HTMLPanel styleName="{playerStyle.ratingPoorSaveCancelContainer}"
+			<g:Label styleName="errorLblBottomText" ui:field="errorLbl"></g:Label>
+			<g:HTMLPanel styleName="ratingPoorSaveCancelContainer"
 				ui:field="buttonsContainer">
 				<g:Button ui:field="btnSkip" styleName="secondary"></g:Button>
-				<g:Button ui:field="btnPost" styleName="primary {playerStyle.btnSpace}"></g:Button>
+				<g:Button ui:field="btnPost" styleName="primary btnSpace"></g:Button>
 			</g:HTMLPanel>
-			<g:Label styleName="{playerStyle.savePostLbl}" ui:field="saveAndPsotLbl"></g:Label>
+			<g:Label styleName="savePostLbl" ui:field="saveAndPsotLbl"></g:Label>
 		</g:HTMLPanel>
 
 

@@ -76,7 +76,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_COLLECTIONPROGRESSDATA, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
 		logger.info("getCollectionProgressData url:+--->> "+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){ 
 			try {
@@ -98,7 +98,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETUSERSFORPATHWAY, classpageId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
 		logger.info("getCollectionSummaryUsersData url:+"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
@@ -121,7 +121,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONRESOURCEDATA, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
 		logger.info("getCollectionResourceData url:+"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
@@ -145,15 +145,16 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonString); 
 		logger.info("url:+------ "+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
+				logger.info("jsonRep.getSize():+------ "+jsonRep.getSize());
 				if(jsonRep!=null&& jsonRep.getSize()!=-1){
 					if(!jsonRep.getJsonObject().isNull("content")){
 						sessionDataList= (ArrayList<CollectionSummaryUsersDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryUsersDataDo>>() {});
 					}
-					}
+				}
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
@@ -175,7 +176,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONDATABYUSERSESSION, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		logger.info("getUserSessionDataByUser url:+--- "+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
@@ -199,7 +200,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonString);
 		logger.info(" getCollectionMetaDataByUserAndSession url:+--- "+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
@@ -254,13 +255,15 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classpageId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
 		logger.info("getAnalyticsGradeData url:+"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				String boolVal="";
-				JSONArray messageArr=jsonRep.getJsonObject().getJSONArray("message");
-				if(messageArr.length()>0){
+				if(!jsonRep.getJsonObject().isNull("message")){
+					JSONArray messageArr=jsonRep.getJsonObject().getJSONArray("message");
+					if(messageArr.length()>0)
+					{
 					boolVal=messageArr.getJSONObject(0).getString("aggregateData");
 					if(boolVal.equalsIgnoreCase("true")){
 						collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
@@ -268,6 +271,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 						GradeJsonData gradeData=new GradeJsonData();
 						gradeData.setAggregateData(boolVal);
 						collectionResourcesList.add(gradeData);
+					}
 					}
 				}
 				
@@ -303,7 +307,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
 		logger.info("getBottomAndTopScoresData url:+"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
@@ -322,13 +326,13 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		
 		JsonRepresentation jsonRep = null;
 		CollectionSummaryMetaDataDo collectionSummaryMetaDataDo=null;
-		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+OPEN_ENDED+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+TOTALRESOURCECOUNT+","+GRADEINPERCENTAGE+","+GOORUOID;
+		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+GRADEINPERCENTAGE+","+GOORUOID;
 		
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
 		String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, urlDataParameterValue);
 		logger.info("getAssignmentAverageData url==>"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
@@ -420,40 +424,46 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,
-			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session,String contentItemId,String parentItemId,String classCode) {
+			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session,String contentItemId,String parentItemId,String classCode,String feedbackProvidedUserUid) {
 		JsonRepresentation jsonRep = null;
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ITEMFEEDBACK, session);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, ("AS".equals(session)?"0":session));
 		//String url ="http://www.goorulearning.org/gooruapi/rest/v2/session/AS/item/feedback?sessionToken=08a99a16-4ea5-11e4-8d6c-123141016e2a";
-		logger.info("url:+"+url);
+		logger.info("postTeacherFeedBackToStudent URL --- :"+url);
 		JSONObject mainObj=new JSONObject();
 		JSONObject userObj=new JSONObject();
 		JSONObject setPlayLoadObj=new JSONObject();
 		try {
-			userObj.put("partyUid", userId);
+			
 			
 			setPlayLoadObj.put("classCode", classCode);
 			setPlayLoadObj.put("pathwayId", pathwayId);
 			setPlayLoadObj.put("classId",classpageId);
 			setPlayLoadObj.put("sessionId",session);
+			setPlayLoadObj.put("userId", userId);
+			setPlayLoadObj.put("collectionId", collectionId);
 			if(contentItemId.equalsIgnoreCase("commentsDelete")){
 				setPlayLoadObj.put("active","false");
 			}else{
 				setPlayLoadObj.put("active","true");
 			}
 			
-			mainObj.put("contentGooruOId",resourceId);
-			mainObj.put("contentItemId",contentItemId);
-			mainObj.put("parentItemId",parentItemId);
-			mainObj.put("parentGooruOId",collectionId);
-			mainObj.put("freeText",freeText);
+			mainObj.put("contentGooruId",resourceId);
+//			mainObj.put("contentItemId",contentItemId);
+			mainObj.put("feedbackProvidedUserUid",feedbackProvidedUserUid);
+			if(!"AS".equals(session)){
+				mainObj.put("sessionActivityId", session);
+			}
+			mainObj.put("parentGooruId",collectionId);
+//			mainObj.put("parentItemId",parentItemId);
+			mainObj.put("feedbackText",freeText);
 			mainObj.put("payLoadObject",setPlayLoadObj.toString());
-			mainObj.put("user",userObj);
-			logger.info("mainObj.toString()::"+mainObj.toString());
+//			mainObj.put("user",userObj);
+			logger.info("postTeacherFeedBackToStudent payload --- "+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			if(jsonResponseRep.getStatusCode()==200){
-				feedBackResponseDataDO=deserializeTeacherResponse(jsonRep.getJsonObject());
+				feedBackResponseDataDO=deserializeTeacherResponse(jsonRep.getJsonObject(),freeText);
 			}else{
 			}
 		} catch (JSONException e) {
@@ -463,7 +473,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	private FeedBackResponseDataDO deserializeTeacherResponse(
-			JSONObject jsonObject) {
+			JSONObject jsonObject, String freeText) {
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
 			try {
 				if(!jsonObject.isNull("contentGooruOId"))
@@ -472,14 +482,13 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				if(!jsonObject.isNull("contentItemId"))
 					feedBackResponseDataDO.setContentItemId(jsonObject.getString("contentItemId"));
 				
-				if(!jsonObject.isNull("createdOn"))
-				  feedBackResponseDataDO.setCreatedOn(jsonObject.getLong("createdOn"));
+				if(!jsonObject.isNull("startTime"))
+				  feedBackResponseDataDO.setCreatedOn(jsonObject.getLong("startTime"));
 				
 				if(!jsonObject.isNull("feedbackProvidedBy") )
 					feedBackResponseDataDO.setFeedbackProvidedByGooruId(jsonObject.getJSONObject("feedbackProvidedBy").getString("gooruUId"));
 				
-				if(!jsonObject.isNull("freeText"))
-					feedBackResponseDataDO.setFreeText(jsonObject.getString("freeText"));
+					feedBackResponseDataDO.setFreeText(freeText);
 				
 				if(!jsonObject.isNull("parentGooruOId"))
 					feedBackResponseDataDO.setParentGooruOId(jsonObject.getString("parentGooruOId"));
@@ -508,7 +517,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_OETEXTJSON, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
 		logger.info("getOETextData url:+"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
@@ -520,8 +529,39 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}
 		return collectionResourcesList;
 	}
-
-
+	@Override
+	public HashMap<String,String> getResourceAndCollectionCounts(String Id,String searchType){
+		try {
+			String requiredFields=VIEWSCOUNT+","+COPYCOUNT+","+RESOURCEADDED+","+RESOURCEUSEDUSER+","+RESOURCEADDEDPUBLIC+","+RESOURCEUSEDUSERPUBLIC;
+			JsonRepresentation jsonRep = null;
+			String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V2_GET_VIEW_COUNTS, getLoggedInSessionToken(),Id);
+			String url = AddQueryParameter.constructQueryParams(partialUrl, FIELDS, requiredFields);
+			logger.info("getResourceAndCollectionCounts url:+"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			if(jsonResponseRep.getStatusCode()==200 && !jsonRep.getJsonObject().isNull("content")){
+				JSONArray jsonArray=jsonRep.getJsonObject().getJSONArray("content");
+				if(jsonArray!=null&&jsonArray.length()>0){
+					return deserializeViewsCount(jsonArray);
+				}
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return new HashMap<String, String>();
+	}
+	public HashMap<String,String> deserializeViewsCount(JSONArray jsonArray){
+		HashMap<String, String> resultMap=new HashMap<String, String>();
+		try {
+			JSONObject jsonObj=jsonArray.getJSONObject(0);
+			resultMap.put("copyCount", Integer.toString(jsonObj.getInt("copyCount")));
+			resultMap.put("viewsCount", Integer.toString(jsonObj.getInt("viewsCount")));
+			resultMap.put("resourceAdded", Integer.toString(jsonObj.getInt("resourceAddedPublic")));		
+		}catch(JSONException e){
+			logger.error("Exception::", e);
+		}
+		return resultMap;
+	}
 	@Override
 	public void sendEmail(String to, String subject, String message,String displayName, String fileName, String path) {
 		JsonRepresentation jsonRep = null;
@@ -570,7 +610,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			filtersObj.put(CLASS_ID, classpageId);
 			paginateObj.put(SORTBY, TIME_STAMP);
 			paginateObj.put(SORT_ORDER, ASC);
-			dataObj.put(FIELDS, "");
+			dataObj.put(FIELDS, "timeStamp,sessionId,frequency");
 			dataObj.put(FILTERS, filtersObj);
 			dataObj.put(PAGINATE, paginateObj);
 

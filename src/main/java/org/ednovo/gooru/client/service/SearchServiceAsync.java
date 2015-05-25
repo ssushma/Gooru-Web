@@ -27,9 +27,8 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.ednovo.gooru.client.SearchAsyncCallback;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
@@ -57,7 +56,16 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 
 	void getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput, AsyncCallback<SearchDo<ResourceSearchResultDo>> callback);
 
+	void getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchInput,AsyncCallback<String> callback) throws GwtException, ServerDownException;
+	
+	void descralizeResourceSearchResults(String response,SearchDo<ResourceSearchResultDo> searchDo,AsyncCallback<SearchDo<ResourceSearchResultDo>> callback) throws GwtException, ServerDownException;
+	
+	
 	void getCollectionSearchResults(SearchDo<CollectionSearchResultDo> searchInput, AsyncCallback<SearchDo<CollectionSearchResultDo>> callback);
+	
+	void getCollectionSearchResultsJson(SearchDo<CollectionSearchResultDo> searchInput,AsyncCallback<String> callback);
+	
+	void descralizeCollectionSearchResults(String response,SearchDo<CollectionSearchResultDo> searchDo,AsyncCallback<SearchDo<CollectionSearchResultDo>> callback);
 
 //	void getCollectionResources(SearchDo<ResourceSearchResultDo> searchDo, AsyncCallback<SearchDo<ResourceSearchResultDo>> callback);
 	

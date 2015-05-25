@@ -54,8 +54,6 @@ public interface GooruCBundle extends ClientBundle {
 		
 		String logoDiv();
 		
-		String gooruLearningIcon();
-		
 		String editSearchInputBoxDiv();
 		
 		String editInputBox();
@@ -158,8 +156,6 @@ public interface GooruCBundle extends ClientBundle {
 		String displayFlagPopup();
 		
 		String goorulandingFooterContainerNew();
-		
-		String discoverDropDown();
 		
 		String discoverDropDownBorder();
 		

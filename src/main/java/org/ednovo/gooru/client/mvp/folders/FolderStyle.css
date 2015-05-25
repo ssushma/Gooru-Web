@@ -806,8 +806,7 @@ textarea {
 	border-radius: 4px;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0 );
+	
 }
 
 .myFoldeCollectionrEditTitle {
@@ -988,8 +987,7 @@ input[type="text"] {
 	border-radius: 4px;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0 );
+	
 }
 
 .myFolderCollectionOkTitle {
@@ -1355,9 +1353,7 @@ input[type="text"] {
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff, endColorstr=#ffdddddd, GradientType=0)  progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color=#33000000, Positive=true)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,
-		endColorstr=#ffdddddd, GradientType=0 ) progid:DXImageTransform.Microsoft.dropshadow(OffX=1,
-		OffY=1, Color=#33000000, Positive=true );
+	
 }
 
 .myFolderCollectionNavlibg:hover {
@@ -1383,10 +1379,6 @@ input[type="text"] {
 	border-bottom: 1px solid #ddd;
 	border-top: 1px solid #eee;
 	background: white;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDFDFD',
-		endColorstr='#EDEDED' );
-	/*background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#EDEDED));
-	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);*/
 	background: url(../images/top-nav-bg.png) repeat-x;
 	width: 202px;
 	height: 34px;
@@ -1398,10 +1390,10 @@ input[type="text"] {
 	border-bottom: 1px solid #ddd;
 	border-top: 1px solid #eee;
 	background: white;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDFDFD',
-		endColorstr='#EDEDED' );
-	/*background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#EDEDED));
-	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);*/
+	
+		
+	
+	
 	background: url(../images/top-nav-bg-normal.png) repeat-x;
 	width: 187px;
 	height: 39px;
@@ -1413,11 +1405,11 @@ input[type="text"] {
 	border-bottom: 1px solid #ddd;
 	border-top: 1px solid #eee;
 	background: white;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDFDFD',
-		endColorstr='#EDEDED' );
-	/*background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#EDEDED));
-	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);*/
-	/*background:url(../images/top-nav-bg-normal.png) repeat-x; */
+	
+		
+	
+	
+	
 	background-color: #efefef;
 	width: 187px;
 	height: 39px;
@@ -1429,18 +1421,18 @@ input[type="text"] {
 	border-bottom: 1px solid #ddd;
 	border-top: 1px solid #eee;
 	background: white;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDFDFD',
-		endColorstr='#EDEDED' );
-	/*background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#EDEDED));
-	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);*/
+	
+		
+	
+	
 	background: url(../images/top-nav-selected-bg.png) repeat-x;
 	width: 202px;
 	height: 39px;
 }
 
 .folder-li-marker {
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#666',
-		endColorstr='#333' );
+	
+		
 	background: -webkit-gradient(linear, left top, left bottom, from(#666),
 		to(#333) );
 	background: -moz-linear-gradient(top, #666, #333);
@@ -2465,8 +2457,8 @@ input[type="text"] {
 	border-radius: 4px;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0 );
+	
+		
 }
 
 .myFolderCollectionEditWork {
@@ -2524,8 +2516,8 @@ input[type="text"] {
 	border-radius: 4px;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0 );
+	
+		
 	background:#1076BB;
 }
 .myFolderEditTitleSaveButton:hover {
@@ -2821,8 +2813,8 @@ input[type="text"] {
 	border-radius: 4px;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0 );
+	
+		
 }
 
 .myFolderCollectionOkTitle {

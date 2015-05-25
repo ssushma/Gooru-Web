@@ -1251,6 +1251,8 @@ public class ShelfCollectionResourceChildView extends
 			//fromLblDisplayText.setText(START_PAGE+DEFAULT_START_PAGE+" of "+DEFAULT_END_PAGE+" pages");
 			}
 			else{
+				if(endPageNumber!=null)
+				{
 				if(endPageNumber.equalsIgnoreCase("")){
 					fromLblDisplayText.setText(START_PAGE+startPageNumber+" - "+ i18n.GL2026()+totalPages);
 					stoppdfPageNumber.setText(totalPages+"");
@@ -1258,6 +1260,7 @@ public class ShelfCollectionResourceChildView extends
 				else{
 					fromLblDisplayText.setText(START_PAGE+startPageNumber+" - "+i18n.GL2026()+endPageNumber);	
 					stoppdfPageNumber.setText(endPageNumber+"");
+				}
 				}
 				fromLblDisplayText.getElement().setAttribute("alt", START_PAGE+startPageNumber);
 				fromLblDisplayText.getElement().setAttribute("title", START_PAGE+startPageNumber);

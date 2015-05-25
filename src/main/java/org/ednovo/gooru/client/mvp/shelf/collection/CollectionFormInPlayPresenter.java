@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPreviewPlayEvent;
@@ -41,6 +42,7 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -70,6 +72,8 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 	private String resourceOid;
 	
 	private String playerType=null;
+	
+	CollectionResourceWidget collectionResourceWidget=null;
 
 	public String getResourceUid() {
 		return resourceOid;
@@ -97,11 +101,10 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 	@Override
 	public void onBind() {
 		super.onBind();
-		
 		setSaveCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
-
 			@Override
 			public void onSuccess(CollectionDo result) {
+				Window.enableScrolling(true);
 				getView().hide();
 				getView().reset();
 				fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
@@ -114,20 +117,18 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 				}else if(playerType.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 					fireEvent(new RefreshCollectionInShelfListInResourcePlayEvent(result.getGooruOid()));
 					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
-				}else if(playerType.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+				}else if(playerType.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
 				}
 			}
 		});
 		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
-
 			@Override
 			public void onSuccess(CollectionDo result) {
 				getView().setData(result);
 			}
 		});
 		setCourseAsyncCallback(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
-
 			@Override
 			public void onSuccess(List<LibraryCodeDo> result) {
 				getView().setLibraryCodes(result);
@@ -143,6 +144,9 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 				getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
 			} else {
 				getResourceService().createCollectionWithItem(collection, getView().getCourseCodeId(), resourceOid, getSaveCollectionAsyncCallback());
+				if(collectionResourceWidget!=null){
+					collectionResourceWidget.getLbladdCount().setText((Integer.parseInt(collectionResourceWidget.getLbladdCount().getText())+1)+"");
+				}
 			}
 		} else {
 			getResourceService().copyCollection(collection, "true", getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
@@ -202,4 +206,7 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 		this.courseAsyncCallback = courseAsyncCallback;
 	}
 
+	public void setResourceWidget(CollectionResourceWidget collectionResourceWidget) {
+		this.collectionResourceWidget=collectionResourceWidget;
+	}
 }
