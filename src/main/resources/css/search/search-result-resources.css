@@ -187,7 +187,8 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .resourceDescription{
 	padding:10px 10px;
-	height:80px;
+	height:59px;
+	overflow: hidden;
 }
 #gooruSearchMainContainer .resourcesStanders{
 	text-align:center;
@@ -247,6 +248,7 @@ margin:0 0 0 -20px !important;
 	color:grey;
 	width:142%;
 	margin-left:-3%;
+	margin-top: 0px;
 }
 #gooruSearchMainContainer .userDetailsResources .user img{
 	border-radius: 50px;
@@ -454,6 +456,7 @@ margin:0 0 0 -20px !important;
 		white-space: normal;
 		height: 31px;
 		margin-left: 10%;
+		margin-top: -4px;
 	}
 }
 @media (min-width: 992px) and (max-width: 1199px) {

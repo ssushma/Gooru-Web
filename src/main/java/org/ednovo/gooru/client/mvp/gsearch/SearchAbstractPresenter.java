@@ -107,6 +107,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackLoadInStore;
 	
+	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsBackToTop;
+	
 	private SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallbackLoadInStore;
 	
 	protected static final String ALL = "*";
@@ -167,6 +169,22 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	public void onBind() {
 		super.onBind();
+		//Back to top async
+		setSearchResultsBackToTop(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
+			@Override
+			protected void run(SearchDo<T> searchDo) {
+				requestSearchLoad(searchDo, this,true);
+			}
+
+			@Override
+			public void onCallSuccess(String result) {
+				getView().setJsonResponseInStorage(result,false);
+				if(getSearchDo().getPageNum()==1){
+					getSearchDo().setPageNum(2);
+					getSearchResultsBackToTop().execute(getSearchDo());
+				}
+			}
+		});
 		//first time data store
 		setSearchAsyncCallback(new SearchAsyncCallbackForString<SearchDo<T>>() {
 			@Override
@@ -178,7 +196,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			public void onCallSuccess(SearchDo<T> result,boolean isApiCalled) {
 				setSearchDo(result);
 				getView().postSearch(result,isApiCalled);
-
 			}
 		});
 		setSearchResultsJsonAsyncCallbackFirstLoad(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
@@ -210,7 +227,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		setSearchResultsJsonAsyncCallbackLoadInStore(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
 			@Override
 			protected void run(SearchDo<T> searchDo) {
-				requestSearchLoad(searchDo, this);
+				requestSearchLoad(searchDo, this,false);
 			}
 
 			@Override
@@ -336,12 +353,20 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	}
 	@Override
 	public void resetLocalStorageData() {
+		if (getPlaceManager().getRequestParameter(QUERY) != null) {
+			getSearchDo().setQuery(getPlaceManager().getRequestParameter(QUERY));
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+				getSearchDo().setPageSize(9);
+			}else{
+				getSearchDo().setPageSize(8);
+			}
+		}
+		getSearchDo().setFilters(getSearchFilters());
 		setPageTitle(getSearchDo().getSearchQuery());
 		if (getSearchDo().getSearchQuery() != null && getSearchDo().getSearchQuery().trim().length() >= 0) {
 			getSearchDo().setPageNum(1);
-			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
-			getSearchDo().setPageNum(2);
-			getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
+			System.out.println("resetLocalStorageData");
+			getSearchResultsBackToTop().execute(getSearchDo());
 		}
 	}
 	/**
@@ -567,7 +592,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
 	
-	protected abstract void requestSearchLoad(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
+	protected abstract void requestSearchLoad(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback, boolean isBackToTop);
 
 	protected abstract void requestSearchFormJson(String result,SearchDo<T> searchDo2);
 
@@ -716,5 +741,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	public void setDataReterivedFromStorage(String data,boolean isApiCalled) {
 		getSearchAsyncCallback().execute(isApiCalled,data, getSearchDo());
+	}
+
+	public SearchAsyncCallbackForSearch<SearchDo<T>> getSearchResultsBackToTop() {
+		return searchResultsBackToTop;
+	}
+
+	public void setSearchResultsBackToTop(
+			SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsBackToTop) {
+		this.searchResultsBackToTop = searchResultsBackToTop;
 	}
 }

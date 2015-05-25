@@ -164,8 +164,12 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
 	}
 	@Override
-	protected void requestSearchLoad(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchResultsJsonAsyncCallback) {
-		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
+	protected void requestSearchLoad(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchResultsJsonAsyncCallback,boolean isBackTotop) {
+		if(isBackTotop){
+			getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsBackToTop());
+		}else{
+			getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
+		}
 	}
 	@Override
 	protected void requestSearchFormJson(String result,SearchDo<ResourceSearchResultDo> searchDo2) {
