@@ -537,7 +537,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     }
 
 	private void getClassPageDetails(String classItemId) {
-		isPlayerRefreshed();
 		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
@@ -549,7 +548,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}else{
 					String collectionId=getPlaceManager().getRequestParameter("id", null);
 					
-					String sessionOldId=Cookies.getCookie("sessionId");
+					/*String sessionOldId=Cookies.getCookie("sessionId");
 					String oldCollectionDataLogEventId=Cookies.getCookie("collectionDataLogEventId");
 					String oldCollectionNewDataLogEventId=Cookies.getCookie("collectionNewDataLogEventId");
 					String oldCollectionStartTime=Cookies.getCookie("collectionStartTime");
@@ -565,8 +564,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
                         isRefreshed = refreshed;
                         isItem_lodRefreshed = refreshed;
                         removeCookieValues();
-                    }/*else{
-                        sessionId=GwtUUIDGenerator.uuid();
                     }*/
                     
                     if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
@@ -631,9 +628,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
 					}
 				}
+				isPlayerRefreshed();
 				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo collectionDo) {
+						getOldValuesOnRefresh();
 						updateHeaderView();
 						hideAuthorInHeader(true);
 						if(collectionDo.getStatusCode()!=200){
@@ -2611,5 +2610,23 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				
 			}
 		});
+	}
+	
+	private void getOldValuesOnRefresh(){
+		String sessionOldId=Cookies.getCookie("sessionId");
+		String oldCollectionDataLogEventId=Cookies.getCookie("collectionDataLogEventId");
+		String oldCollectionNewDataLogEventId=Cookies.getCookie("collectionNewDataLogEventId");
+		String oldCollectionStartTime=Cookies.getCookie("collectionStartTime");
+		String refreshed=Cookies.getCookie("isRefreshed");
+		collectionActivityEventIdTemp = Cookies.getCookie("collectionActivityEventId");
+        if(!StringUtil.isEmpty(sessionOldId) && !StringUtil.isEmpty(oldCollectionNewDataLogEventId)){
+            sessionId=sessionOldId;
+            collectionNewDataLogEventId = oldCollectionNewDataLogEventId;
+            collectionDataLogEventId = oldCollectionDataLogEventId;
+            collectionStartTime = collectionStartTime.valueOf(oldCollectionStartTime);
+            isRefreshed = refreshed;
+            isItem_lodRefreshed = refreshed;
+            removeCookieValues();
+        }
 	}
 }
