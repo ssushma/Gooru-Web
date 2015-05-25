@@ -184,14 +184,57 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		initWidget(uiBinder.createAndBindUi(this));
 		this.richTextData=richTextData;
 		labelChoice.getElement().setId("lblLabelChoice");
+		answerHeadLbl.getElement().setId("lblAnswerHead");
+		answerHeadLbl.setText(i18n.GL3214());
+		answerHeadLbl.getElement().setAttribute("alt", i18n.GL3214());
+		answerHeadLbl.getElement().setAttribute("title", i18n.GL3214());
+		answerHeadingTypeLbl.getElement().setId("lblAnswerHeadintType");
+		answerHeadingTypeLbl.setText(i18n.GL3215());
+		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215());
+		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215());
+		reorderRDButton.getElement().setId("rdReorder");
+		reorderRDButton.setText(i18n.GL3216());
+		reorderRDButton.getElement().setAttribute("alt", i18n.GL3216());
+		reorderRDButton.getElement().setAttribute("title", i18n.GL3216());
+		highlightRDButton.getElement().setId("rdHighlight");
+		highlightRDButton.setText(i18n.GL3217());
+		highlightRDButton.getElement().setAttribute("alt", i18n.GL3217());
+		highlightRDButton.getElement().setAttribute("title", i18n.GL3217());
+		inLbl.getElement().setId("inLbl");
+		inLbl.setText(i18n.GL3225());
+		inLbl.getElement().setAttribute("alt", i18n.GL3225());
+		inLbl.getElement().setAttribute("title", i18n.GL3225());
+		wordRDButton.getElement().setId("rdWord");
+		wordRDButton.setText(i18n.GL3219());
+		wordRDButton.getElement().setAttribute("alt", i18n.GL3219());
+		wordRDButton.getElement().setAttribute("title", i18n.GL3219());
+		sentenceRDButton.getElement().setId("rdSentence");
+		sentenceRDButton.setText(i18n.GL3220());
+		sentenceRDButton.getElement().setAttribute("alt", i18n.GL3220());
+		sentenceRDButton.getElement().setAttribute("title", i18n.GL3220());
+		highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
+		correctAnswerTypeContainer.getElement().setId("pnlCorrectAnswerHeadConatiner");
+		correctAnswerHeadingTypeLbl.getElement().setId("lblCorrectAnswer");
+		correctAnswerHeadingTypeLbl.setText(i18n.GL3221());
+		correctAnswerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3221());
+		correctAnswerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3221());
+		singleRDButton.getElement().setId("rdSingle");
+		singleRDButton.setText(i18n.GL3222());
+		singleRDButton.getElement().setAttribute("alt", i18n.GL3222());
+		singleRDButton.getElement().setAttribute("title", i18n.GL3222());
+		multiRDButton.getElement().setId("rdMultiple");
+		multiRDButton.setText(i18n.GL3223());
+		multiRDButton.getElement().setAttribute("alt", i18n.GL3223());
+		multiRDButton.getElement().setAttribute("title", i18n.GL3223());
 		labelChoice.setText(labelName);
 		labelChoice.getElement().setAttribute("alt", labelName);
 		labelChoice.getElement().setAttribute("title", labelName);
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		answerHeadContainer.getElement().setId("pnlAnswerHeadConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
-		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		deleteButtonContainer.add(ansChoiceDeleteButton);
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 	}
@@ -209,12 +252,17 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 	 public void setRichTextData(){
 		 tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		 answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
+		 highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
 		 deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		 errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
 			   answerTextBox.getElement().setAttribute("alt", richTextData);
 			   answerTextBox.getElement().setAttribute("title", richTextData); 
+			   
+			   highlightTextArea.setText(richTextData);
+			   highlightTextArea.getElement().setAttribute("alt", richTextData);
+			   highlightTextArea.getElement().setAttribute("title", richTextData); 
 		   }	   
 	   }
 	public void setLabelName(String labelName){
