@@ -1,7 +1,8 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:hpanel="urn:import:org.ednovo.gooru.client.ui"
-	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
+	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd"
+	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
 		<g:HTMLPanel ui:field="fixedFilterSearch" styleName="fixedPosition">
@@ -183,7 +184,6 @@
 
 	</g:HTMLPanel>
 			<!-- Resource search filters End -->
-			
 		</g:HTMLPanel>
 		<div class="container">
 			<div class="SmallWidthContainer">
@@ -201,6 +201,7 @@
 				<g:HTMLPanel ui:field="pnlBackToTop">
 					<a><span></span></a>
 				</g:HTMLPanel>
+				<sg:FooterOrganizeUc ui:field="panelFoooter"/>
 			</div>
 		</div>
 	</g:HTMLPanel>

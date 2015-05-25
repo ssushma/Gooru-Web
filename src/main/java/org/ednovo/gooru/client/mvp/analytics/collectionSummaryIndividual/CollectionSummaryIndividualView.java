@@ -305,8 +305,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 							  } else if(VIDEO.equalsIgnoreCase(resourceCategory)) {
 							      resourceCategory = VIDEO;
 							      categoryStyle=res.css().category_new_type_video();
-							  } else if(WEBPAGE.equalsIgnoreCase(resourceCategory)) {
-							      resourceCategory = WEBPAGE;
+							  } else if(INTERACTIVE.equalsIgnoreCase(resourceCategory)) {
+							      resourceCategory = INTERACTIVE;
 							      categoryStyle=res.css().category_new_type_interactive();
 							  }else if(AUDIO.equalsIgnoreCase(resourceCategory)) {
 							      resourceCategory = AUDIO;
