@@ -1593,8 +1593,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		isApiInProgressBackLoad=true;
 		isApiInProgressLoad=true;
 		pageNumber = 1;
-		pageCountForStorage=1;
 		pageFlag=false;
+		pageCountForStorage=1;
 		localStore.clear();
 		isForwardScroll=true;
 		getUiHandlers().resetLocalStorageData();
