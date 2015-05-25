@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
+import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
@@ -57,7 +58,6 @@ import org.ednovo.gooru.client.uc.LabelGlassPanel;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.uc.tooltip.SearchDragToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.player.resource.client.view.resourceplayer.CustomAnimation;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -856,7 +856,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public void setOpenStatus(boolean isNewPage) {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
 			disPanel.getElement().getStyle().setDisplay(Display.NONE);
-		} else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)||AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+		} else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)||AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 			disPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 //			if(folderDo.getItemCount()==null || folderDo.getItemCount()==0){
 			
@@ -1108,7 +1108,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			addSuccessMsg.setVisible(false);
 			contentVerPanel.setVisible(true);
 			shelfResource.glowTitle();
-	            if(contentVerPanel.getWidgetCount()==2 && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH))){
+	            if(contentVerPanel.getWidgetCount()==2 && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE))){
 	        		AppClientFactory.fireEvent(new UserInfoMsgShelfEvent(CONGRATS_MSG));
 	        	}
 		}

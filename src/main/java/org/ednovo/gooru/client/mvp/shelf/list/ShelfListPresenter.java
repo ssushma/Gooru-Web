@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.HighlightRemixedItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
@@ -161,6 +162,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(ReorderShelfListItemsEvent.TYPE, this);
 		addRegisteredHandler(RemoveAssessment.TYPE, this);
 		addRegisteredHandler(UpdateAssmntUrlOnShelfListEvent.TYPE, this);
+		addRegisteredHandler(HighlightRemixedItemEvent.TYPE, this);
 		
 	}
 
@@ -225,7 +227,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("resourceId", resourceUid);
 		
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 			String mediaType = AppClientFactory.getPlaceManager().getRequestParameter(FLT_NOT_MEDIA_TYPE);
 			if(mediaType!=null) {
 				params.put("mediaType", IPAD_FRIENDLY);
@@ -546,5 +548,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void updateAssmntUrl(FolderDo folderDo, HashMap<String, String> params) {
 		getView().updateAssessmentUrlDetails(folderDo, params);
+	}
+
+	@Override
+	public void highlightItem(HashMap<String, String> params, String itemId) {
+		getView().highlightRemixedItem(params,itemId);
 	}
 }

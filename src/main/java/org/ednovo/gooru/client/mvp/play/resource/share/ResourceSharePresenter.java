@@ -57,7 +57,7 @@ public class ResourceSharePresenter extends PresenterWidget<IsResourceShareView>
 			}else{
 				this.resourceId=collectionItemDo.getResource().getGooruOid();
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("type", PlaceTokens.RESOURCE_SEARCH);
+				params.put("type", PlaceTokens.SEARCH_RESOURCE);
 				params.put("shareType", "");
 				AppClientFactory.getInjector().getSearchService().getShortenShareUrl(resourceId,params, new SimpleAsyncCallback<Map<String,String>>() {
 						@Override

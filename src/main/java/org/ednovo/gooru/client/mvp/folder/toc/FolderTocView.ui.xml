@@ -3,12 +3,12 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style field="tocStyle" src="floderToc.css" />
+	<!-- <ui:style field="tocStyle" src="floderToc.css" /> -->
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<ui:with field="folderTocStyle"  type="org.ednovo.gooru.client.mvp.folder.toc.FolderContainerCBundle"/>
-	<g:HTMLPanel>
+	<g:HTMLPanel ui:field="folderTocMainPnl">
 	 	<g:Hidden ui:field="myHiddenField"/>
-		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
+		<g:HTMLPanel styleName="bodyContainer">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row" ui:field="mainContainer">
 				     <!-- Library banner image start here -->
@@ -29,8 +29,8 @@
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<!--  Profile banner image end here -->
-					<g:HTMLPanel ui:field="whiteBgContainer" styleName="{tocStyle.whitebg}">
-						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
+					<g:HTMLPanel ui:field="whiteBgContainer" styleName="whitebg">
+						<g:HTMLPanel ui:field="marginDiv" styleName="marginDiv">
 						    <g:HTMLPanel styleName="{folderTocStyle.css.paginationBlock}">
 							   <g:HTMLPanel ui:field="breadCrumbsPanel">
 							       <!-- <g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/>  -->
@@ -40,37 +40,37 @@
 							  		 <g:TextBox ui:field="shareTxtBox"></g:TextBox>
 							   </g:HTMLPanel> -->
 							</g:HTMLPanel>
-							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />
-							<g:HTMLPanel styleName="{tocStyle.tocShareContainer}">
-							<g:HTMLPanel styleName="col-md-8 col-xs-6 col-sm-8 {tocStyle.folderTitleContainer}">
-								<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"/></g:HTMLPanel>
+							<g:Button ui:field="btnBackToPrevious" styleName="btnBackToPrevious backArrowButton" />
+							<g:HTMLPanel styleName="tocShareContainer">
+							<g:HTMLPanel styleName="col-md-8 col-xs-6 col-sm-8 folderTitleContainer">
+								<tbp:H3Panel styleName="pageHeader" ui:field="lblFolderTitle"/></g:HTMLPanel>
 								<g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {folderTocStyle.css.shareButton}" ui:field="sharePanel">
-									<g:Label styleName="{tocStyle.tocShareBtn}" ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
-									<g:TextBox styleName="{tocStyle.tocShareTxb}" ui:field="shareTxtBox"></g:TextBox>
+									<g:Label styleName="tocShareBtn" ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
+									<g:TextBox styleName="tocShareTxb" ui:field="shareTxtBox"></g:TextBox>
 								</g:HTMLPanel>
 								<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:HTMLPanel ui:field="bigIdeasPanel">
 								<p>
-									<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1731}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>
+									<g:Label styleName="lblFolderTitles" text="{i18n.GL1731}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>
 									<br> 
-									<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblBigIdeas"/>
+									<g:Label styleName="lblFolderMetadata" ui:field="lblBigIdeas"/>
 									</br>
 								</p>
 							</g:HTMLPanel>
 							<g:HTMLPanel ui:field="essentialPanel">
 								<p>
-									<g:Label  styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1732}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1732}"></g:Label>
+									<g:Label  styleName="lblFolderTitles" text="{i18n.GL1732}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1732}"></g:Label>
 									<br> 
-									<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblEssentalQuestions"/>
+									<g:Label styleName="lblFolderMetadata" ui:field="lblEssentalQuestions"/>
 									</br>
 								</p>
 							</g:HTMLPanel>
 							<g:HTMLPanel ui:field="performancePanel">
 								<p>
-									<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1733}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1733}"></g:Label>
+									<g:Label styleName="lblFolderTitles" text="{i18n.GL1733}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1733}"></g:Label>
 									<br> 
-									<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblPerformanceTasks"/>
+									<g:Label styleName="lblFolderMetadata" ui:field="lblPerformanceTasks"/>
 									</br>
 								</p>
 							</g:HTMLPanel>

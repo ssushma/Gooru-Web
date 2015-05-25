@@ -40,6 +40,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -59,6 +60,8 @@ public class FoldersWelcomePage extends Composite {
 			lblFour, lblFive;
 	
 	@UiField HTML htmlWalkSampleCollection;
+	
+	@UiField HTMLPanel tutorialsMainContainer;
 	
 	@UiField Anchor imgSampleCollection;
 	
@@ -97,7 +100,7 @@ public class FoldersWelcomePage extends Composite {
 		imgSampleCollection.getElement().appendChild(imgComponent.getElement());
 		imgSampleCollection.getElement().setId("lnkSampleCollection");
 		
-		
+		tutorialsMainContainer.getElement().setId("mycollTutorials");
 		
 	/*	<g:Image styleName="{WelcomePage.thumbnailImage}" url="images/EmptyPages/thumbnail.png" width="119"
 				height="74" />*/

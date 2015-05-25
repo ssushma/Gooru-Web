@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -36,9 +37,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.client.service.ResourceService;
-import org.ednovo.gooru.player.resource.server.CreateContentReportController;
-import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.server.annotation.ServiceURL;
+import org.ednovo.gooru.server.deserializer.ResourceCollectionDeSerializer;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.server.form.ResourceFormFactory;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
@@ -51,14 +51,17 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.content.CollectionItemsListDo;
 import org.ednovo.gooru.shared.model.content.CollectionProfileItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.NewResourceDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
+import org.ednovo.gooru.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
@@ -76,6 +79,7 @@ import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserDoMorePeople;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,12 +88,10 @@ import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gwt.http.client.URL;
 
 
 @Service("resourceService")
@@ -756,6 +758,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url);
 		String urlStr = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CHECK_SHORTENED_URL, GooruConstants.TRUE);
 		getLogger().info("--- checkResourceExists --  "+urlStr);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceItem(jsonRep);
@@ -1201,23 +1204,135 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public void createContentReport(String assocGooruOid, String targetValue, String typesvalue1,
 			String typesvalue2, String typesvalue3, String typesvalue4,
 			String otherDescription) {
-		new CreateContentReportController().createCollectionContentreport(getRestEndPoint(), getLoggedInSessionToken(), assocGooruOid, targetValue,typesvalue1,typesvalue2,typesvalue3, typesvalue4,otherDescription);
+//		new CreateContentReportController().createCollectionContentreport(getRestEndPoint(), getLoggedInSessionToken(), assocGooruOid, targetValue,typesvalue1,typesvalue2,typesvalue3, typesvalue4,otherDescription);
+		String url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_CONTENT_REPORT, getLoggedInSessionToken(), assocGooruOid, targetValue,typesvalue1,typesvalue2,typesvalue3, typesvalue4,otherDescription);
+		JSONObject createtargetObject=new JSONObject();
+		JSONObject targetObject=new JSONObject();
+		JSONArray typesArray=new JSONArray();
+		JSONObject typesObject1=new JSONObject();
+		JSONObject typesObject2=new JSONObject();
+		JSONObject typesObject3=new JSONObject();
+		JSONObject typesObject4=new JSONObject();
+		String responseData = "";
+		try {
+			
+			createtargetObject.put("assocGooruOid", assocGooruOid);
+			targetObject.put("value", targetValue);
+			createtargetObject.put("target", targetObject);
+			if(!typesvalue1.equalsIgnoreCase("")){
+				typesObject1.put("value", typesvalue1);
+				typesArray.put(typesObject1);
+			}
+			if(!typesvalue2.equalsIgnoreCase("")){
+				typesObject2.put("value", typesvalue2);
+				typesArray.put(typesObject2);
+			}
+			if(!typesvalue3.equalsIgnoreCase("")){
+				typesObject3.put("value", typesvalue3);
+				typesArray.put(typesObject3);
+			}
+			if(!typesvalue4.equalsIgnoreCase("")){
+				typesObject4.put("value", typesvalue4);
+				typesArray.put(typesObject4);
+			}
+			createtargetObject.put("types", typesArray);
+			if(!otherDescription.equalsIgnoreCase("")){
+				createtargetObject.put("freeText", otherDescription);
+			}
+			JsonRepresentation jsonRep = null;
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), createtargetObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation(); 
+			
+			
+			try {
+				responseData=jsonRep.getText();
+			} catch (IOException e) {
+				getLogger().error("Error while creating Content Report (IO) : "+e.toString()); 
+			}
+                               
+       } catch (JSONException e) {
+    	   getLogger().error("Error while creating Get Content Report (JSON) : "+e.toString());
+       }
+
 	}
 
 	@Override
 	public String updateReport(String gooruOid, String freeText) {
-		new CreateContentReportController().updateReport(getRestEndPoint(), getLoggedInSessionToken(), gooruOid, freeText);
-		return freeText;
+//		new CreateContentReportController().updateReport(getRestEndPoint(), getLoggedInSessionToken(), gooruOid, freeText);
+		String response=null;
+		String url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_CONTENT_REPORT, gooruOid, getLoggedInSessionToken());
+		try {
+			JSONObject updateReportObject=new JSONObject();
+			updateReportObject.put("freeText", freeText);
+			
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), updateReportObject.toString());
+			JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
+			
+			response=jsonRep.getText();
+		} catch (JSONException e) {
+			getLogger().error("Error while Updating Content Report (JSON) : "+e.toString());
+		} catch (IOException e) {
+			getLogger().error("Error while Updating Content Report (IO) : "+e.toString());
+		}
+
+		return response;
 	}
 
 	@Override
 	public GetFlagContentDO getContentReport(String assocGooruOid) {
-		return new CreateContentReportController().getContentReport(getRestEndPoint(),getLoggedInSessionToken(),assocGooruOid);
+		JsonRepresentation jsonRep = null;
+		String url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REPORT, assocGooruOid,getLoggedInSessionToken());
+	    	       
+	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeContentReport(jsonRep);
+	}
+
+	private GetFlagContentDO deserializeContentReport(JsonRepresentation jsonRep) {
+		GetFlagContentDO getFlagContentDO=null;
+		String response;
+		
+		String type="";
+		String gooruOid="";
+		String loginUserId="";
+		ArrayList<String> getTypeList=new ArrayList<String>();
+		ArrayList<String> getGooruId=new ArrayList<String>();
+		try {
+			response = jsonRep.getText();
+			if(response!=null && response!="[]"){
+				JSONArray getFormattingArray=new JSONArray(response);
+				for(int i=0;i<getFormattingArray.length();i++){
+					JSONObject typeObj=getFormattingArray.getJSONObject(i);
+					type=typeObj.getString("type");
+					gooruOid=typeObj.getString("gooruOid");
+					getGooruId.add(gooruOid);
+					getFlagContentDO=new GetFlagContentDO();
+					getFlagContentDO.setGetAsscociatedId(getGooruId);
+					getTypeList.add(type);
+					getFlagContentDO.setGetTypeList(getTypeList);
+					loginUserId=typeObj.getString("creator");
+					getFlagContentDO.setUserId(loginUserId);
+				}
+			} 
+       }catch (JSONException e) {
+           getLogger().error("Error while deserializing Get Content Report (JSON) : "+e.toString());
+       }catch (IOException e1) {
+    	   getLogger().error("Error while deserializing Get Content Report (IO) : "+e1.toString()); 
+		}
+		return getFlagContentDO;
 	}
 
 	@Override
 	public String deleteContentReport(String gooruOid) {
-		return new CreateContentReportController().deleteContentReport(getRestEndPoint(),getLoggedInSessionToken(),gooruOid);
+		String url=UrlGenerator.generateUrl(getRestEndPoint(),getLoggedInSessionToken(),gooruOid);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
+		String response="";
+		try {
+			response = jsonResponseRep.getJsonRepresentation().getText();
+		} catch (IOException e) {
+			getLogger().error("Error while deserializing Content Report (IO) : "+e.toString());
+		}
+		return response;
 	}
 
 	
@@ -1254,7 +1369,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public List<ProfanityCheckDo> checkProfanityForList(
 			List<ProfanityCheckDo> profanityList) {
 		Map<String, String> parms = new HashMap<String, String>();
-		if(profanityList!=null){
+		if(profanityList!=null && profanityList.size()>0){
 		for (int i = 0; i < profanityList.size(); i++) {
 			parms.put("text", profanityList.get(i).getQuestionText());
 			profanityList.get(i).setQuestionValue(checkProfanityForLsit(parms));
@@ -1921,5 +2036,48 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			logger.error("Exception::", e);
 		}
 		return new FolderDo();
+	}
+	
+	@Override
+	public ArrayList<ResourceCollDo> getResourceBasedUsersDetails(String resourceId, int offSet, int limit) {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_RESOURCE_BASED_USERS,resourceId, getLoggedInSessionToken(),String.valueOf(offSet),String.valueOf(limit));
+		//getLogger().info("getResourceBasedUsersDetails::"+url);
+		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation= jsonResponseRep.getJsonRepresentation();
+		return deserializeUserCollections(jsonRepresentation);
+	}
+	public ArrayList<ResourceCollDo> deserializeUserCollections(JsonRepresentation jsonRep){
+		ArrayList<ResourceCollDo> resourceModelList=new ArrayList<ResourceCollDo>();
+		try {
+			if(jsonRep!=null){
+				JSONArray myCollectionArryObj=jsonRep.getJsonArray();
+				for(int i=0;i<myCollectionArryObj.length();i++){
+					JSONObject myCollectionObj=myCollectionArryObj.getJSONObject(i);
+					UserDoMorePeople userObj=new UserDoMorePeople();
+					ThumbnailDo thumbnailsDo=new ThumbnailDo();
+					String myCollectionTitle=myCollectionObj.isNull("title")?"":myCollectionObj.getString("title").toString();
+					String mycollectionGid=myCollectionObj.isNull("gooruOid")?"":myCollectionObj.getString("gooruOid").toString();
+					String myCollectionType=myCollectionObj.isNull("collectionType")?"":myCollectionObj.getString("collectionType").toString();
+					if(!myCollectionObj.isNull("user")){
+						userObj = JsonDeserializer.deserialize(myCollectionObj.getJSONObject("user").toString(), UserDoMorePeople.class);			
+					}
+					if(!myCollectionObj.isNull("thumbnails")){
+						thumbnailsDo = JsonDeserializer.deserialize(myCollectionObj.getJSONObject("thumbnails").toString(), ThumbnailDo.class);			
+					}
+					ResourceCollDo collectionDetails=new ResourceCollDo();
+					collectionDetails.setTitle(myCollectionTitle);
+					collectionDetails.setGooruOid(mycollectionGid);
+					collectionDetails.setCollectionType(myCollectionType);
+					collectionDetails.setUser(userObj);
+					collectionDetails.setThumbnails(thumbnailsDo);
+					resourceModelList.add(collectionDetails);
+				}//main for loop
+			}			
+		}//try end
+		catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return resourceModelList;
 	}
 }

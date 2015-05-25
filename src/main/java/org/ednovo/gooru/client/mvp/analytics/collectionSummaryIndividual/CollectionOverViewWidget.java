@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -56,17 +57,25 @@ public class CollectionOverViewWidget extends Composite implements ClientConstan
 	 * @param result
 	 * @param isTeacherSummary
 	 */
-	public void setData(CollectionSummaryMetaDataDo result,boolean isTeacherSummary){
-		collectionOverViewlbl.getElement().getStyle().setTextAlign(TextAlign.LEFT);
-		if(isTeacherSummary){
-			timeSpentTxtlbl.setText(i18n.GL2230());
-		}else{
-			timeSpentTxtlbl.setText(i18n.GL2275());
-		}
-		totalTimeSpentlbl.setText(AnalyticsUtil.getTimeSpent(result.getAvgTimeSpent()));
-		totalViewlbl.setText(Integer.toString(result.getViews()));
-		totalAvgReactionlbl.clear();
-		totalAvgReactionlbl.add(new AnalyticsReactionWidget(result.getAvgReaction()));
+	public void setData(final CollectionSummaryMetaDataDo result, final boolean isTeacherSummary){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				collectionOverViewlbl.getElement().getStyle().setTextAlign(TextAlign.LEFT);
+				if(isTeacherSummary){
+					timeSpentTxtlbl.setText(i18n.GL2230());
+				}else{
+					timeSpentTxtlbl.setText(i18n.GL2275());
+				}
+				totalTimeSpentlbl.setText(AnalyticsUtil.getTimeSpent(result.getAvgTimeSpent()));
+				totalViewlbl.setText(Integer.toString(result.getViews()));
+				totalAvgReactionlbl.clear();
+				totalAvgReactionlbl.add(new AnalyticsReactionWidget(result.getAvgReaction()));
+			
+			}
+		});
 	}
 
 }

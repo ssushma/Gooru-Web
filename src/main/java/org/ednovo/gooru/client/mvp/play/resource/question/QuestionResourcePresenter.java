@@ -92,24 +92,24 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	}
 
 	@Override
-	public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
+	public void createSessionItemAttempt(String contentGooruOid,int answerId,String answerAttemptStatus) {
 		if(isCollectionPlayer){
-			collectionPlayerPresenter.createSessionItemAttempt(answerId, answerAttemptStatus);
+			collectionPlayerPresenter.createSessionItemAttempt(contentGooruOid,answerId, answerAttemptStatus);
 		}else if(isResourcePlayer){
-			resourcePlayerPresenter.createSessionItemAttempt(answerId, answerAttemptStatus);
+			resourcePlayerPresenter.createSessionItemAttempt(contentGooruOid,answerId, answerAttemptStatus);
 		}else if(isPreviewPlayer){
-			previewPlayerPresenter.createSessionItemAttempt(answerId, answerAttemptStatus);
+			previewPlayerPresenter.createSessionItemAttempt(contentGooruOid,answerId, answerAttemptStatus);
 		}	
 	}
 
 	@Override
-	public void createSesstionItemAttemptOe(String answerId,String attemptStatus,String answerText) {
+	public void createSesstionItemAttemptOe(String contentGooruOid,String answerId,String attemptStatus,String answerText) {
 		if(isCollectionPlayer){
-			collectionPlayerPresenter.createSessionItemAttemptOe(answerId ,attemptStatus,answerText);
+			collectionPlayerPresenter.createSessionItemAttemptOe(contentGooruOid,answerId ,attemptStatus,answerText);
 		}else if(isResourcePlayer){
-			resourcePlayerPresenter.createSessionItemAttemptOe(answerId, attemptStatus,answerText);
+			resourcePlayerPresenter.createSessionItemAttemptOe(contentGooruOid,answerId, attemptStatus,answerText);
 		}else if(isPreviewPlayer){
-			previewPlayerPresenter.createSessionItemAttemptOe(answerId ,attemptStatus,answerText);
+			previewPlayerPresenter.createSessionItemAttemptOe(contentGooruOid,answerId ,attemptStatus,answerText);
 		}		
 	}
 	
@@ -125,8 +125,7 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	}
 
 	@Override
-	public void setAnswerAttemptSequence(int attemptSequence,
-			int attemptStatus, int answerId) {
+	public void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId) {
 		if(isCollectionPlayer){
 			collectionPlayerPresenter.setAnswerAttemptSequence(attemptSequence, attemptStatus, answerId);
 		}else if(isResourcePlayer){

@@ -63,7 +63,12 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 			@Override
 			public void onClick(ClickEvent event) {
 				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
+					LoginPopupUc loginPopupUc=new  LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							
+						}
+					};
 				}else{
 				getUiHandlers().showAddCollectionToShelfView(collectionSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"collection");
 				getUiHandlers().showAndHideDisclosurePanelOnCLick(collectionSearchResultVc.getDisclosurePanelClose());
@@ -76,7 +81,12 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 					public void onClick(ClickEvent event) {
 						// TODO Auto-generated method stub
 						if(AppClientFactory.isAnonymous()){
-							LoginPopupUc loginPopupUc=new LoginPopupUc();
+							LoginPopupUc loginPopupUc=new  LoginPopupUc() {
+								@Override
+								public void onLoginSuccess() {
+									
+								}
+							};
 						}else{
 							getUiHandlers().setAnalyticsTabDataForCollections(collectionSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"collection");
 					}

@@ -32,8 +32,9 @@ import java.util.Set;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -357,21 +358,19 @@ public abstract class AddSearchResourceView extends Composite {
 		if(!subjectDoFilter.isEmpty()) {
 			filterResourceParams.put(IsSearchView.SUBJECT_FLT, subjectDoFilter);
 		}
-		filterResourceParams.put("pageSize", "8");
-		filterResourceParams.put("pageNum", "1");
 		filterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, filterResourceParams);
+		HeaderUc.getEditSearchTxtBox().setText(searchBox.getText());
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, filterResourceParams);
 	}
 
 	private void redirectSearchNoFiltersPage() {
 		Map<String,String> noFilterResourceParams = new HashMap<String,String>();
 		noFilterResourceParams.put("query",searchBox.getText());
 		noFilterResourceParams.put("category", "All");
-		noFilterResourceParams.put("pageSize", "8");
-		noFilterResourceParams.put("pageNum", "1");
 		noFilterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, noFilterResourceParams);
+		HeaderUc.getEditSearchTxtBox().setText(searchBox.getText());
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, noFilterResourceParams);
 	}
 }

@@ -173,4 +173,6 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	void removeAssessment(HashMap<String, String> params, String assessment, FolderDo folderDo);
 
 	void updateAssessmentUrlDetails(FolderDo folderDo, HashMap<String, String> params);
+
+	void highlightRemixedItem(HashMap<String, String> params, String itemId);
 }

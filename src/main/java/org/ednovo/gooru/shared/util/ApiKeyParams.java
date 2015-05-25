@@ -59,6 +59,8 @@ public interface ApiKeyParams {
 	String CONTENT_GOORU_OID = "contentGooruOid";
 	String OFFSET = "offset";
 	String LIMIT = "limit";
+	String INCLUDECIMETADATA="includeCIMetaData";
+	String PRETTY="pretty";
 	
 	/**
 	 * Library related parameters.

@@ -37,7 +37,7 @@ import org.ednovo.gooru.client.mvp.play.collection.share.SocialShareWidget;
 import org.ednovo.gooru.client.mvp.play.collection.share.email.CollectionEmailShareView;
 import org.ednovo.gooru.client.mvp.play.collection.share.email.SentEmailSuccessVc;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;

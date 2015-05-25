@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -367,7 +368,12 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource, this.isUserOwnResource);
+		List<Map<String,String>> selectedStandList=addStandardsPresenter.getStandardListArray();
+		if(selectedStandList.size()!=0){
+			for(int i=0;i<selectedStandList.size();i++){
+				getView().setUpdatedStandardsCode(selectedStandList.get(i).get("selectedCodeVal"), Integer.parseInt(selectedStandList.get(i).get("selectedCodeId")),selectedStandList.get(i).get("selectedCodeDesc"),this.isQuestionResource, this.isUserOwnResource);
+			}
+		}
 	}
 
 	@Override

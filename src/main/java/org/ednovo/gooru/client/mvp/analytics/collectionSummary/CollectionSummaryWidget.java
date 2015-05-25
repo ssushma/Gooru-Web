@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -42,42 +43,58 @@ public class CollectionSummaryWidget extends Composite implements ClientConstant
 	 * This method is used to set static data.
 	 */
 	void setStaticData(){
-		StringUtil.setAttributes(collectionImage.getElement(), "imgCollectionImage", null, null);
-		
-		StringUtil.setAttributes(sessionsPnl.getElement(), "pnlSessionsPnl", null, null);
-		
-		StringUtil.setAttributes(sessionValue.getElement(), "spnSessionValue", null, null);
-		StringUtil.setAttributes(sessionText.getElement(), "spnSessionText", null, null);
-		StringUtil.setAttributes(sessionAccessedTime.getElement(), "spnSessionAccessedTime", null, null);
-		StringUtil.setAttributes(collectionLastAccessedlbl.getElement(), "spnCollectionLastAccessedlbl", null, null);
-		StringUtil.setAttributes(collectionTitle.getElement(), "spnCollectionTitle", null, null);
-		StringUtil.setAttributes(collectionResourcesCount.getElement(), "spnCollectionResourcesCount", null, null);
-		StringUtil.setAttributes(collectionLastAccessed.getElement(), "spnCollectionLastAccessed", null, null);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				StringUtil.setAttributes(collectionImage.getElement(), "imgCollectionImage", null, null);
+				
+				StringUtil.setAttributes(sessionsPnl.getElement(), "pnlSessionsPnl", null, null);
+				
+				StringUtil.setAttributes(sessionValue.getElement(), "spnSessionValue", null, null);
+				StringUtil.setAttributes(sessionText.getElement(), "spnSessionText", null, null);
+				StringUtil.setAttributes(sessionAccessedTime.getElement(), "spnSessionAccessedTime", null, null);
+				StringUtil.setAttributes(collectionLastAccessedlbl.getElement(), "spnCollectionLastAccessedlbl", null, null);
+				StringUtil.setAttributes(collectionTitle.getElement(), "spnCollectionTitle", null, null);
+				StringUtil.setAttributes(collectionResourcesCount.getElement(), "spnCollectionResourcesCount", null, null);
+				StringUtil.setAttributes(collectionLastAccessed.getElement(), "spnCollectionLastAccessed", null, null);
+			
+			}
+		});
 	}
 	/**
 	 * This method is used to set the data.
 	 * @param result
 	 */
-	public void setData(CollectionSummaryMetaDataDo result){
-		collectionImage.setVisible(true);
-		sessionsPnl.setVisible(false);
-		collectionLastAccessedlbl.setText(i18n.GL2271());
-		if(!StringUtil.isEmpty(result.getTitle())){
-			collectionTitle.setText(result.getTitle());
-		}
-		collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastAccessed())));
-		if(!StringUtil.isEmpty(result.getThumbnail())){ 
-			collectionImage.setUrl(result.getThumbnail());
-		}else{
-			collectionImage.setUrl("../images/analytics/default-collection-image.png");
-		}
-		collectionImage.addErrorHandler(new ErrorHandler() {
+	public void setData(final CollectionSummaryMetaDataDo result){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void onError(ErrorEvent event) {
-				collectionImage.setUrl("../images/analytics/default-collection-image.png");
+			public void onSuccess() {
+
+				collectionImage.setVisible(true);
+				sessionsPnl.setVisible(false);
+				collectionLastAccessedlbl.setText(i18n.GL2271());
+				if(!StringUtil.isEmpty(result.getTitle())){
+					collectionTitle.setText(result.getTitle());
+				}
+				collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastAccessed())));
+				if(!StringUtil.isEmpty(result.getThumbnail())){ 
+					collectionImage.setUrl(result.getThumbnail());
+				}else{
+					collectionImage.setUrl("../images/analytics/default-collection-image.png");
+				}
+				collectionImage.addErrorHandler(new ErrorHandler() {
+					@Override
+					public void onError(ErrorEvent event) {
+						collectionImage.setUrl("../images/analytics/default-collection-image.png");
+					}
+				});
+				collectionResourcesCount.setText((result.getResourceCount())+" Resources | "+result.getNonResourceCount()+" Questions");
+			
 			}
 		});
-		collectionResourcesCount.setText((result.getResourceCount())+" Resources | "+result.getNonResourceCount()+" Questions");
 	}
 	
 	/**
@@ -85,33 +102,39 @@ public class CollectionSummaryWidget extends Composite implements ClientConstant
 	 * @param result
 	 * @param printUserDataDO
 	 */
-	public void setDataAnalyticsData(CollectionSummaryMetaDataDo result,PrintUserDataDO printUserDataDO){
-		collectionImage.setVisible(false);
-		if(printUserDataDO!=null && !StringUtil.isEmpty(printUserDataDO.getUserName())){
-			sessionsPnl.setVisible(true);
-			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
-			collectionLastAccessedlbl.setText(SORT_BY);
-			collectionLastAccessed.setText(printUserDataDO.getUserName());
-			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
-			sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
-			sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
-			sessionValue.setText(printUserDataDO.getSession());
-		}else if(printUserDataDO!=null &&  printUserDataDO.getUserName()==null){
-			sessionsPnl.setVisible(true);
-			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
-			collectionLastAccessedlbl.setText("");
-			collectionLastAccessed.setText("");
-			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
-			sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
-			sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
-			sessionValue.setText(printUserDataDO.getSession());
-		}else{
-			sessionsPnl.setVisible(false);
-			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
-			collectionLastAccessedlbl.setText(SORT_BY);
-			collectionLastAccessed.setText(i18n.GL2289());
-			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
-		}
+	public void setDataAnalyticsData(final CollectionSummaryMetaDataDo result,final PrintUserDataDO printUserDataDO){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				collectionImage.setVisible(false);
+				if(printUserDataDO!=null && !StringUtil.isEmpty(printUserDataDO.getUserName())){
+					sessionsPnl.setVisible(true);
+					collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
+					collectionLastAccessedlbl.setText(SORT_BY);
+					collectionLastAccessed.setText(printUserDataDO.getUserName());
+					sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
+					sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
+					sessionValue.setText(printUserDataDO.getSession());
+				}else if(printUserDataDO!=null &&  printUserDataDO.getUserName()==null){
+					sessionsPnl.setVisible(true);
+					collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
+					collectionLastAccessedlbl.setText("");
+					collectionLastAccessed.setText("");
+					sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
+					sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
+					sessionValue.setText(printUserDataDO.getSession());
+				}else{
+					sessionsPnl.setVisible(false);
+					collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
+					collectionLastAccessedlbl.setText(SORT_BY);
+					collectionLastAccessed.setText(i18n.GL2289());
+					
+				}
+				collectionResourcesCount.setText(StringUtil.generateMessage(i18n.GL3258(), String.valueOf(result.getResourceCount()), String.valueOf(result.getNonResourceCount())));
+			}
+		});
 	}
 	public HTMLPanel getCollectionLastAccessPnl(){
 		return pnlCollectionLastAccessed;

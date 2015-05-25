@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.GooruCBundle;
@@ -32,6 +33,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.ClasspageListVc;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListEvent;
@@ -40,8 +42,10 @@ import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
@@ -53,7 +57,6 @@ import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BPanel;
 import org.ednovo.gooru.client.uc.BrowserAgent;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.HeaderPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.DashBoardToolTip;
@@ -61,6 +64,7 @@ import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTipUc;
 import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -73,6 +77,8 @@ import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -160,39 +166,54 @@ public class HeaderUc extends Composite implements
 	SetHeaderHandler setHeader = new SetHeaderHandler() {
 
 		@Override
-		public void setHeaderEvent(UserDo userDo) {
-			AppClientFactory
+		public void setHeaderEvent(final UserDo userDo) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					AppClientFactory
 					.setBrowserWindowTitle(SeoTokens.HOME_TITLE_LOGGEDIN);
-			AppClientFactory
-					.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-			setLoggedInUser(userDo);
+					AppClientFactory
+							.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
+					setLoggedInUser(userDo);
+				}
+			});
+			
 		}
 	};
 
 	SetHeaderZIndexHandler setZindex = new SetHeaderZIndexHandler() {
 
 		@Override
-		public void setHeaderZIndex(int value, boolean isClearZIndex) {
-			Document doc = Document.get();
-			if (isClearZIndex) {
-				try {
-					doc.getElementById("headerMainPanel").getStyle()
-							.clearZIndex();
-					doc.getElementById("goToClasicInnerPanel").getStyle()
-							.clearZIndex();
-				} catch (Exception ex) {
-					AppClientFactory.printSevereLogger(ex.getMessage());
+		public void setHeaderZIndex(final int value, final boolean isClearZIndex) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					Document doc = Document.get();
+					if (isClearZIndex) {
+						try {
+							doc.getElementById("headerMainPanel").getStyle()
+									.clearZIndex();
+							doc.getElementById("goToClasicInnerPanel").getStyle()
+									.clearZIndex();
+						} catch (Exception ex) {
+							AppClientFactory.printSevereLogger(ex.getMessage());
+						}
+					} else {
+						try {
+							doc.getElementById("headerMainPanel").getStyle()
+									.setZIndex(value);
+							doc.getElementById("goToClasicInnerPanel").getStyle()
+									.setZIndex(value);
+						} catch (Exception e) {
+							AppClientFactory.printSevereLogger(e.getMessage());
+						}
+					}
+				
 				}
-			} else {
-				try {
-					doc.getElementById("headerMainPanel").getStyle()
-							.setZIndex(value);
-					doc.getElementById("goToClasicInnerPanel").getStyle()
-							.setZIndex(value);
-				} catch (Exception e) {
-					AppClientFactory.printSevereLogger(e.getMessage());
-				}
-			}
+			});
 		}
 
 	};
@@ -201,21 +222,29 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void setVisibility(boolean value) {
-			if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
-				acctActivationPl.setVisible(true);
-			} else {
-				acctActivationPl.setVisible(false);
-			}
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.HOME)) {
-				/*
-				 * acctActivationPl.getElement().getStyle() .setMarginTop(51,
-				 * Unit.PX);
-				 */
-			} else {
-				acctActivationPl.getElement().getStyle().clearMarginTop();
-			}
+					if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
+						acctActivationPl.setVisible(true);
+					} else {
+						acctActivationPl.setVisible(false);
+					}
+
+					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+							PlaceTokens.HOME)) {
+						/*
+						 * acctActivationPl.getElement().getStyle() .setMarginTop(51,
+						 * Unit.PX);
+						 */
+					} else {
+						acctActivationPl.getElement().getStyle().clearMarginTop();
+					}
+				
+				}
+			});
 		}
 	};
 	
@@ -256,13 +285,15 @@ public class HeaderUc extends Composite implements
 	
 	static PreFilterPopup prefilter=null;
 	
-	static String stadardCode;
+	static String stadardCode="";
 
 	boolean isGooruGuidePanelOpen = false;
 
 	private boolean isOpenSettingDropDown = true;
 
 	private boolean isSettingIcon = false;
+	
+	private boolean isClicked = false;
 
 	boolean isEnter = false;
 
@@ -288,6 +319,8 @@ public class HeaderUc extends Composite implements
 	private ClasspageListVc classpageListVc;
 
 	private SaveSharePanel saveSharePanel;
+	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
 	@Inject
 	HomeUiHandlers homeUiHandlers;
@@ -303,9 +336,6 @@ public class HeaderUc extends Composite implements
 
 	@UiField
 	FlowPanel headerSearchBarFloPanel;
-
-	@UiField(provided = true)
-	GooruCBundle res;
 
 	@UiField
 	Label lblBeta;
@@ -356,9 +386,11 @@ public class HeaderUc extends Composite implements
 	private static final String ACCOUNT_TYPE = "accountType";
 	private AppMultiWordSuggestOracle autokeySuggestOracle;
 	String searchData = "";
-	private String GOORU_SEARCH = " -<n> Gooru Search</n>";
+	private String GOORU_SEARCH = "-<n> Gooru Search</n>";
 
 	private String discoverLinkUrl = null;
+	
+	private String stadardsListCode= "";
 
 
 	private static String DEFAULT_PROFILE_IMAGE = "images/settings/setting-user-image.png";
@@ -370,8 +402,7 @@ public class HeaderUc extends Composite implements
 	 */
 	@SuppressWarnings("deprecation")
 	public HeaderUc() {
-		this.res = GooruCBundle.INSTANCE;
-		res.css().ensureInjected();
+		
 		autokeySuggestOracle = new AppMultiWordSuggestOracle(true);
 		setEditSearchTxtBox(new AppSuggestBox(autokeySuggestOracle) {
 
@@ -481,6 +512,8 @@ public class HeaderUc extends Composite implements
 		/*myCollectionsPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		myCollectionsPop.getElement().getStyle().setZIndex(99);*/
 		myCollectionsPop.setVisible(false);
+		organizeToolTip.getElement().getStyle().setMarginLeft(78, Unit.PCT);
+		organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 
 		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
 		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
@@ -625,20 +658,28 @@ public class HeaderUc extends Composite implements
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (!isSettingIcon) {
-					isOpenSettingDropDown = true;
-					settingOptionsPopup.setVisible(false);
-					logoutPanelVc.hide();
-				} else {
-					isSettingIcon = false;
-				}
-				if (!isStudyNow && studyNowToolTip != null) {
-					isClassCodePopupOpen = true;
-					studyNowToolTip.hide();
-					studyNowToolTip.getClassCodeTxtBox().setText("");
-				} else {
-					isStudyNow = false;
-				}
+				GWT.runAsync(new SimpleRunAsyncCallback() {
+					
+					@Override
+					public void onSuccess() {
+
+						if (!isSettingIcon) {
+							isOpenSettingDropDown = true;
+							settingOptionsPopup.setVisible(false);
+							logoutPanelVc.hide();
+						} else {
+							isSettingIcon = false;
+						}
+						if (!isStudyNow && studyNowToolTip != null) {
+							isClassCodePopupOpen = true;
+							studyNowToolTip.hide();
+							studyNowToolTip.getClassCodeTxtBox().setText("");
+						} else {
+							isStudyNow = false;
+						}
+					
+					}
+				});
 			}
 		};
 		acctActivationPl.setVisible(false);
@@ -808,20 +849,31 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("loginLink")
 	public void onLinkPopupClicked(ClickEvent clickEvent) {
-
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-		popup = new LoginPopupUc(this);
-		popup.setGlassEnabled(true);
-		popup.center();
-		popup.show();
-		if (name != null) {
-			if (name.equalsIgnoreCase("teach")) {
-				popup.setNameToken(PlaceTokens.TEACH);
-			} else if (name.equalsIgnoreCase("organize")) {
-				popup.setNameToken(PlaceTokens.SHELF);
+		popup = new LoginPopupUc(this) {
+			@Override
+			public void onLoginSuccess() {
+				
 			}
-			name = null;
-		}
+		};
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+				popup.setGlassEnabled(true);
+				popup.center();
+				popup.show();
+				if (name != null) {
+					if (name.equalsIgnoreCase("teach")) {
+						popup.setNameToken(PlaceTokens.TEACH);
+					} else if (name.equalsIgnoreCase("organize")) {
+						popup.setNameToken(PlaceTokens.SHELF);
+					}
+					name = null;
+				}
+			
+			}
+		});
 	}
 
 	/*
@@ -911,40 +963,49 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("registerLinkLbl")
 	public void onRegisterPopupClicked(ClickEvent clickEvent) {
-		MixpanelUtil.Arrive_Register_popup();
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 
-		DataLogEvents.signUp(GwtUUIDGenerator.uuid(), "home",
-				PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(), "");
+				MixpanelUtil.Arrive_Register_popup();
 
-		Map<String, String> map = StringUtil.splitQuery(Window.Location
-				.getHref());
-		if (map.containsKey("query")) {
-			String queryVal = AppClientFactory.getPlaceManager()
-					.getRequestParameter("query");
-			queryVal = queryVal.replace("+", " ");
-			map.put("query", queryVal);
-			editSearchTxtBox.setText(queryVal);
-		}
-		if (map.containsKey("flt.subjectName")) {
-			String subjectNameVal = AppClientFactory.getPlaceManager()
-					.getRequestParameter("flt.subjectName");
-			subjectNameVal = subjectNameVal.replace("+", " ");
-			map.put("flt.subjectName", subjectNameVal);
-		}
-		map.put("callback", "signup");
-		map.put("type", "1");
+				DataLogEvents.signUp(GwtUUIDGenerator.uuid(), "home",
+						PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(), "");
 
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+				Map<String, String> map = StringUtil.splitQuery(Window.Location
+						.getHref());
+				if (map.containsKey("query")) {
+					String queryVal = AppClientFactory.getPlaceManager()
+							.getRequestParameter("query");
+					queryVal = queryVal.replace("+", " ");
+					map.put("query", queryVal);
+					editSearchTxtBox.setText(queryVal);
+				}
+				if (map.containsKey("flt.subjectName")) {
+					String subjectNameVal = AppClientFactory.getPlaceManager()
+							.getRequestParameter("flt.subjectName");
+					subjectNameVal = subjectNameVal.replace("+", " ");
+					map.put("flt.subjectName", subjectNameVal);
+				}
+				map.put("callback", "signup");
+				map.put("type", "1");
+
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 
 
+			
+			}
+		});
 	}
 
 	/* Click event hanlder for Menu items */
 	public class OnClickDiscoverEventHandler implements ClickHandler {
 
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(final ClickEvent event) {
+
 			Window.enableScrolling(true);
 			Cookies.setCookie("searchvalue", "");
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
@@ -965,6 +1026,7 @@ public class HeaderUc extends Composite implements
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.DISCOVER);
 			}
+		
 		}
 
 	}
@@ -973,22 +1035,30 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onClick(ClickEvent event) {
-			AppClientFactory.setPreviousPlaceRequest(AppClientFactory
-					.getPlaceManager().getCurrentPlaceRequest());
-			Storage stockStore = Storage.getLocalStorageIfSupported();
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-			if (stockStore != null) {
-				stockStore.setItem("tabKey", "resourceTab");
-			}
-			name = "organize";
-			if (AppClientFactory.isAnonymous()) {
-				Window.enableScrolling(true);
-			} else {
-				Window.enableScrolling(false);
-			}
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
-			manageDotsMenuSelection(organizeLink);
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+					AppClientFactory.setPreviousPlaceRequest(AppClientFactory
+							.getPlaceManager().getCurrentPlaceRequest());
+					Storage stockStore = Storage.getLocalStorageIfSupported();
+
+					if (stockStore != null) {
+						stockStore.setItem("tabKey", "resourceTab");
+					}
+					name = "organize";
+					if (AppClientFactory.isAnonymous()) {
+						Window.enableScrolling(true);
+					} else {
+						Window.enableScrolling(false);
+					}
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
+					manageDotsMenuSelection(organizeLink);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+				
+				}
+			});
 		}
 	}
 
@@ -996,66 +1066,64 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
-			if (userDo != null
-					&& !userDo.getUserUid().equals(
-							AppClientFactory.GOORU_ANONYMOUS)) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-				// OpenClasspageList();
-
-				AppClientFactory
-						.getInjector()
-						.getClasspageService()
-						.v2GetAllClass("10", "0",
-								new SimpleAsyncCallback<ClasspageListDo>() {
-									@Override
-									public void onSuccess(ClasspageListDo result) {
-										// hasClasses =
-										// result.getSearchResults().size() > 0
-										// ? true : false;
-										if(result!=null){
-										if (result.getSearchResults() != null) {
-											if (result.getSearchResults()
-													.size() > 0) {
-												AppClientFactory
-														.getPlaceManager()
-														.revealPlace(
-																PlaceTokens.CLASSHOME);
-												// //classpageId =
-												// result.getSearchResults().get(0).getGooruOid();
-												// String userId =
-												// result.getSearchResults().get(0).getUser().getGooruUId();
-												// OpenClasspageEdit(classpageId,
-												// userId);
-												// AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+					Window.enableScrolling(true);
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
+					if (userDo != null
+							&& !userDo.getUserUid().equals(
+									AppClientFactory.GOORU_ANONYMOUS)) {
+						AppClientFactory
+								.getInjector()
+								.getClasspageService()
+								.v2GetAllClass("10", "0",
+										new SimpleAsyncCallback<ClasspageListDo>() {
+											@Override
+											public void onSuccess(ClasspageListDo result) {
+												// hasClasses =
+												// result.getSearchResults().size() > 0
+												// ? true : false;
+												if(result!=null){
+												if (result.getSearchResults() != null) {
+													if (result.getSearchResults()
+															.size() > 0) {
+														AppClientFactory
+																.getPlaceManager()
+																.revealPlace(
+																		PlaceTokens.CLASSHOME);
+													} else {
+														AppClientFactory
+																.getPlaceManager()
+																.redirectPlace(
+																		PlaceTokens.STUDY);
+													}
+												} else {
+													AppClientFactory.getPlaceManager()
+															.redirectPlace(
+																	PlaceTokens.STUDY);
+												}
 											} else {
-												AppClientFactory
-														.getPlaceManager()
+												AppClientFactory.getPlaceManager()
 														.redirectPlace(
 																PlaceTokens.STUDY);
-												// AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
 											}
-										} else {
-											AppClientFactory.getPlaceManager()
-													.redirectPlace(
-															PlaceTokens.STUDY);
-										}
-									} else {
-										AppClientFactory.getPlaceManager()
-												.redirectPlace(
-														PlaceTokens.STUDY);
-									}
-									}
-								});
-			} else {
-				name = "teach";
-				Window.enableScrolling(true);
-				// onLinkPopupClicked(null);
-				// TODO need to show new logout page....
-				AppClientFactory.getPlaceManager().redirectPlace(
-						PlaceTokens.STUDY);
-			}
+											}
+										});
+					} else {
+						name = "teach";
+						Window.enableScrolling(true);
+						// onLinkPopupClicked(null);
+						// TODO need to show new logout page....
+						AppClientFactory.getPlaceManager().redirectPlace(
+								PlaceTokens.STUDY);
+					}
+				
+				}
+			});
+			
 		}
 
 	}
@@ -1064,13 +1132,21 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onClick(ClickEvent event) {
-			name = "dashboard";
-			
-			Window.enableScrolling(true);
-			
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
-			manageDotsMenuSelection(loggedInfoLbl);
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					name = "dashboard";
+					
+					Window.enableScrolling(true);
+					
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
+					manageDotsMenuSelection(loggedInfoLbl);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
+				
+				}
+			});
 		}
 	}
 	
@@ -1168,19 +1244,27 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onMouseOver(final MouseOverEvent event) {
-			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new StudyToolTip());
-			toolTipPopupPanel.setStyleName("");
-			if (event.getSource().equals(studyLink)) {
-				toolTipPopupPanel.setPopupPosition(event.getRelativeElement()
-						.getAbsoluteLeft() - 101, event.getRelativeElement()
-						.getAbsoluteTop() + 25);
-			} else {
-				toolTipPopupPanel.setPopupPosition(event.getRelativeElement()
-						.getAbsoluteLeft() - 85, event.getRelativeElement()
-						.getAbsoluteTop() + 41);
-			}
-			toolTipPopupPanel.show();
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+
+					toolTipPopupPanel.clear();
+					toolTipPopupPanel.setWidget(new StudyToolTip());
+					toolTipPopupPanel.setStyleName("");
+					if (event.getSource().equals(studyLink)) {
+						toolTipPopupPanel.setPopupPosition(event.getRelativeElement()
+								.getAbsoluteLeft() - 101, event.getRelativeElement()
+								.getAbsoluteTop() + 25);
+					} else {
+						toolTipPopupPanel.setPopupPosition(event.getRelativeElement()
+								.getAbsoluteLeft() - 85, event.getRelativeElement()
+								.getAbsoluteTop() + 41);
+					}
+					toolTipPopupPanel.show();
+				
+				}
+			});
 		}
 	}
 
@@ -1239,28 +1323,27 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("logoutDownArrowLbl")
 	public void logoutPanel(ClickEvent clickEvent) {
-	/*	int left = logoutDownArrowLbl.getAbsoluteLeft() - 77;
-		int top = logoutDownArrowLbl.getAbsoluteTop() + 41;
-		isSettingIcon = true;
-		if (isOpenSettingDropDown) {
-			showLogoutPopup(left, top);
-		} else {
-			logoutPanelVc.hide();
-			isOpenSettingDropDown = true;
-		}*/
-		isSettingIcon = true;
-		if(logoutPanelVc.isShowing()){
-			settingOptionsPopup.setVisible(false);
-			logoutPanelVc.hide();
-			isOpenSettingDropDown = true;
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 
-		}else if(isOpenSettingDropDown){
-			settingOptionsPopup.setVisible(true);
-			logoutPanelVc.show();
-			isOpenSettingDropDown = false;
+				isSettingIcon = true;
+				if(logoutPanelVc.isShowing()){
+					settingOptionsPopup.setVisible(false);
+					logoutPanelVc.hide();
+					isOpenSettingDropDown = true;
 
-		}
-		
+				}else if(isOpenSettingDropDown){
+					settingOptionsPopup.setVisible(true);
+					logoutPanelVc.show();
+					isOpenSettingDropDown = false;
+
+				}
+				
+			
+			}
+		});
 	}
 
 	/**
@@ -1270,24 +1353,32 @@ public class HeaderUc extends Composite implements
 	 *            instance of {@link ClickEvent}
 	 */
 	@UiHandler("loggedInfoLbl")
-	public void signoutPanel(ClickEvent clickEvent) {
+	public void signoutPanel(final ClickEvent clickEvent) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
-		Element e = null;
-		if ((e = clickEvent.getRelativeElement()) != null) {
-			if (e.getInnerHTML() != null
-					&& e.getInnerHTML().contains("gwt-Label"))
-				MixpanelUtil.Click_Discover_LandingPage();
-		}
-		manageDotsMenuSelection(loggedInfoLbl);
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", userDo.getGooruUId());
-		params.put("user", userDo.getUsername());
-		MixpanelUtil.Click_On_UserName();
-		AppClientFactory.getPlaceManager().revealPlace(
-				PlaceTokens.PROFILE_PAGE, params);
 
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
+				Element e = null;
+				if ((e = clickEvent.getRelativeElement()) != null) {
+					if (e.getInnerHTML() != null
+							&& e.getInnerHTML().contains("gwt-Label"))
+						MixpanelUtil.Click_Discover_LandingPage();
+				}
+				manageDotsMenuSelection(loggedInfoLbl);
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("id", userDo.getGooruUId());
+				params.put("user", userDo.getUsername());
+				MixpanelUtil.Click_On_UserName();
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.PROFILE_PAGE, params);
+
+			
+			}
+		});
 	}
 
 	/**
@@ -1298,96 +1389,102 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("editSearchBtn")
 	public void OnSearchClick(ClickEvent clickEvent) {
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		if (getEditSearchTxtBox().getText() != null
-				&& getEditSearchTxtBox().getText().length() > 0) {
-			savePlaceRequest();
-			MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
-					.toLowerCase(), "HeaderUc");
-			Map<String, String> params = new HashMap<String, String>();
-			params = updateParams(params);
-			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.COLLECTION_SEARCH)) {
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
-			} else {
-				String queryVal = params.get("query");
-				// queryVal = queryVal.replaceAll("%5C1", "&");
-				Map<String, String> map = params;
-				map.put("query", queryVal);	
-				editSearchTxtBox.setText(queryVal);
-				if(prefilter!=null){
-					prefilter.hide();
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			@Override
+			public void onSuccess() {
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				if (getEditSearchTxtBox().getText() != null
+						&& getEditSearchTxtBox().getText().length() > 0) {
+					savePlaceRequest();
+					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
+							.toLowerCase(), "HeaderUc");
+					Map<String, String> params = new HashMap<String, String>();
+					params = updateParams(params);
+					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+							PlaceTokens.SEARCH_RESOURCE)) {
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_RESOURCE, params);
+					} else {
+						String queryVal = params.get("query");
+						// queryVal = queryVal.replaceAll("%5C1", "&");
+						Map<String, String> map = params;
+						map.put("query", queryVal);	
+						editSearchTxtBox.setText(queryVal);
+						if(prefilter!=null){
+							prefilter.hide();
+						}
+						
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_COLLECTION, params);
+					}
+					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
+					getEditSearchTxtBox().hideSuggestionList();
+				}else{
+					//else is for * query search.
+					
+					if(getEditSearchTxtBox().getText().isEmpty())
+					{
+						Map<String, String> params = new HashMap<String, String>();
+						params = updateParams(params);
+						Map<String, String> map = params;
+						String queryVal = params.get("query");
+						map.put("query", "*");
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_COLLECTION, map);
+					}
 				}
 				
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, params);
-			}
-			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
-			getEditSearchTxtBox().hideSuggestionList();
-		}else{
-			//else is for * query search.
+				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+
+					MixpanelUtil.mixpanelEvent("Perform_Search_FromOrganize");
+				} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+						PlaceTokens.STUDY)) {
+					MixpanelUtil.mixpanelEvent("Perform_Search_FromStudy");
+				} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+						PlaceTokens.SETTINGS)) {
+					MixpanelUtil.mixpanelEvent("Perform_Search_FromSettings");
+				} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+						PlaceTokens.PROFILE_PAGE)) {
+					MixpanelUtil.mixpanelEvent("Perform_Search_FromProfile");
+				} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+						PlaceTokens.EDIT_CLASSPAGE)) {
+					MixpanelUtil.mixpanelEvent("Perform_Search_FromTeach");
+				} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+						PlaceTokens.HOME)) {
+					MixpanelUtil.mixpanelEvent("Perform_Search_FromLandingPage");
+					if (AppClientFactory.isAnonymous()) {
+						MixpanelUtil
+								.mixpanelEvent("Perform_Search_FromLandingPage_Loggedout");
+					} else {
+						MixpanelUtil
+								.mixpanelEvent("Perform_Search_FromLandingPage_Loggedin");
+					}
+					if (AppClientFactory.getPlaceManager().getRequestParameter(
+							"courseId") != null) {
+						MixpanelUtil.mixpanelEvent("Perform_Search_FromCoursePage");
+					}
+					if (AppClientFactory.getPlaceManager().getRequestParameter("page") != null
+							&& AppClientFactory.getPlaceManager()
+									.getRequestParameter("page")
+									.equalsIgnoreCase("featured-contributors")) {
+						MixpanelUtil
+								.mixpanelEvent("Perform_Search_FromContributorsPage");
+					}
+				}
+				if (hasAutoSelected) {
+					MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
+				}
+
 			
-			if(getEditSearchTxtBox().getText().isEmpty())
-			{
-				Map<String, String> params = new HashMap<String, String>();
-				params = updateParams(params);
-				Map<String, String> map = params;
-				String queryVal = params.get("query");
-				map.put("query", "*");
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
 			}
-		}
-		
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
-
-			MixpanelUtil.mixpanelEvent("Perform_Search_FromOrganize");
-		} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-				PlaceTokens.STUDY)) {
-			MixpanelUtil.mixpanelEvent("Perform_Search_FromStudy");
-		} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-				PlaceTokens.SETTINGS)) {
-			MixpanelUtil.mixpanelEvent("Perform_Search_FromSettings");
-		} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-				PlaceTokens.PROFILE_PAGE)) {
-			MixpanelUtil.mixpanelEvent("Perform_Search_FromProfile");
-		} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-				PlaceTokens.EDIT_CLASSPAGE)) {
-			MixpanelUtil.mixpanelEvent("Perform_Search_FromTeach");
-		} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-				PlaceTokens.HOME)) {
-			MixpanelUtil.mixpanelEvent("Perform_Search_FromLandingPage");
-			if (AppClientFactory.isAnonymous()) {
-				MixpanelUtil
-						.mixpanelEvent("Perform_Search_FromLandingPage_Loggedout");
-			} else {
-				MixpanelUtil
-						.mixpanelEvent("Perform_Search_FromLandingPage_Loggedin");
-			}
-			if (AppClientFactory.getPlaceManager().getRequestParameter(
-					"courseId") != null) {
-				MixpanelUtil.mixpanelEvent("Perform_Search_FromCoursePage");
-			}
-			if (AppClientFactory.getPlaceManager().getRequestParameter("page") != null
-					&& AppClientFactory.getPlaceManager()
-							.getRequestParameter("page")
-							.equalsIgnoreCase("featured-contributors")) {
-				MixpanelUtil
-						.mixpanelEvent("Perform_Search_FromContributorsPage");
-			}
-		}
-		if (hasAutoSelected) {
-			MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
-		}
-
+		});
 	}
 
 	public void savePlaceRequest() {
 		String currentPlaceToken = AppClientFactory.getPlaceManager()
 				.getCurrentPlaceRequest().getNameToken();
-		if (currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH)
-				|| currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH)) {
+		if (currentPlaceToken.equals(PlaceTokens.SEARCH_COLLECTION)
+				|| currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE)) {
 		} else {
 			AppClientFactory.getPlaceManager()
 					.setSearchMovedPlaceRequest(
@@ -1439,33 +1536,64 @@ public class HeaderUc extends Composite implements
 			String standardsUrlParam = null;
 			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
 			{
-				if(stadardCode!=null && !stadardCode.equals("")){
-					params.put(IsSearchView.STANDARD_FLT, stadardCode);
-					stadardCode=null;
-				}
-				else
-				{
+				stadardsListCode="";
 				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
-				params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
+				if(addStandardsPresenter!=null && isClicked){
+					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
+					int standardArraySize = standardsList.size();
+					if(standardArraySize!=0){
+						for(int i=0; i<standardArraySize; i++){
+							if(!stadardsListCode.isEmpty()){
+								stadardsListCode += ",";
+							}
+							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
+						}
+						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
+					}
+					isClicked=false;
+				}
+				if(!stadardsListCode.isEmpty()){
+					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam+","+stadardsListCode);
+				}else{
+					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
 				}
 			}
 			else
 			{
-				if(stadardCode!=null && !stadardCode.equals("")){
-				params.put(IsSearchView.STANDARD_FLT, stadardCode);
-				stadardCode=null;
+				stadardsListCode="";
+				if(addStandardsPresenter!=null && isClicked){
+					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
+					int standardArraySize = standardsList.size();
+					if(standardArraySize!=0){
+						for(int i=0; i<standardArraySize; i++){
+							if(!stadardsListCode.isEmpty()){
+								stadardsListCode += ",";
+							}
+							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
+						}
+						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
+					}
+					isClicked=false;
 				}
+				
 			}
 		}
-		params.put("category", "All");
+		
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(!currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH))
-		{
-		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
+		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT,null);
+		if(collectionType!=null){
+			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
+		}else{
+			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
 		}
-		params.put("pageNum", "1");
-		params.put("pageSize", "8");
+		params.put("category", "All");
+		
+		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE))
+		{
+			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		}
 		
 		return params;
 	}
@@ -1615,64 +1743,72 @@ public class HeaderUc extends Composite implements
 	private class SearchKeyDownHandler implements KeyDownHandler {
 
 		@Override
-		public void onKeyDown(KeyDownEvent event) {
-			arrowLbl.setVisible(true);
-			if(prefilter!=null){
-				prefilter.hide();
-			}
-			if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
-				if (getEditSearchTxtBox().getText() != null
-						&& getEditSearchTxtBox().getText().length() > 0) {
-					if (AppClientFactory.getCurrentPlaceToken()
-							.equalsIgnoreCase(PlaceTokens.TEACH)) {
-						MixpanelUtil.Perform_Search_FromTeach();
+		public void onKeyDown(final KeyDownEvent event) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-					} else if (AppClientFactory.getCurrentPlaceToken()
-							.equalsIgnoreCase(PlaceTokens.SHELF)) {
-						MixpanelUtil.Perform_Search_FromOrganize();
+					arrowLbl.setVisible(true);
+					if(prefilter!=null){
+						prefilter.hide();
 					}
-					if (hasAutoSelected) {
-						MixpanelUtil
-								.mixpanelEvent("Select_Autocomplete_Search");
+					if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
+						if (getEditSearchTxtBox().getText() != null
+								&& getEditSearchTxtBox().getText().length() > 0) {
+							if (AppClientFactory.getCurrentPlaceToken()
+									.equalsIgnoreCase(PlaceTokens.TEACH)) {
+								MixpanelUtil.Perform_Search_FromTeach();
+
+							} else if (AppClientFactory.getCurrentPlaceToken()
+									.equalsIgnoreCase(PlaceTokens.SHELF)) {
+								MixpanelUtil.Perform_Search_FromOrganize();
+							}
+							if (hasAutoSelected) {
+								MixpanelUtil
+										.mixpanelEvent("Select_Autocomplete_Search");
+							}
+
+							MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText()
+									.trim().toLowerCase(), "HeaderUc");
+							savePlaceRequest();
+							Map<String, String> params = new HashMap<String, String>();
+							params = updateParams(params);
+							if (AppClientFactory.getCurrentPlaceToken()
+									.equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)) {
+								AppClientFactory.getPlaceManager().revealPlace(
+										PlaceTokens.COLLECTION_SEARCH, params);
+							} else {
+								String queryVal = params.get("query");
+								// queryVal = queryVal.replaceAll("%5C1", "&");
+								Map<String, String> map = params;
+								map.put("query", queryVal);
+								AppClientFactory.getPlaceManager().revealPlace(
+										PlaceTokens.SEARCH_RESOURCE, params);
+							}
+
+							if ((AppClientFactory.getCurrentPlaceToken()
+									.equalsIgnoreCase(PlaceTokens.SHELF))
+									|| (AppClientFactory.getCurrentPlaceToken()
+											.equalsIgnoreCase(PlaceTokens.STUDY) || (AppClientFactory
+											.getCurrentPlaceToken()
+											.equalsIgnoreCase(PlaceTokens.TEACH)))
+									|| (AppClientFactory.getCurrentPlaceToken()
+											.equalsIgnoreCase(PlaceTokens.SETTINGS))
+									|| (AppClientFactory.getCurrentPlaceToken()
+											.equalsIgnoreCase(PlaceTokens.PROFILE_PAGE))) {
+								getEditSearchTxtBox().setText("");
+							}
+
+							AppClientFactory.fireEvent(new HomeEvent(
+									HeaderTabType.DISCOVER));
+							getEditSearchTxtBox().hideSuggestionList();
+						}
 					}
 
-					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText()
-							.trim().toLowerCase(), "HeaderUc");
-					savePlaceRequest();
-					Map<String, String> params = new HashMap<String, String>();
-					params = updateParams(params);
-					if (AppClientFactory.getCurrentPlaceToken()
-							.equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)) {
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.COLLECTION_SEARCH, params);
-					} else {
-						String queryVal = params.get("query");
-						// queryVal = queryVal.replaceAll("%5C1", "&");
-						Map<String, String> map = params;
-						map.put("query", queryVal);
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.RESOURCE_SEARCH, params);
-					}
-
-					if ((AppClientFactory.getCurrentPlaceToken()
-							.equalsIgnoreCase(PlaceTokens.SHELF))
-							|| (AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.STUDY) || (AppClientFactory
-									.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.TEACH)))
-							|| (AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.SETTINGS))
-							|| (AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.PROFILE_PAGE))) {
-						getEditSearchTxtBox().setText("");
-					}
-
-					AppClientFactory.fireEvent(new HomeEvent(
-							HeaderTabType.DISCOVER));
-					getEditSearchTxtBox().hideSuggestionList();
+				
 				}
-			}
-
+			});
 		}
 	}
 
@@ -1684,69 +1820,77 @@ public class HeaderUc extends Composite implements
 	private class studyClickHandler implements ClickHandler {
 
 		@Override
-		public void onClick(ClickEvent event) {
-			isStudyNow = true;
-			if (isClassCodePopupOpen) {
-				if (studyNowToolTip != null && studyNowToolTip.isShowing()) {
-					studyNowToolTip.hide();
-					studyNowToolTip.getClassCodeTxtBox().setText("");
-				} else {
-					if (AppClientFactory.isAnonymous()) {
-						isEnter = true;
-						if (studyNowToolTip == null) {
-							studyNowToolTip = new StudyNowToolTip();
-						} else if (logInfoFloPanel.isVisible()) {
-							if (studyNowToolTip != null) {
-								studyNowToolTip.getLblTitle().setVisible(true);
-								studyNowToolTip.getClassStudyList().clear();
+		public void onClick(final ClickEvent event) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
+					isStudyNow = true;
+					if (isClassCodePopupOpen) {
+						if (studyNowToolTip != null && studyNowToolTip.isShowing()) {
+							studyNowToolTip.hide();
+							studyNowToolTip.getClassCodeTxtBox().setText("");
+						} else {
+							if (AppClientFactory.isAnonymous()) {
+								isEnter = true;
+								if (studyNowToolTip == null) {
+									studyNowToolTip = new StudyNowToolTip();
+								} else if (logInfoFloPanel.isVisible()) {
+									if (studyNowToolTip != null) {
+										studyNowToolTip.getLblTitle().setVisible(true);
+										studyNowToolTip.getClassStudyList().clear();
+
+									}
+								}
+							} else {
+								if (studyNowToolTip == null || isEnter) {
+									isEnter = false;
+									studyNowToolTip = new StudyNowToolTip();
+								}
 							}
+							studyNowToolTip.refreshClasslist();
+							studyNowToolTip.getElement().getStyle()
+									.setBackgroundColor("transparent");
+							studyNowToolTip.getElement().getStyle()
+									.setPosition(Position.ABSOLUTE);
+							studyNowToolTip
+									.setPopupPosition(
+											event.getRelativeElement()
+													.getAbsoluteLeft()
+													- (AppClientFactory.isAnonymous() ? 115
+															: 134),
+											event.getRelativeElement().getAbsoluteTop()
+													+ (AppClientFactory.isAnonymous() ? 23
+															: 33));
+							studyNowToolTip.show();
+							getEditSearchTxtBox().setText("");
+							ClickHandler handler = new ClickHandler() {
+								@Override
+								public void onClick(ClickEvent event) {
+									studyNowToolTip.show();
+									isStudyNow = true;
+								}
+							};
+							studyNowToolTip.addDomHandler(handler, ClickEvent.getType());
 						}
 					} else {
-						if (studyNowToolTip == null || isEnter) {
-							isEnter = false;
-							studyNowToolTip = new StudyNowToolTip();
-						}
+						studyNowToolTip.hide();
+						studyNowToolTip.getClassCodeTxtBox().setText("");
+						isClassCodePopupOpen = true;
 					}
-					studyNowToolTip.refreshClasslist();
-					studyNowToolTip.getElement().getStyle()
-							.setBackgroundColor("transparent");
-					studyNowToolTip.getElement().getStyle()
-							.setPosition(Position.ABSOLUTE);
-					studyNowToolTip
-							.setPopupPosition(
-									event.getRelativeElement()
-											.getAbsoluteLeft()
-											- (AppClientFactory.isAnonymous() ? 115
-													: 134),
-									event.getRelativeElement().getAbsoluteTop()
-											+ (AppClientFactory.isAnonymous() ? 23
-													: 33));
-					studyNowToolTip.show();
-					getEditSearchTxtBox().setText("");
-					ClickHandler handler = new ClickHandler() {
-						@Override
-						public void onClick(ClickEvent event) {
-							studyNowToolTip.show();
-							isStudyNow = true;
-						}
-					};
-					studyNowToolTip.addDomHandler(handler, ClickEvent.getType());
-				}
-			} else {
-				studyNowToolTip.hide();
-				studyNowToolTip.getClassCodeTxtBox().setText("");
-				isClassCodePopupOpen = true;
-			}
 
-			 Window.addWindowScrollHandler(new Window.ScrollHandler() {
-		       public void onWindowScroll(Window.ScrollEvent scrollEvent) {
-		    	   studyNowToolTip.getElement().getStyle()
-					.setPosition(Position.FIXED);	
- 		    	   studyNowToolTip.setPopupPosition(848,33);
-		       }
-		    });
-		
+					 Window.addWindowScrollHandler(new Window.ScrollHandler() {
+				       public void onWindowScroll(Window.ScrollEvent scrollEvent) {
+				    	   studyNowToolTip.getElement().getStyle()
+							.setPosition(Position.FIXED);	
+		 		    	   studyNowToolTip.setPopupPosition(848,33);
+				       }
+				    });
+				
+				
+				}
+			});
 		}
 	}
 
@@ -1807,18 +1951,26 @@ public class HeaderUc extends Composite implements
 	DeleteClasspageListHandler deleteHandler = new DeleteClasspageListHandler() {
 
 		@Override
-		public void deleteClasspage(String classpageId) {
+		public void deleteClasspage(final String classpageId) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-			if (AppClientFactory.getCurrentPlaceToken().equals(
-					PlaceTokens.EDIT_CLASSPAGE)) {
-			} else {
-				if (studyNowToolTip != null) {
-					studyNowToolTip.removeClasspageItem(classpageId);
-				} else {
-					studyNowToolTip = new StudyNowToolTip();
+
+					if (AppClientFactory.getCurrentPlaceToken().equals(
+							PlaceTokens.EDIT_CLASSPAGE)) {
+					} else {
+						/*if (studyNowToolTip != null) {
+							studyNowToolTip.removeClasspageItem(classpageId);
+						} else {
+							studyNowToolTip = new StudyNowToolTip();
+						}*/
+					}
+
+				
 				}
-			}
-
+			});
 		}
 	};
 
@@ -1833,81 +1985,94 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Map<String, String> params = new HashMap<String, String>();
-			params.put(GOORU_UID, userDo.getGooruUId());
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
 
-			if (userDo.getAccountTypeId() == 2
-					|| userDo.getAccountTypeId() == 1) {
-				params.put(ACCOUNT_TYPE, "Parent");
-			} else {
-				params.put(ACCOUNT_TYPE, "NonParent");
-			}
+					Map<String, String> params = new HashMap<String, String>();
+					params.put(GOORU_UID, userDo.getGooruUId());
 
-			AppClientFactory
-					.getInjector()
-					.getUserService()
-					.resendConfirmationMail(params,
-							new SimpleAsyncCallback<Void>() {
-								@Override
-								public void onSuccess(Void result) {
+					if (userDo.getAccountTypeId() == 2
+							|| userDo.getAccountTypeId() == 1) {
+						params.put(ACCOUNT_TYPE, "Parent");
+					} else {
+						params.put(ACCOUNT_TYPE, "NonParent");
+					}
 
-								}
-							});
+					AppClientFactory
+							.getInjector()
+							.getUserService()
+							.resendConfirmationMail(params,
+									new SimpleAsyncCallback<Void>() {
+										@Override
+										public void onSuccess(Void result) {
+
+										}
+									});
+				
+				}
+			});
 		}
 
 	}
 
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
-		String searchText = editSearchTxtBox.getText();
-		searchText = searchText.replaceAll("-<n> Gooru Search</n>", "");
-		editSearchTxtBox.setText(searchText.trim());
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		if (editSearchTxtBox.getText() != null
-				&& editSearchTxtBox.getText().length() > 0) {
-			MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim()
-					.toLowerCase(), "HeaderUc");
-			Map<String, String> params = new HashMap<String, String>();
-			params = updateParams(params);
-			savePlaceRequest();
-			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
-					PlaceTokens.COLLECTION_SEARCH)) {
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.COLLECTION_SEARCH, params);
-			} else {
-				String queryVal = params.get("query");
-				// queryVal = queryVal.replaceAll("%5C1", "&");
-				Map<String, String> map = params;
-				map.put("query", queryVal);
-				editSearchTxtBox.setText(queryVal);
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				String searchText = editSearchTxtBox.getText();
+				searchText = searchText.replaceAll("-<n> Gooru Search</n>", "");
+				editSearchTxtBox.setText(searchText.trim());
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				if (editSearchTxtBox.getText() != null
+						&& editSearchTxtBox.getText().length() > 0) {
+					MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim()
+							.toLowerCase(), "HeaderUc");
+					Map<String, String> params = new HashMap<String, String>();
+					params = updateParams(params);
+					savePlaceRequest();
+					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+							PlaceTokens.SEARCH_RESOURCE)) {
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_RESOURCE, params);
+					} else {
+						String queryVal = params.get("query");
+						// queryVal = queryVal.replaceAll("%5C1", "&");
+						Map<String, String> map = params;
+						map.put("query", queryVal);
+						editSearchTxtBox.setText(queryVal);
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_COLLECTION, map);
+					}
+					editSearchTxtBox.setText("");
+					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+					editSearchTxtBox.hideSuggestionList();
+					getEditSearchTxtBox().setText(searchText.trim());
+				}
+				else
+				{
+					//else is for * query search.
+					if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+					{
+						getEditSearchTxtBox().setText("");
+						Map<String, String> params = new HashMap<String, String>();
+						params = updateParams(params);
+						Map<String, String> map = params;
+						map.put("query", "*");
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.SEARCH_COLLECTION, map);
+					}
+				}
+
+				hasAutoSelected = true;
+				MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");			
 			}
-			editSearchTxtBox.setText("");
-			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
-			editSearchTxtBox.hideSuggestionList();
-			getEditSearchTxtBox().setText(searchText.trim());
-		}
-		else
-		{
-			//else is for * query search.
-			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
-			{
-				getEditSearchTxtBox().setText("");
-				Map<String, String> params = new HashMap<String, String>();
-				params = updateParams(params);
-				Map<String, String> map = params;
-				map.put("query", "*");
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
-			}
-		}
-
-		hasAutoSelected = true;
-		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
-
-
+		});
 	}
 
 	public void requestAutoSuggestKeyword(
@@ -1974,6 +2139,15 @@ public class HeaderUc extends Composite implements
 	protected void onLoad() {
 		super.onLoad();
 		getEditSearchTxtBox().setFocus(true);
+		//This will set the search keyword after refreshing the page
+		Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+			@Override
+			public void execute() {
+				String queryVal=AppClientFactory.getPlaceManager().getRequestParameter("query");
+				getEditSearchTxtBox().setText(queryVal);
+				editSearchTxtBox.setText(queryVal);
+			}
+		});
 	}
 
 	/**
@@ -2040,7 +2214,7 @@ public class HeaderUc extends Composite implements
 				map.put("query", queryVal);
 				editSearchTxtBox.setText(queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_RESOURCE, map);
 			}
 			editSearchTxtBox.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
@@ -2058,7 +2232,7 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", "*");
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_RESOURCE, map);
 			}
 		}
 		
@@ -2075,10 +2249,6 @@ public class HeaderUc extends Composite implements
 		prefilter=prefilterObj;
 	}
 
-	public static void setStandardsCode(String stadardCodeId, int id, String code){
-		stadardCode=stadardCodeId;
-	}
-
 	public void updateHeaderProfileImage(String imageUrl) {
 		imgUserProfile.setUrl(imageUrl+ "?" + Math.random());
 	}
@@ -2088,6 +2258,12 @@ public class HeaderUc extends Composite implements
 		invokeToggleMenuContainer();
 	}
 	public static native void invokeToggleMenuContainer() /*-{
-	$wnd.showToggleMenu();
-}-*/;
+		$wnd.showToggleMenu();
+	}-*/;
+
+	public void setAddStandardsPresenter(
+			AddStandardsPreSearchPresenter addStandardsPresenter, boolean isClicked) {
+		this.addStandardsPresenter=addStandardsPresenter;
+		this.isClicked=isClicked;
+	}
 }

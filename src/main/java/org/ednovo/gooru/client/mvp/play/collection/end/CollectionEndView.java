@@ -1110,7 +1110,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	 */
 	@UiHandler("loginUrl")
 	public void clickOnLoginUrl(ClickEvent event) {
-		LoginPopupUc popup = new LoginPopupUc();
+		LoginPopupUc popup = new LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setWidgetMode(COLLECTION_COMMENTS);
 		popup.getElement().getStyle().setZIndex(100000);
 		popup.setGlassEnabled(true);

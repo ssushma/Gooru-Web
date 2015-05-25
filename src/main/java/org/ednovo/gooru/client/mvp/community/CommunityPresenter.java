@@ -17,7 +17,6 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompletePr
 import org.ednovo.gooru.client.mvp.authentication.uc.StudentSignUpUc;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
-import org.ednovo.gooru.client.mvp.home.ImprovedGooruPopUpView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.SearchHomeFilterVc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -34,7 +33,6 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.player.collection.client.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
@@ -43,6 +41,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -301,7 +300,7 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	 */
 	public void homeSearch(boolean isResourceSearch, Map<String, String> params) {
 		updateParams(isResourceSearch() ? getResourceSearchDo() : getCollectionSearchDo(), params);
-		getPlaceManager().revealPlace(isResourceSearch ? PlaceTokens.RESOURCE_SEARCH : PlaceTokens.COLLECTION_SEARCH, params);
+		getPlaceManager().revealPlace(isResourceSearch ? PlaceTokens.SEARCH_RESOURCE : PlaceTokens.SEARCH_COLLECTION, params);
 	}
 
 	/**
@@ -352,7 +351,13 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 			if (user.isAvailability()) {
 				if (user.getConfirmStatus() == 1 && userType.equalsIgnoreCase("Parent")) {
 					if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
-						LoginPopupUc login = new LoginPopupUc(user.getEmailId());
+						LoginPopupUc login = new LoginPopupUc(user.getEmailId()) {
+							
+							@Override
+							public void onLoginSuccess() {
+								
+							}
+						};
 					} else if(AppClientFactory.getLoggedInUser().getUserUid().equalsIgnoreCase(parentGooruUID)||AppClientFactory.getLoggedInUser().getUserUid()==parentGooruUID){
 						userRegistrationPresenter.setAccountType(userType);
 						userRegistrationPresenter.setUser(user);

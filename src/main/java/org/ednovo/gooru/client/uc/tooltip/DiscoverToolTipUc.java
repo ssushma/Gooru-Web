@@ -33,10 +33,9 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.HomeCBundle;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
@@ -95,7 +94,6 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	
 	@UiField HTMLPanel dropdownImg,dropdownImgLib;
 	@UiField UlPanel tooltipPanel;
-	@UiField HomeCBundle res;
 //	@UiField LibraryStyleBundle libraryStyleUc;
 	/**
 	 * Because this class has a default constructor, it can
@@ -111,8 +109,6 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	 */
 	public DiscoverToolTipUc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.res = HomeCBundle.INSTANCE;
-		res.css().ensureInjected();
 		panelCode.getElement().setId("pnlPanelCode");
 		lblDistrictLibrary.getElement().setInnerHTML(i18n.GL0515());
 		lblDistrictLibrary.getElement().setId("epnlLblDistrictLibrary");
@@ -148,8 +144,8 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 		final HashMap<String,String> publicPartnerList = getPublicLibraryPartners();
 		UlPanel ulPanel=new UlPanel();
 		ulPanel.addStyleName("dropdown-menu");
-		ulPanel.addStyleName(res.css().dropdowDisplay());
-		ulPanel.addStyleName(res.css().partnersDropdown());
+		ulPanel.addStyleName("dropdowDisplay");
+		ulPanel.addStyleName("partnersDropdown");
 		for (final Object key : publicPartnerList.keySet()) {
 			final Anchor partnerTitle = new Anchor(key.toString());
 			LiPanel liPanel=new LiPanel();
@@ -284,8 +280,8 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
 		UlPanel ulPanel=new UlPanel();
 		ulPanel.addStyleName("dropdown-menu");
-		ulPanel.addStyleName(res.css().dropdowDisplay());
-		ulPanel.addStyleName(res.css().districDropDown());
+		ulPanel.addStyleName("dropdowDisplay");
+		ulPanel.addStyleName("districDropDown");
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
 			 LiPanel  liPanel=new LiPanel();

@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -57,9 +58,9 @@ public class EmailPopup extends PopupPanel {
 		this.setGlassStyleName(res.css().setEmailPopupCenter());
 		this.center();
 		this.hide();
-		displayPdfPathlbl.setText("Adding Attachment....");
+		displayPdfPathlbl.setText(i18n.GL3272());
 		sendBtn.setEnabled(false);
-		emailTextbox.getElement().setAttribute("placeholder","Separate email addresses with a comma or semicolon");
+		emailTextbox.getElement().setAttribute("placeholder",i18n.GL1184_1());
 		emailErrorlbl.setVisible(false);
 		successMesageContainer.setVisible(false);
 		mainBodycontainer.setVisible(true);
@@ -69,52 +70,71 @@ public class EmailPopup extends PopupPanel {
 	 * This method is used to set the static text and id's
 	 */
 	void setStaticData(){
-		StringUtil.setAttributes(successMesageContainer.getElement(), "pnlSuccessMesageContainer", null, null);
-		StringUtil.setAttributes(mainBodycontainer.getElement(), "pnlMainBodycontainer", null, null);
-		
-		StringUtil.setAttributes(okBtn.getElement(), "btnOk", i18n.GL0190(), i18n.GL0190());
-		StringUtil.setAttributes(sendBtn.getElement(), "btnSend", i18n.GL0228(), i18n.GL0228());
-		StringUtil.setAttributes(cancelBtn.getElement(), "btnCancelBtn", i18n.GL0142(), i18n.GL0142());
-		
-		StringUtil.setAttributes(messageTextArea.getElement(), "tatMessageTextArea", null, null);
-		
-		StringUtil.setAttributes(subjectTxt.getElement(), "txtSubjectTxt", i18n.GL1443(), i18n.GL1443());
-		StringUtil.setAttributes(emailTextbox.getElement(), "txtEmailTextbox", null, null);
-		
-		StringUtil.setAttributes(sendmecopy.getElement(), "chkSendmecopy", null, null);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-		StringUtil.setAttributes(privacylbl.getElement(), "lnkPrivacylbl",i18n.GL1893(), i18n.GL1893());
+			@Override
+			public void onSuccess() {
 
-		StringUtil.setAttributes(emailIdsText.getElement(), "lblEmailIdsText", null, null);
-		StringUtil.setAttributes(headerTitlelbl.getElement(), "lblHeaderTitle", null, null);
-		StringUtil.setAttributes(emailErrorlbl.getElement(), "lblEmailError", null, null);
-		StringUtil.setAttributes(userNamelbl.getElement(), "lblUserName", null, null);
-		StringUtil.setAttributes(displayPdfPathlbl.getElement(), "lblDisplayPdfPathlbl", null, null);
-		StringUtil.setAttributes(lblTankYou.getElement(), "lblTankYou", i18n.GL0648(), i18n.GL0648());
-		StringUtil.setAttributes(lblFrom.getElement(), "lblFrom", i18n.GL0223(), i18n.GL0223());
-		StringUtil.setAttributes(lblTo.getElement(), "lblTo", i18n.GL0224(), i18n.GL0224());
-		StringUtil.setAttributes(lblWeNeverShareText.getElement(), "lblWeNeverShareText", i18n.GL1892(), i18n.GL1892());
-		StringUtil.setAttributes(lblSendMeCopy.getElement(), "lblSendMeCopy", i18n.GL0225(), i18n.GL0225());
-		StringUtil.setAttributes(lblSubject.getElement(), "lblSubject", i18n.GL0226(), i18n.GL0226());
-		StringUtil.setAttributes(lblMessageText.getElement(), "lblMessageText", i18n.GL0227(), i18n.GL0227());
+				StringUtil.setAttributes(successMesageContainer.getElement(), "pnlSuccessMesageContainer", null, null);
+				StringUtil.setAttributes(mainBodycontainer.getElement(), "pnlMainBodycontainer", null, null);
+				
+				StringUtil.setAttributes(okBtn.getElement(), "btnOk", i18n.GL0190(), i18n.GL0190());
+				StringUtil.setAttributes(sendBtn.getElement(), "btnSend", i18n.GL0228(), i18n.GL0228());
+				StringUtil.setAttributes(cancelBtn.getElement(), "btnCancelBtn", i18n.GL0142(), i18n.GL0142());
+				
+				StringUtil.setAttributes(messageTextArea.getElement(), "tatMessageTextArea", null, null);
+				
+				StringUtil.setAttributes(subjectTxt.getElement(), "txtSubjectTxt", i18n.GL1443(), i18n.GL1443());
+				StringUtil.setAttributes(emailTextbox.getElement(), "txtEmailTextbox", null, null);
+				
+				StringUtil.setAttributes(sendmecopy.getElement(), "chkSendmecopy", null, null);
+					
+				StringUtil.setAttributes(privacylbl.getElement(), "lnkPrivacylbl",i18n.GL1893(), i18n.GL1893());
+
+				StringUtil.setAttributes(emailIdsText.getElement(), "lblEmailIdsText", null, null);
+				StringUtil.setAttributes(headerTitlelbl.getElement(), "lblHeaderTitle", null, null);
+				StringUtil.setAttributes(emailErrorlbl.getElement(), "lblEmailError", null, null);
+				StringUtil.setAttributes(userNamelbl.getElement(), "lblUserName", null, null);
+				StringUtil.setAttributes(displayPdfPathlbl.getElement(), "lblDisplayPdfPathlbl", null, null);
+				StringUtil.setAttributes(lblTankYou.getElement(), "lblTankYou", i18n.GL0648(), i18n.GL0648());
+				StringUtil.setAttributes(lblFrom.getElement(), "lblFrom", i18n.GL0223(), i18n.GL0223());
+				StringUtil.setAttributes(lblTo.getElement(), "lblTo", i18n.GL0224(), i18n.GL0224());
+				StringUtil.setAttributes(lblWeNeverShareText.getElement(), "lblWeNeverShareText", i18n.GL1892(), i18n.GL1892());
+				StringUtil.setAttributes(lblSendMeCopy.getElement(), "lblSendMeCopy", i18n.GL0225(), i18n.GL0225());
+				StringUtil.setAttributes(lblSubject.getElement(), "lblSubject", i18n.GL0226(), i18n.GL0226());
+				StringUtil.setAttributes(lblMessageText.getElement(), "lblMessageText", i18n.GL0227(), i18n.GL0227());
+			
+			}
+		});
 	}
 	/**
 	 * This method will set the eamilpopup data
 	 * @param pdfName
 	 * @param path
 	 */
-	public void setEmailData(String pdfName,String path){
-		successMesageContainer.setVisible(false);
-		mainBodycontainer.setVisible(true);
-		if(!StringUtil.isEmpty(pdfName) && !StringUtil.isEmpty(path)){
-			pdfName=pdfName.replaceAll(" ", "_");
-			pdfName = pdfName + "_Collection_Summary.pdf";
-			displayPdfPathlbl.setText(pdfName);
-			fileName=pdfName;
-			filePath=path;
-		}
-		sendBtn.setEnabled(true);
-		headerTitlelbl.setText(i18n.GL1449());
+	public void setEmailData(String pdfName, String path){
+		pdfName=pdfName.replaceAll(" ", "_");
+		pdfName = pdfName + "_Collection_Summary.pdf";
+		final String tmpPath = path;
+		final String tmpPdfName = pdfName;
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				successMesageContainer.setVisible(false);
+				mainBodycontainer.setVisible(true);
+				if(!StringUtil.isEmpty(tmpPdfName) && !StringUtil.isEmpty(tmpPath)){
+					
+					displayPdfPathlbl.setText(tmpPdfName);
+					fileName=tmpPdfName;
+					filePath=tmpPath;
+				}
+				sendBtn.setEnabled(true);
+				headerTitlelbl.setText(i18n.GL1449());
+			
+			}
+		});
 	}
 	/**
 	 * This method will set the user name
@@ -145,16 +165,24 @@ public class EmailPopup extends PopupPanel {
 	 */
 	@UiHandler("privacylbl")
 	public void onClickOfprivacylblButton(ClickEvent e){
-		TermsOfUse termsOfUse=new TermsOfUse() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void openParentPopup() {
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
+			public void onSuccess() {
+
+				TermsOfUse termsOfUse=new TermsOfUse() {
+					@Override
+					public void openParentPopup() {
+						Window.enableScrolling(false);
+						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
+					}
+				};
+				termsOfUse.show();
+				termsOfUse.center();
+				termsOfUse.getElement().getStyle().setZIndex(99999);
+			
 			}
-		};
-		termsOfUse.show();
-		termsOfUse.center();
-		termsOfUse.getElement().getStyle().setZIndex(99999);
+		});
 	}
 	
 	/**
@@ -163,26 +191,35 @@ public class EmailPopup extends PopupPanel {
 	 */
 	@UiHandler("sendBtn")
 	public void onClickOfSendButton(ClickEvent e){
-		isValidate=true;
-		isValidate=checkValidataions();
-		if(isValidate){
-			String emailIds=emailTextbox.getText();
-			if(sendmecopy.isChecked()){
-				emailIds=emailIds+","+AppClientFactory.getLoggedInUser().getEmailId();
+		
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				isValidate=true;
+				isValidate=checkValidataions();
+				if(isValidate){
+					String emailIds=emailTextbox.getText();
+					if(sendmecopy.isChecked()){
+						emailIds=emailIds+","+AppClientFactory.getLoggedInUser().getEmailId();
+					}
+					emailIdsText.setText(emailIds);
+					AppClientFactory.getInjector().getAnalyticsService().sendEmail(emailIds, subjectTxt.getText(), messageTextArea.getText(), userNamelbl.getText(), fileName, filePath, new AsyncCallback<Void>() {
+						@Override
+						public void onSuccess(Void result) {
+							headerTitlelbl.setText(i18n.GL2295());
+							successMesageContainer.setVisible(true);
+							mainBodycontainer.setVisible(false);
+						}
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+					});
+				}
+			
 			}
-			emailIdsText.setText(emailIds);
-			AppClientFactory.getInjector().getAnalyticsService().sendEmail(emailIds, subjectTxt.getText(), messageTextArea.getText(), userNamelbl.getText(), fileName, filePath, new AsyncCallback<Void>() {
-				@Override
-				public void onSuccess(Void result) {
-					headerTitlelbl.setText(i18n.GL2295());
-					successMesageContainer.setVisible(true);
-					mainBodycontainer.setVisible(false);
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-			});
-		}
+		});
 	}
 	/**
 	 * This method will check the validations

@@ -32,12 +32,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RatingWidgetView extends Composite{
 
 	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5,avgRatingLabel,ratingCountOpenBrace,ratingCountCloseBrace;
+	@UiField FlowPanel maincontainer;
 	
 
 	public InlineLabel getRatingCountOpenBrace() {
@@ -64,6 +66,7 @@ public class RatingWidgetView extends Composite{
 
 	public RatingWidgetView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		maincontainer.getElement().setId("epnlReviewContainer");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		star_1.getElement().setId("spnStar_1");
 		star_2.getElement().setId("spnStar_2");

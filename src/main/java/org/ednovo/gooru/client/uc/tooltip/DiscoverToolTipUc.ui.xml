@@ -10,36 +10,23 @@
 	</ui:style>
 	<g:HTMLPanel ui:field="panelCode">
 		<!-- <g:HTMLPanel styleName="{toolTip.arrowBorder}"></g:HTMLPanel> -->
-		<uc:UlPanel styleName="dropdown-menu {res.css.dropdowDisplay}" ui:field="tooltipPanel">
+		<uc:UlPanel styleName="dropdown-menu dropdowDisplay" ui:field="tooltipPanel">
 		    <uc:LiPanel>
 		        <g:Anchor ui:field="lblGooruLibrary"></g:Anchor> 
 		    </uc:LiPanel>
 		    <uc:LiPanel>
 		        <g:Anchor ui:field="lblDistrictLibrary"></g:Anchor> 
-		        <g:HTMLPanel ui:field="dropdownImgLib" styleName="right-caret {res.css.rightArrow}"></g:HTMLPanel>
-				<uc:HTMLEventPanel  ui:field="districtLibContainer">
-  				</uc:HTMLEventPanel>
+		        <g:HTMLPanel ui:field="dropdownImgLib" styleName="right-caret rightArrow"></g:HTMLPanel>
+				<panel:HTMLEventPanel  ui:field="districtLibContainer">
+  				</panel:HTMLEventPanel>
 			</uc:LiPanel>
 			<uc:LiPanel>
 				<g:Anchor styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
-				<g:HTMLPanel ui:field="dropdownImg" styleName="right-caret  {res.css.rightArrow}"></g:HTMLPanel>
-				<uc:HTMLEventPanel ui:field="partnerLibContainer">
-				</uc:HTMLEventPanel>
+				<g:HTMLPanel ui:field="dropdownImg" styleName="right-caret  rightArrow"></g:HTMLPanel>
+				<panel:HTMLEventPanel ui:field="partnerLibContainer">
+				</panel:HTMLEventPanel>
 			</uc:LiPanel>
 		</uc:UlPanel>
-		<!-- <g:HTMLPanel styleName="{toolTip.discoverTooltipContent}">
-			<g:Label styleName="{toolTip.discoverTooltipLabel}" />
-			<panel:HTMLEventPanel styleName="{toolTip.discoverTooltipLabel}" />
-			<g:HTMLPanel ui:field="dropdownImgLib" styleName="{toolTip.partnerDropDownArrow}"></g:HTMLPanel>
- 			<panel:HTMLEventPanel styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
-			<g:HTMLPanel ui:field="dropdownImg" styleName="{toolTip.partnerDropDownArrow}"></g:HTMLPanel>
-		</g:HTMLPanel> -->
-		<!-- <g:HTMLPanel styleName="{toolTip.partnerLibraryDivInfo}">
- 			<panel:HTMLEventPanel styleName="{toolTip.partnerLibraryContainer}" ui:field="partnerLibContainer"/>
- 		</g:HTMLPanel> -->
- 	<!-- 	<g:HTMLPanel styleName="{toolTip.districtLibrayCOntainerInfo}">
- 			<panel:HTMLEventPanel styleName="{toolTip.districtLibraryContainer}" ui:field="districtLibContainer"/>
- 		</g:HTMLPanel> -->
 	</g:HTMLPanel>
 </ui:UiBinder>
 

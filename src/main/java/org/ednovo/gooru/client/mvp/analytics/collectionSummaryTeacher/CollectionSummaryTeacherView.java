@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.HCBarChart;
@@ -179,63 +180,73 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView#setTeacherResourceData(java.util.ArrayList, org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo, com.google.gwt.user.client.ui.HTMLPanel)
 	 */
 	@Override
-	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,CollectionSummaryMetaDataDo collectionMetaData,HTMLPanel loadingImage) {
-			teacherTabContainer.clearStyles();
-			teacherTabContainer.setScoredQuestionsHilight();  
-			hideAllPanels();
-		    teacherResourceBreakdownDatapnl.setVisible(true);
-		    
-		    this.collectionMetaData=collectionMetaData;
-		    teacherScoredData.clear();
-			teacherOpenendedData.clear();
-			teacherResourceBreakdownData.clear();
-			questionsData.clear();
-			openendedData.clear();
+	public void setTeacherResourceData(final ArrayList<UserDataDo> resourcesData,final CollectionSummaryMetaDataDo collectionMetaData, final HTMLPanel loadingImage) {
+		this.collectionMetaData=collectionMetaData;
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 
-			collectionProgressCount=0;
-			questionRowIndex.clear();
-			resourceRowIndex.clear();
-			//Set collection meta data
-			if(collectionMetaData != null)
-			{
-				collectionOverViewWidget.setData(collectionMetaData,true);
-				collectionSummaryWidget.setDataAnalyticsData(collectionMetaData, null);
-				printWidget.add(collectionSummaryWidget);
-				printWidget.add(collectionOverViewWidget);
-				totalTimeSpentlbl.setText(getTimeSpent(collectionMetaData.getAvgTimeSpent()));
-				totalViewlbl.setText(Integer.toString(collectionMetaData.getViews()));
-				totalAvgReactionlbl.clear();
-				totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.getAvgReaction()));
-			}
-			Collections.sort(resourcesData,new Comparator<UserDataDo>() {
-	        	public int compare(UserDataDo o1, UserDataDo o2) {
-	        		 Integer obj1 = new Integer(o1.getItemSequence());
-					 Integer obj2 = new Integer(o2.getItemSequence());
-	        	     return obj1.compareTo(obj2);
-	        	}
-	        });
-	        //This is used for segrate data based on the category
-	        for (UserDataDo userDataDo : resourcesData) {
-	        	if(userDataDo.getStatus()==0){
-					if(QUESTION.equalsIgnoreCase( userDataDo.getCategory())){
-						if(OE.equalsIgnoreCase(userDataDo.getType())){
-							openendedData.add(userDataDo);
+				teacherTabContainer.clearStyles();
+				teacherTabContainer.setScoredQuestionsHilight();  
+				hideAllPanels();
+			    teacherResourceBreakdownDatapnl.setVisible(true);
+			    
+			    
+			    teacherScoredData.clear();
+				teacherOpenendedData.clear();
+				teacherResourceBreakdownData.clear();
+				questionsData.clear();
+				openendedData.clear();
+
+				collectionProgressCount=0;
+				questionRowIndex.clear();
+				resourceRowIndex.clear();
+				//Set collection meta data
+				if(collectionMetaData != null)
+				{
+					collectionOverViewWidget.setData(collectionMetaData,true);
+					collectionSummaryWidget.setDataAnalyticsData(collectionMetaData, null);
+					printWidget.add(collectionSummaryWidget);
+					printWidget.add(collectionOverViewWidget);
+					totalTimeSpentlbl.setText(getTimeSpent(collectionMetaData.getAvgTimeSpent()));
+					totalViewlbl.setText(Integer.toString(collectionMetaData.getViews()));
+					totalAvgReactionlbl.clear();
+					totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.getAvgReaction()));
+				}
+				Collections.sort(resourcesData,new Comparator<UserDataDo>() {
+		        	public int compare(UserDataDo o1, UserDataDo o2) {
+		        		 Integer obj1 = new Integer(o1.getItemSequence());
+						 Integer obj2 = new Integer(o2.getItemSequence());
+		        	     return obj1.compareTo(obj2);
+		        	}
+		        });
+		        //This is used for segrate data based on the category
+		        for (UserDataDo userDataDo : resourcesData) {
+		        	if(userDataDo.getStatus()==0){
+						if(QUESTION.equalsIgnoreCase( userDataDo.getResourceFormat())){
+							if(OE.equalsIgnoreCase(userDataDo.getType())){
+								openendedData.add(userDataDo);
+							}else{
+								questionsData.add(userDataDo);
+							}
+							questionRowIndex.add(collectionProgressCount);
 						}else{
-							questionsData.add(userDataDo);
+							resourceRowIndex.add(collectionProgressCount);
 						}
-						questionRowIndex.add(collectionProgressCount);
-					}else{
-						resourceRowIndex.add(collectionProgressCount);
-					}
-					collectionProgressCount++;
-	        	}
-	        }
-	    	setScoredQuestionsData(questionsData);
-	    	setQuestionsPrintData(questionsData);
-	    	setOpenendedQuestionsData(openendedData);
-	    	setOpenendedQuestionsPrintData(openendedData);
-	    	setCollectionBreakDown(resourcesData,loadingImage);
-	    	setCollectionBreakDownPrintData(resourcesData);
+						collectionProgressCount++;
+		        	}
+		        }
+		    	setScoredQuestionsData(questionsData);
+		    	setQuestionsPrintData(questionsData);
+		    	setOpenendedQuestionsData(openendedData);
+		    	setOpenendedQuestionsPrintData(openendedData);
+		    	setCollectionBreakDown(resourcesData,loadingImage);
+		    	setCollectionBreakDownPrintData(resourcesData);
+		
+			}
+		});
+		
 	}
 	/**
 	 * This is used to print opened questions data
@@ -246,12 +257,12 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         	printOpendedData.clear();
 		 	int totalUserCount=this.collectionMetaData.getUserCount();
 		    DataTable data = DataTable.create();
-		    data.addColumn(ColumnType.NUMBER, "No.");
-	        data.addColumn(ColumnType.STRING, "Question");
-	        data.addColumn(ColumnType.STRING, "Completion");
-	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
-	        data.addColumn(ColumnType.STRING, "Reaction");
-	        data.addColumn(ColumnType.STRING, "Student&nbsp;Responses");
+		    data.addColumn(ColumnType.NUMBER, i18n.GL3259());
+	        data.addColumn(ColumnType.STRING, i18n.GL0308());
+	        data.addColumn(ColumnType.STRING, i18n.GL3260());
+	        data.addColumn(ColumnType.STRING, i18n.GL2084());
+	        data.addColumn(ColumnType.STRING, i18n.GL3261());
+	        data.addColumn(ColumnType.STRING, i18n.GL3273());
 	        data.addRows(result.size());
 	        if(result.size()!=0){
 	        	   for(int i=0;i<result.size();i++) {
@@ -454,7 +465,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	         	if(result.get(i).getStatus()==0){
 	        	data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	        	 String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
+	        	 String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 	              String categoryStyle="";
 	              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 				      resourceCategory = "webpage";
@@ -572,12 +583,11 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	}
 	        }
 	        data.addRows(rowCount);
-	        
 	        for(int i=0;i<result.size();i++) {
 	        	if(result.get(i).getStatus()==0){
 	        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
+	              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 	              String categoryStyle="";
 	              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 				      resourceCategory = "webpage";

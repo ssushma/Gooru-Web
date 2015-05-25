@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -56,7 +57,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class DistrictBannerView extends Composite {
 
 	@UiField HTMLPanel partnerLogo, landingBannerInner, bannerContainer, bannerTabs, firstBox;
-	@UiField Label headerTag, subHeaderTag, info1, info2, info3, info4, title1, title2;
+	@UiField Label headerTag, subHeaderTag, info1, info2, info3, info4, title1, title2,subTag;
 	@UiField DistrictStyleBundle districtStyleUc;
 	
 	private static DistrictBannerViewUiBinder uiBinder = GWT
@@ -70,6 +71,7 @@ public class DistrictBannerView extends Composite {
 
 	public DistrictBannerView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
+		subTag.setVisible(false);
 		getLandingBannerText(placeToken);
 	}
 
@@ -83,6 +85,9 @@ public class DistrictBannerView extends Composite {
 			setLandingBannerText(i18n.GL1902(),i18n.GL1903(),i18n.GL1977(),i18n.GL1978(),i18n.GL1979(),i18n.GL1980());
 			partnerLogo.setStyleName(districtStyleUc.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
+			subTag.setText("83% English Learners | 92% Low socio-economic status | Large Urban California School District");
+			subTag.setVisible(true); 
+			bannerTabs.getElement().getStyle().setMarginTop(27, Unit.PX);
 		} else if(placeToken.contains(PlaceTokens.LIFEBOARD)) {
 			bannerContainer.addStyleName(districtStyleUc.lifeboardBannerStyle());
 			bannerTabs.addStyleName(districtStyleUc.lifeboardBannerStyle());

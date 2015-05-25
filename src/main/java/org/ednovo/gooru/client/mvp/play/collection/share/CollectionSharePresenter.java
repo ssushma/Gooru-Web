@@ -120,7 +120,7 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 				this.resourceId=resourceId;
 				this.collectionId=null;
 				 Map<String, String> params = new HashMap<String, String>();
-					params.put(ClientConstants.TYPE, PlaceTokens.RESOURCE_SEARCH);
+					params.put(ClientConstants.TYPE, PlaceTokens.SEARCH_RESOURCE);
 					params.put(ClientConstants.SHARETYPE, ClientConstants.SHARE);
 				AppClientFactory.getInjector().getSearchService().getShortenShareUrl(resourceId,params, new SimpleAsyncCallback<Map<String,String>>() {
 						@Override

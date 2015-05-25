@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -63,11 +64,14 @@ public interface AnalyticsService extends BaseService {
 
 	public ArrayList<OetextDataDO> getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId);
 	
-	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode);
+	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode,String feedbackProvidedUserUid);
 
 	public void sendEmail(String to,String subject,String message,String displayName,String fileName,String path);
 
 	public String exportTeacherSummary(String collectionGooruOId,String pathwayId,String classId,String timeZone); 
 	
 	public String exportProgress(String collectionId,String classpageId,String timeZone);
+
+	HashMap<String, String> getResourceAndCollectionCounts(String Id,
+			String searchType);
 }

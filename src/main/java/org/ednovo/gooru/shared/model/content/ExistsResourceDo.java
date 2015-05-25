@@ -47,7 +47,7 @@ public class ExistsResourceDo extends ContentDo {
     private String shortenedUrlStatus;
     private String label;        //Some api's give title in label key
     private String nativeurl;    //Some api's give url in nativeUrl key
-    private String id;
+    private String gooruOid;
     private String sharing;
     
     public String getSharing() {
@@ -60,13 +60,6 @@ public class ExistsResourceDo extends ContentDo {
 
 	public ExistsResourceDo(){}
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getNativeurl() {
         return nativeurl;
@@ -174,4 +167,15 @@ public class ExistsResourceDo extends ContentDo {
 	public void setShortenedUrlStatus(String shortenedUrlStatus) {
 		this.shortenedUrlStatus = shortenedUrlStatus;
 	}
+
+	public String getGooruOid() {
+		return gooruOid;
+	}
+
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+	
+	
+	
 }    

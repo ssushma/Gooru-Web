@@ -26,9 +26,11 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -80,6 +82,7 @@ public class AppPopUp extends PopupPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
+				Window.enableScrolling(true);
 			}
 		});
 		row.add(closeBtn);

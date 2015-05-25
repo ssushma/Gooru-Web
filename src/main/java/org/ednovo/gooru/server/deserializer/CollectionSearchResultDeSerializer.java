@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -42,6 +44,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * @author Search Team
@@ -58,6 +62,8 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 	private static final String COLLECTION_ITEM_COUNT="collectionItemCount";
 	private static final String QUESTION_COUNT="questionCount";
 	private static final String RESOURCE_COUNT="resourceCount";
+	private static final String REMIX_COUNT="scollectionRemixCount";
+	private static String COLLECTION_TYPE  = "collectionType";
 
 	private static final String GOORU_OID = "id";
 	
@@ -68,8 +74,9 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 		CollectionSearchResultDo searchResult = new CollectionSearchResultDo();
 		searchResult.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		searchResult.setCreatorName(getJsonString(recordJsonObject, CREATORNAME));
+		searchResult.setCollectionType(getJsonString(recordJsonObject, COLLECTION_TYPE));
 		searchResult.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
-
+		
 		searchResult.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		searchResult.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		searchResult.setDescription((getJsonString(recordJsonObject, COLLECTION_DESCRIPTION)));
@@ -79,6 +86,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 		ownerDo.setLastName(getJsonString(recordJsonObject, OWNER_LAST_NAME));
 		ownerDo.setUsername(getJsonString(recordJsonObject, OWNER_NAME_DISPLAY));
 		String userVisibility = getJsonString(recordJsonObject, OWNER_PROFILE_USER_VISIBILITY);
+		searchResult.setGooruUId(getJsonString(recordJsonObject, "gooruUId"));
 		if(userVisibility.equalsIgnoreCase("true")) {
 			ownerDo.setProfileUserVisibility(true);
 		} else {
@@ -125,6 +133,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 			searchResult.setResourceCount(stringtoInteger(recordJsonObject, COLLECTION_ITEM_COUNT, 0));
 			searchResult.setQuestionCount(stringtoInteger(recordJsonObject, QUESTION_COUNT, 0));
 			searchResult.setOnlyResourceCount(stringtoInteger(recordJsonObject, RESOURCE_COUNT, 0));
+			searchResult.setScollectionRemixCount(stringtoInteger(recordJsonObject, REMIX_COUNT, 0));
 			
 			if (recordJsonObject.has(LICENSE)) {
 				JSONObject license = recordJsonObject.getJSONObject(LICENSE);
@@ -133,6 +142,9 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 					searchResult.setLicense(licenseDo);
 				}
 			}
+			
+			List<CollectionItemDo> collectionItemDoList= (ArrayList<CollectionItemDo>) JsonDeserializer.deserialize(recordJsonObject.getJSONArray("collectionItems").toString(),new TypeReference<List<CollectionItemDo>>() {});
+			searchResult.setCollectionItems(collectionItemDoList);
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}

@@ -283,7 +283,7 @@ IsSocialShareSmallView{
 	@UiHandler("fbPanel")
 	public void onFbClickEvent(ClickEvent event) {
 		if(!(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Facebook_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Facebook_FromCollection();
@@ -306,7 +306,7 @@ IsSocialShareSmallView{
 	@UiHandler("fbIconPanel")
 	public void onFbIconClickEvent(ClickEvent event){
 		if(!isProfilePageView || !(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Facebook_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Facebook_FromCollection();
@@ -331,7 +331,7 @@ IsSocialShareSmallView{
 	@UiHandler("emailPanel")
 	public void onEmailClickEvent(ClickEvent event){
 		if(!(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Email_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Email_FromCollection();
@@ -353,7 +353,7 @@ IsSocialShareSmallView{
 	@UiHandler("emailIconPanel")
 	public void onEmailIconClickEvent(ClickEvent event){
 		if(!isProfilePageView || !(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Email_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Email_FromCollection();
@@ -378,7 +378,7 @@ IsSocialShareSmallView{
 	@UiHandler("twitterPanel")
 	public void onTwitterClickEvent(ClickEvent event) {
 		if(!(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Twitter_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Twitter_FromCollection();
@@ -401,7 +401,7 @@ IsSocialShareSmallView{
 	@UiHandler("twIconPanel")
 	public void onTwitterIconClickEvent(ClickEvent event) {
 		if(!isProfilePageView || !(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				MixpanelUtil.Click_Twitter_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Twitter_FromCollection();
@@ -483,7 +483,12 @@ IsSocialShareSmallView{
 				}
 			});
 		}else{
-			LoginPopupUc popup = new LoginPopupUc();
+			LoginPopupUc popup = new LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					
+				}
+			};
 			popup.setGlassEnabled(true);
 			popup.show();
 			popup.center();

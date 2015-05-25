@@ -40,9 +40,9 @@ import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -1102,7 +1102,7 @@ public class CollectionShareTabVc extends Composite {
 								this.hide();
 								updateShare("public");
 								selectPrivateResource("public");
-								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 									Window.enableScrolling(false);
 								}else{
 									Window.enableScrolling(true);

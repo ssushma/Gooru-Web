@@ -31,8 +31,8 @@ import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 public interface QuestionResourceUiHandlers extends BaseUiHandlers{
-	public void createSessionItemAttempt(int answerId,String answerAttemptStatus);
-	public void createSesstionItemAttemptOe(String answerId,String attemptStatus,String answerText);
+	public void createSessionItemAttempt(String contentGooruOid,int answerId,String answerAttemptStatus);
+	public void createSesstionItemAttemptOe(String contentGooruOid,String answerId,String attemptStatus,String answerText);
 	public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
 	public void setAnswerAttemptSequence(int attemptSequence,int attemptStatus,int answerId);
 	public void setOeQuestionAnswerText(String answerText);

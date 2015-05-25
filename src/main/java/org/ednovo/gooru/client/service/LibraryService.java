@@ -284,4 +284,76 @@ public interface LibraryService extends BaseService {
 	 *
 	 */
 	public ArrayList<LibraryUserDo> deserializeCollaborators(String jsonString) throws GwtException;
+
+	/**
+	 * 
+	 * @function getLibraryContributorsUsers 
+	 * 
+	 * @created_date : 27-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param libraryName
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	String getLibraryContributorsUsers(String libraryName) throws GwtException;
+
+	/**
+	 * 
+	 * @function deserializeLibrarySubjects 
+	 * 
+	 * @created_date : 27-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param jsonString
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * 
+	 * @return : HashMap<String,SubjectDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	HashMap<String, SubjectDo> deserializeLibrarySubjects(String subjectName, String courseId, String libraryName,String jsonString)
+			throws GwtException;
+	/**
+	 * 
+	 * @function getLibrarySubjectsJson 
+	 * 
+	 * @created_date : 27-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param subjectName
+	 * @parm(s) : @param courseId
+	 * @parm(s) : @param libraryName
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	String getLibrarySubjectsJson(String subjectName, String courseId,
+			String libraryName) throws GwtException;
 }
