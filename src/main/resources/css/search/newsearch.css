@@ -225,6 +225,7 @@
     white-space: normal;
     cursor:pointer;
     max-height:42px;
+    overflow: hidden;
 }
 
 #gooruSearchMainContainer .libraryMainContainerBlock .collectionTitleincoll{
@@ -1293,6 +1294,7 @@ word-wrap: break-word;
 	    text-overflow: ellipsis;
 	    white-space: normal;
 	    cursor: pointer;
+	    overflow: hidden;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon {
 	    background: url("../images/folderIcon-sprite.png") no-repeat scroll 8px -36px rgba(0, 0, 0, 0);
