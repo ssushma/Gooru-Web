@@ -276,8 +276,8 @@
 #gooruSearchMainContainer .standerdContainer{
 	padding:5px 10px;
 	border-bottom:1px solid #dddddd;
-	max-height: 55px;
-  	min-height: 55px;
+	max-height: 34px;
+  	min-height: 34px;
 }
 #gooruSearchMainContainer .resourcesInside {
 	padding:8px 8px;
