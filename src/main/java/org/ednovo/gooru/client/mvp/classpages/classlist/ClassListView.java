@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
@@ -44,7 +45,6 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -665,15 +665,21 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
-			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<V2UserDo>() {
-
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
 				@Override
-				public void onSuccess(V2UserDo result) {
-					shareDo.setEmailId(result.getExternalId());
-					EmailShareUc emailShare=new EmailShareUc(shareDo);
-					emailShare.show();
-					emailShare.center();
+				public void onSuccess() {
+					
+					AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<V2UserDo>() {
+
+						@Override
+						public void onSuccess(V2UserDo result) {
+							shareDo.setEmailId(result.getExternalId());
+							EmailShareUc emailShare=new EmailShareUc(shareDo);
+							emailShare.show();
+							emailShare.center();
+						}
+					});
 				}
 			});
 		}
@@ -732,27 +738,33 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 * This method is used to set the class page Do
 	 */
 	@Override
-	public void setClassPageDo(ClasspageDo classpageDo) {
+	public void setClassPageDo(final ClasspageDo classpageDo) {
 		this.classpageDo = classpageDo;
 		
-		clearMembersListPanel();
-		setLoadingPanelVisibility(true);
-		txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
-		// call an API to get the list of students in this class.
-		activeListPageNum=0;
-		activeListTotalCount=0;
-		pendingListPageNum=0;
-		pendingListTotalCount=0;
-		pendingOffsetValue=0;
-		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  pageSize*activeListPageNum, pageSize, "active",true,true);	//this will callback displayActiveMembersList method ....
-				
-		if(classpageDo.getSharing().equalsIgnoreCase(PUBLIC)){
-			visibilityRadioOpen.setChecked(true);
-			visibilityRadioInviteOnly.setChecked(false);
-		}else{
-			visibilityRadioOpen.setChecked(false);
-			visibilityRadioInviteOnly.setChecked(true);
-		}
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				clearMembersListPanel();
+				setLoadingPanelVisibility(true);
+				txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
+				// call an API to get the list of students in this class.
+				activeListPageNum=0;
+				activeListTotalCount=0;
+				pendingListPageNum=0;
+				pendingListTotalCount=0;
+				pendingOffsetValue=0;
+				getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  pageSize*activeListPageNum, pageSize, "active",true,true);	//this will callback displayActiveMembersList method ....
+						
+				if(classpageDo.getSharing().equalsIgnoreCase(PUBLIC)){
+					visibilityRadioOpen.setChecked(true);
+					visibilityRadioInviteOnly.setChecked(false);
+				}else{
+					visibilityRadioOpen.setChecked(false);
+					visibilityRadioInviteOnly.setChecked(true);
+				}
+			}
+		} );
 	}
 	
 	/**
@@ -775,53 +787,88 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 *
 	 */
 	private void addShareClass() {
-		shareDo = new SocialShareDo();
-		shareDo.setTitle(classpageDo.getTitle());
-		shareDo.setDecodeRawUrl(txtClasspageCodeShare.getText());
-		shareDo.setBitlylink(txtClasspageLinkShare.getText());
-		shareDo.setCategoryType(AppClientFactory.getLoggedInUser().getUsername());
-		shareDo.setOnlyIcon(false);
-		shareDo.setIsSearchShare(false);
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				shareDo = new SocialShareDo();
+				shareDo.setTitle(classpageDo.getTitle());
+				shareDo.setDecodeRawUrl(txtClasspageCodeShare.getText());
+				shareDo.setBitlylink(txtClasspageLinkShare.getText());
+				shareDo.setCategoryType(AppClientFactory.getLoggedInUser().getUsername());
+				shareDo.setOnlyIcon(false);
+				shareDo.setIsSearchShare(false);
+			}
+		});
 	}
 
 	/**
 	 * This method is used to set the the share shorten Url
 	 */
 	@Override
-	public void setShareUrl(Map<String, String> shortenUrl) {
-		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
-			txtClasspageLinkShare.setText(shortenUrl.get(SHORTEN_URL));
-		}
-		addShareClass();
+	public void setShareUrl(final Map<String, String> shortenUrl) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
+					txtClasspageLinkShare.setText(shortenUrl.get(SHORTEN_URL));
+				}
+				addShareClass();
+			}
+		});
 	}
 	
 	@UiHandler("ancPendingListSeeMore")
 	public void onClickPendingListSeeMore(ClickEvent event){
-		lblPendingPleaseWait.setVisible(true);
-		ancPendingListSeeMore.setVisible(false);
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffsetValue, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				lblPendingPleaseWait.setVisible(true);
+				ancPendingListSeeMore.setVisible(false);
+				getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffsetValue, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
+			}
+		});
 	}
 	@UiHandler("ancActiveListSeeMore")
 	public void onClickActiveListSeeMore(ClickEvent event){
-		lblActivePleaseWait.setVisible(true);
-		ancActiveListSeeMore.setVisible(false);
-		int offset=(pageSize*activeListPageNum);
-		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  offset, pageSize, "active",true,false);	//this will callback displayActiveMembersList method ....
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				lblActivePleaseWait.setVisible(true);
+				ancActiveListSeeMore.setVisible(false);
+				int offset=(pageSize*activeListPageNum);
+				getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  offset, pageSize, "active",true,false);	//this will callback displayActiveMembersList method ....
+			}
+		});
 	}
 	
 	@UiHandler("visibilityRadioOpen")
 	public void onvisibilityRadioOpenClicked(ClickEvent click){
-		visibilityRadioOpen.setChecked(true);
-		visibilityRadioInviteOnly.setChecked(false);
-		getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "public");
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				visibilityRadioOpen.setChecked(true);
+				visibilityRadioInviteOnly.setChecked(false);
+				getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "public");
+			}
+		});
 	}
 	
 	@UiHandler("visibilityRadioInviteOnly")
 	public void onvisibilityRadioInviteOnlyClicked(ClickEvent click){
-		visibilityRadioOpen.setChecked(false);
-		visibilityRadioInviteOnly.setChecked(true);
-		getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "private");
-
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				visibilityRadioOpen.setChecked(false);
+				visibilityRadioInviteOnly.setChecked(true);
+				getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "private");
+			}
+		});
 	}
 	
 	
@@ -846,11 +893,16 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 *
 	 */
 	
-	public void showErrorMessage(String errorMessage){
-		lblErrorMessage.setText(errorMessage);
-		lblErrorMessage.getElement().setAttribute("alt",errorMessage);
-		lblErrorMessage.getElement().setAttribute("title",errorMessage);
-		lblErrorMessage.setVisible(true);
+	public void showErrorMessage(final String errorMessage){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				lblErrorMessage.setText(errorMessage);
+				StringUtil.setAttributes(lblErrorMessage.getElement(), "lblErrorMessage", errorMessage, errorMessage);
+				lblErrorMessage.setVisible(true);
+			}
+		});
 	}
 
 	/* (non-Javadoc)
@@ -864,65 +916,71 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	//UI Handlers
 	@UiHandler("btnInvite")
 	public void OnClickInvite(ClickEvent event){
-		//Check for null - Check for Empty
-		lblPleaseWait.setVisible(true);
-		lblActiveMembers.setVisible(true);
-		lblActiveMembersDesc.setVisible(true);
-		btnInvite.setVisible(false);
-		String studentsEmailIds = autoSuggetTextBox.getSelectedItemsAsString();
-		String emailIds[] = studentsEmailIds.trim().split("\\s*,\\s*");
-		List<String> lstEmailID = new ArrayList<String>();
-		for (int i=0; i<emailIds.length; i++){
-			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");	
-		}
-		if (studentsEmailIds != null && studentsEmailIds.equalsIgnoreCase("")){
-			lblPleaseWait.setVisible(false);
-			btnInvite.setVisible(true);
-			return;
-		}
-		
-		currentStudentsCount = emailIds.length + overAllStudentsCount;
-		if (currentStudentsCount > studentsLimitCount){
-			lblPleaseWait.setVisible(false);
-			btnInvite.setVisible(true);
-			showErrorMessage(StringUtil.generateMessage(i18n.GL1523(), ""+studentsLimitCount));
-			return;
-		}
-				
-		//Check for Valid Email ID format
-		boolean from;
-		for (int i=0; i<emailIds.length; i++){
-			String emailID = emailIds[i].toLowerCase().trim();
-			from = emailID.matches(EMAIL_REGEX);
-			if (!from){
-				lblPleaseWait.setVisible(false);
-				btnInvite.setVisible(true);
-				showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailID));
-				return;
-			}
-		}
-		if (AppClientFactory.getLoggedInUser().getEmailId()!=null){
-			boolean isValid=true;
-			for (int i=0; i<emailIds.length; i++){
-				String emailId = emailIds[i].toLowerCase().trim();
-				if (emailId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getEmailId())){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				//Check for null - Check for Empty
+				lblPleaseWait.setVisible(true);
+				lblActiveMembers.setVisible(true);
+				lblActiveMembersDesc.setVisible(true);
+				btnInvite.setVisible(false);
+				String studentsEmailIds = autoSuggetTextBox.getSelectedItemsAsString();
+				String emailIds[] = studentsEmailIds.trim().split("\\s*,\\s*");
+				List<String> lstEmailID = new ArrayList<String>();
+				for (int i=0; i<emailIds.length; i++){
+					lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");	
+				}
+				if (studentsEmailIds != null && studentsEmailIds.equalsIgnoreCase("")){
 					lblPleaseWait.setVisible(false);
 					btnInvite.setVisible(true);
-					showErrorMessage(i18n.GL1524());
-					isValid = false;
-					break;
+					return;
 				}
+				
+				currentStudentsCount = emailIds.length + overAllStudentsCount;
+				if (currentStudentsCount > studentsLimitCount){
+					lblPleaseWait.setVisible(false);
+					btnInvite.setVisible(true);
+					showErrorMessage(StringUtil.generateMessage(i18n.GL1523(), ""+studentsLimitCount));
+					return;
+				}
+						
+				//Check for Valid Email ID format
+				boolean from;
+				for (int i=0; i<emailIds.length; i++){
+					String emailID = emailIds[i].toLowerCase().trim();
+					from = emailID.matches(EMAIL_REGEX);
+					if (!from){
+						lblPleaseWait.setVisible(false);
+						btnInvite.setVisible(true);
+						showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailID));
+						return;
+					}
+				}
+				if (AppClientFactory.getLoggedInUser().getEmailId()!=null){
+					boolean isValid=true;
+					for (int i=0; i<emailIds.length; i++){
+						String emailId = emailIds[i].toLowerCase().trim();
+						if (emailId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getEmailId())){
+							lblPleaseWait.setVisible(false);
+							btnInvite.setVisible(true);
+							showErrorMessage(i18n.GL1524());
+							isValid = false;
+							break;
+						}
+					}
+					if (!isValid){
+						return;
+					}
+				}
+			
+				btnInvite.getElement().addClassName("disabled");
+				btnInvite.setEnabled(false);
+				//Call API to add the Student to the class.
+				getUiHandlers().addMembers(classpageDo.getClasspageId(), lstEmailID);	// this will callback the displayPendingMembersList method.
+				
 			}
-			if (!isValid){
-				return;
-			}
-		}
-	
-		btnInvite.getElement().addClassName("disabled");
-		btnInvite.setEnabled(false);
-		//Call API to add the Student to the class.
-		getUiHandlers().addMembers(classpageDo.getClasspageId(), lstEmailID);	// this will callback the displayPendingMembersList method.
-		
+		});
 	}
 	@Override
 	public void setLoadingPanelVisibility(boolean visibility){
@@ -948,53 +1006,63 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 * 
 	*/
 	@Override
-	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount,boolean increasePageNum,boolean insertTop) {
-		setLoadingPanelVisibility(false);
-		lblPleaseWait.setVisible(false);
-		lblErrorMessage.setVisible(false);
-		if(!insertTop){
-			this.pendingListTotalCount=totalCount;
-		}
-		if(increasePageNum){
-			pendingOffsetValue=pendingOffsetValue+pageSize;
-		}
-		if(pendingListTotalCount==0&&activeListTotalCount==0){
-			panelNoMembers.setVisible(true);
-			panelMembersList.setVisible(false);
-			lblPendingMembers.setVisible(false);
-			questionMarkPanel2.setVisible(false);
-			lblActiveMembers.setVisible(false);
-			lblActiveMembersDesc.setVisible(false);
-			ancPendingListSeeMore.setVisible(false);
-		}else if(pendingListTotalCount==0){
-			lblPendingMembers.setVisible(false);
-			ancPendingListSeeMore.setVisible(false);
-			questionMarkPanel2.setVisible(false);
-		}else{
-			lblPendingPleaseWait.setVisible(false);
-			for (int k=0; k<lstPendingMembers.size();k++){
-				lblPendingMembers.setVisible(true);
-				questionMarkPanel2.setVisible(true);
-				panelNoMembers.setVisible(false);
-				panelMembersList.setVisible(true);
-				panelPendingMembersContainer.setVisible(true);
-				if(insertTop){
-					pendingOffsetValue++;
-					pendingListTotalCount++;
+	public void displayPendingMembersList(final List<CollaboratorsDo> lstPendingMembers,final boolean isNew,final int totalCount,final boolean increasePageNum,final boolean insertTop) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				setLoadingPanelVisibility(false);
+				lblPleaseWait.setVisible(false);
+				lblErrorMessage.setVisible(false);
+				if(!insertTop){
+					pendingListTotalCount=totalCount;
 				}
-				if((pendingOffsetValue)< pendingListTotalCount){
-					ancPendingListSeeMore.setVisible(true);
+				if(increasePageNum){
+					pendingOffsetValue=pendingOffsetValue+pageSize;
 				}
-				else{
+				if(pendingListTotalCount==0&&activeListTotalCount==0){
+					panelNoMembers.setVisible(true);
+					panelMembersList.setVisible(false);
+					lblPendingMembers.setVisible(false);
+					questionMarkPanel2.setVisible(false);
+					lblActiveMembers.setVisible(false);
+					lblActiveMembersDesc.setVisible(false);
 					ancPendingListSeeMore.setVisible(false);
+				}else if(pendingListTotalCount==0){
+					lblPendingMembers.setVisible(false);
+					ancPendingListSeeMore.setVisible(false);
+					questionMarkPanel2.setVisible(false);
+				}else{
+					lblPendingPleaseWait.setVisible(false);
+					for (int k=0; k<lstPendingMembers.size();k++){
+						lblPendingMembers.setVisible(true);
+						questionMarkPanel2.setVisible(true);
+						panelNoMembers.setVisible(false);
+						panelMembersList.setVisible(true);
+						panelPendingMembersContainer.setVisible(true);
+						if(insertTop){
+							pendingOffsetValue++;
+							pendingListTotalCount++;
+						}
+						if((pendingOffsetValue)< pendingListTotalCount){
+							ancPendingListSeeMore.setVisible(true);
+						}
+						else{
+							ancPendingListSeeMore.setVisible(false);
+						}
+						insertPendingUserAfterDeletion(lstPendingMembers.get(k),isNew,totalCount,k,insertTop);
+						enableInvite();
+					}
 				}
-				insertPendingUserAfterDeletion(lstPendingMembers.get(k),isNew,totalCount,k,insertTop);
-				enableInvite();
 			}
-		}
+		});
 	}
 	@Override
-	 public void insertPendingUserAfterDeletion(final CollaboratorsDo lstPendingMembers, boolean isNew, int totalCount, int intPos,boolean insertAtTop){
+	 public void insertPendingUserAfterDeletion(final CollaboratorsDo lstPendingMembers,final boolean isNew,final int totalCount, final int intPos,final boolean insertAtTop){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 				final MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstPendingMembers, classpageDo,intPos) {
 				public void removeUserWidget(){
 					ArrayList<String> arrayEmailId = new ArrayList<String>();
@@ -1039,17 +1107,25 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			}else{
 				panelPendingMembersList.add(membersViewVc);
 			}
-	 }
+			}
+		});
+	}
 	/**
 	 * 
 	 */
-	public void removePendiUserWidget(MembersViewVc membersViewVc,boolean isPendingList){
-		membersViewVc.removeFromParent();
-		if(isPendingList){
-			getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), pendingOffsetValue-1, 1, "pending",false);
-		}else{
-			getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
-		}
+	public void removePendiUserWidget(final MembersViewVc membersViewVc,final boolean isPendingList){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				membersViewVc.removeFromParent();
+				if(isPendingList){
+					getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), pendingOffsetValue-1, 1, "pending",false);
+				}else{
+					getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
+				}
+			}
+		});
 	}
 	
 	
@@ -1077,94 +1153,112 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 * 
 	*/
 	@Override
-	public void displayActiveMembersList(List<CollaboratorsDo> lstActiveMembers, boolean isNew, int totalCount,boolean increasePageNum) {
-		setLoadingPanelVisibility(false);
-		lblPleaseWait.setVisible(false);
-		lblErrorMessage.setVisible(false);
-		AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
-		if(increasePageNum){
-			activeListPageNum++;
-		}
-		this.activeListTotalCount=totalCount;
-		if(activeListTotalCount==0){
-			lblActiveMembers.setVisible(true);
-			lblActiveMembersDesc.setVisible(true);
-			ancActiveListSeeMore.setVisible(false);
-			Label noActiveStudents = new Label(i18n.GL1527());
-			panelActiveMembersContainter.setVisible(true);
-			noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
-			panelActiveMembersList.add(noActiveStudents);
-		}else{
-			for (int k=0; k<lstActiveMembers.size();k++){
-				lblActiveMembers.setVisible(true);
-				lblActiveMembersDesc.setVisible(true);
-				panelNoMembers.setVisible(false);
-				panelMembersList.setVisible(true);
-				panelActiveMembersContainter.setVisible(true);
-				insertActiveUserAfterDeletion(lstActiveMembers.get(k),isNew,totalCount,k);
-				if((pageSize*activeListPageNum)<activeListTotalCount){
-					ancActiveListSeeMore.setVisible(true);
-				}else{
-					ancActiveListSeeMore.setVisible(false);
+	public void displayActiveMembersList(final List<CollaboratorsDo> lstActiveMembers,final boolean isNew,final int totalCount,final boolean increasePageNum) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				setLoadingPanelVisibility(false);
+				lblPleaseWait.setVisible(false);
+				lblErrorMessage.setVisible(false);
+				AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
+				if(increasePageNum){
+					activeListPageNum++;
 				}
-				enableInvite();
+				activeListTotalCount=totalCount;
+				if(activeListTotalCount==0){
+					lblActiveMembers.setVisible(true);
+					lblActiveMembersDesc.setVisible(true);
+					ancActiveListSeeMore.setVisible(false);
+					Label noActiveStudents = new Label(i18n.GL1527());
+					panelActiveMembersContainter.setVisible(true);
+					noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
+					panelActiveMembersList.add(noActiveStudents);
+				}else{
+					for (int k=0; k<lstActiveMembers.size();k++){
+						lblActiveMembers.setVisible(true);
+						lblActiveMembersDesc.setVisible(true);
+						panelNoMembers.setVisible(false);
+						panelMembersList.setVisible(true);
+						panelActiveMembersContainter.setVisible(true);
+						insertActiveUserAfterDeletion(lstActiveMembers.get(k),isNew,totalCount,k);
+						if((pageSize*activeListPageNum)<activeListTotalCount){
+							ancActiveListSeeMore.setVisible(true);
+						}else{
+							ancActiveListSeeMore.setVisible(false);
+						}
+						enableInvite();
+					}
+				}
 			}
-		}
+		});
 	}
 	/**
 	 * 
 	 */
 	public void getPendingMembersList(){
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), 0, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), 0, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
+			}
+		});
 	}
 	
 	@Override
-	 public void insertActiveUserAfterDeletion(final CollaboratorsDo lstActiveMembers, boolean isNew, int totalCount, int intPos){
-		MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstActiveMembers, classpageDo,intPos) {
-			public void removeActiveUserObject(){
-				ArrayList<String> arrayEmailId = new ArrayList<String>();
-				arrayEmailId.add('"'+lstActiveMembers.getEmailId()+'"');
-				getUiHandlers().removeUserFromClass(classpageDo,arrayEmailId.toString(),0,false,this);
-			}
+	 public void insertActiveUserAfterDeletion(final CollaboratorsDo lstActiveMembers,final boolean isNew,final int totalCount,final int intPos){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void setCollabCount(int count, String type) {}
-			@Override
-			public void setStudentsListContainer(ClickEvent event) {
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-				DeletePopupViewVc delete = new DeletePopupViewVc() {
-					@Override
-					public void onClickPositiveButton(ClickEvent event) {
-						removeActiveUserObject();
-						Window.enableScrolling(true);
-						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-						hide();
+			public void onSuccess() {
+				MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstActiveMembers, classpageDo,intPos) {
+					public void removeActiveUserObject(){
+						ArrayList<String> arrayEmailId = new ArrayList<String>();
+						arrayEmailId.add('"'+lstActiveMembers.getEmailId()+'"');
+						getUiHandlers().removeUserFromClass(classpageDo,arrayEmailId.toString(),0,false,this);
 					}
-
 					@Override
-					public void onClickNegitiveButton(ClickEvent event) {
-						Window.enableScrolling(true);
-						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-						hide();
-						
+					public void setCollabCount(int count, String type) {}
+					@Override
+					public void setStudentsListContainer(ClickEvent event) {
+						Window.enableScrolling(false);
+						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+						DeletePopupViewVc delete = new DeletePopupViewVc() {
+							@Override
+							public void onClickPositiveButton(ClickEvent event) {
+								removeActiveUserObject();
+								Window.enableScrolling(true);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+								hide();
+							}
+
+							@Override
+							public void onClickNegitiveButton(ClickEvent event) {
+								Window.enableScrolling(true);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+								hide();
+								
+							}
+						};
+						delete.setPopupTitle(i18n.GL1548());
+						delete.setNotes(i18n.GL0748());
+						delete.setDescText(StringUtil.generateMessage(i18n.GL1547(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
+						delete.setPositiveButtonText(i18n.GL0190());						
+						delete.setNegitiveButtonText(i18n.GL0142());
+						delete.setDeleteValidate("delete");
+						delete.setPixelSize(450, 353);	
+						delete.show();
+						delete.center();
 					}
 				};
-				delete.setPopupTitle(i18n.GL1548());
-				delete.setNotes(i18n.GL0748());
-				delete.setDescText(StringUtil.generateMessage(i18n.GL1547(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
-				delete.setPositiveButtonText(i18n.GL0190());						
-				delete.setNegitiveButtonText(i18n.GL0142());
-				delete.setDeleteValidate("delete");
-				delete.setPixelSize(450, 353);	
-				delete.show();
-				delete.center();
-			}
-		};
-		//this validation added for checking duplicate emailIds in pending list
-		lblActivePleaseWait.setVisible(false);
-		panelActiveMembersList.add(membersViewVc);
+				//this validation added for checking duplicate emailIds in pending list
+				lblActivePleaseWait.setVisible(false);
+				panelActiveMembersList.add(membersViewVc);
 
-	 }
+			 }
+		});
+	}
 
 	/**
 	 * @function clearMembersListPanel 
@@ -1213,33 +1307,39 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	}
 
 	@Override
-	public void displayInvitationSuccessPopUp(int listSize) {
-		Window.enableScrolling(false);
-		SuccessPopupViewVc success = new SuccessPopupViewVc() {
-
-			@Override
-			public void onClickPositiveButton(ClickEvent event) {
-				// TODO Auto-generated method stub
-				this.hide();
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
-					Window.enableScrolling(false);
-				}else{
-					Window.enableScrolling(true);
-				}
-			}
+	public void displayInvitationSuccessPopUp(final int listSize) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-		};
+			@Override
+			public void onSuccess() {
+				Window.enableScrolling(false);
+				SuccessPopupViewVc success = new SuccessPopupViewVc() {
 
-		success.setPopupTitle(i18n.GL1556());
-		if (listSize>1){
-			success.setDescText(i18n.GL1557());
-		}else{
-			success.setDescText(i18n.GL1360());
-		}
-		success.setPositiveButtonText(i18n.GL0190());
-		success.center();
-		success.show();
-		
+					@Override
+					public void onClickPositiveButton(ClickEvent event) {
+						// TODO Auto-generated method stub
+						this.hide();
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
+							Window.enableScrolling(false);
+						}else{
+							Window.enableScrolling(true);
+						}
+					}
+					
+				};
+
+				success.setPopupTitle(i18n.GL1556());
+				if (listSize>1){
+					success.setDescText(i18n.GL1557());
+				}else{
+					success.setDescText(i18n.GL1360());
+				}
+				success.setPositiveButtonText(i18n.GL0190());
+				success.center();
+				success.show();
+				
+			}
+		});
 	}
 
 	/* (non-Javadoc)
@@ -1266,19 +1366,25 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	@UiHandler("ancprivacy")
 	public void onClickPrivacyAnchor(ClickEvent clickEvent){
-		Window.enableScrolling(false);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		termsOfUse=new TermsOfUse(){
-
-			@Override
-			public void openParentPopup() {
-				Window.enableScrolling(true);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-			}
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
-		};
-		termsOfUse.show();
-		termsOfUse.center();
-		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
+			@Override
+			public void onSuccess() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				termsOfUse=new TermsOfUse(){
+
+					@Override
+					public void openParentPopup() {
+						Window.enableScrolling(true);
+						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+					}
+					
+				};
+				termsOfUse.show();
+				termsOfUse.center();
+				termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
+			}
+		});
 	}
 }

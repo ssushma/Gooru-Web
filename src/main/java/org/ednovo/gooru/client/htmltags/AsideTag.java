@@ -67,13 +67,11 @@ public class AsideTag extends ComplexPanel implements InsertPanel{
 
 	
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
-		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
 
 	
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
-		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
 
