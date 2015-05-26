@@ -295,20 +295,15 @@ public class SignUpCompleteProfileView extends
 
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+		MixpanelUtil.close_signUp();
+		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			
-			@Override
-			public void onSuccess() {
-				MixpanelUtil.close_signUp();
-				Window.enableScrolling(true);
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-					
-				}else{
-					Window.enableScrolling(true);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				}
-			}
-		});
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
+		
 	}
 
 	@UiHandler("lblchangePassword")
@@ -323,36 +318,25 @@ public class SignUpCompleteProfileView extends
 
 	@UiHandler("btnSubmit")
 	public void onClickbtnSubmit(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
+		if (validateUserInput()) {
+			MixpanelUtil.Registration_turns13_submit_profile();
+			appPopUp.hide();
+			lblUpdating.setText(i18n.GL1138());
+			lblUpdating.setVisible(true);
+			btnSubmit.setVisible(false);
+			getUiHandlers().updateProfile(txtFirstName.getText(),
+					txtlastName.getText(), txtAreaAbout.getText(),txtConfirmPassword.getText()
+			);
 			
-			@Override
-			public void onSuccess() {
-				if (validateUserInput()) {
-					MixpanelUtil.Registration_turns13_submit_profile();
-					appPopUp.hide();
-					lblUpdating.setText(i18n.GL1138());
-					lblUpdating.setVisible(true);
-					btnSubmit.setVisible(false);
-					getUiHandlers().updateProfile(txtFirstName.getText(),
-							txtlastName.getText(), txtAreaAbout.getText(),txtConfirmPassword.getText()
-					);
-					
-				}
-			}
-		});
+		}
 	}
 
 	@UiHandler("btnUpdateProfileLater")
 	public void onClickbtnUpdateProfileLater(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				appPopUp.hide();
-				SignUpDontWorryView signUpDontWorryView = new SignUpDontWorryView();
-				signUpDontWorryView.show();
-			}
-		});
+		appPopUp.hide();
+		SignUpDontWorryView signUpDontWorryView = new SignUpDontWorryView();
+		signUpDontWorryView.show();
+		
 	}
 
 	@Override
@@ -553,27 +537,21 @@ public class SignUpCompleteProfileView extends
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
-		public void onKeyUp(final KeyUpEvent event) {
-			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
-				@Override
-				public void onSuccess() {
-					passwordValidUc.setVisible(false);
-					if (event.getSource() == txtFirstName) {
-						txtFirstName.removeStyleName(res.css().errorMsgDisplay());
-						firstNameValidUc.setVisible(false);
-					} else if (event.getSource() == txtlastName) {
-						txtlastName.removeStyleName(res.css().errorMsgDisplay());
-						lastNameValidUc.setVisible(false);
-					} else if (event.getSource() == txtPassword) {
-						txtPassword.removeStyleName(res.css().errorMsgDisplay());
-						passwordValidUc.setVisible(false);
-					} else if (event.getSource() == txtConfirmPassword) {
-						txtConfirmPassword.removeStyleName(res.css().errorMsgDisplay());
-						passwordValidUc.setVisible(false);
-					} 
-				}
-			});
+		public void onKeyUp(KeyUpEvent event) {
+			passwordValidUc.setVisible(false);
+			if (event.getSource() == txtFirstName) {
+				txtFirstName.removeStyleName(res.css().errorMsgDisplay());
+				firstNameValidUc.setVisible(false);
+			} else if (event.getSource() == txtlastName) {
+				txtlastName.removeStyleName(res.css().errorMsgDisplay());
+				lastNameValidUc.setVisible(false);
+			} else if (event.getSource() == txtPassword) {
+				txtPassword.removeStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setVisible(false);
+			} else if (event.getSource() == txtConfirmPassword) {
+				txtConfirmPassword.removeStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setVisible(false);
+			} 
 		}
 
 	}

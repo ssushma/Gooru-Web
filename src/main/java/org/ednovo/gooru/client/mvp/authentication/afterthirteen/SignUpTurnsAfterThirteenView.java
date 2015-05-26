@@ -253,20 +253,14 @@ public class SignUpTurnsAfterThirteenView extends
 
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				hide();
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest()
-						.getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)) {
+		this.hide();
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest()
+				.getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)) {
 
-				} else {
-					Window.enableScrolling(true);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				}
-			}
-		});
+		} else {
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
 	}
 	/**
 	 * 
@@ -287,12 +281,9 @@ public class SignUpTurnsAfterThirteenView extends
 	 *
 	 *
 	 */
-	private void sendConfirmationMail(final Map<String, String> params) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				AppClientFactory
+	private void sendConfirmationMail(Map<String, String> params) {
+
+		AppClientFactory
 				.getInjector()
 				.getUserService()
 				.resendConfirmationMail(params,
@@ -302,24 +293,35 @@ public class SignUpTurnsAfterThirteenView extends
 
 							}
 						});
-			}
-		});
 	}
 
 	@UiHandler("btnEnterLater")
 	public void onClickbtnEnterLater(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				hide();
-				SignUpDontWorryView signUpDontWorryView = new SignUpDontWorryView();
-				signUpDontWorryView.show();
-			}
-		});
+		this.hide();
+		SignUpDontWorryView signUpDontWorryView = new SignUpDontWorryView();
+		signUpDontWorryView.show();
+
 	}
 
-	
+	/*
+	 * private class OnBlurHandler implements BlurHandler {
+	 * 
+	 * @Override public void onBlur(BlurEvent event) { if (event.getSource() ==
+	 * txtEmailId && txtEmailId.getText() != null &&
+	 * !txtEmailId.getText().equalsIgnoreCase("")) { boolean isValidFrom =
+	 * txtEmailId.getText().matches(EMAIL_REGEX); if (isValidFrom) {
+	 * checkUserAvailability( txtEmailId.getText(), "byEmailid");
+	 * emailValidUc.setVisible(false);
+	 * txtEmailId.removeStyleName(res.css().errorMsgDisplay()); } else {
+	 * btnSubmit.getElement().addClassName("disabled");
+	 * btnSubmit.setEnabled(false);
+	 * txtEmailId.addStyleName(res.css().errorMsgDisplay());
+	 * emailValidUc.addStyleName(res.css().errorLbl());
+	 * emailValidUc.setText(MessageProperties.i18n.GL0464);
+	 * emailValidUc.setVisible(true); } }
+	 * 
+	 * } }
+	 */
 	/**
 	 * Checks the availability of user name, entered by User.
 	 * 
@@ -414,55 +416,49 @@ public class SignUpTurnsAfterThirteenView extends
 
 	@UiHandler("btnSubmit")
 	public void onClickbtnSubmit(ClickEvent event) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if (validateUserInput() && !isValidEmailId) {
-					MixpanelUtil.Registration_turns13_submit_email();
-					btnSubmit.setVisible(false);
-					btnEnterLater.setVisible(false);
-					lblUpdating.setText(i18n.GL1138());
-					lblUpdating.setVisible(true);
-					AppClientFactory
-							.getInjector()
-							.getUserService()
-							.updateV2ProfileDo(txtEmailId.getText(), "nonParent", "",
-									"", "", "", "", "", true, null,
-									new SimpleAsyncCallback<V2UserDo>() {
+		if (validateUserInput() && !isValidEmailId) {
+			MixpanelUtil.Registration_turns13_submit_email();
+			btnSubmit.setVisible(false);
+			btnEnterLater.setVisible(false);
+			lblUpdating.setText(i18n.GL1138());
+			lblUpdating.setVisible(true);
+			AppClientFactory
+					.getInjector()
+					.getUserService()
+					.updateV2ProfileDo(txtEmailId.getText(), "nonParent", "",
+							"", "", "", "", "", true, null,
+							new SimpleAsyncCallback<V2UserDo>() {
 
-										@Override
-										public void onSuccess(V2UserDo result) {
-											hide();
-											AppClientFactory.setLoggedInUser(result
-													.getUser());
-											AppClientFactory
-													.fireEvent(new ConfirmStatusPopupEvent(
-															false));
+								@Override
+								public void onSuccess(V2UserDo result) {
+									hide();
+									AppClientFactory.setLoggedInUser(result
+											.getUser());
+									AppClientFactory
+											.fireEvent(new ConfirmStatusPopupEvent(
+													false));
 
-											lblUpdating.setVisible(false);
-											Map<String, String> map = StringUtil
-													.splitQuery(Window.Location
-															.getHref());
-											map.put("callback", "profileUpdate");
-											AppClientFactory
-													.getPlaceManager()
-													.revealPlace(
-															AppClientFactory
-																	.getCurrentPlaceToken(),
-															map);
+									lblUpdating.setVisible(false);
+									Map<String, String> map = StringUtil
+											.splitQuery(Window.Location
+													.getHref());
+									map.put("callback", "profileUpdate");
+									AppClientFactory
+											.getPlaceManager()
+											.revealPlace(
+													AppClientFactory
+															.getCurrentPlaceToken(),
+													map);
 
-											Map<String, String> params = new HashMap<String, String>();
-											params.put(GOORU_UID,
-													AppClientFactory.getGooruUid());
-											params.put(ACCOUNT_TYPE, "nonParent");
-											sendConfirmationMail(params);
-										}
-									});
+									Map<String, String> params = new HashMap<String, String>();
+									params.put(GOORU_UID,
+											AppClientFactory.getGooruUid());
+									params.put(ACCOUNT_TYPE, "nonParent");
+									sendConfirmationMail(params);
+								}
+							});
 
-				}
-			}
-		});
+		}
 	}
 
 	@Override

@@ -134,56 +134,53 @@ public class InviteStudentsPopup extends PopupPanel {
 
 	@UiHandler("inviteBtn")
 	public void inviteStudentsMtd(ClickEvent clickEvent){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				isvalid=true;
-				if(!emailTextArea.getText().trim().equals("")){
-					String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-					String strEmails = emailTextArea.getText().trim();
-					String emailIds[] = strEmails.split("\\s*,\\s*");
-					if (strEmails.contains(",")){
-						emailIds = strEmails.split("\\s*,\\s*");
-					}else if (strEmails.contains(";")){
-						emailIds = strEmails.split("\\s*;\\s*");
-					}
-
-					for (int i=0; i<emailIds.length; i++){
-						boolean to = emailIds[i].matches(EMAIL_REGEX);
-						if(to){
-							isvalid = true;
-						}else{
-							emailValidationLbl.setText(StringUtil.generateMessage(i18n.GL1019(), emailIds[i]));
-							StringUtil.setAttributes(emailValidationLbl.getElement(), "errlblEmailValidation", StringUtil.generateMessage(i18n.GL1019(), emailIds[i]), StringUtil.generateMessage(i18n.GL1019(), emailIds[i]));
-							emailValidationLbl.setVisible(true);
-							isvalid = false;
-							break;
-						}
-					}
-				}
-				if ((emailTextArea.getText() != null && !emailTextArea.getText().isEmpty())
-						&& !emailTextArea.getText().contains(AT_SYMBOL)) {
-					emailValidationLbl.setText(i18n.GL1027());
-					StringUtil.setAttributes(emailValidationLbl.getElement(), "errlblEmailValidation", i18n.GL1027(), i18n.GL1027());
-					emailValidationLbl.setVisible(true);
-					isvalid = false;
-
-				}
-				if (emailTextArea.getText().equals("") || emailTextArea.getText().trim().equals("")) {
-					emailValidationLbl.setText(i18n.GL0216_1());
-					StringUtil.setAttributes(emailValidationLbl.getElement(), "errlblEmailValidation", i18n.GL0216_1(), i18n.GL0216_1());
-					emailValidationLbl.setVisible(true);
-					isvalid = false;
-				}
-
-				if(isvalid){
-					Window.enableScrolling(true);
-					hide();
-				}
-
+		isvalid=true;
+		if(!emailTextArea.getText().trim().equals("")){
+			String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+			String strEmails = emailTextArea.getText().trim();
+			String emailIds[] = strEmails.split("\\s*,\\s*");
+			if (strEmails.contains(",")){
+				emailIds = strEmails.split("\\s*,\\s*");
+			}else if (strEmails.contains(";")){
+				emailIds = strEmails.split("\\s*;\\s*");
 			}
-		});
+
+			for (int i=0; i<emailIds.length; i++){
+				boolean to = emailIds[i].matches(EMAIL_REGEX);
+				if(to){
+					isvalid = true;
+				}else{
+					emailValidationLbl.setText(StringUtil.generateMessage(i18n.GL1019(), emailIds[i]));
+					emailValidationLbl.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1019(), emailIds[i]));
+					emailValidationLbl.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1019(), emailIds[i]));
+					emailValidationLbl.setVisible(true);
+					isvalid = false;
+					break;
+				}
+			}
+		}
+		if ((emailTextArea.getText() != null && !emailTextArea.getText().isEmpty())
+				&& !emailTextArea.getText().contains(AT_SYMBOL)) {
+			emailValidationLbl.setText(i18n.GL1027());
+			emailValidationLbl.getElement().setAttribute("alt",i18n.GL1027());
+			emailValidationLbl.getElement().setAttribute("title",i18n.GL1027());
+			emailValidationLbl.setVisible(true);
+			isvalid = false;
+
+		}
+		if (emailTextArea.getText().equals("") || emailTextArea.getText().trim().equals("")) {
+			emailValidationLbl.setText(i18n.GL0216_1());
+			emailValidationLbl.getElement().setAttribute("alt",i18n.GL0216_1());
+			emailValidationLbl.getElement().setAttribute("title",i18n.GL0216_1());
+			emailValidationLbl.setVisible(true);
+			isvalid = false;
+		}
+
+		if(isvalid){
+			Window.enableScrolling(true);
+			hide();
+		}
+
 	}
 
 
