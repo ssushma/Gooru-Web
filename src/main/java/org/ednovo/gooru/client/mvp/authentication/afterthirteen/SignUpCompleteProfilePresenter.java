@@ -90,20 +90,14 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 		getView().setUpdateProfileImage(imageUrl);
 	}
 	@Override
-	public void updateProfile(final String fname,final String lname,final String aboutMe,final String password) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, null, new SimpleAsyncCallback<V2UserDo>() {
+	public void updateProfile(String fname,String lname,String aboutMe,String password) {
+		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, null, new SimpleAsyncCallback<V2UserDo>() {
 
-					@Override
-					public void onSuccess(V2UserDo result) {
-						getView().getUpdateButton().setVisible(false);
-						ThankPopUpForUpdateProfile thankPopUpForUpdateProfile=new ThankPopUpForUpdateProfile();
-						thankPopUpForUpdateProfile.show();
-					}
-				});
+			@Override
+			public void onSuccess(V2UserDo result) {
+				getView().getUpdateButton().setVisible(false);
+				ThankPopUpForUpdateProfile thankPopUpForUpdateProfile=new ThankPopUpForUpdateProfile();
+				thankPopUpForUpdateProfile.show();
 			}
 		});
 	}

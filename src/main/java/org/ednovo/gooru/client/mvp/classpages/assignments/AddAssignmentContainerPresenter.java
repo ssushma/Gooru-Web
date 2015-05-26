@@ -122,37 +122,25 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	 *
 	 *
 	 */
-	public void getWorkspaceData(final int offset,final int limit, final boolean clearShelfPanel){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel){
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
-					@Override
-					public void onSuccess(FolderListDo folderListDo) {
-						if(folderListDo.getCount()==0){
-							getView().displayNoCollectionsMsg();
-						}else{
-							getView().displayWorkspaceData(folderListDo,clearShelfPanel);
-						}
-					}
-				});
+			public void onSuccess(FolderListDo folderListDo) {
+				if(folderListDo.getCount()==0){
+					getView().displayNoCollectionsMsg();
+				}else{
+					getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+				}
 			}
 		});
 	}
 
 	@Override
-	public void getFolderItems(final TreeItem item,final String parentId) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void getFolderItems(final TreeItem item,String parentId) {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
-					@Override
-					public void onSuccess(FolderListDo folderListDo) {
-						getView().setFolderItems(item,folderListDo);
-					}
-				});
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().setFolderItems(item,folderListDo);
 			}
 		});
 	}
@@ -177,18 +165,12 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	 *
 	 *
 	 */
-	public void addCollectionToAssign(final String collectionId,final String direction,final String dueDate){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void addCollectionToAssign(String collectionId,String direction,String dueDate){
+		AppClientFactory.getInjector().getClasspageService().createClassPageItem(this.classpageId, collectionId, dueDate, direction, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId, collectionId, dueDate, direction, new SimpleAsyncCallback<ClasspageItemDo>() {
-					@Override
-					public void onSuccess(ClasspageItemDo classpageItemDo) {
-						getView().hideAddCollectionPopup(classpageItemDo.getCollectionTitle());
-						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
-					}
-				});
+			public void onSuccess(ClasspageItemDo classpageItemDo) {
+				getView().hideAddCollectionPopup(classpageItemDo.getCollectionTitle());
+				getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
 			}
 		});
 	}
@@ -211,20 +193,14 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	 *
 	 *
 	 */
-	public void addCollectionToAssign(final String collectionId){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	public void addCollectionToAssign(String collectionId){
+		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getClasspageService().assignItemToClass(classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
-					@Override
-					public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
-						if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
-							getView().hideAddCollectionPopup("");
-							showCollectionsAfterAddingNewCollections();
-						}
-					}
-				});
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
+				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
+					getView().hideAddCollectionPopup("");
+					showCollectionsAfterAddingNewCollections();
+				}
 			}
 		});
 	}
@@ -248,20 +224,14 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	 *
 	 */
 	public void showCollectionsAfterAddingNewCollections(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				Map<String,String> params = new HashMap<String,String>();
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				params.put("order", "asce");
-				params.put("classpageid", classpageid);
-				params.put("pageNum", 1+"");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
-				AppClientFactory.fireEvent(new ResetProgressEvent());
-			}
-		});
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		params.put("order", "asce");
+		params.put("classpageid", classpageid);
+		params.put("pageNum", 1+"");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+		AppClientFactory.fireEvent(new ResetProgressEvent());
 	}
 	/**
 	 * 

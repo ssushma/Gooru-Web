@@ -108,17 +108,11 @@ public class WelcomeClassView extends PopupPanel {
 
 	@UiHandler("btnOk")
 	public void clickOnOkButton(ClickEvent clickEvent){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				AppClientFactory.getInjector().getUserService().updatePartyCustomField(AppClientFactory.getLoggedInUser().getGooruUId(), CLASSKEY, "false", new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getUserService().updatePartyCustomField(AppClientFactory.getLoggedInUser().getGooruUId(), CLASSKEY, "false", new SimpleAsyncCallback<Void>() {
 
-					@Override
-					public void onSuccess(Void result) {
-						hide(true);
-					}
-				});
+			@Override
+			public void onSuccess(Void result) {
+				hide(true);
 			}
 		});
 	}

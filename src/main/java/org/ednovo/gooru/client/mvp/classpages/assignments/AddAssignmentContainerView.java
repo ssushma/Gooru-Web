@@ -142,48 +142,41 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
-				  final TreeItem item = (TreeItem) event.getSelectedItem();
-				  
-				  GWT.runAsync(new SimpleRunAsyncCallback() {
-					
-					@Override
-					public void onSuccess() {
-						    Widget folderWidget= item.getWidget();
-						    FolderTreeItem folderTreeItemWidget=null;
-						    if(folderWidget instanceof FolderTreeItem){
-						    	folderTreeItemWidget=(FolderTreeItem)folderWidget;
-						    	if(folderTreeItemWidget.isOpen()){
-						    		folderTreeItemWidget.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().open());
-						    		folderTreeItemWidget.setOpen(false);
-						    	}else{
-						    		folderTreeItemWidget.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().open());
-						    		folderTreeItemWidget.setOpen(true);
-						    	}
-						    	removePreviousSelectedItem();
-						    	currentFolderSelectedTreeItem=folderTreeItemWidget;
-						    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem;
-						    	currentFolderSelectedTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
-						    	previousSelectedItem=cureentcollectionTreeItem=null;
-							    TreeItem parent = item.getParentItem();
-							    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
-							    if(!folderTreeItemWidget.isApiCalled()){
-							    	folderTreeItemWidget.setApiCalled(true);
-							    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
-							    }
-							    if(parent != null)
-							    	parent.setSelected(false);   // TODO FIX ME
-							    item.setState(!item.getState(), false);
-							    setSelectedCollectionsCount(getCollectionCountFromFolder(item));
-						    }else if(folderWidget instanceof CollectionTreeItem){
-						    	removePreviousSelectedItem();
-						    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
-						    	previousSelectedItem=cureentcollectionTreeItem;
-						    	cureentcollectionTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
-						    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem=null;
-						    	setSelectedCollectionTitle();
-						    }
-						  }
-				});
+			   final TreeItem item = (TreeItem) event.getSelectedItem();
+			    Widget folderWidget= item.getWidget();
+			    FolderTreeItem folderTreeItemWidget=null;
+			    if(folderWidget instanceof FolderTreeItem){
+			    	folderTreeItemWidget=(FolderTreeItem)folderWidget;
+			    	if(folderTreeItemWidget.isOpen()){
+			    		folderTreeItemWidget.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().open());
+			    		folderTreeItemWidget.setOpen(false);
+			    	}else{
+			    		folderTreeItemWidget.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().open());
+			    		folderTreeItemWidget.setOpen(true);
+			    	}
+			    	removePreviousSelectedItem();
+			    	currentFolderSelectedTreeItem=folderTreeItemWidget;
+			    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem;
+			    	currentFolderSelectedTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+			    	previousSelectedItem=cureentcollectionTreeItem=null;
+				    TreeItem parent = item.getParentItem();
+				    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
+				    if(!folderTreeItemWidget.isApiCalled()){
+				    	folderTreeItemWidget.setApiCalled(true);
+				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
+				    }
+				    if(parent != null)
+				    	parent.setSelected(false);   // TODO FIX ME
+				    item.setState(!item.getState(), false);
+				    setSelectedCollectionsCount(getCollectionCountFromFolder(item));
+			    }else if(folderWidget instanceof CollectionTreeItem){
+			    	removePreviousSelectedItem();
+			    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
+			    	previousSelectedItem=cureentcollectionTreeItem;
+			    	cureentcollectionTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+			    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem=null;
+			    	setSelectedCollectionTitle();
+			    }
 			  }
 			});
 		floderTreeContainer.clear();
@@ -294,18 +287,12 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 */
 	public void setSelectedCollectionTitle(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(cureentcollectionTreeItem!=null){
-					enableAssignButton(true);
-					displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
-					displayCountLabel.getElement().setAttribute("alt","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
-					displayCountLabel.getElement().setAttribute("title","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
-				}
-			}
-		});
+		if(cureentcollectionTreeItem!=null){
+			enableAssignButton(true);
+			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("alt","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("title","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
+		}
 	}
 	/**
 	 * 
@@ -326,26 +313,20 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 *
 	 */
-	public void setSelectedCollectionsCount(final int count){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(count>0){
-					enableAssignButton(true);
-					String label=count==1?count+" collection":count+" collections";
-					displayCountLabel.setText(label+" "+i18n.GL1975());
-					displayCountLabel.getElement().setAttribute("alt",label+" "+i18n.GL1975());
-					displayCountLabel.getElement().setAttribute("title",label+" "+i18n.GL1975());
-				
-				}else{
-					enableAssignButton(false);
-					displayCountLabel.setText("");
-					displayCountLabel.getElement().setAttribute("alt","");
-					displayCountLabel.getElement().setAttribute("title","");
-				}
-			}
-		});
+	public void setSelectedCollectionsCount(int count){
+		if(count>0){
+			enableAssignButton(true);
+			String label=count==1?count+" collection":count+" collections";
+			displayCountLabel.setText(label+" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("alt",label+" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("title",label+" "+i18n.GL1975());
+		
+		}else{
+			enableAssignButton(false);
+			displayCountLabel.setText("");
+			displayCountLabel.getElement().setAttribute("alt","");
+			displayCountLabel.getElement().setAttribute("title","");
+		}
 	}
 	/**
 	 * 
@@ -366,22 +347,16 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 *
 	 */
-	public void enableAssignButton(final boolean enable){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(enable){
-					addResourceBtnLbl.setEnabled(enable);
-					addResourceBtnLbl.removeStyleName("secondary");
-					addResourceBtnLbl.addStyleName("primary");
-				}else{
-					addResourceBtnLbl.setEnabled(enable);
-					addResourceBtnLbl.removeStyleName("primary");
-					addResourceBtnLbl.addStyleName("secondary");
-				}
-			}
-		});
+	public void enableAssignButton(boolean enable){
+		if(enable){
+			addResourceBtnLbl.setEnabled(enable);
+			addResourceBtnLbl.removeStyleName("secondary");
+			addResourceBtnLbl.addStyleName("primary");
+		}else{
+			addResourceBtnLbl.setEnabled(enable);
+			addResourceBtnLbl.removeStyleName("primary");
+			addResourceBtnLbl.addStyleName("secondary");
+		}
 	}
 	/**
 	 * 
@@ -403,18 +378,12 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 */
 	protected void removePreviousSelectedItem(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(previousFolderSelectedTreeItem!=null){
-		    		previousFolderSelectedTreeItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
-		    	}
-				if(previousSelectedItem!=null){
-		    		previousSelectedItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
-		    	}
-			}
-		});
+		if(previousFolderSelectedTreeItem!=null){
+    		previousFolderSelectedTreeItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+    	}
+		if(previousSelectedItem!=null){
+    		previousSelectedItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+    	}
 	}
 	/**
 	 * 
@@ -436,15 +405,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 */
 	public void closeDropDown(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				new CustomAnimation(dropdownListContainerScrollPanel).run(300);
-			
-			}
-		});
+		new CustomAnimation(dropdownListContainerScrollPanel).run(300);
 	}
 	/**
 	 * 
@@ -477,22 +438,14 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	@UiHandler("addResourceBtnLbl")
 	public void addButtonEvent(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				if(addResourceBtnLbl.getText().trim().equalsIgnoreCase("Create a Collection")){
-					hide();
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
-				}else{
-					addResourceBtnLbl.setEnabled(false);
-					addCollectionToAssign();
-				}
-				
-			
-			}
-		});
+		if(addResourceBtnLbl.getText().trim().equalsIgnoreCase("Create a Collection")){
+			hide();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+		}else{
+			addResourceBtnLbl.setEnabled(false);
+			addCollectionToAssign();
+		}
+		
 	}
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
@@ -519,25 +472,19 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 */
 	public void addCollectionToAssign(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(cureentcollectionTreeItem!=null){
-					addResourceBtnLbl.setVisible(false);
-					cancelResourcePopupBtnLbl.setVisible(false);
-					addingText.setVisible(true);
-					getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid());
-					addResourceBtnLbl.setEnabled(true);
-				}else if(currentFolderSelectedTreeItem!=null){
-					addResourceBtnLbl.setVisible(false);
-					cancelResourcePopupBtnLbl.setVisible(false);
-					addingText.setVisible(true);
-					getUiHandlers().addCollectionToAssign(currentFolderSelectedTreeItem.getGooruOid());
-					addResourceBtnLbl.setEnabled(true);
-				}
-			}
-		});
+		if(cureentcollectionTreeItem!=null){
+			addResourceBtnLbl.setVisible(false);
+			cancelResourcePopupBtnLbl.setVisible(false);
+			addingText.setVisible(true);
+			getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid());
+			addResourceBtnLbl.setEnabled(true);
+		}else if(currentFolderSelectedTreeItem!=null){
+			addResourceBtnLbl.setVisible(false);
+			cancelResourcePopupBtnLbl.setVisible(false);
+			addingText.setVisible(true);
+			getUiHandlers().addCollectionToAssign(currentFolderSelectedTreeItem.getGooruOid());
+			addResourceBtnLbl.setEnabled(true);
+		}
 	}
 	
 	/**
@@ -663,40 +610,34 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		
 	}
 	@Override
-	public void displayWorkspaceData(final FolderListDo folderListDo,final boolean clearShelfPanel) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				resetEmptyCollMsg();
-				if(!dropdownListContainerScrollPanel.isVisible()){
-					dropdownListContainerScrollPanel.setVisible(true);
-				}
-				
-				if(clearShelfPanel){
-					folderTreePanel.clear();
-				}
-				if(folderListDo!=null){
-					 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
-					 setPagination(folderListDo.getCount());
-					 if(foldersArrayList!=null&&foldersArrayList.size()>0){
-						 for(int i=0;i<foldersArrayList.size();i++){
-							 FolderDo floderDo=foldersArrayList.get(i);
-							 if(floderDo.getType().equals("folder")){
-								 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
-								 folderTreePanel.addItem(folderItem);
-								 adjustTreeItemStyle(folderItem);
-							 }else {
-								 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
-								 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
-								 folderTreePanel.addItem(folderItem);
-								 adjustTreeItemStyle(folderItem);
-							 }
-						 }
+	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel) {
+		resetEmptyCollMsg();
+		if(!dropdownListContainerScrollPanel.isVisible()){
+			dropdownListContainerScrollPanel.setVisible(true);
+		}
+		
+		if(clearShelfPanel){
+			folderTreePanel.clear();
+		}
+		if(folderListDo!=null){
+			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
+			 setPagination(folderListDo.getCount());
+			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
+				 for(int i=0;i<foldersArrayList.size();i++){
+					 FolderDo floderDo=foldersArrayList.get(i);
+					 if(floderDo.getType().equals("folder")){
+						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
+						 folderTreePanel.addItem(folderItem);
+						 adjustTreeItemStyle(folderItem);
+					 }else {
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
+						 folderTreePanel.addItem(folderItem);
+						 adjustTreeItemStyle(folderItem);
 					 }
-				}
-			}
-		});
+				 }
+			 }
+		}
 	}
 	/**
 	 * 
@@ -718,40 +659,34 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 *
 	 */
-	public void displayWorkspaceData(final TreeItem item, final FolderListDo folderListDo) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				if(folderListDo!=null){
-					 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
-					 int collectionCount=0;
-					 if(foldersArrayList!=null&&foldersArrayList.size()>0){
-						 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
-						 int folderLevel=folderTreeItemWidget.getFolerLevel();
-						 for(int i=0;i<foldersArrayList.size();i++){
-							 FolderDo floderDo=foldersArrayList.get(i);
-							 if(floderDo.getType().equals("folder")){
-								 String styleName=folderLevel==1?AddAssignmentContainerCBundle.INSTANCE.css().parent():AddAssignmentContainerCBundle.INSTANCE.css().child();
-								 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(styleName,floderDo.getTitle(),floderDo.getGooruOid());
-								 innerFolderTreeItem.setFolerLevel(folderLevel+1);
-								 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
-								 item.addItem(folderItem);
-								 adjustTreeItemStyle(folderItem);
-							 }else{
-								 collectionCount++;
-								 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
-								 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
-								 item.addItem(folderItem);
-								 adjustTreeItemStyle(folderItem);
-							 }
-						 }
-							item.setState(folderTreeItemWidget.isOpen());
+	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
+		if(folderListDo!=null){
+			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
+			 int collectionCount=0;
+			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
+				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
+				 int folderLevel=folderTreeItemWidget.getFolerLevel();
+				 for(int i=0;i<foldersArrayList.size();i++){
+					 FolderDo floderDo=foldersArrayList.get(i);
+					 if(floderDo.getType().equals("folder")){
+						 String styleName=folderLevel==1?AddAssignmentContainerCBundle.INSTANCE.css().parent():AddAssignmentContainerCBundle.INSTANCE.css().child();
+						 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(styleName,floderDo.getTitle(),floderDo.getGooruOid());
+						 innerFolderTreeItem.setFolerLevel(folderLevel+1);
+						 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
+						 item.addItem(folderItem);
+						 adjustTreeItemStyle(folderItem);
+					 }else{
+						 collectionCount++;
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
+						 item.addItem(folderItem);
+						 adjustTreeItemStyle(folderItem);
 					 }
-					 setSelectedCollectionsCount(collectionCount);
-				}
-			}
-		});
+				 }
+					item.setState(folderTreeItemWidget.isOpen());
+			 }
+			 setSelectedCollectionsCount(collectionCount);
+		}
 	}
 	/**
 	 * 
@@ -802,28 +737,22 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 */
    	private  void adjustTreeItemStyle(final UIObject uiObject) {
-   		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-			      if (uiObject instanceof TreeItem) {
-				         if (uiObject != null && uiObject.getElement() != null) {
-				            Element element = uiObject.getElement();
-				            element.getStyle().setPadding(0, Unit.PX);
-				            element.getStyle().setMarginLeft(0, Unit.PX);
-				         }
-				      } else {
-				         if (uiObject != null && uiObject.getElement() != null && uiObject.getElement().getParentElement() != null
-				               && uiObject.getElement().getParentElement().getParentElement() != null
-				               && uiObject.getElement().getParentElement().getParentElement().getStyle() != null) {
-				            Element element = uiObject.getElement().getParentElement().getParentElement();
-				            element.getStyle().setPadding(0, Unit.PX);
-				            element.getStyle().setMarginLeft(0, Unit.PX);
-				         }
-				      }
-			 }
-		});
-   	}
+	      if (uiObject instanceof TreeItem) {
+	         if (uiObject != null && uiObject.getElement() != null) {
+	            Element element = uiObject.getElement();
+	            element.getStyle().setPadding(0, Unit.PX);
+	            element.getStyle().setMarginLeft(0, Unit.PX);
+	         }
+	      } else {
+	         if (uiObject != null && uiObject.getElement() != null && uiObject.getElement().getParentElement() != null
+	               && uiObject.getElement().getParentElement().getParentElement() != null
+	               && uiObject.getElement().getParentElement().getParentElement().getStyle() != null) {
+	            Element element = uiObject.getElement().getParentElement().getParentElement();
+	            element.getStyle().setPadding(0, Unit.PX);
+	            element.getStyle().setMarginLeft(0, Unit.PX);
+	         }
+	      }
+ }
    	/**
    	 * 
    	 * @function setPagination 
@@ -865,19 +794,41 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
-			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
-				@Override
-				public void onSuccess() {
-					if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalHitCount>pageNum*limit)){
-						getUiHandlers().getWorkspaceData(pageNum*limit, limit,false);
-						pageNum++;
-					}
+			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalHitCount>pageNum*limit)){
+					getUiHandlers().getWorkspaceData(pageNum*limit, limit,false);
+					pageNum++;
 				}
-			});
+			}
+	}
+	/**
+	 * 
+	 * @fileName : AddAssignmentContainerView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
+	private class OnDoneClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if (dateBoxUc.dateValidation()){
+				if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox()
+						.getText().isEmpty())
+						&& dateBoxUc.hasValidateDate()) {
+				Date date = dateBoxUc.getValue();
+				} else {
+					dateBoxUc.getDatePickerUc().hide();
+				}
+			}
 		}
 	}
-	
 	
 	@Override
 	public Widget asWidget() {
@@ -913,37 +864,23 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	@Override
 	public void clearShelfData() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				addingText.setVisible(false);
-				folderTreePanel.clear();
-				folderTreePanel.addItem(loadingTreeItem());
-				cureentcollectionTreeItem=null;
-				previousSelectedItem=null;
-				offset=0;
-				limit=20;
-				totalHitCount=0;
-				pageNum=1;
-			}
-		});
+		addingText.setVisible(false);
+		folderTreePanel.clear();
+		folderTreePanel.addItem(loadingTreeItem());
+		cureentcollectionTreeItem=null;
+		previousSelectedItem=null;
+		offset=0;
+		limit=20;
+		totalHitCount=0;
+		pageNum=1;
 	}
 	@Override
-	public void hideAddCollectionPopup(final String collectionTitle) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-
-				hide();
-				clearShelfData();
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-				Window.enableScrolling(false);
-				new SuccessMessagePopupView(collectionTitle);
-			
-			}
-		});
+	public void hideAddCollectionPopup(String collectionTitle) {
+		hide();
+		clearShelfData();
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		Window.enableScrolling(false);
+		new SuccessMessagePopupView(collectionTitle);
 	}
 	
 	public TreeItem loadingTreeItem(){
@@ -954,23 +891,17 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 
 	@Override
 	public void displayNoCollectionsMsg() {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				dropdownListContainerScrollPanel.setVisible(false);
-				enableAssignButton(true);
-				addResourceBtnLbl.setText(i18n.GL1964());
-				emptyMsgLbl.setText(i18n.GL1963()); 
-				emptyMsgLbl.getElement().setAttribute("alt",i18n.GL1963());
-				emptyMsgLbl.getElement().setAttribute("title",i18n.GL1963());
-				subHeadingMsgLbl.setVisible(false);
-				emptyMsgLbl.setVisible(true);
-				appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
-				appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
-				popupContent.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
-			}
-		});
+		dropdownListContainerScrollPanel.setVisible(false);
+		enableAssignButton(true);
+		addResourceBtnLbl.setText(i18n.GL1964());
+		emptyMsgLbl.setText(i18n.GL1963()); 
+		emptyMsgLbl.getElement().setAttribute("alt",i18n.GL1963());
+		emptyMsgLbl.getElement().setAttribute("title",i18n.GL1963());
+		subHeadingMsgLbl.setVisible(false);
+		emptyMsgLbl.setVisible(true);
+		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
+		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
+		popupContent.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
 	}
 	/**
 	 * 
@@ -992,19 +923,14 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 *
 	 */
 	public void resetEmptyCollMsg(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				dropdownListContainerScrollPanel.setVisible(true);
-				addResourceBtnLbl.setText(i18n.GL0104());
-				emptyMsgLbl.setVisible(false);
-				subHeadingMsgLbl.setVisible(true);
-				buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer()); 
-				appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
-				appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
-				popupContent.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
-			}
-		});
+		dropdownListContainerScrollPanel.setVisible(true);
+		addResourceBtnLbl.setText(i18n.GL0104());
+		emptyMsgLbl.setVisible(false);
+		subHeadingMsgLbl.setVisible(true);
+		buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer()); 
+		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
+		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
+		popupContent.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
 	}
+
 }
