@@ -25,6 +25,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -471,38 +472,21 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}
 		return feedBackResponseDataDO;
 	}
+	
+	public static long getTodayDateInMilliSeconds(){
+		Calendar cal = Calendar.getInstance();
+		//cal.add(Calendar.DATE);
+		long timeInMilliSeconds = cal.getTime().getTime();
+		return timeInMilliSeconds;
+	}
 
 	private FeedBackResponseDataDO deserializeTeacherResponse(
 			JSONObject jsonObject, String freeText) {
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
-			try {
-				if(!jsonObject.isNull("contentGooruOId"))
-					feedBackResponseDataDO.setContentGooruOId(jsonObject.getString("contentGooruOId"));
-					
-				if(!jsonObject.isNull("contentItemId"))
-					feedBackResponseDataDO.setContentItemId(jsonObject.getString("contentItemId"));
-				
-				if(!jsonObject.isNull("startTime"))
-				  feedBackResponseDataDO.setCreatedOn(jsonObject.getLong("startTime"));
-				
-				if(!jsonObject.isNull("feedbackProvidedBy") )
-					feedBackResponseDataDO.setFeedbackProvidedByGooruId(jsonObject.getJSONObject("feedbackProvidedBy").getString("gooruUId"));
-				
-					feedBackResponseDataDO.setFreeText(freeText);
-				
-				if(!jsonObject.isNull("parentGooruOId"))
-					feedBackResponseDataDO.setParentGooruOId(jsonObject.getString("parentGooruOId"));
-
-				if(!jsonObject.isNull("parentItemId"))
-					feedBackResponseDataDO.setSessionId(jsonObject.getString("parentItemId"));
-				
-				if(!jsonObject.isNull("sessionId"))
-					feedBackResponseDataDO.setSessionItemFeedbackUid(jsonObject.getString("sessionId"));
-				
-				if(!jsonObject.isNull("user"))
-					feedBackResponseDataDO.setUserGooruId(jsonObject.getJSONObject("user").getString("gooruUId"));
-					
-			} catch (JSONException e) {
+		try {
+			feedBackResponseDataDO.setCreatedOn(getTodayDateInMilliSeconds());
+			feedBackResponseDataDO.setFreeText(freeText);
+		} catch (Exception e) {
 				logger.error("Exception::", e);
 			}
 		return feedBackResponseDataDO;
