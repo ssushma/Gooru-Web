@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.home;
 
@@ -91,7 +91,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers {
 
@@ -100,16 +100,16 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 	@Inject
 	private HomeServiceAsync homeService;
-	
+
 	@Inject
 	private UserServiceAsync userService;
 
 	@UiField
 	SearchHomeFilterVc searchHomeFilter;
-	
+
 	public static final  Object CONTRIBUTORS_SLOT = new Object();
-	
-	/** 
+
+	/**
 	 * This method is to get the contributorsSlot
 	 */
 	@Override
@@ -118,18 +118,18 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	}
 
 	SignUpPresenter signUpViewPresenter = null;
-	
+
 	ContributorsPresenter contributorsPresenter = null;
-	
+
 	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
-	
+
 	SignUpAfterThirteenPresenter signUpAfterThirteenPresenter=null;
 	private SearchDo<ResourceSearchResultDo> resourceSearchDo = new SearchDo<ResourceSearchResultDo>();
 
 	private SearchDo<CollectionSearchResultDo> collectionSearchDo = new SearchDo<CollectionSearchResultDo>();
-	
+
 	private SimpleAsyncCallback<UserDo> registerdUserAsyncCallback;
-	
+
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionAsyncCallback;
 	private SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>> autoKeyWordSuggestionAsyncCallback;
 	public boolean isResourceSearch() {
@@ -139,45 +139,45 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	private boolean isResourceSearch = true;
 
 	private final String QUERY = "query";
-	
+
 	private final String FLT_STANDARD = "flt.standard";
-	
+
 	private final String FLT_GRADE = "flt.grade";
-	
+
 	private final String FLT_MEDIA_TYPE = "flt.mediaType";
-	
+
 	private UserRegistrationPresenter userRegistrationPresenter;
 
 	private static final String GOORU_UID = "gooruuid";
-	
+
 	private static final String USER_TYPE = "type";
-	
+
 	private static final String CALLBACK = "callback";
-	
+
 	private static final String LIBRARY_PAGE = "page";
-	
+
 	private static final String LOGINEVENT = "loginEvent";
-	
+
 	private static final String ERROR = "error";
-	
+
 	private static final String CREDENTIAL = "Credential";
-	
+
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
-	
+
 	private static final String USER_META_ACTIVE_FLAG = "0";
-	
+
 	private String parentGooruUID;
-	
+
 	private boolean isLandingPageLoaded = false;
-	
+
 	@ProxyStandard
 	@NameToken(PlaceTokens.HOME)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
-	
+
 //	PreFilterPopup preFilter = new PreFilterPopup();
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
@@ -187,7 +187,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
+	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.addStandardsPresenter = addStandardsPresenterObj;
@@ -209,16 +209,16 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			@Override
 			public void onSuccess(final UserDo user) {
 				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
+
 					@Override
 					public void onSuccess() {
 						initilazeRegistrationView(user);
 					}
 				});
 			}
-		});	
+		});
 		}
-	
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
@@ -236,11 +236,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		Document doc = Document.get();
 		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 	}
-	
-	
+
+
 	private void callBackMethods(){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -268,11 +268,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					if (getPlaceManager().getRequestParameter("dob") != null && getPlaceManager().getRequestParameter("userName") != null){
 						String externalId = AppClientFactory.getLoggedInUser().getExternalId();
 						String email = AppClientFactory.getLoggedInUser().getEmailId();
-						
-						String parentEmailId = email !=null && !email.equalsIgnoreCase("") ? email : externalId !=null && externalId.equalsIgnoreCase("") ? externalId : null;				
+
+						String parentEmailId = email !=null && !email.equalsIgnoreCase("") ? email : externalId !=null && externalId.equalsIgnoreCase("") ? externalId : null;
 						String parameterEmailId = getPlaceManager().getRequestParameter("emailId", null);
 						parentEmailId = parameterEmailId !=null && !parameterEmailId.equalsIgnoreCase("") ? parameterEmailId : parentEmailId;
-						
+
 						StudentSignUpUc studentSignUp = new StudentSignUpUc(parentEmailId, getPlaceManager().getRequestParameter("userName"), getPlaceManager().getRequestParameter("dob").replaceAll("D", "\\/"), AppClientFactory.isAnonymous() ? getPlaceManager().getRequestParameter("privateGooruUId") : AppClientFactory.getLoggedInUser().getGooruUId());
 						studentSignUp.center();
 						studentSignUp.show();
@@ -328,18 +328,18 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 							});
 						}
 					}
-				} 
-				
+				}
+
 				if (getPlaceManager().getRequestParameter(LOGINEVENT) != null && getPlaceManager().getRequestParameter(LOGINEVENT).equalsIgnoreCase("true") && AppClientFactory.isAnonymous()) {
 					AppClientFactory.fireEvent(new InvokeLoginEvent());
 				}
-				
+
 				if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("401") && AppClientFactory.isAnonymous()) {
 					new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 				}
-				
 
-				final UserDo userDo = AppClientFactory.getLoggedInUser(); 
+
+				final UserDo userDo = AppClientFactory.getLoggedInUser();
 				int flag = userDo.getViewFlag();
 				final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 				//Show Popup where user can update his details like, username and role. Show this only for non regular user and if he is logging for the first time.
@@ -358,12 +358,12 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					showMarketingPopup(userDo);
 				}
 
-				AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
-			
+				AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+
 			}
 		});
 	}
-	
+
 	private void validateResetLink(String resetToken) {
 		AppClientFactory.getInjector().getUserService().isValidResetPasswordLink(resetToken, new SimpleAsyncCallback<String>() {
 
@@ -389,7 +389,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			getView().getBtnSignUp().setVisible(false);
 		}
 	}
-	
+
 	private void getIntoLibrarypage() {
 		if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-contributors")) {
 			getView().loadFeaturedContributors("featured-contributors",getViewToken());
@@ -401,20 +401,20 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			getView().loadFeaturedContributors("featured-course",getViewToken());
 		}
 	}
-	
+
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		request.getParameter("", "register");
 		callBackMethods();
-		
+
 		getIntoLibrarypage();
 		if (AppClientFactory.isAnonymous()){
 			getView().getBtnSignUp().setVisible(true);
 		}else{
 			getView().getBtnSignUp().setVisible(false);
 		}
-		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
+//		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
 	}
 
 	@Override
@@ -435,7 +435,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	}
 
 	/**
-	 * Take to search page , resource search or collection search  
+	 * Take to search page , resource search or collection search
 	 * @param isResourceSearch takes to resource search view if it is true otherwise to collection search view
 	 * @param params search filters as map value
 	 */
@@ -473,9 +473,9 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 	@Override
 	public void initilazeRegistrationView(final UserDo user) {
-		
+
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -489,25 +489,25 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 						if (user.getConfirmStatus() == 1 && userType.equalsIgnoreCase("Parent")) {
 							if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
 								LoginPopupUc login = new LoginPopupUc(user.getEmailId()) {
-									
+
 									@Override
 									public void onLoginSuccess() {
 										// TODO Auto-generated method stub
-										
+
 									}
 								};
 							} else if(AppClientFactory.getLoggedInUser().getUserUid().equalsIgnoreCase(parentGooruUID)||AppClientFactory.getLoggedInUser().getUserUid()==parentGooruUID){
 								userRegistrationPresenter.setAccountType(userType);
 								userRegistrationPresenter.setUser(user);
-								addToPopupSlot(userRegistrationPresenter, true); 
+								addToPopupSlot(userRegistrationPresenter, true);
 							}
 							else {
 								alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1417());
-								
+
 							}
 						} else if (user.getConfirmStatus() == 1 && !userType.equalsIgnoreCase("Parent")) {
-							alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1418()); 
-						} 
+							alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1418());
+						}
 						else {
 							userRegistrationPresenter.setAccountType(userType);
 							userRegistrationPresenter.setUser(user);
@@ -520,20 +520,20 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				} else {
 					alert(i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP(), i18n.GL1420()+i18n.GL_SPL_FULLSTOP());
 				}
-			
+
 			}
 		});
-		
+
 	}
 
 	/**
 	 * Create alert popup with message header and message content
-	 * @param messageHeader popup heading 
+	 * @param messageHeader popup heading
 	 * @param messageContent content of the popup
 	 */
 	private void alert(final String messageHeader, final String messageContent) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				new AlertContentUc(messageHeader, messageContent).getAlertButton().addClickHandler(new ClickHandler() {
@@ -546,7 +546,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			}
 		});
 	}
-	
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.HOME;
@@ -582,7 +582,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 				@Override
 				public void onCallSuccess(SearchDo<CodeDo> result) {
-					
+
 				}
 			};
 		}
@@ -607,25 +607,25 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				@Override
 				protected void run(SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
 					getSearchService().getSuggestedAutokeyword(searchDo, this);
-					
+
 				}
 
 				@Override
 				public void onCallSuccess(
 					SearchDo<AutoSuggestKeywordSearchDo> result) {
-					
-					
-					
+
+
+
 				}
 
-				
+
 			};
 		}
 		return autoKeyWordSuggestionAsyncCallback;
 	}
 
 
-	
+
 	@Override
 	public void requestAutoSuggestKeyword(
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {

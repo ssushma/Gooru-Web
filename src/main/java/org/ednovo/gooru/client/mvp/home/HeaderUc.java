@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -134,7 +134,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class HeaderUc extends Composite implements
 		SelectionHandler<SuggestOracle.Suggestion> {
@@ -168,7 +168,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void setHeaderEvent(final UserDo userDo) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 					AppClientFactory
@@ -178,7 +178,7 @@ public class HeaderUc extends Composite implements
 					setLoggedInUser(userDo);
 				}
 			});
-			
+
 		}
 	};
 
@@ -187,7 +187,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void setHeaderZIndex(final int value, final boolean isClearZIndex) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -211,7 +211,7 @@ public class HeaderUc extends Composite implements
 							AppClientFactory.printSevereLogger(e.getMessage());
 						}
 					}
-				
+
 				}
 			});
 		}
@@ -223,7 +223,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void setVisibility(boolean value) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -242,12 +242,12 @@ public class HeaderUc extends Composite implements
 					} else {
 						acctActivationPl.getElement().getStyle().clearMarginTop();
 					}
-				
+
 				}
 			});
 		}
 	};
-	
+
 	private static final int TOOLTIP_DELAY_TIME = 1000;
 
 	private String name;
@@ -282,9 +282,9 @@ public class HeaderUc extends Composite implements
 	DiscoverToolTipUc discoverToolTip;
 
 	OrganizeToolTip organizeToolTip;
-	
+
 	static PreFilterPopup prefilter=null;
-	
+
 	static String stadardCode="";
 
 	boolean isGooruGuidePanelOpen = false;
@@ -292,7 +292,7 @@ public class HeaderUc extends Composite implements
 	private boolean isOpenSettingDropDown = true;
 
 	private boolean isSettingIcon = false;
-	
+
 	private boolean isClicked = false;
 
 	boolean isEnter = false;
@@ -309,9 +309,9 @@ public class HeaderUc extends Composite implements
 	HTMLPanel settingOptionsPopup;
 
 	@UiField HTMLPanel discovertooltippop,myCollectionsPop,myDashBoardPop;
-	
+
 	@UiField static HTMLPanel myClassesPop;
-	
+
 	String classpageId = "";
 
 	private LogoutPanelVc logoutPanelVc;
@@ -319,7 +319,7 @@ public class HeaderUc extends Composite implements
 	private ClasspageListVc classpageListVc;
 
 	private SaveSharePanel saveSharePanel;
-	
+
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
 	@Inject
@@ -343,7 +343,7 @@ public class HeaderUc extends Composite implements
 	@UiField
 
 	public static HTMLPanel mainDotsPanel, mainInnerDotsPanel;
-	
+
 	@UiField
 	BPanel dropDownImg;
 	@UiField
@@ -357,7 +357,7 @@ public class HeaderUc extends Composite implements
 
 	@UiField
 	Label thanksLbl;
-	
+
 	@UiField
 	static Label arrowLbl;
 
@@ -389,12 +389,12 @@ public class HeaderUc extends Composite implements
 	private String GOORU_SEARCH = "-<n> Gooru Search</n>";
 
 	private String discoverLinkUrl = null;
-	
+
 	private String stadardsListCode= "";
 
 
 	private static String DEFAULT_PROFILE_IMAGE = "images/settings/setting-user-image.png";
-	
+
 	DashBoardToolTip dashBoardToolTip;
 
 	/**
@@ -402,7 +402,7 @@ public class HeaderUc extends Composite implements
 	 */
 	@SuppressWarnings("deprecation")
 	public HeaderUc() {
-		
+
 		autokeySuggestOracle = new AppMultiWordSuggestOracle(true);
 		setEditSearchTxtBox(new AppSuggestBox(autokeySuggestOracle) {
 
@@ -415,7 +415,7 @@ public class HeaderUc extends Composite implements
 			public void keyAction(String text,KeyUpEvent event) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
-				
+
 				autoSuggestKeywordDo.setQuery(text);
 				searchData = getEditSearchTxtBox().getText();
 				autoSuggestKeywordDo.setType("resource");
@@ -494,7 +494,7 @@ public class HeaderUc extends Composite implements
 		discoverLink.getElement().setAttribute("data-toggle", "dropdown");
 
 		discoverLink.getParent().setStyleName(GooruCBundle.INSTANCE.css().menu());
-		
+
 		activateAllMenu();
 
 		discoverLinkContainer
@@ -530,14 +530,14 @@ public class HeaderUc extends Composite implements
 
 
 		dashBoardToolTip=new DashBoardToolTip() {
-			
+
 			@Override
 			public void fireSelectionEvent() {
 				if (!AppClientFactory.isAnonymous()){
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
 					manageDotsMenuSelection(loggedInfoLbl);
 				}
-				
+
 			}
 		};
 		dashBoardToolTip.getElement().getStyle().setBackgroundColor("transparent");
@@ -551,7 +551,7 @@ public class HeaderUc extends Composite implements
 
 		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
 		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
-		
+
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
 
@@ -616,7 +616,7 @@ public class HeaderUc extends Composite implements
 
 		loggedInfoLbl.getElement().setAttribute("alt",i18n.GL0183());
 		loggedInfoLbl.getElement().setAttribute("title",i18n.GL0183());
-		
+
 		registerLinkLbl.setText(i18n.GL0186());
 		registerLinkLbl.getElement().setId("btnRegister");
 		registerLinkLbl.getElement().setAttribute("alt", i18n.GL0186());
@@ -647,7 +647,7 @@ public class HeaderUc extends Composite implements
 		acctActivationPl.getElement().setId("epnlAcctActivationPl");
 
 		discoverToolTip = new DiscoverToolTipUc();
-		discoverToolTip.getElement().getStyle().setZIndex(99);		
+		discoverToolTip.getElement().getStyle().setZIndex(99);
 		discovertooltippop.add(discoverToolTip);
 
 		discoverLinkMain.addMouseOverHandler(new DiscoverMouseOver());
@@ -659,7 +659,7 @@ public class HeaderUc extends Composite implements
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.runAsync(new SimpleRunAsyncCallback() {
-					
+
 					@Override
 					public void onSuccess() {
 
@@ -677,7 +677,7 @@ public class HeaderUc extends Composite implements
 						} else {
 							isStudyNow = false;
 						}
-					
+
 					}
 				});
 			}
@@ -749,8 +749,8 @@ public class HeaderUc extends Composite implements
 								}
 							});
 		}
-		
-		//Handling specify case for IE. 
+
+		//Handling specify case for IE.
 		if (!BrowserAgent.isDevice() && BrowserAgent.getWebBrowserClient().equalsIgnoreCase("ie")){
 			editSearchBtn.setVisible(true);
 			headerMainPanel.getElement().getStyle().setWidth(50, Unit.PX);
@@ -761,20 +761,20 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * @function getBetaStatus
-	 * 
+	 *
 	 * @created_date : Aug 14, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 */
 
 	private void getBetaStatus() {
@@ -806,22 +806,22 @@ public class HeaderUc extends Composite implements
 	}
 
 	/**
-	 * 
+	 *
 	 * @function getStatus
-	 * 
+	 *
 	 * @created_date : Aug 14, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param text
 	 * @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -843,7 +843,7 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * Signin using the popup
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -852,11 +852,11 @@ public class HeaderUc extends Composite implements
 		popup = new LoginPopupUc(this) {
 			@Override
 			public void onLoginSuccess() {
-				
+
 			}
 		};
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -865,20 +865,20 @@ public class HeaderUc extends Composite implements
 				popup.show();
 				if (name != null) {
 					if (name.equalsIgnoreCase("teach")) {
-						popup.setNameToken(PlaceTokens.TEACH);
+						popup.setNameToken(PlaceTokens.EDIT_CLASSPAGE);
 					} else if (name.equalsIgnoreCase("organize")) {
 						popup.setNameToken(PlaceTokens.SHELF);
 					}
 					name = null;
 				}
-			
+
 			}
 		});
 	}
 
 	/*
 	 * Selection Control DOTS panel
-	 * 
+	 *
 	 * @param Label
 	 */
 
@@ -957,14 +957,14 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * Register using the popup
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
 	@UiHandler("registerLinkLbl")
 	public void onRegisterPopupClicked(ClickEvent clickEvent) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -995,7 +995,7 @@ public class HeaderUc extends Composite implements
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 
 
-			
+
 			}
 		});
 	}
@@ -1026,7 +1026,7 @@ public class HeaderUc extends Composite implements
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.DISCOVER);
 			}
-		
+
 		}
 
 	}
@@ -1036,7 +1036,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onClick(ClickEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -1056,7 +1056,7 @@ public class HeaderUc extends Composite implements
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					manageDotsMenuSelection(organizeLink);
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
-				
+
 				}
 			});
 		}
@@ -1067,7 +1067,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onClick(ClickEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -1120,10 +1120,10 @@ public class HeaderUc extends Composite implements
 						AppClientFactory.getPlaceManager().redirectPlace(
 								PlaceTokens.STUDY);
 					}
-				
+
 				}
 			});
-			
+
 		}
 
 	}
@@ -1133,24 +1133,24 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onClick(ClickEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
 					name = "dashboard";
-					
+
 					Window.enableScrolling(true);
-					
+
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					manageDotsMenuSelection(loggedInfoLbl);
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
-				
+
 				}
 			});
 		}
 	}
-	
-	
+
+
 	public void OpenClasspageList() {
 		/*
 		 * int left = teachLinkContainer.getAbsoluteLeft(); int top =
@@ -1159,7 +1159,7 @@ public class HeaderUc extends Composite implements
 		 */
 	}
 
-	
+
 	/* On mouse over and out handlers */
 	public class DiscoverMouseOver implements MouseOverHandler {
 		@Override
@@ -1197,7 +1197,7 @@ public class HeaderUc extends Composite implements
 		}
 	}
 
-	
+
 	public class DashBoardMouseOver implements MouseOverHandler {
 
 		@Override
@@ -1245,7 +1245,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onMouseOver(final MouseOverEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -1262,7 +1262,7 @@ public class HeaderUc extends Composite implements
 								.getAbsoluteTop() + 41);
 					}
 					toolTipPopupPanel.show();
-				
+
 				}
 			});
 		}
@@ -1277,21 +1277,21 @@ public class HeaderUc extends Composite implements
 	}
 
 	/**
-	 * 
-	 * @function manageDotsMenuSelectionFromEvent 
-	 * 
+	 *
+	 * @function manageDotsMenuSelectionFromEvent
+	 *
 	 * @created_date : 17-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param tabType
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1317,14 +1317,14 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * View about goorulearning link , logout link
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
 	@UiHandler("logoutDownArrowLbl")
 	public void logoutPanel(ClickEvent clickEvent) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -1340,29 +1340,29 @@ public class HeaderUc extends Composite implements
 					isOpenSettingDropDown = false;
 
 				}
-				
-			
+
+
 			}
 		});
 	}
 
 	/**
 	 * View sign out popup
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
 	@UiHandler("loggedInfoLbl")
 	public void signoutPanel(final ClickEvent clickEvent) {
 		final Element e = clickEvent.getRelativeElement();
-		
+
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
-				
+
 				if (e  != null) {
 					if (e.getInnerHTML() != null
 							&& e.getInnerHTML().contains("gwt-Label"))
@@ -1378,13 +1378,13 @@ public class HeaderUc extends Composite implements
 			}
 		});
 
-		
-	
+
+
 	}
 
 	/**
 	 * Search resource by entered keyword
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -1409,12 +1409,12 @@ public class HeaderUc extends Composite implements
 						String queryVal = params.get("query");
 						// queryVal = queryVal.replaceAll("%5C1", "&");
 						Map<String, String> map = params;
-						map.put("query", queryVal);	
+						map.put("query", queryVal);
 						editSearchTxtBox.setText(queryVal);
 						if(prefilter!=null){
 							prefilter.hide();
 						}
-						
+
 						AppClientFactory.getPlaceManager().revealPlace(
 								PlaceTokens.SEARCH_COLLECTION, params);
 					}
@@ -1422,7 +1422,7 @@ public class HeaderUc extends Composite implements
 					getEditSearchTxtBox().hideSuggestionList();
 				}else{
 					//else is for * query search.
-					
+
 					if(getEditSearchTxtBox().getText().isEmpty())
 					{
 						Map<String, String> params = new HashMap<String, String>();
@@ -1434,7 +1434,7 @@ public class HeaderUc extends Composite implements
 								PlaceTokens.SEARCH_COLLECTION, map);
 					}
 				}
-				
+
 				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 
 					MixpanelUtil.mixpanelEvent("Perform_Search_FromOrganize");
@@ -1476,7 +1476,7 @@ public class HeaderUc extends Composite implements
 					MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
 				}
 
-			
+
 			}
 		});
 	}
@@ -1496,7 +1496,7 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * Set pagination for search
-	 * 
+	 *
 	 * @param params
 	 *            variable for Map<String,String>
 	 * @return pagination values
@@ -1520,8 +1520,8 @@ public class HeaderUc extends Composite implements
 				}
 			}
 			String grade = params.get(IsSearchView.GRADE_FLT);
-		
-			
+
+
 			if (grade != null) {
 				params.put(IsSearchView.GRADE_FLT, grade);
 			}else{
@@ -1576,10 +1576,10 @@ public class HeaderUc extends Composite implements
 					}
 					isClicked=false;
 				}
-				
+
 			}
 		}
-		
+
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
@@ -1590,12 +1590,12 @@ public class HeaderUc extends Composite implements
 			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
 		}
 		params.put("category", "All");
-		
+
 		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE))
 		{
 			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		}
-		
+
 		return params;
 	}
 
@@ -1609,7 +1609,7 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * Set loggedIn user details
-	 * 
+	 *
 	 * @param userDo
 	 *            instance of {@link UserDo}
 	 */
@@ -1649,7 +1649,7 @@ public class HeaderUc extends Composite implements
 
 			loggedInfoLbl.getElement().setAttribute("alt", userDo.getUsername());
 			imgUserProfile.setUrl(userDo.getProfileImageUrl() != "" && userDo.getProfileImageUrl() !=null ? userDo.getProfileImageUrl()+ "?" + Math.random() : DEFAULT_PROFILE_IMAGE);
-			
+
 			imgUserProfile.getElement().setAttribute("onerror","imgError(this);");
 			imgUserProfile.setAltText(userDo.getUsername());
 			imgUserProfile.getElement().setId("imgUserProfile");
@@ -1735,18 +1735,18 @@ public class HeaderUc extends Composite implements
 			return null;
 		}
 	}
-	
+
 
 	/**
 	 * @author Search Team
-	 * 
+	 *
 	 */
 	private class SearchKeyDownHandler implements KeyDownHandler {
 
 		@Override
 		public void onKeyDown(final KeyDownEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -1758,7 +1758,7 @@ public class HeaderUc extends Composite implements
 						if (getEditSearchTxtBox().getText() != null
 								&& getEditSearchTxtBox().getText().length() > 0) {
 							if (AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.TEACH)) {
+									.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 								MixpanelUtil.Perform_Search_FromTeach();
 
 							} else if (AppClientFactory.getCurrentPlaceToken()
@@ -1793,7 +1793,7 @@ public class HeaderUc extends Composite implements
 									|| (AppClientFactory.getCurrentPlaceToken()
 											.equalsIgnoreCase(PlaceTokens.STUDY) || (AppClientFactory
 											.getCurrentPlaceToken()
-											.equalsIgnoreCase(PlaceTokens.TEACH)))
+											.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)))
 									|| (AppClientFactory.getCurrentPlaceToken()
 											.equalsIgnoreCase(PlaceTokens.SETTINGS))
 									|| (AppClientFactory.getCurrentPlaceToken()
@@ -1807,7 +1807,7 @@ public class HeaderUc extends Composite implements
 						}
 					}
 
-				
+
 				}
 			});
 		}
@@ -1816,14 +1816,14 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * @author Search Team
-	 * 
+	 *
 	 */
 	private class studyClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(final ClickEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -1884,12 +1884,12 @@ public class HeaderUc extends Composite implements
 					 Window.addWindowScrollHandler(new Window.ScrollHandler() {
 				       public void onWindowScroll(Window.ScrollEvent scrollEvent) {
 				    	   studyNowToolTip.getElement().getStyle()
-							.setPosition(Position.FIXED);	
+							.setPosition(Position.FIXED);
 		 		    	   studyNowToolTip.setPopupPosition(848,33);
 				       }
 				    });
-				
-				
+
+
 				}
 			});
 		}
@@ -1897,7 +1897,7 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * View or hide search bar in header
-	 * 
+	 *
 	 * @param enabled
 	 *            to view or hide
 	 */
@@ -1907,17 +1907,17 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * Set classic link location
-	 * 
+	 *
 	 * @param enabled
 	 *            to left view or right view
 	 */
 	public void setClassicButtonEnabled(boolean enabled) {
-		
+
 	}
 
 	/**
 	 * Set logout popup location
-	 * 
+	 *
 	 * @param left
 	 *            value to set popup location from left
 	 * @param top
@@ -1931,7 +1931,7 @@ public class HeaderUc extends Composite implements
 		isOpenSettingDropDown = false;
 */	}
 
-	
+
 
 	public void openGooruGuide() {
 
@@ -1954,7 +1954,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void deleteClasspage(final String classpageId) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -1969,7 +1969,7 @@ public class HeaderUc extends Composite implements
 						}*/
 					}
 
-				
+
 				}
 			});
 		}
@@ -1977,7 +1977,7 @@ public class HeaderUc extends Composite implements
 
 	/**
 	 * ReSend confirmation mail to user.
-	 * 
+	 *
 	 * @param params
 	 *            contains gooruUid, accountType
 	 */
@@ -1987,7 +1987,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onClick(ClickEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 
@@ -2011,7 +2011,7 @@ public class HeaderUc extends Composite implements
 
 										}
 									});
-				
+
 				}
 			});
 		}
@@ -2021,7 +2021,7 @@ public class HeaderUc extends Composite implements
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -2071,7 +2071,7 @@ public class HeaderUc extends Composite implements
 				}
 
 				hasAutoSelected = true;
-				MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");			
+				MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
 			}
 		});
 	}
@@ -2152,23 +2152,23 @@ public class HeaderUc extends Composite implements
 	}
 
 	/**
-	 * 
+	 *
 	 * @function OpenClasspageEdit
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param gooruOId
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void OpenClasspageEdit(String gooruOId, String gooruUid) {
 		Map<String, String> params = new HashMap<String, String>();
@@ -2192,7 +2192,7 @@ public class HeaderUc extends Composite implements
 		}
 	}
 
-	
+
 	private void changeQueryParams() {
 		String searchText = editSearchTxtBox.getText();
 		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
@@ -2236,7 +2236,7 @@ public class HeaderUc extends Composite implements
 						PlaceTokens.SEARCH_RESOURCE, map);
 			}
 		}
-		
+
 		hasAutoSelected=true;
 		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
 	}
@@ -2253,7 +2253,7 @@ public class HeaderUc extends Composite implements
 	public void updateHeaderProfileImage(String imageUrl) {
 		imgUserProfile.setUrl(imageUrl+ "?" + Math.random());
 	}
-	
+
 	@UiHandler("toggleButton")
 	public void toggleButtonClick(ClickEvent event){
 		invokeToggleMenuContainer();
