@@ -135,7 +135,7 @@ public class UserSettingsPresenter
 	String userName;
 	String gender;
 	private String Refersh_emailId;
-	private static final String USER_META_ACTIVE_FLAG = "0";
+	private static final String USER_META_ACTIVE_FLAG = "1";
 	
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 

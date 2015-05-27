@@ -34,15 +34,14 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
@@ -78,7 +77,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
  *
  * @Reviewer: 
  */
-public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSearchResultDo, CollectionSearchResultDo, IsSearchResourceView, SearchResourcePresenter.IsSearchResourceProxy> implements GooruSearchUiHandlers,RefreshDisclosurePanelForFoldersEventHandler {
+public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSearchResultDo, CollectionSearchResultDo, IsSearchResourceView, SearchResourcePresenter.IsSearchResourceProxy> implements GooruSearchUiHandlers {
 
 	@Inject
 	private SearchServiceAsync searchService;
@@ -154,10 +153,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	public void setSearchService(SearchServiceAsync searchService) {
 		this.searchService = searchService;
 	}
-	@Override
-	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
-		
-	}
+	
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
 		getSearchDo().setPageSize(9);
@@ -188,9 +184,9 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	@Override
 	protected Map<String, String> getSearchFilters() {
 		Map<String, String> filters = super.getSearchFilters();
-		String author = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
+		String author = getPlaceManager().getRequestParameter(IsGooruSearchView.OWNER_FLT);
 		if (author != null) {
-			filters.put(IsSearchView.OWNER_FLT, author);
+			filters.put(IsGooruSearchView.OWNER_FLT, author);
 		}
 		return filters;
 	}

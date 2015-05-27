@@ -100,10 +100,6 @@ import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocView;
 import org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView;
-import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
-import org.ednovo.gooru.client.mvp.folders.FoldersPresenter.IsFoldersProxy;
-import org.ednovo.gooru.client.mvp.folders.FoldersView;
-import org.ednovo.gooru.client.mvp.folders.IsFoldersView;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter.IsEditFolderProxy;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderView;
@@ -336,24 +332,12 @@ import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
 import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
-import org.ednovo.gooru.client.mvp.search.IsSearchRootView;
 import org.ednovo.gooru.client.mvp.search.IsTagsTabView;
-import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
-import org.ednovo.gooru.client.mvp.search.SearchRootPresenter.IsSearchRootProxy;
-import org.ednovo.gooru.client.mvp.search.SearchRootView;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.IsAddCenturyView;
-import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
-import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter.IsCollectionSearchProxy;
-import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchView;
-import org.ednovo.gooru.client.mvp.search.collection.IsCollectionSearchView;
-import org.ednovo.gooru.client.mvp.search.resource.IsResourceSearchView;
-import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
-import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter.IsResourceSearchProxy;
-import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchView;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsView;
 import org.ednovo.gooru.client.mvp.search.standards.IsAddStandardsView;
@@ -459,22 +443,14 @@ public class AppModule extends AppPresenterModule {
 				IsHomeProxy.class);
 		bindPresenter(WrapPresenter.class, IsWrapView.class, WrapView.class,
 				IsWrapProxy.class);
-		bindPresenter(SearchRootPresenter.class, IsSearchRootView.class,
-				SearchRootView.class, IsSearchRootProxy.class);
 		bindPresenter(SearchMainPresenter.class, IsSearchMainView.class,
 				SearchMainView.class, IsSearchMainProxy.class);
-		bindPresenter(CollectionSearchPresenter.class,
-				IsCollectionSearchView.class, CollectionSearchView.class,
-				IsCollectionSearchProxy.class);
 		bindPresenter(SearchCollectionPresenter.class,
 				IsSearchCollectionView.class, SearchCollectionView.class,
 				IsSearchCollectionProxy.class);
 		bindPresenter(SearchResourcePresenter.class,
 				IsSearchResourceView.class, SearchResourceView.class,
 				IsSearchResourceProxy.class);
-		bindPresenter(ResourceSearchPresenter.class,
-				IsResourceSearchView.class, ResourceSearchView.class,
-				IsResourceSearchProxy.class);
 		bindPresenter(ErrorPresenter.class, IsErrorView.class, ErrorView.class,
 				IsErrorProxy.class);
 		bindPresenter(ShelfPresenter.class, IsShelfView.class, ShelfView.class,
@@ -483,8 +459,6 @@ public class AppModule extends AppPresenterModule {
 				UserSettingsView.class, IsUserSettingProxy.class);
 		// 5.2 Changes
 
-		bindPresenter(FoldersPresenter.class, IsFoldersView.class,
-				FoldersView.class, IsFoldersProxy.class);
 		bindPresenter(EditClasspagePresenter.class, IsEditClasspageView.class,
 				EditClasspageView.class, IsEditClasspageProxy.class);
 
