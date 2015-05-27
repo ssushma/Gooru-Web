@@ -104,10 +104,6 @@ import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocView;
 import org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView;
-import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
-import org.ednovo.gooru.client.mvp.folders.FoldersPresenter.IsFoldersProxy;
-import org.ednovo.gooru.client.mvp.folders.FoldersView;
-import org.ednovo.gooru.client.mvp.folders.IsFoldersView;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter.IsEditFolderProxy;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderView;
@@ -487,8 +483,7 @@ public class AppModule extends AppPresenterModule {
 		// 5.2 Changes
 		bindPresenter(ClasspagePresenter.class, IsClasspageView.class,
 				ClasspageView.class, IsClasspageProxy.class);
-		bindPresenter(FoldersPresenter.class, IsFoldersView.class,
-				FoldersView.class, IsFoldersProxy.class);
+		
 		bindPresenter(EditClasspagePresenter.class, IsEditClasspageView.class,
 				EditClasspageView.class, IsEditClasspageProxy.class);
 
