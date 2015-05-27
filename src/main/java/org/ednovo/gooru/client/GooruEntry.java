@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -61,10 +61,10 @@ import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 /**
- * 
+ *
  * @fileName : GooruEntry.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -78,27 +78,36 @@ import com.gwtplatform.mvp.client.DelayedBindRegistry;
 public class GooruEntry implements EntryPoint {
 
 	private final AppInjector appInjector = GWT.create(AppInjector.class);
-	
+
 	private HandlerRegistration nativePreviewHandlerRegistration;
-	
+
 	private static final String GOORU_USER_INACTIVE = "in-active";
 
-	
+
+	public GooruEntry(){
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+				DelayedBindRegistry.bind(appInjector);
+			}
+		});
+	}
+
+
 	public void onModuleLoad() {
-		
+
 		/**
 		 * Capturing all uncaught exception on client side.
 		 */
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
-			
+
 			@Override
 			public void onUncaughtException(Throwable e) {
 				Throwable unwrapped = getExceptionToDisplay(e);
 				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
 			}
 		});
-		
-		DelayedBindRegistry.bind(appInjector);
 		AppClientFactory.setAppGinjector(appInjector);
 		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
 		    loadLibraries.add(LoadLibrary.ADSENSE);
@@ -108,8 +117,8 @@ public class GooruEntry implements EntryPoint {
 		    loadLibraries.add(LoadLibrary.PLACES);
 		    loadLibraries.add(LoadLibrary.WEATHER);
 		    loadLibraries.add(LoadLibrary.VISUALIZATION);
-		     
-		    
+
+
 		String device = BrowserAgent.returnFormFactorWithSizeView();
 		String size[] = device.split("-");
 
@@ -133,7 +142,7 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");
 		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
-		
+
 		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
@@ -145,9 +154,9 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+SearchCBundle.INSTANCE.getResponsive8Style().getText()+"}");
 
 		SearchCBundle.INSTANCE.css().ensureInjected();
-		
-		
-		
+
+
+
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+LoginPopUpCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+LoginPopUpCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+LoginPopUpCBundle.INSTANCE.getResponsive2Style().getText()+"}");
@@ -157,61 +166,61 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media screen and (min-width: 768px) {"+LoginPopUpCBundle.INSTANCE.getResponsive6Style().getText()+"}");
 
 		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
-		
+
 		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+AnalyticsTabCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+AnalyticsTabCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-		
+
 		AnalyticsTabCBundle.INSTANCE.css().ensureInjected();
-		
+
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+ResourcePlayerCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+ResourcePlayerCBundle.INSTANCE.getResponsive2Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+ResourcePlayerCBundle.INSTANCE.getResponsive3Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 992px){"+ResourcePlayerCBundle.INSTANCE.getResponsive4Style().getText()+"}");
 
 		ResourcePlayerCBundle.INSTANCE.css().ensureInjected();
-	
+
 
 		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-		
+
 		CollectionSummaryIndividualCBundle.INSTANCE.css().ensureInjected();
-		
+
 		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-		
+
 		CollectionPlaySummaryCBundle.INSTANCE.css().ensureInjected();
-		
+
 		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 	}
-	
-	
+
+
 	/**
 	 * Checks the status of loggers from property file whether it is enabled or not.
 	 */
-	private void getloggersStatus() { 
+	private void getloggersStatus() {
 		AppClientFactory.getInjector().getSearchService().isClientSideLoggersEnabled(new SimpleAsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
 				AppClientFactory.setClientLoggersEnabled(result);
 			}
-			
+
 		});
 	}
 
 	private void registerWindowEvents(){
 		nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
-			
+
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				if(event.getTypeInt()==Event.ONMOUSEOVER){
 					if(AppClientFactory.getUserStatus()!=null){
-						Cookies.setCookie("gooru-active-user", AppClientFactory.getUserStatus(),getCurrentDateAndTime()); 
+						Cookies.setCookie("gooru-active-user", AppClientFactory.getUserStatus(),getCurrentDateAndTime());
 					}
 					if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) &&  AppClientFactory.isUserflag() && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY))){
 					}
 					else if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) &&  AppClientFactory.isUserflag() && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
-						
+
 					}
 					else if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) && AppClientFactory.isUserflag()){
 						AppClientFactory.setUserflag(false)	;
@@ -221,20 +230,20 @@ public class GooruEntry implements EntryPoint {
 						else{
 							redirectToLandingPage();
 						}
-						
+
 					}
-					
+
 				}
 			}
 		});
 	}
-	
-	/* 
+
+	/*
 	 * If user logged out by staying on Discover or Study page on any one of the tab,
-	 * this method will be called and header will reset on other tabs. 
-	 * 
+	 * this method will be called and header will reset on other tabs.
+	 *
 	 * */
-	
+
 	protected Date getCurrentDateAndTime() {
 		Date date = new Date();
 		Date updatedDate = new Date((date.getTime() + (1000 * 60 * 60 * 24)));//(1000 * 60 * 60 * 24)=24 hrs. **** 120060 = 2 mins
@@ -252,15 +261,15 @@ public class GooruEntry implements EntryPoint {
 			}
 		});
 	}
-	
-	
-	/* 
+
+
+	/*
 	 * If user logged out on any one of the tab,
-	 * this method will be called to redirect to landing page on other tabs 
+	 * this method will be called to redirect to landing page on other tabs
 	 *  and Log-in pop up will be invoked.
-	 *  
+	 *
 	 * */
-	
+
 	private void redirectToLandingPage(){
 		appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 			@Override
@@ -270,7 +279,7 @@ public class GooruEntry implements EntryPoint {
 				HomeCBundle.INSTANCE.css().ensureInjected();
 				AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
-					
+
 				}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 					AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
 				}else{
@@ -281,14 +290,14 @@ public class GooruEntry implements EntryPoint {
 			}
 		});
 	}
-	
+
 	public String getHttpOrHttpsProtocol() {
 		return Window.Location.getProtocol();
 	}
-	
+
 	/**
 	 *  Method used to unwrap GWT umbrella exception.
-	 *  
+	 *
 	 * @param e {@link Throwable}
 	 * @return {@link Throwable}
 	 */
