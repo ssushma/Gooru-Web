@@ -358,7 +358,7 @@ public class HeaderUc extends Composite
 	Anchor discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl;
 
 	@UiField
-	Label thanksLbl,gooruLabel;
+	Label thanksLbl;
 	
 	@UiField
 	static Label arrowLbl;
@@ -414,7 +414,7 @@ public class HeaderUc extends Composite
 			public void keyAction(String text,KeyUpEvent event) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
-				text.replaceAll("-Gooru Search", "");
+				text.replaceAll("-<n> Gooru Search</n>", "");
 				autoSuggestKeywordDo.setQuery(text);
 				searchData = getEditSearchTxtBox().getText();
 				autoSuggestKeywordDo.setType("resource");
@@ -437,7 +437,7 @@ public class HeaderUc extends Composite
 			
 			@Override
 			public void onSelection(final SelectionEvent<Suggestion> event) {
-				final String searchText = event.getSelectedItem().getDisplayString().replaceAll("-Gooru Search", "");
+				final String searchText = event.getSelectedItem().getDisplayString().replaceAll("-<n> Gooru Search</n>", "");
 				editSearchTxtBox.setText(searchText.trim());
 				GWT.runAsync(new SimpleRunAsyncCallback() {
 					@Override
@@ -459,7 +459,7 @@ public class HeaderUc extends Composite
 								String queryVal = params.get("query");
 								// queryVal = queryVal.replaceAll("%5C1", "&");
 								Map<String, String> map = params;
-								queryVal.replaceAll("-Gooru Search", "");
+								queryVal.replaceAll("-<n> Gooru Search</n>", "");
 								map.put("query", queryVal);
 								editSearchTxtBox.setText(queryVal);
 								AppClientFactory.getPlaceManager().revealPlace(
@@ -500,7 +500,6 @@ public class HeaderUc extends Composite
 			}
 		});
 		initWidget(uiBinder.createAndBindUi(this));
-		gooruLabel.setVisible(false);
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
 
 		logoutPanelVc = new LogoutPanelVc();
@@ -818,7 +817,7 @@ public class HeaderUc extends Composite
 				int key=event.getNativeEvent().getKeyCode();
 				if(key==KeyCodes.KEY_ENTER){
 					String searchText = editSearchTxtBox.getText();
-					searchText = searchText.replaceAll("-Gooru Search", "");
+					searchText = searchText.replaceAll("-<n> Gooru Search</n>", "");
 					editSearchTxtBox.setText(searchText.trim());
 				}
 			}
@@ -1646,7 +1645,7 @@ public class HeaderUc extends Composite
 				
 			}
 		}
-		params.put("query", getEditSearchText().replaceAll("-Gooru Search", ""));
+		params.put("query", getEditSearchText().replaceAll("-<n> Gooru Search</n>", ""));
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
 		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT,null);
@@ -2093,9 +2092,9 @@ public class HeaderUc extends Composite
 			SearchDo<AutoSuggestKeywordSearchDo> autoSuggestKeywordDo) {
 		autokeySuggestOracle.clear();
 		this.autoSuggestKeywordDo = autoSuggestKeywordDo;
-		gooruLabel.setText(i18n.GL3274());
-		String gooruSearchTextLbl = gooruLabel.getText();
-		autokeySuggestOracle.add(searchData+gooruSearchTextLbl);
+
+		autokeySuggestOracle.add(searchData+i18n.GL0146());
+
 		if (this.autoSuggestKeywordDo.getSearchResults() != null) {
 			for (AutoSuggestKeywordSearchDo autoSuggestKeywordSearchDo : autoSuggestKeywordDo
 					.getSearchResults()) {
@@ -2204,7 +2203,7 @@ public class HeaderUc extends Composite
 	
 	private void changeQueryParams() {
 		String searchText = editSearchTxtBox.getText();
-		searchText= searchText.replaceAll("-Gooru Search", "");
+		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
 		editSearchTxtBox.setText(searchText.trim());
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
