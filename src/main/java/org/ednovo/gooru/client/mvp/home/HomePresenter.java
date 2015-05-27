@@ -78,6 +78,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
@@ -135,6 +136,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	public boolean isResourceSearch() {
 		return isResourceSearch;
 	}
+
+	private Timer tooltipTimer = null;
+
+	private static final int TOOLTIP_DELAY_TIME = 1000;
 
 	private boolean isResourceSearch = true;
 
@@ -414,6 +419,12 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			getView().getBtnSignUp().setVisible(false);
 		}
 		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
+		tooltipTimer = new Timer() {
+			public void run() {
+				contributorsPresenter.getContributors();
+			}
+		};
+		tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
 	}
 
 	@Override
