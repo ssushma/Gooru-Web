@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,7 +28,6 @@ package org.ednovo.gooru.client.gin;
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
-import org.ednovo.gooru.client.mvp.classpages.ClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
@@ -41,7 +40,6 @@ import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
-import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
@@ -82,7 +80,6 @@ import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
-import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
@@ -99,6 +96,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPr
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
+import org.ednovo.gooru.client.mvp.test.TestPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -109,10 +107,10 @@ import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
 
 /**
- * 
+ *
  * @fileName : AppInjector.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -135,7 +133,7 @@ public interface AppInjector extends ServiceInjector {
 	AppClientFactory getAppClientShop();
 
 	AppPlaceKeeper getAppPlaceKeeper();
-	
+
 	GoogleAnalyticsImpl getGoogleAnalytics();
 
 	Provider<WrapPresenter> getWrapPresenter();
@@ -143,79 +141,75 @@ public interface AppInjector extends ServiceInjector {
 	Provider<PrimePresenter> getPrimePresenter();
 
 	Provider<HomePresenter> getHomePresenter();
-	
+
 	AsyncProvider<SearchMainPresenter> getSearchMainPresenter();
-	
+
 	AsyncProvider<SearchCollectionPresenter> getSearchCollectionPresenter();
-	
+
 	AsyncProvider<SearchResourcePresenter> getSearchResourcePresenter();
 
 	AsyncProvider<ErrorPresenter> getErrorPresenter();
 
 	AsyncProvider<ShelfPresenter> getShelfPresenter();
-	
+
 	AsyncProvider<CollectionResourceTabPresenter> getCollectionResourceTabPresenter();
-	
+
 	AsyncProvider<CollectionInfoTabPresenter> getCollectionInfoTabPresenter();
 
 	AsyncProvider<ShelfListPresenter> getShelfTabPresenter();
 
 	AsyncProvider<CollectionFormPresenter> getCollectionFormPresenter();
-	
+
 	AsyncProvider<ImageUploadPresenter> getImageUploadPresenter();
-	
+
 	AsyncProvider<UserRegistrationPresenter> getUserRegistrationPresenter();
 	
-	AsyncProvider<ClasspagePresenter> getClasspagePresenter();
-	
-	AsyncProvider<FoldersPresenter> getFoldersPresenter();
-
 	AsyncProvider<UserSettingsPresenter> getUserSettingsPresenter();
-	
+
 	AsyncProvider<FolderFormViewPresenter> getFolderFormViewPresenter();
-	
+
 	AsyncProvider<EditClasspagePresenter> getEditClasspagePresenter();
 
+	AsyncProvider<TestPresenter> getTestPresenter();
+
 	AsyncProvider<EditFolderPresenter> getEditFolderPresenter();
-	
-	AsyncProvider<RegisterPresenter> getRegisterPresenter();
-	
+
 	AsyncProvider<ClassCodePresenter> getClassCodePresenter();
-	
+
 	AsyncProvider<ClassHomePresenter> getClassHomePresenter();
-	
+
 	AsyncProvider<StudentAssignmentPresenter> getStudentAssignmentPresenter();
-	
+
 	AsyncProvider<CollectionFormInPlayPresenter> getCollectionFormInPlayPresenter();
 
 	AsyncProvider<ProfilePagePresenter> getProfilePagePresenter();
 
 	AsyncProvider<DeviceSupportPresenter> getDeviceSupportPresenter();
-	
+
 	AsyncProvider<CollectionAssignTabPresenter> getCollectionAssignViewTabPresenter();
-	
+
 	AsyncProvider<SignUpPresenter> getSignUpPresenter();
-	
+
 	AsyncProvider<CollectionPlayerPresenter> getCollectionPlayerPresenter();
-	
+
 	AsyncProvider<FolderTocPresenter> getFolderTocPresenter();
-	
+
 	AsyncProvider<ResourcePlayerPresenter> getResourcePlayerPresenter();
-	
+
 	AsyncProvider<SignUpCompleteProfilePresenter> getSignUpCompleteProfilePresenter();
-	
+
 	AsyncProvider<RusdPresenter> getRusdPresenter();
-	
+
 	AsyncProvider<CommunityPresenter> getLandingPagePresenter();
-	
+
 	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
-	
+
 	AsyncProvider<CollectionCollaboratorsTabPresenter> getCollectionCollaboratorsTabPresenter();
 
 	AsyncProvider<FolderItemTabPresenter> getFolderItemTabPresenter();
-	
+
 	AsyncProvider<ClassListPresenter> getclassListPresenter();
-	
+
 	AsyncProvider<FteLibraryPresenter> getFteLibraryPresenter();
 
 	AsyncProvider<AutodeskLibraryPresenter> getAutodeskLibraryPresenter();
@@ -227,33 +221,33 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<NgcLibraryPresenter> getNgcLibraryPresenter();
 
 	AsyncProvider<WspwhLibraryPresenter> getWspwhLibraryPresenter();
-	
+
 	AsyncProvider<RatingAndReviewPopupPresenter> getRatingAndReviewPopupPresenter();
 
 	AsyncProvider<PsdpalLibraryPresenter> getPsdpalLibraryPresenter();
 
 	AsyncProvider<CfciLibraryPresenter> getCfciLibraryPresenter();
-	
+
 	AsyncProvider<DistrictPresenter> getDistrictPresenter();
 
 	AsyncProvider<DrivePresenter> getDrivePresenter();
-	
+
 	AsyncProvider<AddResourceContainerPresenter> getAddResourceContainerPresenter();
 
 	AsyncProvider<NatGeoLibraryPresenter> getNatGeoLibraryPresenter();
 
 	AsyncProvider<YouthVoicesLibraryPresenter> getYouthVoicesLibraryPresenter();
-	
+
 	AsyncProvider<SausdLibraryPresenter> getSausdPresenter();
 
 	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
-	
+
 	AsyncProvider<AddCenturyPresenter> getAddCenturyPresenter();
-	
+
 	AsyncProvider<GooruGradesPresenter> getGooruGradesPresenter();
-	
+
 	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
@@ -267,25 +261,25 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
 
 	AsyncProvider<CoreLibraryPresenter> getCoreLibraryPresenter();
-	
+
 	AsyncProvider<EsypLibraryPresenter> getEsypLibraryPresenter();
-	
+
 	AsyncProvider<CcstCalTacLibraryPresenter> getCcstCalTacLibraryPresenter();
-	
+
 	AsyncProvider<LusdLibraryPresenter> getLusdLibraryPresenter();
-	
+
 	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
-	
+
 	AsyncProvider<AnalyticsInfoContainerPresenter> getAnalyticsInfoContainerPresenter();
 
 	AsyncProvider<TagsTabPresenter> getTagsTabPresenter();
-	
+
 	AsyncProvider<UserDashBoardPresenter> getUserDashBoardPresenter();
-	
+
 	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
-	
+
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
-	
+
 	AddCenturyPresenter getAddCenturyPresenterWidget();
 
 
