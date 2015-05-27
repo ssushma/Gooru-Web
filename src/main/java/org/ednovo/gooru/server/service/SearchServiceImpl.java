@@ -881,7 +881,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				url = appendHttpsURL(url);
 			}
 			getLogger().info("collection search url::::::"+url);
-			
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			return jsonRep.getJsonObject().toString();

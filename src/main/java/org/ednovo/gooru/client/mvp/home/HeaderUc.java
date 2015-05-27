@@ -46,7 +46,6 @@ import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -1505,40 +1504,40 @@ public class HeaderUc extends Composite implements
 		params.clear();
 		if(prefilter!=null){
 			params=prefilter.getFilter();
-			String subject = params.get(IsSearchView.SUBJECT_FLT);
+			String subject = params.get(IsGooruSearchView.SUBJECT_FLT);
 
 			if (subject != null) {
-				params.put(IsSearchView.SUBJECT_FLT, subject);
+				params.put(IsGooruSearchView.SUBJECT_FLT, subject);
 			}else{
-				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.SUBJECT_FLT)!=null)
 				{
-					subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+					subject = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.SUBJECT_FLT);
 				}
 				else
 				{
-				params.remove(IsSearchView.SUBJECT_FLT);
+				params.remove(IsGooruSearchView.SUBJECT_FLT);
 				}
 			}
-			String grade = params.get(IsSearchView.GRADE_FLT);
+			String grade = params.get(IsGooruSearchView.GRADE_FLT);
 		
 			
 			if (grade != null) {
-				params.put(IsSearchView.GRADE_FLT, grade);
+				params.put(IsGooruSearchView.GRADE_FLT, grade);
 			}else{
-				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.GRADE_FLT)!=null)
 				{
-					grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+					grade = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.GRADE_FLT);
 				}
 				else
 				{
-				params.remove(IsSearchView.GRADE_FLT);
+				params.remove(IsGooruSearchView.GRADE_FLT);
 				}
 			}
 			String standardsUrlParam = null;
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
+			if(AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.STANDARD_FLT)!=null)
 			{
 				stadardsListCode="";
-				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
+				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.STANDARD_FLT);
 				if(addStandardsPresenter!=null && isClicked){
 					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
 					int standardArraySize = standardsList.size();
@@ -1549,14 +1548,14 @@ public class HeaderUc extends Composite implements
 							}
 							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
 						}
-						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
+						params.put(IsGooruSearchView.STANDARD_FLT, stadardsListCode);
 					}
 					isClicked=false;
 				}
 				if(!stadardsListCode.isEmpty()){
-					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam+","+stadardsListCode);
+					params.put(IsGooruSearchView.STANDARD_FLT, standardsUrlParam+","+stadardsListCode);
 				}else{
-					params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
+					params.put(IsGooruSearchView.STANDARD_FLT, standardsUrlParam);
 				}
 			}
 			else
@@ -1572,11 +1571,10 @@ public class HeaderUc extends Composite implements
 							}
 							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
 						}
-						params.put(IsSearchView.STANDARD_FLT, stadardsListCode);
+						params.put(IsGooruSearchView.STANDARD_FLT, stadardsListCode);
 					}
 					isClicked=false;
 				}
-				
 			}
 		}
 		
@@ -1591,9 +1589,8 @@ public class HeaderUc extends Composite implements
 		}
 		params.put("category", "All");
 		
-		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE))
-		{
-			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		if(currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE)){
+			params.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		}
 		
 		return params;

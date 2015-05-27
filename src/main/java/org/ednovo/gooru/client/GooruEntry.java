@@ -41,14 +41,13 @@ import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBun
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerCBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
-import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
-import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.UmbrellaException;
@@ -77,15 +76,23 @@ import com.gwtplatform.mvp.client.DelayedBindRegistry;
  */
 public class GooruEntry implements EntryPoint {
 
-	private final AppInjector appInjector = GWT.create(AppInjector.class);
+	private final AppInjector appInjector =AppInjector.appInjector;
 	
 	private HandlerRegistration nativePreviewHandlerRegistration;
 	
 	private static final String GOORU_USER_INACTIVE = "in-active";
-
 	
+	public GooruEntry() {
+		 GWT.runAsync(new RunAsyncCallback(){
+			@Override
+			public void onFailure(Throwable reason) {}
+			@Override
+			public void onSuccess() {
+				DelayedBindRegistry.bind(appInjector);
+			}
+		 });
+	}
 	public void onModuleLoad() {
-		
 		/**
 		 * Capturing all uncaught exception on client side.
 		 */
@@ -97,23 +104,7 @@ public class GooruEntry implements EntryPoint {
 				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
 			}
 		});
-		
-		DelayedBindRegistry.bind(appInjector);
-		AppClientFactory.setAppGinjector(appInjector);
-		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
-		    loadLibraries.add(LoadLibrary.ADSENSE);
-		    loadLibraries.add(LoadLibrary.DRAWING);
-		    loadLibraries.add(LoadLibrary.GEOMETRY);
-		    loadLibraries.add(LoadLibrary.PANORAMIO);
-		    loadLibraries.add(LoadLibrary.PLACES);
-		    loadLibraries.add(LoadLibrary.WEATHER);
-		    loadLibraries.add(LoadLibrary.VISUALIZATION);
-		     
-		    
-		String device = BrowserAgent.returnFormFactorWithSizeView();
-		String size[] = device.split("-");
-
-			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
+		appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
 					AppClientFactory.setLoggedInUser(loggedInUser);
@@ -125,7 +116,7 @@ public class GooruEntry implements EntryPoint {
 					registerWindowEvents();
 				}
 			});
-			AppClientFactory.setAppGinjector(appInjector);
+		AppClientFactory.setAppGinjector(appInjector);
 
 		getloggersStatus();
 
@@ -133,20 +124,6 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");
 		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
-		
-		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsive3Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+SearchCBundle.INSTANCE.getResponsive4Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+SearchCBundle.INSTANCE.getResponsive5Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media screen and (min-width: 768px){"+SearchCBundle.INSTANCE.getResponsive6Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+SearchCBundle.INSTANCE.getResponsive7Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+SearchCBundle.INSTANCE.getResponsive8Style().getText()+"}");
-
-		SearchCBundle.INSTANCE.css().ensureInjected();
-		
-		
 		
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+LoginPopUpCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+LoginPopUpCBundle.INSTANCE.getResponsive1Style().getText()+"}");
@@ -169,7 +146,6 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 992px){"+ResourcePlayerCBundle.INSTANCE.getResponsive4Style().getText()+"}");
 
 		ResourcePlayerCBundle.INSTANCE.css().ensureInjected();
-	
 
 		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsive1Style().getText()+"}");
@@ -183,6 +159,16 @@ public class GooruEntry implements EntryPoint {
 		
 		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
+		
+		AppClientFactory.setAppGinjector(appInjector);
+		ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
+		loadLibraries.add(LoadLibrary.ADSENSE);
+		loadLibraries.add(LoadLibrary.DRAWING);
+		loadLibraries.add(LoadLibrary.GEOMETRY);
+		loadLibraries.add(LoadLibrary.PANORAMIO);
+		loadLibraries.add(LoadLibrary.PLACES);
+		loadLibraries.add(LoadLibrary.WEATHER);
+		loadLibraries.add(LoadLibrary.VISUALIZATION);
 	}
 	
 	
@@ -191,12 +177,10 @@ public class GooruEntry implements EntryPoint {
 	 */
 	private void getloggersStatus() { 
 		AppClientFactory.getInjector().getSearchService().isClientSideLoggersEnabled(new SimpleAsyncCallback<String>() {
-
 			@Override
 			public void onSuccess(String result) {
 				AppClientFactory.setClientLoggersEnabled(result);
 			}
-			
 		});
 	}
 
@@ -221,9 +205,7 @@ public class GooruEntry implements EntryPoint {
 						else{
 							redirectToLandingPage();
 						}
-						
 					}
-					
 				}
 			}
 		});

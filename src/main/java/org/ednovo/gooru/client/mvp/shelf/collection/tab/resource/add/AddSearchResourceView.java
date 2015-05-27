@@ -32,8 +32,8 @@ import java.util.Set;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -180,7 +180,7 @@ public abstract class AddSearchResourceView extends Composite {
 		
 		if(collectionDo.getGrade()!=null) {
 			setFilters(collectionDo.getGrade());
-			filterMap.put(IsSearchView.GRADE_FLT, gradeDoFilter);
+			filterMap.put(IsGooruSearchView.GRADE_FLT, gradeDoFilter);
 		}
 		
 		Set<CodeDo> codeDoSet = collectionDo.getTaxonomySet();
@@ -303,7 +303,7 @@ public abstract class AddSearchResourceView extends Composite {
 					}
 				});
 			if(filterMap.size()>0) {
-				filterMap.put(IsSearchView.SUBJECT_FLT, subjectDoFilter);
+				filterMap.put(IsGooruSearchView.SUBJECT_FLT, subjectDoFilter);
 			}
 		}
 		filterSearchDo.setFilters(filterMap);
@@ -353,12 +353,12 @@ public abstract class AddSearchResourceView extends Composite {
 		filterResourceParams.put("category", "All");
 		filterResourceParams.put("query", searchBox.getText());
 		if(!gradeDoFilter.isEmpty()) {
-			filterResourceParams.put(IsSearchView.GRADE_FLT, gradeDoFilter);
+			filterResourceParams.put(IsGooruSearchView.GRADE_FLT, gradeDoFilter);
 		}
 		if(!subjectDoFilter.isEmpty()) {
-			filterResourceParams.put(IsSearchView.SUBJECT_FLT, subjectDoFilter);
+			filterResourceParams.put(IsGooruSearchView.SUBJECT_FLT, subjectDoFilter);
 		}
-		filterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		filterResourceParams.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
 		HeaderUc.getEditSearchTxtBox().setText(searchBox.getText());
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, filterResourceParams);
@@ -368,7 +368,7 @@ public abstract class AddSearchResourceView extends Composite {
 		Map<String,String> noFilterResourceParams = new HashMap<String,String>();
 		noFilterResourceParams.put("query",searchBox.getText());
 		noFilterResourceParams.put("category", "All");
-		noFilterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		noFilterResourceParams.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
 		HeaderUc.getEditSearchTxtBox().setText(searchBox.getText());
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, noFilterResourceParams);

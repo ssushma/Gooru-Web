@@ -33,6 +33,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
@@ -42,7 +43,6 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionHandler;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
@@ -1670,7 +1670,7 @@ public class ProfileTopicListView extends Composite{
 		params.put("query", searchQuery);
 		params.put("pageSize", "8");
 		params.put("pageNum", "1");
-		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		params.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		return params;
 	}
 	private class OnSearchLinkClick implements ClickHandler {
