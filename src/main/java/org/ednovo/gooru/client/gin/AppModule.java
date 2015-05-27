@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -52,10 +52,6 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpAfterThirt
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfileView;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpTurnsAfterThirteenView;
-import org.ednovo.gooru.client.mvp.classpages.ClasspagePresenter;
-import org.ednovo.gooru.client.mvp.classpages.ClasspagePresenter.IsClasspageProxy;
-import org.ednovo.gooru.client.mvp.classpages.ClasspageView;
-import org.ednovo.gooru.client.mvp.classpages.IsClasspageView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.IsAddAssignmentContainerView;
@@ -334,10 +330,6 @@ import org.ednovo.gooru.client.mvp.profilepage.tab.content.ProfilePageContentTab
 import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
-import org.ednovo.gooru.client.mvp.register.IsRegisterView;
-import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
-import org.ednovo.gooru.client.mvp.register.RegisterPresenter.IsRegisterProxy;
-import org.ednovo.gooru.client.mvp.register.RegisterView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
@@ -405,6 +397,10 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDri
 import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
+import org.ednovo.gooru.client.mvp.test.IsTestView;
+import org.ednovo.gooru.client.mvp.test.TestPresenter;
+import org.ednovo.gooru.client.mvp.test.TestPresenter.IsTestProxy;
+import org.ednovo.gooru.client.mvp.test.TestView;
 import org.ednovo.gooru.client.mvp.wrap.IsWrapView;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter.IsWrapProxy;
@@ -421,10 +417,10 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
 
 /**
- * 
+ *
  * @fileName : AppModule.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -452,6 +448,9 @@ public class AppModule extends AppPresenterModule {
 				Singleton.class);
 		bind(RootPresenter.class).to(AppRootPresenter.class).asEagerSingleton();
 
+		bindPresenter(TestPresenter.class, IsTestView.class,
+				TestView.class, IsTestProxy.class);
+
 		bindConstant().annotatedWith(AppDefaultPlace.class)
 				.to(PlaceTokens.HOME);
 		bindPresenter(PrimePresenter.class, IsPrimeView.class, PrimeView.class,
@@ -460,8 +459,6 @@ public class AppModule extends AppPresenterModule {
 				IsHomeProxy.class);
 		bindPresenter(WrapPresenter.class, IsWrapView.class, WrapView.class,
 				IsWrapProxy.class);
-		bindPresenter(RegisterPresenter.class, IsRegisterView.class,
-				RegisterView.class, IsRegisterProxy.class);
 		bindPresenter(SearchRootPresenter.class, IsSearchRootView.class,
 				SearchRootView.class, IsSearchRootProxy.class);
 		bindPresenter(SearchMainPresenter.class, IsSearchMainView.class,
@@ -485,8 +482,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(UserSettingsPresenter.class, IsUserSettingsView.class,
 				UserSettingsView.class, IsUserSettingProxy.class);
 		// 5.2 Changes
-		bindPresenter(ClasspagePresenter.class, IsClasspageView.class,
-				ClasspageView.class, IsClasspageProxy.class);
+
 		bindPresenter(FoldersPresenter.class, IsFoldersView.class,
 				FoldersView.class, IsFoldersProxy.class);
 		bindPresenter(EditClasspagePresenter.class, IsEditClasspageView.class,
@@ -529,14 +525,14 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(SearchAddResourceToCollectionPresenter.class,
 				IsSearchAddResourceToCollectionView.class,
 				SearchAddResourceToCollectionView.class);
-		
+
 		bindPresenterWidget(ViewMorePeoplePresenter.class,
 				IsViewMorePeopleView.class,
 				ViewMorePeopleView.class);
-		
+
 		bindPresenter(ClassCodePresenter.class, IsClassCodeView.class,
 				ClassCodeView.class, IsClassCodeProxy.class);
-		
+
 		bindPresenter(ClassHomePresenter.class, IsClassHomeView.class,
 				ClassHomeView.class, IsClassHomeProxy.class);
 
@@ -561,12 +557,12 @@ public class AppModule extends AppPresenterModule {
 				IsUserRegistrationView.class, UserRegistrationView.class);
 
 		bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class);
-		
+
 		bindConstant().annotatedWith(GaAccount.class).to(GA_ACCOUNT);
 		bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
-		
+
 //		bind(GoogleAnalyticsHpNavigationTracker.class).asEagerSingleton();
-		
+
 		bindPresenterWidget(CollectionFormInPlayPresenter.class,
 				IsCollectionFormInPlayView.class,
 				CollectionFormInPlayView.class);
@@ -586,11 +582,11 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(QuestionResourcePresenter.class, IsQuestionResourceView.class, QuestionResourceView.class);
 		bindPresenterWidget(CollectionEndPresenter.class, IsCollectionEndView.class, CollectionEndView.class);
 		bindPresenterWidget(ResourceSharePresenter.class, IsResourceShareView.class, ResourceShareView.class);
-		bindPresenterWidget(AddResourceCollectionPresenter.class, IsAddResourceCollectionView.class, AddResourceCollectionView.class);	
+		bindPresenterWidget(AddResourceCollectionPresenter.class, IsAddResourceCollectionView.class, AddResourceCollectionView.class);
 		bindPresenterWidget(AddCollectionPresenter.class, IsAddCollectionView.class, AddCollectionView.class);
 		bindPresenterWidget(SignUpCompleteProfilePresenter.class,IsSignUpCompleteProfile.class,SignUpCompleteProfileView.class);
 		bindPresenterWidget(SignUpAfterThirteenPresenter.class,IsAfterThirteen.class,SignUpTurnsAfterThirteenView.class);
-		
+
 		bindPresenter(RusdPresenter.class, IsRusdView.class, RusdView.class,IsRusdProxy.class);
 		bindPresenter(CommunityPresenter.class, IsCommunityView.class, CommunityView.class,IsCommunityProxy.class);
 		bindPresenter(PreviewPlayerPresenter.class,IsPreviewPlayerView.class,PreviewPlayerView.class,IsPreviewPlayerProxy.class);
@@ -599,14 +595,14 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(PreviewEndPresenter.class,IsPreviewEndView.class,PreviewEndView.class);
 		bindPresenterWidget(CollectionFlagPresenter.class,IsCollectionFlagView.class,CollectionFlagView.class);
 		bindPresenterWidget(ResourceFlagPresenter.class,IsResourceFlag.class,ResourceFlagView.class);
-		
+
 		bindPresenterWidget(CollectionCollaboratorsTabPresenter.class,
 				IsCollectionCollaboratorsTab.class, CollectionCollaboratorsTabView.class);
-	
+
 		bindPresenterWidget(FolderItemTabPresenter.class,IsFolderItemTabView.class, FolderItemTabView.class);
-		
+
 		bindPresenterWidget(ClassListPresenter.class, IsClassListView.class, ClassListView.class);
-		
+
 		bindPresenter(FteLibraryPresenter.class, IsFteLibraryView.class, FteLibraryView.class,IsFteLibraryProxy.class);
 		bindPresenter(AutodeskLibraryPresenter.class, IsAutodeskLibraryView.class, AutodeskLibraryView.class,IsAutodeskLibraryProxy.class);
 		bindPresenter(OnrLibraryPresenter.class, IsOnrLibraryView.class, OnrLibraryView.class,IsOnrLibraryProxy.class);
@@ -617,19 +613,19 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(RatingAndReviewPopupPresenter.class, IsRatingAndReviewPopupView.class, RatingAndReviewPopupView.class);
 		bindPresenter(PsdpalLibraryPresenter.class, IsPsdpalView.class, PsdpalLibraryView.class,IsPsdpalLibraryProxy.class);
 		bindPresenter(CfciLibraryPresenter.class, IsCfciView.class, CfciLibraryView.class,IsCfciLibraryProxy.class);
-		
-		
+
+
 
 		bindPresenter(DrivePresenter.class, IsDriveView.class, DriveView.class,IsDriveyProxy.class);
 
 		bindPresenterWidget(AddResourceContainerPresenter.class, IsAddResourceContainerView.class, AddResourceContainerView.class);
 
-		
+
 		bindPresenterWidget(CollectionHomeMetadataPresenter.class, IsCollectionHomeMetadataView.class, CollectionHomeMetadataView.class);
 
 		bindPresenter(YouthVoicesLibraryPresenter.class, IsYouthVoicesLibraryView.class, YouthVoicesLibraryView.class,IsYouthVoicesLibraryProxy.class);
 		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
-		
+
 		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
 		bindPresenterWidget(AddCenturyPresenter.class, IsAddCenturyView.class, AddCenturyView.class);
 		bindPresenterWidget(GooruGradesPresenter.class, IsGooruGradesView.class, GooruGradesView.class);
@@ -652,13 +648,13 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
 		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
 		bindPresenterWidget(PopupForAnalyticsPresenter.class,IsPopupForAnalyticsView.class, PopupForAnalyticsView.class);
-			
+
 		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);
 		bindPresenterWidget(CollectionProgressPresenter.class,IsCollectionProgressView.class,CollectionProgressWidget.class);
 		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
 		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
 		bindPresenter(EpapaLibraryPresenter.class, IsEpapaLibraryView.class, EpapaLibraryView.class,IsEpapaLibraryProxy.class);
-		
+
 	}
 }

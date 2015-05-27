@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,48 +23,38 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
 */
-package org.ednovo.gooru.client.mvp.classpages;
+package org.ednovo.gooru.client.mvp.test;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEventHandler;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEventHandler;
+import org.ednovo.gooru.client.mvp.shelf.event.AssignmentHandler;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 
 /**
- * @fileName : IsClasspageView.java
  *
- * @description : 
+ * @fileName : TestUiHandlers.java
+ *
+ * @description :
  *
  *
  * @version : 1.0
  *
- * @date: Apr 17, 2013
+ * @date: 26-May-2015
  *
- * @Author Gooru Team
+ * @Author tumbalam
  *
- * @Reviewer: 
+ * @Reviewer:
  */
-public interface IsClasspageView extends IsViewWithHandlers<ClasspageUiHandlers>{
-	
-	
-	void insertClasspage(CollectionDo collectionDo, boolean newFlag);
-	
-	void clearClasspageListPanel();
-	
-	void showPlaceHolderForEmptyTeach(boolean visibility);
-	
-	HTMLPanel getLoadingPanel();
-	
-	ScrollPanel getClassPageScrollPanel();
-	
-	HTMLPanel getClasspageListPanel();
+public interface TestUiHandlers extends BaseUiHandlers {
 
-	NewClasspagePopupView getNewPopup();
-	
-	void OpenClasspageEdit(String gooruOId);
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();
+
 }
