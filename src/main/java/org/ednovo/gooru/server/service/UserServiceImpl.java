@@ -417,6 +417,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		logger.info("-----getUserProfileV2Details-----get url-----"+url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			profileDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileDo.class);
