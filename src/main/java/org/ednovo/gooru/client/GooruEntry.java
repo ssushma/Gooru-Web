@@ -85,13 +85,7 @@ public class GooruEntry implements EntryPoint {
 
 
 	public GooruEntry(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-
-			@Override
-			public void onSuccess() {
-				DelayedBindRegistry.bind(appInjector);
-			}
-		});
+		DelayedBindRegistry.bind(appInjector);
 	}
 
 
