@@ -187,7 +187,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
+	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter,ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.addStandardsPresenter = addStandardsPresenterObj;
@@ -196,9 +196,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		this.signUpCompletePresenter = signUpCompletePresenter;
 		this.signUpAfterThirteenPresenter=signUpAfterThirteenPresenter;
 		this.contributorsPresenter = contributorsPresenter;
-	
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -414,7 +413,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}else{
 			getView().getBtnSignUp().setVisible(false);
 		}
-//		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
+		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
 	}
 
 	@Override
