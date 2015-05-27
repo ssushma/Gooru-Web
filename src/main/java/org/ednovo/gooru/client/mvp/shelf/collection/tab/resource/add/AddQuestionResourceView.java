@@ -207,6 +207,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final String REGX_PATTERN = "\\[(.*?)\\]";
 	private static final String FIB_SEPARATOR = i18n.GL0885();
 	
+	
+	private static final String ERROR_MSG_HTHL = i18n.GL3235();
+	private static final String ERROR_MSG_HTHL_SYNTAX = i18n.GL3236();
+	private static final String ERROR_MSG_HTHL_SENTENCE = i18n.GL3237();
+	
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
 	private static final int EXPLAINATION_TEXT_LENGTH =500;
@@ -1386,7 +1391,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					}else{
 					questionHotTextAnswerChoiceContainer.remove(i);
 					widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
-					i--;
 					}
 				}
 				addQuestionAnswer.highlightRDButtonClick();
@@ -2235,6 +2239,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					//questionAnswerDo.setAnswerText(addQuestionAnswerChoice.answerTextBox.getRawContent()); 
 					questionAnswerDo.setAnswerType("text");
 					questionAnswerDo.setSequence(i+1);
+					questionAnswerDo.setIsCorrect(true);
 					enteredAnswers.add(questionAnswerDo);
 				}
 			}else if(getQuestionType().equalsIgnoreCase("HT_HL")){
@@ -2243,6 +2248,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				questionAnswerDo.setAnswerText(addQuestionAnswerChoice.highlightTextArea.getRawContent());
 				questionAnswerDo.setAnswerType("text");
 				questionAnswerDo.setSequence(1);
+				questionAnswerDo.setIsCorrect(true);
 				enteredAnswers.add(questionAnswerDo);
 			}
 			
@@ -2567,50 +2573,102 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     
     
     public boolean isHotTextAnswerChoiceEmpty(HTMLPanel questionAnswerChoiceContainer){
-  		profanityList=new ArrayList<ProfanityCheckDo>();
-  		boolean isReorder=false;
-           for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
-                   final AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
-                   String answerChoiceValue=null;
-                   addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
-                   addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
-                   if(i==0){
-                	   if(addQuestionAnswerChoice.reorderRDButton.getValue()){
-                		   isReorder=true;
-                	   }else{
-                		   isReorder=false;
-                	   }
-                   }
-                   if(isReorder){
-                   answerChoiceValue=addQuestionAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
-                   }else{
-                	   answerChoiceValue=addQuestionAnswerChoice.highlightTextArea.getContent().replaceAll("\\<.*?>","");
-                   }
-                  	 
-                   ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
-                   if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
-                  	  	 isAnswerChoiceSelected=true;
-                           addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
-                           addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
-                           profanitymodel.setQuestionID(Integer.toString(i));
-                           profanityList.add(profanitymodel);
-                           addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "display:block");
-                   }else{
-                  	 if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
-                  		   isAnswerChoiceSelected=true;
-                  		   Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
-                  		   addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
-                  		   addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
-                  	 }else{
-                  		 	isAnswerChoiceSelected=false;
-  	                		profanitymodel.setQuestionID(Integer.toString(i));
-  	                     	profanitymodel.setQuestionText(answerChoiceValue);
-  	                     	profanityList.add(profanitymodel);
-                  	 }
-                   }
-           }
-           return isAnswerChoiceSelected;
-   }
+    	profanityList=new ArrayList<ProfanityCheckDo>();
+    	boolean isReorder=false;
+    	for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
+    		final AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
+    		String answerChoiceValue=null;
+    		addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+    		addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
+    		if(i==0){
+    			if(addQuestionAnswerChoice.reorderRDButton.getValue()){
+    				isReorder=true;
+    			}else{
+    				isReorder=false;
+    			}
+    		}
+    		if(isReorder){
+    			answerChoiceValue=addQuestionAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
+    		}else{
+    			answerChoiceValue=addQuestionAnswerChoice.highlightTextArea.getContent().replaceAll("\\<.*?>","");
+    		}
+
+    		ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
+    		if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
+    			isAnswerChoiceSelected=true;
+    			addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
+    			addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
+    			profanitymodel.setQuestionID(Integer.toString(i));
+    			profanityList.add(profanitymodel);
+    			addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "display:block");
+    		}else{
+    			if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
+    				isAnswerChoiceSelected=true;
+    				Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
+    				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
+    				addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
+    			}else if(!isReorder){
+    				String text=answerChoiceValue;
+    				String[] temp;
+    				String errorMsg;
+    				String errorMsg2;
+
+    				if(htType.equalsIgnoreCase(i18n.GL3219())){
+    					temp = text.split(" ");
+    					errorMsg=ERROR_MSG_HTHL_SYNTAX;
+    					errorMsg2=ERROR_MSG_HTHL;
+    				}else{
+    					temp = text.split("\\.");
+    					errorMsg=ERROR_MSG_HTHL_SENTENCE;
+    					errorMsg2=ERROR_MSG_HTHL_SENTENCE;
+    				}
+
+    				if(temp.length>1  && answerChoiceValue.contains("${") && answerChoiceValue.contains("}$")){
+    					boolean isCorrect=false;
+    					for(int k=0;k<temp.length;k++){
+    						if(temp[k].contains("${") || temp[k].contains("}$")){
+    							if(temp[k].startsWith("${") || temp[k].startsWith(" ${") && temp[k].endsWith("}$") && temp[k].trim().length()>0){
+    								isCorrect=true;
+    							}else{
+    								isCorrect=false;
+    								break;
+    							}
+    						}
+    					}
+    					if(isCorrect){
+    						isAnswerChoiceSelected=false;
+    						profanitymodel.setQuestionID(Integer.toString(i));
+    						profanitymodel.setQuestionText(answerChoiceValue);
+    						profanityList.add(profanitymodel);
+    					}else{
+    						isAnswerChoiceSelected=true;
+    						setHTAnswerErrorMessage(addQuestionAnswerChoice,errorMsg);
+    					}
+    				}
+
+    				else{
+    					isAnswerChoiceSelected=true;
+    					setHTAnswerErrorMessage(addQuestionAnswerChoice,errorMsg2);
+    				}
+
+
+    			}else{
+    				isAnswerChoiceSelected=false;
+    				profanitymodel.setQuestionID(Integer.toString(i));
+    				profanitymodel.setQuestionText(answerChoiceValue);
+    				profanityList.add(profanitymodel);
+    			}
+    		}
+    	}
+    	return isAnswerChoiceSelected;
+    }
+
+
+    public void setHTAnswerErrorMessage(final AddHotTextQuestionAnswerChoice addQuestionAnswerChoice,String errorMsg){
+    	Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
+    	addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(errorMsg);
+    	addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
+    }
     
      /*public void resetAllErrorFields(){
     		errorMessageForQuestion.setText("");
@@ -2867,8 +2925,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 */
 	
 	protected void showEditQuestionResourceView(){
-		
-		System.out.println("showEditQuestionResourceView--");
 		
 		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
 		Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator(); 
