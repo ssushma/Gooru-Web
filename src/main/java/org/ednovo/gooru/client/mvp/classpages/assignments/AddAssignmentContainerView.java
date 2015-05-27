@@ -776,28 +776,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void setPagination(int count){
 		totalHitCount=count;
 	}
-	/**
-	 * 
-	 * @fileName : AddAssignmentContainerView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class OnDropdownListPlaceHolderClick implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
-		}
-	}
-	
+		
 	/**
 	 * 
 	 * @fileName : AddAssignmentContainerView.java
@@ -859,12 +838,10 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 	}
 	
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
 	}
 	
 	@Override

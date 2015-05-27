@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classlist;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -81,7 +82,7 @@ public class InviteStudentsPopup extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		setPixelSize(456,224);
 		setStaticText();
-		emailTextArea.getElement().setAttribute("placeholder", "Separate email addresses with a comma or semicolon");
+		emailTextArea.getElement().setAttribute("placeholder", i18n.GL1184_1());
 		emailValidationLbl.setVisible(false);
 		setGlassEnabled(true);
 		center();
@@ -109,28 +110,20 @@ public class InviteStudentsPopup extends PopupPanel {
 	 */
 	private void setStaticText() {
 		headerPanel.getElement().setInnerHTML(i18n.GL1522());
-		headerPanel.getElement().setId("pnlHeader");
-		headerPanel.getElement().setAttribute("alt",i18n.GL1522());
-		headerPanel.getElement().setAttribute("title",i18n.GL1522());
+		StringUtil.setAttributes(headerPanel.getElement(), "pnlHeader", i18n.GL1522(), i18n.GL1522());
 		
 		titlePanel.getElement().setInnerHTML(i18n.GL1521());
-		titlePanel.getElement().setId("pnlTitle");
-		titlePanel.getElement().setAttribute("alt",i18n.GL1521());
-		titlePanel.getElement().setAttribute("title",i18n.GL1521());
+		StringUtil.setAttributes(titlePanel.getElement(), "pnlTitle", i18n.GL1522(), i18n.GL1521());
 		
 		emailTextArea.getElement().setId("tatEmail");
 		StringUtil.setAttributes(emailTextArea, true);
 		emailValidationLbl.getElement().setId("errlblEmailValidation");
 		
 		cancelBtn.setText(i18n.GL0142());
-		cancelBtn.getElement().setId("btnCancel");
-		cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
-		cancelBtn.getElement().setAttribute("title",i18n.GL0142());
+		StringUtil.setAttributes(cancelBtn.getElement(), "btnCancel", i18n.GL0142(), i18n.GL0142());
 		
 		inviteBtn.setText(i18n.GL0944());
-		inviteBtn.getElement().setId("btnInvite");
-		inviteBtn.getElement().setAttribute("alt",i18n.GL0944());
-		inviteBtn.getElement().setAttribute("title",i18n.GL0944());
+		StringUtil.setAttributes(inviteBtn.getElement(), "btnInvite", i18n.GL0944(), i18n.GL0944());
 	}
 
 	@UiHandler("cancelBtn")

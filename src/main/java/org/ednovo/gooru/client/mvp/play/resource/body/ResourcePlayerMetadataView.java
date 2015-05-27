@@ -1002,6 +1002,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		else{
 			if(!sourceUrl.contains("docs.google.com")){
 				isProtocolsMatched=sourceUrl.contains("https");
+			}else{
+				isProtocolsMatched=true;
 			}
 		}
 		if(sourceUrl.toLowerCase().endsWith("jpg")||sourceUrl.toLowerCase().endsWith("jpeg")){

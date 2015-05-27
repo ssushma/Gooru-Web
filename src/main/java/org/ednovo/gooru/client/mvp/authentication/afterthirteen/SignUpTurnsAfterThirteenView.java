@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.authentication.uc.SignUpDontWorryView;
@@ -127,23 +128,13 @@ public class SignUpTurnsAfterThirteenView extends
 	public void displayView() {
 		appPopUp = new AppPopUp(i18n.GL0697());
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
-		/*
-		 * appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
-		 * .registerPopupStyle());
-		 */appPopUp.setGlassEnabled(true);
+		appPopUp.setGlassEnabled(true);
 		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css()
 				.signUpPopUpGlassCss());
 
-		/*
-		 * appPopUp.setAutoHideOnHistoryEventsEnabled(false);
-		 * 
-		 * appPopUp.getElement().getStyle().setZIndex(99);
-		 */Window.enableScrolling(false);
+		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		// appPopUp.getElement().setAttribute("style",
-		// "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
-		// appPopUp.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 		appPopUp.center();
 	}
@@ -248,7 +239,6 @@ public class SignUpTurnsAfterThirteenView extends
 		tooltipContent.getElement().setAttribute("title", "");
 
 		btnSubmit.getElement().setAttribute("style", "margin-left: 10px");
-		// txtEmailId.addBlurHandler(new OnBlurHandler());
 		txtEmailId.addKeyUpHandler(new OnKeyUpHandler());
 
 		lblUpdating.setVisible(false);
@@ -478,19 +468,16 @@ public class SignUpTurnsAfterThirteenView extends
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUnload() {
-		// TODO Auto-generated method stub
 
 	}
 
