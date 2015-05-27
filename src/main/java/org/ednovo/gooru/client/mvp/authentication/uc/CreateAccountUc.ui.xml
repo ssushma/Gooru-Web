@@ -127,22 +127,22 @@
 						<gg:ErrorLabelUc ui:field="passwordValidUc" />
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-3 col-xs-6 col-sm-3 {res1.css.roleOption} {res1.css.teacherRole}" ui:field="panelTeacher">
+					<g:HTMLPanel styleName="col-md-3 col-xs-3 col-sm-3 {res1.css.roleOption} {res1.css.teacherRole}" ui:field="panelTeacher">
 							<g:HTMLPanel styleName="{res1.css.roleOptionImage}"></g:HTMLPanel>
 							<g:Label styleName="{res1.css.roleLabel}" ui:field="lblTeacher"></g:Label>
 							<g:HTMLPanel ui:field="rdTeacher" />
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-3 col-xs-6 col-sm-3 {res1.css.roleOption} {res1.css.studentRole}" ui:field="panelStudent">
+						<g:HTMLPanel styleName="col-md-3 col-xs-3 col-sm-3 {res1.css.roleOption} {res1.css.studentRole}" ui:field="panelStudent">
 							<g:HTMLPanel styleName="{res1.css.roleOptionImage}"></g:HTMLPanel>
 							<g:Label styleName="{res1.css.roleLabel}" ui:field="lblStudent"></g:Label>
 							<g:HTMLPanel ui:field="rdStudent" />
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-3 col-xs-6 col-sm-3 {res1.css.roleOption} {res1.css.parentRole}" ui:field="panelParent">
+						<g:HTMLPanel styleName="col-md-3 col-xs-3 col-sm-3 {res1.css.roleOption} {res1.css.parentRole}" ui:field="panelParent">
 							<g:HTMLPanel styleName="{res1.css.roleOptionImage}"></g:HTMLPanel>
 							<g:Label styleName="{res1.css.roleLabel}" ui:field="lblParent"></g:Label>
 							<g:HTMLPanel ui:field="rdParent" />
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-3 col-xs-6 col-sm-3 {res1.css.roleOption} {res1.css.otherRole}" ui:field="panelOther">
+						<g:HTMLPanel styleName="col-md-3 col-xs-3 col-sm-3 {res1.css.roleOption} {res1.css.otherRole}" ui:field="panelOther">
 							<g:HTMLPanel styleName="{res1.css.roleOptionImage}"></g:HTMLPanel>
 							<g:Label styleName="{res1.css.roleLabel}" ui:field="lblOther"></g:Label>
 							<g:HTMLPanel ui:field="rdOther" />
