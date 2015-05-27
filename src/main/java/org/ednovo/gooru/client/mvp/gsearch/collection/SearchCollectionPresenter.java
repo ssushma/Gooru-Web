@@ -153,8 +153,12 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
 	}
 	@Override
-	protected void requestSearchLoad(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchResultsJsonAsyncCallback) {
-		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
+	protected void requestSearchLoad(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchResultsJsonAsyncCallback,boolean isBackTotop) {
+		if(isBackTotop){
+			getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsBackToTop());
+		}else{
+			getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
+		}
 	}
 	@Override
 	protected void requestSearchFormJson(String result,SearchDo<CollectionSearchResultDo> searchDo2) {
