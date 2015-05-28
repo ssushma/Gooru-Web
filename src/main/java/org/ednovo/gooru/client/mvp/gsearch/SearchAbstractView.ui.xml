@@ -201,6 +201,7 @@
 				<g:HTMLPanel ui:field="pnlBackToTop">
 					<a><span></span></a>
 				</g:HTMLPanel>
+				<sg:FooterOrganizeUc ui:field="panelFoooter"/>
 			</div>
 		</div>
 	</g:HTMLPanel>
