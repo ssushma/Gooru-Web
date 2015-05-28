@@ -117,10 +117,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 	public final void onKeyUp(KeyUpEvent event) {
 		int keyCode = event.getNativeKeyCode();
 		String text = this.getText().replaceAll("-<n> Gooru Search</n>", "").trim();
-		if (keyCode != (char) KeyCodes.KEY_TAB  && keyCode != (char) KeyCodes.KEY_LEFT && (keyCode != (char) KeyCodes.KEY_RIGHT) && (keyCode != (char) KeyCodes.KEY_DOWN) && (keyCode != (char) KeyCodes.KEY_UP)) {
-			keyAction(text,event);
-		}
-		if(keyCode == (char) KeyCodes.KEY_ENTER){
+		if (keyCode != (char) KeyCodes.KEY_TAB  && keyCode != (char) KeyCodes.KEY_ENTER && keyCode != (char) KeyCodes.KEY_LEFT && (keyCode != (char) KeyCodes.KEY_RIGHT) && (keyCode != (char) KeyCodes.KEY_DOWN) && (keyCode != (char) KeyCodes.KEY_UP)) {
 			keyAction(text,event);
 		}
 	}
