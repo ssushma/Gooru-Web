@@ -711,7 +711,7 @@ word-wrap: break-word;
 		float: left;
 	}
 	#morePeoplePopWrapper .closeButton {
-	    margin-left: 0px;
+	    margin-left: 5%;
 	}
 	#gooruSearchMainContainer .collectionImg{
 		width:160px;
@@ -820,15 +820,19 @@ word-wrap: break-word;
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}
-		#gooruSearchMainContainer  #back-top {
-	margin-left: 81%;
+	#gooruSearchMainContainer  #back-top {
+		margin-left: 81%;
 	}
 	#morePeoplePopWrapper .peopleBlock .viewMore{
 		width:50%;
 		float: left;
 	}
+	#morePeoplePopWrapper .peopleBlock .viewMore p{
+		margin-left: 21%;
+		margin-top: -2%;
+	}
 	#morePeoplePopWrapper .closeButton {
-	    margin-left: 0px;
+	    margin-left: 7%;
 	}
 	#gooruSearchMainContainer .collectionImg{
 		width:100% !important;
@@ -1051,9 +1055,9 @@ word-wrap: break-word;
 		width:50%;
 		float: left;
 	}
-	
-	#morePeoplePopWrapper .closeButton {
-	    margin-left: 0px;
+	#morePeoplePopWrapper .peopleBlock .viewMore p{
+		margin-left: 21%;
+		margin-top: -2%;
 	}
 	#gooruSearchMainContainer .fixedPosition{
 		position: relative;
