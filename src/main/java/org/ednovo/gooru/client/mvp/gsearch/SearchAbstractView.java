@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
-import org.ednovo.gooru.client.mvp.home.FooterOrganizeUc;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -137,8 +136,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField HTMLEventPanel resourceFiltersDropDwn,moreFilterPanel;
 	
 	@UiField Image publisherTooltip,aggregatorTooltip,authorQuestionTooltip;
-	
-	@UiField FooterOrganizeUc panelFoooter;
 	
 	@UiField(provided = true)
 	AppSuggestBox publisherSgstBox;
