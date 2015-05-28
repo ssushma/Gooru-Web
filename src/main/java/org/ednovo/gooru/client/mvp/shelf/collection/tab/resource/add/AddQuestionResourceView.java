@@ -175,6 +175,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	private String htType=i18n.GL3219();
+	private String htSentenceType=i18n.GL3223();
 	
 	public String getQuestionType() {
 		return questionType;
@@ -1419,6 +1420,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.singleRDButtonClick();
+				htSentenceType=i18n.GL3222();
 			}
 		});
 		addQuestionAnswer.multiRDButton.addClickHandler(new ClickHandler() {
@@ -1426,6 +1428,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.multiRDButtonClick();
+				htSentenceType=i18n.GL3223();
 			}
 		});
 	}
@@ -2625,10 +2628,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
     				if(temp.length>1  && answerChoiceValue.contains("${") && answerChoiceValue.contains("}$")){
     					boolean isCorrect=false;
+    					int count=0;
     					for(int k=0;k<temp.length;k++){
     						if(temp[k].contains("${") || temp[k].contains("}$")){
-    							if(temp[k].startsWith("${") || temp[k].startsWith(" ${") && temp[k].endsWith("}$") && temp[k].trim().length()>0){
+    							if((temp[k].startsWith("${") || temp[k].startsWith(" ${")) &&(temp[k].endsWith("}$") || temp[k].endsWith("}$.")) && temp[k].trim().length()>0){
     								isCorrect=true;
+    								count=count+1;
     							}else{
     								isCorrect=false;
     								break;
@@ -2636,14 +2641,25 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						}
     					}
     					if(isCorrect){
-    						isAnswerChoiceSelected=false;
-    						profanitymodel.setQuestionID(Integer.toString(i));
-    						profanitymodel.setQuestionText(answerChoiceValue);
-    						profanityList.add(profanitymodel);
+    						
+    						if(count>1 && htSentenceType.equalsIgnoreCase(i18n.GL3222())){
+        						isAnswerChoiceSelected=true;
+        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3239());
+        					}else if(count<2 && htSentenceType.equalsIgnoreCase(i18n.GL3223())){
+        						isAnswerChoiceSelected=true;
+        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3238());
+        					}else{
+        						isAnswerChoiceSelected=false;
+        						profanitymodel.setQuestionID(Integer.toString(i));
+        						profanitymodel.setQuestionText(answerChoiceValue);
+        						profanityList.add(profanitymodel);
+        					}
+    						
     					}else{
     						isAnswerChoiceSelected=true;
     						setHTAnswerErrorMessage(addQuestionAnswerChoice,errorMsg);
     					}
+    					
     				}
 
     				else{
