@@ -34,32 +34,32 @@ public class ResourceImageWidget extends Composite {
 	@UiField Image imgResourceImg;
 	@UiField HTMLPanel imageOverlay;
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
+	String categoryValue="";
 	
 	public ResourceImageWidget(final ResourceDo resourceDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		final String categoryValue=StringUtil.getCategory(resourceDo.getResourceFormat().getValue()!=null?resourceDo.getResourceFormat().getValue().toLowerCase():"");
-		if(resourceDo.getThumbnails()!= null){
-			String thumbnailAssetURI=resourceDo.getThumbnails().getThumbnailAssetURI()!=null?resourceDo.getThumbnails().getThumbnailAssetURI():"";
-			String thumbnailFolder=resourceDo.getThumbnails().getThumbnailFolder()!=null?resourceDo.getThumbnails().getThumbnailFolder():"";
-			String thumbnailName=resourceDo.getThumbnails().getThumbnailName()!=null?resourceDo.getThumbnails().getThumbnailName():"";
-			String resourceUrl = resourceDo.getUrl() != null ? resourceDo.getUrl() : null;
-			AppClientFactory.printInfoLogger("ResourceImageUtil.getYoutubeVideoId(resourceUrl) : "+ResourceImageUtil.getYoutubeVideoId(resourceUrl));
-			if ("video".equalsIgnoreCase(categoryValue) && (ResourceImageUtil.getYoutubeVideoId(resourceUrl) != null)){
-				String thumbnailUrl = ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(resourceUrl),Window.Location.getProtocol());
-				imgResourceImg.setUrl(thumbnailUrl);
-				AppClientFactory.printInfoLogger("resourceUrl : "+resourceUrl+"---categoryValue : "+categoryValue+"---thumbnailUrl : "+thumbnailUrl);
-			}else{
-				if(thumbnailName.startsWith("http"))
-				{
-					if("video".equalsIgnoreCase(categoryValue)){
-						imgResourceImg.setUrl(thumbnailName);
-					}
-					else{
+		if(resourceDo.getResourceFormat()!=null){
+			categoryValue=StringUtil.getCategory(resourceDo.getResourceFormat().getValue()!=null?resourceDo.getResourceFormat().getValue().toLowerCase():"");
+			if(resourceDo.getThumbnails()!= null){
+				String thumbnailAssetURI=resourceDo.getThumbnails().getThumbnailAssetURI()!=null?resourceDo.getThumbnails().getThumbnailAssetURI():"";
+				String thumbnailFolder=resourceDo.getThumbnails().getThumbnailFolder()!=null?resourceDo.getThumbnails().getThumbnailFolder():"";
+				String thumbnailName=resourceDo.getThumbnails().getThumbnailName()!=null?resourceDo.getThumbnails().getThumbnailName():"";
+				String resourceUrl = resourceDo.getUrl() != null ? resourceDo.getUrl() : null;
+				AppClientFactory.printInfoLogger("ResourceImageUtil.getYoutubeVideoId(resourceUrl) : "+ResourceImageUtil.getYoutubeVideoId(resourceUrl));
+				if ("video".equalsIgnoreCase(categoryValue) && (ResourceImageUtil.getYoutubeVideoId(resourceUrl) != null)){
+					String thumbnailUrl = ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(resourceUrl),Window.Location.getProtocol());
+					imgResourceImg.setUrl(thumbnailUrl);
+					AppClientFactory.printInfoLogger("resourceUrl : "+resourceUrl+"---categoryValue : "+categoryValue+"---thumbnailUrl : "+thumbnailUrl);
+				}else{
+					if(thumbnailName.startsWith("http")){
+						if("video".equalsIgnoreCase(categoryValue)){
+							imgResourceImg.setUrl(thumbnailName);
+						}else{
+							imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
+						}
+					}else{
 						imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
 					}
-				}
-				else{
-					imgResourceImg.setUrl(thumbnailAssetURI+thumbnailFolder+thumbnailName);
 				}
 			}
 		}else{
