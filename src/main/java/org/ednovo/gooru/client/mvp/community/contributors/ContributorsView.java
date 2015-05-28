@@ -233,6 +233,7 @@ public class ContributorsView extends
 	 */
 	public void displayContributors(ArrayList<LibraryUserDo> result) {
 		int count=0;
+		panelContributorsList.clear();
 		for (int i = 0; count < 8; i++) {
 			if (result.get(i).getGooruUId() != null
 					&& !result.get(i).getGooruUId().equalsIgnoreCase("")
