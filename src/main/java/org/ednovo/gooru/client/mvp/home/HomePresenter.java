@@ -221,7 +221,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				});
 			}
 		});
-		}
+		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
+		tooltipTimer = new Timer() {
+			public void run() {
+				contributorsPresenter.getContributors();
+			}
+		};
+		tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+
+	}
 
 	@Override
 	public void onReveal() {
@@ -418,13 +426,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}else{
 			getView().getBtnSignUp().setVisible(false);
 		}
-		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
-		tooltipTimer = new Timer() {
-			public void run() {
-				contributorsPresenter.getContributors();
-			}
-		};
-		tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
 	}
 
 	@Override
