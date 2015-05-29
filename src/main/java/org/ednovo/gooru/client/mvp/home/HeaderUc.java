@@ -459,7 +459,7 @@ public class HeaderUc extends Composite
 								String queryVal = params.get("query");
 								// queryVal = queryVal.replaceAll("%5C1", "&");
 								Map<String, String> map = params;
-								queryVal.replaceAll("-<n> Gooru Search</n>", "");
+							//	queryVal.replaceAll("-<n> Gooru Search</n>", "");
 								map.put("query", queryVal);
 								editSearchTxtBox.setText(queryVal);
 								AppClientFactory.getPlaceManager().revealPlace(
@@ -1645,7 +1645,7 @@ public class HeaderUc extends Composite
 				
 			}
 		}
-		params.put("query", getEditSearchText().replaceAll("-<n> Gooru Search</n>", ""));
+		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
 		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT,null);
