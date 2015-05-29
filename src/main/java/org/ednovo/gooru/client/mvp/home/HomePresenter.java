@@ -81,6 +81,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -170,11 +171,13 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 	private boolean isLandingPageLoaded = false;
 
-	@ProxyStandard
 	@NameToken(PlaceTokens.HOME)
 	@UseGatekeeper(AppPlaceKeeper.class)
+	@ProxyCodeSplit
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
+
+
 
 //	PreFilterPopup preFilter = new PreFilterPopup();
 
