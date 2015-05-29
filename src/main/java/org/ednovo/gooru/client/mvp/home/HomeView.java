@@ -937,14 +937,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
+	final String searchText= txtSearch.getText().replaceAll("-<n> Gooru Search</n>", "");
+		txtSearch.setText(searchText.trim());
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
 			public void onSuccess() {
-
-				String searchText = txtSearch.getText();
-				searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
-				txtSearch.setText(searchText.trim());
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				if (txtSearch.getText() != null && txtSearch.getText().length() > 0) {
