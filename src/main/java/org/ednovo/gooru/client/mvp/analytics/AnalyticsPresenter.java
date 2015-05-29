@@ -79,12 +79,9 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 	@Override
 	public void getGradeCollectionJson() {
-		
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
 			@Override
 			public void onSuccess() {
-
 				clearSlot(COLLECTION_PROGRESS_SLOT);
 				setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
 				getView().getCollectionProgressSlot().clear();
@@ -119,6 +116,8 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 											}
 										});
 									}
+								}else{
+									getView().setNoDataText();
 								}
 							}
 							@Override
