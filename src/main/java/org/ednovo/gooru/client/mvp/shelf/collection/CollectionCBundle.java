@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
 
@@ -37,6 +38,10 @@ import com.google.gwt.resources.client.CssResource;
 public interface CollectionCBundle extends ClientBundle{
 	
 	static final CollectionCBundle INSTANCE = GWT.create(CollectionCBundle.class);
+	
+	@NotStrict
+	@Source("res_Collection.css")
+	CollectionCss getResponsiveStyle();
 	
 	public interface  CollectionCss extends CssResource{
 		

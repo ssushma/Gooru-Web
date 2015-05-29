@@ -402,6 +402,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.Drive
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter.IsDriveyProxy;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDriveView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.IsQuestionTypeView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
 import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
@@ -660,5 +663,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
 		bindPresenter(EpapaLibraryPresenter.class, IsEpapaLibraryView.class, EpapaLibraryView.class,IsEpapaLibraryProxy.class);
 		
+		bindSingletonPresenterWidget(QuestionTypePresenter.class,IsQuestionTypeView.class, QuestionTypeView.class);
 	}
 }

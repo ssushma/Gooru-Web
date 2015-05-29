@@ -40,7 +40,6 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -49,6 +48,7 @@ import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -115,6 +115,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private static final String ID = "id";
 	
+	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
 	}
@@ -136,6 +137,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.drivePresenter = drivePresenter;
 	}
 
+	@Inject QuestionTypePresenter questionTypePresenter;
 
 	@Inject
 	private ResourceServiceAsync resourceService;
@@ -147,9 +149,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	AddStandardsPresenter addStandardsPresenter = null;
 	
 	@Inject
-	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter) {
+	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter,QuestionTypePresenter questionTypePresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
+		this.questionTypePresenter=questionTypePresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(AddResouceImageEvent.TYPE, this);
 		
@@ -572,6 +575,17 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	public void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl) {
 		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
+	}
+
+	@Override
+	public void addSelectedQuestionType(String type) {
+		if(type.equalsIgnoreCase("HS")){
+		addToSlot(SLOT_QUESTION_TYPE, questionTypePresenter);
+		questionTypePresenter.ImageUpload(imageUploadPresenter,getView());
+		}else {
+			clearSlot(SLOT_QUESTION_TYPE);
+			getView().clearQuestionSlot();
+		}
 	}
 
 }

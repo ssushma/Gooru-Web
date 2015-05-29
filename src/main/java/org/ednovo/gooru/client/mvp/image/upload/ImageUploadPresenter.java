@@ -35,20 +35,16 @@ import org.ednovo.gooru.client.mvp.shelf.IsShelfView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
+import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.service.MediaUploadServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -67,6 +63,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
     private boolean isPublicProfileImage=false;
     private boolean isuserOwnResourceImage=false;
     private boolean isUdateProfileImage=false;
+    private boolean isAnswerImage=false;
 	
 	private String collectionItemId;
 	private String fileNameWithoutRepository=null;
@@ -174,6 +171,10 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					saveUserProfileImage(filename);
 				}else if(isuserOwnResourceImage){
 					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
+					getView().closeImageUploadWidget();
+					getView().resetImageUploadWidget();
+				}else if(isAnswerImage){
+					AppClientFactory.fireEvent(new AddAnswerImageEvent(filename,fileNameWithoutRepository,isAnswerImage));
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
 				}
@@ -554,5 +555,13 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	public void setSaveImageCollectionAsyncCallback(
 			SimpleAsyncCallback<String> saveImageCollectionAsyncCallback) {
 		this.saveImageCollectionAsyncCallback = saveImageCollectionAsyncCallback;
+	}
+
+	public boolean isAnswerImage() {
+		return isAnswerImage;
+	}
+
+	public void setAnswerImage(boolean isAnswerImage) {
+		this.isAnswerImage = isAnswerImage;
 	}
 }

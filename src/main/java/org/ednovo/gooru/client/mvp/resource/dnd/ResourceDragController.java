@@ -95,8 +95,11 @@ public class ResourceDragController extends AppPickupDragController {
 			adjustLeft = ((Draggable) context.draggable).getDraggableUc().getDragLeftCorrection();
 			adjustTop = ((Draggable) context.draggable).getDraggableUc().getDragTopCorrection();
 		}
-		DOMUtil.fastSetElementPosition(context.draggable.getElement(), context.mouseX - context.draggable.getAbsoluteLeft() - adjustLeft, context.mouseY - context.draggable.getAbsoluteTop() - adjustTop);
-	}
+		if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().toString().equals(PlaceTokens.COLLECTION_PLAY)) {
+			DOMUtil.fastSetElementPosition(context.draggable.getElement(), context.mouseX - context.draggable.getAbsoluteLeft() - adjustLeft, context.mouseY - context.draggable.getAbsoluteTop() - adjustTop);
+		}
+		
+		}
 
 	@Override
 	public void previewDragStart() throws VetoDragException {
