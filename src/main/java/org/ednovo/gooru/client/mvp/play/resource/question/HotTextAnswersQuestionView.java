@@ -148,7 +148,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
 						
 						if(lbl.getText().startsWith("${") && lbl.getText().endsWith("}$"+SPACE) ){
-							String lblText=lbl.getText().replaceAll("[${ }]", "");
+							String lblText=lbl.getText().replaceAll("[${}]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_CORRECT);
 						}else{
@@ -176,14 +176,15 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						temp = text.split("\\.");
 						for(int k=0;k<temp.length;k++){
 							if(temp[k].trim().length()>0){
+								System.out.println("temp[k]--"+temp[k]);
 							final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
 							
 							if(lbl.getText().startsWith("${") ||  lbl.getText().startsWith(" ${") ){
-								String lblText=lbl.getText().replaceAll("[${ }]", "");
+								String lblText=lbl.getText().replaceAll("[${}]", "");
 								lbl.setText(lblText);
 								lbl.getElement().setId(STYLE_CORRECT);
 							}else{
-								String lblText=lbl.getText().replaceAll("[${ }]", "");
+								String lblText=lbl.getText().replaceAll("[${}]", "");
 								lbl.setText(lblText);
 								lbl.getElement().setId(STYLE_INCORRECT);
 							}
@@ -320,20 +321,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				}
 				j++;
 			}
-			
-			
-			/*if(widget.getElement().getId()!=null && !widget.getElement().getId().equalsIgnoreCase("")){
-				attemptAnsSequence[j]=widget.getElement().getId();
-				j++;
-			}*/
 		}
-		/*boolean isCorrect=Compare(correctAnsSequence,attemptAnsSequence);
-		
-		if(isCorrect){
-			optionsContainerFpnl.addStyleName(STYLE_CORRECT);
-		}else{
-			optionsContainerFpnl.addStyleName(STYLE_INCORRECT);
-		}*/
 		}else{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
@@ -387,16 +375,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		
 	}
 	
-	private static boolean Compare(String[] a,String[] b)
-	{
-		if (a.length != b.length) 	return false;
-
-		for (int i = 0; i< a.length; i++)
-
-			if (!a[i].equalsIgnoreCase(b[i]))  	return false;
-
-		return true;
-	}
 	/**
 	 * This method is used to remove HTMLTags from the String
 	 * @param text
