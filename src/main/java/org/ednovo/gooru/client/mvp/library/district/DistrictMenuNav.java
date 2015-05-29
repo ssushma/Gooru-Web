@@ -57,21 +57,21 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class DistrictMenuNav extends Composite {
 
-	@UiField HTMLPanel tabsInner, scienceCourses, mathCourses, socialCourses, elaCourses,learnCourses;
+	@UiField HTMLPanel tabsInner, scienceCourses, mathCourses, socialCourses, elaCourses,learnCourses,aboutCourses;
 	
-	@UiField HTMLEventPanel sciencePanel, mathPanel, socialPanel, elaPanel,learnPanel;
+	@UiField HTMLEventPanel sciencePanel, mathPanel, socialPanel, elaPanel,learnPanel,aboutPanel;
 	
-	@UiField Label scienceText,mathText,socialSciencesText,languageArtsText,learnText;
+	@UiField Label scienceText,mathText,socialSciencesText,languageArtsText,learnText,aboutText;
 	
 	@UiField DistrictStyleBundle districtStyleUc;
 	
 	@UiField Anchor aboutGooruAnr;
 	
-	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning";
+	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning",EXTENDING="extending";
 	
 	private static final String ACTIVE = "active";
 	
-	private boolean isScienceHovered = false, isMathHovered = false, isSocialHovered = false, isLanguageHovered = false, isLearningHovered = false,iselementaryHoverd =false;
+	private boolean isScienceHovered = false, isMathHovered = false, isSocialHovered = false, isLanguageHovered = false,isExtendingHovered=false, isLearningHovered = false,iselementaryHoverd =false;
 	
 	private Map<String, String> subjectIdList = new HashMap<String, String>();
 	
@@ -144,6 +144,15 @@ public abstract class DistrictMenuNav extends Composite {
 				}
 			}
 		});
+		aboutPanel.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(!isExtendingHovered) {
+					isExtendingHovered = true;
+					getTaxonomyData(subjectIdList.get(EXTENDING),EXTENDING);
+				}
+			}
+		});
 
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
@@ -196,26 +205,26 @@ public abstract class DistrictMenuNav extends Composite {
 		languageArtsText.getElement().setAttribute("alt",i18n.GL1003());
 		languageArtsText.getElement().setAttribute("title",i18n.GL1003());
 		
+		learnText.setText(i18n.GL1682());
 		learnText.getElement().setId("lblLearnText");
 		learnText.getElement().setAttribute("alt","Elementary");
 		learnText.getElement().setAttribute("title","Elementary");
-		learnText.setText(i18n.GL1682());
 
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 			learnText.setText(i18n.GL2077());
-			setGooruAnrText(i18n.GL1899(), i18n.GL1900());
+			setGooruAnrText(i18n.GL1899(), i18n.GL1900(),true);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)) {
-			setGooruAnrText(i18n.GL2063(), i18n.GL2064());
+			setGooruAnrText(i18n.GL2063(), i18n.GL2064(),false);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 			learnText.setText(i18n.GL2076());
-			setGooruAnrText(i18n.GL1827(), i18n.GL1828());
+			setGooruAnrText(i18n.GL1827(), i18n.GL1828(),false);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
 			learnText.setText(i18n.GL2077());
-			setGooruAnrText(i18n.GL2069(), i18n.GL2070());
+			setGooruAnrText(i18n.GL2069(), i18n.GL2070(),false);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
-			setGooruAnrText(i18n.GL2071(), i18n.GL2072());
+			setGooruAnrText(i18n.GL2071(), i18n.GL2072(),false);
 		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
-			setGooruAnrText(i18n.GL2184(), i18n.GL2185());
+			setGooruAnrText(i18n.GL2184(), i18n.GL2185(),false);
 		}
 
 		aboutGooruAnr.setTarget("_blank");
@@ -231,7 +240,7 @@ public abstract class DistrictMenuNav extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
 			aboutGooruAnr.getElement().getStyle().setWidth(10, Unit.PCT);
 		}
-		
+		aboutPanel.getElement().setId("epnlAboutPanel");
 		sciencePanel.getElement().setId("epnlSciencePanel");
 		scienceCourses.getElement().setId("pnlScienceCourses");
 		mathPanel.getElement().setId("epnlMathPanel");
@@ -241,17 +250,42 @@ public abstract class DistrictMenuNav extends Composite {
 		elaPanel.getElement().setId("epnlElaPanel");
 		elaCourses.getElement().setId("pnlElaCourses");
 		learnPanel.getElement().setId("epnlLearnPanel");
-		learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
-		learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
+		//learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
+		//learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
 		learnCourses.getElement().setId("pnlLearnCourses");
 		aboutGooruAnr.getElement().setId("lnkAboutGooruAnr");
 	}
 	
-	private void setGooruAnrText(String anrTxt, String anrLink) {
-		aboutGooruAnr.setText(anrTxt);
-		aboutGooruAnr.getElement().setAttribute("alt",anrTxt);
-		aboutGooruAnr.getElement().setAttribute("title",anrTxt);
-		aboutGooruAnr.setHref(anrLink);
+	private void setGooruAnrText(String anrTxt, String anrLink,boolean isSausd) {
+		if(isSausd){
+			aboutPanel.setVisible(true);
+			aboutGooruAnr.setVisible(false);
+			aboutText.setText(i18n.GL1899());
+			aboutText.getElement().setId("lblLanguageArtsText");
+			aboutText.getElement().setAttribute("alt",i18n.GL1899());
+			aboutText.getElement().setAttribute("title",i18n.GL1899());
+			
+			sciencePanel.addStyleName(districtStyleUc.tabsSausdLi());
+			mathPanel.addStyleName(districtStyleUc.tabsSausdLi());
+			socialPanel.addStyleName(districtStyleUc.tabsSausdLi());
+			elaPanel.addStyleName(districtStyleUc.tabsSausdLi());
+			learnPanel.addStyleName(districtStyleUc.tabsSausdLi());
+			aboutPanel.addStyleName(districtStyleUc.tabsSausdLi());
+		}else{
+			sciencePanel.removeStyleName(districtStyleUc.tabsSausdLi());
+			mathPanel.removeStyleName(districtStyleUc.tabsSausdLi());
+			socialPanel.removeStyleName(districtStyleUc.tabsSausdLi());
+			elaPanel.removeStyleName(districtStyleUc.tabsSausdLi());
+			learnPanel.removeStyleName(districtStyleUc.tabsSausdLi());
+			aboutPanel.removeStyleName(districtStyleUc.tabsSausdLi());
+			
+			aboutGooruAnr.setVisible(true);
+			aboutPanel.setVisible(false);
+			aboutGooruAnr.setText(anrTxt);
+			aboutGooruAnr.getElement().setAttribute("alt",anrTxt);
+			aboutGooruAnr.getElement().setAttribute("title",anrTxt);
+			aboutGooruAnr.setHref(anrLink);
+		}
 	}
 	
 	public void getTaxonomyData(final String subjectCode, final String subjectName) {
@@ -317,6 +351,8 @@ public abstract class DistrictMenuNav extends Composite {
 					elaCourses.add(courseTitle);
 				} else if(subjectname.equalsIgnoreCase(LEARNING)) {
 					learnCourses.add(courseTitle);
+				} else if(subjectname.equalsIgnoreCase(EXTENDING)) {
+					aboutCourses.add(courseTitle);
 				}
 			}
 		}
@@ -341,6 +377,8 @@ public abstract class DistrictMenuNav extends Composite {
 				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
 			}else if(profileListDo.getTitle().toLowerCase().contains("elementary")) {
 				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
+			}else if(profileListDo.getTitle().toLowerCase().contains(EXTENDING)) {
+				subjectIdList.put(EXTENDING, profileListDo.getGooruOid());
 			}
 			setLearningTabStyle();
  		}
