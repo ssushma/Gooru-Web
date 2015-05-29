@@ -265,6 +265,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     
     private String isItem_lodRefreshed = null;
     
+    private String isItem_Refreshed = null;
+    
     int count=0;
     
     /**
@@ -494,6 +496,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		isPlayerRefreshed();
 		getCollectionDetails();
 	}
 	
@@ -507,6 +510,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
         Cookies.removeCookie("collectionStartTime");
         Cookies.removeCookie("isRefreshed");
         Cookies.removeCookie("collectionActivityEventId");
+        Cookies.removeCookie("resourceStartTime");
     }
     /**
      * This method is used to set cookies values when page is refreshed.
@@ -519,6 +523,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
          Cookies.setCookie("collectionNewDataLogEventId",collectionNewDataLogEventId);
          Cookies.setCookie("collectionStartTime",String.valueOf(collectionStartTime));
          Cookies.setCookie("isRefreshed","true");
+         Cookies.setCookie("resourceStartTime",String.valueOf(resourceStartTime));
     }
     
     /**
@@ -624,11 +629,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
 						getClassPageDetails(AppClientFactory.getPlaceManager().getRequestParameter("cid")); 
 					}else{
-						sessionId=GwtUUIDGenerator.uuid();
-						triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+						//						sessionId=GwtUUIDGenerator.uuid();
+						if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
+							isItem_lodRefreshed = null;
+						}else{
+							triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+						}
 					}
 				}
-				isPlayerRefreshed();
 				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo collectionDo) {
@@ -1359,7 +1367,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void startResourceInsightDataLog(){
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
-		resourceStartTime=PlayerDataLogEvents.getUnixTime();
+		if(GooruConstants.TRUE.equals(isItem_Refreshed)){
+			isItem_Refreshed = null;
+		}else{
+			resourceStartTime=PlayerDataLogEvents.getUnixTime();
+		}
+		
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
 			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				questionType=PlayerDataLogEvents.getQuestionType(collectionItemDo.getResource().getType());
@@ -1851,6 +1864,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			collectionSummaryId=null;
 			isRefreshed = null;
 			isItem_lodRefreshed = null;
+			isItem_Refreshed = null;
 			collectionActivityEventId=null;
 			collectionEndTime=0L;
 			newCollectionStartTime=0L;
@@ -2618,6 +2632,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		String oldCollectionNewDataLogEventId=Cookies.getCookie("collectionNewDataLogEventId");
 		String oldCollectionStartTime=Cookies.getCookie("collectionStartTime");
 		String refreshed=Cookies.getCookie("isRefreshed");
+		String resStartTime = Cookies.getCookie("resourceStartTime");
 		collectionActivityEventIdTemp = Cookies.getCookie("collectionActivityEventId");
         if(!StringUtil.isEmpty(sessionOldId) && !StringUtil.isEmpty(oldCollectionNewDataLogEventId)){
             sessionId=sessionOldId;
@@ -2626,6 +2641,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
             collectionStartTime = collectionStartTime.valueOf(oldCollectionStartTime);
             isRefreshed = refreshed;
             isItem_lodRefreshed = refreshed;
+            isItem_Refreshed = refreshed;
+            resourceStartTime = Long.parseLong(resStartTime); 
             removeCookieValues();
         }
 	}
