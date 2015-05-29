@@ -128,7 +128,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		pageInitialLimitOwner = 10;
 		pageInitialLimitJoined = 10;
 		offsetLimitOwner = 0;
-		offsetLimitOwner = 0;
+		offsetLimitJoined = 0;
 		
 		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
 				new SimpleAsyncCallback<ClasspageListDo >() {
@@ -595,24 +595,16 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						@Override
 						public void onSuccess(ClasspageListDo result) {
 							pageInitialLimitJoined = pageInitialLimitJoined + 10;
-							if(result.getTotalHitCount()>pageInitialLimitJoined)
-							{
+							if(result.getTotalHitCount()>pageInitialLimitJoined){
 								seeMorebtnJoined.setVisible(true);
-							}
-							else
-							{
+							}else{
 								seeMorebtnJoined.setVisible(false);
 							}
-
-
-							for(int i = 0; i<result.getSearchResults().size();i++) 
-							{
+							for(int i = 0; i<result.getSearchResults().size();i++) {
 								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
 								classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Study");
 								joinedClassesContainer.add(classpageWidget);
 							}
-
-							
 						}
 					});
 		}
