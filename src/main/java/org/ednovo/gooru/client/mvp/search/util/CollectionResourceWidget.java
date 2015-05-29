@@ -136,22 +136,17 @@ public class CollectionResourceWidget extends Composite {
 		}
 		
 		Window.addResizeHandler(new ResizeHandler() {
-			
 			@Override
 			public void onResize(ResizeEvent event) {
-				if(Window.getClientWidth()<=768)
-				{
+				if(Window.getClientWidth()<=768){
 					if(resourceTitleText.length()>=15){
 						resourceTitleText=resourceTitleText.substring(0, 15)+"...";
 					}
+				}else{
+					if(resourceTitleText.length()>=25){
+						resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+					}
 				}
-				else
-				{
-				if(resourceTitleText.length()>=25){
-					resourceTitleText=resourceTitleText.substring(0, 25)+"...";
-				}
-				}
-				
 			}
 		});
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
@@ -192,11 +187,9 @@ public class CollectionResourceWidget extends Composite {
 			@Override
 			public void onSuccess(ArrayList<ResourceCollDo> userCollectionsList) {
 					//getView().displayContents(userCollectionsList,searchResultDo);
-				if(userCollectionsList.size()>0)
-				{
-					relatedCollectionImage.setVisible(true);
-					creatorImage.setVisible(true);
-
+				if(userCollectionsList.size()>0){
+						relatedCollectionImage.setVisible(true);
+						creatorImage.setVisible(true);
 						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
 						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
 						relatedCollectionTitle.setText(userCollectionsList.get(0).getTitle());
@@ -212,10 +205,7 @@ public class CollectionResourceWidget extends Composite {
 								setDefaultCollectionImage(collectionType);
 							}
 						});
-					
-				}
-				else
-				{
+				}else{
 					relatedCollectionImage.setVisible(false);
 					creatorImage.setVisible(false);
 					relatedCollectionTitle.setStyleName("collectionTitleNoCollection");
@@ -230,9 +220,6 @@ public class CollectionResourceWidget extends Composite {
 				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
 			}
 		});
-
-		
-		//relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler());
 
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
@@ -316,8 +303,8 @@ public class CollectionResourceWidget extends Composite {
 				failedThumbnailGeneration = true;
 			}
 		});		
-		//resourseImage.setAltText(title);
 		resourseImage.setTitle(title);
+		imageOverlay.setTitle(title);
 	}
 	/**
 	 * This method will set the default image
