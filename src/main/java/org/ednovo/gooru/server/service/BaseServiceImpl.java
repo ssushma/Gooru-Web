@@ -48,6 +48,7 @@ import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.PropertiesCache;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,6 +71,15 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	private static final long serialVersionUID = 7437954157376886661L;
 
 	private static final Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
+	
+	private String headerApiKey = null;
+	
+	private String youtubeApiKey = null;
+	
+	private String youtubeApiUrl = null;
+	
+	
+	private String apiKey = null;
 
 	@Resource(name = "restConstants")
 	private Properties restConstants;
@@ -153,8 +163,26 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return restConstants.getProperty(SEARCH_PASSWORD);
 	}
 
+	public String getYouTubeApiUrl(){
+		if (youtubeApiUrl == null){
+			youtubeApiUrl = getPropertyByKey(YOUTUBE_API_URL);
+		}
+		return youtubeApiUrl;
+		
+	}
+	
+	public String getYoutubeApiKey(){
+		if (youtubeApiKey == null){
+			youtubeApiKey = getPropertyByKey(YOUTUBE_API_KEY);
+		}
+		return youtubeApiKey;
+	}
+	
 	public String getApiKey() {
-		return restConstants.getProperty(API_KEY);
+		if (headerApiKey == null){
+			headerApiKey = getPropertyByKey(API_KEY);
+		}
+		return headerApiKey;
 	}
 
 	public String getHomeEndPoint() {
@@ -375,6 +403,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		Cookie cookie = new Cookie(GOORU_SESSION_TOKEN, sessionToken);
 		cookie.setDomain(AppSessionHolder.getInstance().getRequest().getServerName());
 		cookie.setPath(COOKIE_PATH);
+//		cookie.setHttpOnly(true);
 		if (sessionToken != null && sessionToken.length() > 0) {
 			cookie.setMaxAge(COOKIE_AGE);
 		} else {
@@ -387,6 +416,30 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			getHttpRequest().getSession().removeAttribute(GOORU_SESSION_TOKEN);
 		}
 	}
+	/**
+	 * 
+	 * @function getPropertyByKey 
+	 * 
+	 * @created_date : 15-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param keyName
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	protected String getPropertyByKey(String keyName) {
+		return PropertiesCache.getInstance().getProperty(keyName);
+	}
+	
 	
 	protected void setUserActiveStatus(String userStatus){
 		Cookie cookie = new Cookie(GOORU_ACTIVE_USER, userStatus);
@@ -501,7 +554,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		UserDo userDo = null;
 		String sessionToken = getLoggedInSessionToken();
 		if (sessionToken != null) {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER, userUid, sessionToken);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER, userUid);
 			JsonRepresentation jsonRep = null;
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -539,10 +592,13 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	protected UserDo v2GuestSignIn() {
 		UserDo user = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GUEST_SIGNIN, getApiKey());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GUEST_SIGNIN);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		JsonRepresentation jsonRep = null;
 		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if (jsonResponseRep.getStatusCode() != 200){
+			logger.info("jsonResponseRep.getResponseDo().getErrorMessage() : "+jsonResponseRep.getResponseDo().getErrorMessage());
+		}
 		try {
 			logger.info("jsonRep.getText() : "+jsonRep.getText());
 			setLoggedInSessionToken(jsonRep.getJsonObject().getString(TOKEN));
@@ -562,7 +618,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	protected UserDo v2GuestSignInForEmbed(String restEndPointFromEmbed){
 		UserDo user = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(restEndPointFromEmbed, UrlToken.V2_GUEST_SIGNIN, getApiKey());
+		String url = UrlGenerator.generateUrl(restEndPointFromEmbed, UrlToken.V2_GUEST_SIGNIN);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		try {
@@ -581,7 +637,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	protected UserDo v2GetUserInfoByToken(String token) {
 		UserDo userDo = null;
 		try {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_USER_BY_SESSIONTOKEN, getLoggedInSessionToken(), getLoggedInSessionToken());
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_USER_BY_SESSIONTOKEN, getLoggedInSessionToken());
 			JsonRepresentation jsonRep = null;
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();

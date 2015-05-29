@@ -275,7 +275,6 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 
 	public void setCollectionDoOnRefresh(CollectionDo collectionDo) { 
 		this.collectionDo = collectionDo;
-		System.out.println("called from refresh");
 		getView().setCollectionMetadata(collectionDo);
 		setRelatedConcepts(collectionDo);
 	}

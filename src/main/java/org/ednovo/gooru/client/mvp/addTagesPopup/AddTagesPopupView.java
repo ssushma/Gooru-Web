@@ -217,10 +217,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		addTagesTitle.getElement().setAttribute("alt",i18n.GL1795());
 		addTagesTitle.getElement().setAttribute("title",i18n.GL1795());
 		
-		popupContentText.setText(i18n.GL1812());
+		popupContentText.setText(i18n.GL1838());
 		popupContentText.getElement().setId("spnpopupContentText");
-		popupContentText.getElement().setAttribute("alt",i18n.GL1812());
-		popupContentText.getElement().setAttribute("title",i18n.GL1812());
+		popupContentText.getElement().setAttribute("alt",i18n.GL1838());
+		popupContentText.getElement().setAttribute("title",i18n.GL1838());
 		
 		
 		headerEducationalUse.setText(i18n.GL1664());

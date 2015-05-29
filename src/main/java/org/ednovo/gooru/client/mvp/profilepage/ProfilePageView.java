@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
@@ -108,7 +109,7 @@ import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
 
 public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers> implements IsProfilePageView{
 	@UiField
-	Anchor /* shareTabVc, */contentTabVc;
+	Anchor contentTabVc;
 
 	@UiField
 	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage, libraryMessage;
@@ -134,7 +135,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			userMetadata, editPencil;
 
 	@UiField
-	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
+	Button  profileOnButton, profileOffButton, btnSave,
 			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,FollowingButtonBlue;
 	
 	Boolean justClicked = false;
@@ -195,12 +196,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	private Label editImageButton = new Label("Edit image");
 
-	final private String WORKSPACE_FOLDER = "folder";
-
-	final private String WORKSPACE_COLLECTION = "scollection";
-
-	final private int DEFAULT_PROFILE_LIST_VIEW_HEIGHT = 300;
-
 	private FooterUc footerUc = new FooterUc();
 	
 	private AlertContentUc alertContentUc;
@@ -236,8 +231,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private String profileOnStatus = "false";
 	
 	private static String USER_META_ACTIVE_FLAG = "1";
-	
-	private static int RENDER_MARGIN_WIDTH = 4;
 	
 	private boolean isGradeCourseBtnClick = false;
 	
@@ -591,18 +584,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if (isToEnabled) {
 			this.profileOnStatus = "true";
 			MixpanelUtil.Click_Profile_On();
-			profileOnButton.setStyleName(settingsStyle.publicProfileOnButtonActive());
-			profileOnButton.removeStyleName(settingsStyle.publicProfileOnButtonDeActive());
-			profileOffButton.setStyleName(settingsStyle.publicProfileOffButtonsDeActive());
-			profileOffButton.removeStyleName(settingsStyle.publicProfileOffButtonsActive());
+			profileOnButton.setStyleName("publicProfileOnButtonActive");
+			profileOnButton.removeStyleName("publicProfileOnButtonDeActive");
+			profileOffButton.setStyleName("publicProfileOffButtonsDeActive");
+			profileOffButton.removeStyleName("publicProfileOffButtonsActive");
 			setPublicShareDo("public");
 		} else {
 			this.profileOnStatus = "false";
 			MixpanelUtil.Click_Profile_Off();
-			profileOffButton.setStyleName(settingsStyle.publicProfileOffButtonsActive());
-			profileOffButton.removeStyleName(settingsStyle.publicProfileOffButtonsDeActive());
-			profileOnButton.setStyleName(settingsStyle.publicProfileOnButtonDeActive());
-			profileOnButton.removeStyleName(settingsStyle.publicProfileOnButtonActive());
+			profileOffButton.setStyleName("publicProfileOffButtonsActive");
+			profileOffButton.removeStyleName("publicProfileOffButtonsDeActive");
+			profileOnButton.setStyleName("publicProfileOnButtonDeActive");
+			profileOnButton.removeStyleName("publicProfileOnButtonActive");
 			setPublicShareDo("private");
 		}
 	}
@@ -635,6 +628,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 			}
 		} catch (Exception e) {
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		
 
@@ -1177,10 +1171,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		@Override
 		public void onClick(ClickEvent event) {
 			if (enableEdit)
-			//	if(!isGradeCourseBtnClick) {
 					clickGradeCourseEditBtn();
 					isGradeCourseBtnClick = true;
-			//	}
 				userCoursePopup.setVisible(true);
 	        	isShowing=true;
 		}
@@ -1288,26 +1280,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		});
 	}
 
-	/*public void disableContentAndSetOldContent(String aboutMe) {
-		if (aboutMe == null || aboutMe.equalsIgnoreCase("null")) {
-			noAboutUsContainer().setVisible(true);
-		} else {
-			noAboutUsContainer().setVisible(false);
-		}
-
-		if (aboutMe.isEmpty() || aboutMe == null
-				|| aboutMe.equalsIgnoreCase("null")) {
-			enableAddBioBtn("addBioBtn");
-		} else {
-			profileTextArea.switchToLabel();
-		}
-
-		aboutUsCharacterValidation.setVisible(false);
-		btnSave.setVisible(false);
-		biographyCancelButton.setVisible(false);
-		profileTextArea.cancel();
-	}
-*/
 	@Override
 	public ProfilePageDescriptionEditUc getProfileBiographyEditUC() {
 		return profileTextArea;
@@ -1350,8 +1322,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				.infoTextBox());
 		addCourseBtn.setStyleName(CollectionCBundle.INSTANCE.css()
 				.infoAddButton());
-		courseMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css()
-				.courseMaxMsg());
+		courseMaxMsg.setStyleName("courseMaxMsg");
 		courseMaxMsg.getElement().getStyle().setFloat(Float.LEFT);
 	}
 
@@ -1684,7 +1655,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}else{
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.show();
 		popup.setGlassEnabled(true);
 		}
@@ -1699,7 +1675,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}
 		else{
-			LoginPopupUc popup =new LoginPopupUc();
+			LoginPopupUc popup =new  LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					
+				}
+			};
 			popup.show();
 			popup.setGlassEnabled(true);
 		}
@@ -1835,12 +1816,16 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if(collectionHandler!=null) {
 				collectionHandler.removeHandler();
 			}
-		 } catch (AssertionError ae) { }
+		 } catch (AssertionError ae) { 
+			 AppClientFactory.printSevereLogger(ae.getMessage());
+		 }
 		try {
 			if(followingHandler!=null) {
 				followingHandler.removeHandler();
 			}
-		} catch (AssertionError ae) { }
+		} catch (AssertionError ae) { 
+			 AppClientFactory.printSevereLogger(ae.getMessage());
+		}
 		
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
 		{
@@ -1875,7 +1860,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if(follwerHandler!=null) {
 				follwerHandler.removeHandler();
 			}
-		}catch (AssertionError ae) {}
+		}catch (AssertionError ae) {
+			 AppClientFactory.printSevereLogger(ae.getMessage());
+		}
 			 
 			 
 		if(totalCount==0)
@@ -1898,7 +1885,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if(tagHandler!=null) {
 				tagHandler.removeHandler();
 			}
-		}catch (AssertionError ae) { }
+		}catch (AssertionError ae) { 
+			 AppClientFactory.printSevereLogger(ae.getMessage());
+		}
 		
 		if(totalCount==0)
 		{

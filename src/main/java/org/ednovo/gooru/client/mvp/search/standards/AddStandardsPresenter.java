@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.search.standards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -178,6 +179,11 @@ public class AddStandardsPresenter extends PresenterWidget<IsAddStandardsView> i
 	@Override
 	public String setStandardDesc() {
 		return getView().setStandardsDesc();
+	}
+	
+	@Override
+	public List<Map<String, String>> getStandardListArray() {
+		return getView().getStandListArray();
 	}
 	
 	@Override

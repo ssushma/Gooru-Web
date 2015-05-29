@@ -1,3 +1,27 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
 import java.util.HashMap;
@@ -17,6 +41,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveAssessment;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfListItemsEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderDeleteView;
@@ -25,9 +50,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
 import org.ednovo.gooru.client.uc.EditableLabelUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -83,7 +108,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
 	@UiField FolderStyleBundle folderStyle;
 	@UiField HTMLPanel loadingImage;
-//	@UiField FolderItemPanelVc folderItemPanel;
 	
 	@UiField
 	FolderItemMetaDataUc folderItemMetaDataUc;
@@ -261,7 +285,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		assessmentButton.getElement().setId("btnNewCollectionBtn");
 		assessmentButton.getElement().setAttribute("alt",i18n.GL3024());
 		assessmentButton.getElement().setAttribute("title",i18n.GL3024());
-		//assessmentButton.removeFromParent();
 		
 		newFolderBtn.setText(i18n.GL1450());
 		newFolderBtn.getElement().setId("btnNewFolderBtn");
@@ -276,7 +299,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		
 		organizeTitleLbl.getTextBoxSource().getElement().setAttribute("style", "width: 338px !important; height: 29px !important;");
@@ -291,19 +314,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
 						if(!folderName.isEmpty()) {
 							getUiHandlers().createFolderInParent(folderName, parentId);
-//							Window.enableScrolling(true);
 							this.hide();
 						}
 					}
 				};
 				folderPopupUc.setGlassEnabled(true);
-				/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-				if(isFolderType){
-					folderPopupUc.getElement().setAttribute("style", "top:50px !important;");	
-				}else{
-					folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - (464), Window.getScrollTop() + 233);
-				}
-				*/
 				Window.enableScrolling(false);
 				folderPopupUc.show();
 				folderPopupUc.center();
@@ -335,14 +350,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId,int totalCount) { 
 		setFolderUrlParams();
 		setTotalCount(totalCount);
-		/*Label label = new Label("");
-		label.setStyleName(getCss().shelfFoldereDragdropSpacer());
-		folderItemPanel.superAdd(label);
-		
-		Label toplabel = new Label("");
-		toplabel.setStyleName(getCss().shelfFoldereDragdropSpacer());
-		folderItemPanel.add(toplabel);*/
-		
 		if(O1_LEVEL_VALUE==null&&O2_LEVEL_VALUE==null&&O3_LEVEL_VALUE==null) {
 			isRootFolder = true;
 			editButtonEventPanel.setVisible(false);
@@ -387,17 +394,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					if (ele!=null){
 						ele.removeFromParent();
 					}
-					//				folderContentBlock.add(new FoldersWelcomePageToolTip());
-					//				folderContentBlock.add(new FoldersWelcomePage());
 					AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
-
 				}else{
 					folderContentBlock.clear();
 					isFolderType = false;
 					mainSection.addStyleName(folderStyle.mainSection()); 
 					mainSection.addStyleName(folderStyle.emptyFolder());
 				}
-
 			}
 			else{
 				mainSection.removeStyleName(folderStyle.emptyFolder());
@@ -975,7 +978,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					
 					itemSeqToAPI= getMoveUpItemSeq(itemPosSeqNumb,itemToBeMovedPosSeqNumb);
 					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
-					/*reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);*/
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
@@ -1278,10 +1280,39 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 
 	@Override
-	public void resetCollectionsAfterDeletingAssessment(FolderDo folderDo) {
+	public void resetCollectionsAfterDeletingAssessment(FolderDo folderDo, String assessmentId) {
 		deletePopup.hide();
 		resetWidgetsAfterAssessmentDelete(folderDo);
+		postAssessmentDelete(assessmentId,folderDo);
 	}
+	
+	/**
+	 * Triggers the event to remove deleted assessment/url in shelf list.
+	 * @param assessmentId
+	 */
+	private void postAssessmentDelete(String assessmentId, FolderDo folderDo) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			params.put("o3",AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+			AppClientFactory.fireEvent(new RemoveAssessment(params,assessmentId,folderDo));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			AppClientFactory.fireEvent(new RemoveAssessment(params,assessmentId,folderDo));  
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+			AppClientFactory.fireEvent(new RemoveAssessment(params,assessmentId,folderDo));  
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+		}else{
+			AppClientFactory.fireEvent(new RemoveAssessment(params,assessmentId,folderDo)); 
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+		}
+	}
+
 	public void resetWidgetsAfterAssessmentDelete(FolderDo folderDo){
 		Iterator<Widget> widgets = folderContentBlock.iterator();
 		while (widgets.hasNext()) {
@@ -1304,6 +1335,18 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			if (widget instanceof ShelfFolderItemChildView) {
 				((ShelfFolderItemChildView) widget).getReorderPanel().setVisible(false);
 			}
+		}
+	}
+
+	
+	/**
+	 * Updates assessment/url widget.
+	 */
+	@Override
+	public void updateAssessmentUrl(FolderDo folderDo) {
+		ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(folderDo.getGooruOid());
+		if(shelfFolderItemChildView!=null){
+			shelfFolderItemChildView.showAssessmentUrlInfo(folderDo);
 		}
 	}
 }

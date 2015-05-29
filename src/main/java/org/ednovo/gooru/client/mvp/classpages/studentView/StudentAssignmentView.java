@@ -45,13 +45,12 @@ import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -591,7 +590,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										@Override
 										public void onClickPositiveButton(
 												ClickEvent event) {
-											if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+											if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 												Window.enableScrolling(false);
 											}else{
 												Window.enableScrolling(true);
@@ -651,7 +650,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 
 				mainContainer.setVisible(false);
-				LoginPopupUc loginPopupUc=new LoginPopupUc();
+				LoginPopupUc loginPopupUc=new LoginPopupUc() {
+					
+					@Override
+					public void onLoginSuccess() {
+						// TODO Auto-generated method stub
+						
+					}
+				};
 				
 			}else{
 			if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
@@ -717,7 +723,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 														Window.enableScrolling(false);
 													}else{
 														Window.enableScrolling(true);
@@ -1180,11 +1186,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 		if(AppClientFactory.isAnonymous()){
 	
-			LoginPopupUc loginPopupUc=new LoginPopupUc();
-			
-			
-			
-			
+			LoginPopupUc loginPopupUc=new LoginPopupUc() {
+				
+				@Override
+				public void onLoginSuccess() {
+					// TODO Auto-generated method stub
+					
+				}
+			};
 		}else{
 			if(!isJoinPopupButtonclick){
 				isJoinPopupButtonclick=true;
@@ -1213,7 +1222,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									@Override
 									public void onClickPositiveButton(
 											ClickEvent event) {
-										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 											Window.enableScrolling(false);
 										}else{
 											Window.enableScrolling(true);
@@ -1408,7 +1417,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	if(AppClientFactory.isAnonymous()){
 
-		LoginPopupUc loginPopupUc=new LoginPopupUc();
+		LoginPopupUc loginPopupUc=new LoginPopupUc() {
+			
+			@Override
+			public void onLoginSuccess() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
 		
 		
 	}else{
@@ -1439,7 +1455,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								@Override
 								public void onClickPositiveButton(
 										ClickEvent event) {
-									if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 										Window.enableScrolling(false);
 									}else{
 										Window.enableScrolling(true);
@@ -1614,7 +1630,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 														Window.enableScrolling(false);
 													}else{
 														Window.enableScrolling(true);
@@ -1824,7 +1840,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														@Override
 														public void onClickPositiveButton(
 																ClickEvent event) {
-															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 																Window.enableScrolling(false);
 															}else{
 																Window.enableScrolling(true);
@@ -1882,7 +1898,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 
 						mainContainer.setVisible(false);
-						LoginPopupUc loginPopupUc=new LoginPopupUc();
+						LoginPopupUc loginPopupUc=new  LoginPopupUc() {
+							
+							@Override
+							public void onLoginSuccess() {
+								// TODO Auto-generated method stub
+								
+							}
+						};
 						
 					}else{
 					if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
@@ -1949,7 +1972,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														@Override
 														public void onClickPositiveButton(
 																ClickEvent event) {
-															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 																Window.enableScrolling(false);
 															}else{
 																Window.enableScrolling(true);

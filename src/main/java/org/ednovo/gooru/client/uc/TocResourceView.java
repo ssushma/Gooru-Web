@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -298,13 +299,13 @@ public class ResourceRequest implements ClickHandler{
 	
 	public void setNavigationResourceTitle(String title){
 		resourceTitle.add(getHTML(title));
-		resourceTitle.getElement().setAttribute("alt", getHTML(title).toString());
-		resourceTitle.getElement().setAttribute("title", ""+getHTML(title).toString());
+		resourceTitle.getElement().setAttribute("alt",StringUtil.removeAllHtmlCss(getHTML(title).toString()));
+		resourceTitle.getElement().setAttribute("title", ""+StringUtil.removeAllHtmlCss(getHTML(title).toString()));
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
 		resourceTitle.add(getHTML(itemIndex+""));
-		resourceTitle.getElement().setAttribute("alt", itemIndex+". "+title);
-		resourceTitle.getElement().setAttribute("title", itemIndex+". "+title);
+		resourceTitle.getElement().setAttribute("alt", itemIndex+". "+StringUtil.removeAllHtmlCss(title));
+		resourceTitle.getElement().setAttribute("title", itemIndex+". "+StringUtil.removeAllHtmlCss(title));
 	}
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
@@ -417,7 +418,7 @@ public class ResourceRequest implements ClickHandler{
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return thumbnailImage!=null?thumbnailImage:"images/defaultRes.png";
 	}

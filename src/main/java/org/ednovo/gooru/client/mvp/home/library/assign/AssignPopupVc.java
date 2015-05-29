@@ -49,9 +49,9 @@ import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.ScrollPopupUtil;
@@ -129,15 +129,9 @@ public abstract class AssignPopupVc extends PopupPanel {
 	@UiField Anchor ancprivacy ,swithUrlLbl, swithToEmbedLbl;
 
 	private boolean isPrivate = false;
-//	private static final String SWITCH_FULL_URL = i18n.GL0643;
-//	private static final String SWITCH_EMBED_CODE = i18n.GL0640;
-//	private static final String SWITCH_BITLY = i18n.GL0639;
 	private static final String SWITCH_URL_LABEL = "swithUrlLbl";
 	private static final String SWITCH_TO_EMBED_LABEL = "swithToEmbedLbl";
 	private String bitlyLink, decodeRawUrl, embedBitlyLink, rawUrl;
-//	private static final String OOPS =i18n.GL0061;
-//	private static final String LOGIN_ERROR = i18n.GL0347;
-//	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = i18n.GL0348;
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 	private ClasspageServiceAsync classpageService;
 	private SimpleAsyncCallback<ClasspageListDo> getClasspageList;
@@ -211,12 +205,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 		this.setGlassEnabled(true);
 		this.getGlassElement().getStyle().setZIndex(99999);
 		this.getElement().getStyle().setZIndex(99999);
-/*		this.getElement().getStyle().setZIndex(99999);
-		this.getElement().getStyle().setWidth(658, Unit.PX);
-		this.getElement().getStyle().setLeft(0, Unit.PX);
-		this.getElement().getStyle().setRight(0, Unit.PX);
-		this.getElement().getStyle().setTop(0, Unit.PX);*/
-		//this.getElement().setAttribute("style", "z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;top: 0 !important;margin: auto;width: 500px;height: 656px;");
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
@@ -239,34 +227,26 @@ public abstract class AssignPopupVc extends PopupPanel {
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new SimpleAsyncCallback<CollectionDo>(){
 			@Override
 			public void onSuccess(CollectionDo result) {
-	
-
 				toAssignStr = result.getGooruOid();
-
 				if (result.getGooruOid() != null) {
 					collectionDoGlobal = result;
 					if (AppClientFactory.isAnonymous()) {
 						hideContainers();
 					} else {
 						loadListContainers();
-
 					}
 				}
 				loadingImageLabel.setVisible(false);
 				popupContentAssign.setVisible(true);
-
-			
 			}
 		});
 		generateShareLink(collectionIdVal,collectionTitle,collectionDescription);
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
-			
 			@Override
 			public void onSuccess(Map<String, String> result) {
 				embedBitlyLink=result.get("decodeRawUrl");
 			}
 		});
-		
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();	
 		Window.enableScrolling(false);
@@ -279,26 +259,20 @@ public abstract class AssignPopupVc extends PopupPanel {
 	public void hideContainers() {
 		htmlEvenPanelContainer.setVisible(false);
 		htmlLoginPanel.setVisible(true);
-
 	}
 
 	public void loadListContainers() {
-
 		AssignCollectionView assignWidget = new AssignCollectionView(
 				collectionDoGlobal) {
-
 			@Override
 			public void closePoupfromChild() {
 				hide();
-				//closePoup();
-
 			}
 		};
 		htmlEvenPanelContainer.add(assignWidget);
 		this.setPopupPosition(0, (Window.getClientHeight()-527)/2);
 		htmlEvenPanelContainer.setVisible(true);
 		htmlLoginPanel.setVisible(false);
-
 	}
 
 	public abstract void closePoup();
@@ -351,7 +325,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 		ancprivacy.getElement().setId("lnkAncprivacy");
 		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
 		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
-		//ancprivacy.getElement().getStyle().setMarginLeft(5, Unit.PX);
 		
 		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnToUsText");
@@ -436,8 +409,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
 		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
 		
-/*		signUpStyles.getElement().setAttribute("style", "display: inline-block;");
-*/		ancSignUp.getElement().setAttribute("style", "float: left;");
+		ancSignUp.getElement().setAttribute("style", "float: left;");
 		donothaveAC.getElement().setAttribute("style", "float: left;padding:0;");
 
 		cancelButton.getElement().setId("btnCancelButton");
@@ -709,11 +681,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 			shareDo.setOnlyIcon(false);
 			shareDo.setShareType(shareType);
 			shareDo.setDecodeRawUrl(link);
-			//SocialShareSmallView socialView = new SocialShareSmallView(shareDo);
-/*			ftmPanel.add(socialView);
-			socialSharePanel.add(ftmPanel);*/
 			} catch (Exception ex) {
-
+				AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 
@@ -834,9 +803,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 	}
 
 	private void setHandlers() {
-
-	/*	this.setSize("515px", "547px");
-*/
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
@@ -873,10 +839,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 		{
 			params.remove("assign");
 		}
-		/*		AppClientFactory.getPlaceManager().revealPlace(
-				AppClientFactory.getCurrentPlaceToken(), params);*/
-		
-
     	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 		hide();
@@ -894,10 +856,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
-		
 			@Override
 			public void onSuccess(String result) {
-//				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				MixpanelUtil.mixpanelEvent("Assign_library_signin_google");
 				Window.Location.replace(result);
 			}

@@ -46,8 +46,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import com.googlecode.gwt.serialization.JsonReader;
-import com.googlecode.gwt.serialization.JsonWriter;
+
 
 /**
  * 
@@ -73,8 +72,6 @@ public class ContributorsView extends
 
 	private static String CONTRIBUTORS_DATA = "contributorsData";
 	ArrayList<LibraryUserDo> contributorsList = new ArrayList<LibraryUserDo>();
-	StorageJsonSerializationFactory factory = GWT
-			.create(StorageJsonSerializationFactory.class);
 
 	interface ContributorsViewUiBinder extends
 			UiBinder<Widget, ContributorsView> {
@@ -155,38 +152,56 @@ public class ContributorsView extends
 	 * 
 	 */
 	public void getContributorsList() {
-		final JsonWriter<ArrayList<LibraryUserDo>> courseMapWriter = factory
-				.getWriter();
-		final JsonReader<ArrayList<LibraryUserDo>> courseMapReader = factory
-				.getReader();
 
 		String map = null;
-
-		if (stockStore != null && stockStore.getItem(CONTRIBUTORS_DATA) != null) {
+		
+		if (stockStore != null && stockStore.getItem(CONTRIBUTORS_DATA) != null){
 			map = stockStore.getItem(CONTRIBUTORS_DATA);
-			contributorsList = courseMapReader.read(map);
-			displayContributors(contributorsList);
+			deserializeCollaboratorsList(map);
 		} else {
-			AppClientFactory
-					.getInjector()
-					.getLibraryService()
-					.getLibraryFeaturedUsers(
-							"community",
-							new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
-								@Override
-								public void onSuccess(
-										ArrayList<LibraryUserDo> result) {
-									displayContributors(result);
-									String courseMapWriterString = courseMapWriter
-											.write(result);
-									if (stockStore != null) {
-										stockStore.setItem(CONTRIBUTORS_DATA,
-												courseMapWriterString);
-									}
-								}
-							});
+			
+			AppClientFactory.getInjector().getLibraryService().getLibraryContributorsUsers("community",new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String result) {
+					if (stockStore != null) {
+						stockStore.setItem(CONTRIBUTORS_DATA,
+								result);											
+					}
+					deserializeCollaboratorsList(result);
+				}
+			});
 		}
 	}
+	/**
+	 * 
+	 * @function deserializeCollaboratorsList 
+	 * 
+	 * @created_date : 28-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param jsonString
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void deserializeCollaboratorsList(String jsonString){
+		AppClientFactory.getInjector().getLibraryService().deserializeCollaborators(jsonString, new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+
+			@Override
+			public void onSuccess(ArrayList<LibraryUserDo> result) {
+				contributorsList = result;
+				displayContributors(result);
+			}
+		});
+	}
+	
 
 	/**
 	 * 

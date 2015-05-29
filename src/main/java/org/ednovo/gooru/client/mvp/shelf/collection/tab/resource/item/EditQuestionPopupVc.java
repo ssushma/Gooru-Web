@@ -42,9 +42,9 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -75,7 +75,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -93,8 +92,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 
 	@UiField
 	ListBox questionTypeListBox;
-
-	// @UiField TinyMCE resourceQuestion,explainationTextArea;
 
 	private TinyMCE resourceQuestion = null;
 	private TinyMCE explainationTextArea = null;
@@ -184,29 +181,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	HTMLPanel questionAnswerChoiceContainer;
 	CollectionItemDo collectionItemDo;
 	String[] anserChoiceArray = new String[] { "A", "B", "C", "D", "E" };
-
-//	String[] hintsChoiceArray = new String[] { "1", "2", "3", "4", "5" };
-
-//	private static final String ERROR_MSG_QUESTION = i18n.GL0310;
-
-//	private static final String ERROR_MSG_ANSWER = i18n.GL0311;
-
-//	private static final String ERROR_MSG_ANSWER_SELECTED = i18n.GL0312;
-
-//	private static final String ERROR_MSG_HINTS_LENGTH = MessageProperties.i18n.GL0143;
-
-//	private static final String ERROR_MSG_ANSWER_LENGTH = MessageProperties.i18n.GL0143;
-
-//	private static final String ERROR_MSG_EXPLAINATION_LENGTH = MessageProperties.i18n.GL0143;
-
-//	private static final String ERROR_MSG_QUESTION_LENGTH = MessageProperties.i18n.GL0143;
-
-//	private static final String ERROR_MSG_CHAR_LIMIT = i18n.GL0143;
-
-//	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH = 150;
-
-//	private static final int QUESTION_TEXT_LENGTH = 500;
-
 	private static final int EXPLAINATION_TEXT_LENGTH = 400;
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
@@ -238,7 +212,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
@@ -258,7 +231,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 						}						
 					}
 					
-					/*if(standardsPrefDisplayPopup){*/
 						standardsPreferenceOrganizeToolTip.hide();
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							
@@ -268,18 +240,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 								
 							}							
 						});
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-						/*}
-					else{
-						standardSgstBox.hideSuggestionList();
-						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
-						//standardSuggestOracle.add(i18n.GL1613);
-						
-					}*/
+
 					}
 					
 				
@@ -296,28 +257,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		this.getElement().getStyle().setWidth(640, Unit.PX);
 		this.collectionItemDo = collectionItemDo;
 		setWidget(uiBinder.createAndBindUi(this));
-		// resourceQuestion.getElement().setAttribute("maxlength", "500");
-		// explainationTextArea.getElement().setAttribute("maxlength", "400");
-		// setModal(true);
-		// Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-		
-/*		 
-		 
-		 if( collectionItemDo.getResource().getEducationalUse()!=null){
-				for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
-					 
-					 
-					   if(item.isSelected()){
-						    resourceEducationalLabel.setText(item.getValue());
-							educationalUsePanel.setVisible(false);
-							educationalDropDownLblOpen = false;
-							mandatoryEducationalLbl.setVisible(false);
-					   }
-					}
-			}*/
-		
-
 		show();
 		center();
 		 this.getElement().getStyle().setTop(100, Unit.PX);
@@ -423,19 +363,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		 lblPleaseWait.getElement().setId("lblLblPleaseWait");
 		 panelControls.getElement().setId("pnlPanelControls");
 		 btnCancel.getElement().setAttribute("style", "margin-left:10px");
-	//	 educationalUsePanel.setVisible(false);
-		 
-
-/*			if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
-				for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {			
-					   if(item.isSelected()){
-						   resourcemomentsOfLearningLabel.setText(item.getValue());
-						   momentsOfLearningPanel.setVisible(false);
-						   momentsOfLearningOpen = false;
-						   mandatorymomentsOfLearninglLbl.setVisible(false);
-					   }
-					}
-			}*/
 		 browseStandards.addClickHandler(new callBrowseStandards());
 	}
 
@@ -557,7 +484,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		return suggestions;
 	}
 	public void displayQuestionResource() {
-
 		String tumbnailUrl;
 		String category = collectionItemDo.getResource().getCategory();
 		final String categoryString = category == null
@@ -580,14 +506,14 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		try {
 			resourceQuestion.setText(collectionItemDo.getResource().getTitle());
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		try {
 			explainationTextArea.setText(collectionItemDo.getResource()
 					.getExplanation());
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
-
-		//Hide this not used any more.
 		listQuestionType.getElement().getStyle().setDisplay(Display.NONE);
 		
 		setLabelAndIds();
@@ -614,7 +540,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 				final UpdateQuestionHints updateQuestionHints = new UpdateQuestionHints(
 						widgetCount + 1, hints.getHintText());
 				addQuestionHintsContainer.add(updateQuestionHints);
-				// updateQuestionHints.hintsTextBox.setText(hints.getHintText());
 				addEventsToHints(updateQuestionHints);
 				showRemoveToolTip(updateQuestionHints.hintDelLbl);
 				if (addQuestionHintsContainer.getWidgetCount() >= 5) {
@@ -760,43 +685,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		}
 	}
 
-	// public void resetToMultipleChoice(){
-	// for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
-	// UpdateQuestionAnswerChoice
-	// updateQuestionAnswerChoice=(UpdateQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
-	// //updateQuestionAnswerChoice.answerTextBox.setReadOnly(false);
-	// updateQuestionAnswerChoice.answerTextBox.setText("");
-	// updateQuestionAnswerChoice.optionSelectedButton.setStyleName(editQuestionStyle.answerDeselected());
-	// }
-	// addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
-	// }
-	// public void resetAllFields(){
-	// int widgetsCount=questionAnswerChoiceContainer.getWidgetCount();
-	// addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
-	// for(int i=0; i< widgetsCount;){
-	// UpdateQuestionAnswerChoice
-	// updateQuestionAnswerChoice=(UpdateQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
-	// if(i<2){
-	// if(i==0){
-	// //updateQuestionAnswerChoice.answerTextBox.setReadOnly(true);
-	// updateQuestionAnswerChoice.answerTextBox.setText("True");
-	// updateQuestionAnswerChoice.optionSelectedButton.setStyleName(editQuestionStyle.answerDeselected());
-	// }else{
-	// //updateQuestionAnswerChoice.answerTextBox.setReadOnly(true);
-	// updateQuestionAnswerChoice.answerTextBox.setText("False");
-	// updateQuestionAnswerChoice.optionSelectedButton.setStyleName(editQuestionStyle.answerDeselected());
-	// }
-	// i++;
-	// }
-	// else{
-	// updateQuestionAnswerChoice.removeFromParent();
-	// widgetsCount=questionAnswerChoiceContainer.getWidgetCount();
-	// }
-	//
-	// }
-	//
-	// }
-
 	public void clearErrorMessages() {
 		errorMessageForQuestion.setText("");
 		lblErrorMessageForExplanation.setText("");
@@ -820,7 +708,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 					i, answer.getAnswerText(), collectionItemDo.getResource()
 							.getType());
 			if (collectionItemDo.getResource().getType() == 3) {
-				// updateQuestionAnswerChoice.answerTextBox.setReadOnly(true);
 				updateQuestionAnswerChoice.answerTextBoxContainer.clear();
 
 				updateQuestionAnswerChoice.fieldValue = answer.getAnswerText();
@@ -836,7 +723,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 						.setStyleName(editQuestionStyle.answerSelected());
 			}
 			questionAnswerChoiceContainer.add(updateQuestionAnswerChoice);
-			// updateQuestionAnswerChoice.answerTextBox.setText(answer.getAnswerText());
 			updateQuestionAnswerChoice.optionSelectedButton
 					.addClickHandler(new ClickHandler() {
 						@Override
@@ -921,34 +807,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	public void cancelPopUp(ClickEvent clickEvent) {
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, true));
 		hide();
-
-//		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
 	}
-
-	// @UiHandler("resourceQuestion")
-	// public void keyDownOnQuestionTypeTextArea(KeyDownEvent event){
-	// String questionName=resourceQuestion.getText();
-	// errorMessageForQuestion.setText("");
-	// if(questionName.length()>0){
-	// errorMessageForQuestion.setText("");
-	// }
-	// if(questionName.length()>=500){
-	// errorMessageForQuestion.setText(ERROR_MSG_QUESTION_LENGTH);
-	// }
-	// }
-	//
-	// @UiHandler("explainationTextArea")
-	// public void keyDownOnExplnationTypeTextArea(KeyDownEvent event){
-	// String explnationText=explainationTextArea.getText();
-	// errorMessageForExplanation.setText("");
-	// if(explnationText.length()>=400){
-	// errorMessageForExplanation.setText(ERROR_MSG_EXPLAINATION_LENGTH);
-	// }
-	//
-	// }
-
 	@UiHandler("lblAddHints")
 	public void addHints(ClickEvent clickEvent) {
 
@@ -1237,24 +1096,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 			}
 		});
 	}
-
-//	/**
-//	 * Gets the name of the used browser.
-//	 */
-//	public static native String getBrowserName() /*-{
-//													return navigator.userAgent.toLowerCase();
-//													}-*/;
-//
-//	/*
-//     */
-//	public static boolean isFirefoxBrowser() {
-//		return getBrowserName().toLowerCase().contains("firefox");
-//	}
-//
-//	public static boolean isIEBrowser() {
-//		return getBrowserName().toLowerCase().contains("msie");
-//	}
-
 	public void showMulipleAnswerChoice(){
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1269,7 +1110,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		if (collectionItemDo.getResource().getType() == 1) {
 			addAnswerChoices();
 		} else {
-			// resetToMultipleChoice();
 			setMultipleChoiceAnswerFields();
 			clearErrorMessages();
 		}		

@@ -47,6 +47,8 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -70,6 +72,8 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 	
 	private static final String RESOURCE_TAGS = "resourceTags";
 	
+	private static final Logger logger = LoggerFactory.getLogger(ResourceSearchResultDeSerializer.class);
+	
 	@Override
 	public ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
@@ -77,7 +81,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
 			resourceSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
 			resourceSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
-			
+			resourceSearchResultDo.setGooruUId(getJsonString(recordJsonObject, "gooruUId"));
 			JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 			ResourceSourceDo resourceSourceDo=JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);
 			resourceSearchResultDo.setResourceSource(resourceSourceDo);
@@ -91,7 +95,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			resourceSearchResultDo.setRatings(searchRatingsDo);
 			
 		} catch (JSONException e1) {
-			
+			logger.error("Exception::", e1);
 		}
 		
 		try {
@@ -101,7 +105,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
 			}
 		} catch (JSONException e) {
-			
+			logger.error("Exception::", e);
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
@@ -132,6 +136,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				}
 				resourceSearchResultDo.setAggregator(aggregatorList);
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 		}
 		if (getJsonString(recordJsonObject, PUBLISHER) != null) {
@@ -144,6 +149,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				}
 				resourceSearchResultDo.setPublisher(bublisherList);
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 		}
 		
@@ -158,11 +164,14 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				resourceSearchResultDo.setResourceTags(searchTags);
 			}
 		} catch (Exception e) {
+			logger.error("Exception::", e);
 		}
 		
 		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
+		resourceSearchResultDo.setResourceAddedCount(getJsonInteger(recordJsonObject, ADD_COUNT));
+		resourceSearchResultDo.setResourceUsedUserCount(getJsonInteger(recordJsonObject, USER_COUNT));
 
 		try {
 			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {
@@ -178,7 +187,9 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 					if (standardDescriptions.get(i) != null) {
 						standard.put(STANDARD_DESCRIPTION, (String) standardDescriptions.get(i));
 					}
-					}catch(Exception ex){}
+					}catch(Exception ex){
+						logger.error("Exception::", ex);
+					}
 					standards.add(standard);
 				}
 				resourceSearchResultDo.setStandards(standards);
@@ -189,7 +200,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				resourceSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
 			}
 		} catch (JSONException e) {
-			
+			logger.error("Exception::", e);
 		}
 		resourceSearchResultDo.setAverageTime(getJsonString(recordJsonObject, AVERAGE_TIME));
 		resourceSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
@@ -211,7 +222,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			}
 			
 		} catch (JSONException e) {
-			
+			logger.error("Exception::", e);
 		}
 
 		return resourceSearchResultDo;

@@ -143,23 +143,25 @@ public class AnalyticsUtil {
 		}
 		if(minutes!=0){
 			if(createdTime!=null){
-				createdTime=createdTime+((minutes<10)?"0"+minutes+"min":minutes+"min")+" ";
+				createdTime=createdTime+(minutes+"min")+" ";
 			}else{
-				createdTime=((minutes<10)?"0"+minutes+"min":minutes+"min")+" ";
+				createdTime=(minutes+"min")+" ";
 			}
 		}
 		if(seconds!=0){
 			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
 			String formattedTime="";
-			if(secondsInMille > 0 && secondsInMille<1){
+			if(secondsInMille > 0 && secondsInMille<1 && minutes<=0){
 				formattedTime="<1";
+			}else if(secondsInMille > 0 && secondsInMille<1){
+				formattedTime=0+"";
 			}else{
 				formattedTime=((int) Math.round(secondsInMille))+"";
 			}
 			if(createdTime!=null){
 				createdTime=createdTime+formattedTime+"sec";
 			}else{
-				createdTime="0min"+" "+formattedTime+"sec";
+				createdTime=formattedTime+"sec";
 			}
 		}
 		return createdTime;

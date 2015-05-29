@@ -89,7 +89,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @author BLR Team
  * 
  */
-public class LoginPopupUc extends PopupPanel{
+public abstract class LoginPopupUc extends PopupPanel{
  
 	@UiField
 	TextBoxWithPlaceholder loginTxtBox;
@@ -116,12 +116,6 @@ public class LoginPopupUc extends PopupPanel{
 	protected UserDo userDo;
 
 	private SimpleAsyncCallback<UserDo> signedInDataAsyncCallback;
-
-//	private static final String LOGIN_ERROR = i18n.GL0347;
-
-//	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = i18n.GL0348;
-
-//	private static final String OOPS = i18n.GL0061;
 	
 	private String nameToken = "";
 	
@@ -203,8 +197,6 @@ public class LoginPopupUc extends PopupPanel{
 		this.getElement().getStyle().setZIndex(99999);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-       // this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
-//        lblKeepMeLogedIn.getElement().setId("chkLogin");
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
 		setHandlers();
@@ -439,8 +431,8 @@ public class LoginPopupUc extends PopupPanel{
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 								AppClientFactory.fireEvent(new SetButtonEvent());
 								openClasspage();
-							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH) && AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH) ){
-								Window.enableScrolling(false);
+							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_RESOURCE) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION) ){
+								Window.enableScrolling(true);
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 							}else{
 								AppClientFactory.resetPlace();
@@ -505,6 +497,7 @@ public class LoginPopupUc extends PopupPanel{
 
 							}
 						});
+						onLoginSuccess();
 					}
 					
 
@@ -563,8 +556,8 @@ public class LoginPopupUc extends PopupPanel{
 	    	}
 	    }*/
 	    else{
-	    	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
-	    		Window.enableScrolling(false);
+	    	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+	    		Window.enableScrolling(true);
 	    		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 	    	}else{
 	    		Window.enableScrolling(true);
@@ -781,5 +774,6 @@ public class LoginPopupUc extends PopupPanel{
 		loginButton.setVisible(true);
 		lblPleaseWait.setVisible(false);
 	}
+	public abstract void onLoginSuccess();
 }
 

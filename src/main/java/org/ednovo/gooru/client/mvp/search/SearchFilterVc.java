@@ -1917,25 +1917,29 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				try{
 					chkNotFriendly.setValue(true);
 				}catch(Exception e){
-					
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			}else{
 				try{
 					chkNotFriendly.setValue(false);
 				}catch(Exception e){
-					
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			}
 		if(oer!=null)
 			{
 				try{
 				chkOER.setValue(true);
-				}catch(Exception e){}
+				}catch(Exception e){
+					AppClientFactory.printSevereLogger(e.getMessage());
+				}
 			}
 			else{
 				try{
 				chkOER.setValue(false);
-				}catch(Exception e){}
+				}catch(Exception e){
+					AppClientFactory.printSevereLogger(e.getMessage());
+				}
 			}
 		
 		}
@@ -1943,13 +1947,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			try{
 				chkReview.setValue(true);
 			}catch(Exception e){
-				
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}else{
 			try{
 				chkReview.setValue(false);
 			}catch(Exception e){
-				
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 		if(grade == null){
@@ -2399,7 +2403,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					}
 				}
 			}
-		}catch(Exception ex){}
+		}catch(Exception ex){
+			AppClientFactory.printSevereLogger(ex.getMessage());
+		}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
@@ -2407,7 +2413,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if (Element.is(target)) {
 			try{
 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
-			}catch(Exception ex){}
+			}catch(Exception ex){
+				AppClientFactory.printSevereLogger(ex.getMessage());
+			}
 		}
 		return false;
 	}
@@ -2581,10 +2589,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 			}
 		}
-		if(filters.length==0)
+		/*if(filters.length==0)
 		{
-			HeaderUc.setStandardsCode(null,0,null);
-		}
+			HeaderUc.setStandardsCode(null);
+		}*/
 	}
 	
 	@UiHandler("arrowLblCategory")

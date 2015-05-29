@@ -13,6 +13,7 @@ import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
@@ -55,7 +56,8 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 			throws GwtException {
 		
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLABORATORS, contentId, type, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLABORATORS, contentId, type);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.GROUP_BY_STATUS, GooruConstants.TRUE);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		
@@ -65,8 +67,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	@Override
 	public List<String> getSuggestionByName(String emailId){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_SUGGEST_COLLAB, emailId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_SUGGEST_COLLAB, emailId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -88,14 +89,11 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	}
 	
 	@Override
-	public List<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId){
+	public ArrayList<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_COLLABORATORS, collectionId, getLoggedInSessionToken());
-		
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_COLLABORATORS, collectionId);
 		String formData = lstEmailId.toString();
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
-				getRestPassword(), formData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword(), formData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollaboratorsList(jsonRep);
 	}
@@ -121,7 +119,8 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	 */
 	@Override
 	public void removeCollaboratorsFromListByEmailIds(String collectionId, String toRemove){
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLABORATORS, collectionId, getLoggedInSessionToken(), toRemove);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLABORATORS, collectionId);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, toRemove);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 	
@@ -145,11 +144,11 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	 *
 	 *
 	 */
-	public  List<CollaboratorsDo> deserializeCollaboratorsList(JsonRepresentation jsonRep) {
+	public ArrayList<CollaboratorsDo> deserializeCollaboratorsList(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
-						.toString(), new TypeReference<List<CollaboratorsDo>>() {
+						.toString(), new TypeReference<ArrayList<CollaboratorsDo>>() {
 				});
 			}
 		} catch (JSONException e) {

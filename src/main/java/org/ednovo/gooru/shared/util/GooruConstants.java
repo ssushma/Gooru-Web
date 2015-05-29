@@ -27,6 +27,6 @@
 package org.ednovo.gooru.shared.util;
 
 
-public class GooruConstants implements ApiKeyParams {
+public class GooruConstants implements ApiKeyParams,ClientConstants {
 	public GooruConstants(){}
 }

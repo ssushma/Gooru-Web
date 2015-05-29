@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
@@ -65,15 +66,15 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent,AsyncCallback<String> callback);
 	
-	public void createSessionTracker(String collectionGooruOid,String sessionId,AsyncCallback<String> callback);
+	public void createSessionTracker(String collectionGooruOid,String sessionId,String mode,AsyncCallback<String> callback);
 	
 	public void updateSessionInCollection(String sessionTrackerId,AsyncCallback<String> callback);
 	
-	public void createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid,AsyncCallback<String> callback);
+	public void createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status,AsyncCallback<String> callback);
 	
-	public void createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
+	public void createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
 	
-	public void createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId,String answerId, String attemptStatus,String attemptAnswerResult,AsyncCallback<String> callback);
+	public void createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId,String answerId, String attemptStatus,String attemptAnswerResult,AsyncCallback<String> callback);
 	
 	public void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message,AsyncCallback<String> callback);
 	
@@ -176,6 +177,11 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId,AsyncCallback<InsightsCollectionDo> callback);
 	
 	public void getNextCollectionFromToc(String folderId,String collectionItemId,AsyncCallback<FolderWhatsNextCollectionDo> callback);
+
+	public void updateSessionActivityItem(String gooruOid, String status,String updateSessionId,AsyncCallback<Void> callback);
+
+	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions,String sessionId, AsyncCallback<Void> callback);
+
 	
 	
 }

@@ -140,7 +140,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	HTMLEventPanel lblContentRights;
 	
 	@UiField 
-	org.ednovo.gooru.client.uc.HTMLEventPanel eHearderIconCentury,preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
+	HTMLEventPanel eHearderIconCentury,preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,defaultPanel,defaultPanelMomentsOfLearningPnl;
 
 
@@ -184,7 +184,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 	@UiField Label lblAdding,standardMaxMsg;
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr,moblieFriendly;
-	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel,AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
+	@UiField HTMLEventPanel imageResourcePanel,textsResourcePanel,AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,mediaLabelContainer,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 	
 	@UiField(provided = true)
@@ -292,10 +292,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				errorContainer.setVisible(false);
-				//standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
@@ -303,7 +301,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				}
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
-					//standardsPreferenceOrganizeToolTip.hide();
 					errorContainer.setVisible(false);
 					if(standardPreflist!=null){
 						for(int count=0; count<standardPreflist.size();count++) {
@@ -317,15 +314,11 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					}
 					
 					if(standardsPrefDisplayPopup){
-					
-						//standardsPreferenceOrganizeToolTip.hide();
 						errorContainer.setVisible(false);
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
-							
 							@Override
 							public void onSuccess(SearchDo<CodeDo> result) {
 								setStandardSuggestions(result);
-								
 							}							
 						});
 						standardSgstBox.showSuggestionList();
@@ -334,10 +327,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 						errorContainer.setVisible(true);
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
-						/*standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
-			*/			//standardSuggestOracle.add(i18n.i18n.GL1613);
 					}
 				}
 			}
@@ -353,7 +342,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
-				//standardsPreferenceOrganizeToolTip.hide();
 					errorContainer.setVisible(false);
 				}
 			}
@@ -361,30 +349,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(this);
 		centurySgstBox=new AppSuggestBox(centurySuggestOracle) {
-			
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
 				return null;
 			}
-			
 			@Override
 			public void keyAction(String text, KeyUpEvent event) {
 				text=text.toUpperCase();
-				//standardsPreferenceOrganizeToolTip.hide();
 				centurySearchDo.setSearchResults(null);
 				centurySearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
 						AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new AsyncCallback<SearchDo<StandardFo>>() {
-							
 							@Override
 							public void onSuccess(SearchDo<StandardFo> result) {
 								setCenturySuggestions(result);
-								
 							}
-
 							@Override
 							public void onFailure(Throwable caught) {
-								
 							}							
 						});
 						centurySgstBox.showSuggestionList();
@@ -393,29 +374,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		};
 		centurySgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
-		
-		
 	BlurHandler blurHandlerCentury=new BlurHandler() {
 			
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
-				//standardsPreferenceOrganizeToolTip.hide();
 					errorContainer.setVisible(false);
 				}
 			}
 		};
-		
 		centurySgstBox.addDomHandler(blurHandlerCentury, BlurEvent.getType());
 		centurySgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
-			
 			@Override
 			public void onSelection(SelectionEvent<Suggestion> event) {
 				addCentury(centurySgstBox.getValue(), getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults()));
 				centurySgstBox.setText("");
 				centurySuggestOracle.clear();
 				updateCenturyAdvancedSetupStyle();
-				
 			}
 		});
 		
@@ -425,8 +400,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
 		mandatoryCategoryLbl.getElement().getStyle().setTop(-10, Unit.PX);
 		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
-		/*textsResourcePanel.addStyleName("active");
-		resourceCategoryLabel.setText(i18n.GL1044());*/
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {
@@ -699,10 +672,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		lblAdding.setText(i18n.GL0591().toLowerCase());
 		lblAdding.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
 		lblAdding.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
-		
-		
-		
-
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
@@ -887,17 +856,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 			}
 		});
-		
-		
-		
-		/*resourceCategoryLabel.setText(i18n.GL1044());
-		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
-		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());*/
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
-		
-		
 		lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 		panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
 		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords,resourcePathTextBox));
@@ -1226,8 +1187,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 									}else{
 										
 										MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-										//lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
-										//panelAction.getElement().getStyle().setDisplay(Display.NONE);
 										filePath = resourcePathTextBox.getText().trim();
 										resourceTitle = titleTextBox.getText().trim();
 										resourceDesc = descriptionTxtAera.getText().trim();
@@ -1293,7 +1252,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 										{
 											for(int i=0;i<hazardArr.length;i++)
 											{
-												//tagList.add('"' + hazardArr[i].toString() +'"');
 												tagList.add(hazardArr[i].toString());
 											}
 										}
@@ -1302,7 +1260,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
 												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
 											}
-											
 										}
 										
 										
@@ -1341,16 +1298,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 												}
 											});
 											fileuploadForm.submit();
-											
-											
-											
-											/* String str ="{\"deleteType\":\"DELETE\",\"deleteUrl\":\"media/3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\",\"imageValidationMsg\":null,\"name\":\"3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\",\"originalFilename\":\"6-004s09.jpg\",\"size\":72869,\"statusCode\":200,\"uploadImageSource\":\"local\",\"url\":\"http://qarepo.goorulearning.org/qalive/uploaded-media/3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\"}";
-							                 parseUploadFileDetails(str,false,tagList);*/
-											
 										}else{
 											lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 											panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
-										/*	addResourceBtnLbl.setEnabled(true);*/
 										}
 									}
 								}
@@ -1402,7 +1352,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	private class OnBrowseBtnClick implements ClickHandler { 
 		@Override
 		public void onClick(ClickEvent event) {
-//			resourceUpload();
 		}
 	}
 	
@@ -1429,7 +1378,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			addResourceBtnLbl.setEnabled(true);
 			addResourceBtnLbl.getElement().removeClassName("secondary");
 			addResourceBtnLbl.getElement().addClassName("primary");
-			/*addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");*/
 		}
 	}
 	
@@ -1439,7 +1387,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			addResourceBtnLbl.setEnabled(true);
 			addResourceBtnLbl.getElement().removeClassName("secondary");
 			addResourceBtnLbl.getElement().addClassName("primary");
-			/*addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");*/
 			mandatoryTitleLbl.setVisible(false);
 			resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			if (titleTextBox.getText().length() >= 50) {
@@ -1457,12 +1404,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			addResourceBtnLbl.setEnabled(true);
 			addResourceBtnLbl.getElement().removeClassName("secondary");
 			addResourceBtnLbl.getElement().addClassName("primary");
-			/*addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");*/
 			descCharcterLimit.setVisible(false);
 			resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
 			if (descriptionTxtAera.getText().length() >= 300) {
-//				descriptionTxtAera.setText(descriptionTxtAera.getText().trim().substring(0, 300));
 				descCharcterLimit.setText(i18n.GL0143());
 				descCharcterLimit.getElement().setAttribute("alt", i18n.GL0143());
 				descCharcterLimit.getElement().setAttribute("title", i18n.GL0143());
@@ -1500,36 +1445,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		imageResourcePanel.removeStyleName("active");
 	}
 
-	/*@UiHandler("textbookResourcePanel")
-	void textbookResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText(i18n.GL0909);
-		categorypanel.setStyleName(textbook.getStyleName());
-		resourceTypePanel.setVisible(false);
-		resoureDropDownLblOpen = false;
-	}*/
-
-	/*@UiHandler("lessonResourcePanel")
-	void lessonResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText(i18n.GL0910);
-		categorypanel.setStyleName(lesson.getStyleName());
-		resourceTypePanel.setVisible(false);
-		resoureDropDownLblOpen = false;
-	}*/
-
-
-	/*@UiHandler("resoureDropDownLbl")
-	public void dropDownClick(ClickEvent event) {
-		if (resoureDropDownLblOpen == false) {
-			resourceTypePanel.setVisible(true);
-			resoureDropDownLblOpen = true;
-
-		} else {
-			resourceTypePanel.setVisible(false);
-			resoureDropDownLblOpen = false;
-		}
-
-	}*/
-	
 	@UiHandler("lblContentRights")
 	public void onMouseOver(MouseOverEvent event){
 		panelContentRights.setVisible(true);
@@ -1549,7 +1464,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				return isValid = false;
 			}
 		}catch (Exception e) {
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return isValid;
 	}
@@ -1630,13 +1545,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					}else{
 						isValidFilePath =true;
 					}
-					/*if(isValidText && isValidTextArea && isValidFilePath){
-						addResourceBtnLbl.setEnabled(true);
-						addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
-					}else{
-						addResourceBtnLbl.setEnabled(false);
-						addResourceBtnLbl.getElement().setAttribute("style", "background: #999;border: none;");
-					}*/
 				}
 			});
 		}
@@ -1732,7 +1640,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 	}
 	public void addCentury(String centuryTag, String id) {
-		/*if (centuryPanel.getWidgetCount() <5) {*/
 			if (centuryTag != null && !centuryTag.isEmpty()) {
 				StandardFo codeObj=new StandardFo();
 				String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
@@ -1746,10 +1653,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
 			}
-	/*	} else {
-			standardMaxShow();
-			standardSgstBox.setText("");
-		}*/
 	}
 	
 	public void standardMaxShow() {
@@ -1869,7 +1772,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					}
 				}
 			}
-		}catch(Exception ex){}
+		}catch(Exception ex){
+			AppClientFactory.printSevereLogger(ex.getMessage());
+		}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
@@ -1877,7 +1782,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		if (Element.is(target)) {
 			try{
 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
-			}catch(Exception ex){}
+			}catch(Exception ex){
+				AppClientFactory.printSevereLogger(ex.getMessage());
+			}
 		}
 		return false;
 	}

@@ -27,17 +27,12 @@
  */
 package org.ednovo.gooru.server.form;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.server.serializer.JsonSerializer;
-import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.data.Form;
-
-import com.google.gwt.dev.json.JsonArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Search Team
@@ -45,6 +40,7 @@ import com.google.gwt.dev.json.JsonArray;
  */
 public class ResourceFormFactory {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ResourceFormFactory.class);
 	/**
 	 * Generate form object, respect to individual object 
 	 * @param object instance of the {@link Object} 
@@ -245,7 +241,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -289,7 +285,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -332,7 +328,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -377,7 +373,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -395,7 +391,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}

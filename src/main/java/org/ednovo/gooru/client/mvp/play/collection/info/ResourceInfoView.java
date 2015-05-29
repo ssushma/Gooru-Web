@@ -48,11 +48,11 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiecenceTooltip;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -143,7 +143,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     private static final  String PAGE_SIZES="20";
     
     private static final String NOT_FRIENDY_TAG="not_iPad_friendly";
-    
+    public static final String IPAD_FRIENDLY="iPad_friendly";
     
     private int collectionItemSizeData=0;
     
@@ -1379,16 +1379,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setmobilefriendlynessdetails(String mediaType) {
 		if(!StringUtil.isEmpty(mediaType)&&!mediaType.equalsIgnoreCase("null")){
-			if(mediaType.equals(NOT_FRIENDY_TAG)){
-				mobileFriendlyPanel.setVisible(true);
-				mbFriendlyLbl.setText(i18n.GL1687().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-				mbFriendlyLbl.getElement().setAttribute("alt",i18n.GL1687());
-				mbFriendlyLbl.getElement().setAttribute("title",i18n.GL1687());
-				mbFriendlyText.setText(" "+i18n.GL1735().toUpperCase());
-				mbFriendlyText.getElement().setAttribute("alt"," "+i18n.GL1735().toUpperCase());
-				mbFriendlyText.getElement().setAttribute("title"," "+i18n.GL1735().toUpperCase());
-				isAccessibilityInfo=true;
-			}else{
+			if(mediaType.equals(IPAD_FRIENDLY)){
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(i18n.GL1687().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 				mbFriendlyLbl.getElement().setAttribute("alt",i18n.GL1687());
@@ -1396,6 +1387,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				mbFriendlyText.setText(" "+i18n.GL_GRR_YES().toUpperCase());
 				mbFriendlyText.getElement().setAttribute("alt"," "+i18n.GL_GRR_YES().toUpperCase());
 				mbFriendlyText.getElement().setAttribute("title"," "+i18n.GL_GRR_YES().toUpperCase());
+				isAccessibilityInfo=true;
+			}else{
+				mobileFriendlyPanel.setVisible(true);
+				mbFriendlyLbl.setText(i18n.GL1687().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				mbFriendlyLbl.getElement().setAttribute("alt",i18n.GL1687());
+				mbFriendlyLbl.getElement().setAttribute("title",i18n.GL1687());
+				mbFriendlyText.setText(" "+i18n.GL1735().toUpperCase());
+				mbFriendlyText.getElement().setAttribute("alt"," "+i18n.GL1735().toUpperCase());
+				mbFriendlyText.getElement().setAttribute("title"," "+i18n.GL1735().toUpperCase());
 				isAccessibilityInfo=true;
 			}
 		}else{

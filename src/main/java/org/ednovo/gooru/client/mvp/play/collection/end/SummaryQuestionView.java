@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.mvp.play.collection.end;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -188,6 +189,7 @@ public class SummaryQuestionView extends Composite{
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return thumbnailImage!=null?thumbnailImage:"images/questiondefault.png";
 	}

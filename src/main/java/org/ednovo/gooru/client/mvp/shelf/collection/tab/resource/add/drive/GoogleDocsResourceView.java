@@ -5,7 +5,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
@@ -19,7 +19,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -68,7 +67,6 @@ public class GoogleDocsResourceView extends Composite {
 	@UiField
 	Label titleTextLabel,descriptionTextLabel,resourceFormatLabel;
 
-	// @UiField public ListBox resourceTypeListBox;
 
 	@UiField
 	public Image setThumbnailImage,generateImageLbl;
@@ -239,17 +237,6 @@ public class GoogleDocsResourceView extends Composite {
 		GoogleDriveItemDo driveObject=new GoogleDriveItemDo();
 		driveObject.setId(id);
 		driveObject.setAlternateLink(alternateLink);
-//		AppClientFactory.getInjector().getResourceService().updatePermissions( driveObject,new SimpleAsyncCallback<GoogleDriveItemDo>(){
-//
-//			@Override
-//			public void onSuccess(GoogleDriveItemDo result) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//
-//			
-//		});
-	
 	}	
 	
 	private class CloseClickHandler implements ClickHandler {
@@ -263,25 +250,11 @@ public class GoogleDocsResourceView extends Composite {
 	
 	public void clearFields() {
 		titleTextBox.setText("");
-
-		// if(tinyMce!=null){
-		// tinyMce.setEmptyContent("");
-		// }
-		// try {
-		// tinyMce.setEmptyContent("");
-		// } catch (Exception e) {
-		// }
-		// }
-
 		descriptionTxtAera.setText("");
 		descriptionTxtAera.getElement().setAttribute("alt","");
 		descriptionTxtAera.getElement().setAttribute("title","");
-		// resourceTypeListBox.setSelectedIndex(0);
 		generateImageLbl.setVisible(true);
 		setThumbnailImage.setUrl("");
-		/*if (thumbnailImages != null) {
-			thumbnailImages.clear();
-		}*/
 		resourceCategoryLabel.setText(i18n.GL0360());
 		resourceCategoryLabel.getElement().setAttribute("alt",i18n.GL0360());
 		resourceCategoryLabel.getElement().setAttribute("title",i18n.GL0360());
@@ -292,18 +265,12 @@ public class GoogleDocsResourceView extends Composite {
 		descCharcterLimit.setVisible(false);
 		loadingTextLbl.getElement().getStyle().setDisplay(Display.NONE);
 		buttonsPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-//		buttonsPanel.setVisible(true);
-//		loadingTextLbl.setVisible(false);
 		setVisible(true);
 	}
 
 	public void hidePopup(){
 		closeAddResourcePopup();
 	}
-
-
-	
-	
 	public void closeAddResourcePopup(){
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, true));
 		Window.enableScrolling(true);

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -114,8 +115,8 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
 			String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText());
 			openEndedQuestionText.setHTML(removeHtmlTags(titlelbl1));
-			openEndedQuestionText.getElement().setAttribute("alt",removeHtmlTags(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
-			openEndedQuestionText.getElement().setAttribute("title",removeHtmlTags(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
+			openEndedQuestionText.getElement().setAttribute("alt",StringUtil.removeAllHtmlCss(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
+			openEndedQuestionText.getElement().setAttribute("title",StringUtil.removeAllHtmlCss(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
 			if(collectionItemDo.getResource().getHints()!=null && collectionItemDo.getResource().getHints().size()>0){
 				hintsButton.setText(" "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
@@ -259,7 +260,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return thumbnailImage;
 	}
@@ -282,7 +283,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
-			getUiHandlers().createSessionItemAttempt(answerId, answerAttemptStatus);	
+			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);	
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
@@ -313,7 +314,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
-			getUiHandlers().createSessionItemAttempt(answerId, answerAttemptStatus);	
+			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);	
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
@@ -353,7 +354,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							
+							AppClientFactory.printSevereLogger(e.getMessage());	
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";
@@ -361,7 +362,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						}
 					}
 			}	
-			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
 		}
 		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
@@ -374,7 +375,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSesstionItemAttemptOe(String answerId,String answerText){
-			getUiHandlers().createSesstionItemAttemptOe(answerId, "pending",answerText);
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId, "pending",answerText);
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			attemptAnswerDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -428,7 +429,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 					try{
 						answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 					}catch(Exception e){
-						
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 					if((i+1)!=userAttemptedAnswers.size()){
 						attemptedAnswers=attemptedAnswers+",";
@@ -436,7 +437,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 					}
 				}
 			}
-			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
 		}
 		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
 			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,4);

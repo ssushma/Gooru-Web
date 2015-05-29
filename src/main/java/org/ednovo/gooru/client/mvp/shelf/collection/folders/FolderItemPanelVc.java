@@ -33,7 +33,6 @@ public class FolderItemPanelVc extends AppRepositionDragContainer {
 	@Override
 	public void onDrop(Draggable draggable) {
 		ShelfFolderItemChildView folderItem = (ShelfFolderItemChildView) draggable.getDraggableUc();
-//		folderItem.reorderCollectionItem(getWidgetIndex(draggable));
 	}
 
 	@Override

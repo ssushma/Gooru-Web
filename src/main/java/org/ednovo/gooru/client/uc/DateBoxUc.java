@@ -235,6 +235,7 @@ public class DateBoxUc extends FlowPanel{
 					}
 				}
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}

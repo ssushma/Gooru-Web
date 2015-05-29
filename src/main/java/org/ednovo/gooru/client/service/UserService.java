@@ -85,7 +85,7 @@ public interface UserService extends BaseService {
 	 * @param params has user details 
 	 * @throws GwtException
 	 */
-	void registerUser(Map<String, String> params) throws GwtException, ServerDownException;
+	UserDo registerUser(Map<String, String> params) throws GwtException, ServerDownException;
 
 	/**
 	 * Get register user details by userId
@@ -105,12 +105,7 @@ public interface UserService extends BaseService {
 	 */
 	ProfileDo updateUserDetails(String gooruUid, String token, Map<String, String> params) throws GwtException, ServerDownException;
 
-	/**
-	 * Send confirmation mail to user to update their profile
-	 * @param params has details of the user
-	 * @throws GwtException
-	 */
-	void resendConfirmationMail(Map<String, String> params) throws GwtException, ServerDownException;
+	void resendConfirmationMail(Map<String, String> params);
 
 	/**
 	 * Send forget possword link to user registered mail id
@@ -200,7 +195,7 @@ public interface UserService extends BaseService {
 	
 	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail,String userType)  throws GwtException, ServerDownException;
 	
-	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException, ServerDownException;
+	void sendWelcomeMail(String gooruUId, String emailType);
 	
 	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException, ServerDownException;
 	

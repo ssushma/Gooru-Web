@@ -22,15 +22,6 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 }
 
-@eval GOORU_LEARNING_LOGO org.ednovo.gooru.client.GooruImageResourceBundle.getLandingPageSprite();
-.gooruLearningIcon {
-    background: GOORU_LEARNING_LOGO no-repeat scroll -8px -207px transparent;
-    float: left;
-    height: 30px;
-    margin: 10px 5px 10px 0px;
-    width: 108px;
-}
-
 .logoDiv {
 	margin: auto;
 	width: 960px;
@@ -613,15 +604,6 @@ div.learnMoreIconsDiv,div.learnMoreIconsDiv {
 	-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
 	box-shadow: inset 0 0 10px rgba(0,0,0,.3);
 	cursor: pointer;
-}
-
-.discoverDropDown {
-	width: 8px;
-	height: 4px;
-	background: url(images/library/partners/discover_arrow.png) no-repeat;
-	float: right;
-	margin-left: 7px;
-	margin-top: 6px;
 }
 
 .discoverDropDownBorder {

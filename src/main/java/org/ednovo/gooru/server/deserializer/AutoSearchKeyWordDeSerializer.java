@@ -32,11 +32,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AutoSearchKeyWordDeSerializer extends DeSerializer{
 	private static final String KEYWORD = "keyword";
+	private static final Logger logger = LoggerFactory.getLogger(AutoSearchKeyWordDeSerializer.class);
 	public List<AutoSuggestKeywordSearchDo> deserializeAutoKeyword(JsonRepresentation jsonRep) {
 			List<AutoSuggestKeywordSearchDo> autoKeywordsList = new ArrayList<AutoSuggestKeywordSearchDo>();
 	try {
@@ -52,7 +55,9 @@ public class AutoSearchKeyWordDeSerializer extends DeSerializer{
 					}
 				}
 			}
-		} catch (JSONException e) {}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
 		return autoKeywordsList;
 	}
 }

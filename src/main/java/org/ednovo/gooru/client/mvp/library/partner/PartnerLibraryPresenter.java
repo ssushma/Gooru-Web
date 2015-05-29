@@ -40,8 +40,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	
 	private static final String SHARING_TYPE = "public";
 	
-	private static final String COLLECTION_TYPE = "folder";
-	
 	@Inject
 	public PartnerLibraryPresenter(EventBus eventBus, IsPartnerLibraryView view) {
 		super(eventBus, view);
@@ -89,7 +87,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber,final String libraryGooruOid) {
 		final long startTime = System.currentTimeMillis();
 		AppClientFactory.printInfoLogger("Lib unit API call start --- "+AppClientFactory.getCurrentPlaceToken()+" ---- "+startTime);
-		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 20,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
 				AppClientFactory.printInfoLogger("Lib unit API call consumed on success @ client --- "+(System.currentTimeMillis() - startTime));
@@ -101,7 +99,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public void setPartnerWidget() {
-//		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			if(AppClientFactory.getLoggedInUser()!=null) {
 				getView().clearPanels();
 				getView().getComingSoonText(false);
@@ -111,7 +108,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 			} else {
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 			}
-//		}
 	}
 	
 	/**
@@ -127,7 +123,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public String getViewToken() {
-		
 		return AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 	}
 

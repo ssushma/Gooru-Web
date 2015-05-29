@@ -103,7 +103,6 @@
 	background: -o-linear-gradient(top, rgba(239,239,239,1) 0%,rgba(247,247,247,1) 32%,rgba(239,239,239,1) 100%);
 	background: -ms-linear-gradient(top, rgba(239,239,239,1) 0%,rgba(247,247,247,1) 32%,rgba(239,239,239,1) 100%);
 	background: linear-gradient(to bottom, rgba(239,239,239,1) 0%,rgba(247,247,247,1) 32%,rgba(239,239,239,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
 }
 .share:HOVER, .moreInfo:HOVER,.infoLbl:HOVER, .shareActive:HOVER, .moreInfoActive:HOVER, .embed:HOVER, .addLblActive:HOVER, .tagsLblActive:HOVER, .analyticsLblActive:HOVER {
 
@@ -184,7 +183,6 @@
 	padding-left: 4px;
 	display: inline-block;
 }
-
 .blueLinkPad {
 	color: #0F76BB;
 	cursor: pointer;
@@ -222,7 +220,6 @@
 	background: -o-linear-gradient(top, rgba(239,239,239,1) 0%,rgba(247,247,247,1) 32%,rgba(239,239,239,1) 100%);
 	background: -ms-linear-gradient(top, rgba(239,239,239,1) 0%,rgba(247,247,247,1) 32%,rgba(239,239,239,1) 100%);
 	background: linear-gradient(to bottom, rgba(239,239,239,1) 0%,rgba(247,247,247,1) 32%,rgba(239,239,239,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
 }
 .tabActive:HOVER{
 	background:#EFEFEF;

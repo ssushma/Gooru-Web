@@ -32,8 +32,9 @@ import java.util.Set;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -71,8 +72,6 @@ public abstract class AddSearchResourceView extends Composite {
 	private SearchDo<ResourceSearchResultDo> filterSearchDo = new SearchDo<ResourceSearchResultDo>();
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-//	private static final AppConstants CONSTANTS = GWT.create(AppConstants.class);
 	
 	@UiField 
 	Label totalResources,searchtitleText,serachcontentText,suggestedText;
@@ -141,7 +140,6 @@ public abstract class AddSearchResourceView extends Composite {
 		noResultsPanel.getElement().setId("pnlNoResultsPanel");
 		totalResources.getElement().setId("lblTotalResources");
 		noResultsLabel.getElement().setId("htmlNoResultsLabel");
-		//GL0896
 		searchBox.getElement().setAttribute("placeholder", i18n.GL1967());
 		searchBox.setText(collectionTitle);
 		searchBox.getElement().setId("txtSearchBox");
@@ -159,9 +157,7 @@ public abstract class AddSearchResourceView extends Composite {
 		addResourceButton.getElement().setId("btnGoTosearch");
 		viewAllResourcesBtn.setVisible(false);
 		collectionId = collectionDo.getGooruOid();
-				
 		filterSearchDo.setQuery(collectionTitle);
-
 		addResourceButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -192,11 +188,8 @@ public abstract class AddSearchResourceView extends Composite {
 		if(codeDoSet!=null & codeDoSet.size()>0) {
 			setSubject(collectionDo.getTaxonomySet());
 		} else {
-			if(filterMap.size()>0) {
-				filterSearchDo.setFilters(filterMap);
-			}
+			filterSearchDo.setFilters(filterMap);
 			filterMap.put("fltNot.scollectionGooruOIds", collectionId);
-			//getResourceSearchResults(filterSearchDo);
 			getSuggestedResourceSearchResults(filterSearchDo,collectionId);
 		}
 	}
@@ -229,16 +222,6 @@ public abstract class AddSearchResourceView extends Composite {
 			viewAllResourcesBtn.setVisible(false);
 		}
 	}
-	
-/*	private void getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo) {
-		AppClientFactory.getInjector().getSearchService().getResourceSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<ResourceSearchResultDo>>(){
-			@Override
-			public void onSuccess(SearchDo<ResourceSearchResultDo> result) {
-				setData(result);
-			}
-		});
-	}*/
-	
 	private void getSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo,final String contentGorruOid) {
 		AppClientFactory.getInjector().getSearchService().getCollectionSuggestedResourceSearchResults(searchDo,contentGorruOid, new SimpleAsyncCallback<SearchDo<ResourceSearchResultDo>>() {
 			
@@ -321,11 +304,10 @@ public abstract class AddSearchResourceView extends Composite {
 				});
 			if(filterMap.size()>0) {
 				filterMap.put(IsSearchView.SUBJECT_FLT, subjectDoFilter);
-				filterSearchDo.setFilters(filterMap);
 			}
 		}
+		filterSearchDo.setFilters(filterMap);
 		filterMap.put("fltNot.scollectionGooruOIds", collectionId);
-		//getResourceSearchResults(filterSearchDo);
 		getSuggestedResourceSearchResults(filterSearchDo,collectionId);
 	}
 	
@@ -333,71 +315,6 @@ public abstract class AddSearchResourceView extends Composite {
 
 	private void setData(SearchDo<ResourceSearchResultDo> result,String collectiongooruOid) {
 	List<ResourceSearchResultDo> suggestedSearchResults = result.getSuggestResults();
-		/*if(result.getSearchHits()==0) {
-			searchResultspanel.setVisible(false);
-		} else {
-			searchResultspanel.setVisible(true);
-			totalResources.setText(StringUtil.generateMessage(i18n.GL0335, Integer.toString(result.getSearchHits())));
-			final List<ResourceSearchResultDo> searchResults = result.getSearchResults();
-			for(int i = 0; i < 4; i++) {
-				final String thumbnailUrl = searchResults.get(i).getUrl();
-				category = searchResults.get(i).getCategory();
-				if(category!=null){
-				if(category.equalsIgnoreCase("lesson")||category.equalsIgnoreCase("textbook")||category.equalsIgnoreCase("handout")){
-					category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
-				}
-				if(category.equalsIgnoreCase("slide")){
-					category=category.replaceAll("slide","image");
-				}
-				if(category.equalsIgnoreCase("exam")||category.equalsIgnoreCase("website") || category.equalsIgnoreCase("challenge")){
-					category=category.replaceAll("exam","webpage").replaceAll("website","webpage").replaceAll("challenge","webpage");
-				}
-				}
-				HTMLPanel thumbnailContainer = new HTMLPanel("");
-				
-				addResourceThumbnailContent = new HTMLPanel("");
-				addResourceThumbnailContent.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().addResourceThumbnailContent());			
-				final Image resourceThumbnail = new Image();
-				resourceThumbnail.setUrl(thumbnailUrl);
-				resourceThumbnail.getElement().getStyle().setHeight(60, Unit.PX);
-				resourceThumbnail.getElement().getStyle().setWidth(80, Unit.PX);
-				
-				addResourceSprite = new HTMLPanel("");
-				addResourceSprite.addStyleName(UcCBundle.INSTANCE.css().resourceName());
-				addResourceSprite.addStyleName(category.toLowerCase() + SMALL);
-				addResourceImgDesc = new HTML();
-				String resourceTitle = searchResults.get(i).getResourceTitle();
-				if(resourceTitle.length() > 25) {
-					resourceTitle = resourceTitle.substring(0, 24) + "...";
-				}
-				
-				thumbnailContainer.add(resourceThumbnail);
-				thumbnailContainer.add(addResourceSprite);
-				thumbnailContainer.getElement().getStyle().setHeight(65, Unit.PX);
-				
-				addResourceImgDesc.setHTML(resourceTitle);
-				addResourceImgDesc.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().addResourceImgDesc());
-				
-				addResourceThumbnailContent.add(thumbnailContainer);
-				addResourceThumbnailContent.add(addResourceImgDesc);
-				
-				AddSearchSuggestedResourceView addsearchobj = new AddSearchSuggestedResourceView(searchResults.get(i));
-				suggestedResourcesPanel.add(addsearchobj);
-			//	suggestedResourcesPanel.add(addResourceThumbnailContent);
-				
-				resourceThumbnail.addErrorHandler(new ErrorHandler(){
-					@Override
-					public void onError(ErrorEvent event) {
-						resourceThumbnail.setUrl(DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG);
-					}
-				});
-			}
-			
-			suggestedResourcesPanel.add(viewAllResourcesBtn);		
-			viewAllResourcesBtn.getElement().getStyle().setMarginLeft(-236, Unit.PX);
-			viewAllResourcesBtn.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			viewAllResourcesBtn.getElement().getStyle().setMarginTop(33, Unit.PX);
-		}*/
 		if(suggestedSearchResults.size()==0) {
 			suggestedResourcesPanel.setVisible(false);
 			noResultsLabel.setHTML(i18n.GL1957());
@@ -441,21 +358,19 @@ public abstract class AddSearchResourceView extends Composite {
 		if(!subjectDoFilter.isEmpty()) {
 			filterResourceParams.put(IsSearchView.SUBJECT_FLT, subjectDoFilter);
 		}
-		filterResourceParams.put("pageSize", "8");
-		filterResourceParams.put("pageNum", "1");
 		filterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, filterResourceParams);
+		HeaderUc.getEditSearchTxtBox().setText(searchBox.getText());
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, filterResourceParams);
 	}
 
 	private void redirectSearchNoFiltersPage() {
 		Map<String,String> noFilterResourceParams = new HashMap<String,String>();
 		noFilterResourceParams.put("query",searchBox.getText());
 		noFilterResourceParams.put("category", "All");
-		noFilterResourceParams.put("pageSize", "8");
-		noFilterResourceParams.put("pageNum", "1");
 		noFilterResourceParams.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		hidePopup();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, noFilterResourceParams);
+		HeaderUc.getEditSearchTxtBox().setText(searchBox.getText());
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, noFilterResourceParams);
 	}
 }

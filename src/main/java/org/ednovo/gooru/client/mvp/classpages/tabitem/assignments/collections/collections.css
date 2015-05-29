@@ -30,7 +30,8 @@
 	-webkit-border-top-right-radius: 4px;
 	-moz-border-top-left-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
+   
+   
 }
 .headerLeft {
 	display: inline-block;

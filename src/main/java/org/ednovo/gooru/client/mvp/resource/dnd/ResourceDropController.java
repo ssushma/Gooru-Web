@@ -63,7 +63,12 @@ public class ResourceDropController extends AppSimpleDropController {
 		setDropActive(false);
 		if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
 			//AppClientFactory.fireEvent(new InvokeLoginEvent());
-			LoginPopupUc loginPopupUc=new LoginPopupUc(); 
+			LoginPopupUc loginPopupUc=new  LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					
+				}
+			}; 
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				MixpanelUtil.sign_up_from_dragging_resource();
 				loginPopupUc.setMixPanelEvent("dragresource");

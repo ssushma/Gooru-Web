@@ -3,6 +3,8 @@ package org.ednovo.gooru.server.deserializer;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,13 +21,17 @@ public class ProfileLibraryDeserializer extends DeSerializer{
 	private static final String THUMBNAILS = "thumbnails";
 	private static final String FOLDER = "folder";
 	private static final String TYPE = "type";
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProfileLibraryDeserializer.class);
 
 	public ProfileLibraryListDo deserializeFolderList(JsonRepresentation jsonRep) {
 			try {
 				if (jsonRep != null && jsonRep.getSize() != -1) {
 					return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<ProfileLibraryListDo>() {});
 				}
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				logger.error("Exception::", e);
+			}
 			return new ProfileLibraryListDo();
 	}
 }

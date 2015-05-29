@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class AddQueryParameter {
 	
 	
-	private static final Logger logger = LoggerFactory.getLogger(AnalyticsServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(AddQueryParameter.class);
 	
 	AddQueryParameter(){
 		

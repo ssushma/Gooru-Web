@@ -1370,6 +1370,8 @@ footer .col-xs-2:last-child{
     height: 57px;
     background-position: -270px -2px;
     display: inline-block;
+     left: 10px;
+  	position: relative;
 }
 
 .spriteLandingPageNextArrow {

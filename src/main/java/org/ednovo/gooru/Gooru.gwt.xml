@@ -10,16 +10,11 @@
 	<inherits name='com.tractionsoftware.gwt.user.GroupedListBox' />
 	<inherits name='com.gwtplatform.mvp.Mvp' />
 	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd' />
-	<inherits name='com.google.gwt.widgetideas.WidgetIdeas' />
-	<inherits name='com.google.gwt.libideas.LibIdeas' />
 	<inherits name="com.google.gwt.http.HTTP" />
-	<inherits name='org.ednovo.gooru.player.resource.ResourcePlayer' />
-	<inherits name='org.ednovo.gooru.player.collection.Collection' />
 	<inherits name='com.google.code.gwt.crop.GWTCropper' />
 	<inherits name='com.nitrous.gwt.earth.GwtEarthAPI' />
 	<inherits name='br.com.freller.tool.PrintIt' />
 	<inherits name='com.google.gwt.query.Query' />
-	<inherits name='com.googlecode.gwt.Serialization' />
  	<inherits name="com.google.gwt.logging.Logging"/>
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name="com.google.gwt.http.HTTP" />
@@ -31,14 +26,9 @@
 	<!-- the theme of your GWT application by uncommenting -->
 	<!-- any one of the following lines. -->
 	<inherits name='com.google.gwt.user.theme.clean.Clean' />
-	<!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
-	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
 	<!-- Other module inherits -->
 	<inherits name='com.google.gwt.uibinder.UiBinder' />
-
-	<inherits name="com.seanchenxi.gwt.storage.Storage" />
 
 	<!-- Include GWTUpload library -->
 	<inherits name="gwtupload.GWTUpload" />
@@ -78,11 +68,6 @@
 			<when-property-is name="formfactor" value="mobile" />
 		</any>
 	</replace-with>
-	<!-- <generate-with 
-   			class="org.ednovo.gooru.client.GooruServiceInterfaceProxyGenerator">
-    			<when-type-assignable class="com.google.gwt.user.client.rpc.RemoteService"/>
-		</generate-with> -->
-
 	<define-configuration-property name='gin.ginjector'
 		is-multi-valued='false' />
 	<set-configuration-property name='gin.ginjector'
@@ -110,6 +95,6 @@
 	<set-property name="gwt.logging.logLevel" value="SEVERE"/>
 	<set-property name="gwt.logging.logLevel" value="INFO"/> 
  	<set-property name="gwt.logging.enabled" value="TRUE"/>            
-    <set-property name="gwt.logging.popupHandler" value="DISABLED" />
-
+	<set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />
+	
 </module>

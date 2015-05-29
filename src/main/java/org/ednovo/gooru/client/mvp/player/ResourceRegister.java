@@ -264,7 +264,12 @@ public class ResourceRegister extends PopupPanel{
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		MixpanelUtil.Click_HaveAnAccount_ResourceRegisterPopup();
-		LoginPopupUc popup = new LoginPopupUc(new HeaderUc());
+		LoginPopupUc popup = new  LoginPopupUc(new HeaderUc()) {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setGlassEnabled(true);
 		popup.show();
 		popup.center();	 
@@ -305,6 +310,7 @@ public class ResourceRegister extends PopupPanel{
 									}
 								});
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}
@@ -319,9 +325,9 @@ public class ResourceRegister extends PopupPanel{
 				.getInjector()
 				.getUserService()
 				.resendConfirmationMail(params,
-						new SimpleAsyncCallback<Object>() {
+						new SimpleAsyncCallback<Void>() {
 							@Override
-							public void onSuccess(Object result) {
+							public void onSuccess(Void result) {
 								if (parentRegisterVc != null) {
 									parentRegisterVc.getPopupPanel().hide();
 								}

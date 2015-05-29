@@ -2,7 +2,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.folders.uc;
 
 import java.util.HashMap;
 
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
@@ -122,7 +122,6 @@ public abstract class FolderPopupChildItem extends Composite{
 	public class ClickOnFolderLevel implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			//setFolderStyle();
 		}
 	}
 	

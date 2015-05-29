@@ -44,6 +44,10 @@ import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
+import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
@@ -142,6 +146,12 @@ public interface AppInjector extends ServiceInjector {
 	Provider<HomePresenter> getHomePresenter();
 
 	AsyncProvider<SearchRootPresenter> getSearchRootPresenter();
+	
+	AsyncProvider<SearchMainPresenter> getSearchMainPresenter();
+	
+	AsyncProvider<SearchCollectionPresenter> getSearchCollectionPresenter();
+	
+	AsyncProvider<SearchResourcePresenter> getSearchResourcePresenter();
 
 	AsyncProvider<CollectionSearchPresenter> getCollectionSearchPresenter();
 
@@ -249,6 +259,8 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<AddCenturyPresenter> getAddCenturyPresenter();
 	
+	AsyncProvider<GooruGradesPresenter> getGooruGradesPresenter();
+	
 	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
@@ -284,5 +296,6 @@ public interface AppInjector extends ServiceInjector {
 	AddCenturyPresenter getAddCenturyPresenterWidget();
 	
 	AsyncProvider<QuestionTypePresenter> getQuestionTypePresenter();
+
 
 }

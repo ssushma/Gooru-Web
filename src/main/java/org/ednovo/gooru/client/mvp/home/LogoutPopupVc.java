@@ -159,8 +159,8 @@ public class LogoutPopupVc extends Composite{
 				}
 				AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(null));
 
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) 
-						|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) 
+						|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 					Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
 					if(map.containsKey("query"))
 					{
@@ -172,7 +172,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("query", queryVal);
 					}
@@ -186,7 +186,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						subjectNameVal = subjectNameVal.replace("+", " ");
 						map.put("flt.subjectName", subjectNameVal);
@@ -201,7 +201,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("flt.rating", ratingsVal);
 					}
@@ -215,7 +215,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("flt.grade", gradeVal);
 					}
@@ -229,7 +229,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("flt.cfAccessMode", accessMode);
 					}
@@ -243,7 +243,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("flt.publisher", publisher);
 					}
@@ -257,7 +257,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("flt.aggregator", aggregator);
 					}
@@ -271,7 +271,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("flt.standard", standard);
 					}
@@ -285,7 +285,7 @@ public class LogoutPopupVc extends Composite{
 						}
 						catch(Exception ex)
 						{
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("category", category);
 					}

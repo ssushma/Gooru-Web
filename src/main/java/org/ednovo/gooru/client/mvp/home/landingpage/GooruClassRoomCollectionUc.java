@@ -107,10 +107,7 @@ public class GooruClassRoomCollectionUc extends Composite{
 		methodsCollection.setUrl(StringUtil.formThumbnailName(featuredCollectionContentDo.getScollections().get(0).getThumbnailUrl(),"-266x200."));
 		methodsCollection.setAltText(featuredCollectionContentDo.getScollections().get(0).getTitle());
 		methodsCollection.setTitle(featuredCollectionContentDo.getScollections().get(0).getTitle());
-/*		methodsCollection.setUrl(featuredCollectionContentDo.getScollections().get(0).getThumbnailUrl());
-		methodsCollection.setWidth("266px");
-		methodsCollection.setHeight("200px");
-*/		methodsCollection.addClickHandler(new ClickHandler() {
+		methodsCollection.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				SetTab(Tabfilter);

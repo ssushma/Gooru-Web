@@ -112,7 +112,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField SectionTag collectionContainer;
 
 	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
-	@UiField ResourcePlayerMetadataBundle playerStyle;
+	/*@UiField ResourcePlayerMetadataBundle playerStyle;*/
 	@UiField HTML resourceTitleLbl;
 	
 	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
@@ -179,6 +179,21 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
 	int currentRating=0;
+	
+	private static final int EMOTIC_ZERO = 0;
+	
+	private static final int EMOTIC_ONE = 1;
+	
+	private static final int EMOTIC_TWO = 2;
+	
+	private static final int EMOTIC_THREE = 3;
+	
+	private static final int EMOTIC_FOUR = 4;
+	
+	private static final int EMOTIC_FIVE = 5;
+	
+	private static final String REACTION = "reaction";
+	
 	
 	public SectionTag getCollectionContainer(){
 		return collectionContainer;
@@ -441,7 +456,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
 					HTMLPanel htmlPanel = new HTMLPanel("");
-					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
+					htmlPanel.addStyleName("collectionPlayerImage");
 					Image img = new Image();
 					img.addStyleName("img-responsive");
 					img.setHeight("100%");
@@ -531,16 +546,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			showLoginPopupWidget(REACTIONS_WIDGET);
 		}else{
 			if(isCanExplainSelected){
-				canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-				canExplainEmoticButton.addStyleName(playerStyle.emoticon_i());
+				canExplainEmoticButton.setStyleName("spriteType");
+				canExplainEmoticButton.addStyleName("emoticon_i");
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				getUiHandlers().deleteReaction(gooruReactionId);
 				deleteReactionTriggerEvent();
 				setDefaultReaction();
 			}else{
-				canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-				canExplainEmoticButton.addStyleName(playerStyle.emoticon_vi());
+				canExplainEmoticButton.setStyleName("spriteType");
+				canExplainEmoticButton.addStyleName("emoticon_vi");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_EXPLAIN,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_EXPLAIN,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_FIVE);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_CAN_EXPLAIN,PlayerDataLogEvents.REACTION_CREATE);
 			}
 			 
@@ -562,16 +578,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			 * and call Create API.
 			 */
 			if(isCanUnderstandSelected){
-				understandEmoticButton.setStyleName(playerStyle.spriteType());
-				understandEmoticButton.addStyleName(playerStyle.emoticon_ii());
+				understandEmoticButton.setStyleName("spriteType");
+				understandEmoticButton.addStyleName("emoticon_ii");
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				getUiHandlers().deleteReaction(gooruReactionId);
 				deleteReactionTriggerEvent();
 				setDefaultReaction();
 			}else{
-				understandEmoticButton.setStyleName(playerStyle.spriteType());
-				understandEmoticButton.addStyleName(playerStyle.emoticon_vii());
+				understandEmoticButton.setStyleName("spriteType");
+				understandEmoticButton.addStyleName("emoticon_vii");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_CAN_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_FOUR);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_CAN_UNDERSTAND,PlayerDataLogEvents.REACTION_CREATE);
 			}
 		}
@@ -592,16 +609,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			 * and call Create API.
 			 */
 			if(isMehSelected){
-				mehEmoticButton.setStyleName(playerStyle.spriteType());
-				mehEmoticButton.addStyleName(playerStyle.emoticon_viii());
+				mehEmoticButton.setStyleName("spriteType");
+				mehEmoticButton.addStyleName("emoticon_viii");
 				getUiHandlers().deleteReaction(gooruReactionId);
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				deleteReactionTriggerEvent();
 				setDefaultReaction();
 			}else{
-				mehEmoticButton.setStyleName(playerStyle.spriteType());
-				mehEmoticButton.addStyleName(playerStyle.emoticon_v());
+				mehEmoticButton.setStyleName("spriteType");
+				mehEmoticButton.addStyleName("emoticon_v");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_MEH,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_MEH,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_THREE);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_MEH,PlayerDataLogEvents.REACTION_CREATE);
 			}
 			
@@ -623,16 +641,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			 * and call Create API.
 			 */
 			if(isDoNotUnderstandSelected){
-				doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-				doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_iii());
+				doNotUnderstandEmoticButton.setStyleName("spriteType");
+				doNotUnderstandEmoticButton.addStyleName("emoticon_iii");
 				getUiHandlers().deleteReaction(gooruReactionId);
 				deleteReactionTriggerEvent();
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				setDefaultReaction();
 			}else{
-				doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-				doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_ix());
+				doNotUnderstandEmoticButton.setStyleName("spriteType");
+				doNotUnderstandEmoticButton.addStyleName("emoticon_ix");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_DONOT_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_DONOT_UNDERSTAND,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(), EMOTIC_TWO);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_DONOT_UNDERSTAND,PlayerDataLogEvents.REACTION_CREATE);
 			}
 		}
@@ -652,16 +671,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			 * and call Create API.
 			 */
 			if(isNeedHelpSelected){
-				needHelpButton.setStyleName(playerStyle.spriteType());
-				needHelpButton.addStyleName(playerStyle.emoticon_iv());
+				needHelpButton.setStyleName("spriteType");
+				needHelpButton.addStyleName("emoticon_iv");
 				deleteReactionTriggerEvent();
 				getUiHandlers().deleteReaction(gooruReactionId);
+				getUiHandlers().updateSessionActivityItemForReactions(EMOTIC_ZERO,collectionItemDo.getResource().getGooruOid(),REACTION);
 				setDefaultReaction();
 			}else{
-				needHelpButton.setStyleName(playerStyle.spriteType());
-				needHelpButton.addStyleName(playerStyle.emoticon_x());
+				needHelpButton.setStyleName("spriteType");
+				needHelpButton.addStyleName("emoticon_x");
 				deleteReactionTriggerEvent();
-				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_NEED_HELP,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken());
+				createReaction(collectionItemDo.getResource().getGooruOid(),REACTION_NEED_HELP,gooruReactionId,AppClientFactory.getPlaceManager().getRequestParameter("id"),AppClientFactory.getCurrentPlaceToken(),EMOTIC_ONE);
 				getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_NEED_HELP,PlayerDataLogEvents.REACTION_CREATE);
 			}
 		}
@@ -681,7 +701,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 	}
 	private void showLoginPopupWidget(String widgetType) { 
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		if(widgetType.equals(REACTIONS_WIDGET)){
 			popup.setWidgetMode("reactionWidget");
 		}else if(widgetType.equals(RATINGS_WIDGET)){
@@ -764,24 +789,24 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public void setReaction(ReactionDo reactionDo,String gooruReactionId) {
 		this.gooruReactionId=gooruReactionId;
 		if(REACTION_CAN_EXPLAIN.equalsIgnoreCase(reactionDo.getReactionText())){
-			canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-			canExplainEmoticButton.addStyleName(playerStyle.emoticon_vi());
+			canExplainEmoticButton.setStyleName("spriteType");
+			canExplainEmoticButton.addStyleName("emoticon_vi");
 			isCanExplainSelected=true;
 			/**
 			 * Except "can explain" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
 			 */
-			understandEmoticButton.setStyleName(playerStyle.spriteType());
-			understandEmoticButton.addStyleName(playerStyle.emoticon_ii());
+			understandEmoticButton.setStyleName("spriteType");
+			understandEmoticButton.addStyleName("emoticon_ii");
 			
-			mehEmoticButton.setStyleName(playerStyle.spriteType());
-			mehEmoticButton.addStyleName(playerStyle.emoticon_viii());
+			mehEmoticButton.setStyleName("spriteType");
+			mehEmoticButton.addStyleName("emoticon_viii");
 			
-			doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-			doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_iii());
+			doNotUnderstandEmoticButton.setStyleName("spriteType");
+			doNotUnderstandEmoticButton.addStyleName("emoticon_iii");
 			
-			needHelpButton.setStyleName(playerStyle.spriteType());
-			needHelpButton.addStyleName(playerStyle.emoticon_iv());
+			needHelpButton.setStyleName("spriteType");
+			needHelpButton.addStyleName("emoticon_iv");
 			
 			/**
 			 * Except can explain emotic flag, all other emotic flag set to false, based on this again on mouse over previously selected will be removed.
@@ -792,24 +817,24 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
 		}else if(REACTION_CAN_UNDERSTAND.equalsIgnoreCase(reactionDo.getReactionText())){
-			understandEmoticButton.setStyleName(playerStyle.spriteType());
-			understandEmoticButton.addStyleName(playerStyle.emoticon_vii());
+			understandEmoticButton.setStyleName("spriteType");
+			understandEmoticButton.addStyleName("emoticon_vii");
 			isCanUnderstandSelected = true;
 			/**
 			 * Except "can understand" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
 			 */
-			canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-			canExplainEmoticButton.addStyleName(playerStyle.emoticon_i());
+			canExplainEmoticButton.setStyleName("spriteType");
+			canExplainEmoticButton.addStyleName("emoticon_i");
 			
-			mehEmoticButton.setStyleName(playerStyle.spriteType());
-			mehEmoticButton.addStyleName(playerStyle.emoticon_viii());
+			mehEmoticButton.setStyleName("spriteType");
+			mehEmoticButton.addStyleName("emoticon_viii");
 			
-			doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-			doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_iii());
+			doNotUnderstandEmoticButton.setStyleName("spriteType");
+			doNotUnderstandEmoticButton.addStyleName("emoticon_iii");
 			
-			needHelpButton.setStyleName(playerStyle.spriteType());
-			needHelpButton.addStyleName(playerStyle.emoticon_iv());
+			needHelpButton.setStyleName("spriteType");
+			needHelpButton.addStyleName("emoticon_iv");
 			
 			/**
 			 * Except "can understand" emotic flag, all other emotic flag set to false, based on this again on mouse over previously selected will be removed.
@@ -820,24 +845,24 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
 		}else if(REACTION_MEH.equalsIgnoreCase(reactionDo.getReactionText())){
-			mehEmoticButton.setStyleName(playerStyle.spriteType());
-			mehEmoticButton.addStyleName(playerStyle.emoticon_v());
+			mehEmoticButton.setStyleName("spriteType");
+			mehEmoticButton.addStyleName("emoticon_v");
 			isMehSelected = true;
 			/**
 			 * Except "meh" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
 			 */
-			canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-			canExplainEmoticButton.addStyleName(playerStyle.emoticon_i());
+			canExplainEmoticButton.setStyleName("spriteType");
+			canExplainEmoticButton.addStyleName("emoticon_i");
 			
-			understandEmoticButton.setStyleName(playerStyle.spriteType());
-			understandEmoticButton.addStyleName(playerStyle.emoticon_ii());
+			understandEmoticButton.setStyleName("spriteType");
+			understandEmoticButton.addStyleName("emoticon_ii");
 			
-			doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-			doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_iii());
+			doNotUnderstandEmoticButton.setStyleName("spriteType");
+			doNotUnderstandEmoticButton.addStyleName("emoticon_iii");
 			
-			needHelpButton.setStyleName(playerStyle.spriteType());
-			needHelpButton.addStyleName(playerStyle.emoticon_iv());
+			needHelpButton.setStyleName("spriteType");
+			needHelpButton.addStyleName("emoticon_iv");
 			
 			/**
 			 * Except "meh" emotic flag, all other emotic flag set to false, based on this again on mouse over previously selected will be removed.
@@ -848,24 +873,24 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
 		}else if(REACTION_DONOT_UNDERSTAND.equalsIgnoreCase(reactionDo.getReactionText())){
-			doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-			doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_ix());
+			doNotUnderstandEmoticButton.setStyleName("spriteType");
+			doNotUnderstandEmoticButton.addStyleName("emoticon_ix");
 			isDoNotUnderstandSelected = true;
 			/**
 			 * Except "do not understand" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
 			 */
-			canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-			canExplainEmoticButton.addStyleName(playerStyle.emoticon_i());
+			canExplainEmoticButton.setStyleName("spriteType");
+			canExplainEmoticButton.addStyleName("emoticon_i");
 			
-			understandEmoticButton.setStyleName(playerStyle.spriteType());
-			understandEmoticButton.addStyleName(playerStyle.emoticon_ii());
+			understandEmoticButton.setStyleName("spriteType");
+			understandEmoticButton.addStyleName("emoticon_ii");
 			
-			mehEmoticButton.setStyleName(playerStyle.spriteType());
-			mehEmoticButton.addStyleName(playerStyle.emoticon_viii());
+			mehEmoticButton.setStyleName("spriteType");
+			mehEmoticButton.addStyleName("emoticon_viii");
 			
-			needHelpButton.setStyleName(playerStyle.spriteType());
-			needHelpButton.addStyleName(playerStyle.emoticon_iv());
+			needHelpButton.setStyleName("spriteType");
+			needHelpButton.addStyleName("emoticon_iv");
 			
 			/**
 			 * Except "do not understand" emotic flag, all other emotic flag set to false, based on this again on mouse over previously selected will be removed.
@@ -876,24 +901,24 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isMehSelected=false;
 			isNeedHelpSelected=false;
 		}else if(REACTION_NEED_HELP.equalsIgnoreCase(reactionDo.getReactionText())){
-			needHelpButton.setStyleName(playerStyle.spriteType());
-			needHelpButton.addStyleName(playerStyle.emoticon_x());
+			needHelpButton.setStyleName("spriteType");
+			needHelpButton.addStyleName("emoticon_x");
 			isNeedHelpSelected = true;
 			/**
 			 * Except "need help" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
 			 */
-			canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-			canExplainEmoticButton.addStyleName(playerStyle.emoticon_i());
+			canExplainEmoticButton.setStyleName("spriteType");
+			canExplainEmoticButton.addStyleName("emoticon_i");
 			
-			understandEmoticButton.setStyleName(playerStyle.spriteType());
-			understandEmoticButton.addStyleName(playerStyle.emoticon_ii());
+			understandEmoticButton.setStyleName("spriteType");
+			understandEmoticButton.addStyleName("emoticon_ii");
 			
-			mehEmoticButton.setStyleName(playerStyle.spriteType());
-			mehEmoticButton.addStyleName(playerStyle.emoticon_viii());
+			mehEmoticButton.setStyleName("spriteType");
+			mehEmoticButton.addStyleName("emoticon_viii");
 			
-			doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-			doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_iii());
+			doNotUnderstandEmoticButton.setStyleName("spriteType");
+			doNotUnderstandEmoticButton.addStyleName("emoticon_iii");
 			
 			/**
 			 * Except "need help" emotic flag, all other emotic flag set to false, based on this again on mouse over previously selected will be removed.
@@ -923,26 +948,26 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		isDoNotUnderstandSelected=false;
 		isMehSelected=false;
 		isNeedHelpSelected=false;
-		selectedEmoticButton.setStyleName(playerStyle.spriteType());
-		selectedEmoticButton.addStyleName(playerStyle.emoticon_ii());
+		selectedEmoticButton.setStyleName("spriteType");
+		selectedEmoticButton.addStyleName("emoticon_ii");
 		
 		/**
 		 * Resets all emotics to normal in allemoticContainer,
 		 */
-		canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-		canExplainEmoticButton.addStyleName(playerStyle.emoticon_i());
+		canExplainEmoticButton.setStyleName("spriteType");
+		canExplainEmoticButton.addStyleName("emoticon_i");
 		
-		understandEmoticButton.setStyleName(playerStyle.spriteType());
-		understandEmoticButton.addStyleName(playerStyle.emoticon_ii());
+		understandEmoticButton.setStyleName("spriteType");
+		understandEmoticButton.addStyleName("emoticon_ii");
 		
-		mehEmoticButton.setStyleName(playerStyle.spriteType());
-		mehEmoticButton.addStyleName(playerStyle.emoticon_viii());
+		mehEmoticButton.setStyleName("spriteType");
+		mehEmoticButton.addStyleName("emoticon_viii");
 		
-		doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-		doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_iii());
+		doNotUnderstandEmoticButton.setStyleName("spriteType");
+		doNotUnderstandEmoticButton.addStyleName("emoticon_iii");
 		
-		needHelpButton.setStyleName(playerStyle.spriteType());
-		needHelpButton.addStyleName(playerStyle.emoticon_iv());
+		needHelpButton.setStyleName("spriteType");
+		needHelpButton.addStyleName("emoticon_iv");
 	}
 	
 	/**
@@ -953,13 +978,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 * @param gooruReactionId {@link String}
 	 * @param collectionId {@link String}
 	 * @param playerName {@link String}
+	 * @param emoticZero 
 	 */
-	private void createReaction(String resourceGooruId,String reactionText,String gooruReactionId,String collectionId,String playerName){
+	private void createReaction(String resourceGooruId,String reactionText,String gooruReactionId,String collectionId,String playerName, int emoticNumber){ 
 		if(playerName.trim().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){ 
-			getUiHandlers().createReaction(resourceGooruId,reactionText,gooruReactionId,collectionId,CREATE_STUDY_PLAYER_REACTION);
-		}else if(playerName.trim().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			getUiHandlers().createReaction(resourceGooruId,reactionText,gooruReactionId,collectionId,CREATE_STUDY_PLAYER_REACTION,emoticNumber);
+		}/*else if(playerName.trim().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			getUiHandlers().createReaction(resourceGooruId,reactionText,gooruReactionId,collectionId,CREATE_PREVIEW_PLAYER_REACTION);
-		}
+		}*/
 		
 	}
 	
@@ -1604,7 +1630,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 	public void getdata(){
@@ -1678,7 +1704,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){  
-				thankYouResourceStarRatings.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+				thankYouResourceStarRatings.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-73),three_star.getElement().getAbsoluteTop()+40);
 			}else{
 				thankYouResourceStarRatings.setPopupPosition(800,Window.getScrollTop()+153);
 			}
@@ -1694,7 +1720,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-				thankYouResourceStarRatingsPoor.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+				thankYouResourceStarRatingsPoor.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-73),three_star.getElement().getAbsoluteTop()+40);
 			}else{
 				thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
 			}
@@ -1725,7 +1751,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
 		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-73),three_star.getElement().getAbsoluteTop()+40);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
@@ -1819,7 +1845,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
 						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
 					}
-					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
+					tagPanel.setStyleName("eductaionalUseDesign");
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					tagsContainer.add(tagPanel);
 				}
@@ -1840,7 +1866,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(resourceTagsList.size()>3)
 			{
 				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + (resourceTagsList.size()-3)), toolTipwidgets);
-				toolTipUc.setStyleName(playerStyle.educationalUseMoretags());
+				toolTipUc.setStyleName("educationalUseMoretags");
 				tagsContainer.add(toolTipUc);
 			}
 			

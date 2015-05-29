@@ -2,10 +2,7 @@
 	margin: 0;
 	padding: 0;
 }
-.infoSectionAuthor:nth-of-type(2n+2)
-{
-	margin-right:0px;
-}
+
 a:hover {
 	color: #87BADD;
 }
@@ -159,9 +156,6 @@ a:hover {
 
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
-	
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#515151');
 }
 
 .popupContent {

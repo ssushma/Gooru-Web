@@ -2991,41 +2991,120 @@ public interface MessageProperties extends Constants {
 	String GL3203();
 	String GL3204();
 	String GL3205();
-	
-	//added for new Question Types
-	
-	String GL3206();
-	String GL3207();
-	String GL3208();
-	String GL3209();
-	String GL3210();
-	String GL3211();
-	String GL3212();
-	String GL3213();
-	String GL3214();
-	String GL3215();
-	String GL3216();
-	String GL3217();
-	String GL3218();
-	String GL3219();
-	String GL3220();
-	String GL3221();
-	String GL3222();
-	String GL3223();
-	String GL3224();
-	String GL3225();
-	String GL3226();
-	String GL3227();
-	String GL3228();
-	String GL3229();
-	String GL3230();
-	String GL3231();
-	String GL3232();
-	String GL3233();
-	String GL3234();
-	String GL3235();
-	String GL3236();
-	String GL3237();
-	String GL3238();
-	String GL3239();
+
+	 String GL3206();
+
+		 String GL3207();
+		 String GL3208();
+		 String GL3209();
+		 String GL3210();
+		 String GL3211();
+		 String GL3212();
+		 String GL3213();
+		 String GL3214();
+		 String GL3215();
+		 String GL3216();
+		 String GL3217();
+		 String GL3218();
+		 String GL3219();
+		 String GL3220();
+		 
+		 String GL3221();
+		 String GL3222();
+		 String GL3223();
+		 String GL3224();
+		 String GL3225();
+		 String GL3226();
+
+
+		 String GL3227();
+		 String GL3228();
+		 String GL3229();
+		 String GL3230();
+		 String GL3231();
+		 String GL3232();
+		 String GL3233();
+		 String GL3234();
+		 
+		 String GL3235();
+		 String GL3236();
+		 String GL3237();
+		 String GL3238();
+		 String GL3239();
+		 String GL3240();
+		 String GL3241();
+		 String GL3242();
+		 String GL3243();
+		 String GL3244();
+		 String GL3245();
+		 String GL3246();
+		 String GL3247();
+		 String GL3248();
+		 String GL3249();
+		 String GL3250();
+		 String GL3251();
+		 String GL3252();
+		 String GL3253();
+		 String GL3254();
+		 String GL3255();
+		 String GL3256();
+		 String GL3257();
+		 String GL3258();
+		 
+		 String GL3259();
+		 String GL3260();
+		 String GL3261();
+		 String GL3262();
+		 String GL3263();
+		 String GL3264();
+		 String GL3265();
+		 String GL3266();
+		 String GL3267();
+		 String GL3268();
+		 String GL3269();
+		 String GL3270();
+		 String GL3271();
+		 String GL3272();
+		 String GL3273();
+		 String GL3274();
+		 String GL3275();
+		 String GL3276();
+		 
+		 
+		//added for new Question Types
+			
+			String GL3206_1();
+			String GL3207_1();
+			String GL3208_1();
+			String GL3209_1();
+			String GL3210_1();
+			String GL3211_1();
+			String GL3212_1();
+			String GL3213_1();
+			String GL3214_1();
+			String GL3215_1();
+			String GL3216_1();
+			String GL3217_1();
+			String GL3218_1();
+			String GL3219_1();
+			String GL3220_1();
+			String GL3221_1();
+			String GL3222_1();
+			String GL3223_1();
+			String GL3224_1();
+			String GL3225_1();
+			String GL3226_1();
+			String GL3227_1();
+			String GL3228_1();
+			String GL3229_1();
+			String GL3230_1();
+			String GL3231_1();
+			String GL3232_1();
+			String GL3233_1();
+			String GL3234_1();
+			String GL3235_1();
+			String GL3236_1();
+			String GL3237_1();
+			String GL3238_1();
+			String GL3239_1();
 }

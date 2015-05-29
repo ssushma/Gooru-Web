@@ -42,9 +42,6 @@
 	background: -ms-linear-gradient(top, #666, #515151);
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666',
-		EndColorStr='#515151');
 }
 
 .teachPopupContent {
@@ -330,7 +327,7 @@ float: left;
 
 .input1 {
 	color: #515151;
-	width: 72px !important;
+	width: 84px !important;
 	height: 15px !important;
 	margin-top: 10px;
 	margin-bottom: 15px !important;
@@ -594,7 +591,7 @@ float: left;
 .shareTextboxLink {
 	width: 300px;
 	height: 31px !important;
-	padding: 5px;
+	padding: 9px;
 	border: 1px solid #DDD;
 	font-family: arial, sans-serif;
 	font-size: 12px;

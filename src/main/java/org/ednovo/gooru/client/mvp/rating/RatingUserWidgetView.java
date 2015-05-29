@@ -81,7 +81,7 @@ public class RatingUserWidgetView extends Composite {
 	
 	@UiField InlineHTML userratingOne,userratingTwo,userratingThree,userratingFour,userratingFive;
 	
-	@UiField RatingAndReviewStyleBundle style;
+	/*@UiField RatingAndReviewStyleBundle style;*/
 
 	
 	private static final String DATE_FORMAT="MMMM dd, yyyy";
@@ -185,7 +185,7 @@ public class RatingUserWidgetView extends Composite {
 		editReviewText.getElement().setAttribute("title",starRatingsDo.getFreeText());
 		
 		editReview.setVisible(false);
-		deleteReview.addStyleName(style.deleteButtonAlign());
+		deleteReview.addStyleName("deleteButtonAlign");
 		
 		editReviewTextareaContainer.setVisible(false);
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
@@ -221,11 +221,9 @@ public class RatingUserWidgetView extends Composite {
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 		  }else{
-			//reviewContainer.setVisible(false);
 			userName.setText(starRatingsDo.getCreator().getUsername());
 			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
 			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
-			//editReviewLabelContainer.setVisible(false);
 		}
 			
 		}else{
@@ -236,66 +234,61 @@ public class RatingUserWidgetView extends Composite {
 			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.removeStyleName(style.filled());
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.removeStyleName("filled");
+				starThree.removeStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			else if(starRatingsDo.getScore() == 2)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.removeStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			else if(starRatingsDo.getScore() == 3)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			else if(starRatingsDo.getScore() == 4)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.addStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			else if(starRatingsDo.getScore() == 5)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
-				starFive.addStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.addStyleName("filled");
+				starFive.addStyleName("filled");
 			}
 			if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
 				reviewContainer.setVisible(true);
 				editReviewLabelContainer.setVisible(true);
-			}else{
-				//reviewContainer.setVisible(false);
-				//editReviewLabelContainer.setVisible(false);
 			}
 		}
 		
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
-			//reviewContainer.addStyleName(style.creatorReviewPanel());
-			editReview.addStyleName(style.editReview());
-			editReviewBtn.removeStyleName(style.editReview());
-			cancelReviewBtn.removeStyleName(style.editReview());
-			//editReview.setVisible(true);
+			editReview.addStyleName("editReview");
+			editReviewBtn.removeStyleName("editReview");
+			cancelReviewBtn.removeStyleName("editReview");
 			userName.setText(i18n.GL1850());
 			userName.getElement().setAttribute("alt",i18n.GL1850());
 			userName.getElement().setAttribute("title",i18n.GL1850());
-			deleteReview.removeStyleName(style.editReview());
+			deleteReview.removeStyleName("editReview");
 		} else {
-			editReview.removeStyleName(style.editReview());
-			deleteReview.removeStyleName(style.editReview());
+			editReview.removeStyleName("editReview");
+			deleteReview.removeStyleName("editReview");
 			
 		}
 		reviewContainer.addMouseOverHandler(new MouseOverHandler() {
@@ -328,106 +321,106 @@ public class RatingUserWidgetView extends Composite {
 		if(starRatingsDo.getScore()==1){
 			clearAllStarsReadOnly();
 			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				starOne.addStyleName(style.filled());
+				starOne.addStyleName("filled");
 				starOne.getElement().addClassName(FILLED_BLUE);
-				starTwo.removeStyleName(style.filled());
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starTwo.removeStyleName("filled");
+				starThree.removeStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 				starTwo.removeStyleName(FILLED_BLUE);
 				starThree.removeStyleName(FILLED_BLUE);
 				starFour.removeStyleName(FILLED_BLUE);
 				starFive.removeStyleName(FILLED_BLUE);
 			}else{
-				starOne.addStyleName(style.filled());
-				starTwo.removeStyleName(style.filled());
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.removeStyleName("filled");
+				starThree.removeStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			
 		}else if(starRatingsDo.getScore()==2){
 			clearAllStarsReadOnly();
 			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
 				starOne.getElement().addClassName(FILLED_BLUE);
 				starTwo.getElement().addClassName(FILLED_BLUE);
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starThree.removeStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 				starThree.removeStyleName(FILLED_BLUE);
 				starFour.removeStyleName(FILLED_BLUE);
 				starFive.removeStyleName(FILLED_BLUE);
 			}else{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.removeStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			
 		}else if(starRatingsDo.getScore()==3){
 			clearAllStarsReadOnly();
 			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
 				starOne.getElement().addClassName(FILLED_BLUE);
 				starTwo.getElement().addClassName(FILLED_BLUE);
 				starThree.getElement().addClassName(FILLED_BLUE);
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 				starFour.removeStyleName(FILLED_BLUE);
 				starFive.removeStyleName(FILLED_BLUE);
 			}else{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.removeStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			
 		} else if(starRatingsDo.getScore()==4){
 			clearAllStarsReadOnly();
 			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.addStyleName("filled");
 				starOne.getElement().addClassName(FILLED_BLUE);
 				starTwo.getElement().addClassName(FILLED_BLUE);
 				starThree.getElement().addClassName(FILLED_BLUE);
 				starFour.getElement().addClassName(FILLED_BLUE);
-				starFive.removeStyleName(style.filled());
+				starFive.removeStyleName("filled");
 				starFive.removeStyleName(FILLED_BLUE);
 			}else{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.addStyleName("filled");
+				starFive.removeStyleName("filled");
 			}
 			
 		}else if(starRatingsDo.getScore()==5){
 			clearAllStarsReadOnly();
 			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
-				starFive.addStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.addStyleName("filled");
+				starFive.addStyleName("filled");
 				starOne.getElement().addClassName(FILLED_BLUE);
 				starTwo.getElement().addClassName(FILLED_BLUE);
 				starThree.getElement().addClassName(FILLED_BLUE);
 				starFour.getElement().addClassName(FILLED_BLUE);
 				starFive.getElement().addClassName(FILLED_BLUE);
 			}else{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
-				starFive.addStyleName(style.filled());
+				starOne.addStyleName("filled");
+				starTwo.addStyleName("filled");
+				starThree.addStyleName("filled");
+				starFour.addStyleName("filled");
+				starFive.addStyleName("filled");
 			}
 		}
 	}
@@ -480,8 +473,8 @@ public class RatingUserWidgetView extends Composite {
 		userratingThree.addMouseOutHandler(new OnStarMouseOut(THREE_STAR));
 		userratingFour.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 		userratingFive.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
-		editReviewBtn.removeStyleName(style.editReview());
-		cancelReviewBtn.removeStyleName(style.editReview());
+		editReviewBtn.removeStyleName("editReview");
+		cancelReviewBtn.removeStyleName("editReview");
 	}
 	@UiHandler("editReviewText")
 	public void keyRatingTextArea(KeyUpEvent event){
@@ -499,7 +492,6 @@ public class RatingUserWidgetView extends Composite {
 			errorLbl.getElement().setAttribute("alt",i18n.GL0143());
 			errorLbl.getElement().setAttribute("title",i18n.GL0143());
 			errorLbl.setVisible(true);
-		//	fieldValidationStaus=false;
 		}else{
 			errorLbl.setVisible(false);
 		}
@@ -527,8 +519,8 @@ public class RatingUserWidgetView extends Composite {
 							review.getElement().setAttribute("alt",result.get(0).getFreeText());
 							review.getElement().setAttribute("title",result.get(0).getFreeText());
 							editReviewLabelContainer.setVisible(true);
-							editReviewBtn.removeStyleName(style.editReview());
-							cancelReviewBtn.removeStyleName(style.editReview());
+							editReviewBtn.removeStyleName("editReview");
+							cancelReviewBtn.removeStyleName("editReview");
 							updateStars(result.get(0));
 							starRatingsDo.setScore(result.get(0).getScore());
 							starRatingsDo.setFreeText(result.get(0).getFreeText());
@@ -548,14 +540,13 @@ public class RatingUserWidgetView extends Composite {
 		// TODO Auto-generated method stub
 		if(starRatingsDo.getScore() == 1)
 		{
-
-			starOne.addStyleName(style.filled());
+			starOne.addStyleName("filled");
 			starOne.getElement().addClassName(FILLED_BLUE);
 			
-			starTwo.removeStyleName(style.filled());
-			starThree.removeStyleName(style.filled());
-			starFour.removeStyleName(style.filled());
-			starFive.removeStyleName(style.filled());
+			starTwo.removeStyleName("filled");
+			starThree.removeStyleName("filled");
+			starFour.removeStyleName("filled");
+			starFive.removeStyleName("filled");
 			starTwo.removeStyleName(FILLED_BLUE);
 			starThree.removeStyleName(FILLED_BLUE);
 			starFour.removeStyleName(FILLED_BLUE);
@@ -563,55 +554,55 @@ public class RatingUserWidgetView extends Composite {
 		}
 		else if(starRatingsDo.getScore() == 2)
 		{
-			starOne.addStyleName(style.filled());
-			starTwo.addStyleName(style.filled());
+			starOne.addStyleName("filled");
+			starTwo.addStyleName("filled");
 			starOne.getElement().addClassName(FILLED_BLUE);
 			starTwo.getElement().addClassName(FILLED_BLUE);
 			
-			starThree.removeStyleName(style.filled());
-			starFour.removeStyleName(style.filled());
-			starFive.removeStyleName(style.filled());
+			starThree.removeStyleName("filled");
+			starFour.removeStyleName("filled");
+			starFive.removeStyleName("filled");
 			starThree.removeStyleName(FILLED_BLUE);
 			starFour.removeStyleName(FILLED_BLUE);
 			starFive.removeStyleName(FILLED_BLUE);
 		}
 		else if(starRatingsDo.getScore() == 3)
 		{
-			starOne.addStyleName(style.filled());
-			starTwo.addStyleName(style.filled());
-			starThree.addStyleName(style.filled());
+			starOne.addStyleName("filled");
+			starTwo.addStyleName("filled");
+			starThree.addStyleName("filled");
 			starOne.getElement().addClassName(FILLED_BLUE);
 			starTwo.getElement().addClassName(FILLED_BLUE);
 			starThree.getElement().addClassName(FILLED_BLUE);
 			
-			starFour.removeStyleName(style.filled());
-			starFive.removeStyleName(style.filled());
+			starFour.removeStyleName("filled");
+			starFive.removeStyleName("filled");
 			starFour.removeStyleName(FILLED_BLUE);
 			starFive.removeStyleName(FILLED_BLUE);
 			
 		}
 		else if(starRatingsDo.getScore() == 4)
 		{
-			starOne.addStyleName(style.filled());
-			starTwo.addStyleName(style.filled());
-			starThree.addStyleName(style.filled());
-			starFour.addStyleName(style.filled());
+			starOne.addStyleName("filled");
+			starTwo.addStyleName("filled");
+			starThree.addStyleName("filled");
+			starFour.addStyleName("filled");
 			starOne.getElement().addClassName(FILLED_BLUE);
 			starTwo.getElement().addClassName(FILLED_BLUE);
 			starThree.getElement().addClassName(FILLED_BLUE);
 			starFour.getElement().addClassName(FILLED_BLUE);
 			
-			starFive.removeStyleName(style.filled());
+			starFive.removeStyleName("filled");
 			starFive.removeStyleName(FILLED_BLUE);
 			
 		}
 		else if(starRatingsDo.getScore() == 5)
 		{
-			starOne.addStyleName(style.filled());
-			starTwo.addStyleName(style.filled());
-			starThree.addStyleName(style.filled());
-			starFour.addStyleName(style.filled());
-			starFive.addStyleName(style.filled());
+			starOne.addStyleName("filled");
+			starTwo.addStyleName("filled");
+			starThree.addStyleName("filled");
+			starFour.addStyleName("filled");
+			starFive.addStyleName("filled");
 			
 			starOne.getElement().addClassName(FILLED_BLUE);
 			starTwo.getElement().addClassName(FILLED_BLUE);
@@ -679,8 +670,8 @@ public class RatingUserWidgetView extends Composite {
 		
 		editReviewTextareaContainer.setVisible(false);
 		editReviewLabelContainer.setVisible(true);
-		editReviewBtn.removeStyleName(style.editReview());
-		cancelReviewBtn.removeStyleName(style.editReview());
+		editReviewBtn.removeStyleName("editReview");
+		cancelReviewBtn.removeStyleName("editReview");
 	}
 
 	@UiHandler("deleteReview")
@@ -691,7 +682,7 @@ public class RatingUserWidgetView extends Composite {
 			@Override
 			public void onSuccess(Void result) {
 				reviewContainer.clear();
-				reviewContainer.addStyleName(style.deletePanel());
+				reviewContainer.addStyleName("deletePanel");
 				if(!starRatingsDo.getFreeText().equals("") && starRatingsDo.getFreeText() != null){
 					AppClientFactory.fireEvent(new DeletePlayerStarReviewEvent(starRatingsDo.getAssocGooruOid()));
 				}else{
@@ -703,7 +694,7 @@ public class RatingUserWidgetView extends Composite {
 				deleteMsg.setText(i18n.GL1853());
 				deleteMsg.getElement().setAttribute("alt",i18n.GL1853());
 				deleteMsg.getElement().setAttribute("title",i18n.GL1853());
-				deleteMsg.setStyleName(style.lbldeleteMsg());
+				deleteMsg.setStyleName("lbldeleteMsg");
 				deletePanel.add(deleteMsg);
 				reviewContainer.add(deletePanel);
 				new FadeInAndOut(deletePanel.getElement(), 1000);
@@ -878,11 +869,11 @@ public class RatingUserWidgetView extends Composite {
 		userratingFive.getElement().removeClassName(FILLED_BLUE);
 	}
 	public void clearAllStarsReadOnly(){
-		starOne.removeStyleName(style.filled());
-		starTwo.removeStyleName(style.filled());
-		starThree.removeStyleName(style.filled());
-		starFour.removeStyleName(style.filled());
-		starFive.removeStyleName(style.filled());
+		starOne.removeStyleName("filled");
+		starTwo.removeStyleName("filled");
+		starThree.removeStyleName("filled");
+		starFour.removeStyleName("filled");
+		starFive.removeStyleName("filled");
 	}
 
 	private String getTimePrefix(int count, String msg, String regex, String replacement) {

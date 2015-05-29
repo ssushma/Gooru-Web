@@ -143,7 +143,9 @@ IsSocialShareSmallView{
 			if(socialDo.getIsSearchShare()){
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
 			}
-		} catch (Exception e) {	}
+		} catch (Exception e) {	
+			AppClientFactory.printSevereLogger(e.getMessage());
+		}
 		if (socialDo.isOnlyIcon()) {
 			shareTextPanel.setVisible(false);
 			shareIconPanel.setVisible(true);
@@ -239,9 +241,9 @@ IsSocialShareSmallView{
 	@UiHandler("fbPanel")
 	public void onFbClickEvent(ClickEvent event) {
 		if(!(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromResource();
-			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			}else if(PlaceTokens.SEARCH_COLLECTION.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}
 			else if(PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken()) || PlaceTokens.PREVIEW_PLAY.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
@@ -261,9 +263,9 @@ IsSocialShareSmallView{
 	@UiHandler("fbIconPanel")
 	public void onFbIconClickEvent(ClickEvent event){
 		if(!isProfilePageView || !(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromResource();
-			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			}else if(PlaceTokens.SEARCH_COLLECTION.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -283,9 +285,9 @@ IsSocialShareSmallView{
 	@UiHandler("emailPanel")
 	public void onEmailClickEvent(ClickEvent event){
 		if(!(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromResource();
-			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			}else if(PlaceTokens.SEARCH_COLLECTION.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromCollection();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -304,9 +306,9 @@ IsSocialShareSmallView{
 	@UiHandler("emailIconPanel")
 	public void onEmailIconClickEvent(ClickEvent event){
 		if(!isProfilePageView || !(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromResource();
-			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			}else if(PlaceTokens.SEARCH_COLLECTION.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromCollection();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -326,9 +328,9 @@ IsSocialShareSmallView{
 	@UiHandler("twitterPanel")
 	public void onTwitterClickEvent(ClickEvent event) {
 		if(!(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromResource();
-			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			}else if(PlaceTokens.SEARCH_COLLECTION.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromCollection();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -348,9 +350,9 @@ IsSocialShareSmallView{
 	@UiHandler("twIconPanel")
 	public void onTwitterIconClickEvent(ClickEvent event) {
 		if(!isProfilePageView || !(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
-			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromResource();
-			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+			}else if(PlaceTokens.SEARCH_COLLECTION.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromCollection();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -423,7 +425,12 @@ IsSocialShareSmallView{
 				}
 			});
 		}else{
-			LoginPopupUc popup = new LoginPopupUc();
+			LoginPopupUc popup = new  LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					
+				}
+			};
 			popup.setGlassEnabled(true);
 			popup.show();
 			popup.center();

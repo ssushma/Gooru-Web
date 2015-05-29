@@ -43,9 +43,9 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.ScrollPopupUtil;
@@ -68,8 +68,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -221,6 +219,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		}
 		catch(Exception ex)
 		{
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
 			@Override
@@ -630,7 +629,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 			shareDo.setDecodeRawUrl(link);
 			shareDo.setShareType(shareType);
 		} catch (Exception ex) {
-
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 

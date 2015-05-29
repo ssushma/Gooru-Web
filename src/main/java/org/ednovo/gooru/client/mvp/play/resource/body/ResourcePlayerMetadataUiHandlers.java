@@ -39,7 +39,7 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,OpenRev
 	
 	public void showQuestionView(CollectionItemDo collectionItemDo);
 
-	public void createReaction(String resourceId,String reactionText, String gooruReactionId, String collectionId, String createStudyPlayerReaction);
+	public void createReaction(String resourceId,String reactionText, String gooruReactionId, String collectionId, String createStudyPlayerReaction, int emoticNumber);
 
 	public void deleteReaction(String gooruReactionId);   
 	
@@ -71,4 +71,6 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,OpenRev
 	public void updateResourceRatings(String gooruOid,double average); 
 	public FlowPanel getQuestioncontainer();
 	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
+
+	public void updateSessionActivityItemForReactions(int emoticNumber,String gooruOid,String isRatingsReactions);
 }

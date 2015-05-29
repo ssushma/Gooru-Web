@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
@@ -51,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
+import org.springframework.jca.cci.object.SimpleRecordOperation;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -72,6 +74,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -96,6 +99,8 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	Label lblTitle;
 	@UiField
 	Anchor ancNewClasspage;
+	
+	@UiField HTMLPanel mainContainer;
 
 	@UiField
 	Button enterLbl;
@@ -177,6 +182,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 		setLabels();
 		toClear = true;
+		mainContainer.getElement().setId("headerMainPanel");
 	}
 
 	/**
@@ -208,50 +214,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		classpageList.put(classpageId, classpageDo);
 
 	}
-
-	/**
-	 * 
-	 * @function showClasspageList
-	 * 
-	 * @created_date : Aug 21, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) :
-	 * 
-	 * @return : void
-	 * 
-	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	private void showClasspageList() {
-	}
-
-	/**
-	 * 
-	 * @function showNoClasspages
-	 * 
-	 * @created_date : Aug 21, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) :
-	 * 
-	 * @return : void
-	 * 
-	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	private void showNoClasspages() {
-    }
 
 	/**
 	 * 
@@ -320,238 +282,243 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			setButtonStatus("active");
-			if (classCodeTxtBox.getText().trim().equalsIgnoreCase("")
-					|| classCodeTxtBox.getText().trim() == null) {
-				alertMessageUc = new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
-				ClickHandler alertHandler = new ClickHandler() {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+				
+				@Override
+				public void onSuccess() {
+					setButtonStatus("active");
+					if (classCodeTxtBox.getText().trim().equalsIgnoreCase("")
+							|| classCodeTxtBox.getText().trim() == null) {
+						alertMessageUc = new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
+						ClickHandler alertHandler = new ClickHandler() {
 
-					@Override
-					public void onClick(ClickEvent event) {
-						isValid = false;
-						setButtonStatus("");
+							@Override
+							public void onClick(ClickEvent event) {
+								isValid = false;
+								setButtonStatus("");
+							}
+						};
+						alertMessageUc.appPopUp.addDomHandler(alertHandler,
+								ClickEvent.getType());
+
+						alertMessageUc.okButton.addClickHandler(new ClickHandler() {
+
+							@Override
+							public void onClick(ClickEvent event) {
+								isValid = false;
+								setButtonStatus("");
+							}
+						});
+						return;
 					}
-				};
-				alertMessageUc.appPopUp.addDomHandler(alertHandler,
-						ClickEvent.getType());
 
-				alertMessageUc.okButton.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						isValid = false;
-						setButtonStatus("");
-					}
-				});
-				return;
-			}
-
-			MixpanelUtil.ClickOnStudyNow();
-			AppClientFactory
-					.getInjector()
-					.getClasspageService()
-					.v2getClasspageByCode(classCodeTxtBox.getText().trim(),
-							new SimpleAsyncCallback<CollectionDo>() {
-								@Override
-								public void onSuccess(CollectionDo result) {
-									setButtonStatus("");
-									if (result.getGooruOid() == null) {
-										Window.enableScrolling(false);
-										AppClientFactory
-												.fireEvent(new SetHeaderZIndexEvent(
-														98, false));
-										alertMessageUc = new AlertMessageUc(
-												i18n.GL0061(), new Label(i18n.GL0244()));
-										ClickHandler alertHandler = new ClickHandler() {
-
-											@Override
-											public void onClick(ClickEvent event) {
-												isValid = false;
-
-											}
-										};
-										alertMessageUc.appPopUp.addDomHandler(
-												alertHandler,
-												ClickEvent.getType());
-
-										alertMessageUc.okButton
-												.addClickHandler(new ClickHandler() {
+					MixpanelUtil.ClickOnStudyNow();
+					AppClientFactory
+							.getInjector()
+							.getClasspageService()
+							.v2getClasspageByCode(classCodeTxtBox.getText().trim(),
+									new SimpleAsyncCallback<CollectionDo>() {
+										@Override
+										public void onSuccess(CollectionDo result) {
+											setButtonStatus("");
+											if (result.getGooruOid() == null) {
+												Window.enableScrolling(false);
+												AppClientFactory
+														.fireEvent(new SetHeaderZIndexEvent(
+																98, false));
+												alertMessageUc = new AlertMessageUc(
+														i18n.GL0061(), new Label(i18n.GL0244()));
+												ClickHandler alertHandler = new ClickHandler() {
 
 													@Override
-													public void onClick(
-															ClickEvent event) {
+													public void onClick(ClickEvent event) {
 														isValid = false;
+
 													}
-												});
-									} else if (result
-											.getCreator()
-											.getGooruUId()
-											.equalsIgnoreCase(
+												};
+												alertMessageUc.appPopUp.addDomHandler(
+														alertHandler,
+														ClickEvent.getType());
+
+												alertMessageUc.okButton
+														.addClickHandler(new ClickHandler() {
+
+															@Override
+															public void onClick(
+																	ClickEvent event) {
+																isValid = false;
+															}
+														});
+											} else if (result
+													.getCreator()
+													.getGooruUId()
+													.equalsIgnoreCase(
+															AppClientFactory
+																	.getGooruUid())) {
+												if (AppClientFactory
+														.getCurrentPlaceToken().equals(
+																PlaceTokens.HOME)) {
+													MixpanelUtil
+															.Click_Study_LandingPage();
+												}
+
+												Map<String, String> params = new HashMap<String, String>();
+												params.put("id", result.getGooruOid());
+												params.put("pageSize", "10");
+												params.put("pageNum", "0");
+												params.put("pos", "1");
+												AppClientFactory.getPlaceManager()
+														.revealPlace(
+																PlaceTokens.STUDENT,
+																params);
+												classCodeTxtBox.setText("");
+												if (alertMessageUc != null)
+													alertMessageUc.hide();
+											} else if (result.getSharing()
+													.equalsIgnoreCase("private")) {
+
+												if (result
+														.getCreator()
+														.getGooruUId()
+														.equalsIgnoreCase(
+																AppClientFactory
+																		.getGooruUid())) {
+													if (AppClientFactory
+															.getCurrentPlaceToken()
+															.equals(PlaceTokens.HOME)) {
+														MixpanelUtil
+																.Click_Study_LandingPage();
+													}
+
+													Map<String, String> params = new HashMap<String, String>();
+													params.put("id",
+															result.getGooruOid());
+													params.put("pageSize", "10");
+													params.put("pageNum", "0");
+													params.put("pos", "1");
 													AppClientFactory
-															.getGooruUid())) {
-										if (AppClientFactory
-												.getCurrentPlaceToken().equals(
-														PlaceTokens.HOME)) {
-											MixpanelUtil
-													.Click_Study_LandingPage();
-										}
+															.getPlaceManager()
+															.revealPlace(
+																	PlaceTokens.STUDENT,
+																	params);
+													classCodeTxtBox.setText("");
+													if (alertMessageUc != null)
+														alertMessageUc.hide();
 
-										Map<String, String> params = new HashMap<String, String>();
-										params.put("id", result.getGooruOid());
-										params.put("pageSize", "10");
-										params.put("pageNum", "0");
-										params.put("pos", "1");
-										AppClientFactory.getPlaceManager()
-												.revealPlace(
-														PlaceTokens.STUDENT,
-														params);
-										classCodeTxtBox.setText("");
-										if (alertMessageUc != null)
-											alertMessageUc.hide();
-									} else if (result.getSharing()
-											.equalsIgnoreCase("private")) {
+													StudentAssignmentView
+															.setPrivatePage();
 
-										if (result
-												.getCreator()
-												.getGooruUId()
-												.equalsIgnoreCase(
-														AppClientFactory
-																.getGooruUid())) {
-											if (AppClientFactory
-													.getCurrentPlaceToken()
-													.equals(PlaceTokens.HOME)) {
-												MixpanelUtil
-														.Click_Study_LandingPage();
-											}
+												} else if (result.getStatus()
+														.equalsIgnoreCase("active")) {
+													if (AppClientFactory
+															.getCurrentPlaceToken()
+															.equals(PlaceTokens.HOME)) {
+														MixpanelUtil
+																.Click_Study_LandingPage();
+													}
 
-											Map<String, String> params = new HashMap<String, String>();
-											params.put("id",
-													result.getGooruOid());
-											params.put("pageSize", "10");
-											params.put("pageNum", "0");
-											params.put("pos", "1");
-											AppClientFactory
-													.getPlaceManager()
-													.revealPlace(
-															PlaceTokens.STUDENT,
-															params);
-											classCodeTxtBox.setText("");
-											if (alertMessageUc != null)
-												alertMessageUc.hide();
+													Map<String, String> params = new HashMap<String, String>();
+													params.put("id",
+															result.getGooruOid());
+													params.put("pageSize", "10");
+													params.put("pageNum", "0");
+													params.put("pos", "1");
+													AppClientFactory
+															.getPlaceManager()
+															.revealPlace(
+																	PlaceTokens.STUDENT,
+																	params);
+													classCodeTxtBox.setText("");
+													if (alertMessageUc != null)
+														alertMessageUc.hide();
 
-											StudentAssignmentView
-													.setPrivatePage();
+													StudentAssignmentView
+															.setPrivatePageActive();
 
-										} else if (result.getStatus()
-												.equalsIgnoreCase("active")) {
-											if (AppClientFactory
-													.getCurrentPlaceToken()
-													.equals(PlaceTokens.HOME)) {
-												MixpanelUtil
-														.Click_Study_LandingPage();
-											}
+												} else if (result.getStatus()
+														.equalsIgnoreCase("pending")) {
+													if (AppClientFactory
+															.getCurrentPlaceToken()
+															.equals(PlaceTokens.HOME)) {
+														MixpanelUtil
+																.Click_Study_LandingPage();
+													}
 
-											Map<String, String> params = new HashMap<String, String>();
-											params.put("id",
-													result.getGooruOid());
-											params.put("pageSize", "10");
-											params.put("pageNum", "0");
-											params.put("pos", "1");
-											AppClientFactory
-													.getPlaceManager()
-													.revealPlace(
-															PlaceTokens.STUDENT,
-															params);
-											classCodeTxtBox.setText("");
-											if (alertMessageUc != null)
-												alertMessageUc.hide();
+													Map<String, String> params = new HashMap<String, String>();
+													params.put("id",
+															result.getGooruOid());
+													params.put("pageSize", "10");
+													params.put("pageNum", "0");
+													params.put("pos", "1");
+													AppClientFactory
+															.getPlaceManager()
+															.revealPlace(
+																	PlaceTokens.STUDENT,
+																	params);
+													classCodeTxtBox.setText("");
+													if (alertMessageUc != null)
+														alertMessageUc.hide();
 
-											StudentAssignmentView
-													.setPrivatePageActive();
+													StudentAssignmentView
+															.setPrivatePagePending();
 
-										} else if (result.getStatus()
-												.equalsIgnoreCase("pending")) {
-											if (AppClientFactory
-													.getCurrentPlaceToken()
-													.equals(PlaceTokens.HOME)) {
-												MixpanelUtil
-														.Click_Study_LandingPage();
-											}
+												} else {
+													if (AppClientFactory.isAnonymous()) {
+														new SentEmailSuccessVc(i18n.GL1177(),
+																i18n.GL1535());
+													} else {
+														new SentEmailSuccessVc(i18n.GL1177(),
+																i18n.GL1535_1());
+													}
+												}
 
-											Map<String, String> params = new HashMap<String, String>();
-											params.put("id",
-													result.getGooruOid());
-											params.put("pageSize", "10");
-											params.put("pageNum", "0");
-											params.put("pos", "1");
-											AppClientFactory
-													.getPlaceManager()
-													.revealPlace(
-															PlaceTokens.STUDENT,
-															params);
-											classCodeTxtBox.setText("");
-											if (alertMessageUc != null)
-												alertMessageUc.hide();
-
-											StudentAssignmentView
-													.setPrivatePagePending();
-
-										} else {
-											if (AppClientFactory.isAnonymous()) {
-												new SentEmailSuccessVc(i18n.GL1177(),
-														i18n.GL1535());
 											} else {
-												new SentEmailSuccessVc(i18n.GL1177(),
-														i18n.GL1535_1());
+												toClear = true;
+												if (AppClientFactory
+														.getCurrentPlaceToken().equals(
+																PlaceTokens.HOME)) {
+													MixpanelUtil
+															.Click_Study_LandingPage();
+												}
+
+												Map<String, String> params = new HashMap<String, String>();
+												params.put("id", result.getGooruOid());
+												params.put("pageSize", "10");
+												params.put("pageNum", "0");
+												params.put("pos", "1");
+												AppClientFactory.getPlaceManager()
+														.revealPlace(
+																PlaceTokens.STUDENT,
+																params);
+												classCodeTxtBox.setText("");
+												if (alertMessageUc != null)
+													alertMessageUc.hide();
+
+												if (result
+														.getCreator()
+														.getGooruUId()
+														.equalsIgnoreCase(
+																AppClientFactory
+																		.getGooruUid())) {
+													StudentAssignmentView
+															.setPublicPage();
+												} else if (result.getStatus()
+														.equalsIgnoreCase("active")) {
+													StudentAssignmentView
+															.setPublicPageActive();
+												} else {
+													StudentAssignmentView
+															.setPublicPagePending();
+												}
+
 											}
+											setButtonStatus("");
 										}
 
-									} else {
-										toClear = true;
-										// TODO call API to get the list.
-										showClasspageList();
-										if (AppClientFactory
-												.getCurrentPlaceToken().equals(
-														PlaceTokens.HOME)) {
-											MixpanelUtil
-													.Click_Study_LandingPage();
-										}
-
-										Map<String, String> params = new HashMap<String, String>();
-										params.put("id", result.getGooruOid());
-										params.put("pageSize", "10");
-										params.put("pageNum", "0");
-										params.put("pos", "1");
-										AppClientFactory.getPlaceManager()
-												.revealPlace(
-														PlaceTokens.STUDENT,
-														params);
-										classCodeTxtBox.setText("");
-										if (alertMessageUc != null)
-											alertMessageUc.hide();
-
-										if (result
-												.getCreator()
-												.getGooruUId()
-												.equalsIgnoreCase(
-														AppClientFactory
-																.getGooruUid())) {
-											StudentAssignmentView
-													.setPublicPage();
-										} else if (result.getStatus()
-												.equalsIgnoreCase("active")) {
-											StudentAssignmentView
-													.setPublicPageActive();
-										} else {
-											StudentAssignmentView
-													.setPublicPagePending();
-										}
-
-									}
-									setButtonStatus("");
-								}
-
-							});
+									});
+				}
+			});
+			
 		}
 	}
 
@@ -574,8 +541,12 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 * 
 	 */
-	public void getAllClasspages(String offSet,
+	public void getAllClasspages(final String offSet,
 			final boolean isClasspageRefreshed, final String deletedClasspageId) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 		AppClientFactory
 				.getInjector()
 				.getClasspageService()
@@ -588,6 +559,8 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 										deletedClasspageId);
 							}
 						});
+	}
+		});
 	}
 
 	/**
@@ -609,45 +582,51 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 * 
 	 */
-	private void listClasspages(ClasspageListDo result,
-			boolean isClasspageRefershed, String deletedClasspageId) {
-		isApiCalling = false;
-		if (classpageListDo != null) {
-			resultSize = classpageListDo.getSearchResults() != null ? classpageListDo
-					.getSearchResults().size() : 0;
-		} else {
-			resultSize = 0;
-		}
-		if (resultSize > 0) {
-			if (toClear) {
-				toClear = false;
-				classpageList.clear();
+	private void listClasspages(final ClasspageListDo result,
+			final boolean isClasspageRefershed, final String deletedClasspageId) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				isApiCalling = false;
+				if (classpageListDo != null) {
+					resultSize = classpageListDo.getSearchResults() != null ? classpageListDo
+							.getSearchResults().size() : 0;
+				} else {
+					resultSize = 0;
+				}
+				if (resultSize > 0) {
+					if (toClear) {
+						toClear = false;
+						classpageList.clear();
+					}
+					for (int i = 0; i < resultSize; i++) {
+						String classpageId = classpageListDo.getSearchResults().get(i)
+								.getGooruOid();
+						classpageList.put(classpageId, classpageListDo
+								.getSearchResults().get(i));
+						listClasspage.add(classpageId);
+					}
+					generateClasspageList();
+				} else {
+					// Set no classpage info, if there are not classpages.
+					if (toClear) {
+					}
+					offSet = tmpOffSet;
+					Element element = Document.get().getElementById("lblLoading");
+					if (element != null) {
+						element.removeFromParent();
+					}
+					if (whileDeleting) {
+						whileDeleting = false;
+						
+					}
+				}
+				if (isClasspageRefershed) {
+					removeClasspageItem(deletedClasspageId);
+				}
 			}
-			for (int i = 0; i < resultSize; i++) {
-				String classpageId = classpageListDo.getSearchResults().get(i)
-						.getGooruOid();
-				classpageList.put(classpageId, classpageListDo
-						.getSearchResults().get(i));
-				listClasspage.add(classpageId);
-			}
-			generateClasspageList();
-		} else {
-			// Set no classpage info, if there are not classpages.
-			if (toClear) {
-			}
-			offSet = tmpOffSet;
-			Element element = Document.get().getElementById("lblLoading");
-			if (element != null) {
-				element.removeFromParent();
-			}
-			if (whileDeleting) {
-				whileDeleting = false;
-				showNoClasspages();
-			}
-		}
-		if (isClasspageRefershed) {
-			removeClasspageItem(deletedClasspageId);
-		}
+		});
 	}
 
 	/**
@@ -693,67 +672,72 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 */
 	@UiHandler("ancNewClasspage")
 	public void onClickNewClasspage(ClickEvent event) {
-		MixpanelUtil.ClickOnNewClassPage();
-		HeaderUc.closeClassContainer();
-		newPopup = new NewClasspagePopupView() {
-
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void createNewClasspage(String title) {
+			public void onSuccess() {
+				MixpanelUtil.ClickOnNewClassPage();
+				HeaderUc.closeClassContainer();
+				newPopup = new NewClasspagePopupView() {
 
-				MixpanelUtil.Create_NewClasspage();
-				CollectionDo collectionDo = new CollectionDo();
-				collectionDo.setTitle(title);
-				collectionDo.setCollectionType("classpage");
-				AppClientFactory
-						.getInjector()
-						.getClasspageService()
-						.createClassPage(collectionDo.getTitle(),
-								new SimpleAsyncCallback<CollectionDo>() {
+					@Override
+					public void createNewClasspage(String title) {
 
-									@Override
-									public void onSuccess(CollectionDo result) {
-										final String classpageId = result
-												.getGooruOid();
-										AssignmentDo assignmentDo = new AssignmentDo();
-										assignmentDo
-												.setClasspageId(classpageId);
+						MixpanelUtil.Create_NewClasspage();
+						CollectionDo collectionDo = new CollectionDo();
+						collectionDo.setTitle(title);
+						collectionDo.setCollectionType("classpage");
+						AppClientFactory
+								.getInjector()
+								.getClasspageService()
+								.createClassPage(collectionDo.getTitle(),
+										new SimpleAsyncCallback<CollectionDo>() {
 
-										TaskDo taskDo = new TaskDo();
-										taskDo.setTitle(i18n.GL0121());
-										taskDo.setTypeName("assignment");
-										assignmentDo.setTask(taskDo);
+											@Override
+											public void onSuccess(CollectionDo result) {
+												final String classpageId = result
+														.getGooruOid();
+												AssignmentDo assignmentDo = new AssignmentDo();
+												assignmentDo
+														.setClasspageId(classpageId);
 
-										AttachToDo attachToDo = new AttachToDo();
-										attachToDo.setId(classpageId);
-										attachToDo.setType("classpage");
+												TaskDo taskDo = new TaskDo();
+												taskDo.setTitle(i18n.GL0121());
+												taskDo.setTypeName("assignment");
+												assignmentDo.setTask(taskDo);
 
-										assignmentDo.setAttachTo(attachToDo);
-										listClasspage.add(0, classpageId);
+												AttachToDo attachToDo = new AttachToDo();
+												attachToDo.setId(classpageId);
+												attachToDo.setType("classpage");
 
-										classpageList.put(classpageId, result);
+												assignmentDo.setAttachTo(attachToDo);
+												listClasspage.add(0, classpageId);
 
-										AppClientFactory
-												.getInjector()
-												.getClasspageService()
-												.v2CreateAssignment(
-														assignmentDo,
-														new SimpleAsyncCallback<AssignmentDo>() {
+												classpageList.put(classpageId, result);
 
-															@Override
-															public void onSuccess(
-																	AssignmentDo result) {
-																// Assig to
-																// classpage.
-																generateClasspageList();
-																showClasspageList();
-																OpenClasspageEdit(classpageId);
-																newPopup.ClosePopup();
-															}
-														});
-									}
-								});
+												AppClientFactory
+														.getInjector()
+														.getClasspageService()
+														.v2CreateAssignment(
+																assignmentDo,
+																new SimpleAsyncCallback<AssignmentDo>() {
+
+																	@Override
+																	public void onSuccess(
+																			AssignmentDo result) {
+																		// Assig to
+																		// classpage.
+																		generateClasspageList();
+																		OpenClasspageEdit(classpageId);
+																		newPopup.ClosePopup();
+																	}
+																});
+											}
+										});
+					}
+				};
 			}
-		};
+		});
 	}
 
 	/**
@@ -776,30 +760,36 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void OpenClasspageEdit(final String gooruOId) {
-		setClassapageItemSeleted(gooruOId);
-		AppClientFactory.getInjector().getClasspageService().v2GetClasspageById(gooruOId, new SimpleAsyncCallback<CollectionDo>() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
 			@Override
-			public void onSuccess(CollectionDo result) {
-				if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
-				{
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("classpageid", gooruOId);
-					params.put("pageNum", "0");
-					params.put("pageSize", "10");
-					params.put("pos", "1");
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.EDIT_CLASSPAGE, params);
-				}
-				else
-				{
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("id", gooruOId);
-					params.put("pageNum", "0");
-					params.put("pageSize", "10");
-					params.put("pos", "1");
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.STUDENT, params);
-				}
+			public void onSuccess() {
+				setClassapageItemSeleted(gooruOId);
+				AppClientFactory.getInjector().getClasspageService().v2GetClasspageById(gooruOId, new SimpleAsyncCallback<CollectionDo>() {
+					@Override
+					public void onSuccess(CollectionDo result) {
+						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
+						{
+							Map<String, String> params = new HashMap<String, String>();
+							params.put("classpageid", gooruOId);
+							params.put("pageNum", "0");
+							params.put("pageSize", "10");
+							params.put("pos", "1");
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.EDIT_CLASSPAGE, params);
+						}
+						else
+						{
+							Map<String, String> params = new HashMap<String, String>();
+							params.put("id", gooruOId);
+							params.put("pageNum", "0");
+							params.put("pageSize", "10");
+							params.put("pos", "1");
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.STUDENT, params);
+						}
+					}
+				});
 			}
 		});
 	}
@@ -823,22 +813,29 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 * 
 	 */
-	private void setClassapageItemSeleted(String classpageId) {
+	private void setClassapageItemSeleted(final String classpageId) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
 
-		for (int i = 0; i < listClasspage.size(); i++) {
-			Element element = Document.get().getElementById(
-					listClasspage.get(i));
-			if (element != null) {
-				element.setClassName(res.css().classpageTitleHeader());
+				for (int i = 0; i < listClasspage.size(); i++) {
+					Element element = Document.get().getElementById(
+							listClasspage.get(i));
+					if (element != null) {
+						element.setClassName(res.css().classpageTitleHeader());
+					}
+				}
+				if (classpageId != null && !classpageId.equalsIgnoreCase("")) {
+					Element element = Document.get().getElementById(classpageId);
+					if (element != null) {
+						element.setClassName(res.css().classpageTitleHeaderActive());
+					}
+				}
 			}
-		}
-		if (classpageId != null && !classpageId.equalsIgnoreCase("")) {
-			Element element = Document.get().getElementById(classpageId);
-			if (element != null) {
-				element.setClassName(res.css().classpageTitleHeaderActive());
-			}
-		}
+		});
 	}
+	
 
 	/**
 	 * 
@@ -881,34 +878,39 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 * 
 	 */
-	public void removeClasspageItem(String classpageId) {
-		String nextClasspageId = null;
-		int listCount = listClasspage.size();
-		for (int i = 0; i < listClasspage.size(); i++) {
-			if (listClasspage.get(i).equalsIgnoreCase(classpageId)) {
-				if (i == (listCount - 1)) {
-					if ((listCount - 1) > 0) {
-						nextClasspageId = listClasspage.get(i - 1);
-					} else {
-						nextClasspageId = null;
-					}
+	public void removeClasspageItem(final String classpageId) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				String nextClasspageId = null;
+				int listCount = listClasspage.size();
+				for (int i = 0; i < listClasspage.size(); i++) {
+					if (listClasspage.get(i).equalsIgnoreCase(classpageId)) {
+						if (i == (listCount - 1)) {
+							if ((listCount - 1) > 0) {
+								nextClasspageId = listClasspage.get(i - 1);
+							} else {
+								nextClasspageId = null;
+							}
 
-				} else {
-					nextClasspageId = listClasspage.get(i + 1);
+						} else {
+							nextClasspageId = listClasspage.get(i + 1);
+						}
+						listClasspage.remove(i);
+						classpageList.remove(classpageId);
+					} else {
+						nextClasspageId = listClasspage.get(0);
+					}
 				}
-				listClasspage.remove(i);
-				classpageList.remove(classpageId);
-			} else {
-				nextClasspageId = listClasspage.get(0);
+				generateClasspageList();
+				if (nextClasspageId != null) {
+					OpenClasspageEdit(nextClasspageId);
+				} else {
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+				}
 			}
-		}
-		generateClasspageList();
-		if (nextClasspageId != null) {
-			OpenClasspageEdit(nextClasspageId);
-		} else {
-			showNoClasspages();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
-		}
+		});
 	}
 	/**
 	 * 
@@ -929,14 +931,20 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 *
 	 *
 	 */
-	private void setButtonStatus(String status) {
-		if (status.equalsIgnoreCase("active")) {
-			enterLbl.getElement().removeClassName("disabled");
-			enterLbl.setEnabled(true);
-		} else {
-			enterLbl.getElement().addClassName("disabled");
-			enterLbl.setEnabled(false);
-		}
+	private void setButtonStatus(final String status) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if (status.equalsIgnoreCase("active")) {
+					enterLbl.getElement().removeClassName("disabled");
+					enterLbl.setEnabled(true);
+				} else {
+					enterLbl.getElement().addClassName("disabled");
+					enterLbl.setEnabled(false);
+				}
+			}
+		});
 	}
 
 	@Override

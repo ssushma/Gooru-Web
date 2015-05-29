@@ -76,9 +76,7 @@ public class RegisterVc extends PopupPanel {
 	@UiField
 	TextBox emailIdTxtBox;
 
-	/*@UiField
-	Anchor cancelAnr;*/
-
+	
 	@UiField
 	HTMLEventPanel cancelButton;
 	
@@ -103,7 +101,6 @@ public class RegisterVc extends PopupPanel {
 
 	private String dob;
 	
-//	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = i18n.GL0214;
 	
 	private static final String PARENT = "Parent";
 	
@@ -159,8 +156,6 @@ public class RegisterVc extends PopupPanel {
 		super(false);
 		NewRegisterCBundle.INSTANCE.css().ensureInjected();
 		add(binder.createAndBindUi(this));
-//		this.setStyleName(Register1CBundle.INSTANCE.css().registerPopupStyle());
-//		this.addStyleName("gwt-PopupPanel");
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString())|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
         	this.getElement().getStyle().setZIndex(999999);
         }else{
@@ -238,14 +233,9 @@ public class RegisterVc extends PopupPanel {
 	
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
-		//this.setVisible(false);
-	/*	Window.enableScrolling(true);
-        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		hide();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);*/
 		String currentPlaceToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY)||currentPlaceToken.equals(PlaceTokens.PREVIEW_PLAY) || currentPlaceToken.equals(PlaceTokens.RESOURCE_PLAY) ||
-			currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH) || currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH) ){
+			currentPlaceToken.equals(PlaceTokens.SEARCH_COLLECTION) || currentPlaceToken.equals(PlaceTokens.SEARCH_RESOURCE) ){
 			
 		}else{
 			hide();
@@ -271,16 +261,6 @@ public class RegisterVc extends PopupPanel {
 			}
 		});
 	}
-
-	/**
-	 * Cancel the register popup
-	 * @param clickEvent instance of {@link ClickEvent}
-	 */
-	/*@UiHandler("cancelAnr")
-	public void onCancelClick(ClickEvent clickEvent) {
-		hide();
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
-	}*/
 
 	/**
 	 * if ok button is clicked it calls the user check availability method 
@@ -315,6 +295,7 @@ public class RegisterVc extends PopupPanel {
 									}
 								});
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}
@@ -329,9 +310,9 @@ public class RegisterVc extends PopupPanel {
 				.getInjector()
 				.getUserService()
 				.resendConfirmationMail(params,
-						new SimpleAsyncCallback<Object>() {
+						new SimpleAsyncCallback<Void>() {
 							@Override
-							public void onSuccess(Object result) {
+							public void onSuccess(Void result) {
 								if (parentRegisterVc != null) {
 									parentRegisterVc.getPopupPanel().hide();
 								}

@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -31,12 +33,14 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -124,6 +128,10 @@ public class AlertContentUc extends Composite {
 	@UiHandler("okButton")
 	public void onOkClick(ClickEvent clickEvent) {
 		alertBoxUc.hide();
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+			Window.enableScrolling(true);
+		}
 	}
 
 	/**

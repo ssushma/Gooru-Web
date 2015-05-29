@@ -10,14 +10,23 @@
 		</param-value>
 	</context-param>
 	
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<url-pattern>/newgooru/logging</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
+	
+	<servlet>
+    	<servlet-name>remoteLogging</servlet-name>
+    	<servlet-class>com.google.gwt.logging.server.RemoteLoggingServiceImpl</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>remoteLogging</servlet-name>
+   	 	<url-pattern>/newgooru/remote_logging</url-pattern>
+  	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
@@ -34,26 +43,6 @@
 		<url-pattern>/newgooru/gwt-service/*</url-pattern>
 		<url-pattern>/embed/*</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>resourcePlayerPlayServlet</servlet-name>
-		<servlet-class>org.ednovo.gooru.player.resource.server.ResourcePlayerComponentServiceImpl
-		</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>resourcePlayerPlayServlet</servlet-name>
-		<url-pattern>/newgooru/resourcePlayerPlayServletAction
-		</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>collection</servlet-name>
-		<servlet-class>org.ednovo.gooru.player.collection.server.CollectionServiceImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>collection</servlet-name>
-		<url-pattern>/newgooru/actionServlet</url-pattern>
-	</servlet-mapping>
-	
 	<servlet>
     <servlet-name>uploadServlet</servlet-name>
     <servlet-class>org.ednovo.gooru.server.service.uploadServlet</servlet-class>

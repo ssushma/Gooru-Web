@@ -24,11 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
@@ -49,7 +47,6 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -251,28 +248,6 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 					getView().hideUpdateResourcePopup();
 					
 					getView().updateCollectionItem(result);
-					
-					//redirect(Window.Location.getHref());
-//					Map<String,String> params = new HashMap<String,String>();
-//                	
-//                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
-//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-//            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
-//            		}
-//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
-//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-//            		}
-//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
-//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-//            		}
-//              
-//                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
-//                	{
-//                		params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
-//                	}
-//            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 				}
 			};
 		}
@@ -331,34 +306,13 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	public void editUserOwnResource(String jsonString, String gooruOid) {
 		MixpanelUtil.Resource_Edit_Info_Success();
 		AppClientFactory.getInjector().getResourceService().updateUserOwnResource(jsonString,gooruOid,new SimpleAsyncCallback<CollectionItemDo>(){
-
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hideUpdateOwnResourcePopup();
-				//redirect(Window.Location.getHref());
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-    			//String pageLocation=placeRequest.getNameToken();
 				
 				getView().updateCollectionItem(result);
-//        		
-//            	Map<String,String> params = new HashMap<String,String>();
-//            	if(placeRequest.getParameter(O1_LEVEL, "")!= null) {
-//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-//        		} else if(placeRequest.getParameter(O2_LEVEL, "")!=null) {
-//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-//        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
-//        		} else if(placeRequest.getParameter(O3_LEVEL, "")!=null){
-//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-//        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
-//        			params.put(O3_LEVEL, placeRequest.getParameter(O3_LEVEL, ""));
-//        		}
-//            	if(placeRequest.getParameter(ID, "") != null)
-//            	{
-//            	params.put(ID, placeRequest.getParameter(ID, ""));
-//            	}
-//        		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 			}
-			
 		});
 	}
 
@@ -414,7 +368,12 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource, this.isUserOwnResource);
+		List<Map<String,String>> selectedStandList=addStandardsPresenter.getStandardListArray();
+		if(selectedStandList.size()!=0){
+			for(int i=0;i<selectedStandList.size();i++){
+				getView().setUpdatedStandardsCode(selectedStandList.get(i).get("selectedCodeVal"), Integer.parseInt(selectedStandList.get(i).get("selectedCodeId")),selectedStandList.get(i).get("selectedCodeDesc"),this.isQuestionResource, this.isUserOwnResource);
+			}
+		}
 	}
 
 	@Override
@@ -424,9 +383,5 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void reorderResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow, Integer newSequence) {
-//		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
 	}
-
-	
-	
 }

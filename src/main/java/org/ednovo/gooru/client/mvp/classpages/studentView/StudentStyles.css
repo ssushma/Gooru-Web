@@ -130,8 +130,6 @@
 	border-radius: 4px;
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0);
 }
 
 .classPageSearchButtonText {
@@ -184,7 +182,6 @@
 	box-shadow: 0px 0px 10px rgba(204, 204, 204, 0.3);
 	-ms-filter:
 		"progid:DXImageTransform.Microsoft.Glow(Color=#ffcccccc,Strength=10)";
-	filter: progid:DXImageTransform.Microsoft.Glow(Color=#ffcccccc, Strength=10);
 }
 
 .classPageRoundedHeadingContainer {

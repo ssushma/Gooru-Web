@@ -122,6 +122,27 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter.IsFolderPopUpFormProxy;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderPopUpUiBinder;
 import org.ednovo.gooru.client.mvp.folders.newfolder.IsFoldersPopupView;
+import org.ednovo.gooru.client.mvp.gsearch.IsSearchMainView;
+import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter.IsSearchMainProxy;
+import org.ednovo.gooru.client.mvp.gsearch.SearchMainView;
+import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.IsViewMorePeopleView;
+import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
+import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeopleView;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.IsSearchAddResourceToCollectionView;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionView;
+import org.ednovo.gooru.client.mvp.gsearch.collection.IsSearchCollectionView;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter.IsSearchCollectionProxy;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionView;
+import org.ednovo.gooru.client.mvp.gsearch.resource.IsSearchResourceView;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter.IsSearchResourceProxy;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourceView;
+import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesView;
+import org.ednovo.gooru.client.mvp.gsearch.util.IsGooruGradesView;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.client.mvp.home.HomeView;
@@ -446,9 +467,17 @@ public class AppModule extends AppPresenterModule {
 				RegisterView.class, IsRegisterProxy.class);
 		bindPresenter(SearchRootPresenter.class, IsSearchRootView.class,
 				SearchRootView.class, IsSearchRootProxy.class);
+		bindPresenter(SearchMainPresenter.class, IsSearchMainView.class,
+				SearchMainView.class, IsSearchMainProxy.class);
 		bindPresenter(CollectionSearchPresenter.class,
 				IsCollectionSearchView.class, CollectionSearchView.class,
 				IsCollectionSearchProxy.class);
+		bindPresenter(SearchCollectionPresenter.class,
+				IsSearchCollectionView.class, SearchCollectionView.class,
+				IsSearchCollectionProxy.class);
+		bindPresenter(SearchResourcePresenter.class,
+				IsSearchResourceView.class, SearchResourceView.class,
+				IsSearchResourceProxy.class);
 		bindPresenter(ResourceSearchPresenter.class,
 				IsResourceSearchView.class, ResourceSearchView.class,
 				IsResourceSearchProxy.class);
@@ -500,6 +529,14 @@ public class AppModule extends AppPresenterModule {
 				IsAddAssignmentContainerView.class,
 				AddAssignmentContainerView.class);
 
+		bindPresenterWidget(SearchAddResourceToCollectionPresenter.class,
+				IsSearchAddResourceToCollectionView.class,
+				SearchAddResourceToCollectionView.class);
+		
+		bindPresenterWidget(ViewMorePeoplePresenter.class,
+				IsViewMorePeopleView.class,
+				ViewMorePeopleView.class);
+		
 		bindPresenter(ClassCodePresenter.class, IsClassCodeView.class,
 				ClassCodeView.class, IsClassCodeProxy.class);
 		
@@ -598,6 +635,7 @@ public class AppModule extends AppPresenterModule {
 		
 		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
 		bindPresenterWidget(AddCenturyPresenter.class, IsAddCenturyView.class, AddCenturyView.class);
+		bindPresenterWidget(GooruGradesPresenter.class, IsGooruGradesView.class, GooruGradesView.class);
 		bindPresenterWidget(AddStandardsPreSearchPresenter.class, IsAddStandardsPreSearchView.class, AddStandardsPreSearchView.class);
 		bindPresenterWidget(ContributorsPresenter.class, IsContributorsView.class, ContributorsView.class);
 
@@ -617,7 +655,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
 		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
 		bindPresenterWidget(PopupForAnalyticsPresenter.class,IsPopupForAnalyticsView.class, PopupForAnalyticsView.class);
-	
+			
 		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);
 		bindPresenterWidget(CollectionProgressPresenter.class,IsCollectionProgressView.class,CollectionProgressWidget.class);
 		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);

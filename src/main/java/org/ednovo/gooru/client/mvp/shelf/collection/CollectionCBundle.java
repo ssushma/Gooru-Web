@@ -100,8 +100,6 @@ public interface CollectionCBundle extends ClientBundle{
 		String standardsCont();
 		String standardsEditResourceCont();
 		
-		String gradeListCont();
-		
 		String gradeList();
 		
 		String standardsListContainer();
@@ -127,8 +125,6 @@ public interface CollectionCBundle extends ClientBundle{
 		String shelfGradeInfoHigherEd();
 		
 		String shelfHigherEd();
-		
-		String courseMaxMsg();
 		
 		String ErrorShow();
 		
@@ -189,10 +185,6 @@ public interface CollectionCBundle extends ClientBundle{
 		String shelfVocabularyStandard();
 		
 		String shelfGradeSelectResources();
-		
-		String floatLeftCollectionInputBox();
-		
-		String collectionCourseLstPanel();
 		
 		String collectionStandardsMargin();
 		

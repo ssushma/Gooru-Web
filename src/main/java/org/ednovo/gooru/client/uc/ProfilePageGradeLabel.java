@@ -82,10 +82,6 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		
 		if(label.trim().equals(HIGHER_EDUCATION)||label.trim().equalsIgnoreCase(HIGHER_EDUCATION)){
 			this.addStyleName(CollectionCBundle.INSTANCE.css().profileHigherEducationGrade());
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
-//				this.getElement().getStyle().setMarginLeft(60, Unit.PX);
-//				this.getElement().getStyle().setMarginBottom(30, Unit.PX);
-			}
 		}
 		if (grades != null) {
 			String genGrade = grades;

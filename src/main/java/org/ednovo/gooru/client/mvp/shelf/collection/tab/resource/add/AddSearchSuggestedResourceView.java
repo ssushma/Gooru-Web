@@ -44,12 +44,12 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListE
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -427,7 +427,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		public void updateSearchResultMetaData(String count, String resourceId,
 				String whatToUpdate) {
 			if(count!=null){
-//				updateViews(count, resourceId, whatToUpdate);
 			}
 		}
 	};
@@ -453,7 +452,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			public void onSuccess(CollectionItemDo result) {
 				Window.enableScrolling(true);
 				closePopup();
-				//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(result, RefreshType.INSERT));
 				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 			}

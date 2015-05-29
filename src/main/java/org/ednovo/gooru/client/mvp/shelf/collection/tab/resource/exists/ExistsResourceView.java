@@ -46,11 +46,11 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListE
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.FlaggingPopUp;
-import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -183,7 +183,7 @@ public class ExistsResourceView extends AppPopUp {
 		public void onClick(ClickEvent event) {
 			buttonContainer.setVisible(false);
 			loadingTextLbl.setVisible(true);
-			AppClientFactory.getInjector().getResourceService().createCollectionItem(collectionDo.getGooruOid(), existsResourceDo.getId(), new SimpleAsyncCallback<CollectionItemDo>() {
+			AppClientFactory.getInjector().getResourceService().createCollectionItem(collectionDo.getGooruOid(), existsResourceDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
 
 				@Override
 				public void onSuccess(CollectionItemDo result) {
@@ -216,9 +216,9 @@ public class ExistsResourceView extends AppPopUp {
 		this.existsResourceDo = existsResourceDo;
 		setCollectionDo(collectionDo);
 		
-		idStr = existsResourceDo.getId();
-		url = existsResourceDo.getNativeurl();
-		title = existsResourceDo.getLabel();
+		idStr = existsResourceDo.getGooruOid();
+		url = existsResourceDo.getUrl();
+		title = existsResourceDo.getTitle();
 		description = existsResourceDo.getDescription();
 		category = existsResourceDo.getCategory().toLowerCase();
 		thumbnailUrl = existsResourceDo.getThumbnails().getUrl();

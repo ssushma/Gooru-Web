@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -80,15 +81,15 @@ public interface PlayerAppService extends BaseService {
 	
 	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent) throws GwtException, ServerDownException;
 	
-	public String createSessionTracker(String collectionGooruOid,String sessionId) throws GwtException, ServerDownException;
+	public String createSessionTracker(String collectionGooruOid,String sessionId,String mode) throws GwtException, ServerDownException;
 	
 	public String updateSessionInCollection(String sessionTrackerId) throws GwtException, ServerDownException;
 	
-	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid) throws GwtException, ServerDownException;
+	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
+	public String createSessionItemAttemptTry(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult) throws GwtException, ServerDownException;
+	public String createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult) throws GwtException, ServerDownException;
 	
 	public String sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message) throws GwtException, ServerDownException;
 	
@@ -187,5 +188,8 @@ public interface PlayerAppService extends BaseService {
 	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId) throws GwtException, ServerDownException;
 	
 	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId) throws GwtException, ServerDownException;
+
+	public void updateSessionActivityItem(String gooruOid, String status,String updateSessionId) throws GwtException, ServerDownException;
 	
+	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions,String sessionId) throws GwtException, ServerDownException;
 }

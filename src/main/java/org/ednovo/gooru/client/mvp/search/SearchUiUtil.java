@@ -94,6 +94,90 @@ public class SearchUiUtil{
 			}
 		}
 	}
+	public static void renderStandardsforCollection(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
+		if (searchResultDo.getStandards() != null) {
+			List<Map<String, String>> standards = searchResultDo.getStandards();
+			Iterator<Map<String, String>> iterator = standards.iterator();
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			while (iterator.hasNext()) {
+				Map<String, String> standard = iterator.next();
+				String stdCode = standard.get(STANDARD_CODE);
+				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				if (count > 1) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
+					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					standardsContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (standards.size()>18){
+				final Label left = new Label(i18n.GL_SPL_PLUS()+(standards.size() - 18));
+				toolTipwidgets.add(left);
+			}
+			if (searchResultDo.getStandards().size() > 2) {
+				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
+				toolTipUc.setStyleName("blueLink");
+				standardsContainer.add(toolTipUc);
+				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
+				
+			}
+		}
+	}
+	public static void renderStandardsForresourceSearch(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
+		if (searchResultDo.getStandards() != null) {
+			List<Map<String, String>> standards = searchResultDo.getStandards();
+			Iterator<Map<String, String>> iterator = standards.iterator();
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			String standardsfirstVal = "";
+			while (iterator.hasNext()) {
+				Map<String, String> standard = iterator.next();
+				String stdCode = standard.get(STANDARD_CODE);
+				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				if (count > 1) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					if(stdCode.length()>23 && count==0){
+						standardsfirstVal = stdCode;
+					}else{
+						DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
+						toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandardResource());
+						standardsContainer.add(toolTipUc);
+					}
+				}
+				count++;
+			}
+			if (standards.size()>18){
+				final Label left = new Label(i18n.GL_SPL_PLUS()+(standards.size() - 18));
+				toolTipwidgets.add(left);
+			}
+			if (searchResultDo.getStandards().size() > 2) {
+				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
+				if(!standardsfirstVal.isEmpty()){
+					moreStandardsCount = moreStandardsCount+1;
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
+					toolTipUc.setStyleName("blueLink");
+					standardsContainer.add(toolTipUc);
+					toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
+				}else{					
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
+					toolTipUc.setStyleName("blueLink");
+					standardsContainer.add(toolTipUc);
+					toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
+				}
+			}
+		}
+	}
 	/*public static void renderPPPStandards(FlowPanel standardsContainer,CollectionItemDo collectionItemDo) {
 		if (collectionItemDo.getStandards() != null) {
 			List<Map<String, String>> standards = collectionItemDo.getStandards();

@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
@@ -36,6 +37,7 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -92,32 +94,39 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	@Override
 	public void setCollectionSummaryData(final String collectionId,final String pathwayId) {
 		this.collectionId=collectionId;
-		getView().getLoadinImage().setVisible(true);
-		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		this.analyticService.getCollectionSummaryUsersData(classpageId,new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
-			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
-				if(result !=null){
-					getView().setUsersData(result);
-				}
-			}
+			public void onSuccess() {				
+				getView().getLoadinImage().setVisible(true);
+				final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				analyticService.getCollectionSummaryUsersData(classpageId,new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
+						if(result !=null){
+							getView().setUsersData(result);
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
+				analyticService.getAssignmentAverageData(classpageId, pathwayId, collectionId,new AsyncCallback<CollectionSummaryMetaDataDo>() {
+					
+					@Override
+					public void onSuccess(CollectionSummaryMetaDataDo result) {
+						getView().setCollectionMetaData(result,pathwayId,classpageId);
+						collectionMetadata=result;
+						setTeacherData(collectionId,classpageId,pathwayId);
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
 			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});
-		this.analyticService.getAssignmentAverageData(classpageId, pathwayId, collectionId,new AsyncCallback<CollectionSummaryMetaDataDo>() {
-			
-			@Override
-			public void onSuccess(CollectionSummaryMetaDataDo result) {
-				getView().setCollectionMetaData(result,pathwayId,classpageId);
-				collectionMetadata=result;
-				setTeacherData(collectionId,classpageId,pathwayId);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}
@@ -127,24 +136,32 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	 */
 	@Override
 	public void loadUserSessions(final String collectionId,final String classId,final String userId,final String pathwayId,final PrintUserDataDO printUserDataDO) {
-		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
-			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
-				getView().setUserSessionsData(result);
-				if(result.size()!=0){
-					printUserDataDO.setSession(FIRST_SESSION);
-					printUserDataDO.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(result.get(0).getTimeStamp())));
-					setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId,printUserDataDO);
-				}else{
-					getView().resetDataIfNoSessions();
-					clearSlot(TEACHER_STUDENT_SLOT);
-					setInSlot(TEACHER_STUDENT_SLOT, null,false);	
-				}
-			}
+			public void onSuccess() {
+
+				analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
+						getView().setUserSessionsData(result);
+						if(result.size()!=0){
+							printUserDataDO.setSession(FIRST_SESSION);
+							printUserDataDO.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(result.get(0).getTimeStamp())));
+							setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId,printUserDataDO);
+						}else{
+							getView().resetDataIfNoSessions();
+							clearSlot(TEACHER_STUDENT_SLOT);
+							setInSlot(TEACHER_STUDENT_SLOT, null,false);	
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
 			
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}
@@ -153,22 +170,38 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#setTeacherData(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void setTeacherData(String collectionId,String classpageId,String pathwayId) {
-		getView().getLoadinImage().setVisible(true);
-		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryTeacherPresenter.setTeacherData(collectionId,classpageId,pathwayId,collectionMetadata,getView().getLoadinImage());
-		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryTeacherPresenter,false);		
+	public void setTeacherData(final String collectionId,final String classpageId, final String pathwayId) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				getView().getLoadinImage().setVisible(true);
+				clearSlot(TEACHER_STUDENT_SLOT);
+				collectionSummaryTeacherPresenter.setTeacherData(collectionId,classpageId,pathwayId,collectionMetadata,getView().getLoadinImage());
+				setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryTeacherPresenter,false);		
+			
+			}
+		});
 	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#setIndividualData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
 	 */
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,PrintUserDataDO printUserDataDO) {
-		getView().getLoadinImage().setVisible(true);
-		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId,true,getView().getLoadinImage(),printUserDataDO);
-		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
+	public void setIndividualData(final String collectionId,final String classpageId,final String userId,final String sessionId,final String pathwayId, final PrintUserDataDO printUserDataDO) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				getView().getLoadinImage().setVisible(true);
+				clearSlot(TEACHER_STUDENT_SLOT);
+				collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId,true,getView().getLoadinImage(),printUserDataDO);
+				setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
+			
+			}
+		});
 	}
 	@Override
 	protected void onHide() {
@@ -180,25 +213,41 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#exportCollectionSummary(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void exportCollectionSummary(String collectionId,String classpageId, String userId, String sessionId,String pathwayId,String timeZone) {
-		this.analyticService.exportTeacherSummary(collectionId, pathwayId, classpageId, timeZone, new AsyncCallback<String>() {
+	public void exportCollectionSummary(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId, final String timeZone) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
-			public void onSuccess(String result) {
-				if(!StringUtil.isEmpty(result)){
-					getView().getFrame().setUrl(result);
-				}
-			}
+			public void onSuccess() {
+
+				analyticService.exportTeacherSummary(collectionId, pathwayId, classpageId, timeZone, new AsyncCallback<String>() {
+					
+					@Override
+					public void onSuccess(String result) {
+						if(!StringUtil.isEmpty(result)){
+							getView().getFrame().setUrl(result);
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
 			
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}
 	@Override
 	public void clearFrames(){
-		getView().getFrame().setUrl("");
-		collectionSummaryTeacherPresenter.clearFrame();
-		collectionSummaryIndividualPresenter.clearFrame();
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				getView().getFrame().setUrl("");
+				collectionSummaryTeacherPresenter.clearFrame();
+				collectionSummaryIndividualPresenter.clearFrame();
+			
+			}
+		});
 	}
 }

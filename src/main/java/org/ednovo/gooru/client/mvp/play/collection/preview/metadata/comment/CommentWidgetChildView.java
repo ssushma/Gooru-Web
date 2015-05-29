@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewE
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.events.SetCommentsOptionsEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.events.SetCommentsOptionsHandler;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -271,7 +271,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			commentField.getElement().setAttribute("title",commentsDo.getComment());
 			setOptionsButtons();
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	

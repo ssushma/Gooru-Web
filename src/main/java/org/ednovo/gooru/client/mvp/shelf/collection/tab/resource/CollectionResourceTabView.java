@@ -106,10 +106,6 @@ public class CollectionResourceTabView extends
 	@UiField
 	Label dragAndDropLabel;
 
-	/*
-	 * @UiField HTMLEventPanel downArrowPanel,popupPanel;
-	 */
-
 	@UiField
 	Label noResourceLineOneLabel, noResourceLineTwoLabel,
 			noResourceLineThreeLabel, noResourceLineFourLabel,noResourceLineFiveLabel,noResourceLineSixLabel;
@@ -197,32 +193,18 @@ public class CollectionResourceTabView extends
 		
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		css = CollectionEditResourceCBundle.INSTANCE.css();
-
-//		noResourceLineOneLabel.setVisible(false);
-//		panelNoResourceContainer.setVisible(false);
-//		noResourceLineTwoLabel.setVisible(false);
-//		noResourceLineThreeLabel.setVisible(false);
-//		noResourceLineFourLabel.setVisible(false);
 		showOrHideNoCollectionItemsMessage(false);
-		// popupPanel.setVisible(false);
-		
-		
 		buttonContainer.addClickHandler(new NewResourceClickEvent());
 		buttonContainerForQuestion.addClickHandler(new NewQuestionClickEvent());
-		// searchLabel.addClickHandler(new NewSearchResourceClickEvent());
 		dragAndDropLabel.setVisible(true);
 		buttonContainerAddGray.setVisible(false);
 		contentPanel.setVisible(false);
 		panelLoading.getElement().getStyle().setDisplay(Display.BLOCK);
-		// downArrowPanel.addClickHandler(new ShowPopupClickHandler());
 		collectionResourcePanelVc.getElement().setId("editPanelShelf");
 		panelLoading.getElement().setId("pnlPanelLoading");
 		contentPanel.getElement().setId("pnlContentPanel");
 		sequenceVerPanel.getElement().setId("vpnlSequenceVerPanel");
 		panelNoResourceContainer.getElement().setId("pnlPanelNoResourceContainer");
-		
-		
-		
 	}
 
 	@Override
@@ -251,11 +233,6 @@ public class CollectionResourceTabView extends
 			postlabel.setStyleName(getCss().shelfResourceSequenceSpacer());
 			sequenceVerPanel.add(postlabel);
 			if (collectionDo.getCollectionItems().size() <= 0) {
-//				noResourceLineOneLabel.setVisible(true);
-//				panelNoResourceContainer.setVisible(true);
-//				noResourceLineTwoLabel.setVisible(true);
-//				noResourceLineThreeLabel.setVisible(true);
-//				noResourceLineFourLabel.setVisible(true);
 				showNoCollectionsItemsMessage(collectionDo.getCollectionType());
 				showOrHideNoCollectionItemsMessage(true);
 				// dragAndDropLabel.setVisible(false);
@@ -265,7 +242,6 @@ public class CollectionResourceTabView extends
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				insertColectionItem(collectionItem, false);
 			}
-			/*setResourceSequence();*/
 			hideNoResourceMsg();
 			
 			if (collectionDo.getCollectionItems().size() >= 25) {
@@ -276,13 +252,11 @@ public class CollectionResourceTabView extends
 				buttonContainerAddGray.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						// showMaximumCollectionItemsPopup();
 					}
 				});
 				buttonContainerForQuestionGreay.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						// showMaximumCollectionItemsPopup();
 					}
 				});
 				buttonContainerAddGray.addMouseOverHandler(new MouseOverHandler() {
@@ -332,21 +306,11 @@ public class CollectionResourceTabView extends
 				buttonContainerAddGray.setVisible(false);
 				buttonContainer.setVisible(true);
 				buttonContainerForQuestion.setVisible(true);
-
-				// newResourceLabel.setVisible(true);
 			}
-			//showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
 		}
 		panelLoading.getElement().getStyle().setDisplay(Display.NONE);
 		contentPanel.setVisible(true);
 	}
-/*	public void showOrHideResourceButton(String collectionType, int size){
-		if(collectionType!=null&&collectionType.equals("quiz")){
-			buttonContainerAddGray.setVisible(false);
-			buttonContainer.setVisible(false);
-		}
-	}*/
-	
 	public void modifyExistingCollectionItemWidget(final CollectionItemDo collectionItemDo){
 		collectionItemDo.setCollection(collectionDo);
 		shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
@@ -404,25 +368,9 @@ public class CollectionResourceTabView extends
 									description = desc;
 									category = categoryStr;
 	 								thumbnailUrl = thumbnailUrlStr;
-									//if(category.contains("Image")||category.contains("Text"))
-									//{
-									//	category=category.substring(0, category.length()-1);
-									//	/* if(category.contains("Image")||category.contains("Images")){
-									//		 category="Slide";
-									//	 }*/
-									//}
-
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
-									//										getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 								}
-								
-								
-								
-								/*@Override
-								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
-									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
-								}*/
 								@Override
 								public void browseStandardsInfo(boolean val, boolean userResource) {
 									getUiHandlers().getBrowseStandardsInfo(val,userResource);
@@ -511,11 +459,6 @@ public class CollectionResourceTabView extends
 			}
 
 			AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItemDo, RefreshType.INSERT));
-//			noResourceLineOneLabel.setVisible(false);
-//			panelNoResourceContainer.setVisible(false);
-//			noResourceLineTwoLabel.setVisible(false);
-//			noResourceLineThreeLabel.setVisible(false);
-//			noResourceLineFourLabel.setVisible(false);
 			showOrHideNoCollectionItemsMessage(false);
 			dragAndDropLabel.setVisible(true);
 
@@ -529,34 +472,15 @@ public class CollectionResourceTabView extends
 			sequenceVerPanel.insert(sequenceLbl, sequencePostion);
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			resetSequence();
-			/*
-				Again enabled DnD
-			shelfCollectionResourceVc.getResourceMoveUpBtn().addClickHandler(new OnClickReorderUpButton(collectionItemDo.getGooruOid())); 
-			shelfCollectionResourceVc.getResourceMoveDownBtn().addClickHandler(new OnClickReorderDownButton(collectionItemDo.getGooruOid()));
-			shelfCollectionResourceVc.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
-			shelfCollectionResourceVc.getReorderTxtBox().addKeyUpHandler(new ReorderText(collectionItemDo.getGooruOid()));
-			*/
-			
-			
-			/*if(getTotalCount()==1){
-				isReorderButtonEnabled(false,shelfCollectionResourceVc);
-			}else{
-				isReorderButtonEnabled(true,shelfCollectionResourceVc);
-			}*/
-			
-			
 			if(isFlag){
 				isFlag=false;
-//				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
 				shelfCollectionResourceVc.addNewResource();
 			}
 			shelfCollectionResourceVc.getEditInfoLbl().addClickHandler(	new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
-//					shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
 					shelfCollectionResourceVc.getEditButton().setVisible(false);
-					/*shelfCollectionResourceVc.getReorderContainer().setVisible(false);*/
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 						getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
@@ -603,25 +527,9 @@ public class CollectionResourceTabView extends
 								description = desc;
 								category = categoryStr;
  								thumbnailUrl = thumbnailUrlStr;
-								//if(category.contains("Image")||category.contains("Text"))
-								//{
-								//	category=category.substring(0, category.length()-1);
-								//	/* if(category.contains("Image")||category.contains("Images")){
-								//		 category="Slide";
-								//	 }*/
-								//}
-
 								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
-								//										getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 							}
-							
-							
-							
-							/*@Override
-							public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
-								getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
-							}*/
 							@Override
 							public void browseStandardsInfo(boolean val, boolean userResource) {
 								getUiHandlers().getBrowseStandardsInfo(val,userResource);
@@ -641,39 +549,11 @@ public class CollectionResourceTabView extends
 				}
 			});
 			collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
-			/*collectionResourcePanelVc.add(shelfCollectionResourceVc);
-			setResourceSequence();*/
 			AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
-//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 	}
-
-	/*public void insertCollectionItemForCopy(
-			final CollectionItemDo collectionItemDo,
-			boolean isBeingCopiedToSameCollection) {
-
-		if (collectionDo.getCollectionItems() == null) {
-			collectionDo.setCollectionItems(new ArrayList<CollectionItemDo>());
-		}
-		if (!collectionDo.getCollectionItems().contains(collectionItemDo)) {
-			collectionDo.getCollectionItems().add(collectionItemDo);
-		}
-
-		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
-				collectionItemDo, RefreshType.INSERT));
-		noResourceLineOneLabel.setVisible(false);
-		panelNoResourceContainer.setVisible(true);
-		noResourceLineTwoLabel.setVisible(false);
-		noResourceLineThreeLabel.setVisible(false);
-		noResourceLineFourLabel.setVisible(false);
-		dragAndDropLabel.setVisible(true);
-
-		if (isBeingCopiedToSameCollection) {
-			setNewResourcePanel(collectionItemDo);
-		}
-	}*/
 
 	public void setNewResourcePanel(final CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
@@ -693,9 +573,7 @@ public class CollectionResourceTabView extends
 					@Override
 					public void onClick(ClickEvent event) {
 						shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
-//						shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
 						shelfCollectionResourceVc.getEditButton().setVisible(false);
-						/*shelfCollectionResourceVc.getReorderContainer().setVisible(false);*/
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 							editQuestionPopupWidget = new EditQuestionPopupWidget(collectionItemDo);
@@ -754,7 +632,6 @@ public class CollectionResourceTabView extends
 															.getCollectionItemId());
 										}
 									});
-//						} else if(collectionItemDo.getResource().getResourceType().getDescription().equals("web resource") || collectionItemDo.getResource().getResourceType().getDescription().equals("video")){
 						} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
 							editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
@@ -803,13 +680,7 @@ public class CollectionResourceTabView extends
 									thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
-//									getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 								}
-
-								/*@Override
-								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
-									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
-								}*/
 								@Override
 								public void browseStandardsInfo(boolean val, boolean userResource) {
 									getUiHandlers().getBrowseStandardsInfo(val,userResource);
@@ -818,7 +689,6 @@ public class CollectionResourceTabView extends
 								public void closeStandardsPopup() {
 									getUiHandlers().closeBrowseStandardsPopup();
 								}
-								
 								@Override
 								public void onSelection(SelectionEvent<Suggestion> event) {
 									super.onSelection(event);		
@@ -828,7 +698,6 @@ public class CollectionResourceTabView extends
 					}
 				});
 		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
-		/*collectionResourcePanelVc.add(shelfCollectionResourceVc);*/
 	}
 
 	public class EditQuestionPopupWidget extends EditQuestionPopupVc {
@@ -843,7 +712,6 @@ public class CollectionResourceTabView extends
 		public void show() {
 			super.show();
 			this.center();
-			// this.getElement().getStyle().setTop(100, Unit.PX);
 		}
 
 		@Override
@@ -857,8 +725,6 @@ public class CollectionResourceTabView extends
 				String thumbnailUrl = updateQuestionImage
 						.getThumbnailImageUrl();
 				if (thumbnailUrl != null) {
-					// getUiHandlers().updateQuestionImage(collectionItemId,
-					// "asset-question_"+thumbnailUrl);
 					getUiHandlers().updateQuestionResource(collectionItemId,
 							collectionQuestionItemDo,
 							"asset-question_" + thumbnailUrl);
@@ -894,22 +760,12 @@ public class CollectionResourceTabView extends
 
 	@Override
 	public void removeCollectionItem(CollectionItemDo collectionItemDo,	ShelfCollectionResourceChildView resourceChildView) {
-		
-		/*int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"));*/
-		
 		int sequence = collectionResourcePanelVc.getWidgetIndex(resourceChildView.getParent());
 		collectionResourcePanelVc.remove(sequence);
 		sequenceVerPanel.remove(sequence);
 		resetSequence();
 		collectionDo.getCollectionItems().remove(collectionItemDo);
-		
-		/*setTotalCount(collectionDo.getCollectionItems().size());
-		collectionResourcePanelVc.remove(sequence-1);*/
-		
-		
-		/*setResourceSequence();*/
 		if (collectionDo.getCollectionItems().size() >= 25) {
-			// newResourceLabel.setVisible(false);
 
 			buttonContainerForQuestionGreay.setVisible(true);
 			buttonContainerAddGray.setVisible(true);
@@ -920,14 +776,12 @@ public class CollectionResourceTabView extends
 				@Override
 				public void onClick(ClickEvent event) {
 
-					// showMaximumCollectionItemsPopup();
 				}
 			});
 			buttonContainerForQuestionGreay.addClickHandler(new ClickHandler() {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					// showMaximumCollectionItemsPopup();
 
 				}
 			});
@@ -987,17 +841,10 @@ public class CollectionResourceTabView extends
 			buttonContainerAddGray.setVisible(false);
 			buttonContainer.setVisible(true);
 			buttonContainerForQuestion.setVisible(true);
-			// newResourceLabel.setVisible(true);
 		}
 		if (collectionDo.getCollectionItems().size() <= 0) {
 			showNoCollectionsItemsMessage(collectionDo.getCollectionType());
 			showOrHideNoCollectionItemsMessage(true);
-//			noResourceLineOneLabel.setVisible(true);
-//			panelNoResourceContainer.setVisible(true);
-//			noResourceLineTwoLabel.setVisible(true);
-//			noResourceLineThreeLabel.setVisible(true);
-//			noResourceLineFourLabel.setVisible(true);
-			// dragAndDropLabel.setVisible(false);
 		}
 		AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 
@@ -1007,7 +854,7 @@ public class CollectionResourceTabView extends
 
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			setAttributeToWidget(noResourceLineOneLabel,i18n.GL3014());
-			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());
+			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL3276());
 			setAttributeToWidget(noResourceLineThreeLabel,"");
 			setAttributeToWidget(noResourceLineFourLabel," "+i18n.GL3015());
 			setAttributeToWidget(noResourceLineSixLabel,"");
@@ -1083,9 +930,6 @@ public class CollectionResourceTabView extends
 			clickType = "Url";
 			hidePopup();
 			if (collectionDo.getCollectionItems().size() >= 25) {
-
-				// showMaximumCollectionItemsPopup();
-
 			} else {
 				MixpanelUtil.Click_Add_NewResource();
 				Window.enableScrolling(false);
@@ -1106,10 +950,8 @@ public class CollectionResourceTabView extends
 			try{
 			MixpanelUtil.Click_On_AddQuestion();
 			clickType = "Question";
-			// popupPanel.setVisible(false);
 			hidePopup();
 			if (collectionDo.getCollectionItems().size() >= 25) {
-				// showMaximumCollectionItemsPopup();
 
 			} else {
 				Window.enableScrolling(false);
@@ -1117,7 +959,7 @@ public class CollectionResourceTabView extends
 				displayNewResourcePopup();
 			}
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 			
 
@@ -1129,35 +971,7 @@ public class CollectionResourceTabView extends
 	 * To hide the Popup
 	 */
 	private void hidePopup() {
-		// popupPanel.setVisible(false);
-		// popupPanel.getElement().getStyle().setDisplay(Display.NONE);
 	}
-
-
-	/*private class NewSearchResourceClickEvent implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			clickType = "Search";
-			// popupPanel.setVisible(false);
-			hidePopup();
-			if (collectionDo.getCollectionItems().size() >= 25) {
-				// showMaximumCollectionItemsPopup();
-			} else {
-				MixpanelUtil.Click_Add_NewResource();
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-				displayNewResourcePopup();
-			}
-		}
-	}*/
-
-	/*
-	 * private class ShowPopupClickHandler implements ClickHandler{
-	 * 
-	 * @Override public void onClick(ClickEvent event) {
-	 * if(popupPanel.isVisible()) { popupPanel.setVisible(false); } else {
-	 * popupPanel.setVisible(true); } } }
-	 */
 
 	public void showMaximumCollectionItemsPopup() {
 
@@ -1166,11 +980,6 @@ public class CollectionResourceTabView extends
 				i18n.GL0302());
 
 	}
-
-	/*public int getCollectionItemSize() {
-		return collectionDo.getCollectionItems().size();
-	}*/
-
 	@Override
 	public void displayNewResourcePopup() {
 		getUiHandlers().addResourcePopup(collectionDo, clickType);
@@ -1188,7 +997,6 @@ public class CollectionResourceTabView extends
 	public void updateCollectionItem(CollectionItemDo collectionItem) {
 		if(collectionItem != null)
 		{
-//		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItem, RefreshType.UPDATE));
 		AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(collectionItem, RefreshType.UPDATE));
 		}
 	}
@@ -1240,7 +1048,6 @@ public class CollectionResourceTabView extends
 	public void updateCollectionItemImage(String imageUrl,
 			String fileNameWithOutRepository) {
 
-		// editQuestionPopupWidget.getUpdateQuestionImage().setUrl(imageUrl+"?"+Math.random());
 		if (editQuestionPopupWidget.getQuestionImageContainer().getElement()
 				.hasChildNodes()) {
 			UpdateQuestionImageView updateQuestionImage = (UpdateQuestionImageView) editQuestionPopupWidget
@@ -1333,11 +1140,6 @@ public class CollectionResourceTabView extends
 	@Override
 	public void hideNoResourceMsg() {
 		if (this.collectionDo.getCollectionItems().size() > 0) {
-//			noResourceLineOneLabel.setVisible(false);
-//			panelNoResourceContainer.setVisible(false);
-//			noResourceLineTwoLabel.setVisible(false);
-//			noResourceLineThreeLabel.setVisible(false);
-//			noResourceLineFourLabel.setVisible(false);
 			showOrHideNoCollectionItemsMessage(false);
 		}
 	}
@@ -1373,9 +1175,6 @@ public class CollectionResourceTabView extends
 
 	@Override
 	public void uploadResource(MediaUploadDo result) {
-//		JSONObject jsonObject = setEditUserResourceJsonObject(result.getOriginalFilename(),result.getName(), title, description, category, thumbnailUrl);
-//		getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
-		
 	}
 
 	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl, CollectionItemDo collectionItemDo, List<String> tagList) {

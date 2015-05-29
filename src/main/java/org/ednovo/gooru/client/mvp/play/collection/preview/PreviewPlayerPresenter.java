@@ -852,14 +852,14 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null){
 			if(!StringUtil.isEmpty(collectionDo.getViews())){
 				String viewsCount=collectionDo.getViews();
-				Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+				Integer viewsCounts=Integer.parseInt(viewsCount);
 				collectionDo.setViews(StringUtil.toString(viewsCounts));
 				metadataPresenter.setViewCount(StringUtil.toString(viewsCounts));
 				try{
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionDo.getGooruOid(), "views"));
 		         }
 				catch(Exception ex){
-					
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 			}
 		}
@@ -1015,7 +1015,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		         }
 			}   
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}
@@ -1079,7 +1079,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
-				createSession(collectionDo.getGooruOid());
+				String parentGooruOid=null,mode="collection";
+				if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
+					parentGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+					mode="class";
+				}
+				createSession(collectionDo.getGooruOid(),parentGooruOid,mode);
 				sessionIdCreationCount=1;
 			}	
 		}
@@ -1162,7 +1167,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	
 	public void createSessionItem(){
 		if(collectionItemDo!=null){
-			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid());
+			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
 		}
 	}
 	
@@ -1203,22 +1208,22 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			String context,String userAgent){
 	}
 	
-	public void createSession(String collectionGooruOid){
-		this.playerAppService.createSessionTracker(collectionGooruOid, sessionId,new SimpleAsyncCallback<String>() {
+	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
+		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode,new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
 				PreviewPlayerPresenter.this.sessionId=sessionId;
 				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
 				createResourceDataLog();
 				if(collectionItemDo!=null){
-					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid());
+					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
 				}
 			}
 		});
 	}
 	
-	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid){
-		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid, new SimpleAsyncCallback<String>() {
+	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status){
+		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType, status, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
 				PreviewPlayerPresenter.this.sessionItemId=sessionItemId;
@@ -1226,15 +1231,15 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		});
 	}
 	
-	public void createSessionItemAttempt(int answerId, String attemptResult){
-		this.playerAppService.createSessionItemAttemptTry(sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttempt(String contentGooruOid,int answerId, String attemptResult){
+		this.playerAppService.createSessionItemAttemptTry(contentGooruOid,sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {}
 		});
 	}
 	
-	public void createSessionItemAttemptOe(String answerId,String attemptStatus,String attemptAnswerResult){
-		this.playerAppService.createSessionItemAttemptTryForOe(sessionId, sessionItemId, answerId,attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttemptOe(String contentGooruOid,String answerId,String attemptStatus,String attemptAnswerResult){
+		this.playerAppService.createSessionItemAttemptTryForOe(contentGooruOid,sessionId, sessionItemId, answerId,attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {}
 		});
@@ -1412,7 +1417,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 
 	@Override
 	public void showLoginPopupWidget(String widgetMode){
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setWidgetMode(widgetMode);
 		popup.setGlassEnabled(true);
 	}

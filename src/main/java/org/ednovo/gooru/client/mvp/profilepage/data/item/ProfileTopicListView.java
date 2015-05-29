@@ -121,6 +121,8 @@ public class ProfileTopicListView extends Composite{
 	private HandlerRegistration imageHandler;
 
 	private HandlerRegistration titleHandler;
+	
+	ProfileLibraryDo profileFolderDoMainObject = new ProfileLibraryDo();
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 	
@@ -179,6 +181,8 @@ public class ProfileTopicListView extends Composite{
 	private String libraryGooruOid=null;
 	
 	String collectionIdVal = "";
+	String folderIdVal = "";
+	String folderIdValGbl = "";
 
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
@@ -221,12 +225,16 @@ public class ProfileTopicListView extends Composite{
 		setTopicLabel(profileFolderDo.getTitle());
 		searchTitle=profileFolderDo.getTitle();
 		collectionInfo.setVisible(false);
+		
+		profileFolderDoMainObject = profileFolderDo;
+		
 		if(profileFolderDo.getCollections()!=null) {
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount(), libraryGooruOid);
 			try {
 				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		} else {
 			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid(),libraryGooruOid);
@@ -248,6 +256,7 @@ public class ProfileTopicListView extends Composite{
 				}
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 		
@@ -262,7 +271,9 @@ public class ProfileTopicListView extends Composite{
 		if(!AppClientFactory.isAnonymous()){
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 		}else{
 			standardsFloPanel.setVisible(true);
 		}
@@ -338,6 +349,7 @@ public class ProfileTopicListView extends Composite{
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
 			noCollectionLbl.setVisible(true);
+			AppClientFactory.printSevereLogger(e.getMessage());
 			
 		}
 		
@@ -358,7 +370,9 @@ public class ProfileTopicListView extends Composite{
 		if(!AppClientFactory.isAnonymous()){
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 		}else{
 			standardsFloPanel.setVisible(true);
 		}
@@ -453,7 +467,61 @@ public class ProfileTopicListView extends Composite{
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode,final String libraryGooruOid) {
 		setConceptDo(conceptDo);
-
+		
+		if(profileFolderDoMainObject.getCollectionItems()!=null)
+		{	
+		for(int j=0;j<profileFolderDoMainObject.getCollectionItems().size();j++)
+		{
+			if(profileFolderDoMainObject.getCollectionItems().get(j).getGooruOid().equalsIgnoreCase(conceptDo.getGooruOid()))
+			{
+				if(profileFolderDoMainObject.getCollectionItems().get(j).getParentGooruOid()!=null)
+				{
+				folderIdValGbl = profileFolderDoMainObject.getCollectionItems().get(j).getParentGooruOid();
+				collectionImage.getElement().setAttribute("folderId", profileFolderDoMainObject.getCollectionItems().get(j).getParentGooruOid());
+				collectionTitleLbl.getElement().setAttribute("folderId", profileFolderDoMainObject.getCollectionItems().get(j).getParentGooruOid());
+				}
+				break;
+			}
+			else
+			{
+			if(profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems()!=null)
+			{	
+			for(int k=0;k<profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().size();k++)
+			{
+				if(profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getGooruOid().equalsIgnoreCase(conceptDo.getGooruOid()))
+				{
+					if(profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getParentGooruOid()!=null)
+					{
+					folderIdValGbl = profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getParentGooruOid();
+					collectionImage.getElement().setAttribute("folderId", profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getParentGooruOid());
+					collectionTitleLbl.getElement().setAttribute("folderId", profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getParentGooruOid());
+					}
+					break;
+				}
+				else
+				{
+					if(profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getCollectionItems()!=null)
+					{
+					for(int l=0;l<profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getCollectionItems().size();l++)
+					{
+						if(profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getCollectionItems().get(l).getGooruOid().equalsIgnoreCase(conceptDo.getGooruOid()))
+						{
+							if(profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getCollectionItems().get(l).getParentGooruOid()!=null)
+							{
+							folderIdValGbl = profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getCollectionItems().get(l).getParentGooruOid();
+							collectionImage.getElement().setAttribute("folderId", profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getCollectionItems().get(l).getParentGooruOid());
+							collectionTitleLbl.getElement().setAttribute("folderId", profileFolderDoMainObject.getCollectionItems().get(j).getCollectionItems().get(k).getCollectionItems().get(l).getParentGooruOid());
+							}
+							break;
+						}
+					}
+					}
+				}
+			}
+			}
+			}
+		}
+		}
 			
 			this.lessonCode=lessonCode;
 			if(this.topicId==topicId) {
@@ -486,6 +554,7 @@ public class ProfileTopicListView extends Composite{
 						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo));
 					  } catch (Exception e) {
 						StringUtil.setDefaultImages(collectionType, collectionImage, "high");
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 					
 					try {
@@ -501,7 +570,7 @@ public class ProfileTopicListView extends Composite{
 						}
 						collectionDescriptionLbl.setHTML(description);
 					} catch(Exception ex) {
-						
+						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 					setMetaDataInfo(conceptDo); 
 					resourcesInside.clear();
@@ -561,6 +630,20 @@ public class ProfileTopicListView extends Composite{
 								
 								final String category = categoryString;
 								final HTMLEventPanel resourcePanel = new HTMLEventPanel("");
+								
+								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+								
+								if(conceptDo.getParentGooruOid()!= null)
+								{
+								resourcePanel.getElement().setAttribute("folderId", conceptDo.getParentGooruOid());
+								resourceCategoryIcon.getElement().setAttribute("folderId", conceptDo.getParentGooruOid());
+								}
+								else
+								{
+									resourcePanel.getElement().setAttribute("folderId", folderIdValGbl);
+									resourceCategoryIcon.getElement().setAttribute("folderId", folderIdValGbl);	
+								}
+								
 								resourcePanel.setStyleName(style.resourceImage());
 						
 								
@@ -573,6 +656,7 @@ public class ProfileTopicListView extends Composite{
 									String resourceTitle = profileLibraryItem.getTitle().replaceAll("\\<[^>]*>","");
 									profileLibraryItem.setTitle(resourceTitle);
 								} catch (Exception e){
+									AppClientFactory.printSevereLogger(e.getMessage());
 								}
 								resourceImage.setAltText(profileLibraryItem.getTitle());
 								resourceImage.setTitle(profileLibraryItem.getTitle());
@@ -587,8 +671,7 @@ public class ProfileTopicListView extends Composite{
 									domainName = profileLibraryItem.getResourceSource().getDomainName();
 								}
 								final String domain = domainName;
-								
-								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+					
 	
 								
 								resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
@@ -660,11 +743,18 @@ public class ProfileTopicListView extends Composite{
 									resourceImage.setUrl(DEFULT_IMAGE_PREFIX + getDetaultResourceImage(category.toLowerCase()) + PNG);
 									resourceImage.setAltText(profileLibraryItem.getTitle());
 									resourceImage.setTitle(profileLibraryItem.getTitle());
+									AppClientFactory.printSevereLogger(e.getMessage());
 								}
 								
 								resourcePanel.addClickHandler(new ClickHandler() {
 									@Override
 									public void onClick(ClickEvent event) {
+										try{
+											folderIdVal = ((HTMLEventPanel)event.getSource()).getElement().getAttribute("folderId");
+										}
+										catch(Exception ex){
+											folderIdVal = "";
+										}
 										String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 										if(page.equals(COURSE_PAGE)) {
 											MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
@@ -680,8 +770,81 @@ public class ProfileTopicListView extends Composite{
 										}
 										params.put("rid", resourceId);
 										
-	
-											
+										if(folderIdVal!=null && !folderIdVal.isEmpty())
+										{
+
+											AppClientFactory.getInjector().getfolderService().getTocFolders(folderIdVal,false, new SimpleAsyncCallback<FolderTocDo>() {
+												@Override
+												public void onSuccess(FolderTocDo folderListDo) {
+													if(folderListDo.getCollectionItems().size()>0)
+													{
+														String folderItemId = "";
+													for(int i=0;i<folderListDo.getCollectionItems().size();i++)
+													{
+														if(conceptDo.getGooruOid().equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
+														{
+															folderItemId = folderListDo.getCollectionItems().get(i).getCollectionItemId();
+															params.put("folderId", folderIdVal);
+															params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
+															AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+															PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+															AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+															break;
+														}
+													}
+													if(folderItemId.isEmpty())
+													{
+														
+														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+														params.put("lessonId", lessonId);
+														if(libraryGooruOid!=null){
+															params.put("lid", libraryGooruOid);
+														}
+														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+														if(libraryEventId!=null){
+															params.put("eventid", libraryEventId);
+														}
+														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+															params.put("library", getPlaceToken());
+														}
+														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+														if(standardId!=null){
+															params.put("rootNodeId", standardId);
+														}
+														
+														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+													}
+													}
+													else
+													{
+														
+														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+														params.put("lessonId", lessonId);
+														if(libraryGooruOid!=null){
+															params.put("lid", libraryGooruOid);
+														}
+														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+														if(libraryEventId!=null){
+															params.put("eventid", libraryEventId);
+														}
+														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+															params.put("library", getPlaceToken());
+														}
+														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+														if(standardId!=null){
+															params.put("rootNodeId", standardId);
+														}
+														
+														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+													}
+												}
+											});
+							
+										}
+										else
+										{											
 											params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 											params.put("lessonId", lessonId);
 											if(libraryGooruOid!=null){
@@ -701,6 +864,7 @@ public class ProfileTopicListView extends Composite{
 											
 											PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 											AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+									}
 	
 							
 									}
@@ -708,7 +872,12 @@ public class ProfileTopicListView extends Composite{
 								resourceCategoryIcon.addClickHandler(new ClickHandler() {
 									@Override
 									public void onClick(ClickEvent event) {
-
+										try{											
+											folderIdVal = ((HTMLEventPanel)event.getSource()).getElement().getAttribute("folderId");
+										}
+										catch(Exception ex){
+											folderIdVal = "";
+										}
 										String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 										if(page.equals(COURSE_PAGE)) {
 											MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
@@ -725,7 +894,78 @@ public class ProfileTopicListView extends Composite{
 										params.put("rid", resourceId);
 										
 										
-								
+										if(folderIdVal!=null && !folderIdVal.isEmpty())
+										{
+											AppClientFactory.getInjector().getfolderService().getTocFolders(folderIdVal,false, new SimpleAsyncCallback<FolderTocDo>() {
+												@Override
+												public void onSuccess(FolderTocDo folderListDo) {
+													if(folderListDo.getCollectionItems().size()>0)
+													{
+														String folderItemId = "";
+													for(int i=0;i<folderListDo.getCollectionItems().size();i++)
+													{
+														if(conceptDo.getGooruOid().equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
+														{
+															folderItemId = folderListDo.getCollectionItems().get(i).getCollectionItemId();
+															params.put("folderId", folderIdVal);
+															params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
+															AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+															PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+															AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+															break;
+														}
+													}
+													if(folderItemId.isEmpty())
+													{
+														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+														params.put("lessonId", lessonId);
+														if(libraryGooruOid!=null){
+															params.put("lid", libraryGooruOid);
+														}
+														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+														if(libraryEventId!=null){
+															params.put("eventid", libraryEventId);
+														}
+														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+															params.put("library", getPlaceToken());
+														}
+														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+														if(standardId!=null){
+															params.put("rootNodeId", standardId);
+														}
+														
+														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+													}
+													}
+													else
+													{
+														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+														params.put("lessonId", lessonId);
+														if(libraryGooruOid!=null){
+															params.put("lid", libraryGooruOid);
+														}
+														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+														if(libraryEventId!=null){
+															params.put("eventid", libraryEventId);
+														}
+														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+															params.put("library", getPlaceToken());
+														}
+														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+														if(standardId!=null){
+															params.put("rootNodeId", standardId);
+														}
+														
+														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+													}
+												}
+											});
+							
+										}
+										else
+										{
 											params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 											params.put("lessonId", lessonId);
 											if(libraryGooruOid!=null){
@@ -745,6 +985,7 @@ public class ProfileTopicListView extends Composite{
 											
 											PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 											AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+									}
 										
 										
 										
@@ -760,6 +1001,7 @@ public class ProfileTopicListView extends Composite{
 								resourcePanel.add(resourceCategoryIcon);
 								resourcesInside.add(resourcePanel);
 							} catch (Exception e){
+								AppClientFactory.printSevereLogger(e.getMessage());
 							}
 						}
 					}
@@ -907,7 +1149,9 @@ public class ProfileTopicListView extends Composite{
 					getStandardPrefCode(null); 
 				}
 				
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 			return standPrefCode;
 			
 			}
@@ -1133,11 +1377,12 @@ public class ProfileTopicListView extends Composite{
 
 				try{
 					collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
-					
+					folderIdVal = ((Image)event.getSource()).getElement().getAttribute("folderId");
 				}
 				catch(Exception ex){
 					collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
-
+					folderIdVal = ((HTML)event.getSource()).getElement().getAttribute("folderId");
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 				String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 				if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
@@ -1148,7 +1393,81 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
 				}
+				if(folderIdVal!=null && !folderIdVal.isEmpty())
+				{
+					final HashMap<String,String> params = new HashMap<String,String>();
+					params.put("id", collectionIdVal);
+
+					AppClientFactory.getInjector().getfolderService().getTocFolders(folderIdVal,false, new SimpleAsyncCallback<FolderTocDo>() {
+						@Override
+						public void onSuccess(FolderTocDo folderListDo) {
+							if(folderListDo.getCollectionItems().size()>0)
+							{
+								String folderItemId = "";
+							for(int i=0;i<folderListDo.getCollectionItems().size();i++)
+							{
+								if(collectionIdVal.equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
+								{
+									folderItemId = folderListDo.getCollectionItems().get(i).getCollectionItemId();
+									params.put("folderId", folderIdVal);
+									params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+									break;
+								}
+							}
+							if(folderItemId.isEmpty())
+							{
+								Map<String, String> params = new HashMap<String, String>();
+								params.put("id", collectionIdVal);
+								params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+								params.put("lessonId", lessonId);
+								if(libraryGooruOid!=null){
+									params.put("lid", libraryGooruOid);
+								}
+								String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+								if(libraryEventId!=null){
+									params.put("eventid", libraryEventId);
+								}
+								if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+									params.put("library", getPlaceToken());
+								}
+								String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+								if(standardId!=null){
+									params.put("rootNodeId", standardId);
+								}
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+							}
+							}
+							else
+							{
+								Map<String, String> params = new HashMap<String, String>();
+								params.put("id", collectionIdVal);
+								params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+								params.put("lessonId", lessonId);
+								if(libraryGooruOid!=null){
+									params.put("lid", libraryGooruOid);
+								}
+								String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+								if(libraryEventId!=null){
+									params.put("eventid", libraryEventId);
+								}
+								if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+									params.put("library", getPlaceToken());
+								}
+								String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+								if(standardId!=null){
+									params.put("rootNodeId", standardId);
+								}
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+							}
+						}
+					});
 	
+				}
+				else
+				{
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", collectionIdVal);
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
@@ -1168,6 +1487,7 @@ public class ProfileTopicListView extends Composite{
 					params.put("rootNodeId", standardId);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+			}
 				
 			}
 		}
@@ -1197,26 +1517,10 @@ public class ProfileTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-		/*	successPopupVc.setWidth("500px");*/
-			//successPopupVc.setHeight("657px");
 			successPopupVc.show();
-			/*successPopupVc.center();
-			if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
-			}
-			else {				
-				successPopupVc.center();
-			}*/
-			
 			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
-				/*successPopupVc.setWidth("550px");
-				successPopupVc.setHeight("625px");
-				successPopupVc.center();*/
 				successPopupVc.setPopupPosition(0, (Window.getClientHeight()-625)/2);
 			}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
-				/*successPopupVc.setWidth("550px");
-				successPopupVc.setHeight("502px");
-				successPopupVc.center();*/
 				successPopupVc.setPopupPosition(0, (Window.getClientHeight()-527)/2);
 			}else{
 				successPopupVc.center();
@@ -1256,10 +1560,6 @@ public class ProfileTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-		/*	successPopupVc.setWidth("500px");*/
-			//successPopupVc.setHeight("475px");
-			
-			
 			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 				successPopupVc.setPopupPosition(0, 30);
 			}else{
@@ -1311,12 +1611,8 @@ public class ProfileTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-			/*	customizePopup.setWidth("500px");*/
-				//customizePopup.setHeight("440px");
 				customizePopup.show();
 				customizePopup.center();
-
-
 			}
 
 		}
@@ -1337,8 +1633,6 @@ public class ProfileTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				//assignPopup.setWidth("500px");
-				//assignPopup.setHeight("657px");
 				assignPopup.show();
 				assignPopup.center();
 				if (AppClientFactory.isAnonymous()){
@@ -1383,7 +1677,7 @@ public class ProfileTopicListView extends Composite{
 		@Override
 		public void onClick(ClickEvent event) {
 		
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, updateParams(searchTitle));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_RESOURCE, updateParams(searchTitle));
 			
 
 		}

@@ -49,7 +49,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -76,18 +75,6 @@ import com.google.gwt.user.client.ui.Widget;
  * @Reviewer:
  */
 public abstract class CopyConfirmPopupVc{
-
-//	@UiField BlueButtonUc btnCopy;
-//	
-//	@UiField Label btnCancel, resourceFirstElement,loadingTextLbl,copyLabelText;
-//	
-//	@UiField HTMLEventPanel popUpCopyCollection;
-//	
-//	@UiField ScrollPanel copyPopUpScrollHtmlPanel;
-//	
-//	@UiField FocusPanel copyPopUpResourceListImage;
-//	
-//	@UiField HTMLPanel copyLabel, htmlScrollPanel, loadingPanel,copyCollectionText;
 	
 	@UiField HTMLPanel floderTreeContainer;
 	@UiField Button copyResourceBtnLbl,cancelResourcePopupBtnLbl;
@@ -205,46 +192,6 @@ public abstract class CopyConfirmPopupVc{
 		floderTreeContainer.add(folderTreePanel);
 		folderTreePanel.addItem(loadingTreeItem());
 		getWorkspaceData(0,20,true);
-		/*setWidget(uiBinder.createAndBindUi(this));*/
-		//copyCollectionText.getElement().setInnerHTML(i18n.GL0947);
-		//loadingTextLbl.setText(i18n.GL0110.toLowerCase()+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP);
-//		btnCopy.setText(i18n.GL0827);
-//		btnCancel.setText(i18n.GL0142);
-//		copyLabelText.setText(i18n.GL0505.toLowerCase());
-		//i18n.GL0505
-//		setModal(true);
-//		Window.enableScrolling(false);
-//		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
-
-//		show();
-//		center();
-//		loadingTextLbl.setVisible(true);
-//		populateUserCollections();
-//		btnCopy.getElement().setId("btnCopy");
-//		btnCancel.getElement().setId("lblCancel");
-//		loadingPanel.setVisible(false);
-//		copyLabel.setVisible(false);
-//		btnCancel.setVisible(false);
-//		loadingPanel.setVisible(true);
-//		copyPopUpScrollHtmlPanel.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-//		copyPopUpResourceListImage.getElement().removeAttribute("tabindex");
-		/**
-		 * on click for display list of collection in listbox
-		 */
-//		copyPopUpResourceListImage.addClickHandler(new ClickHandler() {
-//
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				if (copyPopUpScrollHtmlPanel.getElement().getStyle()
-//						.getVisibility().equalsIgnoreCase("VISIBLE")) {
-//					copyPopUpScrollHtmlPanel.getElement().getStyle()
-//							.setVisibility(Visibility.HIDDEN);
-//				} else {
-//					copyPopUpScrollHtmlPanel.getElement().getStyle()
-//							.setVisibility(Visibility.VISIBLE);
-//				}
-//			}
-//		});
 
 	}
 	public void setStaticTexts(){
@@ -505,19 +452,6 @@ public abstract class CopyConfirmPopupVc{
 		hide();
 	}
 
-//	/**
-//	 * on click for hide listbox when user click outside the listbox
-//	 */
-//	@UiHandler("copyResourceBtnLbl")
-//	public void onpopUpCopyCollection(ClickEvent clickEvent) {
-//		if (copyPopUpScrollHtmlPanel.getElement().getStyle().getVisibility()
-//				.equalsIgnoreCase("VISIBLE")) {
-//			copyPopUpScrollHtmlPanel.getElement().getStyle()
-//					.setVisibility(Visibility.HIDDEN);
-//		}
-//
-//	}
-
 	@UiHandler("copyResourceBtnLbl")
 	public void onClickCopyBtn(ClickEvent clickEvent){
 		if(cureentcollectionTreeItem!=null){
@@ -543,24 +477,9 @@ public abstract class CopyConfirmPopupVc{
 	}
 	public void hide(){
 		popupPanel.hide();
-//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	public abstract void copyResourceToCollection(String collectionId);
-	
-	
-	/**
-	 * for close copy collection popup
-	 * 
-	 * @param clickEvent
-	 *//*
-	@UiHandler("cancelButton")
-	public void onCloseClick(ClickEvent clickEvent) {
-		hide();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
-	}*/
 	public TreeItem loadingTreeItem(){
 		Label loadingText=new Label(i18n.GL1452());
 		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());

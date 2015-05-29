@@ -573,7 +573,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void createResourceDataLogs(){
 		resourceActivityEventId=GwtUUIDGenerator.uuid();
-		createSession(collectionItemDo.getResource().getGooruOid());
+		createSession(collectionItemDo.getResource().getGooruOid(),null,null);
 	}
 	public void startResourceInsightDataLog(){
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
@@ -610,21 +610,21 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		}
 	}
 	
-	public void createSession(String collectionGooruOid){
-		this.playerAppService.createSessionTracker(collectionGooruOid,null, new SimpleAsyncCallback<String>() {
+	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
+		this.playerAppService.createSessionTracker(collectionGooruOid,parentGooruOid,mode, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
 				ResourcePlayerPresenter.this.sessionId=sessionId;
 				startResourceInsightDataLog();
 				if(collectionItemDo!=null){
-					createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid());
+					createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),"open");
 				}
 			}
 		});
 	}
 	
-	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid){
-		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid, new SimpleAsyncCallback<String>() {
+	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){
+		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType, status, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {
 				ResourcePlayerPresenter.this.sessionItemId=sessionItemId;
@@ -632,15 +632,15 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		});
 	}
 	
-	public void createSessionItemAttempt(int answerId, String attemptResult){
-		this.playerAppService.createSessionItemAttemptTry(sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttempt(String contentGooruOid,int answerId, String attemptResult){
+		this.playerAppService.createSessionItemAttemptTry(contentGooruOid,sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {}
 		});
 	}
 	
-	public void createSessionItemAttemptOe(String answerId,String attemptStatus,String attemptAnswerResult){
-		this.playerAppService.createSessionItemAttemptTryForOe(sessionId, sessionItemId, answerId,attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttemptOe(String contentGooruOid,String answerId,String attemptStatus,String attemptAnswerResult){
+		this.playerAppService.createSessionItemAttemptTryForOe(contentGooruOid,sessionId, sessionItemId, answerId,attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {}
 		});
@@ -780,13 +780,13 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void updateViewCount(){
 		if(collectionItemDo!=null){
 			String viewsCount=collectionItemDo.getResource().getViews();
-			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
-			collectionItemDo.getResource().setViews(viewsCounts.toString());
-			resourceInfoPresenter.updateViewsCount(viewsCounts.toString());
+			resourceInfoPresenter.updateViewsCount(viewsCount);
 		      try{
-		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCounts.toString(), collectionItemDo.getResource().getGooruOid(), "views"));
+		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCount, collectionItemDo.getResource().getGooruOid(), "views"));
 		         }
-		      catch(Exception ex){}
+		      catch(Exception ex){
+		    	  AppClientFactory.printSevereLogger(ex.getMessage());
+		      }
 		}
 	}
 
@@ -812,7 +812,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	
 	public void showLoginPopupWidget(String widgetMode){
-		LoginPopupUc popup =new LoginPopupUc();
+		LoginPopupUc popup =new  LoginPopupUc() {
+			@Override
+			public void onLoginSuccess() {
+				
+			}
+		};
 		popup.setWidgetMode(widgetMode);
 		popup.setGlassEnabled(true);
 	}
@@ -1138,7 +1143,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		String keyword=null;
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousPlayerRequestUrl();
 		if(placeRequest!=null){
-			if(placeRequest.getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			if(placeRequest.getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 				keyword=placeRequest.getParameter("query", null);
 				keyword=URL.encodeQueryString(keyword);
 			}
@@ -1153,6 +1158,19 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			resoruceMetadataPresenter.postReviewForResource(assocGooruOId, userReview, score, isUpdate);
 		}
 		
+	}
+	
+	
+	public void updateRatReacSessionActivityItem(int emoticRatingNumber,String gooruOid, String isRatingsReactions) {
+
+		AppClientFactory.getInjector().getPlayerAppService().getUpdateSessionActivityItemForRatReac(emoticRatingNumber, gooruOid, isRatingsReactions,sessionId, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				// Current not required to handle any thing on success.
+				
+			}
+		});
 	}
 	
 }
