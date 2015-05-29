@@ -138,8 +138,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField Image publisherTooltip,aggregatorTooltip,authorQuestionTooltip;
 	
-	@UiField FooterOrganizeUc panelFoooter;
-	
 	@UiField(provided = true)
 	AppSuggestBox publisherSgstBox;
 	
