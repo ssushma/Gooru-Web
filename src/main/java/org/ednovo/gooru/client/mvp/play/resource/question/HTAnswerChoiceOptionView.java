@@ -114,7 +114,7 @@ public class HTAnswerChoiceOptionView extends Composite implements IsDraggable{
 	}
 	@Override
 	public int getDragLeftCorrection() {
-		return 225;
+		return 40;
 	}
 	public void reorderCollectionItem(int widgetIndex) {
 		AppClientFactory.fireEvent(new ResetDragDropEvent(widgetIndex));

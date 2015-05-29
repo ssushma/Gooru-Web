@@ -621,7 +621,7 @@
 	font-size: 12px;
 	word-wrap: break-word;
 	vertical-align: middle;
-    width: 95%;
+    width: 92%;
 }
 .htAnswerChoiceDragIcon {
 	opacity: 0.4;
@@ -825,10 +825,25 @@
 .dragDropAnsCorrect{
 	border-left: 3px solid #62ae41;
 	background: #D5FDC3;
+	position:relative;
 }
 .dragDropAnsInCorrect{
 	border-left: 3px solid #FBB03B;
 	background: #FFDBA1;
+	position:relative;
+}
+
+.dragDropAnsCorrect:after {
+	display: inline-block;
+	content: "\2714";
+	color: #62ae41;
+	font-size: 15px;
+    line-height: 12px;
+}
+.dragDropAnsInCorrect:after {
+	display: inline-block;
+	content: "\2717";
+	color: #FBB03B;
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {
