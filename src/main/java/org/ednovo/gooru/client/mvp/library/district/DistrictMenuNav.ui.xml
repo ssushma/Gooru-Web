@@ -28,6 +28,11 @@
 	         <g:HTMLPanel styleName="{districtStyleUc.dropdown}" ui:field="learnCourses"/>
 	      </panel:HTMLEventPanel>
 	      
+	       <panel:HTMLEventPanel styleName="{districtStyleUc.tabsLi} tabsLi" ui:field="aboutPanel">
+	      	 <g:Label ui:field="aboutText"></g:Label> 
+	         <g:HTMLPanel styleName="{districtStyleUc.dropdown}" ui:field="aboutCourses"/>
+	      </panel:HTMLEventPanel>
+	      
           <g:Anchor styleName="{districtStyleUc.tabsLi} tabsLi {districtStyleUc.singleLink} {districtStyleUc.last}" ui:field="aboutGooruAnr"></g:Anchor>
 	</g:HTMLPanel>
 </ui:UiBinder>
