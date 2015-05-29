@@ -88,8 +88,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		renderGradesLiPanel(middlePanel,middleGrades);
 		renderGradesLiPanel(higherPanel,higherGrades);
 		showGradesFilter();
-		preKLiPnl.addClickHandler(new ClickOnGradeLiPnl(preKLiPnl,"Pre-K"));
-		higherLiPnl.addClickHandler(new ClickOnGradeLiPnl(higherLiPnl,"12gte"));
+		preKLiPnl.addClickHandler(new ClickOnGradeLiPnl(preKLiPnl,i18n.GL3070()));
+		higherLiPnl.addClickHandler(new ClickOnGradeLiPnl(higherLiPnl,i18n.GL3084()));
 		setStyleForGradeLevel();
 	}
 	
