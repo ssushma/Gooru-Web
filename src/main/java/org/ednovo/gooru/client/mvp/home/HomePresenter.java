@@ -48,9 +48,6 @@ import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
-import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderHandler;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -78,6 +75,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
@@ -136,6 +134,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		return isResourceSearch;
 	}
 
+	private Timer tooltipTimer = null;
+
+	private static final int TOOLTIP_DELAY_TIME = 1000;
+
 	private boolean isResourceSearch = true;
 
 	private final String QUERY = "query";
@@ -162,8 +164,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 	private static final String CREDENTIAL = "Credential";
 
-	AddStandardsPreSearchPresenter addStandardsPresenter = null;
-
 	private static final String USER_META_ACTIVE_FLAG = "0";
 
 	private String parentGooruUID;
@@ -187,18 +187,16 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
+	public HomePresenter(IsHomeView view, IsHomeProxy proxy,UserRegistrationPresenter userRegistrationPresenter,ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
-		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.userRegistrationPresenter = userRegistrationPresenter;
 		this.signUpCompletePresenter = signUpCompletePresenter;
 		this.signUpAfterThirteenPresenter=signUpAfterThirteenPresenter;
 		this.contributorsPresenter = contributorsPresenter;
-	
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -217,7 +215,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				});
 			}
 		});
-		}
+		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
+		tooltipTimer = new Timer() {
+			public void run() {
+				contributorsPresenter.getContributors();
+			}
+		};
+		tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+
+	}
 
 	@Override
 	public void onReveal() {
@@ -231,7 +237,9 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.HOME));
-		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken() != null){
+			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+		}
 
 		Document doc = Document.get();
 		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
@@ -243,17 +251,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 			@Override
 			public void onSuccess() {
-
 				if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
 					AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 				}
+				AppClientFactory.printInfoLogger("getPlaceManager().getRequestParameter(CALLBACK) : "+getPlaceManager().getRequestParameter(CALLBACK));
 				if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registration")) {
 					getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 					parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
 				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("changePassword")) {
 					validateResetLink(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
-				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("register")) {
-					getView().registerPopup();
 				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 					//To show SignUp (Registration popup)
 					if (AppClientFactory.isAnonymous()){
@@ -359,7 +365,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				}
 
 				AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-
 			}
 		});
 	}
@@ -414,7 +419,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}else{
 			getView().getBtnSignUp().setVisible(false);
 		}
-//		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
 	}
 
 	@Override

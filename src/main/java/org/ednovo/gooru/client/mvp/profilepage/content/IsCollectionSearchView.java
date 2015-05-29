@@ -27,13 +27,13 @@
  */
 package org.ednovo.gooru.client.mvp.profilepage.content;
 
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 
 /**
  * @author Search Team
  * 
  */
-public interface IsCollectionSearchView extends IsSearchView<CollectionSearchResultDo> {
+public interface IsCollectionSearchView extends IsGooruSearchView<CollectionSearchResultDo> {
 
 }

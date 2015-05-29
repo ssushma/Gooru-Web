@@ -519,8 +519,6 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 			parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("changePassword")) {
 			getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
-		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("register")) {
-			getView().registerPopup();
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
 			if (AppClientFactory.isAnonymous()){

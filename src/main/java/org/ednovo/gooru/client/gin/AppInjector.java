@@ -81,11 +81,8 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
-import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
@@ -101,6 +98,7 @@ import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.test.TestPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
@@ -124,7 +122,9 @@ import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
  */
 @GinModules({ AppModule.class, ServiceModule.class })
 public interface AppInjector extends ServiceInjector {
-
+	
+	final AppInjector appInjector = GWT.create(AppInjector.class);
+	 
 	AppPlaceManager getPlaceManager();
 
 	EventBus getEventBus();
@@ -136,22 +136,16 @@ public interface AppInjector extends ServiceInjector {
 	GoogleAnalyticsImpl getGoogleAnalytics();
 
 	Provider<WrapPresenter> getWrapPresenter();
-
+	
 	Provider<PrimePresenter> getPrimePresenter();
 
 	Provider<HomePresenter> getHomePresenter();
-
-	AsyncProvider<SearchRootPresenter> getSearchRootPresenter();
 
 	AsyncProvider<SearchMainPresenter> getSearchMainPresenter();
 
 	AsyncProvider<SearchCollectionPresenter> getSearchCollectionPresenter();
 
 	AsyncProvider<SearchResourcePresenter> getSearchResourcePresenter();
-
-	AsyncProvider<CollectionSearchPresenter> getCollectionSearchPresenter();
-
-	AsyncProvider<ResourceSearchPresenter> getResourceSearchPresenter();
 
 	AsyncProvider<ErrorPresenter> getErrorPresenter();
 

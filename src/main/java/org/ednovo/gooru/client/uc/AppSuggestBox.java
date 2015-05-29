@@ -40,7 +40,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
  * @author Search Team
  *
  */
-public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, KeyDownHandler,HasClickHandlers {
+public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, KeyDownHandler,HasClickHandlers  {
 
 	private boolean validation = true;
 
@@ -106,7 +106,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 	@Override
 	public final void onKeyDown(KeyDownEvent event) {
 		int keyCode = event.getNativeKeyCode();
-		String text = this.getText().trim();
+		String text = this.getText().replaceAll("-<n> Gooru Search</n>", "").trim();
 			if ((keyCode == (char) KeyCodes.KEY_TAB) || (keyCode == (char) KeyCodes.KEY_LEFT) || (keyCode == (char) KeyCodes.KEY_RIGHT) && (keyCode != (char) KeyCodes.KEY_DOWN) && (keyCode != (char) KeyCodes.KEY_UP)) {
 				keyDownAction(text);
 			}
@@ -116,8 +116,11 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 	@Override
 	public final void onKeyUp(KeyUpEvent event) {
 		int keyCode = event.getNativeKeyCode();
-		String text = this.getText().trim();
-		if (keyCode != (char) KeyCodes.KEY_TAB && keyCode != (char) KeyCodes.KEY_ENTER && keyCode != (char) KeyCodes.KEY_LEFT && (keyCode != (char) KeyCodes.KEY_RIGHT) && (keyCode != (char) KeyCodes.KEY_DOWN) && (keyCode != (char) KeyCodes.KEY_UP)) {
+		String text = this.getText().replaceAll("-<n> Gooru Search</n>", "").trim();
+		if (keyCode != (char) KeyCodes.KEY_TAB  && keyCode != (char) KeyCodes.KEY_LEFT && (keyCode != (char) KeyCodes.KEY_RIGHT) && (keyCode != (char) KeyCodes.KEY_DOWN) && (keyCode != (char) KeyCodes.KEY_UP)) {
+			keyAction(text,event);
+		}
+		if(keyCode == (char) KeyCodes.KEY_ENTER){
 			keyAction(text,event);
 		}
 	}

@@ -98,15 +98,6 @@ public class CollectionSearchWidget extends Composite {
 		remixBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 	
 		collectionTitle.setText(StringUtil.removeAllHtmlCss(collectionSearchResultDo.getResourceTitle()));
-		
-/*		remixBtn.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				onremixBtnClicked(collectionSearchResultDo.getGooruOid(), collectionSearchResultDo.getResourceTitle());
-				
-			}
-		});*/
 		String collectionDesc=StringUtil.removeAllHtmlCss(collectionSearchResultDo.getDescription());
 		collectionDescription.getElement().setAttribute("title", collectionDesc);
 		if(!StringUtil.isEmpty(collectionDesc)){

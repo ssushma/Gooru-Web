@@ -88,4 +88,5 @@ public interface DistrictStyleBundle extends CssResource {
 	String topicBlockStyle();
 	
 	String listViewBtnStyle();
+	String tabsSausdLi();
 }
