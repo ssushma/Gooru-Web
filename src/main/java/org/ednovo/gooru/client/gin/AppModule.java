@@ -100,20 +100,6 @@ import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocView;
 import org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView;
-import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
-import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter.IsEditFolderProxy;
-import org.ednovo.gooru.client.mvp.folders.edit.EditFolderView;
-import org.ednovo.gooru.client.mvp.folders.edit.IsEditFolderView;
-import org.ednovo.gooru.client.mvp.folders.edit.tab.content.FolderContentTabPresenter;
-import org.ednovo.gooru.client.mvp.folders.edit.tab.content.FolderContentTabView;
-import org.ednovo.gooru.client.mvp.folders.edit.tab.content.IsFolderContentTabView;
-import org.ednovo.gooru.client.mvp.folders.edit.tab.info.FolderInfoTabPresenter;
-import org.ednovo.gooru.client.mvp.folders.edit.tab.info.FolderInfoTabView;
-import org.ednovo.gooru.client.mvp.folders.edit.tab.info.IsFolderInfoTabView;
-import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
-import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter.IsFolderPopUpFormProxy;
-import org.ednovo.gooru.client.mvp.folders.newfolder.FolderPopUpUiBinder;
-import org.ednovo.gooru.client.mvp.folders.newfolder.IsFoldersPopupView;
 import org.ednovo.gooru.client.mvp.gsearch.IsSearchMainView;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter.IsSearchMainProxy;
@@ -461,12 +447,7 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(EditClasspagePresenter.class, IsEditClasspageView.class,
 				EditClasspageView.class, IsEditClasspageProxy.class);
-
-		bindPresenter(FolderFormViewPresenter.class, IsFoldersPopupView.class,
-				FolderPopUpUiBinder.class, IsFolderPopUpFormProxy.class);
-		bindPresenter(EditFolderPresenter.class, IsEditFolderView.class,
-				EditFolderView.class, IsEditFolderProxy.class);
-
+		
 		bindPresenter(ProfilePagePresenter.class, IsProfilePageView.class,
 				ProfilePageView.class, IsProfilePageProxy.class);
 
@@ -475,12 +456,6 @@ public class AppModule extends AppPresenterModule {
 				CollectionResourceTabView.class);
 		bindPresenterWidget(CollectionInfoTabPresenter.class,
 				IsCollectionInfoTabView.class, CollectionInfoTabView.class);
-
-		bindPresenterWidget(FolderInfoTabPresenter.class,
-				IsFolderInfoTabView.class, FolderInfoTabView.class);
-
-		bindPresenterWidget(FolderContentTabPresenter.class,
-				IsFolderContentTabView.class, FolderContentTabView.class);
 
 		bindSingletonPresenterWidget(ShelfListPresenter.class,
 				IsShelfListView.class, ShelfListView.class);

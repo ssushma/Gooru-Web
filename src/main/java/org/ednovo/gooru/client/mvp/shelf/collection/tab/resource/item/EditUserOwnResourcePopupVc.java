@@ -149,10 +149,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	
 
 	@UiField
-	Label resourceContentChkLbl, mandatoryTitleLbl,uploadImageLbl,fileTextLbl,rightsLbl;
-
-	@UiField
-	Label mandatoryCategoryLbl;
+	Label resourceContentChkLbl, mandatoryTitleLbl,uploadImageLbl,fileTextLbl,rightsLbl,centuryDefaultText,mandatoryCategoryLbl;
 
 	@UiField
 	public TextBox titleTextBox,resourcePathTextBox;
@@ -557,9 +554,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
 		standardsPanel.getElement().setId("fpnlStandardsPanel");
 		
-		
-		
-		
+		centuryDefaultText.setText(i18n.GL3199());
+		centuryDefaultText.getElement().setId("lblCenturyDefaultText");
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3199());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3199());
 		
 		uploadName.getElement().setInnerHTML(" "+i18n.GL0948());
 		uploadName.getElement().setId("pnlUploadName");
