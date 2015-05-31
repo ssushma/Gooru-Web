@@ -15,19 +15,18 @@
 <link href="${cdn.endpoint}/css/font-awesome.css" media="all" rel="stylesheet" type="text/css">
 
 <link rel="icon" type="image/png" href="${cdn.endpoint}/images/favicon.png?v=${gooru.release.version}" />
+
 <script type="text/javascript">
-		<!--
+<!--
 	   		var _et = _et || {};
 	   		_et.apiKey = '${log.api.key}';
 	   		_et.endPoint = '${log.api.endpoint}';
 	   		_et.data = [] || _et.data;
-	  		(function() {
-	    		var et = document.createElement('script'); et.type = 'text/javascript'; et.defer= true ;
-	    		et.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '${log.sdk}';
-	    		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(et, s);
-	  		})();
-		-->
+-->
 </script>
+
+<script type="text/javascript" src="//${log.sdk}" defer></script>
+
 <script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg"></script>
 
