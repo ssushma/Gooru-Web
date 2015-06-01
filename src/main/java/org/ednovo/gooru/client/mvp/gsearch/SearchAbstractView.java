@@ -1563,6 +1563,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	public static native void callAnimation() /*-{
 		$wnd.$('body,html').animate({scrollTop: 0}, 800);
+		$wnd.$('html').css("overflow-y","hidden");
 	}-*/;
 
 	@Override
@@ -1583,7 +1584,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageFlag=false;
 	}
 	public void resetDataBacktoTop(){
-		searchResultPanel.clear();
 		lblLoadingText.setVisible(false);
 		isApiInProgress = true;
 		isApiInProgressBack = true;
@@ -1595,10 +1595,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		localStore.clear();
 		isForwardScroll=true;
 		getUiHandlers().resetLocalStorageData();
+		callAnimation();
+		searchResultPanel.clear();
 		if(pnlFirstTempData!=null){
 			searchResultPanel.add(pnlFirstTempData);
 		}
-		callAnimation();
 	}
 	
 	/**
