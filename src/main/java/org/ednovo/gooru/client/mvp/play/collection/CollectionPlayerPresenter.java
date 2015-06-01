@@ -480,6 +480,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
 		Window.scrollTo(0, 0);
+		bodyelement.setAttribute("style", "min-height:300px");
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 	}
 	@Override
@@ -488,6 +489,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
 		Window.scrollTo(0, 0);
+		bodyelement.setAttribute("style", "min-height:300px");
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 	}
 
@@ -2111,7 +2113,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray,null));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
-			updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemDo.getCollectionItemId());
+			String viewCount=collectionItemDo.getViews()!=null?collectionItemDo.getViews().toString():"0";
+			updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),viewCount,RESOURCE,collectionItemDo.getCollectionItemId());
 		}
 		}
 		catch(Exception ex)
