@@ -251,7 +251,7 @@ public abstract class DistrictMenuNav extends Composite {
 		elaCourses.getElement().setId("pnlElaCourses");
 		learnPanel.getElement().setId("epnlLearnPanel");
 		learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
-		//learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
+		learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
 		learnCourses.getElement().setId("pnlLearnCourses");
 		aboutGooruAnr.getElement().setId("lnkAboutGooruAnr");
 	}
