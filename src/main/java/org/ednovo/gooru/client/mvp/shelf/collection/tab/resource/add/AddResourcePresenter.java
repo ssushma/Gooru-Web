@@ -40,6 +40,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;

@@ -198,15 +198,15 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		setHotSpotAnswerFields();
 
 		advancedContainer.getElement().setId("pnladvancedContainer");
-		addHintsAnc.setText(i18n.GL3210() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
-		addHintsAnc.getElement().setAttribute("alt", i18n.GL3210());
-		addHintsAnc.getElement().setAttribute("title", i18n.GL3210());
-		addExplanationAnc.setText( i18n.GL3208());
-		addExplanationAnc.getElement().setAttribute("alt",  i18n.GL3208());
-		addExplanationAnc.getElement().setAttribute("title", i18n.GL3208());
-		addDepthOfKnowledgeAnc.setText(i18n.GL3209());
-		addDepthOfKnowledgeAnc.getElement().setAttribute("alt", i18n.GL3209());
-		addDepthOfKnowledgeAnc.getElement().setAttribute("title", i18n.GL3209());
+		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+		addHintsAnc.getElement().setAttribute("alt", i18n.GL3210_1());
+		addHintsAnc.getElement().setAttribute("title", i18n.GL3210_1());
+		addExplanationAnc.setText( i18n.GL3208_1());
+		addExplanationAnc.getElement().setAttribute("alt",  i18n.GL3208_1());
+		addExplanationAnc.getElement().setAttribute("title", i18n.GL3208_1());
+		addDepthOfKnowledgeAnc.setText(i18n.GL3209_1());
+		addDepthOfKnowledgeAnc.getElement().setAttribute("alt", i18n.GL3209_1());
+		addDepthOfKnowledgeAnc.getElement().setAttribute("title", i18n.GL3209_1());
 		addStandardsAnc.setText(i18n.GL0575());
 		addStandardsAnc.getElement().setAttribute("alt", i18n.GL0575());
 		addStandardsAnc.getElement().setAttribute("title", i18n.GL0575());
@@ -216,9 +216,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211());
+		setUpAdvancedLbl.setText(i18n.GL3211_1());
+		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211_1());
+		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211_1());
 
 
 		/**
@@ -428,9 +428,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	public void setHeaderAndBodyText(String tabType){
 		if(tabType.equals("HS")){
-			questionTypeHeader.setText(i18n.GL3226());
-			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3226());
-			questionTypeHeader.getElement().setAttribute("title", i18n.GL3226());
+			questionTypeHeader.setText(i18n.GL3226_1());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3226_1());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL3226_1());
 			questionTypeText.setText(i18n.GL0350());
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
@@ -558,7 +558,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconExplanation")){
 				explanationContainer.setVisible(false);
 				addExplanationAnc.setVisible(true);
-				addExplanationAnc.setText(i18n.GL3208());
+				addExplanationAnc.setText(i18n.GL3208_1());
 				setExplanationContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconHint")){
 				hintsContainer.setVisible(false);
@@ -578,12 +578,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					i++;
 				}
 				int count=hintsContainer.getWidgetCount();
-				addHintsAnc.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+				addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconDepthOfKnowledge")){
 				depthOfKnowledgeContainer.setVisible(false);
 				addDepthOfKnowledgeAnc.setVisible(true);
-				addDepthOfKnowledgeAnc.setText(i18n.GL3209());
+				addDepthOfKnowledgeAnc.setText(i18n.GL3209_1());
 				setDepthOfKnowledgeContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconStandards")){
 				standardContainer.setVisible(false);
@@ -797,7 +797,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		if(hintsContainer.getWidgetCount()<5){
 			addHintsAnc.addStyleName("advancedOptionsTabs");
 			addHintsAnc.removeStyleName("advancedOptionsTabActive");
-			addHintsAnc.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-hintWidgetsCount)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+			addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-hintWidgetsCount)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 			addHintsAnc.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 
@@ -832,7 +832,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		int widgetCount=hintsContainer.getWidgetCount();
 		addHintsAnc.addStyleName("advancedOptionsTabs");
 		addHintsAnc.removeStyleName("advancedOptionsTabActive");
-		addHintsAnc.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(4-widgetCount)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+		addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(4-widgetCount)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 		final AddHintsView addHints = new AddHintsView(widgetCount+1);
 		addHintsTextArea(addHints);
 	}
