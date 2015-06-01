@@ -34,7 +34,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -186,7 +185,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	@Inject
 	public StudentAssignmentView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		EditClasspageCBundle.INSTANCE.css().ensureInjected();
+		/*EditClasspageCBundle.INSTANCE.css().ensureInjected();*/
 		setStaticData();
 		lblWebHelp.addMouseOverHandler(new OnMouseOver());
 		lblWebHelp.addMouseOutHandler(new OnMouseOut());
@@ -273,7 +272,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			for(int i=0;i < sortingOptionsList.size();i++){
 				String sortType=sortingOptionsList.get(i);
 				Label sortingLabel=new Label(sortType);
-				sortingLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().dropdownTextLabel());
+				sortingLabel.setStyleName("dropdownTextLabel");
 				dropDownListContainer.add(sortingLabel);
 				sortingLabel.addClickHandler(new SortAssignmentEvents(sortType));
 			}
@@ -463,7 +462,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		LblMember.setVisible(false);
 //		userImage.setVisible(false);
 //		userImage.getElement().setId("imgUserImage");
-		mainContainer.getElement().setId("pnlMainContainer");
+		mainContainer.getElement().setId("pnlMainFlow");
 		studentViewImage.getElement().setId("imgStudentView");
 		mainTitleLbl.getElement().setId("lblMainTitle");
 		imgProfileImage.getElement().setId("imgProfileImage");
@@ -521,7 +520,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
 				btnWithDraw.setVisible(false);
-				memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().techerStyle());
+				memberContainer.setStyleName("techerStyle");
 				lineSeparation.setVisible(false);
 				LblMember.setVisible(true);
 //				userImage.setVisible(true);
@@ -534,7 +533,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
 				btnWithDraw.setVisible(true);
-				memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+				memberContainer.setStyleName("studentStyle");
 				lineSeparation.setVisible(true);
 				LblMember.setVisible(true);
 				LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -548,7 +547,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 				
 				btnJoinClass.setVisible(true);
-				memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().techerStyle());
+				memberContainer.setStyleName("techerStyle");
 				lineSeparation.setVisible(false);
 //				userImage.setVisible(false);
 				lblWebHelp.setVisible(true);
@@ -599,7 +598,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //											userImage.setVisible(true);
 											lblWebHelp.setVisible(false);
 											btnWithDraw.setVisible(true);
-											memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+											memberContainer.setStyleName("studentStyle");
 											lineSeparation.setVisible(true);
 											LblMember.setVisible(true);
 											LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -676,7 +675,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //					userImage.setVisible(true);
 					lblWebHelp.setVisible(false);
 					btnWithDraw.setVisible(true);
-					memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+					memberContainer.setStyleName("studentStyle");
 					lineSeparation.setVisible(true);
 					LblMember.setVisible(true);
 					LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -686,7 +685,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			else if(classpageDo.getStatus().equalsIgnoreCase("pending")) 
 			{
 					btnJoinClass.setVisible(true);
-					memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().techerStyle());
+					memberContainer.setStyleName("techerStyle");
 					lineSeparation.setVisible(false);
 //					userImage.setVisible(false);
 					lblWebHelp.setVisible(true);
@@ -732,7 +731,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(true);
-													memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+													memberContainer.setStyleName("studentStyle");
 													lineSeparation.setVisible(true);
 													LblMember.setVisible(true);
 													LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1041,7 +1040,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	 */
 	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
-		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
+		loadingImage.setStyleName("loadingpanelImage");
 		return loadingImage;
 	}
 	/**
@@ -1231,7 +1230,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //										userImage.setVisible(true);
 										lblWebHelp.setVisible(false);
 										btnWithDraw.setVisible(true);
-										memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+										memberContainer.setStyleName("studentStyle");
 										lineSeparation.setVisible(true);
 										LblMember.setVisible(true);
 										LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1406,7 +1405,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPrivatePagePending()
 	{
 	btnJoinClass.setVisible(true);
-	memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().techerStyle());
+	memberContainer.setStyleName("techerStyle");
 	lineSeparation.setVisible(false);
 //	userImage.setVisible(false);
 	lblWebHelp.setVisible(true);
@@ -1464,7 +1463,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //									userImage.setVisible(true);
 									lblWebHelp.setVisible(false);
 									btnWithDraw.setVisible(true);
-									memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+									memberContainer.setStyleName("studentStyle");
 									lineSeparation.setVisible(true);
 									LblMember.setVisible(true);
 									LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1532,7 +1531,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //		userImage.setVisible(true);
 		lblWebHelp.setVisible(false);
 		btnWithDraw.setVisible(true);
-		memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+		memberContainer.setStyleName("studentStyle");
 		lineSeparation.setVisible(false);
 		LblMember.setVisible(true);
 		LblMember.setText(i18n.GL1551());
@@ -1563,7 +1562,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //		userImage.setVisible(true);
 		lblWebHelp.setVisible(false);
 		btnWithDraw.setVisible(true);
-		memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+		memberContainer.setStyleName("studentStyle");
 		lineSeparation.setVisible(true);
 		LblMember.setVisible(true);
 		LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1591,7 +1590,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPublicPagePending()
 	{
 		btnJoinClass.setVisible(true);
-		memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().techerStyle());
+		memberContainer.setStyleName("techerStyle");
 		lineSeparation.setVisible(false);
 //		userImage.setVisible(false);
 		lblWebHelp.setVisible(true);
@@ -1639,7 +1638,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(true);
-													memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+													memberContainer.setStyleName("studentStyle");
 													lineSeparation.setVisible(true);
 													LblMember.setVisible(true);
 													LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1787,7 +1786,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //						userImage.setVisible(true);
 						lblWebHelp.setVisible(false);
 						btnWithDraw.setVisible(true);
-						memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+						memberContainer.setStyleName("studentStyle");
 						lineSeparation.setVisible(true);
 						LblMember.setVisible(true);
 						LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1798,7 +1797,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 						
 						btnJoinClass.setVisible(true);
-						memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().techerStyle());
+						memberContainer.setStyleName("techerStyle");
 						lineSeparation.setVisible(false);
 //						userImage.setVisible(false);
 						lblWebHelp.setVisible(true);
@@ -1849,7 +1848,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //															userImage.setVisible(true);
 															lblWebHelp.setVisible(false);
 															btnWithDraw.setVisible(true);
-															memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+															memberContainer.setStyleName("studentStyle");
 															lineSeparation.setVisible(true);
 															LblMember.setVisible(true);
 															LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1924,7 +1923,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //							userImage.setVisible(true);
 							lblWebHelp.setVisible(false);
 							btnWithDraw.setVisible(true);
-							memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+							memberContainer.setStyleName("studentStyle");
 							lineSeparation.setVisible(true);
 							LblMember.setVisible(true);
 							LblMember.setText(StudentAssignmentView.i18n.GL1549());
@@ -1934,7 +1933,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					else if(classpageDo.getStatus().equalsIgnoreCase("pending")) 
 					{
 							btnJoinClass.setVisible(true);
-							memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().techerStyle());
+							memberContainer.setStyleName("techerStyle");
 							lineSeparation.setVisible(false);
 //							userImage.setVisible(false);
 							lblWebHelp.setVisible(true);
@@ -1981,7 +1980,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //															userImage.setVisible(true);
 															lblWebHelp.setVisible(false);
 															btnWithDraw.setVisible(true);
-															memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+															memberContainer.setStyleName("studentStyle");
 															lineSeparation.setVisible(true);
 															LblMember.setVisible(true);
 															LblMember.setText(StudentAssignmentView.i18n.GL1549());

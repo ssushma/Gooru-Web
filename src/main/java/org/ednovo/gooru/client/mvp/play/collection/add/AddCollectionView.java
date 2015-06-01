@@ -54,9 +54,9 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandlers> implements IsAddCollectionView,ClientConstants{
 
 
-	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
+	private static AddCollectionViewUiBinder uiBinder = GWT.create(AddCollectionViewUiBinder.class);
 
-	interface ResourceShareViewUiBinder extends UiBinder<Widget, AddCollectionView> {
+	interface AddCollectionViewUiBinder extends UiBinder<Widget, AddCollectionView> {
 
 	}
 	

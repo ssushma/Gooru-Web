@@ -82,9 +82,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 
 	private static final String ASSESSMENT = "assessment";
 
-	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
+	private static AddResourceCollectionViewUiBinder uiBinder = GWT.create(AddResourceCollectionViewUiBinder.class);
 
-	interface ResourceShareViewUiBinder extends UiBinder<Widget, AddResourceCollectionView> {
+	interface AddResourceCollectionViewUiBinder extends UiBinder<Widget, AddResourceCollectionView> {
 
 	}
 	
