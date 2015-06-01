@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.server.service;
 
@@ -39,6 +39,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.server.AppSessionHolder;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
@@ -61,29 +62,29 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteService,ClientConstants {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 7437954157376886661L;
 
 	private static final Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
-	
+
 	private String headerApiKey = null;
-	
+
 	private String youtubeApiKey = null;
-	
+
 	private String youtubeApiUrl = null;
-	
-	
+
+
 	private String apiKey = null;
 
 	@Resource(name = "restConstants")
 	private Properties restConstants;
-	
+
 	public BaseServiceImpl() {
 
 	}
@@ -98,7 +99,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	public static Logger getLogger() {
 		return logger;
 	}
-	
+
 	public String getProductionSwitchDate(){
 		return restConstants.getProperty(PRODUCTION_SWITCH);
 	}
@@ -106,31 +107,31 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	public String getDataApiKey(){
 		return restConstants.getProperty(DATA_LOG_API_KEY);
 	}
-	
+
 	public String getGoogleSignin(){
 		return restConstants.getProperty(GOOGLE_SIGNIN);
 	}
-	
+
 	public String getClientSideLoggersStatus(){
 		return restConstants.getProperty(ENABLE_CLIENT_LOGGERS);
 	}
-	
+
 	public String getDriveGoogle(){
 		return restConstants.getProperty(GOOGLE_DRIVE);
 	}
-	
+
 	public String getWhatsNewMosLink(){
 		return restConstants.getProperty(WHATS_NEW_MOS_LINK);
 	}
-	
+
 	public String getWhatsNewFibLink(){
 		return restConstants.getProperty(WHATS_NEW_FIB_LINK);
 	}
-	
+
 	public String getMosLink(){
 		return restConstants.getProperty(MOS_LINK);
 	}
-	
+
 	public String getRestEndPoint() {
 		String restEndPoint = restConstants.getProperty(REST_ENDPOINT);
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -168,16 +169,16 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			youtubeApiUrl = getPropertyByKey(YOUTUBE_API_URL);
 		}
 		return youtubeApiUrl;
-		
+
 	}
-	
+
 	public String getYoutubeApiKey(){
 		if (youtubeApiKey == null){
 			youtubeApiKey = getPropertyByKey(YOUTUBE_API_KEY);
 		}
 		return youtubeApiKey;
 	}
-	
+
 	public String getApiKey() {
 		if (headerApiKey == null){
 			headerApiKey = getPropertyByKey(API_KEY);
@@ -193,7 +194,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 		return homeEndPoint;
 	}
-	
+
 	public String getAnalyticsEndPoint() {
 		String analyticsEndPoint = restConstants.getProperty(ANALYTICS_ENDPOINT);
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -206,7 +207,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	public String getHomeEndPointForEmbed() {
 		return restConstants.getProperty(HOME_ENDPOINT);
 	}
-	
+
 	public String getRestEndPointForEmbed() {
 		return restConstants.getProperty(REST_ENDPOINT);
 	}
@@ -218,11 +219,11 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 		return docViewerHome;
 	}
-	
+
 	public String getDocViewerPoint() {
 		return restConstants.getProperty(DOCVIEWER_CACHE);
 	}
-	
+
 	public String getProfileImageUrl() {
 		String profileImageUrl = restConstants.getProperty(PROFILE_IMAGE_RESPOSITORY_URL);
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -230,19 +231,19 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 		return profileImageUrl;
 	}
-	
+
 	public String getFacebookAppId(){
 		return restConstants.getProperty(FACEBOOK_APP_ID);
 	}
-	
+
 	public String getFacebookFeedUrl(){
 		return restConstants.getProperty(FACEBOOK_FEED_URL);
 	}
-	
+
 	public String getTaxonomyPreferences(){
 		return restConstants.getProperty(TAXONOMY_PREFERENCES);
 	}
-	
+
 	public String getCdnEndPoint() {
 		String cdnEndPoint = restConstants.getProperty(CDN_ENDPOINT);
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -250,29 +251,29 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 		return cdnEndPoint;
 	}
-	
+
 	public String getRedirectUrl(){
 		String serverRedirectUrl = restConstants.getProperty(SERVER_REDIRECT_URL);
 		return serverRedirectUrl;
 	}
-	
+
 	public String getGoogleRestEndPoint(){
 		return restConstants.getProperty(GOOGLE_RESTENDPOINT);
 	}
-	
+
 	public String getStoriesUrl(){
 		return restConstants.getProperty(STORIES_URL);
 	}
-	
+
 	public String showStoriesSection(){
 		return restConstants.getProperty(SHOW_STORIES);
 	}
 
 	public String getCommunityLibaryGooruOid(){
 		return restConstants.getProperty(COMMUNITY_LIBRARY_ID);
-		
+
 	}
-	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	
+	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {
 		if (jsonObject != null && jsonObject.has(key)) {
 			String value = null;
 			try {
@@ -295,11 +296,11 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	}
 
 
-	
+
 	protected void setUserFilterProperties(UserDo user) {
 		user.setSettings(getFilterProperties());
 	}
-	
+
 	protected FilterSettings getFilterProperties() {
 		FilterSettings filterProperties = new FilterSettings();
 		filterProperties.setRestEndPoint(getRestEndPoint());
@@ -330,7 +331,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	public String getClassicEndPoint() {
 		return restConstants.getProperty(CLASSIC_ENDPOINT);
 	}
-	
+
 	public String getGoogleAnalticsAdditionalAccounts() {
 		return restConstants.getProperty(GOOGLE_ANALTICS_ADDITIONAL_ACCOUNTS);
 	}
@@ -338,13 +339,13 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	public String getGooruReleaseVersion() {
 		return restConstants.getProperty(GOORU_RELEASE_VERSION);
 	}
-	
+
 	protected String getLoggedInSessionToken() {
 		String token = getCookie(GOORU_SESSION_TOKEN);
 		if (token == null) {
 			token = (String) getHttpRequest().getSession().getAttribute(GOORU_SESSION_TOKEN);
 			//Fix for handling when cookie get disabled.
-			if (token == null || token.equalsIgnoreCase("null")) { 
+			if (token == null || token.equalsIgnoreCase("null")) {
 				UserDo user = v2GuestSignIn();
 				token = (user != null) ? user.getToken() : token;
 				getHttpRequest().getSession().setAttribute(GOORU_SESSION_TOKEN, token);
@@ -359,7 +360,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		if (token == null) {
 			token = (String) getHttpRequest().getSession().getAttribute(GOORU_ACCESS_TOKEN);
 			//Fix for handling when cookie get disabled.
-			if (token == null || token.equalsIgnoreCase("null")) { 
+			if (token == null || token.equalsIgnoreCase("null")) {
 				getHttpRequest().getSession().setAttribute(GOORU_ACCESS_TOKEN, token);
 			}
 			setLoggedInAccessToken(token);
@@ -417,30 +418,30 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 	}
 	/**
-	 * 
-	 * @function getPropertyByKey 
-	 * 
+	 *
+	 * @function getPropertyByKey
+	 *
 	 * @created_date : 15-Apr-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param keyName
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	protected String getPropertyByKey(String keyName) {
 		return PropertiesCache.getInstance().getProperty(keyName);
 	}
-	
-	
+
+
 	protected void setUserActiveStatus(String userStatus){
 		Cookie cookie = new Cookie(GOORU_ACTIVE_USER, userStatus);
 		cookie.setDomain(AppSessionHolder.getInstance().getRequest().getServerName());
@@ -448,7 +449,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		cookie.setMaxAge(COOKIE_AGE);
 		getHttpResponse().addCookie(cookie);
 	}
-	
+
 	protected void setUserInActiveStatus(String userStatus){
 		Cookie cookie = new Cookie(GOORU_ACTIVE_USER, userStatus);
 		cookie.setDomain(AppSessionHolder.getInstance().getRequest().getServerName());
@@ -483,7 +484,71 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		getHttpRequest().getSession().removeAttribute(GOORU_SESSION_TOKEN);
 		setLoggedInUserUid(null);
 	}
+	/**
+	 *
+	 * @function getLoggedInUserData
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : UserDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	protected UserDo getLoggedInUserData() {
+		String sessionSessionToken = (String) getHttpRequest().getSession().getAttribute(GOORU_SESSION_TOKEN);
+		String cookieSessionToken = getCookie(GOORU_SESSION_TOKEN);
+		String loggedInUserUid = (String) getHttpRequest().getSession().getAttribute(SIGNED_USER_UID);
 
+		boolean sessionTimedOutUser = sessionSessionToken == null && cookieSessionToken != null;
+		boolean switchedUser = sessionSessionToken != null && cookieSessionToken != null && !cookieSessionToken.equals(sessionSessionToken);
+		boolean inUser = sessionSessionToken != null && cookieSessionToken != null && cookieSessionToken.equals(sessionSessionToken);
+
+		UserDo user = null;
+		AppClientFactory.printInfoLogger("getLoggedInUserData 1");
+		if (sessionTimedOutUser || switchedUser) {
+			AppClientFactory.printInfoLogger("getLoggedInUserData 2");
+			user = v2GetUserInfoByToken(cookieSessionToken);
+		} else if (!inUser) {
+			AppClientFactory.printInfoLogger("getLoggedInUserData 3");
+			user = v2GuestSignIn();
+		}
+		if (user != null) {
+			AppClientFactory.printInfoLogger("getLoggedInUserData 4");
+			deleteLoggedInInfo();
+			loggedInUserUid = user.getGooruUId();
+			setLoggedInInfo(cookieSessionToken == null ? user.getToken() : cookieSessionToken, user.getGooruUId(),getLoggedInEmailId(),getLoggedInDateOfBirth());
+		}
+		AppClientFactory.printInfoLogger("getLoggedInUserData 5");
+		return user;
+	}
+	/**
+	 *
+	 * @function getLoggedInUserUid
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected String getLoggedInUserUid() {
 		String sessionSessionToken = (String) getHttpRequest().getSession().getAttribute(GOORU_SESSION_TOKEN);
 		String cookieSessionToken = getCookie(GOORU_SESSION_TOKEN);
@@ -507,7 +572,25 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 		return loggedInUserUid;
 	}
-
+	/**
+	 *
+	 * @function setLoggedInUserUid
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param loggedInUserUid
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected void setLoggedInUserUid(String loggedInUserUid) {
 		if (loggedInUserUid != null) {
 			getHttpRequest().getSession().setAttribute(SIGNED_USER_UID, loggedInUserUid);
@@ -515,12 +598,48 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			getHttpRequest().getSession().removeAttribute(SIGNED_USER_UID);
 		}
 	}
-
+	/**
+	 *
+	 * @function getLoggedInEmailId
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected String getLoggedInEmailId() {
 		String loggedInEmailId = (String) getHttpRequest().getSession().getAttribute(SIGNED_USER_EMAILID);
 		return loggedInEmailId;
 	}
-
+	/**
+	 *
+	 * @function setLoggedInEmailId
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param loggedInEmailId
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected void setLoggedInEmailId(String loggedInEmailId) {
 		if (loggedInEmailId != null) {
 			getHttpRequest().getSession().setAttribute(SIGNED_USER_EMAILID, loggedInEmailId);
@@ -528,12 +647,48 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			getHttpRequest().getSession().removeAttribute(SIGNED_USER_EMAILID);
 		}
 	}
-	
+	/**
+	 *
+	 * @function getLoggedInDateOfBirth
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected String getLoggedInDateOfBirth() {
 		String loggedInDob = (String) getHttpRequest().getSession().getAttribute(SIGNED_USER_DOB);
 		return loggedInDob;
 	}
-	
+	/**
+	 *
+	 * @function setLoggedInDateOfBirth
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param dateOfBirth
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected void setLoggedInDateOfBirth(String dateOfBirth) {
 		if (dateOfBirth != null) {
 			getHttpRequest().getSession().setAttribute(SIGNED_USER_DOB, dateOfBirth);
@@ -541,15 +696,49 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			getHttpRequest().getSession().removeAttribute(SIGNED_USER_DOB);
 		}
 	}
-
+	/**
+	 *
+	 * @function isLoggedInUserAnonymous
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected boolean isLoggedInUserAnonymous() {
 		return getLoggedInUserUid() == null || getLoggedInUserUid().equals(GOORU_ANONYMOUS);
 	}
 
-	
-	
-	
-
+	/**
+	 *
+	 * @function getUserInfo
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param userUid
+	 * @parm(s) : @return
+	 *
+	 * @return : UserDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected UserDo getUserInfo(String userUid) {
 		UserDo userDo = null;
 		String sessionToken = getLoggedInSessionToken();
@@ -560,21 +749,17 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			try {
 				String data = jsonRep.getJsonObject().getJSONObject("user").toString();
-//				String data = jsonRep.getJsonObject().getJSONObject("data").getJSONObject("user").toString(); //removed and moved to V2 API
 				userDo = JsonDeserializer.deserialize(data, UserDo.class);
-//				if (userDo.getCreatedOn()!=null){
-					Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-					Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-					// if user created after production switch
-					if (userCreatedDate.getTime() >= prodDate.getTime()){
-						userDo.setBeforeProductionSwitch(false);
-					}else{
-						userDo.setBeforeProductionSwitch(true);
-					}
-//				}
+				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
+				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
+				if (userCreatedDate.getTime() >= prodDate.getTime()){
+					userDo.setBeforeProductionSwitch(false);
+				}else{
+					userDo.setBeforeProductionSwitch(true);
+				}
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
-			} 
+			}
 			catch (ParseException e) {
 				logger.error("Exception::", e);
 			}
@@ -582,14 +767,69 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return userDo;
 	}
 
+	/**
+	 *
+	 * @function getHttpRequest
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : HttpServletRequest
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected HttpServletRequest getHttpRequest() {
 		return AppSessionHolder.getInstance().getRequest();
 	}
-
+	/**
+	 *
+	 * @function getHttpResponse
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : HttpServletResponse
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected HttpServletResponse getHttpResponse() {
 		return AppSessionHolder.getInstance().getResponse();
 	}
-	
+	/**
+	 *
+	 * @function v2GuestSignIn
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : UserDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected UserDo v2GuestSignIn() {
 		UserDo user = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GUEST_SIGNIN);
@@ -615,6 +855,26 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 		return user;
 	}
+	/**
+	 *
+	 * @function v2GuestSignInForEmbed
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param restEndPointFromEmbed
+	 * @parm(s) : @return
+	 *
+	 * @return : UserDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected UserDo v2GuestSignInForEmbed(String restEndPointFromEmbed){
 		UserDo user = null;
 		JsonRepresentation jsonRep = null;
@@ -632,8 +892,28 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			logger.error("Exception::", e);
 		}
 		return user;
-	}	
-	
+	}
+
+	/**
+	 *
+	 * @function v2GetUserInfoByToken
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param token
+	 * @parm(s) : @return
+	 *
+	 * @return : UserDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	protected UserDo v2GetUserInfoByToken(String token) {
 		UserDo userDo = null;
 		try {
@@ -643,24 +923,39 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			String data = jsonRep.getJsonObject().toString();
 			userDo = JsonDeserializer.deserialize(data, UserDo.class);
-//			if (userDo.getCreatedOn()!=null){
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-				// if user created after production switch
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					userDo.setBeforeProductionSwitch(false);
-				}else{
-					userDo.setBeforeProductionSwitch(true);
-				}
-//			}
-				userDo.setToken(token);
+			Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
+			Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
+			if (userCreatedDate.getTime() >= prodDate.getTime()){
+				userDo.setBeforeProductionSwitch(false);
+			}else{
+				userDo.setBeforeProductionSwitch(true);
+			}
+			userDo.setToken(token);
 			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);
 		}
 		return userDo;
 	}
-	
+	/**
+	 *
+	 * @function getIpAddress
+	 *
+	 * @created_date : 28-May-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	public String getIpAddress(){
 		return getHttpRequest().getRemoteAddr();
 	}

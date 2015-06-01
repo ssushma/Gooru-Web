@@ -1375,7 +1375,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (!selectedGrades.isEmpty()) {
 						selectedGrades += COMMA_SEPARATOR;
 					}
-					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").replace("Higher Ed", "12gte").trim();
+					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").replace(i18n.GL3084(), "12gte").trim();
 				}
 				if("standardPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 					if (!selectedStandards.isEmpty()) {

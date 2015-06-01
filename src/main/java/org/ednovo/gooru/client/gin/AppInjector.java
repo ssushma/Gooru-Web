@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
@@ -121,9 +122,9 @@ import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
  */
 @GinModules({ AppModule.class, ServiceModule.class })
 public interface AppInjector extends ServiceInjector {
-	
+
 	final AppInjector appInjector = GWT.create(AppInjector.class);
-	 
+
 	AppPlaceManager getPlaceManager();
 
 	EventBus getEventBus();
@@ -135,10 +136,10 @@ public interface AppInjector extends ServiceInjector {
 	GoogleAnalyticsImpl getGoogleAnalytics();
 
 	Provider<WrapPresenter> getWrapPresenter();
-	
+
 	Provider<PrimePresenter> getPrimePresenter();
 
-	Provider<HomePresenter> getHomePresenter();
+	AsyncProvider<HomePresenter> getHomePresenter();
 
 	AsyncProvider<SearchMainPresenter> getSearchMainPresenter();
 
@@ -161,7 +162,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<ImageUploadPresenter> getImageUploadPresenter();
 
 	AsyncProvider<UserRegistrationPresenter> getUserRegistrationPresenter();
-	
+
 	AsyncProvider<UserSettingsPresenter> getUserSettingsPresenter();
 
 	AsyncProvider<EditClasspagePresenter> getEditClasspagePresenter();
@@ -275,6 +276,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 
 	AddCenturyPresenter getAddCenturyPresenterWidget();
+	
+	SearchAddResourceToCollectionPresenter getRemixPresenterWidget();
 
 
 }
