@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
-import org.ednovo.gooru.client.mvp.home.FooterOrganizeUc;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -1812,15 +1811,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void setJsonResponseInStorage(String data,boolean isApiCalled){
 		if(Storage.isLocalStorageSupported() && !isApiCalled){
 			if(isForwardScroll){
-				if(pageNumber==1 && !pageFlag)
-				{
-				pageFlag = true;
-				localStore.setItem((pageNumber)+"", data);
-				}
-				else
-				{
+				if(pageNumber==1 && !pageFlag){
+					pageFlag = true;
+					localStore.setItem((pageNumber)+"", data);
+				}else{
 					pageFlag = false;
-				localStore.setItem((pageNumber+1)+"", data);
+					localStore.setItem((pageNumber+1)+"", data);
 				}
 				pageCountForStorage++;
 				removeFromLocalStorageForward();
