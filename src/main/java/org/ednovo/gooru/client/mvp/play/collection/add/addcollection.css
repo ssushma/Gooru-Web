@@ -1,3 +1,4 @@
+@charset "utf-8";
 /* CSS Document */
 .collectionPlayerAddResourcesContainer {
 	width: 100%;
@@ -194,7 +195,7 @@ color: orange;
 }
 
 /* info css */
- @charset "utf-8";
+
 /* CSS Document */
 .collectionxPlayerResourcesWrapper {
 	width: 940px;
@@ -635,7 +636,7 @@ color: orange;
 }
 
 /* SUMMARY.CSS */
- @charset "utf-8";
+
 /* CSS Document */
 .collectionXPlayerSegmentWrapper {
 	width: 1150px;

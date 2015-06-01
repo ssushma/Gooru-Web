@@ -10,14 +10,10 @@ body {
     margin: 50px;
     padding: 0;
 }
-
-
-
-
-.clearfix:before, .clearfix:after, .container:before, .container:after,{
-  content: " ";
+.clearfix:before, .clearfix:after, .container:before, .container:after{
+  	content: " ";
     display: table;
-	 clear: both;
+	clear: both;
 }
 .clearfix{
 	clear:both;

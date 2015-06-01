@@ -228,9 +228,11 @@
 	padding-bottom: 12px;
 }
 
-.no-gutter >[class*='col-md-']{
-	padding-left:0;
-	padding-right:0;
+.no-gutter .col-md-1, .no-gutter .col-md-2, .no-gutter .col-md-3, .no-gutter .col-md-4, .no-gutter .col-md-5
+, .no-gutter .col-md-6, .no-gutter .col-md-7, .no-gutter .col-md-8, .no-gutter .col-md-9, .no-gutter .col-md-10
+, .no-gutter .col-md-11, .no-gutter .col-md-12{ 
+	padding-left:0 !important;
+	padding-right:0 !important;
 }
 .popupContainer{
 	background-color: #fff;
