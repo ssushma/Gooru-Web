@@ -241,14 +241,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		hotTextTabButton.getElement().setId("epnlhotTextTabButton");
 		hotTextTabButton.addClickHandler(new showHotTextWidget());
 		hotTextRadioButton.getElement().setId("rdHotTextRadioButton");
-		hotSpot.setText(i18n.GL3231());
-		hotSpot.getElement().setAttribute("alt", i18n.GL3231());
-		hotSpot.getElement().setAttribute("title", i18n.GL3231());
+		hotSpot.setText(i18n.GL3231_1());
+		hotSpot.getElement().setAttribute("alt", i18n.GL3231_1());
+		hotSpot.getElement().setAttribute("title", i18n.GL3231_1());
 		hotSpotTabButton.getElement().setId("hotSpotTabButton");
 		hotSpotTabButton.addClickHandler(new ShowEquationWidget());
-		hotText.setText(i18n.GL3212());
-		hotText.getElement().setAttribute("alt", i18n.GL3212());
-		hotText.getElement().setAttribute("title", i18n.GL3212());
+		hotText.setText(i18n.GL3212_1());
+		hotText.getElement().setAttribute("alt", i18n.GL3212_1());
+		hotText.getElement().setAttribute("title", i18n.GL3212_1());
 		hotText.getElement().setId("lnkHotText");
 		
 		//assessments tabs

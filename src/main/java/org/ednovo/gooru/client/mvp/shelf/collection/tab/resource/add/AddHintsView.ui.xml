@@ -6,7 +6,7 @@
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
 <ui:style field= "addWebResourceStyle" src="addResource.css" type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceBundle"/>
 	
 		

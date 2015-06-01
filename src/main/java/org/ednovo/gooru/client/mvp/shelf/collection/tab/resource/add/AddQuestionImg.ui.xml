@@ -3,14 +3,14 @@
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
-	ui:generateLocales='default'  xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	ui:generateLocales='default'  xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:EventPanel="urn:import:org.ednovo.gooru.client.ui" >
 <ui:style field= "addWebResourceStyle" src="addResource.css"/>
 	
 	
 	
 	 <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimgContainer}">
 	       <g:HTMLPanel styleName="{addWebResourceStyle.addblockHeaderContainer}">
-	     <uc:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconImage"></uc:HTMLEventPanel>
+	     <EventPanel:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconImage"></EventPanel:HTMLEventPanel>
             <g:Label ui:field="displayQuestLbl" styleName="{addWebResourceStyle.addResourceThumbimgHeading}"/> 
             </g:HTMLPanel>
             <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimg}">

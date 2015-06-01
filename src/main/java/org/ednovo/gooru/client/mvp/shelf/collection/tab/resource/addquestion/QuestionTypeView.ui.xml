@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:HTMLEventPanel="urn:import:org.ednovo.gooru.client.ui">
 
 	<ui:style src="QuestionType.css"
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeCBundle"
@@ -48,7 +49,7 @@
   <!-- Explanation container -->
   
    <g:FlowPanel styleName="containerPadding" ui:field="explanationContainer">
-          <uc:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconExplanation"></uc:HTMLEventPanel>
+          <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconExplanation"></HTMLEventPanel:HTMLEventPanel>
           <g:Label styleName="containerTitle" ui:field="explanationLabel"></g:Label>
           <g:Label styleName="charLimitExplanationStyle" ui:field="charLimitExplanation"></g:Label>
           <g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
@@ -74,7 +75,7 @@
    <!-- Depth Of Knowledge Start-->
       	<g:FlowPanel ui:field="depthOfKnowledgeContainer" styleName="depthOfKnowledgeContainer">
 					<g:FlowPanel styleName="depthOfKnowledgeSubContainer">
-					 <uc:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconDepthOfKnowledge"></uc:HTMLEventPanel>
+					 <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconDepthOfKnowledge"/>
 						<g:Label styleName="depthOfKnoweldgeTitle"	ui:field="depthOfKnowledgeHeader" ></g:Label>
 							<g:Image styleName="friendlyQuestionMark" altText="Question Mark"  ui:field="depthOfKnoweldgeToolTip"></g:Image>
 					</g:FlowPanel>
@@ -101,7 +102,7 @@
          
          <!-- Standards Start -->
 		 <g:FlowPanel ui:field="standardContainer">
-		      <uc:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconStandards"></uc:HTMLEventPanel>
+		      <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconStandards"/>
 					<g:Label styleName="standardTitle"	ui:field="standardsDefaultText"></g:Label>
 						<g:FlowPanel styleName="suggestedBox">
 							<g:FlowPanel styleName="standardsCont">
@@ -120,7 +121,7 @@
    
     <!-- 21 century Start -->
 			 <g:FlowPanel ui:field="centuryContainer">
-			       <uc:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconCentury"></uc:HTMLEventPanel>
+			       <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconCentury"/>
 						<g:Label styleName="standardTitle"	ui:field="centuryDefaultText"></g:Label>
 							<g:FlowPanel styleName="suggestedBox">
 								<g:FlowPanel styleName="standardsCont">
@@ -153,7 +154,7 @@
      <g:HTMLPanel styleName="termPolicyContainer">
         	<g:CheckBox ui:field="rightsChkBox" styleName="checkBoxlevels" checked="true" ></g:CheckBox>
         	<g:Label ui:field="rightsLbl" styleName="copyRightText"></g:Label> 
-     <uc:HTMLEventPanel ui:field="lblContentRights" styleName="copyRightIcon">
+     <HTMLEventPanel:HTMLEventPanel ui:field="lblContentRights" styleName="copyRightIcon">
 	        	<g:HTMLPanel styleName="copyRightPopupContainer" ui:field="panelContentRights">
 					<g:HTMLPanel styleName="copyRightTootlTipArrowShadow"></g:HTMLPanel>
 					<g:HTMLPanel styleName="copyRightTootlTipArrowBorder"></g:HTMLPanel>
@@ -171,14 +172,14 @@
     	 				
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-        	</uc:HTMLEventPanel>
+        	</HTMLEventPanel:HTMLEventPanel>
          </g:HTMLPanel>
   <!-- Terms Policy End -->
   
   <g:HTMLPanel styleName="addButtonContainer inlineBlock" ui:field="buttonContainer">
-         <uc:HTMLEventPanel styleName="inlineBlock" ui:field="addQuestionResourceButton">
+         <HTMLEventPanel:HTMLEventPanel styleName="inlineBlock" ui:field="addQuestionResourceButton">
           <uc:BlueButtonUc styleName="primary" ui:field="addbutton"></uc:BlueButtonUc>
-        </uc:HTMLEventPanel>
+      </HTMLEventPanel:HTMLEventPanel>
      	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
         
       </g:HTMLPanel>
