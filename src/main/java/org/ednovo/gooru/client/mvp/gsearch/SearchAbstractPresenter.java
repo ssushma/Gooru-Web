@@ -65,7 +65,9 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
@@ -179,6 +181,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(String result) {
 				getView().setJsonResponseInStorage(result,false);
+				if(getSearchDo().getPageNum()==2){
+					Element element=Document.get().getElementsByTagName("html").getItem(0);
+					element.getStyle().setOverflowY(Overflow.AUTO);
+				}
 				if(getSearchDo().getPageNum()==1){
 					getSearchDo().setPageNum(2);
 					getSearchResultsBackToTop().execute(getSearchDo());
@@ -353,7 +359,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	}
 	@Override
 	public void resetLocalStorageData() {
-		if (getPlaceManager().getRequestParameter(QUERY) != null) {
+		if (getPlaceManager().getRequestParameter(QUERY) != null){
 			getSearchDo().setQuery(getPlaceManager().getRequestParameter(QUERY));
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 				getSearchDo().setPageSize(9);
@@ -365,7 +371,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		setPageTitle(getSearchDo().getSearchQuery());
 		if (getSearchDo().getSearchQuery() != null && getSearchDo().getSearchQuery().trim().length() >= 0) {
 			getSearchDo().setPageNum(1);
-			System.out.println("resetLocalStorageData");
 			getSearchResultsBackToTop().execute(getSearchDo());
 		}
 	}

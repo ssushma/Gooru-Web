@@ -12,34 +12,25 @@
 
 <link href="${cdn.endpoint}/css/main-styles.min.css" media="all" rel="stylesheet" type="text/css">
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css">
+<link href="${cdn.endpoint}/css/font-awesome.css" media="all" rel="stylesheet" type="text/css">
 
 <link rel="icon" type="image/png" href="${cdn.endpoint}/images/favicon.png?v=${gooru.release.version}" />
+
 <script type="text/javascript">
-		<!--
+<!--
 	   		var _et = _et || {};
 	   		_et.apiKey = '${log.api.key}';
 	   		_et.endPoint = '${log.api.endpoint}';
 	   		_et.data = [] || _et.data;
-	  		(function() {
-	    		var et = document.createElement('script'); et.type = 'text/javascript'; et.defer= true ;
-	    		et.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '${log.sdk}';
-	    		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(et, s);
-	  		})();
-		-->
+-->
 </script>
+
+<script type="text/javascript" src="//${log.sdk}" defer></script>
+
 <script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg"></script>
-</head>
-<body>
-   <iframe id="__printingFrame" style="width: 0; height: 0; border: 0"></iframe>
-  	<noscript>
-		<div
-			style="width: 22em; position: absolute; left: 50%; overflow: auto; margin-left: -11em; color: red; border: 1px solid red; padding: 4px; font-family: sans-serif">
-			Your web browser must have JavaScript enabled in order for this
-			application to display correctly.</div>
-	</noscript>
-	<script>
+
+<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function()
 		{ (i[r].q=i[r].q||[]).push(arguments)}
 		,i[r].l=1*new Date();a=s.createElement(o),
@@ -73,6 +64,18 @@
 	    });
 	    google.load("visualization", "1", {'packages' : ["table"] });
 	 </script>
+
+
+</head>
+<body>
+   <iframe id="__printingFrame" style="width: 0; height: 0; border: 0"></iframe>
+  	<noscript>
+		<div
+			style="width: 22em; position: absolute; left: 50%; overflow: auto; margin-left: -11em; color: red; border: 1px solid red; padding: 4px; font-family: sans-serif">
+			Your web browser must have JavaScript enabled in order for this
+			application to display correctly.</div>
+	</noscript>
+
 	<script type="text/javascript" src="scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js" defer></script>
 	<script type="text/javascript" src="scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js" defer></script>
 

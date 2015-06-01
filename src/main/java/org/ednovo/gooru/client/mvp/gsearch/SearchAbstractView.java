@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
-import org.ednovo.gooru.client.mvp.home.FooterOrganizeUc;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -137,8 +136,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField HTMLEventPanel resourceFiltersDropDwn,moreFilterPanel;
 	
 	@UiField Image publisherTooltip,aggregatorTooltip,authorQuestionTooltip;
-	
-	@UiField FooterOrganizeUc panelFoooter;
 	
 	@UiField(provided = true)
 	AppSuggestBox publisherSgstBox;
@@ -1378,7 +1375,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (!selectedGrades.isEmpty()) {
 						selectedGrades += COMMA_SEPARATOR;
 					}
-					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").replace("Higher Ed", "12gte").trim();
+					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").replace(i18n.GL3084(), "12gte").trim();
 				}
 				if("standardPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 					if (!selectedStandards.isEmpty()) {
@@ -1566,6 +1563,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	public static native void callAnimation() /*-{
 		$wnd.$('body,html').animate({scrollTop: 0}, 800);
+		$wnd.$('html').css("overflow-y","hidden");
 	}-*/;
 
 	@Override
@@ -1586,7 +1584,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageFlag=false;
 	}
 	public void resetDataBacktoTop(){
-		searchResultPanel.clear();
 		lblLoadingText.setVisible(false);
 		isApiInProgress = true;
 		isApiInProgressBack = true;
@@ -1598,10 +1595,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		localStore.clear();
 		isForwardScroll=true;
 		getUiHandlers().resetLocalStorageData();
+		callAnimation();
+		searchResultPanel.clear();
 		if(pnlFirstTempData!=null){
 			searchResultPanel.add(pnlFirstTempData);
 		}
-		callAnimation();
 	}
 	
 	/**
@@ -1814,15 +1812,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void setJsonResponseInStorage(String data,boolean isApiCalled){
 		if(Storage.isLocalStorageSupported() && !isApiCalled){
 			if(isForwardScroll){
-				if(pageNumber==1 && !pageFlag)
-				{
-				pageFlag = true;
-				localStore.setItem((pageNumber)+"", data);
-				}
-				else
-				{
+				if(pageNumber==1 && !pageFlag){
+					pageFlag = true;
+					localStore.setItem((pageNumber)+"", data);
+				}else{
 					pageFlag = false;
-				localStore.setItem((pageNumber+1)+"", data);
+					localStore.setItem((pageNumber+1)+"", data);
 				}
 				pageCountForStorage++;
 				removeFromLocalStorageForward();
