@@ -259,6 +259,7 @@ public abstract class DistrictMenuNav extends Composite {
 	private void setGooruAnrText(String anrTxt, String anrLink,boolean isSausd) {
 		if(isSausd){
 			aboutPanel.setVisible(true);
+			aboutPanel.getElement().setAttribute("style", "border-right:1px solid #ddd;");
 			aboutGooruAnr.setVisible(false);
 			aboutText.setText(i18n.GL1899());
 			aboutText.getElement().setId("lblLanguageArtsText");

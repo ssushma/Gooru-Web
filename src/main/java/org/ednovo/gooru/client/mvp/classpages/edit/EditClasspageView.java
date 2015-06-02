@@ -103,8 +103,8 @@ public class EditClasspageView extends
 		BaseViewWithHandlers<EditClasspageUiHandlers> implements
 		IsEditClasspageView, ClickHandler{
 	
-	@UiField(provided = true)
-	EditClasspageCBundle res;
+	/*@UiField(provided = true)
+	EditClasspageCBundle res;*/
 
 	@UiField(provided = true)
 	AssignmentEditLabelUc collectionTitleUc;
@@ -261,7 +261,7 @@ public class EditClasspageView extends
 
 	@Inject
 	public EditClasspageView() {
-		this.res = EditClasspageCBundle.INSTANCE;
+		/*this.res = EditClasspageCBundle.INSTANCE;*/
 		globalClasspageProcess =  new ArrayList<ClasspageItemDo>(); 
 		collectionTitleUc = new AssignmentEditLabelUc() {
 			@Override
@@ -302,7 +302,7 @@ public class EditClasspageView extends
 			}
 		};
 
-		res.css().ensureInjected();
+		/*res.css().ensureInjected();*/
 
 		setWidget(uiBinder.createAndBindUi(this));
 		
@@ -380,7 +380,7 @@ public class EditClasspageView extends
 			mainContainer.setVisible(true);
 			frameDiv.setVisible(false);
 			
-			assignmentsTab.addStyleName(res.css().selected());
+			assignmentsTab.addStyleName("selected");
 
 			classListTab.getElement().setClassName("");
 			
@@ -534,7 +534,7 @@ public class EditClasspageView extends
 		lblReadytoStart.getElement().setAttribute("alt",i18n.GL1945());
 		lblReadytoStart.getElement().setAttribute("title",i18n.GL1945());
 		
-		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+		getstarteddiv.removeStyleName("btnContainerClasswithBG");
 		getstarteddiv.setVisible(true);
 
 		lblDefine.setText(i18n.GL1960());
@@ -683,7 +683,7 @@ public class EditClasspageView extends
 			for(int i=0;i < sortingOptionsList.size();i++){
 				String sortType=sortingOptionsList.get(i);
 				Label sortingLabel=new Label(sortType);
-				sortingLabel.setStyleName(this.res.css().dropdownTextLabel());
+				sortingLabel.setStyleName("dropdownTextLabel");
 				dropDownListContainer.add(sortingLabel);
 				sortingLabel.addClickHandler(new SortAssignmentEvents(sortType));
 			}
@@ -1124,10 +1124,10 @@ public class EditClasspageView extends
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 			paginationFocPanel1.setVisible(false);
-			classListTab.addStyleName(res.css().selected());
+			classListTab.addStyleName("selected");
 			assignmentsTab.getElement().setClassName("");
 			assignmentsDirectionsLabel.setVisible(false);
-			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.removeStyleName("btnContainerClasswithBG");
 			getstarteddiv.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
@@ -1140,7 +1140,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 		}
 		else if(tab!=null && tab.equalsIgnoreCase("reports")){
-			reportsTab.addStyleName(res.css().selected());
+			reportsTab.addStyleName("selected");
 			assignmentsTab.getElement().setClassName("");
 			classListTab.getElement().setClassName("");
 			newAssignmentAndMsgPanel.setVisible(false);
@@ -1148,7 +1148,7 @@ public class EditClasspageView extends
 			assignmentsTab.setEnabled(true);
 			getClassListContainer().setVisible(false);
 			assignmentsDirectionsLabel.setVisible(false);
-			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.removeStyleName("btnContainerClasswithBG");
 			getstarteddiv.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
@@ -1225,7 +1225,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 			monitorProgress.setVisible(false);
 			assignmentsDirectionsLabel.setVisible(false);
-			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.removeStyleName("btnContainerClasswithBG");
 			getstarteddiv.setVisible(true);
 			String order=AppClientFactory.getPlaceManager().getRequestParameter("order",null);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
@@ -1244,14 +1244,14 @@ public class EditClasspageView extends
 				dropDownListDiv.setVisible(true);
 				assignmentsContainerPanel.clear();
 				Label label=new Label("It looks like none of the assignments for this class have due dates.");
-				label.setStyleName(EditClasspageCBundle.INSTANCE.css().errorMessage());
+				label.setStyleName("errorMessage");
 				assignmentsContainerPanel.add(label);
 			}else{
 				panelAssignmentPath.setVisible(false);
 				headerAssignments.setVisible(false);
 				panelProgressContainer.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
-				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+				getstarteddiv.addStyleName("btnContainerClasswithBG");
 				getstarteddiv.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(true);
 				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
@@ -1369,7 +1369,7 @@ public class EditClasspageView extends
 				headerAssignments.setVisible(false);
 				panelProgressContainer.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
-				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+				getstarteddiv.addStyleName("btnContainerClasswithBG");
 				getstarteddiv.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(true);
 				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
@@ -1388,7 +1388,7 @@ public class EditClasspageView extends
 		headerAssignments.setVisible(true);
 		panelProgressContainer.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
-		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+		getstarteddiv.removeStyleName("btnContainerClasswithBG");
 		getstarteddiv.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		dropDownListDiv.setVisible(true);
@@ -1447,7 +1447,7 @@ public class EditClasspageView extends
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		Label seeMoreLabel=new Label(i18n.GL0508());
-		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
+		seeMoreLabel.setStyleName("paginationPanel");
 		int totalPages = (this.totalHitCount / 5)
 				+ ((this.totalHitCount % 5) > 0 ? 1 : 0);
 		if (totalPages > 1) {
@@ -1557,7 +1557,7 @@ public class EditClasspageView extends
 	 */
 	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
-		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
+		loadingImage.setStyleName("loadingpanelImage");
 		return loadingImage;
 	}
 	/**
@@ -1600,7 +1600,7 @@ public class EditClasspageView extends
 				headerAssignments.setVisible(true);
 				panelProgressContainer.setVisible(true);
 				assignmentsDirectionsLabel.setVisible(false);
-				getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+				getstarteddiv.removeStyleName("btnContainerClasswithBG");
 				getstarteddiv.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(false);
 				/*droplistContianer.setVisible(true);*/
@@ -1669,7 +1669,7 @@ public class EditClasspageView extends
 		headerAssignments.setVisible(true);
 		panelProgressContainer.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
-		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+		getstarteddiv.removeStyleName("btnContainerClasswithBG");
 		getstarteddiv.setVisible(true);
 		dropDownListDiv.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
@@ -1817,7 +1817,7 @@ public class EditClasspageView extends
 			headerAssignments.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			assignmentsDirectionsLabel.setVisible(true);
-			getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.addStyleName("btnContainerClasswithBG");
 			getstarteddiv.setVisible(false);
 			noAssignmentsMessagePanel.setVisible(true);
 			assignmentsTab.setText(i18n.GL1623()+"("+0+")");
@@ -1829,7 +1829,7 @@ public class EditClasspageView extends
 			headerAssignments.setVisible(true);
 			panelProgressContainer.setVisible(true);
 			assignmentsDirectionsLabel.setVisible(false);
-			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.removeStyleName("btnContainerClasswithBG");
 			getstarteddiv.setVisible(true);
 			noAssignmentsMessagePanel.setVisible(false);
 			dropDownListDiv.setVisible(true);
@@ -1840,7 +1840,7 @@ public class EditClasspageView extends
 
 	@Override
 	public void clearPanel() {
-		assignmentsTab.addStyleName(res.css().selected());
+		assignmentsTab.addStyleName("selected");
 
 		classListTab.getElement().setClassName("");
 		
@@ -2049,7 +2049,7 @@ public class EditClasspageView extends
 	public class AssignmentsTabClicked implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			assignmentsTab.addStyleName(res.css().selected());
+			assignmentsTab.addStyleName("selected");
 			dropdownPlaceHolder.setText(i18n.GL1948());
 			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1948());
 			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1948());
@@ -2057,7 +2057,7 @@ public class EditClasspageView extends
 			if(tab!=null){
 				if(classpageItemsList!=null&&classpageItemsList.size()>0){
 					assignmentsDirectionsLabel.setVisible(false);
-					getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+					getstarteddiv.removeStyleName("btnContainerClasswithBG");
 					getstarteddiv.setVisible(true);
 					panelAssignmentPath.setVisible(true);
 					headerAssignments.setVisible(true);
@@ -2066,7 +2066,7 @@ public class EditClasspageView extends
 				}
 				else{
 					assignmentsDirectionsLabel.setVisible(true);
-					getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+					getstarteddiv.addStyleName("btnContainerClasswithBG");
 					getstarteddiv.setVisible(false);
 					panelAssignmentPath.setVisible(false);
 					headerAssignments.setVisible(false);
@@ -2132,9 +2132,9 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			assignmentsDirectionsLabel.setVisible(false);
-			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.removeStyleName("btnContainerClasswithBG");
 			getstarteddiv.setVisible(true);
-			classListTab.addStyleName(res.css().selected());
+			classListTab.addStyleName("selected");
 			reportsTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
 			refresh=false;
@@ -2189,9 +2189,9 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			assignmentsDirectionsLabel.setVisible(false);
-			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.removeStyleName("btnContainerClasswithBG");
 			getstarteddiv.setVisible(true);
-			reportsTab.addStyleName(res.css().selected());
+			reportsTab.addStyleName("selected");
 			classListTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
 			refresh=false;

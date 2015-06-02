@@ -1,20 +1,20 @@
-.userShelfViewContainer {
+#pnlMainFlow .userShelfViewContainer {
 	float: left;
 }
 
-.floatShelfTabLeft {
+#pnlMainFlow .floatShelfTabLeft {
 	float: right;
 	min-height: 759px;
 	position: relative;
 	width: 311px;
 }
 
-.userShelfViewList {
+#pnlMainFlow .userShelfViewList {
 	position: relative;
 	top: -51px;
 }
 
-.newMockLeftAlignController {
+#pnlMainFlow .newMockLeftAlignController {
 	margin: 0px auto;
 	/* float: left; */
 	width: 1000px;
@@ -28,7 +28,7 @@
 	/* top: 36px; */
 }
 
-.howToUseThisPageBlue {
+#pnlMainFlow .howToUseThisPageBlue {
 	float: right;
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 10px 11px 0px 0px;
@@ -37,7 +37,7 @@
 	cursor: pointer;
 }
 
-.myCollectionShareStudentContainer {
+#pnlMainFlow .myCollectionShareStudentContainer {
 	position: relative;
 	width: 1000px;
 	min-width: 1000px;
@@ -45,11 +45,11 @@
 	height: 180px;
 }
 
-.myCollectionShareStudentContainer > .headerContainer{
+#pnlMainFlow .myCollectionShareStudentContainer > .headerContainer{
 	height:180px;
 }
 
-.myClasspageWrapperTwoChapterTextNoWelcome {
+#pnlMainFlow .myClasspageWrapperTwoChapterTextNoWelcome {
 	float: left;
 	width: 83%;
 	height: 37px;
@@ -58,7 +58,7 @@
 	color: #515151;
 }
 
-.myClasspageWrapperTwoChapterText {
+#pnlMainFlow .myClasspageWrapperTwoChapterText {
 	float: left; /*width:257px;*/
 	height: 28px;
 	margin: 17px;
@@ -66,7 +66,7 @@
 	color: white;
 }
 
-.myClassPageTitle {
+#pnlMainFlow .myClassPageTitle {
 	float: left;
 	height: 39px;
 	text-align: left;
@@ -75,14 +75,14 @@
 	/* margin-right: 17px; */
 }
 
-.blueButtonView:hover {
+#pnlMainFlow .blueButtonView:hover {
 	color: white;
 	background: #1076BB;
 	cursor: pointer;
 	float: right;
 }
 
-.blueButtonView {
+#pnlMainFlow .blueButtonView {
 	color: white;
 	background-color: #1076bb;
 	border-radius: 4px;
@@ -104,14 +104,14 @@
 	font-size: 12px;
 }
 
-.blueButtonView:hover {
+#pnlMainFlow .blueButtonView:hover {
 	color: white;
 	background: #1076BB;
 	cursor: pointer;
 	float: right;
 }
 
-.tabs {
+#pnlMainFlow .tabs {
 	clear: both;
 	background: rgb(239, 239, 239);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD),
@@ -124,13 +124,13 @@
 	margin: 0px 21px 0px 26px;
 }
 
-.tabsli {
+#pnlMainFlow .tabsli {
 	display: inline-block;
 	padding: 10px 20px;
 	margin: 0px -2px;
 }
 
-.tabsliactive:hover {
+#pnlMainFlow .tabsliactive:hover {
 	-moz-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
 	-webkit-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
@@ -150,7 +150,7 @@
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
 }
 
-.tabsli:hover {
+#pnlMainFlow .tabsli:hover {
 	/*background: #f0f0f0;*/
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
@@ -159,7 +159,7 @@
 	background-color: #efefef;
 }
 
-.active {
+#pnlMainFlow .active {
 	-moz-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
 	-webkit-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
@@ -179,7 +179,7 @@
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
 }
 
-.addAsAnAssignmentMarginBlue {
+#pnlMainFlow .addAsAnAssignmentMarginBlue {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #1076BB;
@@ -189,7 +189,7 @@
 	width: 25%;	
 }
 
-.noAssignmentMsg{
+#pnlMainFlow .noAssignmentMsg{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:24px;
 	line-height:120%;
@@ -200,7 +200,7 @@
 	/* position: relative; */
 	margin: 0 auto;
 }
-.loadingpanelImage{
+#pnlMainFlow .loadingpanelImage{
 	background: url(images/core/B-Dot.gif) no-repeat;
 	height: 170px;
 	width: 233px;
@@ -210,13 +210,13 @@
 	text-align: center;
 	margin-left: 400px;
 }
-.myClassPageTitleButtonContainer {
+#pnlMainFlow .myClassPageTitleButtonContainer {
 	float: right;
 	width: 100%;
 	margin-top: -18px;
 	background-color: wheat;
 }
-.editTitleButton {
+#pnlMainFlow .editTitleButton {
 	text-align: center;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -226,24 +226,24 @@
 	width: 80%;
 }
 
-.editTitleButton:hover {
+#pnlMainFlow .editTitleButton:hover {
 	color: #87BADD;
 	cursor: pointer;
 }
 
-.searchResultContainer {
+#pnlMainFlow .searchResultContainer {
 	width: 100%;
 	float: left;
 	margin-top:-7px;
 }
 
-.paginationContainer {
+#pnlMainFlow .paginationContainer {
 	float:right;
 	margin-top:7px;
 	text-align:right;
 }
 
-.paginationPanel {
+#pnlMainFlow .paginationPanel {
 	text-align: center;
 	width: 70px;
 	padding-left: 20px;
@@ -252,12 +252,12 @@
 	color: #1076BB;
 	background-image: url("../images/core/background-image.png") !important;
 }
-.paginationPanel:hover{
+#pnlMainFlow .paginationPanel:hover{
 	cursor:pointer;
 	color: #87BADD;
 }
 
-.classPageEditArrContainer {
+#pnlMainFlow .classPageEditArrContainer {
 	padding: 5px 0 0 0;
 	position: absolute;
 	cursor: pointer;
@@ -265,19 +265,19 @@
 	margin-top: 11px;
 }
 
-.classPageEditArrOuterDiv {
+#pnlMainFlow .classPageEditArrOuterDiv {
 	float: left;
 	/* padding: 5px 0px 0px 0px; */
 	position: relative;
 }
 
-.classPageEditArrIcon {
+#pnlMainFlow .classPageEditArrIcon {
 	background-position: -52px 100px;
 	width: 10px;
 	height: 25px;
 }
 
-.classPageEditArrText {
+#pnlMainFlow .classPageEditArrText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 120%;
@@ -290,19 +290,19 @@
 	left: 123px;
 }
 
-.classPageEditArrImg{
+#pnlMainFlow .classPageEditArrImg{
 	position: absolute;
 	/* top: 51px; */
 	float: left;
 	left: 109px;
 }
 
-.simplePencil {
+#pnlMainFlow .simplePencil {
 	height: 64px;
 	min-width: 50px;
 }
 
-.collectionEditImage {
+#pnlMainFlow .collectionEditImage {
 	background: url("images/Collection-Search/icon-sprite.png") repeat
 		scroll -71px -169px transparent;
 	float: right;
@@ -312,7 +312,7 @@
 	margin-top: 15px;
 }
 
-.userCollectionInfo {
+#pnlMainFlow .userCollectionInfo {
 	position: absolute;
 	bottom: 0;
 	float: left;
@@ -321,19 +321,19 @@
 	background-color: rgba(16,118,187,0.5);
 }
 
-.collectionTitle {
+#pnlMainFlow .collectionTitle {
 	float: left;
 	font-size: 15px;
 	font-weight: bold;
 	width: auto;
 }
 
-.titleAlertContainer {
+#pnlMainFlow .titleAlertContainer {
 	float: left;
 	width: 80%;
 }
 
-.titleAlertMessage {
+#pnlMainFlow .titleAlertMessage {
 	display: none;
 	color: #f9b039;
 	float: right;
@@ -342,14 +342,14 @@
 	
 }
 
-.collectionDescriptionTitle {
+#pnlMainFlow .collectionDescriptionTitle {
 	color: #999999;
 	clear: both;
 	float: left;
 	font-size: 12px;
 }
 
-.collectionDescription {
+#pnlMainFlow .collectionDescription {
 	border: none !important;
 	clear: both;
 	float: left;
@@ -358,7 +358,7 @@
 	font-style: italic;
 }
 
-.descriptionAlertMessage {
+#pnlMainFlow .descriptionAlertMessage {
 	color: #fbb03b;
 	float: right;
 	font-size: 12px;
@@ -370,7 +370,7 @@
 }
 
 
-.collectionDescriptionTxtArea,.collectionDescriptionHtml {
+#pnlMainFlow .collectionDescriptionTxtArea,#pnlMainFlow .collectionDescriptionHtml {
 	border: 1px solid #DDDDDD;
 	float: left;
 	height: 60px !important;
@@ -381,12 +381,12 @@
 	word-wrap: break-word;
 	white-space: pre-line;
 }
-.classPagebuttonContainer {
+#pnlMainFlow .classPagebuttonContainer {
 	float: right;
 	margin-top: -43px;
 	margin-right: 210px;
 }
-.classPageEditTitleCancelButton {
+#pnlMainFlow .classPageEditTitleCancelButton {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	display: block;
@@ -396,12 +396,12 @@
 	margin: 5px 0px 10px 4px;
 	float: right;
 	}
-	.cursor {
+#pnlMainFlow .cursor {
 	cursor: pointer;
 }
 	
 	
-.classPageEditTitleSaveButton {
+#pnlMainFlow .classPageEditTitleSaveButton {
 	width: 50px;
 	height: 23px;
 	margin: 0px 0px 5px 50px;
@@ -431,7 +431,7 @@
 	border-radius: 4px;
 	background: #1076bb;
 }
-.classPageEditTitle {
+#pnlMainFlow .classPageEditTitle {
 	color: #fff;
 	font-size: 12px;
 	text-align: center;
@@ -439,32 +439,32 @@
 }
 
 
-.classpageHoverButton {
+#pnlMainFlow .classpageHoverButton {
 	position: relative;
 	top: -147px;
 	right: 20px;
 	float:right
 }
-.classpageHoverButton:hover{
+#pnlMainFlow .classpageHoverButton:hover{
 	color: white;
 	cursor: pointer;
 	background: #1076BB;
 }
 
-.monitorButton {
+#pnlMainFlow .monitorButton {
 	position: relative;
 	right: -94px;
 	float:right;
 	margin-top: 15px;
 	margin-bottom: 20px;
 }
-.monitorButton:hover{
+#pnlMainFlow .monitorButton:hover{
 	color: white;
 	cursor: pointer;
 	background: #1076BB;
 }
 
-.classpageEditButton {
+#pnlMainFlow .classpageEditButton {
 	position: relative;
 	margin: 0px auto;
 	left: 478px;
@@ -472,33 +472,33 @@
 	visibility: hidden;
 }
 
-.classpageDeleteButton {
+#pnlMainFlow .classpageDeleteButton {
 	margin: 20px;
 }
-.classpageEditButton:hover, .classpageDeleteButton:hover{
+#pnlMainFlow .classpageEditButton:hover, #pnlMainFlow .classpageDeleteButton:hover{
 	background: #eee;
 	cursor: pointer;
 }
 
-.classpageTitleSave{
+#pnlMainFlow .classpageTitleSave{
 	float: left;
 	margin-left: 5px;
 }
 
 
-.classpageTitleSave:hover{
+#pnlMainFlow .classpageTitleSave:hover{
 	color: white;
 	cursor: pointer;
 	background: #1076BB;
 }
 
 
-.classpageTitleCancel{
+#pnlMainFlow .classpageTitleCancel{
 	float:left;
 	margin-left: 10px;
 }
 
-.classpageClasscode {
+#pnlMainFlow .classpageClasscode {
 	width: 725px;
 	margin: 0 auto;
 	background-color: rgba(221,221,221,0.5);
@@ -514,30 +514,30 @@
 	-moz-border-top-right-radius: 0px;
 }
 
-.classpageCodeDesc {
+#pnlMainFlow .classpageCodeDesc {
 	float: left;
 	padding: 15px 0px 0px 0px;
 	position: absolute;
 }
-.classpageCodeShare {
+#pnlMainFlow .classpageCodeShare {
 	float: left;
 	padding: 6px 7px 0px 0px;
 	font-weight: bold;
 }
-.classpageCodeShareOr {
+#pnlMainFlow .classpageCodeShareOr {
 	float: left;
 	padding: 6px 7px 0px 0px;
 }
-.classpageCodeShareInput {
+#pnlMainFlow .classpageCodeShareInput {
 	float: left;
 }
 
 
-.classpageCodeHelp:hover {
+#pnlMainFlow .classpageCodeHelp:hover {
 	cursor: pointer;
 }
 
-.classpageShareCodeInput{
+#pnlMainFlow .classpageShareCodeInput{
 	margin-top: 2px;
 	color: #515151;
 	padding: 4px 2px;
@@ -550,7 +550,7 @@
 	
 }
 
-.classpageShareLinkInput{
+#pnlMainFlow .classpageShareLinkInput{
 	width:140px;
 	margin-top: 2px;
 	color: #515151;
@@ -560,7 +560,7 @@
 	border: 1px solid rgb(221,221,221);
 }
 
-.classpageTopLine{
+#pnlMainFlow .classpageTopLine{
 	border-top: 1px solid #D0D0D0;
 	width: 100%;
 	margin: 0px auto;
@@ -569,30 +569,30 @@
 	margin-top:30px;
 }
 
-.addAssignment{
+#pnlMainFlow .addAssignment{
 	margin-top: -50px;
 	margin-left:0px !important;
 }
 
-.addAssignmentStyle{
+#pnlMainFlow .addAssignmentStyle{
 	margin-top: 20px;
 	margin-left:0px !important;
 }
 
-.addAssignment:hover{
+#pnlMainFlow .addAssignment:hover{
 	background: url("images/Classpage/plus_blue.png") 11px 11px no-repeat, #eee;
 	cursor: pointer;
 }
 
-.assignmentsContainer{
+#pnlMainFlow .assignmentsContainer{
 	overflow: hidden;
 margin-left:-1px;
 }
-.assignmentsContainerHead{
+#pnlMainFlow .assignmentsContainerHead{
 	margin-top:44px;
 }
 
-.classpageCodeInnerPopup {
+#pnlMainFlow .classpageCodeInnerPopup {
 	clear: both;
 	color: #515151;
 	font-size: 12px;
@@ -608,13 +608,13 @@ margin-left:-1px;
 	-webkit-border-radius: 4px;
 }
 
-.classpageCodePopupTitle {
+#pnlMainFlow .classpageCodePopupTitle {
 	font-weight: bold;
 	padding-bottom: 10px;
 }
 
 
-.arrowShadow {
+#pnlMainFlow .arrowShadow {
     background-color: transparent;
 	width: 6px;
 	height: 17px;
@@ -627,7 +627,7 @@ margin-left:-1px;
 	-webkit-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
 }
 
-.arrowBorder {
+#pnlMainFlow .arrowBorder {
     width: 0px;
     height: 0px;
     border: 10px solid;
@@ -638,7 +638,7 @@ margin-left:-1px;
 	border-top: none;
 }
 
-.arrow {
+#pnlMainFlow .arrow {
     width: 0px;
     height: 0px;
     border: 10px solid;
@@ -649,7 +649,7 @@ margin-left:-1px;
     border-top: none;
 }
 
-.codePopupContainer{
+#pnlMainFlow .codePopupContainer{
 	width: 227px;
 	position: absolute;
 	top: 50px;
@@ -657,31 +657,31 @@ margin-left:-1px;
 	z-index:99;	
 }
 
-.webLinkPopupContainer{
+#pnlMainFlow .webLinkPopupContainer{
 	width: 227px;
 	position: absolute;
 	top: 50px;
 	left: 475px;	
 	z-index:99;	
 }
-.classpageImage{
+#pnlMainFlow .classpageImage{
 	width:1000px;
 	height:180px;
 }
 /*New CSS for 6.1 teach  */
-.teachContainer {
+#pnlMainFlow .teachContainer {
        width: 1002px;
        margin: 0 auto;
        overflow: visible;
 }
-.teachTab {
+#pnlMainFlow .teachTab {
        text-align: center;
        padding-bottom: 20px;
        margin: 20px auto;
        width: 62%;
        /* margin-left:122px; */
 }
-.teachTab .select {
+#pnlMainFlow .teachTab .select {
        color: #fff;
        cursor: pointer;
        padding: 10px 60px;
@@ -700,12 +700,12 @@ margin-left:-1px;
        left: 7px;
        border-radius: 5px 0px 0px 5px;
 } */
-.teachTab .selectd {
+#pnlMainFlow .teachTab .selectd {
        position: relative;
        right: 7px;
        border-radius: 0px 5px 5px 0px;
 }
-.teachTab .deselect {
+#pnlMainFlow .teachTab .deselect {
        color: #515151;
        cursor: pointer;
        padding: 10px 60px;
@@ -717,7 +717,7 @@ margin-left:-1px;
        border: 1px solid #ccc;
        border-radius: 5px;
 }
-.teachContent {
+#pnlMainFlow .teachContent {
        padding: 30px;
        min-height: 500px;
        border-radius: 4px;
@@ -726,7 +726,7 @@ margin-left:-1px;
        border: 1px solid #eaeaea;
        background: #fff;
 }
-.teachTitle {
+#pnlMainFlow .teachTitle {
        display: inline-block;
        vertical-align: top;
        font-size: 16px;
@@ -734,7 +734,7 @@ margin-left:-1px;
        padding-bottom: 30px;
    padding-top:8px;
 }
-.classpageHover {
+#pnlMainFlow .classpageHover {
 	width: 1002px;
     height:523px;
 	margin: 0 auto;
@@ -745,7 +745,7 @@ margin-left:-1px;
 	box-shadow: 0 0 10px rgba(0,0,0,.1); */
 	/* background: url('/images/Classpage/no-collections.png') no-repeat; */
 }
-.classpageHoverTitle {
+#pnlMainFlow .classpageHoverTitle {
 	font-size: 24px;
 	color: #999;
     padding: 100px 180px 0px 180px;
@@ -753,7 +753,7 @@ margin-left:-1px;
 }
 
 
-.teachTab button:first-child{
+#pnlMainFlow .teachTab button:first-child{
 	color: #515151;
 	cursor: pointer;
 	padding: 10px 60px;
@@ -767,7 +767,7 @@ margin-left:-1px;
 	border-radius: 5px 0px 0px 5px;
 }
 
-.teachTab button{
+#pnlMainFlow .teachTab button{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -782,7 +782,7 @@ margin-left:-1px;
 	/* border-radius: 0px 5px 5px 0px; */
 	
 }
-.teachTab button:last-child{
+#pnlMainFlow .teachTab button:last-child{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -797,7 +797,7 @@ margin-left:-1px;
 	border-radius: 0px 5px 5px 0px;
 	
 }
-.teachTab button:nth-last-child(2){
+#pnlMainFlow .teachTab button:nth-last-child(2){
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -813,7 +813,7 @@ margin-left:-1px;
 	
 }
 
-.teachTab > .selected{
+#pnlMainFlow .teachTab > .selected{
     color: #FFF !important;
     background: #1076BB;
     background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0, #579ecf 100%) !important;
@@ -827,33 +827,33 @@ margin-left:-1px;
 	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.15) !important;
 	box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.15) !important;
 }
-.iframeBorder{
+#pnlMainFlow .iframeBorder{
 	border:none;
 	width: 1000px !important;
 	height: 1000px !important;
 	background-color: #e7e7e7;
 	position: relative;
 }
-.backArrowButton{
+#pnlMainFlow .backArrowButton{
 	margin-top:20px;
 	margin-bottom:20px;
 }
-.labelCenterAlign{
+#pnlMainFlow .labelCenterAlign{
 	text-align:center;
 	font-size : 18px;
 	margin-top: 14px;
 margin-bottom: -10px;
 }
-.labelCenterAlignText{
+#pnlMainFlow .labelCenterAlignText{
 	text-align:center;
 	font-size:20px;
 	
 }
 
-.assignmentPath{
+#pnlMainFlow .assignmentPath{
 	
 }
-.assignmentPathContainer{
+#pnlMainFlow .assignmentPathContainer{
 	margin-bottom: 10px;
 	/* background-color:rgb(255,255,255); */
 	height:70px;
@@ -870,7 +870,7 @@ margin-bottom: -10px;
 	margin-top:-20px;
 }
 
-.assignmentProgress{
+#pnlMainFlow .assignmentProgress{
 	text-align: center;
 	font-size: 12px; 
 /*	font-weight: bold;	*/
@@ -879,7 +879,7 @@ margin-bottom: -10px;
 	border-top: 1px solid #ccc;
   padding-top: 15px;
 }
-.assignmentProgressStudent{
+#pnlMainFlow .assignmentProgressStudent{
 	text-align: center;
 	font-size: 12px; 
 /*	font-weight: bold;	*/
@@ -890,11 +890,11 @@ margin-bottom: -10px;
     padding-bottom: 12px;
 }
 
-.assignmentPath{
+#pnlMainFlow .assignmentPath{
 	height: 15px;
 }
 
-.line{
+#pnlMainFlow .line{
 	height: 3px;
 	background: #515151 2px;
 	margin-top: 7px;
@@ -904,7 +904,7 @@ margin-bottom: -10px;
 	float: left;
 }
 
-.squre {
+#pnlMainFlow .squre {
 	width: 15px;
 	height: 15px;
 	background: #009E0F;
@@ -913,11 +913,11 @@ margin-bottom: -10px;
 	border: 1px black solid;
 }
 
-.path{
+#pnlMainFlow .path{
 	margin-top: 15px;
 	margin-left: 8px;
 }
-.classcodeStyles{
+#pnlMainFlow .classcodeStyles{
 	display: block;
 	width: 75px !important;
 	height: 30px !important;
@@ -931,24 +931,24 @@ margin-bottom: -10px;
 	text-align: center;
 }
 
-.classcodeContainer{
+#pnlMainFlow .classcodeContainer{
 	float: left;
 	
 }
 
-.containerProgress{
+#pnlMainFlow .containerProgress{
 	margin: 0px auto;
 	height: 115px;
 }
 
-.next, .previous{
+#pnlMainFlow .next,#pnlMainFlow .previous{
 	margin: 20px auto;
 	width: 2%;
 	float: left;
 	height: 5px;
 	margin-bottom:0px;
 }
-.nextStudent, .previousStudent{
+#pnlMainFlow .nextStudent,#pnlMainFlow .previousStudent{
 	margin: 78px auto;
 	width: 2%;
 	float: left;
@@ -956,7 +956,7 @@ margin-bottom: -10px;
 	margin-bottom:0px;
 }
 
-.rightArrow {
+#pnlMainFlow .rightArrow {
 	width: 0;
 	height: 0;
 	border: 15px solid transparent;
@@ -969,7 +969,7 @@ margin-bottom: -10px;
 	margin-top:-28px;
 }
 
-.leftArrow {
+#pnlMainFlow .leftArrow {
 	width: 0;
 	height: 0;
 	border: 15px solid transparent;
@@ -982,14 +982,14 @@ margin-bottom: -10px;
 	margin-top:-28px;
 }
 
-.dropdowncontainer {
+#pnlMainFlow .dropdowncontainer {
 	width: 130px;
 	float: left;
 	margin-right: 10px;
 	margin-left: 42px;
 	margin-bottom: 15px;
 }
-.dropdowncontainerStudent {
+#pnlMainFlow .dropdowncontainerStudent {
 /* 	width: 140px;
 	margin-right: 10px;
 	margin-left: 13.5%;
@@ -1002,7 +1002,7 @@ margin-bottom: -10px;
 	position: relative;
 }
 
-.dropdownPlaceHolder {
+#pnlMainFlow .dropdownPlaceHolder {
 	background: url(images/dropdownMenuArrow.png) no-repeat;
 	background-color: white;
 	background-position: right center;
@@ -1017,7 +1017,7 @@ margin-bottom: -10px;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
 }
-.dropdownPlaceHolderStudent {
+#pnlMainFlow .dropdownPlaceHolderStudent {
 	background: url(images/dropdownMenuArrow.png) no-repeat;
 	background-color: white;
 	background-position: right center;
@@ -1032,7 +1032,7 @@ margin-bottom: -10px;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
 }
-.dropdownListContainerScrollPanel {
+#pnlMainFlow .dropdownListContainerScrollPanel {
 	border: 1px solid #ddd;
 	list-style-type: none;
 	padding: 0;
@@ -1042,7 +1042,7 @@ margin-bottom: -10px;
 	position:absolute;
 	background-color: #ffffff;
 }
-.dropdownListContainerScrollPanelStudent {
+#pnlMainFlow .dropdownListContainerScrollPanelStudent {
 	border: 1px solid #ddd;
 	list-style-type: none;
 	padding: 0;
@@ -1052,7 +1052,7 @@ margin-bottom: -10px;
 	position:absolute;
 	background-color: #ffffff;
 }
-.dropdownTextLabel{
+#pnlMainFlow .dropdownTextLabel{
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -1065,11 +1065,11 @@ margin-bottom: -10px;
 	width: 100%;
 	padding: 5px 8px 5px 7px;
 }
-.dropdownTextLabel:hover{
+#pnlMainFlow .dropdownTextLabel:hover{
 	background-color: #cfe3f1;
 	cursor: pointer;
 }
-.dropdownContainerInstructional{
+#pnlMainFlow .dropdownContainerInstructional{
 	background-color:rgb(255,255,255);
 	width:145px;
 	height:28px;
@@ -1085,7 +1085,7 @@ margin-bottom: -10px;
 	position: absolute;
 	margin-top:11px;
 }
-.placeHolderText{
+#pnlMainFlow .placeHolderText{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
 	line-height:120%;
@@ -1097,7 +1097,7 @@ margin-bottom: -10px;
 	cursor: pointer;
 	width: 90%;
 }
-.arrowInstructional {
+#pnlMainFlow .arrowInstructional {
     width: 0;
 	height: 0;
 	border: 8px solid;
@@ -1109,7 +1109,7 @@ margin-bottom: -10px;
 	border-bottom: none;
 	cursor: pointer;
 }
-.scrollPanelContainerInstructional{
+#pnlMainFlow .scrollPanelContainerInstructional{
 	background-color:rgb(255,255,255);
 	width:145px;
 	height:82px;
@@ -1128,17 +1128,17 @@ margin-bottom: -10px;
 	overflow-x:hidden !important;
 }
 
-.btnContainer{
+#pnlMainFlow .btnContainer{
 	text-align : center;
 	border-bottom: 1px solid #EBEAEA;	
 }
 
-.btnContainerStyle{
+#pnlMainFlow .btnContainerStyle{
 	text-align : center;
 	/* border-top: 1px solid #CCC;	 */
 	margin-top: 38px;
 }
-.btnContainerClasswithBG{
+#pnlMainFlow .btnContainerClasswithBG{
 	background: white;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1146,13 +1146,13 @@ margin-bottom: -10px;
 	margin-bottom: -24px;
 }
 
-.section2Div{
+#pnlMainFlow .section2Div{
 	background: white;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 
 }
-.section3Div{
+#pnlMainFlow .section3Div{
 	background: white;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1161,32 +1161,32 @@ margin-bottom: -10px;
 
 
 /* Empty page css */
-.subtitle {
+#pnlMainFlow .subtitle {
 	font-size: 16px;
 	width: 420px
 }
-.contentBox {
+#pnlMainFlow .contentBox {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	min-height: 200px;
 	text-align: center;
 }
-.h3 {
+#pnlMainFlow .h3 {
 	font-size: 18px;
 	text-align: center;
 	padding: 30px 0px;
 }
-.collectionView {
+#pnlMainFlow .collectionView {
 	display: block;
 	min-height: 168px;
 	padding: 23px;
     box-sizing: border-box;
 }
-.circleBlock {
+#pnlMainFlow .circleBlock {
 	display: inline-block;
 	vertical-align: top;
 }
-.circleBg {
+#pnlMainFlow .circleBg {
 	width: 40px;
 	height: 40px;
 	cursor: pointer;
@@ -1194,7 +1194,7 @@ margin-bottom: -10px;
 	border-radius: 20px;
 	-moz-border-radius: 20px;
 }
-.circleTitle {
+#pnlMainFlow .circleTitle {
 	color: #fff;
 	font-weight:bold;
 	font-size: 20px;
@@ -1202,15 +1202,15 @@ margin-bottom: -10px;
 	line-height: 40px;
 	text-align: center;
 }
-.desHtml{
+#pnlMainFlow .desHtml{
 	width: 252px;
 	float: left;
 }
-.desHeader{
+#pnlMainFlow .desHeader{
 	font-size: 18px;
 	float: left;
 }
-.desc {
+#pnlMainFlow .desc {
 	display: inline-block;
 	color: #515151;
 	vertical-align: top;
@@ -1221,32 +1221,32 @@ margin-bottom: -10px;
 	/* line-height: 40px; */
 	margin-top: 14px;
 }
-.collectionView, .img {
+#pnlMainFlow .collectionView,#pnlMainFlow .img {
 	width: 60%;
 	margin: 0 auto;
 }
-.imgStyle{
+#pnlMainFlow .imgStyle{
 	width: 50%;
 	float: left;
 }
-.imgStyleDiv{
+#pnlMainFlow .imgStyleDiv{
 	max-width: 100%;
 }
-.btn {
+#pnlMainFlow .btn {
 	margin-left: 10px;
 }
-.assignText{
+#pnlMainFlow .assignText{
 	color: #1076bb;
 }
 
-.containerProgressWidth{
+#pnlMainFlow .containerProgressWidth{
 	width:1000px;
 }
-.assignementOrderHeader{
+#pnlMainFlow .assignementOrderHeader{
 	margin: 20px auto; 
 	text-align: center; 
 }
-.errorMessage{
+#pnlMainFlow .errorMessage{
 	height: 170px;
 	width: 450px;
 	color: #999;
@@ -1258,20 +1258,20 @@ margin-bottom: -10px;
 	margin-top: 10px;
 }
 
-.studentStyle{
+#pnlMainFlow .studentStyle{
 	float: right;
     position: relative;
 	width: 176px;
 	top: 32%;
 }
 
-.techerStyle{
+#pnlMainFlow .techerStyle{
 	float: left;
     position: relative;
 	width: 218px;
 	top: 29%;
 }
-.switchContainer {
+#pnlMainFlow .switchContainer {
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
@@ -1289,13 +1289,13 @@ margin-bottom: -10px;
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
-.toggleContainer{
+#pnlMainFlow .toggleContainer{
 	float: right;
 	/* position: relative; */
 	display: inline-block;
 	top: 0;
 }
-.assignementOrderHeaderText{
+#pnlMainFlow .assignementOrderHeaderText{
   margin: 20px auto;
   text-align: center;
   font-size: 14px;
