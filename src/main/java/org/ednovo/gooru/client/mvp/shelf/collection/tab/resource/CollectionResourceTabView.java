@@ -853,7 +853,7 @@ public class CollectionResourceTabView extends
 
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			setAttributeToWidget(noResourceLineOneLabel,i18n.GL3014());
-			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());
+			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL3276());
 			setAttributeToWidget(noResourceLineThreeLabel,"");
 			setAttributeToWidget(noResourceLineFourLabel," "+i18n.GL3015());
 			setAttributeToWidget(noResourceLineSixLabel,"");
