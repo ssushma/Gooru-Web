@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
@@ -179,6 +180,8 @@ public class ProfileTopicListView extends Composite{
 	private static final String  COLLECTION = "collection";
 	
 	private String libraryGooruOid=null;
+	
+	SearchAddResourceToCollectionPresenter remixPresenterWidget = AppClientFactory.getInjector().getRemixPresenterWidget();
 	
 	String collectionIdVal = "";
 	String folderIdVal = "";
@@ -1551,7 +1554,24 @@ public class ProfileTopicListView extends Composite{
 			if(params.containsKey(ASSIGN)){
 				params.remove(ASSIGN);
 			}
-			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
+			
+			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+			remixPresenterWidget.getView().getAppPopUp().show();
+			isCustomizePopup = false;
+			remixPresenterWidget.getView().getAppPopUp().center();
+			remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+			
+			/*remixPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					remixPresenterWidget.hidePopup();
+				}
+			});*/
+				
+			
+			
+			/*RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -1566,7 +1586,7 @@ public class ProfileTopicListView extends Composite{
 				successPopupVc.show();
 				successPopupVc.center();
 				
-			}
+			}*/
 			
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);

@@ -76,6 +76,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	ResourceSearchResultDo searchResultDo =null;
 	String type =null;
 	String accessType =null;
+	String collectionId = null;
 	private String parentId=null;
 	HashMap<String, String>  urlParameters;
 	 private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
@@ -110,6 +111,14 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void getUserShelfCollectionsData(CollectionSearchResultDo collectionsearchResultDo,String searchType,CollectionSearchWidget collectionSearchWidget) {
 		this.searchResultDo =collectionsearchResultDo;
 		this.collectionSearchWidget=collectionSearchWidget;
+		getView().setDefaultPanelVisibility(true);
+		getWorkspaceData(0,20,true,searchType);
+	}
+	
+	@Override
+	public void getUserShelfCollectionsData(String collectionId,String searchType) {
+		this.collectionSearchWidget=null;
+		this.collectionId=collectionId;
 		getView().setDefaultPanelVisibility(true);
 		getWorkspaceData(0,20,true,searchType);
 	}
@@ -181,7 +190,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			this.urlParameters=urlparams;
 			final CollectionDo collection = new CollectionDo();
 			if(searchType.equalsIgnoreCase("collection")){
-			collection.setGooruOid(searchResultDo.getGooruOid());
+				collection.setGooruOid(getCollectionGooruId());
+			
 			collection.setSharing("anyonewithlink");
 			if(selectedFolderOrCollectionid!=null){
 				O1_LEVEL_VALUE = urlparams.get("o1");
@@ -195,7 +205,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					parentId=O1_LEVEL_VALUE;
 				}
 
-				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
+				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,getCollectionGooruId(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
 					@Override
 					public void onSuccess(CollectionDo result) {
 						FolderDo folderDo=getFolderDo(result);
@@ -210,7 +220,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							params.put("o1", O1_LEVEL_VALUE);
 						}
 						params.put("from", "SearchAddResourcePresenter");
-						AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(searchResultDo.getGooruOid(),searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
+						AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
 							@Override
 							public void onSuccess(HashMap<String, String> result) {
 								if(collectionSearchWidget!=null){
@@ -226,6 +236,17 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}
 		}
 	}
+	private String getCollectionGooruId() {
+		String gooruOid="";
+		if(AppClientFactory.getCurrentPlaceToken().contains("search")){
+			System.out.println("insearch");
+			gooruOid = searchResultDo.getGooruOid();
+		}else{
+			gooruOid =  collectionId;
+		}
+		return gooruOid;
+	}
+
 	public FolderDo getFolderDo(CollectionDo collectionDo) {
 		FolderDo folderDo = new FolderDo();
 		folderDo.setGooruOid(collectionDo.getGooruOid());
@@ -257,7 +278,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void addCollectionToMyCollections(String object,String currentsearchType) {
 		final CollectionDo collection = new CollectionDo();
 		if(currentsearchType.equalsIgnoreCase("collection")){
-			collection.setGooruOid(searchResultDo.getGooruOid());
+			collection.setGooruOid(getCollectionGooruId());
 			AppClientFactory.getInjector().getResourceService().copyCollection(collection, "true", null,getSaveCollectionAsyncCallback());			
 	}
 		
@@ -271,7 +292,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				@Override
 				public void onSuccess(CollectionDo result) {
 					FolderDo folderDo=getFolderDo(result);
-					AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(searchResultDo.getGooruOid(),"collection", new SimpleAsyncCallback<HashMap<String,String>>() {
+					AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),"collection", new SimpleAsyncCallback<HashMap<String,String>>() {
 						@Override
 						public void onSuccess(HashMap<String, String> result) {
 							if(collectionSearchWidget!=null){
@@ -290,6 +311,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public Button getAddButton() {
 		return getView().getAddButton();
 	}
+	
 
 	@Override
 	public void hidePopup() {

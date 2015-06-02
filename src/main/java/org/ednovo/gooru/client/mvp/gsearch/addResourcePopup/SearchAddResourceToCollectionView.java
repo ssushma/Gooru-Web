@@ -107,12 +107,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		lblError.setVisible(false);
 		urlparams= new HashMap<String, String>();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)){
-			addtocollHeaderText.setText(i18n.GL3223());
-			addingTextLbl.setText(i18n.GL3213());
-		}else{
+		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3214());
+		}else{
+			addtocollHeaderText.setText(i18n.GL3223());
+			addingTextLbl.setText(i18n.GL3213());
 		}		
 		myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -201,6 +201,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@Override
 	public Widget asWidget() {
+		return appPopUp;
+	}
+	
+	/**
+	 * @return the appPopUp
+	 */
+	@Override
+	public PopupPanel getAppPopUp() {
 		return appPopUp;
 	}
 
@@ -461,6 +469,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		isAddingInProgress=true;
 		enableTopFilters();
 	}
+	
+	
 
 	@Override
 	public void setDefaultPanelVisibility(Boolean blnVal){
@@ -515,4 +525,5 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void clearUrlParams() {
 		urlparams.clear();
 	}
+
 }
