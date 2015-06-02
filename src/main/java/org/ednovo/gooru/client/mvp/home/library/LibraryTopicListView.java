@@ -48,6 +48,8 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
@@ -157,6 +159,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	private String searchTitle="";
 	
 	private static LibraryTopicViewUiBinder uiBinder = GWT.create(LibraryTopicViewUiBinder.class);
+	
+	SearchAddResourceToCollectionPresenter remixPresenterWidget = AppClientFactory.getInjector().getRemixPresenterWidget();
 	
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 	
@@ -1639,30 +1643,34 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		if(params.containsKey(ASSIGN)){
 			params.remove(ASSIGN);
 		}
-		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		final String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
 		String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
-			Boolean loginFlag = false;
-			if (AppClientFactory.isAnonymous()){
-				loginFlag = true;
-			}
-			else
-			{
-				loginFlag = false;
-			}
-			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
-
-				@Override
-				public void closePoup() {
-					Window.enableScrolling(true);
-					this.hide();	
-					isCustomizePopup = false;
-				}
-			};
 			Window.scrollTo(0, 0);
-			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+			if(AppClientFactory.isAnonymous()){
+				LoginPopupUc loginPopupUc=new LoginPopupUc() {
+					@Override
+					public	void onLoginSuccess(){
+						Window.enableScrolling(false);
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+						remixPresenterWidget.getView().getAppPopUp().show();
+						isCustomizePopup = false;
+						remixPresenterWidget.getView().getAppPopUp().center();
+						remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+					}
+				};
+				loginPopupUc.show();
+				loginPopupUc.setGlassEnabled(true);
+			}else{
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				remixPresenterWidget.getView().getAppPopUp().show();
+				isCustomizePopup = false;
+				remixPresenterWidget.getView().getAppPopUp().center();
+				remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+			}
+			/*if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 				successPopupVc.setWidth("500px");
 				successPopupVc.setHeight("515px");
 			}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
@@ -1670,7 +1678,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				successPopupVc.setHeight("336px");
 			}
 			successPopupVc.show();
-			successPopupVc.center();
+			successPopupVc.center();*/
 			
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);

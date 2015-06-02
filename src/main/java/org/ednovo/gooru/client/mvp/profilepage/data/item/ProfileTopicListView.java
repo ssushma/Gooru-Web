@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
@@ -1539,48 +1540,39 @@ public class ProfileTopicListView extends Composite{
 	
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
-		String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
+		final String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
-			Boolean loginFlag = false;
-			if (AppClientFactory.isAnonymous()){
-				loginFlag = true;
-			} else {
-				loginFlag = false;
-			}
+			
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
 					.getHref());
 			if(params.containsKey(ASSIGN)){
 				params.remove(ASSIGN);
 			}
-			
-			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
-			remixPresenterWidget.getView().getAppPopUp().show();
-			isCustomizePopup = false;
-			remixPresenterWidget.getView().getAppPopUp().center();
-			remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
-			
-			/*remixPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
-				
-				@Override
-				public void onClick(ClickEvent event) {
-					remixPresenterWidget.hidePopup();
-				}
-			});*/
-				
-			
-			
-			/*RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
-				@Override
-				public void closePoup() {
-					Window.enableScrolling(true);
-					this.hide();	
-					isCustomizePopup = false;
-				}
-			};
 			Window.scrollTo(0, 0);
-			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+			if(AppClientFactory.isAnonymous()){
+				LoginPopupUc loginPopupUc=new LoginPopupUc() {
+					@Override
+					public	void onLoginSuccess(){
+						Window.enableScrolling(false);
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+						remixPresenterWidget.getView().getAppPopUp().show();
+						isCustomizePopup = false;
+						remixPresenterWidget.getView().getAppPopUp().center();
+						remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+					}
+				};
+				loginPopupUc.show();
+				loginPopupUc.setGlassEnabled(true);
+			}else{
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				remixPresenterWidget.getView().getAppPopUp().show();
+				isCustomizePopup = false;
+				remixPresenterWidget.getView().getAppPopUp().center();
+				remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+			}
+			
+			/*if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 				successPopupVc.setPopupPosition(0, 30);
 			}else{
 				successPopupVc.show();
