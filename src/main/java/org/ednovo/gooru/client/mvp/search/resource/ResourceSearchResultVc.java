@@ -478,12 +478,10 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 				toolTip = new ToolTip(
 						i18n.GL0454()
 								+ ""
-								+ "<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"
 								+ " "
 								+ i18n.GL04431()
 								+ " "
-								+ "<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"
-								+ " " + i18n.GL_SPL_EXCLAMATION());
+								+ " ");
 				toolTip.getTootltipContent().getElement()
 						.setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle()
