@@ -75,9 +75,8 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 			user = getUserInfo(userUid);
 			user.setToken(getLoggedInSessionToken());
 			user.setDateOfBirth(getLoggedInDateOfBirth());
-
-			setUserFilterProperties(user);
 		}
+		setUserFilterProperties(user);
 		return user;
 	}
 
