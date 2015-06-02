@@ -513,23 +513,19 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		boolean inUser = sessionSessionToken != null && cookieSessionToken != null && cookieSessionToken.equals(sessionSessionToken);
 
 		UserDo user = null;
-		AppClientFactory.printInfoLogger("getLoggedInUserData 1");
-		if (sessionTimedOutUser || switchedUser) {
-			AppClientFactory.printInfoLogger("getLoggedInUserData 2");
+		if (sessionTimedOutUser || switchedUser || inUser) {
 			user = v2GetUserInfoByToken(cookieSessionToken);
 		} else if (!inUser) {
-			AppClientFactory.printInfoLogger("getLoggedInUserData 3");
 			user = v2GuestSignIn();
 		}
 		if (user != null) {
-			AppClientFactory.printInfoLogger("getLoggedInUserData 4");
 			deleteLoggedInInfo();
 			loggedInUserUid = user.getGooruUId();
 			setLoggedInInfo(cookieSessionToken == null ? user.getToken() : cookieSessionToken, user.getGooruUId(),getLoggedInEmailId(),getLoggedInDateOfBirth());
 		}
-		AppClientFactory.printInfoLogger("getLoggedInUserData 5");
 		return user;
 	}
+
 	/**
 	 *
 	 * @function getLoggedInUserUid
