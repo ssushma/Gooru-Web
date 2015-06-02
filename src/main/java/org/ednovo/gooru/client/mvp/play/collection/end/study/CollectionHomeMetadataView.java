@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCou
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdatePreviewViewCountEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopupPlayerVc;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -297,6 +296,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 						};
 						loginPopupUc.show();
 						loginPopupUc.setGlassEnabled(true);
+						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
 						remixPresenterWidget.getView().getAppPopUp().show();
