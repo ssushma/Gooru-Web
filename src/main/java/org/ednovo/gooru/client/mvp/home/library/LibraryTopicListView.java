@@ -1705,28 +1705,12 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		if(customize!=null && customize.equals("yes") && emailId!=null){
 			if(colleId.equals(collectionId) && isVisible){
 				isVisible=false;
-				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
-				final Map<String, String> params = StringUtil.splitQuery(Window.Location
-						.getHref());
-				RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
-
-					@Override
-					public void closePoup() {
-						Window.enableScrolling(true);
-						this.hide();	
-						isCustomizePopup = false;
-					}
-				};
 				Window.scrollTo(0, 0);
-				successPopupVc.show();
-				successPopupVc.center();
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				remixPresenterWidget.getView().getAppPopUp().show();
+				isCustomizePopup = false;
+				remixPresenterWidget.getView().getAppPopUp().center();
+				remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
 			}
 			
 		}
