@@ -36,9 +36,6 @@
 		,i[r].l=1*new Date();a=s.createElement(o),
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','hewlettOERTracker');
-		$(function() {
-			$('#source').heatmap('target', 15);
-		});
 
 	     function hewlettTracking(a)
 	     {
@@ -59,9 +56,7 @@
  		hewlettOERTracker('send', 'pageview', location.pathname + location.search + location.hash);
  	</script>
 	<script type="text/javascript">
-	    google.load("visualization", "1", {
-	        'packages' : [ "corechart" ]
-	    });
+	    google.load("visualization", "1", {'packages' : [ "corechart" ]});
 	    google.load("visualization", "1", {'packages' : ["table"] });
 	 </script>
 
