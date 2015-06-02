@@ -64,4 +64,5 @@ public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers,
 	void getUserShelfCollectionsData(CollectionSearchResultDo collectionsearchResultDo, String searchType,CollectionSearchWidget collectionSearchWidget);
 	void addCollectionToFolder(String selectedFolderOrCollectionid,String searchType, String title, int folerLevel,HashMap<String, String> urlparams);
 	void addCollectionToMyCollections(String object, String currentsearchType);
+	void getUserShelfCollectionsData(String collectionId, String searchType);
 }
