@@ -84,6 +84,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
 	private String widgetId;
+	private final static String CLICK="click";
 	
 	QuestionTypeView questionTypeView;
 	public AddHotSpotQuestionAnswerChoice(QuestionTypeView questionTypeView){
@@ -154,6 +155,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		setAnswerFields(false);
 		textAnsContainer.clear();
 		addAnswerChoice();
+		addAnswerChoice();
 		
 	}
 	
@@ -161,15 +163,28 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		int widgetCount=textAnsContainer.getWidgetCount();
 		for(int i=0;i<widgetCount;i++){
 			final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)textAnsContainer.getWidget(i);
+			addAnswerChoice.getElement().setId(i+"");
 			addAnswerChoice.setLabelName(anserChoiceNumArray[i]);
-			addAnswerChoice.optionSelectedButton.addClickHandler(new ClickHandler() {
-				
-				@Override
-				public void onClick(ClickEvent event) {
-					setSelectedAnswers();
-					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
-				}
-			});
+			
+			if(!addAnswerChoice.optionSelectedButton.getElement().getId().equalsIgnoreCase(CLICK)){
+				addAnswerChoice.optionSelectedButton.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						if(addAnswerChoice.isOptionSelectedButton){
+							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
+							addAnswerChoice.isOptionSelectedButton=false;
+						}else{
+							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
+							addAnswerChoice.isOptionSelectedButton=true;
+						}
+						
+					}
+				});
+			}
+			
+			addAnswerChoice.optionSelectedButton.getElement().setId(CLICK);
+			
 			if(i>0){
 				
 				addAnswerChoice.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
@@ -202,14 +217,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		
 	}
 	
-	public void setSelectedAnswers(){
-		int widgetCount=textAnsContainer.getWidgetCount();
-		for(int i=0;i<widgetCount;i++){
-			final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)textAnsContainer.getWidget(i);
-			
-		}
-	}
-	
 	public void addAnswerChoice(){
 		AddAnswerChoice addAnswerChoice=new AddAnswerChoice();
 		textAnsContainer.add(addAnswerChoice);
@@ -232,6 +239,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	@Override
 	public void setAnswerImageUrl(String fileName,	String fileNameWithoutRepository, boolean isAnswerImage) {
+		
 		double randNumber = Math.random();
 		final AddAnswerImg addAnswerImage = new AddAnswerImg();
 		addAnswerImage.setAnswerImage(fileName+"?"+randNumber);
@@ -240,7 +248,9 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		ansImageContainer.getElement().removeClassName("errorBorderMessage");
 		if(widgetId!=null){
 			addAnswerImage.setId(Integer.parseInt(widgetId));
-			ansImageContainer.addAndReplaceElement(addAnswerImage,widgetId);
+			ansImageContainer.remove(Integer.parseInt(widgetId));
+			ansImageContainer.add(addAnswerImage);
+			//ansImageContainer.addAndReplaceElement(addAnswerImage,widgetId);
 			widgetId=null;
 		}else{
 			addAnswerImage.setId(ansImageContainer.getWidgetCount());
@@ -252,9 +262,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("change---click--");
              widgetId=addAnswerImage.getElement().getId();
-				
 				questionTypeView.uploadAnswerImage();
 			}
 		});

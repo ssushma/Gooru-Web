@@ -27,13 +27,8 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -51,7 +46,7 @@ public class AddAnswerImg extends Composite
 	@UiField Image ansImageContainer;
 	@UiField HTMLPanel imgBlock;
 	
-	boolean selectedImage=false;
+	public boolean selectedImage=false;
 	
 	private String fileName=null;
 	private static final String DEFAULT_QUESTION_IMAGE="images/default-question.png";
@@ -67,14 +62,14 @@ public class AddAnswerImg extends Composite
 	public AddAnswerImg() {
 		initWidget(addQuestionImageUiBinder.createAndBindUi(this));
 		ansImageContainer.getElement().setId("imgAnsImageContainer");
-		changeImgLbl.setText(i18n.GL3232());
+		changeImgLbl.setText(i18n.GL3232_1());
 		changeImgLbl.getElement().setId("lblChangeImgLbl");
-		changeImgLbl.getElement().setAttribute("alt", i18n.GL3232());
-		changeImgLbl.getElement().setAttribute("title",i18n.GL3232());
-		removeImgLbl.setText(i18n.GL3233());
+		changeImgLbl.getElement().setAttribute("alt", i18n.GL3232_1());
+		changeImgLbl.getElement().setAttribute("title",i18n.GL3232_1());
+		removeImgLbl.setText(i18n.GL3233_1());
 		removeImgLbl.getElement().setId("lblChangeImgLbl");
-		removeImgLbl.getElement().setAttribute("alt", i18n.GL3233());
-		removeImgLbl.getElement().setAttribute("title",i18n.GL3233());
+		removeImgLbl.getElement().setAttribute("alt", i18n.GL3233_1());
+		removeImgLbl.getElement().setAttribute("title",i18n.GL3233_1());
 		imgBlock.getElement().setId("imgBlockPnl");
 		selLbl.getElement().setId("selLbl");
 		
