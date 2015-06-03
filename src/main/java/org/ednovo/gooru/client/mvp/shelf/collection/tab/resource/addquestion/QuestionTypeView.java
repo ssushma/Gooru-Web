@@ -1846,8 +1846,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
-				Window.alert("create");
-				//createQuestionResource(mediaFileName,collectionQuestionItemDo);
+				createQuestionResource(mediaFileName,collectionQuestionItemDo);
 			}
 		}
 	}
