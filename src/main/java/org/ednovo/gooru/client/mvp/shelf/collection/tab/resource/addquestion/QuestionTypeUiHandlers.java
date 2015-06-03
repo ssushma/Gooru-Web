@@ -2,6 +2,8 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResourceImageHandler;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 
 
 
@@ -22,4 +24,6 @@ public interface QuestionTypeUiHandlers extends BaseUiHandlers,AddResourceImageH
 	void removeAnswerImage(String collectionItemId);
 	void answerImageUpload();
 	void answerImageUpload(String collectionItemId);
+	void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl);
+	void addHSQuestionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo);
 }
