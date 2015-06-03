@@ -1886,8 +1886,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	}
 
-
-	public void resetFields() {
+@Override
+	public void reset() {
 		buttonContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		resetToHints();
 		setHotSpotAnswerFields();
