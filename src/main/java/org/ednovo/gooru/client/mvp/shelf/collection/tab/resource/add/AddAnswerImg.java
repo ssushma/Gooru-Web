@@ -27,13 +27,8 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -51,7 +46,7 @@ public class AddAnswerImg extends Composite
 	@UiField Image ansImageContainer;
 	@UiField HTMLPanel imgBlock;
 	
-	boolean selectedImage=false;
+	public boolean selectedImage=false;
 	
 	private String fileName=null;
 	private static final String DEFAULT_QUESTION_IMAGE="images/default-question.png";
