@@ -42,6 +42,8 @@
 
  <g:HTMLPanel styleName="containerMarginTop" ui:field="questionHotSpotAnswerChoiceContainer" />
  
+ <g:Label styleName="errorText errorMessage" ui:field="ansChoiceErrMsg"></g:Label>
+ 
   <g:HTMLPanel  ui:field="advancedContainer" styleName="addAdvancedHeaderTextContainer">
           <g:Label ui:field="advancedLbl"></g:Label>
           </g:HTMLPanel>

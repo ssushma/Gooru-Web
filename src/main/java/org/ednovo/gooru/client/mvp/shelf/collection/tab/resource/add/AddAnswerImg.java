@@ -67,14 +67,14 @@ public class AddAnswerImg extends Composite
 	public AddAnswerImg() {
 		initWidget(addQuestionImageUiBinder.createAndBindUi(this));
 		ansImageContainer.getElement().setId("imgAnsImageContainer");
-		changeImgLbl.setText(i18n.GL3232());
+		changeImgLbl.setText(i18n.GL3232_1());
 		changeImgLbl.getElement().setId("lblChangeImgLbl");
-		changeImgLbl.getElement().setAttribute("alt", i18n.GL3232());
-		changeImgLbl.getElement().setAttribute("title",i18n.GL3232());
-		removeImgLbl.setText(i18n.GL3233());
+		changeImgLbl.getElement().setAttribute("alt", i18n.GL3232_1());
+		changeImgLbl.getElement().setAttribute("title",i18n.GL3232_1());
+		removeImgLbl.setText(i18n.GL3233_1());
 		removeImgLbl.getElement().setId("lblChangeImgLbl");
-		removeImgLbl.getElement().setAttribute("alt", i18n.GL3233());
-		removeImgLbl.getElement().setAttribute("title",i18n.GL3233());
+		removeImgLbl.getElement().setAttribute("alt", i18n.GL3233_1());
+		removeImgLbl.getElement().setAttribute("title",i18n.GL3233_1());
 		imgBlock.getElement().setId("imgBlockPnl");
 		selLbl.getElement().setId("selLbl");
 		
