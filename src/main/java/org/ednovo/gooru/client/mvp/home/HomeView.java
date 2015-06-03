@@ -102,7 +102,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
-` *
+ *
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
@@ -212,11 +212,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		gooruPanel.setVisible(false);
 		setIds();
 
-		generateSubjectsData();
-		generateCourseData();
-
-		generateStandardLibraries();
-		generateDistrictLibraries();
+//		generateSubjectsData();
+//		generateCourseData();
+//
+//		generateStandardLibraries();
+//		generateDistrictLibraries();
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
 		if(emailId!=null)
@@ -567,7 +567,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (slot == getUiHandlers().getContributorsSlot()){
-			contributorsContainer.add(content);
+//			contributorsContainer.add(content);
 		}
 	}
 

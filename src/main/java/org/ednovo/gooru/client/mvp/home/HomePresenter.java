@@ -1,5 +1,4 @@
-/*******************************************************************************
- * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+/****************************************************************************** * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  *
  *  http://www.goorulearning.org/
  *
@@ -82,7 +81,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
@@ -218,13 +216,13 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				});
 			}
 		});
-		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
-		tooltipTimer = new Timer() {
-			public void run() {
-				contributorsPresenter.getContributors();
-			}
-		};
-		tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+//		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
+//		tooltipTimer = new Timer() {
+//			public void run() {
+//				contributorsPresenter.getContributors();
+//			}
+//		};
+//		tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
 
 	}
 
