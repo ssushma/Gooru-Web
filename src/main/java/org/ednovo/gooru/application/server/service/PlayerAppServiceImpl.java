@@ -102,6 +102,10 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	private static final String CREATE_DATE = "createdDate";
 	private static final String LAST_MODIFIED_ON = "lastModifiedOn";
 
+	private static final String YOUTUBE_PART_DETAILS = "contentDetails,status,snippet";
+	private static final String ITEMS = "items";
+	private static final String STATUS = "status";
+
 
 	@Override
 	public CollectionDo getSimpleCollectionDetils(String simpleCollectionId,String resourceId,String tabview, String rootNodeId) {
@@ -1472,22 +1476,21 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			throws GwtException, ServerDownException {
 		Map<String, String> youtubeValues=new HashMap<String, String>();
 		try{
-			String partialUrl = "http://gdata.youtube.com/feeds/api/videos/"+utubeId+"?";
 			Map<String, String> params = new LinkedHashMap<String, String>();
-			params.put(GooruConstants.V, "2");
-			params.put(GooruConstants.ALT, "jsonc");
-			params.put(GooruConstants.PRETTY_PRINT, GooruConstants.TRUE);
-			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+			params.put(GooruConstants.ID, utubeId);
+			params.put(GooruConstants.YOUTUBE_KEY, getYoutubeApiKey());
+			params.put(GooruConstants.YOUTUBE_PART, YOUTUBE_PART_DETAILS);
+			String url=AddQueryParameter.constructQueryParams(getYouTubeApiUrl(), params);
+
 			getLogger().info("getyoutube feed call back url::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 			JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
-			getLogger().info("youtube embed:"+jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").get("embed").toString());
 			if(jsonRep!=null && jsonRep.getSize()!=-1){
-				if(jsonRep.getJsonObject()!=null && jsonRep.getJsonObject().getJSONObject("data")!=null && jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl")!=null){
-					String embed=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("embed");
-					String syndicate=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("syndicate");
+				if(jsonRep.getJsonObject()!=null && jsonRep.getJsonObject().getJSONArray(ITEMS) != null && jsonRep.getJsonObject().getJSONArray(ITEMS).length() > 0){
+					JSONObject resourceJsonObject = jsonRep.getJsonObject().getJSONArray(ITEMS).getJSONObject(0).getJSONObject(STATUS);
+
+					String embed=resourceJsonObject.getString("embeddable");
 					youtubeValues.put("embed", embed);
-					youtubeValues.put("syndicate", syndicate);
 				}
 			}
 
