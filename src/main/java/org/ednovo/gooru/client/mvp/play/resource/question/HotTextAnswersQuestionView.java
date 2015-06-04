@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -305,11 +306,18 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private void showCorrectResult(){
 		
 		if(collectionItemDo.getResource().getType()==9){
-
+			boolean HTDragChoiceStatus=true;
 		int j=0;
-		
+		List<Integer> answerIds=new ArrayList<Integer>();
+		List<String> userAttemptedValueList=new ArrayList<String>();
 		for(int i=0;i<optionsContainer.getWidgetCount();i++){
 			Widget widget=optionsContainer.getWidget(i);
+			
+			if(widget instanceof Draggable){
+				Draggable draggable=(Draggable)widget;
+				HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
+				userAttemptedValueList.add("["+htAnswerOption.getAnswerText()+"]");
+			}
 			
 			Element el=(Element) widget.getElement().getLastChild();
 			
@@ -318,10 +326,14 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					el.addClassName(STYLE_DND_CORRECT);
 				}else{
 					el.addClassName(STYLE_DND_INCORRECT);
+					HTDragChoiceStatus=false;
 				}
 				j++;
 			}
 		}
+		String attemptStatus=HTDragChoiceStatus==true?"correct":"wrong";
+		createSesstionItemAttemptForHTDragDrop(answerIds,userAttemptedValueList,attemptStatus);
+		
 		}else{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
@@ -399,4 +411,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			}
 		}
 	};
+	
+	public abstract void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
+
 }
