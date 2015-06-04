@@ -179,7 +179,6 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 			}
 		} catch (Exception e) {
 			logger.error("Exception::", e);
-			throw new RuntimeException(e.getCause());
 		}
 	}
 	public void deserializeSuggestedResources(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
