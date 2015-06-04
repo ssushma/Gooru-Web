@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertForgetContentUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -53,7 +54,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ForgotPasswordVc extends PopupPanel {
+public class ForgotPasswordVc extends PopupPanel implements ClientConstants {
 
 	private static ForgotPasswordVcUiBinder uiBinder = GWT
 			.create(ForgotPasswordVcUiBinder.class);
@@ -192,10 +193,10 @@ public class ForgotPasswordVc extends PopupPanel {
 
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-                    if (result != null && result.containsKey("errorMessage")) {
-                    	if(result.get("errorMessage")!=null){
-                    		String	error=(String) result.get("errorMessage");
-                    		if("Looks like this email is tied with Google!".equalsIgnoreCase(error)){
+                    if (result != null) {
+                    	if(result.containsKey(ERROR_CODE)&&result.get(ERROR_CODE)!=null){
+                    		String	error=(String) result.get(ERROR_MESSAGE);
+                    		if(GOOGLE_TIE_UP_TEXT.equalsIgnoreCase(error)){
    							 errorMessage.setVisible(true);
    							 hide();
    							 AlertForgetContentUc alertForgetContentUc = new AlertForgetContentUc();	
