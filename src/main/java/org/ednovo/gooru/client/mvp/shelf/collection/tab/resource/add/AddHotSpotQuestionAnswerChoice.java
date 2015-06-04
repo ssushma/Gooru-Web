@@ -47,6 +47,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -68,7 +69,8 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	@UiField
 	public Label errorMessageforAnswerChoice;
-	@UiField public HTMLPanel imgContainer,textAnsContainer,ansImageContainer;
+	@UiField public HTMLPanel imgContainer,textAnsContainer;
+	@UiField public HorizontalPanel ansImageContainer;
 	@UiField FlowPanel answerHeadContainer;
 	@UiField Anchor ansImage,addAnswerChoice;
 	@UiField Image addAnsPlusImage;
@@ -249,8 +251,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		if(widgetId!=null){
 			addAnswerImage.setId(Integer.parseInt(widgetId));
 			ansImageContainer.remove(Integer.parseInt(widgetId));
-			ansImageContainer.add(addAnswerImage);
-			//ansImageContainer.addAndReplaceElement(addAnswerImage,widgetId);
+			ansImageContainer.insert(addAnswerImage, Integer.parseInt(widgetId));
 			widgetId=null;
 		}else{
 			addAnswerImage.setId(ansImageContainer.getWidgetCount());

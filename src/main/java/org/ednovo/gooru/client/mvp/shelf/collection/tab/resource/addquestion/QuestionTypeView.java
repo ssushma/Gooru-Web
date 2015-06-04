@@ -1499,7 +1499,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@UiHandler("addQuestionResourceButton")
 	public void clickedOnAddQuestionButton(ClickEvent event)
 	{
-
 		boolean fieldValidationCheck;
 		if(questionType.equalsIgnoreCase("HS")){
 			if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
@@ -1770,7 +1769,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
 			HashMap<String,ArrayList<QuestionAnswerDo>> answerMap = new HashMap<String,ArrayList<QuestionAnswerDo>>();
 			HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
-
 			if(questionType.equalsIgnoreCase("HS")){
 
 				AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
@@ -1836,14 +1834,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
-
 			if(questionType.equalsIgnoreCase("HS")){
 				CollectionHTQuestionItemDo HSObj=new CollectionHTQuestionItemDo();
 				HSObj.setHlType(hsType);
 				HSObj.setSingleCorrectAnswer(false);
 				collectionQuestionItemDo.setAttributes(HSObj);
 			}
-
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				createQuestionResource(mediaFileName,collectionQuestionItemDo);
@@ -1886,8 +1882,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	}
 
-@Override
-	public void reset() {
+	public void resetFields() {
 		buttonContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		resetToHints();
 		setHotSpotAnswerFields();
@@ -1896,6 +1891,25 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		centuryPanel.clear();
 		setTextAndStyle();
 		resetDepthOfKnowledges();
+		isAddBtnClicked=true;
+		isRightsClicked=false;
+		validationValue=false;
+		isSaveButtonClicked=false;
+		clearObjects();
+		ansChoiceErrMsg.setText("");
+		
+	}
+	
+	public void clearObjects(){
+		standardCodesMap.clear();
+		centuryCodesMap.clear();
+		standardsDo.clear();
+		deletedStandardsDo.clear();
+		standardSearchDo=new SearchDo<CodeDo>();
+		centurySearchDo=new SearchDo<StandardFo>();
+		centurySelectedValues.clear();
+		depthOfKnowledges.clear();
+		isValidHintsList.clear();
 	}
 
 

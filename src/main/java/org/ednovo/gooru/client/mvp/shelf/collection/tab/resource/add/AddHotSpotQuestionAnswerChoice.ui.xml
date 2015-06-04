@@ -24,9 +24,9 @@
 	         </g:HTMLPanel>
 	         
 	           <g:HTMLPanel styleName="col-md-10 col-sm-9 colmdPadding">
-	                 <g:HTMLPanel styleName="imgAnsContainer" ui:field="ansImageContainer">
+	                 <g:HorizontalPanel styleName="imgAnsContainer" ui:field="ansImageContainer">
 	                     
-	                 </g:HTMLPanel>
+	                 </g:HorizontalPanel>
 	           </g:HTMLPanel>
 	          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	     </g:HTMLPanel>
