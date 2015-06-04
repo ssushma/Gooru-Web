@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCou
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdatePreviewViewCountEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopupPlayerVc;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -281,6 +280,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
 				if(!isCustomizePopup){
 					isCustomizePopup=true;
+					Window.scrollTo(0, 0);
 					if(AppClientFactory.isAnonymous()){
 						LoginPopupUc loginPopupUc=new LoginPopupUc() {
 							@Override
@@ -291,18 +291,21 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 								isCustomizePopup = false;
 								remixPresenterWidget.getView().getAppPopUp().center();
 								remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+								remixPresenterWidget.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 							}
 						};
 						loginPopupUc.show();
 						loginPopupUc.setGlassEnabled(true);
+						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();
 						remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+						remixPresenterWidget.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 					}
-				Window.scrollTo(0, 0);
+				
 			//	successPopupVc.setWidth("500px");
 				/*if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 					successPopupVc.setWidth("500px");
@@ -395,21 +398,12 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
 		if(customize!=null && YES.equals(customize) && emailId!=null){
-			Boolean loginFlag = AppClientFactory.isAnonymous();
-			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
-				@Override
-				public void closePoup() {
-					Window.enableScrolling(true);
-					this.hide();	
-					isCustomizePopup = false;
-				}
-			};
-			Window.scrollTo(0, 0);
-			//successPopupVc.setWidth("500px");
-			successPopupVc.show();
-			successPopupVc.center();
-			
-			
+			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+			remixPresenterWidget.getView().getAppPopUp().show();
+			isCustomizePopup = false;
+			remixPresenterWidget.getView().getAppPopUp().center();
+			remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+			remixPresenterWidget.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 		}
 		if(assign!=null && YES.equals(assign) && emailId!=null){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {

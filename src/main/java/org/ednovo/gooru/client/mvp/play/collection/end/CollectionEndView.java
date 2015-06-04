@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
@@ -203,6 +204,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	private boolean isSharePopup = false;
 	
 	private HandlerRegistration whatsNextHandler;
+	
+	SearchAddResourceToCollectionPresenter remixPresenterWidget = AppClientFactory.getInjector().getRemixPresenterWidget();
 	
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
@@ -676,27 +679,36 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
 		
-		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
 
 				if(!isCustomizePopup){
-					isCustomizePopup=true;
-				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
-				RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag,collectionDo.getTitle()) {
-
-					@Override
-					public void closePoup() {
-						this.hide();	
+					Window.scrollTo(0, 0);
+					if(AppClientFactory.isAnonymous()){
+						LoginPopupUc loginPopupUc=new LoginPopupUc() {
+							@Override
+							public	void onLoginSuccess(){
+								Window.enableScrolling(false);
+								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+								remixPresenterWidget.getView().getAppPopUp().show();
+								isCustomizePopup = false;
+								remixPresenterWidget.getView().getAppPopUp().center();
+								remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+								remixPresenterWidget.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+							}
+						};
+						loginPopupUc.show();
+						loginPopupUc.setGlassEnabled(true);
+						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
+					}else{
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
+						remixPresenterWidget.getView().getAppPopUp().center();
+						remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+						remixPresenterWidget.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 					}
-				};
-				Window.scrollTo(0, 0);
+				
+				/*Window.scrollTo(0, 0);
 				if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 					successPopupVc.setWidth("500px");
 					successPopupVc.setHeight("515px");
@@ -705,7 +717,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					successPopupVc.setHeight("336px");
 				}
 				successPopupVc.center();
-				successPopupVc.show();
+				successPopupVc.show();*/
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
