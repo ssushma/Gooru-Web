@@ -628,7 +628,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 			}
 		} catch (Exception e) {
-			 AppClientFactory.printSevereLogger(e.getMessage());
+			 AppClientFactory.printSevereLogger(e.toString());
 		}
 		
 
