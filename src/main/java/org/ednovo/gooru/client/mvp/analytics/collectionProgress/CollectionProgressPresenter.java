@@ -25,16 +25,14 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionProgressPresenter extends PresenterWidget<IsCollectionProgressView> implements CollectionProgressUiHandlers,ClientConstants{
@@ -62,18 +60,13 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 		getView().getFrame().setUrl("");
 		getView().getLoadingImage().setVisible(true);
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
-					
-					@Override
-					public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
-						getView().setData(result,isCollectionView,collectionTitle);
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						
-					}
-				});
+		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new SimpleAsyncCallback<ArrayList<CollectionProgressDataDo>>() {
+			@Override
+			public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
+				getView().getFilterDropDown().setSelectedIndex(0);
+				getView().setData(result,isCollectionView,collectionTitle);
+			}
+		});
 	}
 
 	/**
@@ -95,18 +88,12 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	@Override
 	public void exportCollectionProgress(String collectionId,String classpageId, String timeZone) {
 		String classpage=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		this.analyticService.exportProgress(this.collectionId, classpage, timeZone, new AsyncCallback<String>() {
-			
+		this.analyticService.exportProgress(this.collectionId, classpage, timeZone, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
 				if(!StringUtil.isEmpty(result)){
 					getView().getFrame().setUrl(result);
 				}
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				
 			}
 		});
 	}
