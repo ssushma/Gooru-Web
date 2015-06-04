@@ -487,6 +487,27 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			super(collectionItemDo,attemptedAnswerDo);
 			this.attemptedAnswerDo=attemptedAnswerDo;
 		}
+		@Override
+		public void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds, List<String> userAttemptedAnswers,String attemptStatus) {
+			String attemptedAnswers="";
+			String answerId="";
+			if(userAttemptedAnswers!=null && userAttemptedAnswers.size()>0){
+					for(int i=0;i<userAttemptedAnswers.size();i++){
+						attemptedAnswers=attemptedAnswers+userAttemptedAnswers.get(i);
+						try{
+							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
+						}catch(Exception e){
+							AppClientFactory.printSevereLogger(e.getMessage());	
+						}
+						if((i+1)!=userAttemptedAnswers.size()){
+							attemptedAnswers=attemptedAnswers+",";
+							answerId=answerId+",";
+						}
+					}
+			}	
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
+		
+		}
 	}
 	
 	
