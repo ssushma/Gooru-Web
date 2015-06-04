@@ -73,6 +73,11 @@ public class SuccessPopupForResource extends PopupPanel {
 	private FolderDo folderDo;
 	public SuccessPopupForResource() {
 		setWidget(uiBinder.createAndBindUi(this));
+		if(AppClientFactory.getCurrentPlaceToken().contains("search")){
+			btnContinueSearching.setText(i18n.GL3191());
+		}else{
+			btnContinueSearching.setText(i18n.GL0460());
+		}
 		btnViewInMyCollections.addClickHandler(new ViewinMyCollection());
 	}
 	

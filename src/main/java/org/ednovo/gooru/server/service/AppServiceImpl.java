@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
 
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -49,35 +49,32 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author Search Team
- * 
+ *
  */
 @Service("appService")
 @ServiceURL("/appService")
 public class AppServiceImpl extends BaseServiceImpl implements AppService {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
-	
+
 	private static final long serialVersionUID = -6736852011457993775L;
-	
+
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
-	
+
 
 	@Override
 	public UserDo getLoggedInUser() {
-		UserDo user = null;
-		String userUid = getLoggedInUserUid();
-		if (!isLoggedInUserAnonymous()) {
+		UserDo user = getLoggedInUserData();
+
+		if (user != null && !GOORU_ANONYMOUS.equals(user.getGooruUId())) {
+			String userUid = user.getGooruUId();
 			user = getUserInfo(userUid);
 			user.setToken(getLoggedInSessionToken());
-			user.setDateOfBirth(getLoggedInDateOfBirth()); 
-//			user.setEmailId(getLoggedInEmailId());
-		}
-		if (user == null) {
-			user = v2GuestSignIn();
+			user.setDateOfBirth(getLoggedInDateOfBirth());
 		}
 		setUserFilterProperties(user);
 		return user;
@@ -87,7 +84,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	@Override
 	public UserDo signout() {return null;}
 
-	
+
 	/// V2 Apis
 	@Override
 	public UserDo v2Signin(String userName, String password) {
@@ -95,20 +92,20 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		UserDo user = null;
 		V2UserDo v2UserDo = null;
 		JsonRepresentation jsonRep = null;
-		
+
 		String decryptedPwd = StringUtil.getDecryptedData(password);
 		String content = null;
 		try {
 			postData.put(USERNAME, userName);
 			postData.put(PASSWORD, decryptedPwd);
-			 
+
 			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN);
 			String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.APIKEY,"");
 			getLogger().info("sign in API -- "+url);
 			getLogger().info("sign in API payload -- "+postData.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
-			
+
 			if (jsonResponseRep.getStatusCode()==200){
 				content = jsonRep.getText();
 				if (content.contains("{")) {
@@ -120,7 +117,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 					user.setAccountCreatedType(user.getAccountCreatedType());
 
 					//				user.setCreatedOn(v2UserDo.getCreatedOn());
-					Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
+					Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
 					Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
 					// if user created after production switch
 					if (userCreatedDate.getTime() >= prodDate.getTime()){
@@ -147,8 +144,8 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		}
 		throw new GwtException(content);
 	}
-	
-	
+
+
 	@Override
 	public UserDo v2Signout() {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNOUT);
@@ -158,20 +155,20 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		setUserFilterProperties(user);
 		return user;
 	}
-	
-	
+
+
 	@Override
 	public String getAnalyticsURL(String type, String id) {
-		
-		String analyticsUrl = getAnalyticsEndPoint() +"dashboard/#/" + type +"/"+id+"?session_token="+getLoggedInSessionToken();		
+
+		String analyticsUrl = getAnalyticsEndPoint() +"dashboard/#/" + type +"/"+id+"?session_token="+getLoggedInSessionToken();
 		return analyticsUrl;
 	}
-	
+
 	@Override
 	public UserDo getUserFilterProperties(){
 		UserDo userDo=new UserDo();
 		userDo.setSettings(getFilterProperties());
 		return userDo;
 	}
-	
+
 }

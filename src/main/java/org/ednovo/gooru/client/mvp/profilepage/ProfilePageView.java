@@ -124,7 +124,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	HTMLPanel contentview, shareLinkFloPanel,
-			socialButtonContainer, bioMainContainer;
+			socialButtonContainer, bioMainContainer,mainContainer;
 
 	@UiField
 	HTMLPanel loadingPanel, userGradeList, userCourseList, metaDataContainer;
@@ -163,7 +163,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
-			profilePageEditBioPanel,mainContainer,followingContainer,tagResourceContainer;
+			profilePageEditBioPanel,profileMainContainer,followingContainer,tagResourceContainer;
 	
 	@UiField FlowPanel moreGradeCourseLbl, moreCourseLbl;
 	
@@ -187,7 +187,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	@UiField HTML profileVisiblityMessage;
 	
-	@UiField ProfilePageCBundle ProfilePageStyle;
 	
 	@UiField
 	ProfilePageTabVc collectionsTabVc, followingTabVc, followersTabVc,tagTabVc;
@@ -420,10 +419,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingTabVc.getElement().setId("following");
 		followersTabVc.getElement().setId("followers");
 		tagTabVc.getElement().setId("tags");
-		collectionsTabVc.setStyleName(ProfilePageStyle.tabAlign());
-		followingTabVc.setStyleName(ProfilePageStyle.tabAlign());
-		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
-		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
+		collectionsTabVc.setStyleName("tabAlign");
+		followingTabVc.setStyleName("tabAlign");
+		followersTabVc.setStyleName("tabAlign");
+		tagTabVc.setStyleName("tabAlign");
 		
 		hpnlQuestion.getElement().setAttribute("style", "margin-top: 12px;");
 		
@@ -436,7 +435,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		FollowingButtonBlue.getElement().setAttribute("title",i18n.GL1895());
 		
 		FollowingButtonBlue.setVisible(false);
-		FollowingButtonBlue.addStyleName(ProfilePageStyle.followingBtn());
+		FollowingButtonBlue.addStyleName("followingBtn");
 		FollowingButtonBlue.addMouseOverHandler(new MouseOverOnUnFollowingButton());
 		FollowingButtonBlue.addMouseOutHandler(new MouseOutOnUnFollowingButton());
 		followButton.getElement().setAttribute("style", "width: 100px;");
@@ -537,6 +536,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		lblDescCharLimit.setText(value);
 		StringUtil.setAttributes(lblDescCharLimit.getElement(), "lblDescCharLimit", value, value);
+		profileMainContainer.getElement().setId("gooruProfilePage");
 	}
 
 	public class ProfileOnClickEvent implements ClickHandler  {
@@ -1366,7 +1366,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				getUiHandlers().deleteCourse(codeDo);
 			}
 		};
-		closeLabel.addStyleName(ProfilePageStyle.margin5());
+		closeLabel.addStyleName("margin5");
 		return closeLabel;
 	}
 
@@ -1542,7 +1542,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();
 		Label addedLabel = new Label("Added Courses");
-		addedLabel.setStyleName(ProfilePageStyle.addedCourseLbl());
+		addedLabel.setStyleName("addedCourseLbl");
 		coursesPanel.add(addedLabel);
 		for (ProfileCodeDo code : codeDo) {
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
@@ -1918,8 +1918,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			FollowingButtonBlue.setText(i18n.GL1936());
 			FollowingButtonBlue.getElement().setAttribute("alt",i18n.GL1936());
 			FollowingButtonBlue.getElement().setAttribute("title",i18n.GL1936());
-			FollowingButtonBlue.removeStyleName(ProfilePageStyle.followingBtn());
-			FollowingButtonBlue.addStyleName(ProfilePageStyle.blackPrimaryButton());
+			FollowingButtonBlue.removeStyleName("followingBtn");
+			FollowingButtonBlue.addStyleName("blackPrimaryButton");
 			}
 
 		}
@@ -1935,8 +1935,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			FollowingButtonBlue.setText(i18n.GL1895());
 			FollowingButtonBlue.getElement().setAttribute("alt",i18n.GL1895());
 			FollowingButtonBlue.getElement().setAttribute("title",i18n.GL1895());
-			FollowingButtonBlue.removeStyleName(ProfilePageStyle.blackPrimaryButton());
-			FollowingButtonBlue.addStyleName(ProfilePageStyle.followingBtn());
+			FollowingButtonBlue.removeStyleName("blackPrimaryButton");
+			FollowingButtonBlue.addStyleName("followingBtn");
 			}
 			else
 			{
