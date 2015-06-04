@@ -1387,6 +1387,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	@Override
 	public void hidePopup() {
+		getUiHandlers().addSelectedQuestionType("MC");
 		multipleChoiceRadioButton.setValue(true);
 		closeAddResourcePopup();
 		tabViewContainer.clear();	

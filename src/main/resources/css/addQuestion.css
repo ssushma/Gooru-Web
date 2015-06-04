@@ -170,6 +170,7 @@
 .imgAnsContainer {
 	border: 1px solid #ccc;
 	height: 90px;
+	display: inline-block;
 }
 .addAnswerDeletebg {
 	position: absolute;
