@@ -19,6 +19,8 @@ public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHan
 
 	void setUpdatedStandardsCode(String setStandardsVal,int setStandardsIdVal, String setStandardDesc);
 
+	void resetFields();
+
 
 
 }
