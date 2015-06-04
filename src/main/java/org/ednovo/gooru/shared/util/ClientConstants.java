@@ -343,4 +343,7 @@ public interface ClientConstants {
 	String BUFFERIMAGE ="bufferImage";
 
 	String WELCOME = "welcome";
+	String ERROR_MESSAGE ="errorMessage";
+	String GOOGLE_TIE_UP_TEXT ="Looks like this email is tied with Google!";
+	String ERROR_CODE ="errorCode";
 }
