@@ -28,19 +28,8 @@
 <script type="text/javascript" src="//${log.sdk}" defer></script>
 
 <script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js"></script>
-
+<script type="text/javascript" src="//www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg"></script>
 	<script>
-		$.ajax({
-		    url: '//www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg',
-		    dataType: 'script',
-		    cache: true,
-		    success: function() {
-		    	google.load("visualization", "1", {'packages' : [ "corechart" ]});
-			    google.load("visualization", "1", {'packages' : ["table"] });
-		    }
-		});
-
-
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function()
 		{ (i[r].q=i[r].q||[]).push(arguments)}
 		,i[r].l=1*new Date();a=s.createElement(o),
@@ -66,8 +55,9 @@
  		hewlettOERTracker('send', 'pageview', location.pathname + location.search + location.hash);
  	</script>
 	<script type="text/javascript">
-
-	 </script>
+		google.load("visualization", "1", {'packages' : [ "corechart" ]});
+	    google.load("visualization", "1", {'packages' : ["table"] });
+	</script>
 
 
 </head>
