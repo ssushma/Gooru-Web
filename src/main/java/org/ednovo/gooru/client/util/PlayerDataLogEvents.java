@@ -529,9 +529,9 @@ public class PlayerDataLogEvents {
 			case 7:
 				return "MA";
 			case 8:
-				return "HT_RO";
-			case 9:
 				return "HT_HL";
+			case 9:
+				return "HT_RO";
 			case 10:
 				return "HS";
 			default:
