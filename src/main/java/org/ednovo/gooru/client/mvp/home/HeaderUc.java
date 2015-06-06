@@ -28,13 +28,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.home.HomeCBundle;
+import org.ednovo.gooru.application.client.home.HomePresenter;
+import org.ednovo.gooru.application.client.home.HomeUiHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.GooruCBundle;
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.ClasspageListVc;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListHandler;
@@ -66,11 +74,6 @@ import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -137,7 +140,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @author Search Team
  *
  */
-public class HeaderUc extends Composite 
+public class HeaderUc extends Composite
 	 {
 
 	private static HeaderUcUiBinder uiBinder = GWT
@@ -228,7 +231,7 @@ public class HeaderUc extends Composite
 				@Override
 				public void onSuccess() {
 
-					if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
+					if (AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
 						acctActivationPl.setVisible(true);
 					} else {
 						acctActivationPl.setVisible(false);
@@ -236,10 +239,7 @@ public class HeaderUc extends Composite
 
 					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 							PlaceTokens.HOME)) {
-						/*
-						 * acctActivationPl.getElement().getStyle() .setMarginTop(51,
-						 * Unit.PX);
-						 */
+
 					} else {
 						acctActivationPl.getElement().getStyle().clearMarginTop();
 					}
@@ -358,7 +358,7 @@ public class HeaderUc extends Composite
 
 	@UiField
 	Label thanksLbl;
-	
+
 	@UiField
 	static Label arrowLbl;
 
@@ -402,6 +402,7 @@ public class HeaderUc extends Composite
 	 */
 	@SuppressWarnings("deprecation")
 	public HeaderUc() {
+
 		autokeySuggestOracle = new AppMultiWordSuggestOracle(true);
 		setEditSearchTxtBox(new AppSuggestBox(autokeySuggestOracle) {
 			@Override
@@ -433,7 +434,7 @@ public class HeaderUc extends Composite
 			}
 		});
 		SelectionHandler<SuggestOracle.Suggestion> se=new SelectionHandler<SuggestOracle.Suggestion>() {
-			
+
 			@Override
 			public void onSelection(final SelectionEvent<Suggestion> event) {
 				final String searchText = event.getSelectedItem().getDisplayString().replaceAll("-<n> Gooru Search</n>", "");
@@ -485,7 +486,7 @@ public class HeaderUc extends Composite
 						}
 
 						hasAutoSelected = true;
-						MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");			
+						MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
 					}
 				});
 			}
@@ -741,7 +742,7 @@ public class HeaderUc extends Composite
 		resendEmailAncr.addClickHandler(new ResendEmailConfirmation());
 
 		if (!AppClientFactory.isAnonymous()) {
-			if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
+			if (AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
 				acctActivationPl.setVisible(true);
 			}
 		} else {
@@ -844,31 +845,33 @@ public class HeaderUc extends Composite
 	 */
 
 	private void getBetaStatus() {
-		try {
-			new RequestBuilder(RequestBuilder.GET,
-					"./images/json/product-beta-status.json").sendRequest("",
-					new RequestCallback() {
-						@Override
-						public void onResponseReceived(Request req,
-								Response resp) {
-							boolean status = getStatus(resp.getText());
-							if (status) {
-								lblBeta.getElement().getStyle()
-										.setVisibility(Visibility.VISIBLE);
-							} else {
-								lblBeta.getElement().getStyle()
-										.setVisibility(Visibility.HIDDEN);
-							}
-						}
+		lblBeta.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 
-						@Override
-						public void onError(Request res, Throwable throwable) {
-
-						}
-					});
-		} catch (RequestException e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
-		}
+//		try {
+//			new RequestBuilder(RequestBuilder.GET,
+//					"./images/json/product-beta-status.json").sendRequest("",
+//					new RequestCallback() {
+//						@Override
+//						public void onResponseReceived(Request req,
+//								Response resp) {
+//							boolean status = getStatus(resp.getText());
+//							if (status) {
+//								lblBeta.getElement().getStyle()
+//										.setVisibility(Visibility.VISIBLE);
+//							} else {
+//								lblBeta.getElement().getStyle()
+//										.setVisibility(Visibility.HIDDEN);
+//							}
+//						}
+//
+//						@Override
+//						public void onError(Request res, Throwable throwable) {
+//
+//						}
+//					});
+//		} catch (RequestException e) {
+//			AppClientFactory.printSevereLogger(e.getMessage());
+//		}
 	}
 
 	/**
@@ -1435,12 +1438,14 @@ public class HeaderUc extends Composite
 						MixpanelUtil.Click_Discover_LandingPage();
 				}
 				manageDotsMenuSelection(loggedInfoLbl);
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("id", userDo.getGooruUId());
-				params.put("user", userDo.getUsername());
-				MixpanelUtil.Click_On_UserName();
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.PROFILE_PAGE, params);
+				if (userDo!= null){
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("id", userDo.getGooruUId());
+					params.put("user", userDo.getUsername());
+					MixpanelUtil.Click_On_UserName();
+					AppClientFactory.getPlaceManager().revealPlace(
+							PlaceTokens.PROFILE_PAGE, params);
+				}
 			}
 		});
 
@@ -1675,33 +1680,11 @@ public class HeaderUc extends Composite
 	public void setLoggedInUser(final UserDo userDo) {
 		this.userDo = userDo;
 		activateAllMenu();
-		if (userDo != null
+		if (userDo != null && userDo.getUserUid() != null
 				&& !userDo.getUserUid()
 						.equals(AppClientFactory.GOORU_ANONYMOUS)) {
-/*			mainDotsPanel.getElement().getStyle().setWidth(580, Unit.PX);
-*/		/*	mainInnerDotsPanel.getElement().getStyle().setWidth(550, Unit.PX);
-*/
-			AppClientFactory.getInjector().getHomeService()
-					.getClientIpAddress(new SimpleAsyncCallback<String>() {
-
-						@Override
-						public void onSuccess(String clientIpAddress) {
-							// To set the Identity in Mixpanel.
-							MixpanelUtil.setIdentity(
-									userDo.getUsername(),
-									userDo.getEmailId(),
-									userDo.getUserRoleSetString(),
-									userDo.getCreatedOn(),
-									userDo.getFirstName() + " "
-											+ userDo.getLastName(),
-									clientIpAddress);
-						}
-					});
 
 			int flag = userDo.getViewFlag() != null ? userDo.getViewFlag() : 0;
-			// if((flag==7||flag==2||flag==1)){
-			// showMarketingPopup(userDo);
-			// }
 
 			loggedInfoLbl.setText(userDo.getUsername());
 			loggedInfoLbl.setTitle(userDo.getUsername());
@@ -1723,7 +1706,7 @@ public class HeaderUc extends Composite
 
 			logoutDownArrowLbl.setVisible(true);
 			logInfoFloPanel.setVisible(false);
-			if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
+			if (AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
 				acctActivationPl.setVisible(true);
 			}
 			mainDotsPanel.setVisible(true);

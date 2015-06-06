@@ -26,8 +26,8 @@ package org.ednovo.gooru.client.mvp.play.collection.footer;
 
 
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;

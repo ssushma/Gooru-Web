@@ -38,12 +38,12 @@
 	<inherits name='com.google.gwt.visualization.Visualization'/>
 
 	<inherits name='com.google.gwt.maps.Maps' />
-	
+
 	<!-- GWT Crypto for password encryption -->
-	<inherits name="com.googlecode.gwt.crypto.Crypto"/> 
+	<inherits name="com.googlecode.gwt.crypto.Crypto"/>
 
 	<!-- Specify the app entry point class. -->
-	<entry-point class='org.ednovo.gooru.client.GooruEntry' />
+	<!-- <entry-point class='org.ednovo.gooru.client.GooruEntry' /> -->
 
 	<!-- REPLACE GWT CROPPER STYLES WITH GOORU STYLES -->
 	<replace-with
@@ -71,7 +71,7 @@
 	<define-configuration-property name='gin.ginjector'
 		is-multi-valued='false' />
 	<set-configuration-property name='gin.ginjector'
-		value='org.ednovo.gooru.client.gin.AppInjector' />
+		value='org.ednovo.gooru.application.client.gin.AppInjector' />
 
 	<set-configuration-property name="storage.type.finder"
 		value="rpc" />
@@ -82,7 +82,7 @@
 	<set-configuration-property name="user.agent.runtimeWarning"
 		value="false" />
 
-	<!-- This configuration disables the obfuscation in GWT. Delete this line 
+	<!-- This configuration disables the obfuscation in GWT. Delete this line
 		for production -->
 	<set-configuration-property name="CssResource.style"
 		value="stable" />
@@ -90,11 +90,11 @@
 	<!-- In any real-world application, you will define at least -->
 	<!-- one locale in addition to the default locale. -->
 	<extend-property name="locale" values="en" />
-	
+
 	<!-- This configuration enables client side loggers -->
 	<set-property name="gwt.logging.logLevel" value="SEVERE"/>
-	<set-property name="gwt.logging.logLevel" value="INFO"/> 
- 	<set-property name="gwt.logging.enabled" value="TRUE"/>            
+	<set-property name="gwt.logging.logLevel" value="INFO"/>
+ 	<set-property name="gwt.logging.enabled" value="TRUE"/>
 	<set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />
-	
+
 </module>

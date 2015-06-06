@@ -1,0 +1,452 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
+
+	<ui:with field="i18n"
+		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:HTMLPanel ui:field="homeContainer" styleName="wrapper">
+		<section class="bannerContaner">
+			<div class="main" style="display: none;">
+				<div id="loading-animation" style="display: none;">
+					<div class="loadingContainer">
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+						<span class="dots"></span>
+					</div>
+				</div>
+			</div>
+			<div class="flowPlayer">
+				<img src="images/newlandingpage/banner.png" class="img-responsive" />
+			</div>
+			<div class="bannerCaption">
+				<div class="container">
+					<h1 class="animate fadeInDown animated" data-animate="fadeInDown">
+						Join us in
+						<span> Honoring the Human Right to </span>
+						Education
+					</h1>
+				</div>
+			</div>
+		</section>
+		<div class="gradeContainer">
+			<section class="focusBlock animate fadeInUp animated"
+				data-animate="fadeInUp">
+				<div class="container">
+					<div class="row">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Hi there, what are you looking for?</h3>
+							</div>
+							<div class="panel-body no-gutter">
+								<div class="col-md-7 grade">
+									<span class="blocksSearch">
+										<p>I am lookingfor  </p>
+										<div class="btn-group">
+											<button class="btn btn-primary" type="button">grade(s)</button>
+											<button aria-expanded="false" data-toggle="dropdown"
+												class="btn btn-primary dropdown-toggle" type="button">
+												<span class="caret"></span>
+												<span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul role="menu" class="dropdown-menu">
+												<span>Try selecting from this cool subjecs:</span>
+												<li class="active">
+													<a href="#">Science</a>
+												</li>
+												<li>
+													<a href="#">Math</a>
+												</li>
+												<li>
+													<a href="#">Social Science</a>
+												</li>
+												<li>
+													<a href="#">Language Arts</a>
+												</li>
+												<li>
+													<a href="#">Arts &amp; Humnaitics</a>
+												</li>
+												<li>
+													<a href="#">Tech &amp; Engineering</a>
+												</li>
+												<li>
+													<a href="#">Physical Education</a>
+												</li>
+												<li>
+													<a href="#">Other</a>
+												</li>
+											</ul>
+										</div>
+									</span>
+									<span class="blocksSearch">
+										<p>learning materials in</p>
+										<div class="btn-group subject">
+											<button class="btn btn-primary" type="button">subject(s)</button>
+											<button aria-expanded="false" data-toggle="dropdown"
+												class="btn btn-primary dropdown-toggle" type="button">
+												<span class="caret"></span>
+												<span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul role="menu" class="dropdown-menu">
+												<span>Try selecting from this cool subjecs:</span>
+												<li class="active">
+													<a href="#">Science</a>
+												</li>
+												<li>
+													<a href="#">Math</a>
+												</li>
+												<li>
+													<a href="#">Social Science</a>
+												</li>
+												<li>
+													<a href="#">Language Arts</a>
+												</li>
+												<li>
+													<a href="#">Arts &amp; Humnaitics</a>
+												</li>
+												<li>
+													<a href="#">Tech &amp; Engineering</a>
+												</li>
+												<li>
+													<a href="#">Physical Education</a>
+												</li>
+												<li>
+													<a href="#">Other</a>
+												</li>
+											</ul>
+										</div>
+									</span>
+								</div>
+								<div class="col-md-3 standards">
+									<span class="blocksSearch">
+										<p>or browse by</p>
+										<div class="btn-group">
+											<button class="btn btn-primary" type="button">standard(s)</button>
+											<button aria-expanded="false" data-toggle="dropdown"
+												class="btn btn-primary dropdown-toggle" type="button">
+												<span class="caret"></span>
+												<span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul role="menu" class="dropdown-menu">
+												<span>Try selecting from this cool subjecs:</span>
+												<li class="active">
+													<a href="#">Science</a>
+												</li>
+												<li>
+													<a href="#">Math</a>
+												</li>
+												<li>
+													<a href="#">Social Science</a>
+												</li>
+												<li>
+													<a href="#">Language Arts</a>
+												</li>
+												<li>
+													<a href="#">Arts &amp; Humnaitics</a>
+												</li>
+												<li>
+													<a href="#">Tech &amp; Engineering</a>
+												</li>
+												<li>
+													<a href="#">Physical Education</a>
+												</li>
+												<li>
+													<a href="#">Other</a>
+												</li>
+											</ul>
+										</div>
+									</span>
+								</div>
+								<div class="col-md-2 browseContentBtn">
+									<button class="primary btn-block" type="submit">Browse Content</button>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-footer">
+								<p>
+									Already have an account?
+									<a href="">Log in</a>
+									here.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="categoriesBlock">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-sm-6 animate" data-animate="fadeInLeft">
+							<div class="categoryPanel">
+								<div class="catHeading colorOpt1">
+									For Teacher
+								</div>
+								<div class="catBody">
+									<div class="contentPane">
+										Gooru's potential is equal to the innovation and
+										creativity of the
+										educators who use it.
+									</div>
+									<div class="callToAction">
+										<button type="submit" class="primary">Sign up</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6 animate" data-animate="fadeInLeft">
+							<div class="categoryPanel">
+								<div class="catHeading colorOpt2">
+									For Student
+								</div>
+								<div class="catBody">
+									<div class="contentPane">
+										Student use Gooru to explore their intrests,
+										build, and monitor their
+										progress.
+									</div>
+									<div class="callToAction">
+										<button type="submit" class="primary">Sign up</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6 animate" data-animate="fadeInRight">
+							<div class="categoryPanel">
+								<div class="catHeading colorOpt3">
+									For Districts &amp; Schools
+								</div>
+								<div class="catBody">
+									<div class="contentPane">
+										Districts collaborate with Gooru to unleash
+										personalized learning and
+										share a district-vetted curriculum.
+									</div>
+									<div class="callToAction">
+										<button type="submit" class="primary">See Our Impact</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6 animate" data-animate="fadeInRight">
+							<div class="categoryPanel">
+								<div class="catHeading colorOpt4">
+									For Partners &amp; Developers
+								</div>
+								<div class="catBody">
+									<div class="contentPane">
+										We collaborate with mission-aligned partners to
+										increase our
+										impact on the education ecosystem.
+									</div>
+									<div class="callToAction">
+										<button type="submit" class="primary">Learn more</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</section>
+			<section class="gettingStarted no-gutter">
+				<div class="col-md-5 col-sm-6 gettingStartedBanner">
+					<img src="images/newlandingpage/getting-started-banner.png" class="img-responsive" />
+				</div>
+				<div class="col-md-5 col-sm-6 animate" data-animate="fadeInRight">
+					<div class="gettingContentPane">
+						<h2>Getting Started with Gooru</h2>
+						<div class="blocks">
+							<h3>Getting Started Toolkit</h3>
+							<p>Welcome to Gooru! Check out these rources to learn what you
+								can do with Gooru and get started quickly.</p>
+						</div>
+						<div class="blocks">
+							<h3>Getting Started Toolkit</h3>
+							<p>Welcome to Gooru! Check out these rources to learn what you
+								can do with Gooru and get started quickly.</p>
+						</div>
+						<div class="blocks">
+							<h3>Getting Started Toolkit</h3>
+							<p>Welcome to Gooru! Check out these rources to learn what you
+								can do with Gooru and get started quickly.</p>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</section>
+			<section class="remixBlock">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-sm-6 animate" data-animate="flipInX">
+							<h2>Find</h2>
+							<div class="finMainwrapper animation">
+								<div class="sprite findImage">
+								</div>
+							</div>
+							<p>Browse thousands of K-12 collections made by teachers or
+								search over 18M resources</p>
+						</div>
+						<div class="col-md-3 col-sm-6  animate" data-animate="flipInX">
+							<h2>Remix</h2>
+							<div class="finMainwrapper animation">
+								<div class="sprite remixImage">
+								</div>
+							</div>
+							<p>Remix collections and customize content to to meet your
+								students’ needs.</p>
+						</div>
+						<div class="col-md-3 col-sm-6 animate" data-animate="flipInX">
+							<h2>Share</h2>
+							<div class="finMainwrapper animation">
+								<div class="sprite shareImage">
+								</div>
+							</div>
+							<p>Share collections with students via My Classes. Login is not
+								required to access.</p>
+						</div>
+						<div class="col-md-3 col-sm-6 animate" data-animate="flipInX">
+							<h2>Monitor</h2>
+							<div class="finMainwrapper animation">
+								<div class="sprite monitorImage">
+								</div>
+							</div>
+							<p>Measure your students’ engagement and progress to intervene in
+								real-time.</p>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</section>
+			<section class="freeToOpenBlock">
+				<div class="focusBannerAlwys">
+					<img src="images/newlandingpage/free-to-open-banner.png" class="img-responsive" />
+				</div>
+				<div class="focusTextAlwys">
+					<div class="container">
+						<div class="col-md-6 col-sm-6 animate" data-animate="fadeInLeft">
+							<h2>
+								Free and Open.
+								<span>Always.</span>
+							</h2>
+						</div>
+						<div class="col-md-6 col-sm-6 animate" data-animate="fadeInRight">
+							<div class="BlueBg">
+								<p>We're committed to improving learning for the 1.2 billion
+									students around the world. Gooru will always be free of cost
+									and ads for educatudents.ors and st</p>
+							</div>
+							<div class="callToAction">
+								<button class="primary" type="submit">Learn more about our
+									approach</button>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4 col-xs-12 footerLogo">
+						<p>
+							<img src="images/newlandingpage/footer-logo.png" class="img-responsive" />
+						</p>
+						<p>Gooru is committed t keeping its platform open-source and
+							community created content CCO.</p>
+					</div>
+					<div class="col-md-2 col-sm-2 col-xs-6">
+						<h4>Company</h4>
+						<ul class="list-unstyled">
+							<li>
+								<a href="#">About Gooru</a>
+							</li>
+							<li>
+								<a href="#">Careers</a>
+							</li>
+							<li>
+								<a href="#">Support Center</a>
+							</li>
+							<li>
+								<a href="#">Contact Us</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-2 col-sm-2 col-xs-6">
+						<h4>Community</h4>
+						<ul class="list-unstyled">
+							<li>
+								<a href="#">Districts</a>
+							</li>
+							<li>
+								<a href="#">Partners</a>
+							</li>
+							<li>
+								<a href="#">Coaches</a>
+							</li>
+							<li>
+								<a href="#">Developers</a>
+							</li>
+							<li>
+								<a href="#">Events</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-2 col-sm-2 col-xs-6">
+						<h4>Legal</h4>
+						<ul class="list-unstyled">
+							<li>
+								<a href="#">Terms</a>
+							</li>
+							<li>
+								<a href="#">Privacy</a>
+							</li>
+							<li>
+								<a href="#">Copyright</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-2 col-sm-2 col-xs-6 social">
+						<h4>Connect</h4>
+						<ul class="list-unstyled list-inline">
+							<li class="">
+								<a class="facebook sprite" target="_blank"
+									href="https://www.facebook.com/gooru">
+								</a>
+							</li>
+							<li>
+								<a class="twitter sprite" target="_blank"
+									href="https://www.twitter.com/gooru">
+								</a>
+							</li>
+							<li>
+								<a class="youtube sprite" target="_blank"
+									href="https://www.youtube.com/gooru">
+								</a>
+							</li>
+							<li>
+								<a class="google sprite" target="_blank"
+									href="https://plus.google.com/105874563188592272186/posts">
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</footer>
+<!-- 		<script src="scripts/01_bootstrap.js"></script>
+		<script src="scripts/02_waypoints.js"></script>
+		<script src="scripts/03_custom.js"></script> -->
+	</g:HTMLPanel>
+</ui:UiBinder>
+
+
+
+

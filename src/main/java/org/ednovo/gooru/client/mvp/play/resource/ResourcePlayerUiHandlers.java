@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayHandler;

@@ -30,7 +30,6 @@ package org.ednovo.gooru.client.mvp.play.resource.style;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.CssResource.ClassName;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**

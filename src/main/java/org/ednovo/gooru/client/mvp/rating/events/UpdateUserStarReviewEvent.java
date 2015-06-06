@@ -28,7 +28,7 @@ package org.ednovo.gooru.client.mvp.rating.events;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.event.shared.GwtEvent;
 

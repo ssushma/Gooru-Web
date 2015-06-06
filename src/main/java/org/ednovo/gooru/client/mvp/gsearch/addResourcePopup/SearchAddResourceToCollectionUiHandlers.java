@@ -39,11 +39,11 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 */
 import java.util.HashMap;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.Button;

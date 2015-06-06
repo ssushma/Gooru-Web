@@ -2,7 +2,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.even
 
 import java.util.List;
 
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.event.shared.EventHandler;
 

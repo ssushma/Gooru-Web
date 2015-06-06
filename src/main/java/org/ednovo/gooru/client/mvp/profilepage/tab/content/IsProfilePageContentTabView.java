@@ -26,8 +26,8 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 
 
 public interface IsProfilePageContentTabView extends IsViewWithHandlers<ProfilePageContentTabUiHandlers>{

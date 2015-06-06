@@ -31,14 +31,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.skils.CenturySkilsDo;
+import org.ednovo.gooru.application.shared.model.skils.NodeDo;
 import org.ednovo.gooru.client.uc.AppPopUpCentury;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
-import org.ednovo.gooru.shared.model.skils.NodeDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;

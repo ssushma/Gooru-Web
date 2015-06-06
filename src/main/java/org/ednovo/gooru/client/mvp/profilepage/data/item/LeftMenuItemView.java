@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage.data.item;
 
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

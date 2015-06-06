@@ -25,7 +25,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.rating.events;
 
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.GwtEvent;
 

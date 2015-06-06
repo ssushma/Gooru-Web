@@ -40,8 +40,8 @@ package org.ednovo.gooru.client.mvp.dnd;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.settings.DragDropAnimation;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 

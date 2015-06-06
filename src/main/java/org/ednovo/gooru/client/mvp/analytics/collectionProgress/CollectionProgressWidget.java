@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -52,10 +51,10 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			UiBinder<Widget, CollectionProgressWidget> {
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField(provided = true)
 	CollectionProgressCBundle res;
-	
+
 	@UiField VerticalPanel htmlpnlProgress;
 	@UiField ListBox filterDropDown;
 	@UiField HTMLPanel scrollForCollectionProgress,loadingImageLabel1;
@@ -63,7 +62,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	@UiField Label leftArrow,rightArrow;
 	@UiField Image exportImage;
 	@UiField Frame downloadFile;
-	
+
 	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
 	private final String RED = "#EAB4B3 !important";
@@ -72,7 +71,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	private static final String VIEWRESPONSE = "View Response";
 	private static final String QUESTION = "question";
 	private static final String RESOURCE="resource";
-	
+
 	private int collectionProgressCount=1;
 	ViewResponsesPopup showResponsesPopup=null;
 	Table table;
@@ -82,7 +81,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	public CollectionProgressWidget() {
 		this.res=CollectionProgressCBundle.INSTANCE;
 		res.css().ensureInjected();
-		setWidget(uiBinder.createAndBindUi(this));	
+		setWidget(uiBinder.createAndBindUi(this));
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 		downloadFile.setVisible(false);
 		setStaticData();
@@ -97,7 +96,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		StringUtil.setAttributes(collectionTitlelbl.getElement(), "spnCollectionTitlelbl", null, null);
 		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
 		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
-		
+
 		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -181,7 +180,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		questionCountlbl.setText(questionColumnIndex.size()+"");
 		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionColumnIndex);
 		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceColumnIndex);
-		
+
 		if(defaultUserDataForUsers!=null){
 			int sizeNames=defaultUserDataForUsers.getUserData().size();
 			if(sizeNames!=0){
@@ -260,7 +259,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        					  answerText=answer;
 			        				  }
 				        		  }else{
-				        			  answerText="--"; 
+				        			  answerText="--";
 				        		  }
 		        				  Label answerlbl=new Label(answerText);
 				        		  mainDataVpnl.add(answerlbl);
@@ -276,7 +275,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					        				  color=GREEN;
 					        			  }else{
 					        				  color=WHITE;
-					        			  } 
+					        			  }
 		        					 }else{
 		        						 color=RED;
 		        					 }
@@ -306,44 +305,44 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	        	  data.setValue(i, 1,scoreWidget.toString());
 	        }
 		}
-		
+
         final Options options = Options.create();
         options.setAllowHtml(true);
-        
+
         final DataView view =DataView.create(data);
-        
+
         table = new Table(view, options);
         table.setStyleName("collectionProgressTable");
-     
+
         filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
         filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
         filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
         filterDropDown.addChangeHandler(new ChangeHandler() {
-		
+
 			@Override
 			public void onChange(ChangeEvent event) {
 					htmlpnlProgress.clear();
 					int selectedIndex=filterDropDown.getSelectedIndex();
 				 	operationsView=DataView.create(data);
 					 if(selectedIndex==1){
-						 operationsView.hideColumns(primitivesResources); 
+						 operationsView.hideColumns(primitivesResources);
 					 }
 					 if(selectedIndex==2){
-						 operationsView.hideColumns(primitivesQuestions); 
+						 operationsView.hideColumns(primitivesQuestions);
 					 }
 					 table = new Table(operationsView, options);
 				     table.setStyleName("collectionProgressTable");
-				     htmlpnlProgress.add(table);	
+				     htmlpnlProgress.add(table);
 				     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				     leftArrow.setVisible(true);
 				     rightArrow.setVisible(true);
 			}
 		});
         table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-        htmlpnlProgress.add(table);	
+        htmlpnlProgress.add(table);
         getLoadingImage().setVisible(false);
 	}
-	
+
 	/**
 	 * This class is used to handle the click event on the table cell
 	 */
@@ -420,7 +419,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
-	
+
 	/**
 	 * This will return the loading image.
 	 */

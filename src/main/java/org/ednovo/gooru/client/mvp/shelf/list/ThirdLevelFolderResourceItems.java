@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.effects.FontWeightEffect;
 import org.ednovo.gooru.client.util.ImageUtil;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Style.FontWeight;

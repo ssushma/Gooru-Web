@@ -27,10 +27,10 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;

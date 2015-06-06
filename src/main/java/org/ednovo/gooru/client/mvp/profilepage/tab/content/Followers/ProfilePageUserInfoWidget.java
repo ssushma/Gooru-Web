@@ -25,8 +25,8 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.shared.model.user.UserFollowDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;

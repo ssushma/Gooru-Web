@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 

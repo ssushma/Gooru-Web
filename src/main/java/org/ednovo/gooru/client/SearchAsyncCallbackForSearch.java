@@ -2,11 +2,11 @@ package org.ednovo.gooru.client;
 
 import java.io.IOException;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.search.AbstractSearchDo;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.exception.GwtException;
+import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.search.AbstractSearchDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -49,12 +49,12 @@ public abstract class SearchAsyncCallbackForSearch<T extends AbstractSearchDo<?>
 				message = i18n.GL0839();
 			}
 			if (message.trim().toString().equalsIgnoreCase("0")){
-				
+
 			}else{
 				//new AlertContentUc(i18n.GL0844, message);
 			}
 		}
-	
+
 	}
 
 	@Override

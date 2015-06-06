@@ -28,10 +28,10 @@
 package org.ednovo.gooru.client.mvp.profilepage.content;
 
 
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperVc;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 
 import com.google.gwt.uibinder.client.UiChild;
 import com.google.gwt.user.client.ui.Widget;

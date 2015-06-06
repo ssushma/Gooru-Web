@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.play.resource.flag;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface ResourceFlagUiHandler extends BaseUiHandlers{
 public void createReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids,String collectionItemId);

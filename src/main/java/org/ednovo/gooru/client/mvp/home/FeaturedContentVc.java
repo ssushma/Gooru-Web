@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,7 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
-import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.client.home.HomeCBundle;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -55,7 +56,7 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 	}
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField
 	FlowPanel featuredSlideFloPanel;
 
@@ -65,12 +66,12 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 	@UiField(provided = true)
 	HomeCBundle res;
 
-	
+
 	 public static Timer elapsedTimer;
 	 private int countOfChild=0;
-	 
+
 	 @UiField Label featuredLbl;
-		
+
 	/**
 	 * Class Constructor
 	 */
@@ -92,13 +93,13 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 		        showElapsed(countOfChild);
 		        countOfChild++;
 		      }
-		      
+
 		    };
 
 
 		    // Schedule the timer for every 1/2 second (500 milliseconds)
 		    elapsedTimer.scheduleRepeating(500*6);
-		
+
 	}
 
 	/**
@@ -109,16 +110,16 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 		featuredSlideFloPanel.clear();
 		featuredContentTitleFloPanel.clear();
 		int sequence = 0;
-	
+
 		for (FeaturedContentDo featuredContentDo : featuredContents) {
 			HTMLPanel featuredContectContainer=new HTMLPanel("");
 			final Anchor featuredContentTitle= new Anchor();
 			final HTMLPanel landingPagesliderArrow=new HTMLPanel("");
 			landingPagesliderArrow.setStyleName(res.css().landingPagesliderArrow());
-			
+
 			Label landingPageSliderArrowBackground=new Label();
 			landingPageSliderArrowBackground.setStyleName(res.css().landingPageSliderArrowBackground());
-			
+
 			Label landingPageSliderArrowSpan=new Label();
 			landingPageSliderArrowSpan.setStyleName(res.css().landingPageSliderArrowSpan());
 			landingPagesliderArrow.add(landingPageSliderArrowBackground);
@@ -128,32 +129,32 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 			landingPagesliderArrow.getElement().getStyle().setDisplay(Display.NONE);
 			featuredContentTitle.addMouseOverHandler(new MouseOverHandler() {
 				@Override
-				
+
 				public void onMouseOver(MouseOverEvent event) {
 					int countOfChild=featuredContentTitleFloPanel.getElement().getChildCount();
 			         for(int i=0;i<countOfChild;i++)
 			         {
 			        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getFirstChild()).getStyle().setBackgroundColor("#999999");
-			        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getLastChild()).getStyle().setDisplay(Display.NONE);	 
+			        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getLastChild()).getStyle().setDisplay(Display.NONE);
 			         }
-					
+
 					landingPagesliderArrow.getElement().getStyle().setDisplay(Display.BLOCK);
 					elapsedTimer.cancel();
 					String scrollTop = (Integer.parseInt(featuredContentTitle.getElement().getAttribute("slideIndex")) * slideMaxHeight) + "";
 					featuredSlideFloPanel.getElement().setAttribute("style", "margin-top:-" + scrollTop + "px");
 				}
-			
+
 			});
 			featuredContentTitle.addMouseOutHandler(new MouseOutHandler() {
-				
-				
+
+
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
 					int countOfChild=featuredContentTitleFloPanel.getElement().getChildCount();
 			         for(int i=0;i<countOfChild;i++)
 			         {
 			        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getFirstChild()).getStyle().setBackgroundColor("#999999");
-			        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getLastChild()).getStyle().setDisplay(Display.NONE);	 
+			        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getLastChild()).getStyle().setDisplay(Display.NONE);
 			         }
 					elapsedTimer.scheduleRepeating(500*6);
 					countOfChild=(Integer.parseInt(featuredContentTitle.getElement().getAttribute("slideIndex")));
@@ -166,26 +167,26 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 			featuredContentTitleFloPanel.add(featuredContectContainer);
 			featuredSlideFloPanel.add(new FeaturedSlideVc(featuredContentDo));
 		}
-		
+
 	}
 */
 	/**
 	   * Show the current elapsed time in the elapsedLabel widget.
 	   */
 	  private void showElapsed (int countOfChild1) {
-		 
+
 		  	int countOfChild=featuredContentTitleFloPanel.getElement().getChildCount();
 	         for(int i=0;i<countOfChild;i++)
 	         {
 	        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getFirstChild()).getStyle().setBackgroundColor("#999999");
-	        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getLastChild()).getStyle().setDisplay(Display.NONE);	 
+	        	 ((Element)featuredContentTitleFloPanel.getElement().getChild(i).getLastChild()).getStyle().setDisplay(Display.NONE);
 	         }
 			 String scrollTop = (Integer.parseInt(((Element)featuredContentTitleFloPanel.getElement().getChild(countOfChild1).getFirstChild()).getAttribute("slideIndex")) * slideMaxHeight) + "";
 			 ((Element)featuredContentTitleFloPanel.getElement().getChild(countOfChild1).getFirstChild()).getStyle().setBackgroundColor("#515151");
-			 ((Element)featuredContentTitleFloPanel.getElement().getChild(countOfChild1).getLastChild()).getStyle().setDisplay(Display.BLOCK);	 
+			 ((Element)featuredContentTitleFloPanel.getElement().getChild(countOfChild1).getLastChild()).getStyle().setDisplay(Display.BLOCK);
 			 featuredSlideFloPanel.getElement().setAttribute("style", "margin-top:-" + scrollTop + "px");
-		
-	   
+
+
 			 /*String scrollTop = (Integer.parseInt(featuredContentTitle.getElement().getAttribute("slideIndex")) * slideMaxHeight) + "";
 		featuredSlideFloPanel.getElement().setAttribute("style", "margin-top:-" + scrollTop + "px");
 	  */ }
@@ -196,7 +197,7 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
-		
+
 
 	}
 

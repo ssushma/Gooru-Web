@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
-import org.ednovo.gooru.client.child.IsChildView;
+import org.ednovo.gooru.application.client.child.IsChildView;
 
 /**
  * 

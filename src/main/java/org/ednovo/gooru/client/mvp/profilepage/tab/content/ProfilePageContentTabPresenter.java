@@ -26,11 +26,11 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content;
 
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ProfilePageServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListPresenter;
-import org.ednovo.gooru.client.service.ProfilePageServiceAsync;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

@@ -1,12 +1,11 @@
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.classpages.classlist;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -23,10 +22,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
+ *
  * @fileName : WelcomeClassView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -45,7 +44,7 @@ public class WelcomeClassView extends PopupPanel {
 	interface NewFeaturesClassVcUiBinder extends
 			UiBinder<Widget, WelcomeClassView> {
 	}
-	
+
 	@UiField Button btnOk;
 	@UiField HTMLPanel popupHeader,headingTxt,manageList;
 	@UiField InlineHTML headingTxtDesc,manageListDesc;
@@ -62,48 +61,48 @@ public class WelcomeClassView extends PopupPanel {
 		setDefaultText();
 	}
 	/**
-	 * 
-	 * @function setDefaultText 
-	 * 
+	 *
+	 * @function setDefaultText
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	private void setDefaultText() {
 		btnOk.setText(i18n.GL1386());
 		StringUtil.setAttributes(btnOk.getElement(), "btnOk", i18n.GL1386(), i18n.GL1386());
-		
+
 		popupHeader.getElement().setInnerHTML(i18n.GL1605());
 		StringUtil.setAttributes(popupHeader.getElement(), "pnlPopupHeader", i18n.GL1605(), i18n.GL1605());
-		
+
 		headingTxt.getElement().setInnerHTML(i18n.GL1609());
 		StringUtil.setAttributes(headingTxt.getElement(), "pnlHeadingText", i18n.GL1605(), i18n.GL1609());
-		
+
 		manageList.getElement().setInnerHTML(i18n.GL1611());
 		StringUtil.setAttributes(manageList.getElement(), "pnlManageList", i18n.GL1611(), i18n.GL1611());
-		
+
 		popupContentDesc.setText(i18n.GL1606());
 		StringUtil.setAttributes(popupContentDesc.getElement(), "lblPopupContentDesc", i18n.GL1606(), i18n.GL1606());
-		
+
 		popupContentDesc1.setText(i18n.GL1606_1());
 		StringUtil.setAttributes(popupContentDesc1.getElement(), "lblPopupContentDesc1", i18n.GL1606_1(), i18n.GL1606_1());
-		
+
 		headingTxtDesc.setText(i18n.GL1610());
 		StringUtil.setAttributes(headingTxtDesc.getElement(), "spnHeadingTxtDesc", i18n.GL1610(), i18n.GL1610());
-		
+
 		manageListDesc.setText(i18n.GL1612());
-		StringUtil.setAttributes(manageListDesc.getElement(), "spnManageListDesc", i18n.GL1612(), i18n.GL1612());		
+		StringUtil.setAttributes(manageListDesc.getElement(), "spnManageListDesc", i18n.GL1612(), i18n.GL1612());
 	}
 
 	@UiHandler("btnOk")
@@ -121,6 +120,6 @@ public class WelcomeClassView extends PopupPanel {
 	public void hide(boolean isHide){
 		super.hide(isHide);
 		Window.enableScrolling(true);
-	}	
-	
+	}
+
 }

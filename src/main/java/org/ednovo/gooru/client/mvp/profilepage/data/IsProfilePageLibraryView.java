@@ -29,9 +29,9 @@ package org.ednovo.gooru.client.mvp.profilepage.data;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.child.IsChildView;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
+import org.ednovo.gooru.application.client.child.IsChildView;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryListDo;
 
 /**
  * @author SearchTeam

@@ -5,7 +5,7 @@
 		field="res"></ui:with>
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:FlowPanel>
 		<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupContainer}">
@@ -19,12 +19,12 @@
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionUrlContent}" ui:field="addResourceTabContainer">
-					
+
 					    <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="urlTabButton">
 							<g:Anchor  ui:field="fromweb" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
+
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="myComputerTabButton">
 							<g:Anchor ui:field="fromfile" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
@@ -33,7 +33,7 @@
 							ui:field="myDriveButton">
 							<g:Anchor ui:field="googleDrive" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
+
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="searchTabButton">
 							<g:Anchor ui:field="fromwsearch" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
@@ -44,7 +44,7 @@
 								checked="true" styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
 							<g:Anchor ui:field="multiplechoice" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
+
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="multipleAnswerTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="multipleAnswerRadioButton"
@@ -122,7 +122,7 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"/>
-			
+
 		</g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder>

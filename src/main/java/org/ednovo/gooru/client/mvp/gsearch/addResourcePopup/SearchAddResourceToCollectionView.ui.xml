@@ -4,7 +4,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle"
 		field="res"></ui:with>
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 		<g:HTMLPanel>
 	<div id="addCollectionPopup">
 		<div class="popHeader">
@@ -13,7 +13,7 @@
 		<div class="clearfix"></div>
 		</div>
 		<g:Label ui:field="addingTextLbl" styleName="remixMenuTitle"/>
-		
+
 		<g:Label ui:field="myCollDefault" styleName="foldermenuHeader" text="{i18n.GL1752}" title="{i18n.GL1752}"/>
 		<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListContainerScrollPanel">
 	          <g:HTMLPanel ui:field="floderTreeContainer" styleName="popBody"/>
@@ -28,4 +28,4 @@
 		<div class="clearfix"></div>
 	</div>
 </g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

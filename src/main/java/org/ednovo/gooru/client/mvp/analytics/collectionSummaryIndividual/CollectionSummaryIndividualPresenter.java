@@ -25,13 +25,13 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
-import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
-import org.ednovo.gooru.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 

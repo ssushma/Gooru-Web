@@ -26,14 +26,10 @@
 
 package org.ednovo.gooru.client.mvp.search;
 
-import java.util.List;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.search.SearchResourcesTagsDo;
 
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Label;
 
 public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 

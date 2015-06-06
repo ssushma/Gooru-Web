@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.image.upload;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.MediaUploadServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEvent;
@@ -36,19 +39,10 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
-import org.ednovo.gooru.client.service.MediaUploadServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;

@@ -6,7 +6,7 @@
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:footer="urn:import:org.ednovo.gooru.client.mvp.play.collection.footer">
 	<ui:style field= "playerStyle" src="collectionplayer.css"/>
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="playerHeaderStyle" />
 		<ui:style>
 		.wrapper {
@@ -195,7 +195,7 @@
 				<!-- full screen code end -->
 				<g:FlowPanel ui:field="navigationContainer" styleName="{playerStyle.resource-container}"></g:FlowPanel>
 			</g:FlowPanel>
-			<g:FlowPanel ui:field="playerBodyContainer" styleName="{playerHeaderStyle.getPlayerStyleResource.bodyContent}"></g:FlowPanel>			
+			<g:FlowPanel ui:field="playerBodyContainer" styleName="{playerHeaderStyle.getPlayerStyleResource.bodyContent}"></g:FlowPanel>
 		</g:FlowPanel>
 		<footer:StudyPlayerFooterView ui:field="footerView"></footer:StudyPlayerFooterView>
 	</g:FlowPanel>
