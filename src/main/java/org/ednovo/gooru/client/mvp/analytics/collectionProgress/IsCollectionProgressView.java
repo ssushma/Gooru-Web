@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDat
 
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ListBox;
 
 
 public interface IsCollectionProgressView extends IsViewWithHandlers<CollectionProgressUiHandlers>{
@@ -46,5 +47,14 @@ public interface IsCollectionProgressView extends IsViewWithHandlers<CollectionP
 	 */
 	HTMLPanel getLoadingImage();
 
+	/**
+	 * This will return the frame
+	 * @return
+	 */
 	Frame getFrame();
+	/**
+	 * This will return the filter drop down box
+	 * @return
+	 */
+	ListBox getFilterDropDown();
 }

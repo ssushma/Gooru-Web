@@ -60,18 +60,21 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 		getView().getFrame().setUrl("");
 		getView().getLoadingImage().setVisible(true);
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+
 		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
 
-					@Override
-					public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
-						getView().setData(result,isCollectionView,collectionTitle);
-					}
+			@Override
+			public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
+				getView().setData(result,isCollectionView,collectionTitle);
+			}
 
-					@Override
-					public void onFailure(Throwable caught) {
+			@Override
+			public void onFailure(Throwable caught) {
 
-					}
-				});
+			}
+		});
+
+
 	}
 
 	/**
@@ -93,6 +96,7 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	@Override
 	public void exportCollectionProgress(String collectionId,String classpageId, String timeZone) {
 		String classpage=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+
 		this.analyticService.exportProgress(this.collectionId, classpage, timeZone, new AsyncCallback<String>() {
 
 			@Override

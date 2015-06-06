@@ -159,6 +159,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
 		setBannerStaticImages();
+		
 	}
 
 	/**

@@ -18,6 +18,7 @@
  	<inherits name="com.google.gwt.logging.Logging"/>
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name="com.google.gwt.http.HTTP" />
+	<inherits name='org.gwt.advanced.Grid'/>
 
 	<!--Inherit this class for disabling obfuscation. Remove this line for production -->
 	<inherits name='com.google.gwt.resources.Resources' />

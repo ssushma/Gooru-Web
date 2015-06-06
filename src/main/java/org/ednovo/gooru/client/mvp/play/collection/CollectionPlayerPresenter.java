@@ -1400,7 +1400,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, collectionDataLogEventId,resourceActivityResourceId,collectionDo.getGooruOid(), PlayerDataLogEvents.STOP_EVENT_TYPE, resourceStartTime,
 				resourceEndTime,resourceEndTime-resourceStartTime,AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length());
 		triggerCollectionItemNewDataLogStartStopEvent(resourceActivityResourceId,resourceStartTime, resourceEndTime, PlayerDataLogEvents.STOP_EVENT_TYPE, 0, questionType);
-		updateSessionActivityItem(contentResourceGooruOId,STATUS_ARCHIVE,sessionId);
+		if(!AppClientFactory.isAnonymous()){
+			updateSessionActivityItem(contentResourceGooruOId,STATUS_ARCHIVE,sessionId);	
+		}
+		
 	}
 
 	/**
@@ -1456,31 +1459,37 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		if(GooruConstants.TRUE.equals(isRefreshed)){
-			isRefreshed = null;
-			createResourceDataLog();
-			if(collectionItemDo!=null){
-				createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
+		if(AppClientFactory.isAnonymous()){
+			if(GooruConstants.TRUE.equals(isRefreshed)){
+				isRefreshed = null;
+			}else{
+				sessionId = GwtUUIDGenerator.uuid();
+				/**
+				 * Triggers collection start event.
+				 */
+				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
 			}
+			escalateToTriggerEvents(sessionId);
 		}else{
-			this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-				@Override
-				public void onSuccess(String sessionId) {
-					if(GooruConstants.TRUE.equals(isRefreshed)){
-						isRefreshed = null;
-					}else{
+			if(GooruConstants.TRUE.equals(isRefreshed)){
+				isRefreshed = null;
+				createResourceDataLog();
+				if(collectionItemDo!=null){
+					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
+				}
+			}else{
+				this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
+					@Override
+					public void onSuccess(String sessionId) {
 						CollectionPlayerPresenter.this.sessionId=sessionId;
 						/**
 						 * Triggers collection start event.
 						 */
 						triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+						escalateToTriggerEvents(sessionId);
 					}
-					createResourceDataLog();
-					if(collectionItemDo!=null){
-						createSessionItem(CollectionPlayerPresenter.this.sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
-					}
-				}
-			});
+				});
+			}
 		}
 	}
 
@@ -1491,15 +1500,21 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	 * @param resourceGooruOid
 	 */
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){
-		if(!StringUtil.isEmpty(resourceGooruOid)){ 
-			this.contentResourceGooruOId = resourceGooruOid;
-		}
-		this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType,status, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionItemId) {
-				CollectionPlayerPresenter.this.sessionItemId=sessionItemId;
+		
+		if(AppClientFactory.isAnonymous()){
+			this.sessionItemId = sessionId;
+			AppClientFactory.printInfoLogger("-- item id -- "+sessionItemId);
+		}else{
+			if(!StringUtil.isEmpty(resourceGooruOid)){ 
+				this.contentResourceGooruOId = resourceGooruOid;
 			}
-		});
+			this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType,status, new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String sessionItemId) {
+					CollectionPlayerPresenter.this.sessionItemId=sessionItemId;
+				}
+			});
+		}
 	}
 
 	public void createSessionItemAttempt(String contentGooruOid,int answerId, String attemptResult){
@@ -1750,6 +1765,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("id", collectionDo.getGooruOid());
 		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+		updateEventLoggingSessionId();
 		if(isLoginRequestCancel){
 			String collectionItemId=getPlaceManager().getRequestParameter("rid", null);
 			if(collectionItemId!=null){
@@ -1795,6 +1811,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			updateCollectionSummary();
 		}
 	}
+
 	public void updateHeaderView(){
 		getView().updateAuthorDetails();
 	}
@@ -2645,5 +2662,33 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
             resourceStartTime = Long.parseLong(resStartTime); 
             removeCookieValues();
         }
+	}
+
+	/**
+	 * Triggers resource.strat/stop event.
+	 * @param sessionId
+	 */
+	protected void escalateToTriggerEvents(String sessionId) {
+		createResourceDataLog();
+		if(collectionItemDo!=null){
+			createSessionItem(CollectionPlayerPresenter.this.sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
+		}
+	}
+	
+	/**
+	 * Calls session activity API once user logged in between playing the player.
+	 */
+	private void updateEventLoggingSessionId() {
+		String parentGooruOid=null,mode="collection";
+		if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
+			parentGooruOid=classpageId;
+			mode="class";
+		}
+		this.playerAppService.createSessionTracker(collectionDo.getGooruOid(), parentGooruOid,mode, new SimpleAsyncCallback<String>() {
+			@Override
+			public void onSuccess(String sessionId) {
+				CollectionPlayerPresenter.this.sessionId=sessionId;
+			}
+		});
 	}
 }

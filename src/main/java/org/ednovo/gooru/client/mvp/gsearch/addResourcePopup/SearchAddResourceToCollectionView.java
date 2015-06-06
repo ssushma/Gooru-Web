@@ -485,6 +485,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		hide();
 		successPopup.setData(collectionName, selectedGooruOid,params,searchType,folderDo); 
 		successPopup.setGlassEnabled(true);
+		successPopup.getElement().getStyle().setZIndex(999999);
+		successPopup.setGlassStyleName("setGlassPanelZIndex");
 		successPopup.show();
 		successPopup.center();
 	}

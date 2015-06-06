@@ -1603,28 +1603,12 @@ public class ProfileTopicListView extends Composite{
 		if(customize!=null && customize.equals("yes")){
 			if(colleId.equals(collectionId) && isVisible ){
 				isVisible=false;
-				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
-				final Map<String, String> params = StringUtil.splitQuery(Window.Location
-						.getHref());
-				RenameAndCustomizeLibraryPopUp customizePopup = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
-					@Override
-					public void closePoup() {
-						Window.enableScrolling(true);
-						this.hide();	
-						isCustomizePopup = false;
-
-					}
-				};
 				Window.scrollTo(0, 0);
-				customizePopup.show();
-				customizePopup.center();
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				remixPresenterWidget.getView().getAppPopUp().show();
+				isCustomizePopup = false;
+				remixPresenterWidget.getView().getAppPopUp().center();
+				remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
 			}
 
 		}
