@@ -1,4 +1,5 @@
-/****************************************************************************** * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+/******************************************************************************
+ *  Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  *
  *  http://www.goorulearning.org/
  *
@@ -26,24 +27,48 @@
  */
 package org.ednovo.gooru.application.client.home;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.service.UserServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpAfterThirteenPresenter;
+import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
+import org.ednovo.gooru.client.mvp.authentication.uc.StudentSignUpUc;
+import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
+import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
+import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
+import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -59,6 +84,36 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  */
 public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers {
 
+	SignUpPresenter signUpViewPresenter = null;
+
+	ContributorsPresenter contributorsPresenter = null;
+
+	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
+
+	SignUpAfterThirteenPresenter signUpAfterThirteenPresenter=null;
+
+	private UserRegistrationPresenter userRegistrationPresenter;
+
+	private SimpleAsyncCallback<UserDo> registerdUserAsyncCallback;
+
+	private String parentGooruUID;
+
+	private static final String GOORU_UID = "gooruuid";
+
+	private static final String USER_TYPE = "type";
+
+	private static final String CALLBACK = "callback";
+
+	private static final String LIBRARY_PAGE = "page";
+
+	private static final String LOGINEVENT = "loginEvent";
+
+	private static final String ERROR = "error";
+
+	private static final String CREDENTIAL = "Credential";
+
+	@Inject
+	private UserServiceAsync userService;
 
 	@NameToken(PlaceTokens.HOME)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -76,9 +131,13 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(IsHomeView view, IsHomeProxy proxy) {
+	public HomePresenter(IsHomeView view, IsHomeProxy proxy,UserRegistrationPresenter userRegistrationPresenter,ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.signUpViewPresenter = signUpViewPresenter;
+		this.userRegistrationPresenter = userRegistrationPresenter;
+		this.signUpCompletePresenter = signUpCompletePresenter;
+		this.signUpAfterThirteenPresenter=signUpAfterThirteenPresenter;
 
 	}
 
@@ -88,6 +147,20 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		MixpanelUtil.Arrive_Landing_Page();
+
+		setRegisterdUserAsyncCallback(new SimpleAsyncCallback<UserDo>() {
+			@Override
+			public void onSuccess(final UserDo user) {
+				GWT.runAsync(new SimpleRunAsyncCallback() {
+
+					@Override
+					public void onSuccess() {
+						initilazeRegistrationView(user);
+					}
+				});
+			}
+		});
+
 	}
 
 	@Override
@@ -110,125 +183,124 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 
 	private void callBackMethods(){
-//		GWT.runAsync(new SimpleRunAsyncCallback() {
-//
-//			@Override
-//			public void onSuccess() {
-//				if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
-//					AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
-//				}
-//				AppClientFactory.printInfoLogger("getPlaceManager().getRequestParameter(CALLBACK) : "+getPlaceManager().getRequestParameter(CALLBACK));
-//				if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registration")) {
-//					getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
-//					parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
-//				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("changePassword")) {
-//					validateResetLink(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
-//				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
-//					//To show SignUp (Registration popup)
-//					if (AppClientFactory.isAnonymous()){
-//						Window.enableScrolling(false);
-//						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-//						String type = getPlaceManager().getRequestParameter("type") ;
-//						int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
-//						signUpViewPresenter.displayPopup(displayScreen);
-//						addToPopupSlot(signUpViewPresenter);
-//					}
-//				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registerChild")){
-//					if (getPlaceManager().getRequestParameter("dob") != null && getPlaceManager().getRequestParameter("userName") != null){
-//						String externalId = AppClientFactory.getLoggedInUser().getExternalId();
-//						String email = AppClientFactory.getLoggedInUser().getEmailId();
-//
-//						String parentEmailId = email !=null && !email.equalsIgnoreCase("") ? email : externalId !=null && externalId.equalsIgnoreCase("") ? externalId : null;
-//						String parameterEmailId = getPlaceManager().getRequestParameter("emailId", null);
-//						parentEmailId = parameterEmailId !=null && !parameterEmailId.equalsIgnoreCase("") ? parameterEmailId : parentEmailId;
-//
-//						StudentSignUpUc studentSignUp = new StudentSignUpUc(parentEmailId, getPlaceManager().getRequestParameter("userName"), getPlaceManager().getRequestParameter("dob").replaceAll("D", "\\/"), AppClientFactory.isAnonymous() ? getPlaceManager().getRequestParameter("privateGooruUId") : AppClientFactory.getLoggedInUser().getGooruUId());
-//						studentSignUp.center();
-//						studentSignUp.show();
-//					}
-//				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("guide")){
-//
-//				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("profileUpdate")){
-//					if (AppClientFactory.isAnonymous()){
-//						AppClientFactory.fireEvent(new InvokeLoginEvent());
-//					}else{
-//						signUpCompletePresenter.displayView();
-//						addToPopupSlot(signUpCompletePresenter);
-//					}
-//				}
-//				else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("turn13")){
-//					if (AppClientFactory.isAnonymous()){
-//						AppClientFactory.fireEvent(new InvokeLoginEvent());
-//					}else{
-//						if(!signUpAfterThirteenPresenter.isVisible()) {
-//							signUpAfterThirteenPresenter.displayView();
-//							addToPopupSlot(signUpAfterThirteenPresenter);
-//						}
-//					}
-//				}
-//				else if  (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("confirmUser")){
-//					//SignUpGradeCourseView gradeCourseView = new SignUpGradeCourseView(AppClientFactory.getLoggedInUser());
-//					//Check if user is logged or not.
-//					if (AppClientFactory.isAnonymous()){
-//						//If not Open Login Popup
-//						AppClientFactory.fireEvent(new InvokeLoginEvent());
-//					}else{
-//						if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0){
-//							String gooruUid = getPlaceManager().getRequestParameter("gooruuid") !=null ? getPlaceManager().getRequestParameter("gooruuid") : "";
-//							String token = getPlaceManager().getRequestParameter("sessionid") !=null ? getPlaceManager().getRequestParameter("sessionid") : "";
-//							Map<String, String> params = new HashMap<String, String>();
-//							params.put("confirmUser", "true");
-//							params.put("gooruUid", AppClientFactory.getLoggedInUser().getGooruUId());
-//							// Confirm User and remove/hide Not confirmed Popup.
-//							AppClientFactory.getInjector().getUserService().updateUserDetails(gooruUid, token, params, new SimpleAsyncCallback<ProfileDo>() {
-//								@Override
-//								public void onSuccess(ProfileDo result) {
-//									//Display thanks popup if required.
-//									//Set Visiblity to false
-//									AppClientFactory.setLoggedInUser(result.getUser());
-//									boolean isConfirmed = result.getUser().getConfirmStatus() == 1 ? true : false;
-//									if (isConfirmed){
-//										AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(isConfirmed));
-//										ThanksEmailConfirmPopupUc confirmPopup = new ThanksEmailConfirmPopupUc();
-//										confirmPopup.center();
-//										confirmPopup.show();
-//									}
-//								}
-//							});
-//						}
-//					}
-//				}
-//
-//				if (getPlaceManager().getRequestParameter(LOGINEVENT) != null && getPlaceManager().getRequestParameter(LOGINEVENT).equalsIgnoreCase("true") && AppClientFactory.isAnonymous()) {
-//					AppClientFactory.fireEvent(new InvokeLoginEvent());
-//				}
-//
-//				if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("401") && AppClientFactory.isAnonymous()) {
-//					new AlertContentUc(i18n.GL1966(), i18n.GL1938());
-//				}
-//
-//
-//				final UserDo userDo = AppClientFactory.getLoggedInUser();
-//				int flag = userDo.getViewFlag();
-//				final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-//				//Show Popup where user can update his details like, username and role. Show this only for non regular user and if he is logging for the first time.
-//				if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase(CREDENTIAL)) {
-//					Window.enableScrolling(false);
-//					AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
-//					update.setGlassEnabled(true);
-//					update.show();
-//					update.center();
-//					Document doc=Document.get();
-//					Element bodyelement = doc.getBody();
-//					Window.scrollTo(0, 0);
-//					bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
-//				}
-//				else if(flag>0 && flag<=11 && !AppClientFactory.isAnonymous()){
-//				}
-//
-//				AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-//			}
-//		});
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+				if(AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
+					AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
+				}
+				if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registration")) {
+					getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
+					parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
+				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("changePassword")) {
+					validateResetLink(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+					//To show SignUp (Registration popup)
+					if (AppClientFactory.isAnonymous()){
+						Window.enableScrolling(false);
+						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+						String type = getPlaceManager().getRequestParameter("type") ;
+						int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+						signUpViewPresenter.displayPopup(displayScreen);
+						addToPopupSlot(signUpViewPresenter);
+					}
+				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registerChild")){
+					if (getPlaceManager().getRequestParameter("dob") != null && getPlaceManager().getRequestParameter("userName") != null){
+						String externalId = AppClientFactory.getLoggedInUser().getExternalId();
+						String email = AppClientFactory.getLoggedInUser() != null ? AppClientFactory.getLoggedInUser().getEmailId() : null;
+
+						String parentEmailId = email !=null && !email.equalsIgnoreCase("") ? email : externalId !=null && externalId.equalsIgnoreCase("") ? externalId : null;
+						String parameterEmailId = getPlaceManager().getRequestParameter("emailId", null);
+						parentEmailId = parameterEmailId !=null && !parameterEmailId.equalsIgnoreCase("") ? parameterEmailId : parentEmailId;
+
+						StudentSignUpUc studentSignUp = new StudentSignUpUc(parentEmailId, getPlaceManager().getRequestParameter("userName"), getPlaceManager().getRequestParameter("dob").replaceAll("D", "\\/"), AppClientFactory.isAnonymous() ? getPlaceManager().getRequestParameter("privateGooruUId") : AppClientFactory.getLoggedInUser().getGooruUId());
+						studentSignUp.center();
+						studentSignUp.show();
+					}
+				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("guide")){
+
+				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("profileUpdate")){
+					if (AppClientFactory.isAnonymous()){
+						AppClientFactory.fireEvent(new InvokeLoginEvent());
+					}else{
+						signUpCompletePresenter.displayView();
+						addToPopupSlot(signUpCompletePresenter);
+					}
+				}
+				else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("turn13")){
+					if (AppClientFactory.isAnonymous()){
+						AppClientFactory.fireEvent(new InvokeLoginEvent());
+					}else{
+						if(!signUpAfterThirteenPresenter.isVisible()) {
+							signUpAfterThirteenPresenter.displayView();
+							addToPopupSlot(signUpAfterThirteenPresenter);
+						}
+					}
+				}
+				else if  (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("confirmUser")){
+					//SignUpGradeCourseView gradeCourseView = new SignUpGradeCourseView(AppClientFactory.getLoggedInUser());
+					//Check if user is logged or not.
+					if (AppClientFactory.isAnonymous()){
+						//If not Open Login Popup
+						AppClientFactory.fireEvent(new InvokeLoginEvent());
+					}else{
+						if (AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getConfirmStatus() == 0){
+							String gooruUid = getPlaceManager().getRequestParameter("gooruuid") !=null ? getPlaceManager().getRequestParameter("gooruuid") : "";
+							String token = getPlaceManager().getRequestParameter("sessionid") !=null ? getPlaceManager().getRequestParameter("sessionid") : "";
+							Map<String, String> params = new HashMap<String, String>();
+							params.put("confirmUser", "true");
+							params.put("gooruUid", AppClientFactory.getLoggedInUser().getGooruUId());
+							// Confirm User and remove/hide Not confirmed Popup.
+							AppClientFactory.getInjector().getUserService().updateUserDetails(gooruUid, token, params, new SimpleAsyncCallback<ProfileDo>() {
+								@Override
+								public void onSuccess(ProfileDo result) {
+									//Display thanks popup if required.
+									//Set Visiblity to false
+									AppClientFactory.setLoggedInUser(result.getUser());
+									boolean isConfirmed = result.getUser().getConfirmStatus() == 1 ? true : false;
+									if (isConfirmed){
+										AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(isConfirmed));
+										ThanksEmailConfirmPopupUc confirmPopup = new ThanksEmailConfirmPopupUc();
+										confirmPopup.center();
+										confirmPopup.show();
+									}
+								}
+							});
+						}
+					}
+				}
+
+				if (getPlaceManager().getRequestParameter(LOGINEVENT) != null && getPlaceManager().getRequestParameter(LOGINEVENT).equalsIgnoreCase("true") && AppClientFactory.isAnonymous()) {
+					AppClientFactory.fireEvent(new InvokeLoginEvent());
+				}
+
+				if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("401") && AppClientFactory.isAnonymous()) {
+					new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+				}
+
+
+				final UserDo userDo = AppClientFactory.getLoggedInUser();
+				int flag = userDo != null ? userDo.getViewFlag() : 0;
+				final String loginType = userDo != null && userDo.getLoginType() !=null ? userDo.getLoginType() : "";
+				//Show Popup where user can update his details like, username and role. Show this only for non regular user and if he is logging for the first time.
+				if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase(CREDENTIAL)) {
+					Window.enableScrolling(false);
+					AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser() != null ? AppClientFactory.getLoggedInUser().getEmailId() : null, AppClientFactory.getLoggedInUser());
+					update.setGlassEnabled(true);
+					update.show();
+					update.center();
+					Document doc=Document.get();
+					Element bodyelement = doc.getBody();
+					Window.scrollTo(0, 0);
+					bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
+				}
+				else if(flag>0 && flag<=11 && !AppClientFactory.isAnonymous()){
+				}
+
+				AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+			}
+		});
 	}
 
 
@@ -236,11 +308,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onReset() {
 		super.onReset();
-		/*Window.enableScrolling(true);
-		Window.scrollTo(0, 0);*/
-		if (AppClientFactory.isAnonymous()){
-		}else{
-		}
 	}
 
 	private void getIntoLibrarypage() {
@@ -262,9 +329,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		callBackMethods();
 
 		getIntoLibrarypage();
-		if (AppClientFactory.isAnonymous()){
-		}else{
-		}
 	}
 
 
@@ -289,5 +353,118 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.HOME;
+	}
+
+	/**
+	 * This method is to get the registerdUserAsyncCallback
+	 */
+	public SimpleAsyncCallback<UserDo> getRegisterdUserAsyncCallback() {
+		return registerdUserAsyncCallback;
+	}
+
+	/**
+	 * This method is to set the registerdUserAsyncCallback
+	 */
+	public void setRegisterdUserAsyncCallback(
+			SimpleAsyncCallback<UserDo> registerdUserAsyncCallback) {
+		this.registerdUserAsyncCallback = registerdUserAsyncCallback;
+	}
+
+
+	@Override
+	public void initilazeRegistrationView(final UserDo user) {
+
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+
+				String userType = getPlaceManager().getRequestParameter(USER_TYPE);
+				if (userType == null || (userType != null && !userType.equalsIgnoreCase("Parent") && !userType.equalsIgnoreCase("NonParent"))) {
+
+					alert(i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP(), i18n.GL1416());
+
+				} else if (user != null) {
+					if (user.isAvailability()) {
+						if (user.getConfirmStatus() == 1 && userType.equalsIgnoreCase("Parent")) {
+							if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
+								LoginPopupUc login = new LoginPopupUc(user != null ? user.getEmailId() : null) {
+
+									@Override
+									public void onLoginSuccess() {
+										// TODO Auto-generated method stub
+
+									}
+								};
+							} else if(AppClientFactory.getLoggedInUser().getUserUid().equalsIgnoreCase(parentGooruUID)||AppClientFactory.getLoggedInUser().getUserUid()==parentGooruUID){
+								userRegistrationPresenter.setAccountType(userType);
+								userRegistrationPresenter.setUser(user);
+								addToPopupSlot(userRegistrationPresenter, true);
+							}
+							else {
+								alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1417());
+
+							}
+						} else if (user.getConfirmStatus() == 1 && !userType.equalsIgnoreCase("Parent")) {
+							alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1418());
+						}
+						else {
+							userRegistrationPresenter.setAccountType(userType);
+							userRegistrationPresenter.setUser(user);
+							addToPopupSlot(userRegistrationPresenter, true);
+						}
+					} else {
+						alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1419());
+					}
+
+				} else {
+					alert(i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP(), i18n.GL1420()+i18n.GL_SPL_FULLSTOP());
+				}
+
+			}
+		});
+
+	}
+	/**
+	 * Create alert popup with message header and message content
+	 * @param messageHeader popup heading
+	 * @param messageContent content of the popup
+	 */
+	private void alert(final String messageHeader, final String messageContent) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+				new AlertContentUc(messageHeader, messageContent).getAlertButton().addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+					}
+				});
+			}
+		});
+	}
+
+	public void setUserService(UserServiceAsync userService) {
+		this.userService = userService;
+	}
+
+	public UserServiceAsync getUserService() {
+		return userService;
+	}
+
+	private void validateResetLink(String resetToken) {
+		AppClientFactory.getInjector().getUserService().isValidResetPasswordLink(resetToken, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				if(result.equals("true")){
+					getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+				}else{
+					new AlertMessageUc(i18n.GL1089(), new HTML(i18n.GL0100()));
+				}
+			}
+		});
 	}
 }

@@ -28,6 +28,8 @@
 package org.ednovo.gooru.application.client.home;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
+import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 
 /**
  * @author Search Team
@@ -35,7 +37,26 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  */
 public interface HomeUiHandlers extends BaseUiHandlers {
 
-
+	/**
+	 *
+	 * @function initilazeRegistrationView
+	 *
+	 * @created_date : 06-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param user
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void initilazeRegistrationView(UserDo user);
 
 
 }

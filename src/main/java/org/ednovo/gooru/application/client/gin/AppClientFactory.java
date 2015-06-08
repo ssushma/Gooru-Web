@@ -254,7 +254,7 @@ public class AppClientFactory implements ClientConstants {
 	 */
 	public static boolean isAnonymous() {
 //		return getClientFactory().loggedInUser.getGooruUId()!=null?getClientFactory().loggedInUser.getGooruUId().equals(GOORU_ANONYMOUS):false;
-		return getClientFactory().loggedInUser != null && getClientFactory().loggedInUser.getGooruUId() != null ? getClientFactory().loggedInUser.getGooruUId().equals(GOORU_ANONYMOUS) : false;
+		return getClientFactory().loggedInUser != null && getClientFactory().loggedInUser.getGooruUId() != null ? getClientFactory().loggedInUser.getGooruUId().equals(GOORU_ANONYMOUS) : true;
 	}
 	/**
 	 *

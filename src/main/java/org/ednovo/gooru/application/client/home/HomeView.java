@@ -27,6 +27,8 @@ package org.ednovo.gooru.application.client.home;
 
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -96,6 +98,17 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@Override
 	public void onLoad() {
 
+	}
+
+	@Override
+	public void resetPassword(final String resetToken) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+				new ResetPasswordVc(resetToken);
+			}
+		});
 	}
 }
 

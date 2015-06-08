@@ -35,5 +35,26 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  */
 public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 
+	/**
+	 *
+	 * @function resetPassword
+	 *
+	 * @created_date : 06-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param requestParameter
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void resetPassword(String requestParameter);
+
 
 }
