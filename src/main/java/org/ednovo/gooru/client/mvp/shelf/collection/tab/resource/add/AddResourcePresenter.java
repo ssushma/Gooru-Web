@@ -661,5 +661,16 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		}
 	}
 
+	@Override
+	public void setEditQuestionData(CollectionItemDo collectionItemDo) {
+		
+		questionTypePresenter.getView().editQuestion(collectionItemDo);
+	}
+
+	@Override
+	public void setHSEditData() {
+		questionTypePresenter.getView().setEditData();
+	}
+
 }
 
