@@ -48,7 +48,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
@@ -213,8 +212,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	/* HTML5 Storage implementation for tab persistance */
 	private Storage stockStore = null;
-
-    PPPCollectionResult pppCollectionResult;
 
     boolean isProfileAdmin = false;
 	
@@ -969,8 +966,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@Override
 	public void setCollectionData(CollectionItemDo collectionItemDo) {
-		PPPCollectionResult pppCollectionResult = new PPPCollectionResult(collectionItemDo);
-		pppCollectionResult.openDisclosurePanel();
+		/*PPPCollectionResult pppCollectionResult = new PPPCollectionResult(collectionItemDo);
+		pppCollectionResult.openDisclosurePanel();*/
 		displayFooter();
 	}
 
