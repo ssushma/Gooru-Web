@@ -52,7 +52,7 @@
   right: 0;
   bottom: 0;
   background-color: #eaeaea;
-  z-index: 999;
+  z-index: 89;
 }
 #loading-animation {
   height: auto;
@@ -357,9 +357,7 @@
 .focusBlock{
 	position:relative;
 	margin-top:-100px;
-	z-index:999999;
-
-
+	z-index:89;
 }
 .focusBlock .panel-default{
 	border-color:#b1d2e7;
@@ -372,7 +370,7 @@
 
 .focusBlock .panel-heading .panel-title{
 	text-align:center;
-	font-family:"Arvo",serif;
+	font-family:"Arvo",serif !important;
 	color:#4c98cc;
 	font-size:34px;
 }
