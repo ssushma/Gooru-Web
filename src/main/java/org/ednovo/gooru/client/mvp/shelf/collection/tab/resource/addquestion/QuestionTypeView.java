@@ -4,9 +4,11 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
@@ -14,8 +16,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerChoice;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHintsView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHotSpotQuestionAnswerChoice;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionAnswerChoice;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionImg;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -34,6 +38,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
@@ -46,6 +51,8 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -72,6 +79,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -102,7 +110,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@UiField Label questionTypeHeader,questionTypeText,charLimitLbl,questionNameErrorLbl,setUpAdvancedLbl,advancedLbl,
 	explanationLabel,charLimitExplanation,explainationErrorLbl,errorMessageForExplanation,errorMessageForHintsCheck,
 	depthOfKnowledgeHeader,depthOfKnowledgeTitle,standardsDefaultText,standardMaxMsg,centuryDefaultText,rightsLbl,
-	loadingTextLbl;
+	loadingTextLbl,ansChoiceErrMsg;
 	@UiField Anchor addQuestionImg,addExplanationAnc,addHintsAnc,addDepthOfKnowledgeAnc,addStandardsAnc,addCenturyAnc;
 	@UiField HTMLPanel questionText,addQuestImgContainer,questionHotSpotAnswerChoiceContainer,advancedContainer,hintsContainer,
 	errorContainer,panelContentRights,rightsContent,buttonContainer,questionNameTextAreaContainer,explainationTextAreaContainer;
@@ -119,11 +127,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	AppSuggestBox standardSgstBox,centurySgstBox;
 	@UiField BlueButtonUc addbutton;
 	@UiField public static Label errorMessageForQuestion;
-	
+
 	private static final String MESSAGE_HEADER = i18n.GL0748();
 	private static final String MESSAGE_CONTENT = i18n.GL0891();
-    private static final String ERROR_MSG_ANSWER = i18n.GL0311();
+	private static final String ERROR_MSG_ANSWER = i18n.GL0311();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
+	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312(); 
 	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
@@ -154,10 +163,10 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
 	private HandlerRegistration handlerRegistration=null;
-	
+
 	boolean isAddBtnClicked=true,isRightsClicked=false,validationValue=false,isSaveButtonClicked=false;
-	
-	
+
+
 	private static final int QUESTION_TEXT_LENGTH =500;
 	private static final int EXPLAINATION_TEXT_LENGTH =500;
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
@@ -166,10 +175,13 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String ERROR_MSG_QUESTION = i18n.GL0310();
 	private static final String ERROR_MSG_HINTS_LENGTH = i18n.GL0877();
 	private static final String ERROR_MSG_HINTS = i18n.GL2201();
-	
+
 	private String questionType="HS";
-	
+	private String hsType=i18n.GL3228_1();
+
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
+
+	ArrayList<String> isValidHintsList = new ArrayList<String>();
 
 	public QuestionTypeView() {
 		initializeAutoSuggestedBox();
@@ -198,15 +210,15 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		setHotSpotAnswerFields();
 
 		advancedContainer.getElement().setId("pnladvancedContainer");
-		addHintsAnc.setText(i18n.GL3210() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
-		addHintsAnc.getElement().setAttribute("alt", i18n.GL3210());
-		addHintsAnc.getElement().setAttribute("title", i18n.GL3210());
-		addExplanationAnc.setText( i18n.GL3208());
-		addExplanationAnc.getElement().setAttribute("alt",  i18n.GL3208());
-		addExplanationAnc.getElement().setAttribute("title", i18n.GL3208());
-		addDepthOfKnowledgeAnc.setText(i18n.GL3209());
-		addDepthOfKnowledgeAnc.getElement().setAttribute("alt", i18n.GL3209());
-		addDepthOfKnowledgeAnc.getElement().setAttribute("title", i18n.GL3209());
+		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+		addHintsAnc.getElement().setAttribute("alt", i18n.GL3210_1());
+		addHintsAnc.getElement().setAttribute("title", i18n.GL3210_1());
+		addExplanationAnc.setText( i18n.GL3208_1());
+		addExplanationAnc.getElement().setAttribute("alt",  i18n.GL3208_1());
+		addExplanationAnc.getElement().setAttribute("title", i18n.GL3208_1());
+		addDepthOfKnowledgeAnc.setText(i18n.GL3209_1());
+		addDepthOfKnowledgeAnc.getElement().setAttribute("alt", i18n.GL3209_1());
+		addDepthOfKnowledgeAnc.getElement().setAttribute("title", i18n.GL3209_1());
 		addStandardsAnc.setText(i18n.GL0575());
 		addStandardsAnc.getElement().setAttribute("alt", i18n.GL0575());
 		addStandardsAnc.getElement().setAttribute("title", i18n.GL0575());
@@ -216,9 +228,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211());
+		setUpAdvancedLbl.setText(i18n.GL3211_1());
+		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211_1());
+		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211_1());
 
 
 		/**
@@ -229,16 +241,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		eHearderIconExplanation.getElement().setId("eHearderIconExplanation");
 		eHearderIconExplanation.addClickHandler(new MinimizePanelsClickHandler());
 
-		explanationContainer.setVisible(false);
-		addExplanationAnc.addStyleName("advancedOptionsTabs");
-		addExplanationAnc.removeStyleName("advancedOptionsTabActive");
 		explanationContainer.getElement().setId("fpnlExplanationContainer");
 
 		explanationLabel.setText(" "+i18n.GL0867());
 		explanationLabel.getElement().setId("lblExplanationLabel");
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
-		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		explainationErrorLbl.getElement().setId("errlblExplainationErrorLbl");
 		/**
 		 * hints
@@ -249,10 +257,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		/**
 		 * Depth of Knowledge
 		 */
-		depthOfKnowledgeContainer.setVisible(false);
-		addDepthOfKnowledgeAnc.addStyleName("advancedOptionsTabs");
-		addDepthOfKnowledgeAnc.removeStyleName("advancedOptionsTabActive");
-
 		eHearderIconDepthOfKnowledge.getElement().setId("eHearderIconDepthOfKnowledge");
 		eHearderIconDepthOfKnowledge.addClickHandler(new MinimizePanelsClickHandler());
 
@@ -291,9 +295,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		 * Standards
 		 */
 		standardContainer.getElement().setId("fpnlStandardContainer");
-		standardContainer.setVisible(false);
-		addStandardsAnc.addStyleName("advancedOptionsTabs");
-		addStandardsAnc.removeStyleName("advancedOptionsTabActive");
 		eHearderIconStandards.getElement().setId("eHearderIconStandards");
 		eHearderIconStandards.addClickHandler(new MinimizePanelsClickHandler());
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
@@ -304,7 +305,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
-		errorContainer.setVisible(false);
+
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
 		standardsPanel.getElement().setId("fpnlStandardsPanel");
@@ -312,9 +313,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		/**
 		 * century
 		 */
-		centuryContainer.setVisible(false);
-		addCenturyAnc.addStyleName("advancedOptionsTabs");
-		addCenturyAnc.removeStyleName("advancedOptionsTabActive");
 		eHearderIconCentury.getElement().setId("eHearderIconCentury");
 		eHearderIconCentury.addClickHandler(new MinimizePanelsClickHandler());
 		centuryDefaultText.setText(i18n.GL3199());
@@ -323,7 +321,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		centurySgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:85%;height:19px");
 
 		setCenturyData();
-		
+
 		/**
 		 * Terms Policy
 		 */
@@ -364,7 +362,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		additionalText.getElement().setId("lblAdditionalText");
 		additionalText.getElement().setAttribute("alt", i18n.GL0874());
 		additionalText.getElement().setAttribute("title", i18n.GL0874());
-		
+
 		/**
 		 * add
 		 */
@@ -375,7 +373,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		loadingTextLbl.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
 		loadingTextLbl.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
-		loadingTextLbl.setVisible(false);
+
 		addbutton.setText(i18n.GL0590());
 		addbutton.getElement().setAttribute("alt", i18n.GL0590());
 		addbutton.getElement().setAttribute("title", i18n.GL0590());
@@ -385,7 +383,62 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		cancelButton.getElement().setAttribute("title", i18n.GL0142());
 		cancelButton.getElement().setAttribute("style", "margin-left:10px;float: none;display: inline-block;");
 		cancelButton.getElement().setId("btnCancel");
+
+		setTextAndStyle();
+
+		ansChoiceErrMsg.getElement().setId("lblAnsChoiceErrMsg");
 	}
+
+
+	public void setTextAndStyle(){
+		/**
+		 * Explanation
+		 */
+		explanationContainer.setVisible(false);
+		addExplanationAnc.addStyleName("advancedOptionsTabs");
+		addExplanationAnc.removeStyleName("advancedOptionsTabActive");
+		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
+
+		/**
+		 * Depth of Knowledge
+		 */
+		depthOfKnowledgeContainer.setVisible(false);
+		addDepthOfKnowledgeAnc.addStyleName("advancedOptionsTabs");
+		addDepthOfKnowledgeAnc.removeStyleName("advancedOptionsTabActive");
+
+		/**
+		 * Standards
+		 */
+		standardContainer.setVisible(false);
+		addStandardsAnc.addStyleName("advancedOptionsTabs");
+		addStandardsAnc.removeStyleName("advancedOptionsTabActive");
+		errorContainer.setVisible(false);
+		addStandardsAnc.setVisible(true);
+
+		/**
+		 * century
+		 */
+		centuryContainer.setVisible(false);
+		addCenturyAnc.addStyleName("advancedOptionsTabs");
+		addCenturyAnc.removeStyleName("advancedOptionsTabActive");
+		addCenturyAnc.setVisible(true);
+
+		/**
+		 * Hints
+		 */
+		hintsContainer.setVisible(false);
+		addHintsAnc.addStyleName("advancedOptionsTabs");
+		addHintsAnc.removeStyleName("advancedOptionsTabActive");
+		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+
+		/**
+		 * Add
+		 */
+		loadingTextLbl.setVisible(false);
+	}
+
+
+
 
 	public void setTextForTheFields(){
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
@@ -428,9 +481,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	public void setHeaderAndBodyText(String tabType){
 		if(tabType.equals("HS")){
-			questionTypeHeader.setText(i18n.GL3226());
-			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3226());
-			questionTypeHeader.getElement().setAttribute("title", i18n.GL3226());
+			questionTypeHeader.setText(i18n.GL3226_1());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3226_1());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL3226_1());
 			questionTypeText.setText(i18n.GL0350());
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
@@ -467,7 +520,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void uploadQuestionImage(){
 		getUiHandlers().questionImageUpload();
 	}
-	
+
 
 	public void uploadAnswerImage(){
 		getUiHandlers().answerImageUpload();
@@ -476,31 +529,26 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	@Override
 	public void getRevealType() {
+		getHideRightsToolTip();
+	}
+	
+	public void clearTinyMce(){
 		questionNameTextArea=new TinyMCE(500);
 		explainationTextArea= new TinyMCE();
-		
 		questionNameTextAreaContainer.clear();
 		explainationTextAreaContainer.clear();
-		
 		questionNameTextArea.setCharacterLimit(500);
 		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
 		questionNameTextArea.markAsBlankPanel.setVisible(false);
-		
 		questionNameTextAreaContainer.add(questionNameTextArea);
 		explainationTextAreaContainer.add(explainationTextArea);
-		
-		
-		
-		
-		
-		getHideRightsToolTip();
 	}
-	
+
 
 	@Override
 	public void setImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage){
-		
+
 		double randNumber = Math.random();
 
 		if(isQuestionImage){
@@ -558,7 +606,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconExplanation")){
 				explanationContainer.setVisible(false);
 				addExplanationAnc.setVisible(true);
-				addExplanationAnc.setText(i18n.GL3208());
+				addExplanationAnc.setText(i18n.GL3208_1());
 				setExplanationContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconHint")){
 				hintsContainer.setVisible(false);
@@ -578,12 +626,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					i++;
 				}
 				int count=hintsContainer.getWidgetCount();
-				addHintsAnc.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+				addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconDepthOfKnowledge")){
 				depthOfKnowledgeContainer.setVisible(false);
 				addDepthOfKnowledgeAnc.setVisible(true);
-				addDepthOfKnowledgeAnc.setText(i18n.GL3209());
+				addDepthOfKnowledgeAnc.setText(i18n.GL3209_1());
 				setDepthOfKnowledgeContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconStandards")){
 				standardContainer.setVisible(false);
@@ -622,52 +670,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	public void setHotSpotAnswerFields(){
 		questionHotSpotAnswerChoiceContainer.clear();
-		int widgetCount=questionHotSpotAnswerChoiceContainer.getWidgetCount();
 		final AddHotSpotQuestionAnswerChoice addQuestionAnswer=new AddHotSpotQuestionAnswerChoice(this);
-		/*addQuestionAnswer.imageRDButton.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					int widgetCount=questionHotSpotAnswerChoiceContainer.getWidgetCount();
-					for(int i=0;i<widgetCount;i++){
-						if(i==0){
-						}else{
-							questionHotSpotAnswerChoiceContainer.remove(i);
-						widgetCount=questionHotSpotAnswerChoiceContainer.getWidgetCount();
-						i--;
-						}
-					}
-					addQuestionAnswer.imageRDButtonClick();
-				}
-			});
-
-			addQuestionAnswer.textRDButton.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-
-					addQuestionAnswer.textRDButtonClick();
-				}
-			});
-
-			addQuestionAnswer.singleRDButton.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					addQuestionAnswer.singleRDButtonClick();
-				}
-			});
-			addQuestionAnswer.multiRDButton.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					addQuestionAnswer.multiRDButtonClick();
-				}
-			});
-
-				addQuestionAnswer.setHeadLabelFields(true);
-				addQuestionAnswer.imageRDButton.setValue(true);
-		 */
 
 		questionHotSpotAnswerChoiceContainer.add(addQuestionAnswer);
 	}
@@ -747,9 +750,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			public void onClick(ClickEvent event) 
 			{    
 				addHints.removeFromParent();
-				 removeToolTip.hide();
+				removeToolTip.hide();
 				refreshHintNumber();
-				 isAddBtnClicked=true;
+				isAddBtnClicked=true;
 			}
 		});
 
@@ -797,7 +800,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		if(hintsContainer.getWidgetCount()<5){
 			addHintsAnc.addStyleName("advancedOptionsTabs");
 			addHintsAnc.removeStyleName("advancedOptionsTabActive");
-			addHintsAnc.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-hintWidgetsCount)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+			addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-hintWidgetsCount)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 			addHintsAnc.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 
@@ -832,7 +835,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		int widgetCount=hintsContainer.getWidgetCount();
 		addHintsAnc.addStyleName("advancedOptionsTabs");
 		addHintsAnc.removeStyleName("advancedOptionsTabActive");
-		addHintsAnc.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(4-widgetCount)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+		addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(4-widgetCount)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 		final AddHintsView addHints = new AddHintsView(widgetCount+1);
 		addHintsTextArea(addHints);
 	}
@@ -1446,373 +1449,748 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void hideCenturyPopup(){
 		centuryPopup.hide();
 	}
-	  @UiHandler("addCenturyAnc")
-	    public void clickOnaddCenturyLabel(ClickEvent event){
-	    	addCenturyAnc.setVisible(false);
-	    	addCenturyAnc.addStyleName("advancedOptionsTabs");
-	    	addCenturyAnc.removeStyleName("advancedOptionsTabActive");
-	    	centuryContainer.setVisible(true);
-	    }
-	  
-	  private class rightsChecked implements ClickHandler {
-			@Override
-			public void onClick(ClickEvent event) {
-				if(rightsChkBox.getValue()){
-					rightsLbl.getElement().getStyle().setColor("black");
-				}
-				else{
-					rightsLbl.getElement().getStyle().setColor("orange");
-				}
-				
+	@UiHandler("addCenturyAnc")
+	public void clickOnaddCenturyLabel(ClickEvent event){
+		addCenturyAnc.setVisible(false);
+		addCenturyAnc.addStyleName("advancedOptionsTabs");
+		addCenturyAnc.removeStyleName("advancedOptionsTabActive");
+		centuryContainer.setVisible(true);
+	}
+
+	private class rightsChecked implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if(rightsChkBox.getValue()){
+				rightsLbl.getElement().getStyle().setColor("black");
 			}
+			else{
+				rightsLbl.getElement().getStyle().setColor("orange");
+			}
+
 		}
-	    
-	  /**
-		 * On mouse over panelContentRights will be visible.
-		 * 
-		 * @param event instance of {@link MouseOverEvent}
-		 */
-		@UiHandler("lblContentRights")
-		public void onMouseOver(MouseOverEvent event){
-			panelContentRights.setVisible(true);
-		}
-		
-		/**
-		 * On mouse out panelContentRights will not be visible.
-		 * 
-		 * @param event instance of {@link MouseOutEvent}
-		 */
-		
-		@UiHandler("lblContentRights")
-		public void onMouseOut(MouseOutEvent event){
-			panelContentRights.setVisible(false);
-		}
-		public void getHideRightsToolTip()
-		{
+	}
+
+	/**
+	 * On mouse over panelContentRights will be visible.
+	 * 
+	 * @param event instance of {@link MouseOverEvent}
+	 */
+	@UiHandler("lblContentRights")
+	public void onMouseOver(MouseOverEvent event){
+		panelContentRights.setVisible(true);
+	}
+
+	/**
+	 * On mouse out panelContentRights will not be visible.
+	 * 
+	 * @param event instance of {@link MouseOutEvent}
+	 */
+
+	@UiHandler("lblContentRights")
+	public void onMouseOut(MouseOutEvent event){
 		panelContentRights.setVisible(false);
-		}
-		
-		
-		/**
-		 * add functionality
-		 */
-		
-		 @UiHandler("addQuestionResourceButton")
-			public void clickedOnAddQuestionButton(ClickEvent event)
-			{
-		    	
-		    	boolean fieldValidationCheck;
-		      if(questionType.equalsIgnoreCase("HS")){
-		    		if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
-		    			fieldValidationCheck = false;
-						isAddBtnClicked=true;
-					}
-		    	}
-		    	if(isAddBtnClicked){
-		    		isRightsClicked=rightsChkBox.getValue();
-		    		isAddBtnClicked=false;
-		    		final Map<String, String> parms = new HashMap<String, String>();
-		    		parms.put("text", questionNameTextArea.getText());
-		    		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+	}
+	public void getHideRightsToolTip()
+	{
+		panelContentRights.setVisible(false);
+	}
 
-		    			@Override
-		    			public void onSuccess(Boolean value) {
-		    				if(value){
-		    					SetStyleForProfanity.SetStyleForProfanityForTinyMCE(questionNameTextArea, questionNameErrorLbl, value);
-		    					isAddBtnClicked=true;
-		    				}else{
-		    					SetStyleForProfanity.SetStyleForProfanityForTinyMCE(questionNameTextArea, questionNameErrorLbl, value);
-		    					parms.put("text", explainationTextArea.getText());
-		    					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
-		    						@Override
-		    						public void onSuccess(Boolean value) {
-		    							if(value){
-		    								SetStyleForProfanity.SetStyleForProfanityForTinyMCE(explainationTextArea, explainationErrorLbl, value);
-		    								isAddBtnClicked=true;
-		    							}else{
-		    								
-		    								MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-		    								
-		    								SetStyleForProfanity.SetStyleForProfanityForTinyMCE(explainationTextArea, explainationErrorLbl, value);
-		    								String mediaFileName=null;
-		    							       
-		    						        boolean isQuestEnteredFlag = true;
-		    						    	boolean fieldValidationStaus=true;
-		    						    	if(addQuestImgContainer.getElement().hasChildNodes()){
-		    						    		AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestImgContainer.getWidget(0);
-		    						    		mediaFileName=addQuestionImage.getFileName();
-		    						    	}
-		    						    	clearErrorQuestionMessage();
-		    						        if(questionNameTextArea.getText()==null||questionNameTextArea.getText().trim().equals("")){
-		    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION);
-		    						        	fieldValidationStaus=false;
-		    						        	isQuestEnteredFlag=false;
-		    						        	isAddBtnClicked=true;
-		    						        }
-		    						        //This regex is used to get text count with out html tags
-		    						        String questionNameText = questionNameTextArea.getText().replaceAll("\\<.*?>","");
-		    						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
-		    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
-		    						        	fieldValidationStaus=false;
-		    						        	isAddBtnClicked=true;
-		    						        }
-		    						        errorMessageForExplanation.setText("");
-		    						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
-		    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
-		    						        	fieldValidationStaus=false;
-		    						        	isAddBtnClicked=true;
-		    						        }
-		    						        String explainationText = explainationTextArea.getText().replaceAll("\\<.*?>","");
-		    						        
-		    						    	if(explainationText.trim().length() > EXPLAINATION_TEXT_LENGTH){
-		    						    		errorMessageForExplanation.setText(ERROR_MSG_EXPLAINATION_LENGTH);
-		    									fieldValidationStaus=false;
-		    									isAddBtnClicked=true;
-		    								}
-		    						    	
-		    									    										    								
-		    								else if(fieldValidationStaus && questionType.equalsIgnoreCase("HS")){
-		    									if(!isHintsAdded(hintsContainer)){
-		    										profanityCheckForHints(fieldValidationStaus,mediaFileName);
-		    									}
-		    								}
-		    							}
-		    						}
-		    					});
-		    				}
-		    			}
-		    		});
-		    	}
+	/**
+	 * add functionality
+	 */
+
+	@UiHandler("addQuestionResourceButton")
+	public void clickedOnAddQuestionButton(ClickEvent event)
+	{
+		boolean fieldValidationCheck;
+		if(questionType.equalsIgnoreCase("HS")){
+			if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
+				fieldValidationCheck = false;
+				isAddBtnClicked=true;
 			}
-		
-		
-		 void clearErrorQuestionMessage(){
-		    	errorMessageForQuestion.setText("");
-		    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", null, null);
-		    	
-		    	questionNameTextArea.getElement().removeClassName("errorBorderMessage");
-		    }
-		 
-		 void showErrorQuestionMessage(String errMessage){
-		    	
-		    	errorMessageForQuestion.setText(errMessage);
-		    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", errMessage, errMessage);
-		    	
-		    	questionNameTextArea.getElement().addClassName("errorBorderMessage");
-		    }
-		 
-		 public boolean isHintsAdded(HTMLPanel hintsContainer){
-		    	boolean hintsAdded=false;
-		    	hintsListForProfanity=new ArrayList<ProfanityCheckDo>();
-		    	if(hintsContainer.getWidgetCount()>=1){
-		    		  for(int i=0;i<hintsContainer.getWidgetCount();i++){
-		  	        	final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
-		  	        	  ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
-		  	        	  profanitymodel.setQuestionID(Integer.toString(i));
-		  	        	 
-		  	        	 String hintText=addHints.hintTextBox.getContent().toString().trim().replaceAll("&nbsp;", " ");
-		  	        	 hintText=hintText.replaceAll("\\<.*?>","");
-		  	        	  if(hintText!=null && !hintText.trim().equals("")){
-		  	        		 String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");	
-		  	        		  if(hintsText.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
-		  	        			  Document.get().getElementById(addHints.hintTextBox.getID()+"_message").setInnerText("");
-		  	            		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS_LENGTH);
-		  	            		  hintsAdded=true;
-		  	            		  isAddBtnClicked=true;
-		  	        		  }else{
-		  	        			  hintsAdded=false;
-		  	        			  isAddBtnClicked=true;
-		 	            		  addHints.errorMessageforHints.setText("");
-		 	            		  profanitymodel.setQuestionText(addHints.hintTextBox.getContent());
-		  	        		  }
-		  	        		 
-		  	        	  }else{
-		  	        		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS);
-			        		  hintsAdded=true;
-		            	      isAddBtnClicked=true;
-		  	        	  }
-		  	        	  hintsListForProfanity.add(profanitymodel);
-		  	        }
-		    	}
-		        return hintsAdded;
+			if (!isHotSpotAnswerChoiceSelected(questionHotSpotAnswerChoiceContainer)) {
+				String errorMessage=ERROR_MSG_ANSWER_SELECTED;
+				showErrorMessageForAnswer(errorMessage);
+				fieldValidationCheck = false;
+				isAddBtnClicked=true;
+			}
 		}
-		 
-		 public boolean profanityCheckForHints(final boolean fieldValidationStaus,final String mediaFileName){
-			 validationValue=false;
-			 AppClientFactory.getInjector().getResourceService().checkProfanityForList(hintsListForProfanity, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
-					
-					@Override
-					public void onSuccess(List<ProfanityCheckDo> result) {
-						 for(int i=0;i<hintsContainer.getWidgetCount();i++){
-							 final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
-							 addHints.errorMessageforHints.setText("");
-							 SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addHints.hintTextBox, addHints.errorMessageforHints, result.get(i).questionValue);
-							  if(result.get(i).questionValue==true){
-								  addHints.errorMessageforHints.getElement().setAttribute("style", "float: left;left: 24px;");
-				                  validationValue=true;
-				                  isAddBtnClicked=true;
-							  }
-						  }
-						 if(validationValue){
-							  return;
-						  }else{
-							  if(!isRightsClicked){
-									rightsLbl.getElement().getStyle().setColor("orange");
+
+
+		if(isAddBtnClicked){
+			isRightsClicked=rightsChkBox.getValue();
+			isAddBtnClicked=false;
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", questionNameTextArea.getText());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					if(value){
+						SetStyleForProfanity.SetStyleForProfanityForTinyMCE(questionNameTextArea, questionNameErrorLbl, value);
+						isAddBtnClicked=true;
+					}else{
+						SetStyleForProfanity.SetStyleForProfanityForTinyMCE(questionNameTextArea, questionNameErrorLbl, value);
+						parms.put("text", explainationTextArea.getText());
+						AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+							@Override
+							public void onSuccess(Boolean value) {
+								if(value){
+									SetStyleForProfanity.SetStyleForProfanityForTinyMCE(explainationTextArea, explainationErrorLbl, value);
 									isAddBtnClicked=true;
 								}else{
-									if(fieldValidationStaus){
-										 addFunctionality(!validationValue,mediaFileName);
+
+									MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+
+									SetStyleForProfanity.SetStyleForProfanityForTinyMCE(explainationTextArea, explainationErrorLbl, value);
+									String mediaFileName=null;
+
+									boolean isQuestEnteredFlag = true;
+									boolean fieldValidationStaus=true;
+									if(addQuestImgContainer.getElement().hasChildNodes()){
+										AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestImgContainer.getWidget(0);
+										mediaFileName=addQuestionImage.getFileName();
+									}
+									clearErrorQuestionMessage();
+									if(questionNameTextArea.getText()==null||questionNameTextArea.getText().trim().equals("")){
+										showErrorQuestionMessage(ERROR_MSG_QUESTION);
+										fieldValidationStaus=false;
+										isQuestEnteredFlag=false;
+										isAddBtnClicked=true;
+									}
+									//This regex is used to get text count with out html tags
+									String questionNameText = questionNameTextArea.getText().replaceAll("\\<.*?>","");
+									if(questionNameText.length()>QUESTION_TEXT_LENGTH){
+										showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
+										fieldValidationStaus=false;
+										isAddBtnClicked=true;
+									}
+									errorMessageForExplanation.setText("");
+									if(questionNameText.length()>QUESTION_TEXT_LENGTH){
+										showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
+										fieldValidationStaus=false;
+										isAddBtnClicked=true;
+									}
+									String explainationText = explainationTextArea.getText().replaceAll("\\<.*?>","");
+
+									if(explainationText.trim().length() > EXPLAINATION_TEXT_LENGTH){
+										errorMessageForExplanation.setText(ERROR_MSG_EXPLAINATION_LENGTH);
+										fieldValidationStaus=false;
+										isAddBtnClicked=true;
+									}
+
+
+									else if(fieldValidationStaus && questionType.equalsIgnoreCase("HS")){
+										clearErrorQuestionMessage();
+
+										if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
+											fieldValidationStaus = false;
+											isAddBtnClicked=true;
+										}else{
+
+											if(!isHintsAdded(hintsContainer)){
+
+												if (!isHotSpotAnswerChoiceSelected(questionHotSpotAnswerChoiceContainer)) {
+													String errorMessage=ERROR_MSG_ANSWER_SELECTED;
+													showErrorMessageForAnswer(errorMessage);
+													fieldValidationStaus = false;
+													isAddBtnClicked=true;
+												}else{
+													isProfanityCheckForAnswerChoice(fieldValidationStaus,mediaFileName);
+												}
+
+											}else{
+												profanityCheckForHints(fieldValidationStaus,mediaFileName);
+
+											}
+										}
 									}
 								}
-						  }
-					}
-				});
-			 return validationValue;
-		 }
-		 
-		 
-		 public boolean isHotSpotAnswerChoiceEmpty(HTMLPanel questionHotSpotAnswerChoiceContainer){
-		  		profanityList=new ArrayList<ProfanityCheckDo>();
-		  	  String answerChoiceValue=null;
-		  	  boolean selectedAnswerImage = false;
-		  		final AddHotSpotQuestionAnswerChoice addHotSpotQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
-		  		
-		  		addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
-		  		addHotSpotQuestionAnswerChoice.ansImageContainer.getElement().removeClassName("errorBorderMessage");
-                 
-		  		
-		  		if(addHotSpotQuestionAnswerChoice.imageRDButton.isChecked()){
-		  			 int count=addHotSpotQuestionAnswerChoice.ansImageContainer.getWidgetCount();
-		  			 if(count>0){
-		  				selectedAnswerImage=true;
-		  			 }else{
-		  				selectedAnswerImage=false;
-		  				addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
-		  				addHotSpotQuestionAnswerChoice.ansImageContainer.getElement().addClassName("errorBorderMessage");
-		  			 }
-		  		}else if(addHotSpotQuestionAnswerChoice.textRDButton.isChecked()){
-		  			int widgetCount=addHotSpotQuestionAnswerChoice.textAnsContainer.getWidgetCount();
-		  			for(int i=0;i<widgetCount;i++){
-		  				AddAnswerChoice addAnswerChoice=(AddAnswerChoice) addHotSpotQuestionAnswerChoice.textAnsContainer.getWidget(i);
-		  				answerChoiceValue=addAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
-		  				
-		  			  ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
-	                   if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
-	                	   selectedAnswerImage=false;
-	                	   addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
-	                	   addAnswerChoice.answerTextBox.getElement().addClassName("errorBorderMessage");
-                           profanitymodel.setQuestionID(Integer.toString(i));
-                           profanityList.add(profanitymodel);
-	                   }else{
-	                    	 if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
-	                    		 selectedAnswerImage=false;
-	                    		   Document.get().getElementById(addAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
-	                    		   addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
-	                    		   addAnswerChoice.answerTextBox.getElement().addClassName("errorBorderMessage");
-	                    	 }else{
-	                    		 selectedAnswerImage=true;
-	    	                		profanitymodel.setQuestionID(Integer.toString(i));
-	    	                     	profanitymodel.setQuestionText(answerChoiceValue);
-	    	                     	profanityList.add(profanitymodel);
-	                    	 }
-	                   }
-		  				
-		  			}
-		  		}
-		  	
-				return selectedAnswerImage;
-		 }
-		 
-		 
-		 
-		 /**
-			 * If all validations successful, question is added to the collection.
-			 */
-			public void addFunctionality(boolean fieldValidationStaus,String mediaFileName){
-				
-		    	if(fieldValidationStaus){
-		    		buttonContainer.getElement().getStyle().setDisplay(Display.NONE);
-		    		loadingTextLbl.setVisible(true);
-		    		CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
-					String questionText = questionNameTextArea.getRawContent().replace("&nbsp;","").trim();
-					String explaination = explainationTextArea.getText();
-					if(explaination!=null&&!explaination.trim().equals("")){
-						explaination=explainationTextArea.getRawContent().trim();
-					}
-							
-					ArrayList<QuestionAnswerDo> enteredAnswers = new ArrayList<QuestionAnswerDo>(); 
-					ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
-					HashMap<String,ArrayList<QuestionAnswerDo>> answerMap = new HashMap<String,ArrayList<QuestionAnswerDo>>();
-					HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
-					
-					if(questionType.equalsIgnoreCase("HS")){
-						for(int i=0;i<questionHotSpotAnswerChoiceContainer.getWidgetCount();i++)
-						{
-							QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
-							AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(i);
-							//questionAnswerDo.setAnswerText(addQuestionAnswerChoice.answerTextBox.getRawContent());
-							questionAnswerDo.setAnswerType("text");
-							questionAnswerDo.setSequence(i+1);
-							enteredAnswers.add(questionAnswerDo);
-						}
-					}
-					
-					answerMap.put("answer",enteredAnswers);
-						
-					for(int i=0;i<hintsContainer.getWidgetCount();i++)
-					{
-						AddHintsView addHints = (AddHintsView)hintsContainer.getWidget(i);
-						QuestionHintsDo questionHintsDo=new QuestionHintsDo();
-						String hintText=addHints.hintTextBox.getText();
-						if(hintText!=null&&!hintText.trim().equals("")){
-							hintText=addHints.hintTextBox.getRawContent().trim();
-						}
-						questionHintsDo.setHintText(hintText); 
-						questionHintsDo.setSequence(i+1);
-						enteredHints.add(questionHintsDo);
-					}
-					hintsMap.put("hint",enteredHints);
-					
-					collectionQuestionItemDo.setTypeName(questionType); 
-					collectionQuestionItemDo.setQuestionText(questionText);
-					collectionQuestionItemDo.setAnswers(answerMap);
-					collectionQuestionItemDo.setExplanation(explaination);
-					collectionQuestionItemDo.setHints(hintsMap);
-					collectionQuestionItemDo.setTitle(questionText);
-					collectionQuestionItemDo.setDescription(questionText);  
-					HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
-					taxonomySet.put("taxonomyCode", standardsDo);
-					collectionQuestionItemDo.setTaxonomySet(taxonomySet);
-					HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
-					depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
-					collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
-					
-					
-					if(!isSaveButtonClicked){
-						isSaveButtonClicked=true;
-						getUiHandlers().hidePopup();
-						//createQuestionResource(mediaFileName,collectionQuestionItemDo);
-					}
-		    	}
-			}
-
-			
-			@UiHandler("cancelButton")
-			public void clickedOnCancelButton(ClickEvent clickEvent){
-				
-				resetToHints();
-				if(isEditResource){
-					if(deletedStandardsDo.size()>0){
-			        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new SimpleAsyncCallback<Void>() {
-							
-							@Override
-							public void onSuccess(Void result) {
-								deletedStandardsDo.clear();
 							}
 						});
-			        }
+					}
 				}
-				getUiHandlers().hidePopup();
+			});
+		}
+	}
+
+
+	void clearErrorQuestionMessage(){
+		errorMessageForQuestion.setText("");
+		StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", null, null);
+
+		questionNameTextArea.getElement().removeClassName("errorBorderMessage");
+	}
+
+	void showErrorQuestionMessage(String errMessage){
+
+		errorMessageForQuestion.setText(errMessage);
+		StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", errMessage, errMessage);
+
+		questionNameTextArea.getElement().addClassName("errorBorderMessage");
+	}
+
+	public boolean isHintsAdded(HTMLPanel hintsContainer){
+		boolean hintsAdded=false;
+		hintsListForProfanity=new ArrayList<ProfanityCheckDo>();
+		if(hintsContainer.getWidgetCount()>=1){
+			for(int i=0;i<hintsContainer.getWidgetCount();i++){
+				final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
+				ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
+				profanitymodel.setQuestionID(Integer.toString(i));
+
+				String hintText=addHints.hintTextBox.getContent().toString().trim().replaceAll("&nbsp;", " ");
+				hintText=hintText.replaceAll("\\<.*?>","");
+				if(hintText!=null && !hintText.trim().equals("")){
+					String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");	
+					if(hintsText.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
+						Document.get().getElementById(addHints.hintTextBox.getID()+"_message").setInnerText("");
+						addHints.errorMessageforHints.setText(ERROR_MSG_HINTS_LENGTH);
+						hintsAdded=true;
+						isAddBtnClicked=true;
+					}else{
+						hintsAdded=false;
+						isAddBtnClicked=true;
+						addHints.errorMessageforHints.setText("");
+						profanitymodel.setQuestionText(addHints.hintTextBox.getContent());
+					}
+
+				}else{
+					addHints.errorMessageforHints.setText(ERROR_MSG_HINTS);
+					hintsAdded=true;
+					isAddBtnClicked=true;
+				}
+				hintsListForProfanity.add(profanitymodel);
 			}
+		}
+		return hintsAdded;
+	}
+
+	public boolean profanityCheckForHints(final boolean fieldValidationStaus,final String mediaFileName){
+		validationValue=false;
+		AppClientFactory.getInjector().getResourceService().checkProfanityForList(hintsListForProfanity, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
+
+			@Override
+			public void onSuccess(List<ProfanityCheckDo> result) {
+				for(int i=0;i<hintsContainer.getWidgetCount();i++){
+					final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
+					addHints.errorMessageforHints.setText("");
+					SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addHints.hintTextBox, addHints.errorMessageforHints, result.get(i).questionValue);
+					if(result.get(i).questionValue==true){
+						addHints.errorMessageforHints.getElement().setAttribute("style", "float: left;left: 24px;");
+						validationValue=true;
+						isAddBtnClicked=true;
+					}
+				}
+				if(validationValue){
+					return;
+				}else{
+					if(!isRightsClicked){
+						rightsLbl.getElement().getStyle().setColor("orange");
+						isAddBtnClicked=true;
+					}else{
+						if(fieldValidationStaus){
+							addFunctionality(!validationValue,mediaFileName);
+						}
+					}
+				}
+			}
+		});
+		return validationValue;
+	}
+
+
+	public boolean isHotSpotAnswerChoiceEmpty(HTMLPanel questionHotSpotAnswerChoiceContainer){
+		profanityList=new ArrayList<ProfanityCheckDo>();
+		String answerChoiceValue=null;
+		boolean selectedAnswerImage = false;
+		final AddHotSpotQuestionAnswerChoice addHotSpotQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
+
+		addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+		addHotSpotQuestionAnswerChoice.ansImageContainer.getElement().removeClassName("errorBorderMessage");
+		addHotSpotQuestionAnswerChoice.textAnsContainer.getElement().removeClassName("errorBorderMessage");
+
+		if(addHotSpotQuestionAnswerChoice.imageRDButton.isChecked()){
+			int count=addHotSpotQuestionAnswerChoice.ansImageContainer.getWidgetCount();
+			if(count>1){
+				selectedAnswerImage=false;
+			}else{
+				selectedAnswerImage=true;
+				addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
+				addHotSpotQuestionAnswerChoice.ansImageContainer.getElement().addClassName("errorBorderMessage");
+			}
+		}else if(addHotSpotQuestionAnswerChoice.textRDButton.isChecked()){
+			int widgetCount=addHotSpotQuestionAnswerChoice.textAnsContainer.getWidgetCount();
+			for(int i=0;i<widgetCount;i++){
+				AddAnswerChoice addAnswerChoice=(AddAnswerChoice) addHotSpotQuestionAnswerChoice.textAnsContainer.getWidget(i);
+				answerChoiceValue=addAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
+
+				ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
+				if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
+					selectedAnswerImage=true;
+					addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
+					addAnswerChoice.answerTextBox.getElement().addClassName("errorBorderMessage");
+					profanitymodel.setQuestionID(Integer.toString(i));
+					profanityList.add(profanitymodel);
+				}else{
+					if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
+						selectedAnswerImage=true;
+						Document.get().getElementById(addAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
+						addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
+						addAnswerChoice.answerTextBox.getElement().addClassName("errorBorderMessage");
+					}else{
+						selectedAnswerImage=false;
+						profanitymodel.setQuestionID(Integer.toString(i));
+						profanitymodel.setQuestionText(answerChoiceValue);
+						profanityList.add(profanitymodel);
+					}
+				}
+
+			}
+		}
+		return selectedAnswerImage;
+	}
+
+
+
+	/**
+	 * If all validations successful, question is added to the collection.
+	 */
+	public void addFunctionality(boolean fieldValidationStaus,String mediaFileName){
+		if(fieldValidationStaus){
+			buttonContainer.getElement().getStyle().setDisplay(Display.NONE);
+			loadingTextLbl.setVisible(true);
+			CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
+			String questionText = questionNameTextArea.getRawContent().replace("&nbsp;","").trim();
+			String explaination = explainationTextArea.getText();
+			if(explaination!=null&&!explaination.trim().equals("")){
+				explaination=explainationTextArea.getRawContent().trim();
+			}
+
+			ArrayList<QuestionAnswerDo> enteredAnswers = new ArrayList<QuestionAnswerDo>(); 
+			ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
+			HashMap<String,ArrayList<QuestionAnswerDo>> answerMap = new HashMap<String,ArrayList<QuestionAnswerDo>>();
+			HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
+			if(questionType.equalsIgnoreCase("HS")){
+
+				AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
+
+				if(addQuestionAnswerChoice.imageRDButton.isChecked()){
+					hsType=i18n.GL3228_1();
+
+					for(int i=0;i<addQuestionAnswerChoice.ansImageContainer.getWidgetCount();i++)
+					{
+						QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
+						final AddAnswerImg ansImage=(AddAnswerImg)addQuestionAnswerChoice.ansImageContainer.getWidget(i);
+
+						questionAnswerDo.setAnswerText(ansImage.getFileName());
+						questionAnswerDo.setAnswerType(hsType);
+						questionAnswerDo.setSequence(i+1);
+						questionAnswerDo.setIsCorrect(ansImage.selectedImage);
+						enteredAnswers.add(questionAnswerDo);
+					}
+
+				}else{
+					hsType=i18n.GL3229_1();
+					for(int i=0;i<addQuestionAnswerChoice.textAnsContainer.getWidgetCount();i++)
+					{
+						QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
+						final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)addQuestionAnswerChoice.textAnsContainer.getWidget(i);
+						questionAnswerDo.setAnswerText(addAnswerChoice.answerTextBox.getRawContent());
+						questionAnswerDo.setAnswerType(hsType);
+						questionAnswerDo.setSequence(i+1);
+						questionAnswerDo.setIsCorrect(addAnswerChoice.isOptionSelectedButton);
+						enteredAnswers.add(questionAnswerDo);
+					}
+				}
+
+			}
+
+			answerMap.put("answer",enteredAnswers);
+
+			for(int i=0;i<hintsContainer.getWidgetCount();i++)
+			{
+				AddHintsView addHints = (AddHintsView)hintsContainer.getWidget(i);
+				QuestionHintsDo questionHintsDo=new QuestionHintsDo();
+				String hintText=addHints.hintTextBox.getText();
+				if(hintText!=null&&!hintText.trim().equals("")){
+					hintText=addHints.hintTextBox.getRawContent().trim();
+				}
+				questionHintsDo.setHintText(hintText); 
+				questionHintsDo.setSequence(i+1);
+				enteredHints.add(questionHintsDo);
+			}
+			hintsMap.put("hint",enteredHints);
+
+			collectionQuestionItemDo.setTypeName(questionType); 
+			collectionQuestionItemDo.setQuestionText(questionText);
+			collectionQuestionItemDo.setAnswers(answerMap);
+			collectionQuestionItemDo.setExplanation(explaination);
+			collectionQuestionItemDo.setHints(hintsMap);
+			collectionQuestionItemDo.setTitle(questionText);
+			collectionQuestionItemDo.setDescription(questionText);  
+			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
+			taxonomySet.put("taxonomyCode", standardsDo);
+			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
+			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+
+			if(questionType.equalsIgnoreCase("HS")){
+				CollectionHTQuestionItemDo HSObj=new CollectionHTQuestionItemDo();
+				HSObj.setHlType(hsType);
+				HSObj.setSingleCorrectAnswer(false);
+				collectionQuestionItemDo.setAttributes(HSObj);
+			}
+			if(!isSaveButtonClicked){
+				isSaveButtonClicked=true;
+				createQuestionResource(mediaFileName,collectionQuestionItemDo);
+			}
+		}
+	}
+
+
+	@UiHandler("cancelButton")
+	public void clickedOnCancelButton(ClickEvent clickEvent){
+
+		resetToHints();
+		if(isEditResource){
+			if(deletedStandardsDo.size()>0){
+				AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new SimpleAsyncCallback<Void>() {
+
+					@Override
+					public void onSuccess(Void result) {
+						deletedStandardsDo.clear();
+					}
+				});
+			}
+		}
+		getUiHandlers().hidePopup();
+	}
+
+
+	public void createQuestionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo) {
+		if(getQuestionEditMode()){
+			String thumbnailUrl=null;
+			if(addQuestImgContainer.getWidgetCount()>0){
+				AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestImgContainer.getWidget(0);
+				thumbnailUrl=addQuestionImage.getFileName();
+			}
+			getUiHandlers().v2UpdateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
+		}else{
+			getUiHandlers().addHSQuestionResource(mediaFileName,collectionQuestionItemDo);
+		}
+
+
+	}
+
+	public void resetFields() {
+		clearTinyMce();
+		buttonContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		resetToHints();
+		setHotSpotAnswerFields();
+		depthOfKnowledges.clear();
+		standardsPanel.clear();
+		centuryPanel.clear();
+		setTextAndStyle();
+		resetDepthOfKnowledges();
+		isAddBtnClicked=true;
+		isRightsClicked=false;
+		validationValue=false;
+		isSaveButtonClicked=false;
+		clearObjects();
+		ansChoiceErrMsg.setText("");
+	}
+	
+	public void clearObjects(){
+		standardCodesMap.clear();
+		centuryCodesMap.clear();
+		standardsDo.clear();
+		deletedStandardsDo.clear();
+		standardSearchDo=new SearchDo<CodeDo>();
+		centurySearchDo=new SearchDo<StandardFo>();
+		centurySelectedValues.clear();
+		depthOfKnowledges.clear();
+		isValidHintsList.clear();
+	}
+
+
+	public void resetDepthOfKnowledges(){
+		chkLevelRecall.setChecked(false);
+		chkLevelSkillConcept.setChecked(false);
+		chkLevelStrategicThinking.setChecked(false);
+		chkLevelExtendedThinking.setChecked(false);
+	}
+
+	private boolean isHotSpotAnswerChoiceSelected(HTMLPanel questionHotSpotAnswerChoiceContainer) 
+	{
+		boolean isAnswerChoiceSelected=false;
+		AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
+
+		if(addQuestionAnswerChoice.imageRDButton.isChecked()){
+			for(int i=0;i<addQuestionAnswerChoice.ansImageContainer.getWidgetCount();i++)
+			{
+				final AddAnswerImg addAnswerImg=(AddAnswerImg)addQuestionAnswerChoice.ansImageContainer.getWidget(i);
+				if(addAnswerImg.selectedImage){
+					isAnswerChoiceSelected=true;
+				}
+			}
+		}else{
+			for(int i=0;i<addQuestionAnswerChoice.textAnsContainer.getWidgetCount();i++)
+			{
+				final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)addQuestionAnswerChoice.textAnsContainer.getWidget(i);
+				if(addAnswerChoice.isOptionSelectedButton){
+					isAnswerChoiceSelected=true;
+				}
+			}
+		}
+
+		return isAnswerChoiceSelected;
+	}
+	void showErrorMessageForAnswer(String errMessage){
+
+		ansChoiceErrMsg.setText(errMessage);
+		StringUtil.setAttributes(ansChoiceErrMsg.getElement(), "lblErrorMessageForAnswer", errMessage, errMessage);
+
+		questionNameTextArea.getElement().addClassName("errorBorderMessage");
+	}
+
+
+	public boolean isProfanityCheckForAnswerChoice(final boolean fieldValidationStaus,final String mediaFileName){
+
+
+		validationValue=false;
+		AppClientFactory.getInjector().getResourceService().checkProfanityForList(profanityList, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
+
+			@Override
+			public void onSuccess(List<ProfanityCheckDo> result) {
+				if(questionType.equalsIgnoreCase("HS") && hsType.equalsIgnoreCase(i18n.GL3228_1())){
+					AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
+					for(int i=0;i<addQuestionAnswerChoice.textAnsContainer.getWidgetCount();i++)
+					{
+						final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)addQuestionAnswerChoice.textAnsContainer.getWidget(i);
+						addAnswerChoice.errorMessageforAnswerChoice.setText("");
+						addAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
+						SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addAnswerChoice.answerTextBox, addAnswerChoice.errorMessageforAnswerChoice, result.get(i).questionValue);
+						if(result.get(i)!=null && result.get(i).questionValue==true){
+							addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "float: left;left: 24px;");
+							validationValue=true;
+							isAddBtnClicked=true;
+						}
+
+					}
+				}
+				if(validationValue && fieldValidationStaus){
+					return;
+				}else{
+					isValidHintsList.clear();
+					for(int i=0;i<hintsListForProfanity.size();i++){
+						isValidHintsList.add(hintsListForProfanity.get(i).getQuestionText());
+					}
+					if(!isValidHintsList.toString().contains("undefined")){
+						AppClientFactory.getInjector().getResourceService().checkProfanityForList(hintsListForProfanity, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
+
+							@Override
+							public void onSuccess(List<ProfanityCheckDo> result) {
+								for(int i=0;i<hintsContainer.getWidgetCount();i++){
+									if(result.get(i).questionValue==true){
+										final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
+										addHints.errorMessageforHints.setText("");
+										addHints.errorMessageforHints.getElement().setAttribute("style", "float: left;left: 24px;");
+										SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addHints.hintTextBox, addHints.errorMessageforHints, result.get(i).questionValue);
+										validationValue=true;
+										isAddBtnClicked=true;
+									}
+								}
+								if(validationValue){
+									return;
+								}else{
+									if(!isRightsClicked){
+										rightsLbl.getElement().getStyle().setColor("orange");
+										isAddBtnClicked=true;
+									}else{
+										if(fieldValidationStaus)
+											addFunctionality(!validationValue,mediaFileName);
+									}
+								}
+							}
+						});
+					}
+				}
+			}
+		});
+		return validationValue;
+	}
+	
+
+
+	@Override
+	public void editQuestion(CollectionItemDo collectionItemDo) {
+		this.collectionItemDo=collectionItemDo;
+		isEditResource=true;
+		explanationContainer.setVisible(false);
+    	depthOfKnowledgeContainer.setVisible(false);
+    	hintsContainer.setVisible(false);
+    	standardContainer.setVisible(false);
+    	centuryContainer.setVisible(false);
+    	
+		
+		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
+		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
+		hintsContainer.clear();
+		while (iterator.hasNext()) {
+			QuestionHintsDo hints = iterator.next();
+			int widgetCount=hintsContainer.getWidgetCount();
+	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
+	        addHintsTextArea(addHints);
+		}
+		
+		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
+		Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator(); 
+		
+		
+		AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
+		
+		String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
+		
+		if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
+			int widgetcount=1;
+			while (it.hasNext()) {
+				addHotSpotQuestion.setAnswerFields(false);
+				QuestionAnswerDo answer = it.next();
+				
+				final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
+				
+				if(answer.isIsCorrect()){	
+					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
+				}else{
+					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
+				}
+				
+				
+				addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
+				widgetcount++;
+			}
+			
+		}
+		
+	}
+	
+	
+	public void setEditData(){
+		try{
+			setEditQuestionImage();
+
+			int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
+			timer.schedule(0);
+
+			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
+				int checkBoxCount=0;
+				for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
+					   if(item.isSelected()){
+						   if(checkBoxCount==0)
+						   chkLevelRecall.setChecked(true);
+						   if(checkBoxCount==1)
+					       chkLevelSkillConcept.setChecked(true);
+						   if(checkBoxCount==2)
+					       chkLevelStrategicThinking.setChecked(true);
+						   if(checkBoxCount==3)
+					       chkLevelExtendedThinking.setChecked(true);
+					   }
+					   checkBoxCount++;
+					}
+				}
+				
+				if(collectionItemDo.getStandards()!=null){
+					standardsPanel.clear();
+					standardsDo.clear();
+					String codeID="",code="",label="";
+					for (Map<String, String> map: collectionItemDo.getStandards()) {
+						 CodeDo codeObj=new CodeDo();
+						for (Map.Entry<String, String> entry : map.entrySet()) {
+							String key = entry.getKey();
+							String values = entry.getValue();
+							 if(key.contains("codeId")){
+								 codeID=values;
+								 codeObj.setCodeId(Integer.parseInt(values));
+							 }
+							 if(key.contains("code")){
+								 code=values;
+								 codeObj.setCode(values);
+							 }
+							 if(key.contains("description")){
+								 label=values;
+								 codeObj.setLabel(values);
+							 }
+							}
+						 standardsDo.add(codeObj);
+						 standardsPanel.add(createStandardLabel(code, codeID,label));
+					}
+				}
+				if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
+					centuryPanel.clear();
+					for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
+						 CodeDo codeObj=new CodeDo();
+						 codeObj.setCodeId(standardObj.getCodeId());
+						 codeObj.setCode(standardObj.getLabel());
+						 standardsDo.add(codeObj);
+						 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
+						 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
+					}
+				}
+
+			
+			setDepthOfKnowledgeContainer();
+			setHintsContainer();
+			setStandardsContainer();
+			setCenturyContainer();
+
+				 
+			}catch(Exception e){
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
+	}
+	
+	
+	
+	public void setEditQuestionImage(){
+		String tumbnailUrl="";
+		if(collectionItemDo!=null){
+			if (collectionItemDo.getResource().getAssets() != null
+					&& collectionItemDo.getResource().getAssets().size() > 0) {
+				tumbnailUrl = collectionItemDo.getCollection().getAssetURI()
+						+ collectionItemDo.getResource().getFolder()
+						+ collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
+				
+			}else if(collectionItemDo.getResource().getThumbnails()!=null && collectionItemDo.getResource().getThumbnails().getUrl()!=null) {
+				tumbnailUrl = collectionItemDo.getResource().getThumbnails().getUrl();
+			}
+			
+			setImageUrl(tumbnailUrl, null, true, false);
+			
+		}
+		
+	}
+	
+	
+	Timer timer=new Timer() {
+		
+		@Override
+		public void run() {
+			String explanation = collectionItemDo.getResource().getExplanation() != null ? collectionItemDo.getResource().getExplanation() : collectionItemDo.getQuestionInfo().getExplanation();
+			
+			questionNameTextArea.setText(collectionItemDo.getResource().getTitle());
+			questionNameTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+			questionNameTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
+			explainationTextArea.setText(explanation);
+			explainationTextArea.getElement().setAttribute("alt", explanation);
+			explainationTextArea.getElement().setAttribute("title", explanation);
+			
+			
+			setExplanationContainer();
+		}
+	};
+	
 }

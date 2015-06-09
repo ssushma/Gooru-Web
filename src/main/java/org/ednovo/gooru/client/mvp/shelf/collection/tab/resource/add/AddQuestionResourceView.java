@@ -50,11 +50,11 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -209,9 +209,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final String FIB_SEPARATOR = i18n.GL0885();
 	
 	
-	private static final String ERROR_MSG_HTHL = i18n.GL3235();
-	private static final String ERROR_MSG_HTHL_SYNTAX = i18n.GL3236();
-	private static final String ERROR_MSG_HTHL_SENTENCE = i18n.GL3237();
+	private static final String ERROR_MSG_HTHL = i18n.GL3235_1();
+	private static final String ERROR_MSG_HTHL_SYNTAX = i18n.GL3236_1();
+	private static final String ERROR_MSG_HTHL_SENTENCE = i18n.GL3237_1();
 	
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
@@ -292,15 +292,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
 		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
-		addHintsLabel.setText(i18n.GL3210() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
-		addHintsLabel.getElement().setAttribute("alt", i18n.GL3210());
-		addHintsLabel.getElement().setAttribute("title", i18n.GL3210());
-		addExplanationLabel.setText( i18n.GL3208());
-		addExplanationLabel.getElement().setAttribute("alt",  i18n.GL3208());
-		addExplanationLabel.getElement().setAttribute("title", i18n.GL3208());
-		addDepthOfKnowledgeLabel.setText(i18n.GL3209());
-		addDepthOfKnowledgeLabel.getElement().setAttribute("alt", i18n.GL3209());
-		addDepthOfKnowledgeLabel.getElement().setAttribute("title", i18n.GL3209());
+		addHintsLabel.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+		addHintsLabel.getElement().setAttribute("alt", i18n.GL3210_1());
+		addHintsLabel.getElement().setAttribute("title", i18n.GL3210_1());
+		addExplanationLabel.setText( i18n.GL3208_1());
+		addExplanationLabel.getElement().setAttribute("alt",  i18n.GL3208_1());
+		addExplanationLabel.getElement().setAttribute("title", i18n.GL3208_1());
+		addDepthOfKnowledgeLabel.setText(i18n.GL3209_1());
+		addDepthOfKnowledgeLabel.getElement().setAttribute("alt", i18n.GL3209_1());
+		addDepthOfKnowledgeLabel.getElement().setAttribute("title", i18n.GL3209_1());
 		addStandardsLabel.setText(i18n.GL0575());
 		addStandardsLabel.getElement().setAttribute("alt", i18n.GL0575());
 		addStandardsLabel.getElement().setAttribute("title", i18n.GL0575());
@@ -310,9 +310,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211());
+		setUpAdvancedLbl.setText(i18n.GL3211_1());
+		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211_1());
+		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211_1());
 		rightsLbl.setText(i18n.GL0869());
 		rightsLbl.getElement().setId("lblRightsLbl");
 		rightsLbl.getElement().setAttribute("alt", i18n.GL0869());
@@ -592,21 +592,21 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		addAnswerChoice.getElement().setAttribute("alt", i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("title", i18n.GL0866());
 		addAnswerChoice.getElement().setId("lnkAnswerChoice");
-		addHintsLabel.setText(i18n.GL3210());
-		addHintsLabel.getElement().setAttribute("alt", i18n.GL3210());
-		addHintsLabel.getElement().setAttribute("title", i18n.GL3210());
+		addHintsLabel.setText(i18n.GL3210_1());
+		addHintsLabel.getElement().setAttribute("alt", i18n.GL3210_1());
+		addHintsLabel.getElement().setAttribute("title", i18n.GL3210_1());
 		addHintsLabel.getElement().setId("lnkHints");
 		addStandardsLabel.setText(i18n.GL0575());
 		addStandardsLabel.getElement().setAttribute("alt", i18n.GL0575());
 		addStandardsLabel.getElement().setAttribute("title", i18n.GL0575());
 		addStandardsLabel.getElement().setId("lnkStandards");
-		addExplanationLabel.setText( i18n.GL3208());
-		addExplanationLabel.getElement().setAttribute("alt",  i18n.GL3208());
-		addExplanationLabel.getElement().setAttribute("title", i18n.GL3208());
+		addExplanationLabel.setText( i18n.GL3208_1());
+		addExplanationLabel.getElement().setAttribute("alt",  i18n.GL3208_1());
+		addExplanationLabel.getElement().setAttribute("title", i18n.GL3208_1());
 		addExplanationLabel.getElement().setId("lnkExplanation");
-		addDepthOfKnowledgeLabel.setText(i18n.GL3209());
-		addDepthOfKnowledgeLabel.getElement().setAttribute("alt", i18n.GL3209());
-		addDepthOfKnowledgeLabel.getElement().setAttribute("title", i18n.GL3209());
+		addDepthOfKnowledgeLabel.setText(i18n.GL3209_1());
+		addDepthOfKnowledgeLabel.getElement().setAttribute("alt", i18n.GL3209_1());
+		addDepthOfKnowledgeLabel.getElement().setAttribute("title", i18n.GL3209_1());
 		addDepthOfKnowledgeLabel.getElement().setId("lnkDepthofKnowledge");
 		addCenturyLabel.setText(i18n.GL3199());
 		addCenturyLabel.getElement().setAttribute("alt", i18n.GL3199());
@@ -1657,7 +1657,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	int widgetCount=hintsContainer.getWidgetCount();
     	addHintsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
     	addHintsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
-    	addHintsLabel.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(4-widgetCount)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+    	addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(4-widgetCount)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 
     	final AddHintsView addHints = new AddHintsView(widgetCount+1);
     	addHintsTextArea(addHints);
@@ -1756,7 +1756,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
         if(hintsContainer.getWidgetCount()<5){
         	addHintsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
 			addHintsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
-        	addHintsLabel.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-hintWidgetsCount)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+        	addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-hintWidgetsCount)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
             addHintsLabel.getElement().getStyle().setDisplay(Display.BLOCK);
         }
         
@@ -2894,12 +2894,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionNameTextArea.getElement().setAttribute("maxlength", "500");
 			questionCharcterLimit=500;
 		}else if(tabType.equals("HT_HL") || tabType.equals("HT_RO")){
-			questionTypeHeader.setText(i18n.GL3224());
-			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3224());
-			questionTypeHeader.getElement().setAttribute("title", i18n.GL3224());
-			questionTypeText.setText(i18n.GL3213());
-			questionTypeText.getElement().setAttribute("alt", i18n.GL3213());
-			questionTypeText.getElement().setAttribute("title", i18n.GL3213());
+			questionTypeHeader.setText(i18n.GL3224_1());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3224_1());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL3224_1());
+			questionTypeText.setText(i18n.GL3213_1());
+			questionTypeText.getElement().setAttribute("alt", i18n.GL3213_1());
+			questionTypeText.getElement().setAttribute("title", i18n.GL3213_1());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionCharcterLimit=5000;
 		}
@@ -3844,17 +3844,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				i++;
 			}
 	    	int count=hintsContainer.getWidgetCount();
-	    	addHintsLabel.setText(i18n.GL3210()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+	    	addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 	        
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconExplanation")){
 	    	explanationContainer.setVisible(false);
 	    	addExplanationLabel.setVisible(true);
-	    	addExplanationLabel.setText(i18n.GL3208());
+	    	addExplanationLabel.setText(i18n.GL3208_1());
 	    	setExplanationContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconDepthOfKnowledge")){
 				depthOfKnowledgeContainer.setVisible(false);
 				addDepthOfKnowledgeLabel.setVisible(true);
-				addDepthOfKnowledgeLabel.setText(i18n.GL3209());
+				addDepthOfKnowledgeLabel.setText(i18n.GL3209_1());
 				setDepthOfKnowledgeContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconStandards")){
 				standardContainer.setVisible(false);

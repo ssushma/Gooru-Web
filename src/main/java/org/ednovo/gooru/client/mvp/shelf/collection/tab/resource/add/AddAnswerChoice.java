@@ -56,13 +56,23 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	
-	@UiField Label errorMessageforAnswerChoice,labelChoice,optionSelectedButton;
+	@UiField
+	public Label errorMessageforAnswerChoice;
+
+	@UiField
+	Label labelChoice;
+
+	@UiField
+	public
+	Label optionSelectedButton;
 	@UiField public TinyMCE answerTextBox;
 	@UiField HTMLPanel tinyOrTextBoxConatiner,deleteButtonContainer;
 	
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
+	public boolean isOptionSelectedButton=false;
+	
 	public AddAnswerChoice(){
 		initWidget(uiBinder.createAndBindUi(this));
 		labelChoice.getElement().setId("lblLabelChoice");

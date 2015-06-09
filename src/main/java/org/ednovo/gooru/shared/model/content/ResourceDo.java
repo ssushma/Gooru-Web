@@ -43,6 +43,7 @@ public class ResourceDo extends ContentDo {
     private String description;
     private String folder;
     private String category;
+    private String thumbnail;
     private String explanation;
     private ThumbnailDo thumbnails;
     private ResourceTypeDo resourceType;
@@ -75,6 +76,7 @@ public class ResourceDo extends ContentDo {
     private String label;        //Some api's give title in label key
     private String nativeurl;    //Some api's give url in nativeUrl key
     private String id;
+    private String typeName;
     
     private String goals;
     
@@ -583,4 +585,22 @@ public class ResourceDo extends ContentDo {
 		this.attributes = attributes;
 	}
 	
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	/**
+	 * @return the typeName
+	 */
+	public String getTypeName() {
+		return typeName;
+	}
+	/**
+	 * @param typeName the typeName to set
+	 */
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
 }

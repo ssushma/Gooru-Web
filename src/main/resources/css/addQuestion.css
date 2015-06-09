@@ -170,6 +170,7 @@
 .imgAnsContainer {
 	border: 1px solid #ccc;
 	height: 90px;
+	display: inline-block;
 }
 .addAnswerDeletebg {
 	position: absolute;
@@ -559,6 +560,7 @@
     text-align: center;
     padding: 2px;
     cursor: pointer;
+    z-index: 1;
 }
 .removeImageLbl {
 	position: absolute;
@@ -569,6 +571,7 @@
     text-align: center;
     padding: 2px;
     cursor: pointer;
+    z-index: 1;
 }
 .answerMarkbg {
 	float: right;

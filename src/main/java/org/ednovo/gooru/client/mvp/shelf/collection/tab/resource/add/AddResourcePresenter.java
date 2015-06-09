@@ -40,6 +40,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -651,12 +652,24 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	public void addSelectedQuestionType(String type) {
 		if(type.equalsIgnoreCase("HS")){
+		questionTypePresenter.getView().resetFields();
 		addToSlot(SLOT_QUESTION_TYPE, questionTypePresenter);
-		questionTypePresenter.ImageUpload(imageUploadPresenter,getView());
+		questionTypePresenter.ImageUpload(imageUploadPresenter,getView(),collectionDo);
 		}else {
 			clearSlot(SLOT_QUESTION_TYPE);
 			getView().clearQuestionSlot();
 		}
+	}
+
+	@Override
+	public void setEditQuestionData(CollectionItemDo collectionItemDo) {
+		
+		questionTypePresenter.getView().editQuestion(collectionItemDo);
+	}
+
+	@Override
+	public void setHSEditData() {
+		questionTypePresenter.getView().setEditData();
 	}
 
 }

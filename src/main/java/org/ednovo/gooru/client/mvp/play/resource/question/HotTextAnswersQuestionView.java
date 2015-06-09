@@ -26,17 +26,20 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.RandomIterator;
 
@@ -67,12 +70,14 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private CollectionItemDo collectionItemDo;
 
 	private AttemptedAnswersDo attemptedAnswerDo=null;
-	
+
+	private List randomSequenceList;
+
 	private boolean isCheckButtonEnabled=true;
-	
+
 	String[] correctAnsSequence;
 	String[] attemptAnsSequence;
-	
+
 	private static String SPACE=" ";
 	private static String STYLE_HIGHLIGHT="htHiglightText";
 	private static String STYLE_CORRECT="correct";
@@ -95,12 +100,13 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	@UiConstructor
-	public HotTextAnswersQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+	public HotTextAnswersQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo,List randomList){
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(ResetDragDropEvent.TYPE,resetReorderData);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo=collectionItemDo;
 		this.attemptedAnswerDo=attemptedAnswerDo;
+		this.randomSequenceList=randomList;
 		setQuestionTypeCaption();
 
 		answerText.getElement().setInnerHTML(i18n.GL0665());
@@ -142,52 +148,19 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					String[] temp;
 					if(collectionItemDo.getResource().getAttributes().getHlType().equalsIgnoreCase(i18n.GL3219())){
 						temp = text.split(" ");
-					
-					for(int k=0;k<temp.length;k++){
-						
-						final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
-						
-						if(lbl.getText().startsWith("${") && lbl.getText().endsWith("}$"+SPACE) ){
-							String lblText=lbl.getText().replaceAll("[${}]", "");
-							lbl.setText(lblText);
-							lbl.getElement().setId(STYLE_CORRECT);
-						}else{
-							lbl.getElement().setId(STYLE_INCORRECT);
-						}
-						
-						lbl.addStyleName("htPlayerAns");
-						lbl.addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								clearAnswers();
 
-								if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
-									lbl.removeStyleName(STYLE_HIGHLIGHT);
-								}else{
-
-									lbl.addStyleName(STYLE_HIGHLIGHT);
-								}
-								enableCheckAnswerButton();
-							}
-						});
-						optionsContainerFpnl.add(lbl);
-					}
-					}else{
-						temp = text.split("\\.");
 						for(int k=0;k<temp.length;k++){
-							if(temp[k].trim().length()>0){
-								System.out.println("temp[k]--"+temp[k]);
-							final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
-							
-							if(lbl.getText().startsWith("${") ||  lbl.getText().startsWith(" ${") ){
+
+							final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
+
+							if(lbl.getText().startsWith("${") && lbl.getText().endsWith("}$"+SPACE) ){
 								String lblText=lbl.getText().replaceAll("[${}]", "");
 								lbl.setText(lblText);
 								lbl.getElement().setId(STYLE_CORRECT);
 							}else{
-								String lblText=lbl.getText().replaceAll("[${}]", "");
-								lbl.setText(lblText);
 								lbl.getElement().setId(STYLE_INCORRECT);
 							}
+
 							lbl.addStyleName("htPlayerAns");
 							lbl.addClickHandler(new ClickHandler() {
 								@Override
@@ -204,62 +177,102 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 								}
 							});
 							optionsContainerFpnl.add(lbl);
-								
 						}
-					}
+					}else{
+						temp = text.split("\\.");
+						for(int k=0;k<temp.length;k++){
+							if(temp[k].trim().length()>0){
+								final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
+
+								if(lbl.getText().startsWith("${") ||  lbl.getText().startsWith(" ${") ){
+									String lblText=lbl.getText().replaceAll("[${}]", "");
+									lbl.setText(lblText);
+									lbl.getElement().setId(STYLE_CORRECT);
+								}else{
+									String lblText=lbl.getText().replaceAll("[${}]", "");
+									lbl.setText(lblText);
+									lbl.getElement().setId(STYLE_INCORRECT);
+								}
+								lbl.addStyleName("htPlayerAns");
+								lbl.addClickHandler(new ClickHandler() {
+									@Override
+									public void onClick(ClickEvent event) {
+										clearAnswers();
+
+										if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+											lbl.removeStyleName(STYLE_HIGHLIGHT);
+										}else{
+
+											lbl.addStyleName(STYLE_HIGHLIGHT);
+										}
+										enableCheckAnswerButton();
+									}
+								});
+								optionsContainerFpnl.add(lbl);
+
+							}
+						}
 					}
 				}
 			}else{
 				correctAnsSequence=RandomIterator.getRandomStringArray(answerListSet.size()) ;
 				attemptAnsSequence=new String[answerListSet.size()];
-				List rList= RandomIterator.getRandomList(answerListSet.size());
-				for(int i=0;i<answerListSet.size();i++){
-					int randomSeq=(Integer) rList.get(i);
-					QuestionAnswerDo questionAnswerDo=answerListSet.get(randomSeq);
-					HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
-					
-					htAnswerOptionView.addDomHandler(new ClickHandler() {
+
+				if(attemptedAnswerDo!=null){
+					Map<Integer,Boolean> answerOptionCount=attemptedAnswerDo.getAnswerOptionResult();
+					int k=0;
+
+					for (Map.Entry<Integer, Boolean> entry : answerOptionCount.entrySet())
+					{
 						
-						@Override
-						public void onClick(ClickEvent event) {
-							clearReorderAnswers();
-							enableCheckAnswerButton();
-						}
-					}, ClickEvent.getType());
-					
-					/*htAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
-					htAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());*/
-					htAnswerOptionView.getElement().setId(String.valueOf(randomSeq));
-					int k=i+1;
-					optionsContainer.addDraggable(htAnswerOptionView,k,randomSeq);
-					enableCheckAnswerButton();
-					//showPreviousResult(questionAnswerDo.getAnswerId(),htAnswerOptionView);
+						QuestionAnswerDo questionAnswerDo=answerListSet.get(entry.getKey());
+						HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + k) + ") "));
+						htAnswerOptionView.addDomHandler(new DragContainerClick(),  ClickEvent.getType());
+						htAnswerOptionView.getElement().setId(String.valueOf(entry.getKey()));
+						int beforeIndex=k+1;
+						optionsContainer.addDraggable(htAnswerOptionView,beforeIndex,entry.getKey());
+						showPreviousResult(entry.getKey(),htAnswerOptionView,entry.getValue());
+						k++;
+					}
+
+				}else{
+					for(int i=0;i<answerListSet.size();i++){
+						int randomSeq=(Integer) randomSequenceList.get(i);
+						QuestionAnswerDo questionAnswerDo=answerListSet.get(randomSeq);
+						HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
+						htAnswerOptionView.addDomHandler(new DragContainerClick(),  ClickEvent.getType());
+						htAnswerOptionView.getElement().setId(String.valueOf(randomSeq));
+						int beforeIndex=i+1;
+						optionsContainer.addDraggable(htAnswerOptionView,beforeIndex,randomSeq);
+						enableCheckAnswerButton();
+
+					}
 				}
 			}
 		}
-
 
 	}
+	
+	
+	public class DragContainerClick implements ClickHandler{
 
-	public void showPreviousResult(int answerId,HTAnswerChoiceOptionView htAnswerOptionView){
-		if(attemptedAnswerDo!=null){
-			Map<Integer,Boolean> answerOptionCount=attemptedAnswerDo.getAnswerOptionResult();
-			if(answerOptionCount.containsKey(answerId) && answerOptionCount.get(answerId)!=null){
-				if(answerOptionCount.get(answerId)){
-					if(htAnswerOptionView.isAnswerCorrect()){
-						htAnswerOptionView.getElement().getStyle().setBackgroundColor("#ddd");
-					}else{
-						htAnswerOptionView.getElement().getStyle().setBackgroundColor("red");
-					}
-				}else{
-					if(!htAnswerOptionView.isAnswerCorrect()){
-						htAnswerOptionView.getElement().getStyle().setBackgroundColor("#ddd");
-					}else{
-						htAnswerOptionView.getElement().getStyle().setBackgroundColor("red");
-					}
-				}
-			}
+		@Override
+		public void onClick(ClickEvent event) {
+			clearReorderAnswers();
+			enableCheckAnswerButton();
 		}
+		
+	}
+
+
+	public void showPreviousResult(int answerId,HTAnswerChoiceOptionView htAnswerOptionView,boolean isCorrect){
+
+		if(isCorrect){
+			htAnswerOptionView.addStyleName(STYLE_DND_CORRECT);
+		}else{
+			htAnswerOptionView.addStyleName(STYLE_DND_INCORRECT);
+		}
+
 	}
 
 
@@ -271,7 +284,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			checkAnswer.removeStyleName("primary");
 			checkAnswer.addStyleName(STYLE_INACTIVE_BUTTON);
 		}
-		
+
 	}
 
 	private void enableCheckAnswerButton(){
@@ -303,25 +316,67 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void showCorrectResult(){
-		
+
 		if(collectionItemDo.getResource().getType()==9){
 
-		int j=0;
-		
-		for(int i=0;i<optionsContainer.getWidgetCount();i++){
-			Widget widget=optionsContainer.getWidget(i);
-			
-			Element el=(Element) widget.getElement().getLastChild();
-			
-			if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
-				if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
-					el.addClassName(STYLE_DND_CORRECT);
-				}else{
-					el.addClassName(STYLE_DND_INCORRECT);
+			boolean HTDragChoiceStatus=true;
+			List<Integer> answerIds=new ArrayList<Integer>();
+			List<String> userAttemptedValueList=new ArrayList<String>();
+			Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer, Boolean>();
+			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
+			int j=0;
+
+			for(int i=0;i<optionsContainer.getWidgetCount();i++){
+				Widget widget=optionsContainer.getWidget(i);
+
+
+				Element el=(Element) widget.getElement().getLastChild();
+
+				if(widget instanceof Draggable){
+					Draggable draggable=(Draggable)widget;
+					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
+					userAttemptedValueList.add("["+htAnswerOption.getAnswerText()+"]");
+					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+					answerAttemptDo.setText(htAnswerOption.getAnswerText()); 
+					answerAttemptDo.setAnswerId(Integer.parseInt(el.getId()));
+					answerAttemptDo.setOrder(el.getId());
+
+					if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+
+						if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
+							el.addClassName(STYLE_DND_CORRECT);
+							answerOptionResult.put(Integer.parseInt(el.getId()), true);
+							answerAttemptDo.setStatus("1");
+						}else{
+							el.addClassName(STYLE_DND_INCORRECT);
+							HTDragChoiceStatus=false;
+							answerOptionResult.put(Integer.parseInt(el.getId()), false);
+							answerAttemptDo.setStatus("0");
+						}
+						j++;
+
+
+					}
+					userAttemptedOptionsList.add(answerAttemptDo);
 				}
-				j++;
+
 			}
-		}
+
+
+			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
+			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
+				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
+			}
+			attempteAnswersDo.setAnswerOptionResult(answerOptionResult);
+
+			setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
+			userAttemptedAnswerObject(userAttemptedOptionsList);
+			increaseUserAttemptCount();
+
+			String attemptStatus=HTDragChoiceStatus==true?"correct":"wrong";
+			createSesstionItemAttemptForHTDragDrop(answerIds,userAttemptedValueList,attemptStatus);
+			userAttemptedValue(userAttemptedValueList);
+
 		}else{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
@@ -340,7 +395,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		}
 
 	}
-	
+
 	private void clearAnswers(){
 		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
@@ -356,25 +411,25 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			}
 
 		}
-		
+
 	}
-	
+
 	private void clearReorderAnswers(){
-		
+
 		for(int i=0;i<optionsContainer.getWidgetCount();i++){
 			Widget widget=optionsContainer.getWidget(i);
-			
+
 			Element el=(Element) widget.getElement().getLastChild();
-			
+
 			if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
-					el.removeClassName(STYLE_DND_CORRECT);
-					el.removeClassName(STYLE_DND_INCORRECT);
+				el.removeClassName(STYLE_DND_CORRECT);
+				el.removeClassName(STYLE_DND_INCORRECT);
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * This method is used to remove HTMLTags from the String
 	 * @param text
@@ -387,16 +442,22 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return text;
 	}
-	
+
 	ResetDragDropHandler resetReorderData=new ResetDragDropHandler() {
-		
+
 		@Override
 		public void resetReorder(int widgetIndex) {
-			
+
 			if(checkAnswer.getStyleName().contains(STYLE_INACTIVE_BUTTON)){
 				clearReorderAnswers();
 				enableCheckAnswerButton();
 			}
 		}
 	};
+
+	public abstract void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
+	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
+	public abstract void increaseUserAttemptCount();
+	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
+	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);
 }
