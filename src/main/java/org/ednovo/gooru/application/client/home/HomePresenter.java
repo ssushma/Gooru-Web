@@ -1,5 +1,5 @@
-/******************************************************************************
- *  Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  *
  *  http://www.goorulearning.org/
  *
@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.application.client.home;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,11 +35,19 @@ import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.service.HomeServiceAsync;
+import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.client.service.UserServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
+import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
@@ -51,6 +60,7 @@ import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
+import org.ednovo.gooru.client.mvp.home.SearchHomeFilterVc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
@@ -67,6 +77,8 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
@@ -84,6 +96,28 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  */
 public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers {
 
+	@Inject
+	private SearchServiceAsync searchService;
+
+	@Inject
+	private HomeServiceAsync homeService;
+
+	@Inject
+	private UserServiceAsync userService;
+
+	@UiField
+	SearchHomeFilterVc searchHomeFilter;
+
+	public static final  Object CONTRIBUTORS_SLOT = new Object();
+
+	/**
+	 * This method is to get the contributorsSlot
+	 */
+	@Override
+	public  Object getContributorsSlot() {
+		return CONTRIBUTORS_SLOT;
+	}
+
 	SignUpPresenter signUpViewPresenter = null;
 
 	ContributorsPresenter contributorsPresenter = null;
@@ -91,12 +125,33 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
 
 	SignUpAfterThirteenPresenter signUpAfterThirteenPresenter=null;
+	private SearchDo<ResourceSearchResultDo> resourceSearchDo = new SearchDo<ResourceSearchResultDo>();
 
-	private UserRegistrationPresenter userRegistrationPresenter;
+	private SearchDo<CollectionSearchResultDo> collectionSearchDo = new SearchDo<CollectionSearchResultDo>();
 
 	private SimpleAsyncCallback<UserDo> registerdUserAsyncCallback;
 
-	private String parentGooruUID;
+	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionAsyncCallback;
+	private SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>> autoKeyWordSuggestionAsyncCallback;
+	public boolean isResourceSearch() {
+		return isResourceSearch;
+	}
+
+	private Timer tooltipTimer = null;
+
+	private static final int TOOLTIP_DELAY_TIME = 1000;
+
+	private boolean isResourceSearch = true;
+
+	private final String QUERY = "query";
+
+	private final String FLT_STANDARD = "flt.standard";
+
+	private final String FLT_GRADE = "flt.grade";
+
+	private final String FLT_MEDIA_TYPE = "flt.mediaType";
+
+	private UserRegistrationPresenter userRegistrationPresenter;
 
 	private static final String GOORU_UID = "gooruuid";
 
@@ -112,8 +167,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 	private static final String CREDENTIAL = "Credential";
 
-	@Inject
-	private UserServiceAsync userService;
+	private static final String USER_META_ACTIVE_FLAG = "0";
+
+	private String parentGooruUID;
+
+	private boolean isLandingPageLoaded = false;
 
 	@NameToken(PlaceTokens.HOME)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -121,6 +179,9 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
 
+
+
+//	PreFilterPopup preFilter = new PreFilterPopup();
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -138,7 +199,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		this.userRegistrationPresenter = userRegistrationPresenter;
 		this.signUpCompletePresenter = signUpCompletePresenter;
 		this.signUpAfterThirteenPresenter=signUpAfterThirteenPresenter;
-
+		this.contributorsPresenter = contributorsPresenter;
 	}
 
 	@Override
@@ -147,7 +208,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		MixpanelUtil.Arrive_Landing_Page();
-
 		setRegisterdUserAsyncCallback(new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(final UserDo user) {
@@ -160,13 +220,21 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				});
 			}
 		});
+		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
+		tooltipTimer = new Timer() {
+			public void run() {
+				contributorsPresenter.getContributors();
+			}
+		};
+		tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
 
 	}
 
 	@Override
 	public void onReveal() {
 		super.onReveal();
-
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_ANONYMOUS);
 		} else {
@@ -175,6 +243,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.HOME));
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken() != null){
+			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		}
 
 		Document doc = Document.get();
@@ -187,9 +256,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 			@Override
 			public void onSuccess() {
-				if(AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
+				if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
 					AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 				}
+				AppClientFactory.printInfoLogger("getPlaceManager().getRequestParameter(CALLBACK) : "+getPlaceManager().getRequestParameter(CALLBACK));
 				if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registration")) {
 					getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 					parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
@@ -208,7 +278,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registerChild")){
 					if (getPlaceManager().getRequestParameter("dob") != null && getPlaceManager().getRequestParameter("userName") != null){
 						String externalId = AppClientFactory.getLoggedInUser().getExternalId();
-						String email = AppClientFactory.getLoggedInUser() != null ? AppClientFactory.getLoggedInUser().getEmailId() : null;
+						String email = AppClientFactory.getLoggedInUser().getEmailId();
 
 						String parentEmailId = email !=null && !email.equalsIgnoreCase("") ? email : externalId !=null && externalId.equalsIgnoreCase("") ? externalId : null;
 						String parameterEmailId = getPlaceManager().getRequestParameter("emailId", null);
@@ -245,7 +315,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 						//If not Open Login Popup
 						AppClientFactory.fireEvent(new InvokeLoginEvent());
 					}else{
-						if (AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getConfirmStatus() == 0){
+						if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0){
 							String gooruUid = getPlaceManager().getRequestParameter("gooruuid") !=null ? getPlaceManager().getRequestParameter("gooruuid") : "";
 							String token = getPlaceManager().getRequestParameter("sessionid") !=null ? getPlaceManager().getRequestParameter("sessionid") : "";
 							Map<String, String> params = new HashMap<String, String>();
@@ -286,7 +356,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				//Show Popup where user can update his details like, username and role. Show this only for non regular user and if he is logging for the first time.
 				if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase(CREDENTIAL)) {
 					Window.enableScrolling(false);
-					AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser() != null ? AppClientFactory.getLoggedInUser().getEmailId() : null, AppClientFactory.getLoggedInUser());
+					AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
 					update.setGlassEnabled(true);
 					update.show();
 					update.center();
@@ -296,6 +366,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 				}
 				else if(flag>0 && flag<=11 && !AppClientFactory.isAnonymous()){
+					showMarketingPopup(userDo);
 				}
 
 				AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -303,23 +374,42 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		});
 	}
 
+	private void validateResetLink(String resetToken) {
+		AppClientFactory.getInjector().getUserService().isValidResetPasswordLink(resetToken, new SimpleAsyncCallback<String>() {
 
+			@Override
+			public void onSuccess(String result) {
+				if(result.equals("true")){
+					getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+				}else{
+					new AlertMessageUc(i18n.GL1089(), new HTML(i18n.GL0100()));
+				}
+			}
+		});
+	}
 
 	@Override
 	public void onReset() {
 		super.onReset();
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
+		if (AppClientFactory.isAnonymous()){
+			getView().getBtnSignUp().setVisible(true);
+		}else{
+			getView().getBtnSignUp().setVisible(false);
+		}
 	}
 
 	private void getIntoLibrarypage() {
-//		if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-contributors")) {
-//			getView().loadFeaturedContributors("featured-contributors",getViewToken());
-//		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("course-page")) {
-//			getView().loadFeaturedContributors("course-page",getViewToken());
-//		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-course")) {
-//			getView().loadFeaturedContributors("featured-course",getViewToken());
-//		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) == null) {
-//			getView().loadFeaturedContributors("featured-course",getViewToken());
-//		}
+		if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-contributors")) {
+			getView().loadFeaturedContributors("featured-contributors",getViewToken());
+		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("course-page")) {
+			getView().loadFeaturedContributors("course-page",getViewToken());
+		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-course")) {
+			getView().loadFeaturedContributors("featured-course",getViewToken());
+		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) == null) {
+			getView().loadFeaturedContributors("featured-course",getViewToken());
+		}
 	}
 
 	@Override
@@ -329,8 +419,20 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		callBackMethods();
 
 		getIntoLibrarypage();
+		if (AppClientFactory.isAnonymous()){
+			getView().getBtnSignUp().setVisible(true);
+		}else{
+			getView().getBtnSignUp().setVisible(false);
+		}
 	}
 
+	@Override
+	public void homeSearch(Map<String, String> hm) {
+		hm.clear();
+		resetSearchInfo(getCollectionSearchDo());
+		resetSearchInfo(getResourceSearchDo());
+		homeSearch(isResourceSearch(), hm);
+	}
 
 	/**
 	 * Reset the search result
@@ -350,26 +452,33 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		getPlaceManager().revealPlace(isResourceSearch ? PlaceTokens.SEARCH_RESOURCE : PlaceTokens.SEARCH_COLLECTION, params);
 	}
 
-	@Override
-	public String getViewToken() {
-		return PlaceTokens.HOME;
+	public HomeServiceAsync getFilterService() {
+		return homeService;
+	}
+
+	public SearchServiceAsync getSearchService() {
+		return searchService;
+	}
+
+	public void setResourceSearchDo(SearchDo<ResourceSearchResultDo> resourceSearchDo) {
+		this.resourceSearchDo = resourceSearchDo;
+	}
+
+	public SearchDo<ResourceSearchResultDo> getResourceSearchDo() {
+		return resourceSearchDo;
+	}
+
+	public SearchDo<CollectionSearchResultDo> getCollectionSearchDo() {
+		return collectionSearchDo;
 	}
 
 	/**
-	 * This method is to get the registerdUserAsyncCallback
+	 * Assign collectionSearchDo instance value
+	 * @param collectionSearchDo instance of the {@link CollectionSearchResultDo}
 	 */
-	public SimpleAsyncCallback<UserDo> getRegisterdUserAsyncCallback() {
-		return registerdUserAsyncCallback;
+	public void setCollectionSearchDo(SearchDo<CollectionSearchResultDo> collectionSearchDo) {
+		this.collectionSearchDo = collectionSearchDo;
 	}
-
-	/**
-	 * This method is to set the registerdUserAsyncCallback
-	 */
-	public void setRegisterdUserAsyncCallback(
-			SimpleAsyncCallback<UserDo> registerdUserAsyncCallback) {
-		this.registerdUserAsyncCallback = registerdUserAsyncCallback;
-	}
-
 
 	@Override
 	public void initilazeRegistrationView(final UserDo user) {
@@ -388,7 +497,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					if (user.isAvailability()) {
 						if (user.getConfirmStatus() == 1 && userType.equalsIgnoreCase("Parent")) {
 							if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
-								LoginPopupUc login = new LoginPopupUc(user != null ? user.getEmailId() : null) {
+								LoginPopupUc login = new LoginPopupUc(user.getEmailId()) {
 
 									@Override
 									public void onLoginSuccess() {
@@ -425,6 +534,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		});
 
 	}
+
 	/**
 	 * Create alert popup with message header and message content
 	 * @param messageHeader popup heading
@@ -446,6 +556,19 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		});
 	}
 
+	@Override
+	public String getViewToken() {
+		return PlaceTokens.HOME;
+	}
+
+	public void setRegisterdUserAsyncCallback(SimpleAsyncCallback<UserDo> registerdUserAsyncCallback) {
+		this.registerdUserAsyncCallback = registerdUserAsyncCallback;
+	}
+
+	public SimpleAsyncCallback<UserDo> getRegisterdUserAsyncCallback() {
+		return registerdUserAsyncCallback;
+	}
+
 	public void setUserService(UserServiceAsync userService) {
 		this.userService = userService;
 	}
@@ -454,15 +577,76 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		return userService;
 	}
 
-	private void validateResetLink(String resetToken) {
-		AppClientFactory.getInjector().getUserService().isValidResetPasswordLink(resetToken, new SimpleAsyncCallback<String>() {
+	/**
+	 * @return suggestion standards for the collection as map string
+	 */
+	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
+		if (standardSuggestionAsyncCallback == null) {
+			standardSuggestionAsyncCallback = new SearchAsyncCallback<SearchDo<CodeDo>>() {
 
+				@Override
+				protected void run(SearchDo<CodeDo> searchDo) {
+					getSearchService().getSuggestStandard(searchDo, this);
+				}
+
+				@Override
+				public void onCallSuccess(SearchDo<CodeDo> result) {
+
+				}
+			};
+		}
+		return standardSuggestionAsyncCallback;
+	}
+
+	@Override
+	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
+		getStandardSuggestionAsyncCallback().execute(searchDo);
+	}
+	public void showMarketingPopup(UserDo userDo){
+
+	}
+
+	/**
+	 * @return suggestion standards for the collection as map string
+	 */
+	public SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>> getAutoSuggestionKeyWordAsyncCallback() {
+		if (autoKeyWordSuggestionAsyncCallback == null) {
+			autoKeyWordSuggestionAsyncCallback = new SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>>() {
+
+				@Override
+				protected void run(SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
+					getSearchService().getSuggestedAutokeyword(searchDo, this);
+
+				}
+
+				@Override
+				public void onCallSuccess(
+					SearchDo<AutoSuggestKeywordSearchDo> result) {
+
+
+
+				}
+
+
+			};
+		}
+		return autoKeyWordSuggestionAsyncCallback;
+	}
+
+
+
+	@Override
+	public void requestAutoSuggestKeyword(
+			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
+			getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
+	}
+	@Override
+	public void generatePartnerLibraries() {
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
-			public void onSuccess(String result) {
-				if(result.equals("true")){
-					getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
-				}else{
-					new AlertMessageUc(i18n.GL1089(), new HTML(i18n.GL0100()));
+			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
+				if (partnersList != null){
+					getView().displayPartnerLibraries(partnersList);
 				}
 			}
 		});

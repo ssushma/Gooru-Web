@@ -27,7 +27,15 @@
  */
 package org.ednovo.gooru.application.client.home;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
+import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
+
+import com.google.gwt.user.client.ui.Button;
 
 /**
  * @author Search Team
@@ -36,15 +44,49 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 
 	/**
+	 * Creates instance of {@link ResetPasswordVc}
+	 * @param resetToken of password
+	 */
+	void resetPassword(String resetToken);
+
+	/**
+	 * Load featured contributors {@link LibraryContributorsView}
+	 * @param callBack
+	 * @param placeToken
+	 */
+	void loadFeaturedContributors(String callBack, String placeToken);
+
+	/**
+	 * @function getBtnSignUp
 	 *
-	 * @function resetPassword
-	 *
-	 * @created_date : 06-Jun-2015
+	 * @created_date : Jul 31, 2014
 	 *
 	 * @description
 	 *
 	 *
-	 * @parm(s) : @param requestParameter
+	 * @return
+	 *
+	 * @return : Button
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	*/
+	Button getBtnSignUp();
+
+
+	/**
+	 *
+	 * @function displayPartnerLibraries
+	 *
+	 * @created_date : 17-Dec-2014
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param partnersList
 	 *
 	 * @return : void
 	 *
@@ -54,7 +96,13 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	 *
 	 *
 	 */
-	void resetPassword(String requestParameter);
+	void displayPartnerLibraries(ArrayList<LibraryUserDo> partnersList);
+
+	/**
+	 * To show preFilter popup
+	 * @param addStandardsPresenter
+	 */
+	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
 
 
 }

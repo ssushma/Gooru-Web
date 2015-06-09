@@ -27,9 +27,13 @@
  */
 package org.ednovo.gooru.application.client.home;
 
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
-import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 
 /**
  * @author Search Team
@@ -38,15 +42,55 @@ import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 public interface HomeUiHandlers extends BaseUiHandlers {
 
 	/**
+	 * Set home search view
+	 * @param params search results
+	 */
+	void homeSearch(Map<String, String> params);
+
+	/**
+	 * @param user instance of {@link UserDo} which has information  for registration
+	 */
+	void initilazeRegistrationView(UserDo user);
+
+	/**
+	 * Set text entered by user to the standards
+	 * @param standards instance of {@link SearchDo<CodeDo>} which has information standard codes and description
+	 */
+	void requestStandardsSuggestion(SearchDo<CodeDo> searchDo);
+
+	void requestAutoSuggestKeyword(SearchDo<AutoSuggestKeywordSearchDo> searchDo);
+
+	/**
+	 * @function getContributorsSlot
 	 *
-	 * @function initilazeRegistrationView
-	 *
-	 * @created_date : 06-Jun-2015
+	 * @created_date : Jul 28, 2014
 	 *
 	 * @description
 	 *
 	 *
-	 * @parm(s) : @param user
+	 * @return
+	 *
+	 * @return : Object
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	*/
+
+	Object getContributorsSlot();
+
+	/**
+	 *
+	 * @function generatePartnerLibraries
+	 *
+	 * @created_date : 24-Nov-2014
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
 	 *
 	 * @return : void
 	 *
@@ -56,7 +100,5 @@ public interface HomeUiHandlers extends BaseUiHandlers {
 	 *
 	 *
 	 */
-	void initilazeRegistrationView(UserDo user);
-
-
+	void generatePartnerLibraries();
 }
