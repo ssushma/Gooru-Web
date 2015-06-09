@@ -1,0 +1,465 @@
+/* CSS Document */
+
+#gShelfMainContainer .floderLeftContainer{
+	background:#ffffff;
+	margin-right:15px;
+	box-shadow:0 0 6px rgba(0, 0, 0, 0.05);
+	min-height:500px;
+	margin-bottom:-9999px;
+	padding-bottom:9999px;
+}
+
+#gShelfMainContainer .floderRightContainer{
+	background:#ffffff;
+	box-shadow:0 0 6px rgba(0, 0, 0, 0.05);
+}
+#gShelfMainContainer .equifier{
+	overflow:hidden;
+}
+#gShelfMainContainer .folderBlock{
+	background:#f0f0f0;
+}
+#gShelfMainContainer .folderBlock .folderBlockHeader{
+
+	padding:12px 0;
+}
+#gShelfMainContainer .gradeContainer{
+ background: #333333;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#f5f5f5));
+  background: -webkit-linear-gradient(top, #ffffff, #f5f5f5);
+  background: -moz-linear-gradient(top, #ffffff, #f5f5f5);
+  background: -ms-linear-gradient(top, #ffffff, #f5f5f5);
+  background: -o-linear-gradient(top, #ffffff, #f5f5f5);
+  margin-top:54px;
+  
+}
+#gShelfMainContainer .greyBackground{
+	background:#e8e7e7;
+}
+
+#gShelfMainContainer .folderBlock  .folderMainHeading{
+	padding:5px 0;
+
+	font-size:17px;
+	color:#515151;
+}
+#gShelfMainContainer .folderBlock  .folderMainHeading span.folderIcon{
+		background:url(../images/gooru-sprite.png) no-repeat -226px -372px;
+		width:40px;
+		height:25px;
+		display:inline-block;
+		vertical-align:middle;
+}
+
+
+
+#gShelfMainContainer .floderLeftContainer .createMenu{
+	padding:20px 12px;
+	text-align:right;
+}
+
+#gShelfMainContainer .floderLeftContainer .createMenu .btn{
+	font-size:12px;
+}
+#gShelfMainContainer .floderLeftContainer .folderLeftMainHeader{
+	font-size:17px;
+	padding:12px 12px;
+	border-bottom:1px solid #f0f0f0;
+	border-top:1px solid #f0f0f0;
+	color:#515151;
+}
+
+#gShelfMainContainer .courseNameBlock{
+	position:relative;
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+
+#gShelfMainContainer .courseNameBlock p{
+	margin-bottom:8px;
+	color:#515151;
+}
+
+#gShelfMainContainer .courseNameBlock .form-control{
+	border:1px solid #87badd;
+}
+#gShelfMainContainer .tagCoursePanel{
+	padding:15px 15px;
+}
+
+#gShelfMainContainer .tagCoursePanel p{
+	color:#515151;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader{
+	text-align:center;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader button{
+	width:75%;
+	font-size:13px;
+	font-weight:bold;
+}
+
+button.btn-disabled{
+	background-color:#dddddd;
+	color:#ffffff;
+}
+
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody{
+	border:1px solid #dddddd;
+	margin-top:15px;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupBlock{
+	overflow:hidden;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupLeft{
+	border-right:1px solid #dddddd;
+	margin-bottom:-500px;
+	padding-bottom:500px;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul{
+	margin:0 0;
+	padding:0 0;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li{
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border-bottom:1px solid #ffffff;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li a{
+	display:block;
+	margin:0 0;
+	color:#515151;
+	padding:8px 15px;
+	font-size:12px;
+	
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li a:hover, .tagCoursePanel .tagCoursePanelBody ul li a:focus{
+	background:#87badd;
+	color:#333333;
+	text-decoration:none;
+	opacity:1;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li.active a{
+		background:#87badd;
+	color:#333333;
+	text-decoration:none;
+}
+
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter{
+	margin:15px 0;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags{
+	margin: 0 0;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li a {
+    color: #ffffff;
+    font-size: 12px;
+    padding: 0 0 0 22px;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li{
+	margin:0 15px 0 0;
+}
+
+#gShelfMainContainer .tagCourseOptions a.list-group-item{
+	padding:6px 15px;
+}
+#gShelfMainContainer .tagCourseOptions a.list-group-item:hover{
+	opacity:1;
+}
+#gShelfMainContainer .tagCourseOptions .list-group-item.active, #gShelfMainContainer .tagCourseOptions .list-group-item.active:focus, #gShelfMainContainer .tagCourseOptions .list-group-item.active:hover {
+    background-color: #87badd;
+    border-color: #87badd;
+    color: #515151;
+	opacity:1;
+    z-index: 2;
+}
+
+#gShelfMainContainer .stepsButtonGroup{
+	text-align:center;
+	margin:15px 15px;
+}
+#gShelfMainContainer .createMenu {
+	margin-right:15px;
+	margin-bottom:8px;
+	margin-top:6px;
+}
+#gShelfMainContainer .createMenu .btn-left{
+	width:84%;
+	text-align:left;
+}
+#gShelfMainContainer .createMenu .btn-right{
+	width:16%;
+	border-left:2px solid #eeeeee !important;
+}
+#gShelfMainContainer .createMenu .btn-default {
+    border-color: transparent;
+
+}
+
+#gShelfMainContainer .createMenu .btn-default.active, #gShelfMainContainer .createMenu .btn-default.focus, #gShelfMainContainer .createMenu .btn-default:active, #gShelfMainContainer .createMenu .btn-default:focus, #gShelfMainContainer .createMenu .btn-default:hover, #gShelfMainContainer .createMenu .open > .dropdown-toggle.btn-default {
+    background-color:#ffffff;
+    border-color:transparent;
+    color: #333;
+	box-shadow:none;
+}
+#gShelfMainContainer .createMenu .open > .dropdown-menu{
+	width:100%;
+}
+#gShelfMainContainer .createMenu .caret {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px dashed;
+   
+}
+#gShelfMainContainer .folderLeftActionBtn{
+	font-size:13px;
+	font-weight:bold;
+}
+
+#gShelfMainContainer .folderLeftActionBtn{
+	padding:10px 15px;
+}
+
+
+#gShelfMainContainer .folderListBlock  ul{
+	margin:0 0;
+	padding:0 0;
+}
+
+#gShelfMainContainer .folderListBlock  ul li{
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border-bottom:1px solid #ffffff;
+}
+
+#gShelfMainContainer .folderListBlock  ul li a{
+	padding:15px 15px 15px 55px;
+			background:#f0f0f0 url(../images/gooru-sprite.png) no-repeat -215px -360px;
+			display:block;
+			color:#515151;
+			font-size:13px;
+	
+}
+
+
+#gShelfMainContainer .folderListBlock ul li a:hover, #gShelfMainContainer .folderListBlock ul li a:focus{
+		background:#ffffff url(../images/gooru-sprite.png) no-repeat -215px -316px;
+	color:#515151;
+	text-decoration:none;
+	opacity:1;
+
+}
+#gShelfMainContainer .folderListBlock ul li.active a{
+		background:#ffffff url(../images/gooru-sprite.png) no-repeat -215px -318px;
+	color:#515151;
+	text-decoration:none;
+}
+
+#gShelfMainContainer .folderBlockSitemap{
+	background:#f6f6f6;
+	border-top:1px solid #ffffff;
+}
+@media (max-width: 767px) {
+	
+	#gShelfMainContainer .floderLeftContainer{
+		margin-right:0;
+	}
+	#gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader button{
+		margin-bottom:2px;
+		width:100%;
+	}
+	#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li {
+    margin: 0 10px 10px 0;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupLeft {
+    border-right:none;
+	background:#f5f5f5;
+
+
+
+}
+#gShelfMainContainer .createMenu {
+
+    margin-right: 15px;
+    margin-left:15px;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupRight{
+
+		  border-top: 1px solid #dddddd;
+		  background:#ffffff;
+}
+}
+
+
+
+	@media (min-width: 768px) and (max-width: 991px) {
+		
+		#gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader button {
+    font-size: 13px;
+    font-weight: bold;
+    width: 100%;
+}
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li {
+    margin: 0 10px 10px 0;
+}
+	}
+
+
+
+		@media (min-width: 992px) and (max-width: 1199px) {
+			
+			
+			
+		}
+
+
+
+
+
+@media (min-width: 1200px) {
+	
+	
+	
+
+	
+	
+}
+
+
+
+
+
+
+
+
+#gShelfMainContainer .btn-breadcrumb .btn:not(:last-child):after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 27px solid transparent;
+  border-bottom: 27px solid transparent;
+  border-left: 10px solid #f6f6f6;
+  position: absolute;
+  top: 50%;
+  margin-top: -27px;
+  left: 100%;
+  z-index: 3;
+}
+#gShelfMainContainer .btn-breadcrumb .btn:not(:last-child):before {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 27px solid transparent;
+  border-bottom: 27px solid transparent;
+  border-left: 10px solid rgb(173, 173, 173);
+  position: absolute;
+  top: 50%;
+  margin-top: -27px;
+  margin-left: 1px;
+  left: 100%;
+  z-index: 3;
+}
+
+#gShelfMainContainer .btn-breadcrumb .btn {
+  padding:15px 15px 15px 24px;
+}
+#gShelfMainContainer .btn-breadcrumb .btn:first-child {
+  padding:15px 15px 15px 15px;
+}
+#gShelfMainContainer .btn-breadcrumb .btn:last-child {
+  padding:15px 18px 15px 24px;
+}
+#gShelfMainContainer .btn-breadcrumb .btn.btn-default{
+	background-color:transparent;
+	border-color:transparent;
+	border-radius:0 0;
+	font-size:13px;
+}
+#gShelfMainContainer .btn-breadcrumb .btn.btn-default:hover, #gShelfMainContainer .btn-breadcrumb .btn.btn-default:focus {
+
+	box-shadow:none;
+}
+
+/** Default button **/
+#gShelfMainContainer .btn-breadcrumb .btn.btn-default:not(:last-child):after {
+  border-left: 11px solid #f6f6f6;
+}
+#gShelfMainContainer .btn-breadcrumb .btn.btn-default:not(:last-child):before {
+  border-left: 11px solid #ffffff;
+}
+/*.btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
+  border-left: 10px solid #b4d1b1;
+}*/
+#gShelfMainContainer .btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+  border-left: 11px solid #ffffff;
+}
+#gShelfMainContainer .btn-breadcrumb .btn.btn-default.active {
+	background-color:#b4d1b1;
+	box-shadow:none;
+}
+#gShelfMainContainer .btn-breadcrumb .btn.btn-default.active:not(:last-child)::after {
+    border-left: 11px solid #b4d1b1;
+}
+/* The responsive part */
+
+#gShelfMainContainer .btn-breadcrumb > * > div {
+    /* With less: .text-overflow(); */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+}
+
+#gShelfMainContainer .btn-breadcrumb > *:nth-child(n+2) {
+  display:none;
+}
+
+/* === For phones =================================== */
+@media (max-width: 767px) {
+   #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+2) {
+        display:block;
+    } 
+   #gShelfMainContainer .btn-breadcrumb > * div {
+        max-width: 60px;
+    }
+}
+
+/* === For tablets ================================== */
+@media (min-width: 768px) and (max-width:991px) {
+   #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+4) {
+        display:block;
+    } 
+    #gShelfMainContainer .btn-breadcrumb > * div {
+        max-width: 100px;
+    }
+}
+
+/* === For desktops ================================== */
+@media (min-width: 992px) {
+    #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+6) {
+        display:block;
+    } 
+    #gShelfMainContainer .btn-breadcrumb > * div {
+        max-width: 170px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
