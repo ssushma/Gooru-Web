@@ -260,6 +260,7 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String rightFlagPanel();
 	String normalText();
 	String popupHeader();
+	String AssessmentPopupMain();
 	
 	
 	String forgotPasswordSuccessText();
