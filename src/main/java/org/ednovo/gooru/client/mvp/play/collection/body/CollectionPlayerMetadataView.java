@@ -223,16 +223,20 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		getUiHandlers().getMenuContainer().clear();
 		getUiHandlers().getMenuContainer().add(menuMetadataWidget);
 		getUiHandlers().getMenuContainer().getParent().setStyleName("player");
+		switchContainer.setVisible(true);
+		commentssection.setVisible(true);
+		commentssection.getElement().getStyle().setOpacity(1);
 		if (collectionDo.getMeta() !=null)
 		{
+			
 			if(collectionDo.getMeta().getPermissions() != null)
-			{
+			{				
 			if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
 				switchContainer.setVisible(true);
 				if(collectionDo.getSettings() != null)
-				{
+				{					
 					if(collectionDo.getSettings().getComment() != null)
-					{
+					{						
 							if(ClientConstants.TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment()))
 							{
 								commentField.setEnabled(true);
@@ -264,7 +268,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 					commentssection.getElement().getStyle().setOpacity(1);
 					changeAssignmentStatusButton.setValue(true);
 				}
-			}else{				
+			}else{
 				if(collectionDo.getSettings() != null)
 				{
 						if(ClientConstants.TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
