@@ -24,31 +24,39 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AddQuestionImg extends Composite 
+public class AddAnswerImg extends Composite 
 {
-	@UiField Label changeImgLbl;
+	@UiField Label changeImgLbl,selLbl;
 	@UiField Label removeImgLbl;
-	@UiField Label displayQuestLbl;
-	@UiField Image questionImageContainer;
-	@UiField HTMLEventPanel eHearderIconImage;
+	@UiField Image ansImageContainer;
+	@UiField HTMLPanel imgBlock;
+	
+	boolean selectedImage=false;
 	
 	private String fileName=null;
 	private static final String DEFAULT_QUESTION_IMAGE="images/default-question.png";
 	
-	public interface AddQuestionImageUiBinder extends UiBinder <Widget, AddQuestionImg>{
+	public interface AddQuestionImageUiBinder extends UiBinder <Widget, AddAnswerImg>{
 		
 	}
 	
@@ -56,27 +64,25 @@ public class AddQuestionImg extends Composite
 	
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public AddQuestionImg() {
+	public AddAnswerImg() {
 		initWidget(addQuestionImageUiBinder.createAndBindUi(this));
-		displayQuestLbl.setText(i18n.GL0860());
-		displayQuestLbl.getElement().setId("lblDisplayQuestLbl");
-		displayQuestLbl.getElement().setAttribute("alt", i18n.GL0860());
-		displayQuestLbl.getElement().setAttribute("title",i18n.GL0860());
-		questionImageContainer.getElement().setId("imgQuestionImageContainer");
-		changeImgLbl.setText(i18n.GL0861());
+		ansImageContainer.getElement().setId("imgAnsImageContainer");
+		changeImgLbl.setText(i18n.GL3232());
 		changeImgLbl.getElement().setId("lblChangeImgLbl");
-		changeImgLbl.getElement().setAttribute("alt", i18n.GL0861());
-		changeImgLbl.getElement().setAttribute("title",i18n.GL0861());
-		removeImgLbl.setText(i18n.GL0862());
+		changeImgLbl.getElement().setAttribute("alt", i18n.GL3232());
+		changeImgLbl.getElement().setAttribute("title",i18n.GL3232());
+		removeImgLbl.setText(i18n.GL3233());
 		removeImgLbl.getElement().setId("lblChangeImgLbl");
-		removeImgLbl.getElement().setAttribute("alt", i18n.GL0862());
-		removeImgLbl.getElement().setAttribute("title",i18n.GL0862());
-		eHearderIconImage.getElement().setId("eHearderIconImage");
+		removeImgLbl.getElement().setAttribute("alt", i18n.GL3233());
+		removeImgLbl.getElement().setAttribute("title",i18n.GL3233());
+		imgBlock.getElement().setId("imgBlockPnl");
+		selLbl.getElement().setId("selLbl");
+		
 	}
 	
 	
-	public void setQuestionImage(String imageUrl){
-		questionImageContainer.setUrl(imageUrl);
+	public void setAnswerImage(String imageUrl){
+		ansImageContainer.setUrl(imageUrl);
 	}
 
 
@@ -88,21 +94,10 @@ public class AddQuestionImg extends Composite
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	@UiHandler("questionImageContainer")
-	public void setQuetionDefaultImage(ErrorEvent event){
-		questionImageContainer.setUrl(DEFAULT_QUESTION_IMAGE);
+	@UiHandler("ansImageContainer")
+	public void setAnswerDefaultImage(ErrorEvent event){
+		ansImageContainer.setUrl(DEFAULT_QUESTION_IMAGE);
 	}
-
-
-	public HTMLEventPanel geteHearderIconImage() {
-		return eHearderIconImage;
-	}
-
-
-	public void seteHearderIconImage(HTMLEventPanel eHearderIconImage) {
-		this.eHearderIconImage = eHearderIconImage;
-	}
-
 
 	public Label getChangeImgLbl() {
 		return changeImgLbl;
@@ -121,6 +116,24 @@ public class AddQuestionImg extends Composite
 
 	public void setRemoveImgLbl(Label removeImgLbl) {
 		this.removeImgLbl = removeImgLbl;
+	}
+	
+	public void setId(int id){
+		this.getElement().setId(String.valueOf(id));
+	}
+	
+	@UiHandler("selLbl")
+	public void selectedImage(ClickEvent event){
+		
+		if(selectedImage){
+			selLbl.removeStyleName("answerMarkSelected");
+			imgBlock.removeStyleName("ansImageBlockSel");
+			selectedImage=false;
+		}else{
+		selLbl.addStyleName("answerMarkSelected");
+		imgBlock.addStyleName("ansImageBlockSel");
+		selectedImage=true;
+		}
 	}
 	 
 

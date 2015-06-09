@@ -46,12 +46,13 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists.ExistsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -69,6 +70,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -90,6 +92,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -126,16 +129,22 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	public WebResourcePreview webResourcePreview;
 	
-	@UiField HTMLPanel tabViewContainer,addResourceTabContainer;
+	@UiField HTMLPanel tabViewContainer,addResourceTabContainer,popUpMain;
 	
-	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive,multipleAnswerAnc;
+	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive,multipleAnswerAnc,hotSpot,hotText;
 
-	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton;
+	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton,hotSpotTabButton,hotTextTabButton;
 
 	
 	@UiField Label titleLbl,addResourceCloseButton;
 	
-	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton;
+	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton,hotSpotRadioButton,hotTextRadioButton;
+	
+	//@UiField HTMLEventPanel singleCorrectResponseButton,multipleSelectButton,evidenceBasedResponseButton,hotTextButton,reorderTextButton,matchingTablesButton/*,shortTextResponseButton,writtenResponseButton*/;
+//	@UiField RadioButton singleCorrectResponseRadioButton,multipleSelectRadioButton,evidenceBasedResponseRadioButton,hotTextRadioButton,reorderTextRadioButton,matchingTablesRadioButton/*,shortTextResponseRadioButton,writtenResponseRadioButton*/;
+//	@UiField Anchor singleCorrectResponseText,multipleSelectText,evidenceBasedResponseText,hotTextRadioText,reorderTextText,matchingTablesText/*,shortTextResponseText,writtenResponseText*/;
+	
+	@UiField SimplePanel questionContainerPnl;
 	
 	private ResourceMetaInfoDo resMetaInfo;
 	
@@ -161,6 +170,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private boolean isQuestion =false;
 	
 	private boolean isUserResource =false;
+	
+	
+	@Inject
+	QuestionTypePresenter questionTypePresenter;
 	
 	@Inject
 	public AddResourceView(EventBus eventBus) {
@@ -196,6 +209,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		multipleAnswerAnc.setText(StringUtil.generateMessage(i18n.GL2017()));
 		multipleAnswerAnc.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL2017()));
 		multipleAnswerAnc.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL2017()));
+		//GL0748
 		fromweb.getElement().setId("lnkFromWeb");
 		fromfile.getElement().setId("lnkFromFile");
 		fromwsearch.getElement().setId("lnkFromwSearch");
@@ -225,6 +239,29 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFalseRadioButton.getElement().setId("rdTrueOrFalseRadioButton");
 		fillInTheBlankRadioButton.getElement().setId("rdFillInTheBlankRadioButton");
 		openEndedRadioButton.getElement().setId("rdOpenEndedRadioButton");
+		hotSpotRadioButton.getElement().setId("rdHotSpotRadioButton");
+		hotTextTabButton.getElement().setId("epnlhotTextTabButton");
+		hotTextTabButton.addClickHandler(new showHotTextWidget());
+		hotTextRadioButton.getElement().setId("rdHotTextRadioButton");
+		hotSpot.setText(i18n.GL3231());
+		hotSpot.getElement().setAttribute("alt", i18n.GL3231());
+		hotSpot.getElement().setAttribute("title", i18n.GL3231());
+		hotSpotTabButton.getElement().setId("hotSpotTabButton");
+		hotSpotTabButton.addClickHandler(new ShowEquationWidget());
+		hotText.setText(i18n.GL3212());
+		hotText.getElement().setAttribute("alt", i18n.GL3212());
+		hotText.getElement().setAttribute("title", i18n.GL3212());
+		hotText.getElement().setId("lnkHotText");
+		
+		//assessments tabs
+/*		singleCorrectResponseButton.addClickHandler(new AssessmentQuestionsEvent());
+		multipleSelectButton.addClickHandler(new AssessmentQuestionsEvent());
+		evidenceBasedResponseButton.addClickHandler(new AssessmentQuestionsEvent());
+		hotTextButton.addClickHandler(new AssessmentQuestionsEvent());
+		reorderTextButton.addClickHandler(new AssessmentQuestionsEvent());
+		matchingTablesButton.addClickHandler(new AssessmentQuestionsEvent());*/
+		
+		
 		urlTabButton.addClickHandler(new ClickHandler() {	
 			@Override
 			public void onClick(ClickEvent event) {
@@ -239,10 +276,18 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			@Override
 			public void onClick(ClickEvent event) {
 				tabViewContainer.clear();
+//				questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
+//				openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
+//				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				hideTabButtons(true, false, false);
 				addUserOwnResourceWidget=new AddUserOwnResourceWidget(getUiHandlers().getParentCollectionDetails());
 				tabViewContainer.add(addUserOwnResourceWidget);
 				tabViewContainer.getElement().setId("pnlTabViewContainer");
+//				questionTabButton.setStyleName(res.css().buttonDeSelected());
+//				searchTabButton.setStyleName(res.css().buttonDeSelected());
+//				urlTabButton.setStyleName(res.css().buttonDeSelected());
+//				myDriveButton.setStyleName(res.css().buttonDeSelected());
 				deselectSelectedButton();
 				myComputerTabButton.setStyleName(res.css().buttonSelected());
 			}
@@ -252,10 +297,18 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			@Override
 			public void onClick(ClickEvent event) {
 				tabViewContainer.clear();
+//				questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
+//				openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
+//				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				hideTabButtons(true, false, false);
 				addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails(),appPopUp);
 				tabViewContainer.add(addSearchResourceWidget);
 				tabViewContainer.getElement().setId("pnlTabViewContainer");
+//				questionTabButton.setStyleName(res.css().buttonDeSelected());
+//				urlTabButton.setStyleName(res.css().buttonDeSelected());
+//				myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+//				myDriveButton.setStyleName(res.css().buttonDeSelected());
 				deselectSelectedButton();
 				searchTabButton.setStyleName(res.css().buttonSelected());
 			}
@@ -270,6 +323,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				hideTabButtons(true, false, false);
 				tabViewContainer.clear();
 				getUiHandlers().showDriveResoureView(tabViewContainer);
+//				searchTabButton.setStyleName(res.css().buttonDeSelected());
+//				questionTabButton.setStyleName(res.css().buttonDeSelected());
+//				urlTabButton.setStyleName(res.css().buttonDeSelected());
+//				myComputerTabButton.setStyleName(res.css().buttonDeSelected());
 				deselectSelectedButton();
 				myDriveButton.setStyleName(res.css().buttonSelected());
 			}
@@ -289,9 +346,23 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFlaseButton.setVisible(isQuestionWidget);
 		openEndedButton.setVisible(isQuestionWidget);
 		fillInTheBlankTabButton.setVisible(isQuestionWidget);
+		hotSpotTabButton.setVisible(isQuestionWidget);
+		hotTextTabButton.setVisible(isQuestionWidget);
+		
+		//assessment tabs
+/*		singleCorrectResponseButton.setVisible(isAssementsWidget);
+		multipleSelectButton.setVisible(isAssementsWidget);
+		evidenceBasedResponseButton.setVisible(isAssementsWidget);
+		hotTextButton.setVisible(isAssementsWidget);
+		reorderTextButton.setVisible(isAssementsWidget);
+		matchingTablesButton.setVisible(isAssementsWidget);*/
 	}
 	
 	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo){
+//		questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//		trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
+//		openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
+//		fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 		hideTabButtons(true, false, false);
 		urlTabButton.getElement().setId("epnlUrlTabButton");
 		addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),isGoogleDriveFile,googleDriveItemDo);
@@ -301,6 +372,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}else{
 			tabViewContainer.add(addWebResourceWidget);
 			tabViewContainer.getElement().setId("pnlTabViewContainer");
+//			questionTabButton.setStyleName(res.css().buttonDeSelected());
+//			searchTabButton.setStyleName(res.css().buttonDeSelected());
+//			myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+//			myDriveButton.setStyleName(res.css().buttonDeSelected());
 			deselectSelectedButton();
 			urlTabButton.setStyleName(res.css().buttonSelected());
 
@@ -320,6 +395,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		fillInTheBlankRadioButton.setValue(false);
 		openEndedRadioButton.setValue(false);
 		trueOrFalseRadioButton.setValue(false);
+		hotTextRadioButton.setValue(false);
+//		fillInTheBlankTabButton.setStyleName(res.css().buttonDeSelected());
+//		trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
+//		openEndedButton.setStyleName(res.css().buttonDeSelected());
 		deselectSelectedButton();
 		closeAddResourcePopup();
 		tabViewContainer.clear();	
@@ -327,6 +406,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		tabViewContainer.add(addWebResourceWidget);
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		urlTabButton.setStyleName(res.css().buttonSelected());
+		getUiHandlers().addSelectedQuestionType("MC");
+//		myComputerTabButton.setStyleName(res.css().buttonSelected());
+//		questionTabButton.setStyleName(res.css().buttonDeSelected());
+//		searchTabButton.setStyleName(res.css().buttonDeSelected());
+//		myDriveButton.setStyleName(res.css().buttonDeSelected());
 	}
 	
 	public class AddWebResourceWidget extends AddWebResourceView{
@@ -363,6 +447,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			 if(webResourceCategory.contains("Videos")||webResourceCategory.contains("Interactives")||webResourceCategory.contains("Images")||webResourceCategory.contains("Texts"))
 			{
 				 webResourceCategory=webResourceCategory.substring(0, webResourceCategory.length()-1);
+				/* if(webResourceCategory.contains("Image")||webResourceCategory.contains("Images")){
+					 webResourceCategory="Slide";
+				 }*/
 			}
 			 webResourceThumbnail = thumbnailUrlStr;
 			 webResourceEnd = endTime; 
@@ -388,6 +475,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					@Override
 					public void addWebResource() {
 						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,hostname,tagList);
+
+						
+						/*webResourcePreview.lblConfirmAdding.getElement().getStyle().setDisplay(Display.BLOCK);
+						webResourcePreview.actionPanel.getElement().getStyle().setDisplay(Display.NONE);*/
 						webResourcePreview.hide();
 						webResourcePreview.setGlassEnabled(false);
 						appPopUp.hide();
@@ -416,7 +507,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 				
 			}else{
+
 				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,hostname,tagList);
+
+				
+
 			}
 		}
 		
@@ -461,6 +556,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	
 	public class AddQuestionResourceWidget extends AddQuestionResourceView{
+		
 		private CollectionItemDo collectionItemDo;
 		public AddQuestionResourceWidget(){
 			super();
@@ -469,7 +565,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public AddQuestionResourceWidget(CollectionItemDo collectionItemDo){
 			super(collectionItemDo);
 			this.collectionItemDo=collectionItemDo;
+			
 		}
+		
 		@Override
 		public void hidePopup() {
 			multipleChoiceRadioButton.setValue(true);
@@ -477,6 +575,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			tabViewContainer.clear();	
 			deselectSelectedButton();
 			questionTabButton.setStyleName(res.css().buttonSelected());
+//			urlTabButton.setStyleName(res.css().buttonDeSelected());
+//			myComputerTabButton.setStyleName(res.css().buttonSelected());
+//		    searchTabButton.setStyleName(res.css().buttonDeSelected());
+//		    openEndedButton.setStyleName(res.css().buttonDeSelected());
+//			fillInTheBlankTabButton.setStyleName(res.css().buttonDeSelected());
+//			trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
 		}
 		@Override
 		public void onLoad(){
@@ -499,6 +603,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 		public void createQuestionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo) {
+//			hidePopup();
 			if(getQuestionEditMode()){
 				String thumbnailUrl=null;
 				if(addQuestionResourceWidget.addQuestImgContainer.getWidgetCount()>0){
@@ -544,6 +649,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			tabViewContainer.getElement().setId("pnlTabViewContainer");
 			deselectSelectedButton();
 			urlTabButton.setStyleName(res.css().buttonSelected());
+//			questionTabButton.setStyleName(res.css().buttonDeSelected());
+//			searchTabButton.setStyleName(res.css().buttonDeSelected());
+//			myComputerTabButton.setStyleName(res.css().buttonSelected());
 		}
 		
 		public AddSearchResourceWidget(CollectionDo collectionDo,PopupPanel popuppanel){
@@ -583,6 +691,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				public void showAddResourcePopup() {
 					userOwnResourcePreview.hide();
 					userOwnResourcePreview.removeFromParent();
+					//appPopUp.show();
 					appPopUp.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 					lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 					panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -600,6 +709,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					userOwnResourcePreview.setGlassEnabled(false);
 					appPopUp.hide();
 					userOwnResourcePreview.removeFromParent();
+//					saveUserResource(filePath);
 				}
 
 				@Override
@@ -607,6 +717,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					appPopUp.hide();
 				}
 			};
+			//appPopUp.hide();
 			appPopUp.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			userOwnResourcePreview.filePathValueLbl.setText(filePath);
 			userOwnResourcePreview.resourceTitleValueLbl.setText(resourceTitle);
@@ -620,12 +731,24 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				userOwnResourcePreview.thumbnailLbl.setVisible(false);
 			}
 			userOwnResourcePreview.setGlassEnabled(true);
+			//Window.scrollTo(0, 0);
+			//userOwnResourcePreview.getElement().getParentElement().getParentElement().setAttribute("style", "width:502px;");
 			userOwnResourcePreview.setWidth("502px");
+//			userOwnResourcePreview.setHeight("400px");
 			userOwnResourcePreview.getElement().setAttribute("style", "min-height:400px;");
 			userOwnResourcePreview.show();
 			userOwnResourcePreview.center();
+/*			userOwnResourcePreview.show();
+			userOwnResourcePreview.center();*/
 			
 		}
+
+		/*protected void saveUserResource(String filePath) {
+			
+			getUiHandlers().saveUserResource(filePath);
+			
+		}*/
+
 		@Override
 		public void addUserResource(String filePath,String mediaFileName,String originalFileName, String resourceTitle,String resourceDesc, String resourceCategory, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList) {
 			title=resourceTitle;
@@ -640,33 +763,43 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void browseStandardsInfo() {
 			isQuestion =false;
 			isUserResource = true;
+			
 			getUiHandlers().browseStandardsInfo(isQuestion,isUserResource);
 		}
+
+
 		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
 			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
 		}
+
+
 		@Override
 		public void closeStandardsPopup() {
 			// TODO Auto-generated method stub
 			getUiHandlers().closeStandardsPopup();
 		}
+		
 	}
 	
 	@Override
 	public Widget asWidget() {
+		
 		return appPopUp;
 	}
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
+		
 	}
 	@Override
 	public void onLoad() {
 		// TODO Auto-generated method stub
+		
 	}
 	@Override
 	public void onUnload() {
 		// TODO Auto-generated method stub
+		
 	}
 	public List<String> getThumbnailImages() {
 		return addWebResourceWidget.thumbnailImages;
@@ -674,6 +807,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	public void setThumbnailImages(List<String> thumbnailImages) {
 		addWebResourceWidget.thumbnailImages = thumbnailImages;
+//		addWebResourceWidget.activeImageIndex=0;
+//        addWebResourceWidget.setImageThumbnail();
 	}
 	
 	public ResourceMetaInfoDo getResMetaInfo() {
@@ -690,6 +825,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		if (userUrlStr.indexOf("youtube")==-1){
 			addWebResourceWidget.rightArrowLbl.setVisible(true);
 			addWebResourceWidget.isValidYoutubeUrlFlag = true;
+			
 		}else{
 			if(userUrlStr.indexOf("user") == -1 && userUrlStr.indexOf("list") == -1 && userUrlStr.indexOf("channel") == -1){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
@@ -703,6 +839,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		}
 		if(addWebResourceWidget.thumbnailUrlStr!=null){
+			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(addWebResourceWidget.thumbnailUrlStr, 0, 0, 80, 60);
 			addWebResourceWidget.setThumbnailImage.setUrl(addWebResourceWidget.thumbnailUrlStr);
 			addWebResourceWidget.setThumbnailImage.setHeight("60px");
 			addWebResourceWidget.setThumbnailImage.setWidth("80px");
@@ -712,6 +849,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			addWebResourceWidget.rightArrowLbl.setVisible(false);
 		}
 	}
+	
+	
+	
 	public void setImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage){
 		double randNumber = Math.random();
 		if(isQuestionImage){
@@ -721,6 +861,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			addQuestionResourceWidget.addQuestImgContainer.clear();
 			addQuestionResourceWidget.addQuestionImg.getElement().getStyle().setDisplay(Display.NONE);
 			addQuestionResourceWidget.addQuestImgContainer.add(addQuestionImage);
+			addQuestionResourceWidget.setImageHandler();
 			addQuestionImage.changeImgLbl.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -739,7 +880,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 						deleteConfirmationPopup=new DeleteConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT);
 					}else{
 						addQuestionResourceWidget.addQuestImgContainer.clear();
-						addQuestionResourceWidget.addQuestionImg.getElement().getStyle().setDisplay(Display.BLOCK);
+						addQuestionResourceWidget.addQuestionImg.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 					}
 				}
 			});
@@ -763,6 +904,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			addWebResourceWidget.setThumbnailImage.setHeight("60px");
 			addWebResourceWidget.setThumbnailImage.setWidth("80px");
 			addWebResourceWidget.setThumbnailImage.setVisible(true);
+			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(addWebResourceWidget.thumbnailUrlStr, 18, 14, 80, 60);
 		}
 	}
 	
@@ -790,6 +932,17 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 			setResMetaInfo(resMetaInfo);
 			setThumbnailImages(resMetaInfo.getImages());
+			/*updateUi();
+			if(resMetaInfo.getImages().size()<=0){
+				addWebResourceWidget.generateImageLbl.setVisible(true);
+				addWebResourceWidget.rightArrowLbl.setVisible(false);
+				addWebResourceWidget.leftArrowLbl.setVisible(false);
+				addWebResourceWidget.setThumbnailImage.setVisible(false);
+			}
+			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(resMetaInfo.getImages().get(0), 0, 0, 80, 60);
+			addWebResourceWidget.setThumbnailImage.setUrl(resMetaInfo.getImages().size() >0 ? resMetaInfo.getImages().get(0) : "");
+			addWebResourceWidget.setThumbnailImage.setHeight("60px");
+			addWebResourceWidget.setThumbnailImage.setWidth("80px");*/
 		}
 	}
 	
@@ -807,6 +960,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				addWebResourceWidget.leftArrowLbl.setVisible(false);
 				addWebResourceWidget.setThumbnailImage.setVisible(false);
 			}
+			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(resMetaInfo.getImages().get(0), 0, 0, 80, 60);
 			addWebResourceWidget.setThumbnailImage.setUrl(resMetaInfo.getImages().size() >0 ? resMetaInfo.getImages().get(0) : "");
 			addWebResourceWidget.setThumbnailImage.setHeight("60px");
 			addWebResourceWidget.setThumbnailImage.setWidth("80px");		
@@ -815,11 +969,15 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	@Override
 	public void setExistingResourceData(ExistsResourceDo resourceDo, CollectionDo collectionDo){
 		this.hide();
+		
 		existsResource = new ExistsResourceView();
 		existsResource.displayResourceInformation(resourceDo, collectionDo);
 		existsResource.setAddNewPopup(this);
+		
+
 		existsResource.show();
 		existsResource.center();
+		
 	}
 	
 	@Override
@@ -841,21 +999,34 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@Override
 	public void setPopup(String clickType) {
+		
 		titleLbl.getElement().setId("lblTitleLbl");
 		addResourceCloseButton.getElement().setId("lblAddResourceCloseButton");
 		addResourceTabContainer.getElement().setId("pnlAddResourceTabContainer");
-		if(clickType.equalsIgnoreCase("Url")){			
+		if(clickType.equalsIgnoreCase("Url")){	
 			tabViewContainer.clear();
 			Window.enableScrolling(false);
 			titleLbl.getElement().setAttribute("alt", i18n.GL0886());
 			titleLbl.getElement().setAttribute("title", i18n.GL0886());
 			titleLbl.setText(i18n.GL0886());
+//			urlTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//			searchTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//			myComputerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//			myDriveButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//			questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//			trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
+//			openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
+//			multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//			fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			hideTabButtons(true, false, false);
 			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
 			tabViewContainer.add(addWebResourceWidget);
 			tabViewContainer.getElement().setId("pnlTabViewContainer");
 			deselectSelectedButton();
 			urlTabButton.setStyleName(res.css().buttonSelected());
+//			questionTabButton.setStyleName(res.css().buttonDeSelected());
+//			searchTabButton.setStyleName(res.css().buttonDeSelected());
+//			myComputerTabButton.setStyleName(res.css().buttonDeSelected());
 		} else if(clickType.equalsIgnoreCase("Question")){
 			try{
 				Window.enableScrolling(false);
@@ -864,6 +1035,16 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				titleLbl.getElement().setAttribute("alt", i18n.GL0893());
 				titleLbl.getElement().setAttribute("title", i18n.GL0893());
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
+				addQuestionResourceWidget.getHideRightsToolTip();
+//				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				openEndedButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				urlTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
 				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
 					hideTabButtons(false, true, true);
 				}else{
@@ -883,8 +1064,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			    multipleAnswerTabButton.setStyleName(res.css().buttonDeSelected());
 			    trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
 			    openEndedButton.setStyleName(res.css().buttonDeSelected());
+                hotTextTabButton.setStyleName(res.css().buttonDeSelected());
 			}catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{
@@ -895,6 +1076,15 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				titleLbl.getElement().setAttribute("title", i18n.GL0304());
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
 				addQuestionResourceWidget.getHideRightsToolTip();
+//				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				openEndedButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+//				urlTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
 				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
 					hideTabButtons(false, true, true);
 				}else{
@@ -902,6 +1092,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				tabViewContainer.add(addQuestionResourceWidget);
 				tabViewContainer.getElement().setId("pnlTabViewContainer");
+				
 				int questionTypeNum=collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType(); 
 				if(questionTypeNum==1){
 					highlightSelectedTab("MC");
@@ -918,10 +1109,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}else if(questionTypeNum==4){
 					highlightSelectedTab("FIB");
 					fillInTheBlankRadioButton.setValue(true);
+				}else {
+					highlightSelectedTab("HT");
+					hotTextRadioButton.setValue(true);
 				}
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);
@@ -936,6 +1129,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			questionTabButton.setStyleName(res.css().buttonDeSelected());
 			urlTabButton.setStyleName(res.css().buttonDeSelected());
 			myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+//			questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
+//			trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
+//			openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
+//			fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			hideTabButtons(true, false, false);
 		}
 	}
@@ -945,6 +1142,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFalseRadioButton.setValue(false);
 		fillInTheBlankRadioButton.setValue(false);
 		openEndedRadioButton.setValue(false);
+		hotTextRadioButton.setValue(false);
 	}
 	@Override
 	public void closePopUp() {
@@ -957,6 +1155,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!multipleChoiceRadioButton.getValue()){
+				//Window.enableScrolling(true);
+				getUiHandlers().addSelectedQuestionType("MC");
 				displayQuestionWidget();
 				multipleChoiceRadioButton.setValue(true);
 				highlightSelectedTab("MC");
@@ -975,6 +1175,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!trueOrFalseRadioButton.getValue()){
+				getUiHandlers().addSelectedQuestionType("T/F");
 				displayQuestionWidget();
 				trueOrFalseRadioButton.setValue(true);
 				highlightSelectedTab("TF");
@@ -993,6 +1194,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!openEndedRadioButton.getValue()){
+				getUiHandlers().addSelectedQuestionType("OE");
 				displayQuestionWidget();
 				openEndedRadioButton.setValue(true);
 				highlightSelectedTab("OE");
@@ -1006,6 +1208,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!multipleAnswerRadioButton.getValue()){
+				getUiHandlers().addSelectedQuestionType("MA");
 				displayQuestionWidget();
 				highlightSelectedTab("MA");
 				multipleAnswerRadioButton.setValue(true);
@@ -1026,6 +1229,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!fillInTheBlankRadioButton.getValue()){
+				getUiHandlers().addSelectedQuestionType("FIB");
 				displayQuestionWidget();
 				fillInTheBlankRadioButton.setValue(true);
 				highlightSelectedTab("FIB");
@@ -1044,6 +1248,63 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		}
 	}
+	
+	
+	private class ShowEquationWidget implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Window.enableScrolling(false);
+			if(!hotSpotRadioButton.getValue()){
+				getUiHandlers().addSelectedQuestionType("HS");
+				highlightSelectedTab("HS");
+				hotSpotRadioButton.setValue(true);
+				
+			}
+		}
+		
+	}
+	
+	
+	private class showHotTextWidget implements ClickHandler{
+		public void onClick(ClickEvent event) {
+			Window.enableScrolling(false);
+			if(!hotTextRadioButton.getValue()){
+				getUiHandlers().addSelectedQuestionType("HT");
+				displayQuestionWidget();
+				hotTextRadioButton.setValue(true);
+				highlightSelectedTab("HT");
+				addQuestionResourceWidget.setQuestionType("HT");
+				addQuestionResourceWidget.showHotTextQuestion();
+			}
+		}
+	}
+	
+	@Override
+	public void addToSlot(Object slot, Widget content) {
+		super.addToSlot(slot, content);
+		questionContainerPnl.clear();
+		if (slot == AddResourceUiHandlers.SLOT_QUESTION_TYPE) {
+			tabViewContainer.setVisible(false);
+			questionContainerPnl.setWidget(content);
+		}
+		
+	}
+	
+	public void clearQuestionSlot() {
+		questionContainerPnl.clear();
+		tabViewContainer.setVisible(true);
+	}
+	
+/*	private class AssessmentQuestionsEvent implements ClickHandler{
+		public void onClick(ClickEvent event) {
+			Window.enableScrolling(false);
+			if(collectionDo!=null&&collectionDo.getCollectionType().equals("quiz")){
+				tabViewContainer.clear();
+				tabViewContainer.add(new HTML("<h3>Comming soon........</h3>"));
+			}
+		}
+	}*/
+	
 	private void deselectSelectedButton(){
 		int widgetsCount=addResourceTabContainer.getWidgetCount();
 		for(int i=0;i<widgetsCount;i++){
@@ -1069,6 +1330,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			urlTabButton.setStyleName(res.css().buttonSelected());
 		}else if(tabType.equals("SEARCH")){
 			searchTabButton.setStyleName(res.css().buttonSelected());
+		}else if(tabType.equals("HS")){
+			hotSpotTabButton.setStyleName(res.css().buttonSelected());
+		}else if(tabType.equals("HT")){
+			hotTextTabButton.setStyleName(res.css().buttonSelected());
 		}
 	}
 	@Override
@@ -1101,6 +1366,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	@Override
 	public void uploadResource(MediaUploadDo result) {
+		/*JSONObject jsonObject = setImageUploadJsonObject(result.getOriginalFilename(),result.getName(), title, desc, category, ownResourceImgUrl);
+		getUiHandlers().addUserOwnResource(jsonObject.toString());
+		userOwnResourcePreview.hide();
+		userOwnResourcePreview.setGlassEnabled(false);*/
 	}
 	
 	public JSONObject setImageUploadJsonObject(String originalFileName,String mediaFileName,String resourceTitle, String resourceDesc,	String resourceCategory, String ownResourceImgUrl, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList) {
@@ -1197,8 +1466,15 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		return tolTimeInmin+":"+totalTimeSec;
 	}
 	public static Map setData(Map<String, Object> resultObj){
+		//driveObject=(List<String>) resultObj.get("items");
+		
 	listobj=(List<GoogleDriveItemDo>) resultObj.get("items");
+
+
+	
 		return resultObj;
+		
+		
 	}
 	@Override
 	public void getDriveDetails(GoogleDriveItemDo driveDo){
@@ -1211,7 +1487,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	@Override
 	public void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result) {
 		tabViewContainer.clear();
+
+		// TODO Auto-generated method stub
 		for(int m=0;m<result.size();m++){
+			
+			
 	         tabViewContainer.add(new GoogleWebResource(result.get(m)));
 		}
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
@@ -1223,6 +1503,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			handlerRegistration.removeHandler();
 		}
 		handlerRegistration=addStandardsBtn.addClickHandler(new ClickHandler() {
+			
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().addUpdatedBrowseStandards();
@@ -1238,8 +1519,21 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}else{
 				addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
 			}
+			
 		}else{
 			addQuestionResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
 		}
 	}
+
+	@Override
+	public void hidePopup() {
+		multipleChoiceRadioButton.setValue(true);
+		closeAddResourcePopup();
+		tabViewContainer.clear();	
+		deselectSelectedButton();
+		questionTabButton.setStyleName(res.css().buttonSelected());
+	}
+	
+
+
 }
