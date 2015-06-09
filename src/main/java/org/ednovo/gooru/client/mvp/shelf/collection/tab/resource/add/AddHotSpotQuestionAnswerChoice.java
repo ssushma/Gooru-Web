@@ -28,7 +28,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
 import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageHandler;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
