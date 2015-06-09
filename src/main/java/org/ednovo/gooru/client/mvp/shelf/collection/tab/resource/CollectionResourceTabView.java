@@ -464,6 +464,7 @@ public class CollectionResourceTabView extends
 
 		} else {
 			collectionItemDo.setCollection(collectionDo);
+			collectionItemDo.setGooruUId(collectionDo.getUser().getGooruUId());
 			Label sequenceLbl = new Label(collectionItemDo.getItemSequence()+ "");
 			sequenceLbl.setStyleName(getCss().shelfResourceSequenceNumber());
 			int sequencePostion = collectionItemDo.getItemSequence();

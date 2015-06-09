@@ -61,6 +61,8 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
 	private HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledges;
 	
+	private CollectionHTQuestionItemDo attributes;
+	
 	public CollectionQuestionItemDo(){}
 	
 	public String getSharing() {
@@ -177,5 +179,15 @@ public class CollectionQuestionItemDo implements Serializable {
 			HashMap<String, ArrayList<checkboxSelectedDo>> educationalUse) {
 		this.educationalUse = educationalUse;
 	}
+
+	public CollectionHTQuestionItemDo getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(CollectionHTQuestionItemDo attributes) {
+		this.attributes = attributes;
+	}
+	
+	
 	
 }

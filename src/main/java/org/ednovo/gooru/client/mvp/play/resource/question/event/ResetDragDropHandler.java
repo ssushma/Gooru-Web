@@ -22,50 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.user;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.play.resource.question.event;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.event.shared.EventHandler;
 
-
-@JsonInclude(Include.NON_NULL)
-public class UserGroupDo extends PartyDo {
-
+/**
+ * @author Gooru Team
+ * 
+ */
+public interface ResetDragDropHandler extends EventHandler {
 	/**
-	 * 
+	 * Reset Drag and Drop Answer in player
+	 * @param widgetIndex instance of the int
 	 */
-	private static final long serialVersionUID = -6364841728640681100L;
-
-	private boolean activeFlag;
-
-	private String userGroupType;
-
-	private OrganizationDo organization;
-	
-	public UserGroupDo(){}
-
-	public OrganizationDo getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(OrganizationDo organization) {
-		this.organization = organization;
-	}
-
-	public boolean isActiveFlag() {
-		return activeFlag;
-	}
-
-	public void setActiveFlag(boolean activeFlag) {
-		this.activeFlag = activeFlag;
-	}
-
-	public String getUserGroupType() {
-		return userGroupType;
-	}
-
-	public void setUserGroupType(String userGroupType) {
-		this.userGroupType = userGroupType;
-	}
-
+	void resetReorder(int widgetIndex);
 }

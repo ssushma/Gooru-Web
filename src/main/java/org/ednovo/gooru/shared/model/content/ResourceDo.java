@@ -43,7 +43,6 @@ public class ResourceDo extends ContentDo {
     private String description;
     private String folder;
     private String category;
-    private String thumbnail;
     private String explanation;
     private ThumbnailDo thumbnails;
     private ResourceTypeDo resourceType;
@@ -76,7 +75,6 @@ public class ResourceDo extends ContentDo {
     private String label;        //Some api's give title in label key
     private String nativeurl;    //Some api's give url in nativeUrl key
     private String id;
-    private String typeName;
     
     private String goals;
     
@@ -125,6 +123,8 @@ public class ResourceDo extends ContentDo {
 	private UserDo user;
 	
 	private String url;
+	
+	private CollectionHTQuestionItemDo attributes;
 	
 	public List<String> getPublisher() {
 		return publisher;
@@ -576,22 +576,11 @@ public class ResourceDo extends ContentDo {
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
-	public String getThumbnail() {
-		return thumbnail;
+	public CollectionHTQuestionItemDo getAttributes() {
+		return attributes;
 	}
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setAttributes(CollectionHTQuestionItemDo attributes) {
+		this.attributes = attributes;
 	}
-	/**
-	 * @return the typeName
-	 */
-	public String getTypeName() {
-		return typeName;
-	}
-	/**
-	 * @param typeName the typeName to set
-	 */
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
+	
 }

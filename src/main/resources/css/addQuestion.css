@@ -615,6 +615,236 @@
 	position: relative;
 	margin: 33% 0 0 33%;
 }
+.htAnswerChoiceDragLabel {
+	display: inline-block;
+	padding: 5px 0 5px 10px;
+	font-size: 12px;
+	word-wrap: break-word;
+	vertical-align: middle;
+    width: 92%;
+}
+.htAnswerChoiceDragIcon {
+	opacity: 0.4;
+	width: 1.3em;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.htAnswerChoiceDragIcon:before {
+	display: inline-block;
+	content: "\2630";
+}
+.htAnswerChoiceDragContainer:hover {
+	background: #ddd;
+    border: 1px dashed #BBB3B3;
+	border-radius: 4px 4px 4px 4px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.htAnswerChoiceDragContainer {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 1px dashed #ddd;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+.moveSelectDisable {
+	cursor: move;
+	-webkit-user-select: none; /* Chrome all / Safari all */
+	/*-moz-user-select: none;  Firefox all */
+	-ms-user-select: none; /* IE 10+ */
+	/* No support for these yet, use at own risk */
+	-o-user-select: none;
+	user-select: none;
+}
+.moveSelectDisable .dragdrop-movable-panel {
+	z-index: 999999 !important;
+}
+
+.answerDrag {
+	position: absolute;
+	z-index: 90;
+	top: 10px;
+	left: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px 5px 5px 5px;
+	background: none repeat scroll 0 0 #555;
+	-webkit-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-o-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-khtml-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-ms-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	float: left;
+	padding: 4px;
+	min-height: 30px;
+	border: 1px solid #DDDDDD;
+	box-sizing: content-box;
+	color: #fff;
+	width: 97%;
+}
+.answerDragTitle {
+	display: inline-block;
+	font-size: 12px;
+	height: 15px;
+	margin-left: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-top: 3px;
+	vertical-align: bottom;
+	width: 94%;
+}
+
+.answerDragdropPositioner {
+	float: left;
+	margin-bottom: 11px;
+	padding: 1px 0;
+	position: relative;
+	background-color: #dbeaf5;
+	height: 40px;
+	border-radius: 7px 7px 7px 7px;
+	zoom: 1; /* IE gain hasLayout */
+	z-index: 100;
+}
+.dragDropSpacer {
+	float: left;
+	margin-bottom: 11px;
+	position: relative;
+	height: 5px;
+	zoom: 1;
+	z-index: 98;
+}
+.htPlayerAns {
+	margin-right: 3px;
+	line-height: 20px;
+	border: 1px solid #fff;
+}
+.htPlayerAns:hover {
+	background-color: #fefecf;
+	outline: none;
+	border: 1px solid #8a7300;
+	cursor: pointer;
+}
+
+.htPlayerAns p {
+	margin-bottom: 0px;
+}
+.drapDropContainer {
+	padding: 0 10px;
+	display: inline-block;
+}
+.drapDropContainer.correct {
+	border: 2px solid #8ecc8e;
+}
+.drapDropContainer.inCorrect {
+	border: 2px solid #FBB03B;
+}
+.htHiglightText {
+	background-color: #FBFB9C;
+	border: 1px solid #8a7300;
+	outline: 0;
+}
+.htHiglightText.correct {
+	background-color: #e7f4e1;
+    border: 1px solid  #62ae41;
+	cursor: pointer;
+	position:relative;
+}
+.htHiglightText.correct:after {
+	display: inline-block;
+	content: "\2714";
+	color: #62ae41;
+	font-size: 15px;
+    line-height: 12px;
+}
+
+.htHiglightText.inCorrect {
+	background-color: #fbdddd;
+    border: 1px solid  #FBB03B;
+	cursor: pointer;
+	position:relative;
+}
+.htHiglightText.inCorrect:after {
+	display: inline-block;
+	content: "\2717";
+	color: #FBB03B;
+}
+.htPlayerQuestionAnswerTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	color: #5c8b57;
+	width:100%;
+}
+.htPlayerMessageStyle{
+	margin-bottom: 20px;
+	width: 100%;
+	font-size: 12px;
+	font-style: italic;
+	color: #999;
+	float:left;
+}
+.htPlayerSubmitButton {
+	width: 100%;
+	text-align: center;
+	display: inline-block;
+}
+
+.htPlayerSubmitInActiveButton{
+	color: #999999;
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: #EFEFEF;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FDFDFD), to(#DDD));
+	background: -webkit-linear-gradient(top, #FDFDFD, #DDD);
+	background: -moz-linear-gradient(top, #FDFDFD, #DDD);
+	background: -ms-linear-gradient(top, #FDFDFD, #DDD);
+	background: -o-linear-gradient(top, #FDFDFD, #DDD);
+	border: 1px solid #DDD;
+	/* float:left; */
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.marginTop20 {
+	margin-top:20%;
+}
+.dragDropAnsCorrect{
+	border-left: 3px solid #62ae41;
+	background: #D5FDC3;
+	position:relative;
+}
+.dragDropAnsInCorrect{
+	border-left: 3px solid #FBB03B;
+	background: #FFDBA1;
+	position:relative;
+}
+
+.dragDropAnsCorrect:after {
+	display: inline-block;
+	content: "\2714";
+	color: #62ae41;
+	font-size: 15px;
+    line-height: 12px;
+}
+.dragDropAnsInCorrect:after {
+	display: inline-block;
+	content: "\2717";
+	color: #FBB03B;
+}
 
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {

@@ -67,6 +67,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private MultipleAnswersQuestionWidget multipleAnswersQuestionWidget=null;
 	private OpendEndedQuestionWidget opendEndedQuestionWidget=null;
 	private FillInTheBlankQuestionWidget fillInTheBlankQuestionWidget=null;
+	private HotTextQuestionWidget HotTextQuestionWidget=null;
 	
 	private static QuestionResourceViewUiBinder uiBinder = GWT.create(QuestionResourceViewUiBinder.class);
 
@@ -136,6 +137,11 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private void renderAnswerView(AttemptedAnswersDo attemptedAnswerDo){
 		clearAnswerOptionsContainer();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			
+			if(collectionItemDo.getResource().getType()==null){
+				collectionItemDo.getResource().setType(8);
+			}
+			
 			if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
 				multipleChoicesQuestionWidget=new MultipleChoicesQuestionWidget(collectionItemDo,attemptedAnswerDo);
 				questionContainer.add(multipleChoicesQuestionWidget);
@@ -149,6 +155,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			}else if(collectionItemDo.getResource().getType()==7){
 				multipleAnswersQuestionWidget=new MultipleAnswersQuestionWidget(collectionItemDo,attemptedAnswerDo);
 				questionContainer.add(multipleAnswersQuestionWidget);
+			}else if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9){
+				HotTextQuestionWidget=new HotTextQuestionWidget(collectionItemDo, attemptedAnswerDo);
+				questionContainer.add(HotTextQuestionWidget);
 			}
 		}
 	}
@@ -162,7 +171,12 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	public void ClickOnHintButton(ClickEvent clickEvent){
 		if(hintsButton.getStyleName().equals(oeStyle.hintsActiveButton())){
 			if(collectionItemDo.getResource().getHints().size()>hintsLength){
-				startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
+				
+				if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9){
+					
+				}else{
+					startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
+				}
 				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),oeStyle.hintsText()));
 				hintsButton.setText(""+i18n.GL0317()+" ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
 				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
@@ -466,4 +480,14 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	public FlowPanel getQuestionContainer(){
 		return questionContainer;
 	}
+	
+	public class HotTextQuestionWidget extends HotTextAnswersQuestionView{
+		private AttemptedAnswersDo attemptedAnswerDo=null;
+		public HotTextQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+			super(collectionItemDo,attemptedAnswerDo);
+			this.attemptedAnswerDo=attemptedAnswerDo;
+		}
+	}
+	
+	
 }

@@ -22,50 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.user;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.play.resource.question.event;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.event.shared.GwtEvent;
 
+/**
+ * @author Gooru Team
+ * 
+ */
+public class ResetDragDropEvent extends GwtEvent<ResetDragDropHandler> {
 
-@JsonInclude(Include.NON_NULL)
-public class UserGroupDo extends PartyDo {
+	public static final Type<ResetDragDropHandler> TYPE = new Type<ResetDragDropHandler>();
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6364841728640681100L;
-
-	private boolean activeFlag;
-
-	private String userGroupType;
-
-	private OrganizationDo organization;
+	private int widgetIndex;
 	
-	public UserGroupDo(){}
-
-	public OrganizationDo getOrganization() {
-		return organization;
+	
+	public ResetDragDropEvent(int widgetIndex) {
+		this.widgetIndex = widgetIndex;
 	}
 
-	public void setOrganization(OrganizationDo organization) {
-		this.organization = organization;
+	@Override
+	public Type<ResetDragDropHandler> getAssociatedType() {
+		return TYPE;
 	}
 
-	public boolean isActiveFlag() {
-		return activeFlag;
-	}
-
-	public void setActiveFlag(boolean activeFlag) {
-		this.activeFlag = activeFlag;
-	}
-
-	public String getUserGroupType() {
-		return userGroupType;
-	}
-
-	public void setUserGroupType(String userGroupType) {
-		this.userGroupType = userGroupType;
+	@Override
+	protected void dispatch(ResetDragDropHandler handler) {
+		handler.resetReorder(widgetIndex);
 	}
 
 }

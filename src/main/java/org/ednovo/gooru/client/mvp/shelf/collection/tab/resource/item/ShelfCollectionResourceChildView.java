@@ -331,8 +331,14 @@ public class ShelfCollectionResourceChildView extends
 
 	public boolean checkLoggedInUser() {
 		boolean isValid = true;
-		if (AppClientFactory.getLoggedInUser().getGooruUId().equalsIgnoreCase(
-				collectionItemDo.getResource().getUser().getGooruUId())) {
+		String gooruUId = "";
+		if(collectionItemDo.getResource().getUser()==null){
+			 gooruUId=collectionItemDo.getGooruUId();
+		}else{
+			 gooruUId=collectionItemDo.getResource().getUser().getGooruUId();
+		}
+		
+		if (AppClientFactory.getLoggedInUser().getGooruUId().equalsIgnoreCase(gooruUId)) {
 			isValid = true;
 		} else {
 			isValid = false;
