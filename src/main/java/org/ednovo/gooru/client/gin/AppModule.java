@@ -121,6 +121,10 @@ import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourceView;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesView;
 import org.ednovo.gooru.client.mvp.gsearch.util.IsGooruGradesView;
+import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter.IsShelfMainProxy;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.client.mvp.home.HomeView;
@@ -441,6 +445,8 @@ public class AppModule extends AppPresenterModule {
 				IsErrorProxy.class);
 		bindPresenter(ShelfPresenter.class, IsShelfView.class, ShelfView.class,
 				IsShelfProxy.class);
+		bindPresenter(ShelfMainPresenter.class, IsShelfMainView.class, ShelfMainView.class,
+				IsShelfMainProxy.class);
 		bindPresenter(UserSettingsPresenter.class, IsUserSettingsView.class,
 				UserSettingsView.class, IsUserSettingProxy.class);
 		// 5.2 Changes
