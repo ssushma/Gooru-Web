@@ -129,6 +129,10 @@ import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourceView;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesView;
 import org.ednovo.gooru.client.mvp.gsearch.util.IsGooruGradesView;
+import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter.IsShelfMainProxy;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
@@ -365,6 +369,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.Drive
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter.IsDriveyProxy;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDriveView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.IsQuestionTypeView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
 import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
@@ -438,6 +445,8 @@ public class AppModule extends AppPresenterModule {
 				IsErrorProxy.class);
 		bindPresenter(ShelfPresenter.class, IsShelfView.class, ShelfView.class,
 				IsShelfProxy.class);
+		bindPresenter(ShelfMainPresenter.class, IsShelfMainView.class, ShelfMainView.class,
+				IsShelfMainProxy.class);
 		bindPresenter(UserSettingsPresenter.class, IsUserSettingsView.class,
 				UserSettingsView.class, IsUserSettingProxy.class);
 		// 5.2 Changes
@@ -598,5 +607,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
 		bindPresenter(EpapaLibraryPresenter.class, IsEpapaLibraryView.class, EpapaLibraryView.class,IsEpapaLibraryProxy.class);
 
+		bindSingletonPresenterWidget(QuestionTypePresenter.class,IsQuestionTypeView.class, QuestionTypeView.class);
 	}
 }

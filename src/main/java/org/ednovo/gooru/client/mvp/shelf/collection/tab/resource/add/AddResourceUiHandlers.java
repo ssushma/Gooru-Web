@@ -47,7 +47,10 @@ import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemD
 import org.ednovo.gooru.client.mvp.shelf.event.AddResourceImageHandler;
 
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageHandler, EventHandler{
 
@@ -91,5 +94,14 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl);
 
 	void getResourceImageInfo(String userUrlStr);
+	
+	void addSelectedQuestionType(String type);
+	
+	void setEditQuestionData(CollectionItemDo collectionItemDo);
+	
+	void setHSEditData();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> SLOT_QUESTION_TYPE = new Type<RevealContentHandler<?>>();
 
 }

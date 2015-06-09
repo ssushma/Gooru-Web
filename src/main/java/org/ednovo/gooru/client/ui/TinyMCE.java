@@ -63,7 +63,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class TinyMCE extends Composite{
 	private static List<String> richTextsList=new ArrayList<String>();
 	private static String lastButtonId="";
-    private TextArea tinyMceTextArea=null;
+    public TextArea tinyMceTextArea=null;
     private static final String BUTTONID="_richtext_button";
     private String id=null;
     private Button toolBarOpenButton=null;

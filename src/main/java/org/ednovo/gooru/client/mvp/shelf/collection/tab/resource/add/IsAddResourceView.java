@@ -87,5 +87,9 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	public void setCollectionDo(CollectionDo collectionDo);
 
 	void setPopupImageData(ResourceMetaInfoDo result);
+	
+	void clearQuestionSlot();
+	
+	void hidePopup();
 
 }

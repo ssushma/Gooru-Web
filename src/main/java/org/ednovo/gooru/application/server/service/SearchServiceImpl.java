@@ -863,8 +863,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				}*/
 			 }
 			JsonRepresentation jsonRep=null;
+			if(collectionQuery!=null)
+			{
 			if(collectionQuery.equalsIgnoreCase("'*'")){
 				collectionQuery = "*";
+			}
 			}
 			String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH,getLoggedInSessionToken());
 			Map<String,String> params = searchDo.getFilters();

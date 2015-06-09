@@ -44,6 +44,7 @@ public interface PlaceTokens {
 	String COLLECTION_SEARCH = "collection-search";
 	String ERROR = "error";
 	String SHELF = "mycollections";
+	String MYCOLLECTION = "mycollection";
 	String COLLECTION = "collection";
 	String RESOURCE_PLAY_OLD = "resource-play-old";
 	String COLLECTION_PLAY = "collection-play";

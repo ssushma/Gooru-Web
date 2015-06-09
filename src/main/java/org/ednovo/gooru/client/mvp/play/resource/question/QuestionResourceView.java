@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,18 +24,23 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
+import org.ednovo.gooru.shared.util.RandomIterator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -53,7 +58,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceUiHandlers> implements IsQuestionResourceView{
-	
+
 	@UiField HTMLPanel explanationContainer,questiontext;
 	@UiField Image openEndedQuestionImage;
 	@UiField Button hintsButton,explanaionButton;
@@ -62,20 +67,23 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	@UiField QuestionStyleResource oeStyle;
 	private CollectionItemDo collectionItemDo;
 	private int hintsLength=0;
-	
+
 	private MultipleChoicesQuestionWidget multipleChoicesQuestionWidget=null;
 	private MultipleAnswersQuestionWidget multipleAnswersQuestionWidget=null;
 	private OpendEndedQuestionWidget opendEndedQuestionWidget=null;
 	private FillInTheBlankQuestionWidget fillInTheBlankQuestionWidget=null;
-	
+	private HotTextQuestionWidget HotTextQuestionWidget=null;
+
+	private Map<String, List> reorderMap=new HashMap<String, List>();
+
 	private static QuestionResourceViewUiBinder uiBinder = GWT.create(QuestionResourceViewUiBinder.class);
 
 	interface QuestionResourceViewUiBinder extends UiBinder<Widget, QuestionResourceView> {
-		
+
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@Inject
 	public QuestionResourceView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -83,32 +91,32 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		questiontext.getElement().setId("pnlQuestiontext");
 		questiontext.getElement().setAttribute("alt",i18n.GL0308());
 		questiontext.getElement().setAttribute("title",i18n.GL0308());
-		
+
 		hintsButton.setText(i18n.GL0667());
 		hintsButton.getElement().setId("btnHintsButton");
 		hintsButton.getElement().setAttribute("alt",i18n.GL0667());
 		hintsButton.getElement().setAttribute("title",i18n.GL0667());
-		
+
 		explanaionButton.setText(i18n.GL0316());
 		explanaionButton.getElement().setId("btnexplanaionButton");
 		explanaionButton.getElement().setAttribute("alt",i18n.GL0316());
 		explanaionButton.getElement().setAttribute("title",i18n.GL0316());
-		
+
 		openEndedQuestionText.getElement().setId("htmlOpenEndedQuestionText");
 		questionContainer.getElement().setId("fpnlQuestionContainer");
 		openEndedQuestionImage.getElement().setId("imgOpenEndedQuestionImage");
 		hintsContainer.getElement().setId("fpnlHintsContainer");
 		explanationContainer.getElement().setId("pnlExplanationContainer");
-		
+
 	}
-	
+
 	@Override
 	public void showQuestionPreview(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		this.collectionItemDo=collectionItemDo;
 		renderQuestionView();
 		renderAnswerView(attemptedAnswerDo);
 	}
-	
+
 	private void renderQuestionView(){
 		hintsLength=0;
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
@@ -136,6 +144,11 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private void renderAnswerView(AttemptedAnswersDo attemptedAnswerDo){
 		clearAnswerOptionsContainer();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+
+			if(collectionItemDo.getResource().getType()==null){
+				collectionItemDo.getResource().setType(8);
+			}
+
 			if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
 				multipleChoicesQuestionWidget=new MultipleChoicesQuestionWidget(collectionItemDo,attemptedAnswerDo);
 				questionContainer.add(multipleChoicesQuestionWidget);
@@ -149,6 +162,18 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			}else if(collectionItemDo.getResource().getType()==7){
 				multipleAnswersQuestionWidget=new MultipleAnswersQuestionWidget(collectionItemDo,attemptedAnswerDo);
 				questionContainer.add(multipleAnswersQuestionWidget);
+			}else if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9){
+				List randomList=null;
+				if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null){
+					TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
+					List<QuestionAnswerDo> answerListSet=new ArrayList<QuestionAnswerDo>(answersSet);
+					randomList= RandomIterator.getRandomList(answerListSet.size());
+				}
+				if(!reorderMap.containsKey(collectionItemDo.getResource().getGooruOid())){
+					reorderMap.put(collectionItemDo.getResource().getGooruOid(), randomList);
+				}
+				HotTextQuestionWidget=new HotTextQuestionWidget(collectionItemDo, attemptedAnswerDo,reorderMap.get(collectionItemDo.getResource().getGooruOid()));
+				questionContainer.add(HotTextQuestionWidget);
 			}
 		}
 	}
@@ -162,7 +187,12 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	public void ClickOnHintButton(ClickEvent clickEvent){
 		if(hintsButton.getStyleName().equals(oeStyle.hintsActiveButton())){
 			if(collectionItemDo.getResource().getHints().size()>hintsLength){
-				startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
+
+				if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9){
+
+				}else{
+					startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
+				}
 				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),oeStyle.hintsText()));
 				hintsButton.setText(""+i18n.GL0317()+" ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
 				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
@@ -215,12 +245,12 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		contentHtml.setStyleName(styleName);
 		return contentHtml;
 	}
-	
+
 	public String removeHtmlTags(String htmlText){
 		htmlText = htmlText.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return htmlText;
 	}
-	
+
 	@Override
 	public void resetQuestionView() {
 		openEndedQuestionText.setHTML("");
@@ -250,7 +280,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		return thumbnailImage;
 	}
-	
+
 	public void startHintDataLogEvent(int hintId) {
 		getUiHandlers().startHintDataLogEvent(hintId);
 		getUiHandlers().setHintIdWithTime(hintId);
@@ -260,7 +290,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		getUiHandlers().startExplanationDataLogEvent();
 		getUiHandlers().setExplanationIdWithTime(explanation);
 	}
-	
+
 	public class MultipleChoicesQuestionWidget extends MultipleChoicesQuestionView{
 		private AttemptedAnswersDo attemptedAnswerDo=null;
 		public MultipleChoicesQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
@@ -269,7 +299,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
-			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);	
+			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
@@ -291,7 +321,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
 		}
 	}
-	
+
 	public class MultipleAnswersQuestionWidget extends MultipleAnswersQuestionView{
 		private AttemptedAnswersDo attemptedAnswerDo=null;
 		public MultipleAnswersQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
@@ -300,7 +330,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		@Override
 		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
-			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);	
+			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
@@ -340,21 +370,21 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());	
+							AppClientFactory.printSevereLogger(e.getMessage());
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";
 							answerId=answerId+",";
 						}
 					}
-			}	
+			}
 			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
 		}
 		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
 		}
 	}
-	
+
 	public class OpendEndedQuestionWidget extends OpendEndedQuestionView{
 		public OpendEndedQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 			super(collectionItemDo,attemptedAnswerDo);
@@ -389,7 +419,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
 		}
 	}
-	
+
 	public class FillInTheBlankQuestionWidget extends FillIntheBlankQuestionView{
 		private AttemptedAnswersDo attemptedAnswerDo=null;
 		public FillInTheBlankQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
@@ -466,4 +496,60 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	public FlowPanel getQuestionContainer(){
 		return questionContainer;
 	}
+
+	public class HotTextQuestionWidget extends HotTextAnswersQuestionView{
+		private AttemptedAnswersDo attemptedAnswerDo=null;
+		public HotTextQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo,List randomList){
+			super(collectionItemDo,attemptedAnswerDo,randomList);
+			this.attemptedAnswerDo=attemptedAnswerDo;
+		}
+		@Override
+		public void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds, List<String> userAttemptedAnswers,String attemptStatus) {
+			String attemptedAnswers="";
+			String answerId="";
+			if(userAttemptedAnswers!=null && userAttemptedAnswers.size()>0){
+					for(int i=0;i<userAttemptedAnswers.size();i++){
+						attemptedAnswers=attemptedAnswers+userAttemptedAnswers.get(i);
+						try{
+							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
+						}catch(Exception e){
+							AppClientFactory.printSevereLogger(e.getMessage());
+						}
+						if((i+1)!=userAttemptedAnswers.size()){
+							attemptedAnswers=attemptedAnswers+",";
+							answerId=answerId+",";
+						}
+					}
+			}
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
+
+		}
+		@Override
+		public void increaseUserAttemptCount() {
+			getUiHandlers().increaseUserAttemptCount();
+		}
+		@Override
+		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo) {
+			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
+		}
+		@Override
+		public void userAttemptedValue(List<String> userAttemptedValueList) {
+			String attemptedAnswersText="";
+			if(userAttemptedValueList!=null && userAttemptedValueList.size()>0){
+				for(int i=0;i<userAttemptedValueList.size();i++){
+					attemptedAnswersText=attemptedAnswersText+"["+userAttemptedValueList.get(i)+"]";
+					if((i+1)!=userAttemptedValueList.size()){
+						attemptedAnswersText=attemptedAnswersText+",";
+					}
+				}
+			}
+			getUiHandlers().setOeQuestionAnswerText(attemptedAnswersText);
+		}
+		@Override
+		public void userAttemptedAnswerObject(	List<AnswerAttemptDo> answerOptionAttemptList) {
+			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
+		}
+	}
+
+
 }

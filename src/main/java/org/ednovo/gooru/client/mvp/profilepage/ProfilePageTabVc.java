@@ -1,7 +1,5 @@
 package org.ednovo.gooru.client.mvp.profilepage;
 
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -34,10 +32,11 @@ public class ProfilePageTabVc extends FocusPanel {
 	
 	public ProfilePageTabVc() {
 		setWidget(uiBinder.createAndBindUi(this));
-		wrapperFloPanel.getElement().setId("fpnlWrapperFloPanel");
+		wrapperFloPanel.getElement().setId("gooruProfilePage");
 		imageSimPanel.getElement().setId("spnlImageSimPanel");
 		labelcount.getElement().setId("labelcount");
 		labelLbl.getElement().setId("labelLbl");
+		
 	}
 
 	/** 
@@ -49,7 +48,7 @@ public class ProfilePageTabVc extends FocusPanel {
 		}
 		String activeCss;
 		
-		activeCss = ShelfCBundle.INSTANCE.css().profileMetaDataTabTitleActive();
+		activeCss = "profileMetaDataTabTitleActive";
 		
 		
 		if (enable) {
@@ -62,9 +61,9 @@ public class ProfilePageTabVc extends FocusPanel {
 
 	public void setEnabled(boolean enabled) {
 		if(enabled) {
-			wrapperFloPanel.setStyleName(ShelfCBundle.INSTANCE.css().profileMetaDataTabTitle());
+			wrapperFloPanel.setStyleName("profileMetaDataTabTitle");
 		} else {
-			wrapperFloPanel.setStyleName(ShelfCBundle.INSTANCE.css().profileMetaDataTabTitleDisabled());
+			wrapperFloPanel.setStyleName("profileMetaDataTabTitleDisabled");
 		}
 	}
 	

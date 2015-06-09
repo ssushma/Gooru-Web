@@ -1,0 +1,249 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.no-gutter > [class*='col-']{
+	padding-left:0;
+	padding-right:0;
+}
+.less-gutter > [class*='col-']{
+	padding-left:5px;
+	padding-right:5px;
+}
+.AssessmentPopupWrapper {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    left: 0;
+    outline: 0 none;
+    overflow-x: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1050;
+}
+
+.AssessmentPopupWrapper .AssessmentPopupMain{
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #999;
+    border-radius: 0;
+    color: #515151;
+    font-family: arial;
+    font-size: 12px;
+    margin: 30px auto;
+    padding: 3px;
+    position: relative;
+    width: 902px;
+}
+
+.AssessmentPopupWrapper .popupInnerGrey {
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+.AssessmentPopupWrapper .closeButton {
+    background: url("../images/close-button.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 17px;
+    width: 17px;
+}
+.AssessmentPopupWrapper .closeContainer{
+	text-align:right;
+}
+.AssessmentPopupWrapper .popupgreyHeader {
+padding: 10px 15px;
+color: white;
+background: -webkit-linear-gradient(top, #666, #515151);
+background: -moz-linear-gradient(top, #666, #515151);
+background: -ms-linear-gradient(top, #666, #515151);
+background: -o-linear-gradient(top, #666, #515151);
+background-color: #515151;
+font-size: 16px;
+
+}
+
+.AssessmentPopupWrapper .popTitle{
+	text-align:center;
+	font-weight:bold;
+}
+
+
+
+.assessMenuBlock a{
+	display:block;
+	padding:12px 15px;
+	text-align:right;
+	font-size:16px;
+color: #515151;
+border-bottom: 1px solid #ddd;
+background:#fdfdfd;
+cursor: pointer;
+background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#ededed));
+background: -moz-linear-gradient(top, #fdfdfd, #ededed);
+filter: progid;
+}
+
+.assessMenuBlock a:hover, .assessMenuBlock a:focus{
+	background:#efefef;
+	text-decoration:none;
+	outline:none;
+}
+
+.AssessmentPopupWrapper .assessmentSidebar{
+	border-right:1px solid #ddd;
+	min-height:690px;
+	background:#f2f2f2;
+}
+
+
+.AssessmentPopupWrapper  .assessmentContentBlock label{
+	font-size:14px;
+	font-weight:normal;
+}
+.AssessmentPopupWrapper  .assessmentContentBlock .form-control{
+	border-radius:0 0;
+}
+
+
+
+.marginDivBlock{
+	margin-bottom:15px;
+}
+
+.AssessmentPopupWrapper .questionTextcontainer{
+	margin-right:15px;
+}
+
+.AssessmentPopupWrapper .questionTextcontainer textarea{
+	height:90px;
+}
+
+.AssessmentPopupWrapper .text-muted{
+	float:right;
+}
+
+.AssessmentPopupWrapper .rightBlockContainer{
+border: 1px solid #ccc;
+    height: 90px;
+    margin-top: 25px;
+    padding: 10px 10px;
+	text-align:center;
+}
+
+.AssessmentPopupWrapper .rightBlockContainer p{
+	color:#1076BA;
+	margin-top:8px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.AssessmentPopupWrapper .rightBlockContainer.AnswerBlock p{
+	color:#999;
+	font-size:11px;
+	margin-top:2px;
+	margin-bottom:2px;
+}
+
+.AssessmentPopupWrapper .rightBlockContainer.AnswerBlock input[type="radio"], .AssessmentPopupWrapper .rightBlockContainer.AnswerBlock label{
+	display:inline-block;
+	vertical-align:top;
+	margin-top:0;
+}
+
+
+.AssessmentPopupWrapper .rightBlockContainer.AnswerBlock label{
+	width:75%;
+	font-size:11px;
+	text-align:left;
+	line-height:15px;
+}
+
+.AssessmentPopupWrapper .rightBlockContainer.AnswerBlock .clacImage{
+	margin:9px 0;
+}
+
+.AssessmentPopupWrapper .rightBlockContainer.AnswerBlock .clacOptions {
+	margin:6px 0;
+}
+.errorMessage {
+font-style: italic;
+color: #fbb03b;
+display:block;
+text-align:right;
+}
+
+
+.hints input[type="text"]{
+	border:1px solid #cccccc;
+	font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+	width:97%;
+	display:inline-block;
+}
+
+.hints label{
+	font-weight:bold !important;
+	width:2%;
+		display:inline-block;
+}
+.morehints{
+	text-align:right;
+}
+
+.morehints a:hover, .morehints a:focus{
+	text-decoration:none;
+	outline:none;
+}
+.AssessmentPopupWrapper .assessmentContentBlock  label.hintsHeader{
+	width:100%;
+	font-weight:normal !important;
+	display:inline-block;
+}
+
+.optionsMainContainer{
+	background:#dddddd;
+	display:inline-block;
+}
+.optionsMainContainer > div.optHeader{
+		padding:5px 5px;
+		margin-left:0;
+}
+.optionsMainContainer > div{
+	float:left;
+	
+}
+
+.optionsMainContainer > div a{
+	color:#1076B8;
+	padding:5px 5px;
+	border:1px solid #DDDDDD;
+	background:#ffffff;
+	display:block;
+	
+}
+.optionsMainContainer > div a:hover, .optionsMainContainer > div a:focus{
+	text-decoration:none;
+	border:1px solid #1076B8;
+}
+
+.optionsMainContainer > div.active{
+	border:1px solid #1076B8;
+}
+
+.optionsMainContainer > div.active a:hover,.optionsMainContainer > div.active a:focus{
+	border:1px solid #1076B8;
+}
+
+.optionButtonContainer{
+	text-align:right;
+}
+
+
+@media only screen and (max-width: 767px;){
+	
+	.AssessmentPopupWrapper .AssessmentPopupMain{
+		width:95%;
+	}
+	
+}

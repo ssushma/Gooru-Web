@@ -31,6 +31,7 @@ import java.util.TreeSet;
 
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.application.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -125,6 +126,8 @@ public class ResourceDo extends ContentDo {
 	private UserDo user;
 
 	private String url;
+
+	private CollectionHTQuestionItemDo attributes;
 
 	public List<String> getPublisher() {
 		return publisher;
@@ -576,6 +579,13 @@ public class ResourceDo extends ContentDo {
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
+	public CollectionHTQuestionItemDo getAttributes() {
+		return attributes;
+	}
+	public void setAttributes(CollectionHTQuestionItemDo attributes) {
+		this.attributes = attributes;
+	}
+
 	public String getThumbnail() {
 		return thumbnail;
 	}

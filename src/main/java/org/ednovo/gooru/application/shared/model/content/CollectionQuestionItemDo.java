@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -59,6 +60,8 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse;
 	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
 	private HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledges;
+
+	private CollectionHTQuestionItemDo attributes;
 
 	public CollectionQuestionItemDo(){}
 
@@ -177,4 +180,11 @@ public class CollectionQuestionItemDo implements Serializable {
 		this.educationalUse = educationalUse;
 	}
 
+	public CollectionHTQuestionItemDo getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(CollectionHTQuestionItemDo attributes) {
+		this.attributes = attributes;
+	}
 }
