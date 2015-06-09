@@ -1,10 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
-	<g:FlowPanel styleName="{res.css.profileMetaDataTabTitle}" ui:field="wrapperFloPanel">
-	    <g:SimplePanel styleName="{res.css.userCollectionMetaAssignImage}" ui:field="imageSimPanel" />
-			<g:Label styleName="{res.css.userCollectionMetaShelfFtLft}" ui:field="labelLbl" />
-			<g:Label styleName="{res.css.userprofilecount}" ui:field="labelcount" />
+	<g:FlowPanel styleName="profileMetaDataTabTitl}" ui:field="wrapperFloPanel">
+	    <g:SimplePanel styleName="userCollectionMetaAssignImage" ui:field="imageSimPanel" />
+			<g:Label  ui:field="labelLbl" />
+			<g:Label styleName="userprofilecount" ui:field="labelcount" />
 	</g:FlowPanel>
 </ui:UiBinder> 
