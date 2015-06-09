@@ -22,53 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.shared.model.content;
 
 
-import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
-import org.ednovo.gooru.client.mvp.search.SearchResultWrapperVc;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
+import java.io.Serializable;
 
-import com.google.gwt.uibinder.client.UiChild;
-import com.google.gwt.user.client.ui.Widget;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-/**
- * @author Gooru Team
- * 
- */
-public class PPPCollectionSearchResultWrapperVc extends SearchResultWrapperVc<CollectionItemDo, CollectionItemSearchResultDo> {
-
-	private PPPCollectionMoreInfoVc moreInfoVc;
-	
-	private String collectionId;
-
+@JsonInclude(Include.NON_NULL)
+public class CollectionHTQuestionItemDo implements Serializable {
 
 	/**
-	 * Class constructor
+	 * 
 	 */
-	public PPPCollectionSearchResultWrapperVc(String collectionId) {
-		super();
-		this.collectionId=collectionId;
+	private static final long serialVersionUID = 1L;
+	
+	private String hlType;
+	private boolean singleCorrectAnswer;
+	public String getHlType() {
+		return hlType;
 	}
-
-	public PPPCollectionSearchResultWrapperVc() {
+	public boolean isSingleCorrectAnswer() {
+		return singleCorrectAnswer;
 	}
-
-	@Override
-	protected SearchMoreInfoVc<CollectionItemDo, CollectionItemSearchResultDo> getSearchMoreInfoVc() {
-		if(moreInfoVc == null) {
-			 moreInfoVc = new PPPCollectionMoreInfoVc(collectionId);
-		}
-		return moreInfoVc;
+	public void setHlType(String hlType) {
+		this.hlType = hlType;
+	}
+	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
+		this.singleCorrectAnswer = singleCorrectAnswer;
 	}
 	
-	@UiChild(tagname="content")
-	protected void setContent(Widget widget) {
-		super.setContent(widget);
-	}
-
+	
+	
+	
 }

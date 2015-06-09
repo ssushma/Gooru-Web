@@ -22,17 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.tab.content;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.play.resource.question.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.GwtEvent;
 
-import com.google.gwt.event.shared.GwtEvent.Type;
-import com.gwtplatform.mvp.client.annotations.ContentSlot;
-import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+/**
+ * @author Gooru Team
+ * 
+ */
+public class ResetDragDropEvent extends GwtEvent<ResetDragDropHandler> {
 
-public interface ProfilePageContentTabUiHandlers  extends BaseUiHandlers {
+	public static final Type<ResetDragDropHandler> TYPE = new Type<ResetDragDropHandler>();
+
+	private int widgetIndex;
 	
-	@ContentSlot
-	public static final Type<RevealContentHandler<?>> TYPE_PUBLIC_SHELF_VIEW = new Type<RevealContentHandler<?>>();
+	
+	public ResetDragDropEvent(int widgetIndex) {
+		this.widgetIndex = widgetIndex;
+	}
+
+	@Override
+	public Type<ResetDragDropHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(ResetDragDropHandler handler) {
+		handler.resetReorder(widgetIndex);
+	}
 
 }

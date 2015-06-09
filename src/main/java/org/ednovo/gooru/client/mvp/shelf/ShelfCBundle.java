@@ -82,17 +82,11 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String userCollectionMetaResourceImage();
 		
-		String profileMetaDataTabTitleActive();
-		
 		String userCollectionMetaCollaboratorImage();
-		
-		String userCollectionMetaAssignImage();
 		
 		String userCollectionMetaShareImage();
 		
 		String userCollectionMetaStatisticsImage();
-		
-		String userCollectionMetaShelfFtLft();
 		
 		String metaInfo();
 
@@ -401,12 +395,6 @@ public interface ShelfCBundle extends ClientBundle{
 		String shelfPublishTab();
 		String publishPending();
 		String published();
-		
-		String userprofilecount();
-		
-		String profileMetaDataTabTitle();
-		
-		String profileMetaDataTabTitleDisabled();
 		
 		String standardsBrowsePopup();
 		

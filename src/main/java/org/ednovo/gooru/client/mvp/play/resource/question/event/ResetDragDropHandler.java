@@ -25,15 +25,18 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.play.resource.question.event;
 
-import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import com.google.gwt.event.shared.EventHandler;
 
 /**
- * @author Search Team
+ * @author Gooru Team
  * 
  */
-public interface IsCollectionSearchView extends IsGooruSearchView<CollectionSearchResultDo> {
-
+public interface ResetDragDropHandler extends EventHandler {
+	/**
+	 * Reset Drag and Drop Answer in player
+	 * @param widgetIndex instance of the int
+	 */
+	void resetReorder(int widgetIndex);
 }

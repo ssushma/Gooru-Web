@@ -109,7 +109,7 @@
 					<col:CollectionTabTitleVc enabled="true"
 						ui:field="resourceTabVc" />
 					<col:CollectionTabTitleVc ui:field="shareTabVc" />
-					<col:CollectionTabTitleVc imageStyle="{res.css.userCollectionMetaAssignImage}"
+					<col:CollectionTabTitleVc imageStyle="userCollectionMetaAssignImage"
 						ui:field="assignTabVc" enabled="true" />
 					<col:CollectionTabTitleVc ui:field="collaboratorTabVc"
 						enabled="true" />

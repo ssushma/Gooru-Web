@@ -3072,5 +3072,43 @@ public interface MessageProperties extends Constants {
 
 		 String GL3277();
 		 String GL3278();
+		 
+		 
+			//added for new Question Types
+				
+				String GL3206_1();
+				String GL3207_1();
+				String GL3208_1();
+				String GL3209_1();
+				String GL3210_1();
+				String GL3211_1();
+				String GL3212_1();
+				String GL3213_1();
+				String GL3214_1();
+				String GL3215_1();
+				String GL3216_1();
+				String GL3217_1();
+				String GL3218_1();
+				String GL3219_1();
+				String GL3220_1();
+				String GL3221_1();
+				String GL3222_1();
+				String GL3223_1();
+				String GL3224_1();
+				String GL3225_1();
+				String GL3226_1();
+				String GL3227_1();
+				String GL3228_1();
+				String GL3229_1();
+				String GL3230_1();
+				String GL3231_1();
+				String GL3232_1();
+				String GL3233_1();
+				String GL3234_1();
+				String GL3235_1();
+				String GL3236_1();
+				String GL3237_1();
+				String GL3238_1();
+				String GL3239_1();
 
 }

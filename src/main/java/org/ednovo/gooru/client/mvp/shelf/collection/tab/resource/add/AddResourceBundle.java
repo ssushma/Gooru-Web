@@ -38,5 +38,7 @@ public interface AddResourceBundle extends CssResource {
 	String yesNoTextStyle();
 	String addResourceFormTitleChoiceAlign();
 	String addResourceDepthOfKnoweldgeFormTitle();
+	String advancedOptionsTabActive();
+	String advancedOptionsTabs();
 
 }

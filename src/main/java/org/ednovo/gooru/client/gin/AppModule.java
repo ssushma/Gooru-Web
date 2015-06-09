@@ -310,9 +310,6 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePageView;
 import org.ednovo.gooru.client.mvp.profilepage.list.IsProfilePageListView;
 import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListPresenter;
 import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListView;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.IsProfilePageContentTabView;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.ProfilePageContentTabPresenter;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.ProfilePageContentTabView;
 import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
@@ -494,10 +491,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(StudentAssignmentPresenter.class,
 				IsStudentAssignmentView.class, StudentAssignmentView.class,
 				IsStudentAssignmentProxy.class);
-
-		bindPresenterWidget(ProfilePageContentTabPresenter.class,
-				IsProfilePageContentTabView.class,
-				ProfilePageContentTabView.class);
 
 		/*bindPresenterWidget(ProfilePageInfoTabPresenter.class,
 				IsProfilePageInfoTabView.class, ProfilePageInfoTabView.class);

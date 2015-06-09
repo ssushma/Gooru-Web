@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -61,7 +62,6 @@ import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.util.GooruConstants;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -74,6 +74,9 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
 	private ImageUploadPresenter imageUploadPresenter;
+	
+//	private ExistsResourcePresenter alreadyExistsResourcePresenter;
+	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> collectionItemAsyncCallback;
@@ -115,6 +118,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private static final String ID = "id";
 	
+	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
 	}
@@ -136,6 +140,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.drivePresenter = drivePresenter;
 	}
 
+	@Inject QuestionTypePresenter questionTypePresenter;
 
 	@Inject
 	private ResourceServiceAsync resourceService;
@@ -147,15 +152,20 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	AddStandardsPresenter addStandardsPresenter = null;
 	
 	@Inject
-	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter) {
+	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter,QuestionTypePresenter questionTypePresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
+		this.questionTypePresenter=questionTypePresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(AddResouceImageEvent.TYPE, this);
 		
 		this.isCollResourceTabView = isCollResourceTabView;
 		this.drivePresenter=drivePresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
+
+//		,ExistsResourcePresenter alreadyExistsResourcePresenter
+//		this.alreadyExistsResourcePresenter = alreadyExistsResourcePresenter;
+
 	}
 
 	@Override
@@ -167,6 +177,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
+		
 	}
 	
 	@Override
@@ -210,6 +221,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void setImageUploadPresenter(ImageUploadPresenter imageUploadPresenter) {
 		this.imageUploadPresenter = imageUploadPresenter;
 	}
+	
+//	public void setImageUrl(String fileName,boolean isQuestionImage){
+//		getView().setImageUrl(fileName,isQuestionImage);
+//	}
+
 	@Override
 	public void setResourceImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage) {
 	    getView().setImageUrl(fileName,fileNameWithoutRepository,isQuestionImage,isUserOwnResourceImage);	
@@ -224,6 +240,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
+				/*tagResourceAsOER(result);*/ // Don't enable
 				isCollResourceTabView.insertData(result);
 			}
 
@@ -244,7 +261,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 				/**
 				 * Dis-abled for 6.5 release
 				 */
+				/*tagResourceAsOER(result);*/
 				MixpanelUtil.AddResourceByUrl();
+				
+//				updateShare("private");
+				
 			}
 		});
 		setResoureMetaInfoAsyncCallback(new SimpleAsyncCallback<ResourceMetaInfoDo>() {
@@ -269,11 +290,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(ExistsResourceDo result) {
 				
-				if (result.getSharing()!=null)
-					if(GooruConstants.PUBLIC.equals(result.getSharing())){
-						getView().setExistingResourceData(result, getCollectionDo());
-					}
-					
+				if (result.getNativeurl()!=null)
+					getView().setExistingResourceData(result, getCollectionDo());
 			}
 		});
 		setAddQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
@@ -283,6 +301,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             		/**
     				 *  dis-abled tagging Quest resource for 6.5 release
     				 */
+            		/*tagResourceAsOER(result); */
                     isCollResourceTabView.insertData(result);
                     MixpanelUtil.AddQuestion();
             }
@@ -297,6 +316,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
+            		//redirect(Window.Location.getHref());
                   isCollResourceTabView.updateCollectionItem(result);
                     MixpanelUtil.AddQuestion();
             }
@@ -307,10 +327,52 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
                     isCollResourceTabView.updateCollectionItem(result);
+            		
+//                	Map<String,String> params = new HashMap<String,String>();
+//                	
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            		}
+//                	
+//              
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
+//                	{
+//                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
+//                	}
+//            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+            		
                     MixpanelUtil.AddQuestion();
+                   // redirect(Window.Location.getHref());
             }
 		});
 	}
+	
+	/**
+	 * Dis-abled this method for 6.5 release.
+	 * @param url
+	 */
+	/*protected void tagResourceAsOER(final CollectionItemDo collectionItemDo) {
+		List<String> tagList = new ArrayList<String>();
+		tagList.add("\"" +KEY_OER+"  :"+VAL_OER+"\"");
+		AppClientFactory.getInjector().getResourceService().addTagsToResource(collectionItemDo.getGooruOid(), tagList.toString(), new SimpleAsyncCallback<List<ResourceTagsDo>>() {
+
+			@Override
+			public void onSuccess(List<ResourceTagsDo> result) {
+				isCollResourceTabView.insertData(collectionItemDo); 
+			}
+			
+		});
+	}*/
+
 	native void redirect(String url)
     /*-{
             $wnd.location.reload();
@@ -364,6 +426,18 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
+
+	/*@Override
+	public void updateShare(String shareType) {
+		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, null, shareType, null, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				collectionDo = result;
+				getView().hide();
+			}
+		});
+	}*/
 	public CollectionDo getCollectionDo() {
 		return collectionDo;
 	}
@@ -394,7 +468,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	public void addQeustionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo) {
 		getResourceService().addQuestionResource(collectionDo.getGooruOid(), mediaFileName, collectionQuestionItemDo, getAddQuestionResourceAsyncCallback());
+		
 	}
+	
 
 	@Override
 	public CollectionDo getParentCollectionDetails() {
@@ -495,9 +571,13 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
+		//if(AppClientFactory.getLoggedInUser().getAccessToken()!=null){
 			drivePresenter.setAddResourcePresenter(this);
 			drivePresenter.getGoogleDriveFiles(null, null, true);
 			drivePresenter.setBreadCrumbLabel(null,null);
+		//}else{
+			//drivePresenter.showDriveNotConnectedErrorMessage();
+		//}
 		tabContainer.add(drivePresenter.getWidget());
 		tabContainer.getElement().setId("pnlTabViewContainer");
 	}
@@ -556,12 +636,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		List<Map<String,String>> selectedStandList=addStandardsPresenter.getStandardListArray();
-		if(selectedStandList.size()!=0){
-			for(int i=0;i<selectedStandList.size();i++){
-				getView().setUpdatedStandardsCode(selectedStandList.get(i).get("selectedCodeVal"), Integer.parseInt(selectedStandList.get(i).get("selectedCodeId")),selectedStandList.get(i).get("selectedCodeDesc"),this.isQuestionResource, this.isUserResource);
-			}
-		}
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource,this.isUserResource);
 	}
 
 	@Override
@@ -572,6 +647,29 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	public void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl) {
 		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
+	}
+
+	@Override
+	public void addSelectedQuestionType(String type) {
+		if(type.equalsIgnoreCase("HS")){
+		questionTypePresenter.getView().resetFields();
+		addToSlot(SLOT_QUESTION_TYPE, questionTypePresenter);
+		questionTypePresenter.ImageUpload(imageUploadPresenter,getView(),collectionDo);
+		}else {
+			clearSlot(SLOT_QUESTION_TYPE);
+			getView().clearQuestionSlot();
+		}
+	}
+
+	@Override
+	public void setEditQuestionData(CollectionItemDo collectionItemDo) {
+		
+		questionTypePresenter.getView().editQuestion(collectionItemDo);
+	}
+
+	@Override
+	public void setHSEditData() {
+		questionTypePresenter.getView().setEditData();
 	}
 
 }

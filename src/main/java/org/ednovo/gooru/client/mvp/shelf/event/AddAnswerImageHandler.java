@@ -22,19 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.tab.content;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.shelf.event;
 
-import java.util.List;
+import com.google.gwt.event.shared.EventHandler;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+/**
+ * @author Hari
+ * 
+ */
+public interface AddAnswerImageHandler extends EventHandler {
 
-
-public interface IsProfilePageContentTabView extends IsViewWithHandlers<ProfilePageContentTabUiHandlers>{
-
-	void setContentItemData(List<CollectionItemDo> collectionItemDo);
 	
-	void clearContentItemData();
+	void setAnswerImageUrl(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage); 
 
-	void setMetaData(CollectionItemDo collectionItemDo);
 }

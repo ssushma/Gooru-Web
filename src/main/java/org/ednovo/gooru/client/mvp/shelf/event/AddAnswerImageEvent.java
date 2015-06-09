@@ -22,45 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.content;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.shelf.event;
 
+import com.google.gwt.event.shared.GwtEvent;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+/**
+ * @author Search Team
+ * 
+ */
+public class AddAnswerImageEvent extends GwtEvent<AddAnswerImageHandler> {
 
-public interface PPPCollectionResultCBundle extends ClientBundle {
-	
-	static final PPPCollectionResultCBundle INSTANCE = GWT.create(PPPCollectionResultCBundle.class);
-	
-	public interface PPPCollectionResultCss extends CssResource{
-		String collectionPanel();
+	public static final Type<AddAnswerImageHandler> TYPE = new Type<AddAnswerImageHandler>();
 
-		String collectionHeaderPanel();
+	String fileName;
+	boolean isAnswerImage;
+	String fileNameWithoutRepostory;
 
-		String collectionHeaderTextPanel();
-
-		String collectionTitle();
-
-		String author();
-
-		String metaDataPanel();
-
-		String resourceCount();
-
-		String standards();
-
-		String collectionDescription();
-
-		String collectionHover();
-		
-		String playIcon();
-		
-		String collectionThumbnail();
-		
-		String authorContainer();
+	/**
+	 * Class constructor
+	 * @param isuserOwnResourceImage 
+	 */
+	public AddAnswerImageEvent(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage) {
+		this.fileName = fileName;
+		this.isAnswerImage=isAnswerImage;
+		this.fileNameWithoutRepostory=fileNameWithoutRepostory;
 	}
-	@Source("PPPCollectionResult.css")
-	PPPCollectionResultCss css();
+
+	@Override
+	public Type<AddAnswerImageHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(AddAnswerImageHandler handler) {
+		handler.setAnswerImageUrl(fileName,fileNameWithoutRepostory,isAnswerImage);
+	}
 
 }
