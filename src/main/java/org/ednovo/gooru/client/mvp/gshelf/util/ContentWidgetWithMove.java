@@ -70,7 +70,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 					String movingPosition=txtMoveTextBox.getText().toString().trim();
 					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index");
 					if(!movingPosition.isEmpty()){
-						moveWidgetToPosition(movingPosition,currentWidgetPosition,isDownArrow);
+						moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow);
 					}
 				}
 			});
@@ -84,5 +84,5 @@ public abstract class ContentWidgetWithMove extends Composite {
 		return txtMoveTextBox;
 	}
 	
-	public abstract void moveWidgetToPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow);
+	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow);
 }

@@ -28,6 +28,7 @@ import java.util.Iterator;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -44,6 +45,8 @@ public class CourseListView  extends BaseViewWithHandlers<CourseListUiHandlers> 
 	interface CourseListViewUiBinder extends UiBinder<Widget, CourseListView> {
 	}
 	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField HTMLPanel courseListContainer;
 	@UiField VerticalPanel pnlCourseList;
 	
@@ -53,7 +56,7 @@ public class CourseListView  extends BaseViewWithHandlers<CourseListUiHandlers> 
 		for (int i = 0; i <10; i++) {
 			final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i) {
 				@Override
-				public void moveWidgetToPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
+				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
 					int movingIndex= Integer.parseInt(movingPosition);
 					if(pnlCourseList.getWidgetCount()>=movingIndex){
 						if(!isDownArrow){
@@ -79,7 +82,7 @@ public class CourseListView  extends BaseViewWithHandlers<CourseListUiHandlers> 
 			Widget widget=widgets.next();
 			if(widget instanceof ContentWidgetWithMove){
 				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
-				contentWidgetWithMove.getH3Panel().setText("Course "+(index+1));
+				contentWidgetWithMove.getH3Panel().setText(i18n.GL0326()+" "+(index+1));
 				contentWidgetWithMove.getTextBox().setText("");
 				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
 				index++;
