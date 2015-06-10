@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,8 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.ui.TinyMCE;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -48,15 +48,15 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AddHotTextQuestionAnswerChoice extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
-	
+
 	public interface AddHotTextQuestionAnswerChoiceUiBinder extends UiBinder<Widget, AddHotTextQuestionAnswerChoice>{
-		
+
 	}
-	
+
 	public static AddHotTextQuestionAnswerChoiceUiBinder uiBinder=GWT.create(AddHotTextQuestionAnswerChoiceUiBinder.class);
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField Label labelChoice,errorMessageforAnswerChoice,answerHeadLbl,answerHeadingTypeLbl,inLbl,correctAnswerHeadingTypeLbl;
 	@UiField TinyMCE answerTextBox;
 	@UiField HTMLPanel deleteButtonContainer,tinyOrTextBoxConatiner;
@@ -236,7 +236,7 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		deleteButtonContainer.add(ansChoiceDeleteButton);
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 	}
-	
+
 	@Override
 	public void onLoad(){
 		super.onLoad();
@@ -256,12 +256,12 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
 			   answerTextBox.getElement().setAttribute("alt", richTextData);
-			   answerTextBox.getElement().setAttribute("title", richTextData); 
-			   
+			   answerTextBox.getElement().setAttribute("title", richTextData);
+
 			   highlightTextArea.setText(richTextData);
 			   highlightTextArea.getElement().setAttribute("alt", richTextData);
-			   highlightTextArea.getElement().setAttribute("title", richTextData); 
-		   }	   
+			   highlightTextArea.getElement().setAttribute("title", richTextData);
+		   }
 	   }
 	public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
@@ -273,7 +273,7 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 	}
-	
+
 	public void setHeadLabelFields(boolean val){
 		answerHeadLbl.setVisible(val);
 		answerHeadContainer.setVisible(val);
@@ -284,7 +284,7 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		inLbl.addStyleName("htQInLbl");
 		correctAnswerTypeContainer.setVisible(false);
 	}
-	
+
 	@Override
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		// TODO Auto-generated method stub
@@ -301,7 +301,7 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 	public void setAnswerTextBox(TinyMCE answerTextBox) {
 		this.answerTextBox = answerTextBox;
 	}
-	
+
 	public TinyMCE getHighlightTextArea() {
 		return highlightTextArea;
 	}
@@ -329,11 +329,11 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		labelChoice.setVisible(false);
 		tinyOrTextBoxConatiner.setVisible(false);
 		correctAnswerTypeContainer.setVisible(true);
-		
+
 		wordRDButtonClick();
 		multiRDButtonClick();
 	}
-	
+
 	public void wordRDButtonClick(){
 		wordRDButton.setValue(true);
 		sentenceRDButton.setValue(false);
@@ -350,5 +350,5 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		singleRDButton.setValue(false);
 		multiRDButton.setValue(true);
 	}
-	
+
 }

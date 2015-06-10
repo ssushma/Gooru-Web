@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,9 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -61,12 +62,12 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 	@UiField AddResourceBundle addWebResourceStyle;
 	@UiField
 	public HTMLEventPanel eHearderIconHint;
-	
+
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	public Label hintDelLbl=new Label();
 	private String hintText=null;
 	public AddHintsView(){
-		initWidget(obj.createAndBindUi(this)); 
+		initWidget(obj.createAndBindUi(this));
 		hintsTextLblVal.getElement().setId("lblHintsTextLblVal");
 		hintNumLbl.getElement().setId("lblHintNumLbl");
 		hintTextBox.getElement().setId("tinyMCEHintTextBox");
@@ -74,9 +75,9 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
 		eHearderIconHint.getElement().setId("eHearderIconHint");
 	}
-	
+
 	public AddHintsView(int widgetsCount){
-		initWidget(obj.createAndBindUi(this)); 
+		initWidget(obj.createAndBindUi(this));
 		showHintsMessage(widgetsCount);
 		hintsTextLblVal.getElement().setId("lblHintsTextLblVal");
 		hintNumLbl.getElement().setId("lblHintNumLbl");
@@ -86,7 +87,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		eHearderIconHint.getElement().setId("eHearderIconHint");
 	}
 	public AddHintsView(int widgetsCount,String hintText){
-		initWidget(obj.createAndBindUi(this)); 
+		initWidget(obj.createAndBindUi(this));
 		this.hintText=hintText;
 		showHintsMessage(widgetsCount);
 		hintsTextLblVal.getElement().setId("lblHintsTextLblVal");
@@ -110,7 +111,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 			hintNumLbl.setText(""+widgetsCount);
 			eHearderIconHint.setVisible(false);
 			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
-			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);	
+			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);
 		}
 		hintDelLbl.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		hintDelLbl.getElement().getStyle().setDisplay(Display.NONE);
@@ -138,12 +139,12 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 			  hintTextBox.getElement().setAttribute("title", hintText);
 		  }
 	  }
-	public interface Binder extends UiBinder<Widget, AddHintsView> 
+	public interface Binder extends UiBinder<Widget, AddHintsView>
 	{
-		
+
 	}
-	public static Binder obj = GWT.create(Binder.class); 
-	
+	public static Binder obj = GWT.create(Binder.class);
+
 	@Override
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		// TODO Auto-generated method stub
@@ -154,5 +155,5 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
-	
+
 }

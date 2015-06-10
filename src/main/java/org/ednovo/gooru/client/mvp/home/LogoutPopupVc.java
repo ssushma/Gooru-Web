@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,9 +26,11 @@ package org.ednovo.gooru.client.mvp.home;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
@@ -37,8 +39,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -68,10 +68,10 @@ public class LogoutPopupVc extends Composite{
 
 	@UiField
 	BlueButtonUc okBtnUc;
-	
+
 	@UiField Label lblClassDismissed;
 	@UiField FlowPanel buttonContainer, mainPanel;
-	
+
 //	private static final String HEAR_THE_BELL_TEXT = i18n.GL0188;
 
 	private static LogoutPopupVcUiBinder uiBinder = GWT.create(LogoutPopupVcUiBinder.class);
@@ -80,7 +80,7 @@ public class LogoutPopupVc extends Composite{
 	}
 
 	 private MessageProperties i18n = GWT.create(MessageProperties.class);
-	 
+
 	/**
 	 * Class constructor , get confirm logout popup
 	 */
@@ -89,30 +89,30 @@ public class LogoutPopupVc extends Composite{
 		appPopUp = new AppPopUp();
 	//	appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(i18n.GL0188(), uiBinder.createAndBindUi(this));
-		
+
 		lblClassDismissed.setText(i18n.GL0189());
 		lblClassDismissed.getElement().setId("lblClassDismissed");
 		lblClassDismissed.getElement().setAttribute("alt",i18n.GL0189());
 		lblClassDismissed.getElement().setAttribute("title",i18n.GL0189());
-		
+
 		okBtnUc.setText(i18n.GL0190());
 		okBtnUc.getElement().setId("btnOk");
 		okBtnUc.getElement().setAttribute("alt",i18n.GL0190());
 		okBtnUc.getElement().setAttribute("title",i18n.GL0190());
-		
+
 		cancelAnr.setText(i18n.GL0142());
 		cancelAnr.getElement().setId("lnkCancel");
 		cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
 		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		buttonContainer.getElement().setId("fpnlButtonContainer");
-		
+
 		mainPanel.getElement().getStyle().setPaddingLeft(15, Unit.PX);
-		
+
 		appPopUp.show();
 		appPopUp.center();
-		
-		
+
+
 	}
 
 	/**
@@ -122,13 +122,13 @@ public class LogoutPopupVc extends Composite{
 	@UiHandler("cancelAnr")
 	public void onCancelClick(ClickEvent clickEvent) {
 		appPopUp.hide();
-		
+
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 
 	/**
-	 * Logout from signed user and makes as a anonymous user 
+	 * Logout from signed user and makes as a anonymous user
 	 * @param clickEvent instance of {@link ClickEvent}
 	 */
 	@UiHandler("okBtnUc")
@@ -139,11 +139,11 @@ public class LogoutPopupVc extends Composite{
 
 			@Override
 			public void onSuccess(UserDo result) {
-				
+
 			    String premiumAccountUserName = AppClientFactory.getLoggedInUser().getUsername();
-				
+
 				AppClientFactory.fireEvent(new ClearClasspageListEvent());
-				
+
 				Window.enableScrolling(true);
 		        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				AppClientFactory.setLoggedInUser(result);
@@ -159,7 +159,7 @@ public class LogoutPopupVc extends Composite{
 				}
 				AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(null));
 
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) 
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)
 						|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 					Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
 					if(map.containsKey("query"))

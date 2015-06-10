@@ -26,8 +26,8 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 public interface QuestionResourceUiHandlers extends BaseUiHandlers{

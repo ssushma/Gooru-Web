@@ -8,14 +8,10 @@
 <meta name="author" content="" />
 <meta name="version" content='${gooru.release.version}'>
 <title>Gooru | Sign up, Sign in </title>
-<script type="text/javascript" src='newgooru/newgooru.nocache.js?v=${gooru.release.version}'></script>
 
 <link href="${cdn.endpoint}/css/main-styles.min.css" media="all" rel="stylesheet" type="text/css">
-
 <link href="${cdn.endpoint}/css/font-awesome.css" media="all" rel="stylesheet" type="text/css">
-
 <link rel="icon" type="image/png" href="${cdn.endpoint}/images/favicon.png?v=${gooru.release.version}" />
-
 <script type="text/javascript">
 <!--
 	   		var _et = _et || {};
@@ -26,6 +22,8 @@
 </script>
 
 <script type="text/javascript" src="//${log.sdk}" defer></script>
+
+<script type="text/javascript" src='application/application.nocache.js?v=${gooru.release.version}' defer></script>
 
 <script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg"></script>
@@ -49,17 +47,12 @@
 	    	 }
 	     }
 
-	</script>
-	<script type="text/javascript">
- 		hewlettOERTracker('create', 'UA-5033010-1', 'auto');
- 		hewlettOERTracker('send', 'pageview', location.pathname + location.search + location.hash);
- 	</script>
-	<script type="text/javascript">
-		google.load("visualization", "1", {'packages' : [ "corechart" ]});
+	    hewlettOERTracker('create', 'UA-5033010-1', 'auto');
+	 	hewlettOERTracker('send', 'pageview', location.pathname + location.search + location.hash);
+
+	 	google.load("visualization", "1", {'packages' : [ "corechart" ]});
 	    google.load("visualization", "1", {'packages' : ["table"] });
 	</script>
-
-
 </head>
 <body>
    <iframe id="__printingFrame" style="width: 0; height: 0; border: 0"></iframe>
@@ -77,11 +70,8 @@
 	<script type="text/javascript" src="//widget.uservoice.com/NQx3lF2RAdAcYft8tWKZKA.js" defer></script>
 
 	<!-- Already Minified -->
-	<script type="text/javascript" src="${cdn.endpoint}/scripts/highcharts.js" defer></script>
-	<script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-migrate-1.2.1.js" defer></script>
 	<script type="text/javascript" src="${cdn.endpoint}/scripts/main-script.min.js" defer></script>
+	<script type="text/javascript" src="${cdn.endpoint}/scripts/08_dataTables.fixedColumns.js" defer></script>
 
-	<script type="text/javascript" src="${cdn.endpoint}/scripts/jquery.dataTables.js" defer></script>
-	<script type="text/javascript" src="${cdn.endpoint}/scripts/dataTables.fixedColumns.js" defer></script>
 </body>
 </html>

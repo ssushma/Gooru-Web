@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,12 +27,12 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -50,10 +50,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
- * 
+ *
  * @fileName : LeaveRegistrationPopUpUc.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -72,7 +72,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 	interface LeaveRegistrationPopUpUcUiBinder extends
 			UiBinder<Widget, LeaveRegistrationPopUpUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField(provided = true)
@@ -107,25 +107,25 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		//this.getElement().setAttribute("style", "width:502px;height:352px;z-index:98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
 		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
-		
+
 		setUiAndIds();
 	}
 	/**
-	 * 
-	 * @function setUiAndIds 
-	 * 
+	 *
+	 * @function setUiAndIds
+	 *
 	 * @created_date : 06-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -135,43 +135,43 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		lblTitle.getElement().setId("lblTitle");
 		lblTitle.getElement().setAttribute("alt",i18n.GL0480());
 		lblTitle.getElement().setAttribute("title",i18n.GL0480());
-		
+
 		lblCancel.getElement().setId("lblCancel");
 
 		panelSignUp.getElement().setId("pnlSignUp");
-		
+
 		lblHeading.setText(i18n.GL0477());
 		lblHeading.getElement().setId("lblHeading");
 		lblHeading.getElement().setAttribute("alt",i18n.GL0477());
 		lblHeading.getElement().setAttribute("title",i18n.GL0477());
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
-		
+
 		lblSubHeading.setText(i18n.GL0478());
 		lblSubHeading.getElement().setId("lblSubHeading");
 		lblSubHeading.getElement().setAttribute("alt",i18n.GL0478());
 		lblSubHeading.getElement().setAttribute("title",i18n.GL0478());
-		
+
 		btnLeave.setText(i18n.GL0480());
 		btnLeave.getElement().setId("btnLeave");
 		btnLeave.getElement().setAttribute("alt",i18n.GL0480());
 		btnLeave.getElement().setAttribute("title",i18n.GL0480());
-		
+
 		btnContinue.getElement().setId("btnContinue");
 		btnLeave.getElement().setAttribute("alt",i18n.GL0479());
 		btnLeave.getElement().setAttribute("title",i18n.GL0479());
 		btnContinue.setText(i18n.GL0479());
 		btnContinue.getElement().setAttribute("style", "margin-left: 20px");
-		
+
 		quriesText.setText(i18n.GL1139()+i18n.GL_GRR_COMMA());
 		quriesText.getElement().setId("lblQuriesText");
 		quriesText.getElement().setAttribute("alt",i18n.GL1139());
 		quriesText.getElement().setAttribute("title",i18n.GL1139());
-		
+
 		pleaseContactText.setText(i18n.GL1145());
 		pleaseContactText.getElement().setId("spnPleaseContactText");
 		pleaseContactText.getElement().setAttribute("alt",i18n.GL1145());
 		pleaseContactText.getElement().setAttribute("title",i18n.GL1145());
-		
+
 		supportLink.setText(i18n.GL0299());
 		supportLink.getElement().setId("lnkSupportLink");
 		supportLink.getElement().setAttribute("alt",i18n.GL0299());
@@ -183,7 +183,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 	public void onClickLblCancel(ClickEvent event) {
 		MixpanelUtil.close_signUp();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			
+
 		}else{
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -204,7 +204,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 			//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), mapParms);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
-		
+
 		}
 		this.hide();
 	}
@@ -214,7 +214,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		MixpanelUtil.close_signUp();
 		this.hide();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			
+
 		}else{
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -235,7 +235,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 			//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), mapParms);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
-	
+
 		}
 	}
 
@@ -243,7 +243,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 	public void onClickBtnContinue(ClickEvent event) {
 		MixpanelUtil.continue_registration();
 		if(accountType.equalsIgnoreCase("parent")){
-			
+
 			Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 			if(params.containsKey("query"))
 			{
@@ -273,7 +273,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 			}
 			params.put("callback", "registerChild");
 			params.put("type", "4");
-			
+
 			if (childDob != null) {
 				params.put("dob", childDob);
 			}
@@ -286,7 +286,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 			//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
-	
+
 		}
 		this.hide();
 	}

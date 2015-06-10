@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -31,15 +31,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
-import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.RandomIterator;
 
@@ -224,7 +224,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 					for (Map.Entry<Integer, Boolean> entry : answerOptionCount.entrySet())
 					{
-						
+
 						QuestionAnswerDo questionAnswerDo=answerListSet.get(entry.getKey());
 						HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + k) + ") "));
 						htAnswerOptionView.addDomHandler(new DragContainerClick(),  ClickEvent.getType());
@@ -252,8 +252,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		}
 
 	}
-	
-	
+
+
 	public class DragContainerClick implements ClickHandler{
 
 		@Override
@@ -261,7 +261,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			clearReorderAnswers();
 			enableCheckAnswerButton();
 		}
-		
+
 	}
 
 
@@ -337,7 +337,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
 					userAttemptedValueList.add("["+htAnswerOption.getAnswerText()+"]");
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(htAnswerOption.getAnswerText()); 
+					answerAttemptDo.setText(htAnswerOption.getAnswerText());
 					answerAttemptDo.setAnswerId(Integer.parseInt(el.getId()));
 					answerAttemptDo.setOrder(el.getId());
 
@@ -437,7 +437,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	 */
 	private String removeHtmlTags(String text){
 		/**
-		 * Commented the following line to fix issue with displaying math symbols. 
+		 * Commented the following line to fix issue with displaying math symbols.
 		 */
 		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return text;

@@ -10,10 +10,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerChoice;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
@@ -35,18 +46,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
-import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
-import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
-import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -127,12 +127,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String MESSAGE_CONTENT = i18n.GL0891();
 	private static final String ERROR_MSG_ANSWER = i18n.GL0311();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
-	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312(); 
+	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312();
 	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 	private CollectionItemDo collectionItemDo=null;
-	RemoveToolTipUc removeToolTip=null; 
+	RemoveToolTipUc removeToolTip=null;
 	ToolTip toolTip=null;
 	private boolean isBrowseTooltip =false;
 	BrowseStandardsTooltip browseStandardsTooltip;
@@ -526,7 +526,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void getRevealType() {
 		getHideRightsToolTip();
 	}
-	
+
 	public void clearTinyMce(){
 		questionNameTextArea=new TinyMCE(500);
 		explainationTextArea= new TinyMCE();
@@ -721,7 +721,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		int widgetsCount=hintsContainer.getWidgetCount();
 		for(int i=0;i<widgetsCount;){
 			AddHintsView addHintsView =(AddHintsView) hintsContainer.getWidget(i);
-			if(i<0){			
+			if(i<0){
 				if(i==0){
 					addHintsView.hintsTextLblVal.setText("");
 				}else{
@@ -738,12 +738,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	private void addHintsTextArea(final AddHintsView addHints){
 
-		hintsContainer.add(addHints); 
+		hintsContainer.add(addHints);
 		addHints.hintDelLbl.addClickHandler(new ClickHandler() {
 
 			@Override
-			public void onClick(ClickEvent event) 
-			{    
+			public void onClick(ClickEvent event)
+			{
 				addHints.removeFromParent();
 				removeToolTip.hide();
 				refreshHintNumber();
@@ -778,7 +778,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 
-	protected void refreshHintNumber() 
+	protected void refreshHintNumber()
 	{
 		int hintWidgetsCount=hintsContainer.getWidgetCount();
 		for(int i=0 ; i<hintWidgetsCount;i++)
@@ -806,7 +806,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				removeToolTip=new RemoveToolTipUc();	                
+				removeToolTip=new RemoveToolTipUc();
 				int left=event.getRelativeElement().getAbsoluteLeft()-16;
 				int top=event.getRelativeElement().getAbsoluteTop()+27;
 				removeToolTip.setPopupPosition(left, top);
@@ -872,7 +872,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		@Override
 		public void onClick(ClickEvent event) {
 			CheckBox checkBox = (CheckBox) event.getSource();
-			boolean checked = checkBox.getValue();		
+			boolean checked = checkBox.getValue();
 
 			depthOfKnowledges.clear();
 
@@ -881,14 +881,14 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(true);
 				depthObj.setValue(chkLevelRecall.getText());
-				depthOfKnowledges.add(depthObj); 
+				depthOfKnowledges.add(depthObj);
 			}
 			else
 			{
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(false);
 				depthObj.setValue(chkLevelRecall.getText());
-				depthOfKnowledges.add(depthObj);  
+				depthOfKnowledges.add(depthObj);
 			}
 
 			if(chkLevelSkillConcept.isChecked())
@@ -896,14 +896,14 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(true);
 				depthObj.setValue(chkLevelSkillConcept.getText());
-				depthOfKnowledges.add(depthObj); 
+				depthOfKnowledges.add(depthObj);
 			}
 			else
 			{
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(false);
 				depthObj.setValue(chkLevelSkillConcept.getText());
-				depthOfKnowledges.add(depthObj);  
+				depthOfKnowledges.add(depthObj);
 			}
 
 			if(chkLevelStrategicThinking.isChecked())
@@ -911,14 +911,14 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(true);
 				depthObj.setValue(chkLevelStrategicThinking.getText());
-				depthOfKnowledges.add(depthObj); 
+				depthOfKnowledges.add(depthObj);
 			}
 			else
 			{
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(false);
 				depthObj.setValue(chkLevelStrategicThinking.getText());
-				depthOfKnowledges.add(depthObj);  
+				depthOfKnowledges.add(depthObj);
 			}
 
 			if(chkLevelExtendedThinking.isChecked())
@@ -926,14 +926,14 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(true);
 				depthObj.setValue(chkLevelExtendedThinking.getText());
-				depthOfKnowledges.add(depthObj); 
+				depthOfKnowledges.add(depthObj);
 			}
 			else
 			{
 				checkboxSelectedDo depthObj=new checkboxSelectedDo();
 				depthObj.setSelected(false);
 				depthObj.setValue(chkLevelExtendedThinking.getText());
-				depthOfKnowledges.add(depthObj);  
+				depthOfKnowledges.add(depthObj);
 			}
 
 
@@ -987,7 +987,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 							} else {
 								standardsPrefDisplayPopup = false;
 							}
-						}						
+						}
 					}
 					if(standardsPrefDisplayPopup){
 						errorContainer.setVisible(false);
@@ -1048,7 +1048,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						@Override
 						public void onFailure(Throwable caught) {
 
-						}							
+						}
 					});
 					centurySgstBox.showSuggestionList();
 				}
@@ -1108,7 +1108,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	/**
 	 * Adding new standard for the collection , will check it has more than
 	 * fifteen standards
-	 * 
+	 *
 	 * @param standard
 	 *            which to be added for the collection
 	 */
@@ -1128,7 +1128,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	}
 	public void addCentury(String centuryTag, String id) {
 		if (centuryTag != null && !centuryTag.isEmpty()) {
-			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());				
+			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
 			CodeDo codeObjStandard=new CodeDo();
 			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 			codeObjStandard.setCode(centurySgstBox.getValue());
@@ -1140,7 +1140,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	}
 	/**
 	 * new label is created for the standard which needs to be added
-	 * 
+	 *
 	 * @param standardCode
 	 *            update standard code
 	 * @return instance of {@link DownToolTipWidgetUc}
@@ -1212,7 +1212,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	}
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
@@ -1228,7 +1228,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	}
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
@@ -1360,7 +1360,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	/**
 	 * new label is created for the 21 century which needs to be added
-	 * 
+	 *
 	 * @param standardCode
 	 *            update standard code
 	 * @return instance of {@link DownToolTipWidgetUc}
@@ -1368,7 +1368,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
-			public void onCloseLabelClick(ClickEvent event) {	
+			public void onCloseLabelClick(ClickEvent event) {
 				for(final CodeDo codeObj:standardsDo){
 					if(id.equalsIgnoreCase(String.valueOf(codeObj.getCodeId()))){
 						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
@@ -1377,7 +1377,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 								CodeDo deletedObj=new CodeDo();
 								deletedObj.setCodeId(codeObj.getCodeId());
 								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);	
+								standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
 							}
 						});
@@ -1467,7 +1467,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	/**
 	 * On mouse over panelContentRights will be visible.
-	 * 
+	 *
 	 * @param event instance of {@link MouseOverEvent}
 	 */
 	@UiHandler("lblContentRights")
@@ -1477,7 +1477,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	/**
 	 * On mouse out panelContentRights will not be visible.
-	 * 
+	 *
 	 * @param event instance of {@link MouseOutEvent}
 	 */
 
@@ -1639,7 +1639,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				String hintText=addHints.hintTextBox.getContent().toString().trim().replaceAll("&nbsp;", " ");
 				hintText=hintText.replaceAll("\\<.*?>","");
 				if(hintText!=null && !hintText.trim().equals("")){
-					String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");	
+					String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");
 					if(hintsText.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
 						Document.get().getElementById(addHints.hintTextBox.getID()+"_message").setInnerText("");
 						addHints.errorMessageforHints.setText(ERROR_MSG_HINTS_LENGTH);
@@ -1764,7 +1764,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				explaination=explainationTextArea.getRawContent().trim();
 			}
 
-			ArrayList<QuestionAnswerDo> enteredAnswers = new ArrayList<QuestionAnswerDo>(); 
+			ArrayList<QuestionAnswerDo> enteredAnswers = new ArrayList<QuestionAnswerDo>();
 			ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
 			HashMap<String,ArrayList<QuestionAnswerDo>> answerMap = new HashMap<String,ArrayList<QuestionAnswerDo>>();
 			HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
@@ -1813,19 +1813,19 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				if(hintText!=null&&!hintText.trim().equals("")){
 					hintText=addHints.hintTextBox.getRawContent().trim();
 				}
-				questionHintsDo.setHintText(hintText); 
+				questionHintsDo.setHintText(hintText);
 				questionHintsDo.setSequence(i+1);
 				enteredHints.add(questionHintsDo);
 			}
 			hintsMap.put("hint",enteredHints);
 
-			collectionQuestionItemDo.setTypeName(questionType); 
+			collectionQuestionItemDo.setTypeName(questionType);
 			collectionQuestionItemDo.setQuestionText(questionText);
 			collectionQuestionItemDo.setAnswers(answerMap);
 			collectionQuestionItemDo.setExplanation(explaination);
 			collectionQuestionItemDo.setHints(hintsMap);
 			collectionQuestionItemDo.setTitle(questionText);
-			collectionQuestionItemDo.setDescription(questionText);  
+			collectionQuestionItemDo.setDescription(questionText);
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
 			taxonomySet.put("taxonomyCode", standardsDo);
 			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
@@ -1898,7 +1898,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		clearObjects();
 		ansChoiceErrMsg.setText("");
 	}
-	
+
 	public void clearObjects(){
 		standardCodesMap.clear();
 		centuryCodesMap.clear();
@@ -1919,7 +1919,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		chkLevelExtendedThinking.setChecked(false);
 	}
 
-	private boolean isHotSpotAnswerChoiceSelected(HTMLPanel questionHotSpotAnswerChoiceContainer) 
+	private boolean isHotSpotAnswerChoiceSelected(HTMLPanel questionHotSpotAnswerChoiceContainer)
 	{
 		boolean isAnswerChoiceSelected=false;
 		AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
@@ -2018,7 +2018,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		});
 		return validationValue;
 	}
-	
+
 
 
 	@Override
@@ -2030,8 +2030,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
     	hintsContainer.setVisible(false);
     	standardContainer.setVisible(false);
     	centuryContainer.setVisible(false);
-    	
-		
+
+
 		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
 		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
 		hintsContainer.clear();
@@ -2041,40 +2041,40 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
 	        addHintsTextArea(addHints);
 		}
-		
+
 		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
-		Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator(); 
-		
-		
+		Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator();
+
+
 		AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
-		
+
 		String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
-		
+
 		if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
 			int widgetcount=1;
 			while (it.hasNext()) {
 				addHotSpotQuestion.setAnswerFields(false);
 				QuestionAnswerDo answer = it.next();
-				
+
 				final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
-				
-				if(answer.isIsCorrect()){	
+
+				if(answer.isIsCorrect()){
 					addAnswerChoice.isOptionSelectedButton=true;
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
 				}else{
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
 				}
-				
-				
+
+
 				addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
 				widgetcount++;
 			}
 			addHotSpotQuestion.setAnswerChoices();
 		}
-		
+
 	}
-	
-	
+
+
 	public void setEditData(){
 		try{
 			setEditQuestionImage();
@@ -2084,7 +2084,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 				int checkBoxCount=0;
-				for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
+				for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {
 					   if(item.isSelected()){
 						   if(checkBoxCount==0)
 						   chkLevelRecall.setChecked(true);
@@ -2098,7 +2098,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					   checkBoxCount++;
 					}
 				}
-				
+
 				if(collectionItemDo.getStandards()!=null){
 					standardsPanel.clear();
 					standardsDo.clear();
@@ -2137,20 +2137,20 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					}
 				}
 
-			
+
 			setDepthOfKnowledgeContainer();
 			setHintsContainer();
 			setStandardsContainer();
 			setCenturyContainer();
 
-				 
+
 			}catch(Exception e){
 				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 	}
-	
-	
-	
+
+
+
 	public void setEditQuestionImage(){
 		String tumbnailUrl="";
 		if(collectionItemDo!=null){
@@ -2159,34 +2159,34 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				tumbnailUrl = collectionItemDo.getCollection().getAssetURI()
 						+ collectionItemDo.getResource().getFolder()
 						+ collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
-				
+
 			}else if(collectionItemDo.getResource().getThumbnails()!=null && collectionItemDo.getResource().getThumbnails().getUrl()!=null) {
 				tumbnailUrl = collectionItemDo.getResource().getThumbnails().getUrl();
 			}
-			
+
 			setImageUrl(tumbnailUrl, null, true, false);
-			
+
 		}
-		
+
 	}
-	
-	
+
+
 	Timer timer=new Timer() {
-		
+
 		@Override
 		public void run() {
 			String explanation = collectionItemDo.getResource().getExplanation() != null ? collectionItemDo.getResource().getExplanation() : collectionItemDo.getQuestionInfo().getExplanation();
-			
+
 			questionNameTextArea.setText(collectionItemDo.getResource().getTitle());
 			questionNameTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
 			questionNameTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
 			explainationTextArea.setText(explanation);
 			explainationTextArea.getElement().setAttribute("alt", explanation);
 			explainationTextArea.getElement().setAttribute("title", explanation);
-			
-			
+
+
 			setExplanationContainer();
 		}
 	};
-	
+
 }

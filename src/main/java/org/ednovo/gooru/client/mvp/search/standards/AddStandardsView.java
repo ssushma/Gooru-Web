@@ -29,7 +29,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
@@ -37,12 +43,6 @@ import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;

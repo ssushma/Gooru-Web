@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:style field="districtStyleUc" src="district.css"
 		type="org.ednovo.gooru.client.mvp.library.district.DistrictStyleBundle" />
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="courseTabs" styleName="tabs" />

@@ -26,9 +26,9 @@ package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.ContentStarRatingsDo;
+import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 
 import com.gwtplatform.mvp.client.PopupView;
 

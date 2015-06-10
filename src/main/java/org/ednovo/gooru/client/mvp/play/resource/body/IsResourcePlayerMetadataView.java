@@ -27,16 +27,15 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ReactionDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.client.htmltags.SectionTag;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ReactionDo;
-import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<ResourcePlayerMetadataUiHandlers>{

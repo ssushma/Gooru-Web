@@ -1,22 +1,22 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<ui:style>
 	.searchPop {
 		width: 360px;
 		border: 1px solid #cacaca;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	}
-	
+
 	.clearfix {
 		clear: both;
 	}
-	
+
 	.searchPopMenu {
 		display: block;
 	}
-	
+
 	.searchPopMenu ul {
 		color: #1076bb;
 		background: #efefef;
@@ -30,18 +30,18 @@
 		margin: 0 0;
 		padding: 0 0;
 	}
-	
+
 	.searchPopMenu ul li {
 		list-style: none;
 		display: inline-block;
 		margin: 0 0;
 		padding: 0 0;
 	}
-	
+
 	.searchPopMenu ul>li+li {
 		margin-left: -5px;
 	}
-	
+
 	.searchPopMenu ul li a {
 		display: block;
 		font-size: 13px;
@@ -51,26 +51,26 @@
 		color: #515151;
 		font-family: Arial, Helvetica, sans-serif;
 	}
-	
+
 	.searchPopMenu ul li a:hover {
 		background: #e5e5e5;
 	}
-	
+
 	.searchPopContent {
 		padding: 0 15px;
 	}
-	
+
 	.searchPopMenu ul li.active a {
 		background: #e5e5e5;
 	}
-	
+
 	.searchPopGrade {
 		box-sizing: border-box;
 		box-sizing: border-box;
 		float: left;
 		padding-top: 12px;
 	}
-	
+
 	.searchPopSubject {
 		padding-left: 4%;
 		height: 155px;
@@ -80,14 +80,14 @@
 		float: left;
 		padding-top: 12px;
 	}
-	
+
 	.searchPopSmallHead {
 		font-weight: bold;
 		font-size: 12px;
 		color: #515151;
 		font-family: Arial, Helvetica, sans-serif;
 	}
-	
+
 	.col1 {
 		width: 33%;
 		float: left;
@@ -95,33 +95,33 @@
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 	}
-	
+
 	.checkBoxContaner {
 		margin: 8px 0;
 	}
-	
+
 	.checkBoxContaner input {
 		margin: 0 3px 0 0;
 		vertical-align: middle;
 	}
-	
+
 	.checkBoxContaner label {
 		vertical-align: middle;
 		font-weight: normal !important;
 		margin-bottom: 0px !important;
 		margin-left: 2px;
 	}
-	
+
 	.checkBoxContaner {
 		font-size: 12px;
 		color: #515151;
 		font-family: Arial, Helvetica, sans-serif;
 	}
-	
+
 	.checkBoxContaner p {
 		margin: 0 0 6px 0;
 	}
-	
+
 	.filterHeaderPanel {
 		color: #1076bb;
 		background: #efefef;
@@ -135,14 +135,14 @@
 		margin: 0 0;
 		padding: 0 0;
 	}
-	
+
 	.filterGradePanel {
 		list-style: none;
 		display: inline-block;
 		margin: 0 0;
 		padding: 0 0;
 	}
-	
+
 	.filterLable {
 		display: block;
 		font-size: 13px;
@@ -160,7 +160,7 @@
 	</ui:style>
 <ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res" />
-		
+
 	<g:HTMLPanel styleName="{res.css.PopupMainVSmall} {style.clearMargin} positionFixed" ui:field="filterPanel">
 		    <g:HTMLPanel styleName="{res.css.popupInnerGrey}">
 		    <g:HTMLPanel styleName="{style.searchPopMenu}">
@@ -201,4 +201,4 @@
 			<g:HTMLPanel ui:field="standardsPanel"></g:HTMLPanel>
 		</g:HTMLPanel>
 		</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

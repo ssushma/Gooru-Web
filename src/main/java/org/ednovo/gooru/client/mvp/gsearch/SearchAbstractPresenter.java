@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
@@ -31,15 +31,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.service.SearchServiceAsync;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
 import org.ednovo.gooru.client.SearchAsyncCallbackForString;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.RegisterTabDndEvent;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
@@ -56,12 +62,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
-import org.ednovo.gooru.client.service.SearchServiceAsync;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.search.SearchFilterDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
@@ -78,7 +78,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 /**
  * @author Search Team
- * 
+ *
  * @param <T>
  * @param <C>
  * @param <V>
@@ -106,13 +106,13 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
 
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackFirstLoad;
-	
+
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackLoadInStore;
-	
+
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsBackToTop;
-	
+
 	private SearchAsyncCallbackForString<SearchDo<T>> searchAsyncCallbackLoadInStore;
-	
+
 	protected static final String ALL = "*";
 
 	SignUpPresenter signUpViewPresenter = null;
@@ -120,24 +120,24 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	AddStandardsPresenter addStandardsPresenter = null;
 
 	AddCenturyPresenter addCenturyPresenter = null;
-	
+
 	GooruGradesPresenter gooruGradesPresenter = null;
-	
+
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
-	
+
 	ViewMorePeoplePresenter viewMorePeoplePresenter=null;
-	
+
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
-	
+
 	private static final String USER_META_ACTIVE_FLAG = "0";
 
 	boolean setFilter=true;
 	/**
 	 * Class constructor
-	 * 
+	 *
 	 * @param view
 	 *            {@link View}
 	 * @param proxy
@@ -160,7 +160,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		addRegisteredHandler(SearchEvent.TYPE, this);
 		addRegisteredHandler(StandardsSuggestionEvent.TYPE, this);
 		//addRegisteredHandler(StandardsSuggestionInfoEvent.TYPE, this);
-		
+
 	}
 
 	@Override
@@ -242,7 +242,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			}
 		});
 		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
-		
+
 		if (getViewToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 			setSourceSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
 				@Override
@@ -345,7 +345,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 							+ searchQuery);
 		}
 	}
-	
+
 	@Override
 	public void initiateSearch() {
 		setPageTitle(getSearchDo().getSearchQuery());
@@ -470,13 +470,13 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchServiceAsync getSearchService() {
 		return searchService;
 	}
-	
+
 	@Override
 	public void onSearch(String query) {
 		getSearchDo().setQuery(query);
 		onSearchRequest(null);
 	}
-	
+
 	@Override
 	public void switchSearch(String viewToken, String searchQuery) {
 		getSearchDo().setNotFriendly(null);
@@ -486,7 +486,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setFilters(params);
 		onSearchRequest(viewToken);
 	}
-	
+
 	@Override
 	public void refreshSearch(String query) {
 		if(query!=null){
@@ -513,10 +513,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setQuery(queryVal);
 		getSearchDo().setFilters(getSearchFilters());
 	}
-	
+
 	/**
 	 * Set search view token ,assign search query, page number and page size
-	 * 
+	 *
 	 * @param viewToken
 	 *            is a page view url
 	 */
@@ -530,13 +530,13 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			getPlaceManager().revealPlace(viewToken, params, true);
 		}
 	}
-	
+
 	@Override
 	public void getGradesWidget(){
 		//getView().getGradePanel().clear();
-		
+
 	}
-	
+
 	@Override
 	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
 		if (isCurrentView()) {
@@ -549,7 +549,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		if (isCurrentView()) {
 			getSourceSuggestionAsyncCallback().execute(searchDo);
 		}
-		
+
 	}
 	@Override
 	public void requestSourceSuggestions(SearchDo<String> searchDo){
@@ -562,7 +562,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			getAggregatorSuggestionAsyncCallback().execute(searchDo);
 		}
 	}
-	
+
 	@Override
 	public void requestAggregatorSuggestions(SearchDo<String> searchDo){
 		getAggregatorSuggestionAsyncCallback().execute(searchDo);
@@ -596,7 +596,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	}
 
 	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
-	
+
 	protected abstract void requestSearchLoad(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback, boolean isBackToTop);
 
 	protected abstract void requestSearchFormJson(String result,SearchDo<T> searchDo2);
@@ -624,17 +624,17 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public GooruGradesPresenter getGooruGradesPresenter() {
 		return gooruGradesPresenter;
 	}
-	
+
 	@Override
 	public void setUpdatedStandards() {
 		getView().setUpdatedStandards(addStandardsPresenter.getStandardListArray());
 	}
-	
+
 	@Override
 	public void closeStandardsPopup() {
 		addStandardsPresenter.hidePopup();
 	}
-	
+
 	@Override
 	public void getAddStandards() {
 		if(!AppClientFactory.isAnonymous()){
@@ -647,7 +647,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 					}
 					public void checkStandarsList(List<String> standarsPreferencesList) {
-						
+
 					if(standarsPreferencesList!=null){
 							if(standarsPreferencesList.contains("CCSS")){
 								isCCSSAvailable = true;
@@ -674,7 +674,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 									addToPopupSlot(addStandardsPresenter);
 									getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
 								}
-							
+
 					}
 					}
 				});

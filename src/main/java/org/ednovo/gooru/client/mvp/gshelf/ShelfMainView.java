@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,9 +26,9 @@ package org.ednovo.gooru.client.mvp.gshelf;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -41,16 +41,16 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @fileName : ShelfView.java
- * 
+ *
  * @description :
- * 
- * 
+ *
+ *
  * @version : 5.5
- * 
+ *
  * @date: June 17, 2013
- * 
+ *
  * @Author Gooru Team
- * 
+ *
  * @Reviewer:
  */
 public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers>
@@ -63,6 +63,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers>
 	String selectedFolderId = "";
 
 	List<ClassPageCollectionDo> classpageTitles = null;
+
+	private static final String GOORU_UID = "gooruuid";
 
 	@UiField HTMLPanel gShelfMainContainer,pnlSlot;
 
@@ -79,6 +81,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers>
 		setWidget(uiBinder.createAndBindUi(this));
 		gShelfMainContainer.getElement().setId("gShelfMainContainer");
 	}
+
 	/* (non-Javadoc)
 	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
 	 */
@@ -94,6 +97,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers>
 
 		}
 	}
+
 	@Override
 	public void onClick(ClickEvent event) {
 

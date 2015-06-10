@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 	<ui:style field="style" src="dashboard.css"/>
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
 	<div class="{style.popupWrapper}">
 		<div class="{style.PopupMainSmall}">
@@ -16,8 +16,8 @@
 				</div>
 				<div class="{style.profilePopContent}">
 					<div class="{style.profilePopHeader}">
-						<g:Button styleName="btnGroup active" ui:field="btnHighToLow"></g:Button>	
-						<g:Button styleName="btnGroup" ui:field="btnLowToHigh"></g:Button>	
+						<g:Button styleName="btnGroup active" ui:field="btnHighToLow"></g:Button>
+						<g:Button styleName="btnGroup" ui:field="btnLowToHigh"></g:Button>
 					</div>
 					<div class="{style.colHeadBlock}">
 						<div class="col6">
@@ -37,4 +37,4 @@
 		</div>
 	</div>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

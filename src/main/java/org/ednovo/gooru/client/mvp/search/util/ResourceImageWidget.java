@@ -1,8 +1,8 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
-import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
