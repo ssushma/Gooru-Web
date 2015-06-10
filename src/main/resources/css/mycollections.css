@@ -448,10 +448,121 @@ button.btn-disabled{
 }
 
 
+/* === For Course list Css start ================================== */
 
+#gShelfCousesList{
+	padding-bottom:50px;
+	min-height:450px;
+}
+#gShelfCousesList .courseHeader{
+	padding:20px 15px;
+	background:#f0f0f0;
+}
 
+#gShelfCousesList .courseHeader h2{
+	font-size:22px;
+	font-weight:bold;
+	color:#515151;
+	margin:0 0;
+}
+#gShelfCousesList .tableDiv{
+	display:table;
+	width:100%;
+	border-collapse:collapse;
+}
 
+#gShelfCousesList .tableRow{
+	display:table-row;
+	width:100%;
+	border-bottom:1px solid #dddddd;
+}
 
+#gShelfCousesList .tableColumn{
+	display:table-cell;
+	padding:4px 10px;
+	vertical-align:middle;
+	
+}
+
+#gShelfCousesList .tableColumn:first-child{
+		background:#f9fcfe;
+		padding:10px 15px;
+		width:30%;
+}
+#gShelfCousesList .tableColumn:last-child{
+	width:6%;
+}
+
+#gShelfCousesList .tableMainHeader h3{
+	margin:0 0 2px 0;
+	font-size:17px;
+	font-weight:bold;
+	color:#515151;
+}
+#gShelfCousesList .tableMainHeader p{
+	margin:0 0;
+	color:#515151;
+}
+#gShelfCousesList .tableListOrder .topArrow {
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -360px;
+	width:16px;
+	height:10px;
+	display:inline-block;
+	margin-bottom:-3px;
+}
+#gShelfCousesList .tableListOrder{
+	text-align:center;
+}
+#gShelfCousesList .tableListOrder .form-control{
+	height:24px;
+	padding:6px 2px;
+	font-size:12px;
+	border-radius: 4px;
+}
+#gShelfCousesList .tableListOrder .bottomArrow {
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -381px;
+	width:16px;
+	height:10px;
+	display:inline-block;
+}
+#gShelfCousesList .tableListTags span{
+	margin-left:10px;
+}
+
+#gShelfCousesList .addCourse{
+	padding:15px 25px;
+	font-size:18px;
+	color:#515151;
+	border:1px dashed #dddddd;
+	margin:1px 1px;
+	position:relative;
+	cursor:pointer;
+}
+
+#gShelfCousesList .addCourse input{
+    bottom: 0;
+    height: 55px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+	cursor:pointer;
+}
+@media (max-width: 767px) {
+	
+}
+@media (min-width: 768px) and (max-width: 991px) {
+		
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+@media (min-width: 1200px) {
+	
+}
+/* === For Course list Css end ================================== */
 
 
 
