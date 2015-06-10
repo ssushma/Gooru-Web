@@ -1,14 +1,14 @@
 @charset "utf-8";
 /* CSS Document */
 
-.playerflagpopupwrapper
+#fpnlWrapperContainerField .playerflagpopupwrapper
 {
 	width:418px;
 	float: left;
 	margin:0 auto;
 	background-color:#FFF;
 }
-.playerflagpopupinnerwrapper
+#fpnlWrapperContainerField .playerflagpopupinnerwrapper
 {
 	width:410px;
 	float:left;
@@ -16,7 +16,7 @@
 	border:1px solid #DDDDDD;
 	margin:3px;
 }
-.playerflagpopupheader
+#fpnlWrapperContainerField .playerflagpopupheader
 {
 	float:left;
 	width:100%;
@@ -31,19 +31,19 @@
 	background: linear-gradient(to bottom, rgba(102,102,102,1) 0%,rgba(81,81,81,1) 100%); /* W3C */
 	
 }
-.playerflagpopupheaderCloseBtn
+#fpnlWrapperContainerField .playerflagpopupheaderCloseBtn
 {
 	float:right;
 	width:15px;
 	height:15px;
 	margin:10px 10px 0px 0px;
 }
-.playerflagpopupheaderCloseBtn:hover
+#fpnlWrapperContainerField .playerflagpopupheaderCloseBtn:hover
 {
 	cursor:pointer;
 	opacity:.5;
 }
-.playerflagpopupheadertitle
+#fpnlWrapperContainerField .playerflagpopupheadertitle
 {
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:16px;
@@ -51,21 +51,21 @@
 	padding: 10px 5px 5px 15px;
 	float: left;
 }
-.playerflagcontentcontainer
+#fpnlWrapperContainerField .playerflagcontentcontainer
 {
 	margin:0px 0px 0px 28px;
 	float:left;
 	width:382px;
 	/*height:291px;*/
 }
-.playerflagcontentcontainerThankYou
+#fpnlWrapperContainerField .playerflagcontentcontainerThankYou
 {
 	margin: 0 auto;
 	width:382px;
 	margin-top: 52px;
 	
 }
-.playerflagcontenttext
+#fpnlWrapperContainerField .playerflagcontenttext
 {
 	float:left;
 	font-family:Arial, Helvetica, sans-serif;
@@ -73,7 +73,7 @@
 	color:#515151;
 	width: 280px;
 }
-.playerflagcontent
+#fpnlWrapperContainerField .playerflagcontent
 {
 	/* float:left; */
 	font-family:Arial, Helvetica, sans-serif;
@@ -84,7 +84,7 @@
 	/* width: 345px; */
 	
 }
-.playerflagcontentTextdescription
+#fpnlWrapperContainerField .playerflagcontentTextdescription
 {
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
@@ -95,7 +95,7 @@
 	
 }
 
-.playerflagcontentTextCollectiondescription
+#fpnlWrapperContainerField .playerflagcontentTextCollectiondescription
 {
 	float:left;
 	font-family:Arial, Helvetica, sans-serif;
@@ -106,7 +106,7 @@
 	width: 345px;	
 }
 
-.playerflagcontentTextResourcedescription
+#fpnlWrapperContainerField .playerflagcontentTextResourcedescription
 {
 	float:left;
 	font-family:Arial, Helvetica, sans-serif;
@@ -116,7 +116,7 @@
 	margin-left: 7px;
 	width: 345px;	
 }
-.playerflagcontentChooseResource
+#fpnlWrapperContainerField .playerflagcontentChooseResource
 {
 	float:left;
 	font-family:Arial, Helvetica, sans-serif;
@@ -126,7 +126,7 @@
 	margin-left: 0px;
 	width: 345px;
 }
-.playerflagradiobutton, radio
+#fpnlWrapperContainerField .playerflagradiobutton, radio
 {
 	clear: both;
 	float: left;
@@ -134,7 +134,7 @@
  input[type="checkbox"] {
 	float:left;
 }  
-.playerflagtextarea
+#fpnlWrapperContainerField .playerflagtextarea
 {
 	float: left;
 	width: 358px;
@@ -146,7 +146,7 @@
 	border-color: #ddd;
 	font-family:Arial, Helvetica, sans-serif;
 }
-.playerflagbuttoncontainer
+#fpnlWrapperContainerField .playerflagbuttoncontainer
 {
 	width:151px;
 	float:left;
@@ -154,7 +154,7 @@
 	margin-left: 140px;
 	margin-bottom: 8px;
 }
-.resourcePlayerflagbuttoncontainer
+#fpnlWrapperContainerField .resourcePlayerflagbuttoncontainer
 {
 	width:151px;
 	float:left;
@@ -162,7 +162,7 @@
 	margin: 0px 0px 0px 120px;
 	margin-bottom: 8px;
 }
-.playerflagbuttoncancel
+#fpnlWrapperContainerField .playerflagbuttoncancel
 {
 	float:left;
 	color:#FFF;
@@ -182,13 +182,13 @@
 	text-decoration:none;
 }
 
-.playerflagbuttoncancel:hover
+#fpnlWrapperContainerField .playerflagbuttoncancel:hover
 {
 	background:#eee;
 	cursor:pointer;
 }
 
-.playerflagbuttonsubmit
+#fpnlWrapperContainerField .playerflagbuttonsubmit
 {
 	float:left;
 	background-color:#1076bb;
@@ -220,12 +220,12 @@
 	
 	
 }
-.playerflagbuttonsubmit:hover
+#fpnlWrapperContainerField .playerflagbuttonsubmit:hover
 {
 	background: #1076BB;
 	color: #FFFFFF !important;
 }
-.playerflagbuttoncancelGray
+#fpnlWrapperContainerField .playerflagbuttoncancelGray
 {
 	float:left;
 	color:#999;
@@ -245,7 +245,7 @@
 	cursor: default;
 	
 }
-.playerflagbuttonOk
+#fpnlWrapperContainerField .playerflagbuttonOk
 {
 	float:left;
 	background-color:#1076bb;
@@ -281,7 +281,7 @@
 	margin-left: 170px;
 	
 }
-.playerflagbuttonOk:hover
+#fpnlWrapperContainerField .playerflagbuttonOk:hover
 {
 background: #1076BB;
 color: #FFFFFF !important;	
@@ -296,7 +296,7 @@ color: #FFFFFF !important;
 	padding: 0px 0px 0px 6px;
 
 }
-.downarrow
+#fpnlWrapperContainerField .downarrow
 {
 	width:302px;
 	height:30px;
@@ -308,11 +308,11 @@ color: #FFFFFF !important;
 	background-color: #fff !important;
 	color: #515151;
 }
-.leftalign
+#fpnlWrapperContainerField .leftalign
 {
 	float:left;
 }
-.flagresourcesinnerwrapper
+#fpnlWrapperContainerField .flagresourcesinnerwrapper
 {
 	width:569px !important;
 	float:left!important;
@@ -320,14 +320,14 @@ color: #FFFFFF !important;
 	border: 1px solid #DDD;
 	background-color: #fff;
 }
-.flagresourceleftpart
+#fpnlWrapperContainerField .flagresourceleftpart
 {
 	float:left;
 	width:169px;
 	height:398px;
 	border-right:1px solid #DDDDDD;
 }
-.flagresourcenmenutext
+#fpnlWrapperContainerField .flagresourcenmenutext
 {
 	padding:8px;
 	text-align:left;
@@ -336,7 +336,7 @@ color: #FFFFFF !important;
 	color:#515151;
 }
 /*open ended question css*/
-.endedquestionheader {
+#fpnlWrapperContainerField .endedquestionheader {
 width: 100%;
 background-color: #515151;
 font-family: Arial, Helvetica, sans-serif;
@@ -344,7 +344,7 @@ font-size: 20px;
 height: 39px;
 }
 
-.endedquestionheaderflagtext {
+#fpnlWrapperContainerField .endedquestionheaderflagtext {
 font-family: Arial, Helvetica, sans-serif;
 font-size: 16px;
 float: left;
@@ -352,7 +352,7 @@ padding: 11px 0px 0px 11px;
 color: #FFF;
 }
 
-.flagresourceleftpart {
+#fpnlWrapperContainerField .flagresourceleftpart {
 float: left;
 width: 169px;
 height: 398px;
@@ -360,7 +360,7 @@ border-right: 1px solid #DDDDDD;
 background-color: #e5e5e5;
 }
 
-.flagbuttonDeSelected {
+#fpnlWrapperContainerField .flagbuttonDeSelected {
 width: 100%;
 height: 36px;
 border-bottom: 1px solid #DDD;
@@ -375,12 +375,12 @@ background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
 }
 
-.flagbuttonDeSelected:hover {
+#fpnlWrapperContainerField .flagbuttonDeSelected:hover {
 background:#e5e5e5;
 box-shadow: none;
 cursor:pointer;
 }
-.flagresourcenmenutext {
+#fpnlWrapperContainerField .flagresourcenmenutext {
 padding: 8px;
 text-align: left;
 font-family: Arial, Helvetica, sans-serif;
@@ -388,7 +388,7 @@ font-size: 16px;
 color: #515151;
 }
 
-.flagButtonselected {
+#fpnlWrapperContainerField .flagButtonselected {
 box-shadow: inset 0 0 10px rgba(0,0,0,.1);
 border-top: 1px solid #ccc;
 border-bottom: 1px solid #ddd;
@@ -400,23 +400,23 @@ background: -ms-linear-gradient(top, #cccccc, #efefef);
 background: -o-linear-gradient(top, #cccccc, #efefef);
 
 }
-.flagButtonselected:hover {
+#fpnlWrapperContainerField .flagButtonselected:hover {
 cursor:default !important;
 }
 
-.endedquestionrightpart {
+#fpnlWrapperContainerField .endedquestionrightpart {
 float: right;
 width: 376px;
 /*height: 397px;*/
 }
 
-.playerflagcollectionresourcescontentcontainer {
+#fpnlWrapperContainerField .playerflagcollectionresourcescontentcontainer {
 margin: 14px 0px 0px -6px;
 float: left;
 width: 382px;
 }
 
-.playerflagcontenttext {
+#fpnlWrapperContainerField .playerflagcontenttext {
 float: left;
 font-family: Arial, Helvetica, sans-serif;
 font-size: 12px;
@@ -425,7 +425,7 @@ width: 360px;
 word-wrap: break-word;
 }
 
-.playerflagcontenttextCollectionTitle {
+#fpnlWrapperContainerField .playerflagcontenttextCollectionTitle {
 float: left;
 font-family: Arial, Helvetica, sans-serif;
 font-size: 12px;
@@ -436,13 +436,13 @@ margin-top:10px;
 }
 
 /*add new resource into flag styles*/
-.endedquestionwrapper {
+#fpnlWrapperContainerField .endedquestionwrapper {
 width: 575px !important;
 height: 439px !important;
 margin: 0 auto;
 }
 
-.endedquestionheader {
+#fpnlWrapperContainerField .endedquestionheader {
 width: 100%;
 background-color: #515151;
 font-family: Arial, Helvetica, sans-serif;
@@ -450,7 +450,7 @@ font-size: 20px;
 height: 39px;
 }
 
-.endedquestionheaderflagtext {
+#fpnlWrapperContainerField .endedquestionheaderflagtext {
 font-family: Arial, Helvetica, sans-serif;
 font-size: 16px;
 float: left;
@@ -458,14 +458,14 @@ padding: 11px 0px 0px 11px;
 color: #FFF;
 }
 
-.flagresourceleftpart {
+#fpnlWrapperContainerField .flagresourceleftpart {
 float: left;
 width: 169px;
 height: 471px;
 border-right: 1px solid #DDDDDD;
 }
 
-.endedquestionmenu {
+#fpnlWrapperContainerField .endedquestionmenu {
 background: rgb(253,253,253);
 background: -moz-linear-gradient(top, rgba(253,253,253,1) 0%, rgba(237,237,237,1) 100%);
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(253,253,253,1)), color-stop(100%,rgba(237,237,237,1)));
@@ -480,7 +480,7 @@ border-bottom: 1px solid #DDD;
 cursor: pointer;
 }
 
-.flagresourcenmenutext {
+#fpnlWrapperContainerField .flagresourcenmenutext {
 padding: 8px;
 text-align: left;
 font-family: Arial, Helvetica, sans-serif;
@@ -488,7 +488,7 @@ font-size: 16px;
 color: #515151;
 }
 
-.endedquestionmenuselected {
+#fpnlWrapperContainerField .endedquestionmenuselected {
 background: rgb(255,255,255);
 background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,226,226,1) 6%, rgba(240,240,240,1) 90%, rgba(221,221,221,1) 100%);
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(6%,rgba(226,226,226,1)), color-stop(90%,rgba(240,240,240,1)), color-stop(100%,rgba(221,221,221,1)));
@@ -503,27 +503,27 @@ border: 1px solid #DDD;
 cursor: pointer;
 }
 
-.endedquestionrightpart {
+#fpnlWrapperContainerField .endedquestionrightpart {
 float: right;
 width: 376px;
 /*height: 397px;*/
 }
 
-.playerflagcontenttext {
+#fpnlWrapperContainerField .playerflagcontenttext {
 float: left;
 font-family: Arial, Helvetica, sans-serif;
 font-size: 12px;
 color: #515151;
 }
 /*Thank you popup*/
-.thankyoupopupwrapper
+#fpnlWrapperContainerField .thankyoupopupwrapper
 {
 	width:418px !important;
 	height:162px !important;
 	margin:0 auto;
 	background-color:#FFF;
 }
-.thankyoupopupinnerwrapper
+#fpnlWrapperContainerField .thankyoupopupinnerwrapper
 {
 	width:410px !important;
 	height:156px !important;
@@ -532,13 +532,13 @@ color: #515151;
 	border:1px solid #DDDDDD;
 	margin:3px;
 }
-.thankyoubuttoncontainer
+#fpnlWrapperContainerField .thankyoubuttoncontainer
 {
 	width:37px;
 	margin:0 auto;
 	height:32px;
 }
-.playerflagcontentthankyou
+#fpnlWrapperContainerField .playerflagcontentthankyou
 {
 	clear: both;
 	width:100%;
@@ -548,7 +548,7 @@ color: #515151;
 	color:#515151;
 	text-align: left;
 }
-.thankyouflagbuttonsubmit
+#fpnlWrapperContainerField .thankyouflagbuttonsubmit
 {
 	float:left;
 	background-color:#1076bb;
@@ -568,12 +568,12 @@ color: #515151;
 	text-decoration:none;
 	margin-top: 20px;
 }
-.glassStyle{
+#fpnlWrapperContainerField .glassStyle{
 	background-color:#000;
 	opacity:0.3;
 	z-index:100000;
 }
-.ckeckBoxPlyerStyle
+#fpnlWrapperContainerField .ckeckBoxPlyerStyle
 {
 width: 17px;
 height: 17px;
@@ -581,14 +581,14 @@ float: left;
 margin-top: 10px;
 vertical-align: top;
 }
-.collectionPlayerExistingCollectionInputContainer{
+#fpnlWrapperContainerField .collectionPlayerExistingCollectionInputContainer{
 	width: 324px;
 	float: left;
 	margin-right: 10px;
 	margin-left: 1px;
 	margin-top: 3px;
 }
-  .dropdownListPlaceHolder{
+  #fpnlWrapperContainerField .dropdownListPlaceHolder{
 	background:url(images/dropdownMenuArrow.png) no-repeat;
 	background-color: white;
 	background-position: right center;
@@ -603,7 +603,7 @@ vertical-align: top;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
 } 
-.dropdownListContainerScrollPanel{
+#fpnlWrapperContainerField .dropdownListContainerScrollPanel{
 	border: 1px solid #DDD;
 	list-style-type: none;
 	padding:0;
@@ -614,34 +614,34 @@ vertical-align: top;
 	position:absolute !important;
 }
 /*Scroll bar style for default scrolls*/
-.dropdownListContainerScrollPanel::-webkit-scrollbar {
+#fpnlWrapperContainerField .dropdownListContainerScrollPanel::-webkit-scrollbar {
 	width: 8px;
 } /* this targets the default scrollbar (compulsory) */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-track {
+#fpnlWrapperContainerField .dropdownListContainerScrollPanel::-webkit-scrollbar-track {
 	background-color: white;
 	width: 15px;
 }
 /* the new scrollbar will have a flat appearance with the set background color */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-thumb { /*background-color: rgba(0, 0, 0, 0.2);*/
+#fpnlWrapperContainerField .dropdownListContainerScrollPanel::-webkit-scrollbar-thumb { /*background-color: rgba(0, 0, 0, 0.2);*/
 	background-color: rgba(0, 0, 0, 0.2);
 	width: 15px;
 } /* this will style the thumb, ignoring the track */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-button {
+#fpnlWrapperContainerField .dropdownListContainerScrollPanel::-webkit-scrollbar-button {
 	background-color: #DDDDDD;
 	width: 0px;
 	height: 0px;
 }
 /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-corner {
+#fpnlWrapperContainerField .dropdownListContainerScrollPanel::-webkit-scrollbar-corner {
 	background-color: red;
 }
-.dropdownListContainer{
+#fpnlWrapperContainerField .dropdownListContainer{
 	list-style-type: none;
 	padding:0;
 	margin:0;
 	z-index:9999;
 }
-.dropdownListItemContainer{
+#fpnlWrapperContainerField .dropdownListItemContainer{
 	padding: 5px;
 	background: white;
 	margin: 0px;
@@ -650,31 +650,31 @@ vertical-align: top;
 	font-size: 12px;
 }
 
-.dropdownListItemContainer:hover{
+#fpnlWrapperContainerField .dropdownListItemContainer:hover{
 	background-color: #CFE3F1;
 	cursor: pointer;
 }
 
-.emailThankYouLbl {
+#fpnlWrapperContainerField .emailThankYouLbl {
 	color: #1076bb;
 	font-size: 16px;
 	text-align: center;
 }
 
-.emailIdLbl {
+#fpnlWrapperContainerField .emailIdLbl {
 	text-align: center;
 	margin-top: 5px;
 	font-size: 12px
 }
 
-.reviewTxtareaTitle{
+#fpnlWrapperContainerField .reviewTxtareaTitle{
 	font-weight: bold;
 	clear: both;
 	position: relative;
 	top: 10px;
 }
 
-.poorRatingTxtarea{
+#fpnlWrapperContainerField .poorRatingTxtarea{
 	width: 100%;
 	height: 150px;
 	display: block;
@@ -686,7 +686,7 @@ vertical-align: top;
 	margin-top: 14px;
 }
 
-.ratingPoorSubHeader{
+#fpnlWrapperContainerField .ratingPoorSubHeader{
 	font-size: 12px;
 	margin-top: 11px;
 	margin-bottom: 5px;

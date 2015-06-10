@@ -91,7 +91,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel dropdownListContainer,createCollectionLabelContainer,resourceImageContainerInAddResource,
-		addCollectionInsteadLabelContainer,addCollectionContainer,addresourceText,existingCollectionContainer;
+		addCollectionInsteadLabelContainer,addCollectionContainer,addresourceText,existingCollectionContainer,mainPanel;
 	@UiField InlineLabel dropdownListPlaceHolder;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button addResourceToCollectionButton,workSpaceBtn;
@@ -131,6 +131,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public AddResourceCollectionView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
+		mainPanel.getElement().setId("mainPanel");
 		hideText.setText(i18n.GL0592());
 		hideText.getElement().setId("lblHideText");
 		hideText.getElement().setAttribute("alt",i18n.GL0592());

@@ -1,11 +1,4 @@
-.collection-narration-container {
-	width: 100%;
-	margin-top: 23px;
-	padding: 10px;
-	background-color: rgb(77, 77, 77);
-}
-
-.collection-narration-wrapper {
+#resourceShareMainPanel .collection-narration-wrapper {
 	min-height: 126px;
 	padding: 10px;
 	background-color: rgb(77, 77, 77);
@@ -14,7 +7,7 @@
 	margin: 0 auto;
 }
 
-.narration-wrapper {
+#resourceShareMainPanel .narration-wrapper {
 	min-height: 126px;
 	padding: 10px;
 	background-color: rgb(77, 77, 77);
@@ -22,7 +15,7 @@
 	margin: 0 auto;
 }
 
-.collection-share-maintitle {
+#resourceShareMainPanel .collection-share-maintitle {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
@@ -33,37 +26,37 @@
 	margin-top: 27px;
 }
 
-.collection-share-buttonscontainer{
+#resourceShareMainPanel .collection-share-buttonscontainer{
 	width: 100%;
 	margin-top: 10px;
 /*	padding: 10px;*/
 	background-color: #4d4d4d;
 	float: left;
 }
-.share-buttonscontainer {
+#resourceShareMainPanel .share-buttonscontainer {
 	margin-top: 30px;
 	clear: both;
 	padding-right: 41%;
 }
 
-.collection-share-button1{
+#resourceShareMainPanel .collection-share-button1{
 	color: #1076BB;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 	margin-top: 5px;
 }
-.collection-share-button2{
+#resourceShareMainPanel .collection-share-button2{
 	color: #1076BB;
 	font-size: 12px;
 	margin-top: 5px;
 }
 
-.collection-share-button1:hover,.collection-share-button2:hover {
+#resourceShareMainPanel .collection-share-button1:hover,#resourceShareMainPanel .collection-share-button2:hover {
 	color: #87BADD;
 	cursor: pointer;
 }
 
-.collection-share-wrapper {
+#resourceShareMainPanel .collection-share-wrapper {
 	width: 84%;
 	margin-top: 15px;
 	position: relative;
@@ -71,7 +64,7 @@
 	margin-right: auto;
 }
 
-.share-wrapper {
+#resourceShareMainPanel .share-wrapper {
 	width: 67%;
 	margin-top: 15px;
 	position: relative;
@@ -79,19 +72,19 @@
 	margin-right: auto;
 }
 
-.collection-share-titleContainer {
+#resourceShareMainPanel .collection-share-titleContainer {
 	float: left;
 	padding-bottom: 5px;
 }
 
-.collection-share-title {
+#resourceShareMainPanel .collection-share-title {
 	color: #515151;
 	font-size: 14px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 
-.collection-share-textbox{
+#resourceShareMainPanel .collection-share-textbox{
 	border: 1px solid #CCC;
 	color: #414141;
 	font-size: 12px;
@@ -102,7 +95,7 @@
 	float: left;
 }
 
-.collection-share-separator {
+#resourceShareMainPanel .collection-share-separator {
 	float: left;
 	height: 73px;
 	width: 35px;
@@ -111,17 +104,17 @@
 }
 
 /* SocialShareWidget css */
-.addResource {
+#resourceShareMainPanel .addResource {
 	margin: 0px 10px 10px 0px;
 }
 
-.contentCollectionEdit {
+#resourceShareMainPanel .contentCollectionEdit {
 	float: left;
 	width: 97%;
 	margin-left: 23px;
 }
 
-.collection-socialshare-title {
+#resourceShareMainPanel .collection-socialshare-title {
 	float: left;
 	font-size: 13px;
 	color: #515151;
@@ -129,7 +122,7 @@
 	margin-left: 23px;
 }
 
-.facebookButton {
+#resourceShareMainPanel .facebookButton {
 	color: white;
 	background-color: #3b5996;
 	font-size: 12px;
@@ -157,7 +150,7 @@
 		-o-linear-gradient(top, #3b5996, #3b5996);
 }
 
-.twitterButton {
+#resourceShareMainPanel .twitterButton {
 	color: white;
 	background-color: #00acf0;
 	font-size: 12px;
@@ -185,7 +178,7 @@
 		-o-linear-gradient(top, #00acf0, #1076BB);
 }
 
-.emailButton {
+#resourceShareMainPanel .emailButton {
 	color: white;
 	background-color: #1076bb;
 	font-size: 12px;
@@ -213,7 +206,7 @@
 		-o-linear-gradient(top, #1076BB, #1076BB);
 }
 
-.resource-info-bottomImageContainer {
+#resourceShareMainPanel .resource-info-bottomImageContainer {
 	text-align: center;
 	padding-top: 10px;
 	cursor: pointer;
@@ -222,15 +215,15 @@
 	margin: 0 auto;
 }
 
-.resource-info-hideImage {
+#resourceShareMainPanel .resource-info-hideImage {
 	display: inline-block;
-	background-image: url("images/hide_arrow.png");
+	background-image: url("${cdn.endpoint}/images/hide_arrow.png");
 	width: 10px;
 	color: #fff;
 	height: 6px;
 }
 
-.resource-info-hideText {
+#resourceShareMainPanel .resource-info-hideText {
 	display: inline-block;
 	vertical-align: top;
 	color: #fff;

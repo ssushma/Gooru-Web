@@ -95,8 +95,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class QuestionTypeView extends BaseViewWithHandlers<QuestionTypeUiHandlers>
 implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField QuestionTypeCBundle res;
-
 	private static QuestionTypeViewUiBinder uiBinder = GWT	.create(QuestionTypeViewUiBinder.class);
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -2061,6 +2059,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
 
 				if(answer.isIsCorrect()){
+					addAnswerChoice.isOptionSelectedButton=true;
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
 				}else{
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
@@ -2070,7 +2069,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
 				widgetcount++;
 			}
-
+			addHotSpotQuestion.setAnswerChoices();
 		}
 
 	}

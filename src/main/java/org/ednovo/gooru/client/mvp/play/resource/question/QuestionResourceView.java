@@ -64,7 +64,6 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	@UiField Button hintsButton,explanaionButton;
 	@UiField FlowPanel hintsContainer,questionContainer;
 	@UiField HTML openEndedQuestionText;
-	@UiField QuestionStyleResource oeStyle;
 	private CollectionItemDo collectionItemDo;
 	private int hintsLength=0;
 
@@ -129,12 +128,12 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 				hintsButton.getElement().setAttribute("title"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 			}else{
-				hintsButton.setStyleName(oeStyle.hintsInActiveButton());
+				hintsButton.setStyleName("hintsInActiveButton");
 			}
 			if(collectionItemDo.getResource().getExplanation()!=null && collectionItemDo.getResource().getExplanation().trim().length()>0){
 			}
 			else{
-				explanaionButton.setStyleName(oeStyle.hintsInActiveButton());
+				explanaionButton.setStyleName("hintsInActiveButton");
 			}
 			if(!StringUtil.isEmpty(getQuestionImage())){
 				openEndedQuestionImage.setUrl(getQuestionImage());
@@ -185,24 +184,25 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	}
 	@UiHandler("hintsButton")
 	public void ClickOnHintButton(ClickEvent clickEvent){
-		if(hintsButton.getStyleName().equals(oeStyle.hintsActiveButton())){
+		if(hintsButton.getStyleName().equals("hintsActiveButton")){
 			if(collectionItemDo.getResource().getHints().size()>hintsLength){
+				startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
+				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),"hintsText"));
 
 				if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9){
 
 				}else{
 					startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
 				}
-				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),oeStyle.hintsText()));
 				hintsButton.setText(""+i18n.GL0317()+" ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
 				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 				hintsButton.getElement().setAttribute("title"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 				hintsLength++;
 				if(collectionItemDo.getResource().getHints().size()==hintsLength){
-					hintsButton.setStyleName(oeStyle.hintsInActiveButton());
+					hintsButton.setStyleName("hintsInActiveButton");
 				}
 			}else{
-				hintsButton.setStyleName(oeStyle.hintsInActiveButton());
+				hintsButton.setStyleName("hintsInActiveButton");
 			}
 		}
 	}
@@ -222,10 +222,10 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	}
 	@UiHandler("explanaionButton")
 	public void ClickOnExplanationButton(ClickEvent clickEvent){
-		if(explanaionButton.getStyleName().equals(oeStyle.hintsActiveButton())){
+		if(explanaionButton.getStyleName().equals("hintsActiveButton")){
 			explanationContainer.add(getHTML(collectionItemDo.getResource().getExplanation()));
-			explanationContainer.addStyleName(oeStyle.explanationTextBorder());
-			explanaionButton.setStyleName(oeStyle.hintsInActiveButton());
+			explanationContainer.addStyleName("explanationTextBorder");
+			explanaionButton.setStyleName("hintsInActiveButton");
 			startExplanationDataLogEvent(collectionItemDo.getResource().getExplanation());
 		}
 	}
@@ -257,9 +257,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		hintsButton.setText(i18n.GL0667());
 		hintsButton.getElement().setAttribute("alt",i18n.GL0667());
 		hintsButton.getElement().setAttribute("title",i18n.GL0667());
-		hintsButton.setStyleName(oeStyle.hintsActiveButton());
-		explanaionButton.setStyleName(oeStyle.hintsActiveButton());
-		explanationContainer.removeStyleName(oeStyle.explanationTextBorder());
+		hintsButton.setStyleName("hintsActiveButton");
+		explanaionButton.setStyleName("hintsActiveButton");
+		explanationContainer.removeStyleName("explanationTextBorder");
 		hintsContainer.clear();
 		explanationContainer.clear();
 		clearAnswerOptionsContainer();

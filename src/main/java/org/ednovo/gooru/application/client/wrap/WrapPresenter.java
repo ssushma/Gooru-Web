@@ -56,8 +56,6 @@ import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle;
-import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerCBundle;
-import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
@@ -312,12 +310,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	}
 
 	private void loadResponsiveCss(){
-		AppClientFactory.printInfoLogger("Load Css Start : "+System.currentTimeMillis());
-		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
-		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");
-		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
-
 		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
@@ -345,14 +337,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 		AnalyticsTabCBundle.INSTANCE.css().ensureInjected();
 
-		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+ResourcePlayerCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+ResourcePlayerCBundle.INSTANCE.getResponsive2Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+ResourcePlayerCBundle.INSTANCE.getResponsive3Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 992px){"+ResourcePlayerCBundle.INSTANCE.getResponsive4Style().getText()+"}");
-
-		ResourcePlayerCBundle.INSTANCE.css().ensureInjected();
-
-
 		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 
@@ -365,8 +349,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
-
-		AppClientFactory.printInfoLogger("Load Css End : "+System.currentTimeMillis());
 	}
 
 }

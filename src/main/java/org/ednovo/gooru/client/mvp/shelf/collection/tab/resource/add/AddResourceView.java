@@ -543,7 +543,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				@Override
 				public void execute() {
 					if(collectionItemDo!=null){
+						int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
+						if(type==10){
 						getUiHandlers().setHSEditData();
+						}
 						showEditQuestionResourceView();
 					}
 				}

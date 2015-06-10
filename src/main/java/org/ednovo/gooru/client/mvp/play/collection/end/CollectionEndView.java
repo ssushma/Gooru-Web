@@ -56,7 +56,6 @@ import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;

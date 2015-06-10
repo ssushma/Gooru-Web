@@ -81,7 +81,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements ClientCon
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField HTMLPanel buttonsContainer,ratingsConfirmationMainPanel;
 	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl,thankYouRatingLbl;
-	/*@UiField ResourcePlayerMetadataBundle playerStyle;*/
+	
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review,createrName;

@@ -73,7 +73,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 
 		@UiField TextArea resourceShareTextArea;
 		
-		@UiField FlowPanel socialSharePanel;
+		@UiField FlowPanel socialSharePanel,resourceSharePanel;
 
 		@UiField InlineLabel embedLink,bitlyLink;
 		
@@ -96,6 +96,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		resourceShareTextArea.setReadOnly(true);
 		resourceShareTextArea.getElement().setAttribute("readOnly", "");
+		resourceSharePanel.getElement().setId("resourceShareMainPanel");
 		embedLink.setText(i18n.GL0640());
 		embedLink.getElement().setId("spnEmbedLink");
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());

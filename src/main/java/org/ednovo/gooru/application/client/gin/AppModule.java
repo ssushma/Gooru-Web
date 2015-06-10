@@ -133,6 +133,9 @@ import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter.IsShelfMainProxy;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.CourseListPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.CourseListView;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.IsCourseListView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
@@ -608,5 +611,8 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(EpapaLibraryPresenter.class, IsEpapaLibraryView.class, EpapaLibraryView.class,IsEpapaLibraryProxy.class);
 
 		bindSingletonPresenterWidget(QuestionTypePresenter.class,IsQuestionTypeView.class, QuestionTypeView.class);
+
+		//My Collections New Presenter widgets
+		bindPresenterWidget(CourseListPresenter.class,IsCourseListView.class,CourseListView.class);
 	}
 }

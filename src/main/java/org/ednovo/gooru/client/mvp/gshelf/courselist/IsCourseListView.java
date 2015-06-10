@@ -22,43 +22,15 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource.body;
-import com.google.gwt.resources.client.CssResource;
+package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
-public interface ResourcePlayerMetadataBundle extends CssResource {
-	
-	String spriteType();
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
-	String emoticon_i();
-	
-	String emoticon_ii();
-	
-	String emoticon_iii();
-	
-	String emoticon_iv();
-	
-	String emoticon_v();
-	
-	String emoticon_vi();
-	
-	String emoticon_vii();
-	
-	String emoticon_viii();
-	
-	String emoticon_ix();
-	
-	String emoticon_x();
-	
-	String collectionPlayerWrapper();
-	
-	String collectionPlayerWrapperPadding();
-	
-	String collectionPlayerImage();
-	
-	String eductaionalUseDesign();
-	
-	String educationalUseMoretags();
-	String reviewPopup();
-	String green();
+/**
+ * @author Search Team
+ *
+ */
+public interface IsCourseListView extends IsViewWithHandlers<CourseListUiHandlers> {
+
 	
 }
