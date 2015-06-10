@@ -45,7 +45,7 @@
 										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2084}"></g:Label>
 										<g:FlowPanel ui:field="spendTimeContainer"></g:FlowPanel>
 									</g:FlowPanel>
-									<g:FlowPanel styleName="{smallMobile.getPlayerSmallMobile.playBoxTime} {playerStyle.PlayBox} ">
+									<g:FlowPanel styleName="{smallMobile.getPlayerSmallMobile.playBoxTime} {playerStyle.PlayBox} " visible="false">
 										<g:Label styleName="{playerStyle.smallTxt} " text="{i18n.GL2085}"></g:Label>
 										<g:FlowPanel ui:field="scoreContainer"></g:FlowPanel>
 									</g:FlowPanel>
