@@ -151,15 +151,15 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			leftMenuItemView.setWidgetCount(leftNav.getWidgetCount()+1);
 			leftMenuItemView.setType(folderList.get(i).getType());
 			if(folderList.get(i).getCollectionType().contains(ASSESSMENT)) {
-				leftMenuItemView.addStyleName(style.assessment());
+				leftMenuItemView.addStyleName("assessment");
 			}else if(folderList.get(i).getType().equals(COLLECTION)){
-				leftMenuItemView.addStyleName(style.collection());
+				leftMenuItemView.addStyleName("collection");
 			}
 			if(firstWidgetCount==0&&folderId==null) {
 				firstWidgetCount++;
 				loadingPanel(true);
 				folderListPanel.setVisible(false);
-				leftMenuItemView.addStyleName(style.open());
+				leftMenuItemView.addStyleName("open");
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
 				if(folderList.get(i).getType().equals(COLLECTION)) {
@@ -190,9 +190,9 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					while (widgetsPanel.hasNext()) {
 						final Widget widgetTxt = widgetsPanel.next();
 						widgetTxt.removeStyleName(style.active());
-						widgetTxt.removeStyleName(style.open());
+						widgetTxt.removeStyleName("open");
 					}
-					leftMenuItemView.addStyleName(style.open());
+					leftMenuItemView.addStyleName("open");
 					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
 					if(leftMenuItemView.getType().equals(COLLECTION)) {

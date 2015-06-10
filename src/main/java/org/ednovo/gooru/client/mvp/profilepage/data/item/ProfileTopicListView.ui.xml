@@ -4,7 +4,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<ui:style field="style" src="../ProfilePageLibraryStyle.css" type="org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle" />
 	      <g:HTMLPanel styleName="{style.topicBlock}" ui:field="topicBlock">
-	         <g:Label styleName="{style.topicTitle} {style.folderLevel} {style.open}" ui:field="topicTitleLbl"/>
+	         <g:Label styleName="{style.topicTitle} folderLevel open" ui:field="topicTitleLbl"/>
 	         <g:Label styleName="{style.libraryTopicTitle}" ui:field="libraryTopicLbl"/>
 	           <panel:HTMLEventPanel styleName="{style.searchLink}" ui:field="searchLink">
 	               <g:HTMLPanel styleName="{style.hoverText}" ui:field="moreOnTopicText"></g:HTMLPanel>

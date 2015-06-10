@@ -260,7 +260,7 @@ public class ProfileTopicListView extends Composite{
 				}
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
-				AppClientFactory.printSevereLogger(e.getMessage());
+//				AppClientFactory.printSevereLogger(e.toString());
 			}
 		}
 		
@@ -339,12 +339,12 @@ public class ProfileTopicListView extends Composite{
 		setTopicLabel(profileFolderDo.getTitle());
 		searchTitle=profileFolderDo.getTitle();
 		if(profileFolderDo.getCollectionType().contains(ASSESSMENT)){
-			topicTitleLbl.addStyleName(style.assessment());
+			topicTitleLbl.addStyleName("assessment");
 			if(profileFolderDo.getCollectionType().equals(ASSESSMENT_URL)){
 				showAssessmentButton(true);
 			}
 		}else{
-			topicTitleLbl.addStyleName(style.collection());
+			topicTitleLbl.addStyleName("collection");
 		}
 				
 		try {
