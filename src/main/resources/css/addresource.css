@@ -1,35 +1,23 @@
 @charset "utf-8";
 /* CSS Document */
-.collectionPlayerAddResourcesContainer {
-	width: 100%;
-	height: 120px;
-	margin:0 auto;
-	background-color: #515151;
-/* 	margin-left: 42px; */
-	overflow:hidden;
-	/* padding-top:50px; */
-	/* margin-top:10px;
-	margin-bottom:10px; */
-}
-
-.collectionPlayerAddResourcesContent {
+#mainPanel .collectionPlayerAddResourcesContent {
 	width: 100%;
 	height: 30px;
 }
 
-.collectionPlayerAddResourcesIconContainer {
+#mainPanel .collectionPlayerAddResourcesIconContainer {
 	margin: 0 auto;
 	height: 30px;
 	text-align:center;
 }
 
-.collectionPlayerAddResourcesIconHolder {
+#mainPanel .collectionPlayerAddResourcesIconHolder {
 	float: left;
 	width: 80px;
 	height: 60px;
 }
 
-.collectionPlayerAddResourcesIcon {
+#mainPanel .collectionPlayerAddResourcesIcon {
 	float: left;
 	margin-top: 6px;
 	width: 80px;
@@ -37,13 +25,13 @@
 	position:relative;
 }
 
-.collectionPlayerAddResourcesSmallIcon {
+#mainPanel .collectionPlayerAddResourcesSmallIcon {
 	position: absolute;
 	margin-top: 39px;
 	margin-left: -54px;
 }
 
-.collectionPlayerAddResourcesText {
+#mainPanel .collectionPlayerAddResourcesText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #FFFFFF;
@@ -51,7 +39,7 @@
 	/* float: left; */
 }
 
-.collectionPlayerAddResourcesCollectionInstead {
+#mainPanel .collectionPlayerAddResourcesCollectionInstead {
 	float: right;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -60,18 +48,18 @@
 	margin-top: 10px;
 	cursor: pointer;
 }
-.collectionPlayerAddResourcesCollectionInstead:hover{
+#mainPanel .collectionPlayerAddResourcesCollectionInstead:hover{
 	opacity: 0.6;
 }
 
-.collectionPlayerExistingCollectionContainer {
+#mainPanel .collectionPlayerExistingCollectionContainer {
 /* 	width: 960px; */
 /* 	height: 85px;
 	background-color: #FFF;
  */	margin: 0 auto;
 
 }
-.collectionPlayerExistingCollectionContainerAdd {
+#mainPanel .collectionPlayerExistingCollectionContainerAdd {
 	width: 960px;
 	height: 85px;
 	background-color: #F0F0F0;
@@ -79,7 +67,7 @@
 
 }
 
-.collectionPlayerExistingCollectionContent {
+#mainPanel .collectionPlayerExistingCollectionContent {
 	/* width: 960px;
 	margin-left: 266px; */
 	min-height: 36px;
@@ -90,7 +78,7 @@
 	margin:0 auto;
 }
 
-.collectionPlayerExistingCollectionText {
+#mainPanel .collectionPlayerExistingCollectionText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #515151;
@@ -98,7 +86,7 @@
 	margin-top: 6px;
 }
 
-.collectionPlayerExistingCollectionInputContainer {
+#mainPanel .collectionPlayerExistingCollectionInputContainer {
 	float: left;
 	display: inline-block;
 	margin-left: 10px;
@@ -106,7 +94,7 @@
 	/* width: 312px; */
 }
 
-.collectionPlayerExistingCollectionInput {
+#mainPanel .collectionPlayerExistingCollectionInput {
 	width: 324px;
 	height: 24px;
 	float: left;
@@ -115,16 +103,16 @@
 	border: 1px solid #CCC;
 }
 
-.collectionPlayerExistingAddButton {
+#mainPanel .collectionPlayerExistingAddButton {
 	float: right;
 	min-width: 60px;
 	display: inline-block;
 }
-.collectionPlayerExistingAddButtonText:hover{
+#mainPanel .collectionPlayerExistingAddButtonText:hover{
 	background: #1076BB;
 }
 
-.collectionPlayerExistingAddButtonText {
+#mainPanel .collectionPlayerExistingAddButtonText {
 	font-size: 12px;
 	position: relative;
 	text-align: center;
@@ -152,7 +140,7 @@
 	margin-top: -1px;
 }
 
-.collectionPlayerNewColletionText {
+#mainPanel .collectionPlayerNewColletionText {
 	/* width: 150px; */
 	height: 15px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -165,14 +153,14 @@
 
 /* info css */
 /* CSS Document */
-.collectionxPlayerResourcesWrapper {
+#mainPanel .collectionxPlayerResourcesWrapper {
 	width: 940px;
 	height: 802px;
 	background-color: #f0f0f0;
 	float: left;
 }
 
-.collectionxPlayerResourcesLeftSection {
+#mainPanel .collectionxPlayerResourcesLeftSection {
 	width: 374px;
 	min-height: 780px;
 	height: auto;
@@ -182,7 +170,7 @@
 	border-right: 1px dashed #aaaaaa;
 }
 
-.collectionxPlayerResourcesRightSection {
+#mainPanel .collectionxPlayerResourcesRightSection {
 	width: 506px;
 	min-height: 760px;
 	height: auto;
@@ -191,13 +179,13 @@
 	margin-top: 20px;
 }
 
-.collectionxPlayerIntractiveIcon {
+#mainPanel .collectionxPlayerIntractiveIcon {
 	width: 27px;
 	height: 20px;
 	float: left;
 }
 
-.collectionxPlayerChapterName {
+#mainPanel .collectionxPlayerChapterName {
 	float: left;
 	color: #515151;
 	font-family: Arial, Helvetica, sans-serif;
@@ -206,7 +194,7 @@
 	margin-top: 2px;
 }
 
-.collectionxPlayerBullet {
+#mainPanel .collectionxPlayerBullet {
 	width: 5px;
 	height: 5px;
 	float: left;
@@ -215,7 +203,7 @@
 	margin-top: 7px;
 }
 
-.collectionxPlayerBulletTwo {
+#mainPanel .collectionxPlayerBulletTwo {
 	width: 5px;
 	height: 5px;
 	float: left;
@@ -225,7 +213,7 @@
 	margin-right: 7px;
 }
 
-.collectionxPlayerLessionName {
+#mainPanel .collectionxPlayerLessionName {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #515151;
@@ -234,7 +222,7 @@
 	margin-top: 2px;
 }
 
-.collecionxplayerLessionDescribtion {
+#mainPanel .collecionxplayerLessionDescribtion {
 	width: 100%;
 	float: left;
 	font-size: 12px;
@@ -243,7 +231,7 @@
 	margin-top: 10px;
 }
 
-.collectionxPlayerMoreInformation {
+#mainPanel .collectionxPlayerMoreInformation {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -252,7 +240,7 @@
 	margin-top: 17px;
 }
 
-.collectionxPlayerResourcesTitle {
+#mainPanel .collectionxPlayerResourcesTitle {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -260,7 +248,7 @@
 	font-weight: bold;
 }
 
-.collectionxPlayerResourcesChapterTitles {
+#mainPanel .collectionxPlayerResourcesChapterTitles {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -270,39 +258,39 @@
 	margin-left: 10px;
 }
 
-.collectionxPlayerMoreInformationLeftContainer {
+#mainPanel .collectionxPlayerMoreInformationLeftContainer {
 	width: 194px;
 	float: left;
 	clear: both;
 }
 
-.collectionxPlayerMoreInforamtionLeftContent {
+#mainPanel .collectionxPlayerMoreInforamtionLeftContent {
 	width: 194px;
 	min-height: 100px;
 	float: left;
 }
 
-.collectionxPlayerMoreInformationOneSetInfo {
+#mainPanel .collectionxPlayerMoreInformationOneSetInfo {
 	float: left;
 	width: 100%;
 	margin-top: 10px;
 }
 
-.collectionxPlayerMoreInfoHomeIcon {
+#mainPanel .collectionxPlayerMoreInfoHomeIcon {
 	float: left;
 	width: 23px;
 	height: 21px;
 	margin-right: 17px;
 }
 
-.collectionxPlayerMoreInforamtionText {
+#mainPanel .collectionxPlayerMoreInforamtionText {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #515151;
 }
 
-.collectionxPlayerMoreInforamtionTextBlue {
+#mainPanel .collectionxPlayerMoreInforamtionTextBlue {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -310,94 +298,94 @@
 	width: 130px;
 }
 
-.collectionxPlayerMoreInformationRightContainer {
+#mainPanel .collectionxPlayerMoreInformationRightContainer {
 	width: 174px;
 	float: left;
 }
 
-.collectionxPlayerMoreInformationRightOneSetInfo {
+#mainPanel .collectionxPlayerMoreInformationRightOneSetInfo {
 	width: 100%;
 	float: left;
 	margin-top: 10px;
 }
 
-.collectionxPlayerMoreInformationViewIcon {
+#mainPanel .collectionxPlayerMoreInformationViewIcon {
 	float: left;
 	width: 23px;
 	height: 21px;
 	margin-right: 17px;
 }
 
-.collectionxPlayerMoreInformationLikesIcon {
+#mainPanel .collectionxPlayerMoreInformationLikesIcon {
 	float: left;
 	width: 23px;
 	height: 21px;
 	margin-right: 17px;
 }
 
-.collectioinxPlayerMoreInformationShareIcon {
+#mainPanel .collectioinxPlayerMoreInformationShareIcon {
 	float: left;
 	width: 23px;
 	height: 21px;
 	margin-right: 17px;
 }
 
-.collectioinxPlayerMoreInformationStudyIcon {
+#mainPanel .collectioinxPlayerMoreInformationStudyIcon {
 	float: left;
 	width: 22px;
 	height: 18px;
 	margin-right: 17px;
 }
 
-.collectioinxPlayerMoreInformationMeachineIcon {
+#mainPanel .collectioinxPlayerMoreInformationMeachineIcon {
 	float: left;
 	width: 22px;
 	height: 18px;
 	margin-right: 17px;
 }
 
-.collectioinxPlayerMoreInformationStandardsIcon {
+#mainPanel .collectioinxPlayerMoreInformationStandardsIcon {
 	float: left;
 	width: 57px;
 	height: 20px;
 	margin-right: 10px;
 }
 
-.collectioinxPlayerMoreInformationEorIcon {
+#mainPanel .collectioinxPlayerMoreInformationEorIcon {
 	width: 57px;
 	height: 20px;
 	float: left;
 }
 
-.collectionxPlayerMoreInforamtionTimeIcon {
+#mainPanel .collectionxPlayerMoreInforamtionTimeIcon {
 	float: left;
 	width: 23px;
 	height: 21px;
 	margin-right: 17px;
 }
 
-.collectionxPlayerChapterBgIcon {
+#mainPanel .collectionxPlayerChapterBgIcon {
 	width: 120px;
 	float: left;
 	height: 90px;
 	background-image: url(../images/chapter-icon.png);
 }
 
-.collectionxPlayerChapterBlueBar {
+#mainPanel .collectionxPlayerChapterBlueBar {
 	width: 8px;
 	height: 90px;
 	float: left;
 	background-image: url(../images/chapter-icon-blue-bar.png);
 }
 
-.collectionxPlayerResourecesContainer {
+#mainPanel .collectionxPlayerResourecesContainer {
 	width: 417px;
 	height: 90px;
 	float: left;
 	margin-top: 20px;
 }
 
-.collectionxPlayerResourcesAuthorName {
+#mainPanel .collectionxPlayerResourcesAuthorName {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -408,14 +396,14 @@
 	margin-top: 5px;
 }
 
-.collectionxPlayerResourceDetails {
+#mainPanel .collectionxPlayerResourceDetails {
 	width: 270px;
 	margin-left: 10px;
 	float: left;
 	margin-top: 5px;
 }
 
-.collectionxPlayerDetailsResourceTitle {
+#mainPanel .collectionxPlayerDetailsResourceTitle {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -423,7 +411,7 @@
 	margin-right: 5px;
 }
 
-.collectionxPlayerDetailsResourceView {
+#mainPanel .collectionxPlayerDetailsResourceView {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -431,17 +419,17 @@
 	margin-right: 5px;
 }
 
-.left {
+#mainPanel .left {
 	float: left;
 }
 
-.collectionxPlayerResouresSmallNumberImage {
+#mainPanel .collectionxPlayerResouresSmallNumberImage {
 	float: left;
 	margin-top: 4px;
 	margin-right: 5px;
 }
 
-.collectionxPlayerResouresCount {
+#mainPanel .collectionxPlayerResouresCount {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #4f9747;
@@ -449,7 +437,7 @@
 }
 
 /* New Popup css */
-.popupNewCollection {
+#mainPanel .popupNewCollection {
 	width: 212px;
 	margin-left: 51px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -457,12 +445,12 @@
 	color: #999999;
 }
 
-.popupBirthday {
+#mainPanel .popupBirthday {
 	width: 212px;
 	margin-left: 21px;
 }
 
-.leftAndWidth {
+#mainPanel .leftAndWidth {
 	float: left;
 	width: 43px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -470,19 +458,19 @@
 	color: #515151;
 }
 
-.popupNewCollectionDownArrow {
+#mainPanel .popupNewCollectionDownArrow {
 	position: absolute;
 	margin-top: -16px;
 	margin-left: 292px;
 	cursor: pointer;
 }
 
-.popupEmail {
+#mainPanel .popupEmail {
 	width: 212px;
 	margin-left: 32px;
 }
 
-.popupNewCollectionUserInput {
+#mainPanel .popupNewCollectionUserInput {
 	width: 448px;
 	float: left;
 	margin: 22px 0px 0px 11px;
@@ -491,7 +479,7 @@
 	color: #515151;
 }
 
-.popupNewCollectionUserInputTwo {
+#mainPanel .popupNewCollectionUserInputTwo {
 	width: 448px;
 	float: left;
 	margin: 12px 0px 0px 11px;
@@ -500,7 +488,7 @@
 	color: #515151;
 }
 
-.popupNewCollectionWrapper {
+#mainPanel .popupNewCollectionWrapper {
 	width: 460px;
 	height: 225px;
 	margin: 0 auto;
@@ -508,7 +496,7 @@
 	background-color: #FFF;
 }
 
-.popupRegisterWrapper {
+#mainPanel .popupRegisterWrapper {
 	width: 505px;
 	height: 261px;
 	margin: 0 auto;
@@ -516,7 +504,7 @@
 	background-color: #FFF;
 }
 
-.popupNewCollectionContainer {
+#mainPanel .popupNewCollectionContainer {
 	width: 452px;
 	height: 217px;
 	margin: 3px;
@@ -524,7 +512,7 @@
 	background-color: #FFF;
 }
 
-.popupRegisterContainer {
+#mainPanel .popupRegisterContainer {
 	width: 497px;
 	height: 252px;
 	margin: 3px;
@@ -532,14 +520,14 @@
 	background-color: #FFF;
 }
 
-.popupNewCollectionHeader {
+#mainPanel .popupNewCollectionHeader {
 	width: 452px;
 	height: 34px;
 	float: left;
 	background-color: #515151;
 }
 
-.popupNewCollectionHeaderTitle {
+#mainPanel .popupNewCollectionHeaderTitle {
 	float: left;
 	font: 19px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -547,7 +535,7 @@
 	color: #FFF;
 }
 
-.popupNewCollectionDescribtion {
+#mainPanel .popupNewCollectionDescribtion {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -556,12 +544,12 @@
 	margin: 16px 0px 0px 16px;
 }
 
-.popupNewCollectionButtonContainer {
+#mainPanel .popupNewCollectionButtonContainer {
 	width: 125px;
 	margin: 0 auto;
 }
 
-.popupNewCollectionSendButton {
+#mainPanel .popupNewCollectionSendButton {
 	float: left;
 	width: 61px;
 	height: 33px;
@@ -569,7 +557,7 @@
 	margin-top: 30px;
 }
 
-.popNewCollectionOkButton {
+#mainPanel .popNewCollectionOkButton {
 	float: left;
 	cursor: pointer;
 	margin-top: 20px;
@@ -577,7 +565,7 @@
 	height: 31px;
 }
 
-.popupNewCollectionQuestionMark {
+#mainPanel .popupNewCollectionQuestionMark {
 	float: right;
 	color: #1076bb;
 	font-family: Arial, Helvetica, sans-serif;
@@ -586,7 +574,7 @@
 	margin-top: 3px;
 }
 
-.popupNewCollectionSendButton {
+#mainPanel .popupNewCollectionSendButton {
 	float: left;
 	width: 50px;
 	height: 33px;
@@ -594,7 +582,7 @@
 	margin-top: 30px;
 }
 
-.popupNewCollectionCancelButton {
+#mainPanel .popupNewCollectionCancelButton {
 	float: left;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -605,21 +593,21 @@
 
 /* SUMMARY.CSS */
 /* CSS Document */
-.collectionXPlayerSegmentWrapper {
+#mainPanel .collectionXPlayerSegmentWrapper {
 	width: 1150px;
 	min-height: 500px;
 	height: auto;
 	margin: 0 auto;
 }
 
-.collectionXPlayerSegmentHeader {
+#mainPanel .collectionXPlayerSegmentHeader {
 	width: 1150px;
 	height: 57px;
 	float: left;
 	background-color: #515151;
 }
 
-.collectionXPlayerSegmentHeaderTitle {
+#mainPanel .collectionXPlayerSegmentHeaderTitle {
 	float: left;
 	font-size: 24px;
 	color: #FFF;
@@ -627,7 +615,7 @@
 	margin: 17px 0px 0px 26px;
 }
 
-.collectionxPlayerSummaryBottomDescription {
+#mainPanel .collectionxPlayerSummaryBottomDescription {
 	float: left;
 	margin-left: 130px;
 	font-size: 12px;
@@ -642,7 +630,7 @@ body {
 	line-height: 18px;
 }
 
-.collectionxPlayerSummaryWrapper {
+#mainPanel .collectionxPlayerSummaryWrapper {
 	width: 940px;
 	margin: 0 auto;
 	min-height: 886px;
@@ -650,7 +638,7 @@ body {
 	background-color: #111111;
 }
 
-.collectionxPlayerSummaryTitle {
+#mainPanel .collectionxPlayerSummaryTitle {
 	width: 402px;
 	margin: 0 auto;
 	color: #FFF;
@@ -658,26 +646,26 @@ body {
 	font-size: 21px;
 }
 
-.collectionxPlayerSummaryTitleText {
+#mainPanel .collectionxPlayerSummaryTitleText {
 	float: left;
 	margin-top: 40px;
 }
 
-.collectionxPlayerRefreshContainer {
+#mainPanel .collectionxPlayerRefreshContainer {
 	width: 40px;
 	height: 44px;
 	margin: 0 auto;
 	margin-top: 20px;
 }
 
-.collectionxPlayerRefreshImage {
+#mainPanel .collectionxPlayerRefreshImage {
 	float: left;
 	width: 27px;
 	height: 27px;
 	cursor: pointer;
 }
 
-.collectionxPlayerRefreshText {
+#mainPanel .collectionxPlayerRefreshText {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -686,7 +674,7 @@ body {
 	cursor: pointer;
 }
 
-.collectionxPlayerSummaryQuestionTitle {
+#mainPanel .collectionxPlayerSummaryQuestionTitle {
 	float: left;
 	width: 93%;
 	margin-left: 40px;
@@ -696,7 +684,7 @@ body {
 	margin-top: 40px;
 }
 
-.collectionxPlayerSummaryAnswerCorrectlyContainer {
+#mainPanel .collectionxPlayerSummaryAnswerCorrectlyContainer {
 	float: left;
 	width: 93%;
 	height: 43px;
@@ -704,34 +692,34 @@ body {
 	margin-top: 18px;
 }
 
-.collectionxPlayerSummaryAnswerCorrectlyText {
+#mainPanel .collectionxPlayerSummaryAnswerCorrectlyText {
 	font-size: 12px;
 	float: left;
 	color: #FFF;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-.collectionxPlayerSummaryAnswerCorrectlyBoxContainer {
+#mainPanel .collectionxPlayerSummaryAnswerCorrectlyBoxContainer {
 	float: left;
 	clear: both;
 	margin-top: 3px;
 }
 
-.collectionxPlayerSummaryAnswerCorrectlyBoxGray {
+#mainPanel .collectionxPlayerSummaryAnswerCorrectlyBoxGray {
 	width: 400px;
 	height: 22px;
 	float: left;
 	background-color: #999999;
 }
 
-.collectionxPlayerSummaryAnserCorrectlyBoxGreen {
+#mainPanel .collectionxPlayerSummaryAnserCorrectlyBoxGreen {
 	float: left;
 	background-color: #4e9746;
 	height: 22px;
 	width: 202px;
 }
 
-.collectionxPlayerSummaryQuestionContainer {
+#mainPanel .collectionxPlayerSummaryQuestionContainer {
 	float: left;
 	margin-top: 40px;
 	width: 861px;
@@ -739,20 +727,20 @@ body {
 	margin-left: 40px;
 }
 
-.collectionxPlayerSummaryQuestionImage {
+#mainPanel .collectionxPlayerSummaryQuestionImage {
 	float: left;
 	width: 80px;
 	height: 60px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerContainer {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerContainer {
 	width: 766px;
 	height: 130px;
 	float: left;
 	margin-left: 15px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerWrongImage {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerWrongImage {
 	float: left;
 	width: 12px;
 	height: 15px;
@@ -760,7 +748,7 @@ body {
 	margin-left: -18px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerRigntImage {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerRigntImage {
 	float: left;
 	width: 15px;
 	height: 16px;
@@ -768,7 +756,7 @@ body {
 	margin-left: -22px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerQuestion {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerQuestion {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -776,7 +764,7 @@ body {
 	margin-left: 18px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerOptionOneContainer {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerOptionOneContainer {
 	float: left;
 	width: 700px;
 	clear: both;
@@ -784,7 +772,7 @@ body {
 	margin-left: 18px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerOrder {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerOrder {
 	float: left;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -792,21 +780,21 @@ body {
 	margin-right: 15px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerOptions {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerOptions {
 	float: left;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #FFF;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerOptionContainer {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerOptionContainer {
 	float: left;
 	width: 700px;
 	clear: both;
 	margin-left: 18px;
 }
 
-.collectionxPlayerSummaryQuestionAndAnswerDescribtion {
+#mainPanel .collectionxPlayerSummaryQuestionAndAnswerDescribtion {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -814,7 +802,7 @@ body {
 	margin-top: 8px;
 }
 
-.collectionxPlayerSummaryStudyMoreContainer {
+#mainPanel .collectionxPlayerSummaryStudyMoreContainer {
 	width: 90%;
 	min-height: 90px;
 	height: auto;
@@ -822,7 +810,7 @@ body {
 	margin-top: 20px;
 }
 
-.collectionxPlayerSummaryAuthorName {
+#mainPanel .collectionxPlayerSummaryAuthorName {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -833,7 +821,7 @@ body {
 	margin-top: 5px;
 }
 
-.collectionxPlayerSummaryPartDetails {
+#mainPanel .collectionxPlayerSummaryPartDetails {
 	width: 270px;
 	margin-left: 10px;
 	float: left;
@@ -841,28 +829,28 @@ body {
 	color: #FFF;
 }
 
-.collectionxPlayerChapterBgIcon2 {
+#mainPanel .collectionxPlayerChapterBgIcon2 {
 	width: 120px;
 	float: left;
 	height: 90px;
 	background-image: url(../images-2/chapter-icon.png);
 }
 
-.collectionxPlayerChapterBlueBar2 {
+#mainPanel .collectionxPlayerChapterBlueBar2 {
 	width: 8px;
 	height: 90px;
 	float: left;
 	background-image: url(../images-2/chapter-icon-blue-bar.png);
 }
 
-.collectionxPlayerDetailsSummaryTitle {
+#mainPanel .collectionxPlayerDetailsSummaryTitle {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	margin-right: 5px;
 }
 
-.collectionxPlayerBulletTwo {
+#mainPanel .collectionxPlayerBulletTwo {
 	width: 5px;
 	height: 5px;
 	float: left;
@@ -872,14 +860,14 @@ body {
 	margin-right: 7px;
 }
 
-.collectionxPlayerDetailsSummaryView {
+#mainPanel .collectionxPlayerDetailsSummaryView {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	margin-right: 5px;
 }
 
-.collectionxPlayerBulletTwo {
+#mainPanel .collectionxPlayerBulletTwo {
 	width: 5px;
 	height: 5px;
 	float: left;
@@ -889,24 +877,24 @@ body {
 	margin-right: 7px;
 }
 
-.left {
+#mainPanel .left {
 	float: left;
 }
 
-.collectionxPlayerResouresSmallNumberImage {
+#mainPanel .collectionxPlayerResouresSmallNumberImage {
 	float: left;
 	margin-top: 4px;
 	margin-right: 5px;
 }
 
-.collectionxPlayerResouresCount {
+#mainPanel .collectionxPlayerResouresCount {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #4f9747;
 	float: left;
 }
 
-.collectionxPlayerSummaryStudyMoreChapterTitles {
+#mainPanel .collectionxPlayerSummaryStudyMoreChapterTitles {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -916,12 +904,12 @@ body {
 	margin-left: 10px;
 }
 
-.collectionAddingStyles {
+#mainPanel .collectionAddingStyles {
 	font-style: italic;
 	margin-left: 33px;
 }
 
-.resourceAdditionErrorStyle {
+#mainPanel .resourceAdditionErrorStyle {
 	font-style: italic;
 	margin-left: 12px;
 	font-style: italic;
@@ -930,7 +918,7 @@ body {
 	font-size: 11px;
 }
 
-.collectionAddedToShelf {
+#mainPanel .collectionAddedToShelf {
 	float: left;
 	margin-left: -335px;
 	margin-top: 10px;
@@ -939,13 +927,13 @@ body {
 	width: 314px !important;
 }
 
-.collectionAddedToShelfText {
+#mainPanel .collectionAddedToShelfText {
 	font-size: 12px;
 	color: green;
 	display: none;
 	margin-top:25px;
 }
-.dropdownListPlaceHolder{
+#mainPanel .dropdownListPlaceHolder{
 	background-color: white;
 	color: #999;
 	padding: 5px 25px 5px 5px;
@@ -958,14 +946,14 @@ body {
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
 }
-.dropdownListContainer{
+#mainPanel .dropdownListContainer{
 	list-style-type: none;
 	padding:0;
 	margin:0;
 	z-index:9999;
 	background-color: #F9F9F9;
 }
-.dropdownListContainerScrollPanel{
+#mainPanel .dropdownListContainerScrollPanel{
 	border: 1px solid #DDD;
 	list-style-type: none;
 	padding:0;
@@ -976,7 +964,7 @@ body {
 	width: 242px;
 }
 
-.dropdownListItemContainer{
+#mainPanel .dropdownListItemContainer{
 	padding: 5px;
 	background: white;
 	margin: 0px;
@@ -985,44 +973,44 @@ body {
 	font-size: 12px;
 }
 
-.dropdownListItemContainer:hover{
+#mainPanel .dropdownListItemContainer:hover{
 	background-color: #CFE3F1;
 	cursor: pointer;
 }
 /*Scroll bar style for default scrolls*/
-.dropdownListContainerScrollPanel::-webkit-scrollbar {
+#mainPanel .dropdownListContainerScrollPanel::-webkit-scrollbar {
 	width: 8px;
 } /* this targets the default scrollbar (compulsory) */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-track {
+#mainPanel .dropdownListContainerScrollPanel::-webkit-scrollbar-track {
 	background-color: white;
 	width: 15px;
 }
 /* the new scrollbar will have a flat appearance with the set background color */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-thumb { /*background-color: rgba(0, 0, 0, 0.2);*/
+#mainPanel .dropdownListContainerScrollPanel::-webkit-scrollbar-thumb { /*background-color: rgba(0, 0, 0, 0.2);*/
 	background-color: rgba(0, 0, 0, 0.2);
 	width: 15px;
 } /* this will style the thumb, ignoring the track */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-button {
+#mainPanel .dropdownListContainerScrollPanel::-webkit-scrollbar-button {
 	background-color: #DDDDDD;
 	width: 0px;
 	height: 0px;
 }
 /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
-.dropdownListContainerScrollPanel::-webkit-scrollbar-corner {
+#mainPanel .dropdownListContainerScrollPanel::-webkit-scrollbar-corner {
 	background-color: red;
 }
-.addingLabelText{
+#mainPanel .addingLabelText{
 	margin-left: 343px;
 	margin-top: 5px;
 	color: white;
 	display: none;
 }
-.resourceTypeSmallImage{
+#mainPanel .resourceTypeSmallImage{
 	position: absolute;
 	margin-top: 73px;
 	z-index:99;
 }
-.errorLabelText{
+#mainPanel .errorLabelText{
 	margin-left: 782px;
 	float: left;
 	margin-top: -12px;
@@ -1032,11 +1020,11 @@ body {
 	
 }
 
-.successMessageContainer{
+#mainPanel .successMessageContainer{
 	margin: 0 auto;
 /* 	width: 960px; */
 }
-.successMessageLabelText{
+#mainPanel .successMessageLabelText{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	line-height: 120%;
@@ -1045,7 +1033,7 @@ body {
 	padding-bottom: 7px;
 	padding-top: 5px;
 }
-.workSpaceLinkContainer{
+#mainPanel .workSpaceLinkContainer{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 120%;
@@ -1054,32 +1042,32 @@ body {
 	margin-top: 12px;
 	height: 45px;
 }
-.workSpaceLinkText{
+#mainPanel .workSpaceLinkText{
 	text-decoration: none;
 	cursor: pointer;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #6c889A;
 }
-.workSpaceLinkText:hover{
+#mainPanel .workSpaceLinkText:hover{
 	/* color: #4C98CC; */
 	opacity:0.6;
 	text-decoration: none;
 }
-.addCollectionInsteadLabelContainer{
+#mainPanel .addCollectionInsteadLabelContainer{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 120%;
 	color: #1076BA;
 	text-align: center;
 }
-.horizontalLineStyle{
+#mainPanel .horizontalLineStyle{
 	width: 70%;
 	margin: 0 auto;
 	background-color: transparent;
 	border-bottom: 1px solid #DDD;
 }
-.addCollectionInsteadLabelText{
+#mainPanel .addCollectionInsteadLabelText{
 	float: right;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -1088,15 +1076,15 @@ body {
 	margin-right: 138px;
 	margin-top: -15px;
 }
-.addCollectionInsteadLabelText:hover{
+#mainPanel .addCollectionInsteadLabelText:hover{
 	color: #4C98CC;
 }
-.addCollectionContainer{
+#mainPanel .addCollectionContainer{
 /* 	width:960px; */
 	margin:0 auto;
 }
 
-.addButtonHideLbl {
+#mainPanel .addButtonHideLbl {
 	float: right;
 	padding-right: 20px;
 	font-size: 12px;
@@ -1105,11 +1093,11 @@ body {
 	cursor: pointer;
 }
 
-.addButtonHideLbl:hover {
+#mainPanel .addButtonHideLbl:hover {
 	color: #87badd;	
 }
 
-.dropdownListPlaceHolder{
+#mainPanel .dropdownListPlaceHolder{
 	background:url("images/dropdownMenuArrow.png") no-repeat;
 	background-color: white;
 	background-position: right center;
@@ -1125,7 +1113,7 @@ body {
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
 }
-.resource-info-bottomImageContainer{
+#mainPanel .resource-info-bottomImageContainer{
 	text-align: center;
 	padding-top: 10px;
 	cursor: pointer;
@@ -1133,43 +1121,43 @@ body {
 	width: 45px;
 	margin: 0 auto;
 }
-.resource-info-hideImage{
+#mainPanel .resource-info-hideImage{
 	display: inline-block;
-	background-image: url("images/hide_arrow.png");
+	background-image: url("${cdn.endpoint}/images/hide_arrow.png");
 	width: 10px;
 	color: #fff;
 	height:6px;
 }
-.resource-info-hideText{
+#mainPanel .resource-info-hideText{
 	display: inline-block;
 	vertical-align: top;
 	color: #fff;
 	margin-left: 4px;
 }
-.addNewLabel{
+#mainPanel .addNewLabel{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #6c889A;
 }
-.addNewLabel:hover{
+#mainPanel .addNewLabel:hover{
 	cursor: pointer;
 	opactity:0.6;
 }
-.resource-info-bottomImageContainer{
+#mainPanel .resource-info-bottomImageContainer{
 	text-align: center;
 	padding-top: 7px;
 	cursor: pointer;
 	width: 45px;
 	margin: 0 auto;
 }
-.resource-info-hideImage{
+#mainPanel .resource-info-hideImage{
 	display: inline-block;
-	background-image: url("images/hide_arrow.png");
+	background-image: url("${cdn.endpoint}/images/hide_arrow.png");
 	width: 10px;
 	color: #fff;
 	height:6px;
 }
-.resource-info-hideText{
+#mainPanel .resource-info-hideText{
 	display: inline-block;
 	vertical-align: top;
 	color: #fff;

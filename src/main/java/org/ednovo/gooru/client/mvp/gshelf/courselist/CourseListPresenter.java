@@ -22,32 +22,19 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.play.resource.style;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.CssResource.NotStrict;
-
-/**
- * @author Search Team
- * 
- */
-public interface PlayerSmallMobileBundle extends ClientBundle {
-
-	public static final PlayerSmallMobileBundle INSTANCE = GWT.create(PlayerSmallMobileBundle.class);
-	
-	
-	
-	@NotStrict
-	@Source("playersmallmobile.css")
-	PlayerSmallMobileStyleResource getPlayerSmallMobile();
-	public interface PlayerSmallMobileStyleResource extends CssResource {
-		String playBoxTime();
-		String endButtonsContainer();
-		String container();
+package org.ednovo.gooru.client.mvp.gshelf.courselist;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+public class CourseListPresenter extends PresenterWidget<IsCourseListView> implements CourseListUiHandlers{
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
+	@Inject
+	public CourseListPresenter(EventBus eventBus, IsCourseListView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
 	}
 }

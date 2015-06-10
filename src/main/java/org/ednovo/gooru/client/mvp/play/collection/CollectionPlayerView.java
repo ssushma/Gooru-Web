@@ -36,7 +36,6 @@ import org.ednovo.gooru.client.mvp.play.collection.header.StudyPlayerHeaderView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
-import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -143,7 +142,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		this.eventBus = eventBus;
 		appPopUp=new PopupPanel();
 		appPopUp.setGlassEnabled(true);
-		appPopUp.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().studyplayerContainer());
+		appPopUp.setStyleName("study-player-container");
 		appPopUp.add(uiBinder.createAndBindUi(this));
 		footerView.getShareButton().addClickHandler(new ShowTabWidgetView(SHARE));
 		footerView.getInfoButton().addClickHandler(new ShowTabWidgetView(INFO));
@@ -264,7 +263,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		if((view!=null&&view.equalsIgnoreCase("end")) || (resourceId==null)){
-			appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+			appPopUp.addStyleName("scrollStudyContainer");
 		}
 	}
 	
@@ -328,7 +327,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			params.put("id", collectionId);
 			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
 			if(resourceId!=null&&!resourceId.equalsIgnoreCase("")){
-				appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				appPopUp.removeStyleName("scrollStudyContainer");
 				if(isButtonActive){
 					params.put("rid", resourceId);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -341,7 +340,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 
 				}
 			}else if(view!=null&&view.equalsIgnoreCase("end")){
-				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				appPopUp.addStyleName("scrollStudyContainer");
 				if(isButtonActive){
 					params.put("view", "end");
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -353,7 +352,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			}else{
-				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				appPopUp.addStyleName("scrollStudyContainer");
 				if(isButtonActive){
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -712,12 +711,12 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		}else{
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
-				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				appPopUp.addStyleName("scrollStudyContainer");
 				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			}
 			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
 			{
-				appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				appPopUp.removeStyleName("scrollStudyContainer");
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
@@ -725,11 +724,11 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			else{
 				if(view==null && resourceId != null)
 				{
-					appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+					appPopUp.removeStyleName("scrollStudyContainer");
 				}
 				else
 				{
-					appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+					appPopUp.addStyleName("scrollStudyContainer");
 				}
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
 				headerView.displayAuthorName(getCollectionType());
@@ -859,9 +858,9 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	void setSeemoreBackGround(){
 		if(isSeeMoreClicked){
-			lblSeeMore.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().seelessText());
+			lblSeeMore.addStyleName("seelessText");
 		}else{
-			lblSeeMore.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().seelessText());
+			lblSeeMore.removeStyleName("seelessText");
 		}
 	}
 	private void setUserProfileImage(String profileUserId) {
