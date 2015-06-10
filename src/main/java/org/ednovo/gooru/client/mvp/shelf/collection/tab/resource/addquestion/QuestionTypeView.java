@@ -2064,6 +2064,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
 				
 				if(answer.isIsCorrect()){	
+					addAnswerChoice.isOptionSelectedButton=true;
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
 				}else{
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
@@ -2073,7 +2074,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
 				widgetcount++;
 			}
-			
+			addHotSpotQuestion.setAnswerChoices();
 		}
 		
 	}
