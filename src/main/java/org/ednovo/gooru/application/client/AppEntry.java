@@ -79,7 +79,6 @@ public class AppEntry implements EntryPoint {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
 					AppClientFactory.setLoggedInUser(loggedInUser);
-//					setLoginData(loggedInUser);
 					appInjector.getPlaceManager().revealCurrentPlace();
 					AppClientFactory.setProtocol(getHttpOrHttpsProtocol());
 					appInjector.getWrapPresenter().get().setLoginData(loggedInUser);
