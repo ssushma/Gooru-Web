@@ -56,7 +56,7 @@ public class CourseListView  extends BaseViewWithHandlers<CourseListUiHandlers> 
 		for (int i = 0; i <10; i++) {
 			final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i) {
 				@Override
-				public void moveWidgetToPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
+				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
 					int movingIndex= Integer.parseInt(movingPosition);
 					if(pnlCourseList.getWidgetCount()>=movingIndex){
 						if(!isDownArrow){
