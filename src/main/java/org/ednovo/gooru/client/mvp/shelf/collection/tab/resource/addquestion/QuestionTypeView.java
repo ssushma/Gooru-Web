@@ -19,7 +19,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerCh
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHintsView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHotSpotQuestionAnswerChoice;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionAnswerChoice;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionImg;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -51,8 +50,6 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -97,8 +94,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class QuestionTypeView extends BaseViewWithHandlers<QuestionTypeUiHandlers>
 implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
-
-	@UiField QuestionTypeCBundle res;
 
 	private static QuestionTypeViewUiBinder uiBinder = GWT	.create(QuestionTypeViewUiBinder.class);
 
@@ -2064,6 +2059,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
 				
 				if(answer.isIsCorrect()){	
+					addAnswerChoice.isOptionSelectedButton=true;
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
 				}else{
 					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
@@ -2073,7 +2069,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
 				widgetcount++;
 			}
-			
+			addHotSpotQuestion.setAnswerChoices();
 		}
 		
 	}

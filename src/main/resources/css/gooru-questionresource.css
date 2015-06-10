@@ -2,16 +2,7 @@
 /* CSS Document */
 /*real style*/
 
-.openEndedQuestionTotalContainer {
-	width: 100%;
-	height: auto;
-	/* float: left;
-	background-color: #FFFFFF;
-	border-top: 1px solid #ddd; */
-	overflow-y: scroll;
-	padding: 25px 25px;
-}
-.openEndedQuestionContainer {
+#fpnlQuestionContainer .openEndedQuestionContainer {
 	float: left;
 	width: 440px;
 	min-height: 467px;
@@ -20,14 +11,14 @@
 	margin-left: 40px;
 	margin-top: 40px;
 }
-.openendedQuestionTitle {
+#fpnlQuestionContainer .openendedQuestionTitle {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 20px;
 	color: #1076bb;
 	width: 100%;
 }
-.openEndedQuestionFull {
+#fpnlQuestionContainer .openEndedQuestionFull {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
@@ -36,16 +27,16 @@
 	margin-top: 20px;
 	line-height: 18px;
 }
-.openEndedQuestionImageContainer {
+#fpnlQuestionContainer .openEndedQuestionImageContainer {
 	float: left;
 	width: 100%;
 	margin-top: 20px;
 }
-.openEndedQuestionImage{
+#fpnlQuestionContainer .openEndedQuestionImage{
 	max-width:440px;
 	max-height:331px;
 }
-.hintsActiveButton {
+#fpnlQuestionContainer .hintsActiveButton {
 	color: #1076BB;
 	border-radius: 4px;
 	padding: 7px 9px;
@@ -64,11 +55,11 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-.hintsActiveButton:hover{
+#fpnlQuestionContainer .hintsActiveButton:hover{
 	cursor: pointer;
 	background: #EEE;
 }
-.hintsInActiveButton{
+#fpnlQuestionContainer .hintsInActiveButton{
 	color: #999999;
 	border-radius: 4px;
 	padding: 7px 9px;
@@ -87,13 +78,13 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-.hintsHoldingContainer {
+#fpnlQuestionContainer .hintsHoldingContainer {
 	float: left;
 	width: 100%;
 	min-height: 20px;
 	height: auto;
 }
-.explanationText {
+#fpnlQuestionContainer .explanationText {
 	float: left;
 	width: 100%;
 	min-height: 20px;
@@ -106,17 +97,17 @@
 	color: #5C8B57;
 	padding-top: 10px;
 }
-.explanationTextBorder{
+#fpnlQuestionContainer .explanationTextBorder{
 	border-top: 1px solid #CCCCCC;
 }
-.openEndedQuestionAnswerContainer {
+#fpnlQuestionContainer .openEndedQuestionAnswerContainer {
 	float: left;
 	width: 375px;
 	min-height: 166px;
 	height: auto;
 	margin-top: 40px;
 }
-.openEndedQuestionAnswerTitle {
+#fpnlQuestionContainer .openEndedQuestionAnswerTitle {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 20px;
@@ -124,7 +115,7 @@
 	width:100%;
 /* 	margin-bottom: 20px; */
 }
-.openEndedQuestionAnswer {
+#fpnlQuestionContainer .openEndedQuestionAnswer {
 	float: left;
 	width: 100%;
 	line-height: 20px;
@@ -138,7 +129,7 @@
 	resize:none;
 	border-color: #ccc;
 }
-.openEndedQuestionSubmitButton {
+#fpnlQuestionContainer .openEndedQuestionSubmitButton {
 	margin-top: 20px;
 	float: left;
 	background: #1076BB;
@@ -162,12 +153,12 @@
 	font-size: 12px;
 	padding:7px 9px;
 }
-.openEndedQuestionSubmitButton:hover{
+#fpnlQuestionContainer .openEndedQuestionSubmitButton:hover{
 	background: #1076BB;
 	cursor:pointer;
 }
 
-.openEndedQuestionAnswerHolder {
+#fpnlQuestionContainer .openEndedQuestionAnswerHolder {
 	width: 93%;
 	height: auto;
 	font-family: Arial, Helvetica, sans-serif;
@@ -176,13 +167,13 @@
 	margin-top: 20px;
 	float: left;
 }
-.hintsText{
+#fpnlQuestionContainer .hintsText{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #525252;
 	margin-bottom:10px;
 }
-.openEndedQuestionAnswerText{
+#fpnlQuestionContainer .openEndedQuestionAnswerText{
 	margin-top: 20px;
 	float: right;
 	font-family: Arial, Helvetica, sans-serif;
@@ -190,7 +181,7 @@
 	font-style: italic;
 	color: #525252;
 }
-.errorMessageStyle{
+#fpnlQuestionContainer .errorMessageStyle{
 	font-style: italic;
 	color: #FBB03B;
 	font-family: Arial, Helvetica, sans-serif;
@@ -198,25 +189,19 @@
 	float: left;
 	margin-top: 10px;
 }
-.resourcesQuizzessAnswersOptionsContainer{
-	float: left;
-	width: 100%;
-	min-height: 30px;
-	height: auto;
-}
 
-.questionAnswerIsCorrectPanel {
+#fpnlQuestionContainer .questionAnswerIsCorrectPanel {
 	width: 30px;
 	height: 30px;
 	float: left;
 }
-.quizAnswerChoiceOption{
+#fpnlQuestionContainer .quizAnswerChoiceOption{
 	width: 30px;
 	height: 30px;
 	float: left;
 	margin-left: -30px;
 }
-.quizRadioButtonContainer{
+#fpnlQuestionContainer .quizRadioButtonContainer{
 	float: left;
 	width: 15px;
 	height: 16px;
@@ -224,7 +209,7 @@
 	margin-right: 5px;
 	margin-top: 1px;
 }
-.answerOptionContent{
+#fpnlQuestionContainer .answerOptionContent{
 	float:left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -233,7 +218,7 @@
 	width:85%;
 	word-wrap: break-word;
 }
-.answerOptionSerialNum{
+#fpnlQuestionContainer .answerOptionSerialNum{
 	float:left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -242,13 +227,13 @@
 	margin:0px 3px 0px 3px;
 	word-wrap: break-word;
 }
-.hideButton{
+#fpnlQuestionContainer .hideButton{
 	display:none;
 }
-.adjustCheckAnswerButton{
+#fpnlQuestionContainer .adjustCheckAnswerButton{
 	margin-top:20%;
 }
-.systemMessageStyle{
+#fpnlQuestionContainer .systemMessageStyle{
 	margin-bottom: 20px;
 	width: 100%;
 	font-size: 12px;
@@ -257,17 +242,17 @@
 	float:left;
 }
 
-.charLimit{
+#fpnlQuestionContainer .charLimit{
 	font-size: 12px;
 	color: #999;
 	float: right;
 	margin-right:5px;
 }
-.addjustSubmitButton{
+#fpnlQuestionContainer .addjustSubmitButton{
 	margin-top:15%;
 	margin-left:43%;
 }
-.answerTextBox{
+#fpnlQuestionContainer .answerTextBox{
 	width: 100px;
 	outline: 0;
 	padding: 2px;
@@ -277,17 +262,17 @@
 	font-size: 12px;
 	color: #515151;
 }
-.answerCorrectTextBox{
+#fpnlQuestionContainer .answerCorrectTextBox{
 	border: #4E9646 2px solid !important;
 	background-color: #D5E6D2 !important;
 }
 
-.answerWrongTextBox{
+#fpnlQuestionContainer .answerWrongTextBox{
 	border: #FBB03B 2px solid !important;
 	background-color: #FEE8C7 !important;
 }
 
-.answerTextContainer{
+#fpnlQuestionContainer .answerTextContainer{
 	float: left;
 	color: #515151;
 	display:inline;
@@ -296,26 +281,26 @@
 
 /* result panel style*/
 
-.resultPanel{
+#fpnlQuestionContainer .resultPanel{
 	background-color: #EFEFEF;
 	width: 300px;
 	padding: 20px;
 	float: left;
 	margin-top: 20px;
 }
-.resultPanelConatiner{
+#fpnlQuestionContainer .resultPanelConatiner{
 	float:left;
 	margin-bottom: 10px;
 }
 
-.resultPanelText{
+#fpnlQuestionContainer .resultPanelText{
 	display: inline;
 	margin-bottom: 10px;
 	color: #515151;
 	font-size: 12px;
 }
 
-.resultPanelAnswerImage{
+#fpnlQuestionContainer .resultPanelAnswerImage{
 	display: inline-block;
 	float: none;
 	margin-left: 5px;
@@ -323,33 +308,33 @@
 	margin-right: 5px;
 	margin-top: -3px;
 }
-.resultPanelAnswerImageFIB{
+#fpnlQuestionContainer .resultPanelAnswerImageFIB{
 	display: inline-block;
 	float: none;
 	margin-left: 5px;
 	margin-right: 5px;
 	
 }
-.yesnotextContainer{
+#fpnlQuestionContainer .yesnotextContainer{
 	margin-bottom: 10px;
 	width: 100%;
 	font-size: 12px;
 	font-style: italic;
 	color:#515151;
 }
-.yesText{
+#fpnlQuestionContainer .yesText{
 	color:#515151;
 }
-.noText{
+#fpnlQuestionContainer .noText{
 	color:#515151;
 	font-wight:bold;
 }
-.questionButtons{
+#fpnlQuestionContainer .questionButtons{
 	display: block;
 	width: 100%;
 	float: left;
 }
-.questionSubmitButton{
+#fpnlQuestionContainer .questionSubmitButton{
 	width: 100%;
 text-align: center;
 display: inline-block;
