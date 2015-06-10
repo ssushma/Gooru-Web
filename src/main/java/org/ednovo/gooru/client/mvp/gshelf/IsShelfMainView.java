@@ -22,45 +22,15 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.gshelf;
 
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+/**
+ * @author Search Team
+ *
+ */
+public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
 
-public interface PPPCollectionResultCBundle extends ClientBundle {
 	
-	static final PPPCollectionResultCBundle INSTANCE = GWT.create(PPPCollectionResultCBundle.class);
-	
-	public interface PPPCollectionResultCss extends CssResource{
-		String collectionPanel();
-
-		String collectionHeaderPanel();
-
-		String collectionHeaderTextPanel();
-
-		String collectionTitle();
-
-		String author();
-
-		String metaDataPanel();
-
-		String resourceCount();
-
-		String standards();
-
-		String collectionDescription();
-
-		String collectionHover();
-		
-		String playIcon();
-		
-		String collectionThumbnail();
-		
-		String authorContainer();
-	}
-	@Source("PPPCollectionResult.css")
-	PPPCollectionResultCss css();
-
 }

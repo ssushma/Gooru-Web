@@ -371,12 +371,9 @@
 .margin20Px{
 	margin-bottom: 20px;
 }
-
-
 .margin40Px{
 	margin-bottom: 40px;
 }
-
 .resourceCategoryImage{
 	position: relative;
 	right: 83px;
@@ -405,9 +402,6 @@
 .openEndedQuestionTotalContainer {
 	width: 100%;
 	height: auto;
-	/* float: left;
-	background-color: #FFFFFF;
-	border-top: 1px solid #ddd; */
 	overflow-y: scroll;
 	padding: 25px 25px;
 }
@@ -416,4 +410,11 @@
 	margin-top: 23px;
 	padding: 10px;
 	background-color: rgb(77, 77, 77);
+}
+.userCollectionMetaAssignImage {
+	float: left;
+	margin-right: 5px;
+	position: relative;
+	top: -1px;
+	opacity: 0.3;
 }

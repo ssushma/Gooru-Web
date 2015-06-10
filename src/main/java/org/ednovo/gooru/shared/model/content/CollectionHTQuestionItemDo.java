@@ -22,19 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage;
+package org.ednovo.gooru.shared.model.content;
 
-import com.google.gwt.resources.client.CssResource;
 
-/**
- * @author Search Team
- *
- */
-public interface ProfilePageCBundle extends CssResource {
-	String addedCourseLbl();
-	String margin5();
-	String tabAlign();
-	String blackPrimaryButton();
-	String followingBtn();
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
+public class CollectionHTQuestionItemDo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String hlType;
+	private boolean singleCorrectAnswer;
+	public String getHlType() {
+		return hlType;
+	}
+	public boolean isSingleCorrectAnswer() {
+		return singleCorrectAnswer;
+	}
+	public void setHlType(String hlType) {
+		this.hlType = hlType;
+	}
+	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
+		this.singleCorrectAnswer = singleCorrectAnswer;
+	}
+	
+	
+	
 	
 }

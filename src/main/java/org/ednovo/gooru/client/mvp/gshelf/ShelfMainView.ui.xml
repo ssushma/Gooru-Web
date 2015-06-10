@@ -1,0 +1,343 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	
+	<g:HTMLPanel ui:field="gShelfMainContainer">
+	<g:HTMLPanel styleName="gradeContainer greyBackground">
+
+		<div class="container">
+			<div class="row no-gutter equifier">
+
+				<div class="col-md-3 col-sm-3">
+
+
+					<div class="createMenu animate" data-animate="fadeInLeft">
+
+						<!-- Split button -->
+						<div class="btn-group btn-block">
+							<button type="button" class="btn btn-default btn-left">My Courses </button>
+							<button type="button" class="btn btn-default btn-right dropdown-toggle"
+								data-toggle="dropdown" aria-expanded="false">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">Action</a>
+								</li>
+								<li>
+									<a href="#">Another action</a>
+								</li>
+								<li>
+									<a href="#">Something else here</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="#">Separated link</a>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+
+
+					<div class="floderLeftContainer">
+
+
+
+
+						<div class="folderLeftActionBtn">
+
+							<button class="primary btn-block" type="submit">Create a Course</button>
+
+						</div>
+
+
+						<div class="folderListBlock">
+
+							<ul>
+
+								<li class="active">
+									<a href="">Untitled Course</a>
+								</li>
+								<li>
+									<a href="">Course 2</a>
+								</li>
+								<li>
+									<a href="">Course 3</a>
+								</li>
+							</ul>
+
+
+						</div>
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="col-md-9 col-sm-9">
+					<div class="floderRightContainer">
+
+
+
+
+						<div class="folderBlock">
+							<div class="folderBlockHeader">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="folderMainHeading">
+										<span class="folderIcon"></span>
+										Untitled Course
+									</div>
+								</div>
+
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="folderBlockSitemap">
+
+								<div id="bc1" class="btn-group btn-breadcrumb">
+
+
+									<a href="#" class="btn btn-default  active">
+										<div>Course Info</div>
+									</a>
+									<a href="#" class="btn btn-default">
+										<div>Add Units</div>
+									</a>
+									<a href="#" class="btn btn-default">
+										<div>Add to Class</div>
+									</a>
+
+
+								</div>
+
+							</div>
+						</div>
+
+
+
+
+						<div class="courseNameBlock">
+
+							<p>Course Name</p>
+							<p>
+								<input type="text" class="form-control" value="AcNum"/>
+							</p>
+
+
+						</div>
+
+
+
+
+
+
+
+
+						<div class="tagCoursePanel">
+
+							<p>Tag your course. What do you plan to cover?</p>
+
+							<div class="tagCoursePanelHeader">
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<button class="primary" type="submit">K-12</button>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<button class="primary btn-disabled" type="submit">Proffesional
+											Learning</button>
+
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<button class="primary btn-disabled" type="submit">Higher
+											Education</button>
+
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+
+
+
+							</div>
+
+
+
+
+							<div class="tagCoursePanelBody">
+								<div class="courseGroupBlock">
+
+									<div class="no-gutter">
+										<div class="col-md-4 col-sm-5">
+											<div class="courseGroupLeft">
+												<ul>
+													<li class="active">
+														<a href="">Math</a>
+													</li>
+													<li>
+														<a href="">Science</a>
+													</li>
+													<li>
+														<a href="">English Language Arts</a>
+													</li>
+													<li>
+														<a href="">Social Studies</a>
+													</li>
+													<li>
+														<a href="">Visual and Performing Arts</a>
+													</li>
+													<li>
+														<a href="">World Languages</a>
+													</li>
+													<li>
+														<a href="">Careers and Technical Skills</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-8 col-sm-7">
+											<div class="courseGroupRight">
+												<ul>
+													<li>
+														<a href="">Kindergarden Math</a>
+													</li>
+													<li>
+														<a href="">Math 1</a>
+													</li>
+													<li>
+														<a href="">Math 2</a>
+													</li>
+													<li>
+														<a href="">Math 3</a>
+													</li>
+													<li class="active">
+														<a href="">Math 4</a>
+													</li>
+													<li class="active">
+														<a href="">Math 5</a>
+													</li>
+													<li class="active">
+														<a href="">Math 6</a>
+													</li>
+													<li class="active">
+														<a href="">Math 7</a>
+													</li>
+													<li class="active">
+														<a href="">Math 8</a>
+													</li>
+													<li class="active">
+														<a href="">Algebra 1</a>
+													</li>
+													<li>
+														<a href="">Algebra 2</a>
+													</li>
+													<li>
+														<a href="">Geometry</a>
+													</li>
+
+												</ul>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+
+									</div>
+
+								</div>
+							</div>
+
+							<div class="tagCoursePanelFooter">
+
+								<div class="filterTags">
+									<ul>
+										<li>
+											Math 4
+											<a href="">X</a>
+										</li>
+										<li>
+											Math 5
+											<a href="">X</a>
+										</li>
+										<li>
+											Math 6
+											<a href="">X</a>
+										</li>
+										<li>
+											Math 7
+											<a href="">X</a>
+										</li>
+										<li>
+											Math 8
+											<a href="">X</a>
+										</li>
+										<li>
+											Algebra 1
+											<a href="">X</a>
+										</li>
+									</ul>
+								</div>
+
+
+
+							</div>
+
+
+							<div class="tagCourseOptions">
+
+								<p>Audience  Purpose</p>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="list-group">
+											<a href="#" class="list-group-item">
+												Cras justo odio
+											</a>
+											<a href="#" class="list-group-item">All Students</a>
+											<a href="#" class="list-group-item  active">Students who need Intervention and
+												Support</a>
+											<a href="#" class="list-group-item">Advanced Learner</a>
+											<a href="#" class="list-group-item">English Learner</a>
+											<a href="#" class="list-group-item">Teachers</a>
+										</div>
+									</div>
+
+									<div class="clearfix"></div>
+								</div>
+
+							</div>
+
+
+							<div class="stepsButtonGroup">
+								<button class="secondary" type="submit">Save  View Course</button>
+								<button class="primary" type="submit">Next: Create a Unit</button>
+
+							</div>
+
+
+
+
+
+						</div>
+
+
+
+
+
+
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+
+			</div>
+			</div>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+</ui:UiBinder> 

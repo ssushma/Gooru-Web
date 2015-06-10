@@ -390,6 +390,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		headingText.setText(message);
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
+		switchContainer.setVisible(true);
+		commentssection.setVisible(true);
+		commentssection.getElement().getStyle().setOpacity(1);
 		setReplyLink();
 		if (collectionDo.getMeta() !=null)
 		{

@@ -25,50 +25,17 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.shelf.event;
 
-
-import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
-import org.ednovo.gooru.client.mvp.search.SearchResultWrapperVc;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
-
-import com.google.gwt.uibinder.client.UiChild;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.shared.EventHandler;
 
 /**
- * @author Gooru Team
+ * @author Hari
  * 
  */
-public class PPPCollectionSearchResultWrapperVc extends SearchResultWrapperVc<CollectionItemDo, CollectionItemSearchResultDo> {
+public interface AddAnswerImageHandler extends EventHandler {
 
-	private PPPCollectionMoreInfoVc moreInfoVc;
 	
-	private String collectionId;
-
-
-	/**
-	 * Class constructor
-	 */
-	public PPPCollectionSearchResultWrapperVc(String collectionId) {
-		super();
-		this.collectionId=collectionId;
-	}
-
-	public PPPCollectionSearchResultWrapperVc() {
-	}
-
-	@Override
-	protected SearchMoreInfoVc<CollectionItemDo, CollectionItemSearchResultDo> getSearchMoreInfoVc() {
-		if(moreInfoVc == null) {
-			 moreInfoVc = new PPPCollectionMoreInfoVc(collectionId);
-		}
-		return moreInfoVc;
-	}
-	
-	@UiChild(tagname="content")
-	protected void setContent(Widget widget) {
-		super.setContent(widget);
-	}
+	void setAnswerImageUrl(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage); 
 
 }

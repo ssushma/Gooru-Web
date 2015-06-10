@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToC
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
@@ -94,6 +95,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.Collection
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.test.TestPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
@@ -150,6 +152,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<ErrorPresenter> getErrorPresenter();
 
 	AsyncProvider<ShelfPresenter> getShelfPresenter();
+	
+	AsyncProvider<ShelfMainPresenter> getShelfMainPresenter();
 
 	AsyncProvider<CollectionResourceTabPresenter> getCollectionResourceTabPresenter();
 
@@ -278,6 +282,8 @@ public interface AppInjector extends ServiceInjector {
 	AddCenturyPresenter getAddCenturyPresenterWidget();
 	
 	SearchAddResourceToCollectionPresenter getRemixPresenterWidget();
+
+	AsyncProvider<QuestionTypePresenter> getQuestionTypePresenter();
 
 
 }

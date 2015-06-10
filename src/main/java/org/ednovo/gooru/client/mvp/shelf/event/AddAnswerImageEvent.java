@@ -25,15 +25,40 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.shelf.event;
 
-import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * @author Search Team
  * 
  */
-public interface IsCollectionSearchView extends IsGooruSearchView<CollectionSearchResultDo> {
+public class AddAnswerImageEvent extends GwtEvent<AddAnswerImageHandler> {
+
+	public static final Type<AddAnswerImageHandler> TYPE = new Type<AddAnswerImageHandler>();
+
+	String fileName;
+	boolean isAnswerImage;
+	String fileNameWithoutRepostory;
+
+	/**
+	 * Class constructor
+	 * @param isuserOwnResourceImage 
+	 */
+	public AddAnswerImageEvent(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage) {
+		this.fileName = fileName;
+		this.isAnswerImage=isAnswerImage;
+		this.fileNameWithoutRepostory=fileNameWithoutRepostory;
+	}
+
+	@Override
+	public Type<AddAnswerImageHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(AddAnswerImageHandler handler) {
+		handler.setAnswerImageUrl(fileName,fileNameWithoutRepostory,isAnswerImage);
+	}
 
 }

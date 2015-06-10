@@ -121,6 +121,10 @@ import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourceView;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesView;
 import org.ednovo.gooru.client.mvp.gsearch.util.IsGooruGradesView;
+import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter.IsShelfMainProxy;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.client.mvp.home.HomeView;
@@ -306,9 +310,6 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePageView;
 import org.ednovo.gooru.client.mvp.profilepage.list.IsProfilePageListView;
 import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListPresenter;
 import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListView;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.IsProfilePageContentTabView;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.ProfilePageContentTabPresenter;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.ProfilePageContentTabView;
 import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
@@ -364,6 +365,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.Drive
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter.IsDriveyProxy;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDriveView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.IsQuestionTypeView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
 import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
@@ -441,6 +445,8 @@ public class AppModule extends AppPresenterModule {
 				IsErrorProxy.class);
 		bindPresenter(ShelfPresenter.class, IsShelfView.class, ShelfView.class,
 				IsShelfProxy.class);
+		bindPresenter(ShelfMainPresenter.class, IsShelfMainView.class, ShelfMainView.class,
+				IsShelfMainProxy.class);
 		bindPresenter(UserSettingsPresenter.class, IsUserSettingsView.class,
 				UserSettingsView.class, IsUserSettingProxy.class);
 		// 5.2 Changes
@@ -488,10 +494,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(StudentAssignmentPresenter.class,
 				IsStudentAssignmentView.class, StudentAssignmentView.class,
 				IsStudentAssignmentProxy.class);
-
-		bindPresenterWidget(ProfilePageContentTabPresenter.class,
-				IsProfilePageContentTabView.class,
-				ProfilePageContentTabView.class);
 
 		/*bindPresenterWidget(ProfilePageInfoTabPresenter.class,
 				IsProfilePageInfoTabView.class, ProfilePageInfoTabView.class);
@@ -605,5 +607,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
 		bindPresenter(EpapaLibraryPresenter.class, IsEpapaLibraryView.class, EpapaLibraryView.class,IsEpapaLibraryProxy.class);
 
+		bindSingletonPresenterWidget(QuestionTypePresenter.class,IsQuestionTypeView.class, QuestionTypeView.class);
 	}
 }
