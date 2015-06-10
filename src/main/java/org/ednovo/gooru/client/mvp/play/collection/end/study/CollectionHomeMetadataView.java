@@ -204,20 +204,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		});
 	}
 	
-	/**
-	 * To set the default image based on collectionType value
-	 * @param collectionType {@link String}
-	 *//*
-	private void setDefaultImages(String collectionType) {
-		// TODO Auto-generated method stub
-		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
-	    	collectionThumbnail.setUrl(DEFULT_ASSESSMENT);
-	    	collectionThumbnail.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().assessmentImage());
-	    }else{
-	    	collectionThumbnail.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().collectionImage());
-	    	collectionThumbnail.setUrl(DEFULT_COLLECTION);
-	    }
-	}*/
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
 		resourceAnchor.setHref(getReplayLink());

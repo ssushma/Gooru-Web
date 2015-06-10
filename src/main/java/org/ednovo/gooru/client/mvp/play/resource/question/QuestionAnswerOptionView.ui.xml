@@ -1,11 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-<ui:style field="oeStyle" src="questionresource.css"/>
-	<g:FlowPanel styleName="{oeStyle.resourcesQuizzessAnswersOptionsContainer}">
-     	<g:Label styleName="{oeStyle.quizAnswerChoiceOption}" ui:field="answerChoiceResult"></g:Label>
+	<g:FlowPanel styleName="resourcesQuizzessAnswersOptionsContainer" ui:field="questionsMainPanel">
+     	<g:Label styleName="quizAnswerChoiceOption" ui:field="answerChoiceResult"></g:Label>
      	<g:Label ui:field="radioButton"></g:Label>
-        <g:HTML styleName="{oeStyle.answerOptionContent}" ui:field="answerOptionText"></g:HTML>
-        <g:RadioButton name="answerOptions" ui:field="answerOptionRadioButton" styleName="{oeStyle.hideButton}"></g:RadioButton>
+        <g:HTML styleName="answerOptionContent" ui:field="answerOptionText"></g:HTML>
+        <g:RadioButton name="answerOptions" ui:field="answerOptionRadioButton" styleName="hideButton"></g:RadioButton>
     </g:FlowPanel>
 </ui:UiBinder> 

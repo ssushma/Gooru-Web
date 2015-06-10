@@ -112,7 +112,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField SectionTag collectionContainer;
 
 	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
-	/*@UiField ResourcePlayerMetadataBundle playerStyle;*/
+	
 	@UiField HTML resourceTitleLbl;
 	
 	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;

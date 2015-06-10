@@ -14,8 +14,6 @@
 			padding-right: 12px;
 		}
 	</ui:style>
-	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource"/>
-	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle" field="smallMobile"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle" field="unitStyle"/>
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
     <g:FlowPanel ui:field="studyMainContianer" styleName="container studyMainContainer">
@@ -32,25 +30,25 @@
 									<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
 								</g:FlowPanel>
 					    	</g:FlowPanel>     
-      					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.timespend}">
-							<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.collectionEndImageContainer}" >
+      					<g:FlowPanel styleName="timespend">
+							<g:FlowPanel styleName="collectionEndImageContainer" >
 								<g:Image ui:field="collectionThumbnail" styleName="{playerStyle.collectionImage}"></g:Image>
 								<g:FlowPanel ui:field="thumbnailContainer">
 									<g:HTMLPanel styleName="{playerStyle.collectionreplay}"><g:Label styleName="{playerStyle.collectionreplayText}" ui:field="replayCollection"></g:Label></g:HTMLPanel>
 								</g:FlowPanel>
  							</g:FlowPanel>
-							<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.playRight}">	
-								<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.playBlockTop}">
-									<g:FlowPanel styleName="{smallMobile.getPlayerSmallMobile.playBoxTime} {playerStyle.PlayBoxTime} ">
-										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2084}"></g:Label>
+							<g:FlowPanel styleName="playRight">	
+								<g:FlowPanel styleName="playBlockTop">
+									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBoxTime} ">
+										<g:Label styleName="smallTxt" text="{i18n.GL2084}"></g:Label>
 										<g:FlowPanel ui:field="spendTimeContainer"></g:FlowPanel>
 									</g:FlowPanel>
-									<g:FlowPanel styleName="{smallMobile.getPlayerSmallMobile.playBoxTime} {playerStyle.PlayBox} ">
-										<g:Label styleName="{playerStyle.smallTxt} " text="{i18n.GL2085}"></g:Label>
+									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBox} ">
+										<g:Label styleName="smallTxt" text="{i18n.GL2085}"></g:Label>
 										<g:FlowPanel ui:field="scoreContainer"></g:FlowPanel>
 									</g:FlowPanel>
-									<g:FlowPanel styleName="{smallMobile.getPlayerSmallMobile.playBoxTime} {playerStyle.PlayBox}">
-										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2086}"></g:Label>
+									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBox}">
+										<g:Label styleName="smallTxt" text="{i18n.GL2086}"></g:Label>
 											<g:FlowPanel styleName="{playerStyle.bigTxt}">
 												<g:Label styleName="{playerStyle.timeTextBig}" ui:field="avgReactionImage"></g:Label>
 											</g:FlowPanel>
@@ -58,7 +56,7 @@
 									
 								</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">
-									<g:FlowPanel styleName="{smallMobile.getPlayerSmallMobile.endButtonsContainer} {palyerStyleResource.getPlayerStyleResource.endButtonsContainer} clearfix">
+									<g:FlowPanel styleName="endButtonsContainer endButtonsContainer clearfix">
 										<g:Button styleName="secondary" ui:field="shareCollectionBtn"></g:Button>
 	           							<g:Button styleName="secondary  {playerStyle.buttonmargin}" ui:field="customizeCollectionBtn"></g:Button>
 									</g:FlowPanel>
@@ -71,10 +69,10 @@
 					 	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
 					 	</g:FlowPanel>
 					 	<g:FlowPanel styleName="col-md-3">
-					 	    <g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.whatsnext}" ui:field="nextCollectionContainer">
-								 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallTxt}" text="{i18n.GL2087}"></g:Label>
+					 	    <g:FlowPanel styleName="whatsnext" ui:field="nextCollectionContainer">
+								 <g:Label styleName="smallTxt" text="{i18n.GL2087}"></g:Label>
 						    	 <g:Image ui:field="nextCollectionThumbnail"></g:Image>
-								 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.bigTxt}" ui:field="whatNextCollectionTitle"></g:Label>
+								 <g:Label styleName="bigTxt" ui:field="whatNextCollectionTitle"></g:Label>
 								 <g:HTMLPanel styleName="{playerStyle.displayBlock}">
 								     <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="resourceCount"></g:Label>
 									 <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="questionCount"></g:Label>
@@ -93,7 +91,7 @@
       		
       	<g:FlowPanel styleName="row">
 	      	<g:FlowPanel styleName="col-md-12 {playerStyle.whitebg}">
-				<html5:SectionTag styleName="{palyerStyleResource.getPlayerStyleResource.endPageIframe}" ui:field="dataInsightsPanel">
+				<html5:SectionTag styleName="endPageIframe" ui:field="dataInsightsPanel">
 			          	<!--  insights -->
 			          	<g:HTMLPanel styleName="{unitStyle.css.loadingImageMainDiv}" ui:field="loadingImageLabel">
 							<g:Label styleName="{unitStyle.css.loadingImageForSelfEdit}" />
