@@ -126,6 +126,8 @@ public class ResourceDo extends ContentDo {
 	
 	private String url;
 	
+	private CollectionHTQuestionItemDo attributes;
+	
 	public List<String> getPublisher() {
 		return publisher;
 	}
@@ -576,6 +578,13 @@ public class ResourceDo extends ContentDo {
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
+	public CollectionHTQuestionItemDo getAttributes() {
+		return attributes;
+	}
+	public void setAttributes(CollectionHTQuestionItemDo attributes) {
+		this.attributes = attributes;
+	}
+	
 	public String getThumbnail() {
 		return thumbnail;
 	}

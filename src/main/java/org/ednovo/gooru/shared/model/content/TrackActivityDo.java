@@ -29,6 +29,9 @@ package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 
 /**
  * @fileName : TrackActivityDo.java
@@ -44,6 +47,8 @@ import java.io.Serializable;
  *
  * @Reviewer: 
  */
+
+@JsonInclude(Include.NON_NULL)
 public class TrackActivityDo  implements Serializable{
 	
 	/**

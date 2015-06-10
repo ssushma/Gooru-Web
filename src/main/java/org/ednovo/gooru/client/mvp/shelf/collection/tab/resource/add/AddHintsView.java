@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
@@ -47,11 +48,19 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 
-	@UiField Label hintNumLbl;
-	@UiField TinyMCE hintTextBox;
-	@UiField Label hintsTextLblVal,errorMessageforHints;
+	@UiField
+	public Label hintNumLbl;
+	@UiField
+	public TinyMCE hintTextBox;
+	@UiField
+	public Label hintsTextLblVal;
+	@UiField
+	public
+	Label errorMessageforHints;
 	@UiField HTMLPanel deleteButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
+	@UiField
+	public HTMLEventPanel eHearderIconHint;
 	
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	public Label hintDelLbl=new Label();
@@ -63,6 +72,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		hintTextBox.getElement().setId("tinyMCEHintTextBox");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
+		eHearderIconHint.getElement().setId("eHearderIconHint");
 	}
 	
 	public AddHintsView(int widgetsCount){
@@ -73,6 +83,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		hintTextBox.getElement().setId("tinyMCEHintTextBox");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
+		eHearderIconHint.getElement().setId("eHearderIconHint");
 	}
 	public AddHintsView(int widgetsCount,String hintText){
 		initWidget(obj.createAndBindUi(this)); 
@@ -83,18 +94,21 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		hintTextBox.getElement().setId("tinyMCEHintTextBox");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
+		eHearderIconHint.getElement().setId("eHearderIconHint");
 	}
 	public void showHintsMessage(int widgetsCount){
 		if(widgetsCount==1){
 			hintNumLbl.setText(""+widgetsCount);
 			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
-			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);	
+			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);
+			eHearderIconHint.setVisible(true);
 			hintsTextLblVal.setText(i18n.GL0859());
 			hintsTextLblVal.getElement().setAttribute("alt", i18n.GL0859());
 			hintsTextLblVal.getElement().setAttribute("title", i18n.GL0859());
 		}
 		else{
 			hintNumLbl.setText(""+widgetsCount);
+			eHearderIconHint.setVisible(false);
 			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
 			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);	
 		}
@@ -140,4 +154,5 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
+	
 }
