@@ -193,8 +193,6 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 				}else{
 					startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
 				}
-			/*	hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),oeStyle.hintsText()));*/
-
 				hintsButton.setText(""+i18n.GL0317()+" ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
 				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 				hintsButton.getElement().setAttribute("title"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
