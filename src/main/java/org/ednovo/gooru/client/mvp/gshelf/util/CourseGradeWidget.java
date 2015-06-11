@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.mvp.gshelf.util;
 
 import java.util.List;
 
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
