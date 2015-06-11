@@ -25,38 +25,10 @@
 
 package org.ednovo.gooru.client;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.AppInjector;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
-import org.ednovo.gooru.application.shared.model.user.UserDo;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabCBundle;
-import org.ednovo.gooru.client.mvp.folder.toc.FolderContainerCBundle;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
-import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle;
-import org.ednovo.gooru.client.mvp.search.SearchCBundle;
-import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
-import org.ednovo.gooru.client.uc.BrowserAgent;
-import org.ednovo.gooru.client.uc.UcCBundle;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.StyleInjector;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.UmbrellaException;
-import com.google.gwt.maps.client.LoadApi;
-import com.google.gwt.maps.client.LoadApi.LoadLibrary;
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
-import com.google.gwt.user.client.Window;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 /**
  *
@@ -124,7 +96,6 @@ public class GooruEntry implements EntryPoint {
 //			}
 //		});
 //		AppClientFactory.setAppGinjector(appInjector);
-
 	}
 
 
