@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.prime;
 
-import org.ednovo.gooru.client.gin.BaseView;
+import org.ednovo.gooru.application.client.gin.BaseView;
 import org.ednovo.gooru.client.uc.UcCBundle;
 
 import com.google.gwt.user.client.ui.SimplePanel;

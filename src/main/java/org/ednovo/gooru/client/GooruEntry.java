@@ -30,19 +30,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.AppInjector;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppInjector;
+import org.ednovo.gooru.application.client.home.HomeCBundle;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabCBundle;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderContainerCBundle;
-import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle;
+import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerCBundle;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
-import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -129,6 +133,11 @@ public class GooruEntry implements EntryPoint {
 
 		getloggersStatus();
 
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");
+		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
+
 		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
@@ -157,6 +166,14 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+AnalyticsTabCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 
 		AnalyticsTabCBundle.INSTANCE.css().ensureInjected();
+
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+ResourcePlayerCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+ResourcePlayerCBundle.INSTANCE.getResponsive2Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+ResourcePlayerCBundle.INSTANCE.getResponsive3Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 992px){"+ResourcePlayerCBundle.INSTANCE.getResponsive4Style().getText()+"}");
+
+		ResourcePlayerCBundle.INSTANCE.css().ensureInjected();
+
 
 		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsive1Style().getText()+"}");

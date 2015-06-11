@@ -27,22 +27,7 @@
 */
 package org.ednovo.gooru.client.mvp.test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
-import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 
 /**

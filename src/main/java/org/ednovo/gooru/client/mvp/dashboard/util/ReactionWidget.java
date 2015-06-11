@@ -1,7 +1,5 @@
 package org.ednovo.gooru.client.mvp.dashboard.util;
 
-import org.ednovo.gooru.client.mvp.dashboard.util.ReactionsWidgetCBundle;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

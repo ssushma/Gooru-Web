@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
-import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.event.shared.EventHandler;
 

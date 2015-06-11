@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.info;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface ResourceInfoUiHandlers extends BaseUiHandlers{
 	public void getCollectionList(String resourceGooruOid,String pageNum,String pageSize);

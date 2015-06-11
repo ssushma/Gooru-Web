@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.share;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface ResourceShareUiHandlers extends BaseUiHandlers{
 	public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message); 

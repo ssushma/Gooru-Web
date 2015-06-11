@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,11 +25,11 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
-import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -39,9 +39,9 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollectionSummaryTeacherView> implements CollectionSummaryTeacherUiHandlers{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
-	
+
 	private String collectionId,classpageId,pathwayId;
-	 
+
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -83,12 +83,12 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 				if(userData != null){
 					getView().setTeacherResourceData(userData,result,loadingImage);
 				}
-				
+
 			}
 			@Override
 			public void onFailure(Throwable caught) {
 			}
-		});		
+		});
 	}
 
 	/* (non-Javadoc)
@@ -120,10 +120,10 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 						getView().getFrame().setUrl(result);
 						//Window.open(result, "_blank", "status=0,toolbar=0,menubar=0,location=0");
 					}
-					
+
 					@Override
 					public void onFailure(Throwable caught) {
-						
+
 					}
 				});
 	}

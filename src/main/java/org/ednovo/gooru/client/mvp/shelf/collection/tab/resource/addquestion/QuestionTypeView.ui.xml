@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:HTMLEventPanel="urn:import:org.ednovo.gooru.client.ui">
 
-<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 
 	<g:HTMLPanel styleName="assessmentContentBlock">
 
@@ -19,34 +19,34 @@
 		<g:Label styleName="charLimit" ui:field="charLimitLbl"></g:Label>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>
-	
+
 	<g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
 	    <g:HTMLPanel ui:field="questionNameTextAreaContainer"></g:HTMLPanel>
-	    
+
 		<!-- <tinyMce:TinyMCE width="1" height="1"
 			ui:field="questionNameTextArea" characterLimit="500"></tinyMce:TinyMCE> -->
 		<g:Label ui:field="questionNameErrorLbl"></g:Label>
 	</g:HTMLPanel>
-	
+
      <g:Label styleName="errorText errorMessage" ui:field="errorMessageForQuestion"></g:Label>
 
 	<g:HTMLPanel styleName="">
 		<g:Anchor styleName="ancTab" ui:field="addQuestionImg"></g:Anchor>
 
 	</g:HTMLPanel>
-	
-	<g:HTMLPanel ui:field="addQuestImgContainer" styleName="containerMarginTop"/> 
+
+	<g:HTMLPanel ui:field="addQuestImgContainer" styleName="containerMarginTop"/>
 
  <g:HTMLPanel styleName="containerMarginTop" ui:field="questionHotSpotAnswerChoiceContainer" />
- 
+
  <g:Label styleName="errorText errorMessage" ui:field="ansChoiceErrMsg"></g:Label>
- 
+
   <g:HTMLPanel  ui:field="advancedContainer" styleName="addAdvancedHeaderTextContainer">
           <g:Label ui:field="advancedLbl"></g:Label>
           </g:HTMLPanel>
-          
+
   <!-- Explanation container -->
-  
+
    <g:FlowPanel styleName="containerPadding" ui:field="explanationContainer">
           <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconExplanation"></HTMLEventPanel:HTMLEventPanel>
           <g:Label styleName="containerTitle" ui:field="explanationLabel"></g:Label>
@@ -58,19 +58,19 @@
           </g:HTMLPanel>
     </g:FlowPanel>
      <g:Label styleName="errorText errorMessage" ui:field="errorMessageForExplanation"></g:Label>
-      	
-     <!--End Explanation container --> 
-  
-  
+
+     <!--End Explanation container -->
+
+
   <!-- Hints Container -->
-  
+
    <g:HTMLPanel ui:field="hintsContainer"></g:HTMLPanel>
    <g:Label styleName="errorText errorMessage" ui:field="errorMessageForHintsCheck"></g:Label>
-  
-  
+
+
   <!-- End Hints Container -->
-  
-  
+
+
    <!-- Depth Of Knowledge Start-->
       	<g:FlowPanel ui:field="depthOfKnowledgeContainer" styleName="depthOfKnowledgeContainer">
 					<g:FlowPanel styleName="depthOfKnowledgeSubContainer">
@@ -97,8 +97,8 @@
 					</g:FlowPanel>
 				</g:FlowPanel>
          <!-- Depth Of Knowledge End -->
-         
-         
+
+
          <!-- Standards Start -->
 		 <g:FlowPanel ui:field="standardContainer">
 		      <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconStandards"/>
@@ -117,7 +117,7 @@
 				</g:FlowPanel>
         <!-- Standards End -->
    <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-   
+
     <!-- 21 century Start -->
 			 <g:FlowPanel ui:field="centuryContainer">
 			       <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconCentury"/>
@@ -135,24 +135,24 @@
 						</g:FlowPanel>
 					</g:FlowPanel>
 	        <!-- 21 century End -->
-			
+
  <g:HTMLPanel styleName="col-md-12 colmdPadding containerMarginTop">
-          
+
            <g:Label ui:field="setUpAdvancedLbl" styleName="advancedOptionsHeading"></g:Label>
-          
+
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addExplanationAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addHintsAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addDepthOfKnowledgeAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addStandardsAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addCenturyAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
-          
+
       </g:HTMLPanel>
-      
+
  <!-- Terms Policy Start -->
- 
+
      <g:HTMLPanel styleName="termPolicyContainer">
         	<g:CheckBox ui:field="rightsChkBox" styleName="checkBoxlevels" checked="true" ></g:CheckBox>
-        	<g:Label ui:field="rightsLbl" styleName="copyRightText"></g:Label> 
+        	<g:Label ui:field="rightsLbl" styleName="copyRightText"></g:Label>
      <HTMLEventPanel:HTMLEventPanel ui:field="lblContentRights" styleName="copyRightIcon">
 	        	<g:HTMLPanel styleName="copyRightPopupContainer" ui:field="panelContentRights">
 					<g:HTMLPanel styleName="copyRightTootlTipArrowShadow"></g:HTMLPanel>
@@ -168,21 +168,21 @@
      		 				<g:InlineLabel styleName="anchorText" ui:field="copyRightAnr"/>
      		 				<g:InlineLabel ui:field="additionalText" />
      		 		</g:HTMLPanel>
-    	 				
+
 					</g:HTMLPanel>
 				</g:HTMLPanel>
         	</HTMLEventPanel:HTMLEventPanel>
          </g:HTMLPanel>
   <!-- Terms Policy End -->
-  
+
   <g:HTMLPanel styleName="addButtonContainer inlineBlock" ui:field="buttonContainer">
          <HTMLEventPanel:HTMLEventPanel styleName="inlineBlock" ui:field="addQuestionResourceButton">
           <uc:BlueButtonUc styleName="primary" ui:field="addbutton"></uc:BlueButtonUc>
       </HTMLEventPanel:HTMLEventPanel>
      	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
-        
+
       </g:HTMLPanel>
       <g:Label  styleName="addButtonContainer" ui:field="loadingTextLbl"></g:Label>
 
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,23 +26,21 @@ package org.ednovo.gooru.client.mvp.home;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.home.HomeCBundle;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -58,13 +56,13 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class ResetPasswordVc extends Composite{
-	
+
 	private static ResetPasswordVcUiBinder uiBinder = GWT
 			.create(ResetPasswordVcUiBinder.class);
 
 	interface ResetPasswordVcUiBinder extends UiBinder<Widget, ResetPasswordVc> {
 	}
-	
+
 	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
@@ -84,23 +82,23 @@ public class ResetPasswordVc extends Composite{
 
 	@UiField
 	ErrorLabelUc newPwdValidationUc;
-	
+
 	@UiField
 	Label newPasswordText,newPwdLbl,confirmPwdLbl,tokenExpireErrorLabel;
-	
+
 	private String resetToken;
 
 	private AppPopUp appPopUp;
-	
+
 	private String homeEndPoint=null;
-	
+
 	private boolean isDigiSpclChars=false;
-	
+
 	private static final String PASSWORD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
 
 	/**
 	 * Class constructor , create reset password popup and assign password reset token
-	 * @param resetToken password token 
+	 * @param resetToken password token
 	 */
 	public ResetPasswordVc(String resetToken) {
 		appPopUp = new AppPopUp();
@@ -111,7 +109,7 @@ public class ResetPasswordVc extends Composite{
 				homeEndPoint = result;
 			}
 		});
-		
+
 		if(!appPopUp.isShowing()){
 			this.resetToken = resetToken;
 			appPopUp.setContent(i18n.GL0062(), uiBinder.createAndBindUi(this));
@@ -122,27 +120,27 @@ public class ResetPasswordVc extends Composite{
 			newPasswordText.getElement().setId("lblNewPasswordText");
 			newPasswordText.getElement().setAttribute("alt",i18n.GL1254());
 			newPasswordText.getElement().setAttribute("title",i18n.GL1254());
-			
+
 			newPwdLbl.setText(i18n.GL1255());
 			newPwdLbl.getElement().setId("lblNewPwdLbl");
 			newPwdLbl.getElement().setAttribute("alt",i18n.GL1255());
 			newPwdLbl.getElement().setAttribute("title",i18n.GL1255());
-			
+
 			confirmPwdLbl.setText(i18n.GL0427());
 			confirmPwdLbl.getElement().setId("lblConfirmPwdLbl");
 			confirmPwdLbl.getElement().setAttribute("alt",i18n.GL0427());
 			confirmPwdLbl.getElement().setAttribute("title",i18n.GL0427());
-			
+
 			sendMailBtnUc.setText(i18n.GL0141());
 			sendMailBtnUc.getElement().setAttribute("alt",i18n.GL0141());
 			sendMailBtnUc.getElement().setAttribute("title",i18n.GL0141());
-			
+
 			resetPwdCancelAnr.setText(i18n.GL0142());
 			resetPwdCancelAnr.getElement().setAttribute("alt",i18n.GL0142());
 			resetPwdCancelAnr.getElement().setAttribute("title",i18n.GL0142());
-			
+
 			newPwdValidationUc.getElement().setId("errlblNewPwdValidationUc");
-			
+
 			resetConfirmPwdTxtBox.getElement().setPropertyString("type", "password");
 			resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
 			resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
@@ -160,7 +158,7 @@ public class ResetPasswordVc extends Composite{
 			resetPwdCancelAnr.getElement().setId("lnkCancel");
 			resetNewPwdTxtBox.addFocusHandler(new OnNewPasswordFocus());
 			resetConfirmPwdTxtBox.addFocusHandler(new OnConfirmPasswordFocus());
-			
+
 			Window.enableScrolling(false);
 			AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
 		}
@@ -220,7 +218,7 @@ public class ResetPasswordVc extends Composite{
 	}
 
 	/**
-	 * @return password 
+	 * @return password
 	 */
 	protected String getresetConfirmPwd() {
 		return resetConfirmPwdTxtBox.getText();
@@ -228,7 +226,7 @@ public class ResetPasswordVc extends Composite{
 
 	/**
 	 * Validate the password , that contain all requirement of password text
-	 * @return true or false 
+	 * @return true or false
 	 */
 	public boolean validatePassword() {
 		String newPassword = resetNewPwdTxtBox.getText();
@@ -247,7 +245,7 @@ public class ResetPasswordVc extends Composite{
 						"Password"));
 				newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0070(),
 						"Password"));
-				
+
 				isValid = false;
 			}
 
@@ -264,7 +262,7 @@ public class ResetPasswordVc extends Composite{
 						"Confirm Password"));
 				isValid = false;
 			}
-			
+
 			else if (newPassword.length() > 0 && newPassword.length() < 5) {
 				newPwdValidationUc.setVisible(true);
 				resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
@@ -277,7 +275,7 @@ public class ResetPasswordVc extends Composite{
 						"Password", "5"));
 				isValid = false;
 			}
-			
+
 			else if (newPassword != null && newPassword.length() >= 14) {
 				resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
 						.resetPwdTextError());
@@ -287,7 +285,7 @@ public class ResetPasswordVc extends Composite{
 				newPwdValidationUc.setVisible(true);
 				isValid = false;
 			}
-			else if (!pwdChck) { 
+			else if (!pwdChck) {
 				if(isDigiSpclChars){
 					isDigiSpclChars=false;
 					resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
@@ -339,7 +337,7 @@ public class ResetPasswordVc extends Composite{
 	}
 	/**
 	 * @author Search Team
-	 * Focus on new password text box 
+	 * Focus on new password text box
 	 *
 	 */
 	private class OnNewPasswordFocus implements FocusHandler {
@@ -355,7 +353,7 @@ public class ResetPasswordVc extends Composite{
 
 	/**
 	 * @author Search Team
-	 * Focus on confirm password text box 
+	 * Focus on confirm password text box
 	 *
 	 */
 	private class OnConfirmPasswordFocus implements FocusHandler {
@@ -368,9 +366,9 @@ public class ResetPasswordVc extends Composite{
 			}
 		}
 	}
-	
+
 	private  boolean checkPassword(String pwd) {
-		boolean isLetterIncluded=false,isDigiIncluded=false,isSpecialCharIncluded=false,isValidPwd=false; 
+		boolean isLetterIncluded=false,isDigiIncluded=false,isSpecialCharIncluded=false,isValidPwd=false;
 		boolean isLetters=false,isDigits=false,isSpclChars=false;
 		String digiOnly="";
 		String letterOnly="";

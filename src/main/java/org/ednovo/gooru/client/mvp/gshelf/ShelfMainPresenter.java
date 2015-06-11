@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,15 +27,21 @@ package org.ednovo.gooru.client.mvp.gshelf;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.ActivateSearchBarEvent;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.CourseListPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -61,11 +67,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.MetaDO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -92,7 +93,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, ShelfMainPresenter.IsShelfMainProxy> implements ShelfMainUiHandlers {
 
@@ -107,17 +108,17 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private CollectionResourceTabPresenter collectionResourceTabPresenter;
 
 	private CollectionInfoTabPresenter collectionInfoTabPresenter;
-	
+
 	private CollectionAssignTabPresenter collectionAssignTabPresenter;
-	
+
 	private CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter;
 
 	private FolderItemTabPresenter folderItemTabPresenter;
-	
+
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 
 	private SimpleAsyncCallback<CollectionDo> copyCollectionAsyncCallback;
-	
+
 	private SimpleAsyncCallback<MetaDO> permissionsAsyncCallback;
 
 	private SimpleAsyncCallback<Void> deleteCollectionAsyncCallback;
@@ -131,24 +132,27 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private CollectionDo collectionDo;
 
 	private String folderParentName = "";
-	
+
 	private boolean isPageRefreshed = true;
-	
-	
+
+	public static final  Object COURSE_LIST_SLOT = new Object();
+
+	private CourseListPresenter courseListPresenter;
+
 	boolean isApiCalled=false;
-	
+
     private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
-	
+
 	private String parentId, id=null;
-	
+
 	SignUpPresenter signUpViewPresenter = null;
-	
+
 	Map<String,String> folderMetaData = new HashMap<String,String>();
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String CALLBACK = "callback";
-	
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.MYCOLLECTION)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -158,7 +162,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	/**
 	 * class constructor to set all class of instance
-	 * 
+	 *
 	 * @param imageUploadPresenter
 	 *            instance of {@link ImageUploadPresenter}
 	 * @param shelfTabPresenter
@@ -175,7 +179,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,ImageUploadPresenter imageUploadPresenter, ShelfListPresenter shelfTabPresenter, CollectionResourceTabPresenter collectionResourceTabPresenter, CollectionInfoTabPresenter collectionInfoTabPresenter, CollectionAssignTabPresenter collectionAssignTabPresenter,CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter, FolderItemTabPresenter folderItemTabPresenter, IsShelfMainView view, IsShelfMainProxy proxy) {
+	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,ImageUploadPresenter imageUploadPresenter, ShelfListPresenter shelfTabPresenter, CollectionResourceTabPresenter collectionResourceTabPresenter, CollectionInfoTabPresenter collectionInfoTabPresenter, CollectionAssignTabPresenter collectionAssignTabPresenter,CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter, FolderItemTabPresenter folderItemTabPresenter, CourseListPresenter courseListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		//getView().getLoadingImageVisible();
@@ -187,13 +191,14 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		this.collectionCollaboratorsTabPresenter = collectionCollaboratorsTabPresenter;
 		this.imageUploadPresenter = imageUploadPresenter;
 		this.folderItemTabPresenter = folderItemTabPresenter;
+		this.courseListPresenter=courseListPresenter;
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
 		Document doc = Document.get();
-		doc.getBody().setClassName(""); 
-		
+		doc.getBody().setClassName("");
+
 		CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
-			
+
 			@Override
 			public void updateShareType(String shareType,String publishStatus,boolean isPublish,CollectionDo collection) {
 				if(isPublish){
@@ -204,20 +209,20 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				}
 			}
 		};
-		
+
 		SetCollabCountHandler setCollabCount = new SetCollabCountHandler() {
 			@Override
 			public void setCollabCountBy(String type, Integer count) {
 				//getView().setCollabCountByType(type, count);
 			}
 		};
-		
+
 		addRegisteredHandler(CollectionAssignShareEvent.TYPE, handler);
 		addRegisteredHandler(SetCollabCountEvent.TYPE, setCollabCount);
 		addRegisteredHandler(SetFolderParentNameEvent.TYPE, this);
 		addRegisteredHandler(SetFolderMetaDataEvent.TYPE, this);
 	}
-	
+
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
@@ -246,8 +251,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			update.center();
 		}
 	}
-	
-	
+
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -273,7 +278,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					invokeErrorPopup();
 				}
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				super.onFailure(caught);
@@ -281,12 +286,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			}
 		});
 	}
-	
+
 	@Override
 	public void onUnbind(){
 		super.onUnbind();
 	}
-	
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -297,22 +302,22 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				ShelfCollectionResourceChildView.checkEditState();
 			}
 		}, ClickEvent.getType());
-		
+
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.WORKSPACE_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		if (idParm != null && AppClientFactory.isAnonymous()){
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
-			
+
 		}else if(AppClientFactory.isAnonymous()){
 			Window.enableScrolling(true);
 		//	getView().setOnlyNoDataCollection();
 		} else {
 			//getView().setBackToSearch();
-			
+
 			fireEvent(new ActivateSearchBarEvent(true));
-			
+
 			String id = getPlaceManager().getRequestParameter("id", "INVALID");
 			if(id.equalsIgnoreCase("INVALID") && !AppClientFactory.isAnonymous())
 			{
@@ -326,7 +331,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 			//Call Event for Setting Confirm popup
 			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
-		}		
+		}
 	}
 
 	@Override
@@ -339,7 +344,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			String o1 = getPlaceManager().getRequestParameter("o1");
 			String o2 = getPlaceManager().getRequestParameter("o2");
 			String o3 = getPlaceManager().getRequestParameter("o3");
-			
+
 			if(o3!=null&&id==null) {
 				setFoldersSlot(o3);
 			} else if(o2!=null&&id==null) {
@@ -357,7 +362,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					/*getView().getFolderListPanel().clear();
 					getView().getFolderListPanel().setVisible(false);
 					getView().getLoadingImageVisible();*/
-					
+
 					if (!isApiCalled){
 						isApiCalled= true;
 						getResourceService().getCollection(id, false, getCollectionAsyncCallback());
@@ -375,6 +380,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			}
 			setInSlot(TYPE_SHELF_TAB, shelfListPresenter);
 			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+
+			setInSlot(COURSE_LIST_SLOT, courseListPresenter,false);
 		}else{
 //			getView().setOnlyNoDataCollection();
 			Window.enableScrolling(true);
@@ -384,7 +391,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		//getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
 		//getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
 		if (idParm == null){
-			
+
 			//getView().getEditPanel().getElement().getStyle().setMarginTop(38, Unit.PX);
 		}else{
 			/*getView().getEditPanel().getElement().getStyle().clearHeight();
@@ -392,7 +399,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			//getView().getEditPanel().getElement().getStyle().clearMarginTop();
 		}
 	}
-	
+
 	@Override
 	protected void onHide() {
 		super.onHide();
@@ -400,7 +407,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		//getView().hideAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
 		AppClientFactory.getPlaceManager().setUserShelfId(null);
-		
+
 	}
 
 	@Override
@@ -423,7 +430,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public SimpleAsyncCallback<CollectionDo> getCollectionAsyncCallback() {
 		return collectionAsyncCallback;
 	}
-	
+
 
 	/**
 	 * @return instance of {@link CollectionDo}
@@ -445,7 +452,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					if(O1_LEVEL_VALUE!=null) {
 						params.put("o1", O1_LEVEL_VALUE);
 					}
-					//AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT_AND_VIEW, params,result)); 
+					//AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT_AND_VIEW, params,result));
 					/*getView().getLoadingImageInvisible();
 					getView().editCopyCollectionTitle();*/
 				}
@@ -453,7 +460,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 		return copyCollectionAsyncCallback;
 	}
-		
+
 
 	/**
 	 * @param collectionAsyncCallback
@@ -514,7 +521,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			addToSlot(TYPE_COLLABORATOR_TAB, collectionCollaboratorsTabPresenter);
 			collectionCollaboratorsTabPresenter.setData(collectionDo);
 		}
-		
+
 	}
 
 	@Override
@@ -534,7 +541,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void updateCollectionInfo(String collectionId, String title, String description) {
 		getResourceService().updateCollectionMetadata(collectionId, title, description, null, null, null, null, null, null, null, getUpdateCollectionAsyncCallback());
 	}
-	
+
 
 	@Override
 	public void copyCollection(String collectionUid, boolean addToShelf) {
@@ -544,48 +551,48 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection, " ", parentId, addToShelf, getCopyCollectionAsyncCallback());
 	}
 
-	
-	
+
+
 
 	public void increaseGlassHeight(Element glass){
-	        
+
 	         Style style = glass.getStyle();
-	
+
 	      int winWidth = Window.getClientWidth();
 	      int winHeight = Window.getClientHeight();
-	
+
 	      // Hide the glass while checking the document size. Otherwise it would
 	      // interfere with the measurement.
 	      style.setDisplay(Display.NONE);
 	      style.setWidth(0, Unit.PX);
 	      style.setHeight(0, Unit.PX);
-	
+
 	      int width = Document.get().getScrollWidth();
 	      int height = Document.get().getScrollHeight();
-	
+
 	      // Set the glass size to the larger of the window's client size or the
 	      // document's scroll size.
 	      style.setWidth(Math.max(width, winWidth), Unit.PX);
 	      style.setHeight(Math.max(height, winHeight), Unit.PX);
-	
+
 	      // The size is set. Show the glass again.
 	      style.setDisplay(Display.BLOCK);
 	}
-	
+
 	@Override
 	public void updateResourceCount(int resourceCount) {
 		//getView().updateResoureCount(resourceCount);
-		
+
 	}
-	
+
 	@Override
 	public void setFoldersSlot(String parentId) {
 		clearSlot(TYPE_FOLDERS_SLOT);
-		setInSlot(TYPE_FOLDERS_SLOT, folderItemTabPresenter);
+		//setInSlot(TYPE_FOLDERS_SLOT, folderItemTabPresenter);
 		//getView().getFolderListPanel().setVisible(true);
-		folderItemTabPresenter.setFolderData(parentId, folderParentName, 1);
+		//folderItemTabPresenter.setFolderData(parentId, folderParentName, 1);
 	}
-	
+
 	@Override
 	public void setFolderParentName(String folderParentName) {
 		folderItemTabPresenter.setFolderTitle(folderParentName);
@@ -593,16 +600,16 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 
 	@Override
-	public void moveCollection(final String sourceId, final String targetId,final String folderName,final HashMap<String, String> params) { 
+	public void moveCollection(final String sourceId, final String targetId,final String folderName,final HashMap<String, String> params) {
 		AppClientFactory.getInjector().getfolderService().moveCollectionIntoFolder(sourceId,targetId,new SimpleAsyncCallback<Void>(){
 			@Override
 			public void onSuccess(Void result) {
-				//getView().CollMovedSucessFully(sourceId,targetId,folderName,params); 
+				//getView().CollMovedSucessFully(sourceId,targetId,folderName,params);
 			}
-			
+
 		});
 	}
-	
+
 	private void setFolderUrlParams() {
 		O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 		O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
@@ -615,7 +622,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			parentId=O1_LEVEL_VALUE;
 		}
 	}
-	
+
 	public void invokeErrorPopup(){
 		/*if (errorPopup == null){
 			errorPopup = new ErrorPopup(i18n.GL0340());
@@ -629,7 +636,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		folderItemTabPresenter.setFolderMetaData(folderMetaData);
 		this.folderMetaData = folderMetaData;
 	}
-	
+
 	public void getUserSheldId(){
 		if(!AppClientFactory.isAnonymous()){
 			String userUid=AppClientFactory.getLoggedInUser().getGooruUId();
@@ -643,10 +650,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 
 	@Override
-	public void getEditPageHeight(PopupPanel editQuestionPopupPanel,
-			boolean isHeightClear) {
-		// TODO Auto-generated method stub
-		
+	public void getEditPageHeight(PopupPanel editQuestionPopupPanel,boolean isHeightClear) {
+
 	}
-	
 }

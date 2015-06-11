@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,12 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
 import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageHandler;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -54,17 +54,17 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnswerImageHandler{
-	
+
 	public interface AddHotSpotQuestionAnswerChoiceUiBinder extends UiBinder<Widget, AddHotSpotQuestionAnswerChoice>{
-		
+
 	}
-	
+
 	public static AddHotSpotQuestionAnswerChoiceUiBinder uiBinder=GWT.create(AddHotSpotQuestionAnswerChoiceUiBinder.class);
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String PLUS_IMAGE="images/add-symbol.png";
-	
+
 	@UiField Label answerHeadLbl,answerHeadingTypeLbl;
 
 	@UiField
@@ -80,14 +80,14 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	@UiField
 	public RadioButton textRDButton;
-	
+
 	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
 	private String widgetId;
 	private final static String CLICK="click";
-	
+
 	QuestionTypeView questionTypeView;
 	public AddHotSpotQuestionAnswerChoice(QuestionTypeView questionTypeView){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -130,24 +130,24 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		setAnswerFields(true);
 	}
-	
+
 	public void setAnswerFields(boolean val){
-		
+
 		if(val){
 			imageRDButton.setValue(true);
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 			textAnsContainer.setVisible(false);
 			imgContainer.setVisible(true);
-			
+
 		}else {
 			textRDButton.setValue(true);
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 			textAnsContainer.setVisible(true);
 			imgContainer.setVisible(false);
 		}
-		
+
 	}
-	
+
 	@UiHandler("imageRDButton")
 	public void imageRDButtonClick(ClickEvent event){
 		setAnswerFields(true);
@@ -158,19 +158,19 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		textAnsContainer.clear();
 		addAnswerChoice();
 		addAnswerChoice();
-		
+
 	}
-	
+
 	public void setAnswerChoices(){
 		int widgetCount=textAnsContainer.getWidgetCount();
 		for(int i=0;i<widgetCount;i++){
 			final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)textAnsContainer.getWidget(i);
 			addAnswerChoice.getElement().setId(i+"");
 			addAnswerChoice.setLabelName(anserChoiceNumArray[i]);
-			
+
 			if(!addAnswerChoice.optionSelectedButton.getElement().getId().equalsIgnoreCase(CLICK)){
 				addAnswerChoice.optionSelectedButton.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						if(addAnswerChoice.isOptionSelectedButton){
@@ -180,22 +180,22 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
 							addAnswerChoice.isOptionSelectedButton=true;
 						}
-						
+
 					}
 				});
 			}
-			
+
 			addAnswerChoice.optionSelectedButton.getElement().setId(CLICK);
-			
+
 			if(i>0){
-				
+
 				addAnswerChoice.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						addAnswerChoice.removeFromParent();
 					}
 				});
-				
+
 				addAnswerChoice.addMouseOverHandler(new MouseOverHandler() {
 					@Override
 					public void onMouseOver(MouseOverEvent event) {
@@ -208,7 +208,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 						addAnswerChoice.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 					}
 				});
-				
+
 			}
 		}
 		if(textAnsContainer.getWidgetCount()<5){
@@ -216,20 +216,20 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		}else {
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
+
 	}
-	
+
 	public void addAnswerChoice(){
 		AddAnswerChoice addAnswerChoice=new AddAnswerChoice();
 		textAnsContainer.add(addAnswerChoice);
 		setAnswerChoices();
 	}
-	
+
 	@UiHandler("addAnswerChoice")
 	public void clickedOnAddChoiceButton(ClickEvent clickEvent){
 		addAnswerChoice();
 	}
-	
+
 	private class panelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -241,7 +241,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	@Override
 	public void setAnswerImageUrl(String fileName,	String fileNameWithoutRepository, boolean isAnswerImage) {
-		
+
 		double randNumber = Math.random();
 		final AddAnswerImg addAnswerImage = new AddAnswerImg();
 		addAnswerImage.setAnswerImage(fileName+"?"+randNumber);
@@ -257,32 +257,32 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 			addAnswerImage.setId(ansImageContainer.getWidgetCount());
 			ansImageContainer.add(addAnswerImage);
 		}
-		
-		
+
+
 		addAnswerImage.changeImgLbl.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
              widgetId=addAnswerImage.getElement().getId();
 				questionTypeView.uploadAnswerImage();
 			}
 		});
-		
+
 		addAnswerImage.removeImgLbl.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				addAnswerImage.removeFromParent();
 				refreshImageContainer();
 			}
 		});
-		
+
 		updateImageContainer();
 	}
-	
-	
+
+
 	public void updateImageContainer(){
-		
+
 		if(ansImageContainer.getWidgetCount()==5){
 			ansImageBlock.getElement().getStyle().setOpacity(0.5);
 			ansImage.getElement().getStyle().setCursor(Cursor.DEFAULT);
@@ -292,9 +292,9 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 			ansImageBlock.getElement().getStyle().setCursor(Cursor.POINTER);
 			ansImageBlock.getElement().getStyle().clearOpacity();
 		}
-		
+
 	}
-	
+
 	public void refreshImageContainer(){
 		for(int i=0;i<ansImageContainer.getWidgetCount();i++){
 			AddAnswerImg answerImg=	(AddAnswerImg) ansImageContainer.getWidget(i);
@@ -302,6 +302,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		}
 		updateImageContainer();
 	}
-	
-	
+
+
 }

@@ -38,19 +38,7 @@ package org.ednovo.gooru.client.mvp.search;
 * @Reviewer 
 *
 */
-import java.util.HashMap;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Tree;
-import com.google.gwt.user.client.ui.TreeItem;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 public interface IsAnalyticsInfoContainerView extends IsViewWithHandlers<AnalyticsInfoContainerUiHandlers>{
 

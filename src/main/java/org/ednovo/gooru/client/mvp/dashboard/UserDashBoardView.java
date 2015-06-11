@@ -26,12 +26,12 @@ package org.ednovo.gooru.client.mvp.dashboard;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.application.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
-import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

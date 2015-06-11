@@ -1,10 +1,10 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -31,7 +31,7 @@ public class EmailPopup extends PopupPanel {
 	interface EmailPopupUiBinder extends UiBinder<Widget, EmailPopup> {
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField HTMLPanel successMesageContainer,mainBodycontainer;
 	@UiField Button okBtn,sendBtn,cancelBtn;
 	@UiField Label lblTankYou,lblFrom,lblTo,lblWeNeverShareText,lblSendMeCopy,lblSubject,lblMessageText,emailIdsText,headerTitlelbl,emailErrorlbl,userNamelbl,displayPdfPathlbl;
@@ -41,11 +41,11 @@ public class EmailPopup extends PopupPanel {
 	@UiField Anchor privacylbl;
 	boolean isValidate=true;
 	String fileName,filePath;
-	
+
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	
+
 	CollectionSummaryIndividualCBundle res;
-	
+
 	/**
 	 * Constructor
 	 */
@@ -71,24 +71,24 @@ public class EmailPopup extends PopupPanel {
 	 */
 	void setStaticData(){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
 				StringUtil.setAttributes(successMesageContainer.getElement(), "pnlSuccessMesageContainer", null, null);
 				StringUtil.setAttributes(mainBodycontainer.getElement(), "pnlMainBodycontainer", null, null);
-				
+
 				StringUtil.setAttributes(okBtn.getElement(), "btnOk", i18n.GL0190(), i18n.GL0190());
 				StringUtil.setAttributes(sendBtn.getElement(), "btnSend", i18n.GL0228(), i18n.GL0228());
 				StringUtil.setAttributes(cancelBtn.getElement(), "btnCancelBtn", i18n.GL0142(), i18n.GL0142());
-				
+
 				StringUtil.setAttributes(messageTextArea.getElement(), "tatMessageTextArea", null, null);
-				
+
 				StringUtil.setAttributes(subjectTxt.getElement(), "txtSubjectTxt", i18n.GL1443(), i18n.GL1443());
 				StringUtil.setAttributes(emailTextbox.getElement(), "txtEmailTextbox", null, null);
-				
+
 				StringUtil.setAttributes(sendmecopy.getElement(), "chkSendmecopy", null, null);
-					
+
 				StringUtil.setAttributes(privacylbl.getElement(), "lnkPrivacylbl",i18n.GL1893(), i18n.GL1893());
 
 				StringUtil.setAttributes(emailIdsText.getElement(), "lblEmailIdsText", null, null);
@@ -103,7 +103,7 @@ public class EmailPopup extends PopupPanel {
 				StringUtil.setAttributes(lblSendMeCopy.getElement(), "lblSendMeCopy", i18n.GL0225(), i18n.GL0225());
 				StringUtil.setAttributes(lblSubject.getElement(), "lblSubject", i18n.GL0226(), i18n.GL0226());
 				StringUtil.setAttributes(lblMessageText.getElement(), "lblMessageText", i18n.GL0227(), i18n.GL0227());
-			
+
 			}
 		});
 	}
@@ -118,21 +118,21 @@ public class EmailPopup extends PopupPanel {
 		final String tmpPath = path;
 		final String tmpPdfName = pdfName;
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
 				successMesageContainer.setVisible(false);
 				mainBodycontainer.setVisible(true);
 				if(!StringUtil.isEmpty(tmpPdfName) && !StringUtil.isEmpty(tmpPath)){
-					
+
 					displayPdfPathlbl.setText(tmpPdfName);
 					fileName=tmpPdfName;
 					filePath=tmpPath;
 				}
 				sendBtn.setEnabled(true);
 				headerTitlelbl.setText(i18n.GL1449());
-			
+
 			}
 		});
 	}
@@ -158,7 +158,7 @@ public class EmailPopup extends PopupPanel {
 	public void onClickOfOKButton(ClickEvent e){
 		this.hide();
 	}
-	
+
 	/**
 	 * This will handle the click event on privacy text
 	 * @param e
@@ -166,7 +166,7 @@ public class EmailPopup extends PopupPanel {
 	@UiHandler("privacylbl")
 	public void onClickOfprivacylblButton(ClickEvent e){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -180,20 +180,20 @@ public class EmailPopup extends PopupPanel {
 				termsOfUse.show();
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(99999);
-			
+
 			}
 		});
 	}
-	
+
 	/**
 	 * This will handle the click event on the send button
 	 * @param e
 	 */
 	@UiHandler("sendBtn")
 	public void onClickOfSendButton(ClickEvent e){
-		
+
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -217,7 +217,7 @@ public class EmailPopup extends PopupPanel {
 						}
 					});
 				}
-			
+
 			}
 		});
 	}

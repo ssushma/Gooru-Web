@@ -25,7 +25,7 @@
  ******************************************************************************/
 
 package org.ednovo.gooru.client.mvp.play.collection.preview.home.share;
-import org.ednovo.gooru.client.child.ChildPresenter;
+import org.ednovo.gooru.application.client.child.ChildPresenter;
 
 /**
  * @author Gooru Team

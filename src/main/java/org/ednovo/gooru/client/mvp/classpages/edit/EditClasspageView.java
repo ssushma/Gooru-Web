@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
@@ -8,11 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.AssignmentsSearchDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
@@ -34,14 +42,6 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -87,40 +87,40 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @fileName : EditClasspageView.java
- * 
+ *
  * @description :
- * 
- * 
+ *
+ *
  * @version : 1.0
- * 
+ *
  * @date: Apr 17, 2013
- * 
+ *
  * @Author Anil Kumar T
- * 
+ *
  * @Reviewer:
  */
 public class EditClasspageView extends
 		BaseViewWithHandlers<EditClasspageUiHandlers> implements
 		IsEditClasspageView, ClickHandler{
-	
+
 	/*@UiField(provided = true)
 	EditClasspageCBundle res;*/
 
 	@UiField(provided = true)
 	AssignmentEditLabelUc collectionTitleUc;
-	
+
 	ArrayList<ClasspageItemDo> globalClasspageProcess;
-	
+
 	ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
-	
-	/** 
+
+	/**
 	 * This method is to get the globalClasspageProcess
 	 */
 	@Override
 	public ArrayList<ClasspageItemDo> getGlobalClasspageProcess() {
 		return globalClasspageProcess;
 	}
-	/** 
+	/**
 	 * This method is to set the globalClasspageProcess
 	 */
 	public void setGlobalClasspageProcess(
@@ -133,14 +133,14 @@ public class EditClasspageView extends
 	@UiField Label assignmentsDirectionsLabel, lblDefine, lblIncoporate, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
 
 	@UiField Image imgClasspageImage;
-	
+
 	@UiField FlowPanel dropDownListDiv;
-	
+
 	@UiField FlowPanel mainFlowPanel,dropDownListContainer;
-	
+
 	@UiField
 	static HTMLPanel hideToggleButtons;
-	
+
 	@UiField HTMLPanel frameContainer,panelUpdateActionContols, panelAssignmentProgress, headerAssignments,panelAssignmentPath, panelProgressContainer,getstarteddiv/*,htmlInstructionalListContainer*/;
 
 	@UiField
@@ -148,10 +148,10 @@ public class EditClasspageView extends
 
 	@UiField
 	static HTMLPanel mainContainer;
-	
+
 	@UiField
 	static Frame frameUrl;
-	
+
 	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious, dropdownPlaceHolder,lblAssignHeader,lblAssignText,lblAssignDes,lblStartAssign,lblAssignDetails,lblSequenceText,lblReadytoStart;
 
 	@UiField Button btnStudentView,btnReadytoStart;
@@ -177,21 +177,21 @@ public class EditClasspageView extends
 
 	@UiField
 	Button classListTab,reportsTab;
-	
+
 	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel;
 
 	@UiField FlowPanel paginationFocPanel,paginationFocPanel1,assignmentsContainerPanel,classListContainer;
 
 	@UiField FocusPanel simplePencilFocPanel, classPageTitle,collectionFloPanel;
-	
+
 	@UiField Button btnClasspageCancel, btnClasspageSave, btnDeleteClasspage;
-	
+
 	@UiField TextBox classCodeTextBox;
-	
+
 	@UiField HTMLPanel questionMarkPanel;
-	
+
 	@UiField HTMLEventPanel panelPrevious,panelNext;
-	
+
 	@UiField SimpleCheckBox changeProgressSummary;
 
 	NewClasspagePopupView newPopup = null;
@@ -199,17 +199,17 @@ public class EditClasspageView extends
 
 	private HandlerRegistration reportHandler;
 	private HandlerRegistration reportMouseOverHandler;
-	
+
 	DeleteConfirmPopupVc deleteConfirmVc =null;
-	
+
 	boolean isEditing=false;
-	
+
 	boolean isClicked=true;
-	
+
 	boolean refresh = true;
-	
+
 	private String DEFAULT_CLASSPAGE_IMAGE = "images/Classpage/default-classpage.png";
-	
+
 	private String classpageId = null;
 
 	private static final String SHORTEN_URL = "shortenUrl";
@@ -217,7 +217,7 @@ public class EditClasspageView extends
 	private static final String PREVIOUS = "PREVIOUS";
 
 	private static final String NEXT = "NEXT";
-	
+
 	private CollectionsView assignmentTabView;
 
 	private int pageSize = 5;
@@ -226,32 +226,32 @@ public class EditClasspageView extends
 
 	private Integer offsetProgress=0;
 	private Integer limitProgress=20;
-	
+
 	private int pos = 0;
 
 	int noOfItems = 5;
 
 	private int assignmentCount = 0;
-	
+
 	private int totalHitCount=0;
 	private int limit=5;
 	private int pageNumber=0;
-	
+
 	ToolTip toolTip = null;
-	
+
 	ClassListPresenter classlistPresenter;
-	
+
 	List<CollectionItemDo> collectionItemList = new ArrayList<CollectionItemDo>();
-	
+
 	List<String> sortingOptionsList=new ArrayList<String>();
-	
+
 	final String SUMMARY="Summary",PROGRESS="Progress",REPORTS="reports";
 
 	private static EditClassPageViewUiBinder uiBinder = GWT
 			.create(EditClassPageViewUiBinder.class);
-	
+
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	String dropSortOptionsStr = i18n.GL1947();
 
 	interface EditClassPageViewUiBinder extends
@@ -262,7 +262,7 @@ public class EditClasspageView extends
 	@Inject
 	public EditClasspageView() {
 		/*this.res = EditClasspageCBundle.INSTANCE;*/
-		globalClasspageProcess =  new ArrayList<ClasspageItemDo>(); 
+		globalClasspageProcess =  new ArrayList<ClasspageItemDo>();
 		collectionTitleUc = new AssignmentEditLabelUc() {
 			@Override
 			public void onEditDisabled(String text) {
@@ -305,9 +305,9 @@ public class EditClasspageView extends
 		/*res.css().ensureInjected();*/
 
 		setWidget(uiBinder.createAndBindUi(this));
-		
+
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
-		
+
 		mainContainer.setVisible(true);
 		dropDownListDiv.setVisible(true);
 
@@ -339,10 +339,10 @@ public class EditClasspageView extends
 
 			}
 		}, ClickEvent.getType());
-		
+
 
 		imgClasspageImage.addErrorHandler(new ErrorHandler() {
-			
+
 			@Override
 			public void onError(ErrorEvent event) {
 				imgClasspageImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
@@ -350,23 +350,23 @@ public class EditClasspageView extends
 				StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL1087(), i18n.GL1087());
 			}
 		});
-		
+
 		collectionFloPanel.addMouseOverHandler(new MouseOverHandler() {
-			
+
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				btnEditImage.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			}
 		});
 		collectionFloPanel.addMouseOutHandler(new MouseOutHandler() {
-			
+
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				btnEditImage.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			}
 		});
 		btnEditImage.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				MixpanelUtil.ClickOnEditImage();
@@ -374,24 +374,24 @@ public class EditClasspageView extends
 			}
 		});
 		backArrowButton.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 			mainContainer.setVisible(true);
 			frameDiv.setVisible(false);
-			
+
 			assignmentsTab.addStyleName("selected");
 
 			classListTab.getElement().setClassName("");
-			
+
 			reportsTab.getElement().setClassName("");
-			
+
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
 			assignmentsTab.setEnabled(false);
 			getClassListContainer().setVisible(false);
 
-		
+
 				Map<String,String> params = new HashMap<String,String>();
 				String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
 				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -431,109 +431,109 @@ public class EditClasspageView extends
 		});
 
 		panelUpdateActionContols.getElement().setId("panelUpdateActionContols");
-		
+
 		btnEditImage.setText(i18n.GL0138());
 		btnEditImage.getElement().setAttribute("alt",i18n.GL0138());
 		btnEditImage.getElement().setAttribute("title",i18n.GL0138());
-		
+
 		btnStudentView.setText(i18n.GL0139());
 		btnStudentView.getElement().setAttribute("alt",i18n.GL0139());
 		btnStudentView.getElement().setAttribute("title",i18n.GL0139());
-		
+
 		btnCollectionEditImage.setText(i18n.GL0140());
 		btnCollectionEditImage.getElement().setAttribute("alt",i18n.GL0140());
 		btnCollectionEditImage.getElement().setAttribute("title",i18n.GL0140());
-		
+
 		btnClasspageSave.setText(i18n.GL0141());
 		btnClasspageSave.getElement().setAttribute("alt",i18n.GL0141());
 		btnClasspageSave.getElement().setAttribute("title",i18n.GL0141());
-		
+
 		btnClasspageCancel.setText(i18n.GL0142());
 		btnClasspageCancel.getElement().setAttribute("alt",i18n.GL0142());
 		btnClasspageCancel.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		titleAlertMessageLbl.setText(i18n.GL0143());
 		titleAlertMessageLbl.getElement().setId("lblTitleAlertMessage");
 		titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
 		titleAlertMessageLbl.getElement().setAttribute("title",i18n.GL0143());
-		
+
 		btnNewAssignment.setText(i18n.GL0144());
 		btnNewAssignment.getElement().setAttribute("alt",i18n.GL0144());
 		btnNewAssignment.getElement().setAttribute("title",i18n.GL0144());
-		
+
 		btnAssignCollection.setText(i18n.GL2115());
 		btnAssignCollection.getElement().setId("btnAssignCollection");
 		btnAssignCollection.getElement().setAttribute("alt",i18n.GL2115());
 		btnAssignCollection.getElement().setAttribute("title",i18n.GL2115());
-		
+
 		lblStartAssign.setText(i18n.GL2116());
 		lblStartAssign.getElement().setId("lblStartAssign");
 		lblStartAssign.getElement().setAttribute("alt",i18n.GL2116());
 		lblStartAssign.getElement().setAttribute("title",i18n.GL2116());
-		
+
 		btnDeleteClasspage.setText(i18n.GL0145());
 		btnDeleteClasspage.getElement().setAttribute("alt",i18n.GL0145());
 		btnDeleteClasspage.getElement().setAttribute("title",i18n.GL0145());
-		
+
 		backArrowButton.setText(i18n.GL1617());
 		backArrowButton.getElement().setAttribute("alt",i18n.GL1617());
 		backArrowButton.getElement().setAttribute("title",i18n.GL1617());
-		
+
 		lblAssignHeader.setText(i18n.GL2113());
 		lblAssignHeader.getElement().setId("lblAssignHeader");
 		lblAssignHeader.getElement().setAttribute("alt",i18n.GL2113());
 		lblAssignHeader.getElement().setAttribute("title",i18n.GL2113());
-		
+
 		lblAssignText.setText(i18n.GL1973());
 		lblAssignText.getElement().setId("lblAssignText");
 		lblAssignText.getElement().setAttribute("alt",i18n.GL1973());
 		lblAssignText.getElement().setAttribute("title",i18n.GL1973());
-		
+
 		lblAssignDes.setText(i18n.GL2114());
 		lblAssignDes.getElement().setId("lblAssignDes");
 		lblAssignDes.getElement().setAttribute("alt",i18n.GL2114());
 		lblAssignDes.getElement().setAttribute("title",i18n.GL2114());
-		
+
 		monitorProgress.setText(i18n.GL2229());
 		monitorProgress.getElement().setId("btnMonitorProgress");
 		monitorProgress.getElement().setAttribute("alt",i18n.GL2229());
 		monitorProgress.getElement().setAttribute("title",i18n.GL2229());
-		
+
 		monitorSummary.setText(i18n.GL2228());
 		monitorSummary.getElement().setId("btnMonitorSummary");
 		monitorSummary.getElement().setAttribute("alt",i18n.GL2228());
 		monitorSummary.getElement().setAttribute("title",i18n.GL2228());
-		
+
 		lblSequenceText.setText(i18n.GL2117());
 		lblSequenceText.getElement().setId("lblSequenceText");
 		lblSequenceText.getElement().setAttribute("alt",i18n.GL2117());
 		lblSequenceText.getElement().setAttribute("title",i18n.GL2117());
-		
+
 		lblAssignDetails.setText(i18n.GL2118());
 		lblAssignDetails.getElement().setId("lblAssignDetails");
 		lblAssignDetails.getElement().setAttribute("alt",i18n.GL2118());
 		lblAssignDetails.getElement().setAttribute("title",i18n.GL2118());
-		
+
 		btnReadytoStart.setText(i18n.GL2115());
 		btnReadytoStart.getElement().setId("btnReadytoStart");
 		btnReadytoStart.getElement().setAttribute("alt",i18n.GL2115());
 		btnReadytoStart.getElement().setAttribute("title",i18n.GL2115());
-		
+
 		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
 		reportsTab.getElement().setAttribute("alt",i18n.GL1737());
 		reportsTab.getElement().setAttribute("title",i18n.GL1737());
-		
+
 		assignmentsDirectionsLabel.setText(i18n.GL1945());
 		assignmentsDirectionsLabel.getElement().setId("lblAssignmentsDirections");
 		assignmentsDirectionsLabel.getElement().setAttribute("alt",i18n.GL1945());
 		assignmentsDirectionsLabel.getElement().setAttribute("title",i18n.GL1945());
-		
+
 		lblReadytoStart.setText(i18n.GL1945());
 		lblReadytoStart.getElement().setId("lblReadytoStart");
 		lblReadytoStart.getElement().setAttribute("alt",i18n.GL1945());
 		lblReadytoStart.getElement().setAttribute("title",i18n.GL1945());
-		
+
 		getstarteddiv.removeStyleName("btnContainerClasswithBG");
 		getstarteddiv.setVisible(true);
 
@@ -541,12 +541,12 @@ public class EditClasspageView extends
 		lblDefine.getElement().setId("lblDefine");
 		lblDefine.getElement().setAttribute("alt",i18n.GL1960());
 		lblDefine.getElement().setAttribute("title",i18n.GL1960());
-		
+
 		lblIncoporate.setText(i18n.GL1959());
 		lblIncoporate.getElement().setId("lblIncoporate");
 		lblIncoporate.getElement().setAttribute("alt",i18n.GL1959());
 		lblIncoporate.getElement().setAttribute("title",i18n.GL1959());
-		
+
 		lblPrevious.setVisible(false);
 
 		lblAssignmentProgress.setText(i18n.GL1891_1());
@@ -558,10 +558,10 @@ public class EditClasspageView extends
 
 		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1891_1());
 		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1891_1());
-				
+
 
 		backArrowButton.getElement().setId("backArrowButton");
-		
+
 		btnEditImage.getElement().setId("btnEditImage");
 		btnStudentView.getElement().setId("btnStudentView");
 		btnCollectionEditImage.getElement().setId("btnCollectionEditImage");
@@ -569,26 +569,26 @@ public class EditClasspageView extends
 		btnClasspageCancel.getElement().setId("btnClasspageCancel");
 		btnNewAssignment.getElement().setId("btnNewAssignment");
 		btnDeleteClasspage.getElement().setId("btnDeleteClasspage");
-		
+
 		btnNewAssignment.addClickHandler(new addAssignmentHandler());
 		btnAssignCollection.addClickHandler(new addAssignmentHandler());
 		btnReadytoStart.addClickHandler(new addAssignmentHandler());
-		
+
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
-		
+		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());
+
 		lblNext.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-				
+
 				offsetProgress = offsetProgress +limitProgress;
-				
+
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
 			}
 		});
-		
+
 		lblPrevious.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -600,7 +600,7 @@ public class EditClasspageView extends
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
 			}
 		});
-		
+
 		ResetProgressHandler reset = new ResetProgressHandler() {
 
 			@Override
@@ -656,25 +656,25 @@ public class EditClasspageView extends
 		frameDiv.getElement().setId("pnlFrameDiv");
 		frameUrl.getElement().setId("ifFrameUrl");
 		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(10, Unit.PX);
-		
+
 		frameUrl.setVisible(false);
 	}
 	/**
-	 * 
-	 * @function addSortEventToText 
-	 * 
+	 *
+	 * @function addSortEventToText
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -688,13 +688,13 @@ public class EditClasspageView extends
 				sortingLabel.addClickHandler(new SortAssignmentEvents(sortType));
 			}
 		}
-		
+
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -712,10 +712,10 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -739,7 +739,7 @@ public class EditClasspageView extends
 				dropdownPlaceHolder.setText(sortType);
 				dropdownPlaceHolder.getElement().setAttribute("alt",sortType);
 				dropdownPlaceHolder.getElement().setAttribute("title",sortType);
-				
+
 				String sortingStringValue="";
 				if(sortType.equals(i18n.GL1948())){
 					sortingStringValue="asce";
@@ -770,23 +770,23 @@ public class EditClasspageView extends
 
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function hideDropDown 
-	 * 
+	 *
+	 * @function hideDropDown
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -800,22 +800,22 @@ public class EditClasspageView extends
     	}
      }
 	/**
-	 * 
-	 * @function eventTargetsPopup 
-	 * 
+	 *
+	 * @function eventTargetsPopup
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -827,23 +827,23 @@ public class EditClasspageView extends
 		return false;
 	}
 	/**
-	 * 
-	 * @function callAssignmentAPI 
-	 * 
+	 *
+	 * @function callAssignmentAPI
+	 *
 	 * @created_date : Jun 11, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param classpageId
 	 * @param pageSize
 	 * @param pageNum
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -852,10 +852,10 @@ public class EditClasspageView extends
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call displayAssignmentPath
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -876,10 +876,10 @@ public class EditClasspageView extends
 
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -898,10 +898,10 @@ public class EditClasspageView extends
 
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -958,11 +958,11 @@ public class EditClasspageView extends
 				        AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
 				        Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-						hide(); 
+						hide();
 						AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
 							@Override
 							public void onSuccess(ClasspageListDo result) {
-							
+
 								if (result.getSearchResults().size()>0){
 									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 									}else{
@@ -984,10 +984,10 @@ public class EditClasspageView extends
 		delete.setPopupTitle((i18n.GL0748()));
 		delete.setNotes(i18n.GL0748());
 		delete.setDescText(StringUtil.generateMessage(i18n.GL0824()+"\""+ classpageDo.getTitle() + "\"" + " "+i18n.GL0102()+i18n.GL_SPL_FULLSTOP() +" "+i18n.GL0825()));
-		delete.setPositiveButtonText(i18n.GL0190());						
+		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setDeleteValidate("delete");
-		delete.setPixelSize(450, 352);	
+		delete.setPixelSize(450, 352);
 		delete.show();
 		delete.center();
 	}
@@ -1016,24 +1016,24 @@ public class EditClasspageView extends
 
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,
 				params);
-		
+
 	}
 	/**
-	 * 
-	 * @function setClasspageData 
-	 * 
+	 *
+	 * @function setClasspageData
+	 *
 	 * @created_date : Jun 11, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param ClasspageDo classpageDo
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1047,7 +1047,7 @@ public class EditClasspageView extends
 		classListTab.getElement().setId("btnClassListTab");
 		classListTab.getElement().setAttribute("alt",i18n.GL1624());
 		classListTab.getElement().setAttribute("title",i18n.GL1624());
-		
+
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
@@ -1061,7 +1061,7 @@ public class EditClasspageView extends
 		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
 		classCodeTextBox.getElement().setAttribute("alt",classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
 		classCodeTextBox.getElement().setAttribute("title",classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
-		
+
 		classCodeTextBox.setReadOnly(true);
 		classCodeTextBox.addClickHandler(new ClassCodeTextCopy());
 
@@ -1075,7 +1075,7 @@ public class EditClasspageView extends
 
 		questionMarkPanel.clear();
 		questionMarkPanel.add(imgNotFriendly);
-		
+
 		imgClasspageImage.setAltText(classpageDo.getTitle());
 		imgClasspageImage.setTitle(classpageDo.getTitle());
 		btnCollectionEditImage.setVisible(false);
@@ -1089,10 +1089,10 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -1110,9 +1110,9 @@ public class EditClasspageView extends
 			classCodeTextBox.setFocus(true);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter,int assignmentsCount){
 		this.classlistPresenter = classlistPresenter;
@@ -1159,7 +1159,7 @@ public class EditClasspageView extends
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 			paginationFocPanel1.setVisible(false);
-			
+
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
@@ -1185,7 +1185,7 @@ public class EditClasspageView extends
 			changeProgressSummary.setValue(false);
 			sequenceNumberLabel.setText(i18n.GL2228());
 			getUiHandlers().setCollectionProgressData(SUMMARY,analyticsId,collectionTitleUc.getText());
-			
+
 		}
 		else if(monitorId!=null)
 		{
@@ -1260,25 +1260,25 @@ public class EditClasspageView extends
 			getClassListContainer().setVisible(false);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function showClasspageItem 
-	 * 
+	 *
+	 * @function showClasspageItem
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageItemDo
 	 * @parm(s) : @param sequenceNum
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : CollectionsView
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1298,7 +1298,7 @@ public class EditClasspageView extends
 								pageNumber=pageNumber-1;
 							}
 						}
-						
+
 					}catch(Exception e){
 						AppClientFactory.printSevereLogger(e.getMessage());
 					}
@@ -1309,21 +1309,21 @@ public class EditClasspageView extends
 		return assignmentCollectionView;
 	}
 	/**
-	 * 
-	 * @function showCollectionsAfterDeletingCollection 
-	 * 
+	 *
+	 * @function showCollectionsAfterDeletingCollection
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param pageNumber
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1338,21 +1338,21 @@ public class EditClasspageView extends
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 	/**
-	 * 
-	 * @function restingPagination 
-	 * 
+	 *
+	 * @function restingPagination
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1378,7 +1378,7 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
+	 *
 	 */
 	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo){
 		assignmentTabView = showClasspageItem(classpageItemDo,1);                             //TODO refresh the sequence....
@@ -1396,24 +1396,24 @@ public class EditClasspageView extends
 			assignmentsContainerPanel.remove(assignmentsContainerPanel.getWidgetCount()-1);
 		}
 		setPagination();
-		
+
 	}
 	/**
-	 * 
-	 * @function setPagination 
-	 * 
+	 *
+	 * @function setPagination
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1425,21 +1425,21 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
-	 * @function showPaginationButton 
-	 * 
+	 *
+	 * @function showPaginationButton
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1455,10 +1455,10 @@ public class EditClasspageView extends
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
 				paginationFocPanel1.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
 			}
-		
+
 			int page = pageNumber < 5 ? 1 : pageNumber - 3;
 
-			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
+			for (int count = 1; count < 5 && page <= totalPages; page++, ++count)
 			{
 				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
 				paginationFocPanel1.add(new PaginationButtonUc(page, page == pageNumber, this));
@@ -1470,21 +1470,21 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
-	 * @function clearPaginationButton 
-	 * 
+	 *
+	 * @function clearPaginationButton
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1493,10 +1493,10 @@ public class EditClasspageView extends
 		paginationFocPanel1.clear();
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -1517,7 +1517,7 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
+	 *
 	 */
 	public void resetEditClasspageView(){
 		collectionTitleUc.setText("");
@@ -1537,21 +1537,21 @@ public class EditClasspageView extends
 
 	}
 	/**
-	 * 
-	 * @function setLoadingPanel 
-	 * 
+	 *
+	 * @function setLoadingPanel
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : Label
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1561,21 +1561,21 @@ public class EditClasspageView extends
 		return loadingImage;
 	}
 	/**
-	 * 
-	 * @function removeLoadingPanel 
-	 * 
+	 *
+	 * @function removeLoadingPanel
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1594,7 +1594,7 @@ public class EditClasspageView extends
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 			if (collectionDo != null) {
-				
+
 				AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(collectionDo.getGooruOid()));
 				panelAssignmentPath.setVisible(true);
 				headerAssignments.setVisible(true);
@@ -1620,7 +1620,7 @@ public class EditClasspageView extends
 				imgClasspageImage.setUrl(collectionDo.getThumbnails().getUrl());
 				btnEditImage.setText(i18n.GL0138());
 				StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL0138(), i18n.GL0138());
-           
+
 		    }
 		}
          catch(Exception e){
@@ -1643,23 +1643,23 @@ public class EditClasspageView extends
 		getUiHandlers().getClasspageById(classpageId);
 	}
 	/**
-	 * 
-	 * @function insertAssignment 
-	 * 
+	 *
+	 * @function insertAssignment
+	 *
 	 * @created_date : Aug 17, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param assignmentsSearchDo
 	 * @parm(s) : @param isNew
 	 * @parm(s) : @param isExpandable
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1679,7 +1679,7 @@ public class EditClasspageView extends
 
 	/**
 	 * Set shorten url of the collection view url
-	 * 
+	 *
 	 * @param shortenUrl
 	 *            to be set in shorten url UI field
 	 */
@@ -1721,17 +1721,17 @@ public class EditClasspageView extends
 	@Override
 	public void onClick(ClickEvent event) {
 		if (event.getSource() instanceof PaginationButtonUc) {
-			
+
 			int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
 
 			int pageNumVal = (pagenumber - 1) * 5;
-			
+
 			pageNumber = pagenumber;
 			setPagination();
-			
+
 			assignmentsContainerPanel.clear();
 			assignmentsContainerPanel.add(setLoadingPanel());
-			
+
 			offsetProgress = 0;
 			limitProgress = 20;
 			Map<String,String> params = new HashMap<String,String>();
@@ -1746,9 +1746,9 @@ public class EditClasspageView extends
 		} else {
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public void onDeleteAssignment(boolean isPostDeleteAssignment) {
 		Window.enableScrolling(true);
@@ -1783,7 +1783,7 @@ public class EditClasspageView extends
 				insertAssignment(result.getSearchResults().get(i), false,
 						isDisplay);
 			}
-			
+
 			paginationFocPanel.clear();
 			paginationFocPanel1.clear();
 			assignmentCount = (result.getTotalHitCount() / pageSize)
@@ -1795,7 +1795,7 @@ public class EditClasspageView extends
 							PREVIOUS, this));
 					paginationFocPanel1.add(new PaginationButtonUc(pos - 1,
 							PREVIOUS, this));
-					
+
 				}
 				int page = pos < 5 ? 1 : pos - 5;
 				for (int count = 0; count < 5 && page <= assignmentCount; page++, ++count) {
@@ -1843,9 +1843,9 @@ public class EditClasspageView extends
 		assignmentsTab.addStyleName("selected");
 
 		classListTab.getElement().setClassName("");
-		
+
 		reportsTab.getElement().setClassName("");
-		
+
 		newAssignmentAndMsgPanel.setVisible(true);
 		assignmentsTabContainerPanel.setVisible(true);
 		assignmentsTab.setEnabled(false);
@@ -1870,21 +1870,21 @@ public class EditClasspageView extends
 
 	}
 	/**
-	 * 
-	 * @function frameAnalyticsUrl 
-	 * 
+	 *
+	 * @function frameAnalyticsUrl
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1904,26 +1904,26 @@ public class EditClasspageView extends
 			String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,analyticsId,AppClientFactory.getLoginSessionToken());
 
 			urlVal = urlVal+"&"+Math.random();
-			
+
 		return urlVal;
 	}
-	
+
 	/**
-	 * 
-	 * @function frameReportsUrl 
-	 * 
+	 *
+	 * @function frameReportsUrl
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1933,25 +1933,25 @@ public class EditClasspageView extends
 			String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_REPORTS,classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),AppClientFactory.getLoginSessionToken());
 
 			urlVal = urlVal+"&"+Math.random();
-			
+
 		return urlVal;
 	}
 	/**
-	 * 
-	 * @function frameAnalyticsUrlForMonitor 
-	 * 
+	 *
+	 * @function frameAnalyticsUrlForMonitor
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1971,10 +1971,10 @@ public class EditClasspageView extends
 
 		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_MONITOR_DATA,
 					classpageId,analyticsId,AppClientFactory.getLoginSessionToken());
-		
+
 		urlVal = urlVal+"&"+Math.random();
 
-			
+
 		return urlVal;
 	}
 	/**
@@ -2000,7 +2000,7 @@ public class EditClasspageView extends
 		});
 	}
 /**
- * This handler is used to cancel the title update 
+ * This handler is used to cancel the title update
  * @param event instance of ClickEvent
  */
 	@UiHandler("btnClasspageCancel")
@@ -2032,10 +2032,10 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -2074,22 +2074,22 @@ public class EditClasspageView extends
 					dropDownListDiv.setVisible(false);
 				}
 			}
-			
-			
+
+
 
 			classListTab.getElement().setClassName("");
-			
+
 			reportsTab.getElement().setClassName("");
-			
+
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			monitorSummary.setVisible(true);
 			hideToggleButtons.setVisible(true);
 			frameDiv.setVisible(false);
-		
+
 			paginationFocPanel.setVisible(true);
 			paginationFocPanel1.setVisible(true);
-			
+
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
 			assignmentsTab.setEnabled(false);
@@ -2114,10 +2114,10 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -2171,10 +2171,10 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -2212,7 +2212,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
-			
+
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -2230,27 +2230,27 @@ public class EditClasspageView extends
         }
 		}
 	}
-	
+
 	@Override
 	public FlowPanel getClassListContainer() {
 		return classListContainer;
 	}
 	/**
-	 * 
-	 * @function setAnalyticsData 
-	 * 
+	 *
+	 * @function setAnalyticsData
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2268,21 +2268,21 @@ public class EditClasspageView extends
 		monitorProgress.setVisible(true);
 	}
 	/**
-	 * 
-	 * @function setAnalyticsMonitoringData 
-	 * 
+	 *
+	 * @function setAnalyticsMonitoringData
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2307,20 +2307,20 @@ public class EditClasspageView extends
 		return collectionTitleUc;
 	}
 	@Override
-	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){			
+	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){
 		boolean isLast = false;
-		
-		
-		
+
+
+
 		if (offsetProgress <= 0){
 			lblPrevious.setVisible(false);
 		}else{
 			lblPrevious.setVisible(true);
 		}
 		if (classpageProcess.size() > 0){
-					
+
 			assignmentsTab.setText(i18n.GL1623()+"("+classpageProcess.get(0).getTotalHitCount()+")");
-			
+
 			panelAssignmentProgress.clear();
 			//hide/show the next and previous buttons
 			if (classpageProcess.get(0).getTotalHitCount() > limitProgress && classpageProcess.size() == limitProgress){
@@ -2334,15 +2334,15 @@ public class EditClasspageView extends
 		//display the assignments progress (DOTS)
 
 		for (int i=0; i<classpageProcess.size(); i++){
-			panelAssignmentProgress.add(new AssignmentProgressVc(isLast, 
+			panelAssignmentProgress.add(new AssignmentProgressVc(isLast,
 					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.get(0).getTotalHitCount()));
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -2367,10 +2367,10 @@ public class EditClasspageView extends
 
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -2389,21 +2389,21 @@ public class EditClasspageView extends
 		}
 	}
 	/**
-	 * 
-	 * @function addSortingOptionsToList 
-	 * 
+	 *
+	 * @function addSortingOptionsToList
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2411,7 +2411,7 @@ public class EditClasspageView extends
 		sortingOptionsList.clear();
 		sortingOptionsList.add(i18n.GL1948());
 		sortingOptionsList.add(i18n.GL1950());
-		sortingOptionsList.add(i18n.GL1949());//previously it was descending order 
+		sortingOptionsList.add(i18n.GL1949());//previously it was descending order
 		sortingOptionsList.add(i18n.GL1994());//previous number was 1581
 	}
 	@Override
@@ -2439,16 +2439,16 @@ public class EditClasspageView extends
 			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1948());
 		}
 	}
-	
+
 	@Override
 	public void hideNoAssignmentsMessagePanel(){
 		noAssignmentsMessagePanel.setVisible(false);
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClasspageView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -2466,7 +2466,7 @@ public class EditClasspageView extends
 			Window.enableScrolling(false);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 			getUiHandlers().addAssignmentsContainerPopup(getClasspageId());
-			
+
 		}
 	}
 	@Override

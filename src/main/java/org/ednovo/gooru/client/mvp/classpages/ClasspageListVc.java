@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,14 +28,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.application.shared.model.content.AttachToDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
-import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
-import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleHandler;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
@@ -46,13 +50,6 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentDo;
-import org.ednovo.gooru.shared.model.content.AttachToDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.TaskDo;
-import org.springframework.jca.cci.object.SimpleRecordOperation;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -79,18 +76,18 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
+ *
  * @fileName : ClasspageListVc.java
- * 
+ *
  * @description : This class is used to display the List of Classpaes on
  *              clicking on Teach Tab.
- * 
+ *
  * @version : 1.0
- * 
+ *
  * @date: Aug 14, 2013
- * 
+ *
  * @Author Gooru Team
- * 
+ *
  * @Reviewer:
  */
 public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
@@ -99,7 +96,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	Label lblTitle;
 	@UiField
 	Anchor ancNewClasspage;
-	
+
 	@UiField HTMLPanel mainContainer;
 
 	@UiField
@@ -131,25 +128,25 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	@UiField(provided = true)
 	ClasspageListPopupViewCBundle res;
-	
+
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private NewClasspagePopupView newPopup = null;
-	
-	
+
+
 
 	/**
 	 * Class constructor
 	 */
 	public ClasspageListVc(boolean isClasspageRefreshed,
 			String deletedClasspageId) {
-	
+
 		this.res = ClasspageListPopupViewCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		ancNewClasspage.getElement().setId("lnkNewClasspage");
 
-		
+
 		RefreshClasspageListHandler refreshHandler = new RefreshClasspageListHandler() {
 
 			@Override
@@ -179,21 +176,21 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 
 	/**
-	 * 
+	 *
 	 * @function setLabels
-	 * 
+	 *
 	 * @created_date : Aug 14, 2013
-	 * 
+	 *
 	 * @description This method is used to set the Label text.
-	 * 
+	 *
 	 * @parm(s) :
-	 * 
+	 *
 	 * @return : void
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void setLabels() {
 		ancNewClasspage.setText(i18n.GL0115());
@@ -227,10 +224,10 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		lblTitle.getElement().setId("lblTitle");
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClasspageListVc.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -246,7 +243,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		@Override
 		public void onClick(ClickEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 					setButtonStatus("active");
@@ -481,33 +478,33 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 									});
 				}
 			});
-			
+
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @function getAllClasspages
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param offSet
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void getAllClasspages(final String offSet,
 			final boolean isClasspageRefreshed, final String deletedClasspageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				AppClientFactory
@@ -527,28 +524,28 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	}
 
 	/**
-	 * 
+	 *
 	 * @function listClasspages
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param result
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void listClasspages(final ClasspageListDo result,
 			final boolean isClasspageRefershed, final String deletedClasspageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				isApiCalling = false;
@@ -581,7 +578,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 					}
 					if (whileDeleting) {
 						whileDeleting = false;
-						
+
 					}
 				}
 				if (isClasspageRefershed) {
@@ -591,31 +588,31 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		});
 	}
 
-	
+
 
 	/**
-	 * 
+	 *
 	 * @function onClickNewClasspage
-	 * 
+	 *
 	 * @created_date : Aug 21, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	@UiHandler("ancNewClasspage")
 	public void onClickNewClasspage(ClickEvent event) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				MixpanelUtil.ClickOnNewClassPage();
@@ -682,27 +679,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	}
 
 	/**
-	 * 
+	 *
 	 * @function OpenClasspageEdit
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param gooruOId
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void OpenClasspageEdit(final String gooruOId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				setClassapageItemSeleted(gooruOId);
@@ -736,27 +733,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setClassapageItemSeleted
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageId
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void setClassapageItemSeleted(final String classpageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -776,31 +773,31 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			}
 		});
 	}
-	
+
 
 
 	/**
-	 * 
+	 *
 	 * @function removeClasspageItem
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageId
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void removeClasspageItem(final String classpageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				String nextClasspageId = null;
@@ -832,27 +829,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		});
 	}
 	/**
-	 * 
-	 * @function setButtonStatus 
-	 * 
+	 *
+	 * @function setButtonStatus
+	 *
 	 * @created_date : 06-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param status
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	private void setButtonStatus(final String status) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				if (status.equalsIgnoreCase("active")) {

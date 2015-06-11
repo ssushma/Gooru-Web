@@ -28,13 +28,13 @@ package org.ednovo.gooru.client.mvp.dashboard;
 import java.util.Date;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
-import org.ednovo.gooru.client.service.UserServiceAsync;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
-import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.service.UserServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.application.shared.model.user.ProfileRatingsReactionsDO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;

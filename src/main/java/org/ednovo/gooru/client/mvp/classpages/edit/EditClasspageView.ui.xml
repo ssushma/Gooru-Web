@@ -6,7 +6,7 @@
 		type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle"
 		field="res" /> -->
 	<!-- <ui:style field="unitStyle" src="editclasspage.css" /> -->
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:FlowPanel ui:field="mainFlowPanel">
 		<g:HTMLPanel styleName="newMockLeftAlignController">
 			<g:FocusPanel styleName="myCollectionShareStudentContainer"
@@ -47,7 +47,7 @@
 					</g:FlowPanel>
 				</g:HTMLPanel>
 			</g:FocusPanel>
-			
+
 			<g:HTMLPanel ui:field="mainContainer">
 			<g:HTMLPanel styleName="teachTab">
 				<g:Button ui:field="assignmentsTab" styleName="selected"></g:Button>
@@ -61,7 +61,7 @@
 			        <g:Label styleName="leftArrow" ui:field="lblPrevious"></g:Label>
 			    </panel:HTMLEventPanel>
 				<g:HTMLPanel styleName="assignmentPathContainer" ui:field="panelAssignmentPath">
-			
+
 				    <g:HTMLPanel styleName="path">
 					    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
 					    <g:Label styleName="{res.css.line}"></g:Label> -->
@@ -72,7 +72,7 @@
 				    <g:Label styleName="rightArrow" ui:field="lblNext"></g:Label>
 				</panel:HTMLEventPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">						
+			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
 				<g:HTMLPanel styleName="btnContainer" ui:field="getstarteddiv">
 				<g:Label ui:field="assignmentsDirectionsLabel" styleName="labelCenterAlign"></g:Label>
 					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton addAssignment"></g:Button>
@@ -88,12 +88,12 @@
 					ui:field="paginationFocPanel">
 				</g:FlowPanel>
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
-					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
+					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}"
 						/> -->
 						<g:Label  styleName="noAssignmentMsg" ui:field="lblAssignHeader"></g:Label>
 					<g:HTMLPanel styleName="classpageHover">
 						<!-- <g:Label styleName="{res.css.classpageHoverTitle}"
-							ui:field="noAssignmentsMessageLblTwo"> 
+							ui:field="noAssignmentsMessageLblTwo">
 							</g:Label>-->
 							<!-- New layout for empty classpage.  -->
 							  <g:HTMLPanel styleName="contentBox">
@@ -107,27 +107,27 @@
 							          <g:Label styleName="desHeader" ui:field="lblAssignText"/>
 							          <g:Label styleName="desc" ui:field="lblAssignDes"/>
 							      </g:HTMLPanel>
-							      
+
 							      <g:HTMLPanel styleName="imgStyle">
 							          <g:Button styleName="plusButton addAssignmentStyle" ui:field="btnAssignCollection"></g:Button>
 							          <g:Label styleName="assignText" ui:field="lblStartAssign"/>
 							      </g:HTMLPanel>
 							    </g:HTMLPanel>
-							   
+
 							    <g:HTMLPanel styleName="collectionView section3Div">
 							      <!-- <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
 							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblTwo"></g:Label>
 							        </g:HTMLPanel>
 							      </g:HTMLPanel> -->
-							      
+
 							      <g:HTMLPanel styleName="desHtml">
 							          <g:Label styleName="desHeader" ui:field="lblSequenceText"/>
 							          <g:Label styleName="desc" ui:field="lblDefine"></g:Label>
 							      </g:HTMLPanel>
 							      <g:HTMLPanel styleName="imgStyle"><g:Image styleName="imgStyleDiv" url="images/Classpage/assignments/sequence.png" width="692" height="141"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
-							    
+
 							     <g:HTMLPanel styleName="collectionView section3Div">
 <!-- 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
@@ -138,12 +138,12 @@
 							          <g:Label styleName="desHeader" ui:field="lblAssignDetails"></g:Label>
 							          <g:Label styleName="desc" ui:field="lblIncoporate"></g:Label>
 							      </g:HTMLPanel>
-							      
+
 							      <g:HTMLPanel styleName="imgStyle"><g:Image styleName="imgStyleDiv" url="images/Classpage/assignments/date_directions.png" width="626" height="212"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
 							  </g:HTMLPanel>
 					</g:HTMLPanel>
-					
+
 					<g:HTMLPanel styleName="btnContainerStyle">
 			        	<g:Label  styleName="labelCenterAlign" ui:field="lblReadytoStart"></g:Label>
 					    <g:Button styleName="plusButton addAssignmentStyle" ui:field="btnReadytoStart"/>
@@ -156,11 +156,11 @@
 					<!-- This container for Assignments -->
 
 				</g:FlowPanel>
-				
+
 					<g:FlowPanel styleName="paginationContainer"
 					ui:field="paginationFocPanel1">
 				</g:FlowPanel>
-				
+
 				<g:HTMLPanel styleName="classpageTopLine">
 					<g:Button ui:field="btnDeleteClasspage"
 						styleName="secondary classpageDeleteButton"></g:Button>
@@ -185,13 +185,13 @@
 				<g:InlineLabel styleName="switchLabel1" ui:field="monitorProgress">Progress</g:InlineLabel>
 				<g:InlineLabel styleName="switchLabel1" ui:field="monitorSummary">Summary</g:InlineLabel>
 				<g:InlineLabel styleName="switchHandle1" ui:field="sequenceNumberLabel"></g:InlineLabel>
-			</label> 
+			</label>
 		</g:HTMLPanel>
 		<g:Frame styleName="iframeBorder" ui:field="frameUrl" width="900" height="500"></g:Frame>
 		<g:HTMLPanel ui:field="frameContainer"></g:HTMLPanel>
 		</g:HTMLPanel>
 		</g:HTMLPanel>
 		<sg:FooterUc />
-		
+
 	</g:FlowPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

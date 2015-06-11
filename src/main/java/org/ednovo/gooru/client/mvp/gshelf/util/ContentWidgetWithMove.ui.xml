@@ -1,0 +1,29 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
+	<g:HTMLPanel styleName="tableRow">
+		<div class="tableColumn">
+			<div class="tableMainHeader">
+			<panel:H3Panel ui:field="h3CourseTitle"/>
+				<p>AcNum</p>
+			</div>
+		</div>
+		<div class="tableColumn">
+			<div class="tableListTags">
+				<span>Units (2)</span>
+				<span>Lessons (4)</span>
+				<span>Collections (10)</span>
+				<span>Assessments (2)</span>
+			</div>
+		</div>
+		<div class="tableColumn">
+			<div class="tableListOrder">
+				<g:Label styleName="topArrow sprite" ui:field="lblTopArrow"/>
+				<div class="numInput">
+					<g:TextBox styleName="form-control" maxLength="3" ui:field="txtMoveTextBox"/>
+				</div>
+				<g:Label styleName="bottomArrow sprite" ui:field="lblDownArrow"/>
+			</div>
+		</div>
+</g:HTMLPanel>
+</ui:UiBinder> 

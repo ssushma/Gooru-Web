@@ -28,11 +28,11 @@ package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ContentStarRatingsDo;
+import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
-import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

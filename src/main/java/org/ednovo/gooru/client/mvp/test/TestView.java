@@ -3,7 +3,7 @@
  */
 package org.ednovo.gooru.client.mvp.test;
 
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

@@ -4,7 +4,7 @@
 	<ui:style field="libraryStyle" src="library.css" />
 	<ui:style field="libraryStyleUc" src="library.css"
 		type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 
 	<g:HTMLPanel>
 
@@ -68,4 +68,4 @@
 		<sg:FooterUc />
 	</g:HTMLPanel>
 
-</ui:UiBinder> 
+</ui:UiBinder>
