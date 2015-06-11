@@ -26,15 +26,20 @@ package org.ednovo.gooru.client.mvp.gshelf.courselist;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class CourseListPresenter extends PresenterWidget<IsCourseListView> implements CourseListUiHandlers{
+public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsListView> implements MyCollectionsListUiHandlers{
 	/**
 	 * Constructor
 	 * @param eventBus
 	 * @param view
 	 */
 	@Inject
-	public CourseListPresenter(EventBus eventBus, IsCourseListView view) {
+	public MyCollectionsListPresenter(EventBus eventBus, IsMyCollectionsListView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+	}
+
+	@Override
+	public void setData(String type) {
+		getView().setData(type);
 	}
 }
