@@ -50,11 +50,14 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField TextBox txtMoveTextBox;
 	@UiField H3Panel h3CourseTitle;
 	
-	public ContentWidgetWithMove(int index) {
+	String type;
+	
+	public ContentWidgetWithMove(int index,String type) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.type=type;
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
-		h3CourseTitle.setText("Course "+(index+1));
+		h3CourseTitle.setText(type+" "+(index+1));
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
 	}
 	class ArrowClickHandler implements ClickHandler{

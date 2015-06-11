@@ -23,14 +23,23 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsListView> implements MyCollectionsListUiHandlers{
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
+	@Inject
+	public MyCollectionsListPresenter(EventBus eventBus, IsMyCollectionsListView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-
-/**
- * @author Search Team
- *
- */
-public interface IsCourseListView extends IsViewWithHandlers<CourseListUiHandlers> {
-
-
+	@Override
+	public void setData(String type) {
+		getView().setData(type);
+	}
 }

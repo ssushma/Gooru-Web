@@ -38,23 +38,44 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CourseListView  extends BaseViewWithHandlers<CourseListUiHandlers> implements IsCourseListView,ClientConstants  {
+public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsListUiHandlers> implements IsMyCollectionsListView,ClientConstants  {
 
-	private static CourseListViewUiBinder uiBinder = GWT.create(CourseListViewUiBinder.class);
+	private static MyCollectionsListViewUiBinder uiBinder = GWT.create(MyCollectionsListViewUiBinder.class);
 
-	interface CourseListViewUiBinder extends UiBinder<Widget, CourseListView> {
+	interface MyCollectionsListViewUiBinder extends UiBinder<Widget, MyCollectionsListView> {
 	}
-
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	
 	@UiField HTMLPanel courseListContainer;
 	@UiField VerticalPanel pnlCourseList;
 
-	public CourseListView() {
+	String type;
+	
+	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		courseListContainer.getElement().setId("gShelfCousesList");
+	}
+
+	private void resetWidgetPositions(){
+		Iterator<Widget> widgets=pnlCourseList.iterator();
+		int index=0;
+		while (widgets.hasNext()){
+			Widget widget=widgets.next();
+			if(widget instanceof ContentWidgetWithMove){
+				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
+				contentWidgetWithMove.getH3Panel().setText(type+" "+(index+1));
+				contentWidgetWithMove.getTextBox().setText("");
+				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
+				index++;
+			}
+		}
+	}
+
+	@Override
+	public void setData(String type) {
+		this.type=type;
 		for (int i = 0; i <10; i++) {
-			final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i) {
+			final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type) {
 				@Override
 				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
 					int movingIndex= Integer.parseInt(movingPosition);
@@ -72,21 +93,6 @@ public class CourseListView  extends BaseViewWithHandlers<CourseListUiHandlers> 
 				}
 			};
 			pnlCourseList.add(widgetMove);
-		}
-	}
-
-	private void resetWidgetPositions(){
-		Iterator<Widget> widgets=pnlCourseList.iterator();
-		int index=0;
-		while (widgets.hasNext()){
-			Widget widget=widgets.next();
-			if(widget instanceof ContentWidgetWithMove){
-				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
-				contentWidgetWithMove.getH3Panel().setText(i18n.GL0326()+" "+(index+1));
-				contentWidgetWithMove.getTextBox().setText("");
-				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
-				index++;
-			}
 		}
 	}
 }
