@@ -33,8 +33,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.client.htmltags.AsideTag;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -42,11 +47,6 @@ import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 

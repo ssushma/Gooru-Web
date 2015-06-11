@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folders.item;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface FolderItemChildPresenterUiHandlers extends BaseUiHandlers{
 	void deleteFolder(String folderId);

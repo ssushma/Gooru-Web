@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,11 +27,11 @@ package org.ednovo.gooru.client.mvp.analytics.util;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
-import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.FeedBackResponseDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -72,10 +72,10 @@ public class ViewResponseUserWidget extends Composite {
 	@UiField InlineLabel spnEdit,spnDelete;
 	@UiField Button btnSubmit;
 	@UiField Image userProfileImage,userProfileImage1;
-	
+
 	OetextDataDO oetextDataDO;
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	/**
 	 * Constructor
 	 * @param oetextDataDO
@@ -166,10 +166,10 @@ public class ViewResponseUserWidget extends Composite {
 				userProfileImage1.setUrl("../images/settings/setting-user-image.png");
 			}
 		}
-		
+
 		userProfileImage.addErrorHandler(new OnErrorProfileImage());
 		userProfileImage1.addErrorHandler(new OnErrorProfileImage());
-		
+
 		usernamelbl.setText(oetextDataDO.getUserName());
 		String oeText=oetextDataDO.getOEText();
 		if(questionType.equalsIgnoreCase("MA") || questionType.equalsIgnoreCase("FIB")){
@@ -204,7 +204,7 @@ public class ViewResponseUserWidget extends Composite {
 					    }
 	        		    if(skip == false)
 						{
-	        		    	answerChoice.setText(text+",");	
+	        		    	answerChoice.setText(text+",");
 	        		    	answerChoice.getElement().getStyle().setColor(colorCode);
 	        		    	answerChoice.getElement().getStyle().setFloat(Float.LEFT);
 	        		    	answerChoice.getElement().getStyle().setPaddingRight(1, Unit.PX);
@@ -212,7 +212,7 @@ public class ViewResponseUserWidget extends Composite {
 	        		    	answerChoice.getElement().getStyle().setFontSize(14, Unit.PX);
 	        		    	userAnswerspnl.add(answerChoice);
 						}else{
-							answerChoice.setText(i18n.GL3115());	
+							answerChoice.setText(i18n.GL3115());
 							userAnswerspnl.add(answerChoice);
 							break;
 						}
@@ -220,7 +220,7 @@ public class ViewResponseUserWidget extends Composite {
 	   		      }
 	   		}else{
 	   			Label answerChoice=new Label();
-	   			answerChoice.setText(i18n.GL3115());	
+	   			answerChoice.setText(i18n.GL3115());
 				userAnswerspnl.add(answerChoice);
 	   		}
 		}else{

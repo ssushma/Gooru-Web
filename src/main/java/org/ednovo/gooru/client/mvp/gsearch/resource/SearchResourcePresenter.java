@@ -29,8 +29,12 @@ package org.ednovo.gooru.client.mvp.gsearch.resource;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.service.SearchServiceAsync;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
@@ -46,11 +50,7 @@ import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
-import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;

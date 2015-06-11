@@ -37,8 +37,8 @@ package org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup;
 * @Reviewer 
 *
 */
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
 

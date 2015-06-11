@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.study;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 /**
  * 
  * @fileName : IsClassCodeView.java

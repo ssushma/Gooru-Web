@@ -27,12 +27,12 @@ package org.ednovo.gooru.client.mvp.gsearch.util;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

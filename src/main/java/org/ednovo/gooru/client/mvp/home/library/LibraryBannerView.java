@@ -27,8 +27,8 @@
 */
 package org.ednovo.gooru.client.mvp.home.library;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;

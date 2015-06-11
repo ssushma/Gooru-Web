@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch.util;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team

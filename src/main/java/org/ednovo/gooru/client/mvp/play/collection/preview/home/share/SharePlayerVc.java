@@ -29,17 +29,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.ShareViewUc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;

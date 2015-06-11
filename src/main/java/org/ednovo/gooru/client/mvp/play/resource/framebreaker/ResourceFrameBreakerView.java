@@ -24,12 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.framebreaker;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
-import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;

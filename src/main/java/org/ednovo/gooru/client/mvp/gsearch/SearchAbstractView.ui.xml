@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:hpanel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
 		<g:HTMLPanel ui:field="fixedFilterSearch" styleName="fixedPosition">
 			<div class="subNavigation">
@@ -13,7 +13,7 @@
 							<g:HTMLPanel styleName="seachLeftNavigation">
 								<panel:UlPanel>
 									<panel:LiPanel styleName="active" ui:field="collectionPanel">
-										<g:Anchor text="{i18n.GL0645}" title="{i18n.GL0645}"/> 
+										<g:Anchor text="{i18n.GL0645}" title="{i18n.GL0645}"/>
 									</panel:LiPanel>
 									<panel:LiPanel ui:field="resourcePanel">
 										<g:Anchor text="{i18n.GL1110}" title="{i18n.GL1110}"/>
@@ -31,7 +31,7 @@
 									</hpanel:HTMLEventPanel>
 									<g:HTMLPanel styleName="dropdown-menu" ui:field="gradesPanel"></g:HTMLPanel>
 								</g:HTMLPanel>
-								
+
 							<g:HTMLPanel styleName="btn-group" ui:field="subjectDropDown">
 								<g:Button styleName="btn btn-primary" text="{i18n.GL3208}" title="{i18n.GL3208}"/>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
@@ -127,13 +127,13 @@
 											<g:Label ui:field="sourcesNotFoundLbl"/>
 											<g:FlowPanel ui:field="sourceContainerFloPanel" />
 										 </div>
-									  
+
 									    <div class="paddingBlock">
 											<p>Aggregator <g:Image url="images/mos/questionmark.png" ui:field="aggregatorTooltip"/></p>
 											<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
 											<g:Label ui:field="aggregatorNotFoundLbl"/>
 									   </div>
-									  
+
 									    <div class="paddingBlock no-gutter">
 											<p>Access Mode</p>
 											<!-- <div class="col-md-6">
@@ -188,8 +188,8 @@
 		<div class="container">
 			<div class="SmallWidthContainer">
 				<div>
-					<g:InlineLabel styleName="searchResultsBox" ui:field="searchResults"/> 	
-					<g:FlowPanel ui:field="pnlAddFilters" styleName="searchFilters"></g:FlowPanel>	
+					<g:InlineLabel styleName="searchResultsBox" ui:field="searchResults"/>
+					<g:FlowPanel ui:field="pnlAddFilters" styleName="searchFilters"></g:FlowPanel>
 				</div>
 				<div class="borderBox">
 					<g:Label ui:field="lblLoadingTextPrevious" styleName="loadingText" text="{i18n.GL3206}" title="{i18n.GL3206}"/>
@@ -204,4 +204,4 @@
 			</div>
 		</div>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

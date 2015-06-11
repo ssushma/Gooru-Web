@@ -26,8 +26,8 @@ package org.ednovo.gooru.client.mvp.shelf.list;
 
 import java.util.HashMap;
 
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.event.RegisterTabDndHandler;
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleHandler;

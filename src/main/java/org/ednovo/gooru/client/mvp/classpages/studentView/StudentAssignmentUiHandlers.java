@@ -24,8 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.studentView;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 /**
  * 
  * @fileName : StudentAssignmentUiHandlers.java

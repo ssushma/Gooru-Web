@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.add;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 import com.google.gwt.user.client.ui.TreeItem;
 

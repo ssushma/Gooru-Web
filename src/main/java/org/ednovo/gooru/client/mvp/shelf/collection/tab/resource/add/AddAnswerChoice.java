@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,8 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.ui.TinyMCE;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -46,16 +46,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
-	
+
 	public interface AddAnswerChoiceUiBinder extends UiBinder<Widget, AddAnswerChoice>{
-		
+
 	}
-	
+
 	public static AddAnswerChoiceUiBinder uiBinder=GWT.create(AddAnswerChoiceUiBinder.class);
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	
+
+
 	@UiField
 	public Label errorMessageforAnswerChoice;
 
@@ -67,12 +67,12 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 	Label optionSelectedButton;
 	@UiField public TinyMCE answerTextBox;
 	@UiField HTMLPanel tinyOrTextBoxConatiner,deleteButtonContainer;
-	
+
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
 	public boolean isOptionSelectedButton=false;
-	
+
 	public AddAnswerChoice(){
 		initWidget(uiBinder.createAndBindUi(this));
 		labelChoice.getElement().setId("lblLabelChoice");
@@ -115,7 +115,7 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 		labelChoice.getElement().setAttribute("alt", labelName);
 		labelChoice.getElement().setAttribute("title", labelName);
 	}
-	
+
 	@Override
 	public void onLoad(){
 		super.onLoad();
@@ -134,8 +134,8 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
 			   answerTextBox.getElement().setAttribute("alt", richTextData);
-			   answerTextBox.getElement().setAttribute("title", richTextData); 
-		   }	   
+			   answerTextBox.getElement().setAttribute("title", richTextData);
+		   }
 	   }
 	public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
@@ -147,8 +147,8 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 	}
-	
-	
+
+
 	@Override
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		// TODO Auto-generated method stub
@@ -165,6 +165,6 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 	public void setAnswerTextBox(TinyMCE answerTextBox) {
 		this.answerTextBox = answerTextBox;
 	}
-	
-	
+
+
 }

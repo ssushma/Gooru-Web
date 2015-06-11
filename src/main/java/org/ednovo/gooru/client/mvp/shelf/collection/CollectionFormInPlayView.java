@@ -28,19 +28,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;

@@ -28,13 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
+import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Anchor;

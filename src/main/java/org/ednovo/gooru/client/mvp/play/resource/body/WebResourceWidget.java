@@ -24,8 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;

@@ -1,17 +1,13 @@
 package org.ednovo.gooru.client.mvp.library.partner.tical;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
-import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.IsLessonopolyLibraryView;
-import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
-import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryUiHandlers;
-import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter.IsLessonopolyLibraryProxy;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 
 import com.google.gwt.user.client.Window;

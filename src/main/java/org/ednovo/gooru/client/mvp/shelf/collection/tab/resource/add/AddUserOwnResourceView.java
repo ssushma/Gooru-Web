@@ -30,9 +30,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
@@ -54,11 +59,6 @@ import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;

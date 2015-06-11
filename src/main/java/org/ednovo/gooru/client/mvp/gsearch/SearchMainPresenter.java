@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,15 +23,15 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePresenter;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePresenter;
+import org.ednovo.gooru.application.client.wrap.WrapPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
-import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -45,7 +45,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 /**
  * @fileName : FolderTocPresenter.java
  *
- * @description : 
+ * @description :
  *
  * @version : 1.3
  *
@@ -53,15 +53,15 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  *
  * @Author Gooru Team
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public class SearchMainPresenter extends BasePresenter<IsSearchMainView, SearchMainPresenter.IsSearchMainProxy> implements SearchMainUiHandlers {
 
-	
-	
+
+
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_VIEW = new Type<RevealContentHandler<?>>();
-	
+
 	@ProxyCodeSplit
 	public interface IsSearchMainProxy extends Proxy<SearchMainPresenter> {
 	}
@@ -80,23 +80,23 @@ public class SearchMainPresenter extends BasePresenter<IsSearchMainView, SearchM
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
-		
+
 	}
 	@Override
 	protected void onReset() {
 		super.onReset();
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
 	}
-	
+
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, WrapPresenter.TYPE_VIEW, this);
 	}
-	
+
 	@Override
 	public void getSearchKeyword() {
 		String searchText=getView().getSearchText();

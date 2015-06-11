@@ -26,14 +26,14 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;

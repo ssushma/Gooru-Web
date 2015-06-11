@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.share;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;

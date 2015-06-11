@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.community.contributors;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

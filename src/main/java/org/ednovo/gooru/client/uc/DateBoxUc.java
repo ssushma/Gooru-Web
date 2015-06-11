@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.uc;
 
 import java.util.Date;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;

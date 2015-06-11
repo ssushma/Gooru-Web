@@ -27,8 +27,13 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -39,12 +44,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateQuestionImageEvent;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

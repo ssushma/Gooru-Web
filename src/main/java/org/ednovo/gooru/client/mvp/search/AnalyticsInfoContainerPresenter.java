@@ -25,14 +25,10 @@
 package org.ednovo.gooru.client.mvp.search;
 
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 

@@ -25,8 +25,8 @@
 package org.ednovo.gooru.client.mvp.play.collection.end;
 
 
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.core.client.GWT;

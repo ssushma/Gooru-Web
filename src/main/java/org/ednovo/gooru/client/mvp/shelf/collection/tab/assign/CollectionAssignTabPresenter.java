@@ -24,15 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.assign;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

@@ -26,15 +26,15 @@ package org.ednovo.gooru.client.mvp.play.collection.end;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
-import org.ednovo.gooru.shared.model.player.CommentsDo;
-import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
+import org.ednovo.gooru.application.shared.model.library.ConceptDo;
+import org.ednovo.gooru.application.shared.model.player.CommentsDo;
+import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;

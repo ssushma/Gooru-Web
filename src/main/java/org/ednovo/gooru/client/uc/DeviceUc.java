@@ -3,12 +3,12 @@
  */
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;

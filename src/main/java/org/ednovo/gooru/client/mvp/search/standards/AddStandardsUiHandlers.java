@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.search.standards;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 import com.google.gwt.user.client.ui.Button;
 
