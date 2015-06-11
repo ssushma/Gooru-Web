@@ -98,8 +98,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		StringUtil.setAttributes(collectionTitlelbl.getElement(), "spnCollectionTitlelbl", null, null);
 		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
 		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
-
-		MouseOverHandler mouseOver=new MouseOverHandler() {
+		StringUtil.setAttributes(exportImage.getElement(), "exportImage", "Export", "Export");
+		
+ 		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){

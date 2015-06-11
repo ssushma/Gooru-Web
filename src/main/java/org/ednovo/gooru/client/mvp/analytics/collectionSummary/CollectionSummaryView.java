@@ -90,8 +90,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 		StringUtil.setAttributes(studentsListDropDown.getElement(), "ddlStudentsListDropDown", null, null);
 		StringUtil.setAttributes(sessionsDropDown.getElement(), "ddlSessionsDropDown", null, null);
+		StringUtil.setAttributes(exportImage.getElement(), "imgExportImage", "Export", "Export");
 
-		StringUtil.setAttributes(exportImage.getElement(), "imgExportImage", null, null);
 		StringUtil.setAttributes(sessionsTooltip.getElement(), "imgSessionsTooltip", null, null);
 
 		StringUtil.setAttributes(lastModifiedTime.getElement(), "lblLastModifiedTime", null, null);
