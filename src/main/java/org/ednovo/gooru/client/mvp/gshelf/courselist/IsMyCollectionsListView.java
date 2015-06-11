@@ -24,13 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
 /**
  * @author Search Team
  *
  */
-public interface CourseListUiHandlers extends BaseUiHandlers{
-
-
+public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
+	public void setData(String type);
 }
