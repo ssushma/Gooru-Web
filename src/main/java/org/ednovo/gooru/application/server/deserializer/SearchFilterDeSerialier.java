@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -51,7 +51,7 @@ public class SearchFilterDeSerialier extends DeSerializer {
 	private static final String SUBJECT = "subjects";
 	private static final String RESOURCE = "resource";
 	private static final String RESOURCE_FORMAT = "resourceFormat";
-	
+
 
 	private static Map<String, String> COLLECTION_CATEGORIES = new LinkedHashMap<String, String>();
 
@@ -82,29 +82,31 @@ public class SearchFilterDeSerialier extends DeSerializer {
 		SearchFilterDo filterDo = new SearchFilterDo();
 
 		try {
-			JSONObject taxonomyJsonObject = jsonRep.getJsonObject();
+			if (jsonRep != null){
+				JSONObject taxonomyJsonObject = jsonRep.getJsonObject();
 
-			JSONObject grades = taxonomyJsonObject.getJSONObject(GRADE_LEVEL);
-			HashMap<String, String> gradeLevels;
-			try {
-				gradeLevels = new ObjectMapper().readValue(grades.toString(), new TypeReference<LinkedHashMap<String, String>>() {
-				});
-				filterDo.setGradeLevels(gradeLevels);
-			} catch (Exception e) {
-			}
+				JSONObject grades = taxonomyJsonObject.getJSONObject(GRADE_LEVEL);
+				HashMap<String, String> gradeLevels;
+				try {
+					gradeLevels = new ObjectMapper().readValue(grades.toString(), new TypeReference<LinkedHashMap<String, String>>() {
+					});
+					filterDo.setGradeLevels(gradeLevels);
+				} catch (Exception e) {
 
-			JSONArray subjectsJsonArray = taxonomyJsonObject.getJSONArray(SUBJECT);
-			List<String> subjects = new ArrayList<String>();
-			for (int subject = 0; subject < subjectsJsonArray.length(); subject++) {
-				subjects.add(subjectsJsonArray.getString(subject));
+				}
+
+				JSONArray subjectsJsonArray = taxonomyJsonObject.getJSONArray(SUBJECT);
+				List<String> subjects = new ArrayList<String>();
+				for (int subject = 0; subject < subjectsJsonArray.length(); subject++) {
+					subjects.add(subjectsJsonArray.getString(subject));
+				}
+				filterDo.setSubjects(subjects);
+				if (type.equals(RESOURCE)) {
+					filterDo.setCategories(RESOURCE_CATEGORIES);
+				} else {
+					filterDo.setCategories(COLLECTION_CATEGORIES);
+				}
 			}
-			filterDo.setSubjects(subjects);
-			if (type.equals(RESOURCE)) {
-				filterDo.setCategories(RESOURCE_CATEGORIES);
-			} else {
-				filterDo.setCategories(COLLECTION_CATEGORIES);
-			}
-				
 		} catch (JSONException e) {
 		}
 		return filterDo;
