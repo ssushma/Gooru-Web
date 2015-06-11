@@ -3,9 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:HTMLEventPanel="urn:import:org.ednovo.gooru.client.ui">
 
-	<ui:style src="QuestionType.css"
-		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeCBundle"
-		field="res" />
 <ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 
 	<g:HTMLPanel styleName="assessmentContentBlock">

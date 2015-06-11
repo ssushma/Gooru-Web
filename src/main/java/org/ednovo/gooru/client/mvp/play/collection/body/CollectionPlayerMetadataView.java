@@ -36,7 +36,6 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
-import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -48,7 +47,6 @@ import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -218,7 +216,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		rightPanelMetadata.setCollectionMetadata(collectionDo);
 		menuMetadataWidget=new MetadataWidget();
 		menuMetadataWidget.setStyleName("col-md-12 col-sm-12");
-		menuMetadataWidget.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().rightPanel());
+		menuMetadataWidget.addStyleName("player-rightPanel");
 		menuMetadataWidget.setCollectionMetadata(collectionDo);
 		getUiHandlers().getMenuContainer().clear();
 		getUiHandlers().getMenuContainer().add(menuMetadataWidget);

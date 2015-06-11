@@ -86,6 +86,35 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private boolean clrPanel=false;
 
 	private String version = null;
+	private CollectionResourceTabPresenter collectionResourceTabPresenter;
+
+	private CollectionInfoTabPresenter collectionInfoTabPresenter;
+	
+	private CollectionAssignTabPresenter collectionAssignTabPresenter;
+	
+	private CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter;
+
+	private FolderItemTabPresenter folderItemTabPresenter;
+	
+
+	private SimpleAsyncCallback<Void> deleteCollectionAsyncCallback;
+
+	private ImageUploadPresenter imageUploadPresenter;
+
+
+	private String folderParentName = "";
+	
+	private boolean isPageRefreshed = true;
+	
+	
+	
+	public static final  Object COURSE_LIST_SLOT = new Object();
+	
+	private MyCollectionsListPresenter myCollectionsListPresenter;
+	
+	
+	boolean isApiCalled=false;
+	
     private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	
 	private String parentId, id=null;
@@ -126,11 +155,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,ImageUploadPresenter imageUploadPresenter, ShelfListPresenter shelfTabPresenter, CollectionResourceTabPresenter collectionResourceTabPresenter, CollectionInfoTabPresenter collectionInfoTabPresenter, CollectionAssignTabPresenter collectionAssignTabPresenter,CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter, FolderItemTabPresenter folderItemTabPresenter, IsShelfMainView view, IsShelfMainProxy proxy) {
+	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,ImageUploadPresenter imageUploadPresenter, ShelfListPresenter shelfTabPresenter, CollectionResourceTabPresenter collectionResourceTabPresenter, CollectionInfoTabPresenter collectionInfoTabPresenter, CollectionAssignTabPresenter collectionAssignTabPresenter,CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter, FolderItemTabPresenter folderItemTabPresenter, MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
+		this.myCollectionsListPresenter=myCollectionsListPresenter;
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
 		Document doc = Document.get();
@@ -195,6 +225,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		super.onReset();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
+		myCollectionsListPresenter.setData("Course");
+		setInSlot(COURSE_LIST_SLOT, myCollectionsListPresenter,false);	
 	}
 	
 	public ShelfServiceAsync getShelfService() {
@@ -284,9 +316,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 
 	@Override
-	public void getEditPageHeight(PopupPanel editQuestionPopupPanel,
-			boolean isHeightClear) {
-		// TODO Auto-generated method stub
+	public void getEditPageHeight(PopupPanel editQuestionPopupPanel,boolean isHeightClear) {
 		
 	}
 	

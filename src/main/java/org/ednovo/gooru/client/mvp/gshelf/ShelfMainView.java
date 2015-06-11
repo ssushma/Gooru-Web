@@ -37,14 +37,14 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderPare
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -74,12 +74,11 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers>
-implements IsShelfMainView, ClickHandler {
+public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> implements IsShelfMainView {
 
 	@UiField HTMLPanel floderTreeContainer;
 
-	@UiField HTMLPanel gShelfMainContainer;
+	@UiField HTMLPanel gShelfMainContainer,pnlSlot;
 	
 	@UiField HTMLEventPanel organizeRootPnl;
 	
@@ -109,6 +108,15 @@ implements IsShelfMainView, ClickHandler {
 	private Integer childPageNumber = 1;
 	
 	int collectionItemDoSize, count;
+
+	boolean collectionItemsNotFriendly = false;
+
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
+
+	String selectedFolderId = "";
+
+	List<ClassPageCollectionDo> classpageTitles = null;
+
 
 	private static ShelfMainViewUiBinder uiBinder = GWT
 			.create(ShelfMainViewUiBinder.class);
@@ -145,8 +153,6 @@ implements IsShelfMainView, ClickHandler {
 	private void setIdForFields() {
 		gShelfMainContainer.getElement().setId("gShelfMainContainer");
 	}
-
-
 	private void setTreeStucture() {
 		floderTreeContainer.clear();
 		ShelfCollection treeItemShelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
@@ -204,6 +210,21 @@ implements IsShelfMainView, ClickHandler {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
+	 */
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		pnlSlot.clear();
+		if (content != null) {
+			 if(slot==ShelfMainPresenter.COURSE_LIST_SLOT){
+				 pnlSlot.add(content);
+			 }else{
+			}
+		}else{
+
+		}
+	}
 	@Override
 	public void getChildFolderItems(List<FolderDo> folderListDo) {
 		String o2 = null, o3 = null, selectedFolder = null, selectedFolderName = null, id = null;
@@ -285,14 +306,6 @@ implements IsShelfMainView, ClickHandler {
 	         }
 	      }
  }
-	@Override
-	public void onClick(ClickEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-	
-	
-	
 	/** 
 	 * This method is to get the childPageNumber
 	 */
@@ -547,7 +560,4 @@ implements IsShelfMainView, ClickHandler {
 	         }
 	      }
    	}
-
-
-
 }

@@ -81,6 +81,18 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
                     MixpanelUtil.AddQuestion();
             }
 		});
+		
+		setV2UpdateQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
+            @Override
+            public void onSuccess(CollectionItemDo result) {
+            	      hidePopup();
+            	      if(result != null)
+            			{
+            			AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.UPDATE));
+            			}
+                    MixpanelUtil.AddQuestion();
+            }
+		});
 	}
 	
 	public ResourceServiceAsync getResourceService() {
