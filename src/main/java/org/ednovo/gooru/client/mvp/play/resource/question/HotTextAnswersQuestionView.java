@@ -74,6 +74,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private List randomSequenceList;
 
 	private boolean isCheckButtonEnabled=true;
+	
+	private boolean isCheckAnswerButtonClicked=false;
 
 	String[] correctAnsSequence;
 	String[] attemptAnsSequence;
@@ -316,6 +318,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void showCorrectResult(){
+		
 
 		if(collectionItemDo.getResource().getType()==9){
 
@@ -325,7 +328,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer, Boolean>();
 			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 			int j=0;
-
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
 
@@ -340,7 +342,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					answerAttemptDo.setText(htAnswerOption.getAnswerText());
 					answerAttemptDo.setAnswerId(Integer.parseInt(el.getId()));
 					answerAttemptDo.setOrder(el.getId());
-
+					answerIds.add(Integer.parseInt(el.getId()));
 					if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
 
 						if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
@@ -362,7 +364,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 			}
 
-
 			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
 				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -374,8 +375,15 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			increaseUserAttemptCount();
 
 			String attemptStatus=HTDragChoiceStatus==true?"correct":"wrong";
+			int score=HTDragChoiceStatus==true?1:0;
 			createSesstionItemAttemptForHTDragDrop(answerIds,userAttemptedValueList,attemptStatus);
 			userAttemptedValue(userAttemptedValueList);
+			setAnswerAttemptSequence(1,score,0);
+			
+			boolean isFirstTry=isCheckAnswerButtonClicked;
+			isCheckAnswerButtonClicked=true;
+			
+			setAnswersDetailsWitithTime(answerIds,HTDragChoiceStatus?1:0,1,score,!isFirstTry);
 
 		}else{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
@@ -394,6 +402,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			}
 		}
 
+		isUserAnswerAttempted(true);
+	
+		
 	}
 
 	private void clearAnswers(){
@@ -457,6 +468,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 	public abstract void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
+	public abstract void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId);
+	public void isUserAnswerAttempted(boolean isUserAttemptedResult){}
+	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){}
+	
 	public abstract void increaseUserAttemptCount();
 	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
 	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);

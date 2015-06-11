@@ -537,7 +537,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			String attemptedAnswersText="";
 			if(userAttemptedValueList!=null && userAttemptedValueList.size()>0){
 				for(int i=0;i<userAttemptedValueList.size();i++){
-					attemptedAnswersText=attemptedAnswersText+"["+userAttemptedValueList.get(i)+"]";
+					attemptedAnswersText=attemptedAnswersText+userAttemptedValueList.get(i);
 					if((i+1)!=userAttemptedValueList.size()){
 						attemptedAnswersText=attemptedAnswersText+",";
 					}
@@ -548,6 +548,17 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		@Override
 		public void userAttemptedAnswerObject(	List<AnswerAttemptDo> answerOptionAttemptList) {
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
+		}
+		@Override
+		public void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId) {
+			getUiHandlers().setAnswerAttemptSequence(attemptSequence, attemptStatus, answerId);
+		}
+		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,1);
+		}
+		public void setAnswersDetailsWitithTime(List<Integer> answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+			getUiHandlers().setAnswerIdWithTimeForHT(answerId, answerStatus, answerSequence);
+			getUiHandlers().setResourceScore(score);
 		}
 	}
 

@@ -287,6 +287,25 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 		}		
 	}
 	
+	public void setAnswerIdWithTimeForHT(List<Integer> answerId,Integer attemptStatus,Integer attemptSequence) {
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			collectionPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			collectionPlayerPresenter.setAttemptTrySequenceArray(answerId);
+		}else if(isResourcePlayer){
+			resourcePlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			resourcePlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			resourcePlayerPresenter.setAttemptTrySequenceArray(answerId);
+		}else if(isPreviewPlayer){
+			previewPlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			previewPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			previewPlayerPresenter.setAttemptTrySequenceArray(answerId);
+		}		
+	}
+	
 	public void setAnswerIds(List<Integer> answerId){
 		if(answerId!=null && answerId.size()>0){
 			for(int i=0;i<answerId.size();i++){
