@@ -46,16 +46,15 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	interface MyCollectionsListViewUiBinder extends UiBinder<Widget, MyCollectionsListView> {
 	}
 	
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
 	@UiField HTMLPanel courseListContainer;
 	@UiField VerticalPanel pnlCourseList;
+	String type;
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField H2Panel h2Title;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson";
 
-	String type;
-	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		courseListContainer.getElement().setId("gShelfCousesList");

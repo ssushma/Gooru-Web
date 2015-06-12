@@ -42,6 +42,4 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	int getChildPageNumber();
 
 	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
-
-	
 }
