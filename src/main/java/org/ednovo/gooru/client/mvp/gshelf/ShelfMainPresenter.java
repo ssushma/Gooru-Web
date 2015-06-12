@@ -312,13 +312,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	@Override
 	public void setFolderParentName(String folderName) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
-		// TODO Auto-generated method stub
 		
 	}
 
