@@ -72,6 +72,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private OpendEndedQuestionWidget opendEndedQuestionWidget=null;
 	private FillInTheBlankQuestionWidget fillInTheBlankQuestionWidget=null;
 	private HotTextQuestionWidget HotTextQuestionWidget=null;
+	private HotSpotQuestionWidget HotSpotQuestionWidget=null;
 
 	private Map<String, List> reorderMap=new HashMap<String, List>();
 
@@ -173,6 +174,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 				}
 				HotTextQuestionWidget=new HotTextQuestionWidget(collectionItemDo, attemptedAnswerDo,reorderMap.get(collectionItemDo.getResource().getGooruOid()));
 				questionContainer.add(HotTextQuestionWidget);
+			}else if(collectionItemDo.getResource().getType()==10){
+				HotSpotQuestionWidget=new HotSpotQuestionWidget(collectionItemDo,attemptedAnswerDo);
+				questionContainer.add(HotSpotQuestionWidget);
 			}
 		}
 	}
@@ -561,6 +565,68 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			getUiHandlers().setResourceScore(score);
 		}
 	}
-
-
+	public class HotSpotQuestionWidget extends HotSpotAnswersQuestionView{
+		private AttemptedAnswersDo attemptedAnswerDo=null;
+		public HotSpotQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+			super(collectionItemDo,attemptedAnswerDo);
+			this.attemptedAnswerDo=attemptedAnswerDo;
+		}
+		@Override
+		public void createSessionItemAttempt(int answerId,	String answerAttemptStatus) {
+			getUiHandlers().createSessionItemAttempt(collectionItemDo.getResource().getGooruOid(),answerId, answerAttemptStatus);
+		}
+		@Override
+		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo) {
+			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
+		}
+		@Override
+		public void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId) {
+			getUiHandlers().setAnswerAttemptSequence(attemptSequence, attemptStatus, answerId);
+		}
+		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,1);
+		}
+		public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+			getUiHandlers().setAnswerIdWithTime(answerId, answerStatus, answerSequence);
+			getUiHandlers().setResourceScore(score);
+		}
+		public void increaseUserAttemptCount(){
+			getUiHandlers().increaseUserAttemptCount();
+		}
+		@Override
+		public void userAttemptedValue(List<String> userAttemptedValueList) {
+			String attemptedAnswersText="";
+			if(userAttemptedValueList!=null && userAttemptedValueList.size()>0){
+				for(int i=0;i<userAttemptedValueList.size();i++){
+					attemptedAnswersText=attemptedAnswersText+"["+userAttemptedValueList.get(i)+"]";
+					if((i+1)!=userAttemptedValueList.size()){
+						attemptedAnswersText=attemptedAnswersText+",";
+					}
+				}
+			}
+			getUiHandlers().setOeQuestionAnswerText(attemptedAnswersText);
+		}
+		public void createSesstionItemAttemptForMultipleAnswer(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus){
+			String attemptedAnswers="";
+			String answerId="";
+			if(userAttemptedAnswers!=null && userAttemptedAnswers.size()>0){
+					for(int i=0;i<userAttemptedAnswers.size();i++){
+						attemptedAnswers=attemptedAnswers+userAttemptedAnswers.get(i);
+						try{
+							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
+						}catch(Exception e){
+							AppClientFactory.printSevereLogger(e.getMessage());
+						}
+						if((i+1)!=userAttemptedAnswers.size()){
+							attemptedAnswers=attemptedAnswers+",";
+							answerId=answerId+",";
+						}
+					}
+			}
+			getUiHandlers().createSesstionItemAttemptOe(collectionItemDo.getResource().getGooruOid(),answerId,attemptStatus,attemptedAnswers);
+		}
+		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
+			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
+		}
+	}
 }
