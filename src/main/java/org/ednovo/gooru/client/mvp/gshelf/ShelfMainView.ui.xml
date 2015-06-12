@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="gShelfMainContainer">
 		<g:HTMLPanel styleName="gradeContainer greyBackground">
 			<div class="container">
@@ -14,7 +14,7 @@
 							<div class="col-md-10 col-xs-10 col-sm-10">
 								<!-- Split button -->
 								<div class="btn-group btn-block">
-									<button type="button" class="btn btn-default btn-left">My Courses   </button>
+									<button type="button" class="btn btn-default btn-left">My Courses</button>
 									<button type="button" class="btn btn-default btn-right dropdown-toggle"
 										data-toggle="dropdown" aria-expanded="false">
 										<span class="caret"></span>

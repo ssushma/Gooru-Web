@@ -620,9 +620,7 @@ public class AppModule extends AppPresenterModule {
 
 		//My Collections New Presenter widgets
 		bindPresenterWidget(MyCollectionsListPresenter.class,IsMyCollectionsListView.class,MyCollectionsListView.class);
-		
 		bindPresenterWidget(CourseInfoPresenter.class,IsCourseInfoView.class,CourseInfoView.class);
-
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 	}
 }

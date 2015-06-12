@@ -198,8 +198,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		super.onReset();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
-		myCollectionsListPresenter.setData("Course");
-		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 	
 	public ShelfServiceAsync getShelfService() {
