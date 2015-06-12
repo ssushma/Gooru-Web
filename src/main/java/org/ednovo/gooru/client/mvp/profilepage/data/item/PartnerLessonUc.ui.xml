@@ -1,6 +1,5 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style field="style" src="../ProfilePageLibraryStyle.css" type="org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle" />
-	<g:HTMLPanel styleName="lesson" ui:field="lessonList"/>
+	<g:HTMLPanel ui:field="lessonList"/>
 </ui:UiBinder>

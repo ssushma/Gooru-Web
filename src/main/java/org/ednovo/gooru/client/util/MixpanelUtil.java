@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -613,7 +613,7 @@ public class MixpanelUtil {
    	//$wnd.mixpanel.track("AddImageFromMyComputer",{},function() { });
    	       	$wnd.hewlettTracking("AddImageFromMyComputer");
    	}-*/;
-	//Collectionplayer 
+	//Collectionplayer
 	public static native void ClickFacebookFromShareInCollectionplayer()/*-{
    	//$wnd.mixpanel.track("ClickFacebookFromShareInCollectionplayer",{},function() { });
    	       	$wnd.hewlettTracking("ClickFacebookFromShareInCollectionplayer");
@@ -1279,16 +1279,16 @@ public class MixpanelUtil {
 	}-*/;
 
 	/**
-	 * 
-	 * @function Regular_User_Logged_In 
-	 * 
+	 *
+	 * @function Regular_User_Logged_In
+	 *
 	 * @created_date : Dec 3, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1440,14 +1440,14 @@ public class MixpanelUtil {
 	////Mix Panel events for release-5.6/////
 
 	/// Adding Collection from player
-	
+
 	public static native void Click_ViewthiscollectioninyourWorkspace()/*-{
    	//$wnd.mixpanel.track("Click_ViewthiscollectioninyourWorkspace",{},function() {});
    	   	$wnd.hewlettTracking("Click_ViewthiscollectioninyourWorkspace");
    	}-*/;
 
 	////Mix Panel events for release-5.7/////
-	
+
 	public static native void OpenShare()/*-{
     //$wnd.mixpanel.track("OpenShare",{},function() {});
        	$wnd.hewlettTracking("OpenShare");
@@ -1495,21 +1495,21 @@ public class MixpanelUtil {
     //$wnd.mixpanel.track("Share_direct_player_end",{},function() {});
        	$wnd.hewlettTracking("Share_direct_player_end");
     }-*/;
-	
+
 	//--------------------------------   RP events  --------------------------------------------------------------//
-	
+
 	 public static native void clickShareResource(String Location) /*-{
 	    //$wnd.mixpanel.track("Click_Share_"+Location,{},function() { });
 	    //$wnd.mixpanel.track("Click_Share_TotalCount",{},function() { });
 	       	$wnd.hewlettTracking("Click_Share_TotalCount");
  	}-*/;
-	 
+
 	 public static native void ClickOpenEndedQuestionSubmitButtonFromResourcePlayer()/*-{
 	 //$wnd.mixpanel.track("ClickOpenEndedQuestionSubmitButtonFromResourcePlayer",{},function() {});
 	    	$wnd.hewlettTracking("ClickOpenEndedQuestionSubmitButtonFromResourcePlayer");
 	 }-*/;
-	
-	
+
+
 
 	//--------------------------------    5.12 Players events  --------------------------------------------------------------//
 
@@ -1584,20 +1584,6 @@ public class MixpanelUtil {
   	   	$wnd.hewlettTracking("Player_Click_Linked_Out_Resource");
   	}-*/;
 
-
-	public static native void setIdentity(String userName, String emailId, String role, String createdDate, String firstLastName, String clientIpAddress)/*-{
-		//$wnd.mixpanel.identify(emailId);
-		//$wnd.mixpanel.people.set({
-//			"$name": ""+firstLastName,    // only special properties need the $
-//			"$email": ""+emailId,    // only special properties need the $
-//    		"$created": ""+createdDate,
-//    		"$last_login": new Date(),         // properties can be dates...
-//    		"$role": ""+role,
-//    		"$username": ""+userName,
-//    		"$clientIpAddress":""+clientIpAddress,
-//    		"$version":"6.1"
-//		});
-	}-*/;
 	public static native String getIP() /*-{
     	return $wnd._ipAddress;
 	}-*/;
@@ -1606,12 +1592,12 @@ public class MixpanelUtil {
   		//$wnd.mixpanel.track("Clicked_AddTab_Search",{},function() { });
   		   	$wnd.hewlettTracking("Clicked_AddTab_Search");
   	}-*/;
-	
+
 	public static native void Click_AnalyticsTab_Search()/*-{
 	//$wnd.mixpanel.track("Click_AnalyticsTab_Search",{},function() { });
 			   	$wnd.hewlettTracking("Click_AnalyticsTab_Search");
 		}-*/;
-	
-	
-	
+
+
+
 }

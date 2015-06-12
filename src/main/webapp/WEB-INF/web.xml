@@ -9,7 +9,7 @@
 			classpath*:/gooruContext-security.xml
 		</param-value>
 	</context-param>
-	
+
 	<!-- <servlet>
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>
@@ -18,16 +18,16 @@
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<url-pattern>/newgooru/logging</url-pattern>
 	</servlet-mapping> -->
-	
+
 	<servlet>
     	<servlet-name>remoteLogging</servlet-name>
     	<servlet-class>com.google.gwt.logging.server.RemoteLoggingServiceImpl</servlet-class>
   	</servlet>
   	<servlet-mapping>
     	<servlet-name>remoteLogging</servlet-name>
-   	 	<url-pattern>/newgooru/remote_logging</url-pattern>
+   	 	<url-pattern>/application/remote_logging</url-pattern>
   	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet
@@ -40,17 +40,17 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/newgooru/gwt-service/*</url-pattern>
+		<url-pattern>/application/gwt-service/*</url-pattern>
 		<url-pattern>/embed/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
     <servlet-name>uploadServlet</servlet-name>
-    <servlet-class>org.ednovo.gooru.server.service.uploadServlet</servlet-class>
+    <servlet-class>org.ednovo.gooru.application.server.service.uploadServlet</servlet-class>
   </servlet>
-  
+
   <servlet-mapping>
     <servlet-name>uploadServlet</servlet-name>
-    <url-pattern>/newgooru/upServlet</url-pattern>
+    <url-pattern>/application/upServlet</url-pattern>
   </servlet-mapping>
 
 	<filter>

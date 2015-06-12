@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage.data;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface ProfilePageLibraryUiHandlers extends BaseUiHandlers{
 	public void getPartnerChildFolderItems(String folderId, int pageNumber);

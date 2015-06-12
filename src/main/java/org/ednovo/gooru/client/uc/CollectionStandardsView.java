@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.uc;
 
 import java.util.List;
 
-import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Visibility;

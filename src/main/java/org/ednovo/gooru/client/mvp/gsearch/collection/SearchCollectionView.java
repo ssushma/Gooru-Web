@@ -25,11 +25,11 @@
 
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;

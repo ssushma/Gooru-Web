@@ -27,12 +27,12 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -284,6 +284,25 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 			setAnswerIds(answerId);
 			previewPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
 			previewPlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
+		}		
+	}
+	
+	public void setAnswerIdWithTimeForHT(List<Integer> answerId,Integer attemptStatus,Integer attemptSequence) {
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			collectionPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			collectionPlayerPresenter.setAttemptTrySequenceArray(answerId);
+		}else if(isResourcePlayer){
+			resourcePlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			resourcePlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			resourcePlayerPresenter.setAttemptTrySequenceArray(answerId);
+		}else if(isPreviewPlayer){
+			previewPlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			previewPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			previewPlayerPresenter.setAttemptTrySequenceArray(answerId);
 		}		
 	}
 	

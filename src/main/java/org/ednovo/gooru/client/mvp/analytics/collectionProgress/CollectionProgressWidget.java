@@ -3,13 +3,13 @@ package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
@@ -48,10 +48,10 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			UiBinder<Widget, CollectionProgressWidget> {
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField(provided = true)
 	CollectionProgressCBundle res;
-	
+
 	@UiField VerticalPanel htmlpnlProgress;
 	@UiField ListBox filterDropDown;
 	@UiField HTMLPanel scrollForCollectionProgress,loadingImageLabel1;
@@ -59,7 +59,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	@UiField Label leftArrow,rightArrow;
 	@UiField Image exportImage;
 	@UiField Frame downloadFile;
-	
+
 	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
 	private final String RED = "#EAB4B3 !important";
@@ -68,12 +68,12 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	private static final String VIEWRESPONSE = "View Response";
 	private static final String QUESTION = "question";
 	private static final String RESOURCE="resource";
-	
+
 	ViewResponsesPopup showResponsesPopup=null;
 	ArrayList<CollectionProgressDataDo> collectionProgressData;
 	ArrayList<CollectionProgressDataDo> questionProgressdata=new ArrayList<CollectionProgressDataDo>();
 	ArrayList<CollectionProgressDataDo> resourceProgressData=new ArrayList<CollectionProgressDataDo>();
-			
+
 	Table table;
 	boolean isDropDownClicked=false,isCollectionView;
 	String collectionTitle;
@@ -83,7 +83,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	public CollectionProgressWidget() {
 		this.res=CollectionProgressCBundle.INSTANCE;
 		res.css().ensureInjected();
-		setWidget(uiBinder.createAndBindUi(this));	
+		setWidget(uiBinder.createAndBindUi(this));
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 		downloadFile.setVisible(false);
 		setStaticData();
@@ -98,8 +98,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		StringUtil.setAttributes(collectionTitlelbl.getElement(), "spnCollectionTitlelbl", null, null);
 		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
 		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
+		StringUtil.setAttributes(exportImage.getElement(), "exportImage", "Export", "Export");
 		
-		MouseOverHandler mouseOver=new MouseOverHandler() {
+ 		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
@@ -166,13 +167,13 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 				this.isCollectionView=isCollectionView;
 				this.collectionTitle=collectionTitle;
 			}
-			
+
 			destoryTables();
 			htmlpnlProgress.clear();
 			final AdvancedFlexTable adTable=new AdvancedFlexTable();
 			adTable.getElement().setId("example");
 			htmlpnlProgress.add(adTable);
-			
+
 			// create headers and put them in the thead tag
 			Label title=new Label(i18n.GL2287());
 			adTable.setHeaderWidget(0, title);
@@ -192,7 +193,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			}
 			int questionColumnIndex=0,resourceColumnIndex=0;
 			int noOfQuestions=0;
-			
+
 			CollectionProgressDataDo defaultUserDataForUsers=null;
 			int rowCount=0;
 			for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
@@ -300,7 +301,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 				        					  answerText=answer;
 				        				  }
 					        		  }else{
-					        			  answerText="--"; 
+					        			  answerText="--";
 					        		  }
 			        				  Label answerlbl=new Label(answerText);
 					        		  mainDataVpnl.add(answerlbl);
@@ -316,7 +317,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 						        				  color=GREEN;
 						        			  }else{
 						        				  color=WHITE;
-						        			  } 
+						        			  }
 			        					 }else{
 			        						 color=RED;
 			        					 }
@@ -350,7 +351,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		}
 		sortAndFixed();
 	}
-	
+
 	/**
 	 * This class is used to handle the click event on the table cell
 	 */

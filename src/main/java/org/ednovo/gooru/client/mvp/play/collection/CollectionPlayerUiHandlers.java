@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEventHandler;

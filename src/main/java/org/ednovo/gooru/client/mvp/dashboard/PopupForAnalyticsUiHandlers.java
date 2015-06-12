@@ -37,7 +37,7 @@ package org.ednovo.gooru.client.mvp.dashboard;
  *
  * @Reviewer: 
  */
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 import com.google.gwt.event.shared.EventHandler;
 

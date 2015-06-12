@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -31,15 +31,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
-import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.RandomIterator;
 
@@ -74,6 +74,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private List randomSequenceList;
 
 	private boolean isCheckButtonEnabled=true;
+	
+	private boolean isCheckAnswerButtonClicked=false;
 
 	String[] correctAnsSequence;
 	String[] attemptAnsSequence;
@@ -224,7 +226,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 					for (Map.Entry<Integer, Boolean> entry : answerOptionCount.entrySet())
 					{
-						
+
 						QuestionAnswerDo questionAnswerDo=answerListSet.get(entry.getKey());
 						HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + k) + ") "));
 						htAnswerOptionView.addDomHandler(new DragContainerClick(),  ClickEvent.getType());
@@ -252,8 +254,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		}
 
 	}
-	
-	
+
+
 	public class DragContainerClick implements ClickHandler{
 
 		@Override
@@ -261,7 +263,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			clearReorderAnswers();
 			enableCheckAnswerButton();
 		}
-		
+
 	}
 
 
@@ -316,6 +318,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void showCorrectResult(){
+		
 
 		if(collectionItemDo.getResource().getType()==9){
 
@@ -325,7 +328,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer, Boolean>();
 			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 			int j=0;
-
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
 
@@ -337,10 +339,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
 					userAttemptedValueList.add("["+htAnswerOption.getAnswerText()+"]");
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(htAnswerOption.getAnswerText()); 
+					answerAttemptDo.setText(htAnswerOption.getAnswerText());
 					answerAttemptDo.setAnswerId(Integer.parseInt(el.getId()));
 					answerAttemptDo.setOrder(el.getId());
-
+					answerIds.add(Integer.parseInt(el.getId()));
 					if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
 
 						if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
@@ -362,7 +364,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 			}
 
-
 			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
 				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -374,8 +375,15 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			increaseUserAttemptCount();
 
 			String attemptStatus=HTDragChoiceStatus==true?"correct":"wrong";
+			int score=HTDragChoiceStatus==true?1:0;
 			createSesstionItemAttemptForHTDragDrop(answerIds,userAttemptedValueList,attemptStatus);
 			userAttemptedValue(userAttemptedValueList);
+			setAnswerAttemptSequence(1,score,0);
+			
+			boolean isFirstTry=isCheckAnswerButtonClicked;
+			isCheckAnswerButtonClicked=true;
+			
+			setAnswersDetailsWitithTime(answerIds,HTDragChoiceStatus?1:0,1,score,!isFirstTry);
 
 		}else{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
@@ -394,6 +402,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			}
 		}
 
+		isUserAnswerAttempted(true);
+	
+		
 	}
 
 	private void clearAnswers(){
@@ -437,7 +448,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	 */
 	private String removeHtmlTags(String text){
 		/**
-		 * Commented the following line to fix issue with displaying math symbols. 
+		 * Commented the following line to fix issue with displaying math symbols.
 		 */
 		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return text;
@@ -457,6 +468,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 	public abstract void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
+	public abstract void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId);
+	public void isUserAnswerAttempted(boolean isUserAttemptedResult){}
+	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){}
+	
 	public abstract void increaseUserAttemptCount();
 	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
 	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);

@@ -9,7 +9,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
-		<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+		<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:FlowPanel styleName="{addWebResourceStyle.addResourceFormRightOuterDiv}">
     <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormRightInnerMainDiv}">
         <g:HTMLPanel styleName="{addWebResourceStyle.marginDivBlock}">
@@ -33,11 +33,11 @@
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
            <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForQuestion"></g:Label>
         </g:HTMLPanel>
-        
+
         <g:HTMLPanel ui:field="addQuestImgContainer">
-			
+
 	    </g:HTMLPanel>
-        
+
          <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceContainer}" ui:field="answerchoiceTitleContainer">
             <g:Label styleName="{addWebResourceStyle.addResourceFormTitleChoice}" ui:field="addResourceFormTitleChoice"></g:Label>
             <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceAlign}" ui:field="correctText"></g:HTMLPanel>
@@ -48,23 +48,23 @@
             <qac:AddQuestionAnswerChoice ui:field="alphaLetterB"></qac:AddQuestionAnswerChoice>
         </g:HTMLPanel>
          <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="questionTrueOrFalseAnswerChoiceContainer">
-         	
+
         </g:HTMLPanel>
-        
-         
+
+
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceContainer}" ui:field="questionHotTextAnswerChoiceContainer">
-         	
+
         </g:HTMLPanel>
         <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice"></g:Anchor>
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
           <g:Label text="" ui:field="errorMessageForAnsCheck" styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage"/>
-          <g:Label text="" ui:field="ansChoiceErrMsg" styleName="{addWebResourceStyle.addResourceFormInputBottomTextAnswerChoice} errorMessage"/>   
+          <g:Label text="" ui:field="ansChoiceErrMsg" styleName="{addWebResourceStyle.addResourceFormInputBottomTextAnswerChoice} errorMessage"/>
         </g:HTMLPanel>
-        
+
          <g:HTMLPanel  ui:field="advancedContainer" styleName="{addWebResourceStyle.addAdvancedHeaderTextContainer}">
           <g:Label ui:field="advancedLbl"></g:Label>
           </g:HTMLPanel>
-        
+
         <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="explanationContainer">
           <uc:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconExplanation"></uc:HTMLEventPanel>
           <g:Label styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="explanationLabel"></g:Label>
@@ -76,13 +76,11 @@
           </g:HTMLPanel>
         </g:FlowPanel>
          <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForExplanation"></g:Label>
-      	
+
       	 <g:HTMLPanel ui:field="hintsContainer"></g:HTMLPanel>
       <!--    <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addHintsLabel"></g:Anchor> -->
          <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForHintsCheck"></g:Label>
 
-         
-         
       	 <!-- Depth Of Knowledge Start-->
       	<g:FlowPanel ui:field="depthOfKnowledgeContainer" styleName="{res1.css.depthOfKnowledgeContainer}">
 					<g:FlowPanel styleName="{res1.css.depthOfKnowledgeSubContainer}">
@@ -121,7 +119,7 @@
 					<g:FlowPanel styleName="{res1.css.shelfGradeInfogardenContainer}" />
 				</g:FlowPanel>
          <!-- Depth Of Knowledge End -->
-    	<!-- Educational use 
+    	<!-- Educational use
 		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="educationalTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
@@ -136,92 +134,92 @@
 						<g:Label ui:field="educationalDropDownLbl"	styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-			
+
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryEducationalLbl"></g:Label>
           </g:HTMLPanel>
         </g:HTMLPanel>
-       
+
 		 <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="educationalUsePanel">
 			<g:HTMLPanel styleName="{res.css.myEducationQuestionDropdown}">
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="activityPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="activityText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="handoutPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="handoutText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="homeworkPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="homeworkText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="gamePanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="gameText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="presentationPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="presentationText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="referenceMaterialPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="referenceMaterialText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="quizPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="quizText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="curriculumPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="curriculumPlanText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="lessonPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="lessonPlanText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="unitPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="unitPlanText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="projectPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="projectPlanText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="readingPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="readingText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="textbookPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="textbookText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="articlePanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="articleText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="bookPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="bookText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		 Educational use End -->
-		        
+
 		<!-- Standards Start -->
 		 <g:FlowPanel ui:field="standardContainer">
 		      <uc:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconStandards"></uc:HTMLEventPanel>
@@ -257,25 +255,25 @@
 						</g:FlowPanel>
 					</g:FlowPanel>
 	        <!-- 21 century End -->
-         
+
         </g:HTMLPanel>
-        
+
       <g:HTMLPanel styleName="col-md-12 colmdPadding {addWebResourceStyle.advancedOptionsContainer}">
-          
+
            <g:Label ui:field="setUpAdvancedLbl" styleName="{addWebResourceStyle.advancedOptionsHeading}"></g:Label>
-          
+
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addExplanationLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addHintsLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addDepthOfKnowledgeLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addStandardsLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addCenturyLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
-          
+
       </g:HTMLPanel>
-      
-      
+
+
       <g:HTMLPanel styleName="{addWebResourceStyle.resourceRightsContainer}">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{addWebResourceStyle.resourceRightsCheckBox}" checked="true" ></g:CheckBox>
-        	<g:Label ui:field="rightsLbl" styleName="{addWebResourceStyle.ownResourceFormDeclarationText}"></g:Label> 
+        	<g:Label ui:field="rightsLbl" styleName="{addWebResourceStyle.ownResourceFormDeclarationText}"></g:Label>
      <panel:HTMLEventPanel ui:field="lblContentRights" styleName="{res.css.ownResourceFormRightsContent}">
 	        	<g:HTMLPanel styleName="{res.css.resourceRightsPopupContainer}" ui:field="panelContentRights">
 					<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel>
@@ -292,19 +290,19 @@
      		 				<g:InlineLabel styleName="{res.css.anchorText}" ui:field="copyRightAnr"/>
      		 				<g:InlineLabel ui:field="additionalText" styleName="{res.css.additionalText}"/>
      		 		</g:HTMLPanel>
-    	 				
+
 					</g:HTMLPanel>
 				</g:HTMLPanel>
         	</panel:HTMLEventPanel>
          </g:HTMLPanel>
-         
-	
+
+
      <g:HTMLPanel styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="buttonContainer">
          <panel:HTMLEventPanel styleName="{addWebResourceStyle.addResourceOk}" ui:field="addQuestionResourceButton">
           <gg:BlueButtonUc styleName="primary" ui:field="addbutton"></gg:BlueButtonUc>
         </panel:HTMLEventPanel>
      	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
-        
+
       </g:HTMLPanel>
       <g:Label  styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="loadingTextLbl"></g:Label>
       </g:FlowPanel>

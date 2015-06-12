@@ -26,9 +26,9 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 

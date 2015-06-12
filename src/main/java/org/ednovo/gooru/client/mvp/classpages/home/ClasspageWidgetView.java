@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,12 +29,12 @@ package org.ednovo.gooru.client.mvp.classpages.home;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -49,10 +49,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 /**
- * 
+ *
  * @fileName : ClasspageWidgetView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -66,18 +66,18 @@ import com.google.gwt.user.client.ui.Widget;
 public class ClasspageWidgetView extends Composite {
 
 	@UiField Image classImage,imgUserProfile;
-	
+
 	@UiField HTMLPanel classTitle,assignmentsCount,ownerName,assignmentsCounter;
-	
+
 	@UiField HTMLEventPanel classpageContainer;
-	
+
 	private String DEFAULT_CLASSPAGE_IMAGE = "images/Classpage/default-classpage.png";
-	
+
 	private static String DEFAULT_PROFILE_IMAGE="images/settings/setting-user-image.png";
 
 
 	private static ClasspageWidgetViewUiBinder uiBinder = GWT.create(ClasspageWidgetViewUiBinder.class);
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ClasspageWidgetViewUiBinder extends UiBinder<Widget, ClasspageWidgetView> {
@@ -87,7 +87,7 @@ public class ClasspageWidgetView extends Composite {
 	public ClasspageWidgetView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		
+
 		classImage.setWidth("422"+Unit.PX);
 		classImage.setHeight("77"+Unit.PX);
 		classImage.getElement().setId("imgClassImage");
@@ -100,34 +100,34 @@ public class ClasspageWidgetView extends Composite {
 	}
 
 	/**
-	 * 
-	 * @function setClassPageImage 
-	 * 
+	 *
+	 * @function setClassPageImage
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param collectionDoObj
 	 * @parm(s) : @param pageMode
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	public void setClassPageImage(final CollectionDo collectionDoObj,String pageMode) {
-		
+
 
 		classTitle.getElement().setInnerHTML(collectionDoObj.getTitle());
 		classTitle.getElement().setAttribute("alt",collectionDoObj.getTitle());
 		classTitle.getElement().setAttribute("title",collectionDoObj.getTitle());
-		
+
 		assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
-		
+
 		if(pageMode.equalsIgnoreCase("Teach"))
 		{
 		if(collectionDoObj.getMemberCount() == 1)
@@ -146,12 +146,12 @@ public class ClasspageWidgetView extends Composite {
 		{
 			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
 		}
-		
+
 		imgUserProfile.setVisible(false);
 		assignmentsCounter.setVisible(true);
 		ownerName.setVisible(false);
 		classpageContainer.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String, String> params=new HashMap<String, String>();
@@ -159,9 +159,9 @@ public class ClasspageWidgetView extends Composite {
 				params.put("classpageid", collectionDoObj.getGooruOid());
 				params.put("pageNum", "0");
 				params.put("pos", "1");
-				
+
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE,params);
-				
+
 			}
 		});
 		}
@@ -173,7 +173,7 @@ public class ClasspageWidgetView extends Composite {
 		}
 		else
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());	
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
 		}
 		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUserName()+"'s"+" "+"class");
 		imgUserProfile.setVisible(true);
@@ -183,11 +183,11 @@ public class ClasspageWidgetView extends Composite {
 		{
 		imgUserProfile.setUrl(collectionDoObj.getUser().getProfileImageUrl());
 		imgUserProfile.addErrorHandler(new ErrorHandler() {
-				
+
 				@Override
 				public void onError(ErrorEvent event) {
 					imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
-					
+
 				}
 			});
 		}
@@ -196,7 +196,7 @@ public class ClasspageWidgetView extends Composite {
 			imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
 		}
 		classpageContainer.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String, String> params=new HashMap<String, String>();
@@ -206,18 +206,18 @@ public class ClasspageWidgetView extends Composite {
 				params.put("pos", "1");
 
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
-				
+
 			}
 		});
 		}
 		classImage.setUrl(collectionDoObj.getThumbnailUrl());
-		
+
 		classImage.addErrorHandler(new ErrorHandler() {
-			
+
 			@Override
 			public void onError(ErrorEvent event) {
 				classImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
-				
+
 			}
 		});
 	}

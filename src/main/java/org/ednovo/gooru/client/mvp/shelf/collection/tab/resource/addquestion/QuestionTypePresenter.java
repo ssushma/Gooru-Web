@@ -3,8 +3,13 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -13,12 +18,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -33,25 +33,25 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 
 	private ImageUploadPresenter imageUploadPresenter;
 	private IsAddResourceView isAddResourceView;
-	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
+	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback;
 	@Inject
 	private ResourceServiceAsync resourceService;
-	
+
 	private SimpleAsyncCallback<CollectionItemDo> v2UpdateQuestionResourceAsyncCallback;
 	private SimpleAsyncCallback<CollectionItemDo> addQuestionResourceAsyncCallback;
-	
+
 	CollectionDo collectionDo;
-	
+
     private static final String USER_META_ACTIVE_FLAG = "0";
-   	
+
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
-	
+
 	private boolean isQuestionResource = false;
 	private boolean isUserResource = false;
-	
+
 	AddStandardsPresenter addStandardsPresenter = null;
 	/**
 	 * Class Constructor
@@ -69,7 +69,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	@Override
 	public void onBind() {
 		super.onBind();
-		
+
 		setAddQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
             @Override
             public void onSuccess(CollectionItemDo result) {
@@ -94,7 +94,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
             }
 		});
 	}
-	
+
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
@@ -102,7 +102,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-	
+
 	public SimpleAsyncCallback<Void> getRemoveQuestionImageAsyncCallback() {
 		return removeQuestionImageAsyncCallback;
 	}
@@ -111,15 +111,15 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 			SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback) {
 		this.removeQuestionImageAsyncCallback = removeQuestionImageAsyncCallback;
 	}
-	
-	
+
+
 	public void ImageUpload(ImageUploadPresenter imageUploadPresenter,IsAddResourceView view,CollectionDo collectionDo){
 		this.imageUploadPresenter=imageUploadPresenter;
 		this.isAddResourceView =view;
 		this.collectionDo=collectionDo;
 	}
-	
-	
+
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -128,7 +128,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 
 	@Override
 	public void setResourceImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage) {
-		getView().setImageUrl(fileName,fileNameWithoutRepository,isQuestionImage,isUserOwnResourceImage);	
+		getView().setImageUrl(fileName,fileNameWithoutRepository,isQuestionImage,isUserOwnResourceImage);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 
 	@Override
 	public void questionImageUpload(String collectionItemId) {
-		
+
 			addToPopupSlot(imageUploadPresenter);
 			imageUploadPresenter.setCollectionImage(false);
 			imageUploadPresenter.setUpdateQuestionImage(true);
@@ -160,7 +160,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
-	
+
 	@Override
 	public void answerImageUpload() {
 		addToPopupSlot(imageUploadPresenter);
@@ -184,7 +184,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 					}
 					public void checkStandarsList(List<String> standarsPreferencesList) {
-						
+
 					if(standarsPreferencesList!=null){
 							if(standarsPreferencesList.contains("CCSS")){
 								isCCSSAvailable = true;
@@ -214,7 +214,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
 								}
 					}
-						
+
 					}
 
 				});
@@ -222,7 +222,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		
+
 		List<Map<String,String>> selectedStandList=addStandardsPresenter.getStandardListArray();
 		if(selectedStandList.size()!=0){
 			for(int i=0;i<selectedStandList.size();i++){
@@ -251,11 +251,11 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	public void answerImageUpload(String collectionItemId) {
 		throw new RuntimeException("Not implemented");
 	}
-	
+
 	private SimpleAsyncCallback<CollectionItemDo> getV2UpdateQuestionResourceAsyncCallback() {
 		return v2UpdateQuestionResourceAsyncCallback;
 	}
-	
+
 	public void setV2UpdateQuestionResourceAsyncCallback(
 			SimpleAsyncCallback<CollectionItemDo> v2UpdateQuestionResourceAsyncCallback) {
 		this.v2UpdateQuestionResourceAsyncCallback = v2UpdateQuestionResourceAsyncCallback;
@@ -270,7 +270,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 		this.addQuestionResourceAsyncCallback = addQuestionResourceAsyncCallback;
 	}
 
-	
+
 	@Override
 	public void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,	String thumbnailUrl) {
 		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
@@ -278,7 +278,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 
 	@Override
 	public void addHSQuestionResource(String mediaFileName,CollectionQuestionItemDo collectionQuestionItemDo) {
-		
+
 		getResourceService().addQuestionResource(collectionDo.getGooruOid(), mediaFileName, collectionQuestionItemDo, getAddQuestionResourceAsyncCallback());
 
 	}

@@ -1,8 +1,8 @@
 package org.ednovo.gooru.client.mvp.community;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 
