@@ -848,6 +848,55 @@
 	content: "\2717";
 	color: #FBB03B;
 }
+.answer-radio-normal-icon,.answer-radio-selected-icon,.answer-checkbox-normal-icon,.answer-checkbox-selected-icon,.answer-right-icon,.answer-wrong-icon{
+	background: url("${cdn.endpoint}/images/radio_checkbox_icons.png") -0px -0px no-repeat;
+}
+.answer-radio-normal-icon{
+	background-position: 0 0;
+	width: 19px;
+	height: 16px;
+	float: left;
+	margin-right: 5px;
+	margin-top: 1px;
+}
+.answer-radio-normal-icon:hover{
+	background-position: 0 -17px;
+	width: 19px;
+	height: 16px;
+	float: left;
+		margin-right: 5px;
+	margin-top: 1px;
+}
+.answer-radio-selected-icon{
+	background-position: 0 -33px;
+	width: 19px;
+	height: 16px;
+	float: left;
+	margin-right: 5px;
+	margin-top: 1px;
+}
+.answer-radio-selected-icon:hover{
+	background-position: 0 -51px;
+	width: 19px;
+	height: 16px;
+	float: left;
+	margin-right: 5px;
+	margin-top: 1px;
+}
+.answer-right-icon{
+	background-position: -52px -1px;
+	width: 18px;
+	height: 19px;
+	float: left;
+	margin-left: -22px;
+}
+.answer-wrong-icon{
+	background-position: -53px -28px;
+	width: 14px;
+	height: 19px;
+	float: left;
+	margin-left: -22px;
+}
 
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
