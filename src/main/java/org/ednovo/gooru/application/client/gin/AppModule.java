@@ -136,6 +136,9 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.IsMyCollectionsListView;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListView;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.IsMyCollectionsRightClusterView;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
@@ -614,5 +617,6 @@ public class AppModule extends AppPresenterModule {
 
 		//My Collections New Presenter widgets
 		bindPresenterWidget(MyCollectionsListPresenter.class,IsMyCollectionsListView.class,MyCollectionsListView.class);
+		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 	}
 }
