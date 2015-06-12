@@ -34,7 +34,6 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -55,7 +54,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
@@ -320,6 +318,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	@Override
 	public void setListPresenterBasedOnType(String type) {
+		clearSlot(RIGHT_SLOT);
 		myCollectionsListPresenter.setData(type);
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}

@@ -14,7 +14,7 @@
 							<div class="col-md-10 col-xs-10 col-sm-10">
 								<!-- Split button -->
 								<div class="btn-group btn-block">
-									<button type="button" class="btn btn-default btn-left">My Courses</button>
+									<g:Button ui:field="btnSelectedText" styleName="btn btn-default btn-left">My Courses</g:Button>
 									<button type="button" class="btn btn-default btn-right dropdown-toggle"
 										data-toggle="dropdown" aria-expanded="false">
 										<span class="caret"></span>
@@ -22,12 +22,14 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li>
-											<a href="#">My Folders</a>
+											<g:Anchor ui:field="lnkMyCourses" text="My Courses"/>
 										</li>
 										<li>
-											<a href="#">My Collections</a>
+											<g:Anchor ui:field="lnkMyFolders" text="My Folders"/>
 										</li>
-
+										<li>
+											<g:Anchor ui:field="lnkMyCollections" text="My Collections"/>
+										</li>
 									</ul>
 								</div>
 							</div>

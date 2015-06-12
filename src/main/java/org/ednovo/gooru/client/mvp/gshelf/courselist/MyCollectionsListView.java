@@ -53,7 +53,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	
 	String type;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder";
 
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -80,11 +80,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		this.type=type;
 		if(COURSE.equalsIgnoreCase(type)){
 			h2Title.setText(i18n.GL1180());
-		}else if(UNIT.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL3279());
-		}else if(LESSON.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL3280());
+		}else if(FOLDER.equalsIgnoreCase(type)){
+			h2Title.setText(i18n.GL0994());
+		}else{
+			h2Title.setVisible(false);
 		}
+		pnlCourseList.clear();
 		for (int i = 0; i <10; i++) {
 			final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type) {
 				@Override
