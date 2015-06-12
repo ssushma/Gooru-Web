@@ -32,9 +32,4 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  */
 public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
 	public void setData(String type);
-public interface IsCourseListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
-
-
-public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
-	public void setData(String type);
 }
