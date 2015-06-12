@@ -133,6 +133,9 @@ import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter.IsShelfMainProxy;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoView;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.IsCourseInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.IsMyCollectionsListView;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListView;
@@ -614,5 +617,7 @@ public class AppModule extends AppPresenterModule {
 
 		//My Collections New Presenter widgets
 		bindPresenterWidget(MyCollectionsListPresenter.class,IsMyCollectionsListView.class,MyCollectionsListView.class);
+		
+		bindPresenterWidget(CourseInfoPresenter.class,IsCourseInfoView.class,CourseInfoView.class);
 	}
 }
