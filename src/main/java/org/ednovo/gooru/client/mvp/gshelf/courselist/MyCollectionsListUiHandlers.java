@@ -31,7 +31,5 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  *
  */
 public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
-	
 	public void setData(String type);
-
 }

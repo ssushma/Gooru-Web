@@ -85,27 +85,22 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private ResourceServiceAsync resourceService;
 
 	private boolean clrPanel=false;
-
-	private String version = null;
 	
-	public static final  Object COURSE_LIST_SLOT = new Object();
+	public static final  Object RIGHT_SLOT = new Object();
 	
 	private MyCollectionsListPresenter myCollectionsListPresenter;
-	
 	
 	boolean isApiCalled=false;
 	
     private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	
-	private String parentId, id=null;
-	
 	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback;
 	
 	SignUpPresenter signUpViewPresenter = null;
 	
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
 	private static final String CALLBACK = "callback";
+	
+	String parentId;
 	
 	private List<FolderDo> searchResult = new ArrayList<FolderDo>();
 	
@@ -195,7 +190,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		super.onReveal();
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
 		myCollectionsListPresenter.setData("Course");
-		setInSlot(COURSE_LIST_SLOT, myCollectionsListPresenter,false);	
+		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 	
 	@Override
@@ -204,7 +199,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		myCollectionsListPresenter.setData("Course");
-		setInSlot(COURSE_LIST_SLOT, myCollectionsListPresenter,false);	
+		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 	
 	public ShelfServiceAsync getShelfService() {
@@ -250,18 +245,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void updateResourceCount(int resourceCount) {
 		//getView().updateResoureCount(resourceCount);
 		
-	}
-	private void setFolderUrlParams() {
-		O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
-		O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
-		O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-		if(O3_LEVEL_VALUE!=null){
-			parentId=O3_LEVEL_VALUE;
-		}else if(O2_LEVEL_VALUE!=null){
-			parentId=O2_LEVEL_VALUE;
-		}else if(O1_LEVEL_VALUE!=null){
-			parentId=O1_LEVEL_VALUE;
-		}
 	}
 	
 	public void invokeErrorPopup(){
@@ -341,7 +324,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	@Override
 	public void setListPresenterBasedOnType(String type) {
-		// TODO Auto-generated method stub
-		
+		myCollectionsListPresenter.setData(type);
+		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 }

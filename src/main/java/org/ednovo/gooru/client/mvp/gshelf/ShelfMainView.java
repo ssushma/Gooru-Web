@@ -217,7 +217,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void setInSlot(Object slot, Widget content) {
 		pnlSlot.clear();
 		if (content != null) {
-			 if(slot==ShelfMainPresenter.COURSE_LIST_SLOT){
+			 if(slot==ShelfMainPresenter.RIGHT_SLOT){
 				 pnlSlot.add(content);
 			 }else{
 				 
