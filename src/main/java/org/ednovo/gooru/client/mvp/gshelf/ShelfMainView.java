@@ -174,7 +174,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}else if(selectedIndex==1){
 				getUiHandlers().setListPresenterBasedOnType("Folder");
 			}else if(selectedIndex==2){
-				
+				getUiHandlers().setListPresenterBasedOnType("Collection");
 			}
 		}
 	}

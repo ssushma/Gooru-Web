@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -53,13 +54,23 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	
 	String type;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
 
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		courseListContainer.getElement().setId("gShelfCousesList");
+		setIds();
 	}
-
+	/**
+	 * This method is used to set id's
+	 */
+	public void setIds(){
+		courseListContainer.getElement().setId("gShelfCousesList");
+		h2Title.getElement().setId("h2Title");
+		pnlCourseList.getElement().setId("pnlCourseList");
+	}
+	/**
+	 * This method is used to reset the widget positions with default text
+	 */
 	private void resetWidgetPositions(){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
@@ -74,7 +85,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}
 		}
 	}
-
+	/**
+	 * This method is used to set data for fields
+	 */
 	@Override
 	public void setData(String type) {
 		this.type=type;
@@ -82,6 +95,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			h2Title.setText(i18n.GL1180());
 		}else if(FOLDER.equalsIgnoreCase(type)){
 			h2Title.setText(i18n.GL0994());
+		}else if(COLLECTION.equalsIgnoreCase(type)){
+			h2Title.setText(i18n.GL3282());
 		}else{
 			h2Title.setVisible(false);
 		}
@@ -92,6 +107,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
 					int movingIndex= Integer.parseInt(movingPosition);
 					if(pnlCourseList.getWidgetCount()>=movingIndex){
+						//Based on the position it will insert the widget in the vertical panel
 						if(!isDownArrow){
 							movingIndex= (movingIndex-1);
 							int currentIndex= Integer.parseInt(currentWidgetPosition);
