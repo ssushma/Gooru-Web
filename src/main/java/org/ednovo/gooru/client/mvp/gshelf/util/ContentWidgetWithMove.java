@@ -54,7 +54,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder";
 	
 	String type;
 	
@@ -73,6 +73,10 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
 			h3CourseTitle.setText(i18n.GL0910()+" "+(index+1));
+		}else if(FOLDER.equalsIgnoreCase(type)){
+			spnUnitsCount.setVisible(false);
+			spnLessonsCount.setVisible(false);
+			h3CourseTitle.setText(i18n.GL1501()+" "+(index+1));
 		}
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
 	}

@@ -34,33 +34,24 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
-import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
@@ -88,7 +79,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	public static final  Object RIGHT_SLOT = new Object();
 	
-	private MyCollectionsListPresenter myCollectionsListPresenter;
+	MyCollectionsListPresenter myCollectionsListPresenter;
+	
+	SignUpPresenter signUpViewPresenter;
+	
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
 	boolean isApiCalled=false;
 	
@@ -96,7 +91,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback;
 	
-	SignUpPresenter signUpViewPresenter = null;
 	
 	private static final String CALLBACK = "callback";
 	
@@ -114,10 +108,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	/**
 	 * class constructor to set all class of instance
 	 * 
-	 * @param imageUploadPresenter
-	 *            instance of {@link ImageUploadPresenter}
-	 * @param shelfTabPresenter
-	 *            instance of {@link ShelfListPresenter}
+	 * @param myCollectionsListPresenter
+	 *            instance of {@link MyCollectionsListPresenter}
+	 * @param signUpPresenter
+	 *            instance of {@link SignUpPresenter}
 	 * @param collectionResourceTabPresenter
 	 *            instance of {@link CollectionResourceTabPresenter}
 	 * @param collectionInfoTabPresenter
@@ -130,12 +124,14 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,ImageUploadPresenter imageUploadPresenter, ShelfListPresenter shelfTabPresenter, CollectionResourceTabPresenter collectionResourceTabPresenter, CollectionInfoTabPresenter collectionInfoTabPresenter, CollectionAssignTabPresenter collectionAssignTabPresenter,CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter, FolderItemTabPresenter folderItemTabPresenter, MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
+	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
+		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+		
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
 		Document doc = Document.get();
@@ -216,42 +212,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		return PlaceTokens.SHELF;
 	}
 
-	public void increaseGlassHeight(Element glass){
-	      Style style = glass.getStyle();
-	      int winWidth = Window.getClientWidth();
-	      int winHeight = Window.getClientHeight();
-	
-	      // Hide the glass while checking the document size. Otherwise it would
-	      // interfere with the measurement.
-	      style.setDisplay(Display.NONE);
-	      style.setWidth(0, Unit.PX);
-	      style.setHeight(0, Unit.PX);
-	
-	      int width = Document.get().getScrollWidth();
-	      int height = Document.get().getScrollHeight();
-	
-	      // Set the glass size to the larger of the window's client size or the
-	      // document's scroll size.
-	      style.setWidth(Math.max(width, winWidth), Unit.PX);
-	      style.setHeight(Math.max(height, winHeight), Unit.PX);
-	
-	      // The size is set. Show the glass again.
-	      style.setDisplay(Display.BLOCK);
-	}
-	
 	@Override
 	public void updateResourceCount(int resourceCount) {
 		//getView().updateResoureCount(resourceCount);
 		
 	}
 	
-	public void invokeErrorPopup(){
-		/*if (errorPopup == null){
-			errorPopup = new ErrorPopup(i18n.GL0340());
-			errorPopup.show();
-			errorPopup.center();
-		}*/
-	}
 	public void getUserSheldId(){
 		if(!AppClientFactory.isAnonymous()){
 			String userUid=AppClientFactory.getLoggedInUser().getGooruUId();
@@ -320,6 +286,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	@Override
 	public void setListPresenterBasedOnType(String type) {
+		clearSlot(RIGHT_SLOT);
 		myCollectionsListPresenter.setData(type);
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}

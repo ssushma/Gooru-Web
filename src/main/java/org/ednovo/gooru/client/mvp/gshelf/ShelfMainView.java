@@ -45,12 +45,16 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -76,11 +80,13 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> implements IsShelfMainView {
 
-	@UiField HTMLPanel floderTreeContainer;
-
-	@UiField HTMLPanel gShelfMainContainer,pnlSlot;
+	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot;
 	
 	@UiField HTMLEventPanel organizeRootPnl;
+	
+	@UiField Button btnSelectedText;
+	
+	@UiField Anchor lnkMyCourses,lnkMyFolders,lnkMyCollections;
 	
 	private static final String O1_LEVEL = "o1";
 	
@@ -91,6 +97,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private static final String ID = "id";
 
 	private static final String FOLDER = "folder";
+	
 	private static final String TYPE = "type";
 	
 	private static final String SCOLLECTION = "scollection";
@@ -145,13 +152,42 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		setWidget(uiBinder.createAndBindUi(this));
 		setIdForFields();
 		setTreeStucture();
+		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
+		lnkMyFolders.addClickHandler(new DropDownClickEvent(1));
+		lnkMyCollections.addClickHandler(new DropDownClickEvent(2));
 	}
-
+	
+	/**
+	 * This inner class will handle the click event on the drop down box
+	 */
+	class DropDownClickEvent implements ClickHandler{
+		int selectedIndex;
+		DropDownClickEvent(int selectedIndex){
+			this.selectedIndex=selectedIndex;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Anchor selected=(Anchor) event.getSource();
+			btnSelectedText.setText(selected.getText());
+			if(selectedIndex==0){
+				getUiHandlers().setListPresenterBasedOnType("Course");
+			}else if(selectedIndex==1){
+				getUiHandlers().setListPresenterBasedOnType("Folder");
+			}else if(selectedIndex==2){
+				
+			}
+		}
+	}
+	
 	/**
 	 * To set id's for Ui fields
 	 */
 	private void setIdForFields() {
 		gShelfMainContainer.getElement().setId("gShelfMainContainer");
+		btnSelectedText.getElement().setId("btnSelectedText");
+		lnkMyCourses.getElement().setId("lnkMyCourses");
+		lnkMyFolders.getElement().setId("lnkMyFolders");
+		lnkMyCollections.getElement().setId("lnkMyCollections");
 	}
 	private void setTreeStucture() {
 		floderTreeContainer.clear();
