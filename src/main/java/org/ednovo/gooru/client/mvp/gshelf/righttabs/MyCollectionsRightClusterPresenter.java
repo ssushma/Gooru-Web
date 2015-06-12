@@ -37,9 +37,4 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-
-	@Override
-	public void setData(String type) {
-		getView().setData(type);
-	}
 }
