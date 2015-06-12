@@ -1,169 +1,17 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
-<g:HTMLPanel styleName="floderRightContainer">
+	<g:HTMLPanel ui:field="courseListContainer">
 	<div class="courseHeader">
-		<div class="breadcrumbMain">
-			<a class="active" href="#">
-				<span class="courseFolderCloseIcon"></span>
-				Ac Num
-			</a>
-			<a class="active" href="#">
-				<span class="unitFolderCloseIcon"></span>
-				Untitled Unit
-			</a>
-		</div>
+		<panel:H2Panel ui:field="h2Title"/>
 	</div>
-	<div class="folderBlockSitemap">
-		<a class="active" href="">Info</a>
-		<a href="">Content (Lessons)</a>
-		<a href="">Share</a>
+	<div class="coursesList">
+		<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList"/>
 	</div>
-	<div id="info">
-		<div class="courseNameBlock">
-			<p>Course Name</p>
-			<p>
-				<input type="text" value="AcNum" class="form-control" />
-			</p>
-		</div>
-		<div class="questionsBlock">
-			<div class="col-md-6 col-sm-6">
-				<p>Big Idea</p>
-				<p>
-					<textarea class="form-control" rows="3"></textarea>
-				</p>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<p>Essential Questions</p>
-				<p>
-					<textarea class="form-control" rows="3"></textarea>
-				</p>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-		<div class="unitCoverBlock">
-			<div class="unitCoverHeader">
-				<div class="col-md-6 col-sm-6 col-xs-6">
-					<p>Whjat will this unit cover?</p>
-				</div>
-				<div class="col-md-6 col-sm-6 col-xs-6">
-					<div class="dropDownRight">
-						<div class="btn-group">
-							<button class="btn btn-primary" type="button">My Courses   </button>
-							<button aria-expanded="false" data-toggle="dropdown"
-								class="btn btn-primary dropdown-toggle" type="button">
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<ul role="menu" class="dropdown-menu pull-right">
-								<li>
-									<a href="#">My Folders</a>
-								</li>
-								<li>
-									<a href="#">My Collections</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<div class="unitCoverBody">
-				<div class="unitCoverList no-gutter">
-					<div class="col-md-3 col-sm-3">
-						<div class="unitCoverListLeft">
-							<ul>
-								<li>
-									<a href="">Kindergarden Math</a>
-								</li>
-								<li>
-									<a href="">Math 1</a>
-								</li>
-								<li>
-									<a href="">Math 2</a>
-								</li>
-								<li>
-									<a href="">Math 3</a>
-								</li>
-								<li>
-									<a href="">Math 4</a>
-								</li>
-								<li>
-									<a href="">Math 5</a>
-								</li>
-								<li>
-									<a href="">Math 6</a>
-								</li>
-								<li>
-									<a href="">Math 7</a>
-								</li>
-								<li>
-									<a href="">Math 8</a>
-								</li>
-								<li>
-									<a href="">Algebra 1</a>
-								</li>
-								<li>
-									<a href="">Algebra 2</a>
-								</li>
-								<li>
-									<a href="">Geometry</a>
-								</li>
-
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-5 col-sm-5">
-						<div class="unitCoverListMiddle">
-							<ul>
-								<li>
-									<a href="">Ratios and Proportional Relationships</a>
-								</li>
-								<li>
-									<a href="">The Number System</a>
-								</li>
-								<li>
-									<a href="">Expressions and Equations</a>
-								</li>
-								<li>
-									<a href="">Statistics and Probability</a>
-								</li>
-
-							</ul>
-
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-4">
-						<div class="unitCoverListRight">
-							<ul>
-								<li>
-									<a href="">The Number System Covers:</a>
-								</li>
-								<li>
-									<a href="">Apply and extend previous understandings of
-										multiplication and division to devide fractions by fractions.</a>
-								</li>
-								<li>
-									<a href="">Compute fluently with multi-digit numbers and find
-										common factors and multiples.</a>
-								</li>
-								<li>
-									<a href="">Apply and extend previous understandings of numbers
-										to the system of national numbers</a>
-								</li>
-
-							</ul>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>
-		<div class="stepsButtonGroup">
-			<button type="submit" class="secondary">Save &amp; View Unit</button>
-			<button type="submit" class="primary">Next: Create a Lesson</button>
-		</div>
-		<div class="clearfix"></div>
+	<div class="addCourse">
+		<input type="file" name="fileField" id="fileField"/>
+			<span>+</span>
+			Add new course
 	</div>
-</g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder> 
