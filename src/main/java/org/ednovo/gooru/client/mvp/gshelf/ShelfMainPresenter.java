@@ -28,11 +28,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
@@ -49,11 +54,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -87,27 +87,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private boolean clrPanel=false;
 
 	private String version = null;
-	private CollectionResourceTabPresenter collectionResourceTabPresenter;
-
-	private CollectionInfoTabPresenter collectionInfoTabPresenter;
-	
-	private CollectionAssignTabPresenter collectionAssignTabPresenter;
-	
-	private CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter;
-
-	private FolderItemTabPresenter folderItemTabPresenter;
-	
-
-	private SimpleAsyncCallback<Void> deleteCollectionAsyncCallback;
-
-	private ImageUploadPresenter imageUploadPresenter;
-
-
-	private String folderParentName = "";
-	
-	private boolean isPageRefreshed = true;
-	
-	
 	
 	public static final  Object COURSE_LIST_SLOT = new Object();
 	
@@ -166,9 +145,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
 		Document doc = Document.get();
 		doc.getBody().setClassName(""); 
-		
-		
-		
 		addRegisteredHandler(SetFolderParentNameEvent.TYPE, this);
 		addRegisteredHandler(SetFolderMetaDataEvent.TYPE, this);
 	}
@@ -207,7 +183,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
-		
 	}
 	
 	@Override
@@ -219,6 +194,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
+		myCollectionsListPresenter.setData("Course");
+		setInSlot(COURSE_LIST_SLOT, myCollectionsListPresenter,false);	
 	}
 	
 	@Override
@@ -241,19 +218,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-
-	
-
-
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.SHELF;
 	}
 
 	public void increaseGlassHeight(Element glass){
-	        
-	         Style style = glass.getStyle();
-	
+	      Style style = glass.getStyle();
 	      int winWidth = Window.getClientWidth();
 	      int winHeight = Window.getClientHeight();
 	
@@ -280,8 +251,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		//getView().updateResoureCount(resourceCount);
 		
 	}
-	
-
 	private void setFolderUrlParams() {
 		O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 		O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
@@ -302,8 +271,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			errorPopup.center();
 		}*/
 	}
-
-	
 	public void getUserSheldId(){
 		if(!AppClientFactory.isAnonymous()){
 			String userUid=AppClientFactory.getLoggedInUser().getGooruUId();
@@ -325,7 +292,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		clrPanel=clearShelfPanel;
 		if (userCollectionAsyncCallback == null) {
 			userCollectionAsyncCallback = new SimpleAsyncCallback<FolderListDo>() {
-
 				@Override
 				public void onSuccess(FolderListDo result) {
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
@@ -360,7 +326,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private void setPaginatedChildFolders(String folderId, boolean isDataCalled) {
 		getChildFolderItems(folderId, isDataCalled);
 	}
-	
+
 	@Override
 	public void setFolderParentName(String folderName) {
 		// TODO Auto-generated method stub
@@ -372,5 +338,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+	@Override
+	public void setListPresenterBasedOnType(String type) {
+		// TODO Auto-generated method stub
+		
+	}
 }

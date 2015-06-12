@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEventHandler;
@@ -60,5 +60,9 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	
 	void getChildFolderItems(String folderId, boolean isDataCalled);   
 	
-
+	/**
+	 * This is used to display all the courses,Units, Lessons and collections list with move functionality.
+	 * @param type
+	 */
+	void setListPresenterBasedOnType(String type);
 }
