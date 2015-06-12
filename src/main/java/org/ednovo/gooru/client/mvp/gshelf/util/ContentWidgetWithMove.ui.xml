@@ -14,6 +14,8 @@
 				<g:InlineLabel ui:field="spnLessonsCount"/>
 				<g:InlineLabel ui:field="spnCollectionsCount"/>
 				<g:InlineLabel ui:field="spnAssessmentsCount"/>
+				<g:InlineLabel ui:field="spnResourcesCount"/>
+				<g:InlineLabel ui:field="spnQuestionsCount"/>
 			</div>
 		</div>
 		<div class="tableColumn">
