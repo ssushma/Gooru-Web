@@ -22,24 +22,56 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
+package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 /**
  * @author Search Team
  *
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
+public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> implements IsCourseInfoView {
 
-	void getChildFolderItems(List<FolderDo> folderListDo);
+	private static GooruGradesViewUiBinder uiBinder = GWT.create(GooruGradesViewUiBinder.class);
+	
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiTemplate("CourseInfoView.ui.xml")
+	interface GooruGradesViewUiBinder extends UiBinder<Widget, CourseInfoView> {
+	}	
 
-	void setChildPageNumber(Integer pageNumber);
+	@UiField HTMLPanel courseInfo;
+	/**
+	 * Class constructor 
+	 * @param eventBus {@link EventBus}
+	 */
+	@Inject
+	public CourseInfoView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		courseInfo.getElement().setId("gShelfCourseInfo");
+		showInfoDetailsBasedOnCourseId();
+	}
+	
 
-	int getChildPageNumber();
+	
+	/**
+	 * Pre-Selected grades showing in search page
+	 */
+	@Override
+	public void showInfoDetailsBasedOnCourseId() {
+		
+	}
+	
 
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
 }

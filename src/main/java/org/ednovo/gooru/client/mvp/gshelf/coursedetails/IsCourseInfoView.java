@@ -22,24 +22,23 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
-
-import java.util.List;
+package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
  *
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
+public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandlers> {
+	
+	/**
+	 * Update the grade style.
+	 * @param filterName {@link String}
+	 * @param addOrRemove {@link String}
+	 */
+	
+	void showInfoDetailsBasedOnCourseId();
 
-	void getChildFolderItems(List<FolderDo> folderListDo);
 
-	void setChildPageNumber(Integer pageNumber);
-
-	int getChildPageNumber();
-
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
 }

@@ -134,7 +134,7 @@ button.btn-disabled{
 	font-size:12px;
 	
 }
-#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li a:hover, .tagCoursePanel .tagCoursePanelBody ul li a:focus{
+#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li a:hover, #gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li a:focus{
 	background:#87badd;
 	color:#333333;
 	text-decoration:none;
@@ -564,13 +564,453 @@ button.btn-disabled{
 }
 /* === For Course list Css end ================================== */
 
+/* === For Course info Css start ================================== */
+#gShelfCourseInfo .floderLeftContainer {
+	background: #ffffff;
+	margin-right: 15px;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+	min-height: 500px;
+	margin-bottom: -9999px;
+	padding-bottom: 9999px;
+}
 
+#gShelfCourseInfo .floderRightContainer {
+	background: #ffffff;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
 
+#gShelfCourseInfo .equifier {
+	overflow: hidden;
+}
 
+#gShelfCourseInfo .folderBlock {
+	background: #f0f0f0;
+}
 
+#gShelfCourseInfo .folderBlock .folderBlockHeader {
+	padding: 12px 0;
+}
 
+#gShelfCourseInfo .folderBlock  .folderMainHeading {
+	padding: 5px 0;
+	font-size: 17px;
+	color: #515151;
+}
 
+#gShelfCourseInfo .folderBlock  .folderMainHeading span.folderIcon {
+	background: url(../images/gooru-sprite.png) no-repeat -226px -372px;
+	width: 40px;
+	height: 25px;
+	display: inline-block;
+	vertical-align: middle;
+}
 
+#gShelfCourseInfo .floderLeftContainer .createMenu {
+	display: inline-block;
+	margin: 0;
+	text-align: right;
+	width: 100%;
+	border-bottom: 1px solid #dddddd;
+	vertical-align: bottom;
+}
 
+#gShelfCourseInfo .floderLeftContainer .createMenu .plus {
+	display: block;
+	background: #4d99cd;
+	font-size: 25px;
+	color: #ffffff;
+	text-align: center;
+}
 
+#gShelfCourseInfo .floderLeftContainer .createMenu .btn,.floderLeftContainer .createMenu .plus
+	{
+	height: 40px;
+}
 
+#gShelfCourseInfo .floderLeftContainer .createMenu .btn {
+	font-size: 13px;
+}
+
+#gShelfCourseInfo .floderLeftContainer .folderLeftMainHeader {
+	color: #515151;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0;
+	padding: 12px 12px;
+	background: #f0f0f0;
+}
+
+#gShelfCourseInfo .courseNameBlock {
+	position: relative;
+	padding: 15px 15px 20px 15px;
+}
+
+#gShelfCourseInfo .courseNameBlock p {
+	margin-bottom: 8px;
+	color: #515151;
+}
+
+#gShelfCourseInfo .courseNameBlock .form-control {
+	border: 1px solid #87badd;
+}
+
+#gShelfCourseInfo .tagCoursePanel {
+	padding: 15px 15px;
+}
+
+#gShelfCourseInfo .tagCoursePanel p {
+	color: #515151;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader {
+	text-align: center;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader button {
+	width: 100%;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+button.btn-disabled {
+	background-color: #dddddd;
+	color: #ffffff;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody {
+	border: 1px solid #dddddd;
+	margin-top: 0;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupBlock
+	{
+	overflow: hidden;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupLeft {
+	border-right: 1px solid #dddddd;
+	margin-bottom: -500px;
+	padding-bottom: 500px;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul {
+	margin: 0 0;
+	padding: 0 0;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li {
+	margin: 0 0;
+	padding: 0 0;
+	list-style: none;
+	border-bottom: 1px solid #ffffff;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li a {
+	display: block;
+	margin: 0 0;
+	color: #515151;
+	padding: 8px 15px;
+	font-size: 12px;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li a:hover,#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li a:focus
+	{
+	background: #87badd;
+	color: #333333;
+	text-decoration: none;
+	opacity: 1;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li.active a {
+	background: #87badd;
+	color: #333333;
+	text-decoration: none;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter {
+	margin: 15px 0;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags {
+	margin: 0 0;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li a
+	{
+	color: #ffffff;
+	font-size: 12px;
+	padding: 0 0 0 22px;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li
+	{
+	margin: 0 15px 0 0;
+}
+
+#gShelfCourseInfo .tagCourseOptions a.list-group-item {
+	padding: 6px 15px;
+}
+
+#gShelfCourseInfo .tagCourseOptions a.list-group-item:hover {
+	opacity: 1;
+}
+
+#gShelfCourseInfo .tagCourseOptions .list-group-item.active,#gShelfCourseInfo .tagCourseOptions .list-group-item.active:focus,#gShelfCourseInfo .tagCourseOptions .list-group-item.active:hover
+	{
+	background-color: #87badd;
+	border-color: #87badd;
+	color: #515151;
+	opacity: 1;
+	z-index: 2;
+}
+
+#gShelfCourseInfo .stepsButtonGroup {
+	text-align: center;
+	margin: 15px 15px;
+}
+
+#gShelfCourseInfo .createMenu {
+	margin-right: 15px;
+	margin-bottom: 8px;
+	margin-top: 6px;
+}
+
+#gShelfCourseInfo .createMenu .btn-left {
+	width: 84%;
+	text-align: left;
+}
+
+#gShelfCourseInfo .createMenu .btn-right {
+	width: 16%;
+}
+
+#gShelfCourseInfo .createMenu .btn-default {
+	border-color: transparent;
+}
+
+#gShelfCourseInfo .createMenu .btn-default.active,#gShelfCourseInfo .createMenu .btn-default.focus,#gShelfCourseInfo .createMenu .btn-default:active,#gShelfCourseInfo .createMenu .btn-default:focus,#gShelfCourseInfo .createMenu .btn-default:hover,#gShelfCourseInfo .createMenu .open>.dropdown-toggle.btn-default
+	{
+	background-color: #ffffff;
+	border-color: transparent;
+	color: #333;
+	box-shadow: none;
+}
+
+#gShelfCourseInfo .createMenu .open>.dropdown-menu {
+	border-radius: 0;
+	margin-top: -1px;
+	width: 100%;
+	padding: 0 0;
+}
+
+#gShelfCourseInfo .createMenu .open>.dropdown-menu a {
+	padding: 10px 20px;
+}
+
+#gShelfCourseInfo .createMenu .open>.dropdown-menu a {
+	font-size: 13px;
+	color: #515151;
+}
+
+#gShelfCourseInfo .createMenu .caret {
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px dashed;
+}
+
+#gShelfCourseInfo .folderLeftActionBtn {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+#gShelfCourseInfo .folderLeftActionBtn {
+	padding: 10px 15px;
+}
+
+#gShelfCourseInfo .folderListBlock  ul {
+	margin: 0 0;
+	padding: 0 0;
+}
+
+#gShelfCourseInfo .folderListBlock  ul li {
+	margin: 0 0;
+	padding: 0 0;
+	list-style: none;
+	border-bottom: 1px solid #ffffff;
+}
+
+#gShelfCourseInfo .folderListBlock  ul li a {
+	padding: 15px 15px 15px 15px;
+	background: #f0f0f0;
+	display: block;
+	color: #515151;
+	font-size: 13px;
+}
+
+#gShelfCourseInfo .folderListBlock ul li a:hover,.folderListBlock ul li a:focus
+	{
+	background: #ffffff;
+	color: #515151;
+	text-decoration: none;
+	opacity: 1;
+}
+
+#gShelfCourseInfo .folderListBlock ul li.active a {
+	background: #ffffff;
+	color: #515151;
+	text-decoration: none;
+}
+
+#gShelfCourseInfo .folderBlockSitemap {
+	background: #f6f6f6;
+}
+
+#gShelfCourseInfo .folderBlockSitemap {
+	background: #f6f6f6;
+}
+
+#gShelfCourseInfo .folderBlockSitemap a {
+	padding: 16px 25px;
+	display: inline-block;
+	color: #515151;
+	font-size: 13px;
+	transition: all 0.5s ease-in-out 0s;
+	-moz-trnsition: all 0.5s ease-in-out 0s;
+	-webkit-transition: all 0.5s ease-in-out 0s;
+	-o-transition: all 0.5s ease-in-out 0s;
+}
+
+#gShelfCourseInfo .folderBlockSitemap a:hover,#gShelfCourseInfo .folderBlockSitemap a:focus
+	{
+	background: #d8d8d8;
+	color: #333333;
+	text-decoration: none;
+}
+
+#gShelfCourseInfo .folderBlockSitemap a.active {
+	background: #d8d8d8;
+	color: #333333;
+	text-decoration: none;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader .btn {
+	padding: 12px 12px;
+	box-shadow: none;
+	border-radius: 0 0;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader .btn-default {
+	background-color: #efeeee;
+	color: #999999;
+	border: none;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader .btn-default.active
+	{
+	background-color: #d7e8f4;
+	color: #1076bb;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader {
+	border: 1px solid #dddddd;
+	border-bottom-width: 0;
+}
+
+#gShelfCourseInfo .courseFolderOpenIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -230px
+		-449px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#gShelfCourseInfo .unitFolderOpenIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -230px
+		-484px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#gShelfCourseInfo .courseFolderCloseIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -278px
+		-449px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#gShelfCourseInfo .unitFolderCloseIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -278px
+		-484px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+#gShelfCourseInfo .filterTags ul li {
+  background: #87badd none repeat scroll 0 0;
+  border-radius: 4px;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  list-style: outside none none;
+  margin: 0;
+  padding: 8px 10px;
+}
+
+@media(max-width:767px){
+	#gShelfCourseInfo .floderLeftContainer {
+		margin-right: 0;
+	}
+	
+	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader button {
+		margin-bottom: 2px;
+		width: 100%;
+	}
+	
+	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li
+		{
+		margin: 0 10px 10px 0;
+	}
+	
+	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupLeft {
+		border-right: none;
+		background: #f5f5f5;
+	}
+	
+	#gShelfCourseInfo .createMenu {
+		margin-right: 15px;
+		margin-left: 15px;
+	}
+	
+	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupRight
+	{
+		border-top: 1px solid #dddddd;
+		background: #ffffff;
+	}
+
+}
+@media(min-width:768px) and (max-width:991px){
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader button {
+	font-size: 13px;
+	font-weight: bold;
+	width: 100%;
+}
+
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li
+	{
+	margin: 0 10px 10px 0;
+}
+
+}
+@media ( min-width : 992px) and (max-width: 1199px) {
+}
+
+@media ( min-width : 1200px) {
+}
+
+/* === For Course info Css end ================================== */
