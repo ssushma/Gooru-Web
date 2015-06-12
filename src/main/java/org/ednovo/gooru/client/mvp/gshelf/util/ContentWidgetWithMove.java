@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.H3Panel;
 
@@ -33,6 +34,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,17 +47,40 @@ public abstract class ContentWidgetWithMove extends Composite {
 	interface ContentWidgetWithMoveUiBinder extends
 			UiBinder<Widget, ContentWidgetWithMove> {
 	}
-
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField Label lblTopArrow,lblDownArrow;
 	@UiField TextBox txtMoveTextBox;
 	@UiField H3Panel h3CourseTitle;
+	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount;
 	
-	public ContentWidgetWithMove(int index) {
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson";
+	
+	String type;
+	
+	public ContentWidgetWithMove(int index,String type) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.type=type;
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
-		h3CourseTitle.setText("Course "+(index+1));
+		setData();
+		if(COURSE.equalsIgnoreCase(type)){
+			h3CourseTitle.setText(i18n.GL0326()+" "+(index+1));
+		}else if(UNIT.equalsIgnoreCase(type)){
+			spnUnitsCount.setVisible(false);
+			h3CourseTitle.setText(i18n.GL3281()+" "+(index+1));
+		}else if(LESSON.equalsIgnoreCase(type)){
+			spnUnitsCount.setVisible(false);
+			spnLessonsCount.setVisible(false);
+			h3CourseTitle.setText(i18n.GL0910()+" "+(index+1));
+		}
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
+	}
+	public void setData(){
+		spnUnitsCount.setText(i18n.GL3279()+"( )");
+		spnLessonsCount.setText(i18n.GL3280()+"( )");
+		spnCollectionsCount.setText(i18n.GL1754()+"( )");
+		spnAssessmentsCount.setText(i18n.GL1325()+"( )");
 	}
 	class ArrowClickHandler implements ClickHandler{
 		boolean isDownArrow;
@@ -83,6 +108,5 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public TextBox getTextBox(){
 		return txtMoveTextBox;
 	}
-	
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow);
 }

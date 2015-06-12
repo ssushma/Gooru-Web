@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- *
+ * 
  *  http://www.goorulearning.org/
- *
+ * 
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- *
+ * 
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- *
+ * 
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,10 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf;
 
-import java.util.HashMap;
-
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEventHandler;
@@ -51,30 +48,21 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_COLLECTION_INFO_TAB = new Type<RevealContentHandler<?>>();
-
+	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_ASSIGN_INFO_TAB = new Type<RevealContentHandler<?>>();
-
+	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_COLLABORATOR_TAB = new Type<RevealContentHandler<?>>();
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
-
-	void deleteCollection(String collectionId);
-
-	void revealTab(Type<RevealContentHandler<?>> tabType, CollectionDo collectionDo);
-
-	void clearTabSlot();
-
-	void imageUpload();
-
-	void updateCollectionInfo(String collectionId, String title, String description);
-
-	void copyCollection(String collectionUid, boolean addToShelf);
-
-	void setFoldersSlot(String parentId);
-
-	void moveCollection(String gooruOid, String parentId, String folderName, HashMap<String, String> params);
-
+	
+	void getChildFolderItems(String folderId, boolean isDataCalled);   
+	
+	/**
+	 * This is used to display all the courses,Units, Lessons and collections list with move functionality.
+	 * @param type
+	 */
+	void setListPresenterBasedOnType(String type);
 }
