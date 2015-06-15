@@ -176,7 +176,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
 				}else if(isAnswerImage){
-					AppClientFactory.fireEvent(new AddAnswerImageEvent(filename,fileNameWithoutRepository,isAnswerImage));
+					AppClientFactory.fireEvent(new AddAnswerImageEvent(filename,fileNameWithoutRepository,isAnswerImage,false));
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
 				}
