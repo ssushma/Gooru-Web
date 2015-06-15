@@ -54,7 +54,9 @@ public abstract class CourseGradeWidget extends Composite {
 	
 	public CourseGradeWidget(final List<LibraryCodeDo> libraryCodeDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setData(libraryCodeDo);
+		if(libraryCodeDo!=null){
+			setData(libraryCodeDo);
+		}
 	}
 	public void setData(final List<LibraryCodeDo> libraryCodeDo){
 		ulGradePanel.clear();
