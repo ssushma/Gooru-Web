@@ -59,11 +59,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Inject
 	public CourseInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		courseInfo.getElement().setId("gShelfCourseInfo");
 		showInfoDetailsBasedOnCourseId();
 	}
-	
-
 	
 	/**
 	 * Pre-Selected grades showing in search page
@@ -72,6 +69,4 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public void showInfoDetailsBasedOnCourseId() {
 		
 	}
-	
-
 }

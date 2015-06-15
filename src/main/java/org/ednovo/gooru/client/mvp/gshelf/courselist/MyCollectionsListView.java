@@ -24,16 +24,18 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
-import java.util.Collections;
 import java.util.Iterator;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -53,6 +55,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField H2Panel h2Title;
 	
 	String type;
+	HTMLPanel slotPanel;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
 
@@ -89,7 +92,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type) {
+	public void setData(String type,HTMLPanel slotPanel) {
+		this.slotPanel=slotPanel;
 		this.type=type;
 		if(COURSE.equalsIgnoreCase(type)){
 			h2Title.setText(i18n.GL1180());
@@ -120,7 +124,23 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 					}
 				}
 			};
+			widgetMove.addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
 			pnlCourseList.add(widgetMove);
+		}
+	}
+	
+	class ClickOnTitleContainer implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			getUiHandlers().setListPresenterBasedOnType("");
+		}
+	}
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {	
+		if(slot==null){
+			slotPanel.clear();
+			slotPanel.add(content);
 		}
 	}
 }

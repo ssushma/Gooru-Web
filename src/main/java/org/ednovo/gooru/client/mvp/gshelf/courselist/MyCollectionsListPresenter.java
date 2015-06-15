@@ -23,23 +23,35 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsListView> implements MyCollectionsListUiHandlers{
+	
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
+	
 	/**
 	 * Constructor
 	 * @param eventBus
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsListPresenter(EventBus eventBus, IsMyCollectionsListView view) {
+	public MyCollectionsListPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter,EventBus eventBus, IsMyCollectionsListView view) {
 		super(eventBus, view);
+		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 		getView().setUiHandlers(this);
 	}
 
 	@Override
-	public void setData(String type) {
-		getView().setData(type);
+	public void setData(String type,HTMLPanel slotPanel) {
+		getView().setData(type,slotPanel);
+	}
+	
+	@Override
+	public void setListPresenterBasedOnType(String type) {
+		setInSlot(null, myCollectionsRightClusterPresenter);
 	}
 }
