@@ -328,6 +328,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer, Boolean>();
 			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 			int j=0;
+			
+			String answerText="";
+			
+			AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+			
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
 
@@ -338,10 +343,14 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					Draggable draggable=(Draggable)widget;
 					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
 					userAttemptedValueList.add("["+htAnswerOption.getAnswerText()+"]");
-					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+					answerText=answerText+"["+htAnswerOption.getAnswerText()+"]";
+					if(i<optionsContainer.getWidgetCount()-2){
+						answerText=answerText+",";
+					}
+					/*AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 					answerAttemptDo.setText(htAnswerOption.getAnswerText());
 					answerAttemptDo.setAnswerId(Integer.parseInt(el.getId()));
-					answerAttemptDo.setOrder(el.getId());
+					answerAttemptDo.setOrder(el.getId());*/
 					answerIds.add(Integer.parseInt(el.getId()));
 					if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
 
@@ -359,11 +368,17 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 
 					}
-					userAttemptedOptionsList.add(answerAttemptDo);
+					
 				}
 
 			}
-
+			
+			answerAttemptDo.setText("\""+answerText+"\"");
+			answerAttemptDo.setAnswerId(0);
+			answerAttemptDo.setOrder("0");
+			
+			userAttemptedOptionsList.add(answerAttemptDo);
+			
 			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
 				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
