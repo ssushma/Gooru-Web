@@ -2026,59 +2026,15 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@Override
 	public void editQuestion(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo=collectionItemDo;
+		if(collectionItemDo!=null){
 		isEditResource=true;
+		}
 		explanationContainer.setVisible(false);
     	depthOfKnowledgeContainer.setVisible(false);
     	hintsContainer.setVisible(false);
     	standardContainer.setVisible(false);
     	centuryContainer.setVisible(false);
 
-
-		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
-		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
-		hintsContainer.clear();
-		while (iterator.hasNext()) {
-			QuestionHintsDo hints = iterator.next();
-			int widgetCount=hintsContainer.getWidgetCount();
-	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
-	        addHintsTextArea(addHints);
-		}
-
-		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
-		Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator();
-
-
-		AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
-
-		String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
-
-		if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
-			int widgetcount=1;
-			while (it.hasNext()) {
-				addHotSpotQuestion.setAnswerFields(false);
-				QuestionAnswerDo answer = it.next();
-
-				final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
-
-				if(answer.isIsCorrect()){
-					addAnswerChoice.isOptionSelectedButton=true;
-					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
-				}else{
-					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
-				}
-
-
-				addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
-				widgetcount++;
-			}
-			addHotSpotQuestion.setAnswerChoices();
-		}else {
-			while (it.hasNext()) {
-				QuestionAnswerDo answer = it.next();
-				addHotSpotQuestion.setAnswerImageUrl(answer.getAnswerText(), null, true,answer.isIsCorrect());
-				
-			}
-		}
 
 	}
 
@@ -2144,6 +2100,54 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
 					}
 				}
+
+				TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
+				Iterator<QuestionHintsDo> iterator = hintsList.iterator();
+				hintsContainer.clear();
+				while (iterator.hasNext()) {
+					QuestionHintsDo hints = iterator.next();
+					int widgetCount=hintsContainer.getWidgetCount();
+			        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
+			        addHintsTextArea(addHints);
+				}
+
+				TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
+				Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator();
+
+
+				AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
+
+				String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
+
+				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
+					int widgetcount=1;
+					while (it.hasNext()) {
+						addHotSpotQuestion.setAnswerFields(false);
+						QuestionAnswerDo answer = it.next();
+
+						final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
+
+						if(answer.isIsCorrect()){
+							addAnswerChoice.isOptionSelectedButton=true;
+							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
+						}else{
+							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
+						}
+
+
+						addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
+						widgetcount++;
+					}
+					addHotSpotQuestion.setAnswerChoices();
+				}else {
+					addHotSpotQuestion.ansImageContainer.clear();
+					while (it.hasNext()) {
+						QuestionAnswerDo answer = it.next();
+						addHotSpotQuestion.setAnswerImageUrl(answer.getAnswerText(), null, true,answer.isIsCorrect());
+						
+					}
+				}
+
 
 
 			setDepthOfKnowledgeContainer();
