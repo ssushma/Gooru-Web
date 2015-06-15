@@ -23,18 +23,26 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
+	
+	public static final  Object INNER_SLOT = new Object();
+	
+	CourseInfoPresenter courseInfoPresenter;
 	/**
 	 * Constructor
 	 * @param eventBus
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CourseInfoPresenter courseInfoPresenter) {
 		super(eventBus, view);
+		this.courseInfoPresenter=courseInfoPresenter;
 		getView().setUiHandlers(this);
+		setInSlot(INNER_SLOT, courseInfoPresenter);
 	}
 }

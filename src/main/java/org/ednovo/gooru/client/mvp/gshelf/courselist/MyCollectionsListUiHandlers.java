@@ -26,10 +26,13 @@ package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 /**
  * @author Search Team
  *
  */
 public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
-	public void setData(String type);
+	public void setData(String type,HTMLPanel slotPanel);
+	public void setListPresenterBasedOnType(String type);
 }
