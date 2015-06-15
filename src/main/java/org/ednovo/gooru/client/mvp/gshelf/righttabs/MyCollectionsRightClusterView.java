@@ -25,11 +25,12 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollectionsRightClusterUiHandlers> implements IsMyCollectionsRightClusterView,ClientConstants  {
@@ -39,9 +40,20 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	interface MyCollectionsRightViewUiBinder extends UiBinder<Widget, MyCollectionsRightClusterView> {
 	}
 	
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
 	
 	public MyCollectionsRightClusterView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		mainPanel.getElement().setId("gShelfCourseInfo");
+	}
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		pnlSlotInnerContent.clear();
+		if(content!=null){
+			if(slot==MyCollectionsRightClusterPresenter.INNER_SLOT){
+				pnlSlotInnerContent.add(content);
+			 }
+		}
 	}
 }

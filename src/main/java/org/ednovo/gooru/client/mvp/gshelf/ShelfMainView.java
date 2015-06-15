@@ -597,4 +597,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	         }
 	      }
    	}
+   	@Override
+   	public HTMLPanel getSlot(){
+   		return pnlSlot;
+   	}
 }
