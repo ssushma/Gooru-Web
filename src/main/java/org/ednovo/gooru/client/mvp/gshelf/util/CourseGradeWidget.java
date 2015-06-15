@@ -65,6 +65,7 @@ public abstract class CourseGradeWidget extends Composite {
 				final String courseListValues=libraryCodeDo.get(j).getLabel();
 				final long codeId=libraryCodeDo.get(j).getCodeId();
 				final LiPanel panel=new LiPanel();
+				panel.setCodeId(codeId);
 				Anchor courseValues=new Anchor(courseListValues);
 				panel.add(courseValues);
 				panel.addClickHandler(new ClickHandler() {
@@ -88,5 +89,12 @@ public abstract class CourseGradeWidget extends Composite {
 			}
 		}
 	}
-	public abstract void setSelectedGrade(String lblvalue,long codeId,boolean isAddOrRemove);
+	/**
+	 * This method will return the grade panel
+	 * @return
+	 */
+	public UlPanel getGradePanel(){
+		return ulGradePanel;
+	}
+	public abstract void setSelectedGrade(String lblvalue,long codeId,boolean isAdd);
 }

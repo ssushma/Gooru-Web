@@ -22,26 +22,39 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.gshelf.util;
 
-import java.util.List;
+import org.ednovo.gooru.client.uc.LiPanel;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
-
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 /**
- * @author Search Team
- *
+ * This file is used for creating Li item with close button.
  */
-public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandlers> {
+public class LiPanelWithClose extends Composite{
+	Anchor lnkClose;
+	long id;
 	
+	public LiPanelWithClose(String text){
+		 LiPanel panel = new LiPanel();
+		 Label titleText=new Label(text);
+		 lnkClose=new Anchor("X");
+		 panel.add(titleText);
+		 panel.add(lnkClose);
+		 initWidget(panel);
+	}
 	/**
-	 * This method will display the Grades according to the subject
+	 * This method is used to get close button
+	 * @return
 	 */
-	void showInfoDetailsBasedOnCourseId(LibraryCodeDo libraryCodeDo);
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link LibraryCodeDo} as List
-	 */
-	void setCourseList(List<LibraryCodeDo> libraryCode);
+	public Anchor getCloseButton(){
+		return lnkClose;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 }

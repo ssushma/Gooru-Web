@@ -24,6 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
+import java.util.List;
+
+import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -36,7 +42,9 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  */
 public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> implements CourseInfoUiHandlers {
 
-	
+	@Inject
+	private TaxonomyServiceAsync taxonomyService;
+
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -56,9 +64,19 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+		getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+			@Override
+			public void onSuccess(List<LibraryCodeDo> result) {
+				getView().setCourseList(result);
+			}
+		});
 	}
-	
-	
-	
 
+	public TaxonomyServiceAsync getTaxonomyService() {
+		return taxonomyService;
+	}
+
+	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
+		this.taxonomyService = taxonomyService;
+	}
 }
