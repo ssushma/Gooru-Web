@@ -1897,6 +1897,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		isSaveButtonClicked=false;
 		clearObjects();
 		ansChoiceErrMsg.setText("");
+		addQuestImgContainer.clear();
+		addQuestionImg.setVisible(true);
 	}
 
 	public void clearObjects(){
@@ -2070,6 +2072,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				widgetcount++;
 			}
 			addHotSpotQuestion.setAnswerChoices();
+		}else {
+			while (it.hasNext()) {
+				QuestionAnswerDo answer = it.next();
+				addHotSpotQuestion.setAnswerImageUrl(answer.getAnswerText(), null, true,answer.isIsCorrect());
+				
+			}
 		}
 
 	}

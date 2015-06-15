@@ -118,7 +118,10 @@ public class AddAnswerImg extends Composite
 
 	@UiHandler("selLbl")
 	public void selectedImage(ClickEvent event){
-
+		imageSelected();
+	}
+	
+	public void imageSelected(){
 		if(selectedImage){
 			selLbl.removeStyleName("answerMarkSelected");
 			imgBlock.removeStyleName("ansImageBlockSel");
