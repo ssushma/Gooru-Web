@@ -47,6 +47,7 @@ public class QuestionAnswerOptionView extends Composite{
 	private int answerId;
 	private boolean isAnswerCorrect;
 	private String answerText="";
+	boolean isChecked;
 	public static QuestionAnswerOptionViewUiBinder questionAnswerOptionViewUiBinder=GWT.create(QuestionAnswerOptionViewUiBinder.class);
 	
 	public QuestionAnswerOptionView(String questionText,String questionSerialNum){ 
