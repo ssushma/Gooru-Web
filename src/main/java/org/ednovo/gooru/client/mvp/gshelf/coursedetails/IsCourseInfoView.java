@@ -38,7 +38,7 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	/**
 	 * This method will display the Grades according to the subject
 	 */
-	void showInfoDetailsBasedOnCourseId(LibraryCodeDo libraryCodeDo);
+	void showInfoDetailsBasedOnCourseId(LibraryCodeDo libraryCodeDo,String selectedText);
 	/**
 	 * Set collection default course
 	 * @param libraryCode instance {@link LibraryCodeDo} as List
