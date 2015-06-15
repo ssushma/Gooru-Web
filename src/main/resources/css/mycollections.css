@@ -54,19 +54,38 @@
 
 
 #gShelfMainContainer .floderLeftContainer .createMenu{
-	padding:20px 12px;
-	text-align:right;
+	display: inline-block;
+	margin: 0;
+	text-align: right;
+	width: 100%;
+	border-bottom: 1px solid #dddddd;
+	vertical-align: bottom;
 }
 
 #gShelfMainContainer .floderLeftContainer .createMenu .btn{
 	font-size:12px;
 }
-#gShelfMainContainer .floderLeftContainer .folderLeftMainHeader{
-	font-size:17px;
-	padding:12px 12px;
-	border-bottom:1px solid #f0f0f0;
-	border-top:1px solid #f0f0f0;
-	color:#515151;
+
+#gShelfMainContainer .floderLeftContainer .createMenu .plus {
+	display: block;
+	background: #4d99cd;
+	font-size: 25px;
+	color: #ffffff;
+	text-align: center;
+}
+
+#gShelfMainContainer .floderLeftContainer .createMenu .btn, #gShelfMainContainer .floderLeftContainer .createMenu .plus
+	{
+	height: 40px;
+}
+
+#gShelfMainContainer .floderLeftContainer .folderLeftMainHeader {
+	color: #515151;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0;
+	padding: 12px 12px;
+	background: #f0f0f0;
 }
 
 #gShelfMainContainer .courseNameBlock{
@@ -261,6 +280,190 @@ button.btn-disabled{
 	background:#f6f6f6;
 	border-top:1px solid #ffffff;
 }
+
+/*////////////////////// Folder tree styles ///////////////////*/
+
+#gShelfMainContainer .folderLevel {
+    background-color:#f0f0f0;
+    border-top:1px solid white;
+    border-bottom:1px solid #ddd;
+    height: 50px;
+    line-height: 50px;
+    padding-right:15px;
+    position:relative;
+    box-sizing:content-box;
+	/* width: 280px; */
+	/* width: 176px; */
+}
+#gShelfMainContainer .folderLevel.active {
+	background-color: white;
+	border-left: 8px solid #515151;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-radius: 4px;
+	margin-left: -7px;
+    z-index:10;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+#gShelfMainContainer .folderLevel.justAdded {
+    background-color:#E1F0D1 !important;
+}
+
+#gShelfMainContainer .folderLevel .title {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.2em;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent !important;
+}
+
+#gShelfMainContainer .folderLevel { /* grandparent level - default */
+    padding-left:80px;
+}
+
+#gShelfMainContainer .folderLevel.parent {
+    padding-left:108px;
+}
+
+#gShelfMainContainer .folderLevel.child {
+    padding-left:136px;
+}
+
+#gShelfMainContainer .folderLevel.collectionChild {
+    padding-left:164px;
+}
+
+/*////////////////////// positioning with folder icon ///////////////////*/
+
+
+#gShelfMainContainer .folderLevel { /* grandparent level - default */
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
+}
+
+#gShelfMainContainer .folderLevel.parent {
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 61px 13px;
+}
+
+#gShelfMainContainer .folderLevel.child {
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 89px 13px;
+}
+
+#gShelfMainContainer .folderLevel.collectionChild {
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 117px 13px;
+}
+
+/*////////////////////// other images ///////////////////*/
+
+
+#gShelfMainContainer .folderLevel.open {
+    background-image: url('../images/folders/panel/folder-icon-open.png');
+}
+
+#gShelfMainContainer .folderLevel.collection {
+    background-image: url('../images/folders/panel/collection-icon.png');
+}
+
+#gShelfMainContainer .folderLevel.assessment {
+    background-image: url('../images/folders/panel/assessment-type.png');
+}
+
+#gShelfMainContainer .folderLevel.publicIcon.collection {
+    background-image: url('../images/folders/panel/collection-icon-public.png');
+}
+
+#gShelfMainContainer .folderLevel.assesstpublicIcon.assessment {
+    background-image: url('../images/folders/panel/assessment-icon-public.png');
+}
+#gShelfMainContainer .folderLevel .arrow {
+    width:25px;
+    height:25px;
+    border-radius:2px;
+    position:absolute;
+    top:12px;
+    background: url('../images/folders/panel/arrow-closed.png') no-repeat center;
+    display:none;
+}
+
+#gShelfMainContainer .folderLevel .arrow:hover {
+    background-color:#f0f0f0;
+    cursor:pointer;
+}
+
+#gShelfMainContainer .folderLevel.open .arrow {
+    background-image: url('../images/folders/panel/arrow-open.png');
+    display:block;
+}
+
+#gShelfMainContainer .folderLevel .arrow { /* grandparent level - default */
+    left:5px;
+}
+
+#gShelfMainContainer .folderLevel.parent .arrow {
+    left:33px;
+}
+
+#gShelfMainContainer .folderLevel.child .arrow {
+    left:61px;
+}
+
+#gShelfMainContainer .folderLevel.collectionChild .arrow {
+    left:88px;
+}
+
+#gShelfMainContainer .folderLevel .editButton {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 12px 12px 12px 75px;
+    line-height: normal;
+    display:none;
+    background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(255,255,255,0) 1%, rgba(255,255,255,1) 51%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(1%,rgba(255,255,255,0)), color-stop(51%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* W3C */
+}
+
+#gShelfMainContainer .folderLevel:hover {
+    background-color:white;
+    cursor:pointer;
+}
+
+#gShelfMainContainer .folderLevel:hover .arrow {
+    display:block;
+}
+
+#gShelfMainContainer .folderLevel:hover .editButton {
+    display:none;
+    height:26px;
+}
+#gShelfMainContainer .emptyHoverContainer {
+    position: absolute;
+    top: 24px;
+    left: 50px;
+}
+
+#gShelfMainContainer .emptyHover {
+    width: 21px;
+    height: 20px;
+}
+
+
+#gShelfMainContainer .folderLevel.parent .emptyHoverContainer {
+    left:77px;
+}
+
+#gShelfMainContainer .folderLevel.child .emptyHoverContainer {
+    left:105px;
+}
+
+
 @media (max-width: 767px) {
 	
 	#gShelfMainContainer .floderLeftContainer{
@@ -565,19 +768,6 @@ button.btn-disabled{
 /* === For Course list Css end ================================== */
 
 /* === For Course info Css start ================================== */
-#gShelfCourseInfo .floderLeftContainer {
-	background: #ffffff;
-	margin-right: 15px;
-	box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-	min-height: 500px;
-	margin-bottom: -9999px;
-	padding-bottom: 9999px;
-}
-
-#gShelfCourseInfo .floderRightContainer {
-	background: #ffffff;
-	box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-}
 
 #gShelfCourseInfo .equifier {
 	overflow: hidden;
@@ -603,41 +793,6 @@ button.btn-disabled{
 	height: 25px;
 	display: inline-block;
 	vertical-align: middle;
-}
-
-#gShelfCourseInfo .floderLeftContainer .createMenu {
-	display: inline-block;
-	margin: 0;
-	text-align: right;
-	width: 100%;
-	border-bottom: 1px solid #dddddd;
-	vertical-align: bottom;
-}
-
-#gShelfCourseInfo .floderLeftContainer .createMenu .plus {
-	display: block;
-	background: #4d99cd;
-	font-size: 25px;
-	color: #ffffff;
-	text-align: center;
-}
-
-#gShelfCourseInfo .floderLeftContainer .createMenu .btn,.floderLeftContainer .createMenu .plus
-	{
-	height: 40px;
-}
-
-#gShelfCourseInfo .floderLeftContainer .createMenu .btn {
-	font-size: 13px;
-}
-
-#gShelfCourseInfo .floderLeftContainer .folderLeftMainHeader {
-	color: #515151;
-	font-size: 18px;
-	font-weight: bold;
-	margin: 0;
-	padding: 12px 12px;
-	background: #f0f0f0;
 }
 
 #gShelfCourseInfo .courseNameBlock {

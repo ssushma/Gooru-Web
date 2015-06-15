@@ -9,6 +9,7 @@
 			<div class="container">
 				<div class="row no-gutter equifier">
 					<div class="col-md-3 col-sm-3">
+					  <div class="floderLeftContainer">
 						<div class="createMenu no-gutter animate fadeInLeft animated"
 							data-animate="fadeInLeft">
 							<div class="col-md-10 col-xs-10 col-sm-10">
@@ -38,7 +39,7 @@
 							</div>
 							<div class="clearfix"></div>
 						</div>
-						<div class="floderLeftContainer">
+						
 							<div class="folderListBlock">
 								<!-- <ul> <li class="active"> <a href="">Untitled Course</a> </li> 
 									<li> <a href="">Course 2</a> </li> <li> <a href="">Course 3</a> </li> </ul> -->
