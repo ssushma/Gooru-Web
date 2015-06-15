@@ -916,8 +916,7 @@ button.btn-disabled {
 	font-size: 12px;
 }
 
-#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li a:hover,#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li a:focus
-	{
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li a:hover,#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul li a:focus{
 	background: #87badd;
 	color: #333333;
 	text-decoration: none;
@@ -937,16 +936,18 @@ button.btn-disabled {
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags {
 	margin: 0 0;
 }
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li div{
+	float: left;
+}
 
-#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li a
-	{
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li a{
 	color: #ffffff;
 	font-size: 12px;
 	padding: 0 0 0 22px;
+	float: left;
 }
 
-#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li
-	{
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li{
 	margin: 0 15px 0 0;
 }
 
@@ -958,8 +959,7 @@ button.btn-disabled {
 	opacity: 1;
 }
 
-#gShelfCourseInfo .tagCourseOptions .list-group-item.active,#gShelfCourseInfo .tagCourseOptions .list-group-item.active:focus,#gShelfCourseInfo .tagCourseOptions .list-group-item.active:hover
-	{
+#gShelfCourseInfo .tagCourseOptions .list-group-item.active,#gShelfCourseInfo .tagCourseOptions .list-group-item.active:focus,#gShelfCourseInfo .tagCourseOptions .list-group-item.active:hover{
 	background-color: #87badd;
 	border-color: #87badd;
 	color: #515151;
@@ -991,8 +991,7 @@ button.btn-disabled {
 	border-color: transparent;
 }
 
-#gShelfCourseInfo .createMenu .btn-default.active,#gShelfCourseInfo .createMenu .btn-default.focus,#gShelfCourseInfo .createMenu .btn-default:active,#gShelfCourseInfo .createMenu .btn-default:focus,#gShelfCourseInfo .createMenu .btn-default:hover,#gShelfCourseInfo .createMenu .open>.dropdown-toggle.btn-default
-	{
+#gShelfCourseInfo .createMenu .btn-default.active,#gShelfCourseInfo .createMenu .btn-default.focus,#gShelfCourseInfo .createMenu .btn-default:active,#gShelfCourseInfo .createMenu .btn-default:focus,#gShelfCourseInfo .createMenu .btn-default:hover,#gShelfCourseInfo .createMenu .open>.dropdown-toggle.btn-default{
 	background-color: #ffffff;
 	border-color: transparent;
 	color: #333;
@@ -1050,8 +1049,7 @@ button.btn-disabled {
 	font-size: 13px;
 }
 
-#gShelfCourseInfo .folderListBlock ul li a:hover,.folderListBlock ul li a:focus
-	{
+#gShelfCourseInfo .folderListBlock ul li a:hover,.folderListBlock ul li a:focus{
 	background: #ffffff;
 	color: #515151;
 	text-decoration: none;

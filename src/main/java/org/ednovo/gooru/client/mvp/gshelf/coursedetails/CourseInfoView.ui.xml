@@ -27,15 +27,7 @@
 						<div class="no-gutter">
 							<div class="col-md-4 col-sm-5">
 								<div class="courseGroupLeft">
-									<ul>
-									<li class="active"><a href="">Math</a></li>
-									<li><a href="">Science</a></li>
-									<li><a href="">English Language Arts</a></li>
-									<li><a href="">Social Studies</a></li>
-									<li><a href="">Visual and Performing Arts</a></li>
-									<li><a href="">World Languages</a></li>
-									<li><a href="">Careers and Technical Skills</a></li>
-									</ul>
+									<uc:UlPanel ui:field="ulMainGradePanel"/>
 								</div>
 							</div>
 							<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
@@ -45,14 +37,7 @@
 				</div>
 				<div class="tagCoursePanelFooter">
 					<div class="filterTags">
-					<ul>
-					<li>Math 4 <a href="">X</a></li>
-					<li>Math 5 <a href="">X</a></li>
-					<li>Math 6 <a href="">X</a></li>
-					<li>Math 7 <a href="">X</a></li>
-					<li>Math 8 <a href="">X</a></li>
-					<li>Algebra 1 <a href="">X</a></li>
-					</ul>
+						<uc:UlPanel ui:field="ulSelectedItems"/>
 					</div>
 				</div>
 			<div class="tagCourseOptions">
