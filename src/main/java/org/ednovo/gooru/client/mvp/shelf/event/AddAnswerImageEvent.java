@@ -38,17 +38,18 @@ public class AddAnswerImageEvent extends GwtEvent<AddAnswerImageHandler> {
 	public static final Type<AddAnswerImageHandler> TYPE = new Type<AddAnswerImageHandler>();
 
 	String fileName;
-	boolean isAnswerImage;
+	boolean isAnswerImage,isSelected;
 	String fileNameWithoutRepostory;
 
 	/**
 	 * Class constructor
 	 * @param isuserOwnResourceImage 
 	 */
-	public AddAnswerImageEvent(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage) {
+	public AddAnswerImageEvent(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage,boolean isSelected) {
 		this.fileName = fileName;
 		this.isAnswerImage=isAnswerImage;
 		this.fileNameWithoutRepostory=fileNameWithoutRepostory;
+		this.isSelected=isSelected;
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class AddAnswerImageEvent extends GwtEvent<AddAnswerImageHandler> {
 
 	@Override
 	protected void dispatch(AddAnswerImageHandler handler) {
-		handler.setAnswerImageUrl(fileName,fileNameWithoutRepostory,isAnswerImage);
+		handler.setAnswerImageUrl(fileName,fileNameWithoutRepostory,isAnswerImage,isSelected);
 	}
 
 }
