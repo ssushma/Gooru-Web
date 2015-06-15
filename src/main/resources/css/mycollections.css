@@ -769,6 +769,54 @@ button.btn-disabled{
 
 /* === For Course info Css start ================================== */
 
+#gShelfCourseInfo .courseHeader {
+	background: #f0f0f0;
+}
+#gShelfCourseInfo .breadcrumbMain a{
+	padding:20px 25px;
+	display:inline-block;
+	font-size:17px;
+	color:#515151;
+	position:relative;
+	
+}
+#gShelfCourseInfo .breadcrumbMain a:hover,#gShelfCourseInfo .breadcrumbMain a:focus{
+	opacity:1;
+	text-decoration:none;
+}
+#gShelfCourseInfo .breadcrumbMain a.active{
+	background:#cddeea;
+	box-shadow: none;
+}
+
+#gShelfCourseInfo .breadcrumbMain a.active:after{
+	content:"";
+	position:absolute;
+	width: 0; 
+	height: 0; 
+	border-top: 32px solid transparent;
+	border-bottom: 34px solid transparent;
+	
+	border-left: 20px solid #cddeea;
+	right:-20px;
+	top:0;
+	z-index:999;
+}
+
+#gShelfCourseInfo .breadcrumbMain a.active:before{
+	content:"";
+	position:absolute;
+	width: 0; 
+	height: 0; 
+	border-top: 32px solid transparent;
+	border-bottom: 34px solid transparent;
+	
+	border-left: 20px solid #f0f0f0;
+	right:-22px;
+	top:0;
+	z-index:99;
+}
+
 #gShelfCourseInfo .equifier {
 	overflow: hidden;
 }
@@ -1018,6 +1066,7 @@ button.btn-disabled {
 
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;
+	border-top: 0px;
 }
 
 #gShelfCourseInfo .folderBlockSitemap {
@@ -1150,17 +1199,15 @@ button.btn-disabled {
 
 }
 @media(min-width:768px) and (max-width:991px){
-#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader button {
-	font-size: 13px;
-	font-weight: bold;
-	width: 100%;
-}
-
-#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li
-	{
-	margin: 0 10px 10px 0;
-}
-
+	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader button {
+		font-size: 13px;
+		font-weight: bold;
+		width: 100%;
+	}
+	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li
+		{
+		margin: 0 10px 10px 0;
+	}
 }
 @media ( min-width : 992px) and (max-width: 1199px) {
 }

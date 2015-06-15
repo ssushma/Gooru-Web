@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -51,7 +52,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	interface GooruGradesViewUiBinder extends UiBinder<Widget, CourseInfoView> {
 	}	
 
-	@UiField HTMLPanel courseInfo;
+	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -59,19 +60,20 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Inject
 	public CourseInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		courseInfo.getElement().setId("gShelfCourseInfo");
 		showInfoDetailsBasedOnCourseId();
 	}
-	
-
 	
 	/**
 	 * Pre-Selected grades showing in search page
 	 */
 	@Override
 	public void showInfoDetailsBasedOnCourseId() {
-		
+		CourseGradeWidget courseGradeWidget=new CourseGradeWidget(null) {
+			@Override
+			public void setSelectedGrade(String lblvalue, long codeId,boolean isAddOrRemove) {
+				
+			}
+		};
+		pnlGradeContainer.add(courseGradeWidget);
 	}
-	
-
 }

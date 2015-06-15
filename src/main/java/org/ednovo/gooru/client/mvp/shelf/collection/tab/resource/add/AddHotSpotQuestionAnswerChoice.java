@@ -240,7 +240,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	}
 
 	@Override
-	public void setAnswerImageUrl(String fileName,	String fileNameWithoutRepository, boolean isAnswerImage) {
+	public void setAnswerImageUrl(String fileName,	String fileNameWithoutRepository, boolean isAnswerImage,boolean isSelected) {
 
 		double randNumber = Math.random();
 		final AddAnswerImg addAnswerImage = new AddAnswerImg();
@@ -257,7 +257,11 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 			addAnswerImage.setId(ansImageContainer.getWidgetCount());
 			ansImageContainer.add(addAnswerImage);
 		}
-
+		
+		if(isSelected){
+			addAnswerImage.selectedImage=false;
+			addAnswerImage.imageSelected();
+		}
 
 		addAnswerImage.changeImgLbl.addClickHandler(new ClickHandler() {
 

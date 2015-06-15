@@ -185,7 +185,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
-		myCollectionsListPresenter.setData("Course");
+		myCollectionsListPresenter.setData("Course",getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 	
@@ -283,11 +283,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
 		
 	}
-
 	@Override
 	public void setListPresenterBasedOnType(String type) {
 		clearSlot(RIGHT_SLOT);
-		myCollectionsListPresenter.setData(type);
+		myCollectionsListPresenter.setData(type,getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 }

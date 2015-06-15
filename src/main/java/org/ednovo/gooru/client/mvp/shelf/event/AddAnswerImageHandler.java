@@ -36,6 +36,6 @@ import com.google.gwt.event.shared.EventHandler;
 public interface AddAnswerImageHandler extends EventHandler {
 
 	
-	void setAnswerImageUrl(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage); 
+	void setAnswerImageUrl(String fileName,String fileNameWithoutRepostory, boolean isAnswerImage,boolean isSelected); 
 
 }

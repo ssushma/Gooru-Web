@@ -1150,7 +1150,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			if(!hotSpotRadioButton.getValue()){
 				hotSpotRadioButton.setValue(true);
 				if(collectionItemDo!=null){
-					getUiHandlers().setHSEditData();
+					//getUiHandlers().setHSEditData();
 				}
 				highlightSelectedTab("HS");
 				getUiHandlers().addSelectedQuestionType("HS");
