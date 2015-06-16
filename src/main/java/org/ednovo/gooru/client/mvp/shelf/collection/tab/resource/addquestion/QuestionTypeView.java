@@ -393,6 +393,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addExplanationAnc.addStyleName("advancedOptionsTabs");
 		addExplanationAnc.removeStyleName("advancedOptionsTabActive");
 		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
+		addExplanationAnc.setVisible(true);
 
 		/**
 		 * Depth of Knowledge
@@ -400,6 +401,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		depthOfKnowledgeContainer.setVisible(false);
 		addDepthOfKnowledgeAnc.addStyleName("advancedOptionsTabs");
 		addDepthOfKnowledgeAnc.removeStyleName("advancedOptionsTabActive");
+		addDepthOfKnowledgeAnc.setVisible(true);
 
 		/**
 		 * Standards
@@ -425,6 +427,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addHintsAnc.addStyleName("advancedOptionsTabs");
 		addHintsAnc.removeStyleName("advancedOptionsTabActive");
 		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+		addHintsAnc.setVisible(true);
 
 		/**
 		 * Add
@@ -1899,6 +1902,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		ansChoiceErrMsg.setText("");
 		addQuestImgContainer.clear();
 		addQuestionImg.setVisible(true);
+		setAncTabs();
 	}
 
 	public void clearObjects(){
@@ -2037,10 +2041,19 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 	}
+	
+	public void setAncTabs(){
+		explanationContainer.setVisible(!addExplanationAnc.isVisible());
+    	depthOfKnowledgeContainer.setVisible(!addDepthOfKnowledgeAnc.isVisible());
+    	hintsContainer.setVisible(!addHintsAnc.isVisible());
+    	standardContainer.setVisible(!addStandardsAnc.isVisible());
+    	centuryContainer.setVisible(!addCenturyAnc.isVisible());
+	}
 
 
 	public void setEditData(){
 		try{
+			setAncTabs();
 			setEditQuestionImage();
 
 			int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
