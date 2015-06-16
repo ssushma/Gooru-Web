@@ -83,14 +83,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	SignUpPresenter signUpViewPresenter;
 	
-	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
-	
 	boolean isApiCalled=false;
 	
-    private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
-	
 	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback;
-	
 	
 	private static final String CALLBACK = "callback";
 	
@@ -112,25 +107,18 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 *            instance of {@link MyCollectionsListPresenter}
 	 * @param signUpPresenter
 	 *            instance of {@link SignUpPresenter}
-	 * @param collectionResourceTabPresenter
-	 *            instance of {@link CollectionResourceTabPresenter}
-	 * @param collectionInfoTabPresenter
-	 *            instance {@link CollectionInfoTabPresenter}
-	 * @param collectionAssignTabPresenter
-	 *            instance {@link CollectionAssignTabPresenter}
 	 * @param view
 	 *            {@link View}
 	 * @param proxy
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
+	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
-		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 		
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
@@ -290,5 +278,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
 		myCollectionsListPresenter.setData(type,getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+	}
+	
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsListPresenter.getMyCollectionsRightClusterPresenter();
 	}
 }
