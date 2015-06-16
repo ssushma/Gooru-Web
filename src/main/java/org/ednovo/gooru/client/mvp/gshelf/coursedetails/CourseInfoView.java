@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -63,8 +65,11 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	
-	Map<String,LibraryCodeDo>  courseListBasedOnTitle=new HashMap<String,LibraryCodeDo>();
+	Map<String,LibraryCodeDo> courseListBasedOnTitle=new HashMap<String,LibraryCodeDo>();
+	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	
 	CourseGradeWidget courseGradeWidget;
+	final String ACTIVE="active";
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -81,23 +86,34 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	 * This method will display the Grades according to the subject
 	 */
 	@Override
-	public void showInfoDetailsBasedOnCourseId(LibraryCodeDo libraryCodeDo) {
+	public void showInfoDetailsBasedOnCourseId(LibraryCodeDo libraryCodeDo,final String selectedText) {
 		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo.getNode()) {
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo.getNode(),selectedValues.get(selectedText)) {
 			@Override
-			public void setSelectedGrade(String lblvalue, final long codeId,boolean isAdd) {
+			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
 				if(isAdd){
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(lblvalue);
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
+							//This will remove the selected value when we are trying by close button
+							for(Iterator<Map.Entry<String,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+							     Map.Entry<String, ArrayList<String>> entry = it.next();
+							     if(entry.getValue().contains(lblvalue)){
+							    	 entry.getValue().remove(lblvalue);
+							     }
+							 }
 							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
 							liPanelWithClose.removeFromParent();
 						}
 					});
+					selectedValues.get(selectedText).add(lblvalue);
 					liPanelWithClose.setId(codeId);
 					ulSelectedItems.add(liPanelWithClose);
 				}else{
+					if(selectedValues.get(selectedText).contains(lblvalue)){
+						selectedValues.get(selectedText).remove(lblvalue);
+					}
 					removeGradeWidget(ulSelectedItems,codeId);
 				}
 			}
@@ -131,18 +147,20 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public void setCourseList(List<LibraryCodeDo> libraryCode) {
 		courseListBasedOnTitle.clear();
+		selectedValues.clear();
 		ulMainGradePanel.clear();
 		if (libraryCode.size()>0) {
 			for (LibraryCodeDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getLabel().trim();
 				courseListBasedOnTitle.put(titleText, libraryCodeDo);
+				selectedValues.put(titleText, new ArrayList<String>());
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
-				title.addClickHandler(new ClickOnSubject(titleText));
+				title.addClickHandler(new ClickOnSubject(titleText,liPanel));
 				liPanel.add(title);
 				ulMainGradePanel.add(liPanel);
 			}
-			showInfoDetailsBasedOnCourseId(libraryCode.get(0));
+			showInfoDetailsBasedOnCourseId(libraryCode.get(0),libraryCode.get(0).getLabel().trim());
 		}
 	}
 	/**
@@ -150,13 +168,26 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	 */
 	class ClickOnSubject implements ClickHandler{
 		String selectedText;
-		ClickOnSubject(String selectedText){
+		LiPanel liPanel;
+		ClickOnSubject(String selectedText,LiPanel liPanel){
 			this.selectedText=selectedText;
+			this.liPanel=liPanel;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if(courseListBasedOnTitle.size()>0){
-				showInfoDetailsBasedOnCourseId(courseListBasedOnTitle.get(selectedText));
+			if(liPanel.getStyleName().contains(ACTIVE)){
+				if(selectedValues.get(selectedText).size()>0){
+					if(courseListBasedOnTitle.size()>0){
+						showInfoDetailsBasedOnCourseId(courseListBasedOnTitle.get(selectedText),selectedText);
+					}
+				}else{
+					liPanel.removeStyleName(ACTIVE);
+				}
+			}else{
+				liPanel.addStyleName(ACTIVE);
+				if(courseListBasedOnTitle.size()>0){
+					showInfoDetailsBasedOnCourseId(courseListBasedOnTitle.get(selectedText),selectedText);
+				}
 			}
 		}
 	}

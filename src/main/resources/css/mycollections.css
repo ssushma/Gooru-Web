@@ -224,6 +224,7 @@ button.btn-disabled{
 }
 #gShelfMainContainer .createMenu .open > .dropdown-menu{
 	width:100%;
+	text-align: left;
 }
 #gShelfMainContainer .createMenu .caret {
     border-left: 6px solid transparent;

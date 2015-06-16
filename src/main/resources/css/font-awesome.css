@@ -6,8 +6,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('//qarepo.goorulearning.org/static/css/fonts/fontawesome-webfont.eot?v=4.3.0');
-  src: url('//qarepo.goorulearning.org/static/css/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('//qarepo.goorulearning.org/static/css/fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('//qarepo.goorulearning.org/static/css/fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('//qarepo.goorulearning.org/static/css/fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('//qarepo.goorulearning.org/static/css/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+  src: url('${cdn.endpoint}/css/fonts/fontawesome-webfont.eot?v=4.3.0');
+  src: url('${cdn.endpoint}/css/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('${cdn.endpoint}/css/fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('${cdn.endpoint}/css/fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('${cdn.endpoint}/css/fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('${cdn.endpoint}/css/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }

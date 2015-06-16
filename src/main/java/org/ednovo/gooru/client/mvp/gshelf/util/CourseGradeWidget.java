@@ -50,10 +50,13 @@ public abstract class CourseGradeWidget extends Composite {
 
 	@UiField UlPanel ulGradePanel;
 	
+	List<String> selectedValues;
+	
 	final String ACTIVE="active";
 	
-	public CourseGradeWidget(final List<LibraryCodeDo> libraryCodeDo) {
+	public CourseGradeWidget(final List<LibraryCodeDo> libraryCodeDo,List<String> selectedValues) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.selectedValues=selectedValues;
 		if(libraryCodeDo!=null){
 			setData(libraryCodeDo);
 		}
@@ -62,11 +65,14 @@ public abstract class CourseGradeWidget extends Composite {
 		ulGradePanel.clear();
 		if(libraryCodeDo.size()>0){
 			for(int j=0; j<libraryCodeDo.size(); j++) {
-				final String courseListValues=libraryCodeDo.get(j).getLabel();
+				final String gradeText=libraryCodeDo.get(j).getLabel();
 				final long codeId=libraryCodeDo.get(j).getCodeId();
 				final LiPanel panel=new LiPanel();
+				if(selectedValues.contains(gradeText)){
+					panel.addStyleName(ACTIVE);
+				}
 				panel.setCodeId(codeId);
-				Anchor courseValues=new Anchor(courseListValues);
+				Anchor courseValues=new Anchor(gradeText);
 				panel.add(courseValues);
 				panel.addClickHandler(new ClickHandler() {
 					@Override
@@ -76,10 +82,10 @@ public abstract class CourseGradeWidget extends Composite {
 							public void onSuccess() {
 								if(panel.getStyleName().contains(ACTIVE)){
 									panel.removeStyleName(ACTIVE);
-									setSelectedGrade(courseListValues,codeId,false);
+									setSelectedGrade(gradeText,codeId,false);
 								}else{
 									panel.addStyleName(ACTIVE);
-									setSelectedGrade(courseListValues,codeId,true);
+									setSelectedGrade(gradeText,codeId,true);
 								}
 							}
 						});
