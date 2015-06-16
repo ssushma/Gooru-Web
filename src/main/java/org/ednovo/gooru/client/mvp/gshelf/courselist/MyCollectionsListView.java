@@ -28,7 +28,6 @@ import java.util.Iterator;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -137,7 +136,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	
 	@Override
-	public void setInSlot(Object slot, Widget content) {	
+	public void setDataInSlot(Object slot, Widget content) {	
 		if(slot==null){
 			slotPanel.clear();
 			slotPanel.add(content);

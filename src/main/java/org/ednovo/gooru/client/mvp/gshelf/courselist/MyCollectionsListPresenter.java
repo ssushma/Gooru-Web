@@ -52,6 +52,10 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	
 	@Override
 	public void setListPresenterBasedOnType(String type) {
-		setInSlot(null, myCollectionsRightClusterPresenter);
+		getView().setDataInSlot(null, getMyCollectionsRightClusterPresenter().getWidget());
+	}
+	@Override
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsRightClusterPresenter;
 	}
 }
