@@ -132,7 +132,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	class ClickOnTitleContainer implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().setListPresenterBasedOnType("");
+			getUiHandlers().setListPresenterBasedOnType("",slotPanel);
 		}
 	}
 	@Override

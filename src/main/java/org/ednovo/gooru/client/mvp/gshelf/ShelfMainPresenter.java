@@ -274,7 +274,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		myCollectionsListPresenter.setData(type,getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
-	
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
 		return myCollectionsListPresenter.getMyCollectionsRightClusterPresenter();
 	}
