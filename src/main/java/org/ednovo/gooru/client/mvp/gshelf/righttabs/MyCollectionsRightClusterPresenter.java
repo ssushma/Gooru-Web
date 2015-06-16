@@ -51,6 +51,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		clearSlot(INNER_SLOT);
 		getView().setSlotPanel(slotPanel);
 		if(index==1){
+			courseInfoPresenter.callTaxonomyService();
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 		}else if(index==2){
 			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
