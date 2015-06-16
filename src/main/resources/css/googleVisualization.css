@@ -633,12 +633,26 @@
 	cursor: pointer
 }
 
-.google-visualization-table-sortind {
+ .google-visualization-table-sortind {
 	color: #ccc;
 	font-size: 9px;
-	padding-left: 6px
+	padding-left: 6px;
+} 
+.google-visualization-table-table .unsorted .google-visualization-table-sortind:after {
+  background-image: url("//127.0.0.1:8888/images/sort_both.png")!important;
+  content: "\002003";
+  background-position: center;
+  cursor: pointer;
+  padding: 5px 0px;
+  background-repeat: no-repeat;
+  margin-top: 3px;
 }
-
+.google-visualization-table-table .sort-ascending .google-visualization-table-sortind:after {
+    content: "\0025b2"
+}
+.google-visualization-table-table .sort-descending .google-visualization-table-sortind:after {
+    content: "\0025bc"
+}
 .google-visualization-table-th {
 	border: 1px solid #eee;
 	padding: 6px
