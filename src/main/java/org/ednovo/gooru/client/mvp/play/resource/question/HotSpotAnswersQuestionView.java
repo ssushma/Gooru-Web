@@ -35,6 +35,8 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHotSpotQuestionAnswerChoice;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -114,20 +116,34 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
 			Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 			int i=0;
-			while (answersList.hasNext()) {
-				QuestionAnswerDo questionAnswerDo=answersList.next();
-				final QuestionAnswerOptionView questionAnswerOptionView=new QuestionAnswerOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
-			//	questionAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
-				questionAnswerOptionView.getElement().setId(i+"id");
-				questionAnswerOptionView.radioButton.setStyleName(NORMAL_RADIO);
-				questionAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());
-				questionAnswerOptionView.radioButton.addClickHandler(new RadioButtonSelectEvent(questionAnswerOptionView,questionAnswerDo,i+1));
-				optionsContainer.add(questionAnswerOptionView);
-				
-				if(attemptedAnswerDo!=null){
-				showPreviousAttemptResult(0,questionAnswerOptionView,questionAnswerDo.isIsCorrect());
+			
+			if(collectionItemDo.getResource().getAttributes().getHlType().equalsIgnoreCase(i18n.GL3228_1())){
+				while (answersList.hasNext()) {
+					QuestionAnswerDo questionAnswerDo=answersList.next();
+					double randNumber = Math.random();
+					final AddAnswerImg addAnswerImage = new AddAnswerImg();
+					addAnswerImage.getChangeImgLbl().setVisible(false);
+					addAnswerImage.getRemoveImgLbl().setVisible(false);
+					addAnswerImage.setAnswerImage(questionAnswerDo.getAnswerText()+"?"+randNumber);
+					addAnswerImage.setFileName(null);
+					optionsContainer.add(addAnswerImage);
 				}
-				i++;
+			}else{
+				while (answersList.hasNext()) {
+					QuestionAnswerDo questionAnswerDo=answersList.next();
+					final QuestionAnswerOptionView questionAnswerOptionView=new QuestionAnswerOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
+				//	questionAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
+					questionAnswerOptionView.getElement().setId(i+"id");
+					questionAnswerOptionView.radioButton.setStyleName(NORMAL_RADIO);
+					questionAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());
+					questionAnswerOptionView.radioButton.addClickHandler(new RadioButtonSelectEvent(questionAnswerOptionView,questionAnswerDo,i+1));
+					optionsContainer.add(questionAnswerOptionView);
+					
+					if(attemptedAnswerDo!=null){
+					showPreviousAttemptResult(0,questionAnswerOptionView,questionAnswerDo.isIsCorrect());
+					}
+					i++;
+				}
 			}
 		}
 	}

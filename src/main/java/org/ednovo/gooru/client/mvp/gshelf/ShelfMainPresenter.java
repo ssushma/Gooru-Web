@@ -44,9 +44,6 @@ import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
@@ -83,14 +80,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	SignUpPresenter signUpViewPresenter;
 	
-	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
-	
 	boolean isApiCalled=false;
 	
-    private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
-	
 	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback;
-	
 	
 	private static final String CALLBACK = "callback";
 	
@@ -112,25 +104,18 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 *            instance of {@link MyCollectionsListPresenter}
 	 * @param signUpPresenter
 	 *            instance of {@link SignUpPresenter}
-	 * @param collectionResourceTabPresenter
-	 *            instance of {@link CollectionResourceTabPresenter}
-	 * @param collectionInfoTabPresenter
-	 *            instance {@link CollectionInfoTabPresenter}
-	 * @param collectionAssignTabPresenter
-	 *            instance {@link CollectionAssignTabPresenter}
 	 * @param view
 	 *            {@link View}
 	 * @param proxy
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
+	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
-		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 		
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
@@ -187,6 +172,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
 		myCollectionsListPresenter.setData("Course",getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+		getView().setDefaultOrganizePanel();
 	}
 	
 	@Override
@@ -286,7 +272,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setListPresenterBasedOnType(String type) {
 		clearSlot(RIGHT_SLOT);
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
 		myCollectionsListPresenter.setData(type,getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+	}
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsListPresenter.getMyCollectionsRightClusterPresenter();
 	}
 }
