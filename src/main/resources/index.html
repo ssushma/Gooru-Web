@@ -12,22 +12,9 @@
 <link href="${cdn.endpoint}/css/main-styles.min.css" media="all" rel="stylesheet" type="text/css">
 <link href="${cdn.endpoint}/css/font-awesome.css" media="all" rel="stylesheet" type="text/css">
 <link rel="icon" type="image/png" href="${cdn.endpoint}/images/favicon.png?v=${gooru.release.version}" />
-<script type="text/javascript">
-<!--
-	   		var _et = _et || {};
-	   		_et.apiKey = '${log.api.key}';
-	   		_et.endPoint = '${log.api.endpoint}';
-	   		_et.data = [] || _et.data;
--->
-</script>
-
-<script type="text/javascript" src="//${log.sdk}" defer></script>
-
-<script type="text/javascript" src='application/application.nocache.js?v=${gooru.release.version}' defer></script>
-
-<script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg"></script>
-	<script>
+
+<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function()
 		{ (i[r].q=i[r].q||[]).push(arguments)}
 		,i[r].l=1*new Date();a=s.createElement(o),
@@ -53,6 +40,7 @@
 	 	google.load("visualization", "1", {'packages' : [ "corechart" ]});
 	    google.load("visualization", "1", {'packages' : ["table"] });
 	</script>
+
 </head>
 <body>
    <iframe id="__printingFrame" style="width: 0; height: 0; border: 0"></iframe>
@@ -63,6 +51,22 @@
 			application to display correctly.</div>
 	</noscript>
 
+
+	<script type="text/javascript">
+	<!--
+		   		var _et = _et || {};
+		   		_et.apiKey = '${log.api.key}';
+		   		_et.endPoint = '${log.api.endpoint}';
+		   		_et.data = [] || _et.data;
+	-->
+	</script>
+
+	<script type="text/javascript" src="//${log.sdk}" defer></script>
+
+	<script type="text/javascript" src='application/application.nocache.js?v=${gooru.release.version}' defer></script>
+
+	<script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js"></script>
+
 	<script type="text/javascript" src="scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js" defer></script>
 	<script type="text/javascript" src="scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js" defer></script>
 
@@ -71,7 +75,5 @@
 
 	<!-- Already Minified -->
 	<script type="text/javascript" src="${cdn.endpoint}/scripts/main-script.min.js" defer></script>
-	<script type="text/javascript" src="${cdn.endpoint}/scripts/08_dataTables.fixedColumns.js" defer></script>
-
 </body>
 </html>
