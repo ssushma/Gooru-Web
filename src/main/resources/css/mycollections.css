@@ -108,6 +108,7 @@
 
 #gShelfMainContainer .tagCoursePanel p{
 	color:#515151;
+	margin: 0 0 10px;
 }
 #gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader{
 	text-align:center;
@@ -179,7 +180,10 @@ button.btn-disabled{
 #gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li{
 	margin:0 15px 0 0;
 }
-
+#gShelfMainContainer .tagCourseOptions .row div{
+	padding-right: 15px !important;
+	padding-left: 7px !important;
+}
 #gShelfMainContainer .tagCourseOptions a.list-group-item{
 	padding:6px 15px;
 }
@@ -187,6 +191,7 @@ button.btn-disabled{
 	opacity:1;
 }
 #gShelfMainContainer .tagCourseOptions .list-group-item.active, #gShelfMainContainer .tagCourseOptions .list-group-item.active:focus, #gShelfMainContainer .tagCourseOptions .list-group-item.active:hover {
+    background:#87badd;
     background-color: #87badd;
     border-color: #87badd;
     color: #515151;
