@@ -139,12 +139,9 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 */
 	@Override
 	public void setClickedTabPresenter(final String clickedTab,final String collectionId,final String selectedCollectionTitle) {
-
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-
 			@Override
 			public void onSuccess() {
-
 				if(SUMMARY.equalsIgnoreCase(clickedTab)){
 					clearSlot(COLLECTION_SUMMARY_SLOT);
 					collectionSummaryPresenter.clearFrames();
@@ -164,10 +161,8 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 					setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
 					getView().getCollectionSummarySlot().clear();
 				}
-
 			}
 		});
-
 	}
 
 	/**
