@@ -61,6 +61,7 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
@@ -83,7 +84,10 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.Anchor;
@@ -116,7 +120,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField UlPanel ulSubjectPanel,ulCategoryPanel,ulRatingsPanel;
 
-	@UiField LiPanel resourcePanel, collectionPanel;
+	@UiField HTMLEventPanel resourcePanel, collectionPanel;
 
 	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 
@@ -129,6 +133,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField TextBox authorTxtBox;
 
 	@UiField LiPanel collectionsBtn,assessmentsBtn;
+
+	@UiField Button btnSearchType;
+
+	@UiField HTMLPanel ulDropdown;
 
 	@UiField
 	PPanel panelNotMobileFriendly,accessModePanel,reviewPanelUc;
@@ -233,6 +241,32 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		//pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
 		fixedFilterSearch.getElement().setAttribute("id", "fixedFilterSearchID");
+		btnSearchType.getElement().setAttribute("type", "button");
+		btnSearchType.getElement().setAttribute("data-toggle", "dropdown");
+		btnSearchType.getElement().setAttribute("aria-expanded", "false");
+		btnSearchType.getElement().setAttribute("id", "btnSearchType");
+
+		InlineLabel cart = new InlineLabel();
+		cart.setStyleName("caret");
+
+		collectionPanel.getElement().setInnerText(i18n.GL0645());
+		resourcePanel.getElement().setInnerText(i18n.GL1110());
+
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+			btnSearchType.setText(i18n.GL0645());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}else{
+			btnSearchType.setText(i18n.GL1110());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}
+		ulDropdown.setVisible(false);
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hidePopup(event);
+	          }
+	    });
+
+
 		lblLoadingTextPrevious.setVisible(false);
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
@@ -363,12 +397,43 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		aggregatorTooltip.addMouseOverHandler(new MouseOverOnImage(i18n.GL1768()));
 		aggregatorTooltip.addMouseOutHandler(new MouseOutOnImage());
 	}
+	protected void hidePopup(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target)
+        	{
+        		if (ulDropdown !=null && ulDropdown.isVisible()){
+        			ulDropdown.setVisible(false);
+        		}
+//        		btnSearchType.setVisible(false);
+        	}
+    	}
+	}
+
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return ulDropdown.getElement().isOrHasChild(Element.as(target))||btnSearchType.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
 	/**
 	 * To render the Access Mode values
 	 */
 	private void renderAccessModeValues() {
 		for(int i=0;i<accessModeArray.length;i++){
 			renderAccessModeCheckBox(accessModePanel,accessModeArray[i].toLowerCase(),accessModeArray[i]);
+		}
+	}
+
+	@UiHandler("btnSearchType")
+	public void OnClickSearchType(ClickEvent event){
+		AppClientFactory.printInfoLogger("ulDropdown.isVisible() : "+ulDropdown.isVisible());
+		if (ulDropdown.isVisible()){
+			ulDropdown.setVisible(false);
+		}else{
+			ulDropdown.setVisible(true);
 		}
 	}
 
@@ -495,10 +560,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			@Override
 			public void onSuccess() {
-				collectionPanel.removeStyleName("active");
-				resourcePanel.setStyleName("active");
+//				collectionPanel.removeStyleName("active");
+//				resourcePanel.setStyleName("active");
 				resourceSearchPanel.setVisible(true);
 				collectionSearchPanel.setVisible(false);
+				ulDropdown.setVisible(false);
 				resetData();
 				getUiHandlers().setSearchType(false,getSearchText());
 			}
@@ -513,10 +579,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			@Override
 			public void onSuccess() {
-				collectionPanel.setStyleName("active");
-				resourcePanel.removeStyleName("active");
+//				collectionPanel.setStyleName("active");
+//				resourcePanel.removeStyleName("active");
 				resourceSearchPanel.setVisible(false);
 				collectionSearchPanel.setVisible(true);
+				ulDropdown.setVisible(false);
 				resetData();
 				getUiHandlers().setSearchType(true,getSearchText());
 			}
@@ -573,7 +640,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
-			searchResults.setText(i18n.GL3257()+"  "+searchDo.getQuery()+"  "+"("+searchDo.getSearchHits()+")");
+			searchResults.setText(i18n.GL3275()+" ("+searchDo.getSearchHits()+")");
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
@@ -615,13 +682,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			lblLoadingTextPrevious.setVisible(false);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
-			collectionPanel.setStyleName("active");
-			resourcePanel.removeStyleName("active");
+//			collectionPanel.setStyleName("active");
+//			resourcePanel.removeStyleName("active");
 			resourceSearchPanel.setVisible(false);
 			collectionSearchPanel.setVisible(true);
 		}else{
-			collectionPanel.removeStyleName("active");
-			resourcePanel.setStyleName("active");
+//			collectionPanel.removeStyleName("active");
+//			resourcePanel.setStyleName("active");
 			resourceSearchPanel.setVisible(true);
 			collectionSearchPanel.setVisible(false);
 		}
@@ -640,6 +707,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showReviewFilter();
 		setStyleForCollectionType();
 		showRatingsFilter();
+
 	}
 	/**
 	 * This method will set the search Filters
