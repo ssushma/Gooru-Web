@@ -6,7 +6,7 @@
 		<panel:H2Panel ui:field="h2Title"/>
 	</g:HTMLPanel>
 	<g:HTMLPanel styleName="courseCreateContainer" ui:field="pnlCreateContainer">
-		<g:Button styleName="primary" ui:field="btnCreate"/>
+		<g:Button styleName="primary createButton" ui:field="btnCreate"/>
 	</g:HTMLPanel>
 	<div class="coursesList">
 		<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList"/>

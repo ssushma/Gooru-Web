@@ -54,11 +54,17 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			courseInfoPresenter.callTaxonomyService();
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 		}else if(index==2){
+			System.out.println("in hit");
 			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
 			myCollectionsListPresenter.setData(type, slotPanel);
 			setInSlot(INNER_SLOT, myCollectionsListPresenter);
 		}else if(index==3){
 			
 		}
+	}
+	@Override
+	public void setDefaultActiveTab(){
+		getView().resetHilightStyles();
+		getView().setDefaultActiveTab();
 	}
 }

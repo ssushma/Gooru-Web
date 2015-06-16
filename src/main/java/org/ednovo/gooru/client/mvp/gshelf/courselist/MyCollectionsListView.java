@@ -131,7 +131,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 					}
 				}
 			};
-			widgetMove.addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
+			widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
 			pnlCourseList.add(widgetMove);
 		}
 	}
@@ -139,7 +139,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	class ClickOnTitleContainer implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().setListPresenterBasedOnType("",slotPanel);
+			getUiHandlers().setListPresenterBasedOnType("Unit",slotPanel);
 		}
 	}
 	@Override
