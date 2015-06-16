@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 
 /**
  * @author Search Team
@@ -33,12 +36,12 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandlers> {
 	
 	/**
-	 * Update the grade style.
-	 * @param filterName {@link String}
-	 * @param addOrRemove {@link String}
+	 * This method will display the Grades according to the subject
 	 */
-	
-	void showInfoDetailsBasedOnCourseId();
-
-
+	void showInfoDetailsBasedOnCourseId(LibraryCodeDo libraryCodeDo,String selectedText);
+	/**
+	 * Set collection default course
+	 * @param libraryCode instance {@link LibraryCodeDo} as List
+	 */
+	void setCourseList(List<LibraryCodeDo> libraryCode);
 }

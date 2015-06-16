@@ -26,10 +26,12 @@ package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 /**
  * @author Search Team
  *
  */
 public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
-	public void setData(String type);
+	public void setData(String type,HTMLPanel slotPanel);
 }

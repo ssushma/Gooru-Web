@@ -34,6 +34,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -53,6 +54,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField TextBox txtMoveTextBox;
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount,spnResourcesCount,spnQuestionsCount;
+	@UiField HTMLPanel pnlTitleContainer;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
 	
@@ -133,6 +135,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 	}
 	public TextBox getTextBox(){
 		return txtMoveTextBox;
+	}
+	public HTMLPanel getTitleContainer(){
+		return pnlTitleContainer;
 	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow);
 }

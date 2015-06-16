@@ -22,27 +22,39 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.righttabs;
-import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
+package org.ednovo.gooru.client.mvp.gshelf.util;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.PresenterWidget;
-public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
+import org.ednovo.gooru.client.uc.LiPanel;
+
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+/**
+ * This file is used for creating Li item with close button.
+ */
+public class LiPanelWithClose extends Composite{
+	Anchor lnkClose;
+	long id;
 	
-	public static final  Object INNER_SLOT = new Object();
-	
-	CourseInfoPresenter courseInfoPresenter;
+	public LiPanelWithClose(String text){
+		 LiPanel panel = new LiPanel();
+		 Label titleText=new Label(text);
+		 lnkClose=new Anchor("X");
+		 panel.add(titleText);
+		 panel.add(lnkClose);
+		 initWidget(panel);
+	}
 	/**
-	 * Constructor
-	 * @param eventBus
-	 * @param view
+	 * This method is used to get close button
+	 * @return
 	 */
-	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CourseInfoPresenter courseInfoPresenter) {
-		super(eventBus, view);
-		this.courseInfoPresenter=courseInfoPresenter;
-		getView().setUiHandlers(this);
-		setInSlot(INNER_SLOT, courseInfoPresenter);
+	public Anchor getCloseButton(){
+		return lnkClose;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 }
