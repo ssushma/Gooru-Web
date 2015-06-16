@@ -81,6 +81,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			getUiHandlers().setTabItems(index, "Unit",slotPanel);
 		}
 	}
+	@Override
 	public void resetHilightStyles(){
 		lnkInfo.removeStyleName(ACTIVE);
 		lnkContent.removeStyleName(ACTIVE);
@@ -98,5 +99,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setSlotPanel(HTMLPanel slotPanel){
 		 this.slotPanel=slotPanel;
+	}
+	@Override
+	public void setDefaultActiveTab(){
+		lnkContent.addStyleName(ACTIVE);
 	}
 }

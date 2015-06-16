@@ -31,6 +31,8 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  *
  */
 public interface CourseInfoUiHandlers extends BaseUiHandlers {
-
-	
+	/**
+	 * This method will call the taxonomy service method
+	 */
+	public void callTaxonomyService();
 }
