@@ -35,10 +35,4 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
 	public void setData(String type,HTMLPanel slotPanel);
-	/**
-	 * This method is used set presenter widget on the slot
-	 * @param slot
-	 * @param content
-	 */
-	public void setDataInSlot(Object slot, Widget content);
 }
