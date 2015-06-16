@@ -46,4 +46,6 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
 	
 	HTMLPanel getSlot();
+
+	void setDefaultOrganizePanel();
 }

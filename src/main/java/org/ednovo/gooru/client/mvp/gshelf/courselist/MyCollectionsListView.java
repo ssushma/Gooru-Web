@@ -135,12 +135,15 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			getUiHandlers().setListPresenterBasedOnType("");
 		}
 	}
-	
 	@Override
-	public void setInSlot(Object slot, Widget content) {	
-		if(slot==null){
-			slotPanel.clear();
-			slotPanel.add(content);
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			 if(slot==ShelfMainPresenter.RIGHT_SLOT){
+				slotPanel.clear();
+				slotPanel.add(content);
+			 }
+		}else{
+
 		}
 	}
 }
