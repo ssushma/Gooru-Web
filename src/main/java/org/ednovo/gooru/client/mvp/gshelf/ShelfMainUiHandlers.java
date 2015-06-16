@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEventHandler;

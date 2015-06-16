@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -285,6 +286,6 @@ public interface AppInjector extends ServiceInjector {
 	SearchAddResourceToCollectionPresenter getRemixPresenterWidget();
 
 	AsyncProvider<QuestionTypePresenter> getQuestionTypePresenter();
-
-
+	
+	MyCollectionsListPresenter getMyCollectionsListPresenter();
 }

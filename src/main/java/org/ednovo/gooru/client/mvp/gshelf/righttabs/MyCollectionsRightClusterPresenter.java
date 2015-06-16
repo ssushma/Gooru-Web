@@ -23,15 +23,17 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
 	
 	public static final  Object INNER_SLOT = new Object();
-	
 	CourseInfoPresenter courseInfoPresenter;
 	/**
 	 * Constructor
@@ -43,6 +45,19 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
 		getView().setUiHandlers(this);
-		setInSlot(INNER_SLOT, courseInfoPresenter);
+	}
+	@Override
+	public void setTabItems(int index,String type,HTMLPanel slotPanel) {
+		clearSlot(INNER_SLOT);
+		getView().setSlotPanel(slotPanel);
+		if(index==1){
+			setInSlot(INNER_SLOT, courseInfoPresenter);
+		}else if(index==2){
+			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
+			myCollectionsListPresenter.setData(type, slotPanel);
+			setInSlot(INNER_SLOT, myCollectionsListPresenter);
+		}else if(index==3){
+			
+		}
 	}
 }
