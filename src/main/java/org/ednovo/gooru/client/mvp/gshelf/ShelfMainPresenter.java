@@ -172,6 +172,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
 		myCollectionsListPresenter.setData("Course",getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+		getView().setDefaultOrganizePanel();
 	}
 	
 	@Override
@@ -271,6 +272,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setListPresenterBasedOnType(String type) {
 		clearSlot(RIGHT_SLOT);
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
 		myCollectionsListPresenter.setData(type,getView().getSlot());
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}

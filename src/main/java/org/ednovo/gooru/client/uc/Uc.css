@@ -1,5 +1,5 @@
 .toolTipPopUp {
-	
+
 }
 
 .closeLabelRemove {
@@ -85,14 +85,14 @@
 	height: auto;
 }
 .closeLabelSearch {
-	background: -moz-linear-gradient(center top, #88bbe1, #88bbe1) repeat
+	background: -moz-linear-gradient(center top, #C3DDEE, #C3DDEE) repeat
 		scroll 0 0 transparent;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#88bbe1),
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C3DDEE),
 		to(#88bbe1));
-	background: -webkit-linear-gradient(top, #88bbe1, #88bbe1);
-	background-image: -ms-linear-gradient(top, #88bbe1, #88bbe1);
-	background: -o-linear-gradient(top, #88bbe1, #88bbe1);
-	background-color: #88bbe1;
+	background: -webkit-linear-gradient(top, #C3DDEE, #C3DDEE);
+	background-image: -ms-linear-gradient(top, #C3DDEE, #C3DDEE);
+	background: -o-linear-gradient(top, #C3DDEE, #C3DDEE);
+	background-color: #C3DDEE;
 	border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 	-moz-border-radius: 3px 3px 3px 3px;
@@ -112,7 +112,7 @@
 }
 
 .toolTipPopUp {
-	
+
 }
 
 /*CollectionImageUc*/
@@ -121,7 +121,7 @@
 	height: 91px;
 	margin: 0 10px 0 0;
 	width: 127px;
-	
+
 }
 
 .collectionThumbnail1{
@@ -140,7 +140,7 @@
 	margin: 0 10px 0 0;
 	width: 127px;
 	position: relative;
-	
+
 }
 
 .collectionThumbnails {
@@ -284,7 +284,7 @@
 	/*padding: 10px;*/
 	font-size: 12px !important;
 	float:left;
-	
+
 }
 .editableFieldProfile {
 	cursor: pointer;
@@ -1113,13 +1113,13 @@ float: left;
 .hoverCollPopupContainerPos {
 	/* left: 418px;
 	top: 24px; */
-	
+
 }
 
 .hoverStasPopupContainerPos {
 	/* left: 566px;
 	top: 24px; */
-	
+
 }
 
 .hoverPopupArrow {
@@ -1309,7 +1309,7 @@ float: left;
 .classPageEmailAlign {
  /*	padding-top: 10px;
 	 padding-bottom: 110px;  */
-	min-height:110px; 
+	min-height:110px;
 }
 
 .classPageEmailButtonContainer {
@@ -1674,7 +1674,7 @@ float: left;
 
 .disableGooruButon{
 	/* Firefox v3.6+ */
-	background-image:-moz-linear-gradient(88% 0% -90deg,rgb(187,187,187) 0%,rgb(153,153,153) 100%); 
+	background-image:-moz-linear-gradient(88% 0% -90deg,rgb(187,187,187) 0%,rgb(153,153,153) 100%);
 	/* safari v4.0+ and by Chrome v3.0+ */
 	background-image:-webkit-gradient(linear,88% 0%,88% 100%,color-stop(0, rgb(187,187,187)),color-stop(1, rgb(153,153,153)));
 	/* Chrome v10.0+ and by safari nightly build*/
@@ -1813,10 +1813,10 @@ button.emailPrimary {
 	border: 1px solid #1076BB;
 	font-family: Arial, sans-serif;
 	display:inline-block;
-	
-	/* Old browsers */ 
+
+	/* Old browsers */
 	background:#1076BB;
-	
+
 	/* Safari 4-5, Chrome 1-9 */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
 
@@ -1859,7 +1859,7 @@ button.emailSecondary:hover {
 .emailSendButton{
 	float: left;
     margin-right: 4px;
-	
+
 }
 .privacyAlignStyle{
 	margin-right: 2px;
