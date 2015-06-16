@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.gshelf.courselist;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team

@@ -15,9 +15,9 @@
 		</div>
 	</div>
 	<div class="folderBlockSitemap">
-		<a class="active" href="">Info</a>
-		<a href="">Content (Lessons)</a>
-		<a href="">Share</a>
+		<g:Anchor ui:field="lnkInfo" styleName="active" >Info</g:Anchor> 
+		<g:Anchor ui:field="lnkContent">Content (Lessons)</g:Anchor> 
+		<g:Anchor ui:field="lnkshare">Share</g:Anchor> 
 	</div>
 	<g:HTMLPanel ui:field="pnlSlotInnerContent"/>
 </g:HTMLPanel>
