@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 
@@ -33,7 +34,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
  *
  */
 public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
-	public void setTabItems(int index,String type,HTMLPanel slotPanel);
+	public void setTabItems(int index,String type,HTMLPanel slotPanel,FolderDo folderObj);
 	/**
 	 * This method is used to set Default Active Tab
 	 */
