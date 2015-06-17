@@ -35,7 +35,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
  */
 public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
 	/**
-	 * This method is used to set content
+	 * This method is used to set data as list
 	 * @param type
 	 * @param slotPanel
 	 * @param result
