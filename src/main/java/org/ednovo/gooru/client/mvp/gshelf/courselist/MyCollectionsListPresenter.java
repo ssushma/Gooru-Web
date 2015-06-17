@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -51,8 +52,11 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 	
 	@Override
-	public void setListPresenterBasedOnType(String type) {
-		getView().setDataInSlot(null, getMyCollectionsRightClusterPresenter().getWidget());
+	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel) {
+		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
+		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
+		getMyCollectionsRightClusterPresenter().setTabItems(2, type,slotPanel);
+		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	@Override
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {

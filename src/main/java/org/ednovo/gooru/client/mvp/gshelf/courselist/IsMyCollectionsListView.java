@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.gshelf.courselist;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
@@ -35,10 +34,4 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
 	public void setData(String type,HTMLPanel slotPanel);
-	/**
-	 * This method is used set presenter widget on the slot
-	 * @param slot
-	 * @param content
-	 */
-	public void setDataInSlot(Object slot, Widget content);
 }

@@ -35,7 +35,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
  */
 public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	public void setData(String type,HTMLPanel slotPanel);
-	public void setListPresenterBasedOnType(String type);
+	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel);
 	/**
 	 * This method will return the Right Cluster Presenter
 	 * @return

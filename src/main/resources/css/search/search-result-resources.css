@@ -7,9 +7,9 @@
 }
 
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes {
-     display: inline-block;
-  margin: 16px 0;
-  padding: 0;
+	display: inline-block;
+	margin: 7px 0;
+	padding: 0;
 }
 #gooruSearchMainContainer .resourceDetails .seachRightNavigation {
 	text-align: right;
@@ -19,10 +19,11 @@
 	padding-left:10px;
 }
 #pnlStandards .blueLink{
-display: inline-block;
-  float: left;
-  padding-left: 2px;
-  color: rgb(12, 116, 190);
+	display: inline-block;
+	float: left;
+	padding-left: 2px;
+	color: rgb(12, 116, 190);
+	padding-top: 4px;
 }
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li {
     display: inline-block;
@@ -101,12 +102,12 @@ margin:0 0 0 -20px !important;
     display: inline-block;
     font-size: 13px;
     min-height: 40px;
-    padding: 7px 9px;
+    padding: 7px 2px;
 }
 #gooruSearchMainContainer .gridToggle{
   display: inline-block;
   min-height: 40px;
-  padding: 3px 9px;
+  padding: 3px 2px;
   position: relative;
   vertical-align: top;
 }
@@ -208,6 +209,12 @@ margin:0 0 0 -20px !important;
 	font-size:13px;
 	min-height: 36px;
 }
+
+#gooruSearchMainContainer .usedDetails .addResource{
+	width: 80px;
+  	margin-left: 14px;
+}
+
 #gooruSearchMainContainer .usedDetails a:hover{
 	text-decoration:none;
 	opacity:0.75;
@@ -289,13 +296,13 @@ margin:0 0 0 -20px !important;
     min-width: 300px;
 }
 #gooruSearchMainContainer .resourceDropdown{
-	padding:0 20px 20px 20px;
+	padding:20px;
 }
 #gooruSearchMainContainer .paddingBlock{
-	padding:20px 0 0 0;
+
 }
 #gooruSearchMainContainer .resourceDropdown P{
-	margin-bottom:8px;
+	margin-bottom:10px;
 }
 
 #gooruSearchMainContainer .resourceDropdown .form-control{
@@ -319,7 +326,7 @@ margin:0 0 0 -20px !important;
   min-height: 40px;
   font-size: 14px;
   color:green;
-  padding: 0px 7px;
+  padding: 0px 4px;
   vertical-align: top;
   cursor:pointer;
   line-height: 36px;
@@ -406,12 +413,12 @@ margin:0 0 0 -20px !important;
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
-	
+
 	    #gooruSearchMainContainer .resourceDesc1 {
 		    width: 95%;
 		    max-height:60px;
 		}
-		
+
 		#gooruSearchMainContainer .resourceDetails .seachRightNavigation{
 			text-align:center;
 		}
@@ -460,7 +467,7 @@ margin:0 0 0 -20px !important;
 	}
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-	
+
 }
 /*Resource search end*/
 
@@ -503,7 +510,7 @@ margin:0 0 0 -20px !important;
 
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
-	
+
 }
 #addCollectionPopup .closeButton{
 	text-align:right;

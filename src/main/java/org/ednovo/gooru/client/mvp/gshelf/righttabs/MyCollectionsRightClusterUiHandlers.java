@@ -26,11 +26,16 @@ package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 /**
  * @author Search Team
  *
  */
 public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
-	
-
+	public void setTabItems(int index,String type,HTMLPanel slotPanel);
+	/**
+	 * This method is used to set Default Active Tab
+	 */
+	public void setDefaultActiveTab();
 }

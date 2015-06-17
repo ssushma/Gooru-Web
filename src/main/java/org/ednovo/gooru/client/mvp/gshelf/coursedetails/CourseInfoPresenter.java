@@ -64,12 +64,6 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	@Override
 	protected void onReveal(){
 		super.onReveal();
-		getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
-			@Override
-			public void onSuccess(List<LibraryCodeDo> result) {
-				getView().setCourseList(result);
-			}
-		});
 	}
 
 	public TaxonomyServiceAsync getTaxonomyService() {
@@ -78,5 +72,15 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
+	}
+
+	@Override
+	public void callTaxonomyService() {
+		getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+			@Override
+			public void onSuccess(List<LibraryCodeDo> result) {
+				getView().setCourseList(result);
+			}
+		});		
 	}
 }

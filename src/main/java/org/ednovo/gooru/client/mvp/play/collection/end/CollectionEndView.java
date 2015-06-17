@@ -114,7 +114,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel metadataContainer;
 	@UiField
-	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
+	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer,scoreMainContainer;
 	
 	@UiField SectionTag dataInsightsPanel;
 	
@@ -383,6 +383,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
+		if(!"assessment".equals(collectionDo.getCollectionType())){
+			scoreMainContainer.setVisible(false);
+		}else{
+			scoreMainContainer.setVisible(true);
+		}
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
 
 		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();

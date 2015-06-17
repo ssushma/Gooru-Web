@@ -26,11 +26,24 @@ package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 /**
  * @author Search Team
  *
  */
 public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCollectionsRightClusterUiHandlers> {
-
-
+	/**
+	 * This method is used to set the slot panel
+	 * @param slotPanel
+	 */
+	public void setSlotPanel(HTMLPanel slotPanel);
+	/**
+	 * This method is used to clear tab active status
+	 */
+	public void resetHilightStyles();
+	/**
+	 * This method is used to set Default tab selection
+	 */
+	public void setDefaultActiveTab();
 }
