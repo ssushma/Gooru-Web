@@ -42,7 +42,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param slotPane
 	 * @param resultl
 	 */
-	public void setData(String type,HTMLPanel slotPane,FolderListDo result);
+	public void setData(String type,HTMLPanel slotPane,FolderListDo result,boolean clrPanel);
 	/**
 	 * This method is used to set type of presenter based on the type
 	 * @param type

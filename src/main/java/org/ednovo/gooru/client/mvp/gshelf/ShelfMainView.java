@@ -34,8 +34,6 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -112,8 +110,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private TreeItem treeChildSelectedItem = new TreeItem();
 
 	private TreeItem previousTreeChildSelectedItem = new TreeItem();
-	
-	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
 	private static final String GOORU_UID = "gooruuid";
 	
@@ -410,6 +406,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String gooruOid = o1!=null?o1:id;
 		int collectionCount=0;
 		if(collections!=null){
+			collectionItemDoSize = collections.size();
 			for(int i=0;i<collections.size();i++){
 				FolderDo floderDo=collections.get(i);
 				if(!getShelffCollection(floderDo.getGooruOid())){
@@ -510,7 +507,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	@UiHandler("collectionListScrollpanel")
 	public void dragImageSimPanelscroll(ScrollEvent event) {
-
 		if (collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
 			pageNumber = pageNumber + 1;
 			getUiHandlers().getMoreListItems(20, pageNumber, false);
