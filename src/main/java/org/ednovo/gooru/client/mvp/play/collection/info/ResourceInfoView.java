@@ -507,7 +507,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			{
 				if(collectionItemDo.getResource().getResourceType().getName() != null)
 				{
-					if (VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()) || RESOURCE_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()))
+					if (VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()) || RESOURCE_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())  || RESOURCE_VIMEO_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()))
 					{
 						setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 										collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
