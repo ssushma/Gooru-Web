@@ -74,6 +74,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	private boolean clrPanel=false;
 	
+	private String type="Course";
+	
 	public static final  Object RIGHT_SLOT = new Object();
 	
 	MyCollectionsListPresenter myCollectionsListPresenter;
@@ -170,8 +172,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
-		myCollectionsListPresenter.setData("Course",getView().getSlot());
-		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 		getView().setDefaultOrganizePanel();
 	}
 	
@@ -227,6 +227,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			userCollectionAsyncCallback = new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
+					clearSlot(RIGHT_SLOT);
+					myCollectionsListPresenter.setData(type,getView().getSlot(),result);
+					setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
 				}
 			};
@@ -271,12 +274,15 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	@Override
 	public void setListPresenterBasedOnType(String type) {
-		clearSlot(RIGHT_SLOT);
+		this.type=type;
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
-		myCollectionsListPresenter.setData(type,getView().getSlot());
-		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
 		return myCollectionsListPresenter.getMyCollectionsRightClusterPresenter();
+	}
+
+	@Override
+	public void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel) {
+		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 }

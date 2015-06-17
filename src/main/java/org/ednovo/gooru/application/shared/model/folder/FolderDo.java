@@ -57,6 +57,7 @@ public class FolderDo implements Serializable{
 	private String description;
 	private String url;
 	private String goals;
+	private int itemSequence;
 	private CollectionSettingsDo settings;
 
 	public FolderDo(){}
@@ -266,5 +267,11 @@ public class FolderDo implements Serializable{
 	}
 	public void setSettings(CollectionSettingsDo settings) {
 		this.settings = settings;
+	}
+	public int getItemSequence() {
+		return itemSequence;
+	}
+	public void setItemSequence(int itemSequence) {
+		this.itemSequence = itemSequence;
 	}
 }

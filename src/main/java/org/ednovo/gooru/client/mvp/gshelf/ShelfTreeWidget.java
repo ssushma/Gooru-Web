@@ -34,11 +34,9 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FontWeightEffect;
-import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
@@ -77,7 +75,6 @@ import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -117,41 +114,23 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	private String draggedCollectionId="";
 	
-	private String levelOneFolderId="";
-	
 	private FolderDo collectionDo;
-
-	private FolderItemDo collectionItemDo;
 
 	private ResourceDropController dropController;
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
-	private TreeItem treeChildSelectedItem = new TreeItem();
-
-	//private static final String ADD_TO_THIS_COLLECTION = "Add to this Collection";
-
-//	private static final String ADD_TO_THIS_COLLECTION = "Drag a resource here to add to this collection";
-	
-//	private static final String EDIT_THIS_COLLECTION = "Drop resource here";
-	
-	private final String CONGRATS_MSG=i18n.GL0483().toLowerCase();
-
-	//private static final String EDIT_THIS_COLLECTION = "Edit this Collection";
-
-	private static final String FOLDER_LEVEL = "1";
-
 	private static ShelfTreeWidget shelfTreeWidget;
 	
 	private boolean isEditButtonSelected = false;
 
 	HTMLPanel htmlPanel;
 
-	private Draggable draggable;
-	
 	private boolean isValue=true;
 	
-	private int level = 0;
+	private boolean isOpen=false;
+	
+	private int level = 1;
 	
 	private int position;
 	
@@ -370,7 +349,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
 			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 3) {
-			titleLbl.setWidth("114px");
+			titleLbl.setWidth("82px");
 			//titleFocPanel.setWidth("115px");
 			titleFocPanel.addStyleName("child");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
@@ -380,12 +359,12 @@ public class ShelfTreeWidget extends FocusPanel {
 			//titleFocPanel.setWidth("89px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
-			titleFocPanel.addStyleName("collectionChild()");
-			try {
+			titleFocPanel.addStyleName("collectionChild");
+			/*try {
 				titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
 			} catch (Exception e){
 				AppClientFactory.printSevereLogger(e.getMessage());
-			}
+			}*/
 		}
 	}
 	
@@ -475,6 +454,10 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 
 	
+	public boolean isOpen() {
+		return isOpen;
+	}
+	
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -512,7 +495,7 @@ public class ShelfTreeWidget extends FocusPanel {
                 setOpenStyle(false, shelfTreeWidget.level);
             }
             shelfTreeWidget = this;
-            setOpen(!true);
+            setOpen(isOpen);
         } else if (shelfTreeWidget != null) {
             //shelfCollection.enableGlassPanel(false);
         }
@@ -654,9 +637,8 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	public void setOpenStyle(boolean isOpen, int subElementsCount) 
 	{
-		Element[] docElement = DOMUtils.getElementsByClassName("arrow", titleFocPanel.getElement());
+		Element[] docElement = DOMUtils.getElementsByClassName("arrows", titleFocPanel.getElement());
 
-		
 		if(docElement.length>0 && !(titleFocPanel.getStyleName().contains("folderStyle-collection")))
 		{
 
@@ -688,10 +670,12 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	
 	public void openFolderInShelf() {
+		AppClientFactory.printInfoLogger("Openfolderinshelf"+getLevel());
 		Map<String,String> params = new HashMap<String,String>();
 		if(getLevel()==1) {
 			params.put(O1_LEVEL, collectionDo.getGooruOid());
 		} else if(getLevel()==2) {
+			AppClientFactory.printInfoLogger(" urlParams.get(O1_LEVEL):"+ urlParams.get(O1_LEVEL));
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			params.put(O2_LEVEL, collectionDo.getGooruOid());
 		} else if(getLevel()==3) {

@@ -23,8 +23,12 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -47,18 +51,30 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void setData(String type,HTMLPanel slotPanel) {
-		getView().setData(type,slotPanel);
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result) {
+		getView().setData(type,slotPanel,result);
 	}
 	
 	@Override
 	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel) {
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
-		getMyCollectionsRightClusterPresenter().setTabItems(1, type,slotPanel);
+		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
+		getMyCollectionsRightClusterPresenter().setTabItems(2, type,slotPanel);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	@Override
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
 		return myCollectionsRightClusterPresenter;
+	}
+
+	@Override
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemSeqToAPI,idToMove, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				getView().resetWidgetPositions();
+				//getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
+			}
+		});
 	}
 }

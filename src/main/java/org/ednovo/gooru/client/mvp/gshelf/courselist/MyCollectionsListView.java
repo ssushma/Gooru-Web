@@ -28,6 +28,8 @@ import java.util.Iterator;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
@@ -38,6 +40,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -50,9 +53,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer;
+	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
+	@UiField Button btnCreate;
 	
 	String type;
 	HTMLPanel slotPanel;
@@ -70,11 +74,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		courseListContainer.getElement().setId("gShelfCousesList");
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
+		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
 	 */
-	private void resetWidgetPositions(){
+	@Override
+	public void resetWidgetPositions(){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
 		while (widgets.hasNext()){
@@ -92,9 +98,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel) {
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result) {
 		this.slotPanel=slotPanel;
 		this.type=type;
+		pnlH2TitleContainer.setVisible(true);
+		pnlCreateContainer.setVisible(false);
 		if(COURSE.equalsIgnoreCase(type)){
 			h2Title.setText(i18n.GL1180());
 		}else if(FOLDER.equalsIgnoreCase(type)){
@@ -102,37 +110,45 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else if(COLLECTION.equalsIgnoreCase(type)){
 			h2Title.setText(i18n.GL3282());
 		}else{
-			h2Title.setVisible(false);
+			pnlH2TitleContainer.setVisible(false);
+			pnlCreateContainer.setVisible(true);
+			btnCreate.setText("Create Unit");
 		}
 		pnlCourseList.clear();
-		for (int i = 0; i <10; i++) {
-			final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type) {
-				@Override
-				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
-					int movingIndex= Integer.parseInt(movingPosition);
-					if(pnlCourseList.getWidgetCount()>=movingIndex){
-						//Based on the position it will insert the widget in the vertical panel
-						if(!isDownArrow){
-							movingIndex= (movingIndex-1);
-							int currentIndex= Integer.parseInt(currentWidgetPosition);
-							pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
-						}else{
-							int currentIndex= Integer.parseInt(currentWidgetPosition);
-							pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+		int i=0;
+		if(result.getSearchResult().size()>0){
+			for (FolderDo folderObj : result.getSearchResult()) {
+				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type,folderObj) {
+					@Override
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
+						int movingIndex= Integer.parseInt(movingPosition);
+						if(pnlCourseList.getWidgetCount()>=movingIndex){
+							//Based on the position it will insert the widget in the vertical panel
+							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
+							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence));
+							if(!isDownArrow){
+								movingIndex= (movingIndex-1);
+								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+							}else{
+								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+							}
 						}
-						resetWidgetPositions();
 					}
-				}
-			};
-			widgetMove.addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
-			pnlCourseList.add(widgetMove);
+				};
+				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
+				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
+				pnlCourseList.add(widgetMove);
+				i++;
+			}
 		}
 	}
 	
 	class ClickOnTitleContainer implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().setListPresenterBasedOnType("",slotPanel);
+			getUiHandlers().setListPresenterBasedOnType("Unit",slotPanel);
 		}
 	}
 	@Override

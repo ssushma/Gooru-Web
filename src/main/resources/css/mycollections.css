@@ -51,8 +51,14 @@
 		display:inline-block;
 		vertical-align:middle;
 }
-
-
+#gShelfMainContainer .collectionScrlPanel {
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	min-height:590px;
+}
+#gShelfMainContainer .collectionScrlPanel > div{
+	height: 100%
+}
 
 #gShelfMainContainer .floderLeftContainer .createMenu{
 	display: inline-block;
@@ -87,6 +93,7 @@
 	margin: 0;
 	padding: 12px 12px;
 	background: #f0f0f0;
+	cursor: pointer;
 }
 
 #gShelfMainContainer .floderLeftContainer .folderLeftMainHeader.active {
@@ -316,7 +323,7 @@ button.btn-disabled{
 	/* width: 176px; */
 }
 #gShelfMainContainer .folderLevel.active {
-	background-color: white;
+	background-color: white !important;
 	border-left: 8px solid #515151;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
@@ -399,7 +406,7 @@ button.btn-disabled{
 #gShelfMainContainer .folderLevel.assesstpublicIcon.assessment {
     background-image: url('../images/folders/panel/assessment-icon-public.png');
 }
-#gShelfMainContainer .folderLevel .arrow {
+/* #gShelfMainContainer .folderLevel .arrow {
     width:25px;
     height:25px;
     border-radius:2px;
@@ -419,7 +426,7 @@ button.btn-disabled{
     display:block;
 }
 
-#gShelfMainContainer .folderLevel .arrow { /* grandparent level - default */
+#gShelfMainContainer .folderLevel .arrow { grandparent level - default
     left:5px;
 }
 
@@ -433,7 +440,7 @@ button.btn-disabled{
 
 #gShelfMainContainer .folderLevel.collectionChild .arrow {
     left:88px;
-}
+} */
 
 #gShelfMainContainer .folderLevel .editButton {
     position: absolute;
@@ -791,6 +798,16 @@ button.btn-disabled{
 
 #gShelfCourseInfo .courseHeader {
 	background: #f0f0f0;
+}
+#gShelfCourseInfo .courseCreateContainer {
+	background: white;
+	border-bottom:1px solid #ddd;
+	height: 48px;
+}
+#gShelfCourseInfo .courseCreateContainer .createButton{
+	margin-top: 1%;
+	float: right;
+	margin-right: 2%;
 }
 #gShelfCourseInfo .breadcrumbMain a{
 	padding:20px 25px;
