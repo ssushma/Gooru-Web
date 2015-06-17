@@ -41,16 +41,20 @@ import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -73,6 +77,9 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 	private static final String SELECTED_RADIO="answer-radio-selected-icon";
 	private static final String CORRECT_ICON="answer-right-icon";
 	private static final String INCORRECT_ICON="answer-wrong-icon";
+	private static final String IMAGE_SELECTED_STYLE="hsImage";
+	private static final String IMAGE_CORRECT_STYLE="correct";
+	private static final String IMAGE_INCORRECT_STYLE="inCorrect";
 
 
 	private static HotSpotAnswersQuestionViewUiBinder uiBinder = GWT.create(HotSpotAnswersQuestionViewUiBinder.class);
@@ -126,7 +133,16 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					addAnswerImage.getRemoveImgLbl().setVisible(false);
 					addAnswerImage.setAnswerImage(questionAnswerDo.getAnswerText()+"?"+randNumber);
 					addAnswerImage.setFileName(null);
+					addAnswerImage.setAnswerCorrect(questionAnswerDo.isIsCorrect());
+					addAnswerImage.selLbl.removeStyleName("answerMarkDeselected");
+					addAnswerImage.getElement().getStyle().setCursor(Cursor.POINTER);
+					addAnswerImage.addDomHandler(new imageSelectEvent(addAnswerImage),ClickEvent.getType());
+						
 					optionsContainer.add(addAnswerImage);
+					if(attemptedAnswerDo!=null){
+						addAnswerImage.getElement().addClassName(IMAGE_SELECTED_STYLE);
+						showPreviousImageAttemptResult(0,addAnswerImage,questionAnswerDo.isIsCorrect());
+					}
 				}
 			}else{
 				while (answersList.hasNext()) {
@@ -159,6 +175,67 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					questionAnswerOptionView.answerOptionRadioButton.setValue(true);
 				}
 	}
+	
+	
+	public void showPreviousImageAttemptResult(int answerId,AddAnswerImg answerImg,boolean isCorrect){
+		if(isCorrect){
+			answerImg.getElement().addClassName(IMAGE_CORRECT_STYLE);
+		}else{
+			answerImg.getElement().addClassName(IMAGE_INCORRECT_STYLE);
+		}
+}
+	
+	public class imageSelectEvent implements ClickHandler{
+		private AddAnswerImg ansImage=null;
+		
+		public imageSelectEvent(AddAnswerImg ansImage){
+			this.ansImage=ansImage;
+			
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			clearImageAnswers();
+			if(ansImage.selectedImage){
+				ansImage.getElement().removeClassName(IMAGE_SELECTED_STYLE);
+				ansImage.selectedImage=false;
+			}else{
+				ansImage.getElement().addClassName(IMAGE_SELECTED_STYLE);
+				ansImage.selectedImage=true;
+			}
+			
+			checkSeletcedImage();
+		}
+		
+	}
+	private void clearImageAnswers(){
+		int widgetCount=optionsContainer.getWidgetCount();
+		disableCheckAnswerButton();
+		for(int i=0;i<widgetCount;i++){
+			Widget widget=optionsContainer.getWidget(i);
+			if(widget instanceof AddAnswerImg){
+				AddAnswerImg answerImg=(AddAnswerImg)widget;
+				answerImg.removeStyleName(IMAGE_CORRECT_STYLE);
+				answerImg.removeStyleName(IMAGE_INCORRECT_STYLE);
+			}
+		}
+
+	}
+	
+	public void checkSeletcedImage(){
+		int widgetCount=optionsContainer.getWidgetCount();
+		disableCheckAnswerButton();
+		for(int i=0;i<widgetCount;i++){
+			Widget widget=optionsContainer.getWidget(i);
+			if(widget instanceof AddAnswerImg){
+				AddAnswerImg answerImg=(AddAnswerImg)widget;
+				if(answerImg.selectedImage){
+					enableCheckAnswerButton();
+				}
+			}
+		}
+	}
+	
 	
 	public class RadioButtonSelectEvent implements ClickHandler{
 		private QuestionAnswerOptionView questionAnswerOptionView=null;
@@ -269,6 +346,22 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 				}
 					answerAttemptDo.setStatus(questionAnswerOptionView.isAnswerCorrect()?"1":"0");
 					userAttemptedOptionsList.add(answerAttemptDo);
+				}else if(widget instanceof AddAnswerImg){
+					AddAnswerImg answerImg=(AddAnswerImg)widget;
+					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+					answerAttemptDo.setText(StringUtil.replaceSpecial(answerImg.getAnswerImage())); 
+					answerAttemptDo.setAnswerId(i+1);
+					answerAttemptDo.setOrder(i+1+"");
+					answerIds.add(i+1);
+					
+					if(answerImg.selectedImage){
+						if(answerImg.isAnswerCorrect()){
+							answerImg.getElement().addClassName(IMAGE_CORRECT_STYLE);
+						}else{
+							answerImg.getElement().addClassName(IMAGE_INCORRECT_STYLE);
+						}
+					}
+						
 				}
 		}
 		userAttemptedAnswerObject(userAttemptedOptionsList);

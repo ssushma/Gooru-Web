@@ -40,12 +40,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AddAnswerImg extends Composite
 {
-	@UiField Label changeImgLbl,selLbl;
-	@UiField Label removeImgLbl;
+	@UiField public Label selLbl;
+	@UiField Label changeImgLbl,removeImgLbl;
 	@UiField Image ansImageContainer;
 	@UiField HTMLPanel imgBlock;
 
 	public boolean selectedImage=false;
+	private boolean isAnswerCorrect;
 
 	private String fileName=null;
 	private static final String DEFAULT_QUESTION_IMAGE="images/default-question.png";
@@ -78,7 +79,9 @@ public class AddAnswerImg extends Composite
 	public void setAnswerImage(String imageUrl){
 		ansImageContainer.setUrl(imageUrl);
 	}
-
+	public String getAnswerImage(){
+		return ansImageContainer.getUrl();
+	}
 
 	public String getFileName() {
 		return fileName;
@@ -133,5 +136,10 @@ public class AddAnswerImg extends Composite
 		}
 	}
 
-
+	public boolean isAnswerCorrect() {
+		return isAnswerCorrect;
+	}
+	public void setAnswerCorrect(boolean isAnswerCorrect) {
+		this.isAnswerCorrect = isAnswerCorrect;
+	}
 }
