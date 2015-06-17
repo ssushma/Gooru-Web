@@ -131,7 +131,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
-		getUserSheldId(); // this API call is to get shelf Id
+		//getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){
@@ -283,6 +283,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	@Override
 	public void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel) {
-		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,false,getUserCollectionAsyncCallback(clearShelfPanel));		
+		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,type,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 }
