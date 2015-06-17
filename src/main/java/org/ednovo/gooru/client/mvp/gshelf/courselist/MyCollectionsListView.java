@@ -28,6 +28,8 @@ import java.util.Iterator;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
@@ -95,7 +97,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel) {
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
@@ -112,27 +114,31 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			btnCreate.setText("Create Unit");
 		}
 		pnlCourseList.clear();
-		for (int i = 0; i <10; i++) {
-			final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type) {
-				@Override
-				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
-					int movingIndex= Integer.parseInt(movingPosition);
-					if(pnlCourseList.getWidgetCount()>=movingIndex){
-						//Based on the position it will insert the widget in the vertical panel
-						if(!isDownArrow){
-							movingIndex= (movingIndex-1);
-							int currentIndex= Integer.parseInt(currentWidgetPosition);
-							pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
-						}else{
-							int currentIndex= Integer.parseInt(currentWidgetPosition);
-							pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+		int i=0;
+		if(result.getSearchResult().size()>0){
+			for (FolderDo folderObj : result.getSearchResult()) {
+				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type,folderObj) {
+					@Override
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
+						int movingIndex= Integer.parseInt(movingPosition);
+						if(pnlCourseList.getWidgetCount()>=movingIndex){
+							//Based on the position it will insert the widget in the vertical panel
+							if(!isDownArrow){
+								movingIndex= (movingIndex-1);
+								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+							}else{
+								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+							}
+							resetWidgetPositions();
 						}
-						resetWidgetPositions();
 					}
-				}
-			};
-			widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
-			pnlCourseList.add(widgetMove);
+				};
+				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
+				pnlCourseList.add(widgetMove);
+				i++;
+			}
 		}
 	}
 	

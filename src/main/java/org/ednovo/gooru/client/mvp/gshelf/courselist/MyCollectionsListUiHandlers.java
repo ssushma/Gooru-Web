@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -34,7 +35,18 @@ import com.google.gwt.user.client.ui.HTMLPanel;
  *
  */
 public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
-	public void setData(String type,HTMLPanel slotPanel);
+	/**
+	 * This method is used to set content
+	 * @param type
+	 * @param slotPane
+	 * @param resultl
+	 */
+	public void setData(String type,HTMLPanel slotPane,FolderListDo result);
+	/**
+	 * This method is used to set type of presenter based on the type
+	 * @param type
+	 * @param slotPanel
+	 */
 	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel);
 	/**
 	 * This method will return the Right Cluster Presenter
