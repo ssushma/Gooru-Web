@@ -44,7 +44,7 @@ public class AddAnswerImg extends Composite
 	@UiField Label changeImgLbl,removeImgLbl;
 	@UiField Image ansImageContainer;
 	@UiField HTMLPanel imgBlock;
-
+	private int answerId;
 	public boolean selectedImage=false;
 	private boolean isAnswerCorrect;
 
@@ -141,5 +141,12 @@ public class AddAnswerImg extends Composite
 	}
 	public void setAnswerCorrect(boolean isAnswerCorrect) {
 		this.isAnswerCorrect = isAnswerCorrect;
+	}
+
+	public int getAnswerId() {
+		return answerId;
+	}
+	public void setAnswerId(int answerId) {
+		this.answerId = answerId;
 	}
 }
