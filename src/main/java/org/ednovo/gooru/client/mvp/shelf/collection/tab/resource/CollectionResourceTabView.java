@@ -324,7 +324,8 @@ public class CollectionResourceTabView extends
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 							getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
-						}else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
+						}else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")
+								|| collectionItemDo.getResource().getResourceType().getName().equals("vimeo/video")){
 							editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 								@Override
@@ -484,7 +485,8 @@ public class CollectionResourceTabView extends
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 						getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
-					} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
+					} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube") || 
+							collectionItemDo.getResource().getResourceType().getName().equals("vimeo/video")){
 						editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 							@Override
@@ -632,7 +634,8 @@ public class CollectionResourceTabView extends
 															.getCollectionItemId());
 										}
 									});
-						} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
+						} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")
+								|| collectionItemDo.getResource().getResourceType().getName().equals("vimeo/video")){
 							editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 							@Override
