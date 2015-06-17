@@ -13,6 +13,7 @@
 	background:#ffffff;
 	box-shadow:0 0 6px rgba(0, 0, 0, 0.05);
 }
+
 #gShelfMainContainer .equifier{
 	overflow:hidden;
 }
@@ -86,6 +87,20 @@
 	margin: 0;
 	padding: 12px 12px;
 	background: #f0f0f0;
+	cursor: pointer;
+}
+
+#gShelfMainContainer .floderLeftContainer .folderLeftMainHeader.active {
+	background-color: white;
+	border-left: 8px solid #515151;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-radius: 4px;
+	margin-left: -7px;
+    z-index:10;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
 }
 
 #gShelfMainContainer .courseNameBlock{
@@ -108,6 +123,7 @@
 
 #gShelfMainContainer .tagCoursePanel p{
 	color:#515151;
+	margin: 0 0 10px;
 }
 #gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader{
 	text-align:center;
@@ -179,7 +195,10 @@ button.btn-disabled{
 #gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li{
 	margin:0 15px 0 0;
 }
-
+#gShelfMainContainer .tagCourseOptions .row div{
+	padding-right: 15px !important;
+	padding-left: 7px !important;
+}
 #gShelfMainContainer .tagCourseOptions a.list-group-item{
 	padding:6px 15px;
 }
@@ -187,6 +206,7 @@ button.btn-disabled{
 	opacity:1;
 }
 #gShelfMainContainer .tagCourseOptions .list-group-item.active, #gShelfMainContainer .tagCourseOptions .list-group-item.active:focus, #gShelfMainContainer .tagCourseOptions .list-group-item.active:hover {
+    background:#87badd;
     background-color: #87badd;
     border-color: #87badd;
     color: #515151;
@@ -380,7 +400,7 @@ button.btn-disabled{
 #gShelfMainContainer .folderLevel.assesstpublicIcon.assessment {
     background-image: url('../images/folders/panel/assessment-icon-public.png');
 }
-#gShelfMainContainer .folderLevel .arrow {
+/* #gShelfMainContainer .folderLevel .arrow {
     width:25px;
     height:25px;
     border-radius:2px;
@@ -400,7 +420,7 @@ button.btn-disabled{
     display:block;
 }
 
-#gShelfMainContainer .folderLevel .arrow { /* grandparent level - default */
+#gShelfMainContainer .folderLevel .arrow { grandparent level - default
     left:5px;
 }
 
@@ -414,7 +434,7 @@ button.btn-disabled{
 
 #gShelfMainContainer .folderLevel.collectionChild .arrow {
     left:88px;
-}
+} */
 
 #gShelfMainContainer .folderLevel .editButton {
     position: absolute;
@@ -772,6 +792,16 @@ button.btn-disabled{
 
 #gShelfCourseInfo .courseHeader {
 	background: #f0f0f0;
+}
+#gShelfCourseInfo .courseCreateContainer {
+	background: white;
+	border-bottom:1px solid #ddd;
+	height: 48px;
+}
+#gShelfCourseInfo .courseCreateContainer .createButton{
+	margin-top: 1%;
+	float: right;
+	margin-right: 2%;
 }
 #gShelfCourseInfo .breadcrumbMain a{
 	padding:20px 25px;

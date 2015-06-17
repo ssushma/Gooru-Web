@@ -28,8 +28,11 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,19 +44,64 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
+	@UiField Anchor lnkInfo,lnkContent,lnkshare;
+	
+	HTMLPanel slotPanel;
+	
+	final String ACTIVE="active";
 	
 	public MyCollectionsRightClusterView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		mainPanel.getElement().setId("gShelfCourseInfo");
+		setIds();
+		lnkInfo.addClickHandler(new TabClickHandler(1,lnkInfo));
+		lnkContent.addClickHandler(new TabClickHandler(2,lnkContent));
+		lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
 	}
-	
+	public void setIds(){
+		mainPanel.getElement().setId("gShelfCourseInfo");
+		pnlSlotInnerContent.getElement().setId("pnlSlotInnerContent");
+		lnkInfo.getElement().setId("lnkInfo");
+		lnkContent.getElement().setId("lnkContent");
+		lnkshare.getElement().setId("lnkshare");
+	}
+	/**
+	 * This inner class will handle the click event on the info,content and share tab.
+	 */
+	class TabClickHandler implements ClickHandler{
+		int index;
+		Anchor selectedTab;
+		TabClickHandler(int index,Anchor selectedTab){
+			this.index=index;
+			this.selectedTab=selectedTab;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			resetHilightStyles();
+			selectedTab.setStyleName(ACTIVE);
+			getUiHandlers().setTabItems(index, "Unit",slotPanel);
+		}
+	}
+	@Override
+	public void resetHilightStyles(){
+		lnkInfo.removeStyleName(ACTIVE);
+		lnkContent.removeStyleName(ACTIVE);
+		lnkshare.removeStyleName(ACTIVE);
+	}
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		pnlSlotInnerContent.clear();
 		if(content!=null){
-			if(slot==MyCollectionsRightClusterPresenter.INNER_SLOT){
+		  if(slot==MyCollectionsRightClusterPresenter.INNER_SLOT){
 				pnlSlotInnerContent.add(content);
-			 }
+			}
 		}
+	}
+	@Override
+	public void setSlotPanel(HTMLPanel slotPanel){
+		 this.slotPanel=slotPanel;
+	}
+	@Override
+	public void setDefaultActiveTab(){
+		lnkContent.addStyleName(ACTIVE);
 	}
 }

@@ -45,7 +45,7 @@
 									<li> <a href="">Course 2</a> </li> <li> <a href="">Course 3</a> </li> </ul> -->
 								<panel:HTMLEventPanel styleName="folderLeftMainHeader"
 									ui:field="organizeRootPnl">
-									<g:HTMLPanel>MyCollections</g:HTMLPanel>
+									<g:Label ui:field="organizelbl">My Collections</g:Label>
 								</panel:HTMLEventPanel>
 								<g:HTMLPanel ui:field="floderTreeContainer" />
 							</div>

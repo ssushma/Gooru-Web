@@ -45,14 +45,12 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="list-group">
-			 				 <a href="http://dev.lifeboard.in/demo/goorunew/collection-info.html#" class="list-group-item">
-			  				  Cras justo odio
-			 				 </a>
-			  				<a href="http://dev.lifeboard.in/demo/goorunew/collection-info.html#" class="list-group-item">All Students</a>
-						  <a href="http://dev.lifeboard.in/demo/goorunew/collection-info.html#" class="list-group-item  active">Students who need Intervention and Support</a>
-						  <a href="http://dev.lifeboard.in/demo/goorunew/collection-info.html#" class="list-group-item">Advanced Learner</a>
-						  <a href="http://dev.lifeboard.in/demo/goorunew/collection-info.html#" class="list-group-item">English Learner</a>
-						  <a href="http://dev.lifeboard.in/demo/goorunew/collection-info.html#" class="list-group-item">Teachers</a>
+			 				 <a class="list-group-item">Cras justo odio</a>
+			  				 <a class="list-group-item">All Students</a>
+						 	 <a class="list-group-item  active">Students who need Intervention and Support</a>
+						  	 <a class="list-group-item">Advanced Learner</a>
+						  	 <a class="list-group-item">English Learner</a>
+						 	 <a class="list-group-item">Teachers</a>
 					  </div>
 				</div>
 				<div class="clearfix"></div>
