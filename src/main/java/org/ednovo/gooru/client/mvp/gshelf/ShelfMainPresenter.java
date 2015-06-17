@@ -227,9 +227,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			userCollectionAsyncCallback = new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
-					clearSlot(RIGHT_SLOT);
-					myCollectionsListPresenter.setData(type,getView().getSlot(),result);
-					setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+					if(clrPanel){
+						clearSlot(RIGHT_SLOT);
+						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+						setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
+					}else{
+						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
 				}
 			};

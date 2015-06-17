@@ -58,6 +58,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate;
 	
+	int index=0;
+	
 	String type;
 	HTMLPanel slotPanel;
 	
@@ -98,7 +100,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result) {
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
@@ -114,11 +116,15 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			pnlCreateContainer.setVisible(true);
 			btnCreate.setText("Create Unit");
 		}
-		pnlCourseList.clear();
-		int i=0;
+		if(clrPanel){
+			index=0;
+			pnlCourseList.clear();
+		}else{
+			index=pnlCourseList.getWidgetCount();
+		}
 		if(result.getSearchResult().size()>0){
 			for (FolderDo folderObj : result.getSearchResult()) {
-				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type,folderObj) {
+				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
 					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
 						int movingIndex= Integer.parseInt(movingPosition);
@@ -140,7 +146,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				pnlCourseList.add(widgetMove);
-				i++;
+				index++;
 			}
 		}
 	}

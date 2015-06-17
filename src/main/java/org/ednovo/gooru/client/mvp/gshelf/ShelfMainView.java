@@ -110,8 +110,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private TreeItem treeChildSelectedItem = new TreeItem();
 
 	private TreeItem previousTreeChildSelectedItem = new TreeItem();
-	
-	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
 	private static final String GOORU_UID = "gooruuid";
 	
@@ -413,6 +411,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String gooruOid = o1!=null?o1:id;
 		int collectionCount=0;
 		if(collections!=null){
+			collectionItemDoSize = collections.size();
 			for(int i=0;i<collections.size();i++){
 				FolderDo floderDo=collections.get(i);
 				if(!getShelffCollection(floderDo.getGooruOid())){
@@ -513,7 +512,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	@UiHandler("collectionListScrollpanel")
 	public void dragImageSimPanelscroll(ScrollEvent event) {
-
 		if (collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
 			pageNumber = pageNumber + 1;
 			getUiHandlers().getMoreListItems(20, pageNumber, false);
