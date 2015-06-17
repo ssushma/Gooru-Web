@@ -793,6 +793,16 @@ button.btn-disabled{
 #gShelfCourseInfo .courseHeader {
 	background: #f0f0f0;
 }
+#gShelfCourseInfo .courseCreateContainer {
+	background: white;
+	border-bottom:1px solid #ddd;
+	height: 48px;
+}
+#gShelfCourseInfo .courseCreateContainer .createButton{
+	margin-top: 1%;
+	float: right;
+	margin-right: 2%;
+}
 #gShelfCourseInfo .breadcrumbMain a{
 	padding:20px 25px;
 	display:inline-block;
