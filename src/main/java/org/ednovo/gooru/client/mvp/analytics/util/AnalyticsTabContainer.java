@@ -37,9 +37,9 @@ public abstract class AnalyticsTabContainer extends Composite implements ClientC
 		btnPtint.addClickHandler(new ClickImplemntation(PRINT));
 		btnEmail.addClickHandler(new ClickImplemntation(EMAIL));
 		btnSave.addClickHandler(new ClickImplemntation(SAVEBTN));
-		StringUtil.setAttributes(btnPtint.getElement(), "btnPtint", "print", "Print");
+		StringUtil.setAttributes(btnPtint.getElement(), "btnPtint", i18n.GL3284(), i18n.GL3284());
 		StringUtil.setAttributes(btnEmail.getElement(), "btnPtint", "print", "Email");
-		StringUtil.setAttributes(btnSave.getElement(), "btnSave", i18n.GL0141(), "Save");
+		StringUtil.setAttributes(btnSave.getElement(), "btnSave", i18n.GL0141(), i18n.GL0141());
 	}
 	/**
 	 * This method is used to clear the highlight styles
