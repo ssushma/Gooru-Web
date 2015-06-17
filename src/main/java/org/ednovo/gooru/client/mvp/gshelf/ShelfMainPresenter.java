@@ -280,4 +280,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
 		return myCollectionsListPresenter.getMyCollectionsRightClusterPresenter();
 	}
+
+	@Override
+	public void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel) {
+		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,false,getUserCollectionAsyncCallback(clearShelfPanel));		
+	}
 }
