@@ -196,14 +196,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				organizeRootPnl.removeStyleName("active");
 			}
 			ShelfTreeWidget treeItemShelfTree = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
-			if(organizeRootPnl.getStyleName().contains("active")) {
-				treeItemShelfTree.setActiveStyle(false);
-			} else {
-				treeItemShelfTree.setActiveStyle(true);
+			if(treeItemShelfTree!=null){
+				if(organizeRootPnl.getStyleName().contains("active")) {
+					treeItemShelfTree.setActiveStyle(false);
+				} else {
+					treeItemShelfTree.setActiveStyle(true);
+				}
 			}
-
 		}
-
 	}
 	
 	/**
@@ -304,15 +304,15 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget selectedWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(folderListDo!=null) {
 			int nextLevel = 1;
-			if(selectedWidget.getLevel()==0) {
+			if(selectedWidget.getLevel()==1) {
 				o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 				id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 				nextLevel = 2;
-			} else if (selectedWidget.getLevel()==1) { 
+			} else if (selectedWidget.getLevel()==2) { 
 				o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 				id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 				nextLevel = 3;
-			}else if (selectedWidget.getLevel()==2) {
+			}else if (selectedWidget.getLevel()==3) {
 				id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 				nextLevel = 4;
 			}
@@ -405,30 +405,29 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String gooruOid = o1!=null?o1:id;
 		int collectionCount=0;
 		if(collections!=null){
-			 if(collections.size()>0){
-				 for(int i=0;i<collections.size();i++){
-					 FolderDo floderDo=collections.get(i);
-					 if(!getShelffCollection(floderDo.getGooruOid())){
-						 ShelfTreeWidget shelfCollection = new ShelfTreeWidget(floderDo, 1);
-						 shelfCollection.setWidgetPositions(1, collectionCount, null);
-						 TreeItem folderItem=new TreeItem(new ShelfTreeWidget(floderDo, 1));
-						 shelfFolderTree.addItem(folderItem);
-						 //adjustTreeItemStyle(folderItem,floderDo.getType(),0);
+			if(collections.size()>0){
+				for(int i=0;i<collections.size();i++){
+					FolderDo floderDo=collections.get(i);
+					if(!getShelffCollection(floderDo.getGooruOid())){
+						ShelfTreeWidget shelfCollection = new ShelfTreeWidget(floderDo, 1);
+						shelfCollection.setWidgetPositions(1, collectionCount, null);
+						TreeItem folderItem=new TreeItem(new ShelfTreeWidget(floderDo, 1));
+						shelfFolderTree.addItem(folderItem);
 						//When page is refreshed, the folderItem previously selected will be highlighted.
-							if(gooruOid!=null&&gooruOid.equalsIgnoreCase(floderDo.getGooruOid())) {
-								checkShelfRefreshStatus(folderItem, floderDo.getGooruOid());
-								AppClientFactory.fireEvent(new SetFolderParentNameEvent(floderDo.getTitle()));
-								AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(floderDo)));
-								shelfCollection.setFolderOpenedStatus(true);
-							}
-						 collectionCount++;
+						if(gooruOid!=null&&gooruOid.equalsIgnoreCase(floderDo.getGooruOid())) {
+							checkShelfRefreshStatus(folderItem, floderDo.getGooruOid());
+							AppClientFactory.fireEvent(new SetFolderParentNameEvent(floderDo.getTitle()));
+							AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(floderDo)));
+							shelfCollection.setFolderOpenedStatus(true);
+						}
+						collectionCount++;
 
-					 }
+					}
 				}
-				 
-				 floderTreeContainer.clear();
-				 floderTreeContainer.add(shelfFolderTree);
-			 }
+
+				floderTreeContainer.clear();
+				floderTreeContainer.add(shelfFolderTree);
+			}
 		}
 	}
 	
@@ -446,7 +445,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	/**
 	 * @function checkShelfRefreshStatus 
-	 * @created_date : 11-Feb-2014
+	 * @created_date : 11-Jun-2015
 	 * @description
 	 * @parm(s) : @param treeItem
 	 * @return : void
