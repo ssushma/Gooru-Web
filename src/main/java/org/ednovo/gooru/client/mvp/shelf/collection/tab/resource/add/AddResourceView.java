@@ -957,6 +957,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			    trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
 			    openEndedButton.setStyleName(res.css().buttonDeSelected());
                 hotTextTabButton.setStyleName(res.css().buttonDeSelected());
+            	questionTypePresenter.getView().editQuestion(null);
 			}catch(Exception e) {
 				AppClientFactory.printSevereLogger(e.getMessage());
 			}
@@ -1149,12 +1150,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			Window.enableScrolling(false);
 			if(!hotSpotRadioButton.getValue()){
 				hotSpotRadioButton.setValue(true);
-				if(collectionItemDo!=null){
-					getUiHandlers().setHSEditData();
-				}
 				highlightSelectedTab("HS");
 				getUiHandlers().addSelectedQuestionType("HS");
 				
+				if(titleLbl.getText().equalsIgnoreCase(i18n.GL0304())){
+					getUiHandlers().setHSEditData();
+				}
 			}
 		}
 		

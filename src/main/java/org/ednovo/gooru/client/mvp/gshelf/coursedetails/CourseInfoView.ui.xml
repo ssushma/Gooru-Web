@@ -1,0 +1,65 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:HTMLPanel ui:field="courseInfo">
+			<div class="courseNameBlock">
+				<p>Course Name</p>
+				<p><input type="text" class="form-control" value="AcNum"/></p>
+			</div>
+			<div class="tagCoursePanel">
+				<p>Tag your course. What do you plan to cover?</p>
+				<div class="tagCoursePanelHeader">
+					<div class="btn-group btn-group-justified" role="group" aria-label="...">
+			  			<div class="btn-group" role="group">
+			   				 <button type="button" class="btn btn-default active">K-12</button>
+			 			</div>
+						<div class="btn-group" role="group">
+						    <button type="button" class="btn btn-default">Higher Education</button>
+						</div>
+						<div class="btn-group" role="group">
+						    <button type="button" class="btn btn-default">Professional Learning</button>
+					     </div>
+					</div>
+				</div>
+				<div class="tagCoursePanelBody">
+					<div class="courseGroupBlock">
+						<div class="no-gutter">
+							<div class="col-md-4 col-sm-5">
+								<div class="courseGroupLeft">
+									<uc:UlPanel ui:field="ulMainGradePanel"/>
+								</div>
+							</div>
+							<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+				<div class="tagCoursePanelFooter">
+					<div class="filterTags">
+						<uc:UlPanel ui:field="ulSelectedItems"/>
+					</div>
+				</div>
+			<div class="tagCourseOptions">
+				<p>Audience &amp; Purpose</p>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="list-group">
+			 				 <a class="list-group-item">Cras justo odio</a>
+			  				 <a class="list-group-item">All Students</a>
+						 	 <a class="list-group-item  active">Students who need Intervention and Support</a>
+						  	 <a class="list-group-item">Advanced Learner</a>
+						  	 <a class="list-group-item">English Learner</a>
+						 	 <a class="list-group-item">Teachers</a>
+					  </div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="stepsButtonGroup">
+			<button class="secondary" type="submit">Save &amp; View Course</button>
+			<button class="primary" type="submit">Next: Create a Unit</button>
+		</div>
+	</div>
+</g:HTMLPanel>
+</ui:UiBinder>

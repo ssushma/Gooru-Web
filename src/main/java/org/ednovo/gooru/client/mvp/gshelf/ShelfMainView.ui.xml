@@ -5,86 +5,59 @@
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="gShelfMainContainer">
-	<g:HTMLPanel styleName="gradeContainer greyBackground">
-
-		<div class="container">
-			<div class="row no-gutter equifier">
-
-				<div class="col-md-3 col-sm-3">
-
-
-					<div class="createMenu animate" data-animate="fadeInLeft">
-
-						<!-- Split button -->
-						<div class="btn-group btn-block">
-							<button type="button" class="btn btn-default btn-left">My Courses </button>
-							<button type="button" class="btn btn-default btn-right dropdown-toggle"
-								data-toggle="dropdown" aria-expanded="false">
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a href="#">Action</a>
-								</li>
-								<li>
-									<a href="#">Another action</a>
-								</li>
-								<li>
-									<a href="#">Something else here</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<a href="#">Separated link</a>
-								</li>
-							</ul>
+		<g:HTMLPanel styleName="gradeContainer greyBackground">
+			<div class="container">
+				<div class="row no-gutter equifier">
+					<div class="col-md-3 col-sm-3">
+					  <div class="floderLeftContainer">
+						<div class="createMenu no-gutter animate fadeInLeft animated"
+							data-animate="fadeInLeft">
+							<div class="col-md-10 col-xs-10 col-sm-10">
+								<!-- Split button -->
+								<div class="btn-group btn-block">
+									<g:Button ui:field="btnSelectedText" styleName="btn btn-default btn-left">My Courses</g:Button>
+									<button type="button" class="btn btn-default btn-right dropdown-toggle"
+										data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<g:Anchor ui:field="lnkMyCourses" text="My Courses"/>
+										</li>
+										<li>
+											<g:Anchor ui:field="lnkMyFolders" text="My Folders"/>
+										</li>
+										<li>
+											<g:Anchor ui:field="lnkMyCollections" text="My Collections"/>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-2 col-xs-2 col-sm-2">
+								<span class="plus">+</span>
+							</div>
+							<div class="clearfix"></div>
 						</div>
-
+						
+							<div class="folderListBlock">
+								<!-- <ul> <li class="active"> <a href="">Untitled Course</a> </li> 
+									<li> <a href="">Course 2</a> </li> <li> <a href="">Course 3</a> </li> </ul> -->
+								<panel:HTMLEventPanel styleName="folderLeftMainHeader"
+									ui:field="organizeRootPnl">
+									<g:Label ui:field="organizelbl">My Collections</g:Label>
+								</panel:HTMLEventPanel>
+								<g:HTMLPanel ui:field="floderTreeContainer" />
+							</div>
+						</div>
 					</div>
-
-
-					<div class="floderLeftContainer">
-
-
-
-
-						<div class="folderLeftActionBtn">
-
-							<button class="primary btn-block" type="submit">Create a Course</button>
-
-						</div>
-
-
-						<div class="folderListBlock">
-
-							<ul>
-
-								<li class="active">
-									<a href="">Untitled Course</a>
-								</li>
-								<li>
-									<a href="">Course 2</a>
-								</li>
-								<li>
-									<a href="">Course 3</a>
-								</li>
-							</ul>
-
-
-						</div>
-
-
-
-
+					<div class="col-md-9 col-sm-9">
+						<g:HTMLPanel styleName="floderRightContainer"
+							ui:field="pnlSlot" />
+						<div class="clearfix"></div>
 					</div>
-
-				</div>
-				<div class="col-md-9 col-sm-9">
-					<g:HTMLPanel styleName="floderRightContainer" ui:field="pnlSlot"/>
-					<div class="clearfix"></div>
 				</div>
 			</div>
-			</div>
-			</g:HTMLPanel>
 		</g:HTMLPanel>
-</ui:UiBinder>
+	</g:HTMLPanel>
+</ui:UiBinder> 

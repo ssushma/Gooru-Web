@@ -681,6 +681,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						            
 						            //Set Answer choices
 						            String questionType= result.get(i).getType();
+						            if(questionType==null){
+						            	questionType= result.get(i).getQuestionType();
+						            }
 						            String correctAnser = null;
 						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
 						        		Label anserlbl=new Label();
@@ -800,6 +803,49 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        		}
 						        		 answerspnl.setStyleName(res.css().setMarginAuto());
 						        		 data.setValue(i, 3, answerspnl.toString());
+						        	}else if(HT_RO.equalsIgnoreCase(questionType)){
+						        		VerticalPanel answerspnl=new VerticalPanel();
+						        		if(result.get(i).getAnswerObject()!=null) {
+						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+						        			 JSONObject answerObject = value.isObject();
+						        			 Set<String> keys=answerObject.keySet();
+						        			 Iterator<String> itr = keys.iterator();
+						        			 boolean isCorrect=false;
+						        		      while(itr.hasNext()) {
+						        		    	  answerspnl.clear();
+						        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+						        		         for(int j=0;j<attemptsObj.size();j++){
+						        		        	Label answerChoice=new Label();
+						        		            String showMessage = null;
+						        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+						        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+						        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+						 	        		         if(skip == false)
+						 							  {
+						 	        		        	showMessage=removeHtmlTags(matext);
+														answerChoice.setText(showMessage);
+														
+						 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+						 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+						 										 isCorrect=true;
+						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+						 										answerChoice.getElement().getStyle().setColor(CORRECT);
+						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+						 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+						 									}
+						 							  }else{
+						 								 isCorrect=true;
+						 							  }
+						 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
+						 	        		        answerspnl.add(answerChoice);
+						        		         }
+						        		      }
+						        		      if(!isCorrect){
+													 isTickdisplay=true;
+												}
+						        		}
+						        		 answerspnl.setStyleName(res.css().setMarginAuto());
+						        		 data.setValue(i, 3, answerspnl.toString());
 						        	}
 						        	
 						        	Image correctImg=new Image();      	            
@@ -870,6 +916,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					           
 					            //Set Answer choices
 					            String questionType= result.get(i).getType();
+					            if(questionType==null){
+					            	questionType=result.get(i).getQuestionType();
+					            }
 					            String correctAnser = null;
 					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
 					        		Label anserlbl=new Label();
@@ -975,7 +1024,44 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        		}
 					        		 answerspnl.setStyleName(res.css().setMarginAuto());
 					        		 data.setValue(i, 2, answerspnl.toString());
+					        	}else if(HT_RO.equalsIgnoreCase(questionType)){
+					        		VerticalPanel answerspnl=new VerticalPanel();
+					        		if(result.get(i).getAnswerObject()!=null) {
+					        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+					        			 JSONObject answerObject = value.isObject();
+					        			 Set<String> keys=answerObject.keySet();
+					        			 Iterator<String> itr = keys.iterator();
+					        		      while(itr.hasNext()) {
+					        		    	  answerspnl.clear();
+					        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+					        		         for(int j=0;j<attemptsObj.size();j++){
+					        		        	Label answerChoice=new Label();
+					        		            String showMessage = null;
+					        		            
+					        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+					        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+					        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+					 	        		         if(skip == false)
+					 							  {
+					 	        		        	showMessage=removeHtmlTags(matext);
+													answerChoice.setText(showMessage);
+					 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+					 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+					 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+					 										answerChoice.getElement().getStyle().setColor(CORRECT);
+					 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+					 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+					 									}
+					 							  }
+					 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
+					 	        		        answerspnl.add(answerChoice);
+					        		         }
+					        		      }
+					        		}
+					        		 answerspnl.setStyleName(res.css().setMarginAuto());
+					        		 data.setValue(i, 2, answerspnl.toString());
 					        	}
+					        	
 					           
 					            //Set attempts
 					            Label attempts=new Label(Integer.toString(noOfAttempts));
@@ -1144,5 +1230,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@Override
 	public Frame getFrame(){
 		return downloadFile;
+	}
+	
+	private String removeHtmlTags(String html){
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
+        return html;
 	}
 }

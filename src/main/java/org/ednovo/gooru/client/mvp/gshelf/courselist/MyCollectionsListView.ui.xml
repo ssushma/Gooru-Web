@@ -1,10 +1,13 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
 	<g:HTMLPanel ui:field="courseListContainer">
-	<div class="courseHeader">
-		<h2>Courses</h2>
-	</div>
+	<g:HTMLPanel styleName="courseHeader" ui:field="pnlH2TitleContainer">
+		<panel:H2Panel ui:field="h2Title"/>
+	</g:HTMLPanel>
+	<g:HTMLPanel styleName="courseCreateContainer" ui:field="pnlCreateContainer">
+		<g:Button styleName="primary createButton" ui:field="btnCreate"/>
+	</g:HTMLPanel>
 	<div class="coursesList">
 		<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList"/>
 	</div>

@@ -393,6 +393,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addExplanationAnc.addStyleName("advancedOptionsTabs");
 		addExplanationAnc.removeStyleName("advancedOptionsTabActive");
 		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
+		addExplanationAnc.setVisible(true);
 
 		/**
 		 * Depth of Knowledge
@@ -400,6 +401,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		depthOfKnowledgeContainer.setVisible(false);
 		addDepthOfKnowledgeAnc.addStyleName("advancedOptionsTabs");
 		addDepthOfKnowledgeAnc.removeStyleName("advancedOptionsTabActive");
+		addDepthOfKnowledgeAnc.setVisible(true);
 
 		/**
 		 * Standards
@@ -425,6 +427,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addHintsAnc.addStyleName("advancedOptionsTabs");
 		addHintsAnc.removeStyleName("advancedOptionsTabActive");
 		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+		addHintsAnc.setVisible(true);
 
 		/**
 		 * Add
@@ -1897,6 +1900,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		isSaveButtonClicked=false;
 		clearObjects();
 		ansChoiceErrMsg.setText("");
+		addQuestImgContainer.clear();
+		addQuestionImg.setVisible(true);
+		setAncTabs();
 	}
 
 	public void clearObjects(){
@@ -2024,7 +2030,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@Override
 	public void editQuestion(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo=collectionItemDo;
+		if(collectionItemDo!=null){
 		isEditResource=true;
+		}
 		explanationContainer.setVisible(false);
     	depthOfKnowledgeContainer.setVisible(false);
     	hintsContainer.setVisible(false);
@@ -2032,51 +2040,20 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
     	centuryContainer.setVisible(false);
 
 
-		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
-		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
-		hintsContainer.clear();
-		while (iterator.hasNext()) {
-			QuestionHintsDo hints = iterator.next();
-			int widgetCount=hintsContainer.getWidgetCount();
-	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
-	        addHintsTextArea(addHints);
-		}
-
-		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
-		Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator();
-
-
-		AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
-
-		String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
-
-		if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
-			int widgetcount=1;
-			while (it.hasNext()) {
-				addHotSpotQuestion.setAnswerFields(false);
-				QuestionAnswerDo answer = it.next();
-
-				final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
-
-				if(answer.isIsCorrect()){
-					addAnswerChoice.isOptionSelectedButton=true;
-					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
-				}else{
-					addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
-				}
-
-
-				addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
-				widgetcount++;
-			}
-			addHotSpotQuestion.setAnswerChoices();
-		}
-
+	}
+	
+	public void setAncTabs(){
+		explanationContainer.setVisible(!addExplanationAnc.isVisible());
+    	depthOfKnowledgeContainer.setVisible(!addDepthOfKnowledgeAnc.isVisible());
+    	hintsContainer.setVisible(!addHintsAnc.isVisible());
+    	standardContainer.setVisible(!addStandardsAnc.isVisible());
+    	centuryContainer.setVisible(!addCenturyAnc.isVisible());
 	}
 
 
 	public void setEditData(){
 		try{
+			setAncTabs();
 			setEditQuestionImage();
 
 			int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
@@ -2136,6 +2113,54 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
 					}
 				}
+
+				TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
+				Iterator<QuestionHintsDo> iterator = hintsList.iterator();
+				hintsContainer.clear();
+				while (iterator.hasNext()) {
+					QuestionHintsDo hints = iterator.next();
+					int widgetCount=hintsContainer.getWidgetCount();
+			        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
+			        addHintsTextArea(addHints);
+				}
+
+				TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
+				Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator();
+
+
+				AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
+
+				String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
+
+				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
+					int widgetcount=1;
+					while (it.hasNext()) {
+						addHotSpotQuestion.setAnswerFields(false);
+						QuestionAnswerDo answer = it.next();
+
+						final AddAnswerChoice addAnswerChoice=new AddAnswerChoice(widgetcount+"",answer.getAnswerText());
+
+						if(answer.isIsCorrect()){
+							addAnswerChoice.isOptionSelectedButton=true;
+							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
+						}else{
+							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
+						}
+
+
+						addHotSpotQuestion.textAnsContainer.add(addAnswerChoice);
+						widgetcount++;
+					}
+					addHotSpotQuestion.setAnswerChoices();
+				}else {
+					addHotSpotQuestion.ansImageContainer.clear();
+					while (it.hasNext()) {
+						QuestionAnswerDo answer = it.next();
+						addHotSpotQuestion.setAnswerImageUrl(answer.getAnswerText(), null, true,answer.isIsCorrect());
+						
+					}
+				}
+
 
 
 			setDepthOfKnowledgeContainer();

@@ -2,18 +2,20 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
 	<g:HTMLPanel styleName="tableRow">
-		<div class="tableColumn">
+		<g:HTMLPanel styleName="tableColumn" ui:field="pnlTitleContainer">
 			<div class="tableMainHeader">
 			<panel:H3Panel ui:field="h3CourseTitle"/>
 				<p>AcNum</p>
 			</div>
-		</div>
+		</g:HTMLPanel>
 		<div class="tableColumn">
 			<div class="tableListTags">
-				<span>Units (2)</span>
-				<span>Lessons (4)</span>
-				<span>Collections (10)</span>
-				<span>Assessments (2)</span>
+				<g:InlineLabel ui:field="spnUnitsCount"/>
+				<g:InlineLabel ui:field="spnLessonsCount"/>
+				<g:InlineLabel ui:field="spnCollectionsCount"/>
+				<g:InlineLabel ui:field="spnAssessmentsCount"/>
+				<g:InlineLabel ui:field="spnResourcesCount"/>
+				<g:InlineLabel ui:field="spnQuestionsCount"/>
 			</div>
 		</div>
 		<div class="tableColumn">
