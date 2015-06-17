@@ -23,7 +23,10 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
@@ -53,14 +56,34 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 	
 	@Override
-	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel) {
+	public void setDataInContentSlot(final String type, final HTMLPanel slotPanel,String folderId) {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo result) {
+				getView().setData(type,slotPanel,result);
+			}
+		});
+	}
+
+	@Override
+	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj) {
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
 		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
-		getMyCollectionsRightClusterPresenter().setTabItems(2, type,slotPanel);
+		getMyCollectionsRightClusterPresenter().setTabItems(2, type,slotPanel,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	@Override
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
 		return myCollectionsRightClusterPresenter;
+	}
+
+	@Override
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemSeqToAPI,idToMove, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				getView().resetWidgetPositions();
+			}
+		});
 	}
 }

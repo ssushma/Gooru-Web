@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -47,6 +48,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@UiField Anchor lnkInfo,lnkContent,lnkshare;
 	
 	HTMLPanel slotPanel;
+	FolderDo folderObj;
 	
 	final String ACTIVE="active";
 	
@@ -78,7 +80,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		public void onClick(ClickEvent event) {
 			resetHilightStyles();
 			selectedTab.setStyleName(ACTIVE);
-			getUiHandlers().setTabItems(index, "Unit",slotPanel);
+			getUiHandlers().setTabItems(index, "Unit",slotPanel,folderObj);
 		}
 	}
 	@Override
@@ -97,8 +99,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 	}
 	@Override
-	public void setSlotPanel(HTMLPanel slotPanel){
+	public void setSlotPanel(HTMLPanel slotPanel,FolderDo folderObj){
 		 this.slotPanel=slotPanel;
+		 this.folderObj=folderObj;
 	}
 	@Override
 	public void setDefaultActiveTab(){

@@ -103,6 +103,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 			h3CourseTitle.setText(i18n.GL0645()+" "+(index+1));
 		}
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
+		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
 	}
 	/**
 	 * This method is used to set count for Units,Lessons,Collections and Assessments.
@@ -130,8 +131,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 				public void onSuccess() {
 					String movingPosition=txtMoveTextBox.getText().toString().trim();
 					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index");
+					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
 					if(!movingPosition.isEmpty()){
-						moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow);
+						moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId);
 					}
 				}
 			});
@@ -147,5 +149,5 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public HTMLPanel getTitleContainer(){
 		return pnlTitleContainer;
 	}
-	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow);
+	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 }

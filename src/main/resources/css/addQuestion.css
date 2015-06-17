@@ -897,7 +897,15 @@
 	float: left;
 	margin-left: -22px;
 }
-
+.hsImage {
+	border: 2px solid #06c;
+}
+.hsImage.correct {
+	border: 2px solid #62ae41;
+}
+.hsImage.inCorrect {
+	border: 2px solid #FBB03B;
+}
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
 		float: left;

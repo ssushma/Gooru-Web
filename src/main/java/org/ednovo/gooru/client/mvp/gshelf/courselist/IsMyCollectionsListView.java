@@ -35,10 +35,14 @@ import com.google.gwt.user.client.ui.HTMLPanel;
  */
 public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
 	/**
-	 * This method is used to set content
+	 * This method is used to set data as list
 	 * @param type
 	 * @param slotPanel
 	 * @param result
 	 */
 	public void setData(String type,HTMLPanel slotPanel,FolderListDo result);
+	/**
+	 * This method is used to reset widgets
+	 */
+	public void resetWidgetPositions();
 }
