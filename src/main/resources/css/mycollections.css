@@ -87,6 +87,7 @@
 	margin: 0;
 	padding: 12px 12px;
 	background: #f0f0f0;
+	cursor: pointer;
 }
 
 #gShelfMainContainer .floderLeftContainer .folderLeftMainHeader.active {
@@ -394,7 +395,7 @@ button.btn-disabled{
 #gShelfMainContainer .folderLevel.assesstpublicIcon.assessment {
     background-image: url('../images/folders/panel/assessment-icon-public.png');
 }
-#gShelfMainContainer .folderLevel .arrow {
+/* #gShelfMainContainer .folderLevel .arrow {
     width:25px;
     height:25px;
     border-radius:2px;
@@ -414,7 +415,7 @@ button.btn-disabled{
     display:block;
 }
 
-#gShelfMainContainer .folderLevel .arrow { /* grandparent level - default */
+#gShelfMainContainer .folderLevel .arrow { grandparent level - default
     left:5px;
 }
 
@@ -428,7 +429,7 @@ button.btn-disabled{
 
 #gShelfMainContainer .folderLevel.collectionChild .arrow {
     left:88px;
-}
+} */
 
 #gShelfMainContainer .folderLevel .editButton {
     position: absolute;
