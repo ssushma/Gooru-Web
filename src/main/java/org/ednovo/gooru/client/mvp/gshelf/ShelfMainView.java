@@ -34,8 +34,6 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -210,7 +208,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
-		collectionListScrollpanel.getElement().getStyle().setWidth(249, Unit.PX);
+		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
 	}
 	
@@ -406,6 +404,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		if (clearShelfPanel) {
 			pageNumber = 1;
 			shelfFolderTree.clear();
+		}
+		SHELF_COLLECTIONS.clear();
+		if(collections != null) {
+			SHELF_COLLECTIONS.addAll(collections);
+			collectionItemDoSize = SHELF_COLLECTIONS.size();
 		}
 		String gooruOid = o1!=null?o1:id;
 		int collectionCount=0;

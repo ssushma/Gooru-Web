@@ -138,17 +138,20 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
-				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
+				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				pnlCourseList.add(widgetMove);
 				i++;
 			}
 		}
 	}
-	
 	class ClickOnTitleContainer implements ClickHandler{
+		FolderDo folderObj;
+		ClickOnTitleContainer(FolderDo folderObj){
+			this.folderObj=folderObj;
+		}
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().setListPresenterBasedOnType("Unit",slotPanel);
+			getUiHandlers().setListPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
 	@Override
