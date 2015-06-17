@@ -40,15 +40,15 @@
 							<g:FlowPanel styleName="playRight">
 								<g:FlowPanel styleName="playBlockTop">
 									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBoxTime} ">
-										<g:Label styleName="smallTxt" text="{i18n.GL2084}"></g:Label>
+										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2084}"></g:Label>
 										<g:FlowPanel ui:field="spendTimeContainer"></g:FlowPanel>
 									</g:FlowPanel>
-									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBox} " visible="false">
-										<g:Label styleName="smallTxt" text="{i18n.GL2085}"></g:Label>
+									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBox} " ui:field="scoreMainContainer" >
+										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2085}"></g:Label>
 										<g:FlowPanel ui:field="scoreContainer"></g:FlowPanel>
 									</g:FlowPanel>
 									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBox}">
-										<g:Label styleName="smallTxt" text="{i18n.GL2086}"></g:Label>
+										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2086}"></g:Label>
 											<g:FlowPanel styleName="{playerStyle.bigTxt}">
 												<g:Label styleName="{playerStyle.timeTextBig}" ui:field="avgReactionImage"></g:Label>
 											</g:FlowPanel>
