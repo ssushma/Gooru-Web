@@ -131,7 +131,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
-		getUserSheldId(); // this API call is to get shelf Id
+		//getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){

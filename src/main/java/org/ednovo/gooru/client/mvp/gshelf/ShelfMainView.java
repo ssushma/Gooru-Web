@@ -206,7 +206,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
-		collectionListScrollpanel.getElement().getStyle().setWidth(249, Unit.PX);
+		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
 	}
 	
@@ -402,6 +402,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		if (clearShelfPanel) {
 			pageNumber = 1;
 			shelfFolderTree.clear();
+		}
+		SHELF_COLLECTIONS.clear();
+		if(collections != null) {
+			SHELF_COLLECTIONS.addAll(collections);
+			collectionItemDoSize = SHELF_COLLECTIONS.size();
 		}
 		String gooruOid = o1!=null?o1:id;
 		int collectionCount=0;
