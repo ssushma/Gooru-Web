@@ -311,6 +311,7 @@ public interface ClientConstants {
 	String TURNON ="turn-on";
 	String TURNOFF ="turn-off";
 	String RESOURCE_URL ="resource/url";
+	String RESOURCE_VIMEO_URL ="vimeo/video";
 	String DELETE ="delete";
 	String NEXT ="next";
 	String PREVIOUS ="previous";
