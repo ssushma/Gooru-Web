@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.H3Panel;
+import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,6 +57,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount,spnResourcesCount,spnQuestionsCount;
 	@UiField HTMLPanel pnlTitleContainer;
+	@UiField Paragraph pTitle;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
 	
@@ -64,9 +67,14 @@ public abstract class ContentWidgetWithMove extends Composite {
 	 * @param index
 	 * @param type
 	 */
-	public ContentWidgetWithMove(int index,String type) {
+	public ContentWidgetWithMove(int index,String type,FolderDo folderObj) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.type=type;
+		
+		if(folderObj.getTitle()!=null){
+			pTitle.setText(folderObj.getTitle());
+		}
+		
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
 		spnResourcesCount.setVisible(false);
