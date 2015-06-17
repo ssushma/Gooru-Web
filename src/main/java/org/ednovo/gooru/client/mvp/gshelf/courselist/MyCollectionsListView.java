@@ -79,7 +79,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	/**
 	 * This method is used to reset the widget positions with default text
 	 */
-	private void resetWidgetPositions(){
+	@Override
+	public void resetWidgetPositions(){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
 		while (widgets.hasNext()){
@@ -119,10 +120,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			for (FolderDo folderObj : result.getSearchResult()) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
 							//Based on the position it will insert the widget in the vertical panel
+							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
+							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence));
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
@@ -131,10 +134,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 							}
-							resetWidgetPositions();
 						}
 					}
 				};
+				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(), ClickEvent.getType());
 				pnlCourseList.add(widgetMove);
 				i++;

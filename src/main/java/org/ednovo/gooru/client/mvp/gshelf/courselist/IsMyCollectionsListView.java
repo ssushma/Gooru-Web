@@ -41,4 +41,8 @@ public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollection
 	 * @param result
 	 */
 	public void setData(String type,HTMLPanel slotPanel,FolderListDo result);
+	/**
+	 * This method is used to reset widgets
+	 */
+	public void resetWidgetPositions();
 }

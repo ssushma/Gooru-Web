@@ -53,4 +53,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @return
 	 */
 	MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
+	
+	
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI);
 }
