@@ -409,19 +409,21 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public ProfileDo getUserProfileV2Details(String gooruUid, String userMetaActiveFlag)
 			throws GwtException {
 		ProfileDo profileDo = null;
-		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, gooruUid);
-		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
-			url+=USER_META_ACTIVE_FLAG;
-		}
-		JsonRepresentation jsonRep = null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		logger.info("-----getUserProfileV2Details-----get url-----"+url);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			profileDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileDo.class);
-		} catch (JSONException e) {
-			logger.error("Exception::", e);
+		if (!"ANONYMOUS".equalsIgnoreCase(gooruUid)){
+			String userUid = getLoggedInUserUid();
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, gooruUid);
+			if(userMetaActiveFlag.equalsIgnoreCase("1")) {
+				url+=USER_META_ACTIVE_FLAG;
+			}
+			JsonRepresentation jsonRep = null;
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			logger.info("-----getUserProfileV2Details-----get url-----"+url);
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			try {
+				profileDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileDo.class);
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
 		}
 		return profileDo;
 	}
