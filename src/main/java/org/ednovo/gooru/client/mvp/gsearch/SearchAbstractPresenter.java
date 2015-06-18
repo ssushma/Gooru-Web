@@ -104,6 +104,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	private SearchAsyncCallback<SearchDo<String>> sourceSuggestionAsyncCallback;
 
 	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
+	
+	private SearchAsyncCallback<SearchDo<String>> contributorSuggestionAsyncCallback;
 
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackFirstLoad;
 
@@ -262,6 +264,16 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				@Override
 				public void onCallSuccess(SearchDo<String> result) {
 					getView().setAggregatorSuggestions(result);
+				}
+			});
+			setContributorSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
+				@Override
+				protected void run(SearchDo<String> searchDo) {
+					getSearchService().getSuggestedContributor(searchDo, this);
+				}
+				@Override
+				public void onCallSuccess(SearchDo<String> result) {
+					getView().setContributorSuggestions(result);
 				}
 			});
 		}
@@ -568,6 +580,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		getAggregatorSuggestionAsyncCallback().execute(searchDo);
 	}
 
+	@Override
+	public void requestContributorSuggestions(SearchDo<String> searchDo){
+		getContributorSuggestionAsyncCallback().execute(searchDo);
+	}
+	
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
 		return standardSuggestionAsyncCallback;
 	}
@@ -589,12 +606,21 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchAsyncCallback<SearchDo<String>> getAggregatorSuggestionAsyncCallback() {
 		return aggregatorSuggestionAsyncCallback;
 	}
-
+	
 	public void setAggregatorSuggestionAsyncCallback(
 			SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback) {
 		this.aggregatorSuggestionAsyncCallback = aggregatorSuggestionAsyncCallback;
 	}
-
+	
+	public SearchAsyncCallback<SearchDo<String>> getContributorSuggestionAsyncCallback() {
+		return contributorSuggestionAsyncCallback;
+	}
+	
+	public void setContributorSuggestionAsyncCallback(
+			SearchAsyncCallback<SearchDo<String>> contributorSuggestionAsyncCallback) {
+		this.contributorSuggestionAsyncCallback = contributorSuggestionAsyncCallback;
+	}
+	
 	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
 
 	protected abstract void requestSearchLoad(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback, boolean isBackToTop);

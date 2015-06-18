@@ -45,6 +45,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 	private boolean validation = true;
 
 	private AppMultiWordSuggestOracle suggestionOrcl;
+	private ImageMultiWordSuggestOracle suggestionOrclImg;
 
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -75,7 +76,22 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 		this.getValueBox().addKeyUpHandler(this);
 		this.getValueBox().addKeyDownHandler(this);
 	}
-
+	public AppSuggestBox(ImageMultiWordSuggestOracle suggestionOrclImg) {
+		super(suggestionOrclImg);
+		this.suggestionOrclImg = suggestionOrclImg;
+//		this.getTextBox().getElement().setAttribute("placeholder", "e.g. CCSS.M.8.F.A.3");
+		if (AppClientFactory.getLoggedInUser() != null && AppClientFactory.getLoggedInUser().getUsername()!=null){
+			if(AppClientFactory.getLoggedInUser().getUsername().equalsIgnoreCase("TexasTeacher")) {
+				this.getTextBox().getElement().setAttribute("placeholder", i18n.GL1502());
+			}else{
+				this.getTextBox().getElement().setAttribute("placeholder", i18n.GL1503());
+			}
+		}else{
+			this.getTextBox().getElement().setAttribute("placeholder", i18n.GL1503());
+		}
+		this.getValueBox().addKeyUpHandler(this);
+		this.getValueBox().addKeyDownHandler(this);
+	}
 	/*
 	 * Unused Methods
 	 * public final void reset() {

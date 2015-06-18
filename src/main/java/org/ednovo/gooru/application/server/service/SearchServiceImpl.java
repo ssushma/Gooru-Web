@@ -599,7 +599,23 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeAggregator(jsonRep));
 		return searchDo;
 	}
+	@Override
+	public SearchDo<String> getSuggestedContributor(SearchDo<String> searchDo)
+			throws GwtException {
+		JsonRepresentation jsonRep=null;
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.v2_SEARCH_SUGGEST_SOURCE);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.Q, searchDo.getSearchQuery());
+		params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
+		params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 
+		getLogger().info("SEARCH_SUGGEST_SOURCE get contributor url:::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeSource(jsonRep));
+		return searchDo;
+	}
 	@Override
 	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(
 			SearchDo<ResourceSearchResultDo> searchDo, String contentGorruOid)

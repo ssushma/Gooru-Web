@@ -94,6 +94,11 @@
 																	<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
 																	<g:Label ui:field="aggregatorNotFoundLbl"/>
 															   </div>
+															   <div class="paddingBlock">
+																	<p>Contributor <g:Image url="images/mos/questionmark.png" ui:field="contributorTooltip"/></p>
+																	<p><panel:AppSuggestBox styleName="form-control" ui:field="contributorSgstBox"/></p>
+																	<g:Label ui:field="contribuNotFoundLbl"/>
+									  						   </div>
 															    <div class="paddingBlock no-gutter">
 																	<p>Access Mode</p>
 																	<panel:PPanel styleName="col-md-6 accessStyle" ui:field="accessModePanel" />

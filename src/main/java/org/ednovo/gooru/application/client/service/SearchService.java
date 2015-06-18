@@ -243,6 +243,16 @@ public interface SearchService extends BaseService {
 	 *
 	 */
 	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException, ServerDownException;
+	
+	
+	/**
+	 * This method is used to get the contributor results
+	 * @param searchDo
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	SearchDo<String> getSuggestedContributor(SearchDo<String> searchDo) throws GwtException, ServerDownException;
 	/**
 	 * 
 	 * @function getCollectionSuggestedResourceSearchResults 

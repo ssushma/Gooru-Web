@@ -48,8 +48,10 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.ImageMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.client.uc.Suggestions;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -98,7 +100,9 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -124,7 +128,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 
-	@UiField Label lblLoadingTextPrevious,lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
+	@UiField Label lblLoadingTextPrevious,lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl,contribuNotFoundLbl;
 
 	@UiField InlineLabel searchResults;
 
@@ -143,23 +147,31 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField HTMLEventPanel resourceFiltersDropDwn,moreFilterPanel;
 
-	@UiField Image publisherTooltip,aggregatorTooltip,authorQuestionTooltip;
+	@UiField Image publisherTooltip,aggregatorTooltip,authorQuestionTooltip,contributorTooltip;
 
 	@UiField(provided = true)
 	AppSuggestBox publisherSgstBox;
 
 	@UiField(provided = true)
 	AppSuggestBox aggregatorSgstBox;
+	
+	@UiField(provided = true)
+	AppSuggestBox contributorSgstBox;
 
 	LiPanel liPanel;
 
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
 
 	private AppMultiWordSuggestOracle aggregatorSuggestOracle;
+	
+	private ImageMultiWordSuggestOracle contributorSuggestOracle;
+	
 
 	private SearchDo<String> sourceSearchDo = new SearchDo<String>();
 
 	private SearchDo<String> aggregatorSearchDo = new SearchDo<String>();
+	
+	private SearchDo<String> contributorSearchDo = new SearchDo<String>();
 
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
 
@@ -179,7 +191,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	String FILLED_GREEN = "filled";
 
-	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
+	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag,contributor;
 
 	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
 
@@ -187,7 +199,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	boolean pageFlag=false;
 	boolean firstTime = false,isApiInProgress=true,isApiInProgressLoad=true,isApiInProgressBack=true,isApiInProgressBackLoad=true;
 
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues;
 
 	private HandlerRegistration handlerRegistration=null;
 
@@ -232,6 +244,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (text != null && text.trim().length() > 0) {
 						getUiHandlers().requestAggregatorSuggestions(aggregatorSearchDo);
 				   }
+			}
+		};
+		contributorSuggestOracle= new ImageMultiWordSuggestOracle(true);
+		contributorSgstBox= new AppSuggestBox(contributorSuggestOracle) {
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+			@Override
+			public void keyAction(String text, KeyUpEvent event) {
+				contributorSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					getUiHandlers().requestContributorSuggestions(contributorSearchDo);
+			   }
 			}
 		};
 		setWidget(uiBinder.createAndBindUi(this));
@@ -385,10 +411,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	    	publisherSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 	    	publisherSgstBox.getElement().setId("asSourceSgst");
 	    	aggregatorSgstBox.getElement().setId("asAggregatorSgst");
+	    	
 			aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
-
+			contributorSgstBox.getElement().setId("asContributorSgst");
 			aggregatorSgstBox.addSelectionHandler(this);
 	    	publisherSgstBox.addSelectionHandler(this);
+	    	contributorSgstBox.addSelectionHandler(this);
 	    }
 		publisherTooltip.addMouseOverHandler(new MouseOverOnImage(i18n.GL1769()));
 		publisherTooltip.addMouseOutHandler(new MouseOutOnImage());
@@ -704,6 +732,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showAccessModeFilter();
 		showPublisherFilter();
 		showAggregatorFilter();
+		showContributorFilter();
 		showReviewFilter();
 		setStyleForCollectionType();
 		showRatingsFilter();
@@ -856,7 +885,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 		}
 	}
-
+	/**
+	 * To show the contributor values in search page
+	 */
+	private void showContributorFilter(){
+		contributor  = AppClientFactory.getPlaceManager().getRequestParameter("flt.contributor");
+		if(contributor!=null){
+			String[] split = contributor.split(",");
+			for(int i=0; i<split.length; i++){
+				pnlAddFilters.add(createTagsLabel(split[i],"contributorPanel"));
+			}
+		}
+	}
 	/**
 	 * To render star ratings and handle the click events
 	 */
@@ -1420,6 +1460,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedStars="";
 		selectedPublisheValues="";
 		selectedAuggreValues="";
+		selectedContributorValues="";
 	    oerValue="";
 
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
@@ -1476,6 +1517,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					selectedAuggreValues +=closeLabelSetting.getSourceText();
 				}
+				if("contributorPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					if (!selectedContributorValues.isEmpty()) {
+						selectedContributorValues += COMMA_SEPARATOR;
+					}
+					selectedContributorValues +=closeLabelSetting.getSourceText();
+				}
+				
 				if("oerPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 
 					oerValue="1";
@@ -1540,6 +1588,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 if(!selectedAuggreValues.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.AGGREGATOR_FLT, selectedAuggreValues);
 			 }
+			 if(!selectedContributorValues.isEmpty()){
+				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT, selectedContributorValues);
+			 }
+			 
 			 if(!oerValue.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OER_FLT, oerValue);
 			 }
@@ -1840,6 +1892,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		aggregatorSgstBox.showSuggestionList();
 	}
+	@Override
+	public void setContributorSuggestions(SearchDo<String> contributorSearchDo) {
+		contributorSuggestOracle.clear();
+		this.contributorSearchDo=contributorSearchDo;
+		if(this.contributorSearchDo.getSearchResults() != null){
+			this.contributorSearchDo.getSearchResults().removeAll(getSuggestionsAsList(pnlAddFilters));
+		}
+		if (this.contributorSearchDo.getSearchResults() != null && this.contributorSearchDo.getSearchResults().size() > 0) {
+			contributorSuggestOracle.setAll(contributorSearchDo.getSearchResults());
+		} else {
+			contributorSuggestOracle.add(NO_MATCH_FOUND);
+		}
+		contributorSgstBox.showSuggestionList();
+	}
 
 	@Override
 	public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event) {
@@ -1868,7 +1934,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			aggregatorSgstBox.getElement().setAttribute("alt","");
 			aggregatorSgstBox.getElement().setAttribute("title","");
 			aggregatorSuggestOracle.clear();
+		}else if(event.getSource().equals(contributorSgstBox)){
+			String text = contributorSgstBox.getValue();
+			if (text.equals(NO_MATCH_FOUND)) {
+				new FadeInAndOut(contribuNotFoundLbl.getElement(), 5000, 5000);
+			} else {
+				pnlAddFilters.add(createTagsLabel(text, "contributorPanel"));
+				callSearch();
+			}
+			contributorSgstBox.setText("");
+			contributorSgstBox.getElement().setAttribute("alt","");
+			contributorSgstBox.getElement().setAttribute("title","");
+			contributorSuggestOracle.clear();
 		}
+	
 	}
 
 	@UiHandler("moreFilterPanel")

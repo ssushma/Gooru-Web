@@ -64,6 +64,8 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	String OER_FLT = "flt.isOer";
 
 	String AGGREGATOR_FLT = "flt.aggregator";
+	
+	String CONTRIBUTOR_FLT = "flt.contributor";
 
 	String ACCESS_MODE_FLT = "flt.cfAccessMode";
 
@@ -107,6 +109,8 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	void setSourceSuggestions(SearchDo<String> result);
 
 	void setAggregatorSuggestions(SearchDo<String> result);
-
+	
+	void setContributorSuggestions(SearchDo<String> result);
+	
 	void setJsonResponseInStorage(String data,boolean isApiCalled);
 }
