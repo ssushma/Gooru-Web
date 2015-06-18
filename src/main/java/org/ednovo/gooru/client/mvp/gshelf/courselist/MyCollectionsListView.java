@@ -36,12 +36,18 @@ import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -57,6 +63,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate;
+	@UiField ScrollPanel listScrollPanel;
 	
 	int index=0;
 	
@@ -68,6 +75,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
+		Window.addResizeHandler(new ResizeHandler() {
+			@Override
+			public void onResize(ResizeEvent event) {
+				setScrollHeight();
+			}
+		});
 	}
 	/**
 	 * This method is used to set id's
@@ -77,6 +90,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
+		setScrollHeight();
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
@@ -170,5 +184,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 
 		}
+	}
+	
+	public void setScrollHeight(){
+		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
+		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);
 	}
 }
