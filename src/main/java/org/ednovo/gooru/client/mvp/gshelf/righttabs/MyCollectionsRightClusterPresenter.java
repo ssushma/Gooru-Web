@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 
@@ -47,16 +48,15 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setUiHandlers(this);
 	}
 	@Override
-	public void setTabItems(int index,String type,HTMLPanel slotPanel) {
+	public void setTabItems(int index,String type,HTMLPanel slotPanel,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
-		getView().setSlotPanel(slotPanel);
+		getView().setSlotPanel(slotPanel,folderObj);
 		if(index==1){
 			courseInfoPresenter.callTaxonomyService();
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 		}else if(index==2){
-			System.out.println("in hit");
 			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setData(type, slotPanel);
+			myCollectionsListPresenter.setDataInContentSlot(type, slotPanel,folderObj.getGooruOid());
 			setInSlot(INNER_SLOT, myCollectionsListPresenter);
 		}else if(index==3){
 			

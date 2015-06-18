@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.H3Panel;
+import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,6 +57,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount,spnResourcesCount,spnQuestionsCount;
 	@UiField HTMLPanel pnlTitleContainer;
+	@UiField Paragraph pTitle;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
 	
@@ -64,9 +67,14 @@ public abstract class ContentWidgetWithMove extends Composite {
 	 * @param index
 	 * @param type
 	 */
-	public ContentWidgetWithMove(int index,String type) {
+	public ContentWidgetWithMove(int index,String type,FolderDo folderObj) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.type=type;
+		
+		if(folderObj.getTitle()!=null){
+			pTitle.setText(folderObj.getTitle());
+		}
+		
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
 		spnResourcesCount.setVisible(false);
@@ -95,6 +103,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 			h3CourseTitle.setText(i18n.GL0645()+" "+(index+1));
 		}
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
+		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
 	}
 	/**
 	 * This method is used to set count for Units,Lessons,Collections and Assessments.
@@ -122,8 +131,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 				public void onSuccess() {
 					String movingPosition=txtMoveTextBox.getText().toString().trim();
 					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index");
+					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
 					if(!movingPosition.isEmpty()){
-						moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow);
+						moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId);
 					}
 				}
 			});
@@ -139,5 +149,5 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public HTMLPanel getTitleContainer(){
 		return pnlTitleContainer;
 	}
-	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow);
+	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 }

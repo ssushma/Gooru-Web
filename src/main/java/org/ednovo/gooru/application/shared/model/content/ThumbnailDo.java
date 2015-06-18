@@ -26,7 +26,7 @@ package org.ednovo.gooru.application.shared.model.content;
 
 import java.io.Serializable;
 
-import org.ednovo.gooru.application.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
