@@ -31,8 +31,6 @@
   background: -moz-linear-gradient(top, #ffffff, #f5f5f5);
   background: -ms-linear-gradient(top, #ffffff, #f5f5f5);
   background: -o-linear-gradient(top, #ffffff, #f5f5f5);
-  margin-top:54px;
-  
 }
 #gShelfMainContainer .greyBackground{
 	background:#e8e7e7;
@@ -688,7 +686,14 @@ button.btn-disabled{
 	padding:20px 15px;
 	background:#f0f0f0;
 }
-
+#gShelfCousesList .coursesList::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+#gShelfCousesList .coursesList::-webkit-scrollbar-thumb {
+	background-color: #bdbebd;
+	-webkit-border-radius: 2ex;
+}
 #gShelfCousesList .courseHeader h2{
 	font-size:22px;
 	font-weight:bold;
