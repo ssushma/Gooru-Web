@@ -164,7 +164,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	private AppMultiWordSuggestOracle aggregatorSuggestOracle;
 	
-	private ImageMultiWordSuggestOracle contributorSuggestOracle;
+	private AppMultiWordSuggestOracle contributorSuggestOracle;
 	
 
 	private SearchDo<String> sourceSearchDo = new SearchDo<String>();
@@ -246,7 +246,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				   }
 			}
 		};
-		contributorSuggestOracle= new ImageMultiWordSuggestOracle(true);
+		contributorSuggestOracle= new AppMultiWordSuggestOracle(true);
 		contributorSgstBox= new AppSuggestBox(contributorSuggestOracle) {
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
