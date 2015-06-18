@@ -205,14 +205,14 @@ margin:0 0 0 -20px !important;
 	margin-right:10px;
 }
 #gooruSearchMainContainer .usedDetails{
-	padding:10px 10px;
+	padding:5px 10px;
 	font-size:13px;
 	min-height: 36px;
 }
 
 #gooruSearchMainContainer .usedDetails .addResource{
 	width: 80px;
-  	margin-left: 14px;
+  	margin-left: 8px;
 }
 
 #gooruSearchMainContainer .usedDetails a:hover{
@@ -220,9 +220,9 @@ margin:0 0 0 -20px !important;
 	opacity:0.75;
 }
 #gooruSearchMainContainer .userDetailsResources{
-	padding: 9px 9px;
-	border-top: 1px solid #ddd;
-	min-height: 51px;
+	padding: 5px 9px;
+	/* border-top: 1px solid #ddd;
+	min-height: 51px; */
 }
 #gooruSearchMainContainer .userDetailsResources  .user{
 	font-size:13px;

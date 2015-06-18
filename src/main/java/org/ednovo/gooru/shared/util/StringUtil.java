@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  *
  */
 package org.ednovo.gooru.shared.util;
@@ -50,36 +50,39 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.visualization.client.VisualizationUtils;
+import com.google.gwt.visualization.client.visualizations.PieChart;
+import com.google.gwt.visualization.client.visualizations.Table;
 import com.googlecode.gwt.crypto.client.TripleDesCipher;
 
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class StringUtil implements ClientConstants {
 
 
 
-	
+
 	 public static final int INDEX_NOT_FOUND = -1;
-	 
+
 	 public static final String EMPTY = "";
-	 
+
 	 public static boolean IPAD_MESSAGE_Close_Click = false;
-	 
+
 	 private static final String ASSESSMENT_URL = "assessment/url";
-		
+
      private static final String ASSESSMENT = "assessment";
-     
+
      private static final String DEFULT_COLLECTION = "images/default-collection-image-160x120.png";
- 	
+
  	 private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 
  	 public static Map<String, String> categoryMap =null;
-	
+
 	private final static byte[] key = CRYPTO_KEY.getBytes();
-	
+
 
 	static{
 		addAllCategories();
@@ -106,7 +109,7 @@ public class StringUtil implements ClientConstants {
 		return truncateText(text, maxCharLength, "...");
 	}
 
-	public static String truncateText(String text, int maxCharLength, String suffix) {	
+	public static String truncateText(String text, int maxCharLength, String suffix) {
 		if (text != null && text.trim().length() > maxCharLength && !text.equalsIgnoreCase("multiple sources"))
 		{
 			text = text.trim().substring(0, maxCharLength) + suffix;
@@ -189,29 +192,29 @@ public class StringUtil implements ClientConstants {
 		String  thumbnailFilename = null;
 		if (thumbnailName != null) {
 			String  fileExtension =  StringUtil.substringAfterLast(thumbnailName, ".");
-			if (fileExtension != null) { 
+			if (fileExtension != null) {
 				thumbnailFilename = StringUtil.substringBeforeLast(thumbnailName, "." + fileExtension) + thumbnailSuffix + fileExtension;
 			}
 		}
 		return thumbnailFilename;
 	}
 	/**
-	 * 
-	 * @function splitQuery 
-	 * 
+	 *
+	 * @function splitQuery
+	 *
 	 * @created_date : Dec 5, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param url
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : Map<String,String>
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -241,7 +244,7 @@ public class StringUtil implements ClientConstants {
 	//
 	//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 	//		Date resultdate = new Date(dateMilliseconds);
-	//		
+	//
 	//		return sdf.format(resultdate);
 	//	}
 
@@ -265,10 +268,10 @@ public class StringUtil implements ClientConstants {
 
 	public static boolean isPartnerUser(String userName) {
 		boolean isPartner = false;
-		if(AUTODESK.equalsIgnoreCase(userName) || LESSONOPOLOGY.equalsIgnoreCase(userName) || COMMONSENCEMEDIA.equalsIgnoreCase(userName) 
+		if(AUTODESK.equalsIgnoreCase(userName) || LESSONOPOLOGY.equalsIgnoreCase(userName) || COMMONSENCEMEDIA.equalsIgnoreCase(userName)
 				|| FTE.equalsIgnoreCase(userName) || WSPWH.equalsIgnoreCase(userName) || LISANGC.equalsIgnoreCase(userName) || NGC.equalsIgnoreCase(userName)
-				|| ONR.equalsIgnoreCase(userName) || PlaceTokens.FINCAPINC.equalsIgnoreCase(userName) || PlaceTokens.PSDPAL.equalsIgnoreCase(userName) 
-				|| PlaceTokens.YOUTHVOICES.equalsIgnoreCase(userName) || PlaceTokens.GEOEDUCATION.equalsIgnoreCase(userName) || PlaceTokens.LPS.equalsIgnoreCase(userName) 
+				|| ONR.equalsIgnoreCase(userName) || PlaceTokens.FINCAPINC.equalsIgnoreCase(userName) || PlaceTokens.PSDPAL.equalsIgnoreCase(userName)
+				|| PlaceTokens.YOUTHVOICES.equalsIgnoreCase(userName) || PlaceTokens.GEOEDUCATION.equalsIgnoreCase(userName) || PlaceTokens.LPS.equalsIgnoreCase(userName)
 				|| PlaceTokens.CORE_LIBRARY.equalsIgnoreCase(userName) || PlaceTokens.ESYP.equalsIgnoreCase(userName) || PlaceTokens.CCST_Cal_TAC.equalsIgnoreCase(userName) || PlaceTokens.ASPIRE_EPACS.equalsIgnoreCase(userName) || PlaceTokens.TICAL.equalsIgnoreCase(userName)) {
 			isPartner = true;
 		}
@@ -329,9 +332,9 @@ public class StringUtil implements ClientConstants {
 
 	public static String replaceSpecial(String originalString){
 		String str = "";
-		str = originalString.replaceAll("%", "%25");	
+		str = originalString.replaceAll("%", "%25");
 		str = str.replaceAll("\"", "%22").replaceAll("'", "%27");
-		str = str.replaceAll("<", "%3C").replaceAll(">", "%3E");		
+		str = str.replaceAll("<", "%3C").replaceAll(">", "%3E");
 		return str;
 	}
 
@@ -376,22 +379,22 @@ public class StringUtil implements ClientConstants {
 	}
 
 	/**
-	 * @function setAttributes 
-	 * 
+	 * @function setAttributes
+	 *
 	 * @created_date : Jul 15, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param msgTxa
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 */
 
 	public static void setAttributes(RichTextArea rtatBox, boolean isTrue) {
@@ -399,23 +402,23 @@ public class StringUtil implements ClientConstants {
 	}
 
 	/**
-	 * @function setAttributes 
-	 * 
+	 * @function setAttributes
+	 *
 	 * @created_date : Jul 17, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param editSearchTxtBox
 	 * @param isTrue
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 */
 
 	public static void setAttributes(AppSuggestBox editSearchTxtBox,
@@ -424,24 +427,24 @@ public class StringUtil implements ClientConstants {
 	}
 
 	/**
-	 * 
-	 * @function setAttributes 
-	 * 
+	 *
+	 * @function setAttributes
+	 *
 	 * @created_date : Jul 26, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param object
 	 * @param idValue
 	 * @param altValue
 	 * @param titleValue
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -470,7 +473,7 @@ public class StringUtil implements ClientConstants {
 	public static <T> boolean checkNull(T e){
 		return e==null;
 	}
-	
+
 	/**
 	 * Adding all the categories with new category as a value.
 	 * @return
@@ -478,14 +481,14 @@ public class StringUtil implements ClientConstants {
 	private static void addAllCategories() {
 		categoryMap = new HashMap<String,String>();
 		categoryMap.put(LESSON, TEXT);
-		categoryMap.put(TEXTBOOK,TEXT); 
-		categoryMap.put(HANDOUT, TEXT); 
+		categoryMap.put(TEXTBOOK,TEXT);
+		categoryMap.put(HANDOUT, TEXT);
 		categoryMap.put(SLIDE, IMAGE);
 		categoryMap.put(EXAM, WEBPAGE);
 		categoryMap.put(WEBSITE,WEBPAGE);
-		categoryMap.put(CHALLENGE, WEBPAGE); 
+		categoryMap.put(CHALLENGE, WEBPAGE);
 	}
-	
+
 	/**
 	 * Returns the equivalent category.
 	 * @param type
@@ -494,11 +497,11 @@ public class StringUtil implements ClientConstants {
 	public static String getEquivalentCategory(String type){
 		return categoryMap.get(type)==null?type:categoryMap.get(type);
 	}
-	
+
 	/**
 	 * Encrypts the given string by using GWT crypto method.
 	 * @param data {@link String}
-	 * 
+	 *
 	 * @return encrypted {@link String}
 	 */
 	public static String getCryptoData(String data) {
@@ -512,13 +515,13 @@ public class StringUtil implements ClientConstants {
 		}
 		return encrypted;
 	}
-	
-	
+
+
 	/**
 	 * Decrypts the crypto data and returns the plain text.
-	 * 
+	 *
 	 * @param cryptoData {@link String}
-	 * 
+	 *
 	 * @return plainText {@link String}
 	 */
 	public static String getDecryptedData(String cryptoData){
@@ -532,45 +535,45 @@ public class StringUtil implements ClientConstants {
 		}
 		return plainText;
 	}
-	
+
 
 	public static native String removeHtml(String htmText) /*-{
 		var regex = /(<([^>]+)>)/ig;
 		result = htmText.replace(regex, "");
 		return result;
 	}-*/;
-	
+
 	/**
 	 * To remove rich text content using the following method.
-	 * 
+	 *
 	 * @param htmlText
 	 * @return filteredInnerText
 	 */
 	public static String removeAllHtmlCss(String htmlText){
 		Element element=Document.get().createElement("div");
 		element.setInnerHTML(htmlText);
-		String filteredInnerText = element.getInnerText(); 
+		String filteredInnerText = element.getInnerText();
 		element.removeFromParent();
 		return filteredInnerText;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @function SysOut 
-	 * 
+	 *
+	 * @function SysOut
+	 *
 	 * @created_date : 24-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param message
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -594,18 +597,18 @@ public class StringUtil implements ClientConstants {
 			imgField.getElement().setAttribute("style", borderColor);
 		}
 	}
-	
+
 	private static RegExp urlValidator;
 	private static RegExp urlPlusTldValidator;
 	/**
-	 * @function isValidUrl 
-	 * 
+	 * @function isValidUrl
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param url
 	 * @parm(s) : @param topLevelDomainRequired
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -617,7 +620,7 @@ public class StringUtil implements ClientConstants {
 		if (urlValidator == null || urlPlusTldValidator == null) {
 			urlValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
-			
+
 			urlPlusTldValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
 
@@ -626,13 +629,13 @@ public class StringUtil implements ClientConstants {
 				.exec(url) != null;
 	}
 	/**
-	 * @function returnCount 
-	 * 
+	 * @function returnCount
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param url
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : Integer
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -705,4 +708,58 @@ public class StringUtil implements ClientConstants {
 		  }
 		return resourceCategory;
 	}
+
+
+	/**
+	 *
+	 * @function loadVisualizationLibraries
+	 *
+	 * @created_date : 17-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	public static void loadVisualizationLibraries(){
+		boolean status = getScriptStatus();
+		AppClientFactory.printInfoLogger("status : "+status);
+		if (!status){
+			Runnable onLoad = new Runnable() {
+	            @Override
+	            public void run() {
+
+	            }
+	        };
+	        VisualizationUtils.loadVisualizationApi(onLoad, PieChart.PACKAGE);
+	        VisualizationUtils.loadVisualizationApi(onLoad, Table.PACKAGE);
+		}
+	}
+
+	public static native boolean getScriptStatus() /*-{
+		var scripts = document.getElementsByTagName("script")
+		var isAva = false;
+		console.log("scripts.length :"+scripts.length);
+		for (var i = 0; i < scripts.length; ++i) {
+
+			isAva = scripts[i].getAttribute('src') === "http://www.google.com/uds/?file=visualization&v=1&packages=piechart&async=2";
+			console.log("isAva :"+isAva);
+			console.log("scripts[i].getAttribute('src') :"+scripts[i].getAttribute('src'))
+		    if( isAva ){
+				isAva = true;
+				break;
+		    }
+		}
+		return isAva;
+	}-*/;
+
 }
+
