@@ -106,6 +106,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				contentWidgetWithMove.getH3Panel().setText(type+" "+(index+1));
 				contentWidgetWithMove.getTextBox().setText((index+1)+"");
 				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
+				if(index==0){
+					//If this is the first widget we are hiding the up arrow
+					contentWidgetWithMove.getTopArrow().setVisible(false);
+				}else if(index==(pnlCourseList.getWidgetCount()-1)){
+					//If this the last widget hiding the down arrow
+					contentWidgetWithMove.getDownArrow().setVisible(false);
+				}else{
+					contentWidgetWithMove.getTopArrow().setVisible(true);
+					contentWidgetWithMove.getDownArrow().setVisible(true);
+				}
 				index++;
 			}
 		}
@@ -135,6 +145,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			pnlCourseList.clear();
 		}else{
 			index=pnlCourseList.getWidgetCount();
+			setLastWidgetArrowVisiblity(true);
 		}
 		if(result.getSearchResult().size()>0){
 			for (FolderDo folderObj : result.getSearchResult()) {
@@ -162,6 +173,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				pnlCourseList.add(widgetMove);
 				index++;
 			}
+			setLastWidgetArrowVisiblity(false);
 		}
 	}
 	class ClickOnTitleContainer implements ClickHandler{
@@ -185,7 +197,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 
 		}
 	}
-	
+	/**
+	 * On pagination it will enable the previous widget down arrow for move functionality
+	 * @param isVisible
+	 */
+	public void setLastWidgetArrowVisiblity(boolean isVisible){
+		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
+		lastwidget.getDownArrow().setVisible(isVisible);
+	}
 	public void setScrollHeight(){
 		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
 		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);

@@ -296,6 +296,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			 }else{
 				 
 			}
+			Window.enableScrolling(false);
 		}else{
 
 		}

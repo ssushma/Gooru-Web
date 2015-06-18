@@ -31,6 +31,8 @@ import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -86,6 +88,10 @@ public abstract class ContentWidgetWithMove extends Composite {
 		spnQuestionsCount.setVisible(false);
 		setData();
 		int indexVal=index+1;
+		if(indexVal==1){
+			lblTopArrow.setVisible(false);
+		}
+		
 		if(COURSE.equalsIgnoreCase(type)){
 			h3CourseTitle.setText(i18n.GL0326()+" "+indexVal);
 		}else if(UNIT.equalsIgnoreCase(type)){
@@ -113,6 +119,17 @@ public abstract class ContentWidgetWithMove extends Composite {
 		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
 		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
 		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
+		//This blur handler reset the previous value when the text box value is empty.
+		txtMoveTextBox.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				String enteredString=txtMoveTextBox.getText().toString().trim();
+				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
+				if(enteredString.isEmpty()){
+					txtMoveTextBox.setText((Integer.parseInt(currentWidgetString)+1)+"");
+				}
+			}
+		});
 	}
 	/**
 	 * This inner class used for to restrict text box values to have only numbers
@@ -159,8 +176,6 @@ public abstract class ContentWidgetWithMove extends Composite {
 					lblTopArrow.setVisible(false);
 					lblDownArrow.setVisible(true);
 				}
-			}else{
-				txtMoveTextBox.setText(currentWidgetString);
 			}
 		}
 	}
@@ -191,8 +206,20 @@ public abstract class ContentWidgetWithMove extends Composite {
 					String movingPosition=txtMoveTextBox.getText().toString().trim();
 					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index").trim();
 					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
-					if(!movingPosition.isEmpty() && (Integer.parseInt(movingPosition)!=(Integer.parseInt(currentWidgetPosition)+1))){
-						moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId);
+					if(!movingPosition.isEmpty()){
+						int movingValue=Integer.parseInt(movingPosition);
+						int currentWidgetValue=Integer.parseInt(currentWidgetPosition);
+						//This one will execute when user enter a number in text field and click on either up and down arrow.
+						if(movingValue!=(currentWidgetValue+1)){
+							moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId);
+						}else if(movingValue==(currentWidgetValue+1)){
+							//This one will execute when user directly clicks on either up and down arrow.
+							if(isDownArrow){
+								moveWidgetPosition((movingValue+1)+"",currentWidgetPosition,isDownArrow,moveId);
+							}else{
+								moveWidgetPosition((movingValue-1)+"",currentWidgetPosition,isDownArrow,moveId);
+							}
+						}
 					}
 				}
 			});
@@ -207,6 +234,12 @@ public abstract class ContentWidgetWithMove extends Composite {
 	}
 	public HTMLPanel getTitleContainer(){
 		return pnlTitleContainer;
+	}
+	public Label getTopArrow(){
+		return lblTopArrow;
+	}
+	public Label getDownArrow(){
+		return lblDownArrow;
 	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 }
