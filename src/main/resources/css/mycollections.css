@@ -753,6 +753,7 @@ button.btn-disabled{
 	padding:6px 2px;
 	font-size:12px;
 	border-radius: 4px;
+	text-align: center;
 }
 #gShelfCousesList .tableListOrder .bottomArrow {
 	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -381px;
