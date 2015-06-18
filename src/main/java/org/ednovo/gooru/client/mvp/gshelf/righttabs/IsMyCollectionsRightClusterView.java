@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 
@@ -37,7 +38,7 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 * This method is used to set the slot panel
 	 * @param slotPanel
 	 */
-	public void setSlotPanel(HTMLPanel slotPanel);
+	public void setSlotPanel(HTMLPanel slotPanel,FolderDo folderObj);
 	/**
 	 * This method is used to clear tab active status
 	 */

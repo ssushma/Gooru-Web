@@ -39,9 +39,13 @@
 					<g:FlowPanel ui:field="standardsDataPanel"/>
 				</div>
 				<g:HTMLPanel styleName="usedDetails">
-					<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
-					<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
-					<g:Button styleName="primary addResource" ui:field="btnAddResource">Add</g:Button>
+				    <div class="viewContainer">
+						<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
+						<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
+					</div>
+					<div class="buttonAddResource">
+						<g:Button styleName="primary addResource" ui:field="btnAddResource">Add</g:Button>
+					</div>
 				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
 					<div class="col-md-9 col-xs-9 col-sm-9 collectionResources">

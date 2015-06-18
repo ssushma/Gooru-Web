@@ -841,10 +841,11 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
              sortableTable.setValue(i, 4,AnalyticsUtil.getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
              sortableTable.setWidget(i, 5,new AnalyticsReactionWidget(scoredQuestionsData.get(i-1).getAvgReaction()));
 
-                int[] pieChatValues=new int[3];
+                int[] pieChatValues=new int[4];
 	            pieChatValues[0]=scoredQuestionsData.get(i-1).getTotalInCorrectCount();
 	            pieChatValues[1]=scoredQuestionsData.get(i-1).getTotalCorrectCount();
 	            pieChatValues[2]=scoredQuestionsData.get(i-1).getSkip();
+	            pieChatValues[3]=pieChatValues[0]+pieChatValues[1]+pieChatValues[2];
 
              //set row style
              if ( i % 2 == 0 ){

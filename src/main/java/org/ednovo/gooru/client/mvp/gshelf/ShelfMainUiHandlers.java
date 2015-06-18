@@ -66,4 +66,6 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	 * @param type
 	 */
 	void setListPresenterBasedOnType(String type);
+
+	void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel);
 }
