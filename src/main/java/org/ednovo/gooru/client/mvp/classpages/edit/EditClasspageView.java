@@ -658,6 +658,8 @@ public class EditClasspageView extends
 		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(10, Unit.PX);
 
 		frameUrl.setVisible(false);
+
+		StringUtil.loadVisualizationLibraries();
 	}
 	/**
 	 *

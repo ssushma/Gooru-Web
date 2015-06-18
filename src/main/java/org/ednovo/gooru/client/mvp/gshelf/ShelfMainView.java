@@ -298,6 +298,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		}else{
 
 		}
+		Window.enableScrolling(false);
 	}
 	@Override
 	public void getChildFolderItems(List<FolderDo> folderListDo) {
