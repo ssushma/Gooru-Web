@@ -1411,3 +1411,14 @@ button#btnSearchType .caret {
 .resourceViewsContainer{
 	text-align: right !important;
 }
+
+.usedDetails .viewContainer{
+	display: inline-block;
+	width: 64%;
+	min-width: 64%;
+}
+
+.usedDetails .buttonAddResource{
+	display: inline-block;
+}
+

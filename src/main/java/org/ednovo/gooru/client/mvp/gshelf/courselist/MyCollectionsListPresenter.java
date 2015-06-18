@@ -51,8 +51,8 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result) {
-		getView().setData(type,slotPanel,result);
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel) {
+		getView().setData(type,slotPanel,result,clrPanel);
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
-				getView().setData(type,slotPanel,result);
+				getView().setData(type,slotPanel,result,true);
 			}
 		});
 	}

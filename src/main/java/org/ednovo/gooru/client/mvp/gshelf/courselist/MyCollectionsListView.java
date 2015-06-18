@@ -36,12 +36,18 @@ import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -57,6 +63,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate;
+	@UiField ScrollPanel listScrollPanel;
+	
+	int index=0;
 	
 	String type;
 	HTMLPanel slotPanel;
@@ -66,6 +75,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
+		Window.addResizeHandler(new ResizeHandler() {
+			@Override
+			public void onResize(ResizeEvent event) {
+				setScrollHeight();
+			}
+		});
 	}
 	/**
 	 * This method is used to set id's
@@ -75,6 +90,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
+		setScrollHeight();
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
@@ -88,8 +104,18 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			if(widget instanceof ContentWidgetWithMove){
 				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
 				contentWidgetWithMove.getH3Panel().setText(type+" "+(index+1));
-				contentWidgetWithMove.getTextBox().setText("");
+				contentWidgetWithMove.getTextBox().setText((index+1)+"");
 				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
+				if(index==0){
+					//If this is the first widget we are hiding the up arrow
+					contentWidgetWithMove.getTopArrow().setVisible(false);
+				}else if(index==(pnlCourseList.getWidgetCount()-1)){
+					//If this the last widget hiding the down arrow
+					contentWidgetWithMove.getDownArrow().setVisible(false);
+				}else{
+					contentWidgetWithMove.getTopArrow().setVisible(true);
+					contentWidgetWithMove.getDownArrow().setVisible(true);
+				}
 				index++;
 			}
 		}
@@ -98,7 +124,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result) {
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
@@ -114,11 +140,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			pnlCreateContainer.setVisible(true);
 			btnCreate.setText("Create Unit");
 		}
-		pnlCourseList.clear();
-		int i=0;
+		if(clrPanel){
+			index=0;
+			pnlCourseList.clear();
+		}else{
+			index=pnlCourseList.getWidgetCount();
+			setLastWidgetArrowVisiblity(true);
+		}
 		if(result.getSearchResult().size()>0){
 			for (FolderDo folderObj : result.getSearchResult()) {
-				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(i,type,folderObj) {
+				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
 					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
 						int movingIndex= Integer.parseInt(movingPosition);
@@ -140,8 +171,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				pnlCourseList.add(widgetMove);
-				i++;
+				index++;
 			}
+			setLastWidgetArrowVisiblity(false);
 		}
 	}
 	class ClickOnTitleContainer implements ClickHandler{
@@ -164,5 +196,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 
 		}
+	}
+	/**
+	 * On pagination it will enable the previous widget down arrow for move functionality
+	 * @param isVisible
+	 */
+	public void setLastWidgetArrowVisiblity(boolean isVisible){
+		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
+		lastwidget.getDownArrow().setVisible(isVisible);
+	}
+	public void setScrollHeight(){
+		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
+		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);
 	}
 }

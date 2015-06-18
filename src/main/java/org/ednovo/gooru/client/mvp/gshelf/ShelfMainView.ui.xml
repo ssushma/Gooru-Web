@@ -6,7 +6,7 @@
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="gShelfMainContainer">
-		<g:HTMLPanel styleName="gradeContainer greyBackground">
+		<g:HTMLPanel ui:field="pnlMainContainer" styleName="gradeContainer greyBackground">
 			<div class="container">
 				<div class="row no-gutter equifier">
 					<div class="col-md-3 col-sm-3">
@@ -65,5 +65,6 @@
 				</div>
 			</div>
 		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="pnlNoDataContainer"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

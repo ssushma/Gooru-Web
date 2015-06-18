@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -78,7 +79,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> implements IsShelfMainView {
 
-	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot;
+	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer;
 	
 	@UiField HTMLEventPanel organizeRootPnl;
 	
@@ -109,8 +110,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private TreeItem treeChildSelectedItem = new TreeItem();
 
 	private TreeItem previousTreeChildSelectedItem = new TreeItem();
-	
-	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
 	private static final String GOORU_UID = "gooruuid";
 	
@@ -126,6 +125,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	List<ClassPageCollectionDo> classpageTitles = null;
 
+	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
 	private static ShelfMainViewUiBinder uiBinder = GWT
 			.create(ShelfMainViewUiBinder.class);
@@ -295,6 +295,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			 }else{
 				 
 			}
+			Window.enableScrolling(false);
 		}else{
 
 		}
@@ -412,6 +413,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String gooruOid = o1!=null?o1:id;
 		int collectionCount=0;
 		if(collections!=null){
+			collectionItemDoSize = collections.size();
 			for(int i=0;i<collections.size();i++){
 				FolderDo floderDo=collections.get(i);
 				if(!getShelffCollection(floderDo.getGooruOid())){
@@ -512,16 +514,28 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	@UiHandler("collectionListScrollpanel")
 	public void dragImageSimPanelscroll(ScrollEvent event) {
-
 		if (collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
 			pageNumber = pageNumber + 1;
 			getUiHandlers().getMoreListItems(20, pageNumber, false);
 		}
 	}
-
 	
    	@Override
    	public HTMLPanel getSlot(){
    		return pnlSlot;
+   	}
+   	
+   	@Override
+   	public void setNoDataForAnonymousUser(boolean isAnonymous){
+   		if(isAnonymous){
+   			pnlMainContainer.setVisible(false);
+   			pnlNoDataContainer.setVisible(true);
+   			pnlNoDataContainer.add(new FoldersWelcomePage());
+   			Window.enableScrolling(true);
+   		}else{
+   			pnlMainContainer.setVisible(true);
+   			pnlNoDataContainer.setVisible(false);
+   			Window.enableScrolling(false);
+   		}
    	}
 }
