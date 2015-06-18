@@ -33,6 +33,11 @@ import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -80,19 +85,20 @@ public abstract class ContentWidgetWithMove extends Composite {
 		spnResourcesCount.setVisible(false);
 		spnQuestionsCount.setVisible(false);
 		setData();
+		int indexVal=index+1;
 		if(COURSE.equalsIgnoreCase(type)){
-			h3CourseTitle.setText(i18n.GL0326()+" "+(index+1));
+			h3CourseTitle.setText(i18n.GL0326()+" "+indexVal);
 		}else if(UNIT.equalsIgnoreCase(type)){
 			spnUnitsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL3281()+" "+(index+1));
+			h3CourseTitle.setText(i18n.GL3281()+" "+indexVal);
 		}else if(LESSON.equalsIgnoreCase(type)){
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL0910()+" "+(index+1));
+			h3CourseTitle.setText(i18n.GL0910()+" "+indexVal);
 		}else if(FOLDER.equalsIgnoreCase(type)){
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL1501()+" "+(index+1));
+			h3CourseTitle.setText(i18n.GL1501()+" "+indexVal);
 		}else if(COLLECTION.equalsIgnoreCase(type)){
 			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
@@ -100,10 +106,63 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnLessonsCount.setVisible(false);
 			spnCollectionsCount.setVisible(false);
 			spnAssessmentsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL0645()+" "+(index+1));
+			h3CourseTitle.setText(i18n.GL0645()+" "+indexVal);
 		}
+		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
 		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
+		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
+		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
+	}
+	/**
+	 * This inner class used for to restrict text box values to have only numbers
+	 *
+	 */
+
+	public class HasNumbersOnly implements KeyPressHandler {
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if (event.getNativeEvent().getKeyCode() == 46
+					|| event.getNativeEvent().getKeyCode() == 37) {
+				((TextBox) event.getSource()).cancelKey();
+			}
+		}
+	}
+	/**
+	 * This inner class used for disabling up and down arrow based on user entered reorder value.
+	 */
+	public class ReorderText implements KeyUpHandler {
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			String enteredString=txtMoveTextBox.getText().toString().trim();
+			String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index");
+			if(!enteredString.isEmpty()){
+				int enteredValue=Integer.parseInt(enteredString);
+				int currentWidgetValue=Integer.parseInt(currentWidgetString)+1;
+				if(currentWidgetValue==enteredValue){
+					lblDownArrow.setVisible(true);
+					lblTopArrow.setVisible(true);
+				}else if(currentWidgetValue>enteredValue){
+					lblDownArrow.setVisible(false);
+					lblTopArrow.setVisible(true);
+				}else{
+					lblTopArrow.setVisible(false);
+					lblDownArrow.setVisible(true);
+				}
+			}else{
+				txtMoveTextBox.setText(currentWidgetString);
+			}
+		}
 	}
 	/**
 	 * This method is used to set count for Units,Lessons,Collections and Assessments.
@@ -130,9 +189,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 				@Override
 				public void onSuccess() {
 					String movingPosition=txtMoveTextBox.getText().toString().trim();
-					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index");
+					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index").trim();
 					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
-					if(!movingPosition.isEmpty()){
+					if(!movingPosition.isEmpty() && (Integer.parseInt(movingPosition)!=(Integer.parseInt(currentWidgetPosition)+1))){
 						moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId);
 					}
 				}

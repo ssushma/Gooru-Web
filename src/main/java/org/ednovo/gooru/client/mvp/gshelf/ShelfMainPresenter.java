@@ -171,8 +171,15 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
-		getView().setDefaultOrganizePanel();
+		System.out.println("int onReveal");
+		if (AppClientFactory.isAnonymous()){
+			getView().setNoDataForAnonymousUser(true);
+		}else{
+			System.out.println("int ");
+			getView().setNoDataForAnonymousUser(false);
+			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
+			getView().setDefaultOrganizePanel();
+		}
 	}
 	
 	@Override
