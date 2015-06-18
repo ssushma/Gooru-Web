@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -79,7 +80,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> implements IsShelfMainView {
 
-	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot;
+	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer;
 	
 	@UiField HTMLEventPanel organizeRootPnl;
 	
@@ -295,10 +296,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			 }else{
 				 
 			}
+			Window.enableScrolling(false);
 		}else{
 
 		}
-		Window.enableScrolling(false);
 	}
 	@Override
 	public void getChildFolderItems(List<FolderDo> folderListDo) {
@@ -519,10 +520,23 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			getUiHandlers().getMoreListItems(20, pageNumber, false);
 		}
 	}
-
 	
    	@Override
    	public HTMLPanel getSlot(){
    		return pnlSlot;
+   	}
+   	
+   	@Override
+   	public void setNoDataForAnonymousUser(boolean isAnonymous){
+   		if(isAnonymous){
+   			pnlMainContainer.setVisible(false);
+   			pnlNoDataContainer.setVisible(true);
+   			pnlNoDataContainer.add(new FoldersWelcomePage());
+   			Window.enableScrolling(true);
+   		}else{
+   			pnlMainContainer.setVisible(true);
+   			pnlNoDataContainer.setVisible(false);
+   			Window.enableScrolling(false);
+   		}
    	}
 }

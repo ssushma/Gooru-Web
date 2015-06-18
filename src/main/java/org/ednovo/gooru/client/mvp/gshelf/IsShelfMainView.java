@@ -48,4 +48,9 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	HTMLPanel getSlot();
 
 	void setDefaultOrganizePanel();
+	/**
+	 * This method is used to enable the panels based on the user status.
+	 * @param isAnonymous
+	 */
+	void setNoDataForAnonymousUser(boolean isAnonymous);
 }
