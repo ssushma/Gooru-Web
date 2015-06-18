@@ -125,6 +125,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	List<ClassPageCollectionDo> classpageTitles = null;
 
+	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
 	private static ShelfMainViewUiBinder uiBinder = GWT
 			.create(ShelfMainViewUiBinder.class);
