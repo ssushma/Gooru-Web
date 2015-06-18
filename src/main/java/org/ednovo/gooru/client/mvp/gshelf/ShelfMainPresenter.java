@@ -131,7 +131,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
-		getUserSheldId(); // this API call is to get shelf Id
+		//getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){
@@ -227,9 +227,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			userCollectionAsyncCallback = new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
-					clearSlot(RIGHT_SLOT);
-					myCollectionsListPresenter.setData(type,getView().getSlot(),result);
-					setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+					if(clrPanel){
+						clearSlot(RIGHT_SLOT);
+						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+						setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
+					}else{
+						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
 				}
 			};
@@ -279,5 +283,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
 		return myCollectionsListPresenter.getMyCollectionsRightClusterPresenter();
+	}
+
+	@Override
+	public void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel) {
+		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,type,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 }
