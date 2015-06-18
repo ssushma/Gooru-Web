@@ -316,11 +316,9 @@ button.btn-disabled{
     border-bottom:1px solid #ddd;
     height: 50px;
     line-height: 50px;
-    padding-right:15px;
+   /*  padding-right:15px; */
     position:relative;
     box-sizing:content-box;
-	/* width: 280px; */
-	/* width: 176px; */
 }
 #gShelfMainContainer .folderLevel.active {
 	background-color: white !important;
