@@ -675,18 +675,26 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	@Override
 	public List<String> ShotenUrl(String url){
-
+		String bitlyLink="";
+		String rawUrl="";
+		String originalUrl="";
+		
+		List<String> listUrl=new ArrayList<String>();
 		String httpUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GENERATE_BITLY_LINK);
-		StringRepresentation strRep = null;
+		JsonRepresentation jsonRep = null;
 
 		BitlyUrlDo bitlyUrlDo = new BitlyUrlDo();
 		bitlyUrlDo.setFullUrl(getHomeEndPoint() +"/#"+ url);
 		String formData = ResourceFormFactory.generateStringDataForm(bitlyUrlDo, null);
-		strRep = ServiceProcessor.postString(httpUrl, getRestUsername(), getRestPassword(), formData);
-		List<String> listUrl=new ArrayList<String>();
-		String bitlyLink=strRep.getText().toString();
-		String rawUrl=bitlyUrlDo.getFullUrl();
-		String originalUrl=bitlyUrlDo.getFullUrl();
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(httpUrl, getRestUsername(), getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		try{
+			bitlyLink=jsonRep.getJsonObject().getString("shortenUrl");
+			rawUrl=jsonRep.getJsonObject().getString("rawUrl");
+			originalUrl=jsonRep.getJsonObject().getString("rawUrl");
+		}catch(JSONException e){
+			logger.error("Exception-----"+e);
+		}
 		try {
 			rawUrl=URLEncoder.encode(rawUrl, "UTF-8");
 
@@ -697,11 +705,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			bitlyLink = bitlyLink.replaceAll(HTTP, HTTPS);
 		}
-
 		listUrl.add(bitlyLink);
 		listUrl.add(rawUrl);
 		listUrl.add(originalUrl);
-		/*return strRep.getText().toString();*/
 		return listUrl;
 	}
 	public BitlyUrlDo deserializeBitlyDo(JsonRepresentation jsonRep) {
