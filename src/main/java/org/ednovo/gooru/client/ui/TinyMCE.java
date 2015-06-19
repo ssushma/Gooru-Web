@@ -188,10 +188,12 @@ public class TinyMCE extends Composite{
 
     public void setMarkAsBlankLabel(){
     	Element markAsBlankElement=getFibButton();
+    	if(markAsBlankElement!=null){
         if(markAsBlankElement.hasChildNodes()){
         	markAsBlankElement.getFirstChildElement().setInnerText(i18n.GL1507());
         }
         markAsBlankPanel.getElement().appendChild(markAsBlankElement);
+    	}
     }
 
     /**
@@ -438,7 +440,7 @@ public class TinyMCE extends Composite{
 	public void hideTinyMceToolBar(String id){
 		   hideAllButtons();
 		   try{
-			   if (id!=null){
+			   if (id!=null && Document.get().getElementById(id+"_external") != null){
 				   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.BLOCK);
 				   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 			   }
