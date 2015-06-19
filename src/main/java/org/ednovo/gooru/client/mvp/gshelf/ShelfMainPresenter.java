@@ -49,6 +49,8 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
@@ -125,6 +127,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		doc.getBody().setClassName(""); 
 		addRegisteredHandler(SetFolderParentNameEvent.TYPE, this);
 		addRegisteredHandler(SetFolderMetaDataEvent.TYPE, this);
+		myCollectionsListPresenter.getScrollPanel().addScrollHandler(new ScrollHandler() {
+			@Override
+			public void onScroll(ScrollEvent event) {
+				getView().executeScroll(false);
+			}
+		});
 	}
 	
 	@Override
@@ -286,8 +294,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		this.type=type;
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
 	}
+	
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
 		return myCollectionsListPresenter.getMyCollectionsRightClusterPresenter();
+	}
+	@Override
+	public MyCollectionsListPresenter getMyCollectionsListPresenter(){
+		return  myCollectionsListPresenter;
 	}
 
 	@Override

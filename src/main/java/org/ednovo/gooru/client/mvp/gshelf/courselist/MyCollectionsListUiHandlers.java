@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 /**
  * @author Search Team
@@ -68,4 +69,8 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param folderId
 	 */
 	public void setDataInContentSlot(String type,HTMLPanel slotPanel,String folderId);
+	/**
+	 * This method is used to get scrollpanel
+	 */
+	public ScrollPanel getScrollPanel();
 }
