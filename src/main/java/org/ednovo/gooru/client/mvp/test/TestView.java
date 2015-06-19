@@ -9,6 +9,8 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -39,6 +41,9 @@ public class TestView extends
 
 	}
 
+	@UiField SimplePanel panelBannerImage, panelPreSearch;
+
+
 	@Inject
 	public TestView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -48,5 +53,15 @@ public class TestView extends
 	public void onClick(ClickEvent event) {
 		throw new RuntimeException("Not implemented");
 	}
+
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (slot  == TestPresenter.BANNER_SLOT){
+			panelBannerImage.add(content);
+		}else if (slot == TestPresenter.PRESEARCH_SLOT){
+			panelPreSearch.add(content);
+		}
+	}
+
 }
 
