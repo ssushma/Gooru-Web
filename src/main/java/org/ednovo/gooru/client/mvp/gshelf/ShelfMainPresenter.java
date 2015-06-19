@@ -195,6 +195,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			getView().setNoDataForAnonymousUser(false);
 			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+			type=view;
 			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,view,false,getUserCollectionAsyncCallback(true));
 			getView().setDefaultOrganizePanel(view);
 		}

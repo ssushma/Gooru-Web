@@ -157,7 +157,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		setIdForFields();
 		setTreeStucture();
 		//setDefaultOrganizePanel();
-		organizelbl.setText(i18n.GL3285());
+		//organizelbl.setText(i18n.GL3285());
 		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
 		lnkMyFolders.addClickHandler(new DropDownClickEvent(1));
 		lnkMyCollections.addClickHandler(new DropDownClickEvent(2));
@@ -208,7 +208,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				}
 			}
 		}
-		if(tabView.equals(COURSE)){
+		if(tabView==null || tabView.equals(COURSE)){
 			organizelbl.setText(i18n.GL3285());
 			btnSelectedText.setText(i18n.GL3285());
 		}else if(tabView.equals(FOLDER)){
