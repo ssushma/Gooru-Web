@@ -53,4 +53,9 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	 * @param isAnonymous
 	 */
 	void setNoDataForAnonymousUser(boolean isAnonymous);
+	/**
+	 * This method is used to execute scroll functionality
+	 * @param isLeftScroll
+	 */
+	public void executeScroll(boolean isLeftScroll);
 }
