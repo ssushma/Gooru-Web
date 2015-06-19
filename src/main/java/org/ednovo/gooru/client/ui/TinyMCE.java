@@ -451,7 +451,7 @@ public class TinyMCE extends Composite{
 	}
 	public void hideTinyMceToolBar(String id,boolean toolBarButtonVisible){
 		try{
-			if (id!=null){
+			if (id!=null  && Document.get().getElementById(id+"_external") != null){
 				 Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 				 Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
 			}
