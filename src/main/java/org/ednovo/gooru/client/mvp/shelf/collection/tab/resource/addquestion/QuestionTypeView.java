@@ -2127,6 +2127,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
 
+				if(collectionItemDo.getResource().getAttributes()!=null){
+				
 				String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
@@ -2156,6 +2158,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						addHotSpotQuestion.setAnswerImageUrl(answer.getAnswerText(), null, true,answer.isIsCorrect());
 						
 					}
+				}
 				}
 
 
