@@ -80,6 +80,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> implements IsShelfMainView {
 
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer;
 	
 	@UiField HTMLEventPanel organizeRootPnl;
@@ -100,11 +103,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private static final String ID = "id";
 
-	private static final String FOLDER = "folder";
+	private static final String FOLDER = i18n.GL1501();
 	
-	private static final String TYPE = "type";
+	private static final String COURSE = i18n.GL0574();
 	
-	private static final String SCOLLECTION = "scollection";
+	private static final String COLLECTION = i18n.GL0645();
 	
 	static Integer pageNumber = 1;
 
@@ -119,8 +122,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	int collectionItemDoSize, count;
 
 	boolean collectionItemsNotFriendly = false;
-
-	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	String selectedFolderId = "";
 
@@ -156,7 +157,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		setIdForFields();
 		setTreeStucture();
 		//setDefaultOrganizePanel();
-		organizelbl.setText("My Courses");
+		//organizelbl.setText(i18n.GL3285());
 		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
 		lnkMyFolders.addClickHandler(new DropDownClickEvent(1));
 		lnkMyCollections.addClickHandler(new DropDownClickEvent(2));
@@ -175,14 +176,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			Anchor selected=(Anchor) event.getSource();
 			btnSelectedText.setText(selected.getText());
 			if(selectedIndex==0){
-				organizelbl.setText("My Courses");
-				getUiHandlers().setListPresenterBasedOnType("Course");
+				organizelbl.setText(i18n.GL3285());
+				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
-			    organizelbl.setText("My Folders");
-				getUiHandlers().setListPresenterBasedOnType("Folder");
+			    organizelbl.setText(i18n.GL3286());
+				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}else if(selectedIndex==2){
-				organizelbl.setText("My Collections");
-				getUiHandlers().setListPresenterBasedOnType("Collection");
+				organizelbl.setText(i18n.GL1752());
+				getUiHandlers().setListPresenterBasedOnType(COLLECTION);
 			}
 		}
 	}
@@ -191,7 +192,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 * To set the default organize list.
 	 */
 	@Override
-	public void setDefaultOrganizePanel() {
+	public void setDefaultOrganizePanel(String tabView) {
 		if(treeChildSelectedItem!=null){
 			if(getFolderLevel()==0) {
 				organizeRootPnl.addStyleName("active");
@@ -206,6 +207,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					treeItemShelfTree.setActiveStyle(true);
 				}
 			}
+		}
+		if(tabView==null || tabView.equals(COURSE)){
+			organizelbl.setText(i18n.GL3285());
+			btnSelectedText.setText(i18n.GL3285());
+		}else if(tabView.equals(FOLDER)){
+			organizelbl.setText(i18n.GL3286());
+			btnSelectedText.setText(i18n.GL3286());
+		}else{
+			organizelbl.setText(i18n.GL1752());
+			btnSelectedText.setText(i18n.GL1752());
 		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);

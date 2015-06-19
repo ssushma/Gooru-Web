@@ -972,8 +972,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 				if(type==10){
 				getUiHandlers().addSelectedQuestionType("HS");
-				getUiHandlers().setEditQuestionData(collectionItemDo);
 				}
+				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
 				addQuestionResourceWidget.getHideRightsToolTip();
 				
