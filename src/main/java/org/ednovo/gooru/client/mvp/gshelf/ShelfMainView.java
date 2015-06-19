@@ -46,6 +46,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -513,14 +514,35 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 * To get more collection item after scroll down,if collection is more than 20.
 	 * @param event instance of ScrollEvent
 	 */
-	@UiHandler("collectionListScrollpanel")
-	public void dragImageSimPanelscroll(ScrollEvent event) {
-		if (collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
-			pageNumber = pageNumber + 1;
-			getUiHandlers().getMoreListItems(20, pageNumber, false);
+	class ScrollHandlerImpl implements ScrollHandler{
+		boolean isLeftScroll;
+		ScrollHandlerImpl(boolean isLeftScroll){
+			this.isLeftScroll=isLeftScroll;
+		}
+		@Override
+		public void onScroll(ScrollEvent event) {
 		}
 	}
 	
+	@UiHandler("collectionListScrollpanel")
+	public void onScroll(ScrollEvent event){
+		executeScroll(true);
+	}
+
+	@Override
+	public void executeScroll(boolean isLeftScroll){
+		if(isLeftScroll){
+			if(collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
+				pageNumber = pageNumber + 1;
+				getUiHandlers().getMoreListItems(20, pageNumber, false);
+			}
+		}else{
+			if(getUiHandlers().getMyCollectionsListPresenter().getScrollPanel().getVerticalScrollPosition() == getUiHandlers().getMyCollectionsListPresenter().getScrollPanel().getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
+				pageNumber = pageNumber + 1;
+				getUiHandlers().getMoreListItems(20, pageNumber, false);
+			}
+		}
+	}
    	@Override
    	public HTMLPanel getSlot(){
    		return pnlSlot;
