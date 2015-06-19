@@ -189,8 +189,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     private static final String ERROR_MSG_ATLEAST_SELECTED =i18n.GL0876();
     private static final String ERROR_MSG_HINTS_LENGTH = i18n.GL0877();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
+	private static final String ERROR_MSG_HTANSWER_LENGTH =i18n.GL4000();
 	private static final String ERROR_MSG_EXPLAINATION_LENGTH =i18n.GL0879();
-	private static final String ERROR_MSG_QUESTION_LENGTH =i18n.GL0880();
+	private static String ERROR_MSG_QUESTION_LENGTH =i18n.GL0880();
 	private static final String ERROR_MSG_CHAR_LIMIT=i18n.GL0143();
 	private static final String ERROR_MSG_HINTS = i18n.GL2201();
 
@@ -209,6 +210,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
 	private static final int EXPLAINATION_TEXT_LENGTH =500;
+	private static final int HT_ANSWER_CHOICE_HINTS_TEXT_LENGTH =500;
+	private static final int HT_QUESTION_TEXT_LENGTH =5000;
 
 	public static int questionCharcterLimit;
 
@@ -1328,12 +1331,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onClick(ClickEvent event) {
 				questionType="HT_HL";
 				int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
-				for(int i=0;i<widgetCount;i++){
-					if(i==0){
-					}else{
+				for(int i=widgetCount-1;i>0;i--){
 					questionHotTextAnswerChoiceContainer.remove(i);
-					widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
-					}
 				}
 				addQuestionAnswer.highlightRDButtonClick();
 				addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
@@ -1773,13 +1772,16 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						        	isAddBtnClicked=true;
     						        }
     						        //This regex is used to get text count with out html tags
-    						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
-    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
-    						        	fieldValidationStaus=false;
-    						        	isAddBtnClicked=true;
+    						        int questionMaxLength;
+    						        if(questionType=="HT_HL" || questionType=="HT_RO"){
+    						        	questionMaxLength=HT_QUESTION_TEXT_LENGTH;
+    						        	ERROR_MSG_QUESTION_LENGTH=i18n.GL4001();
+    						        }else{
+    						        	questionMaxLength=QUESTION_TEXT_LENGTH;
+    						        	ERROR_MSG_QUESTION_LENGTH=i18n.GL0880();
     						        }
     						        errorMessageForExplanation.setText("");
-    						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
+    						        if(questionNameText.length()>questionMaxLength){
     						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
     						        	isAddBtnClicked=true;
@@ -2473,10 +2475,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     			profanityList.add(profanitymodel);
     			addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "display:block");
     		}else{
-    			if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
+    			if(answerChoiceValue.trim().length()>HT_ANSWER_CHOICE_HINTS_TEXT_LENGTH){
     				isAnswerChoiceSelected=true;
     				Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
-    				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
+    				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_HTANSWER_LENGTH);
     				addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
     			}else if(!isReorder){
     				String text=answerChoiceValue;
@@ -2510,12 +2512,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     					}
     					if(isCorrect){
 
-    						if(count>1 && htSentenceType.equalsIgnoreCase(i18n.GL3222())){
+    						if(count>1 && htSentenceType.equalsIgnoreCase(i18n.GL3222_1())){
         						isAnswerChoiceSelected=true;
-        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3239());
-        					}else if(count<2 && htSentenceType.equalsIgnoreCase(i18n.GL3223())){
+        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3239_1());
+        					}else if(count<2 && htSentenceType.equalsIgnoreCase(i18n.GL3223_1())){
         						isAnswerChoiceSelected=true;
-        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3238());
+        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3238_1());
         					}else{
         						isAnswerChoiceSelected=false;
         						profanitymodel.setQuestionID(Integer.toString(i));
