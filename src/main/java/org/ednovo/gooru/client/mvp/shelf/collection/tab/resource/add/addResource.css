@@ -980,7 +980,6 @@ width: 114px;
 	border-color: #ddd;
 	border-left: none;
 	border-bottom: none;
-	/*background: url(../images/core/background-image.png) !important; */
 	padding-bottom: 10px;
 	padding-right: 8px;
 }
@@ -1115,7 +1114,7 @@ vertical-align: middle;
 	color: #999;
 }
 .charLimitExplanationStyle{
-	display: inline-flex;	
+	display: inline-flex;
 	color: #999;
 	margin-left: 10px;
 }

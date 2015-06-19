@@ -186,7 +186,7 @@
 	margin: 10px 0 0px 23px;
 	clear: both;
 	cursor: pointer;
-	width: 25%;	
+	width: 25%;
 }
 
 #pnlMainFlow .noAssignmentMsg{
@@ -250,7 +250,6 @@
 	padding-right: 20px;
 	margin-left: 351px;
 	color: #1076BB;
-	background-image: url("../images/core/background-image.png") !important;
 }
 #pnlMainFlow .paginationPanel:hover{
 	cursor:pointer;
@@ -339,7 +338,7 @@
 	float: right;
 	font-size: 12px;
 	margin-top: -9px;
-	
+
 }
 
 #pnlMainFlow .collectionDescriptionTitle {
@@ -399,8 +398,8 @@
 #pnlMainFlow .cursor {
 	cursor: pointer;
 }
-	
-	
+
+
 #pnlMainFlow .classPageEditTitleSaveButton {
 	width: 50px;
 	height: 23px;
@@ -547,7 +546,7 @@
 	width: 70px;
 	font-family: Tahoma, sans-serif !important;
 	text-transform:uppercase;
-	
+
 }
 
 #pnlMainFlow .classpageShareLinkInput{
@@ -654,15 +653,15 @@ margin-left:-1px;
 	position: absolute;
 	top: 50px;
 	left: 188px;
-	z-index:99;	
+	z-index:99;
 }
 
 #pnlMainFlow .webLinkPopupContainer{
 	width: 227px;
 	position: absolute;
 	top: 50px;
-	left: 475px;	
-	z-index:99;	
+	left: 475px;
+	z-index:99;
 }
 #pnlMainFlow .classpageImage{
 	width:1000px;
@@ -780,7 +779,7 @@ margin-left:-1px;
 	background: -linear-gradient(#fff 0, #ddd 100%) !important;
 	border: 1px solid #ccc;
 	/* border-radius: 0px 5px 5px 0px; */
-	
+
 }
 #pnlMainFlow .teachTab button:last-child{
 	margin-left: -4px;
@@ -795,7 +794,7 @@ margin-left:-1px;
 	background: -linear-gradient(#fff 0, #ddd 100%) !important;
 	border: 1px solid #ccc;
 	border-radius: 0px 5px 5px 0px;
-	
+
 }
 #pnlMainFlow .teachTab button:nth-last-child(2){
 	margin-left: -4px;
@@ -810,7 +809,7 @@ margin-left:-1px;
 	background: -linear-gradient(#fff 0, #ddd 100%) !important;
 	border: 1px solid #ccc;
 	border-radius: 0px 5px 5px 0px;
-	
+
 }
 
 #pnlMainFlow .teachTab > .selected{
@@ -847,11 +846,11 @@ margin-bottom: -10px;
 #pnlMainFlow .labelCenterAlignText{
 	text-align:center;
 	font-size:20px;
-	
+
 }
 
 #pnlMainFlow .assignmentPath{
-	
+
 }
 #pnlMainFlow .assignmentPathContainer{
 	margin-bottom: 10px;
@@ -872,7 +871,7 @@ margin-bottom: -10px;
 
 #pnlMainFlow .assignmentProgress{
 	text-align: center;
-	font-size: 12px; 
+	font-size: 12px;
 /*	font-weight: bold;	*/
 	margin:15px;
 	margin-bottom: 19px;
@@ -881,7 +880,7 @@ margin-bottom: -10px;
 }
 #pnlMainFlow .assignmentProgressStudent{
 	text-align: center;
-	font-size: 12px; 
+	font-size: 12px;
 /*	font-weight: bold;	*/
 	margin:15px;
 	margin-bottom: 19px;
@@ -933,7 +932,7 @@ margin-bottom: -10px;
 
 #pnlMainFlow .classcodeContainer{
 	float: left;
-	
+
 }
 
 #pnlMainFlow .containerProgress{
@@ -1130,7 +1129,7 @@ margin-bottom: -10px;
 
 #pnlMainFlow .btnContainer{
 	text-align : center;
-	border-bottom: 1px solid #EBEAEA;	
+	border-bottom: 1px solid #EBEAEA;
 }
 
 #pnlMainFlow .btnContainerStyle{
@@ -1243,8 +1242,8 @@ margin-bottom: -10px;
 	width:1000px;
 }
 #pnlMainFlow .assignementOrderHeader{
-	margin: 20px auto; 
-	text-align: center; 
+	margin: 20px auto;
+	text-align: center;
 }
 #pnlMainFlow .errorMessage{
 	height: 170px;

@@ -47,7 +47,7 @@
 		border-color: rgb(221, 221, 221);
 		border-left: none;
 		border-bottom: none;
-		background: url("../images/core/background-image.png") !important;
+		background: url("../images/background-image.png") !important;
 		}
 		.coursePopupStyle {
 		float: left;
@@ -59,7 +59,7 @@
 		width: 100%;
 		margin-bottom:
 		6px;
-		
+
 		}
         .courseScrollStyle{
          min-height: 350px;
@@ -108,4 +108,4 @@
 			<g:HTMLPanel styleName="clearfix" />
 		</g:HTMLPanel>
 	</g:FlowPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

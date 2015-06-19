@@ -3,13 +3,6 @@
 #folderTocMainPnl a,#folderTocMainPnl a:hover,#folderTocMainPnl a:focus,#folderTocMainPnl a:active {
 	outline: none;
 }
-
-body {
-	background: #efeded url(../images/background-image.png) repeat
-		!important;
-	font-family: Arial, Helvetica, sans-serif !important;
-}
-
 #folderTocMainPnl header {
 	background: #333333;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#515151),

@@ -31,6 +31,12 @@ import org.ednovo.gooru.application.client.home.HomePresenter;
 import org.ednovo.gooru.application.client.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.application.client.home.HomeView;
 import org.ednovo.gooru.application.client.home.IsHomeView;
+import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
+import org.ednovo.gooru.application.client.home.banner.HomeBannerView;
+import org.ednovo.gooru.application.client.home.banner.IsHomeBannerView;
+import org.ednovo.gooru.application.client.home.presearch.IsPreSearchView;
+import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
+import org.ednovo.gooru.application.client.home.presearch.PreSearchView;
 import org.ednovo.gooru.application.client.wrap.IsWrapView;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter.IsWrapProxy;
@@ -622,5 +628,11 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(MyCollectionsListPresenter.class,IsMyCollectionsListView.class,MyCollectionsListView.class);
 		bindPresenterWidget(CourseInfoPresenter.class,IsCourseInfoView.class,CourseInfoView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
+
+
+		bindPresenterWidget(HomeBannerPresenter.class,IsHomeBannerView.class, HomeBannerView.class);
+
+		bindPresenterWidget(PreSearchPresenter.class,IsPreSearchView.class, PreSearchView.class);
+
 	}
 }

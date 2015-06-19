@@ -1,16 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
 
-body {
-    background-image: url("../images/background-image.png");
-    color: #515151;
-    font-family: Arial,sans-serif;
-    font-size: 12px;
-    line-height: 1.2;
-    margin: 50px;
-    padding: 0;
-}
-
 *:before, *:after {
     box-sizing: border-box;
 }
@@ -25,7 +15,7 @@ body {
 }
 
 .analyticsContainerMain, .QuestionsContainer{
-	width:556px; 
+	width:556px;
 
 	background:#ffffff;
 	margin-bottom:20px;
@@ -42,21 +32,21 @@ body {
 .leftPanel{
 	float:left;
 	width:46%;
-	margin-bottom:15px;	
+	margin-bottom:15px;
 
 }
 
  .rightPanel{
 	float:left;
 	width:48%;
-	margin-bottom:15px;	
+	margin-bottom:15px;
 
 }
 .borderBottom{
 	border-bottom:1px solid #dddddd;
 	padding:10px 0;
 }
-	
+
 
 .reactionImg, .reactionDescription{
 	display:inline-block;
@@ -108,13 +98,13 @@ body {
 	width:80px;
 	height:60px;
 	background:#EEEEEE;
-	
+
 
 }
 .qBlock img{
 	border:1px solid #D8DADE;
 }
-	
+
 
 .qBlock .persentage{
  left: 23%;
@@ -126,7 +116,7 @@ body {
 	color:#ffffff;
 	font-weight:bold;
 	font-size:14px;
-	
+
 }
 .qBlock .persentage span{
 	font-weight:normal;
@@ -145,7 +135,7 @@ body {
 }
 .avgAttempts .boldTxt{
 	font-weight:bold;
-	
+
 }
 
 .avgAttempts  .bigText{
