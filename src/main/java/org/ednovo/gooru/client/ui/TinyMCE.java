@@ -487,19 +487,21 @@ public class TinyMCE extends Composite{
 	}
 	public int countCharcters(String content,String tinyMceId){
 		AddQuestionResourceView.errorMessageForQuestion.setText("");
+		int charLimit=AddQuestionResourceView.questionCharcterLimit;
 		//This regex is used to get text count with out html tags
 		String noHTMLString = content.replaceAll("\\<.*?>","");
 		if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
 			setErrorMessage(ERROR_MESSAGE,tinyMceId);
-			if(noHTMLString.length()>=503)
+			if(noHTMLString.length()>=charLimit+3)
 			{
-			setContent(tinyMceId,content.substring(0, 503));
+			setContent(tinyMceId,content.substring(0, charLimit+3));
 			}
 		}else{
 			clearErrorMessage(tinyMceId);
 		}
 		return noHTMLString.length();
 	}
+	
 	public void clearErrorMessage(String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");
