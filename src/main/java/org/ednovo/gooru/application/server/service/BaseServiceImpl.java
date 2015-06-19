@@ -39,6 +39,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.server.AppSessionHolder;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
@@ -57,6 +58,7 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
@@ -928,17 +930,21 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			JsonRepresentation jsonRep = null;
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
-			String data = jsonRep.getJsonObject().toString();
-			userDo = JsonDeserializer.deserialize(data, UserDo.class);
-			Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
-			Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-			if (userCreatedDate.getTime() >= prodDate.getTime()){
-				userDo.setBeforeProductionSwitch(false);
+			if (jsonResponseRep.getResponseDo() != null ){
+				getLogger().info("jsonResponseRep.getResponseDo().getErrorCode() : "+jsonResponseRep.getResponseDo().getErrorCode());
 			}else{
-				userDo.setBeforeProductionSwitch(true);
+				String data = jsonRep.getJsonObject().toString();
+				userDo = JsonDeserializer.deserialize(data, UserDo.class);
+				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
+				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
+				if (userCreatedDate.getTime() >= prodDate.getTime()){
+					userDo.setBeforeProductionSwitch(false);
+				}else{
+					userDo.setBeforeProductionSwitch(true);
+				}
+				userDo.setToken(token);
+				setUserFilterProperties(userDo);
 			}
-			userDo.setToken(token);
-			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);
 		}
