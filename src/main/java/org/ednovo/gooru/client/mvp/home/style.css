@@ -9,18 +9,15 @@
 .fontsforweb_fontid_9786 {
 	font-family: 'rock' !important;
 }
-body {
-	background: #efeded url(../images/background-image.png) repeat !important;
-	font-family: Arial, Helvetica, sans-serif !important;
-}
+
 a {
 }
 .header {
 /* background: -moz-linear-gradient(center top , #515151, #333) repeat scroll 0 0 rgba(0, 0, 0, 0);*/
- 
+
  /* Old browsers */
 	background: #333333;
-	
+
 	/* Safari 4-5, Chrome 1-9 */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#515151), to(#333333));
 
@@ -46,7 +43,7 @@ a {
 button.primary{
 	 /* Old browsers */
 	background: #1076bb;
-	
+
 	/* Safari 4-5, Chrome 1-9 */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4c98cc), to(#1076bb));
 
@@ -1039,7 +1036,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	border-radius: 4px 4px;
 	padding: 10px 9px;
 	margin-bottom:15px;
-	
+
 }
 .searchContainer .sInner p{
 	font-size:13px;
@@ -1174,7 +1171,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	font-size:14px;
 	margin-bottom:15px;
 }
-	
+
 /*.getStart .col-md-7 {
 	padding-left: 0 !important;
 	padding-right: 0 !important;
@@ -1312,25 +1309,25 @@ padding-bottom:15px;
 
 
 @media (min-width: 768px) and (max-width: 991px) {
-	
+
 	 header{
 		position:relative;
 	}
-	
+
 	.searchbox{
 		width:auto !important;
 	}
-	
+
 	.mainmenu{
 		width:auto !important;
 	}
-	
-	
-	
+
+
+
 	.banner{
 		margin-top:0;
 	}
-	
+
 .bannerInner .caption {
     left: 4%;
     position: absolute;
@@ -1348,7 +1345,7 @@ padding-bottom:15px;
 height:140px;
 width:100%;
 }
-	
+
 footer .col-md-2{
 	padding-left:20px;
 }
@@ -1363,7 +1360,7 @@ footer .col-md-2{
 .rightBlock1 .blockContent{
 	min-height:205px;
 
-	
+
 }
 .rightBlock1 .last{
 	min-height:205px;
@@ -1386,34 +1383,34 @@ footer .col-md-2{
 .communityResult .resultMainBlock .dataTableResult{
 		min-height:234px;
 		}
-		
+
 	.communityResult .mathsContainer .dataTableResult{
 			min-height:275px;
 	}
-	
-	
+
+
 	.communityResult .englishContainer .dataTableResult{
 			min-height:200px;
 	}
-		
-	
+
+
 	.getStartedIMG img{
 		width:100%;
 	}
-	
+
 	.searchContainer .form-control{
 		height:43px;
 	}
-	
+
 	.logo{
 		text-align:left;
-	
+
     padding-bottom: 6px;
     padding-top: 6px;
 	width:19% !important;
 
 	}
-	
+
 	.mainmenu{
 		position:absolute !important;
 		right:0;
@@ -1421,37 +1418,37 @@ footer .col-md-2{
 		padding-left:0 !important;
 		padding-right:0 !important;
 	}
-	
+
 	/*.mobileStyle{
 		  background: none repeat scroll 0 0 #ffffff;
     clear: both;
     display: block;
-                 
+
 
    margin-left: -5px;
     margin-right: -5px;
-   
+
 	}*/
-	
+
 	.searchbox{
 	/*  margin-left: 30.33333333%;*/
 	}
 	.searchContainer .sInner p{
 		font-size:14px;
 	}
-	
+
 	header .row{
 		position:relative;
 	}
-	
-	
+
+
 	.navbar-form{
 		padding:0px 7px !important;
 	}
 	.navbar-collapse{
 		padding-right:0 !important;
 	}
-	
+
 	.searchContainer .sInner{
 		min-height:262px;
 	}
@@ -1461,15 +1458,15 @@ footer .col-md-2{
 	padding-top: 15px;
 	font-size:12px;
 }
-	
+
 	 .container {
     width: auto !important;
   }
-  
+
   .margin{
 	  margin:15px 0;
   }
-  
+
   .getStart .getContentContainer h4{
 	  font-size:25px;
   }
@@ -1488,11 +1485,11 @@ footer .col-md-2{
   .getStartedIMG .getCaption{
 	  font-size:40px;
   }
-	  
+
   .mission p,.yourSupport p{
 	  font-size:17px;
   }
-	  
+
   .social {
 	  text-align:left;
   }
@@ -1503,19 +1500,19 @@ footer .col-md-2{
     .dataTableResult p{
 	  font-size:20px;
   }
-  
+
    .searchContainer .sInner p{
 	  font-size:16px;
   }
-  
+
   .searchContainer .col-md-3 h2{
 	  font-size:35px;
   }
- 
+
  .menuHeader{
 	 font-size:30px;
  }
- 
+
  .blueBand{
 	 font-size:20px;
  }
@@ -1525,20 +1522,20 @@ footer .col-md-2{
  .rightPadding .rightBlock1 .blockHeader {
 		font-size:25px !important;
 	}
-	
+
  .bodyWrapper{
 	margin-top:0;
 }
- 
-	
+
+
 }
 
 
 
 
 @media (max-width: 767px) {
-	
-	
+
+
 .searchContainer .col-md-3 h2{
 	font-size:30px;
 }
@@ -1551,14 +1548,14 @@ footer .col-md-2{
 	height:42px;
 	font-size:18px;
 }
-	
+
 	.menuHeader{
 		font-size:25px;
 	}
 	.blueBand{
 		font-size:18px;
 	}
-	
+
 	.dataTableResult p{
 		font-size:18px;
 	}
@@ -1577,13 +1574,13 @@ footer .col-md-2{
 	.getContentContainer p{
 		font-size:16px;
 	}
-	
+
 	.rightBlock1 .last{
 		height:auto;
 	}
-	
-	
-	
+
+
+
 	.getStart .getInnerRight h3{
 		font-size:30px;
 	}
@@ -1596,11 +1593,11 @@ footer .col-md-2{
 	.mission p, .yourSupport p{
 		font-size:16px;
 	}
-	
+
 	.logo{
 		text-align:left;
 	}
-	
+
 .searchbox .form-control{
 	height:37px;
 }
