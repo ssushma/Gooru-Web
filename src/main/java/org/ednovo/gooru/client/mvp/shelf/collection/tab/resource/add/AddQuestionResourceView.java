@@ -128,7 +128,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	private CollectionItemDo collectionItemDo=null;
 	 boolean isAnsweEmpty = false;
-	@UiField Label centuryDefaultText,depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg,advancedLbl,setUpAdvancedLbl;
+	@UiField Label centuryDefaultText,depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg,advancedLbl;
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights,eHearderIconExplanation,eHearderIconDepthOfKnowledge,eHearderIconStandards,eHearderIconCentury;
 	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer,advancedContainer,questionHotTextAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
@@ -167,8 +167,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
-	private String htType=i18n.GL3219();
-	private String htSentenceType=i18n.GL3223();
+	private String htType=i18n.GL3219_1();
+	private String htSentenceType=i18n.GL3223_1();
 
 	public String getQuestionType() {
 		return questionType;
@@ -307,9 +307,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211_1());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211_1());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211_1());
 		rightsLbl.setText(i18n.GL0869());
 		rightsLbl.getElement().setId("lblRightsLbl");
 		rightsLbl.getElement().setAttribute("alt", i18n.GL0869());
@@ -609,9 +606,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211());
 		errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
 		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
 		answerchoiceTitleContainer.getElement().setId("fpnlAnswerchoiceTitleContainer");
@@ -1344,7 +1338,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.wordRDButtonClick();
-				htType=i18n.GL3219();
+				htType=i18n.GL3219_1();
 			}
 		});
 		addQuestionAnswer.sentenceRDButton.addClickHandler(new ClickHandler() {
@@ -1352,7 +1346,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.sentenceRDButtonClick();
-				htType=i18n.GL3220();
+				htType=i18n.GL3220_1();
 			}
 		});
 		addQuestionAnswer.singleRDButton.addClickHandler(new ClickHandler() {
@@ -1360,7 +1354,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.singleRDButtonClick();
-				htSentenceType=i18n.GL3222();
+				htSentenceType=i18n.GL3222_1();
 			}
 		});
 		addQuestionAnswer.multiRDButton.addClickHandler(new ClickHandler() {
@@ -1368,7 +1362,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.multiRDButtonClick();
-				htSentenceType=i18n.GL3223();
+				htSentenceType=i18n.GL3223_1();
 			}
 		});
 	}
@@ -2486,7 +2480,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     				String errorMsg;
     				String errorMsg2;
 
-    				if(htType.equalsIgnoreCase(i18n.GL3219())){
+    				if(htType.equalsIgnoreCase(i18n.GL3219_1())){
     					temp = text.split(" ");
     					errorMsg=ERROR_MSG_HTHL_SYNTAX;
     					errorMsg2=ERROR_MSG_HTHL;
@@ -2949,7 +2943,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addHotTextAnsChoice.highlightRDButton.setValue(true);
 				String HtHighlightType=	collectionItemDo.getResource().getAttributes().getHlType();
 
-				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219())){
+				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219_1())){
 					addHotTextAnsChoice.wordRDButtonClick();
 				}else{
 					addHotTextAnsChoice.sentenceRDButtonClick();

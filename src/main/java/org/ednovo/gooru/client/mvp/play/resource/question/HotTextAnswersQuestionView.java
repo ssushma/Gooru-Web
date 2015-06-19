@@ -229,7 +229,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 						QuestionAnswerDo questionAnswerDo=answerListSet.get(entry.getKey());
 						HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + k) + ") "));
-						htAnswerOptionView.addDomHandler(new DragContainerClick(),  ClickEvent.getType());
 						htAnswerOptionView.getElement().setId(String.valueOf(entry.getKey()));
 						int beforeIndex=k+1;
 						optionsContainer.addDraggable(htAnswerOptionView,beforeIndex,entry.getKey());
@@ -242,7 +241,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						int randomSeq=(Integer) randomSequenceList.get(i);
 						QuestionAnswerDo questionAnswerDo=answerListSet.get(randomSeq);
 						HTAnswerChoiceOptionView htAnswerOptionView=new HTAnswerChoiceOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
-						htAnswerOptionView.addDomHandler(new DragContainerClick(),  ClickEvent.getType());
 						htAnswerOptionView.getElement().setId(String.valueOf(randomSeq));
 						int beforeIndex=i+1;
 						optionsContainer.addDraggable(htAnswerOptionView,beforeIndex,randomSeq);
@@ -254,18 +252,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		}
 
 	}
-
-
-	public class DragContainerClick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			clearReorderAnswers();
-			enableCheckAnswerButton();
-		}
-
-	}
-
 
 	public void showPreviousResult(int answerId,HTAnswerChoiceOptionView htAnswerOptionView,boolean isCorrect){
 

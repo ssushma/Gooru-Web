@@ -138,8 +138,6 @@
 
  <g:HTMLPanel styleName="col-md-12 colmdPadding containerMarginTop">
 
-           <g:Label ui:field="setUpAdvancedLbl" styleName="advancedOptionsHeading"></g:Label>
-
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addExplanationAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addHintsAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addDepthOfKnowledgeAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
