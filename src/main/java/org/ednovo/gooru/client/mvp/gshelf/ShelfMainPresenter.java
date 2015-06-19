@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +78,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private boolean clrPanel=false;
 	
 	private String type="Course";
+	
+	private static final String VIEW= "view";
 	
 	public static final  Object RIGHT_SLOT = new Object();
 	
@@ -169,6 +172,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
+		
 	}
 	
 	@Override
@@ -179,20 +183,22 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		if (AppClientFactory.isAnonymous()){
-			getView().setNoDataForAnonymousUser(true);
-		}else{
-			getView().setNoDataForAnonymousUser(false);
-			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
-			getView().setDefaultOrganizePanel();
-		}
 	}
 	
 	@Override
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
+		//Window.scrollTo(0, 0);
+		if (AppClientFactory.isAnonymous()){
+			getView().setNoDataForAnonymousUser(true);
+		}else{
+			getView().setNoDataForAnonymousUser(false);
+			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+			type=view;
+			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,view,false,getUserCollectionAsyncCallback(true));
+			getView().setDefaultOrganizePanel(view);
+		}
 	}
 	
 	public ShelfServiceAsync getShelfService() {
@@ -208,7 +214,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.SHELF;
+		return PlaceTokens.MYCOLLECTION;
 	}
 
 	@Override
@@ -292,7 +298,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setListPresenterBasedOnType(String type) {
 		this.type=type;
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
+		Map<String,String> params = new HashMap<String,String>();
+		params.put(VIEW, type);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, params);
+		//getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
 	}
 	
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {

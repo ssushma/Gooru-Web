@@ -526,7 +526,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	public void setWidgetPositions(int level, int position, HashMap<String,String> urlParams) {
 		this.level = level;
 		this.position = position;
-
 		if(level==1) {
 			this.urlParams.put(O1_LEVEL, collectionDo.getGooruOid());
 		}
@@ -683,6 +682,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			params.put(O3_LEVEL, collectionDo.getGooruOid());
 		}
+		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view")); 
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, params);
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
 		AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),true,new SimpleAsyncCallback<FolderTocDo>() {
@@ -707,6 +707,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			params.put(O3_LEVEL, urlParams.get(O3_LEVEL));
 		}
     	params.put(ID, collectionDo.getGooruOid());
+    	params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view")); 
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, params);
 	}
 
