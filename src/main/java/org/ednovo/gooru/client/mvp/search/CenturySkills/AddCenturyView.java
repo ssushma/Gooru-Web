@@ -312,7 +312,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 					if(titleText.getElement().getClassName().contains(AddCenturyBundle.INSTANCE.css().hilighTitleText())){
 						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());			
 						for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
-							if(selectedValues.containsValue(entry.getValue().trim())){
+							if(entry.getValue().contains(titleText.getText().trim())){
 								if(collectionIdFromCollectionInfo!=null){
 									getUiHandlers().deleteCourseOrStandard(collectionIdFromCollectionInfo, entry.getKey().toString());
 									if(collectionInfoSelectedValues!=null && collectionInfoSelectedValues.containsKey(entry.getKey())){
