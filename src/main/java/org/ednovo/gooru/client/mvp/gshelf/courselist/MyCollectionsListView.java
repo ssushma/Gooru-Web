@@ -40,10 +40,12 @@ import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -176,6 +178,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			setLastWidgetArrowVisiblity(false);
 		}
 	}
+	/**
+	 * This inner class is used to handle the click event on title container
+	 */
 	class ClickOnTitleContainer implements ClickHandler{
 		FolderDo folderObj;
 		ClickOnTitleContainer(FolderDo folderObj){
@@ -205,8 +210,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
 		lastwidget.getDownArrow().setVisible(isVisible);
 	}
+	/**
+	 * This method will set the height and it will display the scroll
+	 */
 	public void setScrollHeight(){
 		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
 		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);
+	}
+	/**
+	 * This method will return the scroll panel
+	 * @return
+	 */
+	@Override
+	public ScrollPanel getScrollPanel(){
+		return listScrollPanel;
 	}
 }

@@ -39,6 +39,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.server.AppSessionHolder;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
@@ -341,7 +342,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	protected String getLoggedInSessionToken() {
 		String token = getCookie(GOORU_SESSION_TOKEN);
-		AppClientFactory.printInfoLogger("getLoggedInSessionToken -- token : "+token);
 		if (token == null) {
 			token = getHttpRequest() != null ? (String) getHttpRequest().getSession().getAttribute(GOORU_SESSION_TOKEN) : null;
 			//Fix for handling when cookie get disabled.
