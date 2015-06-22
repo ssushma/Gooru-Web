@@ -37,9 +37,9 @@
 										</ul>
 									</div>
 								</div>
-								<div class="col-md-2 col-xs-2 col-sm-2">
+								<panel:HTMLEventPanel styleName="col-md-2 col-xs-2 col-sm-2" ui:field="createNewPnl">
 									<span class="plus">+</span>
-								</div>
+								</panel:HTMLEventPanel>
 								<div class="clearfix"></div>
 							</div>
 
