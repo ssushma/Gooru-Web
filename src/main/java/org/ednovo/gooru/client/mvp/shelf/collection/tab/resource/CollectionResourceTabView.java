@@ -304,7 +304,11 @@ public class CollectionResourceTabView extends
 				toolTipPopupPanel.clear();
 				buttonContainerForQuestionGreay.setVisible(false);
 				buttonContainerAddGray.setVisible(false);
-				buttonContainer.setVisible(true);
+				if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
+					buttonContainer.setVisible(false);
+				}else{
+					buttonContainer.setVisible(true);
+				}
 				buttonContainerForQuestion.setVisible(true);
 			}
 		}
@@ -447,7 +451,11 @@ public class CollectionResourceTabView extends
 			toolTipPopupPanel.clear();
 			buttonContainerForQuestionGreay.setVisible(false);
 			buttonContainerAddGray.setVisible(false);
-			buttonContainer.setVisible(true);
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
+				buttonContainer.setVisible(false);
+			}else{
+				buttonContainer.setVisible(true);
+			}
 			buttonContainerForQuestion.setVisible(true);
 		}
 		if (newFlag) {
@@ -842,7 +850,11 @@ public class CollectionResourceTabView extends
 			toolTipPopupPanel.clear();
 			buttonContainerForQuestionGreay.setVisible(false);
 			buttonContainerAddGray.setVisible(false);
-			buttonContainer.setVisible(true);
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
+				buttonContainer.setVisible(false);
+			}else{
+				buttonContainer.setVisible(true);
+			}
 			buttonContainerForQuestion.setVisible(true);
 		}
 		if (collectionDo.getCollectionItems().size() <= 0) {

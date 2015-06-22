@@ -813,7 +813,7 @@ button.btn-disabled{
 	float: right;
 	margin-right: 2%;
 }
-#gShelfCourseInfo .breadcrumbMain a{
+#gShelfCourseInfo .breadcrumbMain .active{
 	padding:20px 25px;
 	display:inline-block;
 	font-size:17px;
@@ -821,16 +821,16 @@ button.btn-disabled{
 	position:relative;
 	
 }
-#gShelfCourseInfo .breadcrumbMain a:hover,#gShelfCourseInfo .breadcrumbMain a:focus{
+#gShelfCourseInfo .breadcrumbMain .active:hover,#gShelfCourseInfo .breadcrumbMain .active:focus{
 	opacity:1;
 	text-decoration:none;
 }
-#gShelfCourseInfo .breadcrumbMain a.active{
+#gShelfCourseInfo .breadcrumbMain div.active{
 	background:#cddeea;
 	box-shadow: none;
 }
 
-#gShelfCourseInfo .breadcrumbMain a.active:after{
+#gShelfCourseInfo .breadcrumbMain div.active:after{
 	content:"";
 	position:absolute;
 	width: 0; 
@@ -844,7 +844,7 @@ button.btn-disabled{
 	z-index:999;
 }
 
-#gShelfCourseInfo .breadcrumbMain a.active:before{
+#gShelfCourseInfo .breadcrumbMain div.active:before{
 	content:"";
 	position:absolute;
 	width: 0; 
