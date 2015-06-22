@@ -22,34 +22,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.courselist;
+package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team
  *
  */
-public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
+public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	/**
-	 * This method is used to set data as list
-	 * @param type
-	 * @param slotPanel
-	 * @param result
-	 * @param clrPanel
+	 * This method will call the taxonomy service method
 	 */
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel,boolean isInnerSlot);
-	/**
-	 * This method is used to reset widgets
-	 */
-	public void resetWidgetPositions();
-	/**
-	 * This method will return the scroll panel
-	 * @return
-	 */
-	public ScrollPanel getScrollPanel();
+	public void callTaxonomyService();
 }

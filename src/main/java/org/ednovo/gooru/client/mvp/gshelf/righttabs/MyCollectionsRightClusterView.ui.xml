@@ -3,20 +3,11 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
 <g:HTMLPanel styleName="floderRightContainer" ui:field="mainPanel">
 	<div class="courseHeader">
-		<div class="breadcrumbMain">
-			<a class="active">
-				<span class="courseFolderCloseIcon"></span>
-				Ac Num
-			</a>
-			<a class="active">
-				<span class="unitFolderCloseIcon"></span>
-				Untitled Unit
-			</a>
-		</div>
+		<g:HTMLPanel styleName="breadcrumbMain" ui:field="pnlBreadCrumbMain"/>
 	</div>
 	<div class="folderBlockSitemap">
 		<g:Anchor ui:field="lnkInfo" styleName="active" >Info</g:Anchor> 
-		<g:Anchor ui:field="lnkContent">Content (Lessons)</g:Anchor> 
+		<g:Anchor ui:field="lnkContent">Content</g:Anchor> 
 		<g:Anchor ui:field="lnkshare">Share</g:Anchor> 
 	</div>
 	<g:HTMLPanel ui:field="pnlSlotInnerContent"/>
