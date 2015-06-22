@@ -266,10 +266,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					if(o1==null){
 						if(clrPanel){
 							clearSlot(RIGHT_SLOT);
-							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel,false);
 							setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
 						}else{
-							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel,false);
 						}
 					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);

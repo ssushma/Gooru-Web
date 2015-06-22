@@ -44,12 +44,10 @@ import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -65,7 +63,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer;
+	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate;
@@ -140,21 +138,33 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel) {
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel,boolean isInnerSlot) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
-		if(COURSE.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL1180());
-		}else if(FOLDER.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL0994());
-		}else if(COLLECTION.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL3282());
-		}else{
+		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
-			btnCreate.setText("Create Unit");
+			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+			if(view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
+			}else{
+				btnCreate.setText("Create Unit");
+				pnlAddContainer.setVisible(true);
+			}
+		}else{
+			if(COURSE.equalsIgnoreCase(type)){
+				h2Title.setText(i18n.GL1180());
+			}else if(FOLDER.equalsIgnoreCase(type)){
+				h2Title.setText(i18n.GL0994());
+			}else if(COLLECTION.equalsIgnoreCase(type)){
+				h2Title.setText(i18n.GL3282());
+			}else{
+				pnlH2TitleContainer.setVisible(false);
+				pnlCreateContainer.setVisible(true);
+			}
 		}
 		if(clrPanel){
 			index=0;
