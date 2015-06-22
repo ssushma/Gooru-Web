@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
@@ -68,4 +69,10 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	void setListPresenterBasedOnType(String type);
 
 	void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel);
+	/**
+	 * This method is used to get list presenter
+	 */
+	public MyCollectionsListPresenter getMyCollectionsListPresenter();
+	
+	public void setRightPanelData(FolderDo folderObj,String clickedItemType);
 }

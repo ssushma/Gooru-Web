@@ -30,6 +30,8 @@ package org.ednovo.gooru.client.mvp.test;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
+import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
 
 import com.google.gwt.user.client.Window;
@@ -55,17 +57,24 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  */
 public class TestPresenter extends BasePlacePresenter<IsTestView, IsEditClasspageProxy> implements TestUiHandlers {
 
-	@Inject
-	public TestPresenter(IsTestView view, IsEditClasspageProxy proxy) {
-		super(view, proxy);
-		getView().setUiHandlers(this);
-	}
+	HomeBannerPresenter banner = null;
+	PreSearchPresenter presearchPresenter = null;
+
+	public static final  Object BANNER_SLOT = new Object();
+	public static final  Object PRESEARCH_SLOT = new Object();
 
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.TEST)
 	public interface IsTestProxy extends ProxyPlace<TestPresenter> {
 	}
 
+	@Inject
+	public TestPresenter(IsTestView view, IsEditClasspageProxy proxy, HomeBannerPresenter banner, PreSearchPresenter presearchPresenter) {
+		super(view, proxy);
+		getView().setUiHandlers(this);
+		this.presearchPresenter =presearchPresenter;
+		this.banner = banner;
+	}
 
 	@Override
 	public String getViewToken() {
@@ -76,7 +85,11 @@ public class TestPresenter extends BasePlacePresenter<IsTestView, IsEditClasspag
 	protected void onReveal() {
 		super.onReveal();
 		Window.enableScrolling(true);
-			}
+
+		setInSlot(BANNER_SLOT, banner);
+		setInSlot(PRESEARCH_SLOT, presearchPresenter);
+	}
+
 
 
 	@Override

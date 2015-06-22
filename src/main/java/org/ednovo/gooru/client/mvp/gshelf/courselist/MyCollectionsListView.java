@@ -24,8 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -59,7 +63,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer;
+	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate;
@@ -71,7 +75,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	HTMLPanel slotPanel;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
+	
+	private static final String VIEW= "view";
 
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
+	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
@@ -124,21 +138,33 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel) {
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel,boolean isInnerSlot) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
-		if(COURSE.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL1180());
-		}else if(FOLDER.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL0994());
-		}else if(COLLECTION.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL3282());
-		}else{
+		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
-			btnCreate.setText("Create Unit");
+			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+			if(view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
+			}else{
+				btnCreate.setText("Create Unit");
+				pnlAddContainer.setVisible(true);
+			}
+		}else{
+			if(COURSE.equalsIgnoreCase(type)){
+				h2Title.setText(i18n.GL1180());
+			}else if(FOLDER.equalsIgnoreCase(type)){
+				h2Title.setText(i18n.GL0994());
+			}else if(COLLECTION.equalsIgnoreCase(type)){
+				h2Title.setText(i18n.GL3282());
+			}else{
+				pnlH2TitleContainer.setVisible(false);
+				pnlCreateContainer.setVisible(true);
+			}
 		}
 		if(clrPanel){
 			index=0;
@@ -176,6 +202,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			setLastWidgetArrowVisiblity(false);
 		}
 	}
+	/**
+	 * This inner class is used to handle the click event on title container
+	 */
 	class ClickOnTitleContainer implements ClickHandler{
 		FolderDo folderObj;
 		ClickOnTitleContainer(FolderDo folderObj){
@@ -183,7 +212,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().setListPresenterBasedOnType("Unit",slotPanel,folderObj);
+			Map<String,String> params = new HashMap<String,String>();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, updateParameters(params,folderObj));
+			//getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
 	@Override
@@ -205,8 +236,46 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
 		lastwidget.getDownArrow().setVisible(isVisible);
 	}
+	/**
+	 * This method will set the height and it will display the scroll
+	 */
 	public void setScrollHeight(){
 		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
 		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);
+	}
+	/**
+	 * This method will return the scroll panel
+	 * @return
+	 */
+	@Override
+	public ScrollPanel getScrollPanel(){
+		return listScrollPanel;
+	}
+
+	public Map<String,String> updateParameters(Map<String,String> params,FolderDo folderObj){
+		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		if( view!=null){
+			params.put(VIEW,view);
+		}
+		if(o1==null && o2==null && o3==null && id==null){
+			params.put(O1_LEVEL,folderObj.getGooruOid());
+		} else if(o1!=null && o2==null && o3==null && id==null){
+			params.put(O1_LEVEL, o1);
+			params.put(O2_LEVEL,folderObj.getGooruOid());
+		}else if(o1!=null && o2!=null && o3==null && id==null){
+			params.put(O1_LEVEL,o1);
+			params.put(O2_LEVEL,o2);
+			params.put(O3_LEVEL,folderObj.getGooruOid());
+		}else{
+			params.put(O1_LEVEL,o1);
+			params.put(O2_LEVEL,o2);
+			params.put(O3_LEVEL,o3);
+			params.put(ID,folderObj.getGooruOid());
+		}
+		return params;
 	}
 }

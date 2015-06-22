@@ -56,7 +56,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 		}else if(index==2){
 			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setDataInContentSlot(type, slotPanel,folderObj.getGooruOid());
+			myCollectionsListPresenter.setDataInContentSlot(type, slotPanel,folderObj.getGooruOid(),false);
 			setInSlot(INNER_SLOT, myCollectionsListPresenter);
 		}else if(index==3){
 			

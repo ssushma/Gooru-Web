@@ -37,7 +37,7 @@
 			  </g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:Anchor styleName="visible-sm visible-xs" ui:field="menuButton"><img class="" src="images/toggleIcon.png"/></g:Anchor>
-			<g:FlowPanel styleName="fixedContainer" ui:field="headerFixedContainer">
+			<g:FlowPanel styleName="fixedContainer inlineBlock" ui:field="headerFixedContainer">
 				<header:StudyPlayerHeaderView ui:field="headerView"></header:StudyPlayerHeaderView>
 				<!-- full screen code -->
 				<g:FlowPanel styleName="pnlFullScreenNarrationContainer" ui:field="pnlFullScreenNarration">

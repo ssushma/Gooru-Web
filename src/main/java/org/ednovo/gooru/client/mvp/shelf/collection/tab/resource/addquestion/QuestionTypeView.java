@@ -102,7 +102,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	interface QuestionTypeViewUiBinder extends UiBinder<Widget, QuestionTypeView> {
 	}
 
-	@UiField Label questionTypeHeader,questionTypeText,charLimitLbl,questionNameErrorLbl,setUpAdvancedLbl,advancedLbl,
+	@UiField Label questionTypeHeader,questionTypeText,charLimitLbl,questionNameErrorLbl,advancedLbl,
 	explanationLabel,charLimitExplanation,explainationErrorLbl,errorMessageForExplanation,errorMessageForHintsCheck,
 	depthOfKnowledgeHeader,depthOfKnowledgeTitle,standardsDefaultText,standardMaxMsg,centuryDefaultText,rightsLbl,
 	loadingTextLbl,ansChoiceErrMsg;
@@ -223,10 +223,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211_1());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211_1());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211_1());
-
 
 		/**
 		 * Explanation
@@ -2030,6 +2026,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@Override
 	public void editQuestion(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo=collectionItemDo;
+		clearTinyMce();
 		if(collectionItemDo!=null){
 		isEditResource=true;
 		}
@@ -2130,6 +2127,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
 
+				if(collectionItemDo.getResource().getAttributes()!=null){
+				
 				String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
@@ -2159,6 +2158,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						addHotSpotQuestion.setAnswerImageUrl(answer.getAnswerText(), null, true,answer.isIsCorrect());
 						
 					}
+				}
 				}
 
 

@@ -28,6 +28,7 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 /**
  * @author Search Team
@@ -41,9 +42,14 @@ public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollection
 	 * @param result
 	 * @param clrPanel
 	 */
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel);
+	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel,boolean isInnerSlot);
 	/**
 	 * This method is used to reset widgets
 	 */
 	public void resetWidgetPositions();
+	/**
+	 * This method will return the scroll panel
+	 * @return
+	 */
+	public ScrollPanel getScrollPanel();
 }

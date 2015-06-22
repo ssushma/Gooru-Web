@@ -28,6 +28,8 @@ package org.ednovo.gooru.application.client.gin;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.home.HomePresenter;
+import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
+import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
@@ -286,6 +288,9 @@ public interface AppInjector extends ServiceInjector {
 	SearchAddResourceToCollectionPresenter getRemixPresenterWidget();
 
 	AsyncProvider<QuestionTypePresenter> getQuestionTypePresenter();
-	
+
 	MyCollectionsListPresenter getMyCollectionsListPresenter();
+
+	AsyncProvider<HomeBannerPresenter> getHomeBannerPresenter();
+	AsyncProvider<PreSearchPresenter> getPreSearchPresenter();
 }

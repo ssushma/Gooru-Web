@@ -11,11 +11,11 @@
 	<g:ScrollPanel ui:field="listScrollPanel" styleName="coursesList">
 		<g:HTMLPanel>
 			<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList"/>
-			<div class="addCourse">
+			<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
 				<input type="file" name="fileField" id="fileField"/>
 					<span>+</span>
 					Add new course
-			</div>
+			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:ScrollPanel> 
 	</g:HTMLPanel>
