@@ -3302,3 +3302,31 @@ div#spnlDisclosureContentSimPanel>div:first-child {
 	padding-left:0;
 	padding-right:0;
 }
+.suggestPopupContentStyle {
+	
+}
+.suggestPopupContentStyle .item{
+	background-color: #FFF !important;
+	border: none !important;
+	color: #515151 !important;
+	font-size: 12px !important;
+	min-width: 173px !important;
+	margin:0px;
+	padding: 5px 6px !important;
+	cursor: pointer !important;
+}
+
+
+.suggestPopupContentStyle  .item-selected {
+	background-color: #C3DCEE !important;
+	cursor: pointer;
+}
+
+.suggestPopupContentStyle .suggestPopupContent {
+	max-height: 183px;
+	overflow-y: auto;
+	text-align: left;
+	width: 117px;
+	overflow-x: hidden;
+	background-color: #FFF !important;
+}
