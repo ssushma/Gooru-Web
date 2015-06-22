@@ -191,3 +191,13 @@
 	padding: 20px 0px;
 	box-shadow: 0 2px 2px #ccc;
 }
+
+.arrowLable {
+	background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+	position: relative;
+	right: 21px;
+	width: 10px;
+	height: 17px;
+	cursor: pointer;
+	display: inline-block;
+}

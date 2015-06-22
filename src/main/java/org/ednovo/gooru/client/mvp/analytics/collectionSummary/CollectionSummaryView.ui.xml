@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="unitStyle" src="collectionSummary.css" />
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	 <g:HTMLPanel>
@@ -16,8 +16,10 @@
  	 <g:Image ui:field="exportImage" styleName="{unitStyle.exportImage}" url="images/analytics/export.png"></g:Image>
  	 </g:HTMLPanel>
  	 <g:HTMLPanel>
- 	 <g:ListBox ui:field="studentsListDropDown" styleName="{unitStyle.filterDropDown}">
-	 </g:ListBox>
+	 
+	<gg:AppSuggestBox ui:field="studentSgstBox" styleName="{unitStyle.filterDropDown} suggestPopupContentStyle" />
+	<g:Label styleName="{unitStyle.arrowLable}" ui:field="arrowLbl" visible="true"></g:Label>
+	 	 
 	 </g:HTMLPanel>
 	 <!-- Collection Summary Top -->
 	     <g:HTMLPanel ui:field="collectionSummaryDetails">
