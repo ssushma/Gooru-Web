@@ -29,6 +29,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -93,18 +94,18 @@ public abstract class ContentWidgetWithMove extends Composite {
 		}
 		
 		if(COURSE.equalsIgnoreCase(type)){
-			h3CourseTitle.setText(i18n.GL0326()+" "+indexVal);
+			//h3CourseTitle.setText(i18n.GL0326()+" "+indexVal);
 		}else if(UNIT.equalsIgnoreCase(type)){
 			spnUnitsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL3281()+" "+indexVal);
+			//h3CourseTitle.setText(i18n.GL3281()+" "+indexVal);
 		}else if(LESSON.equalsIgnoreCase(type)){
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL0910()+" "+indexVal);
+			//h3CourseTitle.setText(i18n.GL0910()+" "+indexVal);
 		}else if(FOLDER.equalsIgnoreCase(type)){
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL1501()+" "+indexVal);
+			//h3CourseTitle.setText(i18n.GL1501()+" "+indexVal);
 		}else if(COLLECTION.equalsIgnoreCase(type)){
 			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
@@ -112,8 +113,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnLessonsCount.setVisible(false);
 			spnCollectionsCount.setVisible(false);
 			spnAssessmentsCount.setVisible(false);
-			h3CourseTitle.setText(i18n.GL0645()+" "+indexVal);
+			//h3CourseTitle.setText(i18n.GL0645()+" "+indexVal);
 		}
+		h3CourseTitle.setText(StringUtil.capitalizeFirstLetter(folderObj.getCollectionType())+" "+indexVal);
 		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
 		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
