@@ -1,58 +1,33 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel styleName="gradeContainer">
 			<section class="focusBlock animate fadeInUp animated" data-animate="fadeInUp">
 				<div class="container">
 					<div class="row">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3 class="panel-title">Hi there, what are you looking for?</h3>
+								<tbp:H3Panel styleName="panel-title" text="{i18n.GL3287}"></tbp:H3Panel>
 							</div>
 							<div class="panel-body no-gutter">
-								<div class="col-md-7 grade">
+								<div class="col-md-8 grade">
 									<span class="blocksSearch">
-										<p>I am lookingfor  </p>
+										<tbp:PPanel text="{i18n.GL3288}"></tbp:PPanel>
 										<div class="btn-group">
-											<button class="btn btn-primary" type="button">grade(s)</button>
+											<g:Button ui:field="btnGrades" styleName="btn btn-primary" text="{i18n.GL3289}"></g:Button>
 											<button aria-expanded="false" data-toggle="dropdown"
 												class="btn btn-primary dropdown-toggle" type="button">
 												<span class="caret"></span>
 												<span class="sr-only">Toggle Dropdown</span>
 											</button>
-											<ul role="menu" class="dropdown-menu">
-												<span>Try selecting from this cool subjecs:</span>
-												<li class="active">
-													<a href="#">Science</a>
-												</li>
-												<li>
-													<a href="#">Math</a>
-												</li>
-												<li>
-													<a href="#">Social Science</a>
-												</li>
-												<li>
-													<a href="#">Language Arts</a>
-												</li>
-												<li>
-													<a href="#">Arts &amp; Humnaitics</a>
-												</li>
-												<li>
-													<a href="#">Tech &amp; Engineering</a>
-												</li>
-												<li>
-													<a href="#">Physical Education</a>
-												</li>
-												<li>
-													<a href="#">Other</a>
-												</li>
-											</ul>
+											<g:HTMLPanel ui:field="panelGrades"></g:HTMLPanel>
 										</div>
 									</span>
 									<span class="blocksSearch">
-										<p>learning materials in</p>
+										<tbp:PPanel text="{i18n.GL3290}"></tbp:PPanel>
 										<div class="btn-group subject">
-											<button class="btn btn-primary" type="button">subject(s)</button>
+											<g:Button ui:field="btnSubjects" styleName="btn btn-primary" text="{i18n.GL3291}"></g:Button>
 											<button aria-expanded="false" data-toggle="dropdown"
 												class="btn btn-primary dropdown-toggle" type="button">
 												<span class="caret"></span>
@@ -86,62 +61,23 @@
 												</li>
 											</ul>
 										</div>
-									</span>
-								</div>
-								<div class="col-md-3 standards">
-									<span class="blocksSearch">
-										<p>or browse by</p>
-										<div class="btn-group">
-											<button class="btn btn-primary" type="button">standard(s)</button>
-											<button aria-expanded="false" data-toggle="dropdown"
-												class="btn btn-primary dropdown-toggle" type="button">
-												<span class="caret"></span>
-												<span class="sr-only">Toggle Dropdown</span>
-											</button>
-											<ul role="menu" class="dropdown-menu">
-												<span>Try selecting from this cool subjecs:</span>
-												<li class="active">
-													<a href="#">Science</a>
-												</li>
-												<li>
-													<a href="#">Math</a>
-												</li>
-												<li>
-													<a href="#">Social Science</a>
-												</li>
-												<li>
-													<a href="#">Language Arts</a>
-												</li>
-												<li>
-													<a href="#">Arts &amp; Humnaitics</a>
-												</li>
-												<li>
-													<a href="#">Tech &amp; Engineering</a>
-												</li>
-												<li>
-													<a href="#">Physical Education</a>
-												</li>
-												<li>
-													<a href="#">Other</a>
-												</li>
-											</ul>
-										</div>
-
 									</span>
 								</div>
 								<div class="col-md-2 browseContentBtn">
-									<button class="primary btn-block" type="submit">Browse Content</button>
+								    <g:Button ui:field="btnBrowseContent" styleName="btn btn-primary primary" text="{i18n.GL3293}"></g:Button>
+								</div>
+								<div class="col-md-2 standards">
+									<span class="blocksSearch">
+									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary" text="{i18n.GL3294}"></g:Button>
+									</span>
 								</div>
 								<div class="clearfix"></div>
-
 							</div>
-							<div class="panel-footer">
-								<p>
-									Already have an account?
-									<a href="">Log in</a>
-									here.
-								</p>
-							</div>
+							<g:HTMLPanel styleName="panel-footer" ui:field="panelAlreadyHave">
+								<g:InlineLabel text="{i18n.GL3316}"></g:InlineLabel>
+								<g:Anchor ui:field="ancLogin" text="{i18n.GL1185}"></g:Anchor>
+								<g:InlineLabel text="{i18n.GL3317}"></g:InlineLabel>
+							</g:HTMLPanel>
 						</div>
 					</div>
 				</div>
@@ -152,16 +88,11 @@
 						<div class="col-md-3 col-sm-6 animate fadeInLeft animated"
 							data-animate="fadeInLeft">
 							<div class="categoryPanel">
-								<div class="catHeading colorOpt1">
-									For Teacher
-								</div>
+								<g:Label styleName="catHeading colorOpt1" text="{i18n.GL3295}">									</g:Label>
 								<div class="catBody">
-									<div class="contentPane">
-										Gooru's potential is equal to the innovation and creativity of the
-										educators who use it.
-									</div>
+									<g:Label styleName="contentPane" text="{i18n.GL3296}"></g:Label>
 									<div class="callToAction">
-										<button type="submit" class="primary">Sign up</button>
+										<g:Button styleName="primary" ui:field="btnTeacherSignUp"></g:Button>
 									</div>
 								</div>
 							</div>
@@ -169,16 +100,12 @@
 						<div class="col-md-3 col-sm-6 animate fadeInLeft animated"
 							data-animate="fadeInLeft">
 							<div class="categoryPanel">
-								<div class="catHeading colorOpt2">
-									For Student
-								</div>
+								<g:Label styleName="catHeading colorOpt2" text="{i18n.GL3297}">
+								</g:Label>
 								<div class="catBody">
-									<div class="contentPane">
-										Student use Gooru to explore their intrests, build, and monitor their
-										progress.
-									</div>
+									<g:Label styleName="contentPane" text="{i18n.GL3298}" />
 									<div class="callToAction">
-										<button type="submit" class="primary">Sign up</button>
+										<g:Button styleName="primary" ui:field="btnStudentSignUp"></g:Button>
 									</div>
 								</div>
 							</div>
@@ -186,16 +113,11 @@
 						<div class="col-md-3 col-sm-6 animate fadeInRight animated"
 							data-animate="fadeInRight">
 							<div class="categoryPanel">
-								<div class="catHeading colorOpt3">
-									For Districts &amp; Schools
-								</div>
+								<g:Label styleName="catHeading colorOpt3" text="{i18n.GL3299}" />
 								<div class="catBody">
-									<div class="contentPane">
-										Districts collaborate with Gooru to unleash personalized learning and
-										share a district-vetted curriculum.
-									</div>
+									<g:Label styleName="contentPane" text="{i18n.GL3300}"></g:Label>
 									<div class="callToAction">
-										<button type="submit" class="primary">See Our Impact</button>
+										<g:Button ui:field="btnSeeOurImpact" styleName="primary" text="{i18n.GL3301}"></g:Button>
 									</div>
 								</div>
 							</div>
@@ -203,16 +125,11 @@
 						<div class="col-md-3 col-sm-6 animate fadeInRight animated"
 							data-animate="fadeInRight">
 							<div class="categoryPanel">
-								<div class="catHeading colorOpt4">
-									For Partners &amp; Developers
-								</div>
+								<g:Label styleName="catHeading colorOpt4" text="{i18n.GL3302}" />
 								<div class="catBody">
-									<div class="contentPane">
-										We collaborate with mission-aligned partners to increase our
-										impact on the education ecosystem.
-									</div>
+									<g:Label styleName="contentPane" text="{i18n.GL3303}" />
 									<div class="callToAction">
-										<button type="submit" class="primary">Learn more</button>
+									    <g:Button ui:field="btnLearnMore"  styleName="primary" text="{i18n.GL3304}"></g:Button>
 									</div>
 								</div>
 							</div>
@@ -223,26 +140,33 @@
 			</section>
 			<section class="gettingStarted no-gutter">
 				<div class="col-md-5 col-sm-6 gettingStartedBanner">
-					<img src="images/getting-started-banner.png" class="img-responsive" />
+					<img src="images/newlandingpage/getting-started-banner.png" class="img-responsive" />
 				</div>
 				<div class="col-md-5 col-sm-6 animate fadeInRight animated"
 					data-animate="fadeInRight">
 					<div class="gettingContentPane">
-						<h2>Getting Started with Gooru</h2>
+						<tbp:H2Panel text="{i18n.GL3305}"/>
 						<div class="blocks">
-							<h3>Getting Started Toolkit</h3>
-							<p>Welcome to Gooru! Check out these rources to learn what you
-								can do with Gooru and get started quickly.</p>
+						    <h3>
+						    <g:Anchor styleName="h3" target="_blank" href="http://about.goorulearning.org/educators/get-started/" text="{i18n.GL2134}" />
+						    </h3>
+							<tbp:PPanel text="{i18n.GL3307}" />
 						</div>
 						<div class="blocks">
-							<h3>Getting Started Toolkit</h3>
-							<p>Welcome to Gooru! Check out these rources to learn what you
-								can do with Gooru and get started quickly.</p>
+						    <h3>
+								<g:Anchor styleName="h3" target="_blank" href="http://about.goorulearning.org/educators/stories/" text="{i18n.GL2144}" />
+							</h3>
+							<tbp:PPanel text="{i18n.GL2146}" />
 						</div>
 						<div class="blocks">
-							<h3>Getting Started Toolkit</h3>
-							<p>Welcome to Gooru! Check out these rources to learn what you
-								can do with Gooru and get started quickly.</p>
+						    <div class="spriteLandingPage spriteLandingPageMonitorIco eventsIco">
+						    </div>
+						    <div class="events">
+						        <h3>
+									<g:Anchor target="_blank" styleName="h3" href="http://about.goorulearning.org/community/events" text="{i18n.GL2143}" />
+								</h3>
+								<tbp:PPanel text="{i18n.GL2142}" />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -251,45 +175,44 @@
 			<section class="remixBlock">
 				<div class="container">
 					<div class="row">
+					    <g:Label styleName="empower" text="{i18n.GL3318}"></g:Label>
 						<div class="col-md-3 col-sm-6 animate flipInX animated"
 							data-animate="flipInX">
-							<h2>Find</h2>
+							<tbp:H2Panel text="{i18n.GL0524}" />
 							<div class="finMainwrapper animation">
 								<div class="sprite findImage">
 								</div>
 							</div>
-							<p>Browse thousands of K-12 collections made by teachers or
-								search over 18M resources</p>
+							<tbp:PPanel text="{i18n.GL2122}" />
 						</div>
 						<div class="col-md-3 col-sm-6  animate flipInX animated"
 							data-animate="flipInX">
-							<h2>Remix</h2>
+							<tbp:H2Panel text="{i18n.GL2037}" />
 							<div class="finMainwrapper animation">
 								<div class="sprite remixImage">
 								</div>
 							</div>
-							<p>Remix collections and customize content to to meet your
-								students’ needs.</p>
+							<tbp:PPanel text="{i18n.GL2123}" />
 						</div>
 						<div class="col-md-3 col-sm-6 animate flipInX animated"
 							data-animate="flipInX">
-							<h2>Share</h2>
+							<tbp:H2Panel text="{i18n.GL0526}" />
+
 							<div class="finMainwrapper animation">
 								<div class="sprite shareImage">
 								</div>
 							</div>
-							<p>Share collections with students via My Classes. Login is not
-								required to access.</p>
+							<tbp:PPanel text="{i18n.GL2124}" />
 						</div>
 						<div class="col-md-3 col-sm-6 animate flipInX animated"
 							data-animate="flipInX">
-							<h2>Monitor</h2>
+							<tbp:H2Panel text="{i18n.GL2126}" />
 							<div class="finMainwrapper animation">
 								<div class="sprite monitorImage">
 								</div>
 							</div>
-							<p>Measure your students’ engagement and progress to intervene in
-								real-time.</p>
+							<tbp:PPanel text="{i18n.GL2127}" />
+							<g:Anchor text="{i18n.GL3319}" ui:field="lblSampleReports"></g:Anchor>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -297,25 +220,22 @@
 			</section>
 			<section class="freeToOpenBlock">
 				<div class="focusBannerAlwys">
-					<img src="images/free-to-open-banner.png" class="img-responsive" />
+					<img src="images/newlandingpage/free-to-open-banner.png" class="img-responsive" />
 				</div>
 				<div class="focusTextAlwys">
 					<div class="container">
 						<div class="col-md-6 col-sm-6 animate" data-animate="fadeInLeft">
 							<h2>
-								Free and Open.
-								<span>Always.</span>
+								<g:InlineLabel text="{i18n.GL3312}"></g:InlineLabel>
+								<g:InlineLabel text="{i18n.GL3313}"></g:InlineLabel>
 							</h2>
 						</div>
 						<div class="col-md-6 col-sm-6 animate" data-animate="fadeInRight">
 							<div class="BlueBg">
-								<p>We're committed to improving learning for the 1.2 billion
-									students around the world. Gooru will always be free of cost
-									and ads for educatudents.ors and st</p>
+							    <tbp:PPanel text="{i18n.GL3314}"></tbp:PPanel>
 							</div>
 							<div class="callToAction">
-								<button class="primary" type="submit">Learn more about our
-									approach</button>
+								<g:Button ui:field="btnLearnAboutApproach" styleName="primary" text="{i18n.GL3315}"></g:Button>
 							</div>
 						</div>
 						<div class="clearfix"></div>

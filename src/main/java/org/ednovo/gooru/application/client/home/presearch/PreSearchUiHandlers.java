@@ -42,4 +42,5 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  */
 public interface PreSearchUiHandlers extends BaseUiHandlers{
 
+
 }
