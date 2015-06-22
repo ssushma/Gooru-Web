@@ -377,7 +377,7 @@
 
 .focusBlock .panel-footer{
 	background-color: #deebf3;
-		border-top:#b1d2e7;
+	border-top:#b1d2e7;
 }
 .focusBlock .panel-body{
 	padding:0 15px;
@@ -416,22 +416,19 @@
 	padding-right:8px
 }
 
-.focusBlock .grade{
-	width:56.333%;
-}
 .focusBlock .standards{
-	width:27%;
 	text-align:center;
 }
 .focusBlock .grade, .focusBlock .standards{
-	border-right:1px solid #b1d2e7;
-	padding:38px 15px;
-		text-align:center;
-
+	padding:38px 0 38px 25px;
+}
+.focusBlock .grade{
+	text-align: center;
 }
 
 .focusBlock .browseContentBtn{
-		padding:38px 0 38px 15px;
+	padding:38px 15px 38px 15px;
+	border-right:1px solid #b1d2e7;
 }
 
 .focusBlock .panel-body .standards .btn-group{
@@ -442,6 +439,7 @@
 }
 .focusBlock .panel-footer{
 	padding:15px 15px;
+	text-align: center;
 }
 .focusBlock .panel-footer p{
 	text-align:center;
@@ -466,20 +464,18 @@
 .categoriesBlock .catHeading{
 	padding:15px 10px;
 	text-align:center;
-	font-family:"Arvo",serif;
+	font-family:"Arvo",serif !important;
 	border-bottom:4px solid #ffffff;
-
-
 	font-size:14.5px;
 	font-weight:600;
 }
 
 .categoriesBlock .catBody{
-
 	font-size:15px;
 	color:#515151;
 	background:#dcddde;
 	padding:15px 15px;
+	min-height: 190px;
 }
 
 
@@ -561,14 +557,16 @@
 
 .gettingStarted .gettingContentPane h2{
 
-	font-family:"Arvo",serif;
+	font-family:"Arvo",serif !important;
 	margin-bottom:30px;
+	margin-top:30px;
 	font-size:25px;
-		color:#515151;
+	color:#515151;
 }
 
 .gettingStarted .gettingContentPane .blocks{
 	margin-bottom:23px;
+	padding-left: 35px;
 }
 
 .gettingStarted .gettingContentPane .blocks:last-child{
@@ -593,33 +591,41 @@
 
 
 .remixBlock h2{
-		font-family:"Arvo",serif;
-	margin-bottom:30px;
-	text-align:center;
-	font-size:28px;
-		color:#515151;
+	font-family: "Arvo",serif !important;
+	margin-bottom: 30px;
+	text-align: center;
+	font-size: 22px;
+	color: #515151;
+	font-weight: bold;
+}
+
+.remixBlock .empower{
+	text-align: center;
+	font-size: 30px;
+	font-family: "Arvo",serif !important;
+	font-weight: bold;
+	color: #41abca;
+	margin-bottom: 35px;
 }
 
 
-
-.remixBlock p{
-		font-family:"Arvo",serif;
-		font-size:18px;
-
-
+.remixBlock p, .remixBlock span{
+		font-family:"Arvo",serif !important;
+		font-size:16px;
 		color:#333333;
 		line-height:22px;
 }
-.animation {
-  height: 178px;
+
+.remixBlock .animation {
+  height: 178px !important;
   overflow: hidden;
   padding-top: 16px;
   transition: all 0.5s ease-in 0s;
   cursor: pointer;
 }
 
-.animation:hover {
-  height: 178px;
+.remixBlock .animation:hover {
+  height: 178px !important;
   padding-top: 0;
 }
 .remixBlock .finMainwrapper {
@@ -657,12 +663,15 @@
 
 
 		.freeToOpenBlock .focusTextAlwys h2{
-			font-family:"Arvo",serif;
-		font-size:44px;
-		color:#ffffff;
-		font-weight:700;
-		margin:10% 0;
+			font-family:"Arvo",serif !important;
+			font-size:44px;
+			color:#ffffff;
+			font-weight:700;
+			margin:10% 0;
 
+		}
+		.freeToOpenBlock .focusTextAlwys h2 .gwt-InlineLabel{
+			font-family:"Arvo",serif !important;
 		}
 		.freeToOpenBlock .focusTextAlwys h2 span{
 			display:block;
@@ -786,7 +795,7 @@ footer ul li a {
 	font-size:16px;
 }
 .focusBlock .grade{
-	width:100%;
+
 }
 .focusBlock .grade, .focusBlock .standards{
 	border-right:none;
@@ -807,7 +816,7 @@ footer ul li a {
 
 }
 .focusBlock .standards{
-	width:100%;
+
 }
 .focusBlock .standards .blocksSearch{
 	margin-bottom:0;
@@ -970,7 +979,6 @@ footer .footerLogo .img-responsive{
 .focusBlock .standards {
     float: left;
     text-align: center;
-    width: 30%;
 }
 .focusBlock .browseContentBtn {
     float: left;
@@ -1070,4 +1078,41 @@ footer .footerLogo .img-responsive{
 
 .bannerImageHeight{
 	height: 419px !important;
+}
+
+.focusBlock .browseContentBtn{
+	text-align: right;
+}
+
+.focusBlock .browseContentBtn button{
+	margin-right: 25px;
+}
+
+.focusBlock .browseContentBtn:after{
+    content:"or";
+    position:absolute;
+    right:-12px;
+    top:1;
+    z-index:999;
+    color:#4ca4de;
+    padding:5px 5px;
+    background:#ffffff;
+    font-size:18px;
+}
+
+.focusTextAlwys button.primary {
+	width: 100%;
+}
+
+.gettingContentPane .eventsIco{
+	float: left;
+	height: 82px;
+	vertical-align: middle;
+	margin-top: 15px;
+	margin-left: -20px;
+	margin-right: 20px;
+}
+
+.gettingContentPane .events{
+	padding: 10px;
 }

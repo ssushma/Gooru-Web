@@ -26,6 +26,7 @@ package org.ednovo.gooru.application.client.home.presearch;
 
 
 
+import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
@@ -49,16 +50,25 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  */
 public class PreSearchPresenter extends PresenterWidget<IsPreSearchView> implements PreSearchUiHandlers,ClientConstants{
 
+	public static final Object GRADES = new Object();
+
+	GooruGradesPresenter gooruGradesPresenter = null;
 
 	@Inject
-	public PreSearchPresenter(EventBus eventBus, IsPreSearchView view) {
+	public PreSearchPresenter(EventBus eventBus, IsPreSearchView view, GooruGradesPresenter gooruGradesPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-
+		this.gooruGradesPresenter = gooruGradesPresenter;
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
+		setInSlot(GRADES, gooruGradesPresenter);
+	}
+
+	@Override
+	protected void onReset() {
+		getView().setButtonVisibility();
 	}
 }
