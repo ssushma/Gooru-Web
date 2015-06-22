@@ -24,17 +24,24 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
+import java.util.ArrayList;
+
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollectionsRightClusterUiHandlers> implements IsMyCollectionsRightClusterView,ClientConstants  {
@@ -44,13 +51,18 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	interface MyCollectionsRightViewUiBinder extends UiBinder<Widget, MyCollectionsRightClusterView> {
 	}
 	
-	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,pnlBreadCrumbMain;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare;
 	
 	HTMLPanel slotPanel;
 	FolderDo folderObj;
 	
 	final String ACTIVE="active";
+	private static final String O1_LEVEL = "o1";
+	
+	String oldO1Value=null;
+	
+	ArrayList<String> breadCumsSting=new ArrayList<String>();
 	
 	public MyCollectionsRightClusterView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -65,6 +77,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkInfo.getElement().setId("lnkInfo");
 		lnkContent.getElement().setId("lnkContent");
 		lnkshare.getElement().setId("lnkshare");
+		pnlBreadCrumbMain.getElement().setId("pnlBreadCrumbMain");
 	}
 	/**
 	 * This inner class will handle the click event on the info,content and share tab.
@@ -102,9 +115,59 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void setSlotPanel(HTMLPanel slotPanel,FolderDo folderObj){
 		 this.slotPanel=slotPanel;
 		 this.folderObj=folderObj;
+		 String title=folderObj.getTitle();
+		 setBreadCums(title);
 	}
+	/**
+	 * This method is used to set breadcums
+	 * @param title
+	 */
+	public void setBreadCums(String title){
+		 if(oldO1Value==null){
+			 oldO1Value=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		 }else{
+			 if(!AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null).equalsIgnoreCase(oldO1Value)){
+				 breadCumsSting.clear();
+				 pnlBreadCrumbMain.clear();
+				 oldO1Value=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			 }
+		 }
+		 if(!breadCumsSting.contains(title)){
+			 breadCumsSting.add(title);
+			 pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+		 }else{
+			 int index= breadCumsSting.indexOf(title);
+			 if(index!=-1){
+				 for(int i=pnlBreadCrumbMain.getWidgetCount();i>(index+1);i--){
+					 pnlBreadCrumbMain.getWidget(i-1).removeFromParent();
+					 breadCumsSting.remove(i-1);
+				 }
+			 }
+		 }
+	}
+	
 	@Override
 	public void setDefaultActiveTab(){
 		lnkContent.addStyleName(ACTIVE);
+	}
+	/**
+	 * This inner class is used to generate breadcum item widget
+	 */
+	class BreadcrumbItem extends Composite {
+		 Label lblTitle;
+		 public BreadcrumbItem(String title,String type) {
+			 HTMLPanel panel=new HTMLPanel("");
+			 panel.setStyleName("active");
+			 InlineLabel spnIcon=new InlineLabel();
+			 spnIcon.setStyleName("courseFolderCloseIcon");
+			 lblTitle=new Label(title);
+			 lblTitle.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			 panel.add(spnIcon);
+			 panel.add(lblTitle);
+			 initWidget(panel);
+		 }
+		 public Label getLabel(){
+			 return  lblTitle;
+		 }
 	}
 }
