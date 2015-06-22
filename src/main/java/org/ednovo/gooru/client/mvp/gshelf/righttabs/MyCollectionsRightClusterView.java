@@ -126,7 +126,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		 if(oldO1Value==null){
 			 oldO1Value=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		 }else{
-			 if(!AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null).equalsIgnoreCase(oldO1Value)){
+			 if(!oldO1Value.equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,""))){
 				 breadCumsSting.clear();
 				 pnlBreadCrumbMain.clear();
 				 oldO1Value=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
