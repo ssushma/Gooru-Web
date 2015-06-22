@@ -67,7 +67,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj) {
+	public void setRightClusterPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj) {
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
 		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
 		getMyCollectionsRightClusterPresenter().setTabItems(2, type,slotPanel,folderObj);

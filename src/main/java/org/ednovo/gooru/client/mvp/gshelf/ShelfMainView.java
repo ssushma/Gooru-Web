@@ -79,7 +79,6 @@ import com.google.gwt.user.client.ui.Widget;
  * @Reviewer:
  */
 public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> implements IsShelfMainView {
-
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -269,7 +268,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		return folderLevel;
 	}
 
-
 	public void setFolderActiveStatus() { 
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
@@ -278,6 +276,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 				if(parent != null)parent.setSelected(false);
 				treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+				getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(),shelfTreeWidget.getCollectionDo().getCollectionType());
 				getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),shelfTreeWidget.getFolderOpenedStatus());
 				shelfTreeWidget.setFolderOpenedStatus(true);
 				
@@ -478,6 +477,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		id = id!=null?id:"";
 		if(!parentId.equalsIgnoreCase(id)) {
 			getUiHandlers().getChildFolderItems(parentId,false);
+			getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(),shelfTreeWidget.getCollectionDo().getCollectionType());
 		}
 		ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 		if(previousshelfTreeWidget!=null) {

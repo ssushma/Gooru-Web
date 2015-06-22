@@ -50,7 +50,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param slotPanel
 	 * @param folderObj
 	 */
-	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj);
+	public void setRightClusterPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj);
 	/**
 	 * This method will return the Right Cluster Presenter
 	 * @return

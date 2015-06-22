@@ -79,9 +79,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	private String type="Course";
 	
+	private boolean isDropdownChanged=true;
+	
 	private static final String VIEW= "view";
 	
 	public static final  Object RIGHT_SLOT = new Object();
+	
+	private static final String O1_LEVEL = "o1";
 	
 	MyCollectionsListPresenter myCollectionsListPresenter;
 	
@@ -142,7 +146,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
-		//getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){
@@ -165,17 +168,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			update.show();
 			update.center();
 		}
-		Window.enableScrolling(true);
-		//Window.scrollTo(0, 0);
-		if (AppClientFactory.isAnonymous()){
-			getView().setNoDataForAnonymousUser(true);
-		}else{
-			getView().setNoDataForAnonymousUser(false);
-			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-			type=view;
-			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
-			getView().setDefaultOrganizePanel(view);
-		}
 	}
 	
 	
@@ -194,13 +186,37 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		Window.enableScrolling(true);
+		if (AppClientFactory.isAnonymous()){
+			getView().setNoDataForAnonymousUser(true);
+		}else{
+			callWorkspaceApi();
+		}
 	}
 	
 	@Override
 	protected void onReset() {
 		super.onReset();
+		Window.enableScrolling(true);
+		if (AppClientFactory.isAnonymous()){
+			getView().setNoDataForAnonymousUser(true);
+		}else{
+			if(!isDropdownChanged){
+				callWorkspaceApi();
+				isDropdownChanged=true;
+			}
+		}
 	}
-	
+	/**
+	 * This method will call the workspace APi
+	 */
+	public void callWorkspaceApi(){
+		getView().setNoDataForAnonymousUser(false);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		type=view;
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
+		getView().setDefaultOrganizePanel(view);
+	}
 	public ShelfServiceAsync getShelfService() {
 		return shelfService;
 	}
@@ -246,12 +262,15 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			userCollectionAsyncCallback = new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
-					if(clrPanel){
-						clearSlot(RIGHT_SLOT);
-						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
-						setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
-					}else{
-						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+					if(o1==null){
+						if(clrPanel){
+							clearSlot(RIGHT_SLOT);
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+							setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
+						}else{
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+						}
 					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
 				}
@@ -281,6 +300,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			});
 		}
 	}
+	@Override
+	public void setRightPanelData(FolderDo folderObj,String clickedItemType){
+		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
+		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
+		getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,getView().getSlot(),folderObj);
+		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
+	}
 
 	private void setPaginatedChildFolders(String folderId, boolean isDataCalled) {
 		getChildFolderItems(folderId, isDataCalled);
@@ -297,7 +323,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	@Override
 	public void setListPresenterBasedOnType(String type) {
-		this.type=type;
+		if(!this.type.equalsIgnoreCase(type)){
+			this.type=type;
+			isDropdownChanged=false;
+		}
 		Map<String,String> params = new HashMap<String,String>();
 		params.put(VIEW, type);
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, params);
