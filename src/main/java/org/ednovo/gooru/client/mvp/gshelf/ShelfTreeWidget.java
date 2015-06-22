@@ -666,8 +666,6 @@ public class ShelfTreeWidget extends FocusPanel {
 			titleFocPanel.removeStyleName("open");
 		}
 	}
-
-	
 	public void openFolderInShelf() {
 		AppClientFactory.printInfoLogger("Openfolderinshelf"+getLevel());
 		Map<String,String> params = new HashMap<String,String>();
@@ -685,13 +683,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view")); 
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, params);
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
-		AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),true,new SimpleAsyncCallback<FolderTocDo>() {
-			@Override
-			public void onSuccess(FolderTocDo result) {
-				AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaDataTocAPI(result)));
-				
-			}
-		});
 	}
 	
 	public void openCollectionInShelf() {
@@ -729,7 +720,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	UpdateShelfFolderNameHandler updateShelfFolderName = new UpdateShelfFolderNameHandler(){
-
 		@Override
 		public void updateShelfFolderName(String folderName,String folderId) {
 			if(collectionDo.getGooruOid().equals(folderId)){
@@ -739,9 +729,5 @@ public class ShelfTreeWidget extends FocusPanel {
 				titleLbl.getElement().setAttribute("title", folderName);
 			}
 		}
-		
 	};
-		
-	
-	
 }
