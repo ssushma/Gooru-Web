@@ -24,8 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -73,7 +77,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	HTMLPanel slotPanel;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
+	
+	private static final String VIEW= "view";
 
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
+	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
@@ -188,7 +202,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().setListPresenterBasedOnType("Unit",slotPanel,folderObj);
+			Map<String,String> params = new HashMap<String,String>();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, updateParameters(params,folderObj));
+			//getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
 	@Override
@@ -224,5 +240,32 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@Override
 	public ScrollPanel getScrollPanel(){
 		return listScrollPanel;
+	}
+
+	public Map<String,String> updateParameters(Map<String,String> params,FolderDo folderObj){
+		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		if( view!=null){
+			params.put(VIEW,view);
+		}
+		if(o1==null && o2==null && o3==null && id==null){
+			params.put(O1_LEVEL,folderObj.getGooruOid());
+		} else if(o1!=null && o2==null && o3==null && id==null){
+			params.put(O1_LEVEL, o1);
+			params.put(O2_LEVEL,folderObj.getGooruOid());
+		}else if(o1!=null && o2!=null && o3==null && id==null){
+			params.put(O1_LEVEL,o1);
+			params.put(O2_LEVEL,o2);
+			params.put(O3_LEVEL,folderObj.getGooruOid());
+		}else{
+			params.put(O1_LEVEL,o1);
+			params.put(O2_LEVEL,o2);
+			params.put(O3_LEVEL,o3);
+			params.put(ID,folderObj.getGooruOid());
+		}
+		return params;
 	}
 }

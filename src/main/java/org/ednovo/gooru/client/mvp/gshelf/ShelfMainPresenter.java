@@ -146,7 +146,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
-		//getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){
@@ -188,15 +187,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		Window.enableScrolling(true);
-		//Window.scrollTo(0, 0);
 		if (AppClientFactory.isAnonymous()){
 			getView().setNoDataForAnonymousUser(true);
 		}else{
-			getView().setNoDataForAnonymousUser(false);
-			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-			type=view;
-			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
-			getView().setDefaultOrganizePanel(view);
+			callWorkspaceApi();
 		}
 	}
 	
@@ -204,21 +198,25 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
-		//Window.scrollTo(0, 0);
 		if (AppClientFactory.isAnonymous()){
 			getView().setNoDataForAnonymousUser(true);
 		}else{
-			getView().setNoDataForAnonymousUser(false);
-			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
 			if(!isDropdownChanged){
-				type=view;
-				getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
-				getView().setDefaultOrganizePanel(view);
+				callWorkspaceApi();
 				isDropdownChanged=true;
 			}
 		}
 	}
-	
+	/**
+	 * This method will call the workspace APi
+	 */
+	public void callWorkspaceApi(){
+		getView().setNoDataForAnonymousUser(false);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		type=view;
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
+		getView().setDefaultOrganizePanel(view);
+	}
 	public ShelfServiceAsync getShelfService() {
 		return shelfService;
 	}
