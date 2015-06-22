@@ -165,6 +165,17 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			update.show();
 			update.center();
 		}
+		Window.enableScrolling(true);
+		//Window.scrollTo(0, 0);
+		if (AppClientFactory.isAnonymous()){
+			getView().setNoDataForAnonymousUser(true);
+		}else{
+			getView().setNoDataForAnonymousUser(false);
+			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+			type=view;
+			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
+			getView().setDefaultOrganizePanel(view);
+		}
 	}
 	
 	
@@ -188,17 +199,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	protected void onReset() {
 		super.onReset();
-		Window.enableScrolling(true);
-		//Window.scrollTo(0, 0);
-		if (AppClientFactory.isAnonymous()){
-			getView().setNoDataForAnonymousUser(true);
-		}else{
-			getView().setNoDataForAnonymousUser(false);
-			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-			type=view;
-			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,view,false,getUserCollectionAsyncCallback(true));
-			getView().setDefaultOrganizePanel(view);
-		}
 	}
 	
 	public ShelfServiceAsync getShelfService() {
