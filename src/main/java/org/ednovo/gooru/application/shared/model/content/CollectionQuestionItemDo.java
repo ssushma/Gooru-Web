@@ -59,6 +59,8 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse;
 	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
 	private HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledges;
+	
+	private ArrayList<String> media_files;
 
 	
 	private String hlType;
@@ -196,6 +198,13 @@ public class CollectionQuestionItemDo implements Serializable {
 	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
 		this.singleCorrectAnswer = singleCorrectAnswer;
 	}
-	
+
+	public ArrayList<String> getMedia_files() {
+		return media_files;
+	}
+
+	public void setMedia_files(ArrayList<String> media_files) {
+		this.media_files = media_files;
+	}
 	
 }

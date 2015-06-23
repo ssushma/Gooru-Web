@@ -1766,6 +1766,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
 			HashMap<String,ArrayList<QuestionAnswerDo>> answerMap = new HashMap<String,ArrayList<QuestionAnswerDo>>();
 			HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
+			
+			ArrayList<String> answerImageIds=new ArrayList<String>();
+			
 			if(questionType.equalsIgnoreCase("HS")){
 
 				AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
@@ -1777,7 +1780,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					{
 						QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
 						final AddAnswerImg ansImage=(AddAnswerImg)addQuestionAnswerChoice.ansImageContainer.getWidget(i);
-
+						answerImageIds.add(ansImage.getFileName());
 						questionAnswerDo.setAnswerText(ansImage.getFileName());
 						questionAnswerDo.setAnswerType(hsType);
 						questionAnswerDo.setSequence(i+1);
@@ -1834,6 +1837,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			if(questionType.equalsIgnoreCase("HS")){
 				collectionQuestionItemDo.setHlType(hsType);
 				collectionQuestionItemDo.setSingleCorrectAnswer(false);
+				if(hsType.equalsIgnoreCase(i18n.GL3228_1())){
+				collectionQuestionItemDo.setMedia_files(answerImageIds);
+				}
 			}
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
