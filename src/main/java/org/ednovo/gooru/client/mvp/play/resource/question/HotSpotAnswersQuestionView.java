@@ -37,7 +37,6 @@ import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -120,7 +119,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 			int i=0;
 
-			if(collectionItemDo.getResource().getAttributes().getHlType().equalsIgnoreCase(i18n.GL3228_1())){
+			if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3228_1())){
 				while (answersList.hasNext()) {
 					QuestionAnswerDo questionAnswerDo=answersList.next();
 					double randNumber = Math.random();
@@ -337,7 +336,8 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText())); 
+					answerAttemptDo.setText(questionAnswerOptionView.getAnswerText()); 
+					//answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText())); 
 					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);
@@ -373,7 +373,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(StringUtil.replaceSpecial(answerImg.getAnswerImage())); 
+					answerAttemptDo.setText(answerImg.getAnswerImage()); 
 					answerAttemptDo.setAnswerId(answerImg.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);

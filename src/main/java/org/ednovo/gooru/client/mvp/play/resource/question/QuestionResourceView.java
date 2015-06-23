@@ -586,8 +586,8 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
 			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,1);
 		}
-		public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
-			getUiHandlers().setAnswerIdWithTime(answerId, answerStatus, answerSequence);
+		public void setAnswersDetailsWitithTime(List<Integer> answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+			getUiHandlers().setAnswerIdWithTimeForHT(answerId, answerStatus, answerSequence);
 			getUiHandlers().setResourceScore(score);
 		}
 		public void increaseUserAttemptCount(){
