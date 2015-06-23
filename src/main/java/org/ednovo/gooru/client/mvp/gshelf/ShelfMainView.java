@@ -436,6 +436,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					shelfFolderTree.addItem(folderItem);
 					//When page is refreshed, the folderItem previously selected will be highlighted.
 					if(gooruOid!=null&&gooruOid.equalsIgnoreCase(floderDo.getGooruOid())) {
+						System.out.println("inininin");
 						checkShelfRefreshStatus(folderItem, floderDo.getGooruOid());
 						shelfTreeWidget.setFolderOpenedStatus(true);
 					}
@@ -470,6 +471,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	*/
 	
 	private void checkShelfRefreshStatus(TreeItem treeItem, String parentId) {
+		System.out.println("checkShelfRefreshStatus");
 		treeChildSelectedItem = treeItem;
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		shelfTreeWidget.setActiveStyle(true);
@@ -519,7 +521,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getLevel()!=0) {
 			shelfTreeWidget.setActiveStyle(false);
 		}
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION);
+		getUiHandlers().setRightListData(SHELF_COLLECTIONS);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
 	
 	@UiHandler("createNewPnl")
