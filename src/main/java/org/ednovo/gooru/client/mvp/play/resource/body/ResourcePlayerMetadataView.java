@@ -1007,14 +1007,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 		if(sourceUrl.toLowerCase().endsWith("jpg")||sourceUrl.toLowerCase().endsWith("jpeg")){
-			{
-				if(FlashAndVideoPlayerWidget.getProtocal().equalsIgnoreCase("https:")){
+			if(FlashAndVideoPlayerWidget.getProtocal().equalsIgnoreCase("https:")){
 					isProtocolsMatched=!sourceUrl.contains("https");
 				}else{
 					isProtocolsMatched=sourceUrl.contains("https");
 				}
 				
-			}
 		}
 		return isProtocolsMatched;
 	}
