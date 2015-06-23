@@ -246,6 +246,7 @@ public class ProfileTopicListView extends Composite{
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY) || 
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE) || 
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || 
+						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YCGL_LIBRARY) || 
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null,libraryGooruOid);
 					searchLink.setVisible(false);

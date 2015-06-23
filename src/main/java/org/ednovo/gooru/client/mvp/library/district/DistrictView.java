@@ -320,6 +320,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.SUSD) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.VALVERDE) || placeToken.equalsIgnoreCase(PlaceTokens.LUSD)){
@@ -361,6 +362,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			setLandingBannerMetaData("landingValverdeBanner", "250px", i18n.GL2075() + " " + i18n.GL0587(), districtStyleUc.valverdePartnerLogo(), true);
 		}else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LUSD)) {
 			setLandingBannerMetaData("landingLusdBanner", "250px", i18n.GL2180(), districtStyleUc.lusdPartnerLogo(), true);
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)) {
+			setLandingBannerMetaData("landingYcglBanner", "250px", i18n.GL3289(), districtStyleUc.ycglDistrictLogo(), true);
 		} else {
 			partnerLogo.setVisible(false);
 		}

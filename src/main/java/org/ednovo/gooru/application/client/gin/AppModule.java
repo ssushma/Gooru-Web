@@ -187,6 +187,10 @@ import org.ednovo.gooru.client.mvp.library.district.valverde.IsValVerdeLibraryVi
 import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter.IsValVerdeLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.ycl.IsYumaCountryLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.ycl.YumaCountryLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.ycl.YumaCountryLibraryPresenter.IsYumaCountryLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.ycl.YumaCountryLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.IsPartnerLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryView;
@@ -607,6 +611,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(SusdLibraryPresenter.class, IsSusdLibraryView.class, SusdLibraryView.class,IsSusdLibraryProxy.class);
 		bindPresenter(ValVerdeLibraryPresenter.class, IsValVerdeLibraryView.class, ValVerdeLibraryView.class,IsValVerdeLibraryProxy.class);
 		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
+		bindPresenter(YumaCountryLibraryPresenter.class, IsYumaCountryLibraryView.class, YumaCountryLibraryView.class,IsYumaCountryLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
 		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);

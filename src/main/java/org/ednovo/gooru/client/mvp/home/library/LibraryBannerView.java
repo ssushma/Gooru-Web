@@ -116,6 +116,13 @@ public class LibraryBannerView extends Composite{
 			fourSteps.setVisible(false);
 			partnerLogo.setVisible(false);
 			headerTag.getElement().getStyle().setPaddingTop(65, Unit.PX);
+		}else if(placeToken.contains(PlaceTokens.YCGL_LIBRARY)) {
+			setLandingBannerText("Yuma Country Library","This library showcases collections created by teachers from 9 districts throughout Yuma County. A true education collaboration!",i18n.GL0534(),i18n.GL0535(),i18n.GL0536(),i18n.GL0537(),i18n.GL0538(),i18n.GL0539(),i18n.GL0540(),i18n.GL0541());
+			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			fourSteps.setVisible(false);
+			partnerLogo.setStyleName(libraryStyle.rusdPartnerLogo());
+			partnerLogo.setVisible(true);
+			headerTag.getElement().getStyle().clearPaddingTop();
 		}
 	}
 	
