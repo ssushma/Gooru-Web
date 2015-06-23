@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- *
+ * 
  *  http://www.goorulearning.org/
- *
+ * 
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- *
+ * 
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- *
+ * 
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,53 +22,65 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.application.client.home.presearch;
+package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
+import java.util.List;
 
-
-import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
-import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
+ * @author Search Team
  *
- * @fileName : ViewMorePeoplePresenter.java
- *
- * @description :
- *
- *
- * @version : 1.0
- *
- * @date: 16-Jun-2015
- *
- * @Author tumbalam
- *
- * @Reviewer:
  */
-public class PreSearchPresenter extends PresenterWidget<IsPreSearchView> implements PreSearchUiHandlers,ClientConstants{
-
-	public static final Object GRADES = new Object();
-
-	GooruGradesPresenter gooruGradesPresenter = null;
+public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> implements LessonInfoUiHandlers {
 
 	@Inject
-	public PreSearchPresenter(EventBus eventBus, IsPreSearchView view, GooruGradesPresenter gooruGradesPresenter) {
-		super(eventBus, view);
+	private TaxonomyServiceAsync taxonomyService;
+
+	/**
+	 * Class constructor
+	 * @param view {@link View}
+	 * @param proxy {@link Proxy}
+	 */
+	@Inject
+	public LessonInfoPresenter( EventBus eventBus,IsLessonInfoView view) {
+		super(eventBus,view);
 		getView().setUiHandlers(this);
-		this.gooruGradesPresenter = gooruGradesPresenter;
 	}
 
 	@Override
-	protected void onBind() {
+	public void onBind() {
 		super.onBind();
-		setInSlot(GRADES, gooruGradesPresenter);
 	}
 
 	@Override
-	protected void onReset() {
-		getView().setButtonVisibility();
+	protected void onReveal(){
+		super.onReveal();
+	}
+
+	public TaxonomyServiceAsync getTaxonomyService() {
+		return taxonomyService;
+	}
+
+	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
+		this.taxonomyService = taxonomyService;
+	}
+
+	@Override
+	public void callTaxonomyService() {
+		getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+			@Override
+			public void onSuccess(List<LibraryCodeDo> result) {
+				//getView().setCourseList(result);
+			}
+		});		
 	}
 }

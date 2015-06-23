@@ -936,7 +936,7 @@ public class HeaderUc extends Composite
 					if (name.equalsIgnoreCase("teach")) {
 						popup.setNameToken(PlaceTokens.EDIT_CLASSPAGE);
 					} else if (name.equalsIgnoreCase("organize")) {
-						popup.setNameToken(PlaceTokens.SHELF);
+						popup.setNameToken(PlaceTokens.MYCONTENT);
 					}
 					name = null;
 				}
@@ -1124,7 +1124,7 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					manageDotsMenuSelection(organizeLink);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 
 				}
 			});
@@ -1506,7 +1506,7 @@ public class HeaderUc extends Composite
 					}
 				}
 
-				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 
 					MixpanelUtil.mixpanelEvent("Perform_Search_FromOrganize");
 				} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
@@ -1804,7 +1804,7 @@ public class HeaderUc extends Composite
 								MixpanelUtil.Perform_Search_FromTeach();
 
 							} else if (AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.SHELF)) {
+									.equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
 								MixpanelUtil.Perform_Search_FromOrganize();
 							}
 							if (hasAutoSelected) {
@@ -1831,7 +1831,7 @@ public class HeaderUc extends Composite
 							}
 
 							if ((AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.SHELF))
+									.equalsIgnoreCase(PlaceTokens.MYCONTENT))
 									|| (AppClientFactory.getCurrentPlaceToken()
 											.equalsIgnoreCase(PlaceTokens.STUDY) || (AppClientFactory
 											.getCurrentPlaceToken()

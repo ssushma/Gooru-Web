@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -83,9 +84,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	public static final  Object RIGHT_SLOT = new Object();
 	
+	private static final String O1_LEVEL = "o1";
+	
 	MyCollectionsListPresenter myCollectionsListPresenter;
 	
 	SignUpPresenter signUpViewPresenter;
+	
+	private String version = null;
 	
 	boolean isApiCalled=false;
 	
@@ -98,7 +103,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private List<FolderDo> searchResult = new ArrayList<FolderDo>();
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.MYCOLLECTION)
+	@NameToken(PlaceTokens.MYCONTENT)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsShelfMainProxy extends ProxyPlace<ShelfMainPresenter> {
 
@@ -142,7 +147,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
-		//getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){
@@ -165,17 +169,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			update.show();
 			update.center();
 		}
-		Window.enableScrolling(true);
-		//Window.scrollTo(0, 0);
-		if (AppClientFactory.isAnonymous()){
-			getView().setNoDataForAnonymousUser(true);
-		}else{
-			getView().setNoDataForAnonymousUser(false);
-			String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-			type=view;
-			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
-			getView().setDefaultOrganizePanel(view);
-		}
 	}
 	
 	
@@ -194,13 +187,37 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		AppClientFactory.printInfoLogger("OnReveal");
+		Window.enableScrolling(true);
 	}
 	
 	@Override
 	protected void onReset() {
 		super.onReset();
+		AppClientFactory.printInfoLogger("OnReset");
+		Window.enableScrolling(true);
+		if (AppClientFactory.isAnonymous()){
+			getView().setNoDataForAnonymousUser(true);
+		}else{
+			if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
+				AppClientFactory.printInfoLogger("callAPI");
+				callWorkspaceApi();
+				version = AppClientFactory.getLoggedInUser().getToken();
+			}
+			//setRightPanelData(null,null);
+		}
+		
 	}
-	
+	/**
+	 * This method will call the workspace APi
+	 */
+	public void callWorkspaceApi(){
+		getView().setNoDataForAnonymousUser(false);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		type=view;
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
+		getView().setDefaultOrganizePanel(view);
+	}
 	public ShelfServiceAsync getShelfService() {
 		return shelfService;
 	}
@@ -214,7 +231,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.MYCOLLECTION;
+		return PlaceTokens.MYCONTENT;
 	}
 
 	@Override
@@ -246,12 +263,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			userCollectionAsyncCallback = new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
-					if(clrPanel){
-						clearSlot(RIGHT_SLOT);
-						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
-						setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
-					}else{
-						myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel);
+					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+					if(o1==null){
+						if(clrPanel){
+							setRightListData(result.getSearchResult());
+						}else{
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result.getSearchResult(),clrPanel,false);
+						}
 					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
 				}
@@ -281,6 +299,20 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			});
 		}
 	}
+	@Override
+	public void setRightPanelData(FolderDo folderObj,String clickedItemType){
+		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
+		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
+		getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,getView().getSlot(),folderObj);
+		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
+	}
+	
+	@Override
+	public void setRightListData(List<FolderDo> listOfContent){
+		clearSlot(RIGHT_SLOT);
+		myCollectionsListPresenter.setData(type,getView().getSlot(),listOfContent,clrPanel,false);
+		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
+	}
 
 	private void setPaginatedChildFolders(String folderId, boolean isDataCalled) {
 		getChildFolderItems(folderId, isDataCalled);
@@ -298,9 +330,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setListPresenterBasedOnType(String type) {
 		this.type=type;
+		version=null;
 		Map<String,String> params = new HashMap<String,String>();
 		params.put(VIEW, type);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, params);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 		//getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
 	}
 	

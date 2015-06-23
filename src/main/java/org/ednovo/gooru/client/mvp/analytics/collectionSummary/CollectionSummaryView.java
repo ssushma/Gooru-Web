@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -13,6 +14,8 @@ import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -21,13 +24,23 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -37,12 +50,17 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
+import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSummaryUiHandlers> implements IsCollectionSummaryView,ClientConstants {
 
-	private static CollectionSummaryViewUiBinder uiBinder = GWT
+
+public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSummaryUiHandlers> implements  IsCollectionSummaryView,ClientConstants {
+
+	private static CollectionSummaryViewUiBinder uiBinder = GWT 
 			.create(CollectionSummaryViewUiBinder.class);
 
 	interface CollectionSummaryViewUiBinder extends
@@ -51,13 +69,16 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 	CollectionSummaryCBundle res;
 
-	@UiField ListBox studentsListDropDown,sessionsDropDown;
+	@UiField ListBox sessionsDropDown;
 	@UiField Image exportImage,sessionsTooltip,imgQuestionMark;
 	@UiField InlineLabel lastModifiedTime;
 	@UiField HTMLPanel collectionSummaryDetails,sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
 	@UiField Frame downloadFile;
-	@UiField Label subText,errorMessage;
+	@UiField Label subText,errorMessage,arrowLbl;
+	
+	@UiField(provided = true)
+	AppSuggestBox studentSgstBox;
 
 	Map<String, String> sessionData=new HashMap<String, String>();
 	ToolTip toolTip;
@@ -66,6 +87,13 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	String collectionId=null,pathwayId=null,classpageId=null;
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	PrintUserDataDO printUserDataDO=new PrintUserDataDO();
+	List<String> allStudentsList = new ArrayList<String>();
+	private Map<String, String> studentsUIdMap = new HashMap<String, String>();
+	
+	private AppMultiWordSuggestOracle studentSuggestOracle;
+	
+	private String previousText;
+	
 
 	/**
 	 * Constructor
@@ -73,12 +101,66 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	public CollectionSummaryView() {
 		this.res = CollectionSummaryCBundle.INSTANCE;
 		res.css().ensureInjected();
+		initializeAutoSuggestedBox();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
 		setStaticData();
 		downloadFile.setVisible(false);
 		errorMessage.setVisible(false);
+		studentSgstBox.addDomHandler(hanlder, MouseDownEvent.getType());
 	}
+	
+	MouseDownHandler hanlder=new MouseDownHandler() {
+		@Override
+		public void onMouseDown(MouseDownEvent event) {
+			displaySuggestedStudents();
+		}
+	};
+	
+	/**
+	 * Initializes the suggestion box.
+	 */
+	private void initializeAutoSuggestedBox() { 
+		
+		studentSuggestOracle= new AppMultiWordSuggestOracle(true);
+		studentSgstBox=new AppSuggestBox(studentSuggestOracle) {
+
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+
+			@Override
+			public void keyAction(String text, KeyUpEvent event) {
+				
+				if (text != null && text.trim().length() > 0) {
+					search(text.trim());
+					studentSgstBox.showSuggestionList();
+				}
+			}
+		};
+		studentSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
+		studentSgstBox.getTextBox().getElement().setAttribute("placeholder", ALL_STUDENTS);
+		studentSgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				previousText = studentSgstBox.getText().trim();
+				showReport(studentSgstBox.getText().trim(),studentsUIdMap.get(studentSgstBox.getText().trim()));
+			}
+		});
+		
+		BlurHandler blurHandler=new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				studentSgstBox.setText(!"".equals(previousText)&& previousText!=null?previousText:ALL_STUDENTS);
+			}
+		};
+		studentSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
+	}
+	
+	
+	
 	/**
 	 * This method is used to set static data.
 	 */
@@ -88,13 +170,13 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		StringUtil.setAttributes(loadingImageLabel1.getElement(), "pnlLoadingImage", null, null);
 		StringUtil.setAttributes(pnlSummary.getElement(), "pnlSummary", null, null);
 
-		StringUtil.setAttributes(studentsListDropDown.getElement(), "ddlStudentsListDropDown", null, null);
 		StringUtil.setAttributes(sessionsDropDown.getElement(), "ddlSessionsDropDown", null, null);
 		StringUtil.setAttributes(exportImage.getElement(), "imgExportImage", i18n.GL3283(), i18n.GL3283());
 
 		StringUtil.setAttributes(sessionsTooltip.getElement(), "imgSessionsTooltip", null, null);
 
 		StringUtil.setAttributes(lastModifiedTime.getElement(), "lblLastModifiedTime", null, null);
+		studentSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:11%;height:19px");
 	}
 	/**
 	 * This method is used to set default data.
@@ -102,7 +184,6 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	void setData(){
 		sessionspnl.setVisible(false);
 
-		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 
 		sessionsTooltip.addMouseOverHandler(new QuestionMouseToolTip(ONE, sessionsTooltip));
@@ -140,7 +221,6 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 					toolTip.setPopupPosition(image.getAbsoluteLeft()-(50+22), image.getAbsoluteTop()+22);
 					toolTip.show();
-
 				}
 			});
 		}
@@ -167,32 +247,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			});
 		}
 	}
-    public class StudentsListChangeHandler implements ChangeHandler{
-		@Override
-		public void onChange(ChangeEvent event) {
-			GWT.runAsync(new SimpleRunAsyncCallback() {
-
-				@Override
-				public void onSuccess() {
-
-					errorMessage.setVisible(false);
-					int selectedIndex=studentsListDropDown.getSelectedIndex();
-					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-					if(selectedIndex==0){
-						sessionspnl.setVisible(false);
-						collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
-						getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
-					}else{
-						printUserDataDO.setUserName(studentsListDropDown.getItemText(studentsListDropDown.getSelectedIndex()));
-						getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId,printUserDataDO);
-						sessionspnl.setVisible(true);
-						collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(false);
-					}
-
-				}
-			});
-		}
-    }
+    
     public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -202,12 +257,12 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				public void onSuccess() {
 
 					int selectedSessionIndex=sessionsDropDown.getSelectedIndex();
-					int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
+//					int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
 					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 	                setSessionStartTime(selectedSessionIndex);
-	                printUserDataDO.setUserName(studentsListDropDown.getItemText(selectedStudentIndex));
-	                printUserDataDO.setSession(sessionsDropDown.getItemText(selectedSessionIndex));
-					getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
+	                printUserDataDO.setUserName(studentSgstBox.getText());
+	                printUserDataDO.setSession(sessionsDropDown.getItemText(selectedSessionIndex)); 
+					getUiHandlers().setIndividualData(collectionId, classpageId, studentsUIdMap.get(studentSgstBox.getText()),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
 
 				}
 			});
@@ -222,13 +277,18 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 			@Override
 			public void onSuccess() {
-
 				errorMessage.setVisible(false);
-				studentsListDropDown.clear();
-				studentsListDropDown.addItem(ALL_STUDENTS);
+				studentSuggestOracle.clear();
+				studentsUIdMap.clear();
+				allStudentsList.clear();
+				allStudentsList.add(ALL_STUDENTS);
+				studentSuggestOracle.add(ALL_STUDENTS);
+				studentsUIdMap.put(ALL_STUDENTS, ALL_STUDENTS);
+				studentSgstBox.setText(ALL_STUDENTS);
 				for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
 					if(!StringUtil.isEmpty(collectionSummaryUsersDataDo.getUserName()) && !StringUtil.isEmpty(collectionSummaryUsersDataDo.getGooruUId())){
-						studentsListDropDown.addItem(collectionSummaryUsersDataDo.getUserName(),collectionSummaryUsersDataDo.getGooruUId());
+						allStudentsList.add(collectionSummaryUsersDataDo.getUserName());
+						studentsUIdMap.put(collectionSummaryUsersDataDo.getUserName(), collectionSummaryUsersDataDo.getGooruUId());
 					}
 				}
 				sessionspnl.setVisible(false);
@@ -364,4 +424,63 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			}
 		});
 	}
+	
+
+	/**
+	 * This method will return matched student name in the list.
+	 * 
+	 * @param searchText {@link String}
+	 */
+	private void search(String searchText) {
+		studentSuggestOracle.clear();
+		for (String students : allStudentsList) {
+			if(students.matches("(?i)("+searchText+").*")){
+				studentSuggestOracle.add(students);
+			}
+		}
+	}
+
+	/**
+	 * Displays suggested student name based on the given text. 
+	 */
+	private void displaySuggestedStudents() {
+		if(ALL_STUDENTS.equals(studentSgstBox.getText())){
+			studentSuggestOracle.clear();
+			studentSuggestOracle.addAll(allStudentsList);
+		}else{
+			studentSuggestOracle.clear();
+			studentSuggestOracle.add(!"".equals(previousText)&& previousText!=null?previousText:studentSgstBox.getText());
+		}
+		studentSgstBox.setPopupStyleName("suggestPopupContentStyle");
+		studentSgstBox.showSuggestionList();
+	}
+	
+	
+	/**
+	 * On selection of any student, this method is called in which shows the report for respective student.
+	 * @param studentName {@link String}
+	 * @param studentUid {@link String}
+	 */
+	public void showReport(String studentName,String studentUid){
+		errorMessage.setVisible(false);
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(!"".equals(studentName)){
+			if(ALL_STUDENTS.equals(studentName)){
+				sessionspnl.setVisible(false);
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
+				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
+			}else{
+				printUserDataDO.setUserName(studentName);
+				getUiHandlers().loadUserSessions(collectionId, classpageId, studentUid,pathwayId,printUserDataDO);
+				sessionspnl.setVisible(true);
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(false);
+			}
+		}
+	}
+
+	@UiHandler("arrowLbl")
+	public void onArrowClicked(ClickEvent clickEvent) {
+		displaySuggestedStudents();
+	}
+
 }
