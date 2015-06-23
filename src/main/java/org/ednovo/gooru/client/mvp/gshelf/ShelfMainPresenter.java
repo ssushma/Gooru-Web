@@ -80,8 +80,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	private String type="Course";
 	
-	private boolean isDropdownChanged=true;
-	
 	private static final String VIEW= "view";
 	
 	public static final  Object RIGHT_SLOT = new Object();
@@ -189,20 +187,24 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		AppClientFactory.printInfoLogger("OnReveal");
 		Window.enableScrolling(true);
 	}
 	
 	@Override
 	protected void onReset() {
 		super.onReset();
+		AppClientFactory.printInfoLogger("OnReset");
 		Window.enableScrolling(true);
 		if (AppClientFactory.isAnonymous()){
 			getView().setNoDataForAnonymousUser(true);
 		}else{
 			if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
+				AppClientFactory.printInfoLogger("callAPI");
 				callWorkspaceApi();
 				version = AppClientFactory.getLoggedInUser().getToken();
 			}
+			//setRightPanelData(null,null);
 		}
 		
 	}
@@ -264,11 +266,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 					if(o1==null){
 						if(clrPanel){
-							clearSlot(RIGHT_SLOT);
-							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel,false);
-							setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
+							setRightListData(result.getSearchResult());
 						}else{
-							myCollectionsListPresenter.setData(type,getView().getSlot(),result,clrPanel,false);
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result.getSearchResult(),clrPanel,false);
 						}
 					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
@@ -306,6 +306,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,getView().getSlot(),folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
+	
+	@Override
+	public void setRightListData(List<FolderDo> listOfContent){
+		clearSlot(RIGHT_SLOT);
+		myCollectionsListPresenter.setData(type,getView().getSlot(),listOfContent,clrPanel,false);
+		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
+	}
 
 	private void setPaginatedChildFolders(String folderId, boolean isDataCalled) {
 		getChildFolderItems(folderId, isDataCalled);
@@ -322,10 +329,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	@Override
 	public void setListPresenterBasedOnType(String type) {
-		if(!this.type.equalsIgnoreCase(type)){
-			this.type=type;
-			isDropdownChanged=false;
-		}
+		this.type=type;
+		version=null;
 		Map<String,String> params = new HashMap<String,String>();
 		params.put(VIEW, type);
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
