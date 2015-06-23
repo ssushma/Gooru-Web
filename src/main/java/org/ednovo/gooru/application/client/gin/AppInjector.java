@@ -62,6 +62,7 @@ import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.ycl.YumaCountryLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter;
@@ -260,6 +261,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<ValVerdeLibraryPresenter> getValVerdeLibraryPresenter();
 
 	AsyncProvider<RusdLibraryPresenter> getRusdLibraryPresenter();
+	
+	AsyncProvider<YumaCountryLibraryPresenter> getYumaCountryLibraryPresenter();
 
 	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
 

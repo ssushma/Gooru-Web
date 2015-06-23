@@ -193,7 +193,12 @@ public class LibraryMenuNav extends Composite{
 			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
 			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
 			aboutGooruAnr.setHref(i18n.GL1900());
-		} else {
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YCGL_LIBRARY)) {
+			aboutGooruAnr.setText("About Yuma");
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
+			aboutGooruAnr.setHref("http://www.yumasupt.org");
+		}else {
 			aboutGooruAnr.setText(i18n.GL1024());
 			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1024());
 			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1024());
