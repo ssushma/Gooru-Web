@@ -105,11 +105,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -936,7 +931,7 @@ public class HeaderUc extends Composite
 					if (name.equalsIgnoreCase("teach")) {
 						popup.setNameToken(PlaceTokens.EDIT_CLASSPAGE);
 					} else if (name.equalsIgnoreCase("organize")) {
-						popup.setNameToken(PlaceTokens.MYCONTENT);
+						popup.setNameToken(PlaceTokens.SHELF);
 					}
 					name = null;
 				}
@@ -1124,7 +1119,7 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					manageDotsMenuSelection(organizeLink);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 
 				}
 			});
@@ -1506,7 +1501,7 @@ public class HeaderUc extends Composite
 					}
 				}
 
-				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)){
+				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 
 					MixpanelUtil.mixpanelEvent("Perform_Search_FromOrganize");
 				} else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
@@ -1804,7 +1799,7 @@ public class HeaderUc extends Composite
 								MixpanelUtil.Perform_Search_FromTeach();
 
 							} else if (AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
+									.equalsIgnoreCase(PlaceTokens.SHELF)) {
 								MixpanelUtil.Perform_Search_FromOrganize();
 							}
 							if (hasAutoSelected) {
@@ -1831,7 +1826,7 @@ public class HeaderUc extends Composite
 							}
 
 							if ((AppClientFactory.getCurrentPlaceToken()
-									.equalsIgnoreCase(PlaceTokens.MYCONTENT))
+									.equalsIgnoreCase(PlaceTokens.SHELF))
 									|| (AppClientFactory.getCurrentPlaceToken()
 											.equalsIgnoreCase(PlaceTokens.STUDY) || (AppClientFactory
 											.getCurrentPlaceToken()

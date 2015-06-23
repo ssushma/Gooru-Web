@@ -426,6 +426,19 @@ public abstract class LoginPopupUc extends PopupPanel{
 								}
 								AppClientFactory.fireEvent(new SetButtonEvent());
 								//Call shelf api to load the first collection.
+							}//This else-if will remove after 1.5.
+							else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+								AppClientFactory.resetPlace();
+								Window.enableScrolling(true);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+								AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
+								String id = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+								if (id != null) {
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", id });
+								}else{
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+								}
+								AppClientFactory.fireEvent(new SetButtonEvent());
 							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
 								Window.enableScrolling(true);
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));

@@ -63,6 +63,7 @@ public interface PlaceTokens {
 	String CLASSHOME = "myclasseshome";
 	String PROFILE_PAGE = "profilepage";
 	String RUSD_LIBRARY = "rusd";
+	String YCGL_LIBRARY = "ycgl";
 
 	String DEVICE_NOT_SUPPORTED = "not-supported";
 
