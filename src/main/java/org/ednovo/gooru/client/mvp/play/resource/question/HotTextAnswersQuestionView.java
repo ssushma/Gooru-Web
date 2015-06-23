@@ -119,7 +119,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
 		optionsContainerFpnl.clear();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null && collectionItemDo.getResource().getType()==9){
-			messageBodyText.setText(i18n.GL3234()+i18n.GL_SPL_FULLSTOP());
+			messageBodyText.setText(i18n.GL3234_1()+i18n.GL_SPL_FULLSTOP());
 			optionsContainerFpnl.addStyleName("drapDropContainer");
 			optionsContainer=new HTAnswerDragPanelVc();
 			optionsContainerFpnl.add(optionsContainer);
@@ -148,14 +148,13 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					QuestionAnswerDo questionAnswerDo=answersList.next();
 					String text=removeHtmlTags(questionAnswerDo.getAnswerText());
 					String[] temp;
-					if(collectionItemDo.getResource().getAttributes().getHlType().equalsIgnoreCase(i18n.GL3219())){
+					if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
 						temp = text.split(" ");
 
 						for(int k=0;k<temp.length;k++){
 
 							final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
-
-							if(lbl.getText().startsWith("${") && lbl.getText().endsWith("}$"+SPACE) ){
+							if(lbl.getText().startsWith("${") && (lbl.getText().endsWith("}$"+SPACE)|| lbl.getText().trim().endsWith("}$"+DOT))){
 								String lblText=lbl.getText().replaceAll("[${}]", "");
 								lbl.setText(lblText);
 								lbl.getElement().setId(STYLE_CORRECT);

@@ -46,7 +46,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -1833,10 +1832,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
 			if(questionType.equalsIgnoreCase("HS")){
-				CollectionHTQuestionItemDo HSObj=new CollectionHTQuestionItemDo();
-				HSObj.setHlType(hsType);
-				HSObj.setSingleCorrectAnswer(false);
-				collectionQuestionItemDo.setAttributes(HSObj);
+				collectionQuestionItemDo.setHlType(hsType);
+				collectionQuestionItemDo.setSingleCorrectAnswer(false);
 			}
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
@@ -2127,9 +2124,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
 
-				if(collectionItemDo.getResource().getAttributes()!=null){
+				if(collectionItemDo.getResource()!=null){
 				
-				String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
+				String HsType=	collectionItemDo.getResource().getHlType();
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
 					int widgetcount=1;

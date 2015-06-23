@@ -120,7 +120,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 			int i=0;
 
-			if(collectionItemDo.getResource().getAttributes().getHlType().equalsIgnoreCase(i18n.GL3228_1())){
+			if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3228_1())){
 				while (answersList.hasNext()) {
 					QuestionAnswerDo questionAnswerDo=answersList.next();
 					double randNumber = Math.random();
