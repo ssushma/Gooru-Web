@@ -24,8 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -39,10 +41,10 @@ public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollection
 	 * This method is used to set data as list
 	 * @param type
 	 * @param slotPanel
-	 * @param result
+	 * @param listOfContent
 	 * @param clrPanel
 	 */
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel,boolean isInnerSlot);
+	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot);
 	/**
 	 * This method is used to reset widgets
 	 */

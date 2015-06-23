@@ -413,16 +413,16 @@ public abstract class LoginPopupUc extends PopupPanel{
 						    } 
 						    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
-							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.MYCONTENT)){
 								AppClientFactory.resetPlace();
 								Window.enableScrolling(true);
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 								AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
 								String id = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 								if (id != null) {
-									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", id });
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, new String[] { "id", id });
 								}else{
-									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 								}
 								AppClientFactory.fireEvent(new SetButtonEvent());
 								//Call shelf api to load the first collection.
@@ -563,7 +563,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 	    		Window.enableScrolling(true);
 	    		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	    	}
-			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) && AppClientFactory.getPlaceManager().getRequestParameter("id") != null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("")){
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.MYCONTENT) && AppClientFactory.getPlaceManager().getRequestParameter("id") != null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("")){
 				hide();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 			}
