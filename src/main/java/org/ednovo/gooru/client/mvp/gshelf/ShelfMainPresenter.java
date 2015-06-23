@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -91,6 +92,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	SignUpPresenter signUpViewPresenter;
 	
+	private String version = null;
+	
 	boolean isApiCalled=false;
 	
 	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback;
@@ -102,7 +105,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private List<FolderDo> searchResult = new ArrayList<FolderDo>();
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.MYCOLLECTION)
+	@NameToken(PlaceTokens.MYCONTENT)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsShelfMainProxy extends ProxyPlace<ShelfMainPresenter> {
 
@@ -187,11 +190,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		Window.enableScrolling(true);
-		if (AppClientFactory.isAnonymous()){
-			getView().setNoDataForAnonymousUser(true);
-		}else{
-			callWorkspaceApi();
-		}
 	}
 	
 	@Override
@@ -201,11 +199,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		if (AppClientFactory.isAnonymous()){
 			getView().setNoDataForAnonymousUser(true);
 		}else{
-			if(!isDropdownChanged){
+			if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
 				callWorkspaceApi();
-				isDropdownChanged=true;
+				version = AppClientFactory.getLoggedInUser().getToken();
 			}
 		}
+		
 	}
 	/**
 	 * This method will call the workspace APi
@@ -230,7 +229,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.MYCOLLECTION;
+		return PlaceTokens.MYCONTENT;
 	}
 
 	@Override
@@ -329,7 +328,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 		Map<String,String> params = new HashMap<String,String>();
 		params.put(VIEW, type);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, params);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 		//getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
 	}
 	

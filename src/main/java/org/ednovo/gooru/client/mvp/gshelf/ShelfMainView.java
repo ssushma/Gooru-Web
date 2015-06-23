@@ -519,7 +519,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getLevel()!=0) {
 			shelfTreeWidget.setActiveStyle(false);
 		}
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
 	
 	@UiHandler("createNewPnl")

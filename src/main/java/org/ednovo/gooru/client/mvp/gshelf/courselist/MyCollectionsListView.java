@@ -213,7 +213,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		@Override
 		public void onClick(ClickEvent event) {
 			Map<String,String> params = new HashMap<String,String>();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, updateParameters(params,folderObj));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			//getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
