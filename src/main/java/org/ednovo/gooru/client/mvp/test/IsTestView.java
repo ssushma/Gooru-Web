@@ -47,4 +47,25 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  */
 public interface IsTestView extends IsViewWithHandlers<TestUiHandlers>{
 
+	/**
+	 *
+	 * @function resetPassword
+	 *
+	 * @created_date : 22-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param resetToken
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void resetPassword(String resetToken);
+
 }

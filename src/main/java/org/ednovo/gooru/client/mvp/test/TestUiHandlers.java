@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.mvp.test;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
@@ -53,5 +54,26 @@ public interface TestUiHandlers extends BaseUiHandlers {
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();
+
+	/**
+	 *
+	 * @function initilazeRegistrationView
+	 *
+	 * @created_date : 22-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param user
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void initilazeRegistrationView(UserDo user);
 
 }

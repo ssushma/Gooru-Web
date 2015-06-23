@@ -119,7 +119,7 @@ public class DistrictBannerView extends Composite {
 			partnerLogo.setVisible(true);
 			bannerContainer.setVisible(false);
 		}else if(placeToken.contains(PlaceTokens.YCGL_LIBRARY)) {
-			setLandingBannerText(i18n.GL3287(),i18n.GL3288(),"","","","");
+			setLandingBannerText(i18n.GL3287_1(),i18n.GL3288_1(),"","","","");
 			partnerLogo.setStyleName(districtStyleUc.ycglDistrictLogo());
 			partnerLogo.setVisible(true);
 			bannerContainer.setVisible(false);

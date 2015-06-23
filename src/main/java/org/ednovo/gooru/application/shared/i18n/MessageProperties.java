@@ -3117,21 +3117,49 @@ public interface MessageProperties extends Constants {
 				String GL3283();
 				String GL3284();
 
-				String GL3284_1();
-				String GL3284_2();
-				String GL3284_3();
-				String GL3284_4();
-
 				String GL3285();
 				String GL3286();
 
 				String GL4000();
 				String GL4001();
+				String GL3287_1();
+				String GL3288_1();
+				String GL3289_1();
+				String GL3290_1();
+				String GL3291_1();
+				String GL3292_1();
+
+				//New Landing page
+				String GL3284_1();
+				String GL3284_2();
+				String GL3284_3();
+				String GL3284_4();
 				String GL3287();
 				String GL3288();
 				String GL3289();
 				String GL3290();
 				String GL3291();
 				String GL3292();
-
+				String GL3293();
+				String GL3294();
+				String GL3295();
+				String GL3296();
+				String GL3297();
+				String GL3298();
+				String GL3299();
+				String GL3300();
+				String GL3301();
+				String GL3302();
+				String GL3303();
+				String GL3304();
+				String GL3305();
+				String GL3307();
+				String GL3312();
+				String GL3313();
+				String GL3314();
+				String GL3315();
+				String GL3316();
+				String GL3317();
+				String GL3318();
+				String GL3319();
 }

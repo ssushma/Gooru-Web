@@ -43,4 +43,5 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 public interface IsPreSearchView extends IsViewWithHandlers<PreSearchUiHandlers>{
 
 
+	void setButtonVisibility();
 }

@@ -363,7 +363,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		}else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LUSD)) {
 			setLandingBannerMetaData("landingLusdBanner", "250px", i18n.GL2180(), districtStyleUc.lusdPartnerLogo(), true);
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)) {
-			setLandingBannerMetaData("landingYcglBanner", "250px", i18n.GL3289(), districtStyleUc.ycglDistrictLogo(), true);
+			setLandingBannerMetaData("landingYcglBanner", "250px", i18n.GL3289_1(), districtStyleUc.ycglDistrictLogo(), true);
 		} else {
 			partnerLogo.setVisible(false);
 		}
