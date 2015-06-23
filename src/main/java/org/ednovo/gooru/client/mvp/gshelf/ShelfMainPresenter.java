@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -209,7 +208,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		
 	}
 	/**
-	 * This method will call the workspace APi
+	 * This method will call the workspace API
 	 */
 	public void callWorkspaceApi(){
 		getView().setNoDataForAnonymousUser(false);
