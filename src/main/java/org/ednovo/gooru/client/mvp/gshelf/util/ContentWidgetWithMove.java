@@ -64,7 +64,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField TextBox txtMoveTextBox;
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount,spnResourcesCount,spnQuestionsCount;
-	@UiField HTMLPanel pnlTitleContainer;
+	@UiField HTMLPanel pnlTitleContainer,pnlArrows,pnlMoveToEdit;
 	@UiField Paragraph pTitle;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
@@ -93,6 +93,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 			lblTopArrow.setVisible(false);
 		}
 		
+		pnlArrows.setVisible(true);
+		pnlMoveToEdit.setVisible(false);
 		if(COURSE.equalsIgnoreCase(type)){
 			//h3CourseTitle.setText(i18n.GL0326()+" "+indexVal);
 		}else if(UNIT.equalsIgnoreCase(type)){
@@ -105,6 +107,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 		}else if(FOLDER.equalsIgnoreCase(type)){
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
+			pnlArrows.setVisible(false);
+			pnlMoveToEdit.setVisible(true);
 			//h3CourseTitle.setText(i18n.GL1501()+" "+indexVal);
 		}else if(COLLECTION.equalsIgnoreCase(type)){
 			spnResourcesCount.setVisible(true);
@@ -113,6 +117,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnLessonsCount.setVisible(false);
 			spnCollectionsCount.setVisible(false);
 			spnAssessmentsCount.setVisible(false);
+			pnlArrows.setVisible(false);
+			pnlMoveToEdit.setVisible(true);
 			//h3CourseTitle.setText(i18n.GL0645()+" "+indexVal);
 		}
 		h3CourseTitle.setText(StringUtil.capitalizeFirstLetter(folderObj.getCollectionType())+" "+indexVal);
