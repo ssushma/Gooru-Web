@@ -25,14 +25,13 @@
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -65,7 +64,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	
-	Map<String,LibraryCodeDo> courseListBasedOnTitle=new HashMap<String,LibraryCodeDo>();
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
 	CourseGradeWidget courseGradeWidget;
@@ -86,9 +84,9 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	 * This method will display the Grades according to the subject
 	 */
 	@Override
-	public void showInfoDetailsBasedOnCourseId(LibraryCodeDo libraryCodeDo,final String selectedText) {
+	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
 		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo.getNode(),selectedValues.get(selectedText)) {
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText)) {
 			@Override
 			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
 				if(isAdd){
@@ -145,22 +143,19 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	}
 
 	@Override
-	public void setCourseList(List<LibraryCodeDo> libraryCode) {
-		courseListBasedOnTitle.clear();
+	public void setCourseList(List<CourseSubjectDo> libraryCode) {
 		selectedValues.clear();
 		ulMainGradePanel.clear();
 		if (libraryCode.size()>0) {
-			for (LibraryCodeDo libraryCodeDo : libraryCode) {
-				String titleText=libraryCodeDo.getLabel().trim();
-				courseListBasedOnTitle.put(titleText, libraryCodeDo);
+			for (CourseSubjectDo libraryCodeDo : libraryCode) {
+				String titleText=libraryCodeDo.getName().trim();
 				selectedValues.put(titleText, new ArrayList<String>());
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
-				title.addClickHandler(new ClickOnSubject(titleText,liPanel));
+				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getSubjectId()));
 				liPanel.add(title);
 				ulMainGradePanel.add(liPanel);
 			}
-			showInfoDetailsBasedOnCourseId(libraryCode.get(0),libraryCode.get(0).getLabel().trim());
 		}
 	}
 	/**
@@ -169,25 +164,23 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	class ClickOnSubject implements ClickHandler{
 		String selectedText;
 		LiPanel liPanel;
-		ClickOnSubject(String selectedText,LiPanel liPanel){
+		int subjectId;
+		ClickOnSubject(String selectedText,LiPanel liPanel,int subjectId){
 			this.selectedText=selectedText;
 			this.liPanel=liPanel;
+			this.subjectId=subjectId;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(selectedText).size()>0){
-					if(courseListBasedOnTitle.size()>0){
-						showInfoDetailsBasedOnCourseId(courseListBasedOnTitle.get(selectedText),selectedText);
-					}
+					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
 				}else{
 					liPanel.removeStyleName(ACTIVE);
 				}
 			}else{
 				liPanel.addStyleName(ACTIVE);
-				if(courseListBasedOnTitle.size()>0){
-					showInfoDetailsBasedOnCourseId(courseListBasedOnTitle.get(selectedText),selectedText);
-				}
+				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
 			}
 		}
 	}
