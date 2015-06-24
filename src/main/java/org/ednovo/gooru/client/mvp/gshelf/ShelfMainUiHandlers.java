@@ -96,6 +96,7 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
     /**
      * To show List of user content
      * @param listOfContent
+     * @param title
      */
 	void setRightListData(List<FolderDo> listOfContent);
     /**

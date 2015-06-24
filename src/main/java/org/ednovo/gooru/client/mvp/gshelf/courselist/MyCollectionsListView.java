@@ -147,10 +147,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
 			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-			if(view!=null &&(view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
+			if(view!=null && (view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 			}else{
+				btnCreate.setVisible(true);
 				btnCreate.setText("Create Unit");
 				pnlAddContainer.setVisible(true);
 			}
@@ -158,8 +159,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			if(COURSE.equalsIgnoreCase(type)){
 				h2Title.setText(i18n.GL1180());
 			}else if(FOLDER.equalsIgnoreCase(type)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
 				h2Title.setText(i18n.GL0994());
 			}else if(COLLECTION.equalsIgnoreCase(type)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
 				h2Title.setText(i18n.GL3282());
 			}else{
 				pnlH2TitleContainer.setVisible(false);

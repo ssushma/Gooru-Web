@@ -295,6 +295,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		publicPartners.put(i18n.GL2057(),PlaceTokens.SUSD);
 		publicPartners.put(i18n.GL2060(),PlaceTokens.VALVERDE);
 		publicPartners.put("YCGL",PlaceTokens.YCGL_LIBRARY);
+		publicPartners.put("YESD",PlaceTokens.YESD_LIBRARY);
 		return publicPartners;
 	}
 }

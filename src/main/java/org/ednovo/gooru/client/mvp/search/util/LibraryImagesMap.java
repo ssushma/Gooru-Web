@@ -27,6 +27,9 @@ public class LibraryImagesMap {
 		   	
 		   	mapObj.put(PlaceTokens.NGC, Arrays.asList(i18n.GL3249(),PlaceTokens.NGC,"ngcLogo"));	   	
 		   	mapObj.put(PlaceTokens.CORE_LIBRARY, Arrays.asList(i18n.GL3235(),PlaceTokens.CORE_LIBRARY,"coreLogo"));
+		   	
+		   	mapObj.put(PlaceTokens.YESD_LIBRARY, Arrays.asList("YESD1",PlaceTokens.YESD_LIBRARY,"coreLogo"));
+		   	
 			mapObj.put(PlaceTokens.LPS, Arrays.asList(i18n.GL3237(), PlaceTokens.LPS,"lpsLogo"));
 			mapObj.put(PlaceTokens.LUSD, Arrays.asList(i18n.GL3236(), PlaceTokens.LUSD,"lusdLogo"));			
 			mapObj.put(PlaceTokens.SUSD, Arrays.asList(i18n.GL3240(), PlaceTokens.SUSD,"susdLogo"));		 

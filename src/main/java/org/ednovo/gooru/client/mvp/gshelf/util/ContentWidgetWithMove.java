@@ -67,7 +67,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField HTMLPanel pnlTitleContainer,pnlArrows,pnlMoveToEdit;
 	@UiField Paragraph pTitle;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url";
 	
 	String type;
 	/**
@@ -121,7 +121,11 @@ public abstract class ContentWidgetWithMove extends Composite {
 			pnlMoveToEdit.setVisible(true);
 			//h3CourseTitle.setText(i18n.GL0645()+" "+indexVal);
 		}
-		h3CourseTitle.setText(StringUtil.capitalizeFirstLetter(folderObj.getCollectionType())+" "+indexVal);
+		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getCollectionType())){
+			h3CourseTitle.setText(i18n.GL3007()+" "+indexVal);
+		}else{
+			h3CourseTitle.setText(StringUtil.capitalizeFirstLetter(folderObj.getCollectionType())+" "+indexVal);
+		}
 		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
 		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");

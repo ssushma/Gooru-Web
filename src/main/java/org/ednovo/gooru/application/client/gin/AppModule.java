@@ -254,6 +254,10 @@ import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.IsYesdLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryPresenter.IsYesdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.IsYouthVoicesLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter.IsYouthVoicesLibraryProxy;
@@ -614,6 +618,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(YumaCountryLibraryPresenter.class, IsYumaCountryLibraryView.class, YumaCountryLibraryView.class,IsYumaCountryLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
+		bindPresenter(YesdLibraryPresenter.class, IsYesdLibraryView.class, YesdLibraryView.class,IsYesdLibraryProxy.class);
 		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
 		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
