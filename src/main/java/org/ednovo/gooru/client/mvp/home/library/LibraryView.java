@@ -1063,6 +1063,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
 //					partnerLogo.setStyleName(libraryStyleUc.coreDistrictLogo());
 //					partnerLogo.setVisible(true);
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YESD_LIBRARY)){
+					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
 				}
 				else{
 				partnerLogo.setVisible(false);
@@ -1096,6 +1098,20 @@ public class LibraryView extends Composite implements  ClickHandler {
 					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoCore());
 					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextCore());
 					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextCore());
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YESD_LIBRARY)) {
+					courseImage.setHeight("190px");
+					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
+					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+					courseImage.setVisible(false);
+					districtSpecificPartnersMain.setVisible(true);
+					/*districtLibraryHeaderText.getElement().setInnerText("");
+					districtLibrarySubHeaderText.getElement().setInnerText("");*/
+					
+					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainYesd());
+					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainYesd());
+					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoYesd());
+					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextYesd());
+					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextYesd());
 				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)) {
 					courseImage.setHeight("190px");
 					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
