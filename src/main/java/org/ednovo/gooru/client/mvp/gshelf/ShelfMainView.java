@@ -174,10 +174,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			Anchor selected=(Anchor) event.getSource();
 			btnSelectedText.setText(selected.getText());
 			if(selectedIndex==0){
-				organizelbl.setText(i18n.GL3285());
+				organizelbl.setText(i18n.GL3335());
 				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
-			    organizelbl.setText(i18n.GL3286());
+			    organizelbl.setText(i18n.GL3334());
 				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}
 		}
@@ -204,11 +204,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}
 		if(tabView==null || tabView.equals(COURSE)){
-			organizelbl.setText(i18n.GL3285());
-			btnSelectedText.setText(i18n.GL3285());
+			organizelbl.setText(i18n.GL3335());
+			btnSelectedText.setText(i18n.GL3335());
 		}else if(tabView.equals(FOLDER)){
-			organizelbl.setText(i18n.GL3333());
-			btnSelectedText.setText(i18n.GL3333());
+			organizelbl.setText(i18n.GL3334());
+			btnSelectedText.setText(i18n.GL3334());
 		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);
