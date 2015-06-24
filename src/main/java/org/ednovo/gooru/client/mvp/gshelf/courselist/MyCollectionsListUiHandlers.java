@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
@@ -45,7 +47,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param clrPanel
 	 * @param isInnerSlot
 	 */
-	public void setData(String type,HTMLPanel slotPane,FolderListDo result,boolean clrPanel,boolean isInnerSlot);
+	public void setData(String type,HTMLPanel slotPane,List<FolderDo> result,boolean clrPanel,boolean isInnerSlot);
 	/**
 	 * This method is used to set type of presenter based on the type
 	 * @param type

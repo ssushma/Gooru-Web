@@ -69,7 +69,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -2170,10 +2169,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
 			if(getQuestionType().equalsIgnoreCase("HT_HL") || getQuestionType().equalsIgnoreCase("HT_RO") ){
-				CollectionHTQuestionItemDo HTObj=new CollectionHTQuestionItemDo();
-				HTObj.setHlType(htType);
-				HTObj.setSingleCorrectAnswer(true);
-				collectionQuestionItemDo.setAttributes(HTObj);
+				collectionQuestionItemDo.setHlType(htType);
+				collectionQuestionItemDo.setSingleCorrectAnswer(true);
 			}
 
 			if(!isSaveButtonClicked){
@@ -2941,7 +2938,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addHotTextAnsChoice.highlightRDButtonClick();
 				setHotTextAnswers(addHotTextAnsChoice);
 				addHotTextAnsChoice.highlightRDButton.setValue(true);
-				String HtHighlightType=	collectionItemDo.getResource().getAttributes().getHlType();
+				String HtHighlightType=	collectionItemDo.getResource().getHlType();
 
 				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219_1())){
 					addHotTextAnsChoice.wordRDButtonClick();

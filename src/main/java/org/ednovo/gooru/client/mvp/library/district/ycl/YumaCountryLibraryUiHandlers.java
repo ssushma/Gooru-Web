@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,36 +23,19 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
-import java.util.List;
+package org.ednovo.gooru.client.mvp.library.district.ycl;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
-/**
- * @author Search Team
- *
- */
-public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
-	/**
-	 * This method is used to set data as list
-	 * @param type
-	 * @param slotPanel
-	 * @param listOfContent
-	 * @param clrPanel
-	 */
-	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot);
-	/**
-	 * This method is used to reset widgets
-	 */
-	public void resetWidgetPositions();
-	/**
-	 * This method will return the scroll panel
-	 * @return
-	 */
-	public ScrollPanel getScrollPanel();
+public interface YumaCountryLibraryUiHandlers extends BaseUiHandlers {
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+
+
 }

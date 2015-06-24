@@ -293,7 +293,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
-			}else {
+			}if(getPlaceToken().equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)) {
+				partnerLogo.setStyleName(libraryStyleUc.rusdPartnerLogo());
+				partnerLogo.setVisible(true);
+				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+				landingBanner.setVisible(false);
+			} else {
 				partnerLogo.setVisible(false);
 			}
 
@@ -341,6 +346,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCousesLbl.setText(i18n.GL1901());
 			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
 			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
+		}if(getPlaceToken().equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)) {
+			landingBanner.getElement().setId("landingRusdBanner");
+			landingBanner.setHeight("250px");
+			featuredCousesLbl.setText(i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0588());
 		} else {
 			landingBanner.getElement().setId("landingBanner");
 			featuredCousesLbl.setText(i18n.GL0587());

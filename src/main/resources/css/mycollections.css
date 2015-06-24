@@ -1260,6 +1260,28 @@ button.btn-disabled {
 #pnlLessonInfo .floderRightContainer .courseHeader {
 	background:#f0f0f0;
 }
+#pnlLessonInfo .gliphIconImage {
+  background: url("../images/gridicon.png") no-repeat scroll 0 0 transparent;
+  width: 11px;
+  height: 12px;
+}
+#pnlLessonInfo li:hover{
+background: none repeat scroll 0% 0% rgb(195, 221, 238);
+}
+#pnlLessonInfo .liPanelStyle
+{
+text-align: left;
+font-weight: bold;
+padding-left: 10px;
+font-size: 9pt;
+}
+#pnlLessonInfo .liPanelStylenonBold
+{
+text-align: left;
+padding-left: 10px;
+font-size: 9pt;
+padding-bottom: 10px;
+}
 
 #pnlLessonInfo .courseNameBlock{
 	border-bottom:1px solid #dddddd;

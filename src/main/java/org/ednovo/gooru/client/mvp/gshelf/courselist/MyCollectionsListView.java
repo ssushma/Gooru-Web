@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
@@ -33,7 +34,6 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
@@ -138,7 +138,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel,boolean isInnerSlot) {
+	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
@@ -147,7 +147,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
 			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-			if(view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION)){
+			if(view!=null &&(view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 			}else{
@@ -173,8 +173,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			index=pnlCourseList.getWidgetCount();
 			setLastWidgetArrowVisiblity(true);
 		}
-		if(result.getSearchResult().size()>0){
-			for (FolderDo folderObj : result.getSearchResult()) {
+		if(listOfContent.size()>0){
+			for (FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
 					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
@@ -213,7 +213,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		@Override
 		public void onClick(ClickEvent event) {
 			Map<String,String> params = new HashMap<String,String>();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCOLLECTION, updateParameters(params,folderObj));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			//getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
