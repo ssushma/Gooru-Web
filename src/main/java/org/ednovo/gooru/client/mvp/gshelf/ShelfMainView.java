@@ -125,6 +125,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	List<ClassPageCollectionDo> classpageTitles = null;
 
 	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
+	
+	List<FolderDo> folderListDoChild=new ArrayList<FolderDo>();
 
 	private static ShelfMainViewUiBinder uiBinder = GWT
 			.create(ShelfMainViewUiBinder.class);
@@ -366,6 +368,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			selectedWidget1.setFolderOpenedStatus(true);
 		}
 		
+		//This will set the data in the right panel
+		if(selectedWidget!=null){
+			folderListDoChild.clear();
+			int childWidgetsCount=treeChildSelectedItem.getChildCount();
+			for (int i = 0; i < childWidgetsCount; i++) {
+				ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
+				folderListDoChild.add(widget.getCollectionDo());
+			}
+			getUiHandlers().setRightListData(folderListDoChild);
+		}
 	}	
 	
 	private static void correctStyle(final UIObject uiObject) {
@@ -423,7 +435,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					shelfFolderTree.addItem(folderItem);
 					//When page is refreshed, the folderItem previously selected will be highlighted.
 					if(gooruOid!=null&&gooruOid.equalsIgnoreCase(floderDo.getGooruOid())) {
-						System.out.println("inininin");
 						checkShelfRefreshStatus(folderItem, floderDo.getGooruOid());
 						shelfTreeWidget.setFolderOpenedStatus(true);
 					}
@@ -464,7 +475,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		id = id!=null?id:"";
 		if(!parentId.equalsIgnoreCase(id)) {
 			getUiHandlers().getChildFolderItems(parentId,false);
-			getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(),shelfTreeWidget.getCollectionDo().getCollectionType());
 		}
 		ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 		if(previousshelfTreeWidget!=null) {

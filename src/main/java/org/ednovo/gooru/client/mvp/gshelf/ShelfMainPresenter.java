@@ -300,7 +300,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 						getView().getChildFolderItems(searchResult);
 						searchResult.clear();
 					}
-					setRightListData(result.getSearchResult());
 				}
 			});
 		}
@@ -316,7 +315,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightListData(List<FolderDo> listOfContent){
 		clearSlot(RIGHT_SLOT);
-		myCollectionsListPresenter.setData(type,getView().getSlot(),listOfContent,clrPanel,false);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		myCollectionsListPresenter.setData(view,getView().getSlot(),listOfContent,clrPanel,false);
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
 	}
 
