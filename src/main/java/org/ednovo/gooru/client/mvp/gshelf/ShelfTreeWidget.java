@@ -189,10 +189,11 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
-					myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
+				if(collectionDo!= null){
+					if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
+						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
+					}
 				}
-
 			}
 		});
 		titleFocPanel.addMouseOutHandler(new MouseOutHandler() {
@@ -462,7 +463,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(!collectionDo.getType().equals("folder") && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+			if(collectionDo!=null && !collectionDo.getType().equals("folder") && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
 		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
