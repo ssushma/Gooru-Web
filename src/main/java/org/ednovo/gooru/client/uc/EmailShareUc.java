@@ -438,6 +438,11 @@ public class EmailShareUc extends PopupPanel{
 									}else{
 										if(count==0){
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
+											if(cfm.equalsIgnoreCase("yes")){
+												 toTxt.setText(toTxt.getText()+","+AppClientFactory.getLoggedInUser().getEmailId());
+											}else{
+												toTxt.setText(toTxt.getText());
+											}
 											AppClientFactory
 											.getInjector()
 											.getClasspageService()
