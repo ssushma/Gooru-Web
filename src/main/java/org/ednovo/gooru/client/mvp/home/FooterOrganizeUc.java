@@ -170,9 +170,9 @@ public class FooterOrganizeUc extends Composite {
 		aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1242());
 		aboutGooruAnr.getElement().setAttribute("title",i18n.GL1242());
 
-		communityAnr.setText(i18n.GL3332());
-		communityAnr.getElement().setAttribute("alt",i18n.GL3332());
-		communityAnr.getElement().setAttribute("title",i18n.GL3332());
+		communityAnr.setText(i18n.GL3333());
+		communityAnr.getElement().setAttribute("alt",i18n.GL3333());
+		communityAnr.getElement().setAttribute("title",i18n.GL3333());
 
 		supportAnr.setText(i18n.GL0194());
 		supportAnr.getElement().setAttribute("alt",i18n.GL0194());
