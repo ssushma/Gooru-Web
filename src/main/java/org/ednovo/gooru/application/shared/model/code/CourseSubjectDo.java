@@ -22,38 +22,50 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.content;
-
+package org.ednovo.gooru.application.shared.model.code;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
+/**
+ * This Model class is used for subject,course and domain auto deserialization
+ * @author Gooru-Team
+ */
 @JsonInclude(Include.NON_NULL)
-public class CollectionHTQuestionItemDo implements Serializable {
-
-	/**
-	 * 
-	 */
+public class CourseSubjectDo implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+
+	String name;
+	Integer subjectId;
+	Integer courseId;
+	Integer domainId;
 	
-	private String hlType;
-	private boolean singleCorrectAnswer;
-	public String getHlType() {
-		return hlType;
+	CourseSubjectDo(){}
+	
+	public String getName() {
+		return name;
 	}
-	public boolean isSingleCorrectAnswer() {
-		return singleCorrectAnswer;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setHlType(String hlType) {
-		this.hlType = hlType;
+	public Integer getSubjectId() {
+		return subjectId;
 	}
-	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
-		this.singleCorrectAnswer = singleCorrectAnswer;
+	public void setSubjectId(Integer subjectId) {
+		this.subjectId = subjectId;
 	}
-	
-	
-	
-	
+	public Integer getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(Integer courseId) {
+		this.courseId = courseId;
+	}
+	public Integer getDomainId() {
+		return domainId;
+	}
+	public void setDomainId(Integer domainId) {
+		this.domainId = domainId;
+	}
 }
