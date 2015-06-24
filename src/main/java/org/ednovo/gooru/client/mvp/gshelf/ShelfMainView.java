@@ -441,7 +441,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 						shelfTreeWidget.setFolderOpenedStatus(true);
 					}
 					collectionCount++;
-
 				}
 				floderTreeContainer.clear();
 				floderTreeContainer.add(shelfFolderTree);
