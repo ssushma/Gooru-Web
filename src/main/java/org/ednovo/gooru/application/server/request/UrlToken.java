@@ -556,7 +556,13 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 
 	V2_GET_VIEW_COUNTS("/v2/stats/data?sessionToken={0}&gooruOId={1}"),
 
-	V2_GET_RESOURCE_BASED_USERS("/v2/resource/{0}/collection?sessionToken={1}&offset={2}&limit={3}");
+	V2_GET_RESOURCE_BASED_USERS("/v2/resource/{0}/collection?sessionToken={1}&offset={2}&limit={3}"),
+	
+	V1_GET_SUBJECTS("/v1/subject?classificationTypeId={0}"),
+	
+	V1_GET_COURSES_BY_SUBJECTID("/v1/subject/{0}/taxonomycourse?offset={1}&limit={2}"),
+	
+	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?");
 
 
 	private String url;

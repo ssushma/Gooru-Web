@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.gshelf.util;
 
 import java.util.List;
 
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -54,19 +54,19 @@ public abstract class CourseGradeWidget extends Composite {
 	
 	final String ACTIVE="active";
 	
-	public CourseGradeWidget(final List<LibraryCodeDo> libraryCodeDo,List<String> selectedValues) {
+	public CourseGradeWidget(final List<CourseSubjectDo> libraryCodeDo,List<String> selectedValues) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.selectedValues=selectedValues;
 		if(libraryCodeDo!=null){
 			setData(libraryCodeDo);
 		}
 	}
-	public void setData(final List<LibraryCodeDo> libraryCodeDo){
+	public void setData(final List<CourseSubjectDo> libraryCodeDo){
 		ulGradePanel.clear();
 		if(libraryCodeDo.size()>0){
 			for(int j=0; j<libraryCodeDo.size(); j++) {
-				final String gradeText=libraryCodeDo.get(j).getLabel();
-				final long codeId=libraryCodeDo.get(j).getCodeId();
+				final String gradeText=libraryCodeDo.get(j).getName();
+				final long codeId=libraryCodeDo.get(j).getCourseId();
 				final LiPanel panel=new LiPanel();
 				if(selectedValues.contains(gradeText)){
 					panel.addStyleName(ACTIVE);
