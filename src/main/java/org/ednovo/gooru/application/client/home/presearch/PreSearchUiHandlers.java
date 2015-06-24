@@ -42,5 +42,89 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  */
 public interface PreSearchUiHandlers extends BaseUiHandlers{
 
+	/**
+	 *
+	 * @function getAddStandards
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void getAddStandards();
+
+	/**
+	 *
+	 * @function setUpdatedStandards
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void setUpdatedStandards();
+
+	/**
+	 *
+	 * @function closeStandardsPopup
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void closeStandardsPopup();
+
+	/**
+	 *
+	 * @function refreshSearch
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param query
+	 *
+	 * @parm(s) : @param filterStd
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void refreshSearch(String query, String filterStd);
 
 }

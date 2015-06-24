@@ -29,7 +29,7 @@
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="pnlMoveToEdit" styleName="tableListOrder">
 				<div class="numInput">
-					<g:Button styleName="primary btnMoveToEdit" ui:field="btnMoveToEdit" text="{i18n.GL3326}" title="{i18n.GL3326}"/>
+					<g:Button styleName="primary btnMoveToEdit" ui:field="btnMoveToEdit" text="{i18n.GL3332}" title="{i18n.GL3332}"/>
 				</div>
 			</g:HTMLPanel>
 		</div>

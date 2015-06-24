@@ -26,7 +26,20 @@ package org.ednovo.gooru.application.client.home.presearch;
 
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
@@ -48,17 +61,27 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  *
  * @Reviewer:
  */
-public class PreSearchPresenter extends PresenterWidget<IsPreSearchView> implements PreSearchUiHandlers,ClientConstants{
-
+public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo> extends PresenterWidget<IsPreSearchView> implements PreSearchUiHandlers,ClientConstants{
 	public static final Object GRADES = new Object();
 
 	GooruGradesPresenter gooruGradesPresenter = null;
+	AddStandardsPresenter addStandardsPresenter = null;
+
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	private final String QUERY = "query";
+
+	private SearchDo<T> searchDo = new SearchDo<T>();
+
 
 	@Inject
-	public PreSearchPresenter(EventBus eventBus, IsPreSearchView view, GooruGradesPresenter gooruGradesPresenter) {
+	public PreSearchPresenter(EventBus eventBus, IsPreSearchView view, GooruGradesPresenter gooruGradesPresenter,AddStandardsPresenter addStandardsPresenterObj) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.gooruGradesPresenter = gooruGradesPresenter;
+		this.addStandardsPresenter = addStandardsPresenterObj;
 	}
 
 	@Override
@@ -70,5 +93,109 @@ public class PreSearchPresenter extends PresenterWidget<IsPreSearchView> impleme
 	@Override
 	protected void onReset() {
 		getView().setButtonVisibility();
+		if(AppClientFactory.getPlaceManager().refreshPlace()){
+//			getView().setDefaults();
+			AppClientFactory.getInjector().getSearchService().getSearchFilters(PlaceTokens.TEST,new SimpleAsyncCallback<SearchFilterDo>() {
+				@Override
+				public void onSuccess(SearchFilterDo searchFilterDo) {
+					getView().setSearchFilter(searchFilterDo);
+				}
+			});
+		}
 	}
+
+	@Override
+	public void getAddStandards() {
+		if(!AppClientFactory.isAnonymous()){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addToPopupSlot(addStandardsPresenter);
+									getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+
+					}
+					}
+				});
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			isTEKSAvailable = false;
+			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+				addToPopupSlot(addStandardsPresenter);
+				getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+			}
+		}
+
+	}
+
+	@Override
+	public void setUpdatedStandards() {
+		getView().setUpdatedStandards(addStandardsPresenter.getStandardListArray());
+	}
+
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
+	}
+
+	@Override
+	public void refreshSearch(String query, String filterStd) {
+		if(query!=null){
+			getSearchDo().setQuery(query);
+			onSearchRequest(filterStd);
+		}
+	}
+
+
+	public SearchDo<T> getSearchDo() {
+		return searchDo;
+	}
+
+
+	public void setSearchDo(SearchDo<T> searchDo) {
+		this.searchDo = searchDo;
+	}
+
+	public void onSearchRequest(String filterStd) {
+		AppClientFactory.printInfoLogger("in on search request.");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("flt.standard", filterStd);
+		params.put(QUERY, "*");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_COLLECTION, params, true);
+
+	}
+
 }
