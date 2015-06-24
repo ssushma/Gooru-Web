@@ -127,7 +127,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
-		
+		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
 		Document doc = Document.get();
@@ -326,6 +326,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
 		
 	}
+	@Override
+	public void updateLeftShelfPanelActiveStyle() {
+		getView().updateLeftShelfPanelActiveStyle();
+	}
+	
 	@Override
 	public void setListPresenterBasedOnType(String type) {
 		this.type=type;
