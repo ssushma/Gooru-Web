@@ -71,7 +71,7 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3296}"></g:Label>
 									<div class="callToAction">
-										<g:Anchor href="http://about.goorulearning.org/educators/stories/" target="_blank" styleName="primary" ui:field="ancSeeStories" text="{i18n.GL3322}"></g:Anchor>
+										<g:Anchor href="http://about.goorulearning.org/educators/stories/" target="_blank" styleName="primary" ui:field="ancSeeStories" text="{i18n.GL3328}"></g:Anchor>
 									</div>
 								</div>
 							</div>
@@ -228,7 +228,7 @@
 							<p>
 								<img src="images/newlandingpage/footer-logo.png" class="img-responsive" />
 							</p>
-							<tbp:PPanel text="{i18n.GL3320}"></tbp:PPanel>
+							<tbp:PPanel text="{i18n.GL3326}"></tbp:PPanel>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-6">
 							<tbp:H4Panel text="{i18n.GL2161}"></tbp:H4Panel>
@@ -257,7 +257,7 @@
 								    <g:Anchor href="http://partners.goorulearning.org/" target="_blank" text="{i18n.Gl2151}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.goorulearning.org/educators/coach-program/" target="_blank" text="{i18n.GL3321}" />
+								    <g:Anchor href="http://about.goorulearning.org/educators/coach-program/" target="_blank" text="{i18n.GL3327}" />
 								</li>
 								<!-- <li>
 								    <g:Anchor href="http://developers.goorulearning.org/" target="_blank" text="{i18n.GL2154}" />

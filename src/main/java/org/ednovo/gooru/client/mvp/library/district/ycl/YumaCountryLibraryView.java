@@ -22,38 +22,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.content;
+package org.ednovo.gooru.client.mvp.library.district.ycl;
 
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 
-import java.io.Serializable;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+/**
+ * @author Search Team
+` * 
+ */
+public class YumaCountryLibraryView extends BaseViewWithHandlers<YumaCountryLibraryUiHandlers> implements IsYumaCountryLibraryView {
 
-@JsonInclude(Include.NON_NULL)
-public class CollectionHTQuestionItemDo implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	@UiField SimplePanel partnerPanel;
 	
-	private String hlType;
-	private boolean singleCorrectAnswer;
-	public String getHlType() {
-		return hlType;
+	private static YumaCountryLibraryViewUiBinder uiBinder = GWT.create(YumaCountryLibraryViewUiBinder.class);
+
+	interface YumaCountryLibraryViewUiBinder extends UiBinder<Widget, YumaCountryLibraryView> {
 	}
-	public boolean isSingleCorrectAnswer() {
-		return singleCorrectAnswer;
-	}
-	public void setHlType(String hlType) {
-		this.hlType = hlType;
-	}
-	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
-		this.singleCorrectAnswer = singleCorrectAnswer;
+
+	public YumaCountryLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
-	
-	
-	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == YumaCountryLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
+
 }

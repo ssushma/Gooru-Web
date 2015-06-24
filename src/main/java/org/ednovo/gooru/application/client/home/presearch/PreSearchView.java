@@ -267,13 +267,13 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	@UiHandler("btnBrowseContent")
 	public void onClickBrowseContent(ClickEvent event){
 		if (selectedSubjects.size() <= 0 && selectedGrades.size() <= 0){
-			lblErrorMessage.setText(i18n.GL3323());
+			lblErrorMessage.setText(i18n.GL3329());
 			lblErrorMessage.setVisible(true);
 		}else if (selectedSubjects.size() <= 0){
-			lblErrorMessage.setText(i18n.GL3324());
+			lblErrorMessage.setText(i18n.GL3330());
 			lblErrorMessage.setVisible(true);
 		}else if (selectedGrades.size() <= 0){
-			lblErrorMessage.setText(i18n.GL3325());
+			lblErrorMessage.setText(i18n.GL3331());
 			lblErrorMessage.setVisible(true);
 		}else{
 			lblErrorMessage.setVisible(false);

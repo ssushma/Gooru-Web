@@ -461,6 +461,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			libraryList.add(PlaceTokens.CCST_Cal_TAC);
 			libraryList.add(PlaceTokens.LUSD);
 			libraryList.add(PlaceTokens.TICAL);
+			libraryList.add(PlaceTokens.YCGL_LIBRARY);
 		}
 		
 		public String getPlayerMode(){
