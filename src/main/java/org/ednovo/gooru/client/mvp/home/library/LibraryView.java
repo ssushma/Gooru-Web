@@ -767,7 +767,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			final int widgetCountTemp = widgetCount;
 			FeaturedCourseListView featuredCourseListView = ((FeaturedCourseListView) widget);
 			try {
-				if(courseId.equals(""+featuredCourseListView.getCourseId())) {
+				if(courseId !=null && courseId.equals(""+featuredCourseListView.getCourseId())) {
 					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						if(courseDoList.get(widgetCount).getParentId()!=null) {
 							if(partnerFolderList.size()>0) {
@@ -874,7 +874,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			final int widgetCountTemp = widgetCount;
 			final LibraryUnitMenuView libraryUnitMenuView = ((LibraryUnitMenuView) widget);
 			try {
-				if(unitId.equals(libraryUnitMenuView.getUnitId())) {
+				if(unitId != null && unitId.equals(libraryUnitMenuView.getUnitId())) {
 					widget.addStyleName(libraryStyleUc.unitLiActive());
 					if(widgetCountTemp==0) {
 						unitListId = unitDoList.get(widgetCountTemp).getCodeId()+"";
