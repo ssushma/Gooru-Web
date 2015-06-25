@@ -173,7 +173,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 	private boolean isLandingPageLoaded = false;
 
-	@NameToken(PlaceTokens.HOME)
+	@NameToken(PlaceTokens.TEST)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	@ProxyCodeSplit
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
