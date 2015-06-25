@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.gsearch.util;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 /**
  * @author Search Team
  *
@@ -42,5 +44,7 @@ public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandl
 	void showGradesFilter();
 
 	void highlightGradeLevel(String filterName);
+	
+	public void setGradePanel(HTMLPanel panel);
 
 }
