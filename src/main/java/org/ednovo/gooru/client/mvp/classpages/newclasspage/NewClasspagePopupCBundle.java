@@ -78,6 +78,10 @@ public interface NewClasspagePopupCBundle extends ClientBundle{
 		String popupMandatoryContainer();
 
 		String creating();
+		
+		String formViewButtonContainer();
+		
+		String PopupMainVVSmall();
 	}
 	@Source("newclasspagepopup.css")
 	NewClasspagePopupCss css();
