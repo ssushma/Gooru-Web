@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,26 +23,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.library.partner.yesdlibrary;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
-/**
- * @author Search Team
- *
- */
-public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandlers> {
-	
-	/**
-	 * This method will display the Grades according to the subject
-	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,String selectedText);
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link CourseSubjectDo} as List
-	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
+public interface YesdLibraryUiHandlers extends BaseUiHandlers {
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+
+
 }

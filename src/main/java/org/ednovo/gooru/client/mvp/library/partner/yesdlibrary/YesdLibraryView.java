@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
@@ -22,26 +23,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.library.partner.yesdlibrary;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- *
+` * 
  */
-public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandlers> {
+public class YesdLibraryView extends BaseViewWithHandlers<YesdLibraryUiHandlers> implements IsYesdLibraryView {
+
+	@UiField SimplePanel partnerPanel;
 	
-	/**
-	 * This method will display the Grades according to the subject
-	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,String selectedText);
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link CourseSubjectDo} as List
-	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
+	private static YesdLibraryViewUiBinder uiBinder = GWT.create(YesdLibraryViewUiBinder.class);
+
+	interface YesdLibraryViewUiBinder extends UiBinder<Widget, YesdLibraryView> {
+	}
+
+	public YesdLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
+	}
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == YesdLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
+
 }

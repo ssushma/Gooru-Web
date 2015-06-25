@@ -5,7 +5,7 @@
 	position: relative;
 }
 
-.sprite{
+.newSprite{
 	background:url(${cdn.endpoint}/images/newlandingpage/gooru-sprite.png) no-repeat 0 0;
 }
 
@@ -419,7 +419,7 @@
 .focusBlock .standards{
 	text-align:center;
 }
-.focusBlock .grade, .focusBlock .standards{
+.focusBlock .standards{
 	padding:38px 0 38px 25px;
 }
 .focusBlock .grade{
@@ -434,7 +434,7 @@
 .focusBlock .panel-body .standards .btn-group{
 	margin:0 0;
 }
-.focusBlock .grade, .focusBlock .standards, .focusBlock .browseContentBtn{
+.focusBlock .standards, .focusBlock .browseContentBtn{
 	min-height:110px;
 }
 .focusBlock .panel-footer{
@@ -531,7 +531,7 @@
 .categoriesBlock .callToAction{
 	text-align:center;
 }
-.categoriesBlock .callToAction button.primary{
+.categoriesBlock .callToAction button.primary, .categoriesBlock .callToAction a.primary{
 	font-size:12px;
 	width:80%;
 }
@@ -549,30 +549,32 @@
 .gettingStarted{
 	background:#e3e3e3;
 }
-.gettingStarted .gettingContentPane{
-	padding-left:35px;
+.gettingStarted .gettingContentPane {
+
 
 }
 
 
 .gettingStarted .gettingContentPane h2{
-
+	margin-left: 35px;
 	font-family:"Arvo",serif !important;
 	margin-bottom:30px;
 	margin-top:30px;
 	font-size:25px;
 	color:#515151;
+	margin-left: 35px;
 }
 
 .gettingStarted .gettingContentPane .blocks{
-	margin-bottom:23px;
+	margin-bottom:39px;
 	padding-left: 35px;
+	width: 76%;
 }
 
 .gettingStarted .gettingContentPane .blocks:last-child{
 	margin-bottom:0;
 }
-.gettingStarted .gettingContentPane h3{
+.gettingStarted .gettingContentPane h3, .gettingStarted .gettingContentPane a.h3{
 	color:#1076bb;
 	font-size:20px;
 	margin-bottom:4px;
@@ -604,7 +606,7 @@
 	font-size: 30px;
 	font-family: "Arvo",serif !important;
 	font-weight: bold;
-	color: #41abca;
+	color: #1076bb;
 	margin-bottom: 35px;
 }
 
@@ -1115,4 +1117,75 @@ footer .footerLogo .img-responsive{
 
 .gettingContentPane .events{
 	padding: 10px;
+	width: 75%;
+}
+
+.gettingContentPane .eventsContainer{
+	background: #deebf3;
+  	width: 100% !important;
+  	height: 97px;
+}
+
+.remixBlock a.sampleReport{
+	font-family: "Arvo",serif!important;
+	font-size: 16px;
+	line-height: 22px;
+}
+
+
+.gradePanel{
+	padding:38px 0 38px 25px;
+}
+
+.panelGrade{
+	min-width: 350px !important;
+}
+
+.ellipsis{
+	width: 130px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#gooruSearchMainContainer .subjectContainer {
+	text-align: left;
+	margin: 15px 0;
+	width: 100%;
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu {
+	left: 0px;
+	top: 120%;
+	font-size: 12px;
+	min-width: 245px;
+	margin: 0;
+	padding: 0;
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a, #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a:hover, #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a:focus {
+	background: #87badd url(../images/checkmark.png) no-repeat 95% 5px;
+	color: #fff;
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu>span {
+	font-size: 12px;
+	text-align: left;
+	color: #515151;
+	padding: 8px 20px;
+	display: block;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu>li>a {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 1.42857143;
+	white-space: nowrap;
+	padding: 8px 20px;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	color: #515151;
+	text-align: left;
 }

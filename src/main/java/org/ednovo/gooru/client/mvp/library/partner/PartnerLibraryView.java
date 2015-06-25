@@ -200,7 +200,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			AppClientFactory.printInfoLogger(" ---- on unit selected Ui End time consumed --- "+(System.currentTimeMillis()-startTime));
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger(e.toString());
 		}
 	}
 	
@@ -251,6 +251,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		map.put(PlaceTokens.GEOEDUCATION, GeoEduBanner.getGeoEduIstance());
 		map.put(PlaceTokens.LPS, LpsBanner.getLpsIstance());
 		map.put(PlaceTokens.CORE_LIBRARY, CoreBanner.getcoreIstance());
+		map.put(PlaceTokens.YESD_LIBRARY, YesdBanner.getyesdIstance());
 		map.put(PlaceTokens.ESYP, EsypBanner.getEsypIstance());
 		map.put(PlaceTokens.CCST_Cal_TAC, CcstBanner.getCcstIstance());
 		map.put(PlaceTokens.TICAL, TicalBanner.getTicalInstance());
@@ -756,6 +757,45 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
+
+	
+	/**
+	 * Inner class for implementing YESD library banner.
+	 * 
+	 */
+	private static class YesdBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static YesdBanner yesdBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private YesdBanner() {
+		}
+
+		// Providing Global point of access
+		public static YesdBanner getyesdIstance() {
+			if (null == yesdBannerInstance) { 
+				yesdBannerInstance = new YesdBanner();
+			}
+			return yesdBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel("Yuma Elementary School District ONE");
+			thumbnailDo.setUrl(Constants.YESD_BANNER);
+			libraryUserDo.setPartnerName(" About Yuma Elementary School District ONE");
+			libraryUserDo.setPartnerUrl("http://www.yuma.org/");
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+
+	
 	
 
 	/**

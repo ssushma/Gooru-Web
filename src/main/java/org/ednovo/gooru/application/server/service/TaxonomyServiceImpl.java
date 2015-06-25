@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.service.TaxonomyService;
@@ -32,10 +33,19 @@ import org.ednovo.gooru.application.server.deserializer.TaxonomyDeSerializer;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
 import org.ednovo.gooru.application.server.request.UrlToken;
+import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.application.shared.exception.GwtException;
+import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("taxonomyService")
 @ServiceURL("/taxonomyService")
@@ -45,11 +55,15 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 	 *
 	 */
 	private static final long serialVersionUID = 6947235468580822129L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaxonomyDeSerializer.class);
 
 	@Autowired
 	private TaxonomyDeSerializer taxonomyDeSerializer;
 
-
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.TaxonomyService#getCourse()
+	 */
 	@Override
 	public List<LibraryCodeDo> getCourse() {
 		JsonRepresentation jsonRep =null;
@@ -57,6 +71,37 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return taxonomyDeSerializer.getCourse(jsonRep);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.TaxonomyService#getSubjectsList()
+	 */
+	@Override
+	public List<CourseSubjectDo> getSubjectsList(int id,String type,int offset,int limit) throws GwtException,ServerDownException {
+		List<CourseSubjectDo> subjectCodeDo = new ArrayList<CourseSubjectDo>();
+		JsonRepresentation jsonRep =null;
+		String url = null;
+		if(type.equalsIgnoreCase("subject")){
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_SUBJECTS,id+"");
+		}else if(type.equalsIgnoreCase("course")){
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSES_BY_SUBJECTID,id+"",offset+"",limit+"");
+		}else if(type.equalsIgnoreCase("domain")){
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,id+"");
+		}
+		logger.info("url::"+url);
+		if(url!=null){
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			if (jsonRep != null) {
+				try {
+					subjectCodeDo = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CourseSubjectDo>>() {
+				  });
+				} catch (JSONException e) {
+					logger.error("Exception::", e);
+				}
+			}
+		}
+		return subjectCodeDo;
 	}
 
 }

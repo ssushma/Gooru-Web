@@ -22,26 +22,50 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.application.shared.model.code;
 
-import java.util.List;
+import java.io.Serializable;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
- *
+ * This Model class is used for subject,course and domain auto deserialization
+ * @author Gooru-Team
  */
-public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandlers> {
+@JsonInclude(Include.NON_NULL)
+public class CourseSubjectDo implements Serializable {
 	
-	/**
-	 * This method will display the Grades according to the subject
-	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,String selectedText);
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link CourseSubjectDo} as List
-	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
+	private static final long serialVersionUID = 1L;
+
+	String name;
+	Integer subjectId;
+	Integer courseId;
+	Integer domainId;
+	
+	CourseSubjectDo(){}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getSubjectId() {
+		return subjectId;
+	}
+	public void setSubjectId(Integer subjectId) {
+		this.subjectId = subjectId;
+	}
+	public Integer getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(Integer courseId) {
+		this.courseId = courseId;
+	}
+	public Integer getDomainId() {
+		return domainId;
+	}
+	public void setDomainId(Integer domainId) {
+		this.domainId = domainId;
+	}
 }

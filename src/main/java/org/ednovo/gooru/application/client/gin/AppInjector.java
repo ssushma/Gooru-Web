@@ -78,6 +78,7 @@ import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -267,6 +268,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
 
 	AsyncProvider<CoreLibraryPresenter> getCoreLibraryPresenter();
+	
+	AsyncProvider<YesdLibraryPresenter> getYesdLibraryPresenter();
 
 	AsyncProvider<EsypLibraryPresenter> getEsypLibraryPresenter();
 
