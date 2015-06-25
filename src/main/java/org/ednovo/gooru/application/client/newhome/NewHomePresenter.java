@@ -25,7 +25,7 @@
 /**
  *
 */
-package org.ednovo.gooru.client.mvp.test;
+package org.ednovo.gooru.application.client.newhome;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -92,7 +92,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  *
  * @Reviewer:
  */
-public class TestPresenter extends BasePlacePresenter<IsTestView, IsEditClasspageProxy> implements TestUiHandlers {
+public class NewHomePresenter extends BasePlacePresenter<IsNewHomeView, IsEditClasspageProxy> implements NewHomeUiHandlers {
 
 	private HomeBannerPresenter banner = null;
 	private PreSearchPresenter presearchPresenter = null;
@@ -130,13 +130,13 @@ public class TestPresenter extends BasePlacePresenter<IsTestView, IsEditClasspag
 
 
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.TEST)
+	@NameToken(PlaceTokens.HOME)
 	@UseGatekeeper(AppPlaceKeeper.class)
-	public interface IsTestProxy extends ProxyPlace<TestPresenter> {
+	public interface IsTestProxy extends ProxyPlace<NewHomePresenter> {
 	}
 
 	@Inject
-	public TestPresenter(IsTestView view, IsEditClasspageProxy proxy, HomeBannerPresenter banner, PreSearchPresenter presearchPresenter, UserRegistrationPresenter userRegistrationPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter) {
+	public NewHomePresenter(IsNewHomeView view, IsEditClasspageProxy proxy, HomeBannerPresenter banner, PreSearchPresenter presearchPresenter, UserRegistrationPresenter userRegistrationPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.presearchPresenter =presearchPresenter;

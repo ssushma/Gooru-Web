@@ -1142,8 +1142,50 @@ footer .footerLogo .img-responsive{
 }
 
 .ellipsis{
-	width: 130px;
+	width: 120px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+#gooruSearchMainContainer .subjectContainer {
+	text-align: left;
+	margin: 15px 0;
+	width: 100%;
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu {
+	left: 0px;
+	top: 120%;
+	font-size: 12px;
+	min-width: 245px;
+	margin: 0;
+	padding: 0;
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a, #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a:hover, #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a:focus {
+	background: #87badd url(../images/checkmark.png) no-repeat 95% 5px;
+	color: #fff;
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu>span {
+	font-size: 12px;
+	text-align: left;
+	color: #515151;
+	padding: 8px 20px;
+	display: block;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+
+#gooruSearchMainContainer .subjectContainer .dropdown-menu>li>a {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 1.42857143;
+	white-space: nowrap;
+	padding: 8px 20px;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	color: #515151;
+	text-align: left;
 }

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,36 +22,58 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.courselist;
+/**
+ *
+*/
+package org.ednovo.gooru.application.client.newhome;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
 
 /**
- * @author Search Team
  *
+ * @fileName : TestUiHandlers.java
+ *
+ * @description :
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 26-May-2015
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
  */
-public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
+public interface NewHomeUiHandlers extends BaseUiHandlers {
+
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();
+
 	/**
-	 * This method is used to set data as list
-	 * @param type
-	 * @param slotPanel
-	 * @param listOfContent
-	 * @param clrPanel
+	 *
+	 * @function initilazeRegistrationView
+	 *
+	 * @created_date : 22-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param user
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
 	 */
-	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
-	/**
-	 * This method is used to reset widgets
-	 */
-	public void resetWidgetPositions();
-	/**
-	 * This method will return the scroll panel
-	 * @return
-	 */
-	public ScrollPanel getScrollPanel();
+	void initilazeRegistrationView(UserDo user);
+
 }

@@ -142,3 +142,15 @@
 #btnAdd{
 	margin-left:10px;
 }
+.PopupMainVVSmall{
+	width: 390px;
+	color: #515151;
+	margin: 30px auto;
+	position: relative;
+	font-size: 12px;
+}
+.formViewButtonContainer{
+	padding-top: 10px;
+	text-align: center;
+}
+

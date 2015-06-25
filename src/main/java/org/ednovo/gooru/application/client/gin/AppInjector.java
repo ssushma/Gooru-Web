@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.home.HomePresenter;
 import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
+import org.ednovo.gooru.application.client.newhome.NewHomePresenter;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
@@ -78,6 +79,7 @@ import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -103,7 +105,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResou
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
-import org.ednovo.gooru.client.mvp.test.TestPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -176,7 +177,7 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<EditClasspagePresenter> getEditClasspagePresenter();
 
-	AsyncProvider<TestPresenter> getTestPresenter();
+	AsyncProvider<NewHomePresenter> getTestPresenter();
 
 	AsyncProvider<ClassCodePresenter> getClassCodePresenter();
 
@@ -267,6 +268,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
 
 	AsyncProvider<CoreLibraryPresenter> getCoreLibraryPresenter();
+	
+	AsyncProvider<YesdLibraryPresenter> getYesdLibraryPresenter();
 
 	AsyncProvider<EsypLibraryPresenter> getEsypLibraryPresenter();
 
@@ -287,6 +290,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 
 	AddCenturyPresenter getAddCenturyPresenterWidget();
+	
+	GooruGradesPresenter getGooruGradePresenter();
 
 	SearchAddResourceToCollectionPresenter getRemixPresenterWidget();
 

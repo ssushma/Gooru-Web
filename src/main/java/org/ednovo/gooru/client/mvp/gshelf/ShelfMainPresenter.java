@@ -81,6 +81,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	private static final String VIEW= "view";
 	
+	private static final String FOLDER = "Folder";
+	
 	public static final  Object RIGHT_SLOT = new Object();
 	
 	private static final String O1_LEVEL = "o1";
@@ -127,7 +129,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
-		
+		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
 		Document doc = Document.get();
@@ -214,7 +216,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getView().setNoDataForAnonymousUser(false);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
 		type=view;
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,type,false,getUserCollectionAsyncCallback(true));
+		String typeVal=type;
+		if(type!=null && type.equalsIgnoreCase(FOLDER)){
+			typeVal=null;//if we are passing as null we get all the folders and collections
+		}
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
 	}
 	public ShelfServiceAsync getShelfService() {
@@ -265,9 +271,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 					if(o1==null){
 						if(clrPanel){
-							setRightListData(result.getSearchResult());
+							setRightListData(result.getSearchResult(),null);
 						}else{
-							myCollectionsListPresenter.setData(type,getView().getSlot(),result.getSearchResult(),clrPanel,false);
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result.getSearchResult(),clrPanel,false,null);
 						}
 					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
@@ -307,9 +313,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	
 	@Override
-	public void setRightListData(List<FolderDo> listOfContent){
+	public void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo){
 		clearSlot(RIGHT_SLOT);
-		myCollectionsListPresenter.setData(type,getView().getSlot(),listOfContent,clrPanel,false);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		myCollectionsListPresenter.setData(view,getView().getSlot(),listOfContent,clrPanel,false,folderDo);
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
 	}
 
@@ -326,6 +333,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
 		
 	}
+	@Override
+	public void updateLeftShelfPanelActiveStyle() {
+		getView().updateLeftShelfPanelActiveStyle();
+	}
+	
 	@Override
 	public void setListPresenterBasedOnType(String type) {
 		this.type=type;
@@ -346,6 +358,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	@Override
 	public void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel) {
-		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,type,false,getUserCollectionAsyncCallback(clearShelfPanel));		
+		String typeVal=type;
+		if(type.equalsIgnoreCase(FOLDER)){
+			typeVal=null;//if we are passing as null we get all the folders and collections
+		}
+		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,typeVal,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 }

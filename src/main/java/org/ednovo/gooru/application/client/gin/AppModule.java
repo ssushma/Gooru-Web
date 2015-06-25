@@ -37,6 +37,10 @@ import org.ednovo.gooru.application.client.home.banner.IsHomeBannerView;
 import org.ednovo.gooru.application.client.home.presearch.IsPreSearchView;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchView;
+import org.ednovo.gooru.application.client.newhome.IsNewHomeView;
+import org.ednovo.gooru.application.client.newhome.NewHomePresenter;
+import org.ednovo.gooru.application.client.newhome.NewHomeView;
+import org.ednovo.gooru.application.client.newhome.NewHomePresenter.IsTestProxy;
 import org.ednovo.gooru.application.client.wrap.IsWrapView;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter.IsWrapProxy;
@@ -254,6 +258,10 @@ import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.IsYesdLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryPresenter.IsYesdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.yesdlibrary.YesdLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.IsYouthVoicesLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter.IsYouthVoicesLibraryProxy;
@@ -404,7 +412,6 @@ import org.ednovo.gooru.client.mvp.test.IsTestView;
 import org.ednovo.gooru.client.mvp.test.TestPresenter;
 import org.ednovo.gooru.client.mvp.test.TestPresenter.IsTestProxy;
 import org.ednovo.gooru.client.mvp.test.TestView;
-
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.inject.Singleton;
@@ -447,8 +454,8 @@ public class AppModule extends AppPresenterModule {
 				Singleton.class);
 		bind(RootPresenter.class).to(AppRootPresenter.class).asEagerSingleton();
 
-		bindPresenter(TestPresenter.class, IsTestView.class,
-				TestView.class, IsTestProxy.class);
+		bindPresenter(NewHomePresenter.class, IsNewHomeView.class,
+				NewHomeView.class, IsTestProxy.class);
 
 		bindConstant().annotatedWith(AppDefaultPlace.class)
 				.to(PlaceTokens.HOME);
@@ -617,6 +624,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(YumaCountryLibraryPresenter.class, IsYumaCountryLibraryView.class, YumaCountryLibraryView.class,IsYumaCountryLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
+		bindPresenter(YesdLibraryPresenter.class, IsYesdLibraryView.class, YesdLibraryView.class,IsYesdLibraryProxy.class);
 		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
 		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);

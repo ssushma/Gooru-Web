@@ -87,7 +87,10 @@ public abstract class CopyConfirmPopupVc{
 	private int totalHitCount=0;
 	private int pageNum=1;
 	
+	private String resourceType;
+	
 	private static final String ASSESSMENT = "assessment";
+	private static final String QUESTION = "question";
 	
 	private CollectionTreeItem cureentcollectionTreeItem=null;
 	private CollectionTreeItem previousSelectedItem=null;
@@ -131,12 +134,14 @@ public abstract class CopyConfirmPopupVc{
 
 	/**
 	 * default constructor of CopyConfirmPopupVc
+	 * @param resourceType 
 	 */
-	public CopyConfirmPopupVc() {
+	public CopyConfirmPopupVc(String resourceType) {
 		super();
 		popupPanel=new PopupPanel();
 		popupPanel.setWidget(uiBinder.createAndBindUi(this));
 		setStaticTexts();
+		setResourceType(resourceType);
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		popupPanel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainerShelf());
 		popupPanel.setGlassEnabled(true);
@@ -224,6 +229,8 @@ public abstract class CopyConfirmPopupVc{
 	}
 	
 	public void setSelectedCollectionTitle(){
+		copyResourceBtnLbl.setEnabled(true);
+		copyResourceBtnLbl.getElement().removeClassName("disabled");
 		if(cureentcollectionTreeItem!=null){
 			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
 			dropdownListPlaceHolder.getElement().setAttribute("alt", cureentcollectionTreeItem.getCollectionName());
@@ -296,6 +303,7 @@ public abstract class CopyConfirmPopupVc{
 		private String gooruOid=null;
 		private boolean isOpen=false;
 		private int itemCount=0;
+		private String collectionType;
 		public CollectionTreeItem(){
 			initWidget(folderContainer=new FlowPanel());
 			folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().foldercollection());
@@ -318,6 +326,7 @@ public abstract class CopyConfirmPopupVc{
 			this.gooruOid=gooruOid;
 			this.setItemCount(itemCount);
 			this.collectionName=folderTitle;
+			this.collectionType = collectionType;
 			folderName.setText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -331,6 +340,9 @@ public abstract class CopyConfirmPopupVc{
 		}
 		public String getCollectionName(){
 			return collectionName;
+		}
+		public String getCollectionType(){
+			return collectionType;
 		}
 		public int getItemCount() {
 			return itemCount;
@@ -460,8 +472,16 @@ public abstract class CopyConfirmPopupVc{
 				chooseCollectionErrorLabel.getElement().setAttribute("alt", i18n.GL0302());
 				chooseCollectionErrorLabel.getElement().setAttribute("title", i18n.GL0302());
 			}else{
-				hideButton(false);
-				copyResourceToCollection(cureentcollectionTreeItem.getGooruOid());
+				if(!QUESTION.equals(getResourceType())&& ASSESSMENT.equals(cureentcollectionTreeItem.getCollectionType())){
+					chooseCollectionErrorLabel.setText("Oops! can copy only questions for Assessments.");
+					copyResourceBtnLbl.setEnabled(false);
+					copyResourceBtnLbl.getElement().addClassName("disabled");
+				}else{
+					hideButton(false);
+					copyResourceBtnLbl.setEnabled(true);
+					copyResourceBtnLbl.getElement().removeClassName("disabled");
+					copyResourceToCollection(cureentcollectionTreeItem.getGooruOid());
+				}
 			}
 		}else{
 			chooseCollectionErrorLabel.setText(i18n.GL1377_1());
@@ -484,6 +504,20 @@ public abstract class CopyConfirmPopupVc{
 		Label loadingText=new Label(i18n.GL1452());
 		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
+	}
+
+	/**
+	 * @return the resourceType
+	 */
+	public String getResourceType() {
+		return resourceType;
+	}
+
+	/**
+	 * @param resourceType the resourceType to set
+	 */
+	public void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
 	}
 
 }

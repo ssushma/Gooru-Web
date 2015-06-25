@@ -747,6 +747,13 @@ button.btn-disabled{
 #gShelfCousesList .tableListOrder{
 	text-align:center;
 }
+#gShelfCousesList .tableListOrder .btnMoveToEdit{
+	width:96px;
+	background: #DDDDDD;
+	border: none;
+	height: 35px;
+	color:#4d99cd;
+}
 #gShelfCousesList .tableListOrder .form-control{
 	height:24px;
 	padding:6px 2px;

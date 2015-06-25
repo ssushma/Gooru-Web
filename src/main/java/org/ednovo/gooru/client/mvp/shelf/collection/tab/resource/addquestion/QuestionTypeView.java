@@ -23,6 +23,7 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
@@ -442,33 +443,35 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 
 		addClickEventsForCheckBox();
+		
+		if(!AppClientFactory.getGooruUid().equalsIgnoreCase(ClientConstants.GOORU_ANONYMOUS)){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+				@Override
+				public void onSuccess(ProfileDo profileObj) {
+					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+							isBrowseTooltip = true;
+							DisableStandars();
+						}else
+						{
+							isBrowseTooltip = false;
+							enableStandards();
+							standardPreflist=new ArrayList<String>();
+							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+								standardPreflist.add(code);
+								standardPreflist.add(code.substring(0, 2));
+							}
 
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
-					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+						}
+					}else{
 						isBrowseTooltip = true;
 						DisableStandars();
-					}else
-					{
-						isBrowseTooltip = false;
-						enableStandards();
-						standardPreflist=new ArrayList<String>();
-						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
-							standardPreflist.add(code);
-							standardPreflist.add(code.substring(0, 2));
-						}
-
 					}
-				}else{
-					isBrowseTooltip = true;
-					DisableStandars();
 				}
-			}
 
-		});
+			});
+		}
 	}
 
 
@@ -2136,6 +2139,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
 					int widgetcount=1;
+					addHotSpotQuestion.textAnsContainer.clear();
 					while (it.hasNext()) {
 						addHotSpotQuestion.setAnswerFields(false);
 						QuestionAnswerDo answer = it.next();

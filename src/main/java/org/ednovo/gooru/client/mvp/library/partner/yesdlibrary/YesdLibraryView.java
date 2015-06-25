@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
@@ -22,36 +23,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.courselist;
+package org.ednovo.gooru.client.mvp.library.partner.yesdlibrary;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- *
+` * 
  */
-public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollectionsListUiHandlers> {
-	/**
-	 * This method is used to set data as list
-	 * @param type
-	 * @param slotPanel
-	 * @param listOfContent
-	 * @param clrPanel
-	 */
-	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
-	/**
-	 * This method is used to reset widgets
-	 */
-	public void resetWidgetPositions();
-	/**
-	 * This method will return the scroll panel
-	 * @return
-	 */
-	public ScrollPanel getScrollPanel();
+public class YesdLibraryView extends BaseViewWithHandlers<YesdLibraryUiHandlers> implements IsYesdLibraryView {
+
+	@UiField SimplePanel partnerPanel;
+	
+	private static YesdLibraryViewUiBinder uiBinder = GWT.create(YesdLibraryViewUiBinder.class);
+
+	interface YesdLibraryViewUiBinder extends UiBinder<Widget, YesdLibraryView> {
+	}
+
+	public YesdLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
+	}
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == YesdLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
+
 }

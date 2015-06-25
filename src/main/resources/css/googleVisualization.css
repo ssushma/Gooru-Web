@@ -637,9 +637,9 @@
 	color: #ccc;
 	font-size: 9px;
 	padding-left: 6px;
-} 
+}
 .google-visualization-table-table .unsorted .google-visualization-table-sortind:after {
-  background-image: url("//127.0.0.1:8888/images/sort_both.png")!important;
+  background-image: url("${cdn.endpoint}/images/sort_both.png")!important;
   content: "\002003";
   background-position: center;
   cursor: pointer;
@@ -754,7 +754,7 @@
 /* New css for the Collection progress table */
 #pnlHtmlpnlProgress{
 	background: white;
-} 
+}
 #example thead tr th{
 	padding: 5px 20px;
 	border-left:1px solid #eee;
