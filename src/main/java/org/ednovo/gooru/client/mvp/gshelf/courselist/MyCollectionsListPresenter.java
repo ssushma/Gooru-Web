@@ -41,6 +41,8 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
+	private ShelfMainPresenter shelfMainPresenter;
+	
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -94,4 +96,18 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	public ScrollPanel getScrollPanel() {
 		return getView().getScrollPanel();
 	}
+
+	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
+		this.shelfMainPresenter=shelfMainPresenter;
+	}
+
+	/**
+	 * @return the shelfMainPresenter
+	 */
+	@Override
+	public ShelfMainPresenter getShelfMainPresenter() {
+		return shelfMainPresenter;
+	}
+	
+	
 }

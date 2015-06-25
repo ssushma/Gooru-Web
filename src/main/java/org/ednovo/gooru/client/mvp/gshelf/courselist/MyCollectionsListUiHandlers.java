@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -77,4 +77,5 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * This method is used to get scrollpanel
 	 */
 	public ScrollPanel getScrollPanel();
+	ShelfMainPresenter getShelfMainPresenter();
 }

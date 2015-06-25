@@ -147,10 +147,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
 			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-			if(view!=null &&(view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
+			if(view!=null && (view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 			}else{
+				btnCreate.setVisible(true);
 				btnCreate.setText("Create Unit");
 				pnlAddContainer.setVisible(true);
 			}
@@ -158,8 +159,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			if(COURSE.equalsIgnoreCase(type)){
 				h2Title.setText(i18n.GL1180());
 			}else if(FOLDER.equalsIgnoreCase(type)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
 				h2Title.setText(i18n.GL0994());
 			}else if(COLLECTION.equalsIgnoreCase(type)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
 				h2Title.setText(i18n.GL3282());
 			}else{
 				pnlH2TitleContainer.setVisible(false);
@@ -214,7 +219,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		public void onClick(ClickEvent event) {
 			Map<String,String> params = new HashMap<String,String>();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
-			//getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
+			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+			getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
 	@Override
@@ -224,8 +230,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				slotPanel.clear();
 				slotPanel.add(content);
 			 }
-		}else{
-
 		}
 	}
 	/**
