@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
+package org.ednovo.gooru.client.mvp.standards;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
@@ -30,11 +30,16 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  * @author Search Team
  *
  */
-public interface LessonInfoUiHandlers extends BaseUiHandlers {
+public interface StandardsPopupUiHandlers extends BaseUiHandlers {
 	/**
 	 * This method will call the taxonomy service method
 	 */
-	public void callTaxonomyService();
 
-	void showStandardsPopup(String standardVal);
+	void callStandardsBasedonTypeService(String standardVal);
+
+	void getFirstLevelObjects(String levelOrder, String standardCodeSelected);
+
+	void getSecondLevelObjects(String levelOrder, String standardCodeSelected);
+
+	void getThirdLevelObjects(String levelOrder, String standardCodeSelected);
 }
