@@ -98,7 +98,7 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
      * @param listOfContent
      * @param title
      */
-	void setRightListData(List<FolderDo> listOfContent);
+	void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo);
     /**
      * Update tree widget as active style.
      */
