@@ -25,7 +25,7 @@
 /**
  *
 */
-package org.ednovo.gooru.client.mvp.test;
+package org.ednovo.gooru.application.client.newhome;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
@@ -50,7 +50,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  *
  * @Reviewer:
  */
-public interface TestUiHandlers extends BaseUiHandlers {
+public interface NewHomeUiHandlers extends BaseUiHandlers {
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();
