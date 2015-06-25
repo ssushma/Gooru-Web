@@ -108,6 +108,4 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	public ShelfMainPresenter getShelfMainPresenter() {
 		return shelfMainPresenter;
 	}
-	
-	
 }

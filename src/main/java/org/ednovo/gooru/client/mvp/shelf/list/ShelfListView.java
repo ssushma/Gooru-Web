@@ -1681,6 +1681,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				TreeItem item = myShelfVerPanel.getItem(i);
 				checkFolderItemStyle(item, gooruOid);
 			}
+			organizeRootPnl.setStyleName(folderStyle.active());
 		} else {
 			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
 			if(treeChildSelectedItem.getState()==false){
