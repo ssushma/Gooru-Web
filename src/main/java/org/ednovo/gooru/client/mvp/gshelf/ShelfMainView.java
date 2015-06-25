@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
+import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -586,4 +587,65 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
    	public String getViewType(){
 		return AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
    	}
+
+	@Override
+	public void updateLeftShelfPanelActiveStyle() {
+		String gooruOid = null;
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget(); 
+		
+		if(shelfTreeWidget==null || organizeRootPnl.getStyleName().contains("active")) {
+			if(id!=null) {
+				gooruOid = id;
+			} else {
+				gooruOid = o1;
+			}
+			for(int i = 0; i < shelfFolderTree.getItemCount(); i++) { 
+				TreeItem item = shelfFolderTree.getItem(i);
+				checkFolderItemStyle(item, gooruOid);
+			}
+		} else {
+			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
+			if(treeChildSelectedItem.getState()==false){
+				treeChildSelectedItem.setState(true);
+			}
+			
+			
+			if(organizeRootPnl.getStyleName().contains("active")) {
+				gooruOid = o1;
+			} else if(shelfTreeWidget.getLevel()==1) {
+				if(id==null){
+					gooruOid = o2;
+				}else{
+					gooruOid = id; 
+				}
+				
+			} else if(shelfTreeWidget.getLevel()==2) {
+				if(id==null){
+					gooruOid = o3;
+				}else{
+					gooruOid = id;
+				}
+			} else if(shelfTreeWidget.getLevel()==3) {
+				gooruOid = id;
+			}
+			for(int i = 0; i < treeChildSelectedItem.getChildCount(); i++) {
+				 TreeItem item = treeChildSelectedItem.getChild(i);
+				 checkFolderItemStyle(item, gooruOid);
+			}
+		}
+	}
+	
+	private void checkFolderItemStyle(TreeItem item, String gooruOid) {
+		ShelfTreeWidget updatedItem = (ShelfTreeWidget) item.getWidget();
+		 if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
+			 treeChildSelectedItem = item;
+			 //updatedItem.setActiveStyle(true);
+			 setFolderActiveStatus();
+			 return;
+		 }
+	}
 }

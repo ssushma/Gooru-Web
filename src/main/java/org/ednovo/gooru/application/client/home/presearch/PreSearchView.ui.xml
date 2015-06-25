@@ -15,28 +15,28 @@
 								    <div class="gradePanel">
 								        <span class="blocksSearch grade">
 											<tbp:PPanel text="{i18n.GL3288}"></tbp:PPanel>
-											<g:HTMLPanel styleName="btn-group">
+											<g:HTMLPanel styleName="btn-group" ui:field="panelGradeGroup">
 												<g:Button ui:field="btnGrades" styleName="btn btn-primary" text="{i18n.GL3289}"></g:Button>
-												<button aria-expanded="false" data-toggle="dropdown"
-													class="btn btn-primary dropdown-toggle" type="button">
+												<g:Button
+													styleName="btn btn-primary dropdown-toggle" ui:field="btnGradesCaret">
 													<span class="caret"></span>
 													<span class="sr-only">Toggle Dropdown</span>
-												</button>
+												</g:Button>
 											    <g:HTMLPanel styleName="dropdown-menu panelGrade" ui:field="panelGrades">
 											    </g:HTMLPanel>
 											</g:HTMLPanel>
 										</span>
-								        <span class="blocksSearch seachRightNavigation">
+								        <span class="blocksSearch subjectContainer">
 											<tbp:PPanel text="{i18n.GL3290}"></tbp:PPanel>
-											<div class="btn-group subject">
+											<g:HTMLPanel styleName="btn-group subject" ui:field="panelSubjectGroup">
 												<g:Button ui:field="btnSubjects" styleName="btn btn-primary" text="{i18n.GL3291}"></g:Button>
-												<button aria-expanded="false" data-toggle="dropdown"
-													class="btn btn-primary dropdown-toggle" type="button">
+												<g:Button ui:field="btnSubjectCaret"
+													styleName="btn btn-primary dropdown-toggle">
 													<span class="caret"></span>
 													<span class="sr-only">Toggle Dropdown</span>
-												</button>
+												</g:Button>
 												<tbp:UlPanel styleName="dropdown-menu" ui:field="ulSubjectPanel"/>
-											</div>
+											</g:HTMLPanel>
 										</span>
 								    </div>
 									<g:InlineLabel ui:field="lblErrorMessage" styleName="errorMessage"></g:InlineLabel>
