@@ -24,15 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -87,7 +83,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("standardsDropListValues.getElement().getAtt::"+standardsDropListValues.getElement().getAttribute("style"));
 				if(!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;"))
 				{
 				standardsDropListValues.getElement().setAttribute("style", "display:block;");
@@ -112,20 +107,36 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		HTMLPanel headerDiv = new HTMLPanel("");
 		if(j==0)
 		{
+		if(standardsDescriptionList.get(j).toString().equalsIgnoreCase("CA CCSS"))
+		{
+			liPanel.getElement().setId("CA");
+		}
+		else
+		{
+			liPanel.getElement().setId(standardsDescriptionList.get(j).toString());
+		}
 		headerDiv.setStyleName("liPanelStyle");
 		}
 		else
 		{
+
+
 		headerDiv.setStyleName("liPanelStylenonBold");	
 		}
 		headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j).toString());
 		liPanel.add(headerDiv);
+
 		}
+		
+		
+
 		liPanel.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {				
-				//standardsDropListValues.setVisible(true);
+				String standardsVal = event.getRelativeElement().getAttribute("id");
+				System.out.println("standardsVal::"+standardsVal);
+				getUiHandlers().showStandardsPopup(standardsVal);
 			}
 		});
 		standardsDropListValues.add(liPanel);

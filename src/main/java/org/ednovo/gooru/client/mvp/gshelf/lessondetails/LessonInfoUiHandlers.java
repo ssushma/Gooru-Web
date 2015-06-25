@@ -35,4 +35,6 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	 * This method will call the taxonomy service method
 	 */
 	public void callTaxonomyService();
+
+	void showStandardsPopup(String standardVal);
 }

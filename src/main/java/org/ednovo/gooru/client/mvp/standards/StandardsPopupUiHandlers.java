@@ -22,35 +22,24 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gsearch.util;
+package org.ednovo.gooru.client.mvp.standards;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-
-
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.HTMLPanel;
-
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team
  *
  */
-public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandlers> {
-	
+public interface StandardsPopupUiHandlers extends BaseUiHandlers {
 	/**
-	 * Update the grade style.
-	 * @param filterName {@link String}
-	 * @param addOrRemove {@link String}
+	 * This method will call the taxonomy service method
 	 */
-	void updateFilterStyle(String filterName, String addOrRemove);
 
-	void showGradesFilter();
+	void callStandardsBasedonTypeService(String standardVal);
 
-	void highlightGradeLevel(String filterName);
-	
-	Label  getGradeHeader();
+	void getFirstLevelObjects(String levelOrder, String standardCodeSelected);
 
-	public void setGradePanel(HTMLPanel panel);
+	void getSecondLevelObjects(String levelOrder, String standardCodeSelected);
 
-
+	void getThirdLevelObjects(String levelOrder, String standardCodeSelected);
 }

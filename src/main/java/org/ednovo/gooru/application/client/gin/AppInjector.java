@@ -290,6 +290,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 
 	AddCenturyPresenter getAddCenturyPresenterWidget();
+	
+	GooruGradesPresenter getGooruGradePresenter();
 
 	SearchAddResourceToCollectionPresenter getRemixPresenterWidget();
 
