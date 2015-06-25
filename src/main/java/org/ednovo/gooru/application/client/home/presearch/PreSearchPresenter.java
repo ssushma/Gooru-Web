@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -87,6 +88,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 	@Override
 	protected void onBind() {
 		super.onBind();
+//		gooruGradesPresenter.setGradePanel(getView().getPanelGrades());
 		setInSlot(GRADES, gooruGradesPresenter);
 	}
 
@@ -138,13 +140,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 							}else{
 								isCAAvailable = false;
 							}
-								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-									addToPopupSlot(addStandardsPresenter);
-									getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-								}
-
-					}
+						}
 					}
 				});
 		}else{
@@ -152,11 +148,12 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 			isNGSSAvailable = true;
 			isCAAvailable = true;
 			isTEKSAvailable = false;
-			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-				addToPopupSlot(addStandardsPresenter);
-				getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-			}
+		}
+		if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+			Window.enableScrolling(false);
+			addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+			addToPopupSlot(addStandardsPresenter);
+			getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
 		}
 
 	}
