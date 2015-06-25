@@ -496,6 +496,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (gradesPanel.isVisible()){
 						gradesPanel.setVisible(false);
 					}
+					if (ulSubjectPanel.isVisible()){
+						ulSubjectPanel.setVisible(false);
+					}
 					if (moreFilterPanel.isVisible()){
 						moreFilterPanel.setVisible(false);
 					}
