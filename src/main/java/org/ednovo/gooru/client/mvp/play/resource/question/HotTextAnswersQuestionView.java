@@ -41,7 +41,9 @@ import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEve
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.RandomIterator;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -74,7 +76,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private List randomSequenceList;
 
 	private boolean isCheckButtonEnabled=true;
-	
+
 	private boolean isCheckAnswerButtonClicked=false;
 
 	String[] correctAnsSequence;
@@ -88,6 +90,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private static String STYLE_DND_CORRECT="dragDropAnsCorrect";
 	private static String STYLE_DND_INCORRECT="dragDropAnsInCorrect";
 	private static String DOT=".";
+	private static String START_CORRECT_DELIMITER="${$";
+	private static String START_DELIMITER="${";
+	private static String END_CORRECT_DELIMITER="$}$";
+	private static String END_DELIMITER="}$";
+	
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
 
@@ -138,83 +145,55 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private void renderQuestionAnswerOptions(){
 
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null){
-			TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
+			final TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
 			List<QuestionAnswerDo> answerListSet=new ArrayList<QuestionAnswerDo>(answersSet);
 
 			if(collectionItemDo.getResource().getType()==8){
 
-				Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
-				while (answersList.hasNext()) {
-					QuestionAnswerDo questionAnswerDo=answersList.next();
-					String text=removeHtmlTags(questionAnswerDo.getAnswerText());
+				if(attemptedAnswerDo!=null){
+					String text=removeHtmlTags(attemptedAnswerDo.getAnswersText());
 					String[] temp;
+					String delimiter;
 					if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-						temp = text.split(" ");
-
-						for(int k=0;k<temp.length;k++){
-
-							final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
-							if(lbl.getText().startsWith("${") && (lbl.getText().endsWith("}$"+SPACE)|| lbl.getText().trim().endsWith("}$"+DOT))){
-								String lblText=lbl.getText().replaceAll("[${}]", "");
-								lbl.setText(lblText);
-								lbl.getElement().setId(STYLE_CORRECT);
-							}else{
-								lbl.getElement().setId(STYLE_INCORRECT);
-							}
-
-							lbl.addStyleName("htPlayerAns");
-							lbl.addClickHandler(new ClickHandler() {
-								@Override
-								public void onClick(ClickEvent event) {
-									clearAnswers();
-
-									if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
-										lbl.removeStyleName(STYLE_HIGHLIGHT);
-									}else{
-
-										lbl.addStyleName(STYLE_HIGHLIGHT);
-									}
-									enableCheckAnswerButton();
-								}
-							});
-							optionsContainerFpnl.add(lbl);
-						}
-					}else{
+						temp = text.split(SPACE);
+						delimiter=SPACE;
+					}else {
 						temp = text.split("\\.");
-						for(int k=0;k<temp.length;k++){
-							if(temp[k].trim().length()>0){
-								final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
-
-								if(lbl.getText().startsWith("${") ||  lbl.getText().startsWith(" ${") ){
-									String lblText=lbl.getText().replaceAll("[${}]", "");
-									lbl.setText(lblText);
-									lbl.getElement().setId(STYLE_CORRECT);
-								}else{
-									String lblText=lbl.getText().replaceAll("[${}]", "");
-									lbl.setText(lblText);
-									lbl.getElement().setId(STYLE_INCORRECT);
-								}
-								lbl.addStyleName("htPlayerAns");
-								lbl.addClickHandler(new ClickHandler() {
-									@Override
-									public void onClick(ClickEvent event) {
-										clearAnswers();
-
-										if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
-											lbl.removeStyleName(STYLE_HIGHLIGHT);
-										}else{
-
-											lbl.addStyleName(STYLE_HIGHLIGHT);
-										}
-										enableCheckAnswerButton();
-									}
-								});
-								optionsContainerFpnl.add(lbl);
-
-							}
-						}
+						delimiter=DOT;
 					}
+					for(int k=0;k<temp.length;k++){
+						final InlineLabel lbl=new InlineLabel(temp[k]+delimiter);
+						if(lbl.getText().startsWith(START_CORRECT_DELIMITER) && (lbl.getText().endsWith(END_CORRECT_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(DOT+END_CORRECT_DELIMITER+SPACE) || lbl.getText().trim().endsWith(END_CORRECT_DELIMITER+DOT))){
+							String lblText=lbl.getText().replaceAll("[${}]", "");
+							lbl.setText(lblText);
+							lbl.getElement().setId(STYLE_CORRECT);
+							lbl.addStyleName(STYLE_HIGHLIGHT);
+						}
+						else if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT))){
+							String lblText=lbl.getText().replaceAll("[${}]", "");
+							lbl.setText(lblText);
+							lbl.getElement().setId(STYLE_INCORRECT);
+							lbl.addStyleName(STYLE_HIGHLIGHT);
+						}
+
+						lbl.addStyleName("htPlayerAns");
+						lbl.addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								optionsContainerFpnl.clear();
+								setRenderAnswers(answersSet);
+								enableCheckAnswerButton();
+							}
+						});
+						optionsContainerFpnl.add(lbl);
+					}
+
+					showPreviousResult();
+
+				}else{
+					setRenderAnswers(answersSet);
 				}
+
 			}else{
 				correctAnsSequence=RandomIterator.getRandomStringArray(answerListSet.size()) ;
 				attemptAnsSequence=new String[answerListSet.size()];
@@ -252,6 +231,86 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 	}
 
+
+
+	public void setRenderAnswers(TreeSet<QuestionAnswerDo> answersSet){
+		Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
+		while (answersList.hasNext()) {
+			QuestionAnswerDo questionAnswerDo=answersList.next();
+
+			String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(StringUtil.isEmpty(questionAnswerDo.getAnswerText())?"":questionAnswerDo.getAnswerText())));
+
+			String[] temp;
+			if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
+				temp = text.split(SPACE);
+
+				for(int k=0;k<temp.length;k++){
+
+					final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
+					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT))){
+						String lblText=lbl.getText().replaceAll("[${}]", "");
+						lbl.setText(lblText);
+						lbl.getElement().setId(STYLE_CORRECT);
+					}else{
+						lbl.getElement().setId(STYLE_INCORRECT);
+					}
+
+					lbl.addStyleName("htPlayerAns");
+					lbl.addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							clearAnswers();
+
+							if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+								lbl.removeStyleName(STYLE_HIGHLIGHT);
+							}else{
+
+								lbl.addStyleName(STYLE_HIGHLIGHT);
+							}
+							enableCheckAnswerButton();
+						}
+					});
+					optionsContainerFpnl.add(lbl);
+				}
+			}else{
+				temp = text.split("\\.");
+				for(int k=0;k<temp.length;k++){
+					if(temp[k].trim().length()>0){
+						final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
+
+						if(lbl.getText().startsWith(START_DELIMITER) ||  lbl.getText().startsWith(" ${") ){
+							String lblText=lbl.getText().replaceAll("[${}]", "");
+							lbl.setText(lblText);
+							lbl.getElement().setId(STYLE_CORRECT);
+						}else{
+							String lblText=lbl.getText().replaceAll("[${}]", "");
+							lbl.setText(lblText);
+							lbl.getElement().setId(STYLE_INCORRECT);
+						}
+						lbl.addStyleName("htPlayerAns");
+						lbl.addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								clearAnswers();
+
+								if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+									lbl.removeStyleName(STYLE_HIGHLIGHT);
+								}else{
+
+									lbl.addStyleName(STYLE_HIGHLIGHT);
+								}
+								enableCheckAnswerButton();
+							}
+						});
+						optionsContainerFpnl.add(lbl);
+
+					}
+				}
+			}
+		}
+	}
+
+
 	public void showPreviousResult(int answerId,HTAnswerChoiceOptionView htAnswerOptionView,boolean isCorrect){
 
 		if(isCorrect){
@@ -260,6 +319,22 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			htAnswerOptionView.addStyleName(STYLE_DND_INCORRECT);
 		}
 
+	}
+
+	public void showPreviousResult(){
+
+		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
+
+			InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
+			if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
+
+				if(lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
+					lbl.addStyleName(STYLE_CORRECT);
+				}else {
+					lbl.addStyleName(STYLE_INCORRECT);
+				}
+			}
+		}
 	}
 
 
@@ -278,9 +353,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		boolean isOptionSelected=false;
 
 		if(collectionItemDo.getResource().getType()==8){
-
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
-
 				InlineLabel widget=(InlineLabel) optionsContainerFpnl.getWidget(i);
 				if(widget.getStyleName().contains(STYLE_HIGHLIGHT)){
 					isOptionSelected=true;
@@ -289,7 +362,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		}else{
 			isOptionSelected=true;
 		}
-
 
 		if(isOptionSelected){
 			isCheckButtonEnabled=true;
@@ -303,7 +375,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void showCorrectResult(){
-		
 
 		if(collectionItemDo.getResource().getType()==9){
 
@@ -313,17 +384,12 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer, Boolean>();
 			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 			int j=0;
-			
+
 			String answerText="";
-			
 			AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-			
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
-
-
 				Element el=(Element) widget.getElement().getLastChild();
-
 				if(widget instanceof Draggable){
 					Draggable draggable=(Draggable)widget;
 					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
@@ -332,10 +398,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					if(i<optionsContainer.getWidgetCount()-2){
 						answerText=answerText+",";
 					}
-					/*AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(htAnswerOption.getAnswerText());
-					answerAttemptDo.setAnswerId(Integer.parseInt(el.getId()));
-					answerAttemptDo.setOrder(el.getId());*/
 					answerIds.add(Integer.parseInt(el.getId()));
 					if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
 
@@ -350,20 +412,16 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							answerAttemptDo.setStatus("0");
 						}
 						j++;
-
-
 					}
-					
 				}
-
 			}
-			
+
 			answerAttemptDo.setText("\""+answerText+"\"");
 			answerAttemptDo.setAnswerId(0);
 			answerAttemptDo.setOrder("0");
-			
+
 			userAttemptedOptionsList.add(answerAttemptDo);
-			
+
 			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
 				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -379,32 +437,94 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			createSesstionItemAttemptForHTDragDrop(answerIds,userAttemptedValueList,attemptStatus);
 			userAttemptedValue(userAttemptedValueList);
 			setAnswerAttemptSequence(1,score,0);
-			
+
 			boolean isFirstTry=isCheckAnswerButtonClicked;
 			isCheckAnswerButtonClicked=true;
-			
+
 			setAnswersDetailsWitithTime(answerIds,HTDragChoiceStatus?1:0,1,score,!isFirstTry);
 
 		}else{
+
+			boolean HTHLChoiceStatus=true;
+			List<Integer> answerIds=new ArrayList<Integer>();
+			List<String> userAttemptedValueList=new ArrayList<String>();
+			Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer, Boolean>();
+			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
+
+			AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+			String answerText="";
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
 				InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
-
+				answerIds.add(i);
 				if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
 
 					if(lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
 						lbl.addStyleName(STYLE_CORRECT);
+						answerOptionResult.put(1, true);
+						answerAttemptDo.setStatus("1");
+						if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
+							answerText=answerText+START_CORRECT_DELIMITER+lbl.getText().trim()+END_CORRECT_DELIMITER+SPACE;
+						}else{
+							String inLblTxt=lbl.getText()+END_CORRECT_DELIMITER+DOT;						
+							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
+								inLblTxt=lbl.getText().replace(DOT, END_CORRECT_DELIMITER+DOT);
+							}
+
+							answerText=answerText+START_CORRECT_DELIMITER+inLblTxt;
+						}
+
 					}else {
 						lbl.addStyleName(STYLE_INCORRECT);
+						answerOptionResult.put(0, true);
+						answerAttemptDo.setStatus("0");
+						HTHLChoiceStatus=false;
+						if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
+							answerText=answerText+START_DELIMITER+lbl.getText().trim()+END_DELIMITER+SPACE;
+						}else{
+
+							String inLblTxt=lbl.getText()+END_DELIMITER+DOT;						
+							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
+								inLblTxt=lbl.getText().replace(DOT, END_DELIMITER+DOT);
+							}
+							answerText=answerText+START_DELIMITER+inLblTxt;
+						}
 					}
+				}else {
+					answerText=answerText+lbl.getText();
 				}
 
 			}
+			userAttemptedValueList.add("["+answerText+"]");
+			answerAttemptDo.setText("\""+answerText+"\"");
+			answerAttemptDo.setAnswerId(0);
+			answerAttemptDo.setOrder("0");
+			userAttemptedOptionsList.add(answerAttemptDo);
+			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
+			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
+				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
+			}
+			attempteAnswersDo.setAnswersText(answerText);
+			attempteAnswersDo.setAnswerOptionResult(answerOptionResult);
+
+			setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
+
+			userAttemptedAnswerObject(userAttemptedOptionsList);
+			increaseUserAttemptCount();
+
+			String attemptStatus=HTHLChoiceStatus==true?"correct":"wrong";
+			int score=HTHLChoiceStatus==true?1:0;
+			createSesstionItemAttemptForHTDragDrop(answerIds,userAttemptedValueList,attemptStatus);
+			userAttemptedValue(userAttemptedValueList);
+			setAnswerAttemptSequence(1,score,0);
+
+			boolean isFirstTry=isCheckAnswerButtonClicked;
+			isCheckAnswerButtonClicked=true;
+
+			setAnswersDetailsWitithTime(answerIds,HTHLChoiceStatus?1:0,1,score,!isFirstTry);
 		}
 
 		isUserAnswerAttempted(true);
-	
-		
 	}
 
 	private void clearAnswers(){
@@ -420,9 +540,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					lbl.removeStyleName(STYLE_INCORRECT);
 				}
 			}
-
 		}
-
 	}
 
 	private void clearReorderAnswers(){
@@ -436,9 +554,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				el.removeClassName(STYLE_DND_CORRECT);
 				el.removeClassName(STYLE_DND_INCORRECT);
 			}
-
 		}
-
 	}
 
 	/**
@@ -471,7 +587,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	public abstract void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId);
 	public void isUserAnswerAttempted(boolean isUserAttemptedResult){}
 	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){}
-	
+
 	public abstract void increaseUserAttemptCount();
 	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
 	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);

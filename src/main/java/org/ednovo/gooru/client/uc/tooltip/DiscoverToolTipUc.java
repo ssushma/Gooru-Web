@@ -314,8 +314,8 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 		publicPartners.put(i18n.GL1898(),PlaceTokens.SAUSD_LIBRARY);
 		publicPartners.put(i18n.GL2057(),PlaceTokens.SUSD);
 		publicPartners.put(i18n.GL2060(),PlaceTokens.VALVERDE);
-		publicPartners.put(i18n.GL3290_1(),PlaceTokens.YCGL_LIBRARY);
-		publicPartners.put("Yuma Elementary School District ONE",PlaceTokens.YESD_LIBRARY);
+		/*publicPartners.put(i18n.GL3290_1(),PlaceTokens.YCGL_LIBRARY);
+		publicPartners.put("Yuma Elementary School District ONE",PlaceTokens.YESD_LIBRARY);*/
 		return publicPartners;
 	}
 }

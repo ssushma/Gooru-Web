@@ -2492,7 +2492,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     					int count=0;
     					for(int k=0;k<temp.length;k++){
     						if(temp[k].contains("${") || temp[k].contains("}$")){
-    							if((temp[k].startsWith("${") || temp[k].startsWith(" ${")) &&(temp[k].endsWith("}$") || temp[k].endsWith("}$.")) && temp[k].trim().length()>0){
+    							if((temp[k].startsWith("${") || temp[k].startsWith("&nbsp;${") || temp[k].startsWith(" ${")) &&(temp[k].endsWith("}$") || temp[k].endsWith("}$.")) && temp[k].trim().length()>0){
     								isCorrect=true;
     								count=count+1;
     							}else{
