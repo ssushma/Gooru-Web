@@ -90,9 +90,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	private HandlerRegistration handlerRegistration=null;
 
-	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard,btnLearnAboutApproach;
+	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard,btnLearnAboutApproach, btnGradesCaret, btnSubjectCaret;
 	@UiField Anchor ancLogin, lblSampleReports;
-	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup;
+	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup;
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
 	@UiField InlineLabel lblErrorMessage;
@@ -119,8 +119,13 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		btnStudentSignUp.setText(i18n.GL0186());
 
 		StringUtil.setAttributes(btnStudentSignUp.getElement(), "btnStudentSignUp", i18n.GL0186(), i18n.GL0186());
-
 		StringUtil.setAttributes(btnLearnAboutApproach.getElement(), "btnLearnAboutApproach", i18n.GL3315(), i18n.GL3315());
+
+		btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
+		btnGradesCaret.getElement().setAttribute("data-toggle", "dropdown");
+
+		btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
+		btnSubjectCaret.getElement().setAttribute("data-toggle", "dropdown");
 
 		panelGrades.setVisible(false);
 
@@ -150,11 +155,33 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	@UiHandler("btnGrades")
 	public void onClickGrades(ClickEvent event){
 		setGradeVisibility();
+		if (ulSubjectPanel.isVisible()){
+			setSubjectVisibility();
+		}
+	}
+
+	@UiHandler("btnGradesCaret")
+	public void onClickGradeCaret(ClickEvent event){
+		setGradeVisibility();
+		if (ulSubjectPanel.isVisible()){
+			setSubjectVisibility();
+		}
 	}
 
 	@UiHandler("btnSubjects")
 	public void onClickSubject(ClickEvent event){
 		setSubjectVisibility();
+		if (panelGrades.isVisible()){
+			setGradeVisibility();
+		}
+	}
+
+	@UiHandler("btnSubjectCaret")
+	public void onClickSubjectCaret(ClickEvent event){
+		setSubjectVisibility();
+		if (panelGrades.isVisible()){
+			setGradeVisibility();
+		}
 	}
 
 	@UiHandler("lblSampleReports")
@@ -349,10 +376,16 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 */
 	private void setGradeVisibility(){
+		lblErrorMessage.setVisible(false);
+
 		if (panelGrades.isVisible()){
 			panelGrades.getElement().getStyle().setDisplay(Display.NONE);
+			btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
+			panelGradeGroup.getElement().removeClassName("open");
 		}else{
 			panelGrades.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			btnGradesCaret.getElement().setAttribute("aria-expanded", "true");
+			panelGradeGroup.getElement().addClassName("open");
 		}
 	}
 	/**
@@ -375,10 +408,16 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 */
 	private void setSubjectVisibility(){
+		lblErrorMessage.setVisible(false);
+
 		if (ulSubjectPanel.isVisible()){
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+			btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
+			panelSubjectGroup.getElement().removeClassName("open");
 		}else{
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			btnSubjectCaret.getElement().setAttribute("aria-expanded", "true");
+			panelSubjectGroup.getElement().addClassName("open");
 		}
 	}
 
@@ -465,6 +504,25 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		}
 	};
 
+	/**
+	 *
+	 * @function displaySelectedGrades
+	 *
+	 * @created_date : 24-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param addOrRemove
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	private void displaySelectedGrades(String addOrRemove) {
 		int count=0;
 		StringBuffer selectedGrade = new StringBuffer();
@@ -489,7 +547,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    if ("add".equalsIgnoreCase(addOrRemove)){
 	    	btnGrades.getElement().addClassName("ellipsis");
 	    }else{
-	    	btnGrades.getElement().removeClassName("ellipsis");
+	    	if (selectedGrades.size() <= 2){
+	    		btnGrades.getElement().removeClassName("ellipsis");
+	    	}
 	    }
 	}
 	/**
@@ -569,7 +629,25 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			});
 		}
 	}
-
+	/**
+	 *
+	 * @function displaySelectedSbujects
+	 *
+	 * @created_date : 24-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param action
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	private void displaySelectedSbujects(String action) {
 		int count=0;
 		StringBuffer selectedSubject = new StringBuffer();
@@ -594,7 +672,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    if ("add".equalsIgnoreCase(action)){
 	    	btnSubjects.getElement().addClassName("ellipsis");
 	    }else{
-	    	btnSubjects.getElement().removeClassName("ellipsis");
+	    	if (selectedSubjects.size() <= 2){
+	    		btnSubjects.getElement().removeClassName("ellipsis");
+	    	}
 	    }
 	}
 
@@ -685,6 +765,29 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		lblErrorMessage.setVisible(false);
 		btnGrades.setText(i18n.GL3289());
 		btnSubjects.setText(i18n.GL3291());
+	}
+
+	private void parseSelectedGrades(String selected){
+
+		if ("pre-k".equalsIgnoreCase(selected)){
+
+		}else if ("higher ed".equalsIgnoreCase(selected)){
+
+		}else{
+			if ("k".equalsIgnoreCase(selected)){
+
+			}else{
+				int grade = Integer.parseInt(selected.replaceAll("Grade", "").trim());
+				if (grade <= 5){
+
+				}else if (grade > 5 && grade <= 8){
+
+				}else {
+
+				}
+			}
+		}
+
 	}
 
 }
