@@ -220,7 +220,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			Map<String,String> params = new HashMap<String,String>();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
-			getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
+			getUiHandlers().getShelfMainPresenter().setRightPanelData(folderObj, folderObj.getCollectionType());
+			//getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
 	@Override
