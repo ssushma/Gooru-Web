@@ -342,6 +342,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	@Override
 	public Label getGradeHeader(){
 		return gradeHeader;
+	}
 
 	@Override
 	public void setGradePanel(HTMLPanel panel) {
