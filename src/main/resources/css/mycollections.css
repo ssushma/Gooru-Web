@@ -747,6 +747,13 @@ button.btn-disabled{
 #gShelfCousesList .tableListOrder{
 	text-align:center;
 }
+#gShelfCousesList .tableListOrder .btnMoveToEdit{
+	width:96px;
+	background: #DDDDDD;
+	border: none;
+	height: 35px;
+	color:#4d99cd;
+}
 #gShelfCousesList .tableListOrder .form-control{
 	height:24px;
 	padding:6px 2px;
@@ -1259,6 +1266,28 @@ button.btn-disabled {
 /* === For Lesson info Css start ================================== */
 #pnlLessonInfo .floderRightContainer .courseHeader {
 	background:#f0f0f0;
+}
+#pnlLessonInfo .gliphIconImage {
+  background: url("../images/gridicon.png") no-repeat scroll 0 0 transparent;
+  width: 11px;
+  height: 12px;
+}
+#pnlLessonInfo li:hover{
+background: none repeat scroll 0% 0% rgb(195, 221, 238);
+}
+#pnlLessonInfo .liPanelStyle
+{
+text-align: left;
+font-weight: bold;
+padding-left: 10px;
+font-size: 9pt;
+}
+#pnlLessonInfo .liPanelStylenonBold
+{
+text-align: left;
+padding-left: 10px;
+font-size: 9pt;
+padding-bottom: 10px;
 }
 
 #pnlLessonInfo .courseNameBlock{

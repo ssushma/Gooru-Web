@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -75,6 +76,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	public static final String ADD = "add";
 	
 	public static final String REMOVE = "remove";
+	
+	HTMLPanel gradePanelWidget;
 	
 	String[] elementaryGrades = new String[]{i18n.GL2076(),i18n.GL3071(),i18n.GL3072(),i18n.GL3073(),i18n.GL3074(),i18n.GL3075(),i18n.GL3076()};
 	String[] middleGrades = new String[]{i18n.GL0167(),i18n.GL3077(),i18n.GL3078(),i18n.GL3079()};
@@ -140,9 +143,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 							lblGrade.getElement().getStyle().setBackgroundColor("#1076bb");
 						}
 					}
-					
+					gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
 				}
-
 			});
 		}
 	}
@@ -266,8 +268,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, ADD));
 				liPanel.getWidget(0).getElement().getStyle().setBackgroundColor("#1076bb");
 			}
+			gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
 	}
 	/**
 	 * Highlight gradeLevel if select all grades of particular gradeArray.
@@ -333,7 +335,6 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 						((LiPanel) liwidget).getWidget(0).getElement().getStyle().clearBackgroundColor();
 					}
 				}
-
 			}
 		}
 	}
@@ -341,5 +342,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	@Override
 	public Label getGradeHeader(){
 		return gradeHeader;
+
+	@Override
+	public void setGradePanel(HTMLPanel panel) {
+		gradePanelWidget=panel;
 	}
 }

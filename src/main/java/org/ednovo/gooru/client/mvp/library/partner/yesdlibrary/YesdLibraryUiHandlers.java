@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,38 +23,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.content;
+package org.ednovo.gooru.client.mvp.library.partner.yesdlibrary;
+
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+
+public interface YesdLibraryUiHandlers extends BaseUiHandlers {
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
 
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-@JsonInclude(Include.NON_NULL)
-public class CollectionHTQuestionItemDo implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private String hlType;
-	private boolean singleCorrectAnswer;
-	public String getHlType() {
-		return hlType;
-	}
-	public boolean isSingleCorrectAnswer() {
-		return singleCorrectAnswer;
-	}
-	public void setHlType(String hlType) {
-		this.hlType = hlType;
-	}
-	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
-		this.singleCorrectAnswer = singleCorrectAnswer;
-	}
-	
-	
-	
-	
 }

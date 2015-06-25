@@ -63,6 +63,7 @@ public interface PlaceTokens {
 	String CLASSHOME = "myclasseshome";
 	String PROFILE_PAGE = "profilepage";
 	String RUSD_LIBRARY = "rusd";
+	String YCGL_LIBRARY = "ycgl";
 
 	String DEVICE_NOT_SUPPORTED = "not-supported";
 
@@ -87,6 +88,7 @@ public interface PlaceTokens {
 	String VALVERDE = "valverde";
 	String DISCOVER = "community";
 	String CORE_LIBRARY = "CoreLibrary";
+	String YESD_LIBRARY = "YESD1";
 	String ESYP = "ESYP";
 	String CCST_Cal_TAC = "CCSTCalTAC";
 	String LUSD = "lusd";

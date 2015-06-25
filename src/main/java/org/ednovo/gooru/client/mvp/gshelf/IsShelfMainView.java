@@ -58,4 +58,8 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	 * @param isLeftScroll
 	 */
 	public void executeScroll(boolean isLeftScroll);
+    /**
+     * Update the tree widget as active style
+     */
+	void updateLeftShelfPanelActiveStyle();
 }

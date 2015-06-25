@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -50,4 +51,14 @@ public interface TaxonomyService extends BaseService {
 	 * @throws GwtException
 	 */
 	List<LibraryCodeDo> getCourse() throws GwtException, ServerDownException;
+	/**
+	 * This method is used for to get all subjects based on the id , if we are passing any subject id along with the type it will return the 
+	 * related courses and domains.
+	 * @param id
+	 * @param type
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	List<CourseSubjectDo> getSubjectsList(int id,String type,int offset,int limit) throws GwtException, ServerDownException;
 }

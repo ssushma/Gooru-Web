@@ -24,7 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.client.home.presearch;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
+
+import com.google.gwt.user.client.ui.Button;
 /**
  *
  * @fileName : IsViewMorePeopleView.java
@@ -43,5 +49,109 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 public interface IsPreSearchView extends IsViewWithHandlers<PreSearchUiHandlers>{
 
 
+	/**
+	 *
+	 * @function setButtonVisibility
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	void setButtonVisibility();
+
+	/**
+	 *
+	 * @function OnStandardsClickEvent
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param addBtn
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void OnStandardsClickEvent(Button addBtn);
+
+	/**
+	 *
+	 * @function setUpdatedStandards
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param standsListArray
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void setUpdatedStandards(List<Map<String, String>> standsListArray);
+
+	/**
+	 *
+	 * @function setSearchFilter
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param searchFilterDo
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void setSearchFilter(SearchFilterDo searchFilterDo);
+
+	/**
+	 *
+	 * @function setDefaults
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void setDefaults();
+
 }

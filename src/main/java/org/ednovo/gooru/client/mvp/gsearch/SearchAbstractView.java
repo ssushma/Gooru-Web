@@ -406,7 +406,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
         		if (ulDropdown !=null && ulDropdown.isVisible()){
         			ulDropdown.setVisible(false);
         		}
-//        		btnSearchType.setVisible(false);
         	}
     	}
 	}
@@ -414,7 +413,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return ulDropdown.getElement().isOrHasChild(Element.as(target))||btnSearchType.getElement().isOrHasChild(Element.as(target));
+			//gradesPanel.getElement().isOrHasChild(Element.as(target)) || gradesDropDown.getElement().isOrHasChild(Element.as(target)) ||
+			return  ulDropdown.getElement().isOrHasChild(Element.as(target))||btnSearchType.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}

@@ -233,7 +233,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBannerStaticImages() {
 		bannerVal= new HashMap<String, List<String>>();
 		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px no-repeat;",i18n.GL0532(),Constants.RUSD_LOGO));
+		
+		bannerVal.put(PlaceTokens.YCGL_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px no-repeat;",i18n.GL0532(),Constants.RUSD_LOGO));
+		
 		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png) no-repeat;",i18n.GL2108(),Constants.CORE_LOGO));
+		
+		bannerVal.put(PlaceTokens.YESD_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-yesd.png) no-repeat; background-position: center center;","Yuma Country Library",""));
+		
 		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-rusd_purple.png) no-repeat;",i18n.GL2053(), Constants.LPS_LOGO));
 		bannerVal.put(PlaceTokens.LUSD, Arrays.asList("background: url(../images/library/district/landing-image-lusd.png) 0px 0px no-repeat;background-size: auto 130% !important;",i18n.GL2181(), Constants.LUSD_LOGO));
 		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -50px no-repeat;background-size: auto 128% !important;height: 220px; margin-top: -12px;",i18n.GL2061(), Constants.VALVERDE_LOGO));

@@ -130,7 +130,7 @@ public class TestPresenter extends BasePlacePresenter<IsTestView, IsEditClasspag
 
 
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.TEST)
+	@NameToken(PlaceTokens.HOME)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsTestProxy extends ProxyPlace<TestPresenter> {
 	}

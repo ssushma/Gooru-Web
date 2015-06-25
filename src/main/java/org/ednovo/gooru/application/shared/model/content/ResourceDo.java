@@ -31,7 +31,6 @@ import java.util.TreeSet;
 
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.application.shared.util.ResourceImageUtil;
-import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -127,7 +126,8 @@ public class ResourceDo extends ContentDo {
 
 	private String url;
 
-	private CollectionHTQuestionItemDo attributes;
+	private String hlType;
+	private boolean singleCorrectAnswer;
 
 	public List<String> getPublisher() {
 		return publisher;
@@ -579,12 +579,6 @@ public class ResourceDo extends ContentDo {
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
-	public CollectionHTQuestionItemDo getAttributes() {
-		return attributes;
-	}
-	public void setAttributes(CollectionHTQuestionItemDo attributes) {
-		this.attributes = attributes;
-	}
 
 	public String getThumbnail() {
 		return thumbnail;
@@ -604,4 +598,18 @@ public class ResourceDo extends ContentDo {
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
+	public String getHlType() {
+		return hlType;
+	}
+	public boolean isSingleCorrectAnswer() {
+		return singleCorrectAnswer;
+	}
+	public void setHlType(String hlType) {
+		this.hlType = hlType;
+	}
+	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
+		this.singleCorrectAnswer = singleCorrectAnswer;
+	}
+	
+	
 }

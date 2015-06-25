@@ -130,26 +130,26 @@ public abstract class NewClassPopupView extends AppPopUp {
 		btnCancel.getElement().setAttribute("alt",i18n.GL0142());
 		btnCancel.getElement().setAttribute("title",i18n.GL0142());*/
 		
-		anyonwwithLink.getElement().setInnerText(i18n.GL3321());
-		anyonwwithLinkTxt.getElement().setInnerText(i18n.GL3322());
-		privateLbl.getElement().setInnerText(i18n.GL3323());
-		privateLblTxt.getElement().setInnerText(i18n.GL3324());
+		anyonwwithLink.getElement().setInnerText(i18n.GL3338());
+		anyonwwithLinkTxt.getElement().setInnerText(i18n.GL3339());
+		privateLbl.getElement().setInnerText(i18n.GL3340());
+		privateLblTxt.getElement().setInnerText(i18n.GL3341());
 		
 
-		titlePanel.getElement().setInnerText(i18n.GL3320());
+		titlePanel.getElement().setInnerText(i18n.GL3337());
 		titlePanel.getElement().setId("pnlTitle");
-		titlePanel.getElement().setAttribute("alt",i18n.GL3320());
-		titlePanel.getElement().setAttribute("title",i18n.GL3320());
+		titlePanel.getElement().setAttribute("alt",i18n.GL3337());
+		titlePanel.getElement().setAttribute("title",i18n.GL3337());
 		
 		gradePanel.getElement().setInnerText(i18n.GL0325());
 		gradePanel.getElement().setId("pnlGrade");
 		gradePanel.getElement().setAttribute("alt",i18n.GL0325());
 		gradePanel.getElement().setAttribute("title",i18n.GL0325());
 		
-		visiblityPanel.getElement().setInnerText(i18n.GL3325());
+		visiblityPanel.getElement().setInnerText(i18n.GL3342());
 		visiblityPanel.getElement().setId("pnlVisiblity");
-		visiblityPanel.getElement().setAttribute("alt",i18n.GL3325());
-		visiblityPanel.getElement().setAttribute("title",i18n.GL3325());
+		visiblityPanel.getElement().setAttribute("alt",i18n.GL3342());
+		visiblityPanel.getElement().setAttribute("title",i18n.GL3342());
 		
 
 		headerPanel.getElement().setInnerText(i18n.GL1771());

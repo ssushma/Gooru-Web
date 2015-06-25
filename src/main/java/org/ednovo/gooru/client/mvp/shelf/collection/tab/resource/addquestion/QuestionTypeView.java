@@ -23,6 +23,7 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
@@ -46,7 +47,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -443,33 +443,35 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 
 		addClickEventsForCheckBox();
+		
+		if(!AppClientFactory.getGooruUid().equalsIgnoreCase(ClientConstants.GOORU_ANONYMOUS)){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+				@Override
+				public void onSuccess(ProfileDo profileObj) {
+					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+							isBrowseTooltip = true;
+							DisableStandars();
+						}else
+						{
+							isBrowseTooltip = false;
+							enableStandards();
+							standardPreflist=new ArrayList<String>();
+							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+								standardPreflist.add(code);
+								standardPreflist.add(code.substring(0, 2));
+							}
 
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
-					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+						}
+					}else{
 						isBrowseTooltip = true;
 						DisableStandars();
-					}else
-					{
-						isBrowseTooltip = false;
-						enableStandards();
-						standardPreflist=new ArrayList<String>();
-						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
-							standardPreflist.add(code);
-							standardPreflist.add(code.substring(0, 2));
-						}
-
 					}
-				}else{
-					isBrowseTooltip = true;
-					DisableStandars();
 				}
-			}
 
-		});
+			});
+		}
 	}
 
 
@@ -1767,6 +1769,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
 			HashMap<String,ArrayList<QuestionAnswerDo>> answerMap = new HashMap<String,ArrayList<QuestionAnswerDo>>();
 			HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
+			
+			ArrayList<String> answerImageIds=new ArrayList<String>();
+			
 			if(questionType.equalsIgnoreCase("HS")){
 
 				AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
@@ -1778,7 +1783,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					{
 						QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
 						final AddAnswerImg ansImage=(AddAnswerImg)addQuestionAnswerChoice.ansImageContainer.getWidget(i);
-
+						answerImageIds.add(ansImage.getFileName());
 						questionAnswerDo.setAnswerText(ansImage.getFileName());
 						questionAnswerDo.setAnswerType(hsType);
 						questionAnswerDo.setSequence(i+1);
@@ -1833,10 +1838,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
 			if(questionType.equalsIgnoreCase("HS")){
-				CollectionHTQuestionItemDo HSObj=new CollectionHTQuestionItemDo();
-				HSObj.setHlType(hsType);
-				HSObj.setSingleCorrectAnswer(false);
-				collectionQuestionItemDo.setAttributes(HSObj);
+				collectionQuestionItemDo.setHlType(hsType);
+				collectionQuestionItemDo.setSingleCorrectAnswer(false);
+				if(hsType.equalsIgnoreCase(i18n.GL3228_1())){
+				collectionQuestionItemDo.setMedia_files(answerImageIds);
+				}
 			}
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
@@ -2127,9 +2133,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
 
-				if(collectionItemDo.getResource().getAttributes()!=null){
+				if(collectionItemDo.getResource()!=null){
 				
-				String HsType=	collectionItemDo.getResource().getAttributes().getHlType();
+				String HsType=	collectionItemDo.getResource().getHlType();
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
 					int widgetcount=1;
