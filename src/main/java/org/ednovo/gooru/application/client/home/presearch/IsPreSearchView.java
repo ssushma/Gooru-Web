@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
 
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 /**
  *
  * @fileName : IsViewMorePeopleView.java
@@ -153,5 +154,26 @@ public interface IsPreSearchView extends IsViewWithHandlers<PreSearchUiHandlers>
 	 *
 	 */
 	void setDefaults();
+
+	/**
+	 *
+	 * @function getPanelGrades
+	 *
+	 * @created_date : 25-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : HTMLPanel
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	HTMLPanel getPanelGrades();
 
 }
