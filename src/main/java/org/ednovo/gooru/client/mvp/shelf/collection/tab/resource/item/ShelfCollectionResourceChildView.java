@@ -1541,7 +1541,8 @@ public class ShelfCollectionResourceChildView extends
 			}
 		} else {
 			disableAllEditMode();
-			copyConfirmPopupVc = new CopyConfirmPopupVc() {
+			copyConfirmPopupVc = new CopyConfirmPopupVc(collectionItemDo.getResource().getCategory()) {
+				
 				@Override
 				public void populateUserCollections() {
 					pageNumber=1;
