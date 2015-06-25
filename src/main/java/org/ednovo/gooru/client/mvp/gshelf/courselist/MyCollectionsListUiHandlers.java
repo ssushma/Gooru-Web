@@ -47,7 +47,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param clrPanel
 	 * @param isInnerSlot
 	 */
-	public void setData(String type,HTMLPanel slotPane,List<FolderDo> result,boolean clrPanel,boolean isInnerSlot);
+	public void setData(String type,HTMLPanel slotPane,List<FolderDo> result,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
 	/**
 	 * This method is used to set type of presenter based on the type
 	 * @param type

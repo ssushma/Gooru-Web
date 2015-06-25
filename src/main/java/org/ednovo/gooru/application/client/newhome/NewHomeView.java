@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.ednovo.gooru.client.mvp.test;
+package org.ednovo.gooru.application.client.newhome;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
@@ -30,15 +30,15 @@ import com.google.inject.Inject;
  *
  * @Reviewer:
  */
-public class TestView extends
-		BaseViewWithHandlers<TestUiHandlers> implements
-		IsTestView, ClickHandler{
+public class NewHomeView extends
+		BaseViewWithHandlers<NewHomeUiHandlers> implements
+		IsNewHomeView, ClickHandler{
 
-	private static TextViewUiBinder uiBinder = GWT
-			.create(TextViewUiBinder.class);
+	private static NewHomeUiBinder uiBinder = GWT
+			.create(NewHomeUiBinder.class);
 
-	interface TextViewUiBinder extends
-			UiBinder<Widget, TestView> {
+	interface NewHomeUiBinder extends
+			UiBinder<Widget, NewHomeView> {
 
 	}
 
@@ -46,7 +46,7 @@ public class TestView extends
 
 
 	@Inject
-	public TestView() {
+	public NewHomeView() {
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -57,9 +57,9 @@ public class TestView extends
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		if (slot  == TestPresenter.BANNER_SLOT){
+		if (slot  == NewHomePresenter.BANNER_SLOT){
 			panelBannerImage.add(content);
-		}else if (slot == TestPresenter.PRESEARCH_SLOT){
+		}else if (slot == NewHomePresenter.PRESEARCH_SLOT){
 			panelPreSearch.add(content);
 		}
 	}

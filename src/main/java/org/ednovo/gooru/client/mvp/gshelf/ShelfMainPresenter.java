@@ -271,9 +271,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 					if(o1==null){
 						if(clrPanel){
-							setRightListData(result.getSearchResult());
+							setRightListData(result.getSearchResult(),null);
 						}else{
-							myCollectionsListPresenter.setData(type,getView().getSlot(),result.getSearchResult(),clrPanel,false);
+							myCollectionsListPresenter.setData(type,getView().getSlot(),result.getSearchResult(),clrPanel,false,null);
 						}
 					}
 					getView().setUserShelfData(result.getSearchResult(),clrPanel);
@@ -313,10 +313,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	
 	@Override
-	public void setRightListData(List<FolderDo> listOfContent){
+	public void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo){
 		clearSlot(RIGHT_SLOT);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-		myCollectionsListPresenter.setData(view,getView().getSlot(),listOfContent,clrPanel,false);
+		myCollectionsListPresenter.setData(view,getView().getSlot(),listOfContent,clrPanel,false,folderDo);
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
 	}
 

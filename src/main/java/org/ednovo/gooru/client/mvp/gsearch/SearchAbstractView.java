@@ -406,9 +406,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
         		if (ulDropdown !=null && ulDropdown.isVisible()){
         			ulDropdown.setVisible(false);
         		}
-        		if (gradesPanel != null && gradesPanel.isVisible()){
-        			gradesPanel.setVisible(false);
-        		}
         	}
     	}
 	}
@@ -498,6 +495,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					isClickedOnDropDwn=true;
 					if (gradesPanel.isVisible()){
 						gradesPanel.setVisible(false);
+					}
+					if (ulSubjectPanel.isVisible()){
+						ulSubjectPanel.setVisible(false);
 					}
 					if (moreFilterPanel.isVisible()){
 						moreFilterPanel.setVisible(false);
