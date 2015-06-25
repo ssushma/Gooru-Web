@@ -138,7 +138,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot) {
+	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
@@ -161,11 +161,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
-				h2Title.setText(i18n.GL0994());
+				if(folderDo!=null){
+					h2Title.setText(folderDo.getTitle()+" "+i18n.GL3336());
+				}else{
+					h2Title.setText(i18n.GL0994());
+				}
 			}else if(COLLECTION.equalsIgnoreCase(type)){
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
-				h2Title.setText(i18n.GL3282());
+				if(folderDo!=null){
+					h2Title.setText(folderDo.getTitle()+" "+i18n.GL3336());
+				}else{
+					h2Title.setText(i18n.GL3282());
+				}
 			}else{
 				pnlH2TitleContainer.setVisible(false);
 				pnlCreateContainer.setVisible(true);
@@ -220,7 +228,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			Map<String,String> params = new HashMap<String,String>();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
-			getUiHandlers().setRightClusterPresenterBasedOnType("Unit",slotPanel,folderObj);
 		}
 	}
 	@Override
