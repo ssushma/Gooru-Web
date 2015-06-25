@@ -35,7 +35,6 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -596,8 +595,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget(); 
-		
-		if(shelfTreeWidget==null || organizeRootPnl.getStyleName().contains("active")) {
+		if(shelfTreeWidget==null || !organizeRootPnl.getStyleName().contains("active")) {
 			if(id!=null) {
 				gooruOid = id;
 			} else {
@@ -607,14 +605,13 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				TreeItem item = shelfFolderTree.getItem(i);
 				checkFolderItemStyle(item, gooruOid);
 			}
+			organizeRootPnl.setStyleName("active");
 		} else {
 			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
 			if(treeChildSelectedItem.getState()==false){
 				treeChildSelectedItem.setState(true);
 			}
-			
-			
-			if(organizeRootPnl.getStyleName().contains("active")) {
+			if(!organizeRootPnl.getStyleName().contains("active")) {
 				gooruOid = o1;
 			} else if(shelfTreeWidget.getLevel()==1) {
 				if(id==null){
