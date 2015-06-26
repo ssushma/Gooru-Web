@@ -84,7 +84,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer;
 	
-	@UiField HTMLEventPanel organizeRootPnl,createNewPnl;
+	@UiField HTMLEventPanel organizeRootPnl,createNewCourse;
 	
 	@UiField Button btnSelectedText;
 	
@@ -223,7 +223,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		btnSelectedText.getElement().setId("btnSelectedText");
 		lnkMyCourses.getElement().setId("lnkMyCourses");
 		lnkMyFoldersAndCollecctions.getElement().setId("lnkMyFoldersAndCollecctions");
-		StringUtil.setAttributes(createNewPnl.getElement(), "createNew", "createNew", "createNew");
+		StringUtil.setAttributes(createNewCourse.getElement(), "createNew", "createNew", "createNew");
 		StringUtil.setAttributes(organizeRootPnl.getElement(), "organizeRootPnl", "", "");
 		StringUtil.setAttributes(organizelbl.getElement(), "organizelbl", "", "");
 		StringUtil.setAttributes(collectionListScrollpanel.getElement(), "FoldersListScrollpanel", "", "");
@@ -520,13 +520,18 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
 	
-	@UiHandler("createNewPnl")
+	@UiHandler("createNewCourse")
 	public void createNewCourseOrCollection(ClickEvent event) {
-		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 1);
-		TreeItem treeItem = new TreeItem(shelfTreeWidget);
-		//shelfTreeWidget.setWidgetPositions(1, 0, null);
-		shelfFolderTree.insertItem(0, treeItem);
-		correctStyle(treeItem);
+		if(FOLDER!=getViewType()){
+			ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 1);
+			TreeItem treeItem = new TreeItem(shelfTreeWidget);
+			//shelfTreeWidget.setWidgetPositions(1, 0, null);
+			shelfFolderTree.insertItem(0, treeItem);
+			FolderDo folderObj = new FolderDo();
+			folderObj.setTitle("UntitleCourse");
+			getUiHandlers().setRightPanelData(folderObj, COURSE);
+			correctStyle(treeItem);
+		}
 	}
 	
 	/**

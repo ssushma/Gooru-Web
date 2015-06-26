@@ -68,7 +68,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	
 	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
-	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
+	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl,userInfo;
 	@UiField Frame downloadFile;
 	
 	AnalyticsTabContainer individualTabContainer;
@@ -119,7 +119,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			
 			@Override
 			public void onSuccess() {
-
+				userInfo.setVisible(false);
 				StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 				StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
 				StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
@@ -147,6 +147,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		individualScoredDatapnl.setVisible(false);
 		individualOpenendedData.setVisible(false);
 		individualResourceBreakdownDatapnl.setVisible(false);
+		userInfo.setVisible(false);
 	}
 	/**
 	 * Default method for initialization
@@ -166,6 +167,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						}else if(OPENENDED.equalsIgnoreCase(tabClicked)){
 							hideAllPanels();
 							individualOpenendedData.setVisible(true);
+							userInfo.setVisible(true);
 						}else if(BREAKDOWN.equalsIgnoreCase(tabClicked)){
 							hideAllPanels();
 							individualResourceBreakdownDatapnl.setVisible(true);

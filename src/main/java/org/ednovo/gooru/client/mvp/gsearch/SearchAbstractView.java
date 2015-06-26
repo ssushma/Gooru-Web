@@ -137,7 +137,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField Button btnSearchType;
 
-	@UiField HTMLPanel ulDropdown;
+	@UiField HTMLPanel ulDropdown, panelBorderBox;
 
 	@UiField
 	PPanel panelNotMobileFriendly,accessModePanel,reviewPanelUc;
@@ -665,8 +665,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.setVisible(true);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
+			panelBorderBox.getElement().getStyle().clearBackgroundColor();
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
-			searchResults.setText(i18n.GL3275()+" "+ searchDo.getQuery() +" ("+searchDo.getSearchHits()+")");
+			if(searchDo.getQuery() != null && !searchDo.getQuery().equalsIgnoreCase("*")){
+				searchResults.setText(i18n.GL3257()+"  "+searchDo.getQuery()+"  "+"("+searchDo.getSearchHits()+")");
+			}else{
+				searchResults.setText(i18n.GL3275()+"  "+"("+searchDo.getSearchHits()+")");
+			}
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
@@ -702,6 +707,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			searchResults.setVisible(true);
 			searchResults.setText(i18n.GL3210());
 			pnlBackToTop.setVisible(false);
+			panelBorderBox.getElement().getStyle().setBackgroundColor("#FFFFFF");
+			searchResults.setVisible(false);
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{
 			lblLoadingText.setVisible(false);
