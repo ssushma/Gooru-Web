@@ -405,7 +405,13 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.Que
 import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
-
+import org.ednovo.gooru.client.mvp.standards.IsStandardsPopupView;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupView;
+import org.ednovo.gooru.client.mvp.test.IsTestView;
+import org.ednovo.gooru.client.mvp.test.TestPresenter;
+import org.ednovo.gooru.client.mvp.test.TestPresenter.IsTestProxy;
+import org.ednovo.gooru.client.mvp.test.TestView;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.inject.Singleton;
@@ -642,6 +648,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CourseInfoPresenter.class,IsCourseInfoView.class,CourseInfoView.class);
 		bindPresenterWidget(LessonInfoPresenter.class,IsLessonInfoView.class,LessonInfoView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
+		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
 
 
 		bindPresenterWidget(HomeBannerPresenter.class,IsHomeBannerView.class, HomeBannerView.class);

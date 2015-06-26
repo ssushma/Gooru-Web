@@ -22,19 +22,35 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
+package org.ednovo.gooru.client.mvp.standards;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import java.util.ArrayList;
+
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
+
+import com.gwtplatform.mvp.client.PopupView;
 
 /**
  * @author Search Team
  *
  */
-public interface LessonInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
+public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<StandardsPopupUiHandlers> {
 
-	void showStandardsPopup(String standardVal);
+	void loadData();
+
+	void SetData(StandardsLevel1DO levelOneData, int valArr);
+
+	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
+
+	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
+
+	void hidePopup();
+	
+
 }
