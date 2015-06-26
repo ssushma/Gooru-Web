@@ -381,7 +381,7 @@
 }
 .focusBlock .panel-body{
 	padding:0 15px;
-	text-align:center;
+	/* text-align:center; */
 }
 .focusBlock .panel-body p{
 	display:inline-block;
@@ -397,8 +397,7 @@
 
 }
 .focusBlock .panel-body .btn-group{
-		margin-left:4px;
-		margin-right:10px;
+	margin-left:4px;
 }
 .focusBlock .panel-body .btn-primary {
     background-color: #87badd;
