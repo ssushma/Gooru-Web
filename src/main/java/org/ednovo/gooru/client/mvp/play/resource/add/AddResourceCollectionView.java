@@ -106,6 +106,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	
 	private String resourceId=null;
 	
+	private String category = null;
+	
 	private boolean isAllUserShelfCollectionsLoaded=false;
 	
 	private int limit=20;
@@ -277,6 +279,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		Label folderName=null;
 		private String collectionName=null;
 		private String gooruOid=null;
+		private String collectionType;
 		private int itemsCount=0;
 		private boolean isOpen=false;
 		public CollectionTreeItem(){
@@ -303,6 +306,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			this.gooruOid=gooruOid;
 			this.collectionName=folderTitle;
 			this.itemsCount=itemsCount;
+			this.collectionType=collectionType;
 			folderName.setText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -316,6 +320,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		}
 		public String getCollectionName(){
 			return collectionName;
+		}
+		public String getCollectionType(){
+			return collectionType;
 		}
 		public int getItemsCount() {
 			return itemsCount;
@@ -695,6 +702,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo) {
 		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getGooruOid()!=null){
 		this.resourceId=collectionItemDo.getResource().getGooruOid();
+		this.category = collectionItemDo.getResource().getCategory();
 		}
 		changeButtonText();
 	}
@@ -728,16 +736,23 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 					errorMessage.getElement().setAttribute("alt",i18n.GL0699_2());
 					errorMessage.getElement().setAttribute("title",i18n.GL0699_2());
 				}else{
-					getAddResourceToCollectionButton().getElement().getStyle().setDisplay(Display.NONE);
-					errorMessage.setText("");
-					errorMessage.getElement().setAttribute("alt","");
-					errorMessage.getElement().setAttribute("title","");
-					addingLabel.setText(i18n.GL0591());
-					addingLabel.getElement().setAttribute("alt",i18n.GL0591());
-					addingLabel.getElement().setAttribute("title",i18n.GL0591());
-					getAddingLabel().getElement().getStyle().setDisplay(Display.BLOCK);
-					if(resourceId!=null&&cureentcollectionTreeItem.getGooruOid()!=null){
-					copyCollectionItem(resourceId, cureentcollectionTreeItem.getGooruOid());
+					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getCollectionType(),category);
+					if(flag){
+						errorMessage.setVisible(false);
+						getAddResourceToCollectionButton().getElement().getStyle().setDisplay(Display.NONE);
+						errorMessage.setText("");
+						errorMessage.getElement().setAttribute("alt","");
+						errorMessage.getElement().setAttribute("title","");
+						addingLabel.setText(i18n.GL0591());
+						addingLabel.getElement().setAttribute("alt",i18n.GL0591());
+						addingLabel.getElement().setAttribute("title",i18n.GL0591());
+						getAddingLabel().getElement().getStyle().setDisplay(Display.BLOCK);
+						if(resourceId!=null&&cureentcollectionTreeItem.getGooruOid()!=null){
+						copyCollectionItem(resourceId, cureentcollectionTreeItem.getGooruOid());
+						}
+					}else{
+						errorMessage.setVisible(true);
+						errorMessage.setText("Oops! can copy only questions for Assessments.");
 					}
 				}
 			}
@@ -756,8 +771,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 				for (CollectionItemsList userCollection : userCollectionsList) {
 					addDropDownListItem(userCollection.getCollectionTitle(),userCollection.getCollectionId(),userCollection.getCollectionItemsListSize());
 				}
-			} else {
-			}
+			} 
 	}
 	
 	/**

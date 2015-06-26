@@ -335,10 +335,9 @@ public class AddResourceContainerView extends
 
 	public TreeItem loadingTreeItem() {
 		
-		if (AppClientFactory.getCurrentPlaceToken().equals(
-				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
-						PlaceTokens.COLLECTION_PLAY)) {
+		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)) {
 			loadingText = new Label(i18n.GL1452());
+			displayErrorLabel.setVisible(false);
 		} else {
 			loadingText = new Label(i18n.GL2051());
 		}
@@ -434,6 +433,7 @@ public class AddResourceContainerView extends
 		private String collectionName = null;
 		private String gooruOid = null;
 		private boolean isOpen = false;
+		private String collectionType;
 
 		public CollectionTreeItem() {
 			initWidget(folderContainer = new FlowPanel());
@@ -462,6 +462,7 @@ public class AddResourceContainerView extends
 			}
 			this.gooruOid = gooruOid;
 			this.collectionName = folderTitle;
+			this.collectionType = collectionType;
 			folderName.setText(folderTitle);
 		}
 
@@ -475,6 +476,10 @@ public class AddResourceContainerView extends
 
 		public String getGooruOid() {
 			return gooruOid;
+		}
+		
+		public String getCollectionType() {
+			return collectionType;
 		}
 
 		public String getCollectionName() {
@@ -699,7 +704,7 @@ public class AddResourceContainerView extends
 	
 	@UiHandler("addResourceBtnLbl")
 	public void addResourceBtnLblClick(ClickEvent event) {
-		
+
 		addingText.setVisible(true);
 		addResourceBtnLbl.setVisible(false);
 		if (currentsearchType.equalsIgnoreCase("collection")) {
@@ -710,16 +715,21 @@ public class AddResourceContainerView extends
 			isCollectionSearch = false;
 		}
 		if (isResourceSearch) {
-			
 			if (isSelectedCollection) {
-				getUiHandlers().addResourceToCollection(
-						selectedCollectionGooruOid, currentsearchType,
-						cureentcollectionTreeItem.getCollectionName());
+				boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getCollectionType());
+				if(flag){
+					displayErrorLabel.setVisible(false);
+					getUiHandlers().addResourceToCollection(selectedCollectionGooruOid, currentsearchType,cureentcollectionTreeItem.getCollectionName());
+				}else{
+					getButtonVisiblity();
+					displayErrorLabel.setVisible(true);
+					displayErrorLabel.setText("Oops! can copy only questions for Assessments.");
+				}
+				
 			} else if (isSelectedFolder) {
 				displayErrorLabel.setText(i18n.GL3193());
 				getButtonVisiblity();
 			} else {
-			
 				if (!isSelectedCollection && !isSelectedFolder) {
 					restrictionToAddResourcesData(i18n.GL1134());
 					getButtonVisiblity();

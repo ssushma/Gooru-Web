@@ -83,6 +83,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	CollectionFormPresenter collectionFormPresenter;
 	CollectionResourceWidget collectionResourceWidget=null;
 	CollectionSearchWidget collectionSearchWidget=null;
+	private static final String ASSESSMENT = "assessment";
+	private static final String QUESTION = "question";
 	
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	
@@ -316,5 +318,14 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public void hidePopup() {
 		getView().hidePopup();
+	}
+
+	@Override
+	public boolean validateIsAssessments(String collectionType) {
+		boolean flag=true;
+		if(!QUESTION.equalsIgnoreCase(searchResultDo.getCategory())&& ASSESSMENT.equals(collectionType)){
+			flag = false;
+		}
+		return flag;
 	}
 }
