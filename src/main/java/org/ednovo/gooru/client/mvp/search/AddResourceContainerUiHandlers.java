@@ -73,5 +73,6 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 			String currentsearchType);
 	public void addCollectionToFolder(String selectedFolderGooruOid,
 			String currentsearchType, String text, int folerLevel,HashMap<String, String> urlparams);
+	public boolean validateIsAssessments(String collectionType);
 	
 }
