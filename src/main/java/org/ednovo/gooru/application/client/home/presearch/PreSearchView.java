@@ -763,7 +763,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
 	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
-	        String pairValue = pair.getValue().trim();
+	        String pairValue = pair.getValue().replaceAll("Grade", "").replaceAll(" ", "").trim();
 
 	        if (count==0){
 	        	selectedGrade.append(pairValue);
