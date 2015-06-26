@@ -31,5 +31,6 @@ import com.google.gwt.user.client.ui.TreeItem;
 public interface AddResourceCollectionUiHandlers extends BaseUiHandlers{
 	public void copyCollectionItem(String collectionItemId,String collectionId);
 	public void getFolderItems(final TreeItem item,String parentId);
-	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel);
+	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel); 
+	public boolean validateIsAssessments(String collectionType, String category);
 }

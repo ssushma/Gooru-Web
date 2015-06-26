@@ -120,6 +120,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			  public void onSelection(SelectionEvent<TreeItem> event) {
 			   isTopMostSelected = false;
 				lblError.setVisible(false);
+				lblError.setText(i18n.GL1134());
 			   final TreeItem item = (TreeItem) event.getSelectedItem();
 			    Widget folderWidget= item.getWidget();
 			    FolderTreeItem folderTreeItemWidget=null;
@@ -392,6 +393,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		Label folderName=null;
 		private String collectionName=null;
 		private String gooruOid=null;
+		private String collectionType;
 		private boolean isOpen=false;
 		public CollectionTreeItem(){
 			initWidget(folderContainer=new FlowPanel());
@@ -411,6 +413,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			}
 			this.gooruOid=gooruOid;
 			this.collectionName=folderTitle;
+			this.collectionType=collectionType;
 			folderContainer.getElement().setInnerText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -418,6 +421,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		public void setOpen(boolean isOpen) {
 			this.isOpen = isOpen;
+		}
+		public String getcollectionType(){
+			return collectionType;
 		}
 		public String getGooruOid(){
 			return gooruOid;
@@ -440,8 +446,15 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			isAddingInProgress=false;
 			if(currentsearchType.equalsIgnoreCase("resoruce")){
 				if(cureentcollectionTreeItem!=null){
-					lblError.setVisible(false);
-					getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams);
+					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
+					if(flag){
+						lblError.setVisible(false);
+						getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams);
+					}else{
+						lblError.setVisible(true);
+						lblError.setText("Oops! can copy only questions for Assessments.");
+						isAddingInProgress=true;
+					}
 				}else{
 					lblError.setVisible(true);
 					isAddingInProgress=true;

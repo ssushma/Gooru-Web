@@ -78,6 +78,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	String accessType =null;
 
 	CollectionItemDo collectionItemDo;
+	private static final String ASSESSMENT = "assessment";
 	boolean isPlayer=false;
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	HashMap<String, String>  urlParameters;
@@ -369,5 +370,14 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			folderDo.setCollectionItems(folderItems);
 		}
 		return folderDo;
+	}
+	
+	@Override
+	public boolean validateIsAssessments(String collectionType) {
+		boolean flag=true;
+		if(!QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getCategory())&& ASSESSMENT.equals(collectionType)){
+			flag = false;
+		}
+		return flag;
 	}
 }

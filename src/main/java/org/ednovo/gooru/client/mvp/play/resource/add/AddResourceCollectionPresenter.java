@@ -40,6 +40,9 @@ public class AddResourceCollectionPresenter extends PresenterWidget<IsAddResourc
 
 	private int pageNum=1;
 	private int pageSize=20;
+	private static final String ASSESSMENT = "assessment";
+	private static final String QUESTION = "question";
+	
 	@Inject
 	public AddResourceCollectionPresenter(EventBus eventBus, IsAddResourceCollectionView view) {
 		super(eventBus, view);
@@ -107,6 +110,15 @@ public class AddResourceCollectionPresenter extends PresenterWidget<IsAddResourc
 				getView().setFolderItems(item,folderListDo);
 			}
 		});
+	}
+	
+	@Override
+	public boolean validateIsAssessments(String collectionType,String category) {
+		boolean flag=true;
+		if(!QUESTION.equalsIgnoreCase(category)&& ASSESSMENT.equals(collectionType)){
+			flag = false;
+		}
+		return flag;
 	}
 
 }
