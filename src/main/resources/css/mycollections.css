@@ -369,6 +369,16 @@ button.btn-disabled{
     background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
 }
 
+#gShelfMainContainer .folderLevel.course {
+    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
+}
+#gShelfMainContainer .folderLevel.unit {
+    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 33px 13px;
+}
+#gShelfMainContainer .folderLevel.lesson {
+    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 33px 13px;
+}
+
 #gShelfMainContainer .folderLevel.parent {
     background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 61px 13px;
 }
@@ -386,6 +396,12 @@ button.btn-disabled{
 
 #gShelfMainContainer .folderLevel.open {
     background-image: url('../images/folders/panel/folder-icon-open.png');
+}
+#gShelfMainContainer .folderLevel.course.open {
+    background-image: url('../images/folders/panel/c-open.png');
+}
+#gShelfMainContainer .folderLevel.unit.open {
+    background-image: url('../images/folders/panel/u-open.png');
 }
 
 #gShelfMainContainer .folderLevel.collection {
