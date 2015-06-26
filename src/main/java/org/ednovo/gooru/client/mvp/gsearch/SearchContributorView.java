@@ -126,14 +126,21 @@ public abstract class SearchContributorView extends PopupPanel{
 					});
 					userContainerLiPanel.add(usersContainer);
 				}
-				for(int k=0;k<contributorSearchList.get(i).getOrganizationName().size();k++){
+				for(int k=0;k<contributorSearchList.get(i).getOrganization().size();k++){
 					HTMLEventPanel libraryContainer = new HTMLEventPanel("");
-					Image libraryImage = new Image();
+					final Image libraryImage = new Image();
 					final InlineLabel libraryNameLbl = new InlineLabel();
-					libraryImage.setUrl("images/contributor/rusd-small.png");
-					libraryNameLbl.getElement().setInnerText(contributorSearchList.get(i).getOrganizationName().get(k));
+					libraryImage.setUrl(contributorSearchList.get(i).getOrganization().get(k).getImage());
+					libraryImage.addErrorHandler(new ErrorHandler() {
+						@Override
+						public void onError(ErrorEvent event) {
+							libraryImage.setUrl("images/profilepage/user-profile-pic.png");
+						}
+					});
+					libraryImage.setStyleName("userImageStyle");
+					libraryNameLbl.getElement().setInnerText(contributorSearchList.get(i).getOrganization().get(k).getName());
 					libraryContainer.clear();
-					/*libraryContainer.add(libraryImage);*/
+					libraryContainer.add(libraryImage);
 					libraryContainer.add(libraryNameLbl);
 					libraryContainer.setStyleName("anchorPanel");
 					libraryContainer.addClickHandler(new ClickHandler() {

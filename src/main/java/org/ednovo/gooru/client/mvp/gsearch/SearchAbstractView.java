@@ -1610,6 +1610,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 }
 			 if(!selectedContributorValues.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT, selectedContributorValues);
+			 }
+			 if(!selectedContributorType.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT_TYPE,selectedContributorType);
 			 }
 		 }

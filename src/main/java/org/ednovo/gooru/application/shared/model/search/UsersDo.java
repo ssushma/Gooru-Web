@@ -29,7 +29,7 @@ import java.io.Serializable;
 public class UsersDo implements Serializable {
 
 	/**
-	 * 
+	 * UsersDo
 	 */
 	private static final long serialVersionUID = 1L;
 	

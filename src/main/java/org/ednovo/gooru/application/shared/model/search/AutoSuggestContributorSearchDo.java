@@ -38,10 +38,8 @@ public class AutoSuggestContributorSearchDo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<UsersDo> users;
-	private ArrayList<String> organizationName;
-	
+	private ArrayList<OrganizationDo> organization;
 
-	
 	public ArrayList<UsersDo> getUsers() {
 		return users;
 	}
@@ -49,17 +47,13 @@ public class AutoSuggestContributorSearchDo implements Serializable {
 	public void setUsers(ArrayList<UsersDo> users) {
 		this.users = users;
 	}
-
-	public ArrayList<String> getOrganizationName() {
-		return organizationName;
+	
+	public ArrayList<OrganizationDo> getOrganization() {
+		return organization;
 	}
 
-	public void setOrganizationName(ArrayList<String> organizationName) {
-		this.organizationName = organizationName;
+	public void setOrganization(ArrayList<OrganizationDo> organization) {
+		this.organization = organization;
 	}
-
-	
-	
-	
 
 }
