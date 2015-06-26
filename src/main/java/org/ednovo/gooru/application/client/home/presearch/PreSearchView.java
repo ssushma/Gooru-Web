@@ -436,10 +436,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		lblErrorMessage.setVisible(false);
 
 		if (panelGrades.isVisible()){
-			AppClientFactory.printInfoLogger("is visible");
 			panelGrades.getElement().getStyle().setDisplay(Display.NONE);
 		}else{
-			AppClientFactory.printInfoLogger("not visible");
 			panelGrades.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		}
 	}
@@ -546,7 +544,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
-			AppClientFactory.printInfoLogger("filterValue : "+filterValue);
 			filterValue = filterValue.replaceAll("Grade", "").replaceAll(" " , "");
 			int value = 0;
 			if (filterValue.equalsIgnoreCase("k")){
@@ -729,7 +726,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		Iterator it = selectedSubjects.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
 	        String pairValue = pair.getValue().trim();
 
 	        if (count==0){
@@ -831,7 +827,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		Iterator it = selectedSubjects.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
 	        String pairValue = pair.getValue().trim();
 
 	        if (count==0){
