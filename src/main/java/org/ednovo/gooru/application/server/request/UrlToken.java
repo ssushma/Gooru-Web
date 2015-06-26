@@ -55,6 +55,8 @@ public enum UrlToken {
 	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?"),
 
 	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?"),
+	
+	v2_SEARCH_SUGGEST_CONTRIBUTOR("/gooru-search/rest/search/contributor?"),
 
 	UPDATE_V2_COLLLECTION("/v2/collection/{0}?"),
 

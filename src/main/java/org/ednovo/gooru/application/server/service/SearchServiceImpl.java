@@ -31,12 +31,14 @@ package org.ednovo.gooru.application.server.service;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.service.SearchService;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.deserializer.AutoCompleteDeSerializer;
+
 import org.ednovo.gooru.application.server.deserializer.AutoSearchKeyWordDeSerializer;
 import org.ednovo.gooru.application.server.deserializer.CollectionItemsResultDeSerializer;
 import org.ednovo.gooru.application.server.deserializer.CollectionSearchResultDeSerializer;
@@ -56,6 +58,7 @@ import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSearchDo;
 import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.application.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
@@ -152,7 +155,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 
 	@Autowired
 	private AutoSearchKeyWordDeSerializer autoSearchKeyWordDeSerializer;
-
+	
 	String  query;
 	String collectionQuery;
 	@Override
@@ -600,21 +603,32 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		return searchDo;
 	}
 	@Override
-	public SearchDo<String> getSuggestedContributor(SearchDo<String> searchDo)
-			throws GwtException {
+	public ArrayList<AutoSuggestContributorSearchDo> getSuggestedContributor(String query,String contributorquery) throws GwtException ,ServerDownException{
+		ArrayList<AutoSuggestContributorSearchDo> autoSuggestContributorSearchDo= new ArrayList<AutoSuggestContributorSearchDo>();
 		JsonRepresentation jsonRep=null;
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.v2_SEARCH_SUGGEST_SOURCE);
+		try {
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.v2_SEARCH_SUGGEST_CONTRIBUTOR);
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(GooruConstants.Q, searchDo.getSearchQuery());
-		params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
-		params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
+		params.put(GooruConstants.Q, query);
+		params.put(GooruConstants.CONTRIBUTOR_QUERY, contributorquery);
+		/*params.put(GooruConstants.LENGTH, String.valueOf(limit));
+		params.put(GooruConstants.START, String.valueOf(offset));*/
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 
 		getLogger().info("SEARCH_SUGGEST_SOURCE get contributor url:::::"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-		jsonRep=jsonResponseRep.getJsonRepresentation();
-		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeSource(jsonRep));
-		return searchDo;
+		/*JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();*/
+		
+			/*autoSuggestContributorSearchDo=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("searchResults").toString(), new TypeReference<ArrayList<AutoSuggestContributorSearchDo>>() {});*/
+		String value="[{%22users%22:[{%22profileImage%22:%22http://profile-demo.s3.amazonaws.com/profile-demof184a0a4-c728-4c61-8200-236348c60f59.png%22,%22name%22:%22chassssrmmlejmd0122%22},{%22profileImage%22:%22http://profile-demo.s3.amazonaws.com/profile-demof184a0a4-c728-4c61-8200-236348c60f59.png%22,%22name%22:%22chassssrmmlejmd0122%22},{%22profileImage%22:%22http://profile-demo.s3.amazonaws.com/profile-demof184a0a4-c728-4c61-8200-236348c60f59.png%22,%22name%22:%22chassssrmmlejmd0122%22}],%22organizationName%22:[%22gooru%22,%22google%22,%22gasports%22]}]";
+		String value1= value.replaceAll("%22", "\"").toString();
+		autoSuggestContributorSearchDo=(ArrayList<AutoSuggestContributorSearchDo>) JsonDeserializer.deserialize(value1.toString(), new TypeReference<List<AutoSuggestContributorSearchDo>>() {});
+			logger.info("autoSuggestContributorSearchDo:::::::"+autoSuggestContributorSearchDo.size());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return autoSuggestContributorSearchDo;
 	}
 	@Override
 	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(

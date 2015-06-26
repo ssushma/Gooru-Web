@@ -22,10 +22,10 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<!-- collection search filters -->
-							<g:HTMLPanel styleName="collectionDetails" ui:field="collectionSearchPanel" visible="false">
-								<div class="container">
+							<g:HTMLPanel  ui:field="collectionSearchPanel" visible="false">
+								<div class="">
 									<div class="no-gutter">
-										<div class="col-md-9 col-sm-10">
+										<div class="col-md-10 col-sm-10 collectionDetails">
 											<div class="seachLeftNavigation">
 												<panel:UlPanel>
 													<panel:LiPanel styleName="active" ui:field="collectionsBtn">
@@ -35,11 +35,19 @@
 														<g:Anchor styleName="assessmentIcon"  text="{i18n.GL1325}" title="{i18n.GL1325}"/>
 													</panel:LiPanel>
 												</panel:UlPanel>
-												<div class="authorDetails">
+												<div class="authorDetails" style="display:none;">
 													<div class="input-group">
 														<g:InlineLabel text="{i18n.GL0573}" title="{i18n.GL0573}"></g:InlineLabel>
 														<g:TextBox  styleName="form-control" ui:field="authorTxtBox" />
 														<g:Image url="images/mos/questionmark.png" styleName="searchQuestionMark" ui:field="authorQuestionTooltip"/>
+													</div>
+												</div>
+												<div class="authorDetails">
+													<div class="input-group">
+														<g:InlineLabel text="Contributor" title="{i18n.GL0573}"></g:InlineLabel>
+														<g:TextBox  styleName="form-control" ui:field="contCollectionTxtBox" />
+														<g:Image url="images/mos/questionmark.png" styleName="searchQuestionMark"/>
+														<!-- <g:HTMLPanel ui:field="contributorCollectionDiv" styleName="contributorsStyle"></g:HTMLPanel> -->
 													</div>
 												</div>
 											</div>
@@ -94,11 +102,12 @@
 																	<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
 																	<g:Label ui:field="aggregatorNotFoundLbl"/>
 															   </div>
-															   <div class="paddingBlock">
-																	<p>Contributor <g:Image url="images/mos/questionmark.png" ui:field="contributorTooltip"/></p>
-																	<p><panel:AppSuggestBox styleName="form-control" ui:field="contributorSgstBox"/></p>
-																	<g:Label ui:field="contribuNotFoundLbl"/>
-									  						   </div>
+															  
+									  						   <!--  <div class="paddingBlock">
+									  						   <p>Contributor <g:Image url="images/mos/questionmark.png" ui:field="contributorTooltip"/></p>
+									  						   <g:TextBox styleName="form-control" ui:field="contributorTxtBox" />
+									  						   <g:HTMLPanel ui:field="contributorDiv"></g:HTMLPanel>
+									  						   </div> -->
 															    <div class="paddingBlock no-gutter">
 																	<p>Access Mode</p>
 																	<panel:PPanel styleName="col-md-6 accessStyle" ui:field="accessModePanel" />

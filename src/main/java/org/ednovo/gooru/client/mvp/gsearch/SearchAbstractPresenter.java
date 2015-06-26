@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSearchDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
@@ -70,6 +72,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -105,8 +108,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
 	
-	private SearchAsyncCallback<SearchDo<String>> contributorSuggestionAsyncCallback;
-
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackFirstLoad;
 
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackLoadInStore;
@@ -266,16 +267,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 					getView().setAggregatorSuggestions(result);
 				}
 			});
-			setContributorSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
-				@Override
-				protected void run(SearchDo<String> searchDo) {
-					getSearchService().getSuggestedContributor(searchDo, this);
-				}
-				@Override
-				public void onCallSuccess(SearchDo<String> result) {
-					getView().setContributorSuggestions(result);
-				}
-			});
+			
 		}
 	}
 
@@ -460,6 +452,16 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			if (collectionType != null) {
 				filters.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
 			}
+			 AppClientFactory.printInfoLogger("SEARCHPRESENTER:::::::::::");
+			 String selectedContributorValues = getPlaceManager().getRequestParameter(
+						IsGooruSearchView.CONTRIBUTOR_FLT);
+			 if(selectedContributorValues!=null&& !selectedContributorValues.isEmpty()){
+				 filters.put(IsGooruSearchView.CONTRIBUTOR_FLT, selectedContributorValues);
+			 }
+			 String selectedContributorType = getPlaceManager().getRequestParameter(IsGooruSearchView.CONTRIBUTOR_FLT_TYPE);
+			 if(selectedContributorType!=null&& !selectedContributorType.isEmpty()){
+				 filters.put(IsGooruSearchView.CONTRIBUTOR_FLT_TYPE,selectedContributorType);
+			 }
 		}
 		return filters;
 	}
@@ -581,8 +583,23 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	}
 
 	@Override
-	public void requestContributorSuggestions(SearchDo<String> searchDo){
-		getContributorSuggestionAsyncCallback().execute(searchDo);
+	public void requestContributorSuggestions(String contributorquery){
+		String originalQuery=getPlaceManager().getRequestParameter("query");
+		String contributorQuery=contributorquery;
+		searchService.getSuggestedContributor(originalQuery,contributorQuery, new AsyncCallback<ArrayList<AutoSuggestContributorSearchDo>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(ArrayList<AutoSuggestContributorSearchDo> result) {
+				AppClientFactory.printInfoLogger("result:::::"+result);
+				/*if("collectionsearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){*/
+					getView().setCollectionContributorSuggestions(result);
+				/*}*//*else if("resourcesearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){
+					getView().setContributorSuggestions(result);
+				}*/
+			}
+		});
 	}
 	
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
@@ -611,16 +628,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback) {
 		this.aggregatorSuggestionAsyncCallback = aggregatorSuggestionAsyncCallback;
 	}
-	
-	public SearchAsyncCallback<SearchDo<String>> getContributorSuggestionAsyncCallback() {
-		return contributorSuggestionAsyncCallback;
-	}
-	
-	public void setContributorSuggestionAsyncCallback(
-			SearchAsyncCallback<SearchDo<String>> contributorSuggestionAsyncCallback) {
-		this.contributorSuggestionAsyncCallback = contributorSuggestionAsyncCallback;
-	}
-	
+
 	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
 
 	protected abstract void requestSearchLoad(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback, boolean isBackToTop);
