@@ -1428,7 +1428,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		depthOfKnowledge.put("depthOfKnowledge", addQuestionResourceWidget.depthOfKnowledges);
 		
 		collectionQuestionItemDo.setQuestionText(addQuestionResourceWidget.questionNameTextArea.getText());
-		collectionQuestionItemDo.setExplanation(addQuestionResourceWidget.questionNameTextArea.getText());
+		collectionQuestionItemDo.setExplanation(addQuestionResourceWidget.explainationTextArea.getText());
 		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 		
 		

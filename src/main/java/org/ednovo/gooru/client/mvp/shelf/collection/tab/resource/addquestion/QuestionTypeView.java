@@ -2228,8 +2228,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			@Override
 			public void run() {
 				questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
-				questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getTitle());
-				questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getTitle());
+				questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getQuestionText());
+				questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getQuestionText());
 				explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
 				explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
 				explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
@@ -2265,6 +2265,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
 	        addHintsTextArea(addHints);
 		}
+		int count=hintsContainer.getWidgetCount();
+		addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+
 		
 		
 		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
