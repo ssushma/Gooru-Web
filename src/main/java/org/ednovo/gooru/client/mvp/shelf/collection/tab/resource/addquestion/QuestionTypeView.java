@@ -2139,6 +2139,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
 					int widgetcount=1;
+					addHotSpotQuestion.textAnsContainer.clear();
 					while (it.hasNext()) {
 						addHotSpotQuestion.setAnswerFields(false);
 						QuestionAnswerDo answer = it.next();
