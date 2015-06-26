@@ -389,11 +389,11 @@ button.btn-disabled{
 }
 
 #gShelfMainContainer .folderLevel.collection {
-    background-image: url('../images/folders/panel/collection-icon.png');
+    background-image: url('../images/folders/panel/collection-icon.png') !important;
 }
 
 #gShelfMainContainer .folderLevel.assessment {
-    background-image: url('../images/folders/panel/assessment-type.png');
+    background-image: url('../images/folders/panel/assessment-type.png') !important;
 }
 
 #gShelfMainContainer .folderLevel.publicIcon.collection {
