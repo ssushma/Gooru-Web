@@ -95,7 +95,7 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 
 	void getResourceImageInfo(String userUrlStr);
 	
-	void addSelectedQuestionType(String type);
+	void addSelectedQuestionType(String type,CollectionQuestionItemDo collectionQuestionItemDo);
 	
 	void setEditQuestionData(CollectionItemDo collectionItemDo);
 	
