@@ -96,7 +96,7 @@ button.primary, a.primary {
 	background: -o-linear-gradient(top, #4C98CC, #1076BB);
 }
 button.green {
-	color: white;
+	color: #ffffff;
 	background-color: rgb(78, 151, 70);
 	border-radius: 4px;
 	padding: 7px 9px;
@@ -110,13 +110,13 @@ button.green {
 
 }
 
-button.primary:hover, a.primary:hover {
-	color:white;
+button.primary:focus, button.primary:visited, button.primary:hover, a.primary:hover, a.primary:focus, a.primary:visited {
+	color:#ffffff;
 	background:#1076BB;
 	cursor:pointer;
 }
 button.green:hover {
-	color:white;
+	color:#ffffff;
 	background:rgb(78, 151, 70);
 	cursor:pointer;
 }
@@ -925,7 +925,7 @@ textarea {
 	background-color:#515151;
 	color:#ffffff;
 	border-radius:6px 6px 0 0;
-	
+
 }
 #create-class-popup .close{
 	font-size:35px;
