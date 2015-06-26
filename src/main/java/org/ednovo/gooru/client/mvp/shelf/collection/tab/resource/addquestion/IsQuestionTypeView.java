@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 
 import com.google.gwt.user.client.ui.Button;
 
@@ -27,6 +28,8 @@ public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHan
 	void clearTinyMce();
 
 	void setEditData();
+	
+	void setMetadata(CollectionQuestionItemDo collectionQuestionItemDo);
 
 
 
