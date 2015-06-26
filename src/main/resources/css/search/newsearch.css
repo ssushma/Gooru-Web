@@ -587,7 +587,7 @@ Back to top button
 #gooruSearchMainContainer .searchResultsBox{
 	font-size: 14px;
 	vertical-align: middle;
-	margin-right: 12px;
+	margin-left: 24px;
 }
 #gooruSearchMainContainer .seachRightNavigation .btn-primary {
 	background-color: #87badd;
