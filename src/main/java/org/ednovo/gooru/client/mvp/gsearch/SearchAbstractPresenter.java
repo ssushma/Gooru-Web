@@ -453,7 +453,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			if (collectionType != null) {
 				filters.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
 			}
-			 AppClientFactory.printInfoLogger("SEARCHPRESENTER:::::::::::");
 			 String selectedContributorValues = getPlaceManager().getRequestParameter(
 						IsGooruSearchView.CONTRIBUTOR_FLT);
 			 if(selectedContributorValues!=null&& !selectedContributorValues.isEmpty()){
@@ -582,7 +581,9 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void requestAggregatorSuggestions(SearchDo<String> searchDo){
 		getAggregatorSuggestionAsyncCallback().execute(searchDo);
 	}
-
+	/**
+	 * This API call is used to display the suggested results for the contributors based on user's query typed
+	 */
 	@Override
 	public void requestContributorSuggestions(String contributorquery){
 		String originalQuery=getPlaceManager().getRequestParameter("query");
@@ -593,12 +594,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			}
 			@Override
 			public void onSuccess(ArrayList<AutoSuggestContributorSearchDo> result) {
-				AppClientFactory.printInfoLogger("result:::::"+result);
-				/*if("collectionsearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){*/
 					getView().setCollectionContributorSuggestions(result);
-				/*}*//*else if("resourcesearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){
-					getView().setContributorSuggestions(result);
-				}*/
 			}
 		});
 	}

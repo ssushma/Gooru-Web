@@ -611,21 +611,15 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, query);
 		params.put(GooruConstants.CONTRIBUTOR_QUERY, contributorquery);
-		/*params.put(GooruConstants.LENGTH, String.valueOf(limit));
-		params.put(GooruConstants.START, String.valueOf(offset));*/
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
-
 		getLogger().info("SEARCH_SUGGEST_SOURCE get contributor url:::::"+url);
 		/*JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-		jsonRep=jsonResponseRep.getJsonRepresentation();*/
-		
-			/*autoSuggestContributorSearchDo=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("searchResults").toString(), new TypeReference<ArrayList<AutoSuggestContributorSearchDo>>() {});*/
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		autoSuggestContributorSearchDo=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("searchResults").toString(), new TypeReference<ArrayList<AutoSuggestContributorSearchDo>>() {});*/
 		String value="[{%22users%22:[{%22profileImage%22:%22http://profile-demo.s3.amazonaws.com/profile-demof184a0a4-c728-4c61-8200-236348c60f59.png%22,%22name%22:%22chassssrmmlejmd0122%22},{%22profileImage%22:%22http://profile-demo.s3.amazonaws.com/profile-demof184a0a4-c728-4c61-8200-236348c60f59.png%22,%22name%22:%22chassssrmmlejmd0122%22},{%22profileImage%22:%22http://profile-demo.s3.amazonaws.com/profile-demof184a0a4-c728-4c61-8200-236348c60f59.png%22,%22name%22:%22chassssrmmlejmd0122%22}],%22organizationName%22:[%22gooru%22,%22google%22,%22gasports%22]}]";
 		String value1= value.replaceAll("%22", "\"").toString();
 		autoSuggestContributorSearchDo=(ArrayList<AutoSuggestContributorSearchDo>) JsonDeserializer.deserialize(value1.toString(), new TypeReference<List<AutoSuggestContributorSearchDo>>() {});
-			logger.info("autoSuggestContributorSearchDo:::::::"+autoSuggestContributorSearchDo.size());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return autoSuggestContributorSearchDo;

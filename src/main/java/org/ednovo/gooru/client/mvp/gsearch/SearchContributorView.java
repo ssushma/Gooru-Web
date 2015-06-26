@@ -73,6 +73,9 @@ public abstract class SearchContributorView extends PopupPanel{
 	@UiField InlineLabel noResultsFoundLbl;
 	@UiField UlPanel resultsPnl,noResultsPnl;
 	
+	/**
+	 * Constructor
+	 */
 	public SearchContributorView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		contributorDropDown.getElement().setId("contributorDropDown");
@@ -82,6 +85,12 @@ public abstract class SearchContributorView extends PopupPanel{
 		this.setAutoHideEnabled(true);
 		this.setStyleName("newpopupstyle");
 	 }
+	/**
+	 * This method is used to set the data to auto suggested contributor popup.
+	 * This will hide the contributors popup if no results found
+	 * @param contributorSearchList
+	 * @param contributorTxtBox
+	 */
 	public void setData(ArrayList<AutoSuggestContributorSearchDo> contributorSearchList,final TextBox contributorTxtBox) {
 		userContainerLiPanel.clear();
 		organizationContainer.clear();
@@ -91,7 +100,6 @@ public abstract class SearchContributorView extends PopupPanel{
 			contributorDropDown.setVisible(true);
 			for(int i=0;i<contributorSearchList.size();i++){
 				for(int j=0;j<contributorSearchList.get(i).getUsers().size();j++){
-					AppClientFactory.printInfoLogger("for loop ");
 					HTMLEventPanel usersContainer = new HTMLEventPanel("");
 					final Image usersImage = new Image();
 					final InlineLabel userNameLbl = new InlineLabel();
@@ -112,11 +120,7 @@ public abstract class SearchContributorView extends PopupPanel{
 						@Override
 						public void onClick(ClickEvent event) {
 							contributorTxtBox.setText(userNameLbl.getText());
-							/*if("collectionsearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){*/
-								callCollectionsContributorSearch("user");
-							/*}*//*else if("resourcesearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){
-								callContributorSearch();
-							}*/
+							callCollectionsContributorSearch("user");
 							contributorDropDown.setVisible(false);
 						}
 					});
@@ -126,11 +130,9 @@ public abstract class SearchContributorView extends PopupPanel{
 					HTMLEventPanel libraryContainer = new HTMLEventPanel("");
 					Image libraryImage = new Image();
 					final InlineLabel libraryNameLbl = new InlineLabel();
-					
 					libraryImage.setUrl("images/contributor/rusd-small.png");
 					libraryNameLbl.getElement().setInnerText(contributorSearchList.get(i).getOrganizationName().get(k));
 					libraryContainer.clear();
-					
 					/*libraryContainer.add(libraryImage);*/
 					libraryContainer.add(libraryNameLbl);
 					libraryContainer.setStyleName("anchorPanel");
@@ -138,11 +140,7 @@ public abstract class SearchContributorView extends PopupPanel{
 						@Override
 						public void onClick(ClickEvent event) {
 							contributorTxtBox.setText(libraryNameLbl.getText());
-							/*if("collectionsearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){*/
-								callCollectionsContributorSearch("organization");
-							/*}*//*else if("resourcesearch".equalsIgnoreCase(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){
-								callContributorSearch();
-							}*/
+							callCollectionsContributorSearch("organization");
 							contributorDropDown.setVisible(false);
 						}
 					});
@@ -154,7 +152,6 @@ public abstract class SearchContributorView extends PopupPanel{
 			noResultsPnl.setVisible(true);
 		}
 	}
-	/*public abstract void callContributorSearch();*/
 	
 	public UlPanel getNoResultsPnl() {
 		return noResultsPnl;
@@ -162,6 +159,9 @@ public abstract class SearchContributorView extends PopupPanel{
 	public UlPanel getResultsPnl() {
 		return resultsPnl;
 	}
-	
+	/**
+	 * This method is called on click of user or organization data from the contributors popup and to send the type of contributor
+	 * @param type
+	 */
 	public abstract void callCollectionsContributorSearch(String type);
 }

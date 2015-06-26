@@ -9,19 +9,11 @@
  			 <panel:LiPanel styleName="contributordropdown-header" ui:field="userTxtLbl"></panel:LiPanel>
        		 <panel:LiPanel styleName="divider"></panel:LiPanel>
 	    		 <panel:LiPanel ui:field="userContainerLiPanel">
-	    		      <!-- <g:HTMLPanel styleName="anchorPanel">
-	    		     	 <g:Image ui:field="userImage"/> 
-	    		      	 <g:InlineLabel ui:field="userNameLbl"></g:InlineLabel> 
-	    		       </g:HTMLPanel>  -->
 	    		  </panel:LiPanel>
              <panel:LiPanel styleName="divider"></panel:LiPanel>
             <panel:LiPanel styleName="contributordropdown-header" ui:field="organizationTxtLbl" ></panel:LiPanel>
             <panel:LiPanel styleName="divider"></panel:LiPanel>
                    <panel:LiPanel styleName="contributordropdown-header" ui:field="organizationContainer">
-                      <!--  <g:HTMLPanel styleName="anchorPanel">
-                           <g:Image ui:field="libraryLogoImage"/> 
-                           <g:InlineLabel ui:field="libraryNameLbl"></g:InlineLabel>
-                       </g:HTMLPanel> -->
                    </panel:LiPanel>
   		</panel:UlPanel>
   		 <panel:UlPanel ui:field="noResultsPnl" styleName="noresultsStyle">

@@ -123,7 +123,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField HTMLEventPanel resourcePanel, collectionPanel;
 
-	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown/*contributorDiv,contributorCollectionDiv*/;
+	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 
 	@UiField Label lblLoadingTextPrevious,lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
 
@@ -131,7 +131,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField FlowPanel pnlAddFilters,searchResultPanel,sourceContainerFloPanel;
 
-	@UiField TextBox authorTxtBox,/*contributorTxtBox,*/contCollectionTxtBox;
+	@UiField TextBox authorTxtBox,contCollectionTxtBox;
 
 	@UiField LiPanel collectionsBtn,assessmentsBtn;
 
@@ -184,7 +184,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	String FILLED_GREEN = "filled";
 
-	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag,contributor/*,collectionContributor*/;
+	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag,contributor;
 
 	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
 
@@ -352,19 +352,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		});
-		/*contributorTxtBox.getElement().setAttribute("placeholder", i18n.GL3221());
-		contributorTxtBox.addKeyUpHandler(new KeyUpHandler() {
-			@Override
-			public void onKeyUp(KeyUpEvent event) {
-					if (contributorTxtBox.getText() != null && contributorTxtBox.getText().length() > 2) {
-							String text = contributorTxtBox.getValue();
-							getUiHandlers().requestContributorSuggestions(text);
-					}else{
-						ContributorViewpopup.hide();
-					}
-			}
-		});*/
 		contCollectionTxtBox.getElement().setAttribute("placeholder", i18n.GL3221());
+		/**
+		 * This is the keyup handler for Contributors functionality in collection search.
+		 */
 		contCollectionTxtBox.addKeyUpHandler(new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
@@ -740,7 +731,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showPublisherFilter();
 		showAggregatorFilter();
 		showContributorFilter();
-		/*showContributorCollectionFilter();*/
 		showReviewFilter();
 		setStyleForCollectionType();
 		showRatingsFilter();
@@ -905,16 +895,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
-	/*private void showContributorCollectionFilter(){
-		collectionContributor  = AppClientFactory.getPlaceManager().getRequestParameter("flt.contributor");
-		if(collectionContributor!=null){
-			String[] split = collectionContributor.split(",");
-			for(int i=0; i<split.length; i++){
-				pnlAddFilters.add(createTagsLabel(split[i],"contributorPanel"));
-			}
-		}
-	}*/
-	
 	/**
 	 * To render star ratings and handle the click events
 	 */
@@ -1536,18 +1516,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					selectedAuggreValues +=closeLabelSetting.getSourceText();
 				}
 				if("contributorPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
-					/*if (!selectedContributorValues.isEmpty()) {
-						selectedContributorValues += COMMA_SEPARATOR;
-					}*/
 					selectedContributorValues =closeLabelSetting.getSourceText();
 				}
-				/*if("contributorColPnl".equalsIgnoreCase(closeLabelSetting.getPanelName())){
-					if (!selectedcollectionContributorValues.isEmpty()) {
-						selectedcollectionContributorValues += COMMA_SEPARATOR;
-					}
-					selectedcollectionContributorValues +=closeLabelSetting.getSourceText();
-				}*/
-				
 				if("oerPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 
 					oerValue="1";
@@ -1613,10 +1583,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 if(!selectedAuggreValues.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.AGGREGATOR_FLT, selectedAuggreValues);
 			 }
-			/* if(!selectedContributorValues.isEmpty()){
-				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT, selectedContributorValues);
-			 }*/
-			 
 			 if(!oerValue.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OER_FLT, oerValue);
 			 }
@@ -1642,7 +1608,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 if(!selectedAuthors.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
 			 }
-			 AppClientFactory.printInfoLogger("selectedContributorType::::::::::"+selectedContributorType);
 			 if(!selectedContributorValues.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT, selectedContributorValues);
 				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT_TYPE,selectedContributorType);
@@ -1922,45 +1887,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		aggregatorSgstBox.showSuggestionList();
 	}
-/*	@Override
-	public void setContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> contributorSearchList) {
-		this.contributorSearchList=contributorSearchList;
-		AppClientFactory.printInfoLogger("first iteration");
-		if(this.contributorSearchList!=null){
-			if(ContributorViewpopup==null){
-			ContributorViewpopup = new SearchContributorView(){
-				@Override
-				public void callContributorSearch() {
-					AppClientFactory.printInfoLogger("callContributorSearch in setContributorSuggestions");
-					String text = contributorTxtBox.getValue();
-					if (text.equals(NO_MATCH_FOUND)) {
-						//new FadeInAndOut(contribuNotFoundLbl.getElement(), 5000, 5000);
-					}else {
-						pnlAddFilters.add(createTagsLabel(text,"contributorPanel"));
-						callSearch();
-					}
-					contributorTxtBox.setText("");
-					contributorTxtBox.getElement().setAttribute("alt","");
-					contributorTxtBox.getElement().setAttribute("title","");
-					ContributorViewpopup.hide();
-				}
-				@Override
-				public void callCollectionsContributorSearch() {
-					AppClientFactory.printInfoLogger("callCollectionsContributorSearch in setContributorSuggestions");
-				}
-			};
-		}
-			ContributorViewpopup.setData(contributorSearchList,contributorTxtBox);
-			contributorDiv.clear();
-			ContributorViewpopup.show();
-			ContributorViewpopup.setPopupPosition(contributorTxtBox.getElement().getAbsoluteLeft(), contributorTxtBox.getElement().getAbsoluteTop()+20);
-			//contributorDiv.add(ContributorViewpopup);
-		
-			}
-		 else {
-			 ContributorViewpopup.add(NO_MATCH_FOUND);
-		}
-	}*/
+	/**
+	 * This method is used to show the contributors auto suggested data and to create and update the contributor  filter in collection search
+	 */
 	@Override
 	public void setCollectionContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> contributorSearchList){
 
@@ -1968,13 +1897,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if(this.contributorSearchList!=null){
 			if(ContributorViewpopup==null){
 				ContributorViewpopup = new SearchContributorView(){
-					/*@Override
-					public void callContributorSearch() {
-						AppClientFactory.printInfoLogger("callContributorSearch in setCollectionContributorSuggestions");
-					}*/
 					@Override
 					public void callCollectionsContributorSearch(String contributortype) {
-						AppClientFactory.printInfoLogger("callCollectionsContributorSearch in setCollectionContributorSuggestions");
 						String text = contCollectionTxtBox.getValue();
 						if (text.equals(NO_MATCH_FOUND)) {
 							//new FadeInAndOut(contribuNotFoundLbl.getElement(), 5000, 5000);
@@ -1989,7 +1913,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 				};
 			}
-			AppClientFactory.printInfoLogger(" in side setCollectionContributorSuggestions");
 			ContributorViewpopup.setData(contributorSearchList,contCollectionTxtBox);
 			ContributorViewpopup.show();
 			ContributorViewpopup.setPopupPosition(contCollectionTxtBox.getElement().getAbsoluteLeft()-3, contCollectionTxtBox.getElement().getAbsoluteTop()+30);

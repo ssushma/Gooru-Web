@@ -47,7 +47,6 @@
 														<g:InlineLabel text="Contributor" title="{i18n.GL0573}"></g:InlineLabel>
 														<g:TextBox  styleName="form-control" ui:field="contCollectionTxtBox" />
 														<g:Image url="images/mos/questionmark.png" styleName="searchQuestionMark"/>
-														<!-- <g:HTMLPanel ui:field="contributorCollectionDiv" styleName="contributorsStyle"></g:HTMLPanel> -->
 													</div>
 												</div>
 											</div>
@@ -102,12 +101,6 @@
 																	<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
 																	<g:Label ui:field="aggregatorNotFoundLbl"/>
 															   </div>
-															  
-									  						   <!--  <div class="paddingBlock">
-									  						   <p>Contributor <g:Image url="images/mos/questionmark.png" ui:field="contributorTooltip"/></p>
-									  						   <g:TextBox styleName="form-control" ui:field="contributorTxtBox" />
-									  						   <g:HTMLPanel ui:field="contributorDiv"></g:HTMLPanel>
-									  						   </div> -->
 															    <div class="paddingBlock no-gutter">
 																	<p>Access Mode</p>
 																	<panel:PPanel styleName="col-md-6 accessStyle" ui:field="accessModePanel" />
