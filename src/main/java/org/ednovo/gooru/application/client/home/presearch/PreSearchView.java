@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -60,14 +61,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 /**
  *
@@ -107,7 +107,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private final String FLT_SUBJECTNAME = "flt.subjectName";
 	private final String FLT_GRADE = "flt.grade";
 
-	HashMap<String, String> selectedGrades = new HashMap<String, String>();
+	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
 	HashMap<String, String> selectedSubjects = new HashMap<String, String>();
 
 	public PreSearchView() {
@@ -436,10 +436,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		lblErrorMessage.setVisible(false);
 
 		if (panelGrades.isVisible()){
-			AppClientFactory.printInfoLogger("is visible");
 			panelGrades.getElement().getStyle().setDisplay(Display.NONE);
 		}else{
-			AppClientFactory.printInfoLogger("not visible");
 			panelGrades.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		}
 	}
@@ -546,11 +544,22 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
-			AppClientFactory.printInfoLogger("filterValue : "+filterValue);
-			if("add".equals(addOrRemove)){
-				selectedGrades.put(filterValue, filterValue);
+			filterValue = filterValue.replaceAll("Grade", "").replaceAll(" " , "");
+			int value = 0;
+			if (filterValue.equalsIgnoreCase("k")){
+				value = 0;
+			}else if (filterValue.equalsIgnoreCase("pre-k")){
+				value =-1;
+			}else if (filterValue.equalsIgnoreCase("HigherEd")){
+				value =13;
 			}else{
-				selectedGrades.remove(filterValue);
+				value = Integer.parseInt(filterValue);
+			}
+
+			if("add".equals(addOrRemove)){
+				selectedGrades.put(value, value);
+			}else{
+				selectedGrades.remove(value);
 			}
 			displaySelectedGrades(addOrRemove);
 		}
@@ -580,9 +589,18 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		StringBuffer selectedGrade = new StringBuffer();
 		Iterator it = selectedGrades.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
-	        String pairValue = pair.getValue().replaceAll("Grade", "").trim();
+	        Map.Entry<Integer,Integer> pair = (Map.Entry<Integer,Integer>)it.next();
+	        String pairValue = "";
+
+	        if (pair.getValue() == -1){
+	        	pairValue = "Pre-K";
+	        }else if (pair.getValue() == 0){
+	        	pairValue = "K";
+	        }else if (pair.getValue() == 13){
+	        	pairValue = "Higher Ed";
+	        }else{
+	        	pairValue = String.valueOf(pair.getValue());
+	        }
 
 	        if (count==0){
 	        	selectedGrade.append(pairValue);
@@ -597,7 +615,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    	btnGrades.setText(i18n.GL3289());
 	    }
 	    if ("add".equalsIgnoreCase(addOrRemove)){
-	    	btnGrades.getElement().addClassName("ellipsis");
+	    	if (selectedGrades.size() > 1){
+	    		btnGrades.getElement().addClassName("ellipsis");
+	    	}
 	    }else{
 	    	if (selectedGrades.size() <= 2){
 	    		btnGrades.getElement().removeClassName("ellipsis");
@@ -706,7 +726,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		Iterator it = selectedSubjects.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
 	        String pairValue = pair.getValue().trim();
 
 	        if (count==0){
@@ -761,14 +780,23 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		StringBuffer selectedGrade = new StringBuffer();
 		Iterator it = selectedGrades.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
-	        String pairValue = pair.getValue().trim();
+	        Map.Entry<Integer,Integer> pair = (Map.Entry<Integer,Integer>)it.next();
+	        String pairValue = "";
+
+	        if (pair.getValue() == -1){
+	        	pairValue = "Pre-K";
+	        }else if (pair.getValue() == 0){
+	        	pairValue = "K";
+	        }else if (pair.getValue() == 13){
+	        	pairValue = "Higher Ed";
+	        }else{
+	        	pairValue = String.valueOf(pair.getValue());
+	        }
 
 	        if (count==0){
 	        	selectedGrade.append(pairValue);
 	        }else{
-	        	selectedGrade.append(", "+pairValue);
+	        	selectedGrade.append(","+pairValue);
 	        }
 	        count++;
 	    }
@@ -799,7 +827,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		Iterator it = selectedSubjects.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
 	        String pairValue = pair.getValue().trim();
 
 	        if (count==0){
