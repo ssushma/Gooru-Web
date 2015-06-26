@@ -796,7 +796,7 @@
 	overflow:hidden !important;
 	width: 100% !important;
 	border-right: 1px solid #eee;
-	height: auto !important;
+	/* height: auto !important; */
 }
 #pnlHtmlpnlProgress .DTFC_LeftWrapper .DTFC_LeftHeadWrapper .DTFC_Cloned thead tr th div{
 	padding: 5px 20px;
