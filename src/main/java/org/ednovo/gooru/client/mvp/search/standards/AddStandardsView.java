@@ -233,7 +233,11 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	@Override
 	public void loadData()
 	{
-		addBtn.setText("Add");
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME)){
+			addBtn.setText(i18n.GL0176());
+		}else{
+			addBtn.setText(i18n.GL0590());
+		}
 		addBtn.setEnabled(false);
 		addBtn.removeStyleName("primary");
 		addBtn.addStyleName("secondary");
