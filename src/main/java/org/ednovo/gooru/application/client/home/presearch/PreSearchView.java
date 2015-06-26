@@ -49,6 +49,9 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -56,7 +59,10 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -109,23 +115,73 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 		setDebugIds();
 
-		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
+//		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
+
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hidePopup(event);
+	          }
+	    });
+
 	}
 
 
+	protected void hidePopup(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target)
+        	{
+        		if (panelGrades !=null && panelGrades.isVisible()){
+        			panelGrades.setVisible(false);
+        		}
+        		if (ulSubjectPanel !=null && ulSubjectPanel.isVisible()){
+        			ulSubjectPanel.setVisible(false);
+        		}
+        	}
+    	}
+	}
+
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return  panelSubjectGroup.getElement().isOrHasChild(Element.as(target)) || panelGradeGroup.getElement().isOrHasChild(Element.as(target)) || panelGrades.getElement().isOrHasChild(Element.as(target))||ulSubjectPanel.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
+
+	/**
+	 *
+	 * @function setDebugIds
+	 *
+	 * @created_date : 25-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	private void setDebugIds() {
 		btnStudentSignUp.setText(i18n.GL0186());
 
 		StringUtil.setAttributes(btnStudentSignUp.getElement(), "btnStudentSignUp", i18n.GL0186(), i18n.GL0186());
 		StringUtil.setAttributes(btnLearnAboutApproach.getElement(), "btnLearnAboutApproach", i18n.GL3315(), i18n.GL3315());
 
-		btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
-		btnGradesCaret.getElement().setAttribute("data-toggle", "dropdown");
+//		btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
+//		btnGradesCaret.getElement().setAttribute("data-toggle", "dropdown");
 
-		btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
-		btnSubjectCaret.getElement().setAttribute("data-toggle", "dropdown");
+//		btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
+//		btnSubjectCaret.getElement().setAttribute("data-toggle", "dropdown");
 
 		panelGrades.setVisible(false);
 
@@ -200,6 +256,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			@Override
 			public void onSuccess() {
+				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 				LoginPopupUc popup = new LoginPopupUc() {
 					@Override
@@ -379,15 +436,14 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		lblErrorMessage.setVisible(false);
 
 		if (panelGrades.isVisible()){
+			AppClientFactory.printInfoLogger("is visible");
 			panelGrades.getElement().getStyle().setDisplay(Display.NONE);
-			btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
-			panelGradeGroup.getElement().removeClassName("open");
 		}else{
+			AppClientFactory.printInfoLogger("not visible");
 			panelGrades.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			btnGradesCaret.getElement().setAttribute("aria-expanded", "true");
-			panelGradeGroup.getElement().addClassName("open");
 		}
 	}
+
 	/**
 	 *
 	 * @function setSubjectVisibility
@@ -412,12 +468,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 		if (ulSubjectPanel.isVisible()){
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
-			btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
-			panelSubjectGroup.getElement().removeClassName("open");
 		}else{
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			btnSubjectCaret.getElement().setAttribute("aria-expanded", "true");
-			panelSubjectGroup.getElement().addClassName("open");
 		}
 	}
 
@@ -428,7 +480,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 				@Override
 				public void onSuccess() {
-//					setGradeVisibility();
+
 				}
 			});
 		}
@@ -711,7 +763,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
 	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
-	        String pairValue = pair.getValue().trim();
+	        String pairValue = pair.getValue().replaceAll("Grade", "").replaceAll(" ", "").trim();
 
 	        if (count==0){
 	        	selectedGrade.append(pairValue);
@@ -788,6 +840,11 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			}
 		}
 
+	}
+
+	@Override
+	public HTMLPanel getPanelGrades() {
+		return panelGrades;
 	}
 
 }

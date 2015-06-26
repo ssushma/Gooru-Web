@@ -44,6 +44,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -67,6 +68,8 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	@UiField HTMLPanel gradeContainer;
 	
 	@UiField LiPanel preKLiPnl,higherLiPnl;
+	
+	@UiField Label gradeHeader;
 	
 	public static final String GRADE_FLT = "flt.grade";
 	
@@ -334,6 +337,11 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				}
 			}
 		}
+	}
+	
+	@Override
+	public Label getGradeHeader(){
+		return gradeHeader;
 	}
 
 	@Override

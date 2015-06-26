@@ -906,6 +906,66 @@
 .hsImage.inCorrect {
 	border: 2px solid #FBB03B;
 }
+.hsanswer-normal {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 1px solid #ddd;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+.hsanswer-normal:hover {
+	border: 2px solid #98BADD;
+}
+.hsanswer-selected {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 2px solid #98BADD;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+.hsanswer-selected:hover {
+	border: 2px solid #88a7c6;
+}
+.hsanswer-right {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 3px solid #62ae41;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+.hsanswer-wrong {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 3px solid #fbb03b;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+.hsanswer-answerOptionContent {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	line-height: 18px;
+	width: 100%;
+	word-wrap: break-word;
+}
+
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
 		float: left;

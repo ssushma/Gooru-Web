@@ -94,7 +94,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private static String START_DELIMITER="${";
 	private static String END_CORRECT_DELIMITER="$}$";
 	private static String END_DELIMITER="}$";
-	
+
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
 
@@ -547,10 +547,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 		for(int i=0;i<optionsContainer.getWidgetCount();i++){
 			Widget widget=optionsContainer.getWidget(i);
-
 			Element el=(Element) widget.getElement().getLastChild();
-
-			if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+			if(el.getId()!=null){
 				el.removeClassName(STYLE_DND_CORRECT);
 				el.removeClassName(STYLE_DND_INCORRECT);
 			}

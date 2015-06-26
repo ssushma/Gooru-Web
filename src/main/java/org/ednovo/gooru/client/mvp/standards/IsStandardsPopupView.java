@@ -22,35 +22,35 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gsearch.util;
+package org.ednovo.gooru.client.mvp.standards;
+
+import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 
-
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.HTMLPanel;
-
+import com.gwtplatform.mvp.client.PopupView;
 
 /**
  * @author Search Team
  *
  */
-public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandlers> {
+public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<StandardsPopupUiHandlers> {
+
+	void loadData();
+
+	void SetData(StandardsLevel1DO levelOneData, int valArr);
+
+	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
+
+	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
+
+	void hidePopup();
 	
-	/**
-	 * Update the grade style.
-	 * @param filterName {@link String}
-	 * @param addOrRemove {@link String}
-	 */
-	void updateFilterStyle(String filterName, String addOrRemove);
-
-	void showGradesFilter();
-
-	void highlightGradeLevel(String filterName);
-	
-	Label  getGradeHeader();
-
-	public void setGradePanel(HTMLPanel panel);
-
 
 }
