@@ -28,6 +28,7 @@ package org.ednovo.gooru.application.shared.model.content;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 
@@ -65,6 +66,8 @@ public class CollectionQuestionItemDo implements Serializable {
 	
 	private String hlType;
 	private boolean singleCorrectAnswer;
+	private Map<Long, String> centurySelectedValues;
+	private HashMap<String,Boolean> moreOptions;
 
 	public CollectionQuestionItemDo(){}
 
@@ -206,5 +209,23 @@ public class CollectionQuestionItemDo implements Serializable {
 	public void setMedia_files(ArrayList<String> media_files) {
 		this.media_files = media_files;
 	}
+
+	public Map<Long, String> getCenturySelectedValues() {
+		return centurySelectedValues;
+	}
+
+	public void setCenturySelectedValues(Map<Long, String> centurySelectedValues) {
+		this.centurySelectedValues = centurySelectedValues;
+	}
+
+	public HashMap<String, Boolean> getMoreOptions() {
+		return moreOptions;
+	}
+
+	public void setMoreOptions(HashMap<String, Boolean> moreOptions) {
+		this.moreOptions = moreOptions;
+	}
+	
+	
 	
 }

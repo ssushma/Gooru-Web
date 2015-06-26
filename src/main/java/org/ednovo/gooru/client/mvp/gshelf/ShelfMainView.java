@@ -527,6 +527,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			TreeItem treeItem = new TreeItem(shelfTreeWidget);
 			//shelfTreeWidget.setWidgetPositions(1, 0, null);
 			shelfFolderTree.insertItem(0, treeItem);
+			FolderDo folderObj = new FolderDo();
+			folderObj.setTitle("UntitleCourse");
+			getUiHandlers().setRightPanelData(folderObj, COURSE);
 			correctStyle(treeItem);
 		}
 	}

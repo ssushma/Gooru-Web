@@ -2221,4 +2221,98 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		}
 	};
 
+	@Override
+	public void setMetadata(final CollectionQuestionItemDo collectionQuestionItemDo) {
+		
+		Timer timer1=new Timer() {
+			@Override
+			public void run() {
+				questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
+				questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getQuestionText());
+				questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getQuestionText());
+				explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
+				explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
+				explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
+				
+			}
+		};
+		timer1.schedule(0);
+		
+		if(collectionQuestionItemDo.getDepthOfKnowledges()!=null){
+			int checkBoxCount=0;
+			for (checkboxSelectedDo item : collectionQuestionItemDo.getDepthOfKnowledges().get("depthOfKnowledge")) {
+				   if(item.isSelected()){
+					   if(checkBoxCount==0)
+					   chkLevelRecall.setChecked(true);
+					   if(checkBoxCount==1)
+				       chkLevelSkillConcept.setChecked(true);
+					   if(checkBoxCount==2)
+				       chkLevelStrategicThinking.setChecked(true);
+					   if(checkBoxCount==3)
+				       chkLevelExtendedThinking.setChecked(true);
+				   }
+				   checkBoxCount++;
+				}
+			}
+		
+		TreeSet<QuestionHintsDo> hintset = new TreeSet<QuestionHintsDo>(collectionQuestionItemDo.getHints().get("hint"));
+		TreeSet<QuestionHintsDo> hintsList = hintset;
+		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
+		hintsContainer.clear();
+		while (iterator.hasNext()) {
+			QuestionHintsDo hints = iterator.next();
+			int widgetCount=hintsContainer.getWidgetCount();
+	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
+	        addHintsTextArea(addHints);
+		}
+		int count=hintsContainer.getWidgetCount();
+		addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+
+		
+		
+		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
+		
+		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
+		{
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			codeDo.setLabel(entry.getValue());
+			standardsDo.add(codeDo);
+			centurySelectedValues.put(entry.getKey(),entry.getValue());
+			centuryPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"", centuryCodesMap.get(entry.getKey())));
+		}
+		
+		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
+			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();	
+			if(!centurySkills.containsKey(codeID.longValue())){
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			String label=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getLabel();
+			codeDo.setLabel(label);
+			String code=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCode();
+			standardsDo.add(codeDo);
+			standardsPanel.add(createStandardLabel(code,String.valueOf(codeID),label));
+			}
+		}
+		
+		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
+		
+		addExplanationAnc.setVisible(moreOptions.get("explanation"));
+		addHintsAnc.setVisible(moreOptions.get("hints"));
+		addDepthOfKnowledgeAnc.setVisible(moreOptions.get("DOK"));
+		addStandardsAnc.setVisible(moreOptions.get("standards"));
+		addCenturyAnc.setVisible(moreOptions.get("21stcentury"));
+		
+		setAncTabs();
+		
+		
+		if(addDepthOfKnowledgeAnc.isVisible()){setDepthOfKnowledgeContainer();}
+		if(addExplanationAnc.isVisible()){setExplanationContainer();}
+		if(addHintsAnc.isVisible()){setHintsContainer();}
+		if(addStandardsAnc.isVisible()){setStandardsContainer();}
+		if(addCenturyAnc.isVisible()){setCenturyContainer();}
+		
+		
+	}
+
 }
