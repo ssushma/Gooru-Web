@@ -99,7 +99,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
-r * @author Search Team
+ * @author Search Team
  * 
  */
 public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> implements IsShelfListView,ClickHandler {
@@ -1681,6 +1681,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				TreeItem item = myShelfVerPanel.getItem(i);
 				checkFolderItemStyle(item, gooruOid);
 			}
+			organizeRootPnl.addStyleName(folderStyle.active());
 		} else {
 			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
 			if(treeChildSelectedItem.getState()==false){

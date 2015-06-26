@@ -189,7 +189,7 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		answerHeadingTypeLbl.getElement().setId("lblAnswerHeadintType");
 		answerHeadingTypeLbl.setText(i18n.GL3215_1());
 		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215_1());
-		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215());
+		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215_1());
 		reorderRDButton.getElement().setId("rdReorder");
 		reorderRDButton.setText(i18n.GL3216_1());
 		reorderRDButton.getElement().setAttribute("alt", i18n.GL3216_1());

@@ -22,29 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- *
-*/
-package org.ednovo.gooru.client.mvp.test;
+package org.ednovo.gooru.application.client.home.banner;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-
-
 /**
  *
- * @fileName : IsTestView.java
+ * @fileName : IsViewMorePeopleView.java
  *
  * @description :
  *
  *
  * @version : 1.0
  *
- * @date: 26-May-2015
+ * @date: 16-Jun-2015
  *
  * @Author tumbalam
  *
  * @Reviewer:
  */
-public interface IsTestView extends IsViewWithHandlers<TestUiHandlers>{
+public interface IsHomeBannerView extends IsViewWithHandlers<HomeBannerUiHandlers>{
+
 
 }

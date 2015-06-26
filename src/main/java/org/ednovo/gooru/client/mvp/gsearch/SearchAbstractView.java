@@ -438,7 +438,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
         		if (ulDropdown !=null && ulDropdown.isVisible()){
         			ulDropdown.setVisible(false);
         		}
-//        		btnSearchType.setVisible(false);
         	}
     	}
 	}
@@ -446,7 +445,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return ulDropdown.getElement().isOrHasChild(Element.as(target))||btnSearchType.getElement().isOrHasChild(Element.as(target));
+			//gradesPanel.getElement().isOrHasChild(Element.as(target)) || gradesDropDown.getElement().isOrHasChild(Element.as(target)) ||
+			return  ulDropdown.getElement().isOrHasChild(Element.as(target))||btnSearchType.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -527,6 +527,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					isClickedOnDropDwn=true;
 					if (gradesPanel.isVisible()){
 						gradesPanel.setVisible(false);
+					}
+					if (ulSubjectPanel.isVisible()){
+						ulSubjectPanel.setVisible(false);
 					}
 					if (moreFilterPanel.isVisible()){
 						moreFilterPanel.setVisible(false);
@@ -672,7 +675,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
-			searchResults.setText(i18n.GL3275()+" ("+searchDo.getSearchHits()+")");
+			searchResults.setText(i18n.GL3275()+" "+ searchDo.getQuery() +" ("+searchDo.getSearchHits()+")");
 			searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){

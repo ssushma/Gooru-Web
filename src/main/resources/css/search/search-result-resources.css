@@ -211,8 +211,8 @@ margin:0 0 0 -20px !important;
 }
 
 #gooruSearchMainContainer .usedDetails .addResource{
-	width: 80px;
-  	margin-left: 8px;
+	/* width: 80px; */
+  	/* margin-left: 8px; */
 }
 
 #gooruSearchMainContainer .usedDetails a:hover{
@@ -265,6 +265,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .collectionResources {
 	text-align:left;
+	min-height: 40px;
 }
 #gooruSearchMainContainer .collectionResources .collectionTitle{
 	font-size: 13px;

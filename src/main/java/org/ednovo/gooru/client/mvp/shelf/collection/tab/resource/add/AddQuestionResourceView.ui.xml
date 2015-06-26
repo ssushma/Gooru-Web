@@ -260,8 +260,6 @@
 
       <g:HTMLPanel styleName="col-md-12 colmdPadding {addWebResourceStyle.advancedOptionsContainer}">
 
-           <g:Label ui:field="setUpAdvancedLbl" styleName="{addWebResourceStyle.advancedOptionsHeading}"></g:Label>
-
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addExplanationLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addHintsLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addDepthOfKnowledgeLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>

@@ -6,7 +6,7 @@
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="gShelfMainContainer">
-		<g:HTMLPanel styleName="gradeContainer greyBackground">
+		<g:HTMLPanel ui:field="pnlMainContainer" styleName="gradeContainer greyBackground">
 			<div class="container">
 				<div class="row no-gutter equifier">
 					<div class="col-md-3 col-sm-3">
@@ -16,8 +16,7 @@
 								<div class="col-md-10 col-xs-10 col-sm-10">
 									<!-- Split button -->
 									<div class="btn-group btn-block">
-										<g:Button ui:field="btnSelectedText" styleName="btn btn-default btn-left">My
-											Courses</g:Button>
+										<g:Button ui:field="btnSelectedText" styleName="btn btn-default btn-left" text="{i18n.GL3334}"/>
 										<button type="button"
 											class="btn btn-default btn-right dropdown-toggle"
 											data-toggle="dropdown" aria-expanded="false">
@@ -26,20 +25,17 @@
 										</button>
 										<ul class="dropdown-menu" role="menu">
 											<li>
-												<g:Anchor ui:field="lnkMyCourses" text="My Courses" />
+												<g:Anchor ui:field="lnkMyCourses" text="{i18n.GL3335}" title="{i18n.GL3335}"/>
 											</li>
 											<li>
-												<g:Anchor ui:field="lnkMyFolders" text="My Folders" />
-											</li>
-											<li>
-												<g:Anchor ui:field="lnkMyCollections" text="My Collections" />
+												<g:Anchor ui:field="lnkMyFoldersAndCollecctions" text="{i18n.GL3334}" title="{i18n.GL3334}" />
 											</li>
 										</ul>
 									</div>
 								</div>
-								<div class="col-md-2 col-xs-2 col-sm-2">
+								<panel:HTMLEventPanel styleName="col-md-2 col-xs-2 col-sm-2" ui:field="createNewPnl">
 									<span class="plus">+</span>
-								</div>
+								</panel:HTMLEventPanel>
 								<div class="clearfix"></div>
 							</div>
 
@@ -65,5 +61,6 @@
 				</div>
 			</div>
 		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="pnlNoDataContainer"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

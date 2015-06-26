@@ -26,9 +26,9 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import java.util.List;
 
+import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -45,6 +45,10 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
 
+	final String SUBJECT="subject";
+	
+	final String COURSE="course";
+	
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -76,11 +80,25 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void callTaxonomyService() {
-		getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
-			public void onSuccess(List<LibraryCodeDo> result) {
+			public void onSuccess(List<CourseSubjectDo> result) {
 				getView().setCourseList(result);
+				if(result.size()>0){
+					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
+				}
 			}
-		});		
+		});
+	}
+	@Override
+	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
+		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+			@Override
+			public void onSuccess(List<CourseSubjectDo> result) {
+				if(result.size()>0){
+					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
+				}
+			}
+		});
 	}
 }

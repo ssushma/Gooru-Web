@@ -22,38 +22,15 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.content;
+package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
-import java.io.Serializable;
+/**
+ * @author Search Team
+ *
+ */
+public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandlers> {
+	
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-@JsonInclude(Include.NON_NULL)
-public class CollectionHTQuestionItemDo implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private String hlType;
-	private boolean singleCorrectAnswer;
-	public String getHlType() {
-		return hlType;
-	}
-	public boolean isSingleCorrectAnswer() {
-		return singleCorrectAnswer;
-	}
-	public void setHlType(String hlType) {
-		this.hlType = hlType;
-	}
-	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
-		this.singleCorrectAnswer = singleCorrectAnswer;
-	}
-	
-	
-	
-	
 }

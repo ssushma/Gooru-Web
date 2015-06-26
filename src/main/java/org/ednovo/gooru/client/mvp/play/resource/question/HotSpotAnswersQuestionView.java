@@ -37,7 +37,6 @@ import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -69,10 +68,10 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 	private boolean isCheckAnswerButtonClicked=false;
 
-	private static final String NORMAL_RADIO="answer-radio-normal-icon";
-	private static final String SELECTED_RADIO="answer-radio-selected-icon";
-	private static final String CORRECT_ICON="answer-right-icon";
-	private static final String INCORRECT_ICON="answer-wrong-icon";
+	private static final String NORMAL_RADIO="hsanswer-normal";
+	private static final String SELECTED_RADIO="hsanswer-selected";
+	private static final String CORRECT_ICON="hsanswer-right";
+	private static final String INCORRECT_ICON="hsanswer-wrong";
 	private static final String IMAGE_SELECTED_STYLE="hsImage";
 	private static final String IMAGE_CORRECT_STYLE="correct";
 	private static final String IMAGE_INCORRECT_STYLE="inCorrect";
@@ -120,7 +119,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
 			int i=0;
 
-			if(collectionItemDo.getResource().getAttributes().getHlType().equalsIgnoreCase(i18n.GL3228_1())){
+			if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3228_1())){
 				while (answersList.hasNext()) {
 					QuestionAnswerDo questionAnswerDo=answersList.next();
 					double randNumber = Math.random();
@@ -143,11 +142,12 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			}else{
 				while (answersList.hasNext()) {
 					QuestionAnswerDo questionAnswerDo=answersList.next();
-					final QuestionAnswerOptionView questionAnswerOptionView=new QuestionAnswerOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
+					final HSAnswerOptionView questionAnswerOptionView=new HSAnswerOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
 					questionAnswerOptionView.setAnswerId(questionAnswerDo.getSequence());
-					questionAnswerOptionView.radioButton.setStyleName(NORMAL_RADIO);
+					questionAnswerOptionView.answerChoiceResult.addStyleName(NORMAL_RADIO);
 					questionAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());
-					questionAnswerOptionView.radioButton.addClickHandler(new RadioButtonSelectEvent(questionAnswerOptionView,questionAnswerDo,i+1));
+					questionAnswerOptionView.answerChoiceResult.addDomHandler(new RadioButtonSelectEvent(questionAnswerOptionView,questionAnswerDo,i+1), ClickEvent.getType());
+					//questionAnswerOptionView.radioButton.addClickHandler(new RadioButtonSelectEvent(questionAnswerOptionView,questionAnswerDo,i+1));
 					optionsContainer.add(questionAnswerOptionView);
 
 					if(attemptedAnswerDo!=null){
@@ -159,20 +159,18 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 		}
 	}
 
-	public void showPreviousAttemptResult(int answerId,QuestionAnswerOptionView questionAnswerOptionView,boolean isCorrect){
+	public void showPreviousAttemptResult(int answerId,HSAnswerOptionView questionAnswerOptionView,boolean isCorrect){
 
 		Map<Integer,Boolean> answerOptionCount=attemptedAnswerDo.getAnswerOptionResult();
 
 		if(answerOptionCount.containsKey(answerId) && answerOptionCount.get(answerId)!=null){
 			questionAnswerOptionView.isChecked=true;
 			if(isCorrect){
-				questionAnswerOptionView.answerChoiceResult.setStyleName(CORRECT_ICON);
-				questionAnswerOptionView.radioButton.setStyleName(SELECTED_RADIO);
-				questionAnswerOptionView.answerOptionRadioButton.setValue(true);
+				questionAnswerOptionView.answerChoiceResult.addStyleName(CORRECT_ICON);
+				questionAnswerOptionView.answerChoiceResult.addStyleName(SELECTED_RADIO);
 			}else{
-				questionAnswerOptionView.answerChoiceResult.setStyleName(INCORRECT_ICON);
-				questionAnswerOptionView.radioButton.setStyleName(SELECTED_RADIO);
-				questionAnswerOptionView.answerOptionRadioButton.setValue(true);
+				questionAnswerOptionView.answerChoiceResult.addStyleName(INCORRECT_ICON);
+				questionAnswerOptionView.answerChoiceResult.addStyleName(SELECTED_RADIO);
 			}
 		}
 	}
@@ -244,11 +242,11 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 
 	public class RadioButtonSelectEvent implements ClickHandler{
-		private QuestionAnswerOptionView questionAnswerOptionView=null;
+		private HSAnswerOptionView questionAnswerOptionView=null;
 		private QuestionAnswerDo questionAnswerDo=null;
 		private int attemptSequence=1;
 
-		public RadioButtonSelectEvent(QuestionAnswerOptionView questionAnswerOptionView,QuestionAnswerDo questionAnswerDo,int attemptSequence){
+		public RadioButtonSelectEvent(HSAnswerOptionView questionAnswerOptionView,QuestionAnswerDo questionAnswerDo,int attemptSequence){
 			this.questionAnswerOptionView=questionAnswerOptionView;
 			this.questionAnswerDo=questionAnswerDo;
 			this.attemptSequence=attemptSequence;
@@ -259,15 +257,12 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 			if(questionAnswerOptionView.isChecked){
 				questionAnswerOptionView.isChecked=false;
-				questionAnswerOptionView.radioButton.setStyleName(NORMAL_RADIO);
-				questionAnswerOptionView.answerOptionRadioButton.setValue(false);
-				questionAnswerOptionView.answerChoiceResult.setStyleName("");
+				questionAnswerOptionView.answerChoiceResult.removeStyleName(SELECTED_RADIO);
 				int attemptStatus=questionAnswerDo.isIsCorrect()?1:0;
 				setAnswerAttemptSequence(attemptSequence,attemptStatus,questionAnswerDo.getSequence());
 			}else{
 				questionAnswerOptionView.isChecked=true;
-				questionAnswerOptionView.answerOptionRadioButton.setValue(true);
-				questionAnswerOptionView.radioButton.setStyleName(SELECTED_RADIO);
+				questionAnswerOptionView.answerChoiceResult.addStyleName(SELECTED_RADIO);
 				int attemptStatus=questionAnswerDo.isIsCorrect()?1:0;
 				setAnswerAttemptSequence(attemptSequence,attemptStatus,questionAnswerDo.getSequence());
 			}
@@ -282,11 +277,11 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 		disableCheckAnswerButton();
 		for(int i=0;i<widgetCount;i++){
 			Widget widget=optionsContainer.getWidget(i);
-			if(widget instanceof QuestionAnswerOptionView){
-				QuestionAnswerOptionView questionAnswerOptionView=(QuestionAnswerOptionView)widget;
+			if(widget instanceof HSAnswerOptionView){
+				HSAnswerOptionView questionAnswerOptionView=(HSAnswerOptionView)widget;
 				questionAnswerOptionView.answerChoiceResult.removeStyleName(CORRECT_ICON);
 				questionAnswerOptionView.answerChoiceResult.removeStyleName(INCORRECT_ICON);
-				if(questionAnswerOptionView.radioButton.getStyleName().equalsIgnoreCase(SELECTED_RADIO)){
+				if(questionAnswerOptionView.answerChoiceResult.getStyleName().contains(SELECTED_RADIO)){
 					enableCheckAnswerButton();
 				}
 			}
@@ -324,8 +319,8 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 		for(int i=0;i<widgetCount;i++){
 			Widget widget=optionsContainer.getWidget(i);
-			if(widget instanceof QuestionAnswerOptionView){
-				QuestionAnswerOptionView questionAnswerOptionView=(QuestionAnswerOptionView)widget;
+			if(widget instanceof HSAnswerOptionView){
+				HSAnswerOptionView questionAnswerOptionView=(HSAnswerOptionView)widget;
 
 				if(questionAnswerOptionView.isChecked){
 
@@ -337,7 +332,8 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText())); 
+					answerAttemptDo.setText(questionAnswerOptionView.getAnswerText()); 
+					//answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText())); 
 					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);
@@ -349,13 +345,13 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 						answerAttemptDo.setStatus("1");
 						answerOptionResult.put(questionAnswerOptionView.getAnswerId(), true);
 						userAttemptedValueList.add("1");
-						questionAnswerOptionView.answerChoiceResult.setStyleName(CORRECT_ICON);
+						questionAnswerOptionView.answerChoiceResult.addStyleName(CORRECT_ICON);
 					}else{
 						hsChoiceStatus=false;
 						answerOptionResult.put(questionAnswerOptionView.getAnswerId(), false);
 						userAttemptedValueList.add("0");
 						answerAttemptDo.setStatus("0");
-						questionAnswerOptionView.answerChoiceResult.setStyleName(INCORRECT_ICON);
+						questionAnswerOptionView.answerChoiceResult.addStyleName(INCORRECT_ICON);
 					}
 					attempteAnswersDo.setAnswerOptionResult(answerOptionResult);
 					userAttemptedOptionsList.add(answerAttemptDo);
@@ -373,7 +369,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(StringUtil.replaceSpecial(answerImg.getAnswerImage())); 
+					answerAttemptDo.setText(answerImg.getAnswerImage()); 
 					answerAttemptDo.setAnswerId(answerImg.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);

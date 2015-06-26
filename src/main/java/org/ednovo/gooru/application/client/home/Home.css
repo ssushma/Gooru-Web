@@ -10,14 +10,8 @@
 	font-family: 'rock' !important;
 }
 
-body {
-	background: #efeded url(../images/background-image.png) repeat
-		!important;
-	font-family: Arial, Helvetica, sans-serif !important;
-}
-
 a {
-	
+
 }
 
 header {
@@ -325,7 +319,7 @@ button.primary:hover {
 
 .shareImg {
 	/* background-position: -285px -175px; */
-	
+
 }
 
 .discoverText {
@@ -1277,7 +1271,7 @@ button.primary:hover {
 	background: url("images/all-arrow-icon.png") no-repeat scroll -13px
 		-109px transparent;
 	height: 37px;
-	/* left: 90px; 
+	/* left: 90px;
 	position: relative;*/
 	width: 30px;
 	float: right;
@@ -1496,7 +1490,7 @@ button.primary:hover {
 }
 
 .landingPageSliderArrowSpan {
-	background: url("images/side-arrow.1.png") no-repeat; 
+	background: url("images/side-arrow.1.png") no-repeat;
 	display: block;
 	height: 50px;
 	position: relative;
@@ -1968,7 +1962,7 @@ button.primary:hover {
 }
 
 .removingText {
-	
+
 }
 
 /* New landing page */
@@ -2188,7 +2182,7 @@ a.secondary:hover {
 	/*-webkit-box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);
 -moz-box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);
 box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
-	
+
 }
 
 
@@ -2286,7 +2280,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 
 .mission .partext {
 	/*	min-height: 115px;*/
-	
+
 }
 
 .mission {
@@ -2677,7 +2671,7 @@ footer {
 	border-right: none;
 }
 .dataTableResult .col-xs-3 p{
-	width: 100%; 
+	width: 100%;
 }
 
 .rightBlock1 {

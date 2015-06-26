@@ -198,9 +198,9 @@ public class FooterUc extends Composite {
 		aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1242());
 		aboutGooruAnr.getElement().setAttribute("title",i18n.GL1242());
 
-		communityAnr.setText(i18n.GL1243());
-		communityAnr.getElement().setAttribute("alt",i18n.GL1243());
-		communityAnr.getElement().setAttribute("title",i18n.GL1243());
+		communityAnr.setText(i18n.GL3333());
+		communityAnr.getElement().setAttribute("alt",i18n.GL3333());
+		communityAnr.getElement().setAttribute("title",i18n.GL3333());
 
 		supportAnr.setText(i18n.GL0194());
 		supportAnr.getElement().setAttribute("alt",i18n.GL0194());
@@ -242,7 +242,7 @@ public class FooterUc extends Composite {
 		aboutGooruAnr.setTarget("_blank");
 		//featuresAnr.setHref("http://about.goorulearning.org/product/overview/");
 		//featuresAnr.setTarget("_blank");
-		communityAnr.setHref("http://about.goorulearning.org/community/");
+		communityAnr.setHref("http://about.goorulearning.org/educators/stories/");
 		communityAnr.setTarget("_blank");
 		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
 		supportAnr.setTarget("_blank");

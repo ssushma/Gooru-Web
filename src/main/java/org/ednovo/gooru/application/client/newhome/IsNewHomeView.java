@@ -25,22 +25,14 @@
 /**
  *
 */
-package org.ednovo.gooru.client.mvp.test;
+package org.ednovo.gooru.application.client.newhome;
 
-import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
-import com.google.gwt.user.client.Window;
-import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
  *
- * @fileName : TestPresenter.java
+ * @fileName : IsTestView.java
  *
  * @description :
  *
@@ -53,46 +45,27 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  *
  * @Reviewer:
  */
-public class TestPresenter extends BasePlacePresenter<IsTestView, IsEditClasspageProxy> implements TestUiHandlers {
+public interface IsNewHomeView extends IsViewWithHandlers<NewHomeUiHandlers>{
 
-	@Inject
-	public TestPresenter(IsTestView view, IsEditClasspageProxy proxy) {
-		super(view, proxy);
-		getView().setUiHandlers(this);
-	}
+	/**
+	 *
+	 * @function resetPassword
+	 *
+	 * @created_date : 22-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param resetToken
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void resetPassword(String resetToken);
 
-	@ProxyCodeSplit
-	@NameToken(PlaceTokens.TEST)
-	public interface IsTestProxy extends ProxyPlace<TestPresenter> {
-	}
-
-
-	@Override
-	public String getViewToken() {
-		return AppClientFactory.getCurrentPlaceToken();
-	}
-
-	@Override
-	protected void onReveal() {
-		super.onReveal();
-		Window.enableScrolling(true);
-			}
-
-
-	@Override
-	protected void onHide() {
-		super.onHide();
-
-	}
-
-	@Override
-	public void onBind() {
-		super.onBind();
-		Window.enableScrolling(true);
-	}
-
-	@Override
-	protected void onReset() {
-		Window.enableScrolling(true);
-	}
 }

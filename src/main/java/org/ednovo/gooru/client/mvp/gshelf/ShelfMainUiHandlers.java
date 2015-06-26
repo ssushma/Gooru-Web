@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
@@ -58,7 +61,11 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
-	
+	/**
+	 * To get the child folders items
+	 * @param folderId {@link String}
+	 * @param isDataCalled
+	 */
 	void getChildFolderItems(String folderId, boolean isDataCalled);   
 	
 	/**
@@ -66,6 +73,34 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	 * @param type
 	 */
 	void setListPresenterBasedOnType(String type);
-
+    
+	/**
+	 * To get the user content when scrolling the page.
+	 * @param pageSize 
+	 * @param pageNumber {@link Integer}
+	 * @param clearShelfPanel
+	 */
 	void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel);
+	
+	/**
+	 * This method is used to get list presenter
+	 */
+	public MyCollectionsListPresenter getMyCollectionsListPresenter();
+	
+	/**
+	 * To show Folder/Course/Collection content on Right side panel when clicking on Lift side tree.
+	 * @param folderObj
+	 * @param clickedItemType
+	 */
+	public void setRightPanelData(FolderDo folderObj,String clickedItemType);
+    /**
+     * To show List of user content
+     * @param listOfContent
+     * @param title
+     */
+	void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo);
+    /**
+     * Update tree widget as active style.
+     */
+	void updateLeftShelfPanelActiveStyle();
 }

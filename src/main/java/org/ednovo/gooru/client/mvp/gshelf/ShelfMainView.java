@@ -34,7 +34,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
+import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -45,6 +45,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -78,14 +79,16 @@ import com.google.gwt.user.client.ui.Widget;
  * @Reviewer:
  */
 public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> implements IsShelfMainView {
-
-	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot;
 	
-	@UiField HTMLEventPanel organizeRootPnl;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer;
+	
+	@UiField HTMLEventPanel organizeRootPnl,createNewPnl;
 	
 	@UiField Button btnSelectedText;
 	
-	@UiField Anchor lnkMyCourses,lnkMyFolders,lnkMyCollections;
+	@UiField Anchor lnkMyCourses,lnkMyFoldersAndCollecctions;
 	
 	@UiField Label organizelbl;
 	
@@ -99,19 +102,17 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private static final String ID = "id";
 
-	private static final String FOLDER = "folder";
+	private static final String FOLDER = "Folder";
 	
-	private static final String TYPE = "type";
+	private static final String COURSE = "Course";
 	
-	private static final String SCOLLECTION = "scollection";
+	private String VIEW ="view";
 	
 	static Integer pageNumber = 1;
 
 	private TreeItem treeChildSelectedItem = new TreeItem();
 
 	private TreeItem previousTreeChildSelectedItem = new TreeItem();
-
-	private static final String GOORU_UID = "gooruuid";
 	
 	private Integer childPageNumber = 1;
 	
@@ -119,13 +120,13 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	boolean collectionItemsNotFriendly = false;
 
-	static MessageProperties i18n = GWT.create(MessageProperties.class);
-
 	String selectedFolderId = "";
 
 	List<ClassPageCollectionDo> classpageTitles = null;
 
 	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
+	
+	List<FolderDo> folderListDoChild=new ArrayList<FolderDo>();
 
 	private static ShelfMainViewUiBinder uiBinder = GWT
 			.create(ShelfMainViewUiBinder.class);
@@ -155,10 +156,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		setIdForFields();
 		setTreeStucture();
 		//setDefaultOrganizePanel();
-		organizelbl.setText("My Courses");
+		//organizelbl.setText(i18n.GL3285());
 		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
-		lnkMyFolders.addClickHandler(new DropDownClickEvent(1));
-		lnkMyCollections.addClickHandler(new DropDownClickEvent(2));
+		lnkMyFoldersAndCollecctions.addClickHandler(new DropDownClickEvent(1));
 	}
 
 	/**
@@ -174,14 +174,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			Anchor selected=(Anchor) event.getSource();
 			btnSelectedText.setText(selected.getText());
 			if(selectedIndex==0){
-				organizelbl.setText("My Courses");
-				getUiHandlers().setListPresenterBasedOnType("Course");
+				organizelbl.setText(i18n.GL3335());
+				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
-			    organizelbl.setText("My Folders");
-				getUiHandlers().setListPresenterBasedOnType("Folder");
-			}else if(selectedIndex==2){
-				organizelbl.setText("My Collections");
-				getUiHandlers().setListPresenterBasedOnType("Collection");
+			    organizelbl.setText(i18n.GL3334());
+				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}
 		}
 	}
@@ -190,7 +187,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 * To set the default organize list.
 	 */
 	@Override
-	public void setDefaultOrganizePanel() {
+	public void setDefaultOrganizePanel(String tabView) {
 		if(treeChildSelectedItem!=null){
 			if(getFolderLevel()==0) {
 				organizeRootPnl.addStyleName("active");
@@ -206,9 +203,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				}
 			}
 		}
+		if(tabView==null || tabView.equals(COURSE)){
+			organizelbl.setText(i18n.GL3335());
+			btnSelectedText.setText(i18n.GL3335());
+		}else if(tabView.equals(FOLDER)){
+			organizelbl.setText(i18n.GL3334());
+			btnSelectedText.setText(i18n.GL3334());
+		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);
-		collectionListScrollpanel.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
+		collectionListScrollpanel.getElement().getStyle().setHeight(Window.getClientHeight()-181, Unit.PX);
 	}
 	
 	/**
@@ -218,20 +222,19 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		gShelfMainContainer.getElement().setId("gShelfMainContainer");
 		btnSelectedText.getElement().setId("btnSelectedText");
 		lnkMyCourses.getElement().setId("lnkMyCourses");
-		lnkMyFolders.getElement().setId("lnkMyFolders");
-		lnkMyCollections.getElement().setId("lnkMyCollections");
+		lnkMyFoldersAndCollecctions.getElement().setId("lnkMyFoldersAndCollecctions");
+		StringUtil.setAttributes(createNewPnl.getElement(), "createNew", "createNew", "createNew");
 		StringUtil.setAttributes(organizeRootPnl.getElement(), "organizeRootPnl", "", "");
 		StringUtil.setAttributes(organizelbl.getElement(), "organizelbl", "", "");
 		StringUtil.setAttributes(collectionListScrollpanel.getElement(), "FoldersListScrollpanel", "", "");
-		
 	}
 	private void setTreeStucture() {
 		floderTreeContainer.clear();
 		shelfFolderTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
-				ShelfTreeWidget shelfCollection = (ShelfTreeWidget) event.getSelectedItem().getWidget();
-				if(!shelfCollection.getCollectionDo().getCollectionType().equals("assessment/url")){
+				ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) event.getSelectedItem().getWidget();
+				if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
 					treeChildSelectedItem = event.getSelectedItem();
 					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 					setFolderActiveStatus();
@@ -255,29 +258,28 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		return folderLevel;
 	}
 
-
 	public void setFolderActiveStatus() { 
-		ShelfTreeWidget shelfCollection = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
-		if(!shelfCollection.getCollectionDo().getCollectionType().equals("assessment/url")){
-			if(shelfCollection.getCollectionDo().getType().equals("folder")) {
+		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+		if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
+			if(shelfTreeWidget.getCollectionDo().getType().equals("folder")) {
 				TreeItem parent = treeChildSelectedItem.getParentItem();
 				treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 				if(parent != null)parent.setSelected(false);
 				treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-				getUiHandlers().getChildFolderItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getFolderOpenedStatus());
-				shelfCollection.setFolderOpenedStatus(true);
+				getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),shelfTreeWidget.getFolderOpenedStatus());
+				shelfTreeWidget.setFolderOpenedStatus(true);
 				
 			} else {
-				//getUiHandlers().getCollectionItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getCollectionOpenedStatus()); 
-				shelfCollection.setCollectionOpenedStatus(true);
+				//getUiHandlers().getCollectionItems(shelfTreeWidget.getCollectionDo().getGooruOid(),shelfTreeWidget.getCollectionOpenedStatus()); 
+				shelfTreeWidget.setCollectionOpenedStatus(true);
 			}
-			shelfCollection.setActiveStyle(true);
-			ShelfTreeWidget previousShelfCollection = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
-			if(previousShelfCollection==null) {
+			shelfTreeWidget.setActiveStyle(true);
+			ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
+			if(previousshelfTreeWidget==null) {
 				previousTreeChildSelectedItem = treeChildSelectedItem;
 			}
-			if(previousShelfCollection!=null&&(shelfCollection.getCollectionDo().getGooruOid()!=previousShelfCollection.getCollectionDo().getGooruOid())) {
-				previousShelfCollection.setActiveStyle(false);
+			if(previousshelfTreeWidget!=null&&(shelfTreeWidget.getCollectionDo().getGooruOid()!=previousshelfTreeWidget.getCollectionDo().getGooruOid())) {
+				previousshelfTreeWidget.setActiveStyle(false);
 			}
 			previousTreeChildSelectedItem = treeChildSelectedItem;
 		}
@@ -295,10 +297,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			 }else{
 				 
 			}
+			Window.enableScrolling(false);
 		}else{
 
 		}
-		Window.enableScrolling(false);
 	}
 	@Override
 	public void getChildFolderItems(List<FolderDo> folderListDo) {
@@ -321,9 +323,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				nextLevel = 4;
 			}
 			for(int i=0;i<folderListDo.size();i++) {
-				ShelfTreeWidget shelfCollection = new ShelfTreeWidget(folderListDo.get(i), nextLevel);
-				shelfCollection.setWidgetPositions(nextLevel, i, selectedWidget.getUrlParams());
-				TreeItem item = new TreeItem(shelfCollection);
+				ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(folderListDo.get(i), nextLevel);
+				shelfTreeWidget.setWidgetPositions(nextLevel, i, selectedWidget.getUrlParams());
+				TreeItem item = new TreeItem(shelfTreeWidget);
 				treeChildSelectedItem.addItem(item);
 				correctStyle(item);
 				if(nextLevel==2&& (o2!=null&&o2.equalsIgnoreCase(folderListDo.get(i).getGooruOid()) || id!=null&&id.equalsIgnoreCase(folderListDo.get(i).getGooruOid()))) {
@@ -366,6 +368,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			selectedWidget1.setFolderOpenedStatus(true);
 		}
 		
+		//This will set the data in the right panel
+		if(selectedWidget!=null){
+			folderListDoChild.clear();
+			int childWidgetsCount=treeChildSelectedItem.getChildCount();
+			for (int i = 0; i < childWidgetsCount; i++) {
+				ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
+				folderListDoChild.add(widget.getCollectionDo());
+			}
+			getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
+		}
 	}	
 	
 	private static void correctStyle(final UIObject uiObject) {
@@ -417,17 +429,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			for(int i=0;i<collections.size();i++){
 				FolderDo floderDo=collections.get(i);
 				if(!getShelffCollection(floderDo.getGooruOid())){
-					ShelfTreeWidget shelfCollection = new ShelfTreeWidget(floderDo, 1);
-					shelfCollection.setWidgetPositions(1, collectionCount, null);
-					TreeItem folderItem=new TreeItem(new ShelfTreeWidget(floderDo, 1));
+					ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(floderDo, 1);
+					shelfTreeWidget.setWidgetPositions(1, collectionCount, null);
+					TreeItem folderItem=new TreeItem(shelfTreeWidget);
 					shelfFolderTree.addItem(folderItem);
 					//When page is refreshed, the folderItem previously selected will be highlighted.
 					if(gooruOid!=null&&gooruOid.equalsIgnoreCase(floderDo.getGooruOid())) {
 						checkShelfRefreshStatus(folderItem, floderDo.getGooruOid());
-						shelfCollection.setFolderOpenedStatus(true);
+						shelfTreeWidget.setFolderOpenedStatus(true);
 					}
 					collectionCount++;
-
 				}
 				floderTreeContainer.clear();
 				floderTreeContainer.add(shelfFolderTree);
@@ -458,16 +469,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private void checkShelfRefreshStatus(TreeItem treeItem, String parentId) {
 		treeChildSelectedItem = treeItem;
-		ShelfTreeWidget shelfCollection = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
-		shelfCollection.setActiveStyle(true);
+		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+		shelfTreeWidget.setActiveStyle(true);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		id = id!=null?id:"";
 		if(!parentId.equalsIgnoreCase(id)) {
 			getUiHandlers().getChildFolderItems(parentId,false);
 		}
-		ShelfTreeWidget previousShelfCollection = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
-		if(previousShelfCollection!=null) {
-			previousShelfCollection.setActiveStyle(false);
+		ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
+		if(previousshelfTreeWidget!=null) {
+			previousshelfTreeWidget.setActiveStyle(false);
 		}
 		previousTreeChildSelectedItem = treeChildSelectedItem;
 	}
@@ -501,28 +512,137 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiHandler("organizeRootPnl")
 	public void clickOnOrganizeRootPnl(ClickEvent event) {
-		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
-		if(shelfCollection!=null&&shelfCollection.getLevel()!=0) {
-			shelfCollection.setActiveStyle(false);
+		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+		if(shelfTreeWidget!=null&&shelfTreeWidget.getLevel()!=0) {
+			shelfTreeWidget.setActiveStyle(false);
 		}
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+		getUiHandlers().setRightListData(SHELF_COLLECTIONS,null);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+	}
+	
+	@UiHandler("createNewPnl")
+	public void createNewCourseOrCollection(ClickEvent event) {
+		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 1);
+		TreeItem treeItem = new TreeItem(shelfTreeWidget);
+		//shelfTreeWidget.setWidgetPositions(1, 0, null);
+		shelfFolderTree.insertItem(0, treeItem);
+		correctStyle(treeItem);
 	}
 	
 	/**
 	 * To get more collection item after scroll down,if collection is more than 20.
 	 * @param event instance of ScrollEvent
 	 */
-	@UiHandler("collectionListScrollpanel")
-	public void dragImageSimPanelscroll(ScrollEvent event) {
-		if (collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
-			pageNumber = pageNumber + 1;
-			getUiHandlers().getMoreListItems(20, pageNumber, false);
+	class ScrollHandlerImpl implements ScrollHandler{
+		boolean isLeftScroll;
+		ScrollHandlerImpl(boolean isLeftScroll){
+			this.isLeftScroll=isLeftScroll;
+		}
+		@Override
+		public void onScroll(ScrollEvent event) {
 		}
 	}
-
 	
+	@UiHandler("collectionListScrollpanel")
+	public void onScroll(ScrollEvent event){
+		executeScroll(true);
+	}
+
+	@Override
+	public void executeScroll(boolean isLeftScroll){
+		if(isLeftScroll){
+			if(collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
+				pageNumber = pageNumber + 1;
+				getUiHandlers().getMoreListItems(20, pageNumber, false);
+			}
+		}else{
+			if(getUiHandlers().getMyCollectionsListPresenter().getScrollPanel().getVerticalScrollPosition() == getUiHandlers().getMyCollectionsListPresenter().getScrollPanel().getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
+				pageNumber = pageNumber + 1;
+				getUiHandlers().getMoreListItems(20, pageNumber, false);
+			}
+		}
+	}
    	@Override
    	public HTMLPanel getSlot(){
    		return pnlSlot;
    	}
+   	
+   	@Override
+   	public void setNoDataForAnonymousUser(boolean isAnonymous){
+   		if(isAnonymous){
+   			pnlMainContainer.setVisible(false);
+   			pnlNoDataContainer.setVisible(true);
+   			pnlNoDataContainer.add(new FoldersWelcomePage());
+   			Window.enableScrolling(true);
+   		}else{
+   			pnlMainContainer.setVisible(true);
+   			pnlNoDataContainer.setVisible(false);
+   			Window.enableScrolling(false);
+   		}
+   	}
+   	/**
+   	 * @return viewType
+   	 */
+   	public String getViewType(){
+		return AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+   	}
+
+	@Override
+	public void updateLeftShelfPanelActiveStyle() {
+		String gooruOid = null;
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget(); 
+		if(shelfTreeWidget==null || !organizeRootPnl.getStyleName().contains("active")) {
+			if(id!=null) {
+				gooruOid = id;
+			} else {
+				gooruOid = o1;
+			}
+			for(int i = 0; i < shelfFolderTree.getItemCount(); i++) { 
+				TreeItem item = shelfFolderTree.getItem(i);
+				checkFolderItemStyle(item, gooruOid);
+			}
+			organizeRootPnl.addStyleName("active");
+		} else {
+			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
+			if(treeChildSelectedItem.getState()==false){
+				treeChildSelectedItem.setState(true);
+			}
+			if(!organizeRootPnl.getStyleName().contains("active")) {
+				gooruOid = o1;
+			} else if(shelfTreeWidget.getLevel()==1) {
+				if(id==null){
+					gooruOid = o2;
+				}else{
+					gooruOid = id; 
+				}
+				
+			} else if(shelfTreeWidget.getLevel()==2) {
+				if(id==null){
+					gooruOid = o3;
+				}else{
+					gooruOid = id;
+				}
+			} else if(shelfTreeWidget.getLevel()==3) {
+				gooruOid = id;
+			}
+			for(int i = 0; i < treeChildSelectedItem.getChildCount(); i++) {
+				 TreeItem item = treeChildSelectedItem.getChild(i);
+				 checkFolderItemStyle(item, gooruOid);
+			}
+		}
+	}
+	
+	private void checkFolderItemStyle(TreeItem item, String gooruOid) {
+		ShelfTreeWidget updatedItem = (ShelfTreeWidget) item.getWidget();
+		 if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
+			 treeChildSelectedItem = item;
+			 //updatedItem.setActiveStyle(true);
+			 setFolderActiveStatus();
+			 return;
+		 }
+	}
 }

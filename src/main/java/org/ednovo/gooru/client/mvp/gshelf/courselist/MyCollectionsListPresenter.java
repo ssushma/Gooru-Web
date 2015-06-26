@@ -23,6 +23,8 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
@@ -32,11 +34,14 @@ import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPre
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsListView> implements MyCollectionsListUiHandlers{
 	
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
+	
+	private ShelfMainPresenter shelfMainPresenter;
 	
 	/**
 	 * Constructor
@@ -51,22 +56,22 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel) {
-		getView().setData(type,slotPanel,result,clrPanel);
+	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
+		getView().setData(type,slotPanel,listOfContent,clrPanel,isInnerSlot,folderDo);
 	}
 	
 	@Override
-	public void setDataInContentSlot(final String type, final HTMLPanel slotPanel,String folderId) {
+	public void setDataInContentSlot(final String type, final HTMLPanel slotPanel,String folderId,boolean isInnerSlot) {
 		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
-				getView().setData(type,slotPanel,result,true);
+				getView().setData(type,slotPanel,result.getSearchResult(),true,true,null);
 			}
 		});
 	}
 
 	@Override
-	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj) {
+	public void setRightClusterPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj) {
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
 		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
 		getMyCollectionsRightClusterPresenter().setTabItems(2, type,slotPanel,folderObj);
@@ -85,5 +90,22 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 				getView().resetWidgetPositions();
 			}
 		});
+	}
+
+	@Override
+	public ScrollPanel getScrollPanel() {
+		return getView().getScrollPanel();
+	}
+
+	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
+		this.shelfMainPresenter=shelfMainPresenter;
+	}
+
+	/**
+	 * @return the shelfMainPresenter
+	 */
+	@Override
+	public ShelfMainPresenter getShelfMainPresenter() {
+		return shelfMainPresenter;
 	}
 }

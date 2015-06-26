@@ -24,12 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
@@ -59,7 +63,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer;
+	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate;
@@ -71,7 +75,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	HTMLPanel slotPanel;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
+	
+	private static final String VIEW= "view";
 
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
+	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
@@ -104,8 +118,18 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			if(widget instanceof ContentWidgetWithMove){
 				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
 				contentWidgetWithMove.getH3Panel().setText(type+" "+(index+1));
-				contentWidgetWithMove.getTextBox().setText("");
+				contentWidgetWithMove.getTextBox().setText((index+1)+"");
 				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
+				if(index==0){
+					//If this is the first widget we are hiding the up arrow
+					contentWidgetWithMove.getTopArrow().setVisible(false);
+				}else if(index==(pnlCourseList.getWidgetCount()-1)){
+					//If this the last widget hiding the down arrow
+					contentWidgetWithMove.getDownArrow().setVisible(false);
+				}else{
+					contentWidgetWithMove.getTopArrow().setVisible(true);
+					contentWidgetWithMove.getDownArrow().setVisible(true);
+				}
 				index++;
 			}
 		}
@@ -114,30 +138,56 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,FolderListDo result,boolean clrPanel) {
+	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
 		this.slotPanel=slotPanel;
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
-		if(COURSE.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL1180());
-		}else if(FOLDER.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL0994());
-		}else if(COLLECTION.equalsIgnoreCase(type)){
-			h2Title.setText(i18n.GL3282());
-		}else{
+		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
-			btnCreate.setText("Create Unit");
+			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+			if(view!=null && (view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
+			}else{
+				btnCreate.setVisible(true);
+				btnCreate.setText("Create Unit");
+				pnlAddContainer.setVisible(true);
+			}
+		}else{
+			if(COURSE.equalsIgnoreCase(type)){
+				h2Title.setText(i18n.GL1180());
+			}else if(FOLDER.equalsIgnoreCase(type)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
+				if(folderDo!=null){
+					h2Title.setText(folderDo.getTitle()+" "+i18n.GL3336());
+				}else{
+					h2Title.setText(i18n.GL0994());
+				}
+			}else if(COLLECTION.equalsIgnoreCase(type)){
+				btnCreate.setVisible(false);
+				pnlAddContainer.setVisible(false);
+				if(folderDo!=null){
+					h2Title.setText(folderDo.getTitle()+" "+i18n.GL3336());
+				}else{
+					h2Title.setText(i18n.GL3282());
+				}
+			}else{
+				pnlH2TitleContainer.setVisible(false);
+				pnlCreateContainer.setVisible(true);
+			}
 		}
 		if(clrPanel){
 			index=0;
 			pnlCourseList.clear();
 		}else{
 			index=pnlCourseList.getWidgetCount();
+			setLastWidgetArrowVisiblity(true);
 		}
-		if(result.getSearchResult().size()>0){
-			for (FolderDo folderObj : result.getSearchResult()) {
+		if(listOfContent.size()>0){
+			for (FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
 					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
@@ -162,8 +212,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				pnlCourseList.add(widgetMove);
 				index++;
 			}
+			setLastWidgetArrowVisiblity(false);
 		}
 	}
+	/**
+	 * This inner class is used to handle the click event on title container
+	 */
 	class ClickOnTitleContainer implements ClickHandler{
 		FolderDo folderObj;
 		ClickOnTitleContainer(FolderDo folderObj){
@@ -171,7 +225,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().setListPresenterBasedOnType("Unit",slotPanel,folderObj);
+			Map<String,String> params = new HashMap<String,String>();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
+			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
 		}
 	}
 	@Override
@@ -181,13 +237,56 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				slotPanel.clear();
 				slotPanel.add(content);
 			 }
-		}else{
-
 		}
 	}
-	
+	/**
+	 * On pagination it will enable the previous widget down arrow for move functionality
+	 * @param isVisible
+	 */
+	public void setLastWidgetArrowVisiblity(boolean isVisible){
+		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
+		lastwidget.getDownArrow().setVisible(isVisible);
+	}
+	/**
+	 * This method will set the height and it will display the scroll
+	 */
 	public void setScrollHeight(){
 		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
 		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);
+	}
+	/**
+	 * This method will return the scroll panel
+	 * @return
+	 */
+	@Override
+	public ScrollPanel getScrollPanel(){
+		return listScrollPanel;
+	}
+
+	public Map<String,String> updateParameters(Map<String,String> params,FolderDo folderObj){
+		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		if( view!=null){
+			params.put(VIEW,view);
+		}
+		if(o1==null && o2==null && o3==null && id==null){
+			params.put(O1_LEVEL,folderObj.getGooruOid());
+		} else if(o1!=null && o2==null && o3==null && id==null){
+			params.put(O1_LEVEL, o1);
+			params.put(O2_LEVEL,folderObj.getGooruOid());
+		}else if(o1!=null && o2!=null && o3==null && id==null){
+			params.put(O1_LEVEL,o1);
+			params.put(O2_LEVEL,o2);
+			params.put(O3_LEVEL,folderObj.getGooruOid());
+		}else{
+			params.put(O1_LEVEL,o1);
+			params.put(O2_LEVEL,o2);
+			params.put(O3_LEVEL,o3);
+			params.put(ID,folderObj.getGooruOid());
+		}
+		return params;
 	}
 }

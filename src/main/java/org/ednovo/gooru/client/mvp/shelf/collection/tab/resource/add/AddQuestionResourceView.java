@@ -69,7 +69,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.model.content.CollectionHTQuestionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -128,7 +127,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	private CollectionItemDo collectionItemDo=null;
 	 boolean isAnsweEmpty = false;
-	@UiField Label centuryDefaultText,depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg,advancedLbl,setUpAdvancedLbl;
+	@UiField Label centuryDefaultText,depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg,advancedLbl;
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights,eHearderIconExplanation,eHearderIconDepthOfKnowledge,eHearderIconStandards,eHearderIconCentury;
 	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer,advancedContainer,questionHotTextAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
@@ -167,8 +166,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
-	private String htType=i18n.GL3219();
-	private String htSentenceType=i18n.GL3223();
+	private String htType=i18n.GL3219_1();
+	private String htSentenceType=i18n.GL3223_1();
 
 	public String getQuestionType() {
 		return questionType;
@@ -189,8 +188,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     private static final String ERROR_MSG_ATLEAST_SELECTED =i18n.GL0876();
     private static final String ERROR_MSG_HINTS_LENGTH = i18n.GL0877();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
+	private static final String ERROR_MSG_HTANSWER_LENGTH =i18n.GL4000();
 	private static final String ERROR_MSG_EXPLAINATION_LENGTH =i18n.GL0879();
-	private static final String ERROR_MSG_QUESTION_LENGTH =i18n.GL0880();
+	private static String ERROR_MSG_QUESTION_LENGTH =i18n.GL0880();
 	private static final String ERROR_MSG_CHAR_LIMIT=i18n.GL0143();
 	private static final String ERROR_MSG_HINTS = i18n.GL2201();
 
@@ -209,6 +209,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
 	private static final int EXPLAINATION_TEXT_LENGTH =500;
+	private static final int HT_ANSWER_CHOICE_HINTS_TEXT_LENGTH =500;
+	private static final int HT_QUESTION_TEXT_LENGTH =5000;
 
 	public static int questionCharcterLimit;
 
@@ -304,9 +306,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211_1());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211_1());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211_1());
 		rightsLbl.setText(i18n.GL0869());
 		rightsLbl.getElement().setId("lblRightsLbl");
 		rightsLbl.getElement().setAttribute("alt", i18n.GL0869());
@@ -606,9 +605,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		advancedLbl.setText(i18n.GL3096());
 		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
 		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
-		setUpAdvancedLbl.setText(i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("alt", i18n.GL3211());
-		setUpAdvancedLbl.getElement().setAttribute("title", i18n.GL3211());
 		errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
 		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
 		answerchoiceTitleContainer.getElement().setId("fpnlAnswerchoiceTitleContainer");
@@ -1328,12 +1324,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onClick(ClickEvent event) {
 				questionType="HT_HL";
 				int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
-				for(int i=0;i<widgetCount;i++){
-					if(i==0){
-					}else{
+				for(int i=widgetCount-1;i>0;i--){
 					questionHotTextAnswerChoiceContainer.remove(i);
-					widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
-					}
 				}
 				addQuestionAnswer.highlightRDButtonClick();
 				addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
@@ -1345,7 +1337,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.wordRDButtonClick();
-				htType=i18n.GL3219();
+				htType=i18n.GL3219_1();
 			}
 		});
 		addQuestionAnswer.sentenceRDButton.addClickHandler(new ClickHandler() {
@@ -1353,7 +1345,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.sentenceRDButtonClick();
-				htType=i18n.GL3220();
+				htType=i18n.GL3220_1();
 			}
 		});
 		addQuestionAnswer.singleRDButton.addClickHandler(new ClickHandler() {
@@ -1361,7 +1353,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.singleRDButtonClick();
-				htSentenceType=i18n.GL3222();
+				htSentenceType=i18n.GL3222_1();
 			}
 		});
 		addQuestionAnswer.multiRDButton.addClickHandler(new ClickHandler() {
@@ -1369,7 +1361,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.multiRDButtonClick();
-				htSentenceType=i18n.GL3223();
+				htSentenceType=i18n.GL3223_1();
 			}
 		});
 	}
@@ -1681,10 +1673,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
 						fieldValidationCheck = false;
 						showErrorMessageForAnswer(ERROR_MSG_ANSWER_SELECTED);
-						explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 						isAddBtnClicked=true;
-					}else{
-						explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 					}
 
 			}
@@ -1697,11 +1686,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					showErrorMessageForAnswer(errorMessage);
-					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
-				}else{
-					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
 			}
     	} else if(getQuestionType().equalsIgnoreCase("MA")){
@@ -1714,11 +1700,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					showErrorMessageForAnswer(errorMessage);
-					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
-				}else{
-					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
 			}
     	} else if(getQuestionType().equalsIgnoreCase("HT_HL") ||getQuestionType().equalsIgnoreCase("HT_RO")){
@@ -1773,13 +1756,16 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						        	isAddBtnClicked=true;
     						        }
     						        //This regex is used to get text count with out html tags
-    						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
-    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
-    						        	fieldValidationStaus=false;
-    						        	isAddBtnClicked=true;
+    						        int questionMaxLength;
+    						        if(questionType=="HT_HL" || questionType=="HT_RO"){
+    						        	questionMaxLength=HT_QUESTION_TEXT_LENGTH;
+    						        	ERROR_MSG_QUESTION_LENGTH=i18n.GL4001();
+    						        }else{
+    						        	questionMaxLength=QUESTION_TEXT_LENGTH;
+    						        	ERROR_MSG_QUESTION_LENGTH=i18n.GL0880();
     						        }
     						        errorMessageForExplanation.setText("");
-    						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
+    						        if(questionNameText.length()>questionMaxLength){
     						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
     						        	isAddBtnClicked=true;
@@ -1802,10 +1788,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
     												fieldValidationStaus = false;
     												showErrorMessageForAnswer(ERROR_MSG_ANSWER_SELECTED);
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												isAddBtnClicked=true;
     											}else{
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -1822,11 +1806,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												showErrorMessageForAnswer(errorMessage);
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
     											}else{
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -1844,11 +1826,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												showErrorMessageForAnswer(errorMessage);
 
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
     											}else{
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -2174,10 +2154,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
 			if(getQuestionType().equalsIgnoreCase("HT_HL") || getQuestionType().equalsIgnoreCase("HT_RO") ){
-				CollectionHTQuestionItemDo HTObj=new CollectionHTQuestionItemDo();
-				HTObj.setHlType(htType);
-				HTObj.setSingleCorrectAnswer(true);
-				collectionQuestionItemDo.setAttributes(HTObj);
+				collectionQuestionItemDo.setHlType(htType);
+				collectionQuestionItemDo.setSingleCorrectAnswer(true);
 			}
 
 			if(!isSaveButtonClicked){
@@ -2473,10 +2451,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     			profanityList.add(profanitymodel);
     			addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "display:block");
     		}else{
-    			if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
+    			if(answerChoiceValue.trim().length()>HT_ANSWER_CHOICE_HINTS_TEXT_LENGTH){
     				isAnswerChoiceSelected=true;
     				Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
-    				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
+    				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_HTANSWER_LENGTH);
     				addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
     			}else if(!isReorder){
     				String text=answerChoiceValue;
@@ -2484,7 +2462,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     				String errorMsg;
     				String errorMsg2;
 
-    				if(htType.equalsIgnoreCase(i18n.GL3219())){
+    				if(htType.equalsIgnoreCase(i18n.GL3219_1())){
     					temp = text.split(" ");
     					errorMsg=ERROR_MSG_HTHL_SYNTAX;
     					errorMsg2=ERROR_MSG_HTHL;
@@ -2499,7 +2477,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     					int count=0;
     					for(int k=0;k<temp.length;k++){
     						if(temp[k].contains("${") || temp[k].contains("}$")){
-    							if((temp[k].startsWith("${") || temp[k].startsWith(" ${")) &&(temp[k].endsWith("}$") || temp[k].endsWith("}$.")) && temp[k].trim().length()>0){
+    							if((temp[k].startsWith("${") || temp[k].startsWith("&nbsp;${") || temp[k].startsWith(" ${")) &&(temp[k].endsWith("}$") || temp[k].endsWith("}$.")) && temp[k].trim().length()>0){
     								isCorrect=true;
     								count=count+1;
     							}else{
@@ -2510,12 +2488,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     					}
     					if(isCorrect){
 
-    						if(count>1 && htSentenceType.equalsIgnoreCase(i18n.GL3222())){
+    						if(count>1 && htSentenceType.equalsIgnoreCase(i18n.GL3222_1())){
         						isAnswerChoiceSelected=true;
-        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3239());
-        					}else if(count<2 && htSentenceType.equalsIgnoreCase(i18n.GL3223())){
+        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3239_1());
+        					}else if(count<2 && htSentenceType.equalsIgnoreCase(i18n.GL3223_1())){
         						isAnswerChoiceSelected=true;
-        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3238());
+        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3238_1());
         					}else{
         						isAnswerChoiceSelected=false;
         						profanitymodel.setQuestionID(Integer.toString(i));
@@ -2945,9 +2923,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addHotTextAnsChoice.highlightRDButtonClick();
 				setHotTextAnswers(addHotTextAnsChoice);
 				addHotTextAnsChoice.highlightRDButton.setValue(true);
-				String HtHighlightType=	collectionItemDo.getResource().getAttributes().getHlType();
+				String HtHighlightType=	collectionItemDo.getResource().getHlType();
 
-				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219())){
+				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219_1())){
 					addHotTextAnsChoice.wordRDButtonClick();
 				}else{
 					addHotTextAnsChoice.sentenceRDButtonClick();

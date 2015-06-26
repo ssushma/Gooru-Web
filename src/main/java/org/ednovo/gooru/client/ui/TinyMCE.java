@@ -188,10 +188,12 @@ public class TinyMCE extends Composite{
 
     public void setMarkAsBlankLabel(){
     	Element markAsBlankElement=getFibButton();
+    	if(markAsBlankElement!=null){
         if(markAsBlankElement.hasChildNodes()){
         	markAsBlankElement.getFirstChildElement().setInnerText(i18n.GL1507());
         }
         markAsBlankPanel.getElement().appendChild(markAsBlankElement);
+    	}
     }
 
     /**
@@ -438,7 +440,7 @@ public class TinyMCE extends Composite{
 	public void hideTinyMceToolBar(String id){
 		   hideAllButtons();
 		   try{
-			   if (id!=null){
+			   if (id!=null && Document.get().getElementById(id+"_external") != null){
 				   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.BLOCK);
 				   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 			   }
@@ -449,7 +451,7 @@ public class TinyMCE extends Composite{
 	}
 	public void hideTinyMceToolBar(String id,boolean toolBarButtonVisible){
 		try{
-			if (id!=null){
+			if (id!=null  && Document.get().getElementById(id+"_external") != null){
 				 Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 				 Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
 			}
@@ -487,19 +489,21 @@ public class TinyMCE extends Composite{
 	}
 	public int countCharcters(String content,String tinyMceId){
 		AddQuestionResourceView.errorMessageForQuestion.setText("");
+		int charLimit=AddQuestionResourceView.questionCharcterLimit;
 		//This regex is used to get text count with out html tags
 		String noHTMLString = content.replaceAll("\\<.*?>","");
 		if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
 			setErrorMessage(ERROR_MESSAGE,tinyMceId);
-			if(noHTMLString.length()>=503)
+			if(noHTMLString.length()>=charLimit+3)
 			{
-			setContent(tinyMceId,content.substring(0, 503));
+			setContent(tinyMceId,content.substring(0, charLimit+3));
 			}
 		}else{
 			clearErrorMessage(tinyMceId);
 		}
 		return noHTMLString.length();
 	}
+	
 	public void clearErrorMessage(String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");

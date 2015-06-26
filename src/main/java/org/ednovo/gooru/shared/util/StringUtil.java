@@ -41,6 +41,8 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 
+import com.google.gwt.ajaxloader.client.AjaxLoader;
+import com.google.gwt.ajaxloader.client.AjaxLoader.AjaxLoaderOptions;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.regexp.shared.RegExp;
@@ -50,7 +52,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.visualization.client.VisualizationUtils;
 import com.google.gwt.visualization.client.visualizations.PieChart;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.googlecode.gwt.crypto.client.TripleDesCipher;
@@ -272,7 +273,7 @@ public class StringUtil implements ClientConstants {
 				|| FTE.equalsIgnoreCase(userName) || WSPWH.equalsIgnoreCase(userName) || LISANGC.equalsIgnoreCase(userName) || NGC.equalsIgnoreCase(userName)
 				|| ONR.equalsIgnoreCase(userName) || PlaceTokens.FINCAPINC.equalsIgnoreCase(userName) || PlaceTokens.PSDPAL.equalsIgnoreCase(userName)
 				|| PlaceTokens.YOUTHVOICES.equalsIgnoreCase(userName) || PlaceTokens.GEOEDUCATION.equalsIgnoreCase(userName) || PlaceTokens.LPS.equalsIgnoreCase(userName)
-				|| PlaceTokens.CORE_LIBRARY.equalsIgnoreCase(userName) || PlaceTokens.ESYP.equalsIgnoreCase(userName) || PlaceTokens.CCST_Cal_TAC.equalsIgnoreCase(userName) || PlaceTokens.ASPIRE_EPACS.equalsIgnoreCase(userName) || PlaceTokens.TICAL.equalsIgnoreCase(userName)) {
+				|| PlaceTokens.CORE_LIBRARY.equalsIgnoreCase(userName) ||PlaceTokens.YESD_LIBRARY.equalsIgnoreCase(userName) || PlaceTokens.ESYP.equalsIgnoreCase(userName) || PlaceTokens.CCST_Cal_TAC.equalsIgnoreCase(userName) || PlaceTokens.ASPIRE_EPACS.equalsIgnoreCase(userName) || PlaceTokens.TICAL.equalsIgnoreCase(userName)) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -732,16 +733,24 @@ public class StringUtil implements ClientConstants {
 	public static void loadVisualizationLibraries(){
 		boolean status = getScriptStatus();
 		AppClientFactory.printInfoLogger("status : "+status);
-		if (!status){
-			Runnable onLoad = new Runnable() {
-	            @Override
-	            public void run() {
+//		if (!status){
+//			Runnable onLoad = new Runnable() {
+//	            @Override
+//	            public void run() {
+//
+//	            }
+//	        };
+//	        VisualizationUtils.loadVisualizationApi(onLoad, PieChart.PACKAGE);
+//	        VisualizationUtils.loadVisualizationApi(onLoad, Table.PACKAGE);
 
-	            }
-	        };
-	        VisualizationUtils.loadVisualizationApi(onLoad, PieChart.PACKAGE);
-	        VisualizationUtils.loadVisualizationApi(onLoad, Table.PACKAGE);
-		}
+//			AjaxLoaderOptions options = AjaxLoaderOptions.newInstance();
+//            options.setPackages(PieChart.PACKAGE,Table.PACKAGE);
+//            AjaxLoader.loadApi("visualization", "1", new Runnable() {
+//              public void run() {
+//              }
+//            }, options);
+//
+//		}
 	}
 
 	public static native boolean getScriptStatus() /*-{
@@ -760,6 +769,10 @@ public class StringUtil implements ClientConstants {
 		}
 		return isAva;
 	}-*/;
-
+	public static String capitalizeFirstLetter(String original){
+	    if(original.length() == 0)
+	        return original;
+	    return original.substring(0, 1).toUpperCase() + original.substring(1);
+	}
 }
 

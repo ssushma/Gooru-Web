@@ -244,6 +244,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				getSearchAsyncCallbackLoadInStore().execute(false,result,getSearchDo());
 			}
 		});
+		gooruGradesPresenter.setGradePanel(getView().getGradePanel());
 		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
 
 		if (getViewToken().equals(PlaceTokens.SEARCH_RESOURCE)) {

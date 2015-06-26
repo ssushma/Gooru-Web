@@ -39,6 +39,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.server.AppSessionHolder;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
@@ -57,6 +58,7 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
@@ -133,7 +135,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getRestEndPoint() {
 		String restEndPoint =  getPropertyByKey(REST_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			restEndPoint = restEndPoint.replaceAll(HTTP, HTTPS);
 		}
 		return restEndPoint;
@@ -141,7 +143,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getSearchEndPoint() {
 		String searchEndPoint =  getPropertyByKey(SEARCH_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			searchEndPoint = searchEndPoint.replaceAll(HTTP, HTTPS);
 		}
 		return searchEndPoint;
@@ -187,7 +189,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getHomeEndPoint() {
 		String homeEndPoint =  getPropertyByKey(HOME_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			homeEndPoint = homeEndPoint.replaceAll(HTTP, HTTPS);
 			ResourceImageUtil.protocol=HTTPS;
 		}
@@ -196,7 +198,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getAnalyticsEndPoint() {
 		String analyticsEndPoint =  getPropertyByKey(ANALYTICS_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			analyticsEndPoint = analyticsEndPoint.replaceAll(HTTP, HTTPS);
 			ResourceImageUtil.protocol=HTTPS;
 		}
@@ -213,7 +215,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getDocViewerHome() {
 		String docViewerHome =  getPropertyByKey(DOCVIEWER_HOME);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			docViewerHome = docViewerHome.replaceAll(HTTP, HTTPS);
 		}
 		return docViewerHome;
@@ -225,7 +227,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getProfileImageUrl() {
 		String profileImageUrl =  getPropertyByKey(PROFILE_IMAGE_RESPOSITORY_URL);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			profileImageUrl = profileImageUrl.replaceAll(HTTP, HTTPS);
 		}
 		return profileImageUrl;
@@ -245,7 +247,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getCdnEndPoint() {
 		String cdnEndPoint =  getPropertyByKey(CDN_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			cdnEndPoint = cdnEndPoint.replaceAll(HTTP, HTTPS);
 		}
 		return cdnEndPoint;
@@ -342,12 +344,14 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	protected String getLoggedInSessionToken() {
 		String token = getCookie(GOORU_SESSION_TOKEN);
 		if (token == null) {
-			token = (String) getHttpRequest().getSession().getAttribute(GOORU_SESSION_TOKEN);
+			token = getHttpRequest() != null ? (String) getHttpRequest().getSession().getAttribute(GOORU_SESSION_TOKEN) : null;
 			//Fix for handling when cookie get disabled.
 			if (token == null || token.equalsIgnoreCase("null")) {
 				UserDo user = v2GuestSignIn();
 				token = (user != null) ? user.getToken() : token;
-				getHttpRequest().getSession().setAttribute(GOORU_SESSION_TOKEN, token);
+				if (getHttpRequest()!=null){
+					getHttpRequest().getSession().setAttribute(GOORU_SESSION_TOKEN, token);
+				}
 			}
 			setLoggedInSessionToken(token);
 		}
@@ -383,7 +387,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		}
 	}
 	private String getCookie(String name) {
-		Cookie[] cookies = getHttpRequest().getCookies();
+		Cookie[] cookies = getHttpRequest() != null && getHttpRequest().getCookies() != null ? getHttpRequest().getCookies() : null;
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals(name)) {
@@ -400,20 +404,23 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return token;
 	}
 	protected void setLoggedInSessionToken(String sessionToken) {
-		Cookie cookie = new Cookie(GOORU_SESSION_TOKEN, sessionToken);
-		cookie.setDomain(AppSessionHolder.getInstance().getRequest().getServerName());
-		cookie.setPath(COOKIE_PATH);
-//		cookie.setHttpOnly(true);
-		if (sessionToken != null && sessionToken.length() > 0) {
-			cookie.setMaxAge(COOKIE_AGE);
-		} else {
-			cookie.setMaxAge(0);
-		}
-		getHttpResponse().addCookie(cookie);
-		if (sessionToken != null) {
-			getHttpRequest().getSession().setAttribute(GOORU_SESSION_TOKEN, sessionToken);
-		} else {
-			getHttpRequest().getSession().removeAttribute(GOORU_SESSION_TOKEN);
+		if (getHttpRequest() != null){
+			Cookie cookie = new Cookie(GOORU_SESSION_TOKEN, sessionToken);
+			cookie.setDomain(AppSessionHolder.getInstance().getRequest() != null ? AppSessionHolder.getInstance().getRequest().getServerName() : null);
+			cookie.setPath(COOKIE_PATH);
+	//		cookie.setHttpOnly(true);
+			if (sessionToken != null && sessionToken.length() > 0) {
+				cookie.setMaxAge(COOKIE_AGE);
+			} else {
+				cookie.setMaxAge(0);
+			}
+			getHttpResponse().addCookie(cookie);
+
+			if (sessionToken != null) {
+				getHttpRequest().getSession().setAttribute(GOORU_SESSION_TOKEN, sessionToken);
+			} else {
+				getHttpRequest().getSession().removeAttribute(GOORU_SESSION_TOKEN);
+			}
 		}
 	}
 	/**
@@ -587,10 +594,12 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	 *
 	 */
 	protected void setLoggedInUserUid(String loggedInUserUid) {
-		if (loggedInUserUid != null) {
-			getHttpRequest().getSession().setAttribute(SIGNED_USER_UID, loggedInUserUid);
-		} else {
-			getHttpRequest().getSession().removeAttribute(SIGNED_USER_UID);
+		if (getHttpRequest()!= null){
+			if (loggedInUserUid != null) {
+				getHttpRequest().getSession().setAttribute(SIGNED_USER_UID, loggedInUserUid);
+			} else {
+				getHttpRequest().getSession().removeAttribute(SIGNED_USER_UID);
+			}
 		}
 	}
 	/**
@@ -636,10 +645,12 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	 *
 	 */
 	protected void setLoggedInEmailId(String loggedInEmailId) {
-		if (loggedInEmailId != null) {
-			getHttpRequest().getSession().setAttribute(SIGNED_USER_EMAILID, loggedInEmailId);
-		} else {
-			getHttpRequest().getSession().removeAttribute(SIGNED_USER_EMAILID);
+		if (getHttpRequest() != null){
+			if (loggedInEmailId != null) {
+				getHttpRequest().getSession().setAttribute(SIGNED_USER_EMAILID, loggedInEmailId);
+			} else {
+				getHttpRequest().getSession().removeAttribute(SIGNED_USER_EMAILID);
+			}
 		}
 	}
 	/**
@@ -685,10 +696,12 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	 *
 	 */
 	protected void setLoggedInDateOfBirth(String dateOfBirth) {
-		if (dateOfBirth != null) {
-			getHttpRequest().getSession().setAttribute(SIGNED_USER_DOB, dateOfBirth);
-		} else {
-			getHttpRequest().getSession().removeAttribute(SIGNED_USER_DOB);
+		if (getHttpRequest()!=null){
+			if (dateOfBirth != null) {
+				getHttpRequest().getSession().setAttribute(SIGNED_USER_DOB, dateOfBirth);
+			} else {
+				getHttpRequest().getSession().removeAttribute(SIGNED_USER_DOB);
+			}
 		}
 	}
 	/**
@@ -916,17 +929,21 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			JsonRepresentation jsonRep = null;
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
-			String data = jsonRep.getJsonObject().toString();
-			userDo = JsonDeserializer.deserialize(data, UserDo.class);
-			Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
-			Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-			if (userCreatedDate.getTime() >= prodDate.getTime()){
-				userDo.setBeforeProductionSwitch(false);
+			if (jsonResponseRep.getResponseDo() != null ){
+				getLogger().info("jsonResponseRep.getResponseDo().getErrorCode() : "+jsonResponseRep.getResponseDo().getErrorCode());
 			}else{
-				userDo.setBeforeProductionSwitch(true);
+				String data = jsonRep.getJsonObject().toString();
+				userDo = JsonDeserializer.deserialize(data, UserDo.class);
+				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
+				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
+				if (userCreatedDate.getTime() >= prodDate.getTime()){
+					userDo.setBeforeProductionSwitch(false);
+				}else{
+					userDo.setBeforeProductionSwitch(true);
+				}
+				userDo.setToken(token);
+				setUserFilterProperties(userDo);
 			}
-			userDo.setToken(token);
-			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);
 		}

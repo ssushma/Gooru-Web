@@ -24,12 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 /**
  * @author Search Team
@@ -41,15 +44,17 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param type
 	 * @param slotPane
 	 * @param resultl
+	 * @param clrPanel
+	 * @param isInnerSlot
 	 */
-	public void setData(String type,HTMLPanel slotPane,FolderListDo result,boolean clrPanel);
+	public void setData(String type,HTMLPanel slotPane,List<FolderDo> result,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
 	/**
 	 * This method is used to set type of presenter based on the type
 	 * @param type
 	 * @param slotPanel
 	 * @param folderObj
 	 */
-	public void setListPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj);
+	public void setRightClusterPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj);
 	/**
 	 * This method will return the Right Cluster Presenter
 	 * @return
@@ -67,5 +72,10 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param slotPanel
 	 * @param folderId
 	 */
-	public void setDataInContentSlot(String type,HTMLPanel slotPanel,String folderId);
+	public void setDataInContentSlot(String type,HTMLPanel slotPanel,String folderId,boolean isInnerSlot);
+	/**
+	 * This method is used to get scrollpanel
+	 */
+	public ScrollPanel getScrollPanel();
+	ShelfMainPresenter getShelfMainPresenter();
 }

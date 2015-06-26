@@ -91,7 +91,7 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 body {
-	background-image: url("${cdn.endpoint}/images/core/background-image.png") !important;
+	background-image: url("${cdn.endpoint}/images/background-image.png") !important;
 	color: #515151 !important;
 	font-family: Arial, sans-serif !important;
 	font-size: 12px !important;
@@ -580,7 +580,7 @@ body {
 	z-index: 999999;
 	border: 1px solid #CCC;
 	/* width: 199px; */
-	
+
 }
 
 .gwt-SuggestBoxPopup .item {
@@ -668,9 +668,9 @@ body {
 	padding:0px;
 }
 
-.gwt-SuggestBoxPopup .suggestPopupMiddleLeft, 
-.gwt-SuggestBoxPopup .suggestPopupTop, 
-.gwt-SuggestBoxPopup .suggestPopupBottom, 
+.gwt-SuggestBoxPopup .suggestPopupMiddleLeft,
+.gwt-SuggestBoxPopup .suggestPopupTop,
+.gwt-SuggestBoxPopup .suggestPopupBottom,
 .gwt-SuggestBoxPopup .suggestPopupBottomLeft,
 .gwt-SuggestBoxPopup .suggestPopupMiddleRight{
 	display:none;
@@ -699,9 +699,9 @@ body {
 	padding:0px;
 }
 
-.searchSuggestBox .suggestPopupMiddleLeft, 
-.searchSuggestBox .suggestPopupTop, 
-.searchSuggestBox .suggestPopupBottom, 
+.searchSuggestBox .suggestPopupMiddleLeft,
+.searchSuggestBox .suggestPopupTop,
+.searchSuggestBox .suggestPopupBottom,
 .searchSuggestBox .suggestPopupBottomLeft,
 .searchSuggestBox .suggestPopupMiddleRight{
 	display:none;
@@ -729,9 +729,9 @@ body {
 	padding:0px;
 }
 
-.SearchVcTextBox .suggestPopupMiddleLeft, 
-.SearchVcTextBox .suggestPopupTop, 
-.SearchVcTextBox .suggestPopupBottom, 
+.SearchVcTextBox .suggestPopupMiddleLeft,
+.SearchVcTextBox .suggestPopupTop,
+.SearchVcTextBox .suggestPopupBottom,
 .SearchVcTextBox .suggestPopupBottomLeft,
 .SearchVcTextBox .suggestPopupMiddleRight{
 	display:none;
@@ -759,9 +759,9 @@ body {
 	padding:0px;
 }
 
-.shelfEditSearchTextBox .suggestPopupMiddleLeft, 
-.shelfEditSearchTextBox .suggestPopupTop, 
-.shelfEditSearchTextBox .suggestPopupBottom, 
+.shelfEditSearchTextBox .suggestPopupMiddleLeft,
+.shelfEditSearchTextBox .suggestPopupTop,
+.shelfEditSearchTextBox .suggestPopupBottom,
 .shelfEditSearchTextBox .suggestPopupBottomLeft,
 .shelfEditSearchTextBox .suggestPopupMiddleRight{
 	display:none;
@@ -816,7 +816,7 @@ body {
 	cursor: pointer;
 	font-weight: bold;
 	padding: 8px 9px;
-	position: relative;	
+	position: relative;
 }
 .overRideBlueButton:HOVER,.overRideBlueButtonDelete:HOVER {
 	background: #1076BB;
@@ -851,7 +851,7 @@ body {
 }
 
 .videos label {
-	background-position: 0px 1px !important;	
+	background-position: 0px 1px !important;
 }
 
 .interactives label {
@@ -875,7 +875,7 @@ body {
 }
 
 .slides label {
-	background-position: 0px -167px !important;	
+	background-position: 0px -167px !important;
 }
 
 .texts label {
@@ -965,7 +965,7 @@ body {
 }
 .challengeSmall {
 	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
-		transparent;	
+		transparent;
 }
 .textSmall {
 	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
@@ -1029,7 +1029,7 @@ body {
 	background:none !important;
 }
 .challengeSmall:hover {
-	background:none !important;	
+	background:none !important;
 }
 .textSmall:hover {
 	background:none !important;
@@ -1150,7 +1150,7 @@ body {
 }
 .gradeList:HOVER {
 	background: none repeat scroll 0 0 #1076BB;
-    color: #FFFFFF;	
+    color: #FFFFFF;
 }
 
 .profileGradeList {
@@ -1164,7 +1164,7 @@ body {
 }
 .profileGradeList:HOVER {
 	background: none repeat scroll 0 0 #1076BB;
-    color: #FFFFFF;	
+    color: #FFFFFF;
 }
 
 /*remove resource popup*/
@@ -1188,7 +1188,7 @@ body {
     z-index: 9999;
 }
 
-button::-moz-focus-inner { 
+button::-moz-focus-inner {
 	  border: 0;
 	  padding: 0;
 	}
@@ -1234,8 +1234,8 @@ td.datePickerMonth{
 	height: 609px;
     width: 900px;
     background: none repeat scroll 0 0 #FFFFFF;
-    padding: 3px;  
-    z-index: 99;  
+    padding: 3px;
+    z-index: 99;
 }
 
 .newGuidePopUpContainer{
@@ -1256,7 +1256,7 @@ td.datePickerMonth{
 }
 
 .gwt-PopupPanelGlass {
-	 z-index: 99; 
+	 z-index: 99;
 }
 .titleAlertMessageActive{
 	display: block !important;
@@ -1274,7 +1274,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteVideo {
 	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
-	
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1284,7 +1284,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteInteractive {
 	background:url("${cdn.endpoint}/images/Interactive_1.png") no-repeat
 		transparent;
-	
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1294,7 +1294,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteWebsite {
 	background:url("${cdn.endpoint}/images/Website_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1304,7 +1304,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteSlide {
 	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1314,7 +1314,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteHandout {
 	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1324,7 +1324,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteTextbook {
 	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
-	
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1334,7 +1334,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteLesson {
 	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1344,7 +1344,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteQuestion {
 	background:url("${cdn.endpoint}/images/Question_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1354,7 +1354,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteExam {
 	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1364,7 +1364,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteAudio {
 	background:url("${cdn.endpoint}/images/Audio_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1374,7 +1374,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteImage {
 	background:url("${cdn.endpoint}/images/Image_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1384,7 +1384,7 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteOther {
 	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
@@ -1394,13 +1394,13 @@ td.datePickerMonth{
 .resourceExistsResourceTypeSpriteText {
 	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
-		
+
 	width:80px;
 	height:60px;
 	position: relative;
 	text-align: center;
 	top: -38px;
-	
+
 }
 .thumbnailImageDec{
 	width: 80px;
@@ -1444,8 +1444,8 @@ td.datePickerMonth{
 	background:none !important;
 }
 .resourceExistsResourceTypeSpriteText:hover {
-	background:none !important; 
-	
+	background:none !important;
+
 }
 
 .active {
@@ -1510,7 +1510,7 @@ td.datePickerMonth{
 	border: 1px solid #ccc;
 	font-size: 12px !important;
 	padding: 0px 5px;
-	
+
 }
 /* richText box related css */
 
@@ -1666,7 +1666,7 @@ p{
 .map3dcontainer {
         width: 100%;
         height: 100%;
- } 
+ }
   .map3d {
         width: 100%;
         height: 100%;
@@ -1964,7 +1964,7 @@ li.token-input-input-token-gooru {
 }
 
 .wrapperParent {
-	
+
 }
 .errorMessageMaindiv {
 	width: 1100px;
@@ -2183,16 +2183,16 @@ fieldset {
  .setGlassPanelZIndex{
 	z-index: 99999;
     background-color: #000;
-	opacity: 0.3;   
+	opacity: 0.3;
 }
 
 /* Media Css for hiding specif objects */
 
 .searchResults{
-	
+
 }
 .mediaCssToHide{
-	
+
 }
 
 .reviewPopup{
@@ -2209,7 +2209,7 @@ visibility: visible;
 position: absolute;
 overflow: visible;
  }
- 
+
  .addResourceContainer{
 	width:500px;
  }
@@ -2220,9 +2220,9 @@ overflow: visible;
  .borderLeft{
  	border-right:1px solid #999;
  }
- 
+
  .borderRight{
- 	
+
  }
  .loginFailureAlert{
  	left:35% !important;
@@ -2234,7 +2234,7 @@ overflow: visible;
  	position:fixed !important;
  }
 
-  
+
  .dropdownListContainerScrollPanel{
  	margin-left:46px;
  }
@@ -2243,7 +2243,7 @@ overflow: visible;
 	.searchResults > .mediaCssToHide{
 		display: none;
 	}
-	  	span.fivestar input[type="checkbox"], 
+	  	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -2252,7 +2252,7 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
@@ -2321,7 +2321,7 @@ overflow: visible;
 }
 
 .switchLabel {
-	
+
   position: relative;
 	display: block;
 	height: inherit;
@@ -2412,7 +2412,7 @@ overflow: visible;
 }
 
 .analyticsPrintSave{
-	
+
 }
 .panelHeight{
 	overflow-y: auto;
@@ -2437,7 +2437,7 @@ overflow: visible;
 	background: url(../images/preview-arrow-small.png) 70px center no-repeat, -ms-linear-gradient(top, #4c98cc, #1076bb);
 	background: url(../images/preview-arrow-small.png) 70px center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
 	float: right;
-	
+
 }
 .studyplay:hover{
 	cursor: pointer;
@@ -2527,7 +2527,7 @@ overflow: visible;
 		left:20% !important;
 		top:48px !important;
   	}
-  	span.fivestar input[type="checkbox"], 
+  	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -2536,7 +2536,7 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
@@ -2554,7 +2554,7 @@ overflow: visible;
 		left:4% !important;
 		top:48px !important;
   	}
-  	span.fivestar input[type="checkbox"], 
+  	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -2563,7 +2563,7 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
@@ -2574,7 +2574,7 @@ overflow: visible;
 @media (min-width: 768px) and (max-width: 991px) {
 		.analyticsPrintSave{
 			clear:both;
-			width:auto !important; 
+			width:auto !important;
 		}
 		.containerMain {
   	 		 width: auto !important;
@@ -2589,7 +2589,7 @@ overflow: visible;
 			left:16.5% !important;
 			top:48px !important;
   		}
-	  	span.fivestar input[type="checkbox"], 
+	  	span.fivestar input[type="checkbox"],
 		span.fourstar input[type="checkbox"],
 		span.threestar input[type="checkbox"],
 		span.twostar input[type="checkbox"],
@@ -2598,7 +2598,7 @@ overflow: visible;
 		span.review input[type="checkbox"]{
 			margin: 0px 4px 4px 4px !important;
 		}
-		
+
 		.mobilefriendlyContainer, .oerContainer{
 			position: relative;
 			margin-bottom: 0px;
@@ -2613,7 +2613,7 @@ overflow: visible;
 #main {
 	position: relative; /* Set the position property so z-index will apply */
 	/*  z-index: 20;  *//* Make sure this is higher than #menu */
- background: url("../images/background-image.png") repeat scroll 0 0 #efeded !important;
+ background: url("${cdn.endpoint}/images/background-image.png") repeat scroll 0 0 #efeded !important;
 	height: 100%;
 }
 
@@ -2685,7 +2685,7 @@ overflow: visible;
 /***
 * If the left class is present then transform
 * the #page element 240px to the left.
-*/	
+*/
 .animating.left #main {
 	transform: translate3d( 180px, 0, 0 );
 	-webkit-transform: translate3d( 180px, 0, 0 );
@@ -2703,7 +2703,7 @@ overflow: visible;
 /***
 * If the menu-visible class is present then
 * shift the #page 240px from the right edge
-* via position: absolute to keep it in the 
+* via position: absolute to keep it in the
 * open position. When .animating, .left and
 * .right classes are not present the CSS
 * transform does not apply to #page.
@@ -2726,11 +2726,11 @@ overflow: visible;
 }
 
 .addResourcePopup{
-		margin-top:50px ;	
+		margin-top:50px ;
 	}
 .studyMainContainer{
 	width:1000px;
-}	
+}
 
 /* @media (min-width: 240px) and (max-width: 319px){
 	.gwt-PopupPanel{
@@ -2739,12 +2739,12 @@ overflow: visible;
 	}
 }
 @media (min-width: 320px) and (max-width: 479px){
-	
+
 	.gwt-PopupPanel{
 		width:100%;
 		left:0 !important;
 	}
-	
+
 }
 @media (min-width: 768px) and (max-width: 991px){
 	.gwt-PopupPanel{
@@ -2756,9 +2756,9 @@ overflow: visible;
 	#uvTabLabel{
 		display:block;
 	}
-	
-	
-	span.fivestar input[type="checkbox"], 
+
+
+	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -2767,21 +2767,21 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
 		height: 30px;
 	}
-	
+
 	.reviewPopup{
 		left:63% !important;
-		width:100%;	
+		width:100%;
 	}
 	 .narrationRightContainerFullScreen{
  width:86% !important;
  }
-	
+
 	 .borderLeft{
  		border-right:1px solid #999;
  	}
@@ -2798,8 +2798,8 @@ overflow: visible;
    .loginFailureAlert{
  		left:35% !important;
  	}
- 
-   
+
+
 	#main, #menuRight {
 	-webkit-backface-visibility: hidden;
 	-webkit-perspective:0;
@@ -2814,23 +2814,23 @@ overflow: visible;
 	.animating.left #page {
 	transform: translate3d( 0p, 0, 0 );
 	-webkit-transform: translate3d( 0, 0, 0 );
-	}	
+	}
 }
 
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-	
+
 	#main, #menuRight {
 		-webkit-backface-visibility: hidden;
 		-webkit-perspective:0;
-	
+
 	}
-		
+
 	.loginFailureAlert{
 	 	left:32% !important;
 	 }
-	   	span.fivestar input[type="checkbox"], 
+	   	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -2839,13 +2839,13 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
 		height: 30px;
 	}
-	
+
 }
 
 @media (min-width: 992px) {
@@ -2856,13 +2856,13 @@ overflow: visible;
 }
 
 @media(max-width:767px){
-	
+
 	html{
  		overflow-x: hidden;
 		overflow-y: auto;
  	}
  	 .addResourcePopup{
-		margin-top:0px !important;	
+		margin-top:0px !important;
 	}
 	#uvTabLabel{
 		display:none !important;
@@ -2874,18 +2874,18 @@ overflow: visible;
 	.borderLeft{
 		border:0px !important;
 	}
-	
+
 	.reviewPopup{
 		left:44% !important;
 		width: 100%;
 	}
-	
+
 	.preFilterPopup{
 		left:18% !important;
 		top:48px !important;
-		
+
  	}
-	
+
 	.reviewPopupPoor{
 		top:120px !important;
 		left:24% !important;
@@ -2894,15 +2894,15 @@ overflow: visible;
 	.addResourceContainer{
 		width:500px;
 	 }
- 
+
 	 .loginFailureAlert{
 	 	left:22% !important;
 	 }
- 
+
 	 .tableDivStyles{
 	 	width:60% !important;
 	 }
- 	span.fivestar input[type="checkbox"], 
+ 	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -2911,22 +2911,22 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
 		height: 30px;
 	}
-	
+
 }
 @media (min-width: 320px) and (max-width: 479px){
 	 .addResourcePopup{
-		margin-top:0px !important;	
+		margin-top:0px !important;
 	}
 	 .borderLeft{
  		border-right:0px !important;
  	}
- 	
+
  		.borderRight{
  			border-left: 0px !important;
  		}
@@ -2950,15 +2950,15 @@ overflow: visible;
 		width:100%;
 	 	}
 	.dropdownListContainerScrollPanel{
-   	 
+
    	  margin:0px !important;
-   	 
+
    }
 	 .loginFailureAlert{
 	 	left:0% !important;
 	 	width:100% !important;
 	 }
- 
+
    html{
  		overflow-x: hidden;
 		overflow-y: auto ;
@@ -2966,7 +2966,7 @@ overflow: visible;
 	.positionFixed{
  		position:relative !important;
  	}
- 	span.fivestar input[type="checkbox"], 
+ 	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -2975,22 +2975,22 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
 		height: 30px;
 	}
-	
+
 	#uvTabLabel{
 		display:none !important;
 	}
 }
 @media (min-width: 240px) and (max-width: 319px){
 		.addResourcePopup{
-		margin-top:0px !important;	
+		margin-top:0px !important;
 	}
-	
+
 	#uvTabLabel{
 		display:none !important;
 	}
@@ -3016,18 +3016,18 @@ overflow: visible;
 			left:10% !important;
 			width:200px;
 		}
-	
+
 	.addResourceContainer{
 		width:100%;
-	
+
  	}
- 	
+
  	.dropdownListContainerScrollPanel{
-   	 
+
    	  margin:0px !important;
-   	 
+
    }
- 
+
  .loginFailureAlert{
  	left:0% !important;
  	width:100% !important;
@@ -3039,7 +3039,7 @@ overflow: visible;
  	 .positionFixed{
  	position:relative !important;
  }
- 	span.fivestar input[type="checkbox"], 
+ 	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -3048,7 +3048,7 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
@@ -3063,16 +3063,16 @@ overflow: visible;
  	.borderRight{
  		border-left: 0px !important;
  	}
- 	
+
  	.loginFailureAlert{
  		left:29% !important;
- 		
+
  	}
  	html{
  		overflow-x: hidden;
 		overflow-y: auto;
  	}
-	span.fivestar input[type="checkbox"], 
+	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -3081,31 +3081,31 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
 		height: 30px;
 	}
- 
+
 }
 
 @media(min-width:768px){
- 
+
  	html{
  		overflow-x: hidden;
 		overflow-y: auto ;
  	}
-	
+
 	.reviewPopup{
 		left:69% !important;
-		width: 100%;	
+		width: 100%;
 	}
-	
+
 	 .narrationRightContainerFullScreen{
 
  }
-	
+
 	.reviewPopupPoor{
 		left:63% !important;
 		width:300px;
@@ -3113,7 +3113,7 @@ overflow: visible;
 	.addResourceContainer{
 		width:500px;
     }
-    
+
 	#menuRight {
 		-webkit-backface-visibility: hidden;
 		-webkit-perspective:0;
@@ -3121,11 +3121,11 @@ overflow: visible;
 	-webkit-transform:initial !important;
 	}
 	.menu-visible1 #main {
-	 left: 0px; 
+	 left: 0px;
 	}
 
 	.animating #menu, .menu-visible #menu {
-		
+
 	}
 	.animating #page {
 	transition: transform .25s ease-in-out;
@@ -3138,12 +3138,12 @@ overflow: visible;
 
 		transform: translate3d( 0p, 0, 0 );
 		-webkit-transform: translate3d( 0, 0, 0 );
-	}	
+	}
 
 	#searchPush{
 		display:none !important;
 	}
-	span.fivestar input[type="checkbox"], 
+	span.fivestar input[type="checkbox"],
 	span.fourstar input[type="checkbox"],
 	span.threestar input[type="checkbox"],
 	span.twostar input[type="checkbox"],
@@ -3152,7 +3152,7 @@ overflow: visible;
 	span.review input[type="checkbox"]{
 		margin: 0px 4px 4px 4px !important;
 	}
-	
+
 	.mobilefriendlyContainer, .oerContainer{
 		position: relative;
 		margin-bottom: 0px;
@@ -3272,7 +3272,7 @@ overflow: visible;
 }
 
 
-span.fivestar input[type="checkbox"], 
+span.fivestar input[type="checkbox"],
 span.fourstar input[type="checkbox"],
 span.threestar input[type="checkbox"],
 span.twostar input[type="checkbox"],
@@ -3301,4 +3301,87 @@ div#spnlDisclosureContentSimPanel>div:first-child {
 .colmdPadding {
 	padding-left:0;
 	padding-right:0;
+}
+.suggestPopupContentStyle {
+	
+}
+.suggestPopupContentStyle .item{
+	background-color: #FFF !important;
+	border: none !important;
+	color: #515151 !important;
+	font-size: 12px !important;
+	min-width: 173px !important;
+	margin:0px;
+	padding: 5px 6px !important;
+	cursor: pointer !important;
+}
+
+
+.suggestPopupContentStyle  .item-selected {
+	background-color: #C3DCEE !important;
+	cursor: pointer;
+}
+#standardsDetails .menu-iconNew{
+	clear:both
+}
+.scrollBar{
+	border: 1px solid #ccc;
+    height: 372px;
+    overflow: auto;
+
+}
+#standardsDetails .standarBodyContainer{
+	background:#ffffff;
+	padding:15px 10px;
+
+}
+
+.listGroup{
+	margin:15px 0;
+	border:1px solid #cccccc;
+
+}
+
+.listGroup .col-md-2, .listGroup .col-md-4{
+	padding-left:0 !important;
+	padding-right:0 !important;
+	border-right:1px solid #cccccc;
+	height: 372px;
+}
+
+.listGroup ul li a{
+	color:#515151;
+	padding:5px 5px;
+	display:block;
+	line-height:20px;
+}
+
+.listGroup ul li a:hover{
+	color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	opacity:1;
+
+}
+.listGroup ul li.active a,.listGroup ul li.focus a{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+}
+.listGroup ul li a:active,.listGroup ul li a:focus, .listGroup ul li.active:hover{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	margin:0 0;
+	border:none;
+	display:block;
+}
+
+.suggestPopupContentStyle .suggestPopupContent {
+	max-height: 183px;
+	overflow-y: auto;
+	text-align: left;
+	width: 117px;
+	overflow-x: hidden;
+	background-color: #FFF !important;
 }

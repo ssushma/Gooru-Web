@@ -22,36 +22,109 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- *
-*/
-package org.ednovo.gooru.client.mvp.test;
+package org.ednovo.gooru.application.client.home.presearch;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-
-import com.google.gwt.event.shared.GwtEvent.Type;
-import com.gwtplatform.mvp.client.annotations.ContentSlot;
-import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
-
-
 /**
  *
- * @fileName : TestUiHandlers.java
+ * @fileName : ViewMorePeopleUiHandlers.java
  *
  * @description :
  *
  *
  * @version : 1.0
  *
- * @date: 26-May-2015
+ * @date: 16-Jun-2015
  *
  * @Author tumbalam
  *
  * @Reviewer:
  */
-public interface TestUiHandlers extends BaseUiHandlers {
+public interface PreSearchUiHandlers extends BaseUiHandlers{
 
-	@ContentSlot
-	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();
+	/**
+	 *
+	 * @function getAddStandards
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void getAddStandards();
+
+	/**
+	 *
+	 * @function setUpdatedStandards
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void setUpdatedStandards();
+
+	/**
+	 *
+	 * @function closeStandardsPopup
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void closeStandardsPopup();
+
+	/**
+	 *
+	 * @function refreshSearch
+	 *
+	 * @created_date : 23-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param query
+	 *
+	 * @parm(s) : @param filterStd
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void refreshSearch(String query, String filterStd);
 
 }

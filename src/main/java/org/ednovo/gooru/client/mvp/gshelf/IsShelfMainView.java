@@ -47,5 +47,19 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	
 	HTMLPanel getSlot();
 
-	void setDefaultOrganizePanel();
+	void setDefaultOrganizePanel(String view);
+	/**
+	 * This method is used to enable the panels based on the user status.
+	 * @param isAnonymous
+	 */
+	void setNoDataForAnonymousUser(boolean isAnonymous);
+	/**
+	 * This method is used to execute scroll functionality
+	 * @param isLeftScroll
+	 */
+	public void executeScroll(boolean isLeftScroll);
+    /**
+     * Update the tree widget as active style
+     */
+	void updateLeftShelfPanelActiveStyle();
 }

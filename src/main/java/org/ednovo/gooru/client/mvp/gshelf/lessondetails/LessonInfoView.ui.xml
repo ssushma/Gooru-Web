@@ -1,0 +1,180 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:ppanel="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:HTMLPanel ui:field="lessonInfo">
+
+
+<div class="courseNameBlock">
+
+<p>Lesson Name</p>
+<p><input type="text" value="AcNum" class="form-control"/></p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="unitCoverBlock">
+
+<div class="unitCoverHeader">
+
+<div class="col-md-6 col-sm-6"><ppanel:PPanel text="{i18n.GL3320}"/></div>
+<div class="col-md-6 col-sm-6">
+<div class="dropDownRight">
+
+	<panel:HTMLEventPanel styleName="btn-group" ui:field="btnStandardsBrowse">
+	<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
+	<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
+	<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
+	<g:InlineLabel styleName="sr-only"></g:InlineLabel>
+	</g:HTMLPanel>
+  	<ppanel:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"></ppanel:UlPanel>
+	</panel:HTMLEventPanel>
+
+
+
+
+<div class="btn-group">
+  <button class="btn btn-primary" type="button">The Number System  </button>
+  <button aria-expanded="false" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul role="menu" class="dropdown-menu pull-right">
+    <li><a href="#">My Folders</a></li>
+    <li><a href="#">My Collections</a></li>
+   
+  </ul>
+</div>
+</div>
+
+
+ </div>
+
+<div class="clearfix"></div>
+</div>
+
+<div class="lessonCover">
+<div class="panel panel-default">
+<div class="panel-heading">Apply and extend previous understandings of multiplication and division to devide fractions by fractions.</div>
+<div class="panel-body">
+
+<div class="fractionBlocks no-gutter">
+<div class="fractionMultiBlock">
+<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
+<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
+<div class="clearfix"></div>
+</div>
+<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
+</div>
+
+
+<div class="fractionBlocks no-gutter">
+
+<div class="fractionMultiBlock">
+<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
+<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
+<div class="clearfix"></div>
+
+</div>
+
+<div class="fractionMultiBlock">
+<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
+<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
+<div class="clearfix"></div>
+</div>
+
+
+<div class="fractionMultiBlock active">
+<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
+<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
+<div class="clearfix"></div>
+</div>
+
+
+
+
+<div class="fractionMultiBlock">
+<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
+<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
+<div class="clearfix"></div>
+</div>
+
+
+
+<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
+</div>
+
+
+
+<div class="fractionBlocks no-gutter">
+<div class="fractionMultiBlock">
+<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
+<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
+<div class="clearfix"></div>
+</div>
+
+<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
+</div>
+
+
+<div class="fractionBlocks no-gutter">
+<div class="fractionMultiBlock">
+<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
+<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
+<div class="clearfix"></div>
+</div>
+<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
+</div>
+
+
+
+
+</div>
+</div>
+
+
+<div class="filterTags">
+<ul>
+<li>6.NS.B.3 <a href="">X</a></li>
+
+</ul>
+</div>
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+<div class="stepsButtonGroup">
+<button type="submit" class="secondary">Save &amp; View Lesson</button>
+<button type="submit" class="primary">Next: Create a Collection</button>
+
+or
+<button type="submit" class="primary">Next: Create an Assessment</button>
+
+</div>
+
+<div class="clearfix"></div>
+
+
+
+
+
+
+</g:HTMLPanel>
+</ui:UiBinder>
