@@ -832,7 +832,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	        if (count==0){
 	        	selectedSubject.append(pairValue);
 	        }else{
-	        	selectedSubject.append(", "+pairValue);
+	        	selectedSubject.append("~~"+pairValue);
 	        }
 	        count++;
 	    }
