@@ -2234,6 +2234,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
 				explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
 				
+				if(addExplanationAnc.isVisible()){setExplanationContainer();}
 			}
 		};
 		timer1.schedule(0);
@@ -2307,7 +2308,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		
 		
 		if(addDepthOfKnowledgeAnc.isVisible()){setDepthOfKnowledgeContainer();}
-		if(addExplanationAnc.isVisible()){setExplanationContainer();}
 		if(addHintsAnc.isVisible()){setHintsContainer();}
 		if(addStandardsAnc.isVisible()){setStandardsContainer();}
 		if(addCenturyAnc.isVisible()){setCenturyContainer();}
