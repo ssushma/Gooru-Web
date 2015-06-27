@@ -68,6 +68,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
  *
@@ -101,11 +102,15 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup;
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
-	@UiField InlineLabel lblErrorMessage;
+	@UiField Label lblErrorMessage;
 
 	private final String QUERY = "query";
 	private final String FLT_SUBJECTNAME = "flt.subjectName";
 	private final String FLT_GRADE = "flt.grade";
+	private final String CATEGORY = "category";
+	private final String FLT_COLLECTIONTYPE = "flt.collectionType";
+	private final String ALL = "all";
+	private final String COLLECTION = "collection";
 
 	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
 	HashMap<String, String> selectedSubjects = new HashMap<String, String>();
@@ -364,6 +369,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			Map<String, String> params = new HashMap<String, String>();
 			params.put(FLT_GRADE, getSelectedGrades());
 			params.put(FLT_SUBJECTNAME, getSelectedSubjects());
+			params.put(CATEGORY,ALL);
+			params.put(FLT_COLLECTIONTYPE,COLLECTION);
+
 			params.put(QUERY, "*");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_COLLECTION, params, true);
 		}
