@@ -27,10 +27,12 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSearchDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
@@ -64,7 +66,11 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	String OER_FLT = "flt.isOer";
 
 	String AGGREGATOR_FLT = "flt.aggregator";
-
+	
+	String CONTRIBUTOR_FLT = "flt.contributor";
+	
+	String CONTRIBUTOR_FLT_TYPE = "flt.contributorType";
+	
 	String ACCESS_MODE_FLT = "flt.cfAccessMode";
 
 	String RATINGS_FLT = "flt.rating";
@@ -107,6 +113,10 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	void setSourceSuggestions(SearchDo<String> result);
 
 	void setAggregatorSuggestions(SearchDo<String> result);
-
+	
+	/*void setContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> result);*/
+	
 	void setJsonResponseInStorage(String data,boolean isApiCalled);
+
+	void setCollectionContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> result);
 }

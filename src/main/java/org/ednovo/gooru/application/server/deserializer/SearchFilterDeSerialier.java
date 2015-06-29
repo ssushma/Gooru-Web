@@ -55,13 +55,7 @@ public class SearchFilterDeSerialier extends DeSerializer {
 
 	private static Map<String, String> COLLECTION_CATEGORIES = new LinkedHashMap<String, String>();
 
-	private static Map<String, String> RESOURCE_CATEGORIES = new LinkedHashMap<String, String>();
-
-	{
-		COLLECTION_CATEGORIES.put("onlyQuestion", "Show only Quizzes");
-		//COLLECTION_CATEGORIES.put("NoQuestion", "None (___)");
-		//COLLECTION_CATEGORIES.put("all", "Mixed (both Quizzes and___)");
-
+	private static Map<String, String> RESOURCE_CATEGORIES = new LinkedHashMap<String, String>();{
 		RESOURCE_CATEGORIES.put("Video", "Videos");
 		RESOURCE_CATEGORIES.put("Webpage", "Webpage");
 		RESOURCE_CATEGORIES.put("Interactive", "Interactives");
@@ -69,7 +63,6 @@ public class SearchFilterDeSerialier extends DeSerializer {
 		RESOURCE_CATEGORIES.put("Image", "Images");
 		RESOURCE_CATEGORIES.put("Text", "Texts");
 		RESOURCE_CATEGORIES.put("Audio", "Audio");
-		/*RESOURCE_CATEGORIES.put("Other", "Other");*/
 	}
 
 	/**
