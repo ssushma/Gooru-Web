@@ -33,7 +33,6 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -56,25 +55,25 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
-		getView().setData(type,slotPanel,listOfContent,clrPanel,isInnerSlot,folderDo);
+	public void setData(String type,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
+		getView().setData(type,listOfContent,clrPanel,isInnerSlot,folderDo);
 	}
 	
 	@Override
-	public void setDataInContentSlot(final String type, final HTMLPanel slotPanel,String folderId,boolean isInnerSlot) {
+	public void setDataInContentSlot(final String type,String folderId,boolean isInnerSlot) {
 		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
-				getView().setData(type,slotPanel,result.getSearchResult(),true,true,null);
+				getView().setData(type,result.getSearchResult(),true,true,null);
 			}
 		});
 	}
 
 	@Override
-	public void setRightClusterPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj) {
+	public void setRightClusterPresenterBasedOnType(String type,FolderDo folderObj) {
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
 		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
-		getMyCollectionsRightClusterPresenter().setTabItems(2, type,slotPanel,folderObj);
+		getMyCollectionsRightClusterPresenter().setTabItems(1, type,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	@Override

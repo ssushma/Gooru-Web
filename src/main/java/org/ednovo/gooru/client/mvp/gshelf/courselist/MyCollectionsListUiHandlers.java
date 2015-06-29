@@ -47,14 +47,14 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param clrPanel
 	 * @param isInnerSlot
 	 */
-	public void setData(String type,HTMLPanel slotPane,List<FolderDo> result,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
+	public void setData(String type,List<FolderDo> result,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
 	/**
 	 * This method is used to set type of presenter based on the type
 	 * @param type
 	 * @param slotPanel
 	 * @param folderObj
 	 */
-	public void setRightClusterPresenterBasedOnType(String type,HTMLPanel slotPanel,FolderDo folderObj);
+	public void setRightClusterPresenterBasedOnType(String type,FolderDo folderObj);
 	/**
 	 * This method will return the Right Cluster Presenter
 	 * @return
@@ -72,7 +72,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param slotPanel
 	 * @param folderId
 	 */
-	public void setDataInContentSlot(String type,HTMLPanel slotPanel,String folderId,boolean isInnerSlot);
+	public void setDataInContentSlot(String type,String folderId,boolean isInnerSlot);
 	/**
 	 * This method is used to get scrollpanel
 	 */
