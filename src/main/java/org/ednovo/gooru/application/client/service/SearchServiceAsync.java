@@ -27,6 +27,7 @@ package org.ednovo.gooru.application.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSearchDo;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
@@ -99,6 +100,8 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	public void getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo,AsyncCallback<SearchDo<CodeDo>> callback);
 	
 	void getSuggestedAggregator(SearchDo<String> searchDo, AsyncCallback<SearchDo<String>> callback);
+	
+	void getSuggestedContributor(String query,String contributorquery, AsyncCallback<ArrayList<AutoSuggestContributorSearchDo>> callback);
 	
 	void getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid, AsyncCallback<SearchDo<ResourceSearchResultDo>> callback);
 	

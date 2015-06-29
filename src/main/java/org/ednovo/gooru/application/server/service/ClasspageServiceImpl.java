@@ -678,7 +678,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String bitlyLink="";
 		String rawUrl="";
 		String originalUrl="";
-
 		List<String> listUrl=new ArrayList<String>();
 		String httpUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GENERATE_BITLY_LINK);
 		JsonRepresentation jsonRep = null;
