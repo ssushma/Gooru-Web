@@ -151,7 +151,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	private static final String ASSESSMENT = "assessment";
 	
 	private static final String ASSESSMENT_URL = "assessment/url";
-
+	
 	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
 	
 	EditAssessmentPopup editAssessmentPopup=null;
@@ -182,11 +182,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
 		titleLbl.getElement().setId("htmlTitleLbl");
 		panelToolTip.getElement().setId("pnlPanelToolTip");
-		//htmlToolTipContent.getElement().setId("htmlHtmlToolTipContent");
-		if(AppClientFactory.getPlaceManager().getRequestParameter("view")==null ||!AppClientFactory.getPlaceManager().getRequestParameter("view").equals("Folder")){
-			titleFocPanel.addStyleName("course");
-			titleLbl.setText("UntitleCourse");
-		}
 		titleFocPanel.addClickHandler(new ClickOnFolderItem());
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -737,4 +732,21 @@ public class ShelfTreeWidget extends FocusPanel {
 			}
 		}
 	};
+
+
+	/**
+	 * @return the titleLbl
+	 */
+	public HTML getTitleLbl() {
+		return titleLbl;
+	}
+
+	/**
+	 * @return the titleFocPanel
+	 */
+	public FocusPanel getTitleFocPanel() {
+		return titleFocPanel;
+	}
+	
+	
 }
