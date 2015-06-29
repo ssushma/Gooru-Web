@@ -128,7 +128,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String ERROR_MSG_ANSWER = i18n.GL0311();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
 	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312();
-	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 	private CollectionItemDo collectionItemDo=null;
