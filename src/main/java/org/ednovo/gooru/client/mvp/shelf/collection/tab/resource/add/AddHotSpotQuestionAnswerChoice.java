@@ -211,7 +211,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 			}
 		}
-		if(textAnsContainer.getWidgetCount()<6){
+		if(textAnsContainer.getWidgetCount()<5){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}else {
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
