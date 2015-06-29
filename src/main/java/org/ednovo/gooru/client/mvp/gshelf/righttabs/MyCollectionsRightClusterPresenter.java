@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 
@@ -35,6 +36,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	public static final  Object INNER_SLOT = new Object();
 	CourseInfoPresenter courseInfoPresenter;
+	ShelfMainPresenter shelfMainPresenter;
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -44,6 +46,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CourseInfoPresenter courseInfoPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
+		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
@@ -65,5 +68,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setDefaultActiveTab(){
 		getView().resetHilightStyles();
 		getView().setDefaultActiveTab();
+	}
+	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
+		this.shelfMainPresenter=shelfMainPresenter;
 	}
 }
