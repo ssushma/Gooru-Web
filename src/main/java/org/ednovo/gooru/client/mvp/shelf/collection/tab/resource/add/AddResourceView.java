@@ -1430,8 +1430,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 		depthOfKnowledge.put("depthOfKnowledge", addQuestionResourceWidget.depthOfKnowledges);
 		
-		collectionQuestionItemDo.setQuestionText(addQuestionResourceWidget.questionNameTextArea.getText());
-		collectionQuestionItemDo.setExplanation(addQuestionResourceWidget.explainationTextArea.getText());
+		collectionQuestionItemDo.setQuestionText(addQuestionResourceWidget.questionNameTextArea.getText()!=null?addQuestionResourceWidget.questionNameTextArea.getText():"");
+		collectionQuestionItemDo.setExplanation(addQuestionResourceWidget.explainationTextArea.getText()!=null?addQuestionResourceWidget.explainationTextArea.getText():"");
 		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 		
 		

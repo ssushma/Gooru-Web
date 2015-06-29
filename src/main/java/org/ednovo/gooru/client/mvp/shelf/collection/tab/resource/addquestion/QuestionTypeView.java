@@ -2334,8 +2334,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 		depthOfKnowledge.put("depthOfKnowledge",depthOfKnowledges);
 
-		collectionQuestionItemDo.setQuestionText(questionNameTextArea.getText());
-		collectionQuestionItemDo.setExplanation(explainationTextArea.getText());
+		collectionQuestionItemDo.setQuestionText(questionNameTextArea.getText()!=null?questionNameTextArea.getText():"");
+		collectionQuestionItemDo.setExplanation(explainationTextArea.getText()!=null?explainationTextArea.getText():"");
 		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
 		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
