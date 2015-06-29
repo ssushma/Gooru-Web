@@ -106,7 +106,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private static final String COURSE = "Course";
 	
-	private static final String UNTITLEDCOURSE = i18n.GL3344();
+	private static final String UNTITLEDCOURSE = i18n.GL3347();
 	
 	private String VIEW ="view";
 	
@@ -263,7 +263,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void setFolderActiveStatus() { 
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
-			if(shelfTreeWidget.getCollectionDo().getType().equals("folder")) {
+			if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course")) {
 				TreeItem parent = treeChildSelectedItem.getParentItem();
 				treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 				if(parent != null)parent.setSelected(false);
@@ -272,7 +272,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				shelfTreeWidget.setFolderOpenedStatus(true);
 				
 			} else {
-				//getUiHandlers().getCollectionItems(shelfTreeWidget.getCollectionDo().getGooruOid(),shelfTreeWidget.getCollectionOpenedStatus()); 
 				shelfTreeWidget.setCollectionOpenedStatus(true);
 			}
 			shelfTreeWidget.setActiveStyle(true);
@@ -378,7 +377,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
 				folderListDoChild.add(widget.getCollectionDo());
 			}
-			getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
+			if(COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
+				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType());
+			}else{
+				getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
+			}
 		}
 	}	
 	

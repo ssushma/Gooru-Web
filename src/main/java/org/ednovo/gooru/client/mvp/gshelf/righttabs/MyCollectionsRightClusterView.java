@@ -54,7 +54,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,pnlBreadCrumbMain;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare;
 	
-	HTMLPanel slotPanel;
 	FolderDo folderObj;
 	
 	final String ACTIVE="active";
@@ -93,7 +92,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		public void onClick(ClickEvent event) {
 			resetHilightStyles();
 			selectedTab.setStyleName(ACTIVE);
-			getUiHandlers().setTabItems(index, "Unit",slotPanel,folderObj);
+			getUiHandlers().setTabItems(index, "Unit",folderObj);
 		}
 	}
 	@Override
@@ -112,8 +111,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 	}
 	@Override
-	public void setSlotPanel(HTMLPanel slotPanel,FolderDo folderObj){
-		 this.slotPanel=slotPanel;
+	public void setSlotPanel(FolderDo folderObj){
 		 this.folderObj=folderObj;
 		 String title=folderObj.getTitle();
 		 setBreadCums(title);

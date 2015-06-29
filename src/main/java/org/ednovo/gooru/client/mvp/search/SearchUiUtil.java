@@ -149,10 +149,17 @@ public class SearchUiUtil{
 				} else {
 					if(stdCode.length()>23 && count==0){
 						standardsfirstVal = stdCode;
+						DownToolTipWidgetUc toolTipUc1 = new DownToolTipWidgetUc(new Label(standardsfirstVal), new Label(stdDec), standards);
+						toolTipUc1.setStyleName(UcCBundle.INSTANCE.css().searchStandardResource());
+						standardsContainer.add(toolTipUc1);
 					}else{
-						DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-						toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandardResource());
-						standardsContainer.add(toolTipUc);
+						if(standards.size()==2)
+						{
+						DownToolTipWidgetUc toolTipUc1 = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + 1), new Label(stdCode), standards);
+						toolTipUc1.setStyleName("blueLink");
+						standardsContainer.add(toolTipUc1);
+						toolTipUc1.getTooltipPopUpUcCount(1);
+						}				
 					}
 				}
 				count++;

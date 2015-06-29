@@ -44,7 +44,7 @@ public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollection
 	 * @param listOfContent
 	 * @param clrPanel
 	 */
-	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
+	public void setData(String type,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo);
 	/**
 	 * This method is used to reset widgets
 	 */

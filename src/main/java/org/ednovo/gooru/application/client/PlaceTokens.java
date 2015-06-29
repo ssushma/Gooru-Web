@@ -55,6 +55,7 @@ public interface PlaceTokens {
 	String FOLDERS = "organizee";
 	String EDIT_FOLDERS = "organize-folder";
 	String EDIT_CLASSPAGE = "teach";
+	String EDIT_CLASS="teach2";
 	String SETTINGS = "settings";
 	String CREATEFOLDER = "createfolder";
 	String REGISTER="registration";

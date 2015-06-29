@@ -81,7 +81,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	@UiField
 	public RadioButton textRDButton;
 
-	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
+	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5","6"};
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
@@ -233,7 +233,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	private class panelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			if(ansImageContainer.getWidgetCount()<5){
+			if(ansImageContainer.getWidgetCount()<6){
 			questionTypeView.uploadAnswerImage();
 			}
 		}
@@ -287,7 +287,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	public void updateImageContainer(){
 
-		if(ansImageContainer.getWidgetCount()==5){
+		if(ansImageContainer.getWidgetCount()==6){
 			ansImageBlock.getElement().getStyle().setOpacity(0.5);
 			ansImage.getElement().getStyle().setCursor(Cursor.DEFAULT);
 			ansImageBlock.getElement().getStyle().setCursor(Cursor.DEFAULT);

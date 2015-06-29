@@ -30,7 +30,6 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
@@ -51,15 +50,15 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setUiHandlers(this);
 	}
 	@Override
-	public void setTabItems(int index,String type,HTMLPanel slotPanel,FolderDo folderObj) {
+	public void setTabItems(int index,String type,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
-		getView().setSlotPanel(slotPanel,folderObj);
+		getView().setSlotPanel(folderObj);
 		if(index==1){
 			courseInfoPresenter.callTaxonomyService();
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 		}else if(index==2){
 			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setDataInContentSlot(type, slotPanel,folderObj.getGooruOid(),false);
+			myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
 			setInSlot(INNER_SLOT, myCollectionsListPresenter);
 		}else if(index==3){
 			

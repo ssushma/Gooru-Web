@@ -228,7 +228,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
-	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
+	Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	String courseCode="";
 	boolean isEditResource=false;
 
@@ -1576,7 +1576,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	centuryContainer.setVisible(true);
     }
 
-    private void addHintsTextArea(final AddHintsView addHints){
+     void addHintsTextArea(final AddHintsView addHints){
 	       hintsContainer.add(addHints);
 	       addHints.hintDelLbl.addClickHandler(new ClickHandler() {
 
@@ -3281,68 +3281,74 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 		     depthOfKnowledges.clear();
 
-		     if(chkLevelRecall.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelRecall.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelRecall.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelSkillConcept.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelSkillConcept.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelSkillConcept.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelStrategicThinking.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelStrategicThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelStrategicThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelExtendedThinking.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelExtendedThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelExtendedThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
+		     setDOKCheckBoxes();
 		}
      }
+     
+     
+     public void setDOKCheckBoxes(){
+    	 if(chkLevelRecall.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelRecall.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelRecall.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelSkillConcept.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelSkillConcept.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelSkillConcept.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelStrategicThinking.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelStrategicThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelStrategicThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelExtendedThinking.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelExtendedThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelExtendedThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+     }
+     
 
      public abstract void callBrowseStandards();
 
@@ -3561,5 +3567,21 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 	}
+	
+
+	public void setAncTabs(){
+		explanationContainer.setVisible(!addExplanationLabel.isVisible());
+    	depthOfKnowledgeContainer.setVisible(!addDepthOfKnowledgeLabel.isVisible());
+    	hintsContainer.setVisible(!addHintsLabel.isVisible());
+    	standardContainer.setVisible(!addStandardsLabel.isVisible());
+    	centuryContainer.setVisible(!addCenturyLabel.isVisible());
+	}
+	public void resetDepthOfKnowledges(){
+		chkLevelRecall.setChecked(false);
+		chkLevelSkillConcept.setChecked(false);
+		chkLevelStrategicThinking.setChecked(false);
+		chkLevelExtendedThinking.setChecked(false);
+	}
+
 
 }
