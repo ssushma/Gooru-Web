@@ -1412,7 +1412,7 @@ word-wrap: break-word;
 	}
 	#gooruSearchMainContainer .viewContainer{
 		text-align: left;
-		width: 100%;
+		/* width: 100%; */
 	}
 	#gooruSearchMainContainer .resourceImage{
 		  width: 66px;
