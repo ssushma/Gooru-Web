@@ -128,7 +128,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String ERROR_MSG_ANSWER = i18n.GL0311();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
 	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312();
-	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 	private CollectionItemDo collectionItemDo=null;
@@ -2335,8 +2334,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 		depthOfKnowledge.put("depthOfKnowledge",depthOfKnowledges);
 
-		collectionQuestionItemDo.setQuestionText(questionNameTextArea.getText());
-		collectionQuestionItemDo.setExplanation(explainationTextArea.getText());
+		collectionQuestionItemDo.setQuestionText(questionNameTextArea.getText()!=null?questionNameTextArea.getText():"");
+		collectionQuestionItemDo.setExplanation(explainationTextArea.getText()!=null?explainationTextArea.getText():"");
 		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
 		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
