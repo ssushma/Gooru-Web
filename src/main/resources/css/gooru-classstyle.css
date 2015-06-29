@@ -1,0 +1,189 @@
+@charset "utf-8";
+/* CSS Document */
+
+#getStartedContainer .blueBand{
+	background:#87badd;
+	padding:5px 0;
+	position: fixed;
+	width: 100%;
+	text-align: left;
+}
+#getStartedContainer .topBlueRight{
+	text-align:right;
+}
+#getStartedContainer .blueBand h2{
+	color:#ffffff;
+	margin:9px 0;
+	font-size:24px;
+	font-weight:bold;
+}
+
+#getStartedContainer .rightWhiteBox, #getStartedContainer .settingsMenu{
+
+	display:inline-block;
+	vertical-align:middle;
+}
+#getStartedContainer .settingsMenu .classAnrSettings{
+	color:#ffffff;
+	display:inline-block;
+	margin-right:5px;
+	font-weight:bold;
+	cursor:pointer;
+}
+#getStartedContainer .settingsMenu .classAnrSettings:hover,  #getStartedContainer .settingsMenu  .classAnrSettings:focus{
+	opacity: 0.75;
+	text-decoration:none;
+}
+#getStartedContainer .rightWhiteBox  span{
+    background: #ffffff none repeat scroll 0 0;
+    color: #515151;
+    font-size: 26px;
+    font-weight: normal;
+	border-radius:4px 4px;
+	-webkit-border-radius:4px 4px;
+	-moz-border-radius:4px 4px;
+    padding: 6px 12px;
+	display:inline-block;
+}
+
+#getStartedContainer .whiteBG{
+	background:#ffffff;
+}
+#getStartedContainer .getStarted{
+	text-align:center;
+	margin-top: 49px;
+	padding-bottom: 30px;
+}
+#getStartedContainer .getStarted h1{
+	text-align:center;
+	color:#515151;
+	margin:0 0 0 0;
+	padding:30px 0;
+}
+
+#getStartedContainer .getStarted button.primary{
+	padding:8px 35px;
+}
+	#getStartedContainer .videoBlock{
+		text-align:center;
+		padding:35px 0;
+	}
+#getStartedContainer .videoBlock .img-responsive{
+	display:inline-block;
+	border:1px solid #eaeaea;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+#getStartedContainer .settingsMenu{
+	text-align:center;
+	width:100%;
+	padding:12px 0;
+	margin:8px 0;
+	background:#79afd4;
+	border-top:1px solid #6da3c8;
+	border-bottom:1px solid #6da3c8;
+}
+#getStartedContainer .settingsMenu img{
+	width:19px;
+}
+#getStartedContainer .settingsMenu a:last-child{
+	margin-right:0;
+	margin-bottom:0;
+}
+#getStartedContainer  .blueBand{
+	text-align:center;
+}
+#getStartedContainer .settingsMenu a{
+	margin-bottom:10px;
+	border:1px solid #a2d0f0;
+	padding:6px 6px;
+	background:#87badd;
+}
+#getStartedContainer .topBlueRight{
+	text-align:center;
+}
+
+}
+@media (min-width: 320px) and (max-width: 479px) {
+#getStartedContainer .settingsMenu{
+	text-align:center;
+	width:100%;
+	padding:12px 0;
+	margin:8px 0;
+	background:#79afd4;
+	border-top:1px solid #6da3c8;
+	border-bottom:1px solid #6da3c8;
+}
+
+#getStartedContainer .settingsMenu img{
+	width:19px;
+}
+#getStartedContainer .settingsMenu a:last-child{
+	margin-right:0;
+}
+#getStartedContainer  .blueBand{
+	text-align:center;
+}
+#getStartedContainer .topBlueRight{
+	text-align:center;
+}
+}
+@media (min-width: 480px) and (max-width: 767px){
+
+#getStartedContainer .settingsMenu{
+	text-align:center;
+	width:100%;
+	padding:12px 0;
+	margin:8px 0;
+	background:#79afd4;
+	border-top:1px solid #6da3c8;
+	border-bottom:1px solid #6da3c8;
+}
+
+#getStartedContainer .settingsMenu img{
+	width:19px;
+}
+#getStartedContainer .settingsMenu a:last-child{
+	margin-right:0;
+}
+#getStartedContainer  .blueBand{
+	text-align:center;
+}
+#getStartedContainer .topBlueRight{
+	text-align:center;
+}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	
+#getStartedContainer .blueBand h2{
+	font-size:16px;
+	margin-left:6px;
+}
+#getStartedContainer .settingsMenu img{
+	width:20px;
+}
+#getStartedContainer .rightWhiteBox{
+	margin-right:6px;
+}
+#getStartedContainer .rightWhiteBox span{
+	font-size:18px;
+}
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+		#getStartedContainer .settingsMenu img{
+			width:25px;
+}
+}
+@media (min-width: 1200px) {
+	#getStartedContainer .settingsMenu img{
+			width:30px;
+		}
+}
+.gradeContainer {
+	background: #333333;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#f5f5f5));
+	background: -webkit-linear-gradient(top, #ffffff, #f5f5f5);
+	background: -moz-linear-gradient(top, #ffffff, #f5f5f5);
+	background: -ms-linear-gradient(top, #ffffff, #f5f5f5);
+	background: -o-linear-gradient(top, #ffffff, #f5f5f5);
+	margin-top: 40px;
+}
