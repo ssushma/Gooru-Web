@@ -97,8 +97,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	private HandlerRegistration handlerRegistration=null;
 
-	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard,btnLearnAboutApproach, btnGradesCaret, btnSubjectCaret;
-	@UiField Anchor ancLogin, lblSampleReports;
+	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
+	@UiField Anchor ancLogin, lblSampleReports,btnLearnAboutApproach;
 	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup;
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;

@@ -260,7 +260,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		collectionPanel.getElement().setInnerText(i18n.GL0645());
 		resourcePanel.getElement().setInnerText(i18n.GL1110());
 
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 			btnSearchType.setText(i18n.GL0645());
 			btnSearchType.getElement().appendChild(cart.getElement());
 		}else{
@@ -588,8 +588,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void onSuccess() {
 //				collectionPanel.removeStyleName("active");
 //				resourcePanel.setStyleName("active");
-				resourceSearchPanel.setVisible(true);
+				resourceSearchPanel.setVisible(false);
 				collectionSearchPanel.setVisible(false);
+				searchResults.setVisible(false);
 				ulDropdown.setVisible(false);
 				resetData();
 				getUiHandlers().setSearchType(false,getSearchText());
@@ -607,8 +608,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void onSuccess() {
 //				collectionPanel.setStyleName("active");
 //				resourcePanel.removeStyleName("active");
+				searchResults.setVisible(false);
 				resourceSearchPanel.setVisible(false);
-				collectionSearchPanel.setVisible(true);
+				collectionSearchPanel.setVisible(false);
 				ulDropdown.setVisible(false);
 				resetData();
 				getUiHandlers().setSearchType(true,getSearchText());
