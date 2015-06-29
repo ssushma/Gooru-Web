@@ -39,7 +39,8 @@
 											</g:HTMLPanel>
 										</span>
 								    </div>
-									<g:InlineLabel ui:field="lblErrorMessage" styleName="errorMessage"></g:InlineLabel>
+
+									<g:Label ui:field="lblErrorMessage" styleName="errorMessage errorDisplay"></g:Label>
 
 								</g:HTMLPanel>
 								<div class="col-md-2 browseContentBtn">
