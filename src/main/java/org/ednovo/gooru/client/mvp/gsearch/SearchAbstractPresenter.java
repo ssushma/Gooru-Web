@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSearchDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
@@ -70,6 +72,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -104,7 +107,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	private SearchAsyncCallback<SearchDo<String>> sourceSuggestionAsyncCallback;
 
 	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
-
+	
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackFirstLoad;
 
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackLoadInStore;
@@ -265,6 +268,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 					getView().setAggregatorSuggestions(result);
 				}
 			});
+			
 		}
 	}
 
@@ -449,6 +453,15 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			if (collectionType != null) {
 				filters.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);
 			}
+			 String selectedContributorValues = getPlaceManager().getRequestParameter(
+						IsGooruSearchView.CONTRIBUTOR_FLT);
+			 if(selectedContributorValues!=null&& !selectedContributorValues.isEmpty()){
+				 filters.put(IsGooruSearchView.CONTRIBUTOR_FLT, selectedContributorValues);
+			 }
+			 String selectedContributorType = getPlaceManager().getRequestParameter(IsGooruSearchView.CONTRIBUTOR_FLT_TYPE);
+			 if(selectedContributorType!=null&& !selectedContributorType.isEmpty()){
+				 filters.put(IsGooruSearchView.CONTRIBUTOR_FLT_TYPE,selectedContributorType);
+			 }
 		}
 		return filters;
 	}
@@ -568,7 +581,24 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void requestAggregatorSuggestions(SearchDo<String> searchDo){
 		getAggregatorSuggestionAsyncCallback().execute(searchDo);
 	}
-
+	/**
+	 * This API call is used to display the suggested results for the contributors based on user's query typed
+	 */
+	@Override
+	public void requestContributorSuggestions(String contributorquery){
+		String originalQuery=getPlaceManager().getRequestParameter("query");
+		String contributorQuery=contributorquery;
+		searchService.getSuggestedContributor(originalQuery,contributorQuery, new AsyncCallback<ArrayList<AutoSuggestContributorSearchDo>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(ArrayList<AutoSuggestContributorSearchDo> result) {
+					getView().setCollectionContributorSuggestions(result);
+			}
+		});
+	}
+	
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
 		return standardSuggestionAsyncCallback;
 	}
@@ -590,7 +620,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchAsyncCallback<SearchDo<String>> getAggregatorSuggestionAsyncCallback() {
 		return aggregatorSuggestionAsyncCallback;
 	}
-
+	
 	public void setAggregatorSuggestionAsyncCallback(
 			SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback) {
 		this.aggregatorSuggestionAsyncCallback = aggregatorSuggestionAsyncCallback;
