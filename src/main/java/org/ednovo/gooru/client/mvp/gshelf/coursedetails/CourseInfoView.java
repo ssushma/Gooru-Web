@@ -43,9 +43,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -63,6 +66,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
+	@UiField Button saveCourseBtn;
+	@UiField TextBox courseTitle;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
@@ -183,5 +188,10 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
 			}
 		}
+	}
+	
+	@UiHandler("saveCourseBtn")
+	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
 	}
 }

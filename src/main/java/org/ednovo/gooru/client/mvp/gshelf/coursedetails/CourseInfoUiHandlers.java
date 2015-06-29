@@ -37,4 +37,10 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	public void callTaxonomyService();
 	
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
+    
+	/**
+	 * To Create and Save the details of Course
+	 * @param courseTitle {@link String} 
+	 */
+	public void createAndSaveCourseDetails(String courseTitle);
 }

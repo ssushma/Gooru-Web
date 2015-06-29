@@ -52,6 +52,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	public MyCollectionsListPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter,EventBus eventBus, IsMyCollectionsListView view) {
 		super(eventBus, view);
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+		myCollectionsRightClusterPresenter.setShelfMainPresenter(shelfMainPresenter);
 		getView().setUiHandlers(this);
 	}
 

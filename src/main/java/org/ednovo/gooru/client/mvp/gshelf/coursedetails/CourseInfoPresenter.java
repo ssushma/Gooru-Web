@@ -27,8 +27,11 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.SimpleAsyncCallback;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -45,6 +48,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
 
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
+	
 	final String SUBJECT="subject";
 	
 	final String COURSE="course";
@@ -100,5 +105,21 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				}
 			}
 		});
+	}
+
+	@Override
+	public void createAndSaveCourseDetails(String courseTitle) {
+		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, new SimpleAsyncCallback<FolderDo>() {
+
+			@Override
+			public void onSuccess(FolderDo result) {
+				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, null, result);
+			}
+		});
+	}
+
+	public void setMyCollectionRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 }

@@ -349,6 +349,8 @@ public enum UrlToken {
 	V2_LIST_CLASSPAGES_BY_USER_ID("/v2/classpage/collection/{0}?gooruUId={1}"),
 
 	V2_CREATE_FOLDER("/v2/folder?"),
+	
+	V1_CREATE_COURSE("/v1/course?"),
 
 	V2_DELETE_FOLDER("/v2/folder/{0}?"),
 

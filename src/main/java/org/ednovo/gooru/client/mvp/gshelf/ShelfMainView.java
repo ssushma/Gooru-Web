@@ -106,6 +106,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private static final String COURSE = "Course";
 	
+	private static final String UNTITLEDCOURSE = i18n.GL3344();
+	
 	private String VIEW ="view";
 	
 	static Integer pageNumber = 1;
@@ -527,8 +529,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			TreeItem treeItem = new TreeItem(shelfTreeWidget);
 			//shelfTreeWidget.setWidgetPositions(1, 0, null);
 			shelfFolderTree.insertItem(0, treeItem);
+			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
+			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
 			FolderDo folderObj = new FolderDo();
-			folderObj.setTitle("UntitleCourse");
+			folderObj.setTitle(UNTITLEDCOURSE);
 			getUiHandlers().setRightPanelData(folderObj, COURSE);
 			correctStyle(treeItem);
 		}
