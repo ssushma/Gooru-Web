@@ -45,6 +45,8 @@ public interface Constants {
 	
 	String RUSD_LOGO = "../images/library/district/rusd-logo.png";
 	
+	String YCGL_LOGO = "../images/library/district/ycgl-logo.png";
+	
 	String LPS_LOGO = "../images/library/district/lps-logo.png";
 
 	String LUSD_LOGO = "../images/library/district/lusd-logo.png";

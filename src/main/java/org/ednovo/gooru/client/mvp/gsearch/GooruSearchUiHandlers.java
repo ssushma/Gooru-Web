@@ -76,7 +76,9 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	void requestSourceSuggestions(SearchDo<String> searchDo);
 
 	void requestAggregatorSuggestions(SearchDo<String> searchDo);
-
+	
+	void requestContributorSuggestions(String query);
+	
 	void showRatingAndReviewPopup(ResourceSearchResultDo resourceSearchResultDo);
 
 	void setDataReterivedFromStorage(String data,boolean isApiCalled);

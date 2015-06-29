@@ -142,5 +142,5 @@ public interface ApiKeyParams {
 	String YOUTUBE_KEY="key";
 	String YOUTUBE_PART="part";
 	String COURSE="Course";
-	
+	String CONTRIBUTOR_QUERY="contributorQuery";
 }
