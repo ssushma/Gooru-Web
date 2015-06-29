@@ -14,6 +14,7 @@
 			 </g:HTMLPanel>
 			<g:HTMLPanel ui:field="individualScoredData" styleName="{unitStyle.css.individualScore}"/>
 			</g:HTMLPanel>
+			<g:Label ui:field="userInfo" text="{i18n.GL3343}"></g:Label>
 			<g:HTMLPanel ui:field="individualOpenendedData"  styleName="{unitStyle.css.individualScore}" />
 			<g:HTMLPanel ui:field="individualResourceBreakdownDatapnl">
 				 <g:HTMLPanel styleName="{unitStyle.css.collectionOverViewpnl}">

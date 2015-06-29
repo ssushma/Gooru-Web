@@ -30,6 +30,7 @@ package org.ednovo.gooru.application.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSearchDo;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
@@ -243,6 +244,16 @@ public interface SearchService extends BaseService {
 	 *
 	 */
 	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException, ServerDownException;
+	
+	
+	/**
+	 * This method is used to get the contributor results
+	 * @param searchDo
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	 ArrayList<AutoSuggestContributorSearchDo> getSuggestedContributor(String query,String contributorquery) throws GwtException, ServerDownException;
 	/**
 	 * 
 	 * @function getCollectionSuggestedResourceSearchResults 
