@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -87,14 +88,16 @@ public abstract class ContentWidgetWithMove extends Composite {
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
 		spnResourcesCount.setVisible(false);
 		spnQuestionsCount.setVisible(false);
-		setData();
+		if(folderObj.getSummary()!=null){
+			setData(folderObj.getSummary());
+		}
 		int indexVal=index+1;
 		if(indexVal==1){
 			lblTopArrow.setVisible(false);
 		}
-		
 		pnlArrows.setVisible(true);
 		pnlMoveToEdit.setVisible(false);
+		
 		if(COURSE.equalsIgnoreCase(type)){
 			//h3CourseTitle.setText(i18n.GL0326()+" "+indexVal);
 		}else if(UNIT.equalsIgnoreCase(type)){
@@ -193,14 +196,15 @@ public abstract class ContentWidgetWithMove extends Composite {
 	}
 	/**
 	 * This method is used to set count for Units,Lessons,Collections and Assessments.
+	 * @param courseSummaryDo 
 	 */
-	public void setData(){
-		spnUnitsCount.setText(i18n.GL3279()+"( )");
-		spnLessonsCount.setText(i18n.GL3280()+"( )");
-		spnCollectionsCount.setText(i18n.GL1754()+"( )");
-		spnAssessmentsCount.setText(i18n.GL1325()+"( )");
-		spnResourcesCount.setText(i18n.GL1755()+"( )");
-		spnQuestionsCount.setText(i18n.GL2290()+"( )");
+	public void setData(CourseSummaryDo courseSummaryDo){
+		spnUnitsCount.setText(i18n.GL3279()+" ("+courseSummaryDo.getUnitCount()+")");
+		spnLessonsCount.setText(i18n.GL3280()+" ("+courseSummaryDo.getLessonCount()+")");
+		spnCollectionsCount.setText(i18n.GL1754()+" ("+courseSummaryDo.getCollectionCount()+")");
+		spnAssessmentsCount.setText(i18n.GL1325()+" ("+courseSummaryDo.getAssessmentCount()+")");
+		spnResourcesCount.setText(i18n.GL1755()+" ("+courseSummaryDo.getUnitCount()+")");
+		spnQuestionsCount.setText(i18n.GL2290()+" ("+courseSummaryDo.getUnitCount()+")");
 	}
 	/**
 	 * This inner class will handle the click event on the Arrows

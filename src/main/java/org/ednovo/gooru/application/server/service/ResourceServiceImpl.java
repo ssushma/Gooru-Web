@@ -46,6 +46,7 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -1403,13 +1404,17 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String limitSize = Integer.toString(limit);
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_WORKSPACE_FOLDER_LIST);
+		if(GooruConstants.COURSE.equalsIgnoreCase(collectionType)){
+			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_USER_COURSES_LIST,getLoggedInUserUid());
+		}else{
+			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_WORKSPACE_FOLDER_LIST);
+		}
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.OFFSET, offsetSize);
 		if(sharingType!=null){
 			params.put(GooruConstants.SHARING, sharingType);
 		}
-		if(collectionType!=null){
+		if(collectionType!=null && !GooruConstants.COURSE.equalsIgnoreCase(collectionType)){
 			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
 		}
 		params.put(GooruConstants.LIMIT,limitSize);
@@ -1423,13 +1428,19 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("---- getFolderWorkspace ---  "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeWorkspaceFolderList(jsonRep);
+		return deserializeWorkspaceFolderList(jsonRep,collectionType);
 	}
 
-	public FolderListDo deserializeWorkspaceFolderList(JsonRepresentation jsonRep) {
+	public FolderListDo deserializeWorkspaceFolderList(JsonRepresentation jsonRep,String collectionType) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderListDo>() {});
+				if(!GooruConstants.COURSE.equalsIgnoreCase(collectionType)){
+					return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderListDo>() {});
+				}else{
+					FolderListDo listObj=new FolderListDo();
+					listObj.setSearchResult((ArrayList<FolderDo>) JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(),new TypeReference<List<FolderDo>>() {}));
+					return listObj;
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Exception::", e);
