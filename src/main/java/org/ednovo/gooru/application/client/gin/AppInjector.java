@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.home.HomePresenter;
 import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
+import org.ednovo.gooru.application.client.newhome.NewHomePresenter;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
@@ -106,7 +107,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResou
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
-import org.ednovo.gooru.client.mvp.test.TestPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -179,7 +179,7 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<EditClasspagePresenter> getEditClasspagePresenter();
 
-	AsyncProvider<TestPresenter> getTestPresenter();
+	AsyncProvider<NewHomePresenter> getTestPresenter();
 
 	AsyncProvider<ClassCodePresenter> getClassCodePresenter();
 

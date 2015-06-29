@@ -434,7 +434,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	private void search(String searchText) {
 		studentSuggestOracle.clear();
 		for (String students : allStudentsList) {
-			if(students.matches("(?i)("+searchText+").*")){
+			if(students.toUpperCase().startsWith(searchText.toUpperCase())){
 				studentSuggestOracle.add(students);
 			}
 		}

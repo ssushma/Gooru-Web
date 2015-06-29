@@ -128,7 +128,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String ERROR_MSG_ANSWER = i18n.GL0311();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
 	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312();
-	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 	private CollectionItemDo collectionItemDo=null;
@@ -876,70 +875,74 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			boolean checked = checkBox.getValue();
 
 			depthOfKnowledges.clear();
-
-			if(chkLevelRecall.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelRecall.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelRecall.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-			if(chkLevelSkillConcept.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelSkillConcept.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelSkillConcept.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-			if(chkLevelStrategicThinking.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelStrategicThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelStrategicThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-			if(chkLevelExtendedThinking.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelExtendedThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelExtendedThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-
+			setDOKCheckBoxes();
 		}
 	}
+	
+	
+	public void setDOKCheckBoxes(){
+		if(chkLevelRecall.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelRecall.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelRecall.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+
+		if(chkLevelSkillConcept.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelSkillConcept.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelSkillConcept.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+
+		if(chkLevelStrategicThinking.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelStrategicThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelStrategicThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+
+		if(chkLevelExtendedThinking.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelExtendedThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelExtendedThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+	}
+	
+	
 	@UiHandler("addDepthOfKnowledgeAnc")
 	public void clickOnaddDepthOfKnowledgeAnc(ClickEvent event){
 		addDepthOfKnowledgeAnc.setVisible(false);
@@ -2139,6 +2142,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
 					int widgetcount=1;
+					addHotSpotQuestion.textAnsContainer.clear();
 					while (it.hasNext()) {
 						addHotSpotQuestion.setAnswerFields(false);
 						QuestionAnswerDo answer = it.next();
@@ -2219,5 +2223,161 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			setExplanationContainer();
 		}
 	};
+
+	@Override
+	public void setMetadata(final CollectionQuestionItemDo collectionQuestionItemDo) {
+		
+		Timer timer1=new Timer() {
+			@Override
+			public void run() {
+				questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
+				questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getQuestionText());
+				questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getQuestionText());
+				explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
+				explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
+				explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
+				
+				if(addExplanationAnc.isVisible()){setExplanationContainer();}
+			}
+		};
+		timer1.schedule(0);
+		
+		if(collectionQuestionItemDo.getDepthOfKnowledges()!=null){
+			int checkBoxCount=0;
+			resetDepthOfKnowledges();
+			depthOfKnowledges.clear();
+			for (checkboxSelectedDo item : collectionQuestionItemDo.getDepthOfKnowledges().get("depthOfKnowledge")) {
+				
+				   if(item.isSelected()){
+					   if(checkBoxCount==0)
+					   chkLevelRecall.setChecked(true);
+					   if(checkBoxCount==1)
+				       chkLevelSkillConcept.setChecked(true);
+					   if(checkBoxCount==2)
+				       chkLevelStrategicThinking.setChecked(true);
+					   if(checkBoxCount==3)
+				       chkLevelExtendedThinking.setChecked(true);
+				   }
+				   checkBoxCount++;
+				}
+			
+			setDOKCheckBoxes();
+			
+			}
+		
+		TreeSet<QuestionHintsDo> hintset = new TreeSet<QuestionHintsDo>(collectionQuestionItemDo.getHints().get("hint"));
+		TreeSet<QuestionHintsDo> hintsList = hintset;
+		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
+		hintsContainer.clear();
+		while (iterator.hasNext()) {
+			QuestionHintsDo hints = iterator.next();
+			int widgetCount=hintsContainer.getWidgetCount();
+	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
+	        addHintsTextArea(addHints);
+		}
+		int count=hintsContainer.getWidgetCount();
+		addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+
+		centuryPanel.clear();
+		standardsPanel.clear();
+		standardsDo.clear();
+		
+		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
+		
+		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
+		{
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			codeDo.setLabel(entry.getValue());
+			codeDo.setCodeId(entry.getKey().intValue());
+			standardsDo.add(codeDo);
+			centurySelectedValues.put(entry.getKey(),entry.getValue());
+			centuryPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"", centuryCodesMap.get(entry.getKey())));
+		}
+		
+		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
+			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();
+			if(!centurySkills.containsKey(codeID.longValue())){
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			String label=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getLabel();
+			String code=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCode();
+			codeDo.setLabel(code);
+			codeDo.setCode(code);
+			codeDo.setCodeId(codeID);
+			standardsDo.add(codeDo);
+			standardsPanel.add(createStandardLabel(code,String.valueOf(codeID),label));
+			}
+		}
+		
+		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
+		
+		addExplanationAnc.setVisible(moreOptions.get("explanation"));
+		addHintsAnc.setVisible(moreOptions.get("hints"));
+		addDepthOfKnowledgeAnc.setVisible(moreOptions.get("DOK"));
+		addStandardsAnc.setVisible(moreOptions.get("standards"));
+		addCenturyAnc.setVisible(moreOptions.get("21stcentury"));
+		
+		setAncTabs();
+		
+		
+		if(addDepthOfKnowledgeAnc.isVisible()){setDepthOfKnowledgeContainer();}
+		if(addHintsAnc.isVisible()){setHintsContainer();}
+		if(addStandardsAnc.isVisible()){setStandardsContainer();}
+		if(addCenturyAnc.isVisible()){setCenturyContainer();}
+		
+	}
+	
+	public CollectionQuestionItemDo getMetadata(){
+		CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
+
+		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+		depthOfKnowledge.put("depthOfKnowledge",depthOfKnowledges);
+
+		collectionQuestionItemDo.setQuestionText(questionNameTextArea.getText()!=null?questionNameTextArea.getText():"");
+		collectionQuestionItemDo.setExplanation(explainationTextArea.getText()!=null?explainationTextArea.getText():"");
+		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+
+		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
+		HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
+
+		for(int i=0;i<hintsContainer.getWidgetCount();i++)
+		{
+			AddHintsView addHints = (AddHintsView)hintsContainer.getWidget(i);
+			QuestionHintsDo questionHintsDo=new QuestionHintsDo();
+			String hintText=addHints.hintTextBox.getText();
+			if(hintText!=null&&!hintText.trim().equals("")&&!hintText.isEmpty()){
+				hintText=addHints.hintTextBox.getRawContent().trim();
+			}
+			questionHintsDo.setHintText(hintText);
+			questionHintsDo.setSequence(i+1);
+			enteredHints.add(questionHintsDo);
+		}
+		hintsMap.put("hint",enteredHints);
+		collectionQuestionItemDo.setHints(hintsMap);
+
+
+		collectionQuestionItemDo.setCenturySelectedValues(centurySelectedValues);
+
+		if(collectionQuestionItemDo.getTaxonomySet()!=null){
+			collectionQuestionItemDo.getTaxonomySet().clear();
+		}
+		
+		HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
+		taxonomySet.put("taxonomyCode", standardsDo);
+		
+		collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+
+		HashMap<String,Boolean> moreOptions=new HashMap<String, Boolean>();
+
+		moreOptions.put("explanation",addExplanationAnc.isVisible());
+		moreOptions.put("hints", addHintsAnc.isVisible());
+		moreOptions.put("DOK", addDepthOfKnowledgeAnc.isVisible());
+		moreOptions.put("standards", addStandardsAnc.isVisible());
+		moreOptions.put("21stcentury", addCenturyAnc.isVisible());
+
+		collectionQuestionItemDo.setMoreOptions(moreOptions);
+		return collectionQuestionItemDo;
+	}
 
 }

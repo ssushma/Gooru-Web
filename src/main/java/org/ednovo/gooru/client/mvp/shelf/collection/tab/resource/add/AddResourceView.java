@@ -39,8 +39,11 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -49,7 +52,10 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -85,6 +91,7 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -376,7 +383,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		tabViewContainer.add(addWebResourceWidget);
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		urlTabButton.setStyleName(res.css().buttonSelected());
-		getUiHandlers().addSelectedQuestionType("MC");
+		getUiHandlers().addSelectedQuestionType("MC",getAddResourceMetadata());
 //		myComputerTabButton.setStyleName(res.css().buttonSelected());
 //		questionTabButton.setStyleName(res.css().buttonDeSelected());
 //		searchTabButton.setStyleName(res.css().buttonDeSelected());
@@ -971,7 +978,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				
 				int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 				if(type==10){
-				getUiHandlers().addSelectedQuestionType("HS");
+				getUiHandlers().addSelectedQuestionType("HS",getAddResourceMetadata());
 				}
 				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
@@ -1050,7 +1057,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			Window.enableScrolling(false);
 			if(!multipleChoiceRadioButton.getValue()){
 				//Window.enableScrolling(true);
-				getUiHandlers().addSelectedQuestionType("MC");
+				getUiHandlers().addSelectedQuestionType("MC",getAddResourceMetadata());
 				displayQuestionWidget();
 				multipleChoiceRadioButton.setValue(true);
 				highlightSelectedTab("MC");
@@ -1069,7 +1076,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!trueOrFalseRadioButton.getValue()){
-				getUiHandlers().addSelectedQuestionType("T/F");
+				
+				getAddResourceMetadata();
+				
+				getUiHandlers().addSelectedQuestionType("T/F",getAddResourceMetadata());
 				displayQuestionWidget();
 				trueOrFalseRadioButton.setValue(true);
 				highlightSelectedTab("TF");
@@ -1088,7 +1098,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!openEndedRadioButton.getValue()){
-				getUiHandlers().addSelectedQuestionType("OE");
+				getUiHandlers().addSelectedQuestionType("OE",getAddResourceMetadata());
 				displayQuestionWidget();
 				openEndedRadioButton.setValue(true);
 				highlightSelectedTab("OE");
@@ -1102,7 +1112,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!multipleAnswerRadioButton.getValue()){
-				getUiHandlers().addSelectedQuestionType("MA");
+				getUiHandlers().addSelectedQuestionType("MA",getAddResourceMetadata());
 				displayQuestionWidget();
 				highlightSelectedTab("MA");
 				multipleAnswerRadioButton.setValue(true);
@@ -1123,7 +1133,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!fillInTheBlankRadioButton.getValue()){
-				getUiHandlers().addSelectedQuestionType("FIB");
+				getUiHandlers().addSelectedQuestionType("FIB",getAddResourceMetadata());
 				displayQuestionWidget();
 				fillInTheBlankRadioButton.setValue(true);
 				highlightSelectedTab("FIB");
@@ -1151,7 +1161,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			if(!hotSpotRadioButton.getValue()){
 				hotSpotRadioButton.setValue(true);
 				highlightSelectedTab("HS");
-				getUiHandlers().addSelectedQuestionType("HS");
+				getUiHandlers().addSelectedQuestionType("HS",getAddResourceMetadata());
 				
 				if(titleLbl.getText().equalsIgnoreCase(i18n.GL0304())){
 					getUiHandlers().setHSEditData();
@@ -1166,7 +1176,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!hotTextRadioButton.getValue()){
-				getUiHandlers().addSelectedQuestionType("HT_RO");
+				getUiHandlers().addSelectedQuestionType("HT_RO",getAddResourceMetadata());
 				displayQuestionWidget();
 				hotTextRadioButton.setValue(true);
 				highlightSelectedTab("HT_RO");
@@ -1406,11 +1416,163 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	@Override
 	public void hidePopup() {
-		getUiHandlers().addSelectedQuestionType("MC");
+		getUiHandlers().addSelectedQuestionType("MC",getAddResourceMetadata());
 		multipleChoiceRadioButton.setValue(true);
 		closeAddResourcePopup();
 		tabViewContainer.clear();	
 		deselectSelectedButton();
 		questionTabButton.setStyleName(res.css().buttonSelected());
+	}
+	
+	public CollectionQuestionItemDo getAddResourceMetadata(){
+		CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
+		
+		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+		depthOfKnowledge.put("depthOfKnowledge", addQuestionResourceWidget.depthOfKnowledges);
+		
+		collectionQuestionItemDo.setQuestionText(addQuestionResourceWidget.questionNameTextArea.getText()!=null?addQuestionResourceWidget.questionNameTextArea.getText():"");
+		collectionQuestionItemDo.setExplanation(addQuestionResourceWidget.explainationTextArea.getText()!=null?addQuestionResourceWidget.explainationTextArea.getText():"");
+		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+		
+		
+		
+		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
+		HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
+		
+		for(int i=0;i<addQuestionResourceWidget.hintsContainer.getWidgetCount();i++)
+		{
+			AddHintsView addHints = (AddHintsView)addQuestionResourceWidget.hintsContainer.getWidget(i);
+			QuestionHintsDo questionHintsDo=new QuestionHintsDo();
+			String hintText=addHints.hintTextBox.getText();
+			if(hintText!=null&&!hintText.trim().equals("")&&!hintText.isEmpty()){
+				hintText=addHints.hintTextBox.getRawContent().trim();
+			}
+			questionHintsDo.setHintText(hintText);
+			questionHintsDo.setSequence(i+1);
+			enteredHints.add(questionHintsDo);
+		}
+		hintsMap.put("hint",enteredHints);
+		collectionQuestionItemDo.setHints(hintsMap);
+		
+		
+		collectionQuestionItemDo.setCenturySelectedValues(addQuestionResourceWidget.centurySelectedValues);
+		
+		if(collectionQuestionItemDo.getTaxonomySet()!=null){
+		collectionQuestionItemDo.getTaxonomySet().clear();
+		}
+		HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
+		taxonomySet.put("taxonomyCode", addQuestionResourceWidget.standardsDo);
+		collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+		
+		HashMap<String,Boolean> moreOptions=new HashMap<String, Boolean>();
+		
+		moreOptions.put("explanation",addQuestionResourceWidget.addExplanationLabel.isVisible());
+		moreOptions.put("hints", addQuestionResourceWidget.addHintsLabel.isVisible());
+		moreOptions.put("DOK", addQuestionResourceWidget.addDepthOfKnowledgeLabel.isVisible());
+		moreOptions.put("standards", addQuestionResourceWidget.addStandardsLabel.isVisible());
+		moreOptions.put("21stcentury", addQuestionResourceWidget.addCenturyLabel.isVisible());
+		
+		collectionQuestionItemDo.setMoreOptions(moreOptions);
+		return collectionQuestionItemDo;
+	}
+
+	@Override
+	public void questionMetadata(final CollectionQuestionItemDo collectionQuestionItemDo) {
+		Timer timer1=new Timer() {
+			@Override
+			public void run() {
+				addQuestionResourceWidget.questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
+				addQuestionResourceWidget.questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getQuestionText());
+				addQuestionResourceWidget.questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getQuestionText());
+				addQuestionResourceWidget.explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
+				addQuestionResourceWidget.explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
+				addQuestionResourceWidget.explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
+				
+				if(addQuestionResourceWidget.addExplanationLabel.isVisible()){addQuestionResourceWidget.setExplanationContainer();}
+			}
+		};
+		timer1.schedule(0);
+		
+		if(collectionQuestionItemDo.getDepthOfKnowledges()!=null){
+			addQuestionResourceWidget.resetDepthOfKnowledges();
+			addQuestionResourceWidget.depthOfKnowledges.clear();
+			int checkBoxCount=0;
+			for (checkboxSelectedDo item : collectionQuestionItemDo.getDepthOfKnowledges().get("depthOfKnowledge")) {
+				   if(item.isSelected()){
+					   if(checkBoxCount==0)
+						   addQuestionResourceWidget.chkLevelRecall.setChecked(true);
+					   if(checkBoxCount==1)
+						   addQuestionResourceWidget.chkLevelSkillConcept.setChecked(true);
+					   if(checkBoxCount==2)
+						   addQuestionResourceWidget.chkLevelStrategicThinking.setChecked(true);
+					   if(checkBoxCount==3)
+						   addQuestionResourceWidget.chkLevelExtendedThinking.setChecked(true);
+				   }
+				   checkBoxCount++;
+				}
+			
+			addQuestionResourceWidget.setDOKCheckBoxes();
+			}
+		
+		TreeSet<QuestionHintsDo> hintset = new TreeSet<QuestionHintsDo>(collectionQuestionItemDo.getHints().get("hint"));
+		TreeSet<QuestionHintsDo> hintsList = hintset;
+		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
+		addQuestionResourceWidget.hintsContainer.clear();
+		while (iterator.hasNext()) {
+			QuestionHintsDo hints = iterator.next();
+			int widgetCount=addQuestionResourceWidget.hintsContainer.getWidgetCount();
+	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
+	        addQuestionResourceWidget.addHintsTextArea(addHints);
+		}
+		int count=addQuestionResourceWidget.hintsContainer.getWidgetCount();
+		addQuestionResourceWidget.addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+
+		
+		
+		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
+		addQuestionResourceWidget.centuryPanel.clear();
+		addQuestionResourceWidget.standardsPanel.clear();
+		addQuestionResourceWidget.standardsDo.clear();
+		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
+		{
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			codeDo.setLabel(entry.getValue());
+			codeDo.setCodeId(entry.getKey().intValue());
+			addQuestionResourceWidget.standardsDo.add(codeDo);
+			addQuestionResourceWidget.centurySelectedValues.put(entry.getKey(),entry.getValue());
+			addQuestionResourceWidget.centuryPanel.add(addQuestionResourceWidget.create21CenturyLabel(entry.getValue(), entry.getKey()+"", addQuestionResourceWidget.centuryCodesMap.get(entry.getKey())));
+		}
+		
+		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
+			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();	
+			if(!centurySkills.containsKey(codeID.longValue())){
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			String label=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getLabel();
+			String code=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCode();
+			codeDo.setLabel(code);
+			codeDo.setCode(code);
+			codeDo.setCodeId(codeID);
+			addQuestionResourceWidget.standardsDo.add(codeDo);
+			addQuestionResourceWidget.standardsPanel.add(addQuestionResourceWidget.createStandardLabel(code,String.valueOf(codeID),label));
+			}
+		}
+		
+		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
+		
+		addQuestionResourceWidget.addExplanationLabel.setVisible(moreOptions.get("explanation"));
+		addQuestionResourceWidget.addHintsLabel.setVisible(moreOptions.get("hints"));
+		addQuestionResourceWidget.addDepthOfKnowledgeLabel.setVisible(moreOptions.get("DOK"));
+		addQuestionResourceWidget.addStandardsLabel.setVisible(moreOptions.get("standards"));
+		addQuestionResourceWidget.addCenturyLabel.setVisible(moreOptions.get("21stcentury"));
+		
+		addQuestionResourceWidget.setAncTabs();
+		
+		
+		if(addQuestionResourceWidget.addDepthOfKnowledgeLabel.isVisible()){addQuestionResourceWidget.setDepthOfKnowledgeContainer();}
+		if(addQuestionResourceWidget.addHintsLabel.isVisible()){addQuestionResourceWidget.setHintsContainer();}
+		if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
+		if(addQuestionResourceWidget.addCenturyLabel.isVisible()){addQuestionResourceWidget.setCenturyContainer();}
 	}
 }

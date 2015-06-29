@@ -228,7 +228,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
-	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
+	Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	String courseCode="";
 	boolean isEditResource=false;
 
@@ -1576,7 +1576,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	centuryContainer.setVisible(true);
     }
 
-    private void addHintsTextArea(final AddHintsView addHints){
+     void addHintsTextArea(final AddHintsView addHints){
 	       hintsContainer.add(addHints);
 	       addHints.hintDelLbl.addClickHandler(new ClickHandler() {
 
@@ -1673,10 +1673,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
 						fieldValidationCheck = false;
 						showErrorMessageForAnswer(ERROR_MSG_ANSWER_SELECTED);
-						explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 						isAddBtnClicked=true;
-					}else{
-						explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 					}
 
 			}
@@ -1689,11 +1686,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					showErrorMessageForAnswer(errorMessage);
-					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
-				}else{
-					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
 			}
     	} else if(getQuestionType().equalsIgnoreCase("MA")){
@@ -1706,11 +1700,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					showErrorMessageForAnswer(errorMessage);
-					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
-				}else{
-					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
 			}
     	} else if(getQuestionType().equalsIgnoreCase("HT_HL") ||getQuestionType().equalsIgnoreCase("HT_RO")){
@@ -1797,10 +1788,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
     												fieldValidationStaus = false;
     												showErrorMessageForAnswer(ERROR_MSG_ANSWER_SELECTED);
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												isAddBtnClicked=true;
     											}else{
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -1817,11 +1806,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												showErrorMessageForAnswer(errorMessage);
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
     											}else{
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -1839,11 +1826,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												showErrorMessageForAnswer(errorMessage);
 
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
     											}else{
-    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -3296,68 +3281,74 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 		     depthOfKnowledges.clear();
 
-		     if(chkLevelRecall.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelRecall.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelRecall.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelSkillConcept.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelSkillConcept.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelSkillConcept.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelStrategicThinking.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelStrategicThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelStrategicThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelExtendedThinking.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelExtendedThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelExtendedThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
+		     setDOKCheckBoxes();
 		}
      }
+     
+     
+     public void setDOKCheckBoxes(){
+    	 if(chkLevelRecall.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelRecall.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelRecall.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelSkillConcept.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelSkillConcept.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelSkillConcept.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelStrategicThinking.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelStrategicThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelStrategicThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelExtendedThinking.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelExtendedThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelExtendedThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+     }
+     
 
      public abstract void callBrowseStandards();
 
@@ -3576,5 +3567,21 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 	}
+	
+
+	public void setAncTabs(){
+		explanationContainer.setVisible(!addExplanationLabel.isVisible());
+    	depthOfKnowledgeContainer.setVisible(!addDepthOfKnowledgeLabel.isVisible());
+    	hintsContainer.setVisible(!addHintsLabel.isVisible());
+    	standardContainer.setVisible(!addStandardsLabel.isVisible());
+    	centuryContainer.setVisible(!addCenturyLabel.isVisible());
+	}
+	public void resetDepthOfKnowledges(){
+		chkLevelRecall.setChecked(false);
+		chkLevelSkillConcept.setChecked(false);
+		chkLevelStrategicThinking.setChecked(false);
+		chkLevelExtendedThinking.setChecked(false);
+	}
+
 
 }

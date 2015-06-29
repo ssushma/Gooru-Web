@@ -138,8 +138,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	private boolean collectionIsOpened = false;
 	
-	/*@UiField FolderStyleBundle folderStyle;*/
-
 	HashMap<String,String> urlParams = new HashMap<String,String>();
 	
 	private static final String O1_LEVEL = "o1";
@@ -185,6 +183,10 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleLbl.getElement().setId("htmlTitleLbl");
 		panelToolTip.getElement().setId("pnlPanelToolTip");
 		//htmlToolTipContent.getElement().setId("htmlHtmlToolTipContent");
+		if(AppClientFactory.getPlaceManager().getRequestParameter("view")==null ||!AppClientFactory.getPlaceManager().getRequestParameter("view").equals("Folder")){
+			titleFocPanel.addStyleName("course");
+			titleLbl.setText("UntitleCourse");
+		}
 		titleFocPanel.addClickHandler(new ClickOnFolderItem());
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -199,7 +201,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.addMouseOutHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
+				//myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 				/*if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCOLLECTION)) {
 					myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 				}else{
@@ -236,10 +238,6 @@ public class ShelfTreeWidget extends FocusPanel {
 				toolTipPopupPanel.hide();
 			}
 		});
-		
-		/*htmlToolTipContent.setHTML(i18n.GL1395());
-		htmlToolTipContent.getElement().setAttribute("alt", i18n.GL1395());
-		htmlToolTipContent.getElement().setAttribute("title", i18n.GL1395());*/
 		
 		AppClientFactory.getEventBus().addHandler(CollectionAssignShareEvent.TYPE, handler);
 

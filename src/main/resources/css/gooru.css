@@ -3321,6 +3321,61 @@ div#spnlDisclosureContentSimPanel>div:first-child {
 	background-color: #C3DCEE !important;
 	cursor: pointer;
 }
+#standardsDetails .menu-iconNew{
+	clear:both
+}
+.scrollBar{
+	border: 1px solid #ccc;
+    height: 372px;
+    overflow: auto;
+
+}
+#standardsDetails .standarBodyContainer{
+	background:#ffffff;
+	padding:15px 10px;
+
+}
+
+.listGroup{
+	margin:15px 0;
+	border:1px solid #cccccc;
+
+}
+
+.listGroup .col-md-2, .listGroup .col-md-4{
+	padding-left:0 !important;
+	padding-right:0 !important;
+	border-right:1px solid #cccccc;
+	height: 372px;
+}
+
+.listGroup ul li a{
+	color:#515151;
+	padding:5px 5px;
+	display:block;
+	line-height:20px;
+}
+
+.listGroup ul li a:hover{
+	color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	opacity:1;
+
+}
+.listGroup ul li.active a,.listGroup ul li.focus a{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+}
+.listGroup ul li a:active,.listGroup ul li a:focus, .listGroup ul li.active:hover{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	margin:0 0;
+	border:none;
+	display:block;
+}
 
 .suggestPopupContentStyle .suggestPopupContent {
 	max-height: 183px;

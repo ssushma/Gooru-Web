@@ -86,18 +86,18 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		
 		studentLbl.getElement().setId("studentLblId");
 		studentLbl.setText(i18n.GL3343() +"(0)");
-		studentLbl.getElement().setAttribute("alt",i18n.GL3343());
-		studentLbl.getElement().setAttribute("title",i18n.GL3343());
+		studentLbl.getElement().setAttribute("alt",i18n.GL3344());
+		studentLbl.getElement().setAttribute("title",i18n.GL3344());
 		
 		settingsLbl.getElement().setId("settingsLblId");
 		settingsLbl.setText(i18n.GL3344());
-		settingsLbl.getElement().setAttribute("alt",i18n.GL3344());
-		settingsLbl.getElement().setAttribute("title",i18n.GL3344());
+		settingsLbl.getElement().setAttribute("alt",i18n.GL3345());
+		settingsLbl.getElement().setAttribute("title",i18n.GL3345());
 		
 		contentLbl.getElement().setId("contentLblId");
 		contentLbl.setText(i18n.GL3345());
-		contentLbl.getElement().setAttribute("alt",i18n.GL3345());
-		contentLbl.getElement().setAttribute("title",i18n.GL3345());
+		contentLbl.getElement().setAttribute("alt",i18n.GL3346());
+		contentLbl.getElement().setAttribute("title",i18n.GL3346());
 		
 		classCodePanel.setText("XYPRSZ");
 		

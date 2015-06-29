@@ -40,6 +40,7 @@ public class FolderDo implements Serializable{
 
 	private static final long serialVersionUID = -3298220423508874309L;
 
+	private CourseSummaryDo summary;
 	private String collectionType;
 	private String gooruOid;
 	private String title;
@@ -62,20 +63,18 @@ public class FolderDo implements Serializable{
 
 	public FolderDo(){}
 
-
-
+	public CourseSummaryDo getSummary() {
+		return summary;
+	}
+	public void setSummary(CourseSummaryDo summary) {
+		this.summary = summary;
+	}
 	public String getCollectionType() {
 		return collectionType;
 	}
-
-
-
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
 	}
-
-
-
 	/**
 	 * This method is to get the gooruOid
 	 */

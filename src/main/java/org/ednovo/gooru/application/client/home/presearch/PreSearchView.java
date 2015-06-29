@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -49,6 +50,9 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -56,12 +60,15 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
  *
@@ -90,18 +97,22 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	private HandlerRegistration handlerRegistration=null;
 
-	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard,btnLearnAboutApproach, btnGradesCaret, btnSubjectCaret;
-	@UiField Anchor ancLogin, lblSampleReports;
+	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
+	@UiField Anchor ancLogin, lblSampleReports,btnLearnAboutApproach;
 	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup;
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
-	@UiField InlineLabel lblErrorMessage;
+	@UiField Label lblErrorMessage;
 
 	private final String QUERY = "query";
 	private final String FLT_SUBJECTNAME = "flt.subjectName";
 	private final String FLT_GRADE = "flt.grade";
+	private final String CATEGORY = "category";
+	private final String FLT_COLLECTIONTYPE = "flt.collectionType";
+	private final String ALL = "all";
+	private final String COLLECTION = "collection";
 
-	HashMap<String, String> selectedGrades = new HashMap<String, String>();
+	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
 	HashMap<String, String> selectedSubjects = new HashMap<String, String>();
 
 	public PreSearchView() {
@@ -109,23 +120,73 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 		setDebugIds();
 
-		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
+//		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
+
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hidePopup(event);
+	          }
+	    });
+
 	}
 
 
+	protected void hidePopup(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target)
+        	{
+        		if (panelGrades !=null && panelGrades.isVisible()){
+        			panelGrades.setVisible(false);
+        		}
+        		if (ulSubjectPanel !=null && ulSubjectPanel.isVisible()){
+        			ulSubjectPanel.setVisible(false);
+        		}
+        	}
+    	}
+	}
+
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return  panelSubjectGroup.getElement().isOrHasChild(Element.as(target)) || panelGradeGroup.getElement().isOrHasChild(Element.as(target)) || panelGrades.getElement().isOrHasChild(Element.as(target))||ulSubjectPanel.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
+
+	/**
+	 *
+	 * @function setDebugIds
+	 *
+	 * @created_date : 25-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
 	private void setDebugIds() {
 		btnStudentSignUp.setText(i18n.GL0186());
 
 		StringUtil.setAttributes(btnStudentSignUp.getElement(), "btnStudentSignUp", i18n.GL0186(), i18n.GL0186());
 		StringUtil.setAttributes(btnLearnAboutApproach.getElement(), "btnLearnAboutApproach", i18n.GL3315(), i18n.GL3315());
 
-		btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
-		btnGradesCaret.getElement().setAttribute("data-toggle", "dropdown");
+//		btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
+//		btnGradesCaret.getElement().setAttribute("data-toggle", "dropdown");
 
-		btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
-		btnSubjectCaret.getElement().setAttribute("data-toggle", "dropdown");
+//		btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
+//		btnSubjectCaret.getElement().setAttribute("data-toggle", "dropdown");
 
 		panelGrades.setVisible(false);
 
@@ -200,6 +261,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			@Override
 			public void onSuccess() {
+				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 				LoginPopupUc popup = new LoginPopupUc() {
 					@Override
@@ -307,6 +369,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			Map<String, String> params = new HashMap<String, String>();
 			params.put(FLT_GRADE, getSelectedGrades());
 			params.put(FLT_SUBJECTNAME, getSelectedSubjects());
+			params.put(CATEGORY,ALL);
+			params.put(FLT_COLLECTIONTYPE,COLLECTION);
+
 			params.put(QUERY, "*");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_COLLECTION, params, true);
 		}
@@ -380,14 +445,11 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 		if (panelGrades.isVisible()){
 			panelGrades.getElement().getStyle().setDisplay(Display.NONE);
-			btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
-			panelGradeGroup.getElement().removeClassName("open");
 		}else{
 			panelGrades.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			btnGradesCaret.getElement().setAttribute("aria-expanded", "true");
-			panelGradeGroup.getElement().addClassName("open");
 		}
 	}
+
 	/**
 	 *
 	 * @function setSubjectVisibility
@@ -412,12 +474,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 		if (ulSubjectPanel.isVisible()){
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
-			btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
-			panelSubjectGroup.getElement().removeClassName("open");
 		}else{
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			btnSubjectCaret.getElement().setAttribute("aria-expanded", "true");
-			panelSubjectGroup.getElement().addClassName("open");
 		}
 	}
 
@@ -428,7 +486,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 				@Override
 				public void onSuccess() {
-//					setGradeVisibility();
+
 				}
 			});
 		}
@@ -494,11 +552,22 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
-			AppClientFactory.printInfoLogger("filterValue : "+filterValue);
-			if("add".equals(addOrRemove)){
-				selectedGrades.put(filterValue, filterValue);
+			filterValue = filterValue.replaceAll("Grade", "").replaceAll(" " , "");
+			int value = 0;
+			if (filterValue.equalsIgnoreCase("k")){
+				value = 0;
+			}else if (filterValue.equalsIgnoreCase("pre-k")){
+				value =-1;
+			}else if (filterValue.equalsIgnoreCase("HigherEd")){
+				value =13;
 			}else{
-				selectedGrades.remove(filterValue);
+				value = Integer.parseInt(filterValue);
+			}
+
+			if("add".equals(addOrRemove)){
+				selectedGrades.put(value, value);
+			}else{
+				selectedGrades.remove(value);
 			}
 			displaySelectedGrades(addOrRemove);
 		}
@@ -528,9 +597,18 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		StringBuffer selectedGrade = new StringBuffer();
 		Iterator it = selectedGrades.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
-	        String pairValue = pair.getValue().replaceAll("Grade", "").trim();
+	        Map.Entry<Integer,Integer> pair = (Map.Entry<Integer,Integer>)it.next();
+	        String pairValue = "";
+
+	        if (pair.getValue() == -1){
+	        	pairValue = "Pre-K";
+	        }else if (pair.getValue() == 0){
+	        	pairValue = "K";
+	        }else if (pair.getValue() == 13){
+	        	pairValue = "Higher Ed";
+	        }else{
+	        	pairValue = String.valueOf(pair.getValue());
+	        }
 
 	        if (count==0){
 	        	selectedGrade.append(pairValue);
@@ -545,7 +623,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    	btnGrades.setText(i18n.GL3289());
 	    }
 	    if ("add".equalsIgnoreCase(addOrRemove)){
-	    	btnGrades.getElement().addClassName("ellipsis");
+	    	if (selectedGrades.size() > 1){
+	    		btnGrades.getElement().addClassName("ellipsis");
+	    	}
 	    }else{
 	    	if (selectedGrades.size() <= 2){
 	    		btnGrades.getElement().removeClassName("ellipsis");
@@ -654,7 +734,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		Iterator it = selectedSubjects.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
 	        String pairValue = pair.getValue().trim();
 
 	        if (count==0){
@@ -709,14 +788,23 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		StringBuffer selectedGrade = new StringBuffer();
 		Iterator it = selectedGrades.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
-	        String pairValue = pair.getValue().trim();
+	        Map.Entry<Integer,Integer> pair = (Map.Entry<Integer,Integer>)it.next();
+	        String pairValue = "";
+
+	        if (pair.getValue() == -1){
+	        	pairValue = "Pre-K";
+	        }else if (pair.getValue() == 0){
+	        	pairValue = "K";
+	        }else if (pair.getValue() == 13){
+	        	pairValue = "Higher Ed";
+	        }else{
+	        	pairValue = String.valueOf(pair.getValue());
+	        }
 
 	        if (count==0){
 	        	selectedGrade.append(pairValue);
 	        }else{
-	        	selectedGrade.append(", "+pairValue);
+	        	selectedGrade.append(","+pairValue);
 	        }
 	        count++;
 	    }
@@ -747,13 +835,12 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		Iterator it = selectedSubjects.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        AppClientFactory.printInfoLogger(pair.getKey() + " = " + pair.getValue());
 	        String pairValue = pair.getValue().trim();
 
 	        if (count==0){
 	        	selectedSubject.append(pairValue);
 	        }else{
-	        	selectedSubject.append(", "+pairValue);
+	        	selectedSubject.append("~~"+pairValue);
 	        }
 	        count++;
 	    }
@@ -788,6 +875,11 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			}
 		}
 
+	}
+
+	@Override
+	public HTMLPanel getPanelGrades() {
+		return panelGrades;
 	}
 
 }

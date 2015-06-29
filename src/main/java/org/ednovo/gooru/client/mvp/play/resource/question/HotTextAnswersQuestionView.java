@@ -94,7 +94,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private static String START_DELIMITER="${";
 	private static String END_CORRECT_DELIMITER="$}$";
 	private static String END_DELIMITER="}$";
-	
+
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
 
@@ -390,7 +390,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
 				Element el=(Element) widget.getElement().getLastChild();
-				if(widget instanceof Draggable){
+				if(widget instanceof Draggable && el!=null && !el.getId().equalsIgnoreCase("")){
 					Draggable draggable=(Draggable)widget;
 					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
 					userAttemptedValueList.add("["+htAnswerOption.getAnswerText()+"]");
@@ -547,10 +547,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 		for(int i=0;i<optionsContainer.getWidgetCount();i++){
 			Widget widget=optionsContainer.getWidget(i);
-
 			Element el=(Element) widget.getElement().getLastChild();
-
-			if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+			if(el != null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
 				el.removeClassName(STYLE_DND_CORRECT);
 				el.removeClassName(STYLE_DND_INCORRECT);
 			}

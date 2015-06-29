@@ -37,6 +37,10 @@ import org.ednovo.gooru.application.client.home.banner.IsHomeBannerView;
 import org.ednovo.gooru.application.client.home.presearch.IsPreSearchView;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchView;
+import org.ednovo.gooru.application.client.newhome.IsNewHomeView;
+import org.ednovo.gooru.application.client.newhome.NewHomePresenter;
+import org.ednovo.gooru.application.client.newhome.NewHomePresenter.IsTestProxy;
+import org.ednovo.gooru.application.client.newhome.NewHomeView;
 import org.ednovo.gooru.application.client.wrap.IsWrapView;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter.IsWrapProxy;
@@ -408,10 +412,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.Que
 import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
-import org.ednovo.gooru.client.mvp.test.IsTestView;
-import org.ednovo.gooru.client.mvp.test.TestPresenter;
-import org.ednovo.gooru.client.mvp.test.TestPresenter.IsTestProxy;
-import org.ednovo.gooru.client.mvp.test.TestView;
+import org.ednovo.gooru.client.mvp.standards.IsStandardsPopupView;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupView;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -455,8 +458,8 @@ public class AppModule extends AppPresenterModule {
 				Singleton.class);
 		bind(RootPresenter.class).to(AppRootPresenter.class).asEagerSingleton();
 
-		bindPresenter(TestPresenter.class, IsTestView.class,
-				TestView.class, IsTestProxy.class);
+		bindPresenter(NewHomePresenter.class, IsNewHomeView.class,
+				NewHomeView.class, IsTestProxy.class);
 
 		bindConstant().annotatedWith(AppDefaultPlace.class)
 				.to(PlaceTokens.HOME);
@@ -649,6 +652,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CourseInfoPresenter.class,IsCourseInfoView.class,CourseInfoView.class);
 		bindPresenterWidget(LessonInfoPresenter.class,IsLessonInfoView.class,LessonInfoView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
+		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
 
 
 		bindPresenterWidget(HomeBannerPresenter.class,IsHomeBannerView.class, HomeBannerView.class);

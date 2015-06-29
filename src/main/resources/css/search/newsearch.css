@@ -404,8 +404,8 @@
 	margin:7px 0 6px 0;
 }
 #gooruSearchMainContainer .viewContainer span{
-	margin-right:5px;
-	font-size:13px;
+	/* margin-right:5px; */
+	font-size:12px;
 	color:#515151;
 }
 #gooruSearchMainContainer .SmallWidthContainer{
@@ -587,7 +587,7 @@ Back to top button
 #gooruSearchMainContainer .searchResultsBox{
 	font-size: 14px;
 	vertical-align: middle;
-	margin-right: 12px;
+	margin-left: 24px;
 }
 #gooruSearchMainContainer .seachRightNavigation .btn-primary {
 	background-color: #87badd;
@@ -1412,7 +1412,7 @@ word-wrap: break-word;
 	}
 	#gooruSearchMainContainer .viewContainer{
 		text-align: left;
-		width: 100%;
+		/* width: 100%; */
 	}
 	#gooruSearchMainContainer .resourceImage{
 		  width: 66px;

@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -44,6 +45,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
+	
+	StandardsPopupPresenter standardsPopupPresenter;
 
 	/**
 	 * Class constructor
@@ -51,8 +54,9 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public LessonInfoPresenter( EventBus eventBus,IsLessonInfoView view) {
+	public LessonInfoPresenter( EventBus eventBus,IsLessonInfoView view,StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus,view);
+		this.standardsPopupPresenter = standardsPopupPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -72,6 +76,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
+	}
+	
+	@Override
+	public void showStandardsPopup(String standardVal) {
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal);
+		addToPopupSlot(standardsPopupPresenter);
 	}
 
 	@Override
