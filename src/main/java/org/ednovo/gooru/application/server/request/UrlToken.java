@@ -564,7 +564,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_GET_COURSES_BY_SUBJECTID("/v1/subject/{0}/taxonomycourse?offset={1}&limit={2}"),
 	
-	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?");
+	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?"),
+	
+	V1_GET_USER_COURSES_LIST("/v2/user/{0}/course?");
 
 
 	private String url;
