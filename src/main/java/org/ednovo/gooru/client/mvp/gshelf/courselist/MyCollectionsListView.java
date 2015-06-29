@@ -72,7 +72,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	int index=0;
 	
 	String type;
-	HTMLPanel slotPanel;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
 	
@@ -138,8 +137,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to set data for fields
 	 */
 	@Override
-	public void setData(String type,HTMLPanel slotPanel,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
-		this.slotPanel=slotPanel;
+	public void setData(String type,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
@@ -226,7 +224,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		@Override
 		public void onClick(ClickEvent event) {
 			if(COURSE.equalsIgnoreCase(folderObj.getCollectionType())){
-				getUiHandlers().setRightClusterPresenterBasedOnType(folderObj.getCollectionType(), slotPanel, folderObj);
+				getUiHandlers().setRightClusterPresenterBasedOnType(folderObj.getCollectionType(), folderObj);
 			}else{
 				Map<String,String> params = new HashMap<String,String>();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
@@ -238,8 +236,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			 if(slot==ShelfMainPresenter.RIGHT_SLOT){
-				slotPanel.clear();
-				slotPanel.add(content);
+				 getUiHandlers().getShelfMainPresenter().getView().getSlot().clear();
+				 getUiHandlers().getShelfMainPresenter().getView().getSlot().add(content);
 			 }
 		}
 	}
