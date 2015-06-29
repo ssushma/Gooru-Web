@@ -586,12 +586,15 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		questionTypePresenter.ImageUpload(imageUploadPresenter,getView(),collectionDo);
 		
 		if(collectionQuestionItemDo!=null){
+			
 			questionTypePresenter.getView().setMetadata(collectionQuestionItemDo);
 		}
 		
 		}else {
+			CollectionQuestionItemDo questionMetadataDo=questionTypePresenter.getView().getMetadata();
 			clearSlot(SLOT_QUESTION_TYPE);
 			getView().clearQuestionSlot();
+			getView().questionMetadata(questionMetadataDo);
 		}
 	}
 

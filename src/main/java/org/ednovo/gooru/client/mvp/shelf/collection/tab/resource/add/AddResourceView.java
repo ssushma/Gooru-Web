@@ -40,8 +40,10 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -89,6 +91,7 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -1454,6 +1457,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		
 		collectionQuestionItemDo.setCenturySelectedValues(addQuestionResourceWidget.centurySelectedValues);
 		
+		if(collectionQuestionItemDo.getTaxonomySet()!=null){
+		collectionQuestionItemDo.getTaxonomySet().clear();
+		}
 		HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
 		taxonomySet.put("taxonomyCode", addQuestionResourceWidget.standardsDo);
 		collectionQuestionItemDo.setTaxonomySet(taxonomySet);
@@ -1467,7 +1473,106 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		moreOptions.put("21stcentury", addQuestionResourceWidget.addCenturyLabel.isVisible());
 		
 		collectionQuestionItemDo.setMoreOptions(moreOptions);
-		
 		return collectionQuestionItemDo;
+	}
+
+	@Override
+	public void questionMetadata(final CollectionQuestionItemDo collectionQuestionItemDo) {
+		Timer timer1=new Timer() {
+			@Override
+			public void run() {
+				addQuestionResourceWidget.questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
+				addQuestionResourceWidget.questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getQuestionText());
+				addQuestionResourceWidget.questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getQuestionText());
+				addQuestionResourceWidget.explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
+				addQuestionResourceWidget.explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
+				addQuestionResourceWidget.explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
+				
+				if(addQuestionResourceWidget.addExplanationLabel.isVisible()){addQuestionResourceWidget.setExplanationContainer();}
+			}
+		};
+		timer1.schedule(0);
+		
+		if(collectionQuestionItemDo.getDepthOfKnowledges()!=null){
+			addQuestionResourceWidget.resetDepthOfKnowledges();
+			addQuestionResourceWidget.depthOfKnowledges.clear();
+			int checkBoxCount=0;
+			for (checkboxSelectedDo item : collectionQuestionItemDo.getDepthOfKnowledges().get("depthOfKnowledge")) {
+				   if(item.isSelected()){
+					   if(checkBoxCount==0)
+						   addQuestionResourceWidget.chkLevelRecall.setChecked(true);
+					   if(checkBoxCount==1)
+						   addQuestionResourceWidget.chkLevelSkillConcept.setChecked(true);
+					   if(checkBoxCount==2)
+						   addQuestionResourceWidget.chkLevelStrategicThinking.setChecked(true);
+					   if(checkBoxCount==3)
+						   addQuestionResourceWidget.chkLevelExtendedThinking.setChecked(true);
+				   }
+				   checkBoxCount++;
+				}
+			
+			addQuestionResourceWidget.setDOKCheckBoxes();
+			}
+		
+		TreeSet<QuestionHintsDo> hintset = new TreeSet<QuestionHintsDo>(collectionQuestionItemDo.getHints().get("hint"));
+		TreeSet<QuestionHintsDo> hintsList = hintset;
+		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
+		addQuestionResourceWidget.hintsContainer.clear();
+		while (iterator.hasNext()) {
+			QuestionHintsDo hints = iterator.next();
+			int widgetCount=addQuestionResourceWidget.hintsContainer.getWidgetCount();
+	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
+	        addQuestionResourceWidget.addHintsTextArea(addHints);
+		}
+		int count=addQuestionResourceWidget.hintsContainer.getWidgetCount();
+		addQuestionResourceWidget.addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+
+		
+		
+		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
+		addQuestionResourceWidget.centuryPanel.clear();
+		addQuestionResourceWidget.standardsPanel.clear();
+		addQuestionResourceWidget.standardsDo.clear();
+		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
+		{
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			codeDo.setLabel(entry.getValue());
+			codeDo.setCodeId(entry.getKey().intValue());
+			addQuestionResourceWidget.standardsDo.add(codeDo);
+			addQuestionResourceWidget.centurySelectedValues.put(entry.getKey(),entry.getValue());
+			addQuestionResourceWidget.centuryPanel.add(addQuestionResourceWidget.create21CenturyLabel(entry.getValue(), entry.getKey()+"", addQuestionResourceWidget.centuryCodesMap.get(entry.getKey())));
+		}
+		
+		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
+			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();	
+			if(!centurySkills.containsKey(codeID.longValue())){
+			CodeDo codeDo=new CodeDo();
+			codeDo.setDepth((short) 2);
+			String label=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getLabel();
+			String code=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCode();
+			codeDo.setLabel(code);
+			codeDo.setCode(code);
+			codeDo.setCodeId(codeID);
+			addQuestionResourceWidget.standardsDo.add(codeDo);
+			addQuestionResourceWidget.standardsPanel.add(addQuestionResourceWidget.createStandardLabel(code,String.valueOf(codeID),label));
+			}
+		}
+		
+		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
+		
+		addQuestionResourceWidget.addExplanationLabel.setVisible(moreOptions.get("explanation"));
+		addQuestionResourceWidget.addHintsLabel.setVisible(moreOptions.get("hints"));
+		addQuestionResourceWidget.addDepthOfKnowledgeLabel.setVisible(moreOptions.get("DOK"));
+		addQuestionResourceWidget.addStandardsLabel.setVisible(moreOptions.get("standards"));
+		addQuestionResourceWidget.addCenturyLabel.setVisible(moreOptions.get("21stcentury"));
+		
+		addQuestionResourceWidget.setAncTabs();
+		
+		
+		if(addQuestionResourceWidget.addDepthOfKnowledgeLabel.isVisible()){addQuestionResourceWidget.setDepthOfKnowledgeContainer();}
+		if(addQuestionResourceWidget.addHintsLabel.isVisible()){addQuestionResourceWidget.setHintsContainer();}
+		if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
+		if(addQuestionResourceWidget.addCenturyLabel.isVisible()){addQuestionResourceWidget.setCenturyContainer();}
 	}
 }

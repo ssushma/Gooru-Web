@@ -43,6 +43,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
@@ -91,5 +92,7 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	void clearQuestionSlot();
 	
 	void hidePopup();
+	
+	void questionMetadata(CollectionQuestionItemDo collectionQuestionItemDo);
 
 }
