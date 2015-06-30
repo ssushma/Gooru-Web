@@ -57,8 +57,8 @@
 			</div>
 		</div>
 		<div class="stepsButtonGroup">
-			<g:Button styleName="secondary" ui:field="saveCourseBtn">Save &amp; View Course</g:Button>
-			<g:Button styleName="primary">Next: Create a Unit</g:Button>
+			<g:Button styleName="secondary" ui:field="saveCourseBtn" text="{i18n.GL3360}"/>
+			<g:Button styleName="primary" text="{i18n.GL3361}"/>
 		</div>
 	</div>
 </g:HTMLPanel>
