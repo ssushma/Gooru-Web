@@ -122,4 +122,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
+
+	public void setData(FolderDo folderObj) {
+		getView().setCouseData(folderObj);
+	}
 }
