@@ -81,6 +81,12 @@ public class CollectionSearchWidget extends Composite {
 	
 	private static final String ASSESSMENT = "assessment";
 	
+	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
+	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
+	public static final String YUMA_COUNTY_SS = "YumaCountySS";
+	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
+	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
+	
 	public CollectionSearchWidget(final CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set the data
@@ -320,6 +326,20 @@ public class CollectionSearchWidget extends Composite {
 					creatorPanel.clear();
 				}
 			});
+			
+		}else if(YUMA_COUNTY_SCIENCE.equals(collectionSearchResultDo.getOwner().getUsername())|| YUMA_COUNTY_MATH.equals(collectionSearchResultDo.getOwner().getUsername()) ||
+				YUMA_COUNTY_SS.equals(collectionSearchResultDo.getOwner().getUsername()) || YUMA_COUNTY_ELA.equals(collectionSearchResultDo.getOwner().getUsername())||
+				YUMA_COUNTY_PD.equals(collectionSearchResultDo.getOwner().getUsername())){
+			authorName.getElement().getStyle().setColor("#1076bb");
+			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
+			authorName.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					MixpanelUtil.Click_Username();
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.YCGL_LIBRARY);
+				}
+			});
+			
 			
 		}else{
 			authorName.getElement().getStyle().setColor("#1076bb");
