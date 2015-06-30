@@ -145,8 +145,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	
 	@Override
-	public void setDefaultActiveTab(){
-		lnkInfo.addStyleName(ACTIVE);
+	public void setDefaultActiveTab(int tabIndex){
+		resetHilightStyles();
+		if(tabIndex==2){
+			lnkContent.addStyleName(ACTIVE);
+		}else if(tabIndex==3){
+			lnkshare.addStyleName(ACTIVE);
+		}else{
+			lnkInfo.addStyleName(ACTIVE);
+		}
+		
 	}
 	/**
 	 * This inner class is used to generate breadcum item widget
