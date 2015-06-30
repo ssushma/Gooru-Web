@@ -151,7 +151,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField(provided = true)
 	AppSuggestBox aggregatorSgstBox;
-	
+
 	LiPanel liPanel;
 
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
@@ -161,9 +161,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private SearchDo<String> sourceSearchDo = new SearchDo<String>();
 
 	private SearchDo<String> aggregatorSearchDo = new SearchDo<String>();
-	
+
 	ArrayList<AutoSuggestContributorSearchDo> contributorSearchList  = new ArrayList<AutoSuggestContributorSearchDo>();
-	
+
 	ArrayList<String> list = new ArrayList<String>();
 
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
@@ -201,9 +201,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageCountForStorage=1,previousScroll;
 
 	Widget pnlFirstTempData=null;
-	
+
 	SearchContributorView ContributorViewpopup = null;
-	
+
 	/**
 	 * Assign new instance for
 	 *
@@ -408,7 +408,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	    	publisherSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 	    	publisherSgstBox.getElement().setId("asSourceSgst");
 	    	aggregatorSgstBox.getElement().setId("asAggregatorSgst");
-	    	
+
 			aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
 			aggregatorSgstBox.addSelectionHandler(this);
 	    	publisherSgstBox.addSelectionHandler(this);
@@ -945,7 +945,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
 						}else{
 							ratingsLbl.setText(ratingValue+"+ Stars");
-							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
+							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:2%;");
 							ratingsLbl.setVisible(true);
 							pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
 						}
@@ -1933,7 +1933,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 ContributorViewpopup.getResultsPnl().setVisible(false);
 			 ContributorViewpopup.getNoResultsPnl().setVisible(true);
 		}
-	
+
 	}
 	@Override
 	public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event) {
