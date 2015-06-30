@@ -258,6 +258,7 @@ margin:0 0 0 -20px !important;
 	width:142%;
 	margin-left:-3%;
 	margin-top: 0px;
+	min-height: 27px;
 }
 #gooruSearchMainContainer .userDetailsResources .user img{
 	border-radius: 50px;

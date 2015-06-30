@@ -113,7 +113,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 			@Override
 			public void onSuccess(FolderDo result) {
-				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, result);
+				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 			}
 		});
 	}
@@ -121,5 +121,9 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+	}
+
+	public void setData(FolderDo folderObj) {
+		getView().setCouseData(folderObj);
 	}
 }

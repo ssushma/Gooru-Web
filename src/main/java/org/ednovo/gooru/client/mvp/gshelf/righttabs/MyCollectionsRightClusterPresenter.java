@@ -57,8 +57,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setTabItems(int index,String type,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
 		getView().setSlotPanel(folderObj);
+		getView().setDefaultActiveTab(index);
 		if(index==1){
 			courseInfoPresenter.callTaxonomyService();
+			courseInfoPresenter.setData(folderObj);
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 			//setInSlot(INNER_SLOT, collectionContentPresenter);
 		}else if(index==2){
@@ -69,10 +71,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			
 		}
 	}
+	//This method is not using present
 	@Override
 	public void setDefaultActiveTab(){
 		getView().resetHilightStyles();
-		getView().setDefaultActiveTab();
+		//getView().setDefaultActiveTab();
 	}
 	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
 		this.shelfMainPresenter=shelfMainPresenter;

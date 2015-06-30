@@ -44,7 +44,8 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 */
 	public void resetHilightStyles();
 	/**
-	 * This method is used to set Default tab selection
+	 * This method is used to set Default or based on index tab selection
+	 * @param tabIndex 
 	 */
-	public void setDefaultActiveTab();
+	public void setDefaultActiveTab(int tabIndex);
 }

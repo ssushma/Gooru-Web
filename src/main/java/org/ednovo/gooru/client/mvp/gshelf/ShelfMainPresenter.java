@@ -307,7 +307,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightPanelData(FolderDo folderObj,String clickedItemType){
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
-		getMyCollectionsRightClusterPresenter().setDefaultActiveTab();
 		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
