@@ -25,17 +25,18 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
 	
 	public static final  Object INNER_SLOT = new Object();
 	CourseInfoPresenter courseInfoPresenter;
+	ShelfMainPresenter shelfMainPresenter;
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -45,18 +46,20 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CourseInfoPresenter courseInfoPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
+		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
-	public void setTabItems(int index,String type,HTMLPanel slotPanel,FolderDo folderObj) {
+	public void setTabItems(int index,String type,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
-		getView().setSlotPanel(slotPanel,folderObj);
+		getView().setSlotPanel(folderObj);
 		if(index==1){
 			courseInfoPresenter.callTaxonomyService();
+			courseInfoPresenter.setData(folderObj);
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 		}else if(index==2){
 			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setDataInContentSlot(type, slotPanel,folderObj.getGooruOid(),false);
+			myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
 			setInSlot(INNER_SLOT, myCollectionsListPresenter);
 		}else if(index==3){
 			
@@ -66,5 +69,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setDefaultActiveTab(){
 		getView().resetHilightStyles();
 		getView().setDefaultActiveTab();
+	}
+	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
+		this.shelfMainPresenter=shelfMainPresenter;
 	}
 }

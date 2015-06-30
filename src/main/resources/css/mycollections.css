@@ -398,10 +398,10 @@ button.btn-disabled{
     background-image: url('../images/folders/panel/folder-icon-open.png');
 }
 #gShelfMainContainer .folderLevel.course.open {
-    background-image: url('../images/folders/panel/c-open.png');
+    background-image: url('../images/folders/panel/c-open.png')!important;
 }
 #gShelfMainContainer .folderLevel.unit.open {
-    background-image: url('../images/folders/panel/u-open.png');
+    background-image: url('../images/folders/panel/u-open.png')!important;
 }
 
 #gShelfMainContainer .folderLevel.collection {

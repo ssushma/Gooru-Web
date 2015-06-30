@@ -106,6 +106,13 @@ public interface FolderService extends BaseService {
 	 * @throws GwtException
 	 */
 	public FolderDo createFolder(String folderName, String parentId, boolean addToShelf) throws GwtException, ServerDownException;
+	
+	/**
+	 * Create Course - generic method for first, second and third levels.
+	 * @return serialized created {@link FolderDo}
+	 * @throws GwtException
+	 */
+	public FolderDo createCourse(String folderName, boolean addToShelf) throws GwtException, ServerDownException;
 
 	/**
 	 * delete a folder from organize

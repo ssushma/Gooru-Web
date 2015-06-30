@@ -296,8 +296,6 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	 */
 	public void setOptionsButtons(){
 		loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
-		if(collectionDo.getSettings()!=null){
-			if(TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment())){
 				if(!AppClientFactory.isAnonymous() && (commentOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
 					editButton.setVisible(true);
 					deleteButton.setVisible(false);
@@ -316,11 +314,6 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 					deleteButton.setVisible(false);
 					editButton.setVisible(true);
 				}	
-			}else{
-				editButton.setVisible(false);
-				deleteButton.setVisible(false);
-			}
-		}
 	}
 	
 

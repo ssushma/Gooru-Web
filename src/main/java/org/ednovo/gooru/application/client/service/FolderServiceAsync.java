@@ -59,6 +59,8 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void deleteCollectionsFolder(String folderId, AsyncCallback<Void> callback);
 
 	void createFolder(String folderName, String parentId, boolean addToShelf, AsyncCallback<FolderDo> callback);
+	
+	void createCourse(String folderName, boolean addToShelf, AsyncCallback<FolderDo> callback);
 
 	void moveCollectionIntoFolder(String sourceId, String targetId,AsyncCallback<Void> callback);
 
