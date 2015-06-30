@@ -23,17 +23,17 @@
 
 #starRatingsPanel .star:before {
     display: inline-block;
-    font-family: FontAwesome;
+    /* font-family: FontAwesome; */
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f006';
+    content:'\2606';
 }
 
 #starRatingsPanel .star.filled:before {
-    content: "\f005";
+    content: "\2605";
 }
 
 #starRatingsPanel .userRating .star.filled {
@@ -279,26 +279,26 @@ body.popupBG {
     display: inline-block;
     text-decoration: inherit;
     display: inline-block;
-    font-family: FontAwesome;
+    /* font-family: FontAwesome; */
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f006';
+    content:'\2606';
 }
 
 #starRatingsPanel .rating > input:checked ~ label:before,
 #starRatingsPanel .rating:not(:checked) > label:hover:before,
 #starRatingsPanel .rating:not(:checked) > label:hover ~ label:before{
     display: inline-block;
-    font-family: FontAwesome;
+    /* font-family: FontAwesome; */
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f005';;
+    content:'\2605';
 }
 
 #starRatingsPanel .rating > input:checked ~ label {
