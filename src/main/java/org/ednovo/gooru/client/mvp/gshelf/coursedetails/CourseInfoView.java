@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -72,6 +73,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
 	CourseGradeWidget courseGradeWidget;
+	public FolderDo courseObj;
 	final String ACTIVE="active";
 	/**
 	 * Class constructor 
@@ -193,5 +195,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+	}
+
+	@Override
+	public void setCouseData(FolderDo courseObj) {
+		this.courseObj=courseObj;
+		if(null!=courseObj){
+			courseTitle.setText(courseObj.getTitle());
+		}
+		
 	}
 }
