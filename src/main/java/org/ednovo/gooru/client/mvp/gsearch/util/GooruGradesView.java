@@ -116,7 +116,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			gradePanel.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					if(gradePanel.getWidget(0).getElement().getInnerText().equals(stringArray[0])){
+					if(gradePanel.getWidget(0).getElement() != null &&gradePanel.getWidget(0).getElement().getInnerText().equals(stringArray[0])){
 						if(lblGrade.getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
 							lblGrade.getElement().getStyle().clearBackgroundColor();
 							selectAllGrades(stringArray,REMOVE);

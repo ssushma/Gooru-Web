@@ -70,6 +70,13 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpAfterThirt
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfileView;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpTurnsAfterThirteenView;
+import org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView;
+import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
+import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.IsAddAssignmentContainerView;
@@ -143,6 +150,9 @@ import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter.IsShelfMainProxy;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentView;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.IsCollectionContentView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.IsCourseInfoView;
@@ -646,11 +656,15 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(LessonInfoPresenter.class,IsLessonInfoView.class,LessonInfoView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
+		bindPresenterWidget(CollectionContentPresenter.class,IsCollectionContentView.class, CollectionContentView.class);
 
 
 		bindPresenterWidget(HomeBannerPresenter.class,IsHomeBannerView.class, HomeBannerView.class);
 
 		bindPresenterWidget(PreSearchPresenter.class,IsPreSearchView.class, PreSearchView.class);
+		bindPresenter(TeachClassPresenter.class, IsTeachClassView.class,TeachClassView.class, IsTeachClassProxy.class);
+		bindPresenterWidget(EditClassPresenter.class, IsEditClassView.class, EditClassView.class);
+		
 
 	}
 }

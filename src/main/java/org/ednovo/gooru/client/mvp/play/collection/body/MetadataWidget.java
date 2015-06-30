@@ -94,6 +94,12 @@ public class MetadataWidget extends Composite {
 	
 	public static final String STANDARD_DESCRIPTION = "description";
 	
+	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
+	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
+	public static final String YUMA_COUNTY_SS = "YumaCountySS";
+	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
+	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static MetadataWidgetUiBinder uiBinder = GWT.create(MetadataWidgetUiBinder.class);
@@ -561,8 +567,14 @@ public class MetadataWidget extends Composite {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
 		if(collectionDo!=null){
+			
 			if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
 				anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+			}else if(YUMA_COUNTY_SCIENCE.equals(collectionDo.getUser().getUsernameDisplay())|| YUMA_COUNTY_MATH.equals(collectionDo.getUser().getUsernameDisplay()) ||
+					YUMA_COUNTY_SS.equals(collectionDo.getUser().getUsernameDisplay()) || YUMA_COUNTY_ELA.equals(collectionDo.getUser().getUsernameDisplay())||
+					YUMA_COUNTY_PD.equals(collectionDo.getUser().getUsernameDisplay())){
+				anchor.setHref("#"+PlaceTokens.YCGL_LIBRARY);
+				
 			}else{
 				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+((collectionDo.getUser()!=null && collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
 				anchor.setHref(token);

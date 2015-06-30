@@ -1,0 +1,70 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<g:HTMLPanel styleName="tableRow"> 
+				<div class="tableColumn">
+						<div class="tableMainHeader">
+							<div class="resourceNumber">1</div>
+							<div class="resourceNameBlock">
+								<span class="interactiveIcon"></span>
+								<div class="resourceTitle">Adding Fractions</div>
+							</div>
+						</div>
+					</div>
+					<div class="tableColumn">
+						<div class="tableListTags">
+							<div class="no-gutter">
+								<div class="col-md-12">
+									<div class="reviewsIcon">
+										<img src="images/messageIcon.png"></img>
+									</div>
+									<div class="reviewsText">Lorem Ipsum is simply dummy text of the printing and
+										typesetting industry. Lorem Ipsum has been the industry's standard
+										dummy text ever since the 1500s</div>
+									<div class="clearfix"></div>
+				
+									<div class="timeIcon">
+										<img src="images/timeIcon.png" />
+									</div>
+									<div class="timeText">Video time: 02:23 - 03:33</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+					<div class="tableColumn lastItem">
+						<div class="btn-group editButton open">
+							<button aria-expanded="true" aria-haspopup="true" data-toggle="dropdown"
+								class="btn btn-default dropdown-toggle" type="button">
+								Edit
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Edit Narration</a>
+								</li>
+								<li>
+									<a href="#">Edit Video</a>
+								</li>
+								<li>
+									<a href="#">Copy To</a>
+								</li>
+								<li>
+									<a href="#">Remove</a>
+								</li>
+								<li>
+									<a href="#">Add Tags</a>
+								</li>
+							</ul>
+						</div>
+						<g:HTMLPanel ui:field="pnlArrows" styleName="tableListOrder">
+							<g:Label styleName="topArrow sprite" ui:field="lblTopArrow"/>
+							<div class="numInput">
+								<g:TextBox styleName="form-control" maxLength="3" ui:field="txtMoveTextBox"/>
+							</div>
+							<g:Label styleName="bottomArrow sprite" ui:field="lblDownArrow"/>
+						</g:HTMLPanel>
+					</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

@@ -35,16 +35,17 @@ import com.google.gwt.user.client.ui.HTMLPanel;
  */
 public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCollectionsRightClusterUiHandlers> {
 	/**
-	 * This method is used to set the slot panel
-	 * @param slotPanel
+	 * This method is used to set folder data
+	 * @param folderObj
 	 */
-	public void setSlotPanel(HTMLPanel slotPanel,FolderDo folderObj);
+	public void setSlotPanel(FolderDo folderObj);
 	/**
 	 * This method is used to clear tab active status
 	 */
 	public void resetHilightStyles();
 	/**
-	 * This method is used to set Default tab selection
+	 * This method is used to set Default or based on index tab selection
+	 * @param tabIndex 
 	 */
-	public void setDefaultActiveTab();
+	public void setDefaultActiveTab(int tabIndex);
 }

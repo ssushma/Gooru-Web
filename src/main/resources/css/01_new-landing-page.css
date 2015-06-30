@@ -28,7 +28,7 @@
 
 .bannerContaner .bannerCaption{
 	position:absolute;
-	top:10%;
+	top:11%;
 	left:0;
 	right:0;
 	bottom:0;
@@ -356,8 +356,9 @@
 }
 .focusBlock{
 	position:relative;
-	margin-top:-100px;
+	margin-top:-290px;
 	z-index:89;
+	min-height: 255px;
 }
 .focusBlock .panel-default{
 	border-color:#b1d2e7;
@@ -651,14 +652,16 @@
 		bottom:0;
 	}
 	.freeToOpenBlock .focusTextAlwys .BlueBg{
-		background:#4c98cc;
-		border-radius:4px 4px;
-		padding:10px 10px;
-		margin-bottom:20px;
+		background: #fff;
+		border-radius: 4px 4px;
+		padding: 20px 20px;
+		margin-bottom: 20px;
+		color: #4c98cc;
+		opacity: .75;
 	}
 		.freeToOpenBlock .focusTextAlwys .BlueBg p{
 			margin:0 0;
-			color:#ffffff;
+			color:#000000;
 			font-size:17px;
 		}
 
@@ -1150,7 +1153,7 @@ footer ul li a {
 	height: 82px;
 	vertical-align: middle;
 	margin-top: 15px;
-	margin-left: -20px;
+	margin-left: -28px;
 	margin-right: 20px;
 }
 
@@ -1235,6 +1238,11 @@ footer ul li a {
 }
 
 .aboutApproach{
-	width: 100px;
+	width: 50%;
+	text-align: center;
+	line-height: 20px;
+	font-size: 14px;
+}
+.callToAction{
 	text-align: center;
 }

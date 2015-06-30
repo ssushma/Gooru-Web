@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
@@ -44,4 +45,9 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 * @param libraryCode instance {@link CourseSubjectDo} as List
 	 */
 	void setCourseList(List<CourseSubjectDo> libraryCode);
+	/**
+	 * To set the Updated course data
+	 * @param courseObj
+	 */
+	void setCouseData(FolderDo courseObj);
 }
