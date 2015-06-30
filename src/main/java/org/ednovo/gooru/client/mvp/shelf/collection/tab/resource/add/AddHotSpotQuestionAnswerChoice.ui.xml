@@ -8,8 +8,6 @@
 	     <g:FlowPanel  ui:field="answerHeadContainer" styleName="containerBottom">
 	        <g:HTMLPanel styleName="col-md-5 col-sm-6 colmdPadding">
 	         <g:Label  ui:field="answerHeadingTypeLbl" styleName="hsQAnswerHeadings htQAnswerTypeLbl"></g:Label>
-	        <g:RadioButton ui:field="imageRDButton" name="ansTypeGroup" styleName="hsQAnswerHeadings"></g:RadioButton>
-	         <g:RadioButton ui:field="textRDButton" name="ansTypeGroup" styleName="hsQAnswerHeadings"></g:RadioButton>
 	     </g:HTMLPanel>
 	          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	     </g:FlowPanel>
