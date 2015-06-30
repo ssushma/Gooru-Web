@@ -1456,7 +1456,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 	
 	public CollectionQuestionItemDo getAddResourceMetadata(){
-		CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
+		
+		if(addQuestionResourceWidget!=null){
+			
+			CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
 		
 		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 		depthOfKnowledge.put("depthOfKnowledge", addQuestionResourceWidget.depthOfKnowledges);
@@ -1504,7 +1507,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		moreOptions.put("21stcentury", addQuestionResourceWidget.addCenturyLabel.isVisible());
 		
 		collectionQuestionItemDo.setMoreOptions(moreOptions);
+		
 		return collectionQuestionItemDo;
+	}
+	return null;
 	}
 
 	@Override
