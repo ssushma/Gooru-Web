@@ -36,10 +36,14 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
 	
 	public static final  Object INNER_SLOT = new Object();
+	
 	CourseInfoPresenter courseInfoPresenter;
+	
 	ShelfMainPresenter shelfMainPresenter;
 	
 	CollectionContentPresenter collectionContentPresenter;
+	
+	final String COLLECTION="Collection";
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -62,11 +66,16 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			courseInfoPresenter.callTaxonomyService();
 			courseInfoPresenter.setData(folderObj);
 			setInSlot(INNER_SLOT, courseInfoPresenter);
-			//setInSlot(INNER_SLOT, collectionContentPresenter);
 		}else if(index==2){
-			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
-			setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			//The true condition is added for testing purpose
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+				collectionContentPresenter.setData(folderObj);
+				setInSlot(INNER_SLOT, collectionContentPresenter);
+			}else{
+				MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
+				myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
+				setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			}
 		}else if(index==3){
 			
 		}
