@@ -62,6 +62,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo){
 		index=0;
+		pnlReosurceList.clear();
 		if(listOfContent.getCollectionItems().size()>0){
 			for (CollectionItemDo collectionItem : listOfContent.getCollectionItems()) {
 				ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem) {
