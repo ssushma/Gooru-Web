@@ -94,5 +94,7 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	void hidePopup();
 	
 	void questionMetadata(CollectionQuestionItemDo collectionQuestionItemDo);
+	
+	boolean checkQuestionSlot();
 
 }

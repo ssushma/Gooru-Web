@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.gshelf;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -236,7 +238,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
 				ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) event.getSelectedItem().getWidget();
-				if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
+				if(shelfTreeWidget.getCollectionDo()==null || !shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
 					treeChildSelectedItem = event.getSelectedItem();
 					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 					setFolderActiveStatus();
@@ -260,30 +262,36 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		return folderLevel;
 	}
 
+	/**
+	 * To set the active status current selected tree item.
+	 */
 	public void setFolderActiveStatus() { 
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
-		if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
-			if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course")) {
-				TreeItem parent = treeChildSelectedItem.getParentItem();
-				treeChildSelectedItem.getTree().setSelectedItem(parent, false);
-				if(parent != null)parent.setSelected(false);
-				treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-				getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),shelfTreeWidget.getFolderOpenedStatus());
-				shelfTreeWidget.setFolderOpenedStatus(true);
-				
-			} else {
-				shelfTreeWidget.setCollectionOpenedStatus(true);
+		if(shelfTreeWidget.getCollectionDo()!=null){
+			if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
+				if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course")) {
+					TreeItem parent = treeChildSelectedItem.getParentItem();
+					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
+					if(parent != null)parent.setSelected(false);
+					treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+					getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),shelfTreeWidget.getFolderOpenedStatus());
+					shelfTreeWidget.setFolderOpenedStatus(true);
+
+				} else {
+					shelfTreeWidget.setCollectionOpenedStatus(true);
+				}
 			}
-			shelfTreeWidget.setActiveStyle(true);
-			ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
-			if(previousshelfTreeWidget==null) {
-				previousTreeChildSelectedItem = treeChildSelectedItem;
-			}
-			if(previousshelfTreeWidget!=null&&(shelfTreeWidget.getCollectionDo().getGooruOid()!=previousshelfTreeWidget.getCollectionDo().getGooruOid())) {
-				previousshelfTreeWidget.setActiveStyle(false);
-			}
+		}
+		shelfTreeWidget.setActiveStyle(true);
+		ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
+		if(previousshelfTreeWidget==null) {
 			previousTreeChildSelectedItem = treeChildSelectedItem;
 		}
+		previousshelfTreeWidget.setActiveStyle(false);
+		if(previousshelfTreeWidget!=null&&(shelfTreeWidget.getCollectionDo().getGooruOid()!=previousshelfTreeWidget.getCollectionDo().getGooruOid())) {
+			previousshelfTreeWidget.setActiveStyle(false);
+		}
+		previousTreeChildSelectedItem = treeChildSelectedItem;
 	}
 
 	/* (non-Javadoc)
@@ -538,6 +546,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			folderObj.setTitle(UNTITLEDCOURSE);
 			getUiHandlers().setRightPanelData(folderObj, COURSE);
 			correctStyle(treeItem);
+			setFolderActiveStatus();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put(VIEW, getViewType());
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 		}
 	}
 	

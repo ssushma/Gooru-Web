@@ -537,7 +537,9 @@ public class PlayerDataLogEvents {
 			case 9:
 				return "HT_RO";
 			case 10:
-				return "HS";
+				return "HS_TXT";
+			case 11:
+				return "HS_IMG";
 			default:
 				return "RES";
 		}

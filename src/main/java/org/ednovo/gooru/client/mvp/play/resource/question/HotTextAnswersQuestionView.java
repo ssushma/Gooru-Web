@@ -90,10 +90,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	private static String STYLE_DND_CORRECT="dragDropAnsCorrect";
 	private static String STYLE_DND_INCORRECT="dragDropAnsInCorrect";
 	private static String DOT=".";
-	private static String START_CORRECT_DELIMITER="${$";
-	private static String START_DELIMITER="${";
-	private static String END_CORRECT_DELIMITER="$}$";
-	private static String END_DELIMITER="}$";
+	private static String START_CORRECT_DELIMITER="[$";
+	private static String START_DELIMITER="[";
+	private static String END_CORRECT_DELIMITER="$]";
+	private static String END_DELIMITER="]";
 
 
 	private static HotTextAnswersQuestionViewUiBinder uiBinder = GWT.create(HotTextAnswersQuestionViewUiBinder.class);
@@ -164,13 +164,13 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					for(int k=0;k<temp.length;k++){
 						final InlineLabel lbl=new InlineLabel(temp[k]+delimiter);
 						if(lbl.getText().startsWith(START_CORRECT_DELIMITER) && (lbl.getText().endsWith(END_CORRECT_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(DOT+END_CORRECT_DELIMITER+SPACE) || lbl.getText().trim().endsWith(END_CORRECT_DELIMITER+DOT))){
-							String lblText=lbl.getText().replaceAll("[${}]", "");
+							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_CORRECT);
 							lbl.addStyleName(STYLE_HIGHLIGHT);
 						}
 						else if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT))){
-							String lblText=lbl.getText().replaceAll("[${}]", "");
+							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_INCORRECT);
 							lbl.addStyleName(STYLE_HIGHLIGHT);
@@ -248,7 +248,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 					final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
 					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT))){
-						String lblText=lbl.getText().replaceAll("[${}]", "");
+						String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 						lbl.setText(lblText);
 						lbl.getElement().setId(STYLE_CORRECT);
 					}else{
@@ -279,11 +279,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
 
 						if(lbl.getText().startsWith(START_DELIMITER) ||  lbl.getText().startsWith(" ${") ){
-							String lblText=lbl.getText().replaceAll("[${}]", "");
+							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_CORRECT);
 						}else{
-							String lblText=lbl.getText().replaceAll("[${}]", "");
+							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_INCORRECT);
 						}
