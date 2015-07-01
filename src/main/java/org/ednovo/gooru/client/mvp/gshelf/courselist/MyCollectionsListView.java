@@ -184,7 +184,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			index=pnlCourseList.getWidgetCount();
 			setLastWidgetArrowVisiblity(true);
 		}
-		if(listOfContent.size()>0){
+		if(listOfContent!=null && listOfContent.size()>0){
 			for (FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override

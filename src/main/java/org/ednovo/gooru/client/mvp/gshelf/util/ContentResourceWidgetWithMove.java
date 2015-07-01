@@ -292,5 +292,11 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 		pnlYoutubeContainer.setVisible(isTrue);
 		pnlTimeIcon.setVisible(isTrue);
 	}
+	public Label getItemSequenceLabel(){
+		return lblItemSequence;
+	}
+	public TextBox getTextBox(){
+		return txtMoveTextBox;
+	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 }

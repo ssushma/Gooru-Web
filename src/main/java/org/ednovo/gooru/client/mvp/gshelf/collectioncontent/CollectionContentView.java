@@ -25,14 +25,12 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import java.util.Iterator;
-import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentResourceWidgetWithMove;
-import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -72,15 +70,15 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlReosurceList.getWidgetCount()>=movingIndex){
 							//Based on the position it will insert the widget in the vertical panel
-							String itemSequence=pnlContentContainer.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
+							String itemSequence=pnlReosurceList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
 							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence));
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
-								pnlReosurceList.insert(pnlContentContainer.getWidget(currentIndex), movingIndex);
+								pnlReosurceList.insert(pnlReosurceList.getWidget(currentIndex), movingIndex);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
-								pnlReosurceList.insert(pnlContentContainer.getWidget(currentIndex), movingIndex);
+								pnlReosurceList.insert(pnlReosurceList.getWidget(currentIndex), movingIndex);
 							}
 						}
 					}
@@ -97,11 +95,11 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	 * @param isVisible
 	 */
 	public void setLastWidgetArrowVisiblity(boolean isVisible){
-		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlReosurceList.getWidget(pnlReosurceList.getWidgetCount()-1);
+		ContentResourceWidgetWithMove lastwidget=(ContentResourceWidgetWithMove) pnlReosurceList.getWidget(pnlReosurceList.getWidgetCount()-1);
 		lastwidget.getDownArrow().setVisible(isVisible);
 	}
 	/**
-	 * This method is used to reset the widget positions with default text
+	 * This method is used to reset the widget positions with default text.
 	 */
 	@Override
 	public void resetWidgetPositions(){
@@ -109,9 +107,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		int index=0;
 		while (widgets.hasNext()){
 			Widget widget=widgets.next();
-			if(widget instanceof ContentWidgetWithMove){
-				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
-				contentWidgetWithMove.getH3Panel().setText(type+" "+(index+1));
+			if(widget instanceof ContentResourceWidgetWithMove){
+				ContentResourceWidgetWithMove contentWidgetWithMove=(ContentResourceWidgetWithMove) widget;
+				contentWidgetWithMove.getElement().setAttribute("itemSequence",Integer.toString((index+1)));
+				contentWidgetWithMove.getItemSequenceLabel().setText(Integer.toString((index+1)));
 				contentWidgetWithMove.getTextBox().setText((index+1)+"");
 				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
 				if(index==0){
