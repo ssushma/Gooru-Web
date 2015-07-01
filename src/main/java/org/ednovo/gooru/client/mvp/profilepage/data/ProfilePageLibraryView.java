@@ -196,6 +196,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
 					if(leftMenuItemView.getType().equals(COLLECTION)) {
+						leftMenuItemView.removeStyleName("open");
 						getPresenter().getProfileLibraryCollection(unitListId, false);
 						listAllBtn.setVisible(false);
 						folderListPanel.setVisible(false);

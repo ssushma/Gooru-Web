@@ -184,7 +184,8 @@ public interface ClientConstants {
 	String TF = "TF";
 	String HT_RO = "HT_RO";
 	String HT_HL = "HT_HL";
-	String HS = "HS";
+	String HS_TXT = "HS_TXT";
+	String HS_IMG = "HS_IMG";
 	String ANS_A = "A";
 	String ANS_B = "B";
 	String FIRST_SESSION = "1st Session";

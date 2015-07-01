@@ -61,7 +61,7 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
 	private HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledges;
 	
-	private ArrayList<String> media_files;
+	private ArrayList<String> mediaFiles;
 
 	
 	private String hlType;
@@ -202,12 +202,12 @@ public class CollectionQuestionItemDo implements Serializable {
 		this.singleCorrectAnswer = singleCorrectAnswer;
 	}
 
-	public ArrayList<String> getMedia_files() {
-		return media_files;
+	public ArrayList<String> getMediaFiles() {
+		return mediaFiles;
 	}
 
-	public void setMedia_files(ArrayList<String> media_files) {
-		this.media_files = media_files;
+	public void setMediaFiles(ArrayList<String> mediaFiles) {
+		this.mediaFiles = mediaFiles;
 	}
 
 	public Map<Long, String> getCenturySelectedValues() {

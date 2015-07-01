@@ -742,7 +742,7 @@ button#btnSearchType .caret {
 	color: rgb(81, 81, 81);
 	cursor: pointer !important;
 	text-decoration: none !important;
-  	width: 90%;
+  	width: 97%;
 	box-sizing: border-box;
 	background: rgb(255, 255, 255);
 	position: absolute;
@@ -768,7 +768,7 @@ button#btnSearchType .caret {
 }
 
 .no-gutter-col{
-	width: 130px !important;
+	width: 115px !important;
 	margin-top: 3px;
 	padding-top: 5px;
 }

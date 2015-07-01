@@ -22,30 +22,42 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
  * @author Search Team
  *
  */
-public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCollectionsRightClusterUiHandlers> {
+public class CollectionContentPresenter extends PresenterWidget<IsCollectionContentView> implements CollectionContentUiHandlers {
+	
+	final String SUBJECT="subject";
+	
+	final String COURSE="course";
+	
 	/**
-	 * This method is used to set folder data
-	 * @param folderObj
+	 * Class constructor
+	 * @param view {@link View}
+	 * @param proxy {@link Proxy}
 	 */
-	public void setSlotPanel(FolderDo folderObj);
-	/**
-	 * This method is used to clear tab active status
-	 */
-	public void resetHilightStyles();
-	/**
-	 * This method is used to set Default or based on index tab selection
-	 * @param tabIndex 
-	 */
-	public void setDefaultActiveTab(int tabIndex);
+	@Inject
+	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view) {
+		super(eventBus,view);
+		getView().setUiHandlers(this);
+	}
+
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
+
+	@Override
+	protected void onReveal(){
+		super.onReveal();
+	}
 }
