@@ -37,4 +37,6 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	 * This method is used to set Default Active Tab
 	 */
 	public void setDefaultActiveTab();
+	void setUnitInfo();
+	void setUnitTemplate();
 }

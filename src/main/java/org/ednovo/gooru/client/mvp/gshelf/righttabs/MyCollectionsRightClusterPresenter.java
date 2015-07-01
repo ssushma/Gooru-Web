@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -37,6 +38,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	public static final  Object INNER_SLOT = new Object();
 	CourseInfoPresenter courseInfoPresenter;
+	LessonInfoPresenter lessonInfoPresenter;
 	ShelfMainPresenter shelfMainPresenter;
 	
 	CollectionContentPresenter collectionContentPresenter;
@@ -46,9 +48,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
+		this.lessonInfoPresenter=lessonInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
@@ -77,6 +80,24 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().resetHilightStyles();
 		//getView().setDefaultActiveTab();
 	}
+
+	@Override
+	public void setUnitTemplate(){
+		shelfMainPresenter.createNewUnitItem();
+	}
+	@Override
+	public void setUnitInfo(){
+	/*	courseInfoPresenter.callTaxonomyService();
+		courseInfoPresenter.setData(folderObj);*/
+		setInSlot(INNER_SLOT, lessonInfoPresenter);
+		//getView().setDefaultActiveTab();
+	}
+
+	/**
+	 * To set the shelfMainPresenter obj
+	 * @param shelfMainPresenter
+	 */
+
 	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
 		this.shelfMainPresenter=shelfMainPresenter;
 	}

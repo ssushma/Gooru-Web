@@ -74,6 +74,7 @@
 .htQAnswerTypeLbl {
 	font-style: italic;
 	padding-left: 0;
+	width: 65%;
 }
 
 .htQAnswerHeadings input[type="radio"] {
