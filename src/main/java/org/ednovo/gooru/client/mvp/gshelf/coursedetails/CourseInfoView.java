@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -51,6 +52,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -68,7 +70,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveCourseBtn;
+	@UiField Button saveCourseBtn,nextUnitBtn;
 	@UiField TextBox courseTitle;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
@@ -202,6 +204,28 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
 		}
 	}
+	
+	@UiHandler("nextUnitBtn")
+	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
+		getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		getUiHandlers().showUnitTemplate();
+		getUiHandlers().showUnitInfo();
+		
+		
+		
+/*		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 1);
+		TreeItem treeItem = new TreeItem(shelfTreeWidget);
+		
+		shelfFolderTree.insertItem(0, treeItem);
+		shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
+		shelfTreeWidget.getTitleFocPanel().addStyleName("course");
+		FolderDo folderObj = new FolderDo();
+		folderObj.setTitle(UNTITLEDCOURSE);
+		getUiHandlers().setRightPanelData(folderObj, COURSE);
+		correctStyle(treeItem);*/
+	}
+	
+	
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {

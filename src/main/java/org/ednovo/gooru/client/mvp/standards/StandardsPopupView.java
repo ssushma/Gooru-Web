@@ -55,7 +55,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -285,6 +284,11 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
+					for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
+						if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
+							levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+						}
+					}
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -293,7 +297,6 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -447,6 +450,11 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
+					for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
+						if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
+							levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+						}
+					}
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -455,7 +463,6 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -550,6 +557,11 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(j).getNode().get(k).getCodeId().toString());
+					for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
+						if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
+							levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+						}
+					}
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -558,7 +570,6 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 							
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -622,6 +633,11 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(k).getCodeId().toString());
+					for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
+						if(ulSelectedItems.getWidget(r).getElement().getInnerText().substring(0,(ulSelectedItems.getWidget(r).getElement().getInnerText().length()-1)).equalsIgnoreCase(codeVal)){
+							levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+						}
+					}
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -630,7 +646,6 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}

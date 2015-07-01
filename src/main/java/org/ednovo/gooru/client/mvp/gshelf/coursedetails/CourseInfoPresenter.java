@@ -117,6 +117,19 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			}
 		});
 	}
+	@Override
+	public void showUnitInfo() {
+
+				myCollectionsRightClusterPresenter.setUnitInfo();
+	
+	}
+	@Override
+	public void showUnitTemplate() {
+
+				myCollectionsRightClusterPresenter.setUnitTemplate();
+	
+	}
+	
 
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {

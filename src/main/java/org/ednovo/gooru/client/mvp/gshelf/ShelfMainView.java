@@ -571,6 +571,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 		}
 	}
+	@Override
+	public void createNewUnitItem() {
+
+		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 2);
+		TreeItem item = new TreeItem(shelfTreeWidget);
+		treeChildSelectedItem.addItem(item);
+
+		
+		
+	}
 	
 	/**
 	 * To get more collection item after scroll down,if collection is more than 20.

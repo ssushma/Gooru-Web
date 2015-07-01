@@ -48,4 +48,8 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	 * @param courseTitle {@link String} 
 	 */
 	public void updateCourseDetails(String text, String id);
+
+	void showUnitInfo();
+
+	void showUnitTemplate();
 }
