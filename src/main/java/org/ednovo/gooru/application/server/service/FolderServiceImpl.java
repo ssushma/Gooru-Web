@@ -467,6 +467,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			logger.error("Exception::", e);
 		}
 	}
+	
+	
 
 	@Override
 	public CollectionDo copyDraggedCollectionIntoFolder(CollectionDo data,String courseCodeId,String parentId,boolean addToShelf) throws GwtException {
@@ -598,5 +600,21 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			}
 		}
 		return folderList;
+	}
+
+	@Override
+	public void updateCourse(String courseId, String courseTitle)
+			throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA, courseId);
+		JSONObject courseObj=new JSONObject();
+		try {
+			courseObj.put(TITLE, courseTitle);
+			
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),courseObj.toString());
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
 	}
 }

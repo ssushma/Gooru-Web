@@ -363,6 +363,8 @@ public enum UrlToken {
 	V2_CREATE_COLLECTION_IN_FOLDER("/v2/collection?"),
 
 	V2_UPDATE_FOLDER_METADATA("/v2/folder/{0}?"),
+	
+	V1_UPDATE_COURSE_METADATA("/v1/course/{0}?"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
 
