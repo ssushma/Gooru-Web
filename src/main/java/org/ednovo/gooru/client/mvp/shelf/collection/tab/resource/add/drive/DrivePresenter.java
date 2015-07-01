@@ -196,8 +196,8 @@ public class DrivePresenter extends
 	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
 		loadingImage.setStyleName("loadingpanelImage");
-		loadingImage.getElement().getStyle().setMarginLeft(70, Unit.PX);
-		loadingImage.getElement().getStyle().setMarginTop(25, Unit.PX);
+		//loadingImage.getElement().getStyle().setMarginLeft(70, Unit.PX);
+		loadingImage.getElement().getStyle().setMarginTop(95, Unit.PX);
 		return loadingImage;
 	}
 	
