@@ -76,6 +76,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -177,6 +178,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private boolean isQuestion =false;
 	
 	private boolean isUserResource =false;
+	
+	private boolean isEdit =false;
 	
 	
 	@Inject
@@ -937,6 +940,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		} else if(clickType.equalsIgnoreCase("Question")){
 			try{
 				Window.enableScrolling(false);
+				isEdit=true;
+				disableEditMode(Cursor.POINTER);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0893());
 				titleLbl.getElement().setAttribute("alt", i18n.GL0893());
@@ -979,6 +984,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{
 				Window.enableScrolling(false);
+				isEdit=false;
+				disableEditMode(Cursor.DEFAULT);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0304());
 				titleLbl.getElement().setAttribute("alt", i18n.GL0304());
@@ -1068,7 +1075,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private class showMultipleChoiceWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!multipleChoiceRadioButton.getValue()){
+			if(!multipleChoiceRadioButton.getValue() && isEdit){
 				//Window.enableScrolling(true);
 				getUiHandlers().addSelectedQuestionType("MC",getAddResourceMetadata());
 				displayQuestionWidget();
@@ -1088,7 +1095,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private class showTrueOrFalseWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!trueOrFalseRadioButton.getValue()){
+			if(!trueOrFalseRadioButton.getValue() && isEdit){
 				
 				getAddResourceMetadata();
 				
@@ -1110,7 +1117,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private class showOpenEndedWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!openEndedRadioButton.getValue()){
+			if(!openEndedRadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("OE",getAddResourceMetadata());
 				displayQuestionWidget();
 				openEndedRadioButton.setValue(true);
@@ -1124,7 +1131,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!multipleAnswerRadioButton.getValue()){
+			if(!multipleAnswerRadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("MA",getAddResourceMetadata());
 				displayQuestionWidget();
 				highlightSelectedTab("MA");
@@ -1145,7 +1152,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!fillInTheBlankRadioButton.getValue()){
+			if(!fillInTheBlankRadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("FIB",getAddResourceMetadata());
 				displayQuestionWidget();
 				fillInTheBlankRadioButton.setValue(true);
@@ -1171,7 +1178,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!hotSpotImgRadioButton.getValue()){
+			if(!hotSpotImgRadioButton.getValue() && isEdit){
 				hotSpotImgRadioButton.setValue(true);
 				highlightSelectedTab("HS_IMG");
 				getUiHandlers().addSelectedQuestionType("HS_IMG",getAddResourceMetadata());
@@ -1187,7 +1194,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!hotSpotWordRadioButton.getValue()){
+			if(!hotSpotWordRadioButton.getValue() && isEdit){
 				hotSpotWordRadioButton.setValue(true);
 				highlightSelectedTab("HS_TXT");
 				getUiHandlers().addSelectedQuestionType("HS_TXT",getAddResourceMetadata());
@@ -1204,7 +1211,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private class showHotTextWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!hotTextRadioButton.getValue()){
+			if(!hotTextRadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("HT_RO",getAddResourceMetadata());
 				displayQuestionWidget();
 				hotTextRadioButton.setValue(true);
@@ -1619,7 +1626,25 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		return tabViewContainer.isVisible();
 		
 	}
-
+	public void disableEditMode(Cursor cursorType){
+		multiplechoice.getElement().getStyle().setCursor(cursorType);
+		multipleAnswerAnc.getElement().getStyle().setCursor(cursorType);
+		truefalase.getElement().getStyle().setCursor(cursorType);
+		truefalseText.getElement().getStyle().setCursor(cursorType);
+		openended.getElement().getStyle().setCursor(cursorType);
+		hotText.getElement().getStyle().setCursor(cursorType);
+		hotSpotImg.getElement().getStyle().setCursor(cursorType);
+		hotSpotWord.getElement().getStyle().setCursor(cursorType);
+		
+		questionTabButton.getElement().getStyle().setCursor(cursorType);
+		multipleAnswerTabButton.getElement().getStyle().setCursor(cursorType);
+		trueOrFlaseButton.getElement().getStyle().setCursor(cursorType);
+		fillInTheBlankTabButton.getElement().getStyle().setCursor(cursorType);
+		openEndedButton.getElement().getStyle().setCursor(cursorType);
+		hotTextTabButton.getElement().getStyle().setCursor(cursorType);
+		hotSpotImageTabButton.getElement().getStyle().setCursor(cursorType);
+		hotSpotWordTabButton.getElement().getStyle().setCursor(cursorType);
+	}
 	
 	
 }
