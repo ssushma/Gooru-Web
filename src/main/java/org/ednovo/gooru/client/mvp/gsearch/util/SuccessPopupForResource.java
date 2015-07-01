@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.HighlightRemixedItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
@@ -96,8 +97,9 @@ public class SuccessPopupForResource extends PopupPanel {
 			hide();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
 			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
+			AppClientFactory.fireEvent(new CloseCollectionPlayerEvent(true));
 			if("resource".equals(searchType)){
-				AppClientFactory.fireEvent(new SetFolderCollectionStyleEvent(params,"collection"));  
+				AppClientFactory.fireEvent(new SetFolderCollectionStyleEvent(params,"collection"));
 			}else{
 				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
 				AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));

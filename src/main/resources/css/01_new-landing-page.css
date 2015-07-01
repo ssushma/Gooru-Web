@@ -382,6 +382,7 @@ body{
 .focusBlock .panel-footer{
 	background-color: #deebf3;
 	border-top:#b1d2e7;
+	font-size: 14px;
 }
 .focusBlock .panel-body{
 	padding:0 15px;
@@ -407,6 +408,7 @@ body{
     background-color: #87badd;
     border-color: #7cb0d4;
     color: #fff;
+    font-size: 18px;
 }
 
 .no-gutter > [class*='col-md-']{
@@ -470,7 +472,7 @@ body{
 	text-align:center;
 	font-family:"Arvo",serif !important;
 	border-bottom:4px solid #ffffff;
-	font-size:14.5px;
+	font-size:18px;
 	font-weight:600;
 }
 
@@ -536,7 +538,7 @@ body{
 	text-align:center;
 }
 .categoriesBlock .callToAction button.primary, .categoriesBlock .callToAction a.primary{
-	font-size:12px;
+	font-size:14px;
 	width:80%;
 }
 .gradeContainer{
@@ -627,7 +629,6 @@ body{
   overflow: hidden;
   padding-top: 16px;
   transition: all 0.5s ease-in 0s;
-  cursor: pointer;
 }
 
 .remixBlock .animation:hover {
@@ -667,6 +668,7 @@ body{
 			margin:0 0;
 			color:#000000;
 			font-size:17px;
+			font-family: "Arvo" !important;
 		}
 
 
@@ -753,6 +755,8 @@ footer ul li a {
 
 .focusBlock .browseContentBtn{
 	text-align: right;
+	margin-left: 38px;
+	margin-right: 20px;
 }
 
 .focusBlock .browseContentBtn button{
@@ -763,7 +767,7 @@ footer ul li a {
     content:"or";
     position:absolute;
     right:-12px;
-    top:1;
+    top:36%;
     z-index:999;
     color:#4ca4de;
     padding:5px 5px;
@@ -803,7 +807,7 @@ footer ul li a {
 
 
 .gradePanel{
-	padding:23px 0 23px 25px;
+	padding:39px 0 39px 25px;
 }
 
 .panelGrade{
@@ -811,7 +815,7 @@ footer ul li a {
 }
 
 .ellipsis{
-	width: 120px;
+	width: 90px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -867,12 +871,11 @@ footer ul li a {
 	width: 50%;
 	text-align: center;
 	line-height: 20px;
-	font-size: 14px;
+	font-size: 16px;
 }
 .callToAction{
 	text-align: center;
 }
-
 
 
 @media (max-width: 767px) {
