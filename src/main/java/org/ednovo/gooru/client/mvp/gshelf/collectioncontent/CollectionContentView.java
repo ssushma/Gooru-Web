@@ -24,8 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentResourceWidgetWithMove;
+import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -47,34 +54,78 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@UiField VerticalPanel pnlReosurceList;
 	
 	int index=0;
+	String type;
 	
 	public CollectionContentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		pnlContentContainer.getElement().setId("resourceEdit");
+	}
+	
+	@Override
+	public void setData(CollectionDo listOfContent,FolderDo folderDo){
 		index=0;
-		for (int i = 0; i < 10; i++) {
-			ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index) {
-				@Override
-				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow, String moveId) {
-					int movingIndex= Integer.parseInt(movingPosition);
-					if(pnlReosurceList.getWidgetCount()>=movingIndex){
-						//Based on the position it will insert the widget in the vertical panel
-						String itemSequence=pnlContentContainer.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
-						//getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence));
-						if(!isDownArrow){
-							movingIndex= (movingIndex-1);
-							int currentIndex= Integer.parseInt(currentWidgetPosition);
-							pnlReosurceList.insert(pnlContentContainer.getWidget(currentIndex), movingIndex);
-						}else{
-							int currentIndex= Integer.parseInt(currentWidgetPosition);
-							pnlReosurceList.insert(pnlContentContainer.getWidget(currentIndex), movingIndex);
+		if(listOfContent.getCollectionItems().size()>0){
+			for (CollectionItemDo collectionItem : listOfContent.getCollectionItems()) {
+				ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem) {
+					@Override
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow, String moveId) {
+						int movingIndex= Integer.parseInt(movingPosition);
+						if(pnlReosurceList.getWidgetCount()>=movingIndex){
+							//Based on the position it will insert the widget in the vertical panel
+							String itemSequence=pnlContentContainer.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
+							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence));
+							if(!isDownArrow){
+								movingIndex= (movingIndex-1);
+								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								pnlReosurceList.insert(pnlContentContainer.getWidget(currentIndex), movingIndex);
+							}else{
+								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								pnlReosurceList.insert(pnlContentContainer.getWidget(currentIndex), movingIndex);
+							}
 						}
 					}
+				}; 
+				widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
+				pnlReosurceList.add(widgetMove);
+				index++;
+			}
+			setLastWidgetArrowVisiblity(false);
+		}
+	}
+	/**
+	 * On pagination it will enable the previous widget down arrow for move functionality
+	 * @param isVisible
+	 */
+	public void setLastWidgetArrowVisiblity(boolean isVisible){
+		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlReosurceList.getWidget(pnlReosurceList.getWidgetCount()-1);
+		lastwidget.getDownArrow().setVisible(isVisible);
+	}
+	/**
+	 * This method is used to reset the widget positions with default text
+	 */
+	@Override
+	public void resetWidgetPositions(){
+		Iterator<Widget> widgets=pnlReosurceList.iterator();
+		int index=0;
+		while (widgets.hasNext()){
+			Widget widget=widgets.next();
+			if(widget instanceof ContentWidgetWithMove){
+				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
+				contentWidgetWithMove.getH3Panel().setText(type+" "+(index+1));
+				contentWidgetWithMove.getTextBox().setText((index+1)+"");
+				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
+				if(index==0){
+					//If this is the first widget we are hiding the up arrow
+					contentWidgetWithMove.getTopArrow().setVisible(false);
+				}else if(index==(pnlReosurceList.getWidgetCount()-1)){
+					//If this the last widget hiding the down arrow
+					contentWidgetWithMove.getDownArrow().setVisible(false);
+				}else{
+					contentWidgetWithMove.getTopArrow().setVisible(true);
+					contentWidgetWithMove.getDownArrow().setVisible(true);
 				}
-			}; 
-			//widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
-			pnlReosurceList.add(widgetMove);
-			index++;
+				index++;
+			}
 		}
 	}
 }

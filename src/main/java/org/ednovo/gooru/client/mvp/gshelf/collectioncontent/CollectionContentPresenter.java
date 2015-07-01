@@ -24,6 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -59,5 +65,25 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+	}
+
+	@Override
+	public void setData(final FolderDo folderDo) {
+		/**As off now the API create lession is not implemented hardcode the collection id for testing **/
+		AppClientFactory.getInjector().getResourceService().getCollection("431c086c-2e81-4318-9e87-375235a7b84c",true, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				getView().setData(result,folderDo);
+			}
+		});
+	}
+	@Override
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemSeqToAPI,idToMove, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				getView().resetWidgetPositions();
+			}
+		});
 	}
 }

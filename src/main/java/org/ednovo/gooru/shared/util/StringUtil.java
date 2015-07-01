@@ -456,7 +456,25 @@ public class StringUtil implements ClientConstants {
 		if (!isEmpty(titleValue) )
 			object.setAttribute("title",titleValue);
 	}
-
+	/**
+	 * @function setAttributes
+	 * 
+	 * @description
+	 * 
+	 * @param object
+	 * @param altValue
+	 * @param titleValue
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 */
+	public static void setAttributes(Element object,String altValue, String titleValue){
+		if (!isEmpty(altValue) )
+			object.setAttribute("alt",altValue);
+		if (!isEmpty(titleValue) )
+			object.setAttribute("title",titleValue);
+	}
 	/**
 	 * Generalised method for converting object to toString (This will avoid NPE)
 	 * @param obj
