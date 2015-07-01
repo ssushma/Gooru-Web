@@ -4,10 +4,10 @@
 	<g:HTMLPanel styleName="tableRow"> 
 				<div class="tableColumn">
 						<div class="tableMainHeader">
-							<div class="resourceNumber">1</div>
+							<g:Label styleName="resourceNumber" ui:field="lblItemSequence"/>
 							<div class="resourceNameBlock">
 								<span class="interactiveIcon"></span>
-								<div class="resourceTitle">Adding Fractions</div>
+								<g:Label styleName="resourceTitle" ui:field="lblResourceTitle"/>
 							</div>
 						</div>
 					</div>
@@ -18,15 +18,16 @@
 									<div class="reviewsIcon">
 										<img src="images/messageIcon.png"></img>
 									</div>
-									<div class="reviewsText">Lorem Ipsum is simply dummy text of the printing and
-										typesetting industry. Lorem Ipsum has been the industry's standard
-										dummy text ever since the 1500s</div>
+									<g:HTMLPanel styleName="reviewsText" ui:field="pnlNarration"/>
 									<div class="clearfix"></div>
-				
-									<div class="timeIcon">
-										<img src="images/timeIcon.png" />
-									</div>
-									<div class="timeText">Video time: 02:23 - 03:33</div>
+									<g:HTMLPanel styleName="timeIcon" ui:field="pnlTimeIcon">
+										<img src="images/timeIcon.png"/>
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="timeText" ui:field="pnlYoutubeContainer">
+										<g:Label ui:field="startStopTimeDisplayText"></g:Label>
+									 	<g:Label ui:field="videoTimeField" styleName="youtubeText"/>
+			   						    <g:Label ui:field="fromLblDisplayText" styleName="youtubeText"/>
+									</g:HTMLPanel>
 									<div class="clearfix"></div>
 								</div>
 								<div class="clearfix"></div>

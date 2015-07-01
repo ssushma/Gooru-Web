@@ -1,6 +1,13 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.util.ImageUtil;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -29,24 +36,51 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 			UiBinder<Widget, ContentResourceWidgetWithMove> {
 	}
 	
-	@UiField Label lblTopArrow,lblDownArrow;
-	@UiField HTMLPanel pnlArrows;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText;
+	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon;
 	@UiField TextBox txtMoveTextBox;
 	
-	public ContentResourceWidgetWithMove(int index) {
+	private static final String VIDEO_TIME =i18n.GL0974();
+	private static final String START_MINUTE="00";
+	private static final String START_SEC="00";
+	private static final String END_MINUTE="00";
+	private static final String END_SEC="00";
+	boolean youtube;
+	private int totalVideoLength;
+	
+	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
 		initWidget(uiBinder.createAndBindUi(this));
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
-		setData(index);
+		startStopTimeDisplayText.setVisible(false);
+		
+		videoTimeField.setText(VIDEO_TIME);
+		videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
+		videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
+		videoTimeField.getElement().setId("lblVideoTimeField");
+		
+		fromLblDisplayText.getElement().setId("lblFromLblDisplayText");
+		setData(index,collectionItem);
 	}
-	public void setData(int index){
+	public void setData(int index,CollectionItemDo collectionItem){
 		int indexVal=index+1;
 		if(indexVal==1){
 			lblTopArrow.setVisible(false);
 		}
+		
+		lblItemSequence.setText(indexVal+"");
+		lblResourceTitle.getElement().setInnerHTML(collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"");
+		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+		
+		String resourceType = collectionItem.getResource().getResourceType().getName();
+		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
+		checkYoutubeResourceOrNot(collectionItem,youtube);
+		
 		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
-		//txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
+		txtMoveTextBox.getElement().setAttribute("moveId",collectionItem.getCollectionItemId()+"");
 		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
 		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
 		//This blur handler reset the previous value when the text box value is empty.
@@ -148,6 +182,115 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 	}
 	public Label getDownArrow(){
 		return lblDownArrow;
+	}
+	/**
+	 * This method is used to check whether the resource is youtube resource or not and if it is will display the duration of that resource
+	 * @param collectionItemDo
+	 * @param youtube
+	 */
+	public void checkYoutubeResourceOrNot(CollectionItemDo collectionItemDo,boolean youtube){
+		if (youtube){
+			enableOrDisableYoutubeFields(true);
+			videoTimeField.setText(VIDEO_TIME);
+			videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
+			videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
+			String stopTime = (collectionItemDo.getStop() == null) ? "00:00:00": collectionItemDo.getStop();
+			String startTime = (collectionItemDo.getStart() == null) ? "00:00:00": collectionItemDo.getStart();
+			startTime = startTime.replaceAll("\\.", ":");
+			stopTime = stopTime.replaceAll("\\.", ":");
+			String youTubeVideoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl());
+			//This will set the end time of the video
+			AppClientFactory.getInjector().getResourceService().getYoutubeDuration(youTubeVideoId,new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String youtubeInfo) {
+					if (youtubeInfo != null) {
+						totalVideoLength = Integer.parseInt(youtubeInfo);
+						startStopTimeDisplayText.setText(i18n.GL0957()+checkForTwoDigits(totalVideoLength/60)+":"
+						+checkForTwoDigits(totalVideoLength%60));
+					}
+				}
+			});
+			//This if block will set the youtube resource time if already exists.
+			if (!"00:00:00".equalsIgnoreCase(stopTime) ||!"00:00:00".equalsIgnoreCase(startTime)) {
+					String[] VideoStartTime=startTime.split(":");
+					String[] VideoEndTime=stopTime.split(":");
+					String startMm=Integer.parseInt(VideoStartTime[0])*60+Integer.parseInt(VideoStartTime[1])+"";
+					String startSec =null;
+					String endSec = null;
+					if (VideoStartTime.length>2){
+						startSec=Integer.parseInt(VideoStartTime[2])+"";
+					}else{
+						startSec="00";
+					}
+					String endMm=Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1])+"";
+					if (VideoEndTime.length>2){
+						endSec=Integer.parseInt(VideoEndTime[2])+"";
+					}else{
+						endSec="00";
+					}
+					String displayTime=checkLengthOfSting(startMm)+":"+checkLengthOfSting(startSec)
+							+" "+i18n.GL_GRR_Hyphen()+" "+checkLengthOfSting(endMm)+":"+checkLengthOfSting(endSec);
+					fromLblDisplayText.setText(displayTime);
+					StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
+			}else{
+			   String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl());
+				if (videoId != null) {
+					AppClientFactory.getInjector().getResourceService().getYoutubeDuration(videoId, new SimpleAsyncCallback<String>() {
+						@Override
+						public void onSuccess(String youtubeInfo) {
+							if(youtubeInfo != null) {
+								totalVideoLength = Integer.parseInt(youtubeInfo);
+								String displayTime=START_MINUTE	+ ":"+ START_SEC+i18n.GL_GRR_Hyphen()
+										+checkForTwoDigits(totalVideoLength/60)+ ":"+ checkForTwoDigits(totalVideoLength%60);
+								fromLblDisplayText.setText(displayTime);
+								StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
+							}else{
+								String displayTime=START_MINUTE+":"+ START_SEC
+												+" "+i18n.GL_GRR_Hyphen()+" "
+												+ START_MINUTE+":"+ END_MINUTE+":"+END_SEC;
+								fromLblDisplayText.setText(displayTime);
+								StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
+							}
+						}
+					});
+				}
+			}
+		}else{
+			enableOrDisableYoutubeFields(false);
+		}
+	}
+	/**
+	 * This method is used to check the given value is two digit number or not, if not it will add the 0.
+	 * @param value
+	 * @return
+	 */
+	public String checkForTwoDigits(int value){
+		String valueString;
+		if (value < 10) {
+			valueString = "0"+ value;
+		} else {
+			valueString = value+ "";
+		}
+		return valueString;
+	}
+	/**
+	 * This method is used to check length of a string and it will append the 0
+	 * @param value
+	 * @return
+	 */
+	public String checkLengthOfSting(String value){
+		if(value.length()<2){
+			value="0"+value;
+		}
+		return value;
+	}
+	/**
+	 * This method is used to enable or disable the youtube related fields based on the boolean value.
+	 * @param isTrue
+	 */
+	public void enableOrDisableYoutubeFields(boolean isTrue){
+		pnlYoutubeContainer.setVisible(isTrue);
+		pnlTimeIcon.setVisible(isTrue);
 	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 }
