@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -196,7 +197,12 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		if(id!=null){
+			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
+		}else{
+			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		}
 	}
 	
 	@UiHandler("nextUnitBtn")

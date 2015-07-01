@@ -44,6 +44,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	ShelfMainPresenter shelfMainPresenter;
 	
+	FolderDo folderObj;
+	
 	CollectionContentPresenter collectionContentPresenter;
 	
 	final String COLLECTION="Collection";
@@ -58,11 +60,16 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
+		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
+		if(folderObj!=null){
+			this.folderObj=folderObj;
+		}
+	    AppClientFactory.printInfoLogger("setTabItems");
 		clearSlot(INNER_SLOT);
 		getView().setSlotPanel(folderObj);
 		getView().setDefaultActiveTab(index);

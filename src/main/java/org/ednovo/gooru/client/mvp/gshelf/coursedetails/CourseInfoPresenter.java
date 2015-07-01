@@ -139,4 +139,15 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	public void setData(FolderDo folderObj) {
 		getView().setCouseData(folderObj);
 	}
+
+	@Override
+	public void updateCourseDetails(String text, String id) {
+		AppClientFactory.getInjector().getfolderService().updateCourse(id, text, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				//myCollectionsRightClusterPresenter.setTabItems(2, COURSE, null);
+			}
+		});
+	}
 }
