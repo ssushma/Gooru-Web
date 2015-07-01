@@ -592,7 +592,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		}
 		
 		}else {
-			CollectionQuestionItemDo questionMetadataDo=questionTypePresenter.getView().getMetadata();
+			CollectionQuestionItemDo questionMetadataDo=null;
+			if(!getView().checkQuestionSlot()){
+			 questionMetadataDo=questionTypePresenter.getView().getMetadata();
+			}
 			clearSlot(SLOT_QUESTION_TYPE);
 			getView().clearQuestionSlot();
 			getView().questionMetadata(questionMetadataDo);
