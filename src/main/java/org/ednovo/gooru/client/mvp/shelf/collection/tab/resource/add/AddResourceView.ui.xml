@@ -79,11 +79,20 @@
 						</uc:HTMLEventPanel>
 
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
-							ui:field="hotSpotTabButton">
-							<g:RadioButton name="questionTypeGrouop" ui:field="hotSpotRadioButton"
+							ui:field="hotSpotImageTabButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="hotSpotImgRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
-							<g:Anchor  ui:field="hotSpot" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
+							<g:Anchor  ui:field="hotSpotImg" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
+						
+						
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="hotSpotWordTabButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="hotSpotWordRadioButton"
+								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
+							<g:Anchor  ui:field="hotSpotWord" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
+						</uc:HTMLEventPanel>
+						
 
 
 
