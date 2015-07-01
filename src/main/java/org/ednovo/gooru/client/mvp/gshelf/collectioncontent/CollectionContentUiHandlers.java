@@ -25,11 +25,22 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
  *
  */
 public interface CollectionContentUiHandlers extends BaseUiHandlers {
-
+	/**
+	 * This method is used to set the folderdo object
+	 * @param folderDo
+	 */
+	public void setData(FolderDo folderDo);
+	/**
+	 * This method is used to reorder positions of the widgets
+	 * @param idToMove
+	 * @param itemSeqToAPI
+	 */
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) ;
 }

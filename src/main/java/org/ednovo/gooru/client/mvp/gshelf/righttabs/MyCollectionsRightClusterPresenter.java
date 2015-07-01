@@ -37,11 +37,18 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
 	
 	public static final  Object INNER_SLOT = new Object();
+	
 	CourseInfoPresenter courseInfoPresenter;
+	
 	LessonInfoPresenter lessonInfoPresenter;
+	
 	ShelfMainPresenter shelfMainPresenter;
 	
+	FolderDo folderObj;
+	
 	CollectionContentPresenter collectionContentPresenter;
+	
+	final String COLLECTION="Collection";
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -53,11 +60,16 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
+		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
+		if(folderObj!=null){
+			this.folderObj=folderObj;
+		}
+	    AppClientFactory.printInfoLogger("setTabItems");
 		clearSlot(INNER_SLOT);
 		getView().setSlotPanel(folderObj);
 		getView().setDefaultActiveTab(index);
@@ -65,11 +77,16 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			courseInfoPresenter.callTaxonomyService();
 			courseInfoPresenter.setData(folderObj);
 			setInSlot(INNER_SLOT, courseInfoPresenter);
-			//setInSlot(INNER_SLOT, collectionContentPresenter);
 		}else if(index==2){
-			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
-			setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			//The true condition is added for testing purpose
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+				collectionContentPresenter.setData(folderObj);
+				setInSlot(INNER_SLOT, collectionContentPresenter);
+			}else{
+				MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
+				myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
+				setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			}
 		}else if(index==3){
 			
 		}

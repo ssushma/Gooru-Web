@@ -39,10 +39,15 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
     
 	/**
-	 * To Create and Save the details of Course
+	 * To Create Course
 	 * @param courseTitle {@link String} 
 	 */
 	public void createAndSaveCourseDetails(String courseTitle);
+	/**
+	 * To update the course details
+	 * @param courseTitle {@link String} 
+	 */
+	public void updateCourseDetails(String text, String id);
 
 	void showUnitInfo();
 
