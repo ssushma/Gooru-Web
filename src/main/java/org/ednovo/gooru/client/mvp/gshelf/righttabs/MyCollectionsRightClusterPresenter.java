@@ -80,6 +80,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().resetHilightStyles();
 		//getView().setDefaultActiveTab();
 	}
+
 	@Override
 	public void setUnitTemplate(){
 		shelfMainPresenter.createNewUnitItem();
@@ -91,6 +92,12 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		setInSlot(INNER_SLOT, lessonInfoPresenter);
 		//getView().setDefaultActiveTab();
 	}
+
+	/**
+	 * To set the shelfMainPresenter obj
+	 * @param shelfMainPresenter
+	 */
+
 	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
 		this.shelfMainPresenter=shelfMainPresenter;
 	}

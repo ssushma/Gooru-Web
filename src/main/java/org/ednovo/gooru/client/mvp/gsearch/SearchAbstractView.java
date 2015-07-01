@@ -192,7 +192,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	boolean pageFlag=false;
 	boolean firstTime = false,isApiInProgress=true,isApiInProgressLoad=true,isApiInProgressBack=true,isApiInProgressBackLoad=true;
 
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues,selectedContributorType;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues,selectedContributorType="";
 
 	private HandlerRegistration handlerRegistration=null;
 

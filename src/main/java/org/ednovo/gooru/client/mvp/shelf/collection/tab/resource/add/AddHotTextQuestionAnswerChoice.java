@@ -57,12 +57,12 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField Label labelChoice,errorMessageforAnswerChoice,answerHeadLbl,answerHeadingTypeLbl,inLbl,correctAnswerHeadingTypeLbl;
+	@UiField Label labelChoice,errorMessageforAnswerChoice,answerHeadLbl,answerHeadingTypeLbl;
 	@UiField TinyMCE answerTextBox;
 	@UiField HTMLPanel deleteButtonContainer,tinyOrTextBoxConatiner;
 	@UiField AddResourceBundle addWebResourceStyle;
-	@UiField FlowPanel answerHeadContainer,correctAnswerTypeContainer;
-	@UiField RadioButton reorderRDButton,highlightRDButton,wordRDButton,sentenceRDButton,singleRDButton,multiRDButton;
+	@UiField FlowPanel answerHeadContainer;
+	@UiField RadioButton wordRDButton,sentenceRDButton;
 	@UiField TinyMCE highlightTextArea;
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
@@ -78,18 +78,6 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		answerHeadingTypeLbl.setText(i18n.GL3215_1());
 		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215_1());
 		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215_1());
-		reorderRDButton.getElement().setId("rdReorder");
-		reorderRDButton.setText(i18n.GL3216_1());
-		reorderRDButton.getElement().setAttribute("alt", i18n.GL3216_1());
-		reorderRDButton.getElement().setAttribute("title", i18n.GL3216_1());
-		highlightRDButton.getElement().setId("rdHighlight");
-		highlightRDButton.setText(i18n.GL3217_1());
-		highlightRDButton.getElement().setAttribute("alt", i18n.GL3217_1());
-		highlightRDButton.getElement().setAttribute("title", i18n.GL3217_1());
-		inLbl.getElement().setId("inLbl");
-		inLbl.setText(i18n.GL3225_1());
-		inLbl.getElement().setAttribute("alt", i18n.GL3225_1());
-		inLbl.getElement().setAttribute("title", i18n.GL3225_1());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219_1());
 		wordRDButton.getElement().setAttribute("alt", i18n.GL3219_1());
@@ -100,20 +88,7 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		sentenceRDButton.getElement().setAttribute("title", i18n.GL3220_1());
 		highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
-		correctAnswerHeadingTypeLbl.getElement().setId("lblCorrectAnswer");
-		correctAnswerHeadingTypeLbl.setText(i18n.GL3221_1());
-		correctAnswerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3221_1());
-		correctAnswerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3221_1());
-		singleRDButton.getElement().setId("rdSingle");
-		singleRDButton.setText(i18n.GL3222_1());
-		singleRDButton.getElement().setAttribute("alt", i18n.GL3222_1());
-		singleRDButton.getElement().setAttribute("title", i18n.GL3222_1());
-		multiRDButton.getElement().setId("rdMultiple");
-		multiRDButton.setText(i18n.GL3223_1());
-		multiRDButton.getElement().setAttribute("alt", i18n.GL3223_1());
-		multiRDButton.getElement().setAttribute("title", i18n.GL3223_1());
 		answerHeadContainer.getElement().setId("pnlAnswerHeadConatiner");
-		correctAnswerTypeContainer.getElement().setId("pnlCorrectAnswerHeadConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -132,18 +107,6 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		answerHeadingTypeLbl.setText(i18n.GL3215_1());
 		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215_1());
 		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215_1());
-		reorderRDButton.getElement().setId("rdReorder");
-		reorderRDButton.setText(i18n.GL3216_1());
-		reorderRDButton.getElement().setAttribute("alt", i18n.GL3216_1());
-		reorderRDButton.getElement().setAttribute("title", i18n.GL3216_1());
-		highlightRDButton.getElement().setId("rdHighlight");
-		highlightRDButton.setText(i18n.GL3217_1());
-		highlightRDButton.getElement().setAttribute("alt", i18n.GL3217_1());
-		highlightRDButton.getElement().setAttribute("title", i18n.GL3217_1());
-		inLbl.getElement().setId("inLbl");
-		inLbl.setText(i18n.GL3225_1());
-		inLbl.getElement().setAttribute("alt", i18n.GL3225_1());
-		inLbl.getElement().setAttribute("title", i18n.GL3225_1());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219_1());
 		wordRDButton.getElement().setAttribute("alt", i18n.GL3219_1());
@@ -153,19 +116,6 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		sentenceRDButton.getElement().setAttribute("alt", i18n.GL3220_1());
 		sentenceRDButton.getElement().setAttribute("title", i18n.GL3220_1());
 		highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
-		correctAnswerTypeContainer.getElement().setId("pnlCorrectAnswerHeadConatiner");
-		correctAnswerHeadingTypeLbl.getElement().setId("lblCorrectAnswer");
-		correctAnswerHeadingTypeLbl.setText(i18n.GL3221_1());
-		correctAnswerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3221_1());
-		correctAnswerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3221_1());
-		singleRDButton.getElement().setId("rdSingle");
-		singleRDButton.setText(i18n.GL3222_1());
-		singleRDButton.getElement().setAttribute("alt", i18n.GL3222_1());
-		singleRDButton.getElement().setAttribute("title", i18n.GL3222_1());
-		multiRDButton.getElement().setId("rdMultiple");
-		multiRDButton.setText(i18n.GL3223_1());
-		multiRDButton.getElement().setAttribute("alt", i18n.GL3223_1());
-		multiRDButton.getElement().setAttribute("title", i18n.GL3223_1());
 		labelChoice.setText(labelName);
 		labelChoice.getElement().setAttribute("alt", labelName);
 		labelChoice.getElement().setAttribute("title", labelName);
@@ -190,18 +140,6 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		answerHeadingTypeLbl.setText(i18n.GL3215_1());
 		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215_1());
 		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215_1());
-		reorderRDButton.getElement().setId("rdReorder");
-		reorderRDButton.setText(i18n.GL3216_1());
-		reorderRDButton.getElement().setAttribute("alt", i18n.GL3216_1());
-		reorderRDButton.getElement().setAttribute("title", i18n.GL3216_1());
-		highlightRDButton.getElement().setId("rdHighlight");
-		highlightRDButton.setText(i18n.GL3217_1());
-		highlightRDButton.getElement().setAttribute("alt", i18n.GL3217_1());
-		highlightRDButton.getElement().setAttribute("title", i18n.GL3217_1());
-		inLbl.getElement().setId("inLbl");
-		inLbl.setText(i18n.GL3225_1());
-		inLbl.getElement().setAttribute("alt", i18n.GL3225_1());
-		inLbl.getElement().setAttribute("title", i18n.GL3225_1());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219_1());
 		wordRDButton.getElement().setAttribute("alt", i18n.GL3219_1());
@@ -211,19 +149,6 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		sentenceRDButton.getElement().setAttribute("alt", i18n.GL3220_1());
 		sentenceRDButton.getElement().setAttribute("title", i18n.GL3220_1());
 		highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
-		correctAnswerTypeContainer.getElement().setId("pnlCorrectAnswerHeadConatiner");
-		correctAnswerHeadingTypeLbl.getElement().setId("lblCorrectAnswer");
-		correctAnswerHeadingTypeLbl.setText(i18n.GL3221_1());
-		correctAnswerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3221_1());
-		correctAnswerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3221_1());
-		singleRDButton.getElement().setId("rdSingle");
-		singleRDButton.setText(i18n.GL3222_1());
-		singleRDButton.getElement().setAttribute("alt", i18n.GL3222_1());
-		singleRDButton.getElement().setAttribute("title", i18n.GL3222_1());
-		multiRDButton.getElement().setId("rdMultiple");
-		multiRDButton.setText(i18n.GL3223_1());
-		multiRDButton.getElement().setAttribute("alt", i18n.GL3223_1());
-		multiRDButton.getElement().setAttribute("title", i18n.GL3223_1());
 		labelChoice.setText(labelName);
 		labelChoice.getElement().setAttribute("alt", labelName);
 		labelChoice.getElement().setAttribute("title", labelName);
@@ -280,9 +205,6 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		highlightTextArea.setVisible(false);
 		wordRDButton.setVisible(false);
 		sentenceRDButton.setVisible(false);
-		//inLbl.setVisible(false);
-		inLbl.addStyleName("htQInLbl");
-		correctAnswerTypeContainer.setVisible(false);
 	}
 
 	@Override
@@ -309,29 +231,22 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		this.highlightTextArea = highlightTextArea;
 	}
 	public void reorderRDButtonClick(){
-		inLbl.setText(i18n.GL3225_1());
-		inLbl.addStyleName("htQInLbl");
-		//inLbl.setVisible(false);
+		answerHeadingTypeLbl.setText(i18n.GL3225_1());
 		wordRDButton.setVisible(false);
 		sentenceRDButton.setVisible(false);
 		highlightTextArea.setVisible(false);
 		labelChoice.setVisible(true);
 		tinyOrTextBoxConatiner.setVisible(true);
-		correctAnswerTypeContainer.setVisible(false);
 	}
 	public void highlightRDButtonClick(){
-		inLbl.setText(i18n.GL3218_1());
-		inLbl.removeStyleName("htQInLbl");
-		//inLbl.setVisible(true);
+		answerHeadingTypeLbl.setText(i18n.GL3218_1());
 		wordRDButton.setVisible(true);
 		sentenceRDButton.setVisible(true);
 		highlightTextArea.setVisible(true);
 		labelChoice.setVisible(false);
 		tinyOrTextBoxConatiner.setVisible(false);
-		correctAnswerTypeContainer.setVisible(true);
 
 		wordRDButtonClick();
-		multiRDButtonClick();
 	}
 
 	public void wordRDButtonClick(){
@@ -341,14 +256,6 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 	public void sentenceRDButtonClick(){
 		wordRDButton.setValue(false);
 		sentenceRDButton.setValue(true);
-	}
-	public void singleRDButtonClick(){
-		singleRDButton.setValue(true);
-		multiRDButton.setValue(false);
-	}
-	public void multiRDButtonClick(){
-		singleRDButton.setValue(false);
-		multiRDButton.setValue(true);
 	}
 
 }
