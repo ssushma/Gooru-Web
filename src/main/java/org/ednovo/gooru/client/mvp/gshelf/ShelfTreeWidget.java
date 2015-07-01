@@ -478,7 +478,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void openFolderItem() {
-		if(collectionDo.getType().equals(FOLDER) || collectionDo.getType().equals(COURSE)) {
+		if(collectionDo!=null &&(collectionDo.getType().equals(FOLDER) || collectionDo.getType().equals(COURSE))) {
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.MYCONTENT) && !isEditButtonSelected) {
      			openFolderInShelf();
 			}

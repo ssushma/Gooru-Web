@@ -325,9 +325,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 		JsonRepresentation jsonRep = null;
 		CollectionSummaryMetaDataDo collectionSummaryMetaDataDo=null;
-		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+GRADEINPERCENTAGE+","+GOORUOID;
-
-		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
+		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",FIELDS_ASSIGNMENT_AVERAGE_DATA);
 		String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, urlDataParameterValue);
 		logger.info("getAssignmentAverageData url==>"+url);

@@ -41,11 +41,11 @@
 						<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
 						<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
 					</div>
-					<div class="col-md-3 col-sm-8 col-xs-8 ratings resourceViewsContainer">
+					<g:HTMLPanel styleName="col-md-3 col-sm-8 col-xs-8 ratings resourceViewsContainer" ui:field="panelRatings">
 						<div class="resultRating">
 							<g:FlowPanel ui:field="ratingWidgetPanel"/>
 						</div>
-					</div>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
 					<div class="col-md-9 col-xs-9 col-sm-9 collectionResources">

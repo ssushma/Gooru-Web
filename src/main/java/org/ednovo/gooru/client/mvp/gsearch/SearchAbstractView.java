@@ -192,11 +192,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	boolean pageFlag=false;
 	boolean firstTime = false,isApiInProgress=true,isApiInProgressLoad=true,isApiInProgressBack=true,isApiInProgressBackLoad=true;
 
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues,selectedContributorType;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues,selectedContributorType="";
 
 	private HandlerRegistration handlerRegistration=null;
 
 	private Storage localStore = null;
+
+	InlineLabel cart = null;
 
 	int pageCountForStorage=1,previousScroll;
 
@@ -254,7 +256,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		btnSearchType.getElement().setAttribute("aria-expanded", "false");
 		btnSearchType.getElement().setAttribute("id", "btnSearchType");
 
-		InlineLabel cart = new InlineLabel();
+		cart = new InlineLabel();
 		cart.setStyleName("caret");
 
 		collectionPanel.getElement().setInnerText(i18n.GL0645());
@@ -663,6 +665,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@Override
 	public void postSearch(SearchDo<T> searchDo,boolean isApiCalled) {
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+			btnSearchType.setText(i18n.GL0645());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}else{
+			btnSearchType.setText(i18n.GL1110());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
