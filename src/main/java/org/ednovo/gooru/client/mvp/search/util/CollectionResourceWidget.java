@@ -20,6 +20,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventH
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEventHandler;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -59,7 +60,7 @@ public class CollectionResourceWidget extends Composite {
 
 	@UiField Label lblResourcePublisher,resourceTitle,lblViewCount,lbladdCount;
 	@UiField InlineLabel lblUserCount;
-	@UiField HTMLPanel resourceDescription,imageOverlay;
+	@UiField HTMLPanel resourceDescription,imageOverlay, panelRatings;
 	@UiField Image resourseImage,relatedCollectionImage,creatorImage;
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	@UiField InlineLabel relatedCollectionTitle;
@@ -234,6 +235,10 @@ public class CollectionResourceWidget extends Composite {
 		StringUtil.setAttributes(imageOverlay.getElement(), "imageOverlay", "", "");
 		StringUtil.setAttributes(btnAddResource.getElement(), "btnAddResource", "", "");
 		StringUtil.setAttributes(resourseImage.getElement(), "imgResoruce", "", "");
+
+		if (!BrowserAgent.isDevice()){
+			panelRatings.getElement().getStyle().setWidth(27, Unit.PCT);
+		}
 
 		AppClientFactory.getEventBus().addHandler(
 				UpdateResourceRatingCountEvent.TYPE, setRatingCount);

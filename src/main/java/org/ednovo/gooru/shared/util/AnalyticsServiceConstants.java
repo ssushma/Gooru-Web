@@ -88,7 +88,8 @@ public interface AnalyticsServiceConstants {
 	String TIME_STAMP_LOWER_CASE = "timestamp";
 	String TIME_STAMP_LOWER_CASE_VALUE = "1410757700537";
 	
-	String FIELDS_METADATA_BY_USR_AND_SESSION ="thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage,resourceCount,hasFrameBreaker,itemCount";
+	String FIELDS_ASSIGNMENT_AVERAGE_DATA = "resourceCount,itemCount,nonResourceCount,avgTimeSpent,avgReaction,views,thumbnail,userCount,lastAccessed,completionStatus,timeSpent,title,description,options,skip,score,totalQuestionCount,gradeInPercentage,gooruOId";
+	String FIELDS_METADATA_BY_USR_AND_SESSION ="resourceCount,itemCount,nonResourceCount,thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage,resourceCount,hasFrameBreaker,itemCount";
 	String FIELDS_COLL_PROG_DATA = "timeSpent,avgTimeSpent,resourceGooruOId,questionType,type,category,resourceFormat,gooruUId,userName,userData,metaData,reaction,title,description,options,skip,hasFrameBreaker,status,itemSequence,views,attempts,totalAttemptUserCount";
 	String FIELDS_COLL_SUMMARY_USERS_DATA = "userGroupUId,userName,gooruUId";
 	String FIELDS_ANALYTICS_GRADE_DATA = "timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,title";
