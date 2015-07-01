@@ -5,6 +5,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -21,6 +22,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -41,6 +43,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText;
 	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon;
 	@UiField TextBox txtMoveTextBox;
+	@UiField UlPanel ulGradePanel;
+	@UiField Anchor updateResourceBtn,editInfoLbl,editVideoTimeLbl,editStartPageLbl,copyResource,confirmDeleteLbl,addTages;
 	
 	private static final String VIDEO_TIME =i18n.GL0974();
 	private static final String START_MINUTE="00";
@@ -50,11 +54,15 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 	boolean youtube;
 	private int totalVideoLength;
 	
+	CollectionItemDo collectionItem;
+	
 	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
+		this.collectionItem=collectionItem;
 		initWidget(uiBinder.createAndBindUi(this));
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
 		startStopTimeDisplayText.setVisible(false);
+		ulGradePanel.setStyleName("dropdown-menu");
 		
 		videoTimeField.setText(VIDEO_TIME);
 		videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
@@ -77,6 +85,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 		String resourceType = collectionItem.getResource().getResourceType().getName();
 		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
 		checkYoutubeResourceOrNot(collectionItem,youtube);
+		enableEditInfoButton();
 		
 		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
@@ -94,6 +103,43 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 				}
 			}
 		});
+	}
+	/**
+	 * This method is used to enable or disabling the editinfo button
+	 * @param collectionItem
+	 */
+	private void enableEditInfoButton() {
+		// To check whether resource is public and is created by logged in user
+		String resourceShare = collectionItem.getResource().getSharing();
+		String resourceCategory = collectionItem.getResource().getResourceFormat() !=null ? collectionItem.getResource().getResourceFormat().getDisplayName() : "text";
+		if (resourceShare.equalsIgnoreCase("public") && !resourceCategory.equalsIgnoreCase("question")) {
+			editInfoLbl.setVisible(false);
+		} else if (resourceShare.equalsIgnoreCase("public")	&& resourceCategory.equalsIgnoreCase("question") && checkLoggedInUser()) {
+			editInfoLbl.setVisible(true);
+		} else if (resourceShare.equalsIgnoreCase("private") && !resourceCategory.equalsIgnoreCase("question") && checkLoggedInUser()) {
+			editInfoLbl.setVisible(true);
+		} else if (!checkLoggedInUser()) {
+			editInfoLbl.setVisible(false);
+		}		
+	}
+	/**
+	 * This method is used to check whether the user is logged in user or not.
+	 * @return
+	 */
+	public boolean checkLoggedInUser() {
+		boolean isValid = true;
+		String gooruUId = "";
+		if(collectionItem.getResource().getUser()==null){
+			 gooruUId=collectionItem.getGooruUId();
+		}else{
+			 gooruUId=collectionItem.getResource().getUser().getGooruUId();
+		}
+		if (AppClientFactory.getLoggedInUser().getGooruUId().equalsIgnoreCase(gooruUId)) {
+			isValid = true;
+		} else {
+			isValid = false;
+		}
+		return isValid;
 	}
 	/**
 	 * This inner class used for disabling up and down arrow based on user entered reorder value.
@@ -291,6 +337,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 	public void enableOrDisableYoutubeFields(boolean isTrue){
 		pnlYoutubeContainer.setVisible(isTrue);
 		pnlTimeIcon.setVisible(isTrue);
+		editVideoTimeLbl.setVisible(isTrue);
+		editStartPageLbl.setVisible(false);	
 	}
 	public Label getItemSequenceLabel(){
 		return lblItemSequence;
