@@ -25,11 +25,22 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
  *
  */
 public interface IsCollectionContentView extends IsViewWithHandlers<CollectionContentUiHandlers> {
-	
+	/**
+	 * This method is used to set the data in side the content panel
+	 * @param result
+	 * @param folderDo
+	 */
+	public void setData(CollectionDo result,FolderDo folderDo);
+	/**
+	 * This method is used to reset the widgets positions
+	 */
+	public void resetWidgetPositions();
 }

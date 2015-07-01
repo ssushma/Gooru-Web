@@ -124,7 +124,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 */
 	public void setBreadCums(String title){
 		setRequestParams();
-		if(o1==null || oldO1Value.equals(o1)){
+		if(o1==null || !oldO1Value.equals(o1)){
 			breadCumsSting.clear();
 			pnlBreadCrumbMain.clear();
 		}

@@ -1550,6 +1550,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	@Override
 	public void questionMetadata(final CollectionQuestionItemDo collectionQuestionItemDo) {
+		
+		if(collectionQuestionItemDo!=null){
+		
 		Timer timer1=new Timer() {
 			@Override
 			public void run() {
@@ -1646,6 +1649,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		if(addQuestionResourceWidget.addHintsLabel.isVisible()){addQuestionResourceWidget.setHintsContainer();}
 		if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
 		if(addQuestionResourceWidget.addCenturyLabel.isVisible()){addQuestionResourceWidget.setCenturyContainer();}
+	}
 	}
 
 	@Override
