@@ -22,25 +22,48 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
 
 
 /**
- * @fileName : EditClassViewUiHandlers.java
+ * @fileName : EditClassContentPresenter.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 26-Jun-2015
+ * @date: 02-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public interface EditClassViewUiHandlers extends BaseUiHandlers {
+public class EditClassContentPresenter extends PresenterWidget<IsEditClassContentView> implements EditClassContentViewUiHandler {
+	
+	@Inject
+	public EditClassContentPresenter(EventBus eventBus,IsEditClassContentView view){
+		super(eventBus, view);
+	}
+	
+	@Override
+	public void onBind() {
+		super.onBind();
+		
+	}
+
+	@Override
+	public void onReveal() {
+		super.onReveal();
+	}
+
+	@Override
+	protected void onHide() {
+		super.onHide();
+	}
 
 }

@@ -24,23 +24,47 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
 
 
 /**
- * @fileName : EditClassViewUiHandlers.java
+ * @fileName : EditClassSettingsPresenter.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 26-Jun-2015
+ * @date: 01-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public interface EditClassViewUiHandlers extends BaseUiHandlers {
+public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSettingsView> implements EditClassSettingsViewUiHandler{
+
+	@Inject
+	public EditClassSettingsPresenter(EventBus eventBus,IsEditClassSettingsView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
+	
+	@Override
+	public void onBind() {
+		super.onBind();
+		
+	}
+
+	@Override
+	public void onReveal() {
+		super.onReveal();
+	}
+
+	@Override
+	protected void onHide() {
+		super.onHide();
+	}
 
 }
