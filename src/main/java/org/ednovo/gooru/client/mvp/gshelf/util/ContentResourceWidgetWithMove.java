@@ -3,13 +3,17 @@ package org.ednovo.gooru.client.mvp.gshelf.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
@@ -86,6 +90,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	CollectionContentPresenter collectionContentPresenter;
 	
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
+	AddTagesPopupView popup;
 	
 	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
 		this.collectionItem=collectionItem;
@@ -527,6 +532,51 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				ContentResourceWidgetWithMove.this.removeFromParent();
 			}
 		};
+	}
+	/**
+	 * This will handle the click event on the add tags for resoruce
+	 * @param clickEvent
+	 */
+	@UiHandler("addTages")
+	public void onAddTagesClick(ClickEvent clickEvent) {
+		if(AppClientFactory.isAnonymous()) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			Window.enableScrolling(false);
+			popup=new AddTagesPopupView(collectionItem.getResource().getGooruOid()){
+				@Override
+				public void closePoup(boolean isCancelclicked) {
+			        this.hide();
+			        if(!isCancelclicked){
+			        SuccessPopupViewVc success = new SuccessPopupViewVc() {
+						@Override
+						public void onClickPositiveButton(ClickEvent event) {
+							this.hide();
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								Window.enableScrolling(false);
+							}else{
+								Window.enableScrolling(true);
+							}
+						}
+					};
+					success.setPopupTitle(i18n.GL1795());
+					success.setDescText(i18n.GL1796());
+					success.enableTaggingImage();
+					success.setPositiveButtonText(i18n.GL0190());
+					success.center();
+					success.show();
+			        }else{
+			        	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			    			Window.enableScrolling(false);
+			    		}else{
+			    			Window.enableScrolling(true);
+			    		}
+			        }
+				}
+			};
+			popup.show();
+			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
 	}
 	/**
 	 * This method is used to trim the text of rich text box.
