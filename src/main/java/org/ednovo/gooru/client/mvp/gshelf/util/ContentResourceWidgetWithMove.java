@@ -445,7 +445,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	}
 	/**
 	 * Update the collection item meta data
-	 * 
 	 */
 	public void editAndUpdateResource() {
 		if (collectionItem.getNarration() != null) {
@@ -532,7 +531,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	/**
 	 * This method is used to trim the text of rich text box.
 	 * @function trim 
-	 * @created_date : 20-Jan-2014
 	 * 
 	 * @description :
 	 * 
