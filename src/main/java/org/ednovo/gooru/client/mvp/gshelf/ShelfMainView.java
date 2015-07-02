@@ -109,8 +109,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private static final String COURSE = "Course";
 	
 	private static final String UNTITLEDCOURSE = i18n.GL3347();
-	private static final String UNTITLEDUNIT = i18n.GL3362();
-	private static final String UNTITLEDLESSON = i18n.GL3363();
+	private static final String UNTITLEDUNIT = i18n.GL3364();
+	private static final String UNTITLEDLESSON = i18n.GL3365();
 	
 	private String VIEW ="view";
 	
@@ -710,12 +710,15 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private void checkFolderItemStyle(TreeItem item, String gooruOid) {
 		ShelfTreeWidget updatedItem = (ShelfTreeWidget) item.getWidget();
+		if(gooruOid!=null)
+		{
 		 if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
 			 treeChildSelectedItem = item;
 			 //updatedItem.setActiveStyle(true);
 			 setFolderActiveStatus();
 			 return;
 		 }
+		}
 	}
 	
 	public FolderDo getFolderDo(){

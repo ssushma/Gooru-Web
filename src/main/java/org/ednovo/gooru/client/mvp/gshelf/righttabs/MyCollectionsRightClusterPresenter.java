@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPre
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -42,6 +43,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	LessonInfoPresenter lessonInfoPresenter;
 	
+	UnitInfoPresenter unitInfoPresenter;
+	
 	ShelfMainPresenter shelfMainPresenter;
 	
 	FolderDo folderObj;
@@ -49,16 +52,19 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	CollectionContentPresenter collectionContentPresenter;
 	
 	final String COLLECTION="Collection";
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
 	/**
 	 * Constructor
 	 * @param eventBus
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,UnitInfoPresenter unitInfoPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
+		this.unitInfoPresenter=unitInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
 		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -73,10 +79,41 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		clearSlot(INNER_SLOT);
 		getView().setSlotPanel(folderObj);
 		getView().setDefaultActiveTab(index);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		if(index==1){
-			courseInfoPresenter.callTaxonomyService();
-			courseInfoPresenter.setData(folderObj);
-			setInSlot(INNER_SLOT, courseInfoPresenter);
+			if(folderObj==null){
+				//For displaying template
+				if(folderObj==null  && o1==null){
+					courseInfoPresenter.callTaxonomyService();
+					FolderDo folderObjTemp = new FolderDo();
+					folderObjTemp.setTitle("Untitled Course");
+					courseInfoPresenter.setData(folderObjTemp);
+					setInSlot(INNER_SLOT, courseInfoPresenter);
+				}else if(folderObj==null && o1!=null  && o2==null){
+					unitInfoPresenter.callTaxonomyService();
+					FolderDo folderObjTemp = new FolderDo();
+					folderObjTemp.setTitle("Untitled Unit");
+					unitInfoPresenter.setData(folderObjTemp);
+					setInSlot(INNER_SLOT, unitInfoPresenter);
+				}else{
+				
+					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}
+			}else{
+				//For displaying original data
+				if(o1==null){
+					courseInfoPresenter.callTaxonomyService();
+					courseInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, courseInfoPresenter);
+				}else if(o1!=null  && o2==null){
+					unitInfoPresenter.callTaxonomyService();
+					unitInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, unitInfoPresenter);
+				}else{
+					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}
+			}
 		}else if(index==2){
 			//The true condition is added for testing purpose
 			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
@@ -106,7 +143,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setUnitInfo(){
 	/*	courseInfoPresenter.callTaxonomyService();
 		courseInfoPresenter.setData(folderObj);*/
-		setInSlot(INNER_SLOT, lessonInfoPresenter);
+		setInSlot(INNER_SLOT, unitInfoPresenter);
 		//getView().setDefaultActiveTab();
 	}
 
