@@ -128,7 +128,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String ERROR_MSG_ANSWER = i18n.GL0311();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
 	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312();
-	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 	private CollectionItemDo collectionItemDo=null;
@@ -171,7 +170,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String ERROR_MSG_HINTS_LENGTH = i18n.GL0877();
 	private static final String ERROR_MSG_HINTS = i18n.GL2201();
 
-	private String questionType="HS";
+	private String questionType;
 	private String hsType=i18n.GL3228_1();
 
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
@@ -181,7 +180,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public QuestionTypeView() {
 		initializeAutoSuggestedBox();
 		setWidget(uiBinder.createAndBindUi(this));
-		setHeaderAndBodyText("HS");
+		setHeaderAndBodyText("HS_IMG");
 		questionTypeHeader.getElement().setId("lblQuestionTypeHeader");
 		questionTypeText.getElement().setId("lblQuestionTypeText");
 		questionText.getElement().setId("pnlQuestionText");
@@ -202,7 +201,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
 		questionHotSpotAnswerChoiceContainer.getElement().setId("pnlQuestionHotSpotAnswerChoiceContainer");
 		setTextForTheFields();
-		setHotSpotAnswerFields();
 
 		advancedContainer.getElement().setId("pnladvancedContainer");
 		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
@@ -476,7 +474,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 	public void setHeaderAndBodyText(String tabType){
-		if(tabType.equals("HS")){
+		if(tabType.equals("HS_TXT") || tabType.equals("HS_IMG")){
 			questionTypeHeader.setText(i18n.GL3226_1());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3226_1());
 			questionTypeHeader.getElement().setAttribute("title", i18n.GL3226_1());
@@ -667,8 +665,13 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void setHotSpotAnswerFields(){
 		questionHotSpotAnswerChoiceContainer.clear();
 		final AddHotSpotQuestionAnswerChoice addQuestionAnswer=new AddHotSpotQuestionAnswerChoice(this);
-
+		if(questionType.equalsIgnoreCase("HS_IMG")){
+			addQuestionAnswer.imageRDButtonClick();
+		}else{
+			addQuestionAnswer.textRDButtonClick();
+		}
 		questionHotSpotAnswerChoiceContainer.add(addQuestionAnswer);
+		
 	}
 
 	public void setExplanationContainer(){
@@ -876,70 +879,74 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			boolean checked = checkBox.getValue();
 
 			depthOfKnowledges.clear();
-
-			if(chkLevelRecall.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelRecall.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelRecall.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-			if(chkLevelSkillConcept.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelSkillConcept.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelSkillConcept.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-			if(chkLevelStrategicThinking.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelStrategicThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelStrategicThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-			if(chkLevelExtendedThinking.isChecked())
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(true);
-				depthObj.setValue(chkLevelExtendedThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-			else
-			{
-				checkboxSelectedDo depthObj=new checkboxSelectedDo();
-				depthObj.setSelected(false);
-				depthObj.setValue(chkLevelExtendedThinking.getText());
-				depthOfKnowledges.add(depthObj);
-			}
-
-
+			setDOKCheckBoxes();
 		}
 	}
+	
+	
+	public void setDOKCheckBoxes(){
+		if(chkLevelRecall.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelRecall.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelRecall.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+
+		if(chkLevelSkillConcept.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelSkillConcept.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelSkillConcept.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+
+		if(chkLevelStrategicThinking.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelStrategicThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelStrategicThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+
+		if(chkLevelExtendedThinking.isChecked())
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(true);
+			depthObj.setValue(chkLevelExtendedThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+		else
+		{
+			checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			depthObj.setSelected(false);
+			depthObj.setValue(chkLevelExtendedThinking.getText());
+			depthOfKnowledges.add(depthObj);
+		}
+	}
+	
+	
 	@UiHandler("addDepthOfKnowledgeAnc")
 	public void clickOnaddDepthOfKnowledgeAnc(ClickEvent event){
 		addDepthOfKnowledgeAnc.setVisible(false);
@@ -1500,7 +1507,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void clickedOnAddQuestionButton(ClickEvent event)
 	{
 		boolean fieldValidationCheck;
-		if(questionType.equalsIgnoreCase("HS")){
+		if(questionType.equalsIgnoreCase("HS_TXT") ||questionType.equalsIgnoreCase("HS_IMG") ){
 			if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
 				fieldValidationCheck = false;
 				isAddBtnClicked=true;
@@ -1578,7 +1585,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 									}
 
 
-									else if(fieldValidationStaus && questionType.equalsIgnoreCase("HS")){
+									else if(fieldValidationStaus && (questionType.equalsIgnoreCase("HS_TXT") || questionType.equalsIgnoreCase("HS_IMG"))){
 										clearErrorQuestionMessage();
 
 										if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
@@ -1708,7 +1715,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addHotSpotQuestionAnswerChoice.ansImageContainer.getElement().removeClassName("errorBorderMessage");
 		addHotSpotQuestionAnswerChoice.textAnsContainer.getElement().removeClassName("errorBorderMessage");
 
-		if(addHotSpotQuestionAnswerChoice.imageRDButton.isChecked()){
+		if(questionType.equalsIgnoreCase("HS_IMG")){
 			int count=addHotSpotQuestionAnswerChoice.ansImageContainer.getWidgetCount();
 			if(count>1){
 				selectedAnswerImage=false;
@@ -1717,7 +1724,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
 				addHotSpotQuestionAnswerChoice.ansImageContainer.getElement().addClassName("errorBorderMessage");
 			}
-		}else if(addHotSpotQuestionAnswerChoice.textRDButton.isChecked()){
+		}else if(questionType.equalsIgnoreCase("HS_TXT")){
 			int widgetCount=addHotSpotQuestionAnswerChoice.textAnsContainer.getWidgetCount();
 			for(int i=0;i<widgetCount;i++){
 				AddAnswerChoice addAnswerChoice=(AddAnswerChoice) addHotSpotQuestionAnswerChoice.textAnsContainer.getWidget(i);
@@ -1772,11 +1779,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			
 			ArrayList<String> answerImageIds=new ArrayList<String>();
 			
-			if(questionType.equalsIgnoreCase("HS")){
+			if(questionType.equalsIgnoreCase("HS_TXT") || questionType.equalsIgnoreCase("HS_IMG")){
 
 				AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
 
-				if(addQuestionAnswerChoice.imageRDButton.isChecked()){
+				if(questionType.equalsIgnoreCase("HS_IMG")){
 					hsType=i18n.GL3228_1();
 
 					for(int i=0;i<addQuestionAnswerChoice.ansImageContainer.getWidgetCount();i++)
@@ -1822,8 +1829,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				enteredHints.add(questionHintsDo);
 			}
 			hintsMap.put("hint",enteredHints);
-
-			collectionQuestionItemDo.setTypeName(questionType);
+			String qType="HS_TXT";
+			if(hsType.equalsIgnoreCase(i18n.GL3228_1())){
+				qType="HS_IMG";
+			}
+			collectionQuestionItemDo.setTypeName(qType);
 			collectionQuestionItemDo.setQuestionText(questionText);
 			collectionQuestionItemDo.setAnswers(answerMap);
 			collectionQuestionItemDo.setExplanation(explaination);
@@ -1837,12 +1847,13 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 
-			if(questionType.equalsIgnoreCase("HS")){
+			if(questionType.equalsIgnoreCase("HS_IMG")){
 				collectionQuestionItemDo.setHlType(hsType);
 				collectionQuestionItemDo.setSingleCorrectAnswer(false);
-				if(hsType.equalsIgnoreCase(i18n.GL3228_1())){
-				collectionQuestionItemDo.setMedia_files(answerImageIds);
-				}
+				collectionQuestionItemDo.setMediaFiles(answerImageIds);
+			}else if(questionType.equalsIgnoreCase("HS_TXT")){
+				collectionQuestionItemDo.setHlType(hsType);
+				collectionQuestionItemDo.setSingleCorrectAnswer(false);
 			}
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
@@ -1886,8 +1897,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	}
 
-	public void resetFields() {
+	public void resetFields(String type) {
 		clearTinyMce();
+		questionType=type;
 		buttonContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		resetToHints();
 		setHotSpotAnswerFields();
@@ -1932,7 +1944,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		boolean isAnswerChoiceSelected=false;
 		AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
 
-		if(addQuestionAnswerChoice.imageRDButton.isChecked()){
+		if(questionType.equalsIgnoreCase("HS_IMG")){
 			for(int i=0;i<addQuestionAnswerChoice.ansImageContainer.getWidgetCount();i++)
 			{
 				final AddAnswerImg addAnswerImg=(AddAnswerImg)addQuestionAnswerChoice.ansImageContainer.getWidget(i);
@@ -1969,7 +1981,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 			@Override
 			public void onSuccess(List<ProfanityCheckDo> result) {
-				if(questionType.equalsIgnoreCase("HS") && hsType.equalsIgnoreCase(i18n.GL3228_1())){
+				if(questionType.equalsIgnoreCase("HS_IMG") && hsType.equalsIgnoreCase(i18n.GL3228_1())){
 					AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
 					for(int i=0;i<addQuestionAnswerChoice.textAnsContainer.getWidgetCount();i++)
 					{
@@ -2162,7 +2174,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					addHotSpotQuestion.ansImageContainer.clear();
 					while (it.hasNext()) {
 						QuestionAnswerDo answer = it.next();
-						addHotSpotQuestion.setAnswerImageUrl(answer.getAnswerText(), null, true,answer.isIsCorrect());
+						//hard code Image url for 1.5 QA
+						addHotSpotQuestion.setAnswerImageUrl(collectionItemDo.getAssetURI()+"uploaded-media/"+answer.getAnswerText(), null, true,answer.isIsCorrect());
 						
 					}
 				}
@@ -2241,7 +2254,10 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		
 		if(collectionQuestionItemDo.getDepthOfKnowledges()!=null){
 			int checkBoxCount=0;
+			resetDepthOfKnowledges();
+			depthOfKnowledges.clear();
 			for (checkboxSelectedDo item : collectionQuestionItemDo.getDepthOfKnowledges().get("depthOfKnowledge")) {
+				
 				   if(item.isSelected()){
 					   if(checkBoxCount==0)
 					   chkLevelRecall.setChecked(true);
@@ -2254,6 +2270,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				   }
 				   checkBoxCount++;
 				}
+			
+			setDOKCheckBoxes();
+			
 			}
 		
 		TreeSet<QuestionHintsDo> hintset = new TreeSet<QuestionHintsDo>(collectionQuestionItemDo.getHints().get("hint"));
@@ -2269,7 +2288,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		int count=hintsContainer.getWidgetCount();
 		addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 
-		
+		centuryPanel.clear();
+		standardsPanel.clear();
+		standardsDo.clear();
 		
 		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
 		
@@ -2278,19 +2299,22 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			CodeDo codeDo=new CodeDo();
 			codeDo.setDepth((short) 2);
 			codeDo.setLabel(entry.getValue());
+			codeDo.setCodeId(entry.getKey().intValue());
 			standardsDo.add(codeDo);
 			centurySelectedValues.put(entry.getKey(),entry.getValue());
 			centuryPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"", centuryCodesMap.get(entry.getKey())));
 		}
 		
 		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
-			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();	
+			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();
 			if(!centurySkills.containsKey(codeID.longValue())){
 			CodeDo codeDo=new CodeDo();
 			codeDo.setDepth((short) 2);
 			String label=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getLabel();
-			codeDo.setLabel(label);
 			String code=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCode();
+			codeDo.setLabel(code);
+			codeDo.setCode(code);
+			codeDo.setCodeId(codeID);
 			standardsDo.add(codeDo);
 			standardsPanel.add(createStandardLabel(code,String.valueOf(codeID),label));
 			}
@@ -2312,7 +2336,64 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		if(addStandardsAnc.isVisible()){setStandardsContainer();}
 		if(addCenturyAnc.isVisible()){setCenturyContainer();}
 		
+	}
+	
+	public CollectionQuestionItemDo getMetadata(){
+		final CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
+
+		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+		depthOfKnowledge.put("depthOfKnowledge",depthOfKnowledges);
+
+		Timer timer2=new Timer() {
+			@Override
+			public void run() {
+		collectionQuestionItemDo.setQuestionText(questionNameTextArea!=null && questionNameTextArea.getText()!=null?questionNameTextArea.getText():"");
+		collectionQuestionItemDo.setExplanation(explainationTextArea!=null && explainationTextArea.getText()!=null?explainationTextArea.getText():"");
+			}
+		};
+		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+
+		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
+		HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
+
+		for(int i=0;i<hintsContainer.getWidgetCount();i++)
+		{
+			AddHintsView addHints = (AddHintsView)hintsContainer.getWidget(i);
+			QuestionHintsDo questionHintsDo=new QuestionHintsDo();
+			String hintText=addHints.hintTextBox.getText();
+			if(hintText!=null&&!hintText.trim().equals("")&&!hintText.isEmpty()){
+				hintText=addHints.hintTextBox.getRawContent().trim();
+			}
+			questionHintsDo.setHintText(hintText);
+			questionHintsDo.setSequence(i+1);
+			enteredHints.add(questionHintsDo);
+		}
+		hintsMap.put("hint",enteredHints);
+		collectionQuestionItemDo.setHints(hintsMap);
+
+
+		collectionQuestionItemDo.setCenturySelectedValues(centurySelectedValues);
+
+		if(collectionQuestionItemDo.getTaxonomySet()!=null){
+			collectionQuestionItemDo.getTaxonomySet().clear();
+		}
 		
+		HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
+		taxonomySet.put("taxonomyCode", standardsDo);
+		
+		collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+		timer2.schedule(0);
+
+		HashMap<String,Boolean> moreOptions=new HashMap<String, Boolean>();
+
+		moreOptions.put("explanation",addExplanationAnc.isVisible());
+		moreOptions.put("hints", addHintsAnc.isVisible());
+		moreOptions.put("DOK", addDepthOfKnowledgeAnc.isVisible());
+		moreOptions.put("standards", addStandardsAnc.isVisible());
+		moreOptions.put("21stcentury", addCenturyAnc.isVisible());
+
+		collectionQuestionItemDo.setMoreOptions(moreOptions);
+		return collectionQuestionItemDo;
 	}
 
 }

@@ -97,8 +97,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	private HandlerRegistration handlerRegistration=null;
 
-	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard,btnLearnAboutApproach, btnGradesCaret, btnSubjectCaret;
-	@UiField Anchor ancLogin, lblSampleReports;
+	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
+	@UiField Anchor ancLogin, lblSampleReports,btnLearnAboutApproach;
 	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup;
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
@@ -359,10 +359,10 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			lblErrorMessage.setText(i18n.GL3329());
 			lblErrorMessage.setVisible(true);
 		}else if (selectedSubjects.size() <= 0){
-			lblErrorMessage.setText(i18n.GL3330());
+			lblErrorMessage.setText(i18n.GL3331());
 			lblErrorMessage.setVisible(true);
 		}else if (selectedGrades.size() <= 0){
-			lblErrorMessage.setText(i18n.GL3331());
+			lblErrorMessage.setText(i18n.GL3330());
 			lblErrorMessage.setVisible(true);
 		}else{
 			lblErrorMessage.setVisible(false);

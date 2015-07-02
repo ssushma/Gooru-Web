@@ -580,9 +580,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Override
 	public void addSelectedQuestionType(String type,CollectionQuestionItemDo collectionQuestionItemDo) {
-		if(type.equalsIgnoreCase("HS")){
-		questionTypePresenter.getView().resetFields();
+		if(type.equalsIgnoreCase("HS_TXT") || type.equalsIgnoreCase("HS_IMG")){
+		questionTypePresenter.getView().resetFields(type);
+		if(getView().checkQuestionSlot()){
 		addToSlot(SLOT_QUESTION_TYPE, questionTypePresenter);
+		}
 		questionTypePresenter.ImageUpload(imageUploadPresenter,getView(),collectionDo);
 		
 		if(collectionQuestionItemDo!=null){
@@ -590,8 +592,13 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		}
 		
 		}else {
+			CollectionQuestionItemDo questionMetadataDo=null;
+			if(!getView().checkQuestionSlot()){
+			 questionMetadataDo=questionTypePresenter.getView().getMetadata();
+			}
 			clearSlot(SLOT_QUESTION_TYPE);
 			getView().clearQuestionSlot();
+			getView().questionMetadata(questionMetadataDo);
 		}
 	}
 

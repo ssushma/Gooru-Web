@@ -176,7 +176,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		StringUtil.setAttributes(sessionsTooltip.getElement(), "imgSessionsTooltip", null, null);
 
 		StringUtil.setAttributes(lastModifiedTime.getElement(), "lblLastModifiedTime", null, null);
-		studentSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:11%;height:19px");
+		studentSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:19%;height:19px");
 	}
 	/**
 	 * This method is used to set default data.
@@ -434,7 +434,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	private void search(String searchText) {
 		studentSuggestOracle.clear();
 		for (String students : allStudentsList) {
-			if(students.matches("(?i)("+searchText+").*")){
+			if(students.toUpperCase().startsWith(searchText.toUpperCase())){
 				studentSuggestOracle.add(students);
 			}
 		}

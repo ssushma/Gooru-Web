@@ -21,7 +21,7 @@ public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHan
 
 	void setUpdatedStandardsCode(String setStandardsVal,int setStandardsIdVal, String setStandardDesc);
 
-	void resetFields();
+	void resetFields(String type);
 
 	void editQuestion(CollectionItemDo collectionItemDo);
 
@@ -30,6 +30,8 @@ public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHan
 	void setEditData();
 	
 	void setMetadata(CollectionQuestionItemDo collectionQuestionItemDo);
+	
+	CollectionQuestionItemDo getMetadata();
 
 
 

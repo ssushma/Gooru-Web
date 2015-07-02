@@ -167,7 +167,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	private String htType=i18n.GL3219_1();
-	private String htSentenceType=i18n.GL3223_1();
 
 	public String getQuestionType() {
 		return questionType;
@@ -228,7 +227,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
-	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
+	Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	String courseCode="";
 	boolean isEditResource=false;
 
@@ -498,7 +497,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			});
 		}
 		setTrueOrFalseFields();
-		setHotTextFields();
 		setCenturyData();
 		explanationContainer.setVisible(false);
 		addExplanationLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
@@ -655,7 +653,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
 		setTrueOrFalseFields();
-		setHotTextFields();
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
@@ -1287,50 +1284,53 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 
 
-	public void setHotTextFields(){
+	public void setHotTextROFields(){
 		questionHotTextAnswerChoiceContainer.clear();
 		for(int i=0;i<2;i++){
 			int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
 			final AddHotTextQuestionAnswerChoice addQuestionAnswer=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[widgetCount]);
 
 			if(i==0){
-				setHotTextAnswers(addQuestionAnswer);
 				addQuestionAnswer.setHeadLabelFields(true);
-				addQuestionAnswer.reorderRDButton.setValue(true);
+				addQuestionAnswer.reorderRDButtonClick();
 			}else{
 				addQuestionAnswer.setHeadLabelFields(false);
 			}
 
 			questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
 		}
+		
+		addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 
 	}
+	
+	public void setHotTextHLFields(){
+		questionHotTextAnswerChoiceContainer.clear();
+		int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
+		final AddHotTextQuestionAnswerChoice addQuestionAnswer=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[widgetCount]);
+		setHotTextAnswers(addQuestionAnswer);
+		addQuestionAnswer.setHeadLabelFields(true);
+		questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
+		addQuestionAnswer.highlightRDButtonClick();
+		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
+
+	}
+	
 
     public void setHotTextAnswers(final AddHotTextQuestionAnswerChoice addQuestionAnswer){
 
-    	addQuestionAnswer.reorderRDButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				addQuestionAnswer.reorderRDButtonClick();
-				questionType="HT_RO";
-				addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
+    	/*
+    	if(questionType.equalsIgnoreCase("HT_RO")){
+    		addQuestionAnswer.reorderRDButtonClick();
+			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
+    	}else if(questionType.equalsIgnoreCase("HT_HL")){
+    		int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
+			for(int i=widgetCount-1;i>0;i--){
+				questionHotTextAnswerChoiceContainer.remove(i);
 			}
-		});
-
-		addQuestionAnswer.highlightRDButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				questionType="HT_HL";
-				int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
-				for(int i=widgetCount-1;i>0;i--){
-					questionHotTextAnswerChoiceContainer.remove(i);
-				}
-				addQuestionAnswer.highlightRDButtonClick();
-				addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
-			}
-		});
+			addQuestionAnswer.highlightRDButtonClick();
+			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
+    	}*/
 
 		addQuestionAnswer.wordRDButton.addClickHandler(new ClickHandler() {
 
@@ -1346,22 +1346,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onClick(ClickEvent event) {
 				addQuestionAnswer.sentenceRDButtonClick();
 				htType=i18n.GL3220_1();
-			}
-		});
-		addQuestionAnswer.singleRDButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				addQuestionAnswer.singleRDButtonClick();
-				htSentenceType=i18n.GL3222_1();
-			}
-		});
-		addQuestionAnswer.multiRDButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				addQuestionAnswer.multiRDButtonClick();
-				htSentenceType=i18n.GL3223_1();
 			}
 		});
 	}
@@ -1576,7 +1560,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	centuryContainer.setVisible(true);
     }
 
-    private void addHintsTextArea(final AddHintsView addHints){
+     void addHintsTextArea(final AddHintsView addHints){
 	       hintsContainer.add(addHints);
 	       addHints.hintDelLbl.addClickHandler(new ClickHandler() {
 
@@ -2423,20 +2407,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
     public boolean isHotTextAnswerChoiceEmpty(HTMLPanel questionAnswerChoiceContainer){
     	profanityList=new ArrayList<ProfanityCheckDo>();
-    	boolean isReorder=false;
     	for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
     		final AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
     		String answerChoiceValue=null;
     		addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
     		addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
-    		if(i==0){
-    			if(addQuestionAnswerChoice.reorderRDButton.getValue()){
-    				isReorder=true;
-    			}else{
-    				isReorder=false;
-    			}
-    		}
-    		if(isReorder){
+    		if(questionType.equalsIgnoreCase("HT_RO")){
     			answerChoiceValue=addQuestionAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
     		}else{
     			answerChoiceValue=addQuestionAnswerChoice.highlightTextArea.getContent().replaceAll("\\<.*?>","");
@@ -2456,7 +2432,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     				Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
     				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_HTANSWER_LENGTH);
     				addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
-    			}else if(!isReorder){
+    			}else if(questionType.equalsIgnoreCase("HT_HL")){
     				String text=answerChoiceValue;
     				String[] temp;
     				String errorMsg;
@@ -2472,14 +2448,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     					errorMsg2=ERROR_MSG_HTHL_SENTENCE;
     				}
 
-    				if(temp.length>1  && answerChoiceValue.contains("${") && answerChoiceValue.contains("}$")){
+    				if(temp.length>1  && answerChoiceValue.contains("[") && answerChoiceValue.contains("]")){
     					boolean isCorrect=false;
-    					int count=0;
     					for(int k=0;k<temp.length;k++){
-    						if(temp[k].contains("${") || temp[k].contains("}$")){
-    							if((temp[k].startsWith("${") || temp[k].startsWith("&nbsp;${") || temp[k].startsWith(" ${")) &&(temp[k].endsWith("}$") || temp[k].endsWith("}$.")) && temp[k].trim().length()>0){
+    						if(temp[k].contains("[") || temp[k].contains("]")){
+    							if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith("].")) && temp[k].trim().length()>0){
     								isCorrect=true;
-    								count=count+1;
     							}else{
     								isCorrect=false;
     								break;
@@ -2487,20 +2461,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						}
     					}
     					if(isCorrect){
-
-    						if(count>1 && htSentenceType.equalsIgnoreCase(i18n.GL3222_1())){
-        						isAnswerChoiceSelected=true;
-        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3239_1());
-        					}else if(count<2 && htSentenceType.equalsIgnoreCase(i18n.GL3223_1())){
-        						isAnswerChoiceSelected=true;
-        						setHTAnswerErrorMessage(addQuestionAnswerChoice,i18n.GL3238_1());
-        					}else{
         						isAnswerChoiceSelected=false;
         						profanitymodel.setQuestionID(Integer.toString(i));
         						profanitymodel.setQuestionText(answerChoiceValue);
         						profanityList.add(profanitymodel);
-        					}
-
     					}else{
     						isAnswerChoiceSelected=true;
     						setHTAnswerErrorMessage(addQuestionAnswerChoice,errorMsg);
@@ -2669,7 +2633,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 */
 
 	public void showHotTextQuestion(){
-		setHeaderAndBodyText("HT_HL");
+		setHeaderAndBodyText(questionType);
 		clearErrorMessageForAnswer();
 		clearErrorQuestionMessage();
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
@@ -2677,6 +2641,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.NONE);
 		questionHotTextAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		if(questionType.equalsIgnoreCase("HT_RO")){
+		setHotTextROFields();
+		}else if(questionType.equalsIgnoreCase("HT_HL")){
+			setHotTextHLFields();
+		}
 
 	}
 
@@ -2922,7 +2891,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addHotTextAnsChoice.setHeadLabelFields(true);
 				addHotTextAnsChoice.highlightRDButtonClick();
 				setHotTextAnswers(addHotTextAnsChoice);
-				addHotTextAnsChoice.highlightRDButton.setValue(true);
 				String HtHighlightType=	collectionItemDo.getResource().getHlType();
 
 				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219_1())){
@@ -2943,7 +2911,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			AddHotTextQuestionAnswerChoice addHotTextAnsChoice=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[k], answer.getAnswerText());
 			addHotTextAnsChoice.setHeadLabelFields(true);
 			setHotTextAnswers(addHotTextAnsChoice);
-			addHotTextAnsChoice.reorderRDButton.setValue(true);
 			questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
 				}else{
 					AddHotTextQuestionAnswerChoice addHotTextAnsChoice=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[k], answer.getAnswerText());
@@ -3281,68 +3248,74 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 		     depthOfKnowledges.clear();
 
-		     if(chkLevelRecall.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelRecall.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelRecall.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelSkillConcept.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelSkillConcept.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelSkillConcept.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelStrategicThinking.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelStrategicThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelStrategicThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
-		     if(chkLevelExtendedThinking.isChecked())
-		     {
-		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(true);
-			     depthObj.setValue(chkLevelExtendedThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-		     else
-		     {
-		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected(false);
-			     depthObj.setValue(chkLevelExtendedThinking.getText());
-			     depthOfKnowledges.add(depthObj);
-		     }
-
+		     setDOKCheckBoxes();
 		}
      }
+     
+     
+     public void setDOKCheckBoxes(){
+    	 if(chkLevelRecall.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelRecall.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelRecall.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelSkillConcept.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelSkillConcept.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelSkillConcept.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelStrategicThinking.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelStrategicThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelStrategicThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+	     if(chkLevelExtendedThinking.isChecked())
+	     {
+	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(true);
+		     depthObj.setValue(chkLevelExtendedThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+	     else
+	     {
+	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+		     depthObj.setSelected(false);
+		     depthObj.setValue(chkLevelExtendedThinking.getText());
+		     depthOfKnowledges.add(depthObj);
+	     }
+
+     }
+     
 
      public abstract void callBrowseStandards();
 
@@ -3561,5 +3534,21 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 	}
+	
+
+	public void setAncTabs(){
+		explanationContainer.setVisible(!addExplanationLabel.isVisible());
+    	depthOfKnowledgeContainer.setVisible(!addDepthOfKnowledgeLabel.isVisible());
+    	hintsContainer.setVisible(!addHintsLabel.isVisible());
+    	standardContainer.setVisible(!addStandardsLabel.isVisible());
+    	centuryContainer.setVisible(!addCenturyLabel.isVisible());
+	}
+	public void resetDepthOfKnowledges(){
+		chkLevelRecall.setChecked(false);
+		chkLevelSkillConcept.setChecked(false);
+		chkLevelStrategicThinking.setChecked(false);
+		chkLevelExtendedThinking.setChecked(false);
+	}
+
 
 }

@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSearchDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
@@ -85,9 +86,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.Anchor;
@@ -130,7 +131,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField FlowPanel pnlAddFilters,searchResultPanel,sourceContainerFloPanel;
 
-	@UiField TextBox authorTxtBox;
+	@UiField TextBox authorTxtBox,contCollectionTxtBox;
 
 	@UiField LiPanel collectionsBtn,assessmentsBtn;
 
@@ -161,6 +162,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	private SearchDo<String> aggregatorSearchDo = new SearchDo<String>();
 
+	ArrayList<AutoSuggestContributorSearchDo> contributorSearchList  = new ArrayList<AutoSuggestContributorSearchDo>();
+
+	ArrayList<String> list = new ArrayList<String>();
+
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
 
 	private static final String SUBJECTS_SEPARATOR = "~~";
@@ -179,7 +184,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	String FILLED_GREEN = "filled";
 
-	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
+	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag,contributor;
 
 	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
 
@@ -187,15 +192,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	boolean pageFlag=false;
 	boolean firstTime = false,isApiInProgress=true,isApiInProgressLoad=true,isApiInProgressBack=true,isApiInProgressBackLoad=true;
 
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues,selectedContributorType="";
 
 	private HandlerRegistration handlerRegistration=null;
 
 	private Storage localStore = null;
 
+	InlineLabel cart = null;
+
 	int pageCountForStorage=1,previousScroll;
 
 	Widget pnlFirstTempData=null;
+
+	SearchContributorView ContributorViewpopup = null;
+
 	/**
 	 * Assign new instance for
 	 *
@@ -246,13 +256,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		btnSearchType.getElement().setAttribute("aria-expanded", "false");
 		btnSearchType.getElement().setAttribute("id", "btnSearchType");
 
-		InlineLabel cart = new InlineLabel();
+		cart = new InlineLabel();
 		cart.setStyleName("caret");
 
 		collectionPanel.getElement().setInnerText(i18n.GL0645());
 		resourcePanel.getElement().setInnerText(i18n.GL1110());
 
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
 			btnSearchType.setText(i18n.GL0645());
 			btnSearchType.getElement().appendChild(cart.getElement());
 		}else{
@@ -344,6 +354,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		});
+		contCollectionTxtBox.getElement().setAttribute("placeholder", i18n.GL3221());
+		/**
+		 * This is the keyup handler for Contributors functionality in collection search.
+		 */
+		contCollectionTxtBox.addKeyUpHandler(new KeyUpHandler() {
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if(contCollectionTxtBox.getText()!=null && contCollectionTxtBox.getText().length() >2){
+					String text = contCollectionTxtBox.getValue();
+					getUiHandlers().requestContributorSuggestions(text);
+				}else{
+					ContributorViewpopup.hide();
+				}
+			}
+		});
 		ClickHandler rootHandler= new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -385,8 +410,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	    	publisherSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 	    	publisherSgstBox.getElement().setId("asSourceSgst");
 	    	aggregatorSgstBox.getElement().setId("asAggregatorSgst");
-			aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
 
+			aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
 			aggregatorSgstBox.addSelectionHandler(this);
 	    	publisherSgstBox.addSelectionHandler(this);
 	    }
@@ -565,8 +590,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void onSuccess() {
 //				collectionPanel.removeStyleName("active");
 //				resourcePanel.setStyleName("active");
-				resourceSearchPanel.setVisible(true);
+				resourceSearchPanel.setVisible(false);
 				collectionSearchPanel.setVisible(false);
+				searchResults.setVisible(false);
 				ulDropdown.setVisible(false);
 				resetData();
 				getUiHandlers().setSearchType(false,getSearchText());
@@ -584,8 +610,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void onSuccess() {
 //				collectionPanel.setStyleName("active");
 //				resourcePanel.removeStyleName("active");
+				searchResults.setVisible(false);
 				resourceSearchPanel.setVisible(false);
-				collectionSearchPanel.setVisible(true);
+				collectionSearchPanel.setVisible(false);
 				ulDropdown.setVisible(false);
 				resetData();
 				getUiHandlers().setSearchType(true,getSearchText());
@@ -638,6 +665,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@Override
 	public void postSearch(SearchDo<T> searchDo,boolean isApiCalled) {
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+			btnSearchType.setText(i18n.GL0645());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}else{
+			btnSearchType.setText(i18n.GL1110());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
@@ -714,6 +748,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showAccessModeFilter();
 		showPublisherFilter();
 		showAggregatorFilter();
+		showContributorFilter();
 		showReviewFilter();
 		setStyleForCollectionType();
 		showRatingsFilter();
@@ -866,7 +901,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 		}
 	}
-
+	/**
+	 * To show the contributor values in search page
+	 */
+	private void showContributorFilter(){
+		contributor  = AppClientFactory.getPlaceManager().getRequestParameter("flt.contributor");
+		if(contributor!=null){
+			String[] split = contributor.split(",");
+			for(int i=0; i<split.length; i++){
+				pnlAddFilters.add(createTagsLabel(split[i],"contributorPanel"));
+			}
+		}
+	}
 	/**
 	 * To render star ratings and handle the click events
 	 */
@@ -908,7 +954,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
 						}else{
 							ratingsLbl.setText(ratingValue+"+ Stars");
-							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
+							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:2%;");
 							ratingsLbl.setVisible(true);
 							pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
 						}
@@ -1430,6 +1476,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedStars="";
 		selectedPublisheValues="";
 		selectedAuggreValues="";
+		selectedContributorValues="";
 	    oerValue="";
 
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
@@ -1486,6 +1533,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					selectedAuggreValues +=closeLabelSetting.getSourceText();
 				}
+				if("contributorPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					selectedContributorValues =closeLabelSetting.getSourceText();
+				}
 				if("oerPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 
 					oerValue="1";
@@ -1525,6 +1575,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 
 		 if(viewToken.equals(PlaceTokens.SEARCH_RESOURCE)){
+			 filtersMap.remove(IsGooruSearchView.CONTRIBUTOR_FLT);
 			 if(!selectedStars.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.RATINGS_FLT, selectedStars);
 			 }else{
@@ -1574,6 +1625,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			 if(!selectedAuthors.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
+			 }
+			 if(!selectedContributorValues.isEmpty()){
+				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT, selectedContributorValues);
+			 }
+			 if(!selectedContributorType.isEmpty()){
+				 filtersMap.put(IsGooruSearchView.CONTRIBUTOR_FLT_TYPE,selectedContributorType);
 			 }
 		 }
 		 return filtersMap;
@@ -1850,7 +1907,43 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		aggregatorSgstBox.showSuggestionList();
 	}
+	/**
+	 * This method is used to show the contributors auto suggested data and to create and update the contributor  filter in collection search
+	 */
+	@Override
+	public void setCollectionContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> contributorSearchList){
 
+		this.contributorSearchList=contributorSearchList;
+		if(this.contributorSearchList!=null){
+			if(ContributorViewpopup==null){
+				ContributorViewpopup = new SearchContributorView(){
+					@Override
+					public void callCollectionsContributorSearch(String contributortype) {
+						String text = contCollectionTxtBox.getValue();
+						if (text.equals(NO_MATCH_FOUND)) {
+							//new FadeInAndOut(contribuNotFoundLbl.getElement(), 5000, 5000);
+						}else {
+							pnlAddFilters.add(createTagsLabel(text,"contributorPanel"));
+							selectedContributorType = contributortype;
+							callSearch();
+						}
+						contCollectionTxtBox.setText("");
+						contCollectionTxtBox.getElement().setAttribute("alt","");
+						contCollectionTxtBox.getElement().setAttribute("title","");
+					}
+				};
+			}
+			ContributorViewpopup.setData(contributorSearchList,contCollectionTxtBox);
+			ContributorViewpopup.show();
+			ContributorViewpopup.setPopupPosition(contCollectionTxtBox.getElement().getAbsoluteLeft()-3, contCollectionTxtBox.getElement().getAbsoluteTop()+30);
+			ContributorViewpopup.getElement().getStyle().setZIndex(99);
+		}
+		 else {
+			 ContributorViewpopup.getResultsPnl().setVisible(false);
+			 ContributorViewpopup.getNoResultsPnl().setVisible(true);
+		}
+
+	}
 	@Override
 	public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event) {
 	if (event.getSource().equals(publisherSgstBox)) {
@@ -1865,7 +1958,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			publisherSgstBox.getElement().setAttribute("alt","");
 			publisherSgstBox.getElement().setAttribute("title","");
 			sourceSuggestOracle.clear();
-
 		} else if(event.getSource().equals(aggregatorSgstBox)){
 			String text = aggregatorSgstBox.getValue();
 			if (text.equals(NO_MATCH_FOUND)) {

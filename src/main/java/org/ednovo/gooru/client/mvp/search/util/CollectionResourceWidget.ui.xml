@@ -5,16 +5,14 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="no-gutter">
-				<div class="col-md-7 col-sm-8 col-xs-8 ratings">
-					<div class="resultRating">
-						<g:FlowPanel ui:field="ratingWidgetPanel"/>
-					</div>
-				</div>
-				<div class="col-md-5 col-sm-4 col-xs-4 viewContainer resourceViewsContainer">
-				<g:Label styleName="plus" title="Number of Times Added">+</g:Label><g:Label ui:field="lbladdCount" styleName="authorName"></g:Label>
+				<div class="col-md-5 col-sm-4 col-xs-4 viewContainer">
+					<g:Label styleName="plus" title="Number of Times Added">+</g:Label><g:Label ui:field="lbladdCount" styleName="authorName"></g:Label>
 					<span>
 						<img title="Number of Views" src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 					</span>
+				</div>
+				<div class="col-md-7 col-sm-4 col-xs-4 buttonAddResource resourceViewsContainer">
+					<g:Button styleName="primary addResource" ui:field="btnAddResource">Add</g:Button>
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -39,13 +37,15 @@
 					<g:FlowPanel ui:field="standardsDataPanel"/>
 				</div>
 				<g:HTMLPanel styleName="usedDetails">
-				    <div class="viewContainer">
+				    <div class="col-md-7 col-sm-4 col-xs-4 viewContainer">
 						<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
 						<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
 					</div>
-					<div class="buttonAddResource">
-						<g:Button styleName="primary addResource" ui:field="btnAddResource">Add</g:Button>
-					</div>
+					<g:HTMLPanel styleName="col-md-3 col-sm-8 col-xs-8 ratings resourceViewsContainer" ui:field="panelRatings">
+						<div class="resultRating">
+							<g:FlowPanel ui:field="ratingWidgetPanel"/>
+						</div>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
 					<div class="col-md-9 col-xs-9 col-sm-9 collectionResources">

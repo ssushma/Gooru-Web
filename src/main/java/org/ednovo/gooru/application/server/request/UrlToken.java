@@ -55,6 +55,8 @@ public enum UrlToken {
 	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?"),
 
 	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?"),
+	
+	v2_SEARCH_SUGGEST_CONTRIBUTOR("/gooru-search/rest/search/contributor?"),
 
 	UPDATE_V2_COLLLECTION("/v2/collection/{0}?"),
 
@@ -349,6 +351,8 @@ public enum UrlToken {
 	V2_LIST_CLASSPAGES_BY_USER_ID("/v2/classpage/collection/{0}?gooruUId={1}"),
 
 	V2_CREATE_FOLDER("/v2/folder?"),
+	
+	V1_CREATE_COURSE("/v1/course?"),
 
 	V2_DELETE_FOLDER("/v2/folder/{0}?"),
 
@@ -359,6 +363,8 @@ public enum UrlToken {
 	V2_CREATE_COLLECTION_IN_FOLDER("/v2/collection?"),
 
 	V2_UPDATE_FOLDER_METADATA("/v2/folder/{0}?"),
+	
+	V1_UPDATE_COURSE_METADATA("/v1/course/{0}?"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
 
@@ -562,7 +568,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_GET_COURSES_BY_SUBJECTID("/v1/subject/{0}/taxonomycourse?offset={1}&limit={2}"),
 	
-	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?");
+	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?"),
+	
+	V1_GET_USER_COURSES_LIST("/v2/user/{0}/course?");
 
 
 	private String url;

@@ -30,8 +30,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -43,9 +45,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -63,10 +68,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
+	@UiField Button saveCourseBtn,nextUnitBtn;
+	@UiField TextBox courseTitle;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
 	CourseGradeWidget courseGradeWidget;
+	public FolderDo courseObj;
 	final String ACTIVE="active";
 	/**
 	 * Class constructor 
@@ -183,5 +191,38 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
 			}
 		}
+	}
+	
+	@UiHandler("saveCourseBtn")
+	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		if(id!=null){
+			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
+		}else{
+			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		}
+	}
+	
+	@UiHandler("nextUnitBtn")
+	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
+		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		if(id!=null){
+			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
+		}else{
+			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		}
+		getUiHandlers().showUnitTemplate();
+		getUiHandlers().showUnitInfo();
+	}
+	
+	
+
+	@Override
+	public void setCouseData(FolderDo courseObj) {
+		this.courseObj=courseObj;
+		if(null!=courseObj){
+			courseTitle.setText(courseObj.getTitle());
+		}
+		
 	}
 }

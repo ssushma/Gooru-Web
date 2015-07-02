@@ -7,19 +7,11 @@
 	     <g:Label ui:field="answerHeadLbl" styleName="answerHeadLbl"></g:Label>
 	     <g:FlowPanel  ui:field="answerHeadContainer">
 	         <g:Label  ui:field="answerHeadingTypeLbl" styleName="htQAnswerHeadings htQAnswerTypeLbl"></g:Label>
-	        <g:RadioButton ui:field="reorderRDButton" name="ansTypeGroup" styleName="htQAnswerHeadings"></g:RadioButton>
-	         <g:RadioButton ui:field="highlightRDButton" name="ansTypeGroup" styleName="htQAnswerHeadings"></g:RadioButton>
-	         <g:Label  ui:field="inLbl" styleName="htQAnswerHeadings"></g:Label>
 	          <g:RadioButton ui:field="wordRDButton" styleName="htQAnswerHeadings" name="ansFormat"></g:RadioButton>
 	           <g:RadioButton ui:field="sentenceRDButton" styleName="htQAnswerHeadings" name="ansFormat"></g:RadioButton>
 	     </g:FlowPanel>
 	<g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormAnswerContainer} htQanswerContainer">
 	     <tinyMce:TinyMCE ui:field="highlightTextArea" characterLimit="500" styleName="htQhighlightTextArea"></tinyMce:TinyMCE>
-	     <g:FlowPanel  ui:field="correctAnswerTypeContainer">
-	         <g:Label  ui:field="correctAnswerHeadingTypeLbl" styleName="htQAnswerHeadings htQAnswerTypeLbl"></g:Label>
-	        <g:RadioButton ui:field="singleRDButton" name="ansType" styleName="htQAnswerHeadings"></g:RadioButton>
-	         <g:RadioButton ui:field="multiRDButton" name="ansType" styleName="htQAnswerHeadings"></g:RadioButton>
-	     </g:FlowPanel>
               <g:Label styleName="htQLabelNum" ui:field="labelChoice"></g:Label>
               <g:HTMLPanel styleName="htQAnswerInputControl answerChoiceAndHintsTextcontainer" ui:field="tinyOrTextBoxConatiner">
 	              <tinyMce:TinyMCE ui:field="answerTextBox" characterLimit="500"></tinyMce:TinyMCE>

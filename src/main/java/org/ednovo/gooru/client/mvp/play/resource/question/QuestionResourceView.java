@@ -177,6 +177,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			}else if(collectionItemDo.getResource().getType()==10){
 				HotSpotQuestionWidget=new HotSpotQuestionWidget(collectionItemDo,attemptedAnswerDo);
 				questionContainer.add(HotSpotQuestionWidget);
+			}else if(collectionItemDo.getResource().getType()==11){
+				HotSpotQuestionWidget=new HotSpotQuestionWidget(collectionItemDo,attemptedAnswerDo);
+				questionContainer.add(HotSpotQuestionWidget);
 			}
 		}
 	}

@@ -25,46 +25,97 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
 	
 	public static final  Object INNER_SLOT = new Object();
+	
 	CourseInfoPresenter courseInfoPresenter;
+	
+	LessonInfoPresenter lessonInfoPresenter;
+	
+	ShelfMainPresenter shelfMainPresenter;
+	
+	FolderDo folderObj;
+	
+	CollectionContentPresenter collectionContentPresenter;
+	
+	final String COLLECTION="Collection";
 	/**
 	 * Constructor
 	 * @param eventBus
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CourseInfoPresenter courseInfoPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
+		this.lessonInfoPresenter=lessonInfoPresenter;
+		this.collectionContentPresenter=collectionContentPresenter;
+		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
+		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
-	public void setTabItems(int index,String type,HTMLPanel slotPanel,FolderDo folderObj) {
+	public void setTabItems(int index,String type,FolderDo folderObj) {
+		if(folderObj!=null){
+			this.folderObj=folderObj;
+		}
+	    AppClientFactory.printInfoLogger("setTabItems");
 		clearSlot(INNER_SLOT);
-		getView().setSlotPanel(slotPanel,folderObj);
+		getView().setSlotPanel(folderObj);
+		getView().setDefaultActiveTab(index);
 		if(index==1){
 			courseInfoPresenter.callTaxonomyService();
+			courseInfoPresenter.setData(folderObj);
 			setInSlot(INNER_SLOT, courseInfoPresenter);
 		}else if(index==2){
-			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setDataInContentSlot(type, slotPanel,folderObj.getGooruOid(),false);
-			setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			//The true condition is added for testing purpose
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+				collectionContentPresenter.setData(folderObj);
+				setInSlot(INNER_SLOT, collectionContentPresenter);
+			}else{
+				MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
+				myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
+				setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			}
 		}else if(index==3){
 			
 		}
 	}
+	//This method is not using present
 	@Override
 	public void setDefaultActiveTab(){
 		getView().resetHilightStyles();
-		getView().setDefaultActiveTab();
+		//getView().setDefaultActiveTab();
+	}
+
+	@Override
+	public void setUnitTemplate(){
+		shelfMainPresenter.createNewUnitItem();
+	}
+	@Override
+	public void setUnitInfo(){
+	/*	courseInfoPresenter.callTaxonomyService();
+		courseInfoPresenter.setData(folderObj);*/
+		setInSlot(INNER_SLOT, lessonInfoPresenter);
+		//getView().setDefaultActiveTab();
+	}
+
+	/**
+	 * To set the shelfMainPresenter obj
+	 * @param shelfMainPresenter
+	 */
+
+	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
+		this.shelfMainPresenter=shelfMainPresenter;
 	}
 }

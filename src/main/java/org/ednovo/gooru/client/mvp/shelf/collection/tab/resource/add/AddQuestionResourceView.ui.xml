@@ -258,7 +258,7 @@
 
         </g:HTMLPanel>
 
-      <g:HTMLPanel styleName="col-md-12 colmdPadding {addWebResourceStyle.advancedOptionsContainer}">
+      <g:HTMLPanel styleName="col-md-12 colmdPadding">
 
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addExplanationLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.advancedOptions}"><g:Anchor ui:field="addHintsLabel" styleName="{addWebResourceStyle.advancedOptionsTabs}"></g:Anchor></g:HTMLPanel>
@@ -268,8 +268,8 @@
 
       </g:HTMLPanel>
 
-
-      <g:HTMLPanel styleName="{addWebResourceStyle.resourceRightsContainer}">
+ <g:HTMLPanel>
+      <g:HTMLPanel styleName="col-md-6 col-sm-6 colmdPadding {addWebResourceStyle.resourceRightsContainer}">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{addWebResourceStyle.resourceRightsCheckBox}" checked="true" ></g:CheckBox>
         	<g:Label ui:field="rightsLbl" styleName="{addWebResourceStyle.ownResourceFormDeclarationText}"></g:Label>
      <panel:HTMLEventPanel ui:field="lblContentRights" styleName="{res.css.ownResourceFormRightsContent}">
@@ -295,13 +295,16 @@
          </g:HTMLPanel>
 
 
-     <g:HTMLPanel styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="buttonContainer">
+     <g:HTMLPanel styleName="col-md-6 col-sm-6 colmdPadding {addWebResourceStyle.addResourceButtonContainer}" ui:field="buttonContainer">
          <panel:HTMLEventPanel styleName="{addWebResourceStyle.addResourceOk}" ui:field="addQuestionResourceButton">
           <gg:BlueButtonUc styleName="primary" ui:field="addbutton"></gg:BlueButtonUc>
         </panel:HTMLEventPanel>
      	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
 
       </g:HTMLPanel>
+     
+     </g:HTMLPanel>
+     
       <g:Label  styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="loadingTextLbl"></g:Label>
       </g:FlowPanel>
   </g:FlowPanel>

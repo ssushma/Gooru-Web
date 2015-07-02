@@ -62,4 +62,6 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
      * Update the tree widget as active style
      */
 	void updateLeftShelfPanelActiveStyle();
+
+	void createNewUnitItem();
 }

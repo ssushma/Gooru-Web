@@ -106,6 +106,13 @@ public interface FolderService extends BaseService {
 	 * @throws GwtException
 	 */
 	public FolderDo createFolder(String folderName, String parentId, boolean addToShelf) throws GwtException, ServerDownException;
+	
+	/**
+	 * Create Course - generic method for first, second and third levels.
+	 * @return serialized created {@link FolderDo}
+	 * @throws GwtException
+	 */
+	public FolderDo createCourse(String folderName, boolean addToShelf) throws GwtException, ServerDownException;
 
 	/**
 	 * delete a folder from organize
@@ -132,6 +139,14 @@ public interface FolderService extends BaseService {
 	 * @throws GwtException
 	 */
 	public void updateFolder(String folderId, String title, String ideas, String questions, String performance) throws GwtException, ServerDownException;
+	
+	/**
+	 * updates the course details.
+	 * @param courseId
+	 * @param courseTitle
+	 * @throws GwtException
+	 */
+	public void updateCourse(String courseId, String courseTitle) throws GwtException, ServerDownException;
 	
 	public CollectionDo  copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf) throws GwtException, ServerDownException;
 	

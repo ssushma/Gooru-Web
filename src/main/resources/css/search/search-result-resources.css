@@ -205,13 +205,13 @@ margin:0 0 0 -20px !important;
 	margin-right:10px;
 }
 #gooruSearchMainContainer .usedDetails{
-	padding:5px 10px;
+	padding:5px 0 5px 10px;
 	font-size:13px;
 	min-height: 36px;
 }
 
-#gooruSearchMainContainer .usedDetails .addResource{
-	/* width: 80px; */
+#gooruSearchMainContainer .panel-heading .addResource{
+	width: 80px;
   	/* margin-left: 8px; */
 }
 
@@ -221,6 +221,8 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .userDetailsResources{
 	padding: 5px 9px;
+	background: #ccc;
+	border-radius: 0px 0px 3px 3px;
 	/* border-top: 1px solid #ddd;
 	min-height: 51px; */
 }
@@ -256,6 +258,7 @@ margin:0 0 0 -20px !important;
 	width:142%;
 	margin-left:-3%;
 	margin-top: 0px;
+	min-height: 27px;
 }
 #gooruSearchMainContainer .userDetailsResources .user img{
 	border-radius: 50px;
@@ -265,7 +268,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .collectionResources {
 	text-align:left;
-	min-height: 40px;
+	/* min-height: 40px; */
 }
 #gooruSearchMainContainer .collectionResources .collectionTitle{
 	font-size: 13px;
@@ -662,4 +665,9 @@ margin:0 0 0 -20px !important;
 	color: #fab03a;
 	font: 12px arial;
 }
+
+#gooruSearchMainContainer .viewContainer a{
+	font-size: 12px;
+}
+
 /*Add Resource to collection popup end*/

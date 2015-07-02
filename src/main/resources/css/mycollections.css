@@ -373,10 +373,10 @@ button.btn-disabled{
     background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
 }
 #gShelfMainContainer .folderLevel.unit {
-    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 61px 13px;
 }
 #gShelfMainContainer .folderLevel.lesson {
-    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 89px 13px;
 }
 
 #gShelfMainContainer .folderLevel.parent {
@@ -398,10 +398,10 @@ button.btn-disabled{
     background-image: url('../images/folders/panel/folder-icon-open.png');
 }
 #gShelfMainContainer .folderLevel.course.open {
-    background-image: url('../images/folders/panel/c-open.png');
+    background-image: url('../images/folders/panel/c-open.png')!important;
 }
 #gShelfMainContainer .folderLevel.unit.open {
-    background-image: url('../images/folders/panel/u-open.png');
+    background-image: url('../images/folders/panel/u-open.png')!important;
 }
 
 #gShelfMainContainer .folderLevel.collection {
@@ -1800,3 +1800,560 @@ padding-left:7px;
 }
 
 /* == For Standards end======*/
+
+/* Css for collection edit*/
+@charset "utf-8";
+/* CSS Document */
+#resourceEdit{
+	padding-bottom:50px;
+	min-height:450px;
+}
+
+
+#resourceEdit .breadcrumbMain{
+	background:#cddeea;
+}
+
+#resourceEdit .resourcesButtonGroup{
+	padding:10px 15px;
+	text-align:right;
+	border-bottom:1px solid #dddddd;
+}
+
+#resourceEdit .breadcrumbMain a{
+	padding:16px 5px 16px 20px;
+	display:inline-block;
+	font-size:17px;
+	color:#515151;
+	position:relative;
+	
+}
+#resourceEdit .breadcrumbMain a:hover, #resourceEdit .breadcrumbMain a:focus{
+	opacity:1;
+	text-decoration:none;
+}
+#resourceEdit .breadcrumbMain a.active{
+	background:#cddeea;
+}
+
+#resourceEdit .breadcrumbMain a.active:after{
+	content:"";
+	position:absolute;
+	width: 0; 
+	height: 0; 
+	border-top: 29px solid transparent;
+	border-bottom: 29px solid transparent;
+	
+	border-left: 15px solid #cddeea;
+	right:-15px;
+	top:0;
+	z-index:999;
+}
+
+#resourceEdit .breadcrumbMain a.active:before{
+	content:"";
+	position:absolute;
+	width: 0; 
+	height: 0; 
+	border-top: 29px solid transparent;
+	border-bottom: 29px solid transparent;
+	
+	border-left: 15px solid #fff;
+	right:-17px;
+	top:0;
+	z-index:99;
+}
+
+#resourceEdit .courseFolderOpenIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -449px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+#resourceEdit .unitFolderOpenIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -484px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+#resourceEdit .courseFolderCloseIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -449px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+#resourceEdit .unitFolderCloseIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -484px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+#resourceEdit .lessonFolderCloseIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -520px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+#resourceEdit .floderRightContainer .courseHeader {
+	background:#f0f0f0;
+}
+
+
+
+#resourceEdit .courseHeader{
+
+	background:#fff;
+}
+#resourceEdit .deleteButton {
+	display:inline-block;
+}
+#resourceEdit .deleteButton a {
+    border-left: 1px solid #dddddd;
+       border-right: 1px solid #dddddd;
+    color: #1076bb;
+}
+#resourceEdit  .actionItems{
+	margin:8px 18px !important;
+}
+#resourceEdit  .actionItems .btn-default{
+	background-color:#999999;
+	color:#ffffff;
+	border:none;
+}
+#resourceEdit  .actionItems .dropdown-menu:before {
+    border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    display: inline-block;
+    right: 9px;
+    position: absolute;
+    top: -7px;
+}
+
+#resourceEdit  .actionItems .dropdown-menu:after {
+    border-bottom: 6px solid #ffffff;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    content: "";
+    display: inline-block;
+    right: 10px;
+    position: absolute;
+    top: -6px;
+}
+#resourceEdit .folderBlockSitemap a:hover,#resourceEdit  .folderBlockSitemap a:focus {
+    background: #d8d8d8 none repeat scroll 0 0;
+    color: #333333;
+    text-decoration: none;
+}
+#resourceEdit .courseHeader h2{
+	font-size:22px;
+		padding:20px 15px;
+	font-weight:bold;
+	color:#515151;
+	margin:0 0;
+}
+#resourceEdit .tableDiv{
+	display:table;
+	width:100%;
+	border-collapse:collapse;
+}
+
+#resourceEdit .tableRow{
+	display:table-row;
+	width:100%;
+	border-bottom:1px solid #dddddd;
+}
+
+#resourceEdit .tableColumn{
+	display:table-cell;
+	padding:4px 10px;
+	vertical-align:top;
+	
+}
+
+#resourceEdit .tableColumn:first-child{
+		background:#f9fcfe;
+		padding:10px 15px;
+		width:35%;
+}
+#resourceEdit .tableColumn:last-child{
+
+    width: 188px;
+}
+#resourceEdit .tableColumn .tableListTags .reviewsIcon, #resourceEdit .tableColumn .tableListTags .reviewsText{
+	float:left;
+}
+
+#resourceEdit .tableColumn .tableListTags .reviewsIcon, #resourceEdit .tableColumn .tableListTags .timeIcon{
+	width:25px;
+	text-align:center;
+}
+#resourceEdit .tableColumn .tableListTags .reviewsText{
+	width:84%;
+	margin-left:1em;
+	margin-bottom:1em;
+	line-height:15px;
+}
+
+
+#resourceEdit .tableColumn .tableListTags .timeIcon, #resourceEdit .tableColumn .tableListTags .timeText{
+	float:left;
+	margin:0 0;
+}
+
+#resourceEdit .tableColumn .tableListTags .timeIcon, #resourceEdit .tableColumn .tableListTags .editButton {
+    margin: 0 0 !important;
+}
+
+#resourceEdit .tableColumn .editButton .btn-default{
+	background-color:#dddddd;
+	color:#515151;
+	font-size:12px;
+}
+#resourceEdit .tableColumn .editButton .btn{
+	padding:8px 15px;
+}
+#resourceEdit .tableColumn .editButton .dropdown-menu{
+	font-size:12px;
+	min-width:100px;
+	float:right !important;
+	right:0;
+	left:auto;
+}
+#resourceEdit .tableColumn .editButton{
+	margin:12px 10px;
+	vertical-align:top;
+}
+#resourceEdit .tableColumn .tableListTags{
+	padding:12px 0;
+}
+#resourceEdit .tableColumn .tableListTags .timeText{
+	width:84%;
+	margin-left:1em;
+}
+#resourceEdit .tableMainHeader .resourceNumber{
+	margin:0 0 2px 0;
+	font-size:26px;
+	font-weight:bold;
+	color:#515151;
+	display:inline-block;
+	vertical-align:middle;
+	min-width:22px;
+}
+#resourceEdit .tableMainHeader .resourceNameBlock{
+	margin:0 0 0 0;
+	color:#515151;
+display:inline-block;
+vertical-align:middle;
+	width:75%;
+
+}
+#resourceEdit .tableMainHeader .resourceNameBlock .resourceTitle{
+	float:left;
+	width:75%;
+}
+#resourceEdit .tableMainHeader .resourceNameBlock span{
+	margin-right:8px;
+}
+#resourceEdit .tableMainHeader .resourceNameBlock span.interactiveIcon{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+	float:left;
+	background:url("../images/resource-type-icons.png") no-repeat scroll 0 -27px;
+}
+
+#resourceEdit .tableMainHeader .resourceNameBlock span.questionsIcon{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+	float:left;
+	background:url("../images/resource-type-icons.png") no-repeat scroll -1px -140px;
+}
+
+
+#resourceEdit .tableMainHeader .resourceNameBlock span.imageIcon{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+	float:left;
+	background:url("../images/resource-type-icons.png") no-repeat scroll -1px -251px;
+}
+#resourceEdit .tableListOrder .topArrow {
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -360px;
+	width:16px;
+	height:10px;
+	display:inline-block;
+	margin-bottom:-3px;
+}
+#resourceEdit .tableListOrder{
+margin:8px 0 12px 45px;
+display:inline-block;
+    text-align: center;
+    width: 26px;
+}
+#resourceEdit .tableListOrder .form-control{
+	height:24px;
+	padding:6px 2px;
+	font-size:12px;
+	text-align:center;
+	border-radius: 4px;
+}
+#resourceEdit .tableListOrder .bottomArrow {
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -381px;
+	width:16px;
+	height:10px;
+	display:inline-block;
+}
+#resourceEdit .tableListTags span{
+	margin-left:10px;
+}
+#resourceEdit .addCourse{
+	padding:15px 25px;
+	font-size:18px;
+	color:#515151;
+	border:1px dashed #dddddd;
+	margin:1px 1px;
+	position:relative;
+	cursor:pointer;
+}
+
+#resourceEdit .addCourse input{
+ bottom: 0;
+    height: 55px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+	cursor:pointer;
+}
+@media (min-width: 240px) and (max-width: 319px){
+	#resourceEdit .tableColumn .tableListTags .reviewsText{
+		width:80%;
+	}
+	#resourceEdit .tableColumn .tableListTags .timeText{
+		width:80%;
+	}
+	#resourceEdit .folderBlockSitemap a:first-child{
+			margin-left:0;
+	}
+	#resourceEdit .folderBlockSitemap a {
+		margin-left:-3px;
+	}
+	#resourceEdit .AcItem{
+			text-align:center;
+	}
+	#resourceEdit .menuLinks{
+		border-bottom:1px solid #dddddd;
+		text-align:center;
+	}
+	#resourceEdit .tableColumn{
+		display:table;
+	}
+	#resourceEdit .tableColumn:first-child{
+		width:100%;
+	}
+		#resourceEdit .tableMainHeader{
+			padding:10px 20px;
+		}
+		#resourceEdit .tableColumn .tableListTags{
+			padding:10px 20px;
+		}
+		#resourceEdit .tableColumn{
+			display:block;
+		}
+		#resourceEdit .tableColumn:last-child{
+			border-top:1px solid #dddddd;
+			width:100%;
+			text-align:left;
+			background:#fafafa;
+		}
+		#resourceEdit .tableListOrder{
+			margin: 0 0;
+		}
+		#resourceEdit .tableColumn .editButton{
+			margin:12px 10px 12px 20px;
+		}
+		#resourceEdit  .actionItems .dropdown-menu:before {
+		    border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+		    border-left: 7px solid transparent;
+		    border-right: 7px solid transparent;
+		    content: "";
+		    display: inline-block;
+		    right: 9px;
+			left:auto;
+		    position: absolute;
+		    top: -7px;
+		}
+		#resourceEdit  .actionItems .dropdown-menu:after {
+		    border-bottom: 6px solid #ffffff;
+		    border-left: 6px solid transparent;
+		    border-right: 6px solid transparent;
+		    content: "";
+		    display: inline-block;
+		    right: 10px;
+			left:auto;
+		    position: absolute;
+		    top: -6px;
+		}
+		#resourceEdit .breadcrumbMain a{
+			width:100%;
+			border-bottom:1px solid #ffffff;
+		}
+		#resourceEdit .breadcrumbMain a.active:before{
+			content:normal;
+		}
+		.folderBlockSitemap a{
+			padding:16px 18px;
+		}
+		#resourceEdit .actionItems .dropdown-menu{
+			left:auto;
+			right:0;
+		}
+}
+@media (min-width: 320px) and (max-width: 479px) {
+		#resourceEdit .folderBlockSitemap a:first-child{
+			margin-left:0;
+		}
+		#resourceEdit .folderBlockSitemap a {
+				margin-left:-3px;
+		}
+		#resourceEdit .AcItem{
+			text-align:center;
+		}
+		#resourceEdit .menuLinks{
+			border-bottom:1px solid #dddddd;
+			text-align:center;
+		}
+		#resourceEdit .tableColumn{
+			display:table;
+		}
+		#resourceEdit .tableColumn:first-child{
+			width:100%;
+		}
+		#resourceEdit .tableMainHeader{
+			padding:10px 20px;
+		}
+		#resourceEdit .tableColumn .tableListTags{
+			padding:10px 20px;
+		}
+		#resourceEdit .tableColumn{
+			display:block;
+		}
+		#resourceEdit .tableColumn:last-child{
+			border-top:1px solid #dddddd;
+			width:100%;
+			text-align:left;
+			background:#fafafa;
+		}
+		#resourceEdit .tableListOrder{
+			margin: 0 0;
+		}
+		#resourceEdit .tableColumn .editButton{
+			margin:12px 10px 12px 20px;
+		}
+		#resourceEdit .breadcrumbMain a{
+			font-size:12px;
+		}
+		#resourceEdit  .actionItems .dropdown-menu:before {
+		    border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+		    border-left: 7px solid transparent;
+		    border-right: 7px solid transparent;
+		    content: "";
+		    display: inline-block;
+		    left: 9px;
+			right:auto;
+		    position: absolute;
+		    top: -7px;
+		}
+		#resourceEdit  .actionItems .dropdown-menu:after {
+		    border-bottom: 6px solid #ffffff;
+		    border-left: 6px solid transparent;
+		    border-right: 6px solid transparent;
+		    content: "";
+		    display: inline-block;
+		    left: 10px;
+			right:auto;
+		    position: absolute;
+		    top: -6px;
+		}
+}
+
+@media (min-width: 480px) and (max-width: 767px)  {
+	#resourceEdit .menuLinks{
+		width:60%;
+		float:left;
+	}
+	#resourceEdit .AcItem{
+		width:40%;
+			float:left;
+			text-align:right;
+	}
+	.folderBlockSitemap a{
+		padding:16px 12px;
+	}
+	#resourceEdit .tableMainHeader .resourceNameBlock .resourceTitle{
+		width:62%;
+	}
+	#resourceEdit .tableColumn:last-child{
+		width:auto;
+	}
+	#resourceEdit .tableListOrder {
+		display:block;
+	
+	    margin: 0 auto;
+	    text-align: center;
+	    width: 26px;
+	}
+	#resourceEdit .tableColumn .tableListTags .reviewsText{
+		width:75%;
+	}
+	#resourceEdit .tableColumn .tableListTags .timeText{
+		width:75%;
+	}
+	
+	#resourceEdit .actionItems .dropdown-menu{
+		left:auto;
+		right:0;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+		#resourceEdit .tableColumn .tableListTags .reviewsText{
+			width:76%;
+		}
+		#resourceEdit .tableColumn .tableListTags .timeText{
+			width:76%;
+		}
+		#resourceEdit .tableMainHeader .resourceNameBlock .resourceTitle{
+			width:73%;
+		}
+		#resourceEdit .breadcrumbMain a {
+		    color: #515151;
+		    display: inline-block;
+		    font-size: 12px;
+		    padding: 16px 5px 16px 15px;
+		    position: relative;
+		}
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+			
+}
+@media (min-width: 1200px) {
+	
+}
+
+/* Css for collection edit end*/

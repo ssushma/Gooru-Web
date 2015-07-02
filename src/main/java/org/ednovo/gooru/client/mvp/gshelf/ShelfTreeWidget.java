@@ -149,10 +149,10 @@ public class ShelfTreeWidget extends FocusPanel {
 	private static final String ID = "id";
 	
 	private static final String ASSESSMENT = "assessment";
-	
+	private static final String FOLDER = "folder";
+	private static final String COURSE = "course";
+	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT_URL = "assessment/url";
-
-	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
 	
 	EditAssessmentPopup editAssessmentPopup=null;
 	
@@ -174,7 +174,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
 		}else{
-			setData();
+			setData(nextLevel);
 		}
 		this.getElement().setAttribute("style", "min-height: 42px;");
 		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -182,11 +182,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
 		titleLbl.getElement().setId("htmlTitleLbl");
 		panelToolTip.getElement().setId("pnlPanelToolTip");
-		//htmlToolTipContent.getElement().setId("htmlHtmlToolTipContent");
-		if(AppClientFactory.getPlaceManager().getRequestParameter("view")==null ||!AppClientFactory.getPlaceManager().getRequestParameter("view").equals("Folder")){
-			titleFocPanel.addStyleName("course");
-			titleLbl.setText("UntitleCourse");
-		}
 		titleFocPanel.addClickHandler(new ClickOnFolderItem());
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -215,7 +210,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			public void onMouseOver(MouseOverEvent event) {
 				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
 					String tooltipText="";
-					if(collectionDo.getType().equalsIgnoreCase("folder")){
+					if(collectionDo.getType().equalsIgnoreCase(FOLDER)){
 						tooltipText = i18n.GL1472();
 					}else{
 						tooltipText = i18n.GL1473();
@@ -252,7 +247,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
 			myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 			isValue=false;
-			if(collectionDo.getType().equalsIgnoreCase("folder")){
+			if(collectionDo.getType().equalsIgnoreCase(FOLDER)){
 				MixpanelUtil.mixpanelEvent("Search_click_folder_edit");
 				isEditButtonSelected=true;
 				openFolderInShelf();
@@ -309,14 +304,16 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
-		if(!collectionDo.getType().equals("folder")) {
-			titleFocPanel.addStyleName("collection");
+		if(collectionDo.getType().equals(COURSE)){
+			titleFocPanel.addStyleName(COURSE);
+		}else if(!collectionDo.getType().equals(FOLDER)) {
+			titleFocPanel.addStyleName(COLLECTION);
 		}
 		if(collectionDo.getCollectionType().contains(ASSESSMENT)){
 			titleFocPanel.addStyleName("assessment");
 		}
 		if(collectionDo.getSharing()!=null && !collectionDo.getSharing().equalsIgnoreCase("") && collectionDo.getSharing().equals("public")) {
-			if(collectionDo.getCollectionType().equals("collection") ){
+			if(collectionDo.getCollectionType().equals(COLLECTION) ){
 				titleFocPanel.addStyleName("publicIcon");
 				panelToolTip.getElement().getStyle().clearDisplay();
 			}else if(collectionDo.getCollectionType().equals(ASSESSMENT)){
@@ -359,13 +356,30 @@ public class ShelfTreeWidget extends FocusPanel {
 		}
 	}
 	
-	public void setData() {
+	public void setData(int nextLevel) {
 		String viewType=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
-		if(viewType!=null && viewType.equals("Collection")){
-			titleFocPanel.addStyleName("collection");
+		if(viewType!=null && viewType.equals(COLLECTION)){
+			titleFocPanel.addStyleName(COLLECTION);
 		}
+		titleFocPanel.addStyleName(COURSE);
 		titleLbl.setWidth("138px");
 		titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		if(nextLevel == 1) {
+			titleLbl.setWidth("138px");
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 2) {
+			titleLbl.setWidth("111px");
+			titleFocPanel.addStyleName("unit");
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 3) {
+			titleLbl.setWidth("82px");
+			titleFocPanel.addStyleName("lesson");
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
+		} else if(nextLevel == 4) {
+			titleLbl.setWidth("100px");
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
+			titleFocPanel.addStyleName("collectionChild");
+		}
 	}
 	
 	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
@@ -373,7 +387,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		@Override
 		public void updateShareType(String shareType,String publishStatus,boolean isPublish,CollectionDo collec) {
            if(!isPublish){
-        	   if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection") || collectionDo.getType().equals(ASSESSMENT)){
+        	   if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals(COLLECTION) || collectionDo.getType().equals(ASSESSMENT)){
    				if(titleFocPanel.getStyleName().contains("open")) {
    					if(shareType.equalsIgnoreCase("public")){
    						if(collectionDo.getCollectionType().equals(ASSESSMENT)){
@@ -461,7 +475,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(collectionDo!=null && !collectionDo.getType().equals("folder") && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
 		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
@@ -481,7 +495,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void openFolderItem() {
-		if(collectionDo.getType().equals("folder")) {
+		if(collectionDo!=null &&(collectionDo.getType().equals(FOLDER) || collectionDo.getType().equals(COURSE))) {
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.MYCONTENT) && !isEditButtonSelected) {
      			openFolderInShelf();
 			}
@@ -737,4 +751,21 @@ public class ShelfTreeWidget extends FocusPanel {
 			}
 		}
 	};
+
+
+	/**
+	 * @return the titleLbl
+	 */
+	public HTML getTitleLbl() {
+		return titleLbl;
+	}
+
+	/**
+	 * @return the titleFocPanel
+	 */
+	public FocusPanel getTitleFocPanel() {
+		return titleFocPanel;
+	}
+	
+	
 }
