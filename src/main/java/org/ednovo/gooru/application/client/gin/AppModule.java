@@ -75,8 +75,15 @@ import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.IsAddAssignmentContainerView;
@@ -678,6 +685,8 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(PreSearchPresenter.class,IsPreSearchView.class, PreSearchView.class);
 		bindPresenter(TeachClassPresenter.class, IsTeachClassView.class,TeachClassView.class, IsTeachClassProxy.class);
 		bindPresenterWidget(EditClassPresenter.class, IsEditClassView.class, EditClassView.class);
+		bindPresenterWidget(EditClassSettingsPresenter.class, IsEditClassSettingsView.class, EditClassSettingsView.class);
+		bindPresenterWidget(EditClassContentPresenter.class, IsEditClassContentView.class, EditClassContentView.class);
 		
 
 		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);

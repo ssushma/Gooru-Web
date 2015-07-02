@@ -24,23 +24,23 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 
 /**
- * @fileName : EditClassViewUiHandlers.java
+ * @fileName : IsEditClassSettingsView.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 26-Jun-2015
+ * @date: 01-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public interface EditClassViewUiHandlers extends BaseUiHandlers {
+public interface IsEditClassSettingsView extends IsViewWithHandlers<EditClassSettingsViewUiHandler>{
 
 }

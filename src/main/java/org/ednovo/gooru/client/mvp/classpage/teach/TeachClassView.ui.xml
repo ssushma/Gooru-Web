@@ -5,7 +5,7 @@
 	<ui:style src=""></ui:style>
 	<g:HTMLPanel>
 	<g:HTMLPanel ui:field="startContainer">
-		<g:HTMLPanel styleName="blueBand">
+		<g:HTMLPanel styleName="standardBlueBand">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="no-gutter">
 					<g:HTMLPanel styleName="col-md-6 col-sm-5">
@@ -23,7 +23,21 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
+		<g:HTMLPanel styleName="mainBodySupportBlock">
+			<g:HTMLPanel styleName="container">
+				<g:HTMLPanel styleName="row">
+					<g:HTMLPanel styleName="whiteBG" ui:field="tabTitleContainer">
+						<g:HTMLPanel styleName="MainHeader">
+						<uc:H3Panel ui:field="tabTitle"></uc:H3Panel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:SimplePanel ui:field="bodyMenuView"></g:SimplePanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
 		<g:SimplePanel ui:field="bodyMenu"></g:SimplePanel>
 	</g:HTMLPanel>
   </g:HTMLPanel>
 </ui:UiBinder> 
+
+
