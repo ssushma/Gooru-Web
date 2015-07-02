@@ -573,13 +573,29 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	}
 	@Override
 	public void createNewUnitItem() {
-
+		ShelfTreeWidget selectedWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+		String o2=null,id=null,o3=null;
+		int nextLevel = 1;
+		if(selectedWidget.getLevel()==1) {
+			o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+			id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+			nextLevel = 2;
+		} else if (selectedWidget.getLevel()==2) { 
+			o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+			id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+			nextLevel = 3;
+		}else if (selectedWidget.getLevel()==3) {
+			id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+			nextLevel = 4;
+		}
 		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 2);
+		//shelfTreeWidget.setWidgetPositions(2, 0, null);
 		TreeItem item = new TreeItem(shelfTreeWidget);
-		treeChildSelectedItem.addItem(item);
-
-		
-		
+		shelfTreeWidget.getTitleLbl().setText("untitledUnit");
+		shelfTreeWidget.getTitleFocPanel().addStyleName("unit");
+		treeChildSelectedItem.insertItem(0, item);
+		correctStyle(item);
+		setFolderActiveStatus();
 	}
 	
 	/**

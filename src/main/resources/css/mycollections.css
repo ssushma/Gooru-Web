@@ -373,10 +373,10 @@ button.btn-disabled{
     background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
 }
 #gShelfMainContainer .folderLevel.unit {
-    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 61px 13px;
 }
 #gShelfMainContainer .folderLevel.lesson {
-    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 89px 13px;
 }
 
 #gShelfMainContainer .folderLevel.parent {
