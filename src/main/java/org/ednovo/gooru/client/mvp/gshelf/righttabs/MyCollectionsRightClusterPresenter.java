@@ -151,8 +151,15 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 * To set the shelfMainPresenter obj
 	 * @param shelfMainPresenter
 	 */
-
 	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
 		this.shelfMainPresenter=shelfMainPresenter;
+	}
+	
+	/**
+	 * To set the shelfMainPresenter obj
+	 * @param shelfMainPresenter
+	 */
+	public ShelfMainPresenter getShelfMainPresenter() {
+		return shelfMainPresenter;
 	}
 }

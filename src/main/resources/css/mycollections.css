@@ -362,6 +362,18 @@ button.btn-disabled{
     padding-left:164px;
 }
 
+#gShelfMainContainer .folderLevel.unit {
+    padding-left:108px;
+}
+
+#gShelfMainContainer .folderLevel.lesson {
+    padding-left:136px;
+}
+
+#gShelfMainContainer .folderLevel.collectionChild {
+    padding-left:164px;
+}
+
 /*////////////////////// positioning with folder icon ///////////////////*/
 
 
