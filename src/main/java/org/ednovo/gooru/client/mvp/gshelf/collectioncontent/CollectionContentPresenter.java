@@ -55,6 +55,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+		getView().setCollectionContentPresenter(this);
 	}
 
 	@Override
@@ -94,6 +95,15 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 				collectionItem.setNarration(result.getNarration());
 				collectionItem.setStart(result.getStart());
 				collectionItem.setStop(result.getStop());
+			}
+		});
+	}
+	@Override
+	public void deleteCollectionItem(String collectionItemId) {
+		AppClientFactory.getInjector().getResourceService().deleteCollectionItem(collectionItemId, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				
 			}
 		});
 	}

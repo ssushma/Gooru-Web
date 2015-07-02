@@ -8,6 +8,9 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -30,6 +33,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -69,6 +73,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String END_MINUTE="00";
 	private static final String END_SEC="00";
 	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =i18n.GL0967();
+	private static final String MESSAGE_CONTENT =i18n.GL0968();
+	private static final String MESSAGE_HEADER =i18n.GL0748();
 	
 	boolean youtube;
 	boolean isHavingBadWords=false;
@@ -76,6 +82,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private int totalVideoLength;
 	
 	CollectionItemDo collectionItem;
+	
+	CollectionContentPresenter collectionContentPresenter;
+	
+	private ConfirmationPopupVc deleteConfirmationPopupVc;
 	
 	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
 		this.collectionItem=collectionItem;
@@ -498,6 +508,27 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		});
 	}
+
+	/**
+	 * Confirmation popup for collection item delete, delete collection item
+	 * regarding the popup action
+	 * 
+	 * @param clickEvent
+	 *            instance of {@link ClickEvent}
+	 */
+	@UiHandler("confirmDeleteLbl")
+	public void deleteCollectionItem(ClickEvent clickEvent) {
+		Window.enableScrolling(false);
+        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
+		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
+			@Override
+			public void onDelete(ClickEvent clickEvent) {
+				collectionContentPresenter.deleteCollectionItem(collectionItem.getCollectionItemId());
+				deleteConfirmationPopupVc.hide();
+				ContentResourceWidgetWithMove.this.removeFromParent();
+			}
+		};
+	}
 	/**
 	 * This method is used to trim the text of rich text box.
 	 * @function trim 
@@ -526,4 +557,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 	
 	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);
+	
+	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
+		this.collectionContentPresenter=collectionContentPresenter;
+	}
 }

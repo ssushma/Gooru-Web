@@ -50,4 +50,9 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 * @param narration
 	 */
 	public void updateNarrationItem(CollectionItemDo collectionItem, String narration);
+	/**
+	 * This method is used to delete resoruce
+	 * @param collectionItemId
+	 */
+	public void deleteCollectionItem(String collectionItemId);
 }

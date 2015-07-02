@@ -51,6 +51,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@UiField HTMLPanel pnlContentContainer;
 	@UiField VerticalPanel pnlReosurceList;
 	
+	CollectionContentPresenter collectionContentPresenter;
+	
 	int index=0;
 	String type;
 	
@@ -88,6 +90,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 						getUiHandlers().updateNarrationItem(collectionItem, narration);
 					}
 				}; 
+				widgetMove.setPresenter(collectionContentPresenter);
 				widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
 				pnlReosurceList.add(widgetMove);
 				index++;
@@ -131,5 +134,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				index++;
 			}
 		}
+	}
+	
+	@Override
+	public void setCollectionContentPresenter(CollectionContentPresenter collectionContentPresenter){
+		this.collectionContentPresenter=collectionContentPresenter;
 	}
 }
