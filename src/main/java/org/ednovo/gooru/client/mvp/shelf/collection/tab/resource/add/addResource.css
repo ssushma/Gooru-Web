@@ -186,7 +186,6 @@ user agent stylesheetdiv {
 }
 .addResourceFormTitleChoiceContainer {
 margin: 20px 0px 0px 0px;
-float: left;
 width: 100%;
 }
 .addResourceFormTitleChoice {
@@ -542,9 +541,8 @@ width: 100%;
 	margin: 4px 2px 2px 4px;
 }
 .addResourceButtonContainer {
-	text-align: center;
-	width: 100%;
-	margin-top: 10px;
+	text-align: right;
+	margin-top: 23px;
 }
 .addResourceOk {
 	display: inline-block;
@@ -679,12 +677,11 @@ width: 100%;
 .addResourceBottmTitle {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	float: right;
 	cursor: pointer;
 	color: rgb(16,118,186);
-	text-align: right;
+	text-align: left;
+	float:left;
 	padding: 0px 0px 0px 0px;
-	margin:10px 11% 0px 0px;
 }
 .addResourceBottmTitleAlign {
 }
@@ -1089,9 +1086,8 @@ margin: 1px 0;
 vertical-align: middle;
 }
 .resourceRightsContainer {
-	width: 100%;
-	text-align: center;
-	margin-top:47px;
+	text-align: left;
+	margin-top:32px;
 	display: inline-block;
 }
 .ownResourceFormDeclarationText {

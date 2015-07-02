@@ -174,7 +174,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
 		}else{
-			setData();
+			setData(nextLevel);
 		}
 		this.getElement().setAttribute("style", "min-height: 42px;");
 		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -356,13 +356,30 @@ public class ShelfTreeWidget extends FocusPanel {
 		}
 	}
 	
-	public void setData() {
+	public void setData(int nextLevel) {
 		String viewType=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(viewType!=null && viewType.equals(COLLECTION)){
 			titleFocPanel.addStyleName(COLLECTION);
 		}
+		titleFocPanel.addStyleName(COURSE);
 		titleLbl.setWidth("138px");
 		titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		if(nextLevel == 1) {
+			titleLbl.setWidth("138px");
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 2) {
+			titleLbl.setWidth("111px");
+			titleFocPanel.addStyleName("unit");
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 3) {
+			titleLbl.setWidth("82px");
+			titleFocPanel.addStyleName("lesson");
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
+		} else if(nextLevel == 4) {
+			titleLbl.setWidth("100px");
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
+			titleFocPanel.addStyleName("collectionChild");
+		}
 	}
 	
 	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
