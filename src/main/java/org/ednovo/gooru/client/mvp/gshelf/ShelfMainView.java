@@ -238,11 +238,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
 				ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) event.getSelectedItem().getWidget();
-				//if((shelfTreeWidget.getCollectionDo().getCollectionType()!=null && !shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url"))){
+				if((shelfTreeWidget.getCollectionDo()==null ||shelfTreeWidget.getCollectionDo().getCollectionType()==null)|| 
+						(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url"))){
 					treeChildSelectedItem = event.getSelectedItem();
 					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 					setFolderActiveStatus();
-				//}
+				}
 				if(shelfTreeWidget.getCollectionDo()==null){
 					getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
 				}
