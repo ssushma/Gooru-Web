@@ -362,6 +362,18 @@ button.btn-disabled{
     padding-left:164px;
 }
 
+#gShelfMainContainer .folderLevel.unit {
+    padding-left:108px;
+}
+
+#gShelfMainContainer .folderLevel.lesson {
+    padding-left:136px;
+}
+
+#gShelfMainContainer .folderLevel.collectionChild {
+    padding-left:164px;
+}
+
 /*////////////////////// positioning with folder icon ///////////////////*/
 
 
@@ -1979,16 +1991,32 @@ padding-left:7px;
 	display:table-cell;
 	padding:4px 10px;
 	vertical-align:top;
-	
+	width:40%;
 }
 
 #resourceEdit .tableColumn:first-child{
-		background:#f9fcfe;
-		padding:10px 15px;
-		width:35%;
+	background:#f9fcfe;
+	padding:10px 15px;
+	width:35%;
+}
+#resourceEdit .tableColumn #fpnlActionVerPanel .updateButton{
+	width: 60%;
+	margin-bottom: 10px;
+	margin-top: 9px;
+}
+#resourceEdit .tableColumn #fpnlActionVerPanel{
+	float: right;
+}
+#resourceEdit .tableColumn .resourceNarrationContainer .narrationText{
+	width: 100%;
+	height: 60px;
+	border: 1px solid #999;
+	color: #515151;
+	resize: none !important;
+	font-size: inherit;
+	line-height: inherit;
 }
 #resourceEdit .tableColumn:last-child{
-
     width: 188px;
 }
 #resourceEdit .tableColumn .tableListTags .reviewsIcon, #resourceEdit .tableColumn .tableListTags .reviewsText{
@@ -2042,6 +2070,9 @@ padding-left:7px;
 	width:84%;
 	margin-left:1em;
 }
+#resourceEdit .tableColumn .tableListTags .timeText .youtubeText {
+	float: left;
+}
 #resourceEdit .tableMainHeader .resourceNumber{
 	margin:0 0 2px 0;
 	font-size:26px;
@@ -2073,7 +2104,6 @@ vertical-align:middle;
 	float:left;
 	background:url("../images/resource-type-icons.png") no-repeat scroll 0 -27px;
 }
-
 #resourceEdit .tableMainHeader .resourceNameBlock span.questionsIcon{
 	width:25px;
 	height:25px;
@@ -2081,8 +2111,6 @@ vertical-align:middle;
 	float:left;
 	background:url("../images/resource-type-icons.png") no-repeat scroll -1px -140px;
 }
-
-
 #resourceEdit .tableMainHeader .resourceNameBlock span.imageIcon{
 	width:25px;
 	height:25px;
@@ -2356,4 +2384,339 @@ display:inline-block;
 	
 }
 
+
+
 /* Css for collection edit end*/
+/*unit info starts*/
+.breadcrumbMain a{
+	padding:20px 25px;
+	display:inline-block;
+	font-size:17px;
+	color:#515151;
+	position:relative;
+	
+}
+.breadcrumbMain a:hover, .breadcrumbMain a:focus{
+	opacity:1;
+	text-decoration:none;
+}
+.breadcrumbMain a.active{
+	background:#cddeea;
+}
+
+.breadcrumbMain a.active:after{
+	content:"";
+	position:absolute;
+	width: 0; 
+	height: 0; 
+	border-top: 32px solid transparent;
+	border-bottom: 34px solid transparent;
+	
+	border-left: 20px solid #cddeea;
+	right:-20px;
+	top:0;
+	z-index:999;
+}
+
+.breadcrumbMain a.active:before{
+	content:"";
+	position:absolute;
+	width: 0; 
+	height: 0; 
+	border-top: 32px solid transparent;
+	border-bottom: 34px solid transparent;
+	
+	border-left: 20px solid #f0f0f0;
+	right:-22px;
+	top:0;
+	z-index:99;
+}
+
+.courseFolderOpenIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -449px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.unitFolderOpenIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -484px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.courseFolderCloseIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -449px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.unitFolderCloseIcon{
+	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -484px;
+	width:36px;
+	height:24px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.floderRightContainer .courseHeader {
+	background:#f0f0f0;
+}
+
+#unitinfo .courseNameBlock{
+	border-bottom:1px solid #dddddd;
+	padding:15px 15px 15px 15px;
+}
+#unitinfo .questionsBlock{
+	
+	padding:15px 0;
+		border-bottom:1px solid #dddddd;
+}
+#unitinfo .questionsBlockTextArea{
+padding-right: 15px !important;
+padding-left: 15px !important;
+}
+#unitinfo .questionsBlock p{
+	margin-bottom:5px;
+	color:#515151;
+}
+#unitinfo .dropDownRight{
+	text-align:right;
+}
+#unitinfo .dropDownRight .btn{
+	font-size:12px;
+}
+#unitinfo .unitCoverBlock{
+	padding:15px 0;
+}
+
+#unitinfo .unitCoverBody{
+	padding:15px 15px;
+}
+#unitinfo .unitCoverList {
+	border:1px solid #dddddd;
+	border-radius:3px 3px;
+}
+
+#unitinfo .unitCoverList ul {
+    margin: 0;
+    padding: 0;
+}
+#unitinfo .unitCoverList ul li {
+
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+#unitinfo .unitCoverList ul li a {
+    color: #515151;
+    display: block;
+    font-size: 12px;
+    margin: 0;
+    padding: 8px 15px;
+}
+#unitinfo .unitCoverList ul li a:hover, #unitinfo .unitCoverList ul li a:focus {
+    background: #87badd none repeat scroll 0 0;
+    color: #333333;
+    opacity: 1;
+    text-decoration: none;
+}
+#unitinfo .unitCoverListLeft{
+	border-right:1px solid #dddddd;
+}
+#unitinfo .unitCoverListMiddle{
+	border-right:1px solid #dddddd;
+}
+
+#unitinfo .unitCoverListLeft, #unitinfo .unitCoverListMiddle, #unitinfo .unitCoverListRight{
+	min-height:398px;
+}
+
+#unitinfo .unitCoverListRight ul li{
+	font-style:italic;
+}
+#unitinfo .unitCoverListRight ul li:first-child{
+	font-style:normal;
+}
+@media (max-width: 767px) {
+	
+#unitinfo .unitCoverListLeft, #unitinfo .unitCoverListMiddle, #unitinfo .unitCoverListRight{
+	min-height:inherit;
+}
+#unitinfo .unitCoverListLeft{
+	border-right:none;
+		border-bottom:1px solid #dddddd;
+}
+#unitinfo .unitCoverListMiddle{
+	border-right:none;
+		border-bottom:1px solid #dddddd;
+}
+#unitinfo .breadcrumbMain a{
+	font-size:13px;
+	padding:20px 20px
+}
+#unitinfo .folderBlockSitemap a{
+	padding:16px 18px;
+}
+}
+
+
+
+	@media (min-width: 768px) and (max-width: 991px) {
+		
+
+	}
+
+
+
+		@media (min-width: 992px) and (max-width: 1199px) {
+			
+			
+			
+		}
+
+
+
+
+
+@media (min-width: 1200px) {
+	
+	
+	
+
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+.btn-breadcrumb .btn:not(:last-child):after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 27px solid transparent;
+  border-bottom: 27px solid transparent;
+  border-left: 10px solid #f6f6f6;
+  position: absolute;
+  top: 50%;
+  margin-top: -27px;
+  left: 100%;
+  z-index: 3;
+}
+.btn-breadcrumb .btn:not(:last-child):before {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 27px solid transparent;
+  border-bottom: 27px solid transparent;
+  border-left: 10px solid rgb(173, 173, 173);
+  position: absolute;
+  top: 50%;
+  margin-top: -27px;
+  margin-left: 1px;
+  left: 100%;
+  z-index: 3;
+}
+
+.btn-breadcrumb .btn {
+  padding:15px 15px 15px 24px;
+}
+.btn-breadcrumb .btn:first-child {
+  padding:15px 15px 15px 15px;
+}
+.btn-breadcrumb .btn:last-child {
+  padding:15px 18px 15px 24px;
+}
+.btn-breadcrumb .btn.btn-default{
+	background-color:transparent;
+	border-color:transparent;
+	border-radius:0 0;
+	font-size:13px;
+}
+.btn-breadcrumb .btn.btn-default:hover, .btn-breadcrumb .btn.btn-default:focus {
+
+	box-shadow:none;
+}
+
+/** Default button **/
+.btn-breadcrumb .btn.btn-default:not(:last-child):after {
+  border-left: 16px solid #f6f6f6;
+}
+.btn-breadcrumb .btn.btn-default:not(:last-child):before {
+  border-left: 16px solid #ffffff;
+}
+/*.btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
+  border-left: 10px solid #b4d1b1;
+}*/
+.btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+  border-left: 16px solid #ffffff;
+}
+.btn-breadcrumb .btn.btn-default.active {
+	background-color:#cddeea;
+	box-shadow:none;
+}
+.btn-breadcrumb .btn.btn-default.active:not(:last-child)::after {
+    border-left: 16px solid #cddeea;
+}
+/* The responsive part */
+
+.btn-breadcrumb > * > div {
+    /* With less: .text-overflow(); */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+}
+
+.btn-breadcrumb > *:nth-child(n+2) {
+  display:none;
+}
+
+/* === For phones =================================== */
+@media (max-width: 767px) {
+    .btn-breadcrumb > *:nth-last-child(-n+2) {
+        display:block;
+    } 
+    .btn-breadcrumb > * div {
+        max-width: 60px;
+    }
+}
+
+/* === For tablets ================================== */
+@media (min-width: 768px) and (max-width:991px) {
+    .btn-breadcrumb > *:nth-last-child(-n+4) {
+        display:block;
+    } 
+    .btn-breadcrumb > * div {
+        max-width: 100px;
+    }
+}
+
+/* === For desktops ================================== */
+@media (min-width: 992px) {
+    .btn-breadcrumb > *:nth-last-child(-n+6) {
+        display:block;
+    } 
+    .btn-breadcrumb > * div {
+        max-width: 170px;
+    }
+}
+
+*/
+/*unit info ends*/

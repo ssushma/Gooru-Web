@@ -353,6 +353,10 @@ public enum UrlToken {
 	V2_CREATE_FOLDER("/v2/folder?"),
 	
 	V1_CREATE_COURSE("/v1/course?"),
+	
+	V1_CREATE_UNIT("/v1/course/{0}/unit?"),
+	
+	V1_CREATE_LESSON("/v1/course/{0}/unit/{1}/lesson?"),
 
 	V2_DELETE_FOLDER("/v2/folder/{0}?"),
 

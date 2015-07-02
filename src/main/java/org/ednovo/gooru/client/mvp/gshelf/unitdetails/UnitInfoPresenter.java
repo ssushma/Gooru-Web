@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  * @author Search Team
  *
  */
-public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> implements CourseInfoUiHandlers {
+public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implements UnitInfoUiHandlers {
 
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
@@ -54,13 +54,15 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	
 	final String COURSE="course";
 	
+	private static final String O1_LEVEL = "o1";
+	
 	/**
 	 * Class constructor
 	 * @param view {@link View}
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CourseInfoPresenter( EventBus eventBus,IsCourseInfoView view) {
+	public UnitInfoPresenter( EventBus eventBus,IsUnitInfoView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 	}
@@ -109,22 +111,26 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void createAndSaveCourseDetails(String courseTitle) {
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true,null,null, new SimpleAsyncCallback<FolderDo>() {
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
 
 			@Override
 			public void onSuccess(FolderDo result) {
 				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 			}
 		});
 	}
 	@Override
 	public void showUnitInfo() {
-       myCollectionsRightClusterPresenter.setUnitInfo();
+
+				myCollectionsRightClusterPresenter.setUnitInfo();
+	
 	}
 	@Override
 	public void showUnitTemplate() {
-	   myCollectionsRightClusterPresenter.setUnitTemplate();
+
+				myCollectionsRightClusterPresenter.setUnitTemplate();
+	
 	}
 	
 
@@ -135,17 +141,5 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	public void setData(FolderDo folderObj) {
 		getView().setCouseData(folderObj);
-	}
-
-	@Override
-	public void updateCourseDetails(String text, String id) {
-		AppClientFactory.getInjector().getfolderService().updateCourse(id, text, new SimpleAsyncCallback<Void>() {
-
-			@Override
-			public void onSuccess(Void result) {
-				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result.getTitle());
-				//myCollectionsRightClusterPresenter.setTabItems(2, COURSE, null);
-			}
-		});
 	}
 }

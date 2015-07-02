@@ -22,51 +22,39 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.reports;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- *
+ *  
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
+public class StudentClassReportView extends BaseViewWithHandlers<StudentClassReportUiHandlers> implements IsStudentClassReportView {
 
-	void getChildFolderItems(List<FolderDo> folderListDo);
-
-	void setChildPageNumber(Integer pageNumber);
-
-	int getChildPageNumber();
-
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
+	private static StudentClassReportViewUiBinder uiBinder = GWT
+			.create(StudentClassReportViewUiBinder.class);
 	
-	HTMLPanel getSlot();
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	void setDefaultOrganizePanel(String view);
-	/**
-	 * This method is used to enable the panels based on the user status.
-	 * @param isAnonymous
-	 */
-	void setNoDataForAnonymousUser(boolean isAnonymous);
-	/**
-	 * This method is used to execute scroll functionality
-	 * @param isLeftScroll
-	 */
-	public void executeScroll(boolean isLeftScroll);
-    /**
-     * Update the tree widget as active style
-     */
-	void updateLeftShelfPanelActiveStyle();
+	interface StudentClassReportViewUiBinder extends
+			UiBinder<Widget, StudentClassReportView> {
+	}
 
-	void createNewUnitItem();
-    /**
-     * Updating tree widget 
-     * @param courseDo {@link FolderDo}
-     */
-	void updateTitleOfTreeWidget(FolderDo courseDo);
+	/**
+	 * Class constructor
+	 */
+	public StudentClassReportView() {
+		setWidget(uiBinder.createAndBindUi(this));
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+	}
 }

@@ -22,51 +22,33 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
-
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 /**
- * @author Search Team
+ * @fileName : StudentClassUiHandlers.java
  *
+ * @description : 
+ *
+ * @version : 1.0
+ *
+ * @date: 19-Jun-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
-
-	void getChildFolderItems(List<FolderDo> folderListDo);
-
-	void setChildPageNumber(Integer pageNumber);
-
-	int getChildPageNumber();
-
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
+public interface StudentClassUiHandlers extends BaseUiHandlers {
 	
-	HTMLPanel getSlot();
+	public static final Object SLOT_assignment=new Object();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> LEARNING_MAP_TAB = new Type<RevealContentHandler<?>>();
 
-	void setDefaultOrganizePanel(String view);
-	/**
-	 * This method is used to enable the panels based on the user status.
-	 * @param isAnonymous
-	 */
-	void setNoDataForAnonymousUser(boolean isAnonymous);
-	/**
-	 * This method is used to execute scroll functionality
-	 * @param isLeftScroll
-	 */
-	public void executeScroll(boolean isLeftScroll);
-    /**
-     * Update the tree widget as active style
-     */
-	void updateLeftShelfPanelActiveStyle();
-
-	void createNewUnitItem();
-    /**
-     * Updating tree widget 
-     * @param courseDo {@link FolderDo}
-     */
-	void updateTitleOfTreeWidget(FolderDo courseDo);
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> CLASSPAGE_REPORT_TAB = new Type<RevealContentHandler<?>>();
 }

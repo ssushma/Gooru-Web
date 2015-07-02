@@ -22,51 +22,29 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
+package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 
-import java.util.List;
-
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team
  *
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
-
-	void getChildFolderItems(List<FolderDo> folderListDo);
-
-	void setChildPageNumber(Integer pageNumber);
-
-	int getChildPageNumber();
-
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
+public interface UnitInfoUiHandlers extends BaseUiHandlers {
+	/**
+	 * This method will call the taxonomy service method
+	 */
+	public void callTaxonomyService();
 	
-	HTMLPanel getSlot();
-
-	void setDefaultOrganizePanel(String view);
+	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
+    
 	/**
-	 * This method is used to enable the panels based on the user status.
-	 * @param isAnonymous
+	 * To Create and Save the details of Course
+	 * @param courseTitle {@link String} 
 	 */
-	void setNoDataForAnonymousUser(boolean isAnonymous);
-	/**
-	 * This method is used to execute scroll functionality
-	 * @param isLeftScroll
-	 */
-	public void executeScroll(boolean isLeftScroll);
-    /**
-     * Update the tree widget as active style
-     */
-	void updateLeftShelfPanelActiveStyle();
+	public void createAndSaveCourseDetails(String courseTitle);
 
-	void createNewUnitItem();
-    /**
-     * Updating tree widget 
-     * @param courseDo {@link FolderDo}
-     */
-	void updateTitleOfTreeWidget(FolderDo courseDo);
+	void showUnitInfo();
+
+	void showUnitTemplate();
 }

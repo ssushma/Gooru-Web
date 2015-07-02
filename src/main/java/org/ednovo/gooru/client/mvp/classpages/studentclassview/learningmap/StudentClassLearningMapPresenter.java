@@ -22,51 +22,50 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap;
 
-import java.util.List;
-
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
 
 /**
  * @author Search Team
  *
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
-
-	void getChildFolderItems(List<FolderDo> folderListDo);
-
-	void setChildPageNumber(Integer pageNumber);
-
-	int getChildPageNumber();
-
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
+public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentClassLearningMapView> implements StudentClassLearningMapUiHandlers {
+	/**
+	 * Class constructor
+	 * 
+	 * @param eventBus {@link EventBus}
+	 * @param view {@link View}
+	 */
 	
-	HTMLPanel getSlot();
+	@Inject
+	public StudentClassLearningMapPresenter(EventBus eventBus, IsStudentClassLearningMapView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
 
-	void setDefaultOrganizePanel(String view);
-	/**
-	 * This method is used to enable the panels based on the user status.
-	 * @param isAnonymous
-	 */
-	void setNoDataForAnonymousUser(boolean isAnonymous);
-	/**
-	 * This method is used to execute scroll functionality
-	 * @param isLeftScroll
-	 */
-	public void executeScroll(boolean isLeftScroll);
-    /**
-     * Update the tree widget as active style
-     */
-	void updateLeftShelfPanelActiveStyle();
+	@Override
+	public void onBind() {
+		super.onBind();
+		
+	}
 
-	void createNewUnitItem();
-    /**
-     * Updating tree widget 
-     * @param courseDo {@link FolderDo}
-     */
-	void updateTitleOfTreeWidget(FolderDo courseDo);
+	@Override
+	public void onReveal() {
+		super.onReveal();
+	}
+
+	@Override
+	protected void onHide() {
+		super.onHide();
+	}
+	
+	@Override
+	public void onReset() {
+		getView().setContent();
+	}
+	
 }

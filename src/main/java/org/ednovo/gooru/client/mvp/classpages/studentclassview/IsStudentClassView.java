@@ -22,51 +22,40 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
-
-import java.util.List;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
-
 /**
- * @author Search Team
+ * 
+ * @fileName : IsStudentClassView.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 19-Jun-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
+public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHandlers>  {
 
-	void getChildFolderItems(List<FolderDo> folderListDo);
-
-	void setChildPageNumber(Integer pageNumber);
-
-	int getChildPageNumber();
-
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
-	
-	HTMLPanel getSlot();
-
-	void setDefaultOrganizePanel(String view);
 	/**
-	 * This method is used to enable the panels based on the user status.
-	 * @param isAnonymous
+	 * @function clearAll 
+	 * 
+	 * @created_date : @date: 19-Jun-2015
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
 	 */
-	void setNoDataForAnonymousUser(boolean isAnonymous);
-	/**
-	 * This method is used to execute scroll functionality
-	 * @param isLeftScroll
-	 */
-	public void executeScroll(boolean isLeftScroll);
-    /**
-     * Update the tree widget as active style
-     */
-	void updateLeftShelfPanelActiveStyle();
+	void clearAll();
 
-	void createNewUnitItem();
-    /**
-     * Updating tree widget 
-     * @param courseDo {@link FolderDo}
-     */
-	void updateTitleOfTreeWidget(FolderDo courseDo);
 }

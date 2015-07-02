@@ -26,8 +26,8 @@ package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 
 import com.google.gwt.event.shared.EventBus;
@@ -55,6 +55,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+		getView().setCollectionContentPresenter(this);
 	}
 
 	@Override
@@ -83,6 +84,26 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void onSuccess(Void result) {
 				getView().resetWidgetPositions();
+			}
+		});
+	}
+	@Override
+	public void updateNarrationItem(final CollectionItemDo collectionItem, String narration){
+		AppClientFactory.getInjector().getResourceService().updateNarrationMetadata(collectionItem.getCollectionItemId(), narration, null, new SimpleAsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				collectionItem.setNarration(result.getNarration());
+				collectionItem.setStart(result.getStart());
+				collectionItem.setStop(result.getStop());
+			}
+		});
+	}
+	@Override
+	public void deleteCollectionItem(String collectionItemId) {
+		AppClientFactory.getInjector().getResourceService().deleteCollectionItem(collectionItemId, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				
 			}
 		});
 	}

@@ -20,6 +20,18 @@
 								<img src="images/messageIcon.png"></img>
 							</div>
 							<g:HTMLPanel styleName="reviewsText" ui:field="pnlNarration"/>
+							
+							<g:FlowPanel ui:field="narrationConatainer">
+							<g:HTML ui:field="resourceNarrationHtml"/>
+							<g:Label ui:field="lblCharLimit"></g:Label>
+							<g:FlowPanel ui:field="editFloPanel" >
+								<g:FlowPanel ui:field="narationFloPanel" styleName="resourceNarrationContainer">
+									 <g:TextArea ui:field="narrationTxtArea" styleName="narrationText"/> 
+									<g:Label ui:field="narrationAlertMessageLbl" />
+								</g:FlowPanel>
+							</g:FlowPanel>
+							</g:FlowPanel>
+							
 							<div class="clearfix"></div>
 							<g:HTMLPanel styleName="timeIcon" ui:field="pnlTimeIcon">
 								<img src="images/timeIcon.png"/>
@@ -35,8 +47,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="tableColumn lastItem">
-				<div class="btn-group editButton open">
+			<g:HTMLPanel styleName="tableColumn lastItem">
+				<g:HTMLPanel styleName="btn-group editButton open" ui:field="pnlEditContainer">
 					<button aria-expanded="true" aria-haspopup="true" data-toggle="dropdown"
 						class="btn btn-default dropdown-toggle" type="button">
 						Edit
@@ -65,7 +77,7 @@
 							<g:Anchor ui:field="addTages" text="{i18n.GL1795}" title="{i18n.GL1795}"/>
 						</panel:LiPanel>
 					</panel:UlPanel>
-				</div>
+				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="pnlArrows" styleName="tableListOrder">
 					<g:Label styleName="topArrow sprite" ui:field="lblTopArrow"/>
 					<div class="numInput">
@@ -73,6 +85,11 @@
 					</div>
 					<g:Label styleName="bottomArrow sprite" ui:field="lblDownArrow"/>
 				</g:HTMLPanel>
-			</div>
+				<g:Label ui:field="lblUpdateTextMessage" text="{i18n.GL0966}" title="{i18n.GL0966}"/>
+				<g:FlowPanel ui:field="actionVerPanel">
+					 <g:Button styleName="primary updateButton" ui:field="updateNarrationBtn" text="{i18n.GL0240}" title="{i18n.GL0240}"/>
+					 <g:Button styleName="secondary updateButton" ui:field="cancelNarrationBtn" text="{i18n.GL0142}" title="{i18n.GL0142}"/>
+				</g:FlowPanel>
+			</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -22,51 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf;
 
-import java.util.List;
-
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
+package org.ednovo.gooru.client;
 
 /**
- * @author Search Team
+ * 
+ * @fileName : UrlNavigationTokens.java
  *
+ * @description : 
+ *	The page navigation tokens will be used in this file.
+ *
+ * @version : 1.0
+ *
+ * @date: 30-Jun-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
-public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
-
-	void getChildFolderItems(List<FolderDo> folderListDo);
-
-	void setChildPageNumber(Integer pageNumber);
-
-	int getChildPageNumber();
-
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
+public interface UrlNavigationTokens{
+	//Student Class page Tabs
+	String STUDENT_CLASSPAGE_TAB = "classpage-tab";
+	String STUDENT_CLASSPAGE_LEARNING_MAP_ITEM = "learning-map";
+	String STUDENT_CLASSPAGE_REPORT_ITEM = "student-report";
+	//Student Class page view tokens
+	String STUDENT_CLASSPAGE_PAGE_DIRECT = "page-view";
+	String STUDENT_CLASSPAGE_UNIT_VIEW = "unit-view";
+	String STUDENT_CLASSPAGE_LESSON_VIEW = "lesson-view";
+	String STUDENT_CLASSPAGE_CONTENT_VIEW = "content-view";
+	String STUDENT_CLASSPAGE_UNIT_REPORT_VIEW = "unit-report-view";
+	String STUDENT_CLASSPAGE_ASSESSMENT_REPORT_VIEW = "assessment-report-view";
+	//Student Class page unique ids
+	String STUDENT_CLASSPAGE_CLASS_ID = "id";
+	String STUDENT_CLASSPAGE_UNIT_ID = "u-id";
+	String STUDENT_CLASSPAGE_LESSON_ID = "l-id";
+	String STUDENT_CLASSPAGE_ASSESSMENT_ID = "a-id";
 	
-	HTMLPanel getSlot();
-
-	void setDefaultOrganizePanel(String view);
-	/**
-	 * This method is used to enable the panels based on the user status.
-	 * @param isAnonymous
-	 */
-	void setNoDataForAnonymousUser(boolean isAnonymous);
-	/**
-	 * This method is used to execute scroll functionality
-	 * @param isLeftScroll
-	 */
-	public void executeScroll(boolean isLeftScroll);
-    /**
-     * Update the tree widget as active style
-     */
-	void updateLeftShelfPanelActiveStyle();
-
-	void createNewUnitItem();
-    /**
-     * Updating tree widget 
-     * @param courseDo {@link FolderDo}
-     */
-	void updateTitleOfTreeWidget(FolderDo courseDo);
+	
+	
+	
 }
