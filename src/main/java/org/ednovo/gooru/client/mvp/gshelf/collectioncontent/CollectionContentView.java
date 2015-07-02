@@ -83,6 +83,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							}
 						}
 					}
+					@Override
+					public void updateNarration(CollectionItemDo collectionItem,String narration) {
+						getUiHandlers().updateNarrationItem(collectionItem, narration);
+					}
 				}; 
 				widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
 				pnlReosurceList.add(widgetMove);

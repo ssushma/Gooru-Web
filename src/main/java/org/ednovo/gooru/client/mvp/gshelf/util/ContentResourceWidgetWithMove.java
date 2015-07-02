@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -7,10 +10,12 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,16 +25,22 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class ContentResourceWidgetWithMove extends Composite {
+public abstract class ContentResourceWidgetWithMove extends Composite{
 
 	private static ContentResourceWidgetWithMoveUiBinder uiBinder = GWT
 			.create(ContentResourceWidgetWithMoveUiBinder.class);
@@ -40,18 +51,28 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText;
-	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon;
+	//All Ui fields
+	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
+				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl;
+	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon,pnlEditContainer;
+	@UiField FlowPanel actionVerPanel,narrationConatainer;
 	@UiField TextBox txtMoveTextBox;
+	@UiField TextArea narrationTxtArea;
 	@UiField UlPanel ulGradePanel;
 	@UiField Anchor updateResourceBtn,editInfoLbl,editVideoTimeLbl,editStartPageLbl,copyResource,confirmDeleteLbl,addTages;
+	@UiField HTML resourceNarrationHtml;
 	
+	//final strings
 	private static final String VIDEO_TIME =i18n.GL0974();
 	private static final String START_MINUTE="00";
 	private static final String START_SEC="00";
 	private static final String END_MINUTE="00";
 	private static final String END_SEC="00";
+	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =i18n.GL0967();
+	
 	boolean youtube;
+	boolean isHavingBadWords=false;
+	
 	private int totalVideoLength;
 	
 	CollectionItemDo collectionItem;
@@ -61,16 +82,29 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
+		narrationTxtArea.getElement().setAttribute("maxlength", "500");
+		narrationTxtArea.getElement().setId("tatNarrationTxtArea");
+		
+		actionVerPanel.setVisible(false);
+		lblUpdateTextMessage.setVisible(false);
+		narrationConatainer.setVisible(false);
+		
 		startStopTimeDisplayText.setVisible(false);
 		ulGradePanel.setStyleName("dropdown-menu");
+		actionVerPanel.getElement().setId("fpnlActionVerPanel");
 		
 		videoTimeField.setText(VIDEO_TIME);
-		videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
-		videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
-		videoTimeField.getElement().setId("lblVideoTimeField");
+		StringUtil.setAttributes(videoTimeField.getElement(), "lblVideoTimeField", VIDEO_TIME, VIDEO_TIME);
 		
 		fromLblDisplayText.getElement().setId("lblFromLblDisplayText");
 		setData(index,collectionItem);
+		MouseOutHandler mouseOutHandler=new MouseOutHandler() {
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				resetNarrationDetails();
+			}
+		};
+		this.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
 	}
 	public void setData(int index,CollectionItemDo collectionItem){
 		int indexVal=index+1;
@@ -346,5 +380,150 @@ public abstract class ContentResourceWidgetWithMove extends Composite {
 	public TextBox getTextBox(){
 		return txtMoveTextBox;
 	}
+	/**
+	 * Edit collection item , update collection item
+	 * @param clickEvent
+	 */
+	@UiHandler("updateResourceBtn")
+	public void onEditClick(ClickEvent clickEvent) {
+		MixpanelUtil.Organize_Click_Edit_Narration();
+		enableDisableNarration(false);
+		editAndUpdateResource();
+		lblCharLimit.setVisible(true);
+		pnlTimeIcon.setVisible(false);
+		pnlYoutubeContainer.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
+	}
+	/*
+	 * This clickEvent is used to cancel narration edit
+	 */
+	@UiHandler("cancelNarrationBtn")
+	public void onclickcancelNarrationBtn(ClickEvent event){
+		resetNarrationDetails();
+	}
+	/**
+	 * This method is used to reset the narration details on click of cancel and mouse out of this widget.
+	 */
+	public void resetNarrationDetails(){
+		String narrationText=collectionItem.getNarration()!=null?collectionItem.getNarration():"";
+		narrationTxtArea.setText(narrationText);
+		StringUtil.setAttributes(narrationTxtArea.getElement(),narrationText, narrationText);
+		if(youtube){
+			pnlTimeIcon.setVisible(true);
+			pnlYoutubeContainer.setVisible(true);
+		}else{
+			pnlTimeIcon.setVisible(false);
+			pnlYoutubeContainer.setVisible(false);
+		}
+		enableDisableNarration(true);
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+	}
+	
+	/**
+	 * This method is used to enable and disable the narration fields
+	 * @param isValue
+	 */
+	public void enableDisableNarration(boolean isValue){
+		pnlEditContainer.setVisible(isValue);
+		pnlArrows.setVisible(isValue);
+		pnlNarration.setVisible(isValue);
+		
+		narrationConatainer.setVisible(!isValue);
+		resourceNarrationHtml.setVisible(!isValue);
+		actionVerPanel.setVisible(!isValue);
+	}
+	/**
+	 * Update the collection item meta data
+	 * 
+	 */
+	public void editAndUpdateResource() {
+		if (collectionItem.getNarration() != null) {
+			String narrationText=collectionItem.getNarration();
+			narrationTxtArea.setText(narrationText);
+			StringUtil.setAttributes(narrationTxtArea.getElement(), narrationText, narrationText);
+		}
+		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
+		resourceNarrationHtml.setHTML(ADD_NARRATION_FOR_YOUR_VIEWERS);
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblCharLimit.setText(value);
+		lblCharLimit.setVisible(true);
+		StringUtil.setAttributes(resourceNarrationHtml.getElement(), ADD_NARRATION_FOR_YOUR_VIEWERS, ADD_NARRATION_FOR_YOUR_VIEWERS);
+	}
+	/*
+	 * This clickEvent is used to upadte narration
+	 */
+	@UiHandler("updateNarrationBtn")
+	public void onclickOfnarrationUpdate(ClickEvent event){
+		lblUpdateTextMessage.setVisible(true);
+		actionVerPanel.setVisible(false);
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", narrationTxtArea.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				isHavingBadWords = value;
+				if (value){
+					narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
+					narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
+					
+					narrationTxtArea.getElement().getStyle().setBorderColor("orange");
+					narrationAlertMessageLbl.setText(i18n.GL0554());
+					StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
+					
+					narrationAlertMessageLbl.setVisible(true);
+					actionVerPanel.setVisible(true);
+					lblUpdateTextMessage.setVisible(true);
+					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+				}else{
+					String narration = null;
+					MixpanelUtil.Organize_Click_Edit_Narration_Update();
+					
+					if (resourceNarrationHtml.getHTML().length() > 0) {
+						narration = trim(narrationTxtArea.getText());
+						collectionItem.setNarration(narration);
+						pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+					}
+					try{
+						updateNarration(collectionItem, narration);
+						enableDisableNarration(true);
+						//getPresenter().updateNarrationItem(collectionItem.getCollectionItemId(), narration);
+					}catch(Exception e){
+						AppClientFactory.printSevereLogger(e.getMessage());
+					}
+					lblUpdateTextMessage.setVisible(false);
+					lblCharLimit.setVisible(false);
+					resourceNarrationHtml.getElement().getStyle().clearWidth();
+				}
+			}
+		});
+	}
+	/**
+	 * This method is used to trim the text of rich text box.
+	 * @function trim 
+	 * @created_date : 20-Jan-2014
+	 * 
+	 * @description :
+	 * 
+	 * @parm(s) : @param s
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 */
+	public String trim(String s) {
+	   String result = s.trim(); 
+	   String x = result.replaceAll("<br>", "");
+	   x = x.replaceAll("&nbsp;", "");
+	   x = x.trim();
+	   if(x.equals("")) {
+	       return x;
+	   } else {
+	       return result;
+	   }
+	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
+	
+	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);
 }
