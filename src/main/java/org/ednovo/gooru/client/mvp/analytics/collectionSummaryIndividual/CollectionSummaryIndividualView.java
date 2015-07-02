@@ -848,6 +848,49 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        		}
 						        		 answerspnl.setStyleName(res.css().setMarginAuto());
 						        		 data.setValue(i, 3, answerspnl.toString());
+						        	}else if(HS_TXT.equalsIgnoreCase(questionType)){
+						        		VerticalPanel answerspnl=new VerticalPanel();
+						        		if(result.get(i).getAnswerObject()!=null) {
+						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+						        			 JSONObject answerObject = value.isObject();
+						        			 Set<String> keys=answerObject.keySet();
+						        			 Iterator<String> itr = keys.iterator();
+						        			 boolean isCorrect=false;
+						        		      while(itr.hasNext()) {
+						        		    	  answerspnl.clear();
+						        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+						        		         for(int j=0;j<attemptsObj.size();j++){
+						        		        	Label answerChoice=new Label();
+						        		            String showMessage = null;
+						        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+						        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+						        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+						 	        		         if(skip == false)
+						 							  {
+						 	        		        	showMessage=removeHtmlTags(matext);
+														answerChoice.setText(showMessage);
+														
+						 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+						 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+						 										 isCorrect=true;
+						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+						 										answerChoice.getElement().getStyle().setColor(CORRECT);
+						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+						 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+						 									}
+						 							  }else{
+						 								 isCorrect=true;
+						 							  }
+						 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
+						 	        		        answerspnl.add(answerChoice);
+						        		         }
+						        		      }
+						        		      if(!isCorrect){
+													 isTickdisplay=true;
+												}
+						        		}
+						        		 answerspnl.setStyleName(res.css().setMarginAuto());
+						        		 data.setValue(i, 3, answerspnl.toString());
 						        	}
 						        	
 						        	Image correctImg=new Image();      	            

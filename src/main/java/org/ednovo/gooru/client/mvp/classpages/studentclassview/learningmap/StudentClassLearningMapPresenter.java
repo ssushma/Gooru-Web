@@ -22,23 +22,50 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap;
+
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
 
 /**
  * @author Search Team
  *
  */
-public interface CssTokens {
+public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentClassLearningMapView> implements StudentClassLearningMapUiHandlers {
+	/**
+	 * Class constructor
+	 * 
+	 * @param eventBus {@link EventBus}
+	 * @param view {@link View}
+	 */
 	
-	String PAGINATION_UC = "paginationUc";
-	
-	String PAGINATION_UC_SELECTED = "paginationUcSelected";
-	
-	String FILTER_CHECKBOX = "filterCheckBox";
-	
-	String SEPARATOR = "separator";
-	
-	String FLOAT_LEFT = "floatLeft";
+	@Inject
+	public StudentClassLearningMapPresenter(EventBus eventBus, IsStudentClassLearningMapView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
 
-	String ACTIVE = "active";
+	@Override
+	public void onBind() {
+		super.onBind();
+		
+	}
+
+	@Override
+	public void onReveal() {
+		super.onReveal();
+	}
+
+	@Override
+	protected void onHide() {
+		super.onHide();
+	}
+	
+	@Override
+	public void onReset() {
+		getView().setContent();
+	}
+	
 }

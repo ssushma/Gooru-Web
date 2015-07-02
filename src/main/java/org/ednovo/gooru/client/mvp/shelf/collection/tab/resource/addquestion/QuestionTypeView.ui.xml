@@ -37,7 +37,7 @@
 
 	<g:HTMLPanel ui:field="addQuestImgContainer" styleName="containerMarginTop"/>
 
- <g:HTMLPanel styleName="containerMarginTop" ui:field="questionHotSpotAnswerChoiceContainer" />
+ <g:HTMLPanel styleName="marginTop20" ui:field="questionHotSpotAnswerChoiceContainer" />
 
  <g:Label styleName="errorText errorMessage" ui:field="ansChoiceErrMsg"></g:Label>
 
@@ -136,7 +136,7 @@
 					</g:FlowPanel>
 	        <!-- 21 century End -->
 
- <g:HTMLPanel styleName="col-md-12 colmdPadding containerMarginTop">
+ <g:HTMLPanel styleName="col-md-12 colmdPadding ">
 
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addExplanationAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
           <g:HTMLPanel styleName="advancedOptions"><g:Anchor ui:field="addHintsAnc" styleName="advancedOptionsTabs"></g:Anchor></g:HTMLPanel>
@@ -147,8 +147,8 @@
       </g:HTMLPanel>
 
  <!-- Terms Policy Start -->
-
-     <g:HTMLPanel styleName="termPolicyContainer">
+ <g:HTMLPanel>
+     <g:HTMLPanel styleName="col-md-6 col-sm-6 colmdPadding termPolicyContainer">
         	<g:CheckBox ui:field="rightsChkBox" styleName="checkBoxlevels" checked="true" ></g:CheckBox>
         	<g:Label ui:field="rightsLbl" styleName="copyRightText"></g:Label>
      <HTMLEventPanel:HTMLEventPanel ui:field="lblContentRights" styleName="copyRightIcon">
@@ -173,12 +173,13 @@
          </g:HTMLPanel>
   <!-- Terms Policy End -->
 
-  <g:HTMLPanel styleName="addButtonContainer inlineBlock" ui:field="buttonContainer">
+  <g:HTMLPanel styleName="col-md-6 col-sm-6 colmdPadding addButtonContainer inlineBlock" ui:field="buttonContainer">
          <HTMLEventPanel:HTMLEventPanel styleName="inlineBlock" ui:field="addQuestionResourceButton">
           <uc:BlueButtonUc styleName="primary" ui:field="addbutton"></uc:BlueButtonUc>
       </HTMLEventPanel:HTMLEventPanel>
      	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
 
+      </g:HTMLPanel>
       </g:HTMLPanel>
       <g:Label  styleName="addButtonContainer" ui:field="loadingTextLbl"></g:Label>
 
