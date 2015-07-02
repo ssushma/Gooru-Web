@@ -109,6 +109,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private static final String COURSE = "Course";
 	
 	private static final String UNTITLEDCOURSE = i18n.GL3347();
+	private static final String UNTITLEDUNIT = i18n.GL3362();
+	private static final String UNTITLEDLESSON = i18n.GL3363();
 	
 	private String VIEW ="view";
 	
@@ -592,7 +594,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 2);
 		//shelfTreeWidget.setWidgetPositions(2, 0, null);
 		TreeItem item = new TreeItem(shelfTreeWidget);
-		shelfTreeWidget.getTitleLbl().setText("untitledUnit");
+		shelfTreeWidget.getTitleLbl().setText(UNTITLEDUNIT);
 		shelfTreeWidget.getTitleFocPanel().addStyleName("unit");
 		treeChildSelectedItem.insertItem(0, item);
 		correctStyle(item);
