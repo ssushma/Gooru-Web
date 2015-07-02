@@ -17,12 +17,12 @@
 
 <div class="questionsBlock">
 
-<div class="col-md-6 col-sm-6">
+<div class="col-md-6 col-sm-6 questionsBlockTextArea">
 <p>Big Idea</p>
 <p><textarea class="form-control" rows="3"></textarea></p>
 
 </div>
-<div class="col-md-6 col-sm-6">
+<div class="col-md-6 col-sm-6 questionsBlockTextArea">
 <p>Essential Questions</p>
 <p><textarea class="form-control" rows="3"></textarea></p>
 
@@ -42,8 +42,8 @@
 
 <div class="unitCoverHeader">
 
-<div class="col-md-6 col-sm-6 col-xs-6"> <p>What will this unit cover?</p></div>
-<div class="col-md-6 col-sm-6 col-xs-6">
+<div class="col-md-6 col-sm-6 col-xs-6 questionsBlockTextArea"> <p>What will this unit cover?</p></div>
+<div class="col-md-6 col-sm-6 col-xs-6 questionsBlockTextArea">
 <div class="dropDownRight">
 <div class="btn-group">
   <button class="btn btn-primary" type="button">My Courses   </button>
@@ -52,8 +52,8 @@
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul role="menu" class="dropdown-menu pull-right">
-    <li><a href="#">My Folders</a></li>
-    <li><a href="#">My Collections</a></li>
+    <li><a href="#">This will be replaced with popup</a></li>
+
    
   </ul>
 </div>
@@ -90,8 +90,8 @@
 				</div>
 
 <div class="stepsButtonGroup">
-	<g:Button styleName="secondary" ui:field="saveCourseBtn" text="{i18n.GL3360}"/>
-			<g:Button styleName="primary" ui:field="nextUnitBtn" text="{i18n.GL3361}"/>
+	<g:Button styleName="secondary" ui:field="saveCourseBtn" text="{i18n.GL3362}"/>
+			<g:Button styleName="primary" ui:field="nextUnitBtn" text="{i18n.GL3363}"/>
 
 </div>
 

@@ -2449,6 +2449,10 @@ display:inline-block;
 	padding:15px 0;
 		border-bottom:1px solid #dddddd;
 }
+#unitinfo .questionsBlockTextArea{
+padding-right: 15px !important;
+padding-left: 15px !important;
+}
 #unitinfo .questionsBlock p{
 	margin-bottom:5px;
 	color:#515151;
