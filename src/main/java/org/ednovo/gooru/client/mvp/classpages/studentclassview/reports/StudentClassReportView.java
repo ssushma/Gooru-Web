@@ -22,23 +22,39 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.reports;
+
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- *
+ *  
  */
-public interface CssTokens {
-	
-	String PAGINATION_UC = "paginationUc";
-	
-	String PAGINATION_UC_SELECTED = "paginationUcSelected";
-	
-	String FILTER_CHECKBOX = "filterCheckBox";
-	
-	String SEPARATOR = "separator";
-	
-	String FLOAT_LEFT = "floatLeft";
+public class StudentClassReportView extends BaseViewWithHandlers<StudentClassReportUiHandlers> implements IsStudentClassReportView {
 
-	String ACTIVE = "active";
+	private static StudentClassReportViewUiBinder uiBinder = GWT
+			.create(StudentClassReportViewUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
+	interface StudentClassReportViewUiBinder extends
+			UiBinder<Widget, StudentClassReportView> {
+	}
+
+	/**
+	 * Class constructor
+	 */
+	public StudentClassReportView() {
+		setWidget(uiBinder.createAndBindUi(this));
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+	}
 }

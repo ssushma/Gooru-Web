@@ -48,7 +48,7 @@
 								</div>
 								<div class="col-md-2 standards">
 									<span class="blocksSearch">
-									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary" text="{i18n.GL3294}"></g:Button>
+									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary primary" text="{i18n.GL3294}"></g:Button>
 									</span>
 								</div>
 								<div class="clearfix"></div>
