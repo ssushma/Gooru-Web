@@ -126,9 +126,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
-		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
+		
 		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
@@ -366,6 +366,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	public void createNewUnitItem() {
 		getView().createNewUnitItem();
-		
+	}
+
+	public void updateTitleOfTreeWidget(FolderDo courseDo) {
+		getView().updateTitleOfTreeWidget(courseDo);
 	}
 }
