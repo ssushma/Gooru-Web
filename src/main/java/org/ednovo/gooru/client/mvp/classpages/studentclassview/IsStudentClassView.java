@@ -22,23 +22,40 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview;
 
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 /**
- * @author Search Team
+ * 
+ * @fileName : IsStudentClassView.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 19-Jun-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
-public interface CssTokens {
-	
-	String PAGINATION_UC = "paginationUc";
-	
-	String PAGINATION_UC_SELECTED = "paginationUcSelected";
-	
-	String FILTER_CHECKBOX = "filterCheckBox";
-	
-	String SEPARATOR = "separator";
-	
-	String FLOAT_LEFT = "floatLeft";
+public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHandlers>  {
 
-	String ACTIVE = "active";
+	/**
+	 * @function clearAll 
+	 * 
+	 * @created_date : @date: 19-Jun-2015
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	void clearAll();
+
 }

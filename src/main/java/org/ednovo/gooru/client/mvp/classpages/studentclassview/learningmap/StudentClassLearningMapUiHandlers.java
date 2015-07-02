@@ -22,23 +22,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap;
+
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team
  *
  */
-public interface CssTokens {
+public interface StudentClassLearningMapUiHandlers extends BaseUiHandlers{
 	
-	String PAGINATION_UC = "paginationUc";
-	
-	String PAGINATION_UC_SELECTED = "paginationUcSelected";
-	
-	String FILTER_CHECKBOX = "filterCheckBox";
-	
-	String SEPARATOR = "separator";
-	
-	String FLOAT_LEFT = "floatLeft";
-
-	String ACTIVE = "active";
 }

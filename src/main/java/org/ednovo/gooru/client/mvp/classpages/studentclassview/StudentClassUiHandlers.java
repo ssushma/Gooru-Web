@@ -22,23 +22,33 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview;
 
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 /**
- * @author Search Team
+ * @fileName : StudentClassUiHandlers.java
  *
+ * @description : 
+ *
+ * @version : 1.0
+ *
+ * @date: 19-Jun-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
-public interface CssTokens {
+public interface StudentClassUiHandlers extends BaseUiHandlers {
 	
-	String PAGINATION_UC = "paginationUc";
+	public static final Object SLOT_assignment=new Object();
 	
-	String PAGINATION_UC_SELECTED = "paginationUcSelected";
-	
-	String FILTER_CHECKBOX = "filterCheckBox";
-	
-	String SEPARATOR = "separator";
-	
-	String FLOAT_LEFT = "floatLeft";
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> LEARNING_MAP_TAB = new Type<RevealContentHandler<?>>();
 
-	String ACTIVE = "active";
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> CLASSPAGE_REPORT_TAB = new Type<RevealContentHandler<?>>();
 }

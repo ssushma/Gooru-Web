@@ -88,6 +88,16 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.IsStudentAssignmentVie
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.IsStudentClassView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassPresenter;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassPresenter.IsStudentClassProxy;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.IsStudentClassLearningMapView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.StudentClassLearningMapPresenter;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.StudentClassLearningMapView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.IsStudentClassReportView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.StudentClassReportPresenter;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.StudentClassReportView;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter.IsClassCodeProxy;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodeView;
@@ -652,5 +662,9 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenterWidget(PreSearchPresenter.class,IsPreSearchView.class, PreSearchView.class);
 
+		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);
+		
+		bindPresenterWidget(StudentClassLearningMapPresenter.class,IsStudentClassLearningMapView.class, StudentClassLearningMapView.class);
+		bindPresenterWidget(StudentClassReportPresenter.class,IsStudentClassReportView.class, StudentClassReportView.class);
 	}
 }

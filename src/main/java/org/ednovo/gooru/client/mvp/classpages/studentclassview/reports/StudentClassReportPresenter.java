@@ -22,23 +22,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.reports;
+
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
 
 /**
  * @author Search Team
  *
  */
-public interface CssTokens {
+public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassReportView> implements StudentClassReportUiHandlers {
+	/**
+	 * Class constructor
+	 * 
+	 * @param eventBus {@link EventBus}
+	 * @param view {@link View}
+	 */
 	
-	String PAGINATION_UC = "paginationUc";
-	
-	String PAGINATION_UC_SELECTED = "paginationUcSelected";
-	
-	String FILTER_CHECKBOX = "filterCheckBox";
-	
-	String SEPARATOR = "separator";
-	
-	String FLOAT_LEFT = "floatLeft";
+	@Inject
+	public StudentClassReportPresenter(EventBus eventBus, IsStudentClassReportView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
 
-	String ACTIVE = "active";
+	@Override
+	public void onBind() {
+		super.onBind();
+		
+	}
+
+	@Override
+	public void onReveal() {
+		super.onReveal();
+		getView().onLoad();
+		getView().reset();
+	}
+
+	@Override
+	protected void onHide() {
+		super.onHide();
+		getView().onUnload();
+	}
 }
