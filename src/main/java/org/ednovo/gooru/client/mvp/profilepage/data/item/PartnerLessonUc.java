@@ -283,9 +283,9 @@ public class PartnerLessonUc extends Composite{
 	
 	private HTML setOpenStyle(boolean isOpen) {
 		if(isOpen) {
-			lessonTitle.addStyleName("open");
+			lessonTitle.addStyleName("folderOpen");
 		} else {
-			lessonTitle.removeStyleName("open");
+			lessonTitle.removeStyleName("folderOpen");
 		}
 		return lessonTitle;
 	}
