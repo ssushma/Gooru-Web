@@ -159,7 +159,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				firstWidgetCount++;
 				loadingPanel(true);
 				folderListPanel.setVisible(false);
-				leftMenuItemView.addStyleName("open");
+				leftMenuItemView.addStyleName("folderOpen");
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
 				if(folderList.get(i).getType().equals(COLLECTION)) {
@@ -190,13 +190,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					while (widgetsPanel.hasNext()) {
 						final Widget widgetTxt = widgetsPanel.next();
 						widgetTxt.removeStyleName(style.active());
-						widgetTxt.removeStyleName("open");
+						widgetTxt.removeStyleName("folderOpen");
 					}
-					leftMenuItemView.addStyleName("open");
+					leftMenuItemView.addStyleName("folderOpen");
 					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
 					if(leftMenuItemView.getType().equals(COLLECTION)) {
-						leftMenuItemView.removeStyleName("open");
+						leftMenuItemView.removeStyleName("folderOpen");
 						getPresenter().getProfileLibraryCollection(unitListId, false);
 						listAllBtn.setVisible(false);
 						folderListPanel.setVisible(false);

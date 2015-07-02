@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -67,7 +68,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveCourseBtn;
+	@UiField Button saveCourseBtn,nextUnitBtn;
 	@UiField TextBox courseTitle;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
@@ -194,8 +195,27 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		if(id!=null){
+			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
+		}else{
+			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		}
 	}
+	
+	@UiHandler("nextUnitBtn")
+	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
+		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		if(id!=null){
+			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
+		}else{
+			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+		}
+		getUiHandlers().showUnitTemplate();
+		getUiHandlers().showUnitInfo();
+	}
+	
+	
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {

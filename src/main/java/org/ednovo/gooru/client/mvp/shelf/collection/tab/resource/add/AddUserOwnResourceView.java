@@ -1352,6 +1352,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	private class OnBrowseBtnClick implements ClickHandler { 
 		@Override
 		public void onClick(ClickEvent event) {
+			resourceUpload();
 		}
 	}
 	
