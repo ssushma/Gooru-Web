@@ -40,4 +40,5 @@ public interface CssTokens {
 	
 	String FLOAT_LEFT = "floatLeft";
 
+	String ACTIVE = "active";
 }

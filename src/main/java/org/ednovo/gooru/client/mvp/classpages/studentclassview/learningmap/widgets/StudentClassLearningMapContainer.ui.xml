@@ -1,0 +1,24 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc"
+     xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style src="" />
+    <g:HTMLPanel styleName="rowContainer no-gutter">
+       <g:HTMLPanel styleName="col-md-3 col-sm-3">
+          <uc:HTMLEventPanel styleName="heighlightBlock" ui:field="unitBlock">
+             <span:H3Panel ui:field="unitCountName"></span:H3Panel>
+             <span:PPanel ui:field="unitName"></span:PPanel>
+          </uc:HTMLEventPanel>
+       </g:HTMLPanel>
+       <g:HTMLPanel styleName="col-md-8 col-sm-8">
+          <g:HTMLPanel styleName="progressBlock">
+             <g:HTMLPanel styleName="circle-main-container" ui:field="circleContainer"/>
+          </g:HTMLPanel>
+       </g:HTMLPanel>
+       <g:HTMLPanel styleName="col-md-1 col-sm-1">
+          <g:HTMLPanel styleName="viewReport">
+             <a href="">View Unit Report</a>
+          </g:HTMLPanel>
+       </g:HTMLPanel>
+       <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>

@@ -357,6 +357,7 @@ body{
     z-index: 1;
   }
 }
+
 .focusBlock{
 	position:relative;
 	margin-top:-300px;
@@ -425,16 +426,17 @@ body{
 	text-align:center;
 }
 .focusBlock .standards{
-	padding:38px 0 38px 25px;
+	padding: 38px 0 38px 0;
+  	margin-left: 25px;
 }
 .focusBlock .grade{
 	 display: inline-block;
 	text-align: center;
 }
-
 .focusBlock .browseContentBtn{
 	padding:38px 15px 38px 15px;
 	border-right:1px solid #b1d2e7;
+	width:20%;
 }
 
 .focusBlock .panel-body .standards .btn-group{
@@ -570,9 +572,8 @@ body{
 	color:#515151;
 	margin-left: 35px;
 }
-
 .gettingStarted .gettingContentPane .blocks{
-	margin-bottom:39px;
+	margin-bottom:32px;
 	padding-left: 35px;
 	width: 76%;
 }
@@ -752,11 +753,10 @@ footer ul li a {
 	}
 
 
-
 .focusBlock .browseContentBtn{
 	text-align: right;
-	margin-left: 38px;
-	margin-right: 20px;
+	margin-left: 0;
+	margin-right: 0;
 }
 
 .focusBlock .browseContentBtn button{
@@ -796,7 +796,7 @@ footer ul li a {
 .gettingContentPane .eventsContainer{
 	background: #deebf3;
   	width: 100% !important;
-  	height: 97px;
+  	height: 110px;
 }
 
 .remixBlock a.sampleReport{
@@ -805,9 +805,8 @@ footer ul li a {
 	line-height: 22px;
 }
 
-
 .gradePanel{
-	padding:39px 0 39px 25px;
+	padding:39px 0 39px 10px;
 }
 
 .panelGrade{
@@ -822,8 +821,9 @@ footer ul li a {
 }
 #gooruSearchMainContainer .subjectContainer {
 	display: inline-block;
-    /* margin: 0 0 0 30px; */
+
     text-align: left;
+	margin-left:12px;
 }
 
 #gooruSearchMainContainer .subjectContainer .dropdown-menu {
@@ -880,6 +880,14 @@ footer ul li a {
 
 @media (max-width: 767px) {
 
+	.aboutApproach{
+		width: auto;
+	}
+
+	.remixBlock a.sampleReport {
+		display: block;
+  		text-align: center;
+	}
 	#gooruSearchMainContainer .subjectContainer {
 		text-align: center;
 	}
@@ -953,17 +961,17 @@ footer ul li a {
 		border-bottom:none;
 	}
 	.focusBlock .grade, .focusBlock .standards{
-		padding:15px 0;
+		padding:18px 0 18px 0;
 	}
 	.focusBlock .panel-body{
 		padding:0 0;
 	}
 	.focusBlock .panel-body p{
-		font-size:15px;
+
 	}
 	.focusBlock .blocksSearch{
 		display:block;
-		margin-bottom:15px;
+		margin-bottom:4px;
 
 	}
 	.focusBlock .standards{
@@ -982,9 +990,10 @@ footer ul li a {
 		text-align:center;
 	}
 	.focusBlock .browseContentBtn {
-	    padding: 5px 25px 15px 25px;
+	    padding: 5px 25px 20px 25px;
 	    border-bottom: 1px solid #b1d2e7;
 	    text-align: center;
+		border-right:none;
 	}
 
 	.focusBlock .browseContentBtn button {
@@ -993,11 +1002,10 @@ footer ul li a {
 	.bannerContaner .bannerCaption h1, .bannerContaner .bannerCaption h1 div {
 		font-family: "Arvo",serif!important;
 		color: #fff;
-		font-size: 133%;
+		font-size: 120%;
 		font-weight: bold;
 		text-align: center;
 	}
-
 	.focusBlock .browseContentBtn:after {
 		content: "or";
 		position: absolute;
@@ -1005,8 +1013,8 @@ footer ul li a {
 		top: auto;
 		z-index: 999;
 		color: #4ca4de;
-		padding: 3px 5px;
-		background: #fff;
+		padding:0 5px;
+		background: #f5f5f5;
 		font-size: 18px;
 		bottom: -14px;
 		left: 45%;
@@ -1029,6 +1037,7 @@ footer ul li a {
 
 	.remixBlock h2{
 		margin-bottom:0;
+		margin-top: 30px;
 	}
 	.remixBlock p{
 		text-align:center;
@@ -1079,11 +1088,12 @@ footer ul li a {
 	.gettingStarted .gettingStartedBanner img{
 		width:100%;
 	}
-
 	#gooruSearchMainContainer .subjectContainer{
 
 		text-align:center;
 		margin-left:0;
+		padding-bottom:4px;
+		display:block;
 	}
 	.gettingStarted .gettingContentPane .blocks {
     margin-bottom: 39px;
@@ -1100,6 +1110,9 @@ footer ul li a {
 .gettingContentPane .events{
 	width:100%;
 }
+.focusBlock .browseContentBtn{
+	width:100%;
+}
 }
 
 
@@ -1108,6 +1121,11 @@ footer ul li a {
 	.findImage, .remixImage, .shareImage, .monitorImage {
 		margin: 0 auto;
 
+	}
+
+	.gettingContentPane .events{
+		padding: 10px;
+		width: auto;
 	}
 
 	.bannerContaner .bannerCaption{
@@ -1169,7 +1187,7 @@ footer ul li a {
 		margin-right:20px;
 	}
 	.focusBlock{
-		margin-top:-67px;
+		margin-top:-143px;
 	}
 	.categoriesBlock{
 		padding:30px 0 20px;
@@ -1220,7 +1238,7 @@ footer ul li a {
 		margin-bottom:10px;
 	}
 	.gettingStarted .gettingStartedBanner img{
-	 height: 332px;
+	 height: 374px;
     width: 100%;
 	}
 	.remixBlock p{
@@ -1245,14 +1263,18 @@ footer ul li a {
 	}
 	#gooruSearchMainContainer .subjectContainer{
 		width:auto;
-		margin:0 0 0 10px;
+		margin:0 0 0 6px;
+	}
+	.focusBlock .browseContentBtn button {
+ 	 	margin-right: 18px;
 	}
 	.focusBlock .panel-body p{
 		font-size:13px;
 	}
 	.focusBlock .standards {
-    padding: 39px 0 0;
-}
+		padding: 39px 0 0;
+		margin-left: 0px;
+	}
 
 .focusBlock .browseContentBtn::after{
 	top:36%;
@@ -1272,6 +1294,19 @@ footer ul li a {
 }
 .gettingStarted .gettingContentPane .blocks{
 	width:95%;
+	height:95px;
+}
+.focusBlock .panel-body .btn-primary{
+	font-size:13px;
+}
+.focusBlock .standards{
+	width:22%;
+}
+.focusBlock .browseContentBtn{
+	width:19%;
+}
+.gettingContentPane .eventsIco{
+	height:75px;
 }
 }
 
@@ -1293,7 +1328,7 @@ footer ul li a {
 			font-size:40px;
 		}
 		.gettingStarted .gettingStartedBanner img{
-			height:381px;
+			height:346px;
 		}
 		.gettingStarted .gettingContentPane h2{
 			margin-bottom:15px;
@@ -1316,9 +1351,56 @@ footer ul li a {
 		.focusBlock .browseContentBtn::after{
 			top:33%;
 		}
+
+		.bannerContaner .bannerCaption h1, .bannerContaner .bannerCaption h1 div {
+			font-size: 47px;
+		}
+		.focusBlock {
+			margin-top: -251px;
+		}
+
+		.gettingContentPane .eventsContainer{
+			height:97px;
+		}
+		.gradePanel {
+    padding: 39px 0;
+}
+.focusBlock .panel-body .btn-primary{
+	font-size:16px;
+}
+.focusBlock .standards{
+	width:19%;
+}
+.focusBlock .browseContentBtn button{
+	margin-right:25px;
+}
+#gooruSearchMainContainer .subjectContainer{
+	margin-left:0;
+}
+}
+@media (min-width: 1100px) and (max-width: 1199px){
+
+	.gettingStarted .gettingStartedBanner img{
+		height:367px;
+	}
 }
 
 
-@media (min-width: 1200px) {
+ @media (min-width: 480px) and (max-width: 767px) {
+.bannerContaner .bannerCaption h1, .bannerContaner .bannerCaption h1 div{
+	font-size:142% !important;
+}
+ }
 
+ @media (min-width: 1200px) {
+
+
+
+
+}
+
+@media (min-width: 1100px) and (max-width: 1199px){
+	.gettingStarted .gettingStartedBanner img {
+  		height: 347px;
+	}
 }

@@ -109,25 +109,22 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void createAndSaveCourseDetails(String courseTitle) {
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true,null,null, new SimpleAsyncCallback<FolderDo>() {
 
 			@Override
 			public void onSuccess(FolderDo result) {
 				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 			}
 		});
 	}
 	@Override
 	public void showUnitInfo() {
-
-				myCollectionsRightClusterPresenter.setUnitInfo();
-	
+       myCollectionsRightClusterPresenter.setUnitInfo();
 	}
 	@Override
 	public void showUnitTemplate() {
-
-				myCollectionsRightClusterPresenter.setUnitTemplate();
-	
+	   myCollectionsRightClusterPresenter.setUnitTemplate();
 	}
 	
 
@@ -146,6 +143,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 			@Override
 			public void onSuccess(Void result) {
+				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result.getTitle());
 				//myCollectionsRightClusterPresenter.setTabItems(2, COURSE, null);
 			}
 		});
