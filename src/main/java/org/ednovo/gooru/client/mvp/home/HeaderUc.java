@@ -195,8 +195,6 @@ public class HeaderUc extends Composite
 						try {
 							doc.getElementById("headerMainPanel").getStyle()
 									.clearZIndex();
-							doc.getElementById("goToClasicInnerPanel").getStyle()
-									.clearZIndex();
 						} catch (Exception ex) {
 							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
@@ -204,13 +202,10 @@ public class HeaderUc extends Composite
 						try {
 							doc.getElementById("headerMainPanel").getStyle()
 									.setZIndex(value);
-							doc.getElementById("goToClasicInnerPanel").getStyle()
-									.setZIndex(value);
 						} catch (Exception e) {
 							AppClientFactory.printSevereLogger(e.getMessage());
 						}
 					}
-
 				}
 			});
 		}

@@ -111,10 +111,10 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		privateLbl.getElement().setInnerText(i18n.GL3340());
 		privateLblTxt.getElement().setInnerText(i18n.GL3341());
 		
-		classTitleLbl.setText(i18n.GL3347());
+		classTitleLbl.setText(i18n.GL3401());
 		classTitleLbl.getElement().setId("classTitleLblId");
-		classTitleLbl.getElement().setAttribute("alt",i18n.GL3347());
-		classTitleLbl.getElement().setAttribute("title",i18n.GL3347());
+		classTitleLbl.getElement().setAttribute("alt",i18n.GL3401());
+		classTitleLbl.getElement().setAttribute("title",i18n.GL3401());
 		
 		gradePanel.setText(i18n.GL0325());
 		gradePanel.getElement().setId("classGradeLblId");
@@ -122,10 +122,10 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		gradePanel.getElement().setAttribute("title",i18n.GL0325());
 		
 		
-		bannerImagePanel.setText(i18n.GL3348());
+		bannerImagePanel.setText(i18n.GL3402());
 		bannerImagePanel.getElement().setId("baneerImageLblId");
-		bannerImagePanel.getElement().setAttribute("alt",i18n.GL3348());
-		bannerImagePanel.getElement().setAttribute("title",i18n.GL3348());
+		bannerImagePanel.getElement().setAttribute("alt",i18n.GL3402());
+		bannerImagePanel.getElement().setAttribute("title",i18n.GL3402());
 		
 		uploadImagePanel.setText(i18n.GL0912());
 		uploadImagePanel.getElement().setId("uploadImageLblId");

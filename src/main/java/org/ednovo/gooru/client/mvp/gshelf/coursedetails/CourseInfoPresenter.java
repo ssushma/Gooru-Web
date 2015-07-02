@@ -27,8 +27,11 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.SimpleAsyncCallback;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -45,6 +48,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
 
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
+	
 	final String SUBJECT="subject";
 	
 	final String COURSE="course";
@@ -98,6 +103,48 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				if(result.size()>0){
 					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
 				}
+			}
+		});
+	}
+
+	@Override
+	public void createAndSaveCourseDetails(String courseTitle) {
+		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true,null,null, new SimpleAsyncCallback<FolderDo>() {
+
+			@Override
+			public void onSuccess(FolderDo result) {
+				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+			}
+		});
+	}
+	@Override
+	public void showUnitInfo() {
+       myCollectionsRightClusterPresenter.setUnitInfo();
+	}
+	@Override
+	public void showUnitTemplate() {
+	   myCollectionsRightClusterPresenter.setUnitTemplate();
+	}
+	
+
+	public void setMyCollectionRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+	}
+
+	public void setData(FolderDo folderObj) {
+		getView().setCouseData(folderObj);
+	}
+
+	@Override
+	public void updateCourseDetails(String text, String id) {
+		AppClientFactory.getInjector().getfolderService().updateCourse(id, text, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result.getTitle());
+				//myCollectionsRightClusterPresenter.setTabItems(2, COURSE, null);
 			}
 		});
 	}

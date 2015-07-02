@@ -105,25 +105,19 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
  		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				leftArrow.setVisible(true);
-				rightArrow.setVisible(true);
+				if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
+									leftArrow.setVisible(true);
+									rightArrow.setVisible(true);
+							}else{
+									leftArrow.setVisible(false);
+									rightArrow.setVisible(false);
+									}
 			}
 		};
-		MouseOutHandler outHandler=new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				leftArrow.setVisible(false);
-				rightArrow.setVisible(false);
-			}
-		};
-		htmlpnlProgress.addDomHandler(outHandler, MouseOutEvent.getType());
-		htmlpnlProgress.addDomHandler(mouseOver, MouseOverEvent.getType());
+		scrollForCollectionProgress.addDomHandler(mouseOver, MouseOverEvent.getType());
+		
 		leftArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
 		rightArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
-		
-		leftArrow.addDomHandler(outHandler, MouseOutEvent.getType());
-		rightArrow.addDomHandler(outHandler, MouseOutEvent.getType());
 		
 		filterDropDown.clear();
 		filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
@@ -183,8 +177,6 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			final AdvancedFlexTable adTable=new AdvancedFlexTable();
 			adTable.getElement().setId("example");
 			htmlpnlProgress.add(adTable);
-			leftArrow.setVisible(false);
-			rightArrow.setVisible(false);
 			// create headers and put them in the thead tag
 			Label title=new Label(i18n.GL2287());
 			adTable.setHeaderWidget(0, title);

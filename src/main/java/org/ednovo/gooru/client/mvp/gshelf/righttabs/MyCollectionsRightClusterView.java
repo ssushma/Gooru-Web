@@ -54,13 +54,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,pnlBreadCrumbMain;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare;
 	
-	HTMLPanel slotPanel;
 	FolderDo folderObj;
 	
 	final String ACTIVE="active";
 	private static final String O1_LEVEL = "o1";
-	
-	String oldO1Value=null;
+	private static final String O2_LEVEL = "o2";
+	private static final String O3_LEVEL = "o3";
+	String o1,o2,o3;
+	String oldO1Value=null,oldO2Value=null,oldO3Value=null;
 	
 	ArrayList<String> breadCumsSting=new ArrayList<String>();
 	
@@ -93,7 +94,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		public void onClick(ClickEvent event) {
 			resetHilightStyles();
 			selectedTab.setStyleName(ACTIVE);
-			getUiHandlers().setTabItems(index, "Unit",slotPanel,folderObj);
+			getUiHandlers().setTabItems(index, "Unit",folderObj);
 		}
 	}
 	@Override
@@ -112,8 +113,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 	}
 	@Override
-	public void setSlotPanel(HTMLPanel slotPanel,FolderDo folderObj){
-		 this.slotPanel=slotPanel;
+	public void setSlotPanel(FolderDo folderObj){
 		 this.folderObj=folderObj;
 		 String title=folderObj.getTitle();
 		 setBreadCums(title);
@@ -123,32 +123,36 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param title
 	 */
 	public void setBreadCums(String title){
-		 if(oldO1Value==null){
-			 oldO1Value=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		 }else{
-			 if(!oldO1Value.equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,""))){
-				 breadCumsSting.clear();
-				 pnlBreadCrumbMain.clear();
-				 oldO1Value=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			 }
-		 }
-		 if(!breadCumsSting.contains(title)){
-			 breadCumsSting.add(title);
-			 pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
-		 }else{
-			 int index= breadCumsSting.indexOf(title);
-			 if(index!=-1){
-				 for(int i=pnlBreadCrumbMain.getWidgetCount();i>(index+1);i--){
-					 pnlBreadCrumbMain.getWidget(i-1).removeFromParent();
-					 breadCumsSting.remove(i-1);
-				 }
-			 }
-		 }
+		setRequestParams();
+		if(o1==null || !oldO1Value.equals(o1)){
+			breadCumsSting.clear();
+			pnlBreadCrumbMain.clear();
+		}
+		if(!breadCumsSting.contains(title)){
+			breadCumsSting.add(title);
+			pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+		}else{
+			int index= breadCumsSting.indexOf(title);
+			if(index!=-1){
+				for(int i=pnlBreadCrumbMain.getWidgetCount();i>(index+1);i--){
+					pnlBreadCrumbMain.getWidget(i-1).removeFromParent();
+					breadCumsSting.remove(i-1);
+				}
+			}
+		}
 	}
 	
 	@Override
-	public void setDefaultActiveTab(){
-		lnkInfo.addStyleName(ACTIVE);
+	public void setDefaultActiveTab(int tabIndex){
+		resetHilightStyles();
+		if(tabIndex==2){
+			lnkContent.addStyleName(ACTIVE);
+		}else if(tabIndex==3){
+			lnkshare.addStyleName(ACTIVE);
+		}else{
+			lnkInfo.addStyleName(ACTIVE);
+		}
+		
 	}
 	/**
 	 * This inner class is used to generate breadcum item widget
@@ -169,5 +173,20 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		 public Label getLabel(){
 			 return  lblTitle;
 		 }
+	}
+	
+	public void setRequestParams(){
+		o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		if(oldO1Value==null){
+			oldO1Value=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		}
+		if(oldO2Value==null){
+			oldO2Value=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		}
+		if(oldO3Value==null){
+			oldO3Value=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		}
 	}
 }

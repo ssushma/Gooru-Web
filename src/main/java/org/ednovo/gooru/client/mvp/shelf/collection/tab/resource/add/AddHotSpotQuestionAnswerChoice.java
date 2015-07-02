@@ -75,11 +75,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	@UiField Anchor ansImage,addAnswerChoice;
 	@UiField Image addAnsPlusImage;
 	@UiField HTMLEventPanel ansImageBlock;
-	@UiField
-	public RadioButton imageRDButton;
-
-	@UiField
-	public RadioButton textRDButton;
 
 	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5","6"};
 	public String fieldValue;
@@ -101,14 +96,6 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 		answerHeadingTypeLbl.setText(i18n.GL3227_1());
 		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3227_1());
 		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3227_1());
-		imageRDButton.getElement().setId("rdImage");
-		imageRDButton.setText(i18n.GL3228_1());
-		imageRDButton.getElement().setAttribute("alt", i18n.GL3228_1());
-		imageRDButton.getElement().setAttribute("title", i18n.GL3228_1());
-		textRDButton.getElement().setId("rdText");
-		textRDButton.setText(i18n.GL3229_1());
-		textRDButton.getElement().setAttribute("alt", i18n.GL3229());
-		textRDButton.getElement().setAttribute("title", i18n.GL3229());
 		imgContainer.getElement().setId("pnlImgBoxContainer");
 		textAnsContainer.getElement().setId("pnlTextBoxContainer");
 		answerHeadContainer.getElement().setId("pnlAnswerHeadConatiner");
@@ -134,13 +121,11 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	public void setAnswerFields(boolean val){
 
 		if(val){
-			imageRDButton.setValue(true);
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 			textAnsContainer.setVisible(false);
 			imgContainer.setVisible(true);
 
 		}else {
-			textRDButton.setValue(true);
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 			textAnsContainer.setVisible(true);
 			imgContainer.setVisible(false);
@@ -148,12 +133,10 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	}
 
-	@UiHandler("imageRDButton")
-	public void imageRDButtonClick(ClickEvent event){
+	public void imageRDButtonClick(){
 		setAnswerFields(true);
 	}
-	@UiHandler("textRDButton")
-	public void textRDButtonClick(ClickEvent event){
+	public void textRDButtonClick(){
 		setAnswerFields(false);
 		textAnsContainer.clear();
 		addAnswerChoice();

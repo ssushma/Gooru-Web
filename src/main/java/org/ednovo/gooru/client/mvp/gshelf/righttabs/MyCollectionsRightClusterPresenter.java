@@ -25,46 +25,141 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
 	
 	public static final  Object INNER_SLOT = new Object();
+	
 	CourseInfoPresenter courseInfoPresenter;
+	
+	LessonInfoPresenter lessonInfoPresenter;
+	
+	UnitInfoPresenter unitInfoPresenter;
+	
+	ShelfMainPresenter shelfMainPresenter;
+	
+	FolderDo folderObj;
+	
+	CollectionContentPresenter collectionContentPresenter;
+	
+	final String COLLECTION="Collection";
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
 	/**
 	 * Constructor
 	 * @param eventBus
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CourseInfoPresenter courseInfoPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,UnitInfoPresenter unitInfoPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
+		this.lessonInfoPresenter=lessonInfoPresenter;
+		this.unitInfoPresenter=unitInfoPresenter;
+		this.collectionContentPresenter=collectionContentPresenter;
+		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
+		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
-	public void setTabItems(int index,String type,HTMLPanel slotPanel,FolderDo folderObj) {
+	public void setTabItems(int index,String type,FolderDo folderObj) {
+		if(folderObj!=null){
+			this.folderObj=folderObj;
+		}
+	    AppClientFactory.printInfoLogger("setTabItems");
 		clearSlot(INNER_SLOT);
-		getView().setSlotPanel(slotPanel,folderObj);
+		getView().setSlotPanel(folderObj);
+		getView().setDefaultActiveTab(index);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		if(index==1){
-			courseInfoPresenter.callTaxonomyService();
-			setInSlot(INNER_SLOT, courseInfoPresenter);
+			if(folderObj==null){
+				//For displaying template
+				if(folderObj==null  && o1==null){
+					courseInfoPresenter.callTaxonomyService();
+					FolderDo folderObjTemp = new FolderDo();
+					folderObjTemp.setTitle("Untitled Course");
+					courseInfoPresenter.setData(folderObjTemp);
+					setInSlot(INNER_SLOT, courseInfoPresenter);
+				}else if(folderObj==null && o1!=null  && o2==null){
+					unitInfoPresenter.callTaxonomyService();
+					FolderDo folderObjTemp = new FolderDo();
+					folderObjTemp.setTitle("Untitled Unit");
+					unitInfoPresenter.setData(folderObjTemp);
+					setInSlot(INNER_SLOT, unitInfoPresenter);
+				}else{
+				
+					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}
+			}else{
+				//For displaying original data
+				if(o1==null){
+					courseInfoPresenter.callTaxonomyService();
+					courseInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, courseInfoPresenter);
+				}else if(o1!=null  && o2==null){
+					unitInfoPresenter.callTaxonomyService();
+					unitInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, unitInfoPresenter);
+				}else{
+					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}
+			}
 		}else if(index==2){
-			MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-			myCollectionsListPresenter.setDataInContentSlot(type, slotPanel,folderObj.getGooruOid(),false);
-			setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			//The true condition is added for testing purpose
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+				collectionContentPresenter.setData(folderObj);
+				setInSlot(INNER_SLOT, collectionContentPresenter);
+			}else{
+				MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
+				myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
+				setInSlot(INNER_SLOT, myCollectionsListPresenter);
+			}
 		}else if(index==3){
 			
 		}
 	}
+	//This method is not using present
 	@Override
 	public void setDefaultActiveTab(){
 		getView().resetHilightStyles();
-		getView().setDefaultActiveTab();
+		//getView().setDefaultActiveTab();
+	}
+
+	@Override
+	public void setUnitTemplate(){
+		shelfMainPresenter.createNewUnitItem();
+	}
+	@Override
+	public void setUnitInfo(){
+	/*	courseInfoPresenter.callTaxonomyService();
+		courseInfoPresenter.setData(folderObj);*/
+		setInSlot(INNER_SLOT, unitInfoPresenter);
+		//getView().setDefaultActiveTab();
+	}
+
+	/**
+	 * To set the shelfMainPresenter obj
+	 * @param shelfMainPresenter
+	 */
+	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
+		this.shelfMainPresenter=shelfMainPresenter;
+	}
+	
+	/**
+	 * To set the shelfMainPresenter obj
+	 * @param shelfMainPresenter
+	 */
+	public ShelfMainPresenter getShelfMainPresenter() {
+		return shelfMainPresenter;
 	}
 }

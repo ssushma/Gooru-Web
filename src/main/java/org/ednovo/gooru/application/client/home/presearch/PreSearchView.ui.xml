@@ -11,7 +11,7 @@
 								<tbp:H3Panel styleName="panel-title" text="{i18n.GL3287}"></tbp:H3Panel>
 							</div>
 							<div class="panel-body no-gutter">
-								<g:HTMLPanel styleName="col-md-8" ui:field="buttonGroup">
+								<g:HTMLPanel styleName="col-md-7" ui:field="buttonGroup">
 								    <div class="gradePanel">
 								        <span class="blocksSearch grade">
 											<tbp:PPanel text="{i18n.GL3288}"></tbp:PPanel>
@@ -48,7 +48,7 @@
 								</div>
 								<div class="col-md-2 standards">
 									<span class="blocksSearch">
-									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary" text="{i18n.GL3294}"></g:Button>
+									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary primary" text="{i18n.GL3294}"></g:Button>
 									</span>
 								</div>
 								<div class="clearfix"></div>
@@ -204,13 +204,13 @@
 				</div>
 				<div class="focusTextAlwys">
 					<div class="container">
-						<div class="col-md-6 col-sm-6 animate" data-animate="fadeInLeft">
+						<div class="col-md-5 col-sm-6 animate" data-animate="fadeInLeft">
 							<h2>
 								<g:InlineLabel text="{i18n.GL3312}"></g:InlineLabel>
 								<g:InlineLabel text="{i18n.GL3313}"></g:InlineLabel>
 							</h2>
 						</div>
-						<div class="col-md-6 col-sm-6 animate" data-animate="fadeInRight">
+						<div class="col-md-7 col-sm-6 animate" data-animate="fadeInRight">
 							<div class="BlueBg">
 							    <tbp:PPanel text="{i18n.GL3314}"></tbp:PPanel>
 							</div>

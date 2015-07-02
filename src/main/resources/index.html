@@ -11,7 +11,6 @@
 
 <link href="${cdn.endpoint}/css/main-styles.min.css" media="all" rel="stylesheet" type="text/css">
 <link rel="icon" type="image/png" href="${cdn.endpoint}/images/favicon.png?v=${gooru.release.version}" />
-<!-- <script type="text/javascript" src="//www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg"></script> -->
 <script src="https://www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg&autoload=%7B%22modules%22%3A%5B%7B%22name%22%3A%22visualization%22%2C%22version%22%3A%221.0%22%2C%22packages%22%3A%5B%22corechart%22%2C%22table%22%5D%7D%5D%7D"></script>
 
 <script>
@@ -37,9 +36,6 @@
 	    hewlettOERTracker('create', 'UA-5033010-1', 'auto');
 	 	hewlettOERTracker('send', 'pageview', location.pathname + location.search + location.hash);
 
-	 	/* google.load("visualization", "1", {'packages' : [ "corechart" ]});
-	    google.load("visualization", "1", {'packages' : ["table"] }); */
-
 	</script>
 
 </head>
@@ -62,7 +58,7 @@
 	-->
 	</script>
 
-	<script type="text/javascript" src="//${log.sdk}" defer></script>
+	<!-- <script type="text/javascript" src="${log.sdk}" defer></script> -->
 
 	<script type="text/javascript" src='application/application.nocache.js?v=${gooru.release.version}' defer></script>
 

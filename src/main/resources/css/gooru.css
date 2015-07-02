@@ -2066,13 +2066,13 @@ li.token-input-input-token-gooru {
     display: inline-block;
     text-decoration: inherit;
     display: inline-block;
-    font-family: FontAwesome;
+    /* font-family: FontAwesome; */
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f006';
+    content:'\2606';
 }
 .rating > input:checked ~ label:before,
 .rating:not(:checked) > label:hover:before,
@@ -2081,13 +2081,13 @@ li.token-input-input-token-gooru {
 .rating .ratingItems:not(:checked) > label:hover:before,
 .rating .ratingItems:not(:checked) > label:hover ~ label:before{
     display: inline-block;
-    font-family: FontAwesome;
+    /* font-family: FontAwesome; */
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f005';
+    content:'\2605';
 }
 .rating > input:checked ~ label,
 .rating .ratingItems> input:checked ~ label {
@@ -2139,17 +2139,17 @@ fieldset {
  */
 .star:before {
     display: inline-block;
-    font-family: FontAwesome;
+    /* font-family: FontAwesome; */
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f006';
+    content:'\2606';
 }
 
 .star.filled:before {
-    content: "\f005";
+    content: "\2605";
 }
 
 .userRating .star.filled {
@@ -3381,7 +3381,7 @@ div#spnlDisclosureContentSimPanel>div:first-child {
 	max-height: 183px;
 	overflow-y: auto;
 	text-align: left;
-	width: 117px;
+	width: 195px;
 	overflow-x: hidden;
 	background-color: #FFF !important;
 }

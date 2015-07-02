@@ -151,7 +151,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField(provided = true)
 	AppSuggestBox aggregatorSgstBox;
-	
+
 	LiPanel liPanel;
 
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
@@ -161,9 +161,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private SearchDo<String> sourceSearchDo = new SearchDo<String>();
 
 	private SearchDo<String> aggregatorSearchDo = new SearchDo<String>();
-	
+
 	ArrayList<AutoSuggestContributorSearchDo> contributorSearchList  = new ArrayList<AutoSuggestContributorSearchDo>();
-	
+
 	ArrayList<String> list = new ArrayList<String>();
 
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
@@ -192,18 +192,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	boolean pageFlag=false;
 	boolean firstTime = false,isApiInProgress=true,isApiInProgressLoad=true,isApiInProgressBack=true,isApiInProgressBackLoad=true;
 
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues,selectedContributorType;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues,selectedContributorValues,selectedContributorType="";
 
 	private HandlerRegistration handlerRegistration=null;
 
 	private Storage localStore = null;
 
+	InlineLabel cart = null;
+
 	int pageCountForStorage=1,previousScroll;
 
 	Widget pnlFirstTempData=null;
-	
+
 	SearchContributorView ContributorViewpopup = null;
-	
+
 	/**
 	 * Assign new instance for
 	 *
@@ -254,7 +256,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		btnSearchType.getElement().setAttribute("aria-expanded", "false");
 		btnSearchType.getElement().setAttribute("id", "btnSearchType");
 
-		InlineLabel cart = new InlineLabel();
+		cart = new InlineLabel();
 		cart.setStyleName("caret");
 
 		collectionPanel.getElement().setInnerText(i18n.GL0645());
@@ -408,7 +410,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	    	publisherSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 	    	publisherSgstBox.getElement().setId("asSourceSgst");
 	    	aggregatorSgstBox.getElement().setId("asAggregatorSgst");
-	    	
+
 			aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
 			aggregatorSgstBox.addSelectionHandler(this);
 	    	publisherSgstBox.addSelectionHandler(this);
@@ -663,6 +665,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@Override
 	public void postSearch(SearchDo<T> searchDo,boolean isApiCalled) {
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+			btnSearchType.setText(i18n.GL0645());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}else{
+			btnSearchType.setText(i18n.GL1110());
+			btnSearchType.getElement().appendChild(cart.getElement());
+		}
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
@@ -945,7 +954,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
 						}else{
 							ratingsLbl.setText(ratingValue+"+ Stars");
-							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
+							ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:2%;");
 							ratingsLbl.setVisible(true);
 							pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
 						}
@@ -1933,7 +1942,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 ContributorViewpopup.getResultsPnl().setVisible(false);
 			 ContributorViewpopup.getNoResultsPnl().setVisible(true);
 		}
-	
+
 	}
 	@Override
 	public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event) {

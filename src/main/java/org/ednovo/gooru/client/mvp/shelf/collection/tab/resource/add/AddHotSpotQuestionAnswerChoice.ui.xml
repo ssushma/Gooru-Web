@@ -5,16 +5,14 @@
 	
 	<g:HTMLPanel>
 	     <g:Label ui:field="answerHeadLbl" styleName="answerHeadLbl"></g:Label>
-	     <g:FlowPanel  ui:field="answerHeadContainer" styleName="containerBottom">
+	     <g:FlowPanel  ui:field="answerHeadContainer" >
 	        <g:HTMLPanel styleName="col-md-5 col-sm-6 colmdPadding">
 	         <g:Label  ui:field="answerHeadingTypeLbl" styleName="hsQAnswerHeadings htQAnswerTypeLbl"></g:Label>
-	        <g:RadioButton ui:field="imageRDButton" name="ansTypeGroup" styleName="hsQAnswerHeadings"></g:RadioButton>
-	         <g:RadioButton ui:field="textRDButton" name="ansTypeGroup" styleName="hsQAnswerHeadings"></g:RadioButton>
 	     </g:HTMLPanel>
 	          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	     </g:FlowPanel>
 	<g:HTMLPanel styleName=" htQanswerContainer">
-	     <g:HTMLPanel ui:field="imgContainer" styleName="containerMarginTop containerBottom">
+	     <g:HTMLPanel ui:field="imgContainer" styleName="containerMarginTop ">
 	         
 	         <g:HTMLPanel styleName="col-md-2 col-sm-3 colmdPadding">
 	             <uc:HTMLEventPanel ui:field="ansImageBlock" styleName="imgBlockContainer">
@@ -30,7 +28,7 @@
 	           </g:HTMLPanel>
 	          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	     </g:HTMLPanel>
-	     <g:HTMLPanel ui:field="textAnsContainer" styleName="containerBottom"/>
+	     <g:HTMLPanel ui:field="textAnsContainer" />
 	      <g:Label text="" ui:field="errorMessageforAnswerChoice" styleName="errorText errorMessage"/>
 	      <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	      <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice"></g:Anchor>

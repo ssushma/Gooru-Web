@@ -91,40 +91,40 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	}
 	
 	public void setId(){
-		minmumScoreAnr.setText(i18n.GL3349());
+		minmumScoreAnr.setText(i18n.GL3403());
 		minmumScoreAnr.getElement().setId("minmumAnrId");
-		minmumScoreAnr.getElement().setAttribute("alt",i18n.GL3349());
-		minmumScoreAnr.getElement().setAttribute("title",i18n.GL3349());
+		minmumScoreAnr.getElement().setAttribute("alt",i18n.GL3403());
+		minmumScoreAnr.getElement().setAttribute("title",i18n.GL3403());
 		
-		contentSettingsAnr.setText(i18n.GL3350());
+		contentSettingsAnr.setText(i18n.GL3404());
 		contentSettingsAnr.getElement().setId("contentSettingAnrId");
-		contentSettingsAnr.getElement().setAttribute("alt",i18n.GL3350());
-		contentSettingsAnr.getElement().setAttribute("title",i18n.GL3350());
+		contentSettingsAnr.getElement().setAttribute("alt",i18n.GL3404());
+		contentSettingsAnr.getElement().setAttribute("title",i18n.GL3404());
 		
 		courseLbl.setText(i18n.GL0326());
 		courseLbl.getElement().setId("courseLblId");
 		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
 		courseLbl.getElement().setAttribute("title",i18n.GL0326());
 		
-		editCourseBtn.setText(i18n.GL3351());
+		editCourseBtn.setText(i18n.GL3405());
 		editCourseBtn.getElement().setId("editCourseId");
-		editCourseBtn.getElement().setAttribute("alt",i18n.GL3351());
-		editCourseBtn.getElement().setAttribute("title",i18n.GL3351());
+		editCourseBtn.getElement().setAttribute("alt",i18n.GL3405());
+		editCourseBtn.getElement().setAttribute("title",i18n.GL3405());
 		
-		studentPreviewbtn.setText(i18n.GL3352());
+		studentPreviewbtn.setText(i18n.GL3406());
 		studentPreviewbtn.getElement().setId("previwBtnId");
-		studentPreviewbtn.getElement().setAttribute("alt",i18n.GL3352());
-		studentPreviewbtn.getElement().setAttribute("title",i18n.GL3352());
+		studentPreviewbtn.getElement().setAttribute("alt",i18n.GL3406());
+		studentPreviewbtn.getElement().setAttribute("title",i18n.GL3406());
 		
-		scorePanel.setText(i18n.GL3353());
+		scorePanel.setText(i18n.GL3407());
 		scorePanel.getElement().setId("scorePnlId");
-		scorePanel.getElement().setAttribute("alt",i18n.GL3353());
-		scorePanel.getElement().setAttribute("title",i18n.GL3353());
+		scorePanel.getElement().setAttribute("alt",i18n.GL3407());
+		scorePanel.getElement().setAttribute("title",i18n.GL3407());
 		
-		helpPanel.setText(i18n.GL3354());
+		helpPanel.setText(i18n.GL3408());
 		helpPanel.getElement().setId("helpPnlId");
-		helpPanel.getElement().setAttribute("alt",i18n.GL3354());
-		helpPanel.getElement().setAttribute("title",i18n.GL3354());
+		helpPanel.getElement().setAttribute("alt",i18n.GL3408());
+		helpPanel.getElement().setAttribute("title",i18n.GL3408());
 		
 		saveBtn.setText(i18n.GL0141());
 		saveBtn.getElement().setId("saveBtnId");

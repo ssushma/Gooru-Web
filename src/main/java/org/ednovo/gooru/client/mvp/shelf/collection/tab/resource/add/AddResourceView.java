@@ -76,6 +76,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -139,14 +140,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@UiField HTMLPanel tabViewContainer,addResourceTabContainer,popUpMain;
 	
-	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive,multipleAnswerAnc,hotSpot,hotText;
+	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive,multipleAnswerAnc,hotSpotImg,hotSpotWord,hotTextRO,hotTextHL;
 
-	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton,hotSpotTabButton,hotTextTabButton;
+	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton,hotSpotImageTabButton,hotSpotWordTabButton,hotTextROTabButton,hotTextHLTabButton;
 
 	
 	@UiField Label titleLbl,addResourceCloseButton;
 	
-	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton,hotSpotRadioButton,hotTextRadioButton;
+	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton,hotSpotImgRadioButton,hotSpotWordRadioButton,hotTextRORadioButton,hotTextHLRadioButton;
 	
 	//@UiField HTMLEventPanel singleCorrectResponseButton,multipleSelectButton,evidenceBasedResponseButton,hotTextButton,reorderTextButton,matchingTablesButton/*,shortTextResponseButton,writtenResponseButton*/;
 //	@UiField RadioButton singleCorrectResponseRadioButton,multipleSelectRadioButton,evidenceBasedResponseRadioButton,hotTextRadioButton,reorderTextRadioButton,matchingTablesRadioButton/*,shortTextResponseRadioButton,writtenResponseRadioButton*/;
@@ -177,6 +178,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private boolean isQuestion =false;
 	
 	private boolean isUserResource =false;
+	
+	private boolean isEdit =false;
 	
 	
 	@Inject
@@ -245,19 +248,33 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFalseRadioButton.getElement().setId("rdTrueOrFalseRadioButton");
 		fillInTheBlankRadioButton.getElement().setId("rdFillInTheBlankRadioButton");
 		openEndedRadioButton.getElement().setId("rdOpenEndedRadioButton");
-		hotSpotRadioButton.getElement().setId("rdHotSpotRadioButton");
-		hotTextTabButton.getElement().setId("epnlhotTextTabButton");
-		hotTextTabButton.addClickHandler(new showHotTextWidget());
-		hotTextRadioButton.getElement().setId("rdHotTextRadioButton");
-		hotSpot.setText(i18n.GL3231_1());
-		hotSpot.getElement().setAttribute("alt", i18n.GL3231_1());
-		hotSpot.getElement().setAttribute("title", i18n.GL3231_1());
-		hotSpotTabButton.getElement().setId("hotSpotTabButton");
-		hotSpotTabButton.addClickHandler(new ShowHotSpotWidget());
-		hotText.setText(i18n.GL3212_1());
-		hotText.getElement().setAttribute("alt", i18n.GL3212_1());
-		hotText.getElement().setAttribute("title", i18n.GL3212_1());
-		hotText.getElement().setId("lnkHotText");
+		hotSpotImgRadioButton.getElement().setId("rdHotSpotImgRadioButton");
+		hotSpotWordRadioButton.getElement().setId("rdHotSpotWordRadioButton");
+		hotTextROTabButton.getElement().setId("epnlhotTextROTabButton");
+		hotTextROTabButton.addClickHandler(new showHotTextROWidget());
+		hotTextHLTabButton.getElement().setId("epnlhotTextHLTabButton");
+		hotTextHLTabButton.addClickHandler(new showHotTextHLWidget());
+		hotTextRORadioButton.getElement().setId("rdhotTextRORadioButton");
+		hotTextHLRadioButton.getElement().setId("rdhotTextHLRadioButton");
+		hotSpotImg.setText(i18n.GL3231_1());
+		hotSpotImg.getElement().setAttribute("alt", i18n.GL3231_1());
+		hotSpotImg.getElement().setAttribute("title", i18n.GL3231_1());
+		hotSpotWord.setText(i18n.GL4002());
+		hotSpotWord.getElement().setAttribute("alt", i18n.GL4002());
+		hotSpotWord.getElement().setAttribute("title", i18n.GL4002());
+		hotSpotImageTabButton.getElement().setId("hotSpotImageTabButton");
+		hotSpotImageTabButton.addClickHandler(new ShowHotSpotWidget());
+		hotSpotWordTabButton.getElement().setId("hotSpotWordTabButton");
+		hotSpotWordTabButton.addClickHandler(new ShowHotSpotWordWidget());
+		hotTextRO.setText(i18n.GL3212_1());
+		hotTextRO.getElement().setAttribute("alt", i18n.GL3212_1());
+		hotTextRO.getElement().setAttribute("title", i18n.GL3212_1());
+		hotTextRO.getElement().setId("lnkHotText");
+		
+		hotTextHL.setText(i18n.GL4003());
+		hotTextHL.getElement().setAttribute("alt", i18n.GL4003());
+		hotTextHL.getElement().setAttribute("title", i18n.GL4003());
+		hotTextHL.getElement().setId("lnkHotText");
 		
 		//assessments tabs
 /*		singleCorrectResponseButton.addClickHandler(new AssessmentQuestionsEvent());
@@ -330,8 +347,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFlaseButton.setVisible(isQuestionWidget);
 		openEndedButton.setVisible(isQuestionWidget);
 		fillInTheBlankTabButton.setVisible(isQuestionWidget);
-		hotSpotTabButton.setVisible(isQuestionWidget);
-		hotTextTabButton.setVisible(isQuestionWidget);
+		hotSpotImageTabButton.setVisible(isQuestionWidget);
+		hotSpotWordTabButton.setVisible(isQuestionWidget);
+		hotTextROTabButton.setVisible(isQuestionWidget);
+		hotTextHLTabButton.setVisible(isQuestionWidget);
 		
 		//assessment tabs
 /*		singleCorrectResponseButton.setVisible(isAssementsWidget);
@@ -371,8 +390,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		fillInTheBlankRadioButton.setValue(false);
 		openEndedRadioButton.setValue(false);
 		trueOrFalseRadioButton.setValue(false);
-		hotTextRadioButton.setValue(false);
-		hotSpotRadioButton.setValue(false);
+		hotTextRORadioButton.setValue(false);
+		hotTextHLRadioButton.setValue(false);
+		hotSpotImgRadioButton.setValue(false);
+		hotSpotWordRadioButton.setValue(false);
 //		fillInTheBlankTabButton.setStyleName(res.css().buttonDeSelected());
 //		trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
 //		openEndedButton.setStyleName(res.css().buttonDeSelected());
@@ -551,7 +572,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				public void execute() {
 					if(collectionItemDo!=null){
 						int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
-						if(type==10){
+						if(type==10 || type==11){
 						getUiHandlers().setHSEditData();
 						}
 						showEditQuestionResourceView();
@@ -929,6 +950,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		} else if(clickType.equalsIgnoreCase("Question")){
 			try{
 				Window.enableScrolling(false);
+				isEdit=true;
+				disableEditMode(Cursor.POINTER);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0893());
 				titleLbl.getElement().setAttribute("alt", i18n.GL0893());
@@ -963,7 +986,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			    multipleAnswerTabButton.setStyleName(res.css().buttonDeSelected());
 			    trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
 			    openEndedButton.setStyleName(res.css().buttonDeSelected());
-                hotTextTabButton.setStyleName(res.css().buttonDeSelected());
+                hotTextROTabButton.setStyleName(res.css().buttonDeSelected());
+                hotTextHLTabButton.setStyleName(res.css().buttonDeSelected());
             	questionTypePresenter.getView().editQuestion(null);
 			}catch(Exception e) {
 				AppClientFactory.printSevereLogger(e.getMessage());
@@ -971,6 +995,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{
 				Window.enableScrolling(false);
+				isEdit=false;
+				disableEditMode(Cursor.DEFAULT);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0304());
 				titleLbl.getElement().setAttribute("alt", i18n.GL0304());
@@ -978,7 +1004,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				
 				int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 				if(type==10){
-				getUiHandlers().addSelectedQuestionType("HS",getAddResourceMetadata());
+				getUiHandlers().addSelectedQuestionType("HS_TXT",getAddResourceMetadata());
+				}else if(type==11){
+					getUiHandlers().addSelectedQuestionType("HS_IMG",getAddResourceMetadata());
 				}
 				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
@@ -1009,13 +1037,16 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					fillInTheBlankRadioButton.setValue(true);
 				}else if(questionTypeNum==8){
 					highlightSelectedTab("HT_HL");
-					hotTextRadioButton.setValue(true);
+					hotTextHLRadioButton.setValue(true);
 				}else if(questionTypeNum==9){
 					highlightSelectedTab("HT_RO");
-					hotTextRadioButton.setValue(true);
+					hotTextRORadioButton.setValue(true);
 				}else if(questionTypeNum==10){
-					highlightSelectedTab("HS");
-					hotSpotRadioButton.setValue(true);
+					highlightSelectedTab("HS_TXT");
+					hotSpotWordRadioButton.setValue(true);
+				}else if(questionTypeNum==11){
+					highlightSelectedTab("HS_IMG");
+					hotSpotImgRadioButton.setValue(true);
 				}
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}catch(Exception e) {
@@ -1043,7 +1074,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFalseRadioButton.setValue(false);
 		fillInTheBlankRadioButton.setValue(false);
 		openEndedRadioButton.setValue(false);
-		hotTextRadioButton.setValue(false);
+		hotTextRORadioButton.setValue(false);
+		hotTextHLRadioButton.setValue(false);
 	}
 	@Override
 	public void closePopUp() {
@@ -1055,7 +1087,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private class showMultipleChoiceWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!multipleChoiceRadioButton.getValue()){
+			if(!multipleChoiceRadioButton.getValue() && isEdit){
 				//Window.enableScrolling(true);
 				getUiHandlers().addSelectedQuestionType("MC",getAddResourceMetadata());
 				displayQuestionWidget();
@@ -1075,7 +1107,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private class showTrueOrFalseWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!trueOrFalseRadioButton.getValue()){
+			if(!trueOrFalseRadioButton.getValue() && isEdit){
 				
 				getAddResourceMetadata();
 				
@@ -1097,7 +1129,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private class showOpenEndedWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!openEndedRadioButton.getValue()){
+			if(!openEndedRadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("OE",getAddResourceMetadata());
 				displayQuestionWidget();
 				openEndedRadioButton.setValue(true);
@@ -1111,7 +1143,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!multipleAnswerRadioButton.getValue()){
+			if(!multipleAnswerRadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("MA",getAddResourceMetadata());
 				displayQuestionWidget();
 				highlightSelectedTab("MA");
@@ -1132,7 +1164,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!fillInTheBlankRadioButton.getValue()){
+			if(!fillInTheBlankRadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("FIB",getAddResourceMetadata());
 				displayQuestionWidget();
 				fillInTheBlankRadioButton.setValue(true);
@@ -1158,10 +1190,26 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!hotSpotRadioButton.getValue()){
-				hotSpotRadioButton.setValue(true);
-				highlightSelectedTab("HS");
-				getUiHandlers().addSelectedQuestionType("HS",getAddResourceMetadata());
+			if(!hotSpotImgRadioButton.getValue() && isEdit){
+				hotSpotImgRadioButton.setValue(true);
+				highlightSelectedTab("HS_IMG");
+				getUiHandlers().addSelectedQuestionType("HS_IMG",getAddResourceMetadata());
+				
+				if(titleLbl.getText().equalsIgnoreCase(i18n.GL0304())){
+					getUiHandlers().setHSEditData();
+				}
+			}
+		}
+		
+	}
+	private class ShowHotSpotWordWidget implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Window.enableScrolling(false);
+			if(!hotSpotWordRadioButton.getValue() && isEdit){
+				hotSpotWordRadioButton.setValue(true);
+				highlightSelectedTab("HS_TXT");
+				getUiHandlers().addSelectedQuestionType("HS_TXT",getAddResourceMetadata());
 				
 				if(titleLbl.getText().equalsIgnoreCase(i18n.GL0304())){
 					getUiHandlers().setHSEditData();
@@ -1172,15 +1220,29 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 	
 	
-	private class showHotTextWidget implements ClickHandler{
+	private class showHotTextROWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
-			if(!hotTextRadioButton.getValue()){
+			if(!hotTextRORadioButton.getValue() && isEdit){
 				getUiHandlers().addSelectedQuestionType("HT_RO",getAddResourceMetadata());
 				displayQuestionWidget();
-				hotTextRadioButton.setValue(true);
+				hotTextRORadioButton.setValue(true);
 				highlightSelectedTab("HT_RO");
 				addQuestionResourceWidget.setQuestionType("HT_RO");
+				addQuestionResourceWidget.showHotTextQuestion();
+			}
+		}
+	}
+	
+	private class showHotTextHLWidget implements ClickHandler{
+		public void onClick(ClickEvent event) {
+			Window.enableScrolling(false);
+			if(!hotTextHLRadioButton.getValue() && isEdit){
+				getUiHandlers().addSelectedQuestionType("HT_HL",getAddResourceMetadata());
+				displayQuestionWidget();
+				hotTextHLRadioButton.setValue(true);
+				highlightSelectedTab("HT_HL");
+				addQuestionResourceWidget.setQuestionType("HT_HL");
 				addQuestionResourceWidget.showHotTextQuestion();
 			}
 		}
@@ -1236,10 +1298,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			urlTabButton.setStyleName(res.css().buttonSelected());
 		}else if(tabType.equals("SEARCH")){
 			searchTabButton.setStyleName(res.css().buttonSelected());
-		}else if(tabType.equals("HS")){
-			hotSpotTabButton.setStyleName(res.css().buttonSelected());
-		}else if(tabType.equals("HT_HL") || (tabType.equals("HT_RO"))){
-			hotTextTabButton.setStyleName(res.css().buttonSelected());
+		}else if(tabType.equals("HS_IMG")){
+			hotSpotImageTabButton.setStyleName(res.css().buttonSelected());
+		}else if(tabType.equals("HS_TXT")){
+			hotSpotWordTabButton.setStyleName(res.css().buttonSelected());
+		}else if(tabType.equals("HT_HL")){
+			hotTextHLTabButton.setStyleName(res.css().buttonSelected());
+		}else if(tabType.equals("HT_RO")){
+			hotTextROTabButton.setStyleName(res.css().buttonSelected());
 		}
 	}
 	@Override
@@ -1425,7 +1491,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 	
 	public CollectionQuestionItemDo getAddResourceMetadata(){
-		CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
+		
+		if(addQuestionResourceWidget!=null){
+			
+			CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
 		
 		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 		depthOfKnowledge.put("depthOfKnowledge", addQuestionResourceWidget.depthOfKnowledges);
@@ -1473,11 +1542,17 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		moreOptions.put("21stcentury", addQuestionResourceWidget.addCenturyLabel.isVisible());
 		
 		collectionQuestionItemDo.setMoreOptions(moreOptions);
+		
 		return collectionQuestionItemDo;
+	}
+	return null;
 	}
 
 	@Override
 	public void questionMetadata(final CollectionQuestionItemDo collectionQuestionItemDo) {
+		
+		if(collectionQuestionItemDo!=null){
+		
 		Timer timer1=new Timer() {
 			@Override
 			public void run() {
@@ -1575,4 +1650,35 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
 		if(addQuestionResourceWidget.addCenturyLabel.isVisible()){addQuestionResourceWidget.setCenturyContainer();}
 	}
+	}
+
+	@Override
+	public boolean checkQuestionSlot() {
+		
+		return tabViewContainer.isVisible();
+		
+	}
+	public void disableEditMode(Cursor cursorType){
+		multiplechoice.getElement().getStyle().setCursor(cursorType);
+		multipleAnswerAnc.getElement().getStyle().setCursor(cursorType);
+		truefalase.getElement().getStyle().setCursor(cursorType);
+		truefalseText.getElement().getStyle().setCursor(cursorType);
+		openended.getElement().getStyle().setCursor(cursorType);
+		hotTextRO.getElement().getStyle().setCursor(cursorType);
+		hotTextHL.getElement().getStyle().setCursor(cursorType);
+		hotSpotImg.getElement().getStyle().setCursor(cursorType);
+		hotSpotWord.getElement().getStyle().setCursor(cursorType);
+		
+		questionTabButton.getElement().getStyle().setCursor(cursorType);
+		multipleAnswerTabButton.getElement().getStyle().setCursor(cursorType);
+		trueOrFlaseButton.getElement().getStyle().setCursor(cursorType);
+		fillInTheBlankTabButton.getElement().getStyle().setCursor(cursorType);
+		openEndedButton.getElement().getStyle().setCursor(cursorType);
+		hotTextHLTabButton.getElement().getStyle().setCursor(cursorType);
+		hotTextROTabButton.getElement().getStyle().setCursor(cursorType);
+		hotSpotImageTabButton.getElement().getStyle().setCursor(cursorType);
+		hotSpotWordTabButton.getElement().getStyle().setCursor(cursorType);
+	}
+	
+	
 }

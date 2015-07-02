@@ -102,6 +102,16 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.IsStudentAssignmentVie
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.IsStudentClassView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassPresenter;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassPresenter.IsStudentClassProxy;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.IsStudentClassLearningMapView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.StudentClassLearningMapPresenter;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.StudentClassLearningMapView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.IsStudentClassReportView;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.StudentClassReportPresenter;
+import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.StudentClassReportView;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter.IsClassCodeProxy;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodeView;
@@ -157,6 +167,9 @@ import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter.IsShelfMainProxy;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentView;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.IsCollectionContentView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.IsCourseInfoView;
@@ -169,6 +182,9 @@ import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.IsMyCollectionsRightClusterView;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterView;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.IsUnitInfoView;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
@@ -657,9 +673,11 @@ public class AppModule extends AppPresenterModule {
 		//My Collections New Presenter widgets
 		bindPresenterWidget(MyCollectionsListPresenter.class,IsMyCollectionsListView.class,MyCollectionsListView.class);
 		bindPresenterWidget(CourseInfoPresenter.class,IsCourseInfoView.class,CourseInfoView.class);
+		bindPresenterWidget(UnitInfoPresenter.class,IsUnitInfoView.class,UnitInfoView.class);
 		bindPresenterWidget(LessonInfoPresenter.class,IsLessonInfoView.class,LessonInfoView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
+		bindPresenterWidget(CollectionContentPresenter.class,IsCollectionContentView.class, CollectionContentView.class);
 
 
 		bindPresenterWidget(HomeBannerPresenter.class,IsHomeBannerView.class, HomeBannerView.class);
@@ -671,5 +689,9 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(EditClassContentPresenter.class, IsEditClassContentView.class, EditClassContentView.class);
 		
 
+		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);
+		
+		bindPresenterWidget(StudentClassLearningMapPresenter.class,IsStudentClassLearningMapView.class, StudentClassLearningMapView.class);
+		bindPresenterWidget(StudentClassReportPresenter.class,IsStudentClassReportView.class, StudentClassReportView.class);
 	}
 }

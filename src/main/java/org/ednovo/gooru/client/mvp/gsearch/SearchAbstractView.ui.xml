@@ -10,7 +10,7 @@
 				<g:HTMLPanel styleName="container">
 					<g:HTMLPanel styleName="no-gutter">
 						<g:HTMLPanel styleName="col-md-1 col-sm-5 no-gutter-col">
-							<g:HTMLPanel styleName="seachLeftNavigation">
+							<g:HTMLPanel styleName="seachLeftNavigation resourceDropDown">
 							    <div class="btn-group ScienceBtn">
 									<g:Button ui:field="btnSearchType" styleName="btn btn-default dropdown-toggle"></g:Button>
 								</div>
@@ -25,7 +25,7 @@
 							<g:HTMLPanel  ui:field="collectionSearchPanel" visible="false">
 								<div class="">
 									<div class="no-gutter">
-										<div class="col-md-10 col-sm-10 collectionDetails">
+										<div class="col-md-9 col-sm-12 collectionDetails">
 											<div class="seachLeftNavigation">
 												<panel:UlPanel>
 													<panel:LiPanel styleName="active" ui:field="collectionsBtn">

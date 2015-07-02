@@ -312,6 +312,44 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return folderDo;
 	}
+	
+	@Override
+	public FolderDo createCourse(String folderName,boolean addToShelf, String courseId, String unitId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		FolderDo folderDo = null;
+		if(courseId==null && unitId==null)
+		{
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
+		}
+		else if(courseId!=null && unitId==null)
+		{
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
+		}
+		else
+		{
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
+		}
+		JSONObject courseObject=new JSONObject();
+		try {
+			courseObject.put(TITLE, folderName);
+			if(addToShelf) {
+				courseObject.put(ADD_TO_SHELF, addToShelf);
+			}
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),courseObject.toString());
+
+			logger.info("createCourse : "+url);
+			logger.info("CourseObject : "+courseObject.toString());
+
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRep);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
 
 	public FolderDo deserializeCreatedFolder(JsonRepresentation jsonRep) {
 		try {
@@ -440,6 +478,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			logger.error("Exception::", e);
 		}
 	}
+	
+	
 
 	@Override
 	public CollectionDo copyDraggedCollectionIntoFolder(CollectionDo data,String courseCodeId,String parentId,boolean addToShelf) throws GwtException {
@@ -571,5 +611,21 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			}
 		}
 		return folderList;
+	}
+
+	@Override
+	public void updateCourse(String courseId, String courseTitle)
+			throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA, courseId);
+		JSONObject courseObj=new JSONObject();
+		try {
+			courseObj.put(TITLE, courseTitle);
+			
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),courseObj.toString());
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
 	}
 }

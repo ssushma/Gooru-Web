@@ -5,7 +5,7 @@
 	<g:HTMLPanel ui:field="courseInfo">
 			<div class="courseNameBlock">
 				<p>Course Name</p>
-				<p><input type="text" class="form-control" value="AcNum"/></p>
+				<p><g:TextBox styleName="form-control" ui:field="courseTitle" text="{i18n.GL3347}" title="{i18n.GL3347}"/></p>
 			</div>
 			<div class="tagCoursePanel">
 				<p>Tag your course. What do you plan to cover?</p>
@@ -57,8 +57,8 @@
 			</div>
 		</div>
 		<div class="stepsButtonGroup">
-			<button class="secondary" type="submit">Save &amp; View Course</button>
-			<button class="primary" type="submit">Next: Create a Unit</button>
+			<g:Button styleName="secondary" ui:field="saveCourseBtn" text="{i18n.GL3360}"/>
+			<g:Button styleName="primary" ui:field="nextUnitBtn" text="{i18n.GL3361}"/>
 		</div>
 	</div>
 </g:HTMLPanel>
