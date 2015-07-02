@@ -43,4 +43,9 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	 * This method is used to reset the widgets positions
 	 */
 	public void resetWidgetPositions();
+	/**
+	 * This method is used to set the presenter reference.
+	 * @param collectionContentPresenter
+	 */
+	public void setCollectionContentPresenter(CollectionContentPresenter collectionContentPresenter);
 }

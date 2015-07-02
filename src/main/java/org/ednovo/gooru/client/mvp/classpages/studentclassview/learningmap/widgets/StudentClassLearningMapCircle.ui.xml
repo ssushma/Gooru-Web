@@ -1,0 +1,7 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style src="" />
+	<g:HTMLPanel ui:field="circleField">
+	    <span:SpanPanel ui:field="spanTxt"></span:SpanPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>
