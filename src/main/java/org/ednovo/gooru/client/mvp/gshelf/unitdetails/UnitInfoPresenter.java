@@ -54,6 +54,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String COURSE="course";
 	
+	private static final String O1_LEVEL = "o1";
+	
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -109,7 +111,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 
 	@Override
 	public void createAndSaveCourseDetails(String courseTitle) {
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, new SimpleAsyncCallback<FolderDo>() {
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
 
 			@Override
 			public void onSuccess(FolderDo result) {
