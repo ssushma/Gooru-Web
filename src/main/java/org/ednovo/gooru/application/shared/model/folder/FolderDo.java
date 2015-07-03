@@ -57,6 +57,7 @@ public class FolderDo implements Serializable{
 	private String collectionItemId;
 	private String description;
 	private String url;
+	private String uri;
 	private String goals;
 	private int itemSequence;
 	private CollectionSettingsDo settings;
@@ -273,4 +274,19 @@ public class FolderDo implements Serializable{
 	public void setItemSequence(int itemSequence) {
 		this.itemSequence = itemSequence;
 	}
+
+	/**
+	 * @return the uri
+	 */
+	public String getUri() {
+		return uri;
+	}
+
+	/**
+	 * @param uri the uri to set
+	 */
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+	
 }

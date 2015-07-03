@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
@@ -52,7 +55,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String SUBJECT="subject";
 	
-	final String COURSE="course";
+	final String UNIT="unit";
 	
 	private static final String O1_LEVEL = "o1";
 	
@@ -99,7 +102,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
-		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(subjectId, UNIT, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
@@ -113,10 +116,17 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	public void createAndSaveCourseDetails(String courseTitle) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
-
 			@Override
 			public void onSuccess(FolderDo result) {
-				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+				String[] uri=result.getUri().split("/");
+				Map<String, String> params= new HashMap<String, String>();
+				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+				params.put("o2", uri[uri.length-1]);
+				params.put("view", "course");
+				result.setGooruOid(uri[uri.length-1]);
+				myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
+				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
