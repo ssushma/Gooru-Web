@@ -33,7 +33,7 @@ public class StudentClassLearningMapContainer extends Composite {
 	public StudentClassLearningMapContainer() {
 		initWidget(uiBinder.createAndBindUi(this));
 		setCircleContainerItems();
-		unitBlock.addClickHandler(new LessonPageRedirection("lessonId"));
+		unitBlock.addClickHandler(new LessonPageRedirection("unitId"));
 	}
 	
 	public void setCircleContainerItems() {

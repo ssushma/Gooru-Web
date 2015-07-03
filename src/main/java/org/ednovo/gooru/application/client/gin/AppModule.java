@@ -84,6 +84,9 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContent
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.IsAddAssignmentContainerView;
@@ -687,11 +690,14 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(EditClassPresenter.class, IsEditClassView.class, EditClassView.class);
 		bindPresenterWidget(EditClassSettingsPresenter.class, IsEditClassSettingsView.class, EditClassSettingsView.class);
 		bindPresenterWidget(EditClassContentPresenter.class, IsEditClassContentView.class, EditClassContentView.class);
+		bindPresenterWidget(EditClassStudentPresenter.class, IsEditClassStudentView.class, EditClassStudentView.class);
 		
 
 		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);
 		
 		bindPresenterWidget(StudentClassLearningMapPresenter.class,IsStudentClassLearningMapView.class, StudentClassLearningMapView.class);
+		
 		bindPresenterWidget(StudentClassReportPresenter.class,IsStudentClassReportView.class, StudentClassReportView.class);
+		
 	}
 }

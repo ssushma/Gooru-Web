@@ -1,0 +1,28 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style src=""></ui:style>
+	<g:HTMLPanel styleName="classMenuBlock no-gutter">
+		<g:HTMLPanel styleName="col-md-5 col-sm-6">
+			<g:HTMLPanel styleName="classMenuLeft">
+				<ul>
+				    <uc:LiPanel styleName="active"><g:Anchor>Roster</g:Anchor></uc:LiPanel>
+				    <uc:LiPanel><g:Anchor>Unit Report</g:Anchor></uc:LiPanel>
+				    <uc:LiPanel><g:Anchor>Collection Report</g:Anchor></uc:LiPanel>
+				</ul>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="col-md-7 col-sm-6">
+			<div class="scoreStatus">
+                  <div class="red">Below 60%</div>
+                  <div class="org">60%- 69%</div>
+                  <div class="yellowgreen">70%- 79%</div>
+                  <div class="lightgreen">80%- 89%</div>
+                  <div class="green">90%- 100%</div>
+           </div>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
+

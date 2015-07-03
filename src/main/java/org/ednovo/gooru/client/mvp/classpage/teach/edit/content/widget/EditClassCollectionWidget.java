@@ -22,69 +22,49 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.uc.PPanel;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.PresenterWidget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /**
- * @fileName : EditClassSettingsPresenter.java
+ * @fileName : EditClassCollectionWidget.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 01-Jul-2015
+ * @date: 03-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSettingsView> implements EditClassSettingsViewUiHandler{
+public class EditClassCollectionWidget extends Composite {
 	
-	private ImageUploadPresenter imageUploadPresenter;
-	
-	String classpageId="";
+	@UiField PPanel titlePanel;
 
-	@Inject
-	public EditClassSettingsPresenter(EventBus eventBus,IsEditClassSettingsView view,ImageUploadPresenter imageUploadPresenter) {
-		super(eventBus, view);
-		getView().setUiHandlers(this);
-		this.imageUploadPresenter=imageUploadPresenter;
-		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-	}
-	
-	@Override
-	public void onBind() {
-		super.onBind();
-		
-	}
+	private static EditClassCollectionWidgetUiBinder uiBinder = GWT.create(EditClassCollectionWidgetUiBinder.class);
 
-	@Override
-	public void onReveal() {
-		super.onReveal();
-	}
-
-	@Override
-	protected void onHide() {
-		super.onHide();
+	interface EditClassCollectionWidgetUiBinder extends UiBinder<Widget, EditClassCollectionWidget> {
 	}
 
 	
-	@Override
-	public void showImageUploadWidget() {
-		imageUploadPresenter.setCollectionImage(false);
-		imageUploadPresenter.setClassPageImage(true);
-		imageUploadPresenter.setEditResourceImage(false);
-		imageUploadPresenter.setClasspageId(classpageId);
-		addToPopupSlot(imageUploadPresenter);
+	public EditClassCollectionWidget() {
+		initWidget(uiBinder.createAndBindUi(this));
+		titlePanel.setText("Assessment: Assessment Title");
 	}
-	
+
 }

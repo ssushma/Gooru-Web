@@ -87,12 +87,16 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void setData(final FolderDo folderDo) {
 		/**As off now the API create lession is not implemented hardcode the collection id for testing **/
-		AppClientFactory.getInjector().getResourceService().getCollection("1f093040-2ea7-4962-9fdd-a4147b231d95",true, new SimpleAsyncCallback<CollectionDo>() {
-			@Override
-			public void onSuccess(CollectionDo result) {
-				getView().setData(result,folderDo, RefreshType.INSERT);
-			}
-		});
+
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		if(collectionId!=null){
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionId,true, new SimpleAsyncCallback<CollectionDo>() {
+				@Override
+				public void onSuccess(CollectionDo result) {
+					getView().setData(result,folderDo, RefreshType.INSERT);
+				}
+			});
+		}
 	}
 	@Override
 	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {

@@ -22,27 +22,45 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /**
- * @fileName : IsEditClassContentView.java
+ * @fileName : EditClassStudentView.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jul-2015
+ * @date: 03-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
+public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentViewUiHandler> implements IsEditClassStudentView {
 
-	void setNavigationTab();
+	private static EditClassStudentViewUiBinder uiBinder = GWT.create(EditClassStudentViewUiBinder.class);
+
+	interface EditClassStudentViewUiBinder extends UiBinder<Widget, EditClassStudentView> {
+	}
+
+	public EditClassStudentView() {
+		setWidget(uiBinder.createAndBindUi(this));
+	}
 
 }
