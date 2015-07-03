@@ -184,9 +184,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			Anchor selected=(Anchor) event.getSource();
 			btnSelectedText.setText(selected.getText());
 			if(selectedIndex==0){
+				enableDisableCourseButton(true);
 				organizelbl.setText(i18n.GL3335());
 				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
+				enableDisableCourseButton(false);
 			    organizelbl.setText(i18n.GL3334());
 				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}
@@ -214,9 +216,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}
 		if(tabView==null || tabView.equals(COURSE)){
+			enableDisableCourseButton(true);
 			organizelbl.setText(i18n.GL3335());
 			btnSelectedText.setText(i18n.GL3335());
 		}else if(tabView.equals(FOLDER)){
+			enableDisableCourseButton(false);
 			organizelbl.setText(i18n.GL3334());
 			btnSelectedText.setText(i18n.GL3334());
 		}
@@ -280,7 +284,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getCollectionDo()!=null){
 			//if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
-				if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course") || shelfTreeWidget.getCollectionDo().getType().equals("unit") || shelfTreeWidget.getCollectionDo().getType().equals("lesson")) {
+				if("folder".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "course".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "unit".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "lesson".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType())) {
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);
@@ -776,6 +780,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		if(isEnable){
 			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#4d99cd");
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.POINTER);
+		}else{
+			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
+			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 		}
 		setCreateCourse(isEnable);
 	}

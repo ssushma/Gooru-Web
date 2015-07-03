@@ -9,14 +9,9 @@
              <span:PPanel ui:field="unitName"></span:PPanel>
           </uc:HTMLEventPanel>
        </g:HTMLPanel>
-       <g:HTMLPanel styleName="col-md-8 col-sm-8">
+       <g:HTMLPanel styleName="col-md-9 col-sm-9">
           <g:HTMLPanel styleName="progressBlock">
              <g:HTMLPanel styleName="circle-main-container" ui:field="circleContainer"/>
-          </g:HTMLPanel>
-       </g:HTMLPanel>
-       <g:HTMLPanel styleName="col-md-1 col-sm-1">
-          <g:HTMLPanel styleName="viewReport">
-             <a href="">View Unit Report</a>
           </g:HTMLPanel>
        </g:HTMLPanel>
        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>

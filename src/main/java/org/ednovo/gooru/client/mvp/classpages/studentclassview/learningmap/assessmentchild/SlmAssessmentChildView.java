@@ -22,31 +22,30 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.assessmentchild;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.client.child.ChildView;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Search Team
- *
+ * @author Gooru Team
+ * 
  */
-public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCollectionsRightClusterUiHandlers> {
-	/**
-	 * This method is used to set folder data
-	 * @param folderObj
-	 */
-	public void setSlotPanel(FolderDo folderObj);
-	/**
-	 * This method is used to clear tab active status
-	 */
-	public void resetHilightStyles();
-	/**
-	 * This method is used to set Default or based on index tab selection
-	 * @param tabIndex 
-	 */
-	public void setDefaultActiveTab(int tabIndex);
-	public void setCurrentTypeView(String type);
+public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresenter> implements IsSlmAssessmentView {
+
+	@UiField Anchor reportUrl;
+	
+	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
+
+	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
+	}
+
+	public SlmAssessmentChildView() {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 }

@@ -22,31 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.assessmentchild;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
+import org.ednovo.gooru.application.client.child.ChildPresenter;
 
 /**
  * @author Search Team
- *
+ * 
  */
-public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCollectionsRightClusterUiHandlers> {
-	/**
-	 * This method is used to set folder data
-	 * @param folderObj
-	 */
-	public void setSlotPanel(FolderDo folderObj);
-	/**
-	 * This method is used to clear tab active status
-	 */
-	public void resetHilightStyles();
-	/**
-	 * This method is used to set Default or based on index tab selection
-	 * @param tabIndex 
-	 */
-	public void setDefaultActiveTab(int tabIndex);
-	public void setCurrentTypeView(String type);
+public class SlmAssessmentChildPresenter extends ChildPresenter<SlmAssessmentChildPresenter, IsSlmAssessmentView>{
+
+	public SlmAssessmentChildPresenter(IsSlmAssessmentView childView) {
+		super(childView);
+	}
+
 }
