@@ -22,69 +22,60 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.PresenterWidget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /**
- * @fileName : EditClassSettingsPresenter.java
+ * @fileName : EditClassLessonView.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 01-Jul-2015
+ * @date: 03-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSettingsView> implements EditClassSettingsViewUiHandler{
+public class EditClassLessonView extends Composite {
 	
-	private ImageUploadPresenter imageUploadPresenter;
+	@UiField H4Panel lessonCountPanel;
 	
-	String classpageId="";
+	@UiField PPanel lessonPanel;
+	
+	@UiField HTMLPanel rowContainer;
+	
+	EditClassCollectionWidget editClassCollectionWidget;
 
-	@Inject
-	public EditClassSettingsPresenter(EventBus eventBus,IsEditClassSettingsView view,ImageUploadPresenter imageUploadPresenter) {
-		super(eventBus, view);
-		getView().setUiHandlers(this);
-		this.imageUploadPresenter=imageUploadPresenter;
-		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-	}
-	
-	@Override
-	public void onBind() {
-		super.onBind();
-		
+	private static EditClassLessonViewUiBinder uiBinder = GWT.create(EditClassLessonViewUiBinder.class);
+
+	interface EditClassLessonViewUiBinder extends	UiBinder<Widget, EditClassLessonView> {
 	}
 
-	@Override
-	public void onReveal() {
-		super.onReveal();
+	public EditClassLessonView() {
+		initWidget(uiBinder.createAndBindUi(this));
+		lessonCountPanel.setText("Lesson 1");
+		lessonPanel.setText("Intro to Fractions");
+		for(int i=0;i<5;i++){
+			editClassCollectionWidget=new EditClassCollectionWidget();
+			rowContainer.add(editClassCollectionWidget);
+		}
 	}
-
-	@Override
-	protected void onHide() {
-		super.onHide();
-	}
-
-	
-	@Override
-	public void showImageUploadWidget() {
-		imageUploadPresenter.setCollectionImage(false);
-		imageUploadPresenter.setClassPageImage(true);
-		imageUploadPresenter.setEditResourceImage(false);
-		imageUploadPresenter.setClasspageId(classpageId);
-		addToPopupSlot(imageUploadPresenter);
-	}
-	
 }

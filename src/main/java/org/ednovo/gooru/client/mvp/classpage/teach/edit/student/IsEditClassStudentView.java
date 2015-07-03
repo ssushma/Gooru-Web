@@ -22,27 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 
 /**
- * @fileName : IsEditClassContentView.java
+ * @fileName : IsEditStudentView.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jul-2015
+ * @date: 03-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
-
-	void setNavigationTab();
+public interface IsEditClassStudentView extends IsViewWithHandlers<EditClassStudentViewUiHandler>{
 
 }

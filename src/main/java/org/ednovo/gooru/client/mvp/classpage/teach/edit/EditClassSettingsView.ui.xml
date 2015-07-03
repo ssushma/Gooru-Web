@@ -16,7 +16,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="uploadImage">
 						<uc:PPanel ui:field="bannerImagePanel"></uc:PPanel>
-						<uc:SpanPanel styleName="btn btn-default btn-file" ui:field="uploadImagePanel"></uc:SpanPanel>
+						<g:Button styleName="btn btn-default btn-file" ui:field="uploadImagePanel"></g:Button>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
