@@ -881,7 +881,7 @@ button.btn-disabled{
 	border-left: 20px solid #cddeea;
 	right:-20px;
 	top:0;
-	/* z-index:999; */
+	 z-index:97; 
 }
 
 #gShelfCourseInfo .breadcrumbMain div.active:before{
@@ -895,7 +895,7 @@ button.btn-disabled{
 	border-left: 20px solid #f0f0f0;
 	right:-22px;
 	top:0;
-	/* z-index:99; */
+	 z-index:97; 
 }
 
 #gShelfCourseInfo .equifier {
