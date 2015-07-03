@@ -40,15 +40,17 @@
     width: 150px;
 }
 .learningHeaderBlock {
-    background: #efeeee;
+    background: #fafafa;
     border-radius: 6px 6px 0 0;
     padding: 10px 0;
+    margin-bottom: 10px;
 }
 .learningHeaderBlock .indicationBox {
     text-align: right;
+    padding-top: 3px;
 }
 .learningHeaderBlock .indicationBox div {
-    font-size: 17px;
+    font-size: 12px;
     display: inline-block;
     margin-right: 15px;
 }
@@ -61,36 +63,36 @@
     margin-right: 5px;
 }
 .learningHeaderBlock .green-circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50% 50%;
-    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-small.png") no-repeat 5px 8px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50% 50%;
+	background: #a5cba1 url("//127.0.0.1:8888/images/Classpage/student/checkmark-small.png") no-repeat 0px 4px;
     display: inline-block;
 }
 
 .learningHeaderBlock .green-text {
-    width: 30px;
-    height: 30px;
-    border-radius: 50% 50%;
-    display: inline-block;
-    background: #a5cba1 !important;
+	width: 20px;
+	height: 20px;
+	border-radius: 50% 50%;
+	display: inline-block;
+	background: #a5cba1!important;
 	text-align: center;
-	padding-top: 8px;
-	color: #ffffff;
-	font-size: 12px;
+	padding-top: 4px;
+	color: #fff;
+	font-size: 11px;
 	font-weight: bold;
 }
 
 .learningHeaderBlock .blue-circle {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50% 50%;
     background: #85b9df;
     display: inline-block;
 }
 .learningHeaderBlock .grey-circle {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50% 50%;
     background: #d1cfcf;
     display: inline-block;
@@ -113,7 +115,7 @@
 .rowContainer .heighlightBlock h3 {
     margin: 0 0;
     padding-bottom: 5px;
-    font-size: 22px;
+    font-size: 20px;
     color: #515151;
     font-weight: bold;
 }
@@ -126,27 +128,27 @@
 .rowContainer .progressBlock,
 .rowContainer .heighlightBlock,
 .rowContainer .viewReport {
-    min-height: 70px;
+    min-height: 68px;
 }
 .rowContainer .progressBlock {
-    padding: 12px 8px;
+    padding: 14px 6px;
     border-right: 1px solid #dddddd;
 }
 .rowContainer .progressBlock .circle-main-container {
     margin: 0 0;
-    padding: 0 0;
+    padding: 0px 13px;
     display: block;
 }
 .rowContainer .progressBlock .circle-main-container div {
-    margin: 0 8px 0 0;
+    margin: 0 13px 0 0;
     padding: 0 0;
     list-style: none;
     display: inline-block;
     vertical-align: middle;
 }
 .rowContainer .progressBlock .circle-main-container div span {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50% 50%;
     background: #dddddd;
     display: block;
@@ -168,14 +170,14 @@
     text-decoration: none;
 }
 .rowContainer .progressBlock .circle-main-container div.green-circle span {
-    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 10px 12px;
+    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 6px 10px;
 }
 .rowContainer .progressBlock .circle-main-container div.green-text span {
     background: #a5cba1;
 	text-align: center;
 	padding-top: 11px;
 	color: #ffffff;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 100;
 }
 .rowContainer .progressBlock .circle-main-container div.blue-circle span {
@@ -187,210 +189,67 @@
 .LearningMapContainer {
     padding-bottom: 50px;
 }
-@media (min-width: 240px) and (max-width: 319px) {
-    .learningHeaderBlock .indicationBox div {
-        margin: 5px 0;
-    }
-    .learningHeaderBlock .indicationBox {
-        text-align: left;
-    }
-    .rowContainer .viewReport a {
-        padding: 20px 10px;
-        border-top: 1px solid #dddddd;
-        border-left: none;
-        display: block;
-        margin: 0 0;
-    }
-    .student-blueBand .col-md-6-reset {
-        width: 50% !important;
-        float: left;
-    }
-    .student-blueBand h2 {
-        font-size: 15px;
-    }
-    .rightWhiteBox span {
-        font-size: 18px;
-    }
-    .tabsContainer .btn {
-        width: 135px;
-    }
-    .bannerImg {
-        display: none;
-    }
-}
-@media (min-width: 320px) and (max-width: 479px) {
-    .learningHeaderBlock .indicationBox {
-        text-align: left;
-    }
-    .learningHeaderBlock .indicationBox div {
-        margin: 5px 0;
-    }
-    .rowContainer .viewReport a {
-        padding: 20px 10px;
-        border-top: 1px solid #dddddd;
-        border-left: none;
-        display: block;
-        margin: 0 0;
-    }
-    .student-blueBand .col-md-6-reset {
-        width: 50% !important;
-        float: left;
-    }
-    .student-blueBand h2 {
-        font-size: 16px;
-    }
-    .rightWhiteBox span {
-        font-size: 18px;
-    }
-    .learningHeaderBlock .green-circle {
-        background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-small.png") no-repeat scroll 2px 5px;
-        height: 22px;
-        width: 22px;
-    }
-    .learningHeaderBlock .green-text {
-        height: 22px;
-        width: 22px;
-    }
-	.learningHeaderBlock .blue-circle {
-        height: 22px;
-        width: 22px;
-    }
-    .learningHeaderBlock .grey-circle {
-        height: 22px;
-        width: 22px;
-    }
-    .learningHeaderBlock .indicationBox div {
-        font-size: 11px;
-    }
-    .bannerImg {
-        display: none;
-    }
-}
-@media (min-width: 480px) and (max-width: 767px) {
-    .student-blueBand .col-md-6-reset {
-        width: 50% !important;
-        float: left;
-    }
-    .student-blueBand h2 {
-        font-size: 25px;
-    }
-    .learningHeaderBlock .indicationBox {
-        text-align: center;
-    }
-    .learningHeaderBlock .indicationBox div {
-        margin: 5px 0;
-    }
-    .rowContainer .viewReport a {
-        padding: 20px 10px;
-        border-top: 1px solid #dddddd;
-        border-left: none;
-        display: block;
-        margin: 0 0;
-    }
-    .bannerImg {
-        display: none;
-    }
-}
-@media (max-width: 767px) {
-    .student-blueBand h2 {
-        text-align: left;
-    }
-    .rowContainer .progressBlock,
-    .rowContainer .heighlightBlock,
-    .rowContainer .viewReport {
-        text-align: left;
-    }
-    .rowContainer .progressBlock .circle-main-container div {
-        margin: 0 0 5px 0;
-    }
-    .rowContainer .progressBlock,
-    .rowContainer .heighlightBlock,
-    .rowContainer .viewReport {
-        min-height: inherit;
-    }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-    .rowContainer .heighlightBlock p {
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .rowContainer .progressBlock .circle-main-container div span {
-        width: 35px;
-        height: 35px;
-    }
-    .rowContainer .progressBlock .circle-main-container div {
-        margin: 0 5px 0 0;
-    }
-    .rowContainer .progressBlock .circle-main-container div.green-circle span {
-        background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 4px 7px;
-    }
-}
-@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
-@charset "utf-8";
-/* CSS Document */
 
 .LearningMapContainer .headerLinksContainer {
-    padding: 20px 0;
+    padding: 13px 0;
     border-bottom: 1px solid #dddddd;
     background: #fafafa;
 }
-.LearningMapContainer .topBackLinkBox a {
+.LearningMapContainer .topBackLinkBox div {
     font-size: 20px;
     font-weight: bold;
     color: #515151;
 }
-.LearningMapContainer .topBackLinkBox a span {
+.LearningMapContainer .topBackLinkBox div span {
     display: table-cell;
     vertical-align: middle;
 }
-.LearningMapContainer .topBackLinkBox a span.left-arrow {
+.LearningMapContainer .topBackLinkBox div span.left-arrow {
     background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
     width: 18px;
     height: 25px;
 }
-.LearningMapContainer .topBackLinkBox a:hover,
-.LearningMapContainer .topBackLinkBox a:focus {
+.LearningMapContainer .topBackLinkBox div:hover,
+.LearningMapContainer .topBackLinkBox div:focus {
     text-decoration: none;
 }
-.LearningMapContainer .headerBackLinkBox a {
+.LearningMapContainer .headerBackLinkBox div {
     font-size: 20px;
     font-weight: bold;
     color: #515151;
 }
-.LearningMapContainer .headerBackLinkBox a span {
+.LearningMapContainer .headerBackLinkBox div span {
     display: table-cell;
     vertical-align: middle;
 }
-.LearningMapContainer .headerBackLinkBox a span.left-arrow {
+.LearningMapContainer .headerBackLinkBox div span.left-arrow {
     background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
     width: 18px;
     height: 25px;
 }
-.LearningMapContainer .headerBackLinkBox a:hover,
-.LearningMapContainer .topBackLinkBox a:focus {
+.LearningMapContainer .headerBackLinkBox div:hover,
+.LearningMapContainer .topBackLinkBox div:focus {
     text-decoration: none;
 }
 .LearningMapContainer .headerNextLinkBox {
     text-align: right;
 }
-.LearningMapContainer .headerNextLinkBox a {
+.LearningMapContainer .headerNextLinkBox div {
     font-size: 20px;
     font-weight: bold;
     color: #515151;
 }
-.LearningMapContainer .headerNextLinkBox a span {
+.LearningMapContainer .headerNextLinkBox div span {
     display: table-cell;
     vertical-align: middle;
 }
-.LearningMapContainer .headerNextLinkBox a span.next-arrow {
+.LearningMapContainer .headerNextLinkBox div span.next-arrow {
     background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -347px -326px;
     width: 18px;
     height: 25px;
 }
-.LearningMapContainer .headerNextLinkBox a:hover,
-.LearningMapContainer .headerNextLinkBox a:focus {
+.LearningMapContainer .headerNextLinkBox div:hover,
+.LearningMapContainer .headerNextLinkBox div:focus {
     text-decoration: none;
 }
 .rowContainer .progressBlockLeft {
@@ -410,7 +269,7 @@
     vertical-align: middle;
 }
 .rowContainer .progressBlockLeft div.green-circle span {
-    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 10px 12px;
+    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 7px 9px;
 }
 .rowContainer .progressBlockLeft div.blue-circle span {
     background: #85b9df none repeat scroll 0 0;
@@ -419,15 +278,15 @@
     background: #dddddd none repeat scroll 0 0;
     border-radius: 50%;
     display: block;
-    height: 45px;
-    width: 45px;
+    height: 40px;
+    width: 40px;
 }
 .rowContainer .heighlightBlock .lessonDetails p {
     line-height: 15px;
 }
 .LearningMapContainer .lessonDescription div {
     display: table-cell;
-    padding: 12px 10px;
+    padding: 11px 10px;
     position: relative;
     width: 95px;
 }
@@ -464,46 +323,6 @@
     background: url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
     content: "";
 }
-@media (min-width: 240px) and (max-width: 319px) {
-    .LearningMapContainer .topBackLinkBox {
-        margin-bottom: 10px;
-    }
-    .rowContainer .progressBlockLeft {
-        padding: 6px 0;
-    }
-    .LearningMapContainer .headerBackLinkBox a {
-        font-size: 15px;
-        line-height: 16px;
-    }
-}
-@media (min-width: 320px) and (max-width: 479px) {
-    .LearningMapContainer .topBackLinkBox {
-        margin-bottom: 10px;
-    }
-    .rowContainer .progressBlockLeft {
-        padding: 6px 0;
-    }
-    .LearningMapContainer .headerBackLinkBox a {
-        font-size: 15px;
-        line-height: 18px;
-    }
-    .LearningMapContainer .headerNextLinkBox a {
-        font-size: 15px;
-        line-height: 18px;
-    }
-}
-@media (min-width: 480px) and (max-width: 767px) {
-    .LearningMapContainer .topBackLinkBox {
-        margin-bottom: 10px;
-    }
-    .rowContainer .progressBlockLeft {
-        padding: 6px 0;
-    }
-}
-@media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
-
-@charset "utf-8";
-/* CSS Document */
 
 .userClassContainer {
     padding: 10px 0;
@@ -1181,6 +1000,329 @@ th.headcol.whitebg {
 .dashboardContainer .dashboardBodyBlock {
     background: #f8fafb;
 }
+
+.LearningMapContainer .lessonMetaDataContainer{
+	background: #fafafa;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	float: left;
+	padding: 8px 0px;
+}
+
+.LearningMapContainer .lessonDataDescription{
+	padding: 19px 25px;
+	text-align:left;
+}
+.LearningMapContainer .lessonDataDescription p{
+	margin:0 0;
+}
+
+.LearningMapContainer .standardsBlock{
+	padding:5px 18px;
+	border-spacing:10px;
+}
+
+.LearningMapContainer .standardsBlock .lessonStandard{
+	display: inline-block;
+	padding: 8px 15px;
+	color: #fff;
+	border-radius: 4px 4px;
+	background: #515151;
+	font-weight: bold;
+}
+
+.LearningMapContainer .fractionsDetailsContainer{
+	background:#f7f6f6;
+	border-top: 1px solid #dddddd;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock{
+	padding:15px 15px;
+	border-spacing:10px;
+	border-right:1px solid #dddddd;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock .assessmentImageContainer{
+	display:table-cell;
+	vertical-align:top;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock .descriptionContainer{
+	display:table-cell;
+	vertical-align:top;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock .descriptionContainer h3{
+	font-size:18px;
+	color:#1076bb;
+	margin:0 0 5px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers{
+	padding:8px 8px;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group{
+	margin-bottom:0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item{
+	padding:0px 10px;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item .pull-left{
+	padding:12px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item .pull-right{
+	padding:12px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink{
+	padding:0 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink a{
+	padding:10px 15px;
+	display:block;
+	background:#85b9df;
+	text-align:center;
+	color:#ffffff;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink a:hover, .LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink a:focus{
+	text-decoration:none;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .blueHighlightText{
+	font-size:28px;
+	font-weight:bold;
+	color:#85b9df;
+	padding:0 0 !important;
+}
+
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .greenHighlightText{
+	font-size:28px;
+	font-weight:bold;
+	color:#a5cba1;
+	padding:0 0 !important;
+}
+.resourceImgContainer{
+	padding:5px 18px;
+	border-spacing:10px;
+}
+.resourceImgContainer .videoSmall {
+    background:url(../images/Video_1.png) no-repeat;
+}
+.resourceImgContainer img {
+    height: 60px;
+    width: 80px;
+}
+.resourceImgContainer .resourceName {
+    color: #fff;
+    font-size: 12px;
+    height: 61px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 81px;
+}
+
+.resourceImgContainer a{
+	position:relative;
+	display:table-cell;
+	
+}
+.resourceImgContainer a:hover {
+    opacity: 0.6;
+}
+.resourceImgContainer a:hover .videoSmall {
+    display: none;
+}
+
+.LearningMapContainer .fractionsDetailsContainer .evidenceBlock{
+	padding:8px 8px;
+}
+.LearningMapContainer .fractionsDetailsContainer .evidenceBlock p{
+	margin:5px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .evidenceBlock .evidenceLink{
+	background:#ffffff;
+	border:1px solid #dddddd;
+	padding:8px 8px;
+	border-radius:4px 4px;
+	display:block;
+	min-height:126px;
+}
+.cursorPointer {
+	cursor: pointer;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+    .learningHeaderBlock .indicationBox div {
+        margin: 5px 0;
+    }
+    .learningHeaderBlock .indicationBox {
+        text-align: left;
+    }
+    .rowContainer .viewReport a {
+        padding: 20px 10px;
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        display: block;
+        margin: 0 0;
+    }
+    .student-blueBand .col-md-6-reset {
+        width: 50% !important;
+        float: left;
+    }
+    .student-blueBand h2 {
+        font-size: 15px;
+    }
+    .rightWhiteBox span {
+        font-size: 18px;
+    }
+    .tabsContainer .btn {
+        width: 135px;
+    }
+    .bannerImg {
+        display: none;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .learningHeaderBlock .indicationBox {
+        text-align: left;
+    }
+    .learningHeaderBlock .indicationBox div {
+        margin: 5px 0;
+    }
+    .rowContainer .viewReport a {
+        padding: 20px 10px;
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        display: block;
+        margin: 0 0;
+    }
+    .student-blueBand .col-md-6-reset {
+        width: 50% !important;
+        float: left;
+    }
+    .student-blueBand h2 {
+        font-size: 16px;
+    }
+    .rightWhiteBox span {
+        font-size: 18px;
+    }
+    .learningHeaderBlock .green-circle {
+        background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-small.png") no-repeat scroll 2px 5px;
+        height: 22px;
+        width: 22px;
+    }
+    .learningHeaderBlock .green-text {
+        height: 22px;
+        width: 22px;
+    }
+	.learningHeaderBlock .blue-circle {
+        height: 22px;
+        width: 22px;
+    }
+    .learningHeaderBlock .grey-circle {
+        height: 22px;
+        width: 22px;
+    }
+    .learningHeaderBlock .indicationBox div {
+        font-size: 11px;
+    }
+    .bannerImg {
+        display: none;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .student-blueBand .col-md-6-reset {
+        width: 50% !important;
+        float: left;
+    }
+    .student-blueBand h2 {
+        font-size: 25px;
+    }
+    .learningHeaderBlock .indicationBox {
+        text-align: center;
+    }
+    .learningHeaderBlock .indicationBox div {
+        margin: 5px 0;
+    }
+    .rowContainer .viewReport a {
+        padding: 20px 10px;
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        display: block;
+        margin: 0 0;
+    }
+    .bannerImg {
+        display: none;
+    }
+}
+@media (max-width: 767px) {
+    .student-blueBand h2 {
+        text-align: left;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .heighlightBlock,
+    .rowContainer .viewReport {
+        text-align: left;
+    }
+    .rowContainer .progressBlock .circle-main-container div {
+        margin: 0 0 5px 0;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .heighlightBlock,
+    .rowContainer .viewReport {
+        min-height: inherit;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .rowContainer .heighlightBlock p {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .rowContainer .progressBlock .circle-main-container div span {
+        width: 35px;
+        height: 35px;
+    }
+    .rowContainer .progressBlock .circle-main-container div {
+        margin: 0 5px 0 0;
+    }
+    .rowContainer .progressBlock .circle-main-container div.green-circle span {
+        background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 4px 7px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+
+@media (min-width: 240px) and (max-width: 319px) {
+    .LearningMapContainer .topBackLinkBox {
+        margin-bottom: 10px;
+    }
+    .rowContainer .progressBlockLeft {
+        padding: 6px 0;
+    }
+    .LearningMapContainer .headerBackLinkBox div {
+        font-size: 15px;
+        line-height: 16px;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .LearningMapContainer .topBackLinkBox {
+        margin-bottom: 10px;
+    }
+    .rowContainer .progressBlockLeft {
+        padding: 6px 0;
+    }
+    .LearningMapContainer .headerBackLinkBox div {
+        font-size: 15px;
+        line-height: 18px;
+    }
+    .LearningMapContainer .headerNextLinkBox div {
+        font-size: 15px;
+        line-height: 18px;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .LearningMapContainer .topBackLinkBox {
+        margin-bottom: 10px;
+    }
+    .rowContainer .progressBlockLeft {
+        padding: 6px 0;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
 @media (min-width: 240px) and (max-width: 319px) {
     .dashboardContainer .dashboardMenuBlock .scoreStatus div {
         padding: 8px 0;
@@ -1282,4 +1424,38 @@ th.headcol.whitebg {
         width: auto;
     }
 }
+@media (min-width: 1200px) {}
+
+@media (min-width: 240px) and (max-width: 319px) {
+	.LearningMapContainer .standardsBlock .lessonStandard{
+		display:block;
+		margin-bottom:10px;
+	}
+	.LearningMapContainer .fractionsDetailsContainer .studyBlock .assessmentImageContainer{
+		display:block;
+		text-align:center;
+	}
+	.resourceImgContainer {
+    border-spacing: 5px;
+    padding: 5px;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 .LearningMapContainer .standardsBlock .lessonStandard{
+		display:block;
+		margin-bottom:10px;
+		text-align:center;
+	}
+	.LearningMapContainer .fractionsDetailsContainer .studyBlock .assessmentImageContainer{
+		display:block;
+		text-align:center;
+	}
+	.resourceImgContainer {
+    border-spacing: 5px;
+    padding: 5px;
+}
+}
+@media (min-width: 480px) and (max-width: 767px) {}
+@media (min-width: 768px) and (max-width: 991px) {}
+@media (min-width: 992px) and (max-width: 1199px) {}
 @media (min-width: 1200px) {}
