@@ -275,7 +275,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getCollectionDo()!=null){
 			//if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
-				if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course") || shelfTreeWidget.getCollectionDo().getType().equals("unit")) {
+				if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course") || shelfTreeWidget.getCollectionDo().getType().equals("unit") || shelfTreeWidget.getCollectionDo().getType().equals("lesson")) {
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);
@@ -575,7 +575,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		}
 	}
 	@Override
-	public void createNewUnitItem() {
+	public void createNewItem(String type) {
 		ShelfTreeWidget selectedWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		String o2=null,id=null,o3=null;
 		int nextLevel = 1;
@@ -591,11 +591,17 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 			nextLevel = 4;
 		}
-		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 2);
-		//shelfTreeWidget.setWidgetPositions(2, 0, null);
+		ShelfTreeWidget shelfTreeWidget = null;
+		if("Unit".equalsIgnoreCase(type)){
+			shelfTreeWidget = new ShelfTreeWidget(null, 2);
+			shelfTreeWidget.getTitleLbl().setText(UNTITLEDUNIT);
+			shelfTreeWidget.getTitleFocPanel().addStyleName("unit");
+		}else if("Lesson".equalsIgnoreCase(type)){
+			shelfTreeWidget = new ShelfTreeWidget(null, 3);
+			shelfTreeWidget.getTitleLbl().setText(UNTITLEDLESSON);
+			shelfTreeWidget.getTitleFocPanel().addStyleName("lesson");
+		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
-		shelfTreeWidget.getTitleLbl().setText(UNTITLEDUNIT);
-		shelfTreeWidget.getTitleFocPanel().addStyleName("unit");
 		treeChildSelectedItem.insertItem(0, item);
 		treeChildSelectedItem.setState(true);
 		shelfTreeWidget.setFolderOpenedStatus(true);

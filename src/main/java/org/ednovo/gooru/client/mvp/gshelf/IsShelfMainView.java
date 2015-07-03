@@ -63,7 +63,7 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
      */
 	void updateLeftShelfPanelActiveStyle();
 
-	void createNewUnitItem();
+	void createNewItem(String type);
     /**
      * Updating tree widget 
      * @param courseDo {@link FolderDo}

@@ -120,25 +120,19 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				params.put("o1", uri[uri.length-1]);
 				params.put("view", COURSE);
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, result);
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+				}
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setUnitTemplate();
+					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
-	@Override
-	public void showUnitInfo() {
-      // myCollectionsRightClusterPresenter.setUnitInfo();
-	}
-	@Override
-	public void showUnitTemplate() {
-	   myCollectionsRightClusterPresenter.setUnitTemplate();
-	}
-	
-
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
@@ -160,7 +154,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
 				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setUnitTemplate();
+					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
 				}
 			}
 		});

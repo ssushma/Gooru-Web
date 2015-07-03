@@ -368,8 +368,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,typeVal,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 
-	public void createNewUnitItem() {
-		getView().createNewUnitItem();
+	public void createNewUnitItem(String type) {
+		getView().createNewItem(type);
 	}
 
 	public void updateTitleOfTreeWidget(FolderDo courseDo) {
