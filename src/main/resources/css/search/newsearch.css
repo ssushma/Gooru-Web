@@ -805,7 +805,6 @@ button#btnSearchType .caret {
 
 
 .borderBox .libraryMainContainerBlock{
-	background: white;
 	border-radius: 5px;
 }
 
@@ -826,6 +825,12 @@ button#btnSearchType .caret {
 
 
 @media (min-width: 240px) and (max-width: 319px){
+	#gooruSearchMainContainer .searchFilters{
+		min-height: 1px;
+		margin: 0px;
+		padding: 0px;
+		display: block;
+	}
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}
@@ -901,7 +906,7 @@ button#btnSearchType .caret {
 			margin-bottom:10px;
 	}
 	#gooruSearchMainContainer .remixButton{
-		text-align:center;
+		text-align: right;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
@@ -1079,6 +1084,13 @@ left: -200px !important;
 }
 
 @media (min-width: 320px) and (max-width: 479px){
+	#gooruSearchMainContainer .searchFilters{
+		min-height: 1px;
+		margin: 0px;
+		padding: 0px;
+		display: block;
+	}
+
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}
@@ -1173,7 +1185,7 @@ left: -200px !important;
 	}
 
 	#gooruSearchMainContainer .remixButton{
-		text-align:center;
+		text-align: right;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
@@ -1437,6 +1449,13 @@ left: -210px !important;
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
+	#gooruSearchMainContainer .searchFilters{
+		min-height: 1px;
+		margin: 0px;
+		padding: 0px;
+		display: block;
+	}
+
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}

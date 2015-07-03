@@ -40,8 +40,10 @@
 
          <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceContainer}" ui:field="answerchoiceTitleContainer">
             <g:Label styleName="{addWebResourceStyle.addResourceFormTitleChoice}" ui:field="addResourceFormTitleChoice"></g:Label>
-            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceAlign}" ui:field="correctText"></g:HTMLPanel>
-            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceAlign}" ui:field="noLabelText"></g:HTMLPanel>
+            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceContainer}">
+	            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceAlign}" ui:field="correctText"></g:HTMLPanel>
+	            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceAlign}" ui:field="noLabelText"></g:HTMLPanel>
+            </g:HTMLPanel>
           </g:FlowPanel>
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="questionAnswerChoiceContainer">
          	<qac:AddQuestionAnswerChoice ui:field="alphaLetterA"></qac:AddQuestionAnswerChoice>

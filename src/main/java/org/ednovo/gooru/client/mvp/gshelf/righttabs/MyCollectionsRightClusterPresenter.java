@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPre
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -42,6 +43,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	LessonInfoPresenter lessonInfoPresenter;
 	
+	UnitInfoPresenter unitInfoPresenter;
+	
 	ShelfMainPresenter shelfMainPresenter;
 	
 	FolderDo folderObj;
@@ -49,19 +52,23 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	CollectionContentPresenter collectionContentPresenter;
 	
 	final String COLLECTION="Collection";
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
 	/**
 	 * Constructor
 	 * @param eventBus
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,UnitInfoPresenter unitInfoPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
+		this.unitInfoPresenter=unitInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
 		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
+		unitInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
@@ -73,13 +80,38 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		clearSlot(INNER_SLOT);
 		getView().setSlotPanel(folderObj);
 		getView().setDefaultActiveTab(index);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		if(index==1){
-			courseInfoPresenter.callTaxonomyService();
-			courseInfoPresenter.setData(folderObj);
-			setInSlot(INNER_SLOT, courseInfoPresenter);
+			if(folderObj.getGooruOid()==null){
+				//For displaying template
+				if(o1==null){
+					courseInfoPresenter.callTaxonomyService();
+					courseInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, courseInfoPresenter);
+				}else if(o1!=null && o2==null){
+					unitInfoPresenter.callTaxonomyService();
+					unitInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, unitInfoPresenter);
+				}else{
+					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}
+			}else{
+				//For displaying original data
+				if(o1!=null && o2==null){
+					courseInfoPresenter.callTaxonomyService();
+					courseInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, courseInfoPresenter);
+				}else if(o1!=null && o2!=null){
+					unitInfoPresenter.callTaxonomyService();
+					unitInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, unitInfoPresenter);
+				}else{
+					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}
+			}
 		}else if(index==2){
-			//The true condition is added for testing purpose
-			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
@@ -99,23 +131,28 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 
 	@Override
-	public void setUnitTemplate(){
-		shelfMainPresenter.createNewUnitItem();
-	}
-	@Override
-	public void setUnitInfo(){
-	/*	courseInfoPresenter.callTaxonomyService();
-		courseInfoPresenter.setData(folderObj);*/
-		setInSlot(INNER_SLOT, lessonInfoPresenter);
-		//getView().setDefaultActiveTab();
+	public void setUnitTemplate(String type){
+		shelfMainPresenter.createNewUnitItem(type);
+		if("Unit".equalsIgnoreCase(type)){
+			setInSlot(INNER_SLOT, unitInfoPresenter);
+		}else if("Lesson".equalsIgnoreCase(type)){
+			setInSlot(INNER_SLOT, lessonInfoPresenter);
+		}
 	}
 
 	/**
 	 * To set the shelfMainPresenter obj
 	 * @param shelfMainPresenter
 	 */
-
 	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
 		this.shelfMainPresenter=shelfMainPresenter;
+	}
+	
+	/**
+	 * To set the shelfMainPresenter obj
+	 * @param shelfMainPresenter
+	 */
+	public ShelfMainPresenter getShelfMainPresenter() {
+		return shelfMainPresenter;
 	}
 }

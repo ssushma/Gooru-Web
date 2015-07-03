@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
@@ -43,4 +44,23 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 * @param itemSeqToAPI
 	 */
 	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) ;
+	/**
+	 * This method is used to update narration.
+	 * @param collectionItemId
+	 * @param narration
+	 */
+	public void updateNarrationItem(CollectionItemDo collectionItem, String narration);
+	/**
+	 * This method is used to delete resoruce
+	 * @param collectionItemId
+	 */
+	public void deleteCollectionItem(String collectionItemId);
+	/**
+	 * This method is used to update the pdf pages
+	 * @param collectionItem
+	 * @param narration
+	 * @param start
+	 * @param stop
+	 */
+	public void updateCollectionItem(final CollectionItemDo collectionItem, String narration, String start, String stop);
 }

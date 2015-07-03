@@ -353,6 +353,10 @@ public enum UrlToken {
 	V2_CREATE_FOLDER("/v2/folder?"),
 	
 	V1_CREATE_COURSE("/v1/course?"),
+	
+	V1_CREATE_UNIT("/v1/course/{0}/unit?"),
+	
+	V1_CREATE_LESSON("/v1/course/{0}/unit/{1}/lesson?"),
 
 	V2_DELETE_FOLDER("/v2/folder/{0}?"),
 
@@ -570,7 +574,13 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?"),
 	
-	V1_GET_USER_COURSES_LIST("/v2/user/{0}/course?");
+	V1_GET_USER_COURSES_LIST("/v2/user/{0}/course?"),
+	
+	V1_GET_UNITS_BY_COURSEID("/v1/course/{0}/unit"),
+	
+	V1_GET_LESSONS_BY_LESSONID("/v1/course/{0}/unit/{1}/lesson"),
+	
+	V1_GET_COLLECTIONS_BY_COLLECTIONID("/v1/course/{0}/unit/{1}/lesson/{2}/collection");
 
 
 	private String url;

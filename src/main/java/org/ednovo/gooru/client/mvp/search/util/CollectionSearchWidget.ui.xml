@@ -5,7 +5,7 @@
 			<g:HTMLPanel styleName="panel panel-default">
 				<g:HTMLPanel styleName="panel-heading">
 					<div class="no-gutter">
-						<g:HTMLPanel styleName="col-md-6 col-sm-6 col-xs-12 viewContainer">
+						<g:HTMLPanel styleName="col-md-6 col-sm-6 col-xs-6 viewContainer">
 							<span>
 								<img title="Number of Remixes" src="images/rev-arrows.png"/> <g:Label styleName="authorName" ui:field="remixCountLbl"></g:Label>
 							</span>
@@ -13,7 +13,7 @@
 								<img title="Number of Views" src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 							</span>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-6 col-sm-6 remixButton">
+						<g:HTMLPanel styleName="col-md-6 col-sm-6 col-xs-6 remixButton">
 							<g:Button styleName="primary" ui:field="remixBtn">Remix</g:Button>
 						</g:HTMLPanel>
 						<div class="clearfix"></div>

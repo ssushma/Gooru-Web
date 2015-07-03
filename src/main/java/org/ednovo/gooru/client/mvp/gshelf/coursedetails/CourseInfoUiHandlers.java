@@ -41,15 +41,12 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	/**
 	 * To Create Course
 	 * @param courseTitle {@link String} 
+	 * @param isCreateUnit {@link boolean} 
 	 */
-	public void createAndSaveCourseDetails(String courseTitle);
+	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateUnit);
 	/**
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(String text, String id);
-
-	void showUnitInfo();
-
-	void showUnitTemplate();
+	public void updateCourseDetails(String text, String id,boolean isCreateUnit);
 }
