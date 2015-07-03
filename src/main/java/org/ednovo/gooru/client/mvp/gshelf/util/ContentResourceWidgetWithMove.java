@@ -43,6 +43,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -61,17 +62,20 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	
 	//All Ui fields
 	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
-				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl;
+				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl,lblStartPage,lblEndPage,lblEditSartPageText,lblError;
 	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon,pnlEditContainer;
-	@UiField FlowPanel actionVerPanel,narrationConatainer;
-	@UiField TextBox txtMoveTextBox;
+	@UiField FlowPanel actionVerPanel,narrationConatainer,pnlPdfEdiContainer;
+	@UiField TextBox txtMoveTextBox,startpdfPageNumber,stoppdfPageNumber;
 	@UiField TextArea narrationTxtArea;
 	@UiField UlPanel ulGradePanel;
 	@UiField Anchor updateResourceBtn,editInfoLbl,editVideoTimeLbl,editStartPageLbl,copyResource,confirmDeleteLbl,addTages;
 	@UiField HTML resourceNarrationHtml;
+	@UiField Image imgDisplayIcon;
 	
 	//final strings
 	private static final String VIDEO_TIME =i18n.GL0974();
+	private static final String START_PAGE=i18n.GL0961();
+	private static final String DEFAULT_START_PAGE="1";
 	private static final String START_MINUTE="00";
 	private static final String START_SEC="00";
 	private static final String END_MINUTE="00";
@@ -79,11 +83,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =i18n.GL0967();
 	private static final String MESSAGE_CONTENT =i18n.GL0968();
 	private static final String MESSAGE_HEADER =i18n.GL0748();
+	private static final String VALID_END_PAGE = i18n.GL2025();
 	
-	boolean youtube;
+	boolean youtube,isPdf;
 	boolean isHavingBadWords=false;
 	
 	private int totalVideoLength;
+	Integer totalPages;
 	
 	CollectionItemDo collectionItem;
 	
@@ -103,20 +109,28 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		actionVerPanel.setVisible(false);
 		lblUpdateTextMessage.setVisible(false);
 		narrationConatainer.setVisible(false);
-		
+		pnlPdfEdiContainer.setVisible(false);
+		lblEditSartPageText.setVisible(false);
 		startStopTimeDisplayText.setVisible(false);
+		
 		ulGradePanel.setStyleName("dropdown-menu");
 		actionVerPanel.getElement().setId("fpnlActionVerPanel");
 		
 		videoTimeField.setText(VIDEO_TIME);
 		StringUtil.setAttributes(videoTimeField.getElement(), "lblVideoTimeField", VIDEO_TIME, VIDEO_TIME);
 		
+		lblStartPage.setText(i18n.GL0961());
+		StringUtil.setAttributes(videoTimeField.getElement(), "lblStartPageLbl",  i18n.GL0961(),  i18n.GL0961());
+		
+		lblEndPage.setText(i18n.GL2026());
+		StringUtil.setAttributes(lblEndPage.getElement(), "lblEndPage",i18n.GL2026(),i18n.GL2026());
+		
 		fromLblDisplayText.getElement().setId("lblFromLblDisplayText");
 		setData(index,collectionItem);
 		MouseOutHandler mouseOutHandler=new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				resetNarrationDetails();
+				//resetNarrationDetails();
 			}
 		};
 		this.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
@@ -285,6 +299,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 */
 	public void checkYoutubeResourceOrNot(CollectionItemDo collectionItemDo,boolean youtube){
 		if (youtube){
+			isPdf=false;
+			imgDisplayIcon.setUrl("images/timeIcon.png");
 			enableOrDisableYoutubeFields(true);
 			videoTimeField.setText(VIDEO_TIME);
 			videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
@@ -350,7 +366,54 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					});
 				}
 			}
+		}else if(collectionItemDo.getResource() !=null && collectionItemDo.getResource().getUrl() != null && collectionItemDo.getResource().getUrl().endsWith(".pdf")){
+			isPdf=true;
+			imgDisplayIcon.setUrl("images/note.png");
+			
+			enableOrDisableYoutubeFields(true);
+			editVideoTimeLbl.setVisible(false);
+			videoTimeField.setVisible(false);
+			
+			fromLblDisplayText.setVisible(true);
+			editStartPageLbl.setVisible(true);
+			
+			String startPageNumber=collectionItemDo.getStart();
+			totalPages = collectionItemDo.getTotalPages();
+			if(totalPages == null){
+				fromLblDisplayText.setVisible(false);
+				editStartPageLbl.setVisible(false);
+				imgDisplayIcon.setVisible(false);
+			}else{
+				fromLblDisplayText.setVisible(true);
+				lblEditSartPageText.setText(i18n.GL2039() + totalPages);
+				editStartPageLbl.setVisible(true);	
+				imgDisplayIcon.setVisible(true);
+			}
+			String endPageNumber=collectionItemDo.getStop();
+			if(startPageNumber==null){
+				startpdfPageNumber.setText("1");
+				StringUtil.setAttributes(startpdfPageNumber.getElement(), "1", "1");
+				fromLblDisplayText.setText(START_PAGE+DEFAULT_START_PAGE);
+				StringUtil.setAttributes(fromLblDisplayText.getElement(),START_PAGE+DEFAULT_START_PAGE, START_PAGE+DEFAULT_START_PAGE);
+			}else{
+				String pdfText = "";
+				if(endPageNumber!=null){
+					if(endPageNumber.equalsIgnoreCase("")){
+						pdfText=START_PAGE+startPageNumber+" - "+ i18n.GL2026()+totalPages;
+						fromLblDisplayText.setText(pdfText);
+						stoppdfPageNumber.setText(totalPages+"");
+					}else{
+						pdfText=START_PAGE+startPageNumber+" - "+i18n.GL2026()+endPageNumber;
+						fromLblDisplayText.setText(pdfText);	
+						stoppdfPageNumber.setText(endPageNumber+"");
+					}
+				}
+				StringUtil.setAttributes(fromLblDisplayText.getElement(), pdfText, pdfText);
+				startpdfPageNumber.setText(startPageNumber);
+				StringUtil.setAttributes(startpdfPageNumber.getElement(), startPageNumber, startPageNumber);
+			}
 		}else{
+			isPdf=false;
 			enableOrDisableYoutubeFields(false);
 		}
 	}
@@ -412,7 +475,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	/*
 	 * This clickEvent is used to cancel narration edit
 	 */
-	@UiHandler("cancelNarrationBtn")
+	@UiHandler("btnCancel")
 	public void onclickcancelNarrationBtn(ClickEvent event){
 		resetNarrationDetails();
 	}
@@ -423,9 +486,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		String narrationText=collectionItem.getNarration()!=null?collectionItem.getNarration():"";
 		narrationTxtArea.setText(narrationText);
 		StringUtil.setAttributes(narrationTxtArea.getElement(),narrationText, narrationText);
-		if(youtube){
+		if(youtube || isPdf){
 			pnlTimeIcon.setVisible(true);
 			pnlYoutubeContainer.setVisible(true);
+			fromLblDisplayText.setVisible(true);
+			pnlPdfEdiContainer.setVisible(false);
+			lblEditSartPageText.setVisible(false);
+			lblError.setVisible(false);
 		}else{
 			pnlTimeIcon.setVisible(false);
 			pnlYoutubeContainer.setVisible(false);
@@ -465,54 +532,101 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		StringUtil.setAttributes(resourceNarrationHtml.getElement(), ADD_NARRATION_FOR_YOUR_VIEWERS, ADD_NARRATION_FOR_YOUR_VIEWERS);
 	}
 	/*
-	 * This clickEvent is used to upadte narration
+	 * This clickEvent is used to update narration
 	 */
-	@UiHandler("updateNarrationBtn")
+	@UiHandler("btnUpdate")
 	public void onclickOfnarrationUpdate(ClickEvent event){
-		lblUpdateTextMessage.setVisible(true);
-		actionVerPanel.setVisible(false);
-		Map<String, String> parms = new HashMap<String, String>();
-		parms.put("text", narrationTxtArea.getText());
-		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-			@Override
-			public void onSuccess(Boolean value) {
-				isHavingBadWords = value;
-				if (value){
-					narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
-					narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
-					
-					narrationTxtArea.getElement().getStyle().setBorderColor("orange");
-					narrationAlertMessageLbl.setText(i18n.GL0554());
-					StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
-					
-					narrationAlertMessageLbl.setVisible(true);
-					actionVerPanel.setVisible(true);
-					lblUpdateTextMessage.setVisible(true);
-					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-				}else{
-					String narration = null;
-					MixpanelUtil.Organize_Click_Edit_Narration_Update();
-					
-					if (resourceNarrationHtml.getHTML().length() > 0) {
-						narration = trim(narrationTxtArea.getText());
-						collectionItem.setNarration(narration);
-						pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+		if(youtube){
+			
+		}else if(isPdf){
+			updatePdfStartPage();
+		}else{
+			lblUpdateTextMessage.setVisible(true);
+			actionVerPanel.setVisible(false);
+			Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", narrationTxtArea.getText());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+					isHavingBadWords = value;
+					if (value){
+						narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
+						narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
+						
+						narrationTxtArea.getElement().getStyle().setBorderColor("orange");
+						narrationAlertMessageLbl.setText(i18n.GL0554());
+						StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
+						
+						narrationAlertMessageLbl.setVisible(true);
+						actionVerPanel.setVisible(true);
+						lblUpdateTextMessage.setVisible(true);
+						MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+					}else{
+						String narration = null;
+						MixpanelUtil.Organize_Click_Edit_Narration_Update();
+						
+						if (resourceNarrationHtml.getHTML().length() > 0) {
+							narration = trim(narrationTxtArea.getText());
+							collectionItem.setNarration(narration);
+							pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+						}
+						try{
+							updateNarration(collectionItem, narration);
+							enableDisableNarration(true);
+							//getPresenter().updateNarrationItem(collectionItem.getCollectionItemId(), narration);
+						}catch(Exception e){
+							AppClientFactory.printSevereLogger(e.getMessage());
+						}
+						lblUpdateTextMessage.setVisible(false);
+						lblCharLimit.setVisible(false);
+						resourceNarrationHtml.getElement().getStyle().clearWidth();
 					}
-					try{
-						updateNarration(collectionItem, narration);
-						enableDisableNarration(true);
-						//getPresenter().updateNarrationItem(collectionItem.getCollectionItemId(), narration);
-					}catch(Exception e){
-						AppClientFactory.printSevereLogger(e.getMessage());
-					}
-					lblUpdateTextMessage.setVisible(false);
-					lblCharLimit.setVisible(false);
-					resourceNarrationHtml.getElement().getStyle().clearWidth();
 				}
-			}
-		});
+			});
+		}
 	}
-
+	/**
+	 * This method is used to update the pdf start and end page
+	 */
+	public void updatePdfStartPage(){
+		String start = startpdfPageNumber.getText();
+		String enteredStopPage = stoppdfPageNumber.getText();
+		boolean isValid = this.validatePDF(start, enteredStopPage, totalPages);
+		if (isValid) {
+			MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
+			lblError.setText("");
+			fromLblDisplayText.setVisible(true);
+			actionVerPanel.setVisible(false);
+			collectionContentPresenter.updateCollectionItem(collectionItem, collectionItem.getNarration(), start, enteredStopPage);
+			enablePdfButtons(true);
+		}
+	}
+	/**
+	 * PDF validations
+	 * @param startpage
+	 * @param stopPage
+	 * @param totalPage
+	 * @return
+	 */
+	public boolean validatePDF(String startpage,String stopPage,Integer totalPage){
+		boolean isValid;
+		Integer enteredStopPage =	Integer.parseInt(stopPage);
+		Integer startpdfpage = Integer.parseInt(startpage);
+		if(enteredStopPage > totalPage){
+			lblError.setText(VALID_END_PAGE);
+			isValid = false;
+		}else if( startpdfpage > totalPage){
+			lblError.setText(VALID_END_PAGE);
+			isValid = false;	
+		}else if( enteredStopPage < startpdfpage){
+			lblError.setText(VALID_END_PAGE);
+			isValid = false;	
+		}else{
+			isValid = true;
+			lblError.setText("");
+		}
+		return isValid;
+	}
 	/**
 	 * Confirmation popup for collection item delete, delete collection item
 	 * regarding the popup action
@@ -577,6 +691,27 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}
+	}
+	/*
+	 * This clickEvent is used to edit pdf
+	 */
+	@UiHandler("editStartPageLbl")
+	public void oneditStartPageLblClick(ClickEvent clickEvent) {
+		MixpanelUtil.Organize_Click_Edit_Start_Page();
+		enablePdfButtons(false);
+	}
+	/**
+	 * This method is used to enable and disable the pdf buttons
+	 * @param isValue
+	 */
+	public void enablePdfButtons(boolean isValue){
+		pnlPdfEdiContainer.setVisible(!isValue);
+		lblEditSartPageText.setVisible(!isValue);
+		actionVerPanel.setVisible(!isValue);
+	
+		pnlEditContainer.setVisible(isValue);
+		pnlArrows.setVisible(isValue);
+		fromLblDisplayText.setVisible(isValue);
 	}
 	/**
 	 * This method is used to trim the text of rich text box.
