@@ -184,9 +184,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			Anchor selected=(Anchor) event.getSource();
 			btnSelectedText.setText(selected.getText());
 			if(selectedIndex==0){
+				enableDisableCourseButton(true);
 				organizelbl.setText(i18n.GL3335());
 				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
+				enableDisableCourseButton(false);
 			    organizelbl.setText(i18n.GL3334());
 				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}
@@ -214,9 +216,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}
 		if(tabView==null || tabView.equals(COURSE)){
+			enableDisableCourseButton(true);
 			organizelbl.setText(i18n.GL3335());
 			btnSelectedText.setText(i18n.GL3335());
 		}else if(tabView.equals(FOLDER)){
+			enableDisableCourseButton(false);
 			organizelbl.setText(i18n.GL3334());
 			btnSelectedText.setText(i18n.GL3334());
 		}
@@ -777,6 +781,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		if(isEnable){
 			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#4d99cd");
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.POINTER);
+		}else{
+			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
+			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 		}
 		setCreateCourse(isEnable);
 	}
