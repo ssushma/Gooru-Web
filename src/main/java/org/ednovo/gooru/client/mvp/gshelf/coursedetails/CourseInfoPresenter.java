@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
@@ -109,25 +112,28 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void createAndSaveCourseDetails(String courseTitle) {
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true,null,null, new SimpleAsyncCallback<FolderDo>() {
 
 			@Override
 			public void onSuccess(FolderDo result) {
+				String[] uri=result.getUri().split("/");
+				Map<String, String> params= new HashMap<String, String>();
+				params.put("o1", uri[uri.length-1]);
+				params.put("view", COURSE);
+				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
 	@Override
 	public void showUnitInfo() {
-
-				myCollectionsRightClusterPresenter.setUnitInfo();
-	
+       myCollectionsRightClusterPresenter.setUnitInfo();
 	}
 	@Override
 	public void showUnitTemplate() {
-
-				myCollectionsRightClusterPresenter.setUnitTemplate();
-	
+	   myCollectionsRightClusterPresenter.setUnitTemplate();
 	}
 	
 
@@ -146,6 +152,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 			@Override
 			public void onSuccess(Void result) {
+				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result.getTitle());
 				//myCollectionsRightClusterPresenter.setTabItems(2, COURSE, null);
 			}
 		});

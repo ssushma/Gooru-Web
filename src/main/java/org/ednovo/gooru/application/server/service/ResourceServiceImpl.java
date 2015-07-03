@@ -1194,8 +1194,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
+		getLogger().info("data url put call:::::"+collectionItemObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), collectionItemObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("response:::::"+jsonResponseRep.getStatusCode());
 		return deserializeCollectionItem(jsonRep);
 	}
 

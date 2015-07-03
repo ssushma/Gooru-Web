@@ -126,9 +126,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
-		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
+		
 		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
@@ -207,7 +207,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			}
 			//setRightPanelData(null,null);
 		}
-		
 	}
 	/**
 	 * This method will call the workspace API
@@ -215,10 +214,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void callWorkspaceApi(){
 		getView().setNoDataForAnonymousUser(false);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-		type=view;
 		String typeVal=type;
 		if(type!=null && type.equalsIgnoreCase(FOLDER)){
 			typeVal=null;//if we are passing as null we get all the folders and collections
+			type=view;
+		}else{
+			typeVal=type;
 		}
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
@@ -314,7 +315,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo){
 		clearSlot(RIGHT_SLOT);
-		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		if(view==null){
+			view=type;
+		}
 		myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
 	}
@@ -366,6 +370,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	public void createNewUnitItem() {
 		getView().createNewUnitItem();
-		
+	}
+
+	public void updateTitleOfTreeWidget(FolderDo courseDo) {
+		getView().updateTitleOfTreeWidget(courseDo);
 	}
 }
