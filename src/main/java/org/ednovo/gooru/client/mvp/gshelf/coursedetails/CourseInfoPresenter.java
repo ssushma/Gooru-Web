@@ -149,9 +149,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void updateCourseDetails(final String text, final String id) {
+	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit) {
 		AppClientFactory.getInjector().getfolderService().updateCourse(id, text, new SimpleAsyncCallback<Void>() {
-
 			@Override
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
@@ -160,6 +159,9 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setUnitTemplate();
+				}
 			}
 		});
 	}

@@ -197,7 +197,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		if(id!=null){
-			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
+			getUiHandlers().updateCourseDetails(courseTitle.getText(),id,false);
 		}else{
 			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),false);
 		}
@@ -207,7 +207,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
 		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		if(id!=null){
-			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
+			getUiHandlers().updateCourseDetails(courseTitle.getText(),id,true);
 		}else{
 			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),true);
 		}

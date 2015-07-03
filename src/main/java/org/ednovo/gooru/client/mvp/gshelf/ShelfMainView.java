@@ -275,7 +275,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getCollectionDo()!=null){
 			//if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
-				if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course") || shelfTreeWidget.getCollectionDo().getType().equals("course")) {
+				if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course") || shelfTreeWidget.getCollectionDo().getType().equals("unit")) {
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);

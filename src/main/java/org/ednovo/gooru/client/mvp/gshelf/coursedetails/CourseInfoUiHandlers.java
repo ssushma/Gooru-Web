@@ -48,7 +48,7 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(String text, String id);
+	public void updateCourseDetails(String text, String id,boolean isCreateUnit);
 
 	void showUnitInfo();
 
