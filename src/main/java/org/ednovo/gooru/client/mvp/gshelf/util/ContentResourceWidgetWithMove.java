@@ -22,6 +22,9 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -37,13 +40,18 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -57,9 +65,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	interface ContentResourceWidgetWithMoveUiBinder extends
 			UiBinder<Widget, ContentResourceWidgetWithMove> {
 	}
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	//All Ui fields
 	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
 				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl,lblStartPage,lblEndPage,lblEditSartPageText,lblError;
@@ -71,7 +79,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiField Anchor updateResourceBtn,editInfoLbl,editVideoTimeLbl,editStartPageLbl,copyResource,confirmDeleteLbl,addTages;
 	@UiField HTML resourceNarrationHtml;
 	@UiField Image imgDisplayIcon;
-	
+	@UiField Button btnEdit;
+
 	//final strings
 	private static final String VIDEO_TIME =i18n.GL0974();
 	private static final String START_PAGE=i18n.GL0961();
@@ -84,20 +93,21 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String MESSAGE_CONTENT =i18n.GL0968();
 	private static final String MESSAGE_HEADER =i18n.GL0748();
 	private static final String VALID_END_PAGE = i18n.GL2025();
-	
+
 	boolean youtube,isPdf;
 	boolean isHavingBadWords=false;
-	
+	boolean isEditResourceClicked=false;
+
 	private int totalVideoLength;
 	Integer totalPages;
-	
+
 	CollectionItemDo collectionItem;
-	
+
 	CollectionContentPresenter collectionContentPresenter;
-	
+
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
 	AddTagesPopupView popup;
-	
+
 	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
 		this.collectionItem=collectionItem;
 		initWidget(uiBinder.createAndBindUi(this));
@@ -105,26 +115,27 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
 		narrationTxtArea.getElement().setAttribute("maxlength", "500");
 		narrationTxtArea.getElement().setId("tatNarrationTxtArea");
-		
+
 		actionVerPanel.setVisible(false);
 		lblUpdateTextMessage.setVisible(false);
 		narrationConatainer.setVisible(false);
 		pnlPdfEdiContainer.setVisible(false);
 		lblEditSartPageText.setVisible(false);
 		startStopTimeDisplayText.setVisible(false);
-		
+
 		ulGradePanel.setStyleName("dropdown-menu");
+		ulGradePanel.setVisible(false);
 		actionVerPanel.getElement().setId("fpnlActionVerPanel");
-		
+
 		videoTimeField.setText(VIDEO_TIME);
 		StringUtil.setAttributes(videoTimeField.getElement(), "lblVideoTimeField", VIDEO_TIME, VIDEO_TIME);
-		
+
 		lblStartPage.setText(i18n.GL0961());
 		StringUtil.setAttributes(videoTimeField.getElement(), "lblStartPageLbl",  i18n.GL0961(),  i18n.GL0961());
-		
+
 		lblEndPage.setText(i18n.GL2026());
 		StringUtil.setAttributes(lblEndPage.getElement(), "lblEndPage",i18n.GL2026(),i18n.GL2026());
-		
+
 		fromLblDisplayText.getElement().setId("lblFromLblDisplayText");
 		setData(index,collectionItem);
 		MouseOutHandler mouseOutHandler=new MouseOutHandler() {
@@ -134,27 +145,62 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		};
 		this.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
+
+		btnEdit.getElement().setAttribute("aria-expanded", "false");
+		btnEdit.getElement().setAttribute("aria-haspopup", "true");
+		btnEdit.getElement().setAttribute("data-toggle", "dropdown");
+
+		InlineLabel caret = new InlineLabel();
+		caret.setStyleName("caret");
+
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hidePopup(event);
+	          }
+	    });
+	}
+
+	protected void hidePopup(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target)
+        	{
+        		if (isEditResourceClicked && ulGradePanel != null){
+        			ulGradePanel.setVisible(ulGradePanel.isVisible() ? false : true);
+        			isEditResourceClicked = false;
+        		}
+        	}
+    	}
+	}
+
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return  btnEdit.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
 	}
 	public void setData(int index,CollectionItemDo collectionItem){
 		int indexVal=index+1;
 		if(indexVal==1){
 			lblTopArrow.setVisible(false);
 		}
-		
+
 		lblItemSequence.setText(indexVal+"");
 		lblResourceTitle.getElement().setInnerHTML(collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"");
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
-		
+
 		String resourceType = collectionItem.getResource().getResourceType().getName();
 		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
 		checkYoutubeResourceOrNot(collectionItem,youtube);
 		enableEditInfoButton();
-		
+
 		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
 		txtMoveTextBox.getElement().setAttribute("moveId",collectionItem.getCollectionItemId()+"");
-		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
-		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
+		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly());
+		txtMoveTextBox.addKeyUpHandler(new ReorderText());
 		//This blur handler reset the previous value when the text box value is empty.
 		txtMoveTextBox.addBlurHandler(new BlurHandler() {
 			@Override
@@ -183,7 +229,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			editInfoLbl.setVisible(true);
 		} else if (!checkLoggedInUser()) {
 			editInfoLbl.setVisible(false);
-		}		
+		}
 	}
 	/**
 	 * This method is used to check whether the user is logged in user or not.
@@ -235,8 +281,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public class HasNumbersOnly implements KeyPressHandler {
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if (!Character.isDigit(event.getCharCode()) 
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+			if (!Character.isDigit(event.getCharCode())
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB
 					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
 					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
 					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
@@ -369,14 +415,14 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		}else if(collectionItemDo.getResource() !=null && collectionItemDo.getResource().getUrl() != null && collectionItemDo.getResource().getUrl().endsWith(".pdf")){
 			isPdf=true;
 			imgDisplayIcon.setUrl("images/note.png");
-			
+
 			enableOrDisableYoutubeFields(true);
 			editVideoTimeLbl.setVisible(false);
 			videoTimeField.setVisible(false);
-			
+
 			fromLblDisplayText.setVisible(true);
 			editStartPageLbl.setVisible(true);
-			
+
 			String startPageNumber=collectionItemDo.getStart();
 			totalPages = collectionItemDo.getTotalPages();
 			if(totalPages == null){
@@ -386,7 +432,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}else{
 				fromLblDisplayText.setVisible(true);
 				lblEditSartPageText.setText(i18n.GL2039() + totalPages);
-				editStartPageLbl.setVisible(true);	
+				editStartPageLbl.setVisible(true);
 				imgDisplayIcon.setVisible(true);
 			}
 			String endPageNumber=collectionItemDo.getStop();
@@ -404,7 +450,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 						stoppdfPageNumber.setText(totalPages+"");
 					}else{
 						pdfText=START_PAGE+startPageNumber+" - "+i18n.GL2026()+endPageNumber;
-						fromLblDisplayText.setText(pdfText);	
+						fromLblDisplayText.setText(pdfText);
 						stoppdfPageNumber.setText(endPageNumber+"");
 					}
 				}
@@ -450,7 +496,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlYoutubeContainer.setVisible(isTrue);
 		pnlTimeIcon.setVisible(isTrue);
 		editVideoTimeLbl.setVisible(isTrue);
-		editStartPageLbl.setVisible(false);	
+		editStartPageLbl.setVisible(false);
 	}
 	public Label getItemSequenceLabel(){
 		return lblItemSequence;
@@ -501,7 +547,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		lblCharLimit.setVisible(false);
 		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
-	
+
 	/**
 	 * This method is used to enable and disable the narration fields
 	 * @param isValue
@@ -510,7 +556,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlEditContainer.setVisible(isValue);
 		pnlArrows.setVisible(isValue);
 		pnlNarration.setVisible(isValue);
-		
+
 		narrationConatainer.setVisible(!isValue);
 		resourceNarrationHtml.setVisible(!isValue);
 		actionVerPanel.setVisible(!isValue);
@@ -537,7 +583,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiHandler("btnUpdate")
 	public void onclickOfnarrationUpdate(ClickEvent event){
 		if(youtube){
-			
+
 		}else if(isPdf){
 			updatePdfStartPage();
 		}else{
@@ -552,11 +598,11 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					if (value){
 						narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
 						narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
-						
+
 						narrationTxtArea.getElement().getStyle().setBorderColor("orange");
 						narrationAlertMessageLbl.setText(i18n.GL0554());
 						StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
-						
+
 						narrationAlertMessageLbl.setVisible(true);
 						actionVerPanel.setVisible(true);
 						lblUpdateTextMessage.setVisible(true);
@@ -564,7 +610,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					}else{
 						String narration = null;
 						MixpanelUtil.Organize_Click_Edit_Narration_Update();
-						
+
 						if (resourceNarrationHtml.getHTML().length() > 0) {
 							narration = trim(narrationTxtArea.getText());
 							collectionItem.setNarration(narration);
@@ -617,10 +663,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			isValid = false;
 		}else if( startpdfpage > totalPage){
 			lblError.setText(VALID_END_PAGE);
-			isValid = false;	
+			isValid = false;
 		}else if( enteredStopPage < startpdfpage){
 			lblError.setText(VALID_END_PAGE);
-			isValid = false;	
+			isValid = false;
 		}else{
 			isValid = true;
 			lblError.setText("");
@@ -630,7 +676,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	/**
 	 * Confirmation popup for collection item delete, delete collection item
 	 * regarding the popup action
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -641,7 +687,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
 			@Override
 			public void onDelete(ClickEvent clickEvent) {
-				collectionContentPresenter.deleteCollectionItem(collectionItem.getCollectionItemId());
+				collectionContentPresenter.deleteCollectionItem(collectionItem.getCollectionItemId(), collectionItem.getItemSequence());
 				deleteConfirmationPopupVc.hide();
 				ContentResourceWidgetWithMove.this.removeFromParent();
 			}
@@ -700,6 +746,19 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		MixpanelUtil.Organize_Click_Edit_Start_Page();
 		enablePdfButtons(false);
 	}
+
+	@UiHandler("btnEdit")
+	public void onEditResourceClick(ClickEvent event){
+		if (ulGradePanel.isVisible()){
+			ulGradePanel.setVisible(false);
+			isEditResourceClicked = false;
+		}else{
+			ulGradePanel.setVisible(true);
+			isEditResourceClicked = true;
+		}
+
+	}
+
 	/**
 	 * This method is used to enable and disable the pdf buttons
 	 * @param isValue
@@ -708,26 +767,26 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlPdfEdiContainer.setVisible(!isValue);
 		lblEditSartPageText.setVisible(!isValue);
 		actionVerPanel.setVisible(!isValue);
-	
+
 		pnlEditContainer.setVisible(isValue);
 		pnlArrows.setVisible(isValue);
 		fromLblDisplayText.setVisible(isValue);
 	}
 	/**
 	 * This method is used to trim the text of rich text box.
-	 * @function trim 
-	 * 
+	 * @function trim
+	 *
 	 * @description :
-	 * 
+	 *
 	 * @parm(s) : @param s
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
 	public String trim(String s) {
-	   String result = s.trim(); 
+	   String result = s.trim();
 	   String x = result.replaceAll("<br>", "");
 	   x = x.replaceAll("&nbsp;", "");
 	   x = x.trim();
@@ -738,9 +797,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	   }
 	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
-	
+
 	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);
-	
+
 	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter=collectionContentPresenter;
 	}

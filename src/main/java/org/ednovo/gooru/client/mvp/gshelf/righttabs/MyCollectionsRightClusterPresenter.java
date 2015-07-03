@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -36,21 +36,21 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
-	
+
 	public static final  Object INNER_SLOT = new Object();
-	
+
 	CourseInfoPresenter courseInfoPresenter;
-	
+
 	LessonInfoPresenter lessonInfoPresenter;
-	
+
 	UnitInfoPresenter unitInfoPresenter;
-	
+
 	ShelfMainPresenter shelfMainPresenter;
-	
+
 	FolderDo folderObj;
-	
+
 	CollectionContentPresenter collectionContentPresenter;
-	
+
 	final String COLLECTION="Collection";
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
@@ -111,7 +111,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}
 			}
 		}else if(index==2){
-			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
@@ -120,7 +120,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setInSlot(INNER_SLOT, myCollectionsListPresenter);
 			}
 		}else if(index==3){
-			
+
 		}
 	}
 	//This method is not using present
@@ -147,7 +147,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {
 		this.shelfMainPresenter=shelfMainPresenter;
 	}
-	
+
 	/**
 	 * To set the shelfMainPresenter obj
 	 * @param shelfMainPresenter

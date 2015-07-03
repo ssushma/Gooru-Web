@@ -1,15 +1,16 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
-<g:HTMLPanel styleName="floderRightContainer" ui:field="mainPanel">
-	<div class="courseHeader">
-		<g:HTMLPanel styleName="breadcrumbMain" ui:field="pnlBreadCrumbMain"/>
-	</div>
-	<div class="folderBlockSitemap">
-		<g:Anchor ui:field="lnkInfo" styleName="active" >Info</g:Anchor> 
-		<g:Anchor ui:field="lnkContent">Content</g:Anchor> 
-		<g:Anchor ui:field="lnkshare">Share</g:Anchor> 
-	</div>
-	<g:HTMLPanel ui:field="pnlSlotInnerContent"/>
-</g:HTMLPanel>
-</ui:UiBinder> 
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:HTMLPanel styleName="floderRightContainer" ui:field="mainPanel">
+		<div class="courseHeader">
+			<g:HTMLPanel styleName="breadcrumbMain" ui:field="pnlBreadCrumbMain"/>
+		</div>
+		<div class="folderBlockSitemap">
+			<g:Anchor ui:field="lnkInfo" styleName="active" >Info</g:Anchor>
+			<g:Anchor ui:field="lnkContent">Content</g:Anchor>
+			<g:Anchor ui:field="lnkshare">Share</g:Anchor>
+		</div>
+		<g:HTMLPanel ui:field="pnlSlotInnerContent"/>
+	</g:HTMLPanel>
+</ui:UiBinder>
