@@ -147,13 +147,17 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void updateCourseDetails(String text, String id) {
+	public void updateCourseDetails(final String text, final String id) {
 		AppClientFactory.getInjector().getfolderService().updateCourse(id, text, new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
-				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result.getTitle());
-				//myCollectionsRightClusterPresenter.setTabItems(2, COURSE, null);
+				FolderDo folderDo = new FolderDo();
+				folderDo.setTitle(text);
+				folderDo.setType(COURSE);
+				//folderDo.setGooruOid(id);
+				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
 			}
 		});
 	}
