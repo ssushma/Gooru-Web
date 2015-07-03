@@ -68,6 +68,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionContentPresenter=collectionContentPresenter;
 		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
+		unitInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
 	}
 	@Override
@@ -82,31 +83,26 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		if(index==1){
-			if(folderObj==null){
+			if(folderObj.getGooruOid()==null){
 				//For displaying template
-				if(folderObj==null  && o1==null){
-					courseInfoPresenter.callTaxonomyService();
-					FolderDo folderObjTemp = new FolderDo();
-					folderObjTemp.setTitle("Untitled Course");
-					courseInfoPresenter.setData(folderObjTemp);
-					setInSlot(INNER_SLOT, courseInfoPresenter);
-				}else if(folderObj==null && o1!=null  && o2==null){
-					unitInfoPresenter.callTaxonomyService();
-					FolderDo folderObjTemp = new FolderDo();
-					folderObjTemp.setTitle("Untitled Unit");
-					unitInfoPresenter.setData(folderObjTemp);
-					setInSlot(INNER_SLOT, unitInfoPresenter);
-				}else{
-				
-					setInSlot(INNER_SLOT, lessonInfoPresenter);
-				}
-			}else{
-				//For displaying original data
 				if(o1==null){
 					courseInfoPresenter.callTaxonomyService();
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
-				}else if(o1!=null  && o2==null){
+				}else if(o1!=null && o2==null){
+					unitInfoPresenter.callTaxonomyService();
+					unitInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, unitInfoPresenter);
+				}else{
+					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}
+			}else{
+				//For displaying original data
+				if(o1!=null && o2==null){
+					courseInfoPresenter.callTaxonomyService();
+					courseInfoPresenter.setData(folderObj);
+					setInSlot(INNER_SLOT, courseInfoPresenter);
+				}else if(o1!=null && o2!=null){
 					unitInfoPresenter.callTaxonomyService();
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
@@ -115,8 +111,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}
 			}
 		}else if(index==2){
-			//The true condition is added for testing purpose
-			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
