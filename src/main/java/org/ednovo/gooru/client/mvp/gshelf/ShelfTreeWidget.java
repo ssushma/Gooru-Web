@@ -354,6 +354,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void setData(int nextLevel) {
+		System.out.println("setData"+nextLevel);
 		String viewType=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(viewType!=null && viewType.equals(COLLECTION)){
 			titleFocPanel.addStyleName(COLLECTION);
@@ -488,9 +489,10 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void openFolderItem() {
-		if(collectionDo!=null &&(collectionDo.getType().equals(FOLDER) || collectionDo.getType().equals(COURSE))) {
+		String type=(collectionDo!=null&&collectionDo.getType()!=null)?collectionDo.getType():"";
+		if(FOLDER.equalsIgnoreCase(type) || COURSE.equalsIgnoreCase(type) || UNIT.equalsIgnoreCase(type)|| LESSON.equalsIgnoreCase(type)){
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.MYCONTENT) && !isEditButtonSelected) {
-     			openFolderInShelf();
+				openFolderInShelf();
 			}
 		}
 	}
