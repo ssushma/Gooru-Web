@@ -569,6 +569,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			correctStyle(treeItem);
 			floderTreeContainer.add(shelfFolderTree);
 			setFolderActiveStatus();
+			shelfTreeWidget.setFolderOpenedStatus(true);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put(VIEW, getViewType());
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
@@ -591,6 +592,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 			nextLevel = 4;
 		}
+		selectedWidget.setOpen(true);
 		ShelfTreeWidget shelfTreeWidget = null;
 		if("Unit".equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 2);
@@ -604,6 +606,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		TreeItem item = new TreeItem(shelfTreeWidget);
 		treeChildSelectedItem.insertItem(0, item);
 		treeChildSelectedItem.setState(true);
+		
 		shelfTreeWidget.setFolderOpenedStatus(true);
 		correctStyle(item);
 		treeChildSelectedItem=item;
