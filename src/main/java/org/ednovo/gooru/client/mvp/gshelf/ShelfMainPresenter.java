@@ -375,4 +375,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void updateTitleOfTreeWidget(FolderDo courseDo) {
 		getView().updateTitleOfTreeWidget(courseDo);
 	}
+
+	/**
+	 * To enable course button based on the boolean parameter.
+	 * @param isEnable
+	 */
+	public void enableCreateCourseButton(boolean isEnable) {
+		getView().enableDisableCourseButton(isEnable);
+	}
 }

@@ -69,4 +69,6 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
      * @param courseDo {@link FolderDo}
      */
 	void updateTitleOfTreeWidget(FolderDo courseDo);
+
+	void enableDisableCourseButton(boolean isEnable);
 }
