@@ -296,9 +296,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 						callChilds(shelfTreeWidget,type);
 					}
 					shelfTreeWidget.setFolderOpenedStatus(true);
-				} else {
-					getUiHandlers().setCollectionContent(shelfTreeWidget.getCollectionDo());
-					shelfTreeWidget.setCollectionOpenedStatus(true);
+				}else{
+					String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+						getUiHandlers().setCollectionContent(shelfTreeWidget.getCollectionDo());
+						shelfTreeWidget.setCollectionOpenedStatus(true);
+					}
 				}
 				shelfTreeWidget.setActiveStyle(true);
 				ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
