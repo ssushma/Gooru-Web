@@ -194,30 +194,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(unitTitle.getText());
+		getUiHandlers().createAndSaveCourseDetails(unitTitle.getText(),false);
 	}
 	
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(unitTitle.getText());
-		getUiHandlers().showUnitTemplate();
-		getUiHandlers().showUnitInfo();
-		
-		
-		
-/*		ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 1);
-		TreeItem treeItem = new TreeItem(shelfTreeWidget);
-		
-		shelfFolderTree.insertItem(0, treeItem);
-		shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
-		shelfTreeWidget.getTitleFocPanel().addStyleName("course");
-		FolderDo folderObj = new FolderDo();
-		folderObj.setTitle(UNTITLEDCOURSE);
-		getUiHandlers().setRightPanelData(folderObj, COURSE);
-		correctStyle(treeItem);*/
+		getUiHandlers().createAndSaveCourseDetails(unitTitle.getText(),true);
 	}
-	
-	
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
@@ -225,6 +208,5 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		if(null!=courseObj){
 			unitTitle.setText(courseObj.getTitle());
 		}
-		
 	}
 }
