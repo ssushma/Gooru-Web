@@ -317,18 +317,13 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	public FolderDo createCourse(String folderName,boolean addToShelf, String courseId, String unitId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		FolderDo folderDo = null;
-		if(courseId==null && unitId==null)
-		{
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
-		}
-		else if(courseId!=null && unitId==null)
-		{
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
-		}
-		else
-		{
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
+		FolderDo folderDo = new FolderDo();
+		if(courseId==null && unitId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
+		}else if(courseId!=null && unitId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
+		}else{
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
 		}
 		JSONObject courseObject=new JSONObject();
 		try {
@@ -343,6 +338,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRep);
+			logger.info("folderDo obj : "+folderDo);
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		} catch (Exception e) {
@@ -353,6 +349,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 	public FolderDo deserializeCreatedFolder(JsonRepresentation jsonRep) {
 		try {
+			getLogger().info("jsonRep.getJsonObject().toString():::::::"+jsonRep.getJsonObject().toString());
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderDo>() {});
 			}
