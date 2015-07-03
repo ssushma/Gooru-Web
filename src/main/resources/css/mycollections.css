@@ -361,6 +361,9 @@ button.btn-disabled{
 #gShelfMainContainer .folderLevel.collectionChild {
     padding-left:164px;
 }
+#gShelfMainContainer .folderLevel.course{ /* grandparent level - default */
+    padding-left:80px;
+}
 
 #gShelfMainContainer .folderLevel.unit {
     padding-left:108px;

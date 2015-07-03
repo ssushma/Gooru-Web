@@ -43,7 +43,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
- * @author Search Team
+ * @author Search TeamUnitInfoPresenter.java
  *
  */
 public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implements UnitInfoUiHandlers {
@@ -113,7 +113,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(String courseTitle) {
+	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateLesson) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
@@ -122,30 +122,31 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
 				params.put("o2", uri[uri.length-1]);
-				params.put("view", "course");
+				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
-				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				if(isCreateLesson){
+					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, result);
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
+				}
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				if(isCreateLesson){
+					myCollectionsRightClusterPresenter.setUnitTemplate("Lesson");
+				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
 	@Override
 	public void showUnitInfo() {
-
-				myCollectionsRightClusterPresenter.setUnitInfo();
-	
+		//myCollectionsRightClusterPresenter.setUnitInfo();
 	}
 	@Override
 	public void showUnitTemplate() {
-
-				myCollectionsRightClusterPresenter.setUnitTemplate();
-	
+		//myCollectionsRightClusterPresenter.setUnitTemplate();
 	}
-	
 
-	public void setMyCollectionRightClusterPresenter(
-			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 

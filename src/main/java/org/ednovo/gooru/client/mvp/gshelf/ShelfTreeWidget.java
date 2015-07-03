@@ -151,6 +151,8 @@ public class ShelfTreeWidget extends FocusPanel {
 	private static final String ASSESSMENT = "assessment";
 	private static final String FOLDER = "folder";
 	private static final String COURSE = "course";
+	private static final String UNIT = "unit";
+	private static final String LESSON = "lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	
@@ -306,6 +308,10 @@ public class ShelfTreeWidget extends FocusPanel {
 		updateData(collectionDo);
 		if(collectionDo.getType().equals(COURSE)){
 			titleFocPanel.addStyleName(COURSE);
+		}else if(collectionDo.getType().equals(UNIT)) {
+			titleFocPanel.addStyleName(UNIT);
+		}else if(collectionDo.getType().equals(LESSON)) {
+			titleFocPanel.addStyleName(LESSON);
 		}else if(!collectionDo.getType().equals(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
@@ -325,34 +331,21 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else{
 			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
 		if(nextLevel == 1) {
 			titleLbl.setWidth("138px");
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 2) {
 			titleLbl.setWidth("111px");
-			//titleFocPanel.setWidth("143px");
 			titleFocPanel.addStyleName("parent");
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 3) {
 			titleLbl.setWidth("82px");
-			//titleFocPanel.setWidth("115px");
 			titleFocPanel.addStyleName("child");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
 		} else if(nextLevel == 4) {
 			titleLbl.setWidth("100px");
-			//titleFocPanel.setWidth("89px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
 			titleFocPanel.addStyleName("collectionChild");
-			/*try {
-				titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
-			} catch (Exception e){
-				AppClientFactory.printSevereLogger(e.getMessage());
-			}*/
 		}
 	}
 	
@@ -406,11 +399,9 @@ public class ShelfTreeWidget extends FocusPanel {
    							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
    						}
    					}
-
    				}
    			} 
            }
-			
 		}
 	};
 
@@ -475,7 +466,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) &&!collectionDo.getType().equals(UNIT) &&!collectionDo.getType().equals(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
 		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
@@ -644,39 +635,24 @@ public class ShelfTreeWidget extends FocusPanel {
 		} else {
 			titleFocPanel.removeStyleName("active");
 		}
-		
 	}
-
-	
-	public void setOpenStyle(boolean isOpen, int subElementsCount) 
-	{
+	public void setOpenStyle(boolean isOpen, int subElementsCount){
 		Element[] docElement = DOMUtils.getElementsByClassName("arrows", titleFocPanel.getElement());
-
-		if(docElement.length>0 && !(titleFocPanel.getStyleName().contains("folderStyle-collection")))
-		{
-
-			if(subElementsCount == 0)
-			{
-				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("block"))
-				{
+		if(docElement.length>0 && !(titleFocPanel.getStyleName().contains("folderStyle-collection"))){
+			if(subElementsCount == 0){
+				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("block")){
 					docElement[0].getStyle().setDisplay(Display.NONE);	
 				}
 			}
-			if(subElementsCount > 0)
-			{
-			if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("none"))
-			{
-				docElement[0].getStyle().setDisplay(Display.BLOCK);
+			if(subElementsCount > 0){
+				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("none")){
+					docElement[0].getStyle().setDisplay(Display.BLOCK);
+				}
 			}
-			}
-
 		}
-		if(isOpen) 
-		{
+		if(isOpen){
 			titleFocPanel.addStyleName("open");
-		} 
-		else 
-		{
+		}else {
 			titleFocPanel.removeStyleName("open");
 		}
 	}
@@ -751,21 +727,16 @@ public class ShelfTreeWidget extends FocusPanel {
 			}
 		}
 	};
-
-
 	/**
 	 * @return the titleLbl
 	 */
 	public HTML getTitleLbl() {
 		return titleLbl;
 	}
-
 	/**
 	 * @return the titleFocPanel
 	 */
 	public FocusPanel getTitleFocPanel() {
 		return titleFocPanel;
 	}
-	
-	
 }

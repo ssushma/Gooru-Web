@@ -131,15 +131,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 
 	@Override
-	public void setUnitTemplate(){
-		shelfMainPresenter.createNewUnitItem();
-	}
-	@Override
-	public void setUnitInfo(){
-	/*	courseInfoPresenter.callTaxonomyService();
-		courseInfoPresenter.setData(folderObj);*/
-		setInSlot(INNER_SLOT, unitInfoPresenter);
-		//getView().setDefaultActiveTab();
+	public void setUnitTemplate(String type){
+		shelfMainPresenter.createNewUnitItem(type);
+		if("Unit".equalsIgnoreCase(type)){
+			setInSlot(INNER_SLOT, unitInfoPresenter);
+		}else if("Lesson".equalsIgnoreCase(type)){
+			setInSlot(INNER_SLOT, lessonInfoPresenter);
+		}
 	}
 
 	/**
