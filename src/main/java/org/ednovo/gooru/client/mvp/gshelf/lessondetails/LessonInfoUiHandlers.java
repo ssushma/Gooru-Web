@@ -37,4 +37,6 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	public void callTaxonomyService();
 
 	void showStandardsPopup(String standardVal);
+
+	public void createAndSaveCourseDetails(String text);
 }
