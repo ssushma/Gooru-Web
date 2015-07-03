@@ -34,13 +34,26 @@
 							
 							<div class="clearfix"></div>
 							<g:HTMLPanel styleName="timeIcon" ui:field="pnlTimeIcon">
-								<img src="images/timeIcon.png"/>
+								<g:Image ui:field="imgDisplayIcon"/>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="timeText" ui:field="pnlYoutubeContainer">
 								<g:Label ui:field="startStopTimeDisplayText"></g:Label>
 							 	<g:Label ui:field="videoTimeField" styleName="youtubeText"/>
 	   						    <g:Label ui:field="fromLblDisplayText" styleName="youtubeText"/>
+	   						    <g:Label ui:field="lblEditSartPageText"></g:Label>
 							</g:HTMLPanel>
+							<g:FlowPanel ui:field="pnlPdfEdiContainer" styleName="pdfEdiContainer pdfEdiContainerLeft">
+							    <g:Label ui:field="lblStartPage" styleName="styleForLbl"/>
+							    <g:FlowPanel styleName="pdfEditBox pdfEdiContainerLeft">
+							  	 	<g:TextBox ui:field="startpdfPageNumber"/>
+							   	</g:FlowPanel>
+							   	 <g:Label ui:field="lblEndPage" styleName="styleForLbl"/>
+							   	 <g:FlowPanel styleName="pdfEdiContainerLeft">
+							  	 	<g:TextBox ui:field="stoppdfPageNumber"/>
+							   	</g:FlowPanel>
+							   	<g:Label ui:field="updatePDFLabelText"></g:Label>
+							</g:FlowPanel>
+							<g:Label ui:field="lblError" styleName="errorMsgLabel"></g:Label>
 							<div class="clearfix"></div>
 						</div>
 						<div class="clearfix"></div>
@@ -87,8 +100,8 @@
 				</g:HTMLPanel>
 				<g:Label ui:field="lblUpdateTextMessage" text="{i18n.GL0966}" title="{i18n.GL0966}"/>
 				<g:FlowPanel ui:field="actionVerPanel">
-					 <g:Button styleName="primary updateButton" ui:field="updateNarrationBtn" text="{i18n.GL0240}" title="{i18n.GL0240}"/>
-					 <g:Button styleName="secondary updateButton" ui:field="cancelNarrationBtn" text="{i18n.GL0142}" title="{i18n.GL0142}"/>
+					 <g:Button styleName="primary updateButton" ui:field="btnUpdate" text="{i18n.GL0240}" title="{i18n.GL0240}"/>
+					 <g:Button styleName="secondary updateButton" ui:field="btnCancel" text="{i18n.GL0142}" title="{i18n.GL0142}"/>
 				</g:FlowPanel>
 			</g:HTMLPanel>
 	</g:HTMLPanel>

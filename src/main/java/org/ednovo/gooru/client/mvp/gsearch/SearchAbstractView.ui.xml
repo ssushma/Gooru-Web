@@ -25,7 +25,7 @@
 							<g:HTMLPanel  ui:field="collectionSearchPanel" visible="false">
 								<div class="">
 									<div class="no-gutter">
-										<div class="col-md-9 col-sm-12 collectionDetails">
+										<div class="col-md-9 col-sm-10 collectionDetails">
 											<div class="seachLeftNavigation">
 												<panel:UlPanel>
 													<panel:LiPanel styleName="active" ui:field="collectionsBtn">
