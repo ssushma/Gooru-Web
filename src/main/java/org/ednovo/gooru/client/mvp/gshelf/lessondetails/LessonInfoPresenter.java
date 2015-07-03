@@ -118,11 +118,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-				params.put("o2", uri[uri.length-1]);
+				params.put("o2", AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+				params.put("o3", uri[uri.length-1]);
 				params.put("view", "course");
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.setTabItems(3, LESSON, result);
-				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
