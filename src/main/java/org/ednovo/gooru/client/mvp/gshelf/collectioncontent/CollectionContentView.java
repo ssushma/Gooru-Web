@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import java.util.Iterator;
 
-import org.apache.bcel.generic.LSTORE;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
