@@ -1,0 +1,67 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style src="" />
+	<g:HTMLPanel styleName="fractionsDetailsContainer">
+	     <g:HTMLPanel styleName="rowContainer no-gutter">
+	        <g:HTMLPanel styleName="col-md-5 col-sm-5">
+	           <g:HTMLPanel styleName="studyBlock">
+	              <g:HTMLPanel styleName="assessmentImageContainer">
+	                 <img src="images/leason3.png" height="120" width="172"/>
+	              </g:HTMLPanel>
+	              <g:HTMLPanel styleName="descriptionContainer">
+	                 <h3>Whole Numbers as Fractions</h3>
+	                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing.</p>
+	              </g:HTMLPanel>
+	           </g:HTMLPanel>
+	        </g:HTMLPanel>
+	        <g:HTMLPanel styleName="col-md-7 col-sm-7">
+	           <g:HTMLPanel styleName="no-gutter">
+	              <g:HTMLPanel styleName="col-md-6 col-sm-6">
+	              </g:HTMLPanel>
+	              <g:HTMLPanel styleName="col-md-6 col-sm-6">
+	                 <g:HTMLPanel styleName="fraNumbers">
+	                    <g:HTMLPanel styleName="list-group">
+	                       <g:HTMLPanel styleName="list-group-item timeSpent">
+	                          <g:HTMLPanel styleName="pull-left">Total Time Spent</g:HTMLPanel>
+	                          <g:HTMLPanel styleName="pull-right">20min</g:HTMLPanel>
+	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	                       </g:HTMLPanel>
+	                       <g:HTMLPanel styleName="list-group-item totalViews">
+	                          <g:HTMLPanel styleName="pull-left">Views</g:HTMLPanel>
+	                          <g:HTMLPanel styleName="pull-right">2</g:HTMLPanel>
+	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	                       </g:HTMLPanel>
+	                       <g:HTMLPanel styleName="list-group-item lastSession">
+	                          <g:HTMLPanel styleName="pull-left">Last Session</g:HTMLPanel>
+	                          <g:HTMLPanel styleName="pull-right">05/27/2015 12:51PM</g:HTMLPanel>
+	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	                       </g:HTMLPanel>
+	                       <g:HTMLPanel styleName="list-group-item viewLink">
+	                          <g:Anchor ui:field="reportUrl">View Report</g:Anchor>
+	                       </g:HTMLPanel>
+	                    </g:HTMLPanel>
+	                 </g:HTMLPanel>
+	              </g:HTMLPanel>
+	              <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	           </g:HTMLPanel>
+	        </g:HTMLPanel>
+	        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	     </g:HTMLPanel>
+	     <g:HTMLPanel styleName="rowContainer no-gutter">
+	        <g:HTMLPanel styleName="resourceImgContainer">
+	           <a href="#">
+	              <img src="images/auto1.png"/>
+	              <g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
+	           </a>
+	           <a href="#">
+	              <img src="images/auto1.png"/>
+	              <g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
+	           </a>
+	           <a href="#">
+	              <img src="images/auto1.png"/>
+	              <g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
+	           </a>
+	        </g:HTMLPanel>
+	     </g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>
