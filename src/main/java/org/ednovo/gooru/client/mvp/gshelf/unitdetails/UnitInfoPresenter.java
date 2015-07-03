@@ -43,7 +43,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
- * @author Search Team
+ * @author Search TeamUnitInfoPresenter.java
  *
  */
 public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implements UnitInfoUiHandlers {
@@ -125,24 +125,19 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("view", "course");
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
-				//myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
 	@Override
 	public void showUnitInfo() {
-
-				myCollectionsRightClusterPresenter.setUnitInfo();
-	
+		//myCollectionsRightClusterPresenter.setUnitInfo();
 	}
 	@Override
 	public void showUnitTemplate() {
-
-				myCollectionsRightClusterPresenter.setUnitTemplate();
-	
+		myCollectionsRightClusterPresenter.setUnitTemplate();
 	}
-	
 
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
