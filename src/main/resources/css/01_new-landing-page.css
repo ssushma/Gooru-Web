@@ -360,7 +360,7 @@ body{
 
 .focusBlock{
 	position:relative;
-	margin-top:-250px;
+	margin-top:-300px;
 	z-index:89;
 	min-height: 255px;
 }

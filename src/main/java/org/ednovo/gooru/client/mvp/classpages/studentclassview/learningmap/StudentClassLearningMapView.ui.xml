@@ -1,46 +1,64 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc"
+    xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
 	<g:HTMLPanel styleName="container">
-	   <g:HTMLPanel styleName="row">
-	      <g:HTMLPanel styleName="learningHeaderBlock">
-	         <g:HTMLPanel styleName="col-md-4">
-	            <g:HTMLPanel styleName="emptyBox"></g:HTMLPanel>
-	            <g:HTMLPanel styleName="topBackLinkBox" ui:field="topBackLinkBox">
-					<a href=""><span class="left-arrow"></span><span:SpanPanel ui:field="allContentTxt"></span:SpanPanel></a>
+	   <span:LoadingUc ui:field="cropImageLoading"/>
+	   <g:HTMLPanel styleName="row" ui:field="containerData">
+			<g:HTMLPanel styleName="learningHeaderBlock">
+			   <g:HTMLPanel styleName="col-md-4">
+			    <g:HTMLPanel styleName="emptyBox"></g:HTMLPanel>
+			    <g:HTMLPanel styleName="topBackLinkBox" ui:field="topBackLinkBox">
+			 		<panel:HTMLEventPanel ui:field="allContentPanel" styleName="cursorPointer">
+			 		    <span class="left-arrow"></span><span:SpanPanel ui:field="allContentTxt"></span:SpanPanel>
+			 		</panel:HTMLEventPanel>
 				</g:HTMLPanel>
-	         </g:HTMLPanel>
-	         <g:HTMLPanel styleName="col-md-8">
-	            <g:HTMLPanel styleName="indicationBox">
-	               <g:HTMLPanel><span:SpanPanel styleName="green-circle"></span:SpanPanel><g:Label>Score Met (90%)</g:Label></g:HTMLPanel>
-	               <g:HTMLPanel><span:SpanPanel styleName="green-text" ui:field="spanTxt"></span:SpanPanel><g:Label>Not Scored</g:Label></g:HTMLPanel>
-	               <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label>Score Not Yet Met</g:Label></g:HTMLPanel>
-	               <g:HTMLPanel><span:SpanPanel styleName="grey-circle"></span:SpanPanel><g:Label>Not Attempted</g:Label></g:HTMLPanel>
-	            </g:HTMLPanel>
-	         </g:HTMLPanel>
-	         <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-	      </g:HTMLPanel>
+			    </g:HTMLPanel>
+			    <g:HTMLPanel styleName="col-md-8">
+			       <g:HTMLPanel styleName="indicationBox">
+			          <g:HTMLPanel><span:SpanPanel styleName="green-circle"></span:SpanPanel><g:Label>Score Met (90%)</g:Label></g:HTMLPanel>
+			          <g:HTMLPanel><span:SpanPanel styleName="green-text" ui:field="spanTxt"></span:SpanPanel><g:Label>Not Scored</g:Label></g:HTMLPanel>
+			          <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label>Score Not Yet Met</g:Label></g:HTMLPanel>
+			          <g:HTMLPanel><span:SpanPanel styleName="grey-circle"></span:SpanPanel><g:Label>Not Attempted</g:Label></g:HTMLPanel>
+			       </g:HTMLPanel>
+			    </g:HTMLPanel>
+			    <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+			</g:HTMLPanel>
 			<g:HTMLPanel styleName="headerLinksContainer" ui:field="headerLinksContainer">
-			   <g:HTMLPanel styleName="col-md-3 col-xs-8 col-sm-6">
+			   <g:HTMLPanel styleName="col-md-4 col-xs-8 col-sm-6">
 			      <g:HTMLPanel styleName="headerBackLinkBox">
-			         <a href=""><span class="left-arrow"></span>  <span:SpanPanel ui:field="previousContentName"></span:SpanPanel></a>
+			         <panel:HTMLEventPanel ui:field="previousContentPanel" styleName="cursorPointer">
+			             <span class="left-arrow"></span><span:SpanPanel ui:field="previousContentName"></span:SpanPanel>
+			         </panel:HTMLEventPanel>
 			      </g:HTMLPanel>
 			   </g:HTMLPanel>
 			   <g:HTMLPanel styleName="col-md-6 col-xs-8 col-sm-6">
 			      <g:HTMLPanel styleName="headerBackLinkBox">
-			         <a href=""><span:SpanPanel ui:field="currentContentName"></span:SpanPanel></a>
+			         <panel:HTMLEventPanel ui:field="currentContentPanel">
+			             <span:SpanPanel ui:field="currentContentName"></span:SpanPanel>
+			         </panel:HTMLEventPanel>
 			      </g:HTMLPanel>
 			   </g:HTMLPanel>
-			   <g:HTMLPanel styleName="col-md-3 col-xs-4 col-sm-6">
+			   <g:HTMLPanel styleName="col-md-2 col-xs-4 col-sm-6">
 			      <g:HTMLPanel styleName="headerNextLinkBox">
-			         <a href="" class="pull-right">
+			         <panel:HTMLEventPanel styleName="pull-right cursorPointer" ui:field="nextContentPanel">
 			             <span:SpanPanel ui:field="nextContentName"></span:SpanPanel><span class="next-arrow"></span>
-			         </a>
+			         </panel:HTMLEventPanel>
 			      </g:HTMLPanel>
 			   </g:HTMLPanel>
 			   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
-	      <g:HTMLPanel styleName="learningBodyBlock" ui:field="learningMapContainer"/>
+			<g:HTMLPanel styleName="lessonMetaDataContainer col-md-12" ui:field="standardsBlock">
+				<g:HTMLPanel styleName="standardsBlock">
+				   <g:Label styleName="lessonStandard">
+				      CCSS.Math.Content.4.NF.A.1
+				   </g:Label>
+				   <g:Label styleName="lessonStandard">
+				      CCSS.Math.Content.4.NF.A.2
+				   </g:Label>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+	    	<g:HTMLPanel styleName="learningBodyBlock" ui:field="learningMapContainer"/>
 	   </g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
