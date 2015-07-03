@@ -296,8 +296,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 						callChilds(shelfTreeWidget,type);
 					}
 					shelfTreeWidget.setFolderOpenedStatus(true);
-				} else {
-					shelfTreeWidget.setCollectionOpenedStatus(true);
+				}else{
+					String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+						getUiHandlers().setCollectionContent(shelfTreeWidget.getCollectionDo());
+						shelfTreeWidget.setCollectionOpenedStatus(true);
+					}
 				}
 				shelfTreeWidget.setActiveStyle(true);
 				ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
@@ -730,7 +734,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				}else{
 					gooruOid = id; 
 				}
-				
 			} else if(shelfTreeWidget.getLevel()==2) {
 				if(id==null){
 					gooruOid = o3;
@@ -749,15 +752,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private void checkFolderItemStyle(TreeItem item, String gooruOid) {
 		ShelfTreeWidget updatedItem = (ShelfTreeWidget) item.getWidget();
-		if(gooruOid!=null)
-		{
+		if(gooruOid!=null){
 		 if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
 			 treeChildSelectedItem = item;
 			 //updatedItem.setActiveStyle(true);
 			 setFolderActiveStatus();
 			 return;
 		 }
-		}
+	   }
 	}
 	
 	public FolderDo getFolderDo(){
