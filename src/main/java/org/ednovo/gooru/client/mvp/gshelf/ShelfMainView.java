@@ -280,7 +280,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getCollectionDo()!=null){
 			//if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
-				if(shelfTreeWidget.getCollectionDo().getType().equals("folder") || shelfTreeWidget.getCollectionDo().getType().equals("course") || shelfTreeWidget.getCollectionDo().getType().equals("unit") || shelfTreeWidget.getCollectionDo().getType().equals("lesson")) {
+				if("folder".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "course".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "unit".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "lesson".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType())) {
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);

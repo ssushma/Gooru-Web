@@ -57,6 +57,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	
 	final String COURSE="course";
 	
+	private String UNIT = "Unit";
+	
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -120,15 +122,13 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				params.put("o1", uri[uri.length-1]);
 				params.put("view", COURSE);
 				result.setGooruOid(uri[uri.length-1]);
-				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, result);
-				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
-				}
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
@@ -154,8 +154,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
-				
 				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
 				}
 			}
