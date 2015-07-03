@@ -111,9 +111,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(String courseTitle) {
+	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateUnit) {
 		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true,null,null, new SimpleAsyncCallback<FolderDo>() {
-
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -123,13 +122,16 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setUnitTemplate();
+				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
 	@Override
 	public void showUnitInfo() {
-       myCollectionsRightClusterPresenter.setUnitInfo();
+      // myCollectionsRightClusterPresenter.setUnitInfo();
 	}
 	@Override
 	public void showUnitTemplate() {

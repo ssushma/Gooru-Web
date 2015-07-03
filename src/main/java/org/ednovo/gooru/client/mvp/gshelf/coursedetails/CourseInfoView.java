@@ -199,7 +199,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		if(id!=null){
 			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
 		}else{
-			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),false);
 		}
 	}
 	
@@ -209,10 +209,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		if(id!=null){
 			getUiHandlers().updateCourseDetails(courseTitle.getText(),id);
 		}else{
-			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText());
+			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),true);
 		}
-		getUiHandlers().showUnitTemplate();
-		getUiHandlers().showUnitInfo();
 	}
 	
 	
@@ -223,6 +221,5 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		if(null!=courseObj){
 			courseTitle.setText(courseObj.getTitle());
 		}
-		
 	}
 }
