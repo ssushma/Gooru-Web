@@ -314,11 +314,22 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 	
 	@Override
-	public FolderDo createCourse(String folderName,boolean addToShelf) throws GwtException {
+	public FolderDo createCourse(String folderName,boolean addToShelf, String courseId, String unitId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		FolderDo folderDo = null;
+		if(courseId==null && unitId==null)
+		{
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
+		}
+		else if(courseId!=null && unitId==null)
+		{
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
+		}
+		else
+		{
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
+		}
 		JSONObject courseObject=new JSONObject();
 		try {
 			courseObject.put(TITLE, folderName);

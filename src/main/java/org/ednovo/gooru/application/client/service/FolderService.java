@@ -112,7 +112,7 @@ public interface FolderService extends BaseService {
 	 * @return serialized created {@link FolderDo}
 	 * @throws GwtException
 	 */
-	public FolderDo createCourse(String folderName, boolean addToShelf) throws GwtException, ServerDownException;
+	public FolderDo createCourse(String folderName,boolean addToShelf,String courseId, String unitId) throws GwtException, ServerDownException;
 
 	/**
 	 * delete a folder from organize
@@ -180,4 +180,5 @@ public interface FolderService extends BaseService {
 	 * @throws ServerDownException
 	 */
 	Map<String,String> getFolderRouteNodes(String folderId) throws GwtException,ServerDownException;
+
 }

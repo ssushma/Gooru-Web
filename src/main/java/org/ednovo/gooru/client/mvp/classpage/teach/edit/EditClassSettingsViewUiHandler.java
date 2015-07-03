@@ -28,19 +28,19 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 
 /**
- * @fileName : EditClassViewUiHandlers.java
+ * @fileName : EditClassSettingsUiHandler.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 26-Jun-2015
+ * @date: 01-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public interface EditClassViewUiHandlers extends BaseUiHandlers {
+public interface EditClassSettingsViewUiHandler extends BaseUiHandlers{
 
 }

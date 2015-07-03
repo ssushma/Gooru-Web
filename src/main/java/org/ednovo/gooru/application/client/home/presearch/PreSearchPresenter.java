@@ -114,12 +114,12 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+
+						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 					}
 					public void checkStandarsList(List<String> standarsPreferencesList) {
-
-					if(standarsPreferencesList!=null){
+						if(standarsPreferencesList!=null){
 							if(standarsPreferencesList.contains("CCSS")){
 								isCCSSAvailable = true;
 							}else{
@@ -141,6 +141,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 								isCAAvailable = false;
 							}
 						}
+						setStandardsPopup();
 					}
 				});
 		}else{
@@ -148,14 +149,35 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 			isNGSSAvailable = true;
 			isCAAvailable = true;
 			isTEKSAvailable = false;
+			setStandardsPopup();
 		}
+	}
+	/**
+	 *
+	 * @function setStandardsPopup
+	 *
+	 * @created_date : 02-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	private void setStandardsPopup(){
 		if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 			Window.enableScrolling(false);
 			addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 			addToPopupSlot(addStandardsPresenter);
 			getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
 		}
-
 	}
 
 	@Override

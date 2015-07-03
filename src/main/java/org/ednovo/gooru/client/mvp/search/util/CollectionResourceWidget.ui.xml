@@ -5,13 +5,13 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="no-gutter">
-				<div class="col-md-5 col-sm-4 col-xs-4 viewContainer">
+				<div class="col-md-5 col-sm-7 col-xs-6 viewContainer">
 					<g:Label styleName="plus" title="Number of Times Added">+</g:Label><g:Label ui:field="lbladdCount" styleName="authorName"></g:Label>
 					<span>
 						<img title="Number of Views" src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 					</span>
 				</div>
-				<div class="col-md-7 col-sm-4 col-xs-4 buttonAddResource resourceViewsContainer">
+				<div class="col-md-7 col-sm-5 col-xs-6 buttonAddResource resourceViewsContainer">
 					<g:Button styleName="primary addResource" ui:field="btnAddResource">Add</g:Button>
 				</div>
 				<div class="clearfix"></div>
