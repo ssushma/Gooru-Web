@@ -285,17 +285,38 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	
 	@Override
-	public void getChildFolderItems(final String folderId, final boolean isDataCalled) {
+	public void getChildFolderItems(final String folderId,final String typeVal,final boolean isDataCalled) {
 		if(isDataCalled) {
 			getView().getChildFolderItems(null);
-		} else {
+		}else{
 			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					searchResult.addAll(result.getSearchResult());
 					if(result.getSearchResult().size()==20) {
 						getView().setChildPageNumber(getView().getChildPageNumber()+1);
-						setPaginatedChildFolders(folderId, isDataCalled);
+						setPaginatedChildFolders(folderId,typeVal,isDataCalled);
+					} else {
+						getView().setChildPageNumber(1);
+						getView().getChildFolderItems(searchResult);
+						searchResult.clear();
+					}
+				}
+			});
+		}
+	}
+	@Override
+	public void getChildFolderItemsForCourse(final String courseId,final String unitId,final String lessonId,final String typeVal,final boolean isDataCalled) {
+		if(isDataCalled) {
+			getView().getChildFolderItems(null);
+		}else{
+			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse((getView().getChildPageNumber()-1)*20, 20,courseId, unitId, lessonId, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+				@Override
+				public void onSuccess(FolderListDo result) {
+					searchResult.addAll(result.getSearchResult());
+					if(result.getSearchResult().size()==20) {
+						getView().setChildPageNumber(getView().getChildPageNumber()+1);
+						setPaginatedChilds(courseId,unitId,lessonId,typeVal,isDataCalled);
 					} else {
 						getView().setChildPageNumber(1);
 						getView().getChildFolderItems(searchResult);
@@ -323,8 +344,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
 	}
 
-	private void setPaginatedChildFolders(String folderId, boolean isDataCalled) {
-		getChildFolderItems(folderId, isDataCalled);
+	private void setPaginatedChildFolders(String folderId,String typeVal, boolean isDataCalled) {
+		getChildFolderItems(folderId,typeVal, isDataCalled);
+	}
+	private void setPaginatedChilds(String courseId,String unitId,String lessonId,String typeVal, boolean isDataCalled) {
+		getChildFolderItemsForCourse(courseId,unitId,lessonId,typeVal,isDataCalled);
 	}
 
 	@Override

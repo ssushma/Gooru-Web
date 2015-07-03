@@ -99,7 +99,21 @@ public interface FolderService extends BaseService {
 	 * @throws GwtException
 	 */
 	public FolderListDo getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException, ServerDownException;
-	
+	/**
+	 * This method is used to get the child items of the parent.
+	 * @param offset
+	 * @param limit
+	 * @param courseId
+	 * @param unitId
+	 * @param lessonId
+	 * @param sharingType
+	 * @param collectionType
+	 * @param isExcludeAssessment
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	public FolderListDo getChildFoldersForCourse(int offset, int limit,String courseId,String unitId,String lessonId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException, ServerDownException;
 	/**
 	 * Create Folder - generic method for first, second and third levels.
 	 * @return serialized created {@link FolderDo}
