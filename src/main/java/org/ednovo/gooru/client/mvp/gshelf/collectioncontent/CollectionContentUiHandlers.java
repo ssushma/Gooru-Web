@@ -55,4 +55,12 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 * @param collectionItemId
 	 */
 	public void deleteCollectionItem(String collectionItemId);
+	/**
+	 * This method is used to update the pdf pages
+	 * @param collectionItem
+	 * @param narration
+	 * @param start
+	 * @param stop
+	 */
+	public void updateCollectionItem(final CollectionItemDo collectionItem, String narration, String start, String stop);
 }
