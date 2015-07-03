@@ -202,6 +202,7 @@ width: 100%;
 	text-align: left;
 	position: static;
 	float: right;
+	margin-left: 160px;
 }
 .addResourceFormAnswerContainerOuter {
 	clear: both;
@@ -1102,7 +1103,7 @@ vertical-align: middle;
 	text-align: center;
 	position: static;
 	float: left;
-	margin-left: 41px;
+	margin-left: 14px;
 }
 .charLimitStyle{
 	display: inline-block;
@@ -1203,4 +1204,9 @@ vertical-align: middle;
 .addblockHeaderContainer {
 	display: inline-block;
 	width:100%;
+}
+
+.addResourceContainer{
+	margin-left: 398px;
+	float: left;
 }
