@@ -331,21 +331,25 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else{
 			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		if(nextLevel == 1) {
-			titleLbl.setWidth("138px");
-			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-		} else if(nextLevel == 2) {
-			titleLbl.setWidth("111px");
-			titleFocPanel.addStyleName("parent");
-			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-		} else if(nextLevel == 3) {
-			titleLbl.setWidth("82px");
-			titleFocPanel.addStyleName("child");
-			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
-		} else if(nextLevel == 4) {
-			titleLbl.setWidth("100px");
-			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
-			titleFocPanel.addStyleName("collectionChild");
+		if(collectionDo.getType().equals(COURSE)||collectionDo.getType().equals(UNIT)||collectionDo.getType().equals(LESSON)){
+			setData(nextLevel);
+		}else{
+			if(nextLevel == 1) {
+				titleLbl.setWidth("138px");
+				titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+			} else if(nextLevel == 2) {
+				titleLbl.setWidth("111px");
+				titleFocPanel.addStyleName("parent");
+				titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+			} else if(nextLevel == 3) {
+				titleLbl.setWidth("82px");
+				titleFocPanel.addStyleName("child");
+				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
+			} else if(nextLevel == 4) {
+				titleLbl.setWidth("100px");
+				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
+				titleFocPanel.addStyleName("collectionChild");
+			}
 		}
 	}
 	
@@ -354,10 +358,8 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(viewType!=null && viewType.equals(COLLECTION)){
 			titleFocPanel.addStyleName(COLLECTION);
 		}
-		titleFocPanel.addStyleName(COURSE);
-		titleLbl.setWidth("138px");
-		titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
 		if(nextLevel == 1) {
+			titleFocPanel.addStyleName(COURSE);
 			titleLbl.setWidth("138px");
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 2) {
