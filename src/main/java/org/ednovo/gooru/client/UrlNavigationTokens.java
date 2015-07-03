@@ -58,6 +58,15 @@ public interface UrlNavigationTokens{
 	String STUDENT_CLASSPAGE_LESSON_ID = "l-id";
 	String STUDENT_CLASSPAGE_ASSESSMENT_ID = "a-id";
 	
+	//Teacher Class Page View tabs
+	String TEACHER_CLASSSUB_PAGE_VIEW = "subpage-view";
+	String TEACHER_CLASS_STUDENTES="students";
+	String TEACHER_CLASS_SETTINGS="class-settings";
+	String TEACHER_CLASS_CONTENT_SETTINGS="class-content";
+	String TEACHER_CLASS_CONTENT_SUB_SCORE="mini-score";
+	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-set";
+	
+	
 	
 	
 	

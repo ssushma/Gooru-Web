@@ -112,4 +112,9 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
      * Update tree widget as active style.
      */
 	void updateLeftShelfPanelActiveStyle();
+	/**
+	 * This method is used to set collection content presenter
+	 * @param collectionDo
+	 */
+	void setCollectionContent(FolderDo collectionDo);
 }

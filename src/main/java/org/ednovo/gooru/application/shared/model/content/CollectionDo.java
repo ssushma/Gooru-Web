@@ -75,11 +75,15 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private List<checkboxSelectedDo> learningSkills;
 	private CollectionSettingsDo settings;
 	private String gooruOid;
-
-	public CollectionDo(){
-
+	
+	private String type;
+	public CollectionDo(){}
+	public String getStringTypeValue() {
+		return type;
 	}
-
+	public void setType(String type) {
+		this.type = type;
+	}
 	public String getGooruOid() {
 		return gooruOid;
 	}

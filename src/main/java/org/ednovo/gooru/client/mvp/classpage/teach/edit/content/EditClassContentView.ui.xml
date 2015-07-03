@@ -8,8 +8,8 @@
 		<g:HTMLPanel styleName="col-md-7 col-sm-5">
 			<g:HTMLPanel styleName="classMenuLeft">
 				<ul>
-				    <uc:LiPanel styleName="active"><g:Anchor ui:field="minmumScoreAnr"></g:Anchor></uc:LiPanel>
-				    <uc:LiPanel><g:Anchor ui:field="contentSettingsAnr"></g:Anchor></uc:LiPanel>
+				    <uc:LiPanel ui:field="minLiPnl"><g:Anchor ui:field="minmumScoreAnr"></g:Anchor></uc:LiPanel>
+				    <uc:LiPanel ui:field="settLiPanel"><g:Anchor ui:field="contentSettingsAnr"></g:Anchor></uc:LiPanel>
 				</ul>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
@@ -40,7 +40,63 @@
 				<g:Button styleName="primary" ui:field="saveBtn"></g:Button>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
+			<g:HTMLPanel styleName="contentSettingsContainer no-gutter" ui:field="contentSeetingsContainer">
+			   <g:HTMLPanel styleName="col-md-5 col-sm-8">
+			      <g:HTMLPanel styleName="unitLeft">
+			         <uc:PPanel ui:field="unitPanel"></uc:PPanel>
+			         <g:HTMLPanel styleName="labelStyle customs-select" ui:field="unitList">
+			           <!--  <select>
+			               <option>Rates &amp; Ratios</option>
+			               <option>Blue cheese with crackers</option>
+			               <option>Steak</option>
+			               <option>Other</option>
+			            </select> -->
+			         </g:HTMLPanel>
+			         <uc:PPanel ui:field="choseTxtPanel"></uc:PPanel>
+			         <uc:PPanel ui:field="noteTxtPanel"></uc:PPanel>
+			      </g:HTMLPanel>
+			   </g:HTMLPanel>
+			   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+			   <g:HTMLPanel styleName="contentSettingsTableIndications">
+			      <g:HTMLPanel styleName="makeallVisible">
+			         <g:HTMLPanel styleName="squaredOne">
+			            <g:CheckBox></g:CheckBox>
+			            <uc:LabelUc></uc:LabelUc>
+			         </g:HTMLPanel>
+			         <g:InlineLabel ui:field="markAllLbl"></g:InlineLabel>
+			      </g:HTMLPanel>
+			      <g:HTMLPanel styleName="visible">
+			         <g:HTMLPanel styleName="squaredOne">
+			            <uc:LabelUc></uc:LabelUc>
+			         </g:HTMLPanel>
+			         <g:InlineLabel ui:field="visiblLbl"></g:InlineLabel>
+			      </g:HTMLPanel>
+			      <g:HTMLPanel styleName="hiddenOpt">
+			         <g:HTMLPanel styleName="squaredOne">
+			           <g:CheckBox></g:CheckBox>
+			            <uc:LabelUc></uc:LabelUc>
+			         </g:HTMLPanel>
+			         <g:InlineLabel ui:field="hiddenLbl"></g:InlineLabel>
+			      </g:HTMLPanel>
+			   </g:HTMLPanel>
+			   <g:HTMLPanel styleName="table-responsive">
+			   <g:HTMLPanel styleName="contentSettingsTable">
+			      <g:HTMLPanel styleName="contentTable" ui:field="tableConatiner">
+			          <g:HTMLPanel styleName="contentTableRow">
+						   <g:HTMLPanel styleName="contentTableCell lessonHeader"><uc:PPanel ui:field="lessonPanel"></uc:PPanel></g:HTMLPanel>
+						   <g:HTMLPanel styleName="contentTableCell">
+						      <g:HTMLPanel styleName="contentTableInner">
+						         <g:HTMLPanel styleName="contentTableCellInner"><uc:PPanel ui:field="collectionTitlePanel"></uc:PPanel></g:HTMLPanel>
+						         <g:HTMLPanel styleName="contentTableCellInner"><uc:PPanel ui:field="visiblePanel"></uc:PPanel></g:HTMLPanel>
+						      </g:HTMLPanel>
+						   </g:HTMLPanel>
+						</g:HTMLPanel>
+			      </g:HTMLPanel>
+			   </g:HTMLPanel>
+			</g:HTMLPanel>
+			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
+
 
