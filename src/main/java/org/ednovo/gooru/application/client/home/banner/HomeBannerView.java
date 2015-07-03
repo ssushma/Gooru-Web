@@ -65,22 +65,22 @@ public class HomeBannerView extends BaseViewWithHandlers<HomeBannerUiHandlers> i
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField Image imgBanner;
-	@UiField Label lblPageTitle1,lblPageTitle2,lblPageTitle3;
-	@UiField HTMLPanel panelTitleContainer;
+//	@UiField Label lblPageTitle1,lblPageTitle2,lblPageTitle3;
+//	@UiField HTMLPanel panelTitleContainer;
 
 	public HomeBannerView() {
 		setWidget(uiBinder.createAndBindUi(this));
 
 		imgBanner.setUrl(AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint() +"/images/newlandingpage/"+generateRandomNumber()+".png");
 
-		lblPageTitle1.setText(i18n.GL3284_2());
-		StringUtil.setAttributes(lblPageTitle1.getElement(), "lblPageTitle", "", "");
-		lblPageTitle2.setText(i18n.GL3284_3());
-		StringUtil.setAttributes(lblPageTitle2.getElement(), "lblPageTitle", "", "");
-		lblPageTitle3.setText(i18n.GL3284_4());
-		StringUtil.setAttributes(lblPageTitle3.getElement(), "lblPageTitle", "", "");
-
-		StringUtil.setAttributes(panelTitleContainer.getElement(), "panelTitleContainer", i18n.GL3284_1(), i18n.GL3284_1());
+//		lblPageTitle1.setText(i18n.GL3284_2());
+//		StringUtil.setAttributes(lblPageTitle1.getElement(), "lblPageTitle", "", "");
+//		lblPageTitle2.setText(i18n.GL3284_3());
+//		StringUtil.setAttributes(lblPageTitle2.getElement(), "lblPageTitle", "", "");
+//		lblPageTitle3.setText(i18n.GL3284_4());
+//		StringUtil.setAttributes(lblPageTitle3.getElement(), "lblPageTitle", "", "");
+//
+//		StringUtil.setAttributes(panelTitleContainer.getElement(), "panelTitleContainer", i18n.GL3284_1(), i18n.GL3284_1());
 
 
 	}
