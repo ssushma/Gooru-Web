@@ -8,10 +8,15 @@
 			</div>
 			<div class="bannerCaption">
 				<g:HTMLPanel styleName="container" ui:field="panelTitleContainer">
-					<h1 class="animate fadeInDown animated" data-animate="fadeInDown">
+					<!-- <h1 class="animate fadeInDown animated" data-animate="fadeInDown">
 						<g:Label ui:field="lblPageTitle1"></g:Label>
 						<g:Label ui:field="lblPageTitle2"></g:Label>
 						<g:Label ui:field="lblPageTitle3"></g:Label>
+					</h1> -->
+					<h1 class="animate fadeInDown animated" data-animate="fadeInDown">
+						<div class="gwt-Label" id="lblPageTitle">June, </div>
+						<div class="gwt-Label" id="lblPageTitle">Wishing You A Very</div>
+						<div class="gwt-Label" id="lblPageTitle">Happy Bug-Free Birthday! Love, Kangoorus</div>
 					</h1>
 				</g:HTMLPanel>
 			</div>
