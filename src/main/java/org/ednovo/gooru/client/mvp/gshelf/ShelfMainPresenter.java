@@ -213,9 +213,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 */
 	public void callWorkspaceApi(){
 		getView().setNoDataForAnonymousUser(false);
-		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		String typeVal=type;
-		if(type!=null && type.equalsIgnoreCase(FOLDER)){
+		if(view!=null && view.equalsIgnoreCase(FOLDER)){
 			typeVal=null;//if we are passing as null we get all the folders and collections
 			type=view;
 		}else{
