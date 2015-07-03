@@ -212,8 +212,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),true);
 		}
 	}
-	
-	
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
