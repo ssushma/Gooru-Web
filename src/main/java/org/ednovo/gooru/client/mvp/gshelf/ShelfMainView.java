@@ -280,7 +280,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);
 					treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-					getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),shelfTreeWidget.getFolderOpenedStatus());
+					String type=shelfTreeWidget.getCollectionDo().getType();
+					if(FOLDER.equalsIgnoreCase(type)){
+						getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),type,shelfTreeWidget.getFolderOpenedStatus());
+					}else{
+						callChilds(shelfTreeWidget,type);
+					}
 					shelfTreeWidget.setFolderOpenedStatus(true);
 				} else {
 					shelfTreeWidget.setCollectionOpenedStatus(true);
@@ -316,6 +321,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		previousTreeChildSelectedItem = treeChildSelectedItem;
 	}
 
+	public void callChilds(ShelfTreeWidget shelfTreeWidget,String typeVal){
+//		/o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+		getUiHandlers().getChildFolderItemsForCourse(shelfTreeWidget.getCollectionDo().getGooruOid(), null, null, typeVal, shelfTreeWidget.getFolderOpenedStatus());
+	}
 	/* (non-Javadoc)
 	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
 	 */
@@ -509,7 +518,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		id = id!=null?id:"";
 		if(!parentId.equalsIgnoreCase(id)) {
-			getUiHandlers().getChildFolderItems(parentId,false);
+			String type=shelfTreeWidget.getCollectionDo().getType();
+			if(FOLDER.equalsIgnoreCase(type)){
+				getUiHandlers().getChildFolderItems(parentId,type,false);
+			}else{
+				callChilds(shelfTreeWidget,type);
+			}
 		}
 		ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 		if(previousshelfTreeWidget!=null) {

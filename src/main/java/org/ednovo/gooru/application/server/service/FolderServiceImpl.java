@@ -272,6 +272,51 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		return deserializeFolderList(jsonRep);
 	}
 
+	
+	//Get Call for course
+	@Override
+	public FolderListDo getChildFoldersForCourse(int offset, int limit,String courseId,String unitId,String lessonId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		if(courseId!=null && unitId==null){
+			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNITS_BY_COURSEID, courseId);
+		}else if(courseId!=null && unitId!=null && lessonId==null){
+			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_LESSONS_BY_LESSONID, courseId,unitId);
+		}else if(courseId!=null && unitId!=null && lessonId!=null){
+			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTIONS_BY_COLLECTIONID, courseId,unitId,lessonId);
+		}
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.OFFSET, String.valueOf(offset));
+		params.put(GooruConstants.LIMIT, String.valueOf(limit));
+		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+		if(sharingType!=null){
+			params.put(GooruConstants.SHARING, sharingType);
+		}
+		if(collectionType!=null){
+			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
+		}
+		if(isExcludeAssessment){
+			params.put(GooruConstants.EXCLUDE_TYPE, "assessment/url");
+		}
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		logger.info("getChildFoldersForCourse service : "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeFolderListForCourse(jsonRep);
+	}
+	public FolderListDo deserializeFolderListForCourse(JsonRepresentation jsonRep) {
+		FolderListDo listObj=new FolderListDo();
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				listObj.setSearchResult((ArrayList<FolderDo>) JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(),new TypeReference<List<FolderDo>>() {}));
+				return listObj;
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return listObj;
+	}
 	public FolderListDo deserializeFolderList(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
