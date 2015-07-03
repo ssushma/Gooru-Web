@@ -16,7 +16,7 @@
 								<div class="col-md-10 col-xs-10 col-sm-10">
 									<!-- Split button -->
 									<div class="btn-group btn-block">
-										<g:Button ui:field="btnSelectedText" styleName="btn btn-default btn-left" text="{i18n.GL3334}"/>
+										<g:Button ui:field="btnSelectedText" styleName="btn btn-default btn-left" text="{i18n.GL3335}"/>
 										<button type="button"
 											class="btn btn-default btn-right dropdown-toggle"
 											data-toggle="dropdown" aria-expanded="false">
