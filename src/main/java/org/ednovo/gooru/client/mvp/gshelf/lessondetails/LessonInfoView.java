@@ -41,9 +41,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -60,8 +63,10 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}	
 
 	@UiField HTMLPanel lessonInfo;
+	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
+	@UiField Button saveCourseBtn;
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -144,6 +149,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 	}
 	
-	
+	@UiHandler("saveCourseBtn")
+	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText());
+	}
 
 }

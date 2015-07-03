@@ -151,6 +151,8 @@ public class ShelfTreeWidget extends FocusPanel {
 	private static final String ASSESSMENT = "assessment";
 	private static final String FOLDER = "folder";
 	private static final String COURSE = "course";
+	private static final String UNIT = "unit";
+	private static final String LESSON = "lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	
@@ -475,7 +477,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) &&!collectionDo.getType().equals(UNIT) &&!collectionDo.getType().equals(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
 		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
