@@ -223,12 +223,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if(COURSE.equalsIgnoreCase(folderObj.getCollectionType())){
-				getUiHandlers().setRightClusterPresenterBasedOnType(folderObj.getCollectionType(), folderObj);
-			}else{
+			//if(COURSE.equalsIgnoreCase(folderObj.getCollectionType())){
+				//getUiHandlers().setRightClusterPresenterBasedOnType(folderObj.getCollectionType(), folderObj);
+			//}else{
 				Map<String,String> params = new HashMap<String,String>();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
-			}
+			//}
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
 		}
 	}
@@ -273,6 +273,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		if( view!=null){
 			params.put(VIEW,view);
+		}else{
+			params.put(VIEW,"Course");
 		}
 		if(o1==null && o2==null && o3==null && id==null){
 			params.put(O1_LEVEL,folderObj.getGooruOid());

@@ -361,6 +361,9 @@ button.btn-disabled{
 #gShelfMainContainer .folderLevel.collectionChild {
     padding-left:164px;
 }
+#gShelfMainContainer .folderLevel.course{ /* grandparent level - default */
+    padding-left:80px;
+}
 
 #gShelfMainContainer .folderLevel.unit {
     padding-left:108px;
@@ -2069,6 +2072,31 @@ padding-left:7px;
 #resourceEdit .tableColumn .tableListTags .timeText{
 	width:84%;
 	margin-left:1em;
+}
+#resourceEdit .tableColumn .tableListTags .pdfEdiContainerLeft input{
+	width: 28px;
+	height: 23px;
+	text-align: right;
+	padding-right: 1px;
+	margin-left: 6px;
+	margin-right: 11px;
+}
+#resourceEdit .tableColumn .tableListTags .pdfEdiContainerLeft .errorMsgLabel{
+	color: #fbb03b;
+	text-align: center;
+}
+#resourceEdit .tableColumn .tableListTags .pdfEdiContainerLeft{
+	float: left;
+	font-weight: bold;
+}
+#resourceEdit .tableColumn .tableListTags .styleForLbl{
+	color: #515151;
+	font-size: 12px;
+	float: left;
+	padding-top: 5px;
+	padding-left: 0;
+	padding-right: 5px;
+	font-weight: bold;
 }
 #resourceEdit .tableColumn .tableListTags .timeText .youtubeText {
 	float: left;

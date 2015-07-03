@@ -107,4 +107,15 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			}
 		});
 	}
+	@Override
+	public void updateCollectionItem(final CollectionItemDo collectionItem, String narration, String start, String stop) {
+		AppClientFactory.getInjector().getResourceService().updateCollectionItemMetadata(collectionItem.getCollectionItemId(), narration, null, start, stop,new SimpleAsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				collectionItem.setNarration(result.getNarration());
+				collectionItem.setStart(result.getStart());
+				collectionItem.setStop(result.getStop());
+			}
+		});
+	}
 }

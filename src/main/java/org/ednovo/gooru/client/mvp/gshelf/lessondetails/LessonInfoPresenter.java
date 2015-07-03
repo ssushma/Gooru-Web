@@ -24,11 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -47,6 +53,13 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	private TaxonomyServiceAsync taxonomyService;
 	
 	StandardsPopupPresenter standardsPopupPresenter;
+	
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
+	
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
+	
+	final String LESSON="lesson";
 
 	/**
 	 * Class constructor
@@ -92,5 +105,32 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				//getView().setCourseList(result);
 			}
 		});		
+	}
+
+	@Override
+	public void createAndSaveCourseDetails(String text) {
+	String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+	String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		
+		AppClientFactory.getInjector().getfolderService().createCourse(text, true, o1,o2, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				String[] uri=result.getUri().split("/");
+				Map<String, String> params= new HashMap<String, String>();
+				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+				params.put("o2", AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+				params.put("o3", uri[uri.length-1]);
+				params.put("view", "course");
+				result.setGooruOid(uri[uri.length-1]);
+				myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+			}
+		});
+		
+	}
+	public void setMyCollectionRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 }

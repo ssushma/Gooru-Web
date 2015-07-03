@@ -22,30 +22,30 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.assessmentchild;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.child.ChildView;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Search Team
- *
+ * @author Gooru Team
+ * 
  */
-public interface UnitInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
+public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresenter> implements IsSlmAssessmentView {
+
+	@UiField Anchor reportUrl;
 	
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
-    
-	/**
-	 * To Create and Save the details of Course
-	 * @param courseTitle {@link String} 
-	 * @param isCreateLesson {@link boolean} 
-	 */
-	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateLesson);
+	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
 
-	void showUnitInfo();
+	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
+	}
 
-	void showUnitTemplate();
+	public SlmAssessmentChildView() {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 }
