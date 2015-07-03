@@ -48,9 +48,15 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 public interface TeachClassViewUiHandlers extends BaseUiHandlers{
 	
 	@ContentSlot
-	public static final Type<RevealContentHandler<?>> SLOT_BODYMENU = new Type<RevealContentHandler<?>>();
+	public static final Type<RevealContentHandler<?>> EMPTY_TAB = new Type<RevealContentHandler<?>>();
 	
 	@ContentSlot
-	public static final Type<RevealContentHandler<?>> BODY_MENU_VIEW = new Type<RevealContentHandler<?>>();
+	public static final Type<RevealContentHandler<?>> STUDENT_TAB = new Type<RevealContentHandler<?>>();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> CLASS_SETTINGS_TAB = new Type<RevealContentHandler<?>>();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> CLASS_CONTENT_TAB = new Type<RevealContentHandler<?>>();
 
 }

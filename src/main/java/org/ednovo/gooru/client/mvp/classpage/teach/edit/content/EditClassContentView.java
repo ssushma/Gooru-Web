@@ -24,12 +24,19 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget.EditClassLessonView;
+import org.ednovo.gooru.client.uc.LabelUc;
+import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -40,8 +47,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -63,16 +72,25 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	@UiField Anchor minmumScoreAnr,contentSettingsAnr;
 	
-	@UiField InlineLabel courseLbl,titleLbl;
+	@UiField InlineLabel courseLbl,titleLbl,markAllLbl,visiblLbl,hiddenLbl;
 	
 	@UiField Button editCourseBtn,studentPreviewbtn,saveBtn;
 	
-	@UiField HTMLPanel scoreContainer;
+	@UiField HTMLPanel scoreContainer,contentSeetingsContainer;
 	
-	@UiField PPanel scorePanel,helpPanel;
+	@UiField PPanel scorePanel,helpPanel,unitPanel,choseTxtPanel,noteTxtPanel;
 	
 	@UiField TextBox scoreTextBox;
 	
+	@UiField LiPanel minLiPnl,settLiPanel;
+	
+	@UiField HTMLPanel unitList;
+	
+	@UiField PPanel lessonPanel,collectionTitlePanel,visiblePanel;
+	
+	@UiField HTMLPanel tableConatiner;
+	
+	EditClassLessonView editClassLessonView;
 	
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -88,6 +106,29 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		setWidget(uiBinder.createAndBindUi(this));
 		scoreTextBox.setText("95");
 		setId();
+		for(int i=0; i<5 ;i++){
+			editClassLessonView = new EditClassLessonView();
+			tableConatiner.add(editClassLessonView);
+		}
+	}
+	
+	public void setTabVisible(boolean visible){
+		scoreContainer.setVisible(visible);
+		contentSeetingsContainer.setVisible(!visible);
+	}
+	
+	@Override
+	public void setNavigationTab(){
+		String tabView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSSUB_PAGE_VIEW,"");
+		if(tabView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE)){
+			setTabVisible(true);
+			minLiPnl.addStyleName(CssTokens.ACTIVE);
+		}else if(tabView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
+			setTabVisible(false);
+			settLiPanel.addStyleName(CssTokens.ACTIVE);
+		}else{
+			setTabVisible(true);
+		}
 	}
 	
 	public void setId(){
@@ -131,9 +172,73 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
 		saveBtn.getElement().setAttribute("title",i18n.GL0141());
 		
+		unitPanel.setText(i18n.GL3281());
+		unitPanel.getElement().setId("unitPanelId");
+		
+		ListBox unitListBox = new ListBox();
+		
+		unitListBox.addItem("Rates & Rations", "Rates & Rations");
+		unitListBox.addItem("Rates & Rations", "Exponents");
+		
+		unitList.add(unitListBox);
+		
 		scoreContainer.getElement().setId("scoreContainerId");
 		
+		choseTxtPanel.setText(i18n.GL3409());
+		choseTxtPanel.getElement().setId("choseTxtpanelId");
 		
+		noteTxtPanel.setText(i18n.GL3410());
+		noteTxtPanel.getElement().setId("notetxtPanelId");
+		
+		markAllLbl.setText(i18n.GL3411());
+		markAllLbl.getElement().setId("marlAllLblId");
+		
+		visiblLbl.setText(i18n.GL3412());
+		visiblLbl.getElement().setId("visibleLblId");
+		
+		hiddenLbl.setText(i18n.GL3413());
+		hiddenLbl.getElement().setId("hiddenLblId");
+		
+		lessonPanel.setText(i18n.GL0910());
+		lessonPanel.getElement().setId("lessonPanelId");
+		
+		collectionTitlePanel.setText(i18n.GL3414());
+		collectionTitlePanel.getElement().setId("collectionTitlePanelId");
+		
+		visiblePanel.setText(i18n.GL3415());
+		visiblePanel.getElement().setId("visibliePanelId");
+		
+		
+		
+		minmumScoreAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
+		contentSettingsAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
+		
+		
+		
+	}
+	
+	public class ContentTabNavigationHandler implements ClickHandler{
+
+		String view;
+		LiPanel liPanel;
+		
+		public ContentTabNavigationHandler(String view,LiPanel liPanel){
+			this.view=view;
+			this.liPanel=liPanel;
+		}
+		
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			minLiPnl.removeStyleName(CssTokens.ACTIVE);
+			settLiPanel.removeStyleName(CssTokens.ACTIVE);
+			liPanel.addStyleName(CssTokens.ACTIVE);
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.TEACHER_CLASSSUB_PAGE_VIEW, view);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}
 		
 	}
 

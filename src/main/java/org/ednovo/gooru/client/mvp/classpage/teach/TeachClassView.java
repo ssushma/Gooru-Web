@@ -27,18 +27,23 @@ package org.ednovo.gooru.client.mvp.classpage.teach;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -60,7 +65,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	
 	@UiField HTMLPanel startContainer,tabTitleContainer;
 	
-	@UiField SimplePanel bodyMenu,bodyMenuView;
+	@UiField SimplePanel bodyMenuView;
 	
 	@UiField H2Panel titlePanel;
 	
@@ -68,7 +73,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	
 	@UiField InlineLabel settingsLbl,contentLbl,studentLbl;
 	
-	@UiField HTMLEventPanel classSettingsAnr,studentAnr,classContent;
+	@UiField HTMLEventPanel classSettingsAnr,studentAnr,classContentAnr;
 	
 	@UiField SpanPanel classCodePanel;
 	
@@ -83,6 +88,9 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	public TeachClassView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
+		classSettingsAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS,classSettingsAnr));
+		studentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTES,studentAnr));
+		classContentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SETTINGS,classContentAnr));
 	}
 
 
@@ -114,17 +122,16 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		studentLbl.getElement().setAttribute("title",i18n.GL3344());
 		
 		settingsLbl.getElement().setId("settingsLblId");
-		settingsLbl.setText(i18n.GL3344());
+		settingsLbl.setText(i18n.GL3345());
 		settingsLbl.getElement().setAttribute("alt",i18n.GL3345());
 		settingsLbl.getElement().setAttribute("title",i18n.GL3345());
 		
 		contentLbl.getElement().setId("contentLblId");
-		contentLbl.setText(i18n.GL3345());
+		contentLbl.setText(i18n.GL3346());
 		contentLbl.getElement().setAttribute("alt",i18n.GL3346());
 		contentLbl.getElement().setAttribute("title",i18n.GL3346());
 		
 		classCodePanel.setText("XYPRSZ");
-		tabTitle.setText("Class Settings");
 		
 		//startContainer.getElement().setAttribute("alt","startContainer);
 		//startContainer.getElement().setAttribute("title",i18n.GL0747());
@@ -132,22 +139,40 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	}
 	
 	@Override
-	public void setInSlot(Object slot, Widget content) {
-		super.setInSlot(slot, content);
-		String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
-		bodyMenuView.clear();
-		if(view.equalsIgnoreCase("")){
-			tabTitleContainer.setVisible(false);
+	public void addToSlot(Object slot, Widget content) {
+		super.addToSlot(slot, content);
+		String viewPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		tabTitleContainer.setVisible(true);
+		if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)){
+			tabTitle.setText(i18n.GL1624());
+		}else if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
+			tabTitle.setText(i18n.GL3345());
+		}else if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SETTINGS)){
+			tabTitle.setText(i18n.GL3346());
 		}else{
-			tabTitleContainer.setVisible(true);
+			tabTitleContainer.setVisible(false);
 		}
-		if (slot == TeachClassViewUiHandlers.SLOT_BODYMENU) {
+		if (content != null) {
 			bodyMenuView.setWidget(content);
 		}
 		
 	}
-
-
 	
+	public class TeacherClassNavigationHandler implements ClickHandler{
 
+		String token;
+		HTMLEventPanel htmlEventPanel;
+		
+		public TeacherClassNavigationHandler(String token,HTMLEventPanel htmlEventPanel){
+			this.token=token;
+			this.htmlEventPanel=htmlEventPanel;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, token);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}
+		
+	}
 }

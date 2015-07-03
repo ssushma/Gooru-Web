@@ -223,12 +223,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			//if(COURSE.equalsIgnoreCase(folderObj.getCollectionType())){
-				//getUiHandlers().setRightClusterPresenterBasedOnType(folderObj.getCollectionType(), folderObj);
-			//}else{
-				Map<String,String> params = new HashMap<String,String>();
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
-			//}
+			Map<String,String> params = new HashMap<String,String>();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
 		}
 	}
@@ -276,12 +272,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 			params.put(VIEW,"Course");
 		}
-		if(o1==null && o2==null && o3==null && id==null){
+		if(o1==null && o2==null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)){
 			params.put(O1_LEVEL,folderObj.getGooruOid());
-		} else if(o1!=null && o2==null && o3==null && id==null){
+		} else if(o1!=null && o2==null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)){
 			params.put(O1_LEVEL, o1);
 			params.put(O2_LEVEL,folderObj.getGooruOid());
-		}else if(o1!=null && o2!=null && o3==null && id==null){
+		}else if(o1!=null && o2!=null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)) {
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
