@@ -257,9 +257,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 					setFolderActiveStatus();
 				}
-				if(shelfTreeWidget.getCollectionDo()==null){
+				/*if(shelfTreeWidget.getCollectionDo()==null){
 					getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
-				}
+				}*/
 			}
 		});
 		floderTreeContainer.add(shelfFolderTree);
@@ -285,7 +285,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void setFolderActiveStatus() { 
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getCollectionDo()!=null){
-			//if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
 				if("folder".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "course".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "unit".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "lesson".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType())) {
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);

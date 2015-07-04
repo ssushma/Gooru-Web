@@ -25,10 +25,12 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView.BreadCrumbLabel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -39,9 +41,11 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollectionsRightClusterUiHandlers> implements IsMyCollectionsRightClusterView,ClientConstants  {
@@ -51,8 +55,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	interface MyCollectionsRightViewUiBinder extends UiBinder<Widget, MyCollectionsRightClusterView> {
 	}
 	
-	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,pnlBreadCrumbMain;
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare;
+	
+	@UiField FlowPanel pnlBreadCrumbMain;
 	
 	FolderDo folderObj;
 	
@@ -60,6 +66,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
+	
+	private static final String COURSE = "Course";
+	private static final String UNIT = "Unit";
+	private static final String LESSON = "Lesson";
+	
 	private String currentTypeView;
 	String o1,o2,o3;
 	String oldO1Value=null,oldO2Value=null,oldO3Value=null;
@@ -114,11 +125,54 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 	}
 	@Override
-	public void setSlotPanel(FolderDo folderObj){
+	public void setBreadCrumbSlot(FolderDo folderObj, String type){
 		 this.folderObj=folderObj;
 		 String title=folderObj.getTitle();
-		 setBreadCums(title);
+//		 setBreadCums(title);
+		 setBreadCrumbs(title,type);
+		 
 	}
+	
+	/**
+	 * Used to set the Bread crumbs.
+	 * @param title
+	 * @param type
+	 */
+	private void setBreadCrumbs(String title, String type) {
+		if(COURSE.equalsIgnoreCase(type)){
+			pnlBreadCrumbMain.clear();
+			pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+		}else if(UNIT.equalsIgnoreCase(type)){
+			if(pnlBreadCrumbMain.getWidgetCount()<2){
+				pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+			}else{
+				getBreadCrumbs(title,type);
+			}
+		}else if(LESSON.equalsIgnoreCase(type)){
+			if(pnlBreadCrumbMain.getWidgetCount()<3){
+				pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+			}else{
+				getBreadCrumbs(title,type);
+			}
+		}else{
+			
+		}
+	}
+	
+	
+	public void getBreadCrumbs(String title,String type){
+//		Widget widget=pnlBreadCrumbMain.getWidget(breadCrumbItemIndex);
+		Iterator<Widget> breadCrumbswidgets = pnlBreadCrumbMain.iterator();
+		while(breadCrumbswidgets.hasNext()){
+			Widget widget = breadCrumbswidgets.next();
+			if(widget instanceof BreadcrumbItem && ((BreadcrumbItem) widget).getType().equalsIgnoreCase(type)){ 
+				BreadcrumbItem breadCrumbItem=(BreadcrumbItem)widget;
+				breadCrumbItem.getLabel().setText(title);
+			}
+		}
+	}
+	
+	
 	/**
 	 * This method is used to set breadcums
 	 * @param title
@@ -160,7 +214,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 */
 	class BreadcrumbItem extends Composite {
 		 Label lblTitle;
+		 private String type;
 		 public BreadcrumbItem(String title,String type) {
+			 this.type = type;
 			 HTMLPanel panel=new HTMLPanel("");
 			 panel.setStyleName("active");
 			 InlineLabel spnIcon=new InlineLabel();
@@ -173,6 +229,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		 }
 		 public Label getLabel(){
 			 return  lblTitle;
+		 }
+		 
+		 public String getType(){
+			 return  type;
 		 }
 	}
 	

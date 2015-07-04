@@ -82,11 +82,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			this.folderObj=folderObj;
 		}
 		clearSlot(INNER_SLOT);
-		getView().setSlotPanel(this.folderObj);
+		getView().setBreadCrumbSlot(this.folderObj,type);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+//		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+//		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		if(index==1){
 				//For displaying template
 				if(COURSE.equalsIgnoreCase(type)){ 
@@ -101,7 +101,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}
 		}else if(index==2){
-			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
@@ -109,8 +109,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
 				setInSlot(INNER_SLOT, myCollectionsListPresenter);
 			}
-		}else if(index==3){
-
 		}
 	}
 	//This method is not using present
