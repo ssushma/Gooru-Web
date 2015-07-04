@@ -68,13 +68,16 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
-	@UiField Button saveCourseBtn;
+	@UiField Button saveCourseBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	final String ACTIVE="active";
+	final String COLLECTION="Collection";
+	final String ASSESSMENT="Assessment";
+	
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -135,5 +138,13 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),false,null);
+	}
+	@UiHandler("btnSaveAndCreateCollection")
+	public void clickOnSaveAndCreateCollection(ClickEvent saveCourseEvent){
+		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),true,COLLECTION);
+	}
+	@UiHandler("btnSaveAndCreateAssessment")
+	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
+		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),true,ASSESSMENT);
 	}
 }

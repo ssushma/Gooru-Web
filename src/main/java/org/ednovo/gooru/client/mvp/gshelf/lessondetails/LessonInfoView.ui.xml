@@ -163,10 +163,10 @@
 <div class="stepsButtonGroup">
 
 <g:Button styleName="secondary" ui:field="saveCourseBtn" text="{i18n.GL3366}"/>
-<button type="submit" class="primary">Next: Create a Collection</button>
 
+<g:Button styleName="secondary" ui:field="btnSaveAndCreateCollection" text="Next: Create a Collection"/>
 or
-<button type="submit" class="primary">Next: Create an Assessment</button>
+<g:Button styleName="secondary" ui:field="btnSaveAndCreateAssessment" text="Next: Create an Assessment"/>
 
 </div>
 
