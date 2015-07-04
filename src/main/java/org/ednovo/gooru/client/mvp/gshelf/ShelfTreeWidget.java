@@ -354,7 +354,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void setData(int nextLevel) {
-		System.out.println("setData"+nextLevel);
 		String viewType=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(viewType!=null && viewType.equals(COLLECTION)){
 			titleFocPanel.addStyleName(COLLECTION);
