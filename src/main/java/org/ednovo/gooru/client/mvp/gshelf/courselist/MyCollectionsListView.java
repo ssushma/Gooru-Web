@@ -273,12 +273,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 			params.put(VIEW,"Course");
 		}
-		if(o1==null && o2==null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)){
+		if(o1==null && o2==null && o3==null && id==null){
 			params.put(O1_LEVEL,folderObj.getGooruOid());
-		} else if(o1!=null && o2==null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)){
+		} else if(o1!=null && o2==null && o3==null && id==null){
 			params.put(O1_LEVEL, o1);
 			params.put(O2_LEVEL,folderObj.getGooruOid());
-		}else if(o1!=null && o2!=null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)) {
+		}else if(o1!=null && o2!=null && o3==null && id==null) {
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
