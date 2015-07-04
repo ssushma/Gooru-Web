@@ -7,6 +7,7 @@
 	min-height:500px;
 	margin-bottom:-9999px;
 	padding-bottom:9999px;
+	position: fixed;
 }
 
 #gShelfMainContainer .floderRightContainer{
@@ -524,46 +525,39 @@ button.btn-disabled{
 	
 	#gShelfMainContainer .floderLeftContainer{
 		margin-right:0;
+		position: fixed;
 	}
 	#gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader button{
 		margin-bottom:2px;
 		width:100%;
 	}
 	#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li {
-    margin: 0 10px 10px 0;
+    	margin: 0 10px 10px 0;
+	}
+	#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupLeft {
+	    border-right:none;
+		background:#f5f5f5;
+	}
+	#gShelfMainContainer .createMenu {
+	    margin-right: 15px;
+	    margin-left:15px;
+	}
+	#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupRight{
+			  border-top: 1px solid #dddddd;
+			  background:#ffffff;
+	}
 }
-#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupLeft {
-    border-right:none;
-	background:#f5f5f5;
-
-
-
-}
-#gShelfMainContainer .createMenu {
-
-    margin-right: 15px;
-    margin-left:15px;
-}
-#gShelfMainContainer .tagCoursePanel .tagCoursePanelBody .courseGroupRight{
-
-		  border-top: 1px solid #dddddd;
-		  background:#ffffff;
-}
-}
-
-
-
-	@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 991px) {
 		
 		#gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader button {
-    font-size: 13px;
-    font-weight: bold;
-    width: 100%;
+		    font-size: 13px;
+		    font-weight: bold;
+		    width: 100%;
+		}
+		#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li {
+		    margin: 0 10px 10px 0;
+		}
 }
-#gShelfMainContainer .tagCoursePanel .tagCoursePanelFooter .filterTags ul li {
-    margin: 0 10px 10px 0;
-}
-	}
 
 
 
