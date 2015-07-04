@@ -4,7 +4,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel styleName="floderRightContainer" ui:field="mainPanel">
 		<div class="courseHeader">
-			<g:HTMLPanel styleName="breadcrumbMain" ui:field="pnlBreadCrumbMain"/>
+			<g:FlowPanel styleName="breadcrumbMain" ui:field="pnlBreadCrumbMain"/>
 		</div>
 		<div class="folderBlockSitemap">
 			<g:Anchor ui:field="lnkInfo" styleName="active" >Info</g:Anchor>

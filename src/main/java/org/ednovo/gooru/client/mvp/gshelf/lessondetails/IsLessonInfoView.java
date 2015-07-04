@@ -25,12 +25,15 @@
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
  *
  */
 public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandlers> {
+
+	void setLessonInfoData(FolderDo folderObj); 
 	
 
 }

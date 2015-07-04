@@ -2490,6 +2490,15 @@ display:inline-block;
 	vertical-align:middle;
 }
 
+.lessonFolderCloseIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -279px
+		-520px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .floderRightContainer .courseHeader {
 	background:#f0f0f0;
 }

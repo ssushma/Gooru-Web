@@ -135,4 +135,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
+
+	public void setLessonData(FolderDo folderObj) {
+		getView().setLessonInfoData(folderObj);
+	}
 }
