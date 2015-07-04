@@ -83,13 +83,12 @@ public abstract class ContentWidgetWithMove extends Composite {
 		if(folderObj.getTitle()!=null){
 			pTitle.setText(folderObj.getTitle());
 		}
-		
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
 		spnResourcesCount.setVisible(false);
 		spnQuestionsCount.setVisible(false);
 		if(folderObj.getSummary()!=null){
-			setData(folderObj.getSummary());
+			setData(folderObj.getSummary(),type);
 		}
 		int indexVal=index+1;
 		if(indexVal==1){
@@ -97,33 +96,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		}
 		pnlArrows.setVisible(true);
 		pnlMoveToEdit.setVisible(false);
-		
-		if(COURSE.equalsIgnoreCase(type)){
-			//h3CourseTitle.setText(i18n.GL0326()+" "+indexVal);
-		}else if(UNIT.equalsIgnoreCase(type)){
-			spnUnitsCount.setVisible(false);
-			//h3CourseTitle.setText(i18n.GL3281()+" "+indexVal);
-		}else if(LESSON.equalsIgnoreCase(type)){
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
-			//h3CourseTitle.setText(i18n.GL0910()+" "+indexVal);
-		}else if(FOLDER.equalsIgnoreCase(type)){
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
-			pnlArrows.setVisible(false);
-			pnlMoveToEdit.setVisible(true);
-			//h3CourseTitle.setText(i18n.GL1501()+" "+indexVal);
-		}else if(COLLECTION.equalsIgnoreCase(type)){
-			spnResourcesCount.setVisible(true);
-			spnQuestionsCount.setVisible(true);
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
-			spnCollectionsCount.setVisible(false);
-			spnAssessmentsCount.setVisible(false);
-			pnlArrows.setVisible(false);
-			pnlMoveToEdit.setVisible(true);
-			//h3CourseTitle.setText(i18n.GL0645()+" "+indexVal);
-		}
+	
 		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getCollectionType())){
 			h3CourseTitle.setText(i18n.GL3007()+" "+indexVal);
 		}else{
@@ -198,13 +171,39 @@ public abstract class ContentWidgetWithMove extends Composite {
 	 * This method is used to set count for Units,Lessons,Collections and Assessments.
 	 * @param courseSummaryDo 
 	 */
-	public void setData(CourseSummaryDo courseSummaryDo){
+	public void setData(CourseSummaryDo courseSummaryDo,String typeVal){
 		spnUnitsCount.setText(i18n.GL3279()+" ("+courseSummaryDo.getUnitCount()+")");
 		spnLessonsCount.setText(i18n.GL3280()+" ("+courseSummaryDo.getLessonCount()+")");
 		spnCollectionsCount.setText(i18n.GL1754()+" ("+courseSummaryDo.getCollectionCount()+")");
 		spnAssessmentsCount.setText(i18n.GL1325()+" ("+courseSummaryDo.getAssessmentCount()+")");
 		spnResourcesCount.setText(i18n.GL1755()+" ("+courseSummaryDo.getUnitCount()+")");
 		spnQuestionsCount.setText(i18n.GL2290()+" ("+courseSummaryDo.getUnitCount()+")");
+	}
+	/**
+	 * This method is used for enabling and disabling the counts
+	 * @param typeVal
+	 */
+	public void enableAndDisableCount(String typeVal){
+		if(UNIT.equalsIgnoreCase(typeVal)){
+			spnUnitsCount.setVisible(false);
+		}else if(LESSON.equalsIgnoreCase(typeVal)){
+			spnUnitsCount.setVisible(false);
+			spnLessonsCount.setVisible(false);
+		}else if(FOLDER.equalsIgnoreCase(typeVal)){
+			spnUnitsCount.setVisible(false);
+			spnLessonsCount.setVisible(false);
+			pnlArrows.setVisible(false);
+			pnlMoveToEdit.setVisible(true);
+		}else if(COLLECTION.equalsIgnoreCase(typeVal)){
+			spnResourcesCount.setVisible(true);
+			spnQuestionsCount.setVisible(true);
+			spnUnitsCount.setVisible(false);
+			spnLessonsCount.setVisible(false);
+			spnCollectionsCount.setVisible(false);
+			spnAssessmentsCount.setVisible(false);
+			pnlArrows.setVisible(false);
+			pnlMoveToEdit.setVisible(true);
+		}
 	}
 	/**
 	 * This inner class will handle the click event on the Arrows

@@ -23,6 +23,8 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
@@ -53,6 +55,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	FolderDo folderObj;
 
 	CollectionContentPresenter collectionContentPresenter;
+	
+	List<FolderDo> folderListDoChild;
 
 	final String COLLECTION="Collection";
 	private static final String O1_LEVEL = "o1";
@@ -74,7 +78,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.unitInfoPresenter=unitInfoPresenter;
 		this.collectionInfoPresenter=collectionInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
-		AppClientFactory.printInfoLogger("mycollerightclusterpresenter");
+
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		unitInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		lessonInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -89,8 +93,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setSlotPanel(this.folderObj);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		if(index==1){
 				//For displaying template
 				if(COURSE.equalsIgnoreCase(type)){ 
@@ -109,9 +111,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
-				MyCollectionsListPresenter myCollectionsListPresenter=AppClientFactory.getInjector().getMyCollectionsListPresenter();
-				myCollectionsListPresenter.setDataInContentSlot(type,folderObj.getGooruOid(),false);
-				setInSlot(INNER_SLOT, myCollectionsListPresenter);
+				shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
+				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
 		}else if(index==3){
 
@@ -152,5 +153,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 */
 	public ShelfMainPresenter getShelfMainPresenter() {
 		return shelfMainPresenter;
+	}
+	public List<FolderDo> getFolderListDoChild() {
+		return folderListDoChild;
+	}
+	public void setFolderListDoChild(List<FolderDo> folderListDoChild) {
+		this.folderListDoChild = folderListDoChild;
 	}
 }
