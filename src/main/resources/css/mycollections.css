@@ -747,9 +747,10 @@ button.btn-disabled{
 }
 
 #gShelfCousesList .tableColumn:first-child{
-		background:#f9fcfe;
-		padding:10px 15px;
-		width:30%;
+	background:#f9fcfe;
+	padding:10px 15px;
+	width:30%;
+	cursor:pointer;
 }
 #gShelfCousesList .tableColumn:last-child{
 	width:6%;
