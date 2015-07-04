@@ -38,7 +38,7 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 * This method is used to set folder data
 	 * @param folderObj
 	 */
-	public void setSlotPanel(FolderDo folderObj);
+	public void setBreadCrumbSlot(FolderDo folderObj, String type);
 	/**
 	 * This method is used to clear tab active status
 	 */

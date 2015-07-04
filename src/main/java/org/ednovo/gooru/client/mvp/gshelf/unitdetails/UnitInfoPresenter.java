@@ -128,7 +128,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 				if(isCreateLesson){
-					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
