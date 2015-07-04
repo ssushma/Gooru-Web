@@ -38,8 +38,10 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -51,6 +53,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -66,14 +69,15 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
-	@UiField Button btnCreate;
+	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
 	@UiField ScrollPanel listScrollPanel;
+	@UiField Label lblAddNew;
 	
 	int index=0;
 	
 	String type;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment";
 	
 	private static final String VIEW= "view";
 
@@ -150,7 +154,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				pnlAddContainer.setVisible(false);
 			}else{
 				btnCreate.setVisible(true);
-				btnCreate.setText("Create Unit");
+				lblAddNew.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				pnlAddContainer.setVisible(true);
 			}
 		}else{
@@ -184,6 +188,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			index=pnlCourseList.getWidgetCount();
 			setLastWidgetArrowVisiblity(true);
 		}
+		setCreateText();
 		if(listOfContent!=null && listOfContent.size()>0){
 			for (FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
@@ -207,10 +212,50 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
+				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;
 			}
 			setLastWidgetArrowVisiblity(false);
+		}
+	}
+	/**
+	 * This method is used to set the create text
+	 * @param typeVal
+	 */
+	public void setCreateText(){
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
+		btnCreateResource.setVisible(false);
+		btnCreateQuestion.setVisible(false);
+		if(id!=null){
+			btnCreateResource.setVisible(true);
+			btnCreateQuestion.setVisible(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1110(), i18n.GL1110());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0308());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL0308(), i18n.GL0308());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+		}else if(o3!=null){
+			btnCreateResource.setVisible(true);
+			btnCreateQuestion.setVisible(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+		}else if(o2!=null){
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3417());
+			lblAddNew.setText(i18n.GL3417());
+		}else if(o1!=null){
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3416());
+			lblAddNew.setText(i18n.GL3416());
 		}
 	}
 	/**
@@ -223,12 +268,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			//if(COURSE.equalsIgnoreCase(folderObj.getCollectionType())){
-				//getUiHandlers().setRightClusterPresenterBasedOnType(folderObj.getCollectionType(), folderObj);
-			//}else{
-				Map<String,String> params = new HashMap<String,String>();
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
-			//}
+			Map<String,String> params = new HashMap<String,String>();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
 		}
 	}
@@ -264,13 +305,18 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public ScrollPanel getScrollPanel(){
 		return listScrollPanel;
 	}
-
+	/**
+	 * This method is used to update the url parameters
+	 * @param params
+	 * @param folderObj
+	 * @return
+	 */
 	public Map<String,String> updateParameters(Map<String,String> params,FolderDo folderObj){
-		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 		if( view!=null){
 			params.put(VIEW,view);
 		}else{
@@ -281,7 +327,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		} else if(o1!=null && o2==null && o3==null && id==null){
 			params.put(O1_LEVEL, o1);
 			params.put(O2_LEVEL,folderObj.getGooruOid());
-		}else if(o1!=null && o2!=null && o3==null && id==null){
+		}else if(o1!=null && o2!=null && o3==null && id==null) {
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());

@@ -57,6 +57,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String UNIT="unit";
 	
+	private String LESSON = "Lesson";
+	
 	private static final String O1_LEVEL = "o1";
 	
 	/**
@@ -124,14 +126,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("o2", uri[uri.length-1]);
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
-				if(isCreateLesson){
-					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, result);
-				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
-				}
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
 				if(isCreateLesson){
-					myCollectionsRightClusterPresenter.setUnitTemplate("Lesson");
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
+					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}

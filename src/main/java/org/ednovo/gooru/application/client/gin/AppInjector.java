@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
@@ -307,6 +308,7 @@ public interface AppInjector extends ServiceInjector {
 	MyCollectionsListPresenter getMyCollectionsListPresenter();
 
 	AsyncProvider<HomeBannerPresenter> getHomeBannerPresenter();
+	
 	AsyncProvider<PreSearchPresenter> getPreSearchPresenter();
 	
 	AsyncProvider<StudentClassPresenter> getStudentClassPresenter();
@@ -316,7 +318,12 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<StudentClassReportPresenter> getStudentClassReportPresenter();
 
 	AsyncProvider<TeachClassPresenter> getTeachClassPresenter();
+	
 	AsyncProvider<EditClassPresenter>  getEditClassPresenter();
+	
 	AsyncProvider<EditClassSettingsPresenter> getEditClassSettingsPresenter();
+	
 	AsyncProvider<EditClassContentPresenter> getEditClassContentPresenter();
-}
+	
+	AsyncProvider<EditClassStudentPresenter> getEditClassStudentPresenter();
+ }

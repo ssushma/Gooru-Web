@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,6 +29,10 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
+import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -41,21 +45,33 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  *
  */
 public class CollectionContentPresenter extends PresenterWidget<IsCollectionContentView> implements CollectionContentUiHandlers {
-	
+
 	final String SUBJECT="subject";
-	
+
 	final String COURSE="course";
-	
+
+	AddResourcePresenter addResourcePresenter=null;
+
 	/**
 	 * Class constructor
 	 * @param view {@link View}
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view) {
+	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		getView().setCollectionContentPresenter(this);
+		this.addResourcePresenter = addResourcePresenter;
+
+		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
+
+			@Override
+			public void insertCollectionItemInAddResource(
+					CollectionItemDo collectionItem, RefreshType refreshType) {
+				getView().setDisplayResourceItem(collectionItem, refreshType, -1);
+			}
+		});
 	}
 
 	@Override
@@ -71,12 +87,16 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void setData(final FolderDo folderDo) {
 		/**As off now the API create lession is not implemented hardcode the collection id for testing **/
-		AppClientFactory.getInjector().getResourceService().getCollection("431c086c-2e81-4318-9e87-375235a7b84c",true, new SimpleAsyncCallback<CollectionDo>() {
-			@Override
-			public void onSuccess(CollectionDo result) {
-				getView().setData(result,folderDo);
-			}
-		});
+
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		if(collectionId!=null){
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionId,true, new SimpleAsyncCallback<CollectionDo>() {
+				@Override
+				public void onSuccess(CollectionDo result) {
+					getView().setData(result,folderDo, RefreshType.INSERT);
+				}
+			});
+		}
 	}
 	@Override
 	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
@@ -99,11 +119,11 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		});
 	}
 	@Override
-	public void deleteCollectionItem(String collectionItemId) {
+	public void deleteCollectionItem(final String collectionItemId, final int itemSequence) {
 		AppClientFactory.getInjector().getResourceService().deleteCollectionItem(collectionItemId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				
+				getView().updateDeleteItem(collectionItemId, itemSequence);
 			}
 		});
 	}
@@ -118,4 +138,13 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			}
 		});
 	}
+
+	@Override
+    public void addResourcePopup(CollectionDo collectionDo, String clickType) {
+
+    	addResourcePresenter.setCollectionDo(collectionDo);
+    	addResourcePresenter.setCollectionDoAndType(collectionDo, clickType);
+        addToPopupSlot(addResourcePresenter);
+
+    }
 }

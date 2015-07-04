@@ -38,5 +38,5 @@ public interface ResetDragDropHandler extends EventHandler {
 	 * Reset Drag and Drop Answer in player
 	 * @param widgetIndex instance of the int
 	 */
-	void resetReorder(int widgetIndex);
+	void resetReorder();
 }
