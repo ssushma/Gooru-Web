@@ -56,11 +56,13 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	//New APIs for 6.0
 	void getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType,boolean isExcludeAssessment, AsyncCallback<FolderListDo> callback);
 	
+	void getChildFoldersForCourse(int offset, int limit,String courseId,String unitId,String lessonId,String sharingType, String collectionType,boolean isExcludeAssessment,AsyncCallback<FolderListDo> callback);
+	
 	void deleteCollectionsFolder(String folderId, AsyncCallback<Void> callback);
 
 	void createFolder(String folderName, String parentId, boolean addToShelf, AsyncCallback<FolderDo> callback);
 	
-	void createCourse(String folderName, boolean addToShelf, AsyncCallback<FolderDo> callback);
+	void createCourse(String folderName, boolean addToShelf,String courseId, String unitId, AsyncCallback<FolderDo> callback);
 
 	void moveCollectionIntoFolder(String sourceId, String targetId,AsyncCallback<Void> callback);
 

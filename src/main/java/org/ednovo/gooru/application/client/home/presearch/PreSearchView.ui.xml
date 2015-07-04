@@ -11,7 +11,7 @@
 								<tbp:H3Panel styleName="panel-title" text="{i18n.GL3287}"></tbp:H3Panel>
 							</div>
 							<div class="panel-body no-gutter">
-								<g:HTMLPanel styleName="col-md-7" ui:field="buttonGroup">
+								<g:HTMLPanel styleName="col-md-7 col-sm-7" ui:field="buttonGroup">
 								    <div class="gradePanel">
 								        <span class="blocksSearch grade">
 											<tbp:PPanel text="{i18n.GL3288}"></tbp:PPanel>
@@ -48,7 +48,7 @@
 								</div>
 								<div class="col-md-2 standards">
 									<span class="blocksSearch">
-									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary" text="{i18n.GL3294}"></g:Button>
+									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary primary" text="{i18n.GL3294}"></g:Button>
 									</span>
 								</div>
 								<div class="clearfix"></div>

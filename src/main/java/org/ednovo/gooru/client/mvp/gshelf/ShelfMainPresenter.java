@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
@@ -91,6 +92,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	SignUpPresenter signUpViewPresenter;
 	
+	CollectionContentPresenter collectionContentPresenter;
+	
 	private String version = null;
 	
 	boolean isApiCalled=false;
@@ -123,12 +126,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
+	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,CollectionContentPresenter collectionContentPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
-		//getView().getLoadingImageVisible();
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
+		this.collectionContentPresenter=collectionContentPresenter;
+		
 		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
@@ -188,14 +192,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		AppClientFactory.printInfoLogger("OnReveal");
 		Window.enableScrolling(true);
 	}
 	
 	@Override
 	protected void onReset() {
 		super.onReset();
-		AppClientFactory.printInfoLogger("OnReset");
 		Window.enableScrolling(true);
 		if (AppClientFactory.isAnonymous()){
 			getView().setNoDataForAnonymousUser(true);
@@ -205,20 +207,20 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				callWorkspaceApi();
 				version = AppClientFactory.getLoggedInUser().getToken();
 			}
-			//setRightPanelData(null,null);
 		}
-		
 	}
 	/**
 	 * This method will call the workspace API
 	 */
 	public void callWorkspaceApi(){
 		getView().setNoDataForAnonymousUser(false);
-		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-		type=view;
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		String typeVal=type;
-		if(type!=null && type.equalsIgnoreCase(FOLDER)){
+		if(view!=null && view.equalsIgnoreCase(FOLDER)){
 			typeVal=null;//if we are passing as null we get all the folders and collections
+			type=view;
+		}else{
+			typeVal=type;
 		}
 		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
@@ -284,17 +286,17 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	
 	@Override
-	public void getChildFolderItems(final String folderId, final boolean isDataCalled) {
+	public void getChildFolderItems(final String folderId,final String typeVal,final boolean isDataCalled) {
 		if(isDataCalled) {
 			getView().getChildFolderItems(null);
-		} else {
+		}else{
 			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					searchResult.addAll(result.getSearchResult());
 					if(result.getSearchResult().size()==20) {
 						getView().setChildPageNumber(getView().getChildPageNumber()+1);
-						setPaginatedChildFolders(folderId, isDataCalled);
+						setPaginatedChildFolders(folderId,typeVal,isDataCalled);
 					} else {
 						getView().setChildPageNumber(1);
 						getView().getChildFolderItems(searchResult);
@@ -305,8 +307,30 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 	}
 	@Override
-	public void setRightPanelData(FolderDo folderObj,String clickedItemType){
+	public void getChildFolderItemsForCourse(final String courseId,final String unitId,final String lessonId,final String typeVal,final boolean isDataCalled) {
+		if(isDataCalled) {
+			getView().getChildFolderItems(null);
+		}else{
+			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse((getView().getChildPageNumber()-1)*20, 20,courseId, unitId, lessonId, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+				@Override
+				public void onSuccess(FolderListDo result) {
+					searchResult.addAll(result.getSearchResult());
+					if(result.getSearchResult().size()==20) {
+						getView().setChildPageNumber(getView().getChildPageNumber()+1);
+						setPaginatedChilds(courseId,unitId,lessonId,typeVal,isDataCalled);
+					} else {
+						getView().setChildPageNumber(1);
+						getView().getChildFolderItems(searchResult);
+						searchResult.clear();
+					}
+				}
+			});
+		}
+	}
+	@Override
+	public void setRightPanelData(FolderDo folderObj,String clickedItemType,List<FolderDo> folderListDoChild){
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
+		getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
 		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
@@ -314,13 +338,19 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo){
 		clearSlot(RIGHT_SLOT);
-		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		if(view==null){
+			view=type;
+		}
 		myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
-		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);
+		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 	}
 
-	private void setPaginatedChildFolders(String folderId, boolean isDataCalled) {
-		getChildFolderItems(folderId, isDataCalled);
+	private void setPaginatedChildFolders(String folderId,String typeVal, boolean isDataCalled) {
+		getChildFolderItems(folderId,typeVal, isDataCalled);
+	}
+	private void setPaginatedChilds(String courseId,String unitId,String lessonId,String typeVal, boolean isDataCalled) {
+		getChildFolderItemsForCourse(courseId,unitId,lessonId,typeVal,isDataCalled);
 	}
 
 	@Override
@@ -364,8 +394,25 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,typeVal,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 
-	public void createNewUnitItem() {
-		getView().createNewUnitItem();
-		
+	public void createNewUnitItem(String type) {
+		getView().createNewItem(type);
+	}
+
+	public void updateTitleOfTreeWidget(FolderDo courseDo) {
+		getView().updateTitleOfTreeWidget(courseDo);
+	}
+	
+	@Override
+	public void setCollectionContent(FolderDo collectionDo){
+		clearSlot(RIGHT_SLOT);
+		collectionContentPresenter.setData(collectionDo);
+		setInSlot(RIGHT_SLOT, collectionContentPresenter,false);	
+	}
+	/**
+	 * To enable course button based on the boolean parameter.
+	 * @param isEnable
+	 */
+	public void enableCreateCourseButton(boolean isEnable) {
+		getView().enableDisableCourseButton(isEnable);
 	}
 }

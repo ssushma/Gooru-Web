@@ -283,6 +283,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void onWindowScroll(ScrollEvent event) {
 				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
+					if(publisherSgstBox!=null && aggregatorSgstBox!=null){
+						publisherSgstBox.hideSuggestionList();
+						aggregatorSgstBox.hideSuggestionList();
+					}
+					
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top
 					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
 						if(!isBackToTopClicked && pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
@@ -701,6 +706,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}else{
 				HTMLPanel widgetsContainer=new HTMLPanel("");
 				widgetsContainer.getElement().setId(pageNumber+"");
+				searchResultPanel.clear();
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
@@ -720,6 +726,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			pnlBackToTop.setVisible(false);
 			panelBorderBox.getElement().getStyle().setBackgroundColor("#FFFFFF");
 			searchResults.setVisible(false);
+			searchResultPanel.clear();
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{
 			lblLoadingText.setVisible(false);

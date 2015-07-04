@@ -938,7 +938,7 @@ body {
 	color: #999;
 	padding: 5px 25px 5px 5px;
 	border-bottom: 1px solid #DDD;
-	background: white url("../_images/dropdown-menu-arrow.png") no-repeat right center;
+	background: white url("../images/dropdown-menu-arrow.png") no-repeat right center;
 	border: 1px solid #DDD;
 	cursor: pointer;
 	display: block;
@@ -1098,7 +1098,7 @@ body {
 }
 
 #mainPanel .dropdownListPlaceHolder{
-	background:url("images/dropdownMenuArrow.png") no-repeat;
+	background:url("../images/dropdownMenuArrow.png") no-repeat;
 	background-color: white;
 	background-position: right center;
 	text-align:left;

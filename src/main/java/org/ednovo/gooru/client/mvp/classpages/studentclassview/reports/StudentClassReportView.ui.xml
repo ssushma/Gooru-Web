@@ -1,0 +1,321 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style src="" />
+	<g:HTMLPanel styleName="dashboardContainer">
+		<g:HTMLPanel styleName="container">
+		   <div class="row">
+		      <div class="whitebgcolor">
+		         <div class="dashboardMenuBlock no-gutter">
+		            <div class="col-md-5 col-sm-6">
+		               <div class="dashLeftMenu">
+		                  <ul>
+		                     <li class="active"><a href="">Unit Reports</a></li>
+		                     <li><a href="">Collection Reports</a></li>
+		                  </ul>
+		               </div>
+		            </div>
+		            <div class="col-md-7 col-sm-6">
+		               <div class="scoreStatus">
+		                  <div class="red">Below 60%</div>
+		                  <div class="org">60%- 69%</div>
+		                  <div class="yellowgreen">70%- 79%</div>
+		                  <div class="lightgreen">80%- 89%</div>
+		                  <div class="green">90%- 100%</div>
+		               </div>
+		            </div>
+		            <div class="clearfix"></div>
+		         </div>
+		         <div class="dashboardDropDownContainer">
+		            <div class="dropBox unitDrop">
+		               <p>Unit:</p>
+		               <label class="custom-select">
+		                  <select>
+		                     <option>The Number System</option>
+		                     <option>Blue cheese with crackers</option>
+		                     <option>Steak</option>
+		                     <option>Other</option>
+		                  </select>
+		               </label>
+		            </div>
+		            <div class="dropBox viewDrop">
+		               <p>View By:</p>
+		               <label class="custom-select">
+		                  <select>
+		                     <option>Standard</option>
+		                     <option>Blue cheese with crackers</option>
+		                     <option>Steak</option>
+		                     <option>Other</option>
+		                  </select>
+		               </label>
+		            </div>
+		            <div class="dropBox displayDrop">
+		               <p>Display:</p>
+		               <label class="custom-select">
+		                  <select>
+		                     <option>Assessments Only</option>
+		                     <option>Blue cheese with crackers</option>
+		                     <option>Steak</option>
+		                     <option>Other</option>
+		                  </select>
+		               </label>
+		            </div>
+		            <div class="dropBox checkBoxes">
+		               <div class="squaredOne">
+		                  <input type="checkbox" checked="" name="check1" id="squaredOne" value="None"/>
+		                  <label for="squaredOne"></label>
+		               </div>
+		               Score (%) <span>or</span>
+		               <div class="squaredOne">
+		                  <input type="checkbox" name="check2" id="squaredTwo" value="None"/>
+		                  <label for="squaredTwo"></label>
+		               </div>
+		               Score (fraction) 
+		            </div>
+		         </div>
+		         <div class="dashboardBodyBlock">
+		            <div class="table-responsive scrollingTable">
+		               <div class="scrollTBL">
+		                  <table class="table table-bordered tableStyle">
+		                     <thead>
+		                        <tr>
+		                           <th class="headcol">&nbsp;</th>
+		                           <th>Unit</th>
+		                           <th colspan="5">6.RP.A.1</th>
+		                           <th colspan="4">6.RP.A.2</th>
+		                           <th colspan="3">6.RP.A.3</th>
+		                           <th colspan="4">6.RP.A.3a</th>
+		                        </tr>
+		                     </thead>
+		                     <tbody>
+		                        <tr>
+		                           <th class="headcol whitebg"></th>
+		                           <th>Total</th>
+		                           <th>Total</th>
+		                           <th>A1</th>
+		                           <th>A2</th>
+		                           <th>A3</th>
+		                           <th>A4</th>
+		                           <th>Total</th>
+		                           <th>A4</th>
+		                           <th>A5</th>
+		                           <th>A6</th>
+		                           <th>Total</th>
+		                           <th>A7</th>
+		                           <th>A8</th>
+		                           <th>Total</th>
+		                           <th>A7</th>
+		                           <th>A8</th>
+		                           <th>A9</th>
+		                           <th>Total</th>
+		                           <th>Total</th>
+		                           <th>A1</th>
+		                           <th>A2</th>
+		                           <th>A3</th>
+		                           <th>A4</th>
+		                           <th>Total</th>
+		                           <th>A4</th>
+		                           <th>A5</th>
+		                           <th>A6</th>
+		                           <th>Total</th>
+		                           <th>A7</th>
+		                           <th>A8</th>
+		                           <th>Total</th>
+		                           <th>A7</th>
+		                           <th>A8</th>
+		                           <th>A9</th>
+		                        </tr>
+		                        <tr>
+		                           <th class="headcol"><img src="images/comment-avathar.png"/> JoannaS</th>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                        </tr>
+		                        <tr>
+		                           <th class="headcol"><img src="images/comment-avathar.png"/> JoannaS</th>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                        </tr>
+		                        <tr>
+		                           <th class="headcol"><img src="images/comment-avathar.png"/> JoannaS</th>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                        </tr>
+		                        <tr>
+		                           <th class="headcol"><img src="images/comment-avathar.png"/> JoannaS</th>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                        </tr>
+		                        <tr>
+		                           <th class="headcol"><img src="images/comment-avathar.png"/> JoannaS</th>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="lightgreen">89%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="lightgreen">90%</td>
+		                           <td class="green">96%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">95%</td>
+		                           <td class="green">100%</td>
+		                           <td class="green">81%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">85%</td>
+		                           <td class="lightgreen">70%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                           <td class="yellowgreen">75%</td>
+		                        </tr>
+		                     </tbody>
+		                  </table>
+		               </div>
+		            </div>
+		         </div>
+		      </div>
+		   </div>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>

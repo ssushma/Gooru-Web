@@ -1,0 +1,1461 @@
+@charset "utf-8";
+
+.student-banner-image {
+	width: 1000px;
+	height: 180px;
+}
+.student-blueBand {
+    background: #87badd;
+    padding: 5px 0;
+}
+.student-blueBand h2 {
+    color: #ffffff;
+    margin: 9px 0;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: left;
+}
+.rightWhiteBox {
+    text-align: right;
+    margin: 3px 0px 0px 0px;
+}
+.rightWhiteBox span {
+    background: #ffffff none repeat scroll 0 0;
+    color: #515151;
+    font-size: 26px;
+    font-weight: normal;
+    border-radius: 4px 4px;
+    -webkit-border-radius: 4px 4px;
+    -moz-border-radius: 4px 4px;
+    padding: 6px 12px;
+    display: inline-block;
+}
+.tabsContainer {
+    padding: 25px 0;
+    text-align: center;
+}
+.tabsContainer .btn {
+    font-size: 17px;
+    padding: 12px 26px;
+    width: 150px;
+}
+.learningHeaderBlock {
+    background: #fafafa;
+    border-radius: 6px 6px 0 0;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+.learningHeaderBlock .indicationBox {
+    text-align: right;
+    padding-top: 3px;
+}
+.learningHeaderBlock .indicationBox div {
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 15px;
+}
+.learningHeaderBlock .indicationBox div:last-child {
+    margin-right: 0;
+}
+.learningHeaderBlock .indicationBox span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.learningHeaderBlock .green-circle {
+	width: 20px;
+	height: 20px;
+	border-radius: 50% 50%;
+	background: #a5cba1 url("//127.0.0.1:8888/images/Classpage/student/checkmark-small.png") no-repeat 0px 4px;
+    display: inline-block;
+}
+
+.learningHeaderBlock .green-text {
+	width: 20px;
+	height: 20px;
+	border-radius: 50% 50%;
+	display: inline-block;
+	background: #a5cba1!important;
+	text-align: center;
+	padding-top: 4px;
+	color: #fff;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.learningHeaderBlock .blue-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50% 50%;
+    background: #85b9df;
+    display: inline-block;
+}
+.learningHeaderBlock .grey-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50% 50%;
+    background: #d1cfcf;
+    display: inline-block;
+}
+.learningBodyBlock {
+    background: #fafafa;
+    border-radius: 0 0 6px 6px;
+}
+.rowContainer {
+    border-bottom: 1px solid #dddddd;
+}
+.rowContainer:last-child {
+    border-bottom: none;
+}
+.rowContainer .heighlightBlock {
+    padding: 10px 10px;
+    background: #eef3f7;
+    cursor: pointer;
+}
+.rowContainer .heighlightBlock h3 {
+    margin: 0 0;
+    padding-bottom: 5px;
+    font-size: 20px;
+    color: #515151;
+    font-weight: bold;
+}
+.rowContainer .heighlightBlock p {
+    font-weight: bold;
+    font-size: 12px;
+    color: #515151;
+    margin: 0 0;
+}
+.rowContainer .progressBlock,
+.rowContainer .heighlightBlock,
+.rowContainer .viewReport {
+    min-height: 68px;
+}
+.rowContainer .progressBlock {
+    padding: 14px 6px;
+    border-right: 1px solid #dddddd;
+}
+.rowContainer .progressBlock .circle-main-container {
+    margin: 0 0;
+    padding: 0px 13px;
+    display: block;
+}
+.rowContainer .progressBlock .circle-main-container div {
+    margin: 0 13px 0 0;
+    padding: 0 0;
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+.rowContainer .progressBlock .circle-main-container div span {
+    width: 40px;
+    height: 40px;
+    border-radius: 50% 50%;
+    background: #dddddd;
+    display: block;
+}
+.rowContainer .viewReport {
+    text-align: center;
+}
+.rowContainer .viewReport a {
+    color: #0074cb;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 19px 0;
+    vertical-align: middle;
+    line-height: 15px;
+}
+.rowContainer .viewReport a:hover,
+.rowContainer .viewReport a:focus {
+    text-decoration: none;
+}
+.rowContainer .progressBlock .circle-main-container div.green-circle span {
+    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 6px 10px;
+}
+.rowContainer .progressBlock .circle-main-container div.green-text span {
+    background: #a5cba1;
+	text-align: center;
+	padding-top: 11px;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 100;
+}
+.rowContainer .progressBlock .circle-main-container div.blue-circle span {
+    background: #85b9df;
+}
+.rowContainer .progressBlock .circle-main-container div.grey-circle span {
+    background: #d1cfcf;
+}
+.LearningMapContainer {
+    padding-bottom: 50px;
+}
+
+.LearningMapContainer .headerLinksContainer {
+    padding: 13px 0;
+    border-bottom: 1px solid #dddddd;
+    background: #fafafa;
+}
+.LearningMapContainer .topBackLinkBox div {
+    font-size: 20px;
+    font-weight: bold;
+    color: #515151;
+}
+.LearningMapContainer .topBackLinkBox div span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.LearningMapContainer .topBackLinkBox div span.left-arrow {
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+    width: 18px;
+    height: 25px;
+}
+.LearningMapContainer .topBackLinkBox div:hover,
+.LearningMapContainer .topBackLinkBox div:focus {
+    text-decoration: none;
+}
+.LearningMapContainer .headerBackLinkBox div {
+    font-size: 20px;
+    font-weight: bold;
+    color: #515151;
+}
+.LearningMapContainer .headerBackLinkBox div span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.LearningMapContainer .headerBackLinkBox div span.left-arrow {
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+    width: 18px;
+    height: 25px;
+}
+.LearningMapContainer .headerBackLinkBox div:hover,
+.LearningMapContainer .topBackLinkBox div:focus {
+    text-decoration: none;
+}
+.LearningMapContainer .headerNextLinkBox {
+    text-align: right;
+}
+.LearningMapContainer .headerNextLinkBox div {
+    font-size: 20px;
+    font-weight: bold;
+    color: #515151;
+}
+.LearningMapContainer .headerNextLinkBox div span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.LearningMapContainer .headerNextLinkBox div span.next-arrow {
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -347px -326px;
+    width: 18px;
+    height: 25px;
+}
+.LearningMapContainer .headerNextLinkBox div:hover,
+.LearningMapContainer .headerNextLinkBox div:focus {
+    text-decoration: none;
+}
+.rowContainer .progressBlockLeft {
+    display: table-cell;
+    padding: 6px 8px;
+    vertical-align: middle;
+}
+.rowContainer .lessonDetails {
+    display: table-cell;
+    vertical-align: middle;
+}
+.rowContainer .progressBlockLeft div {
+    display: inline-block;
+    list-style: outside none none;
+    margin: 0 8px 0 0;
+    padding: 0;
+    vertical-align: middle;
+}
+.rowContainer .progressBlockLeft div.green-circle span {
+    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 7px 9px;
+}
+.rowContainer .progressBlockLeft div.blue-circle span {
+    background: #85b9df none repeat scroll 0 0;
+}
+.rowContainer .progressBlockLeft div span {
+    background: #dddddd none repeat scroll 0 0;
+    border-radius: 50%;
+    display: block;
+    height: 40px;
+    width: 40px;
+}
+.rowContainer .heighlightBlock .lessonDetails p {
+    line-height: 15px;
+}
+.LearningMapContainer .lessonDescription div {
+    display: table-cell;
+    padding: 11px 10px;
+    position: relative;
+    width: 95px;
+}
+.LearningMapContainer .lessonDescription div.blueBorder img {
+    border-left: 5px solid #0074be;
+}
+.LearningMapContainer .lessonDescription div.orgBorder img {
+    border-left: 5px solid #fdb128;
+}
+.LearningMapContainer .lessonDescription div.selected:before {
+    left: 10px;
+    right: 10px;
+    bottom: 12px;
+    top: 12px;
+    position: absolute;
+    background: rgba(131, 184, 126, 0.7) url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
+    content: "";
+}
+.LearningMapContainer .lessonDescription div.blueselected:before {
+    left: 10px;
+    right: 10px;
+    bottom: 12px;
+    top: 12px;
+    position: absolute;
+    background: rgba(113, 170, 212, 0.7);
+    content: "";
+}
+.LearningMapContainer .lessonDescription div.emptyselected:before {
+    left: 10px;
+    right: 10px;
+    bottom: 12px;
+    top: 12px;
+    position: absolute;
+    background: url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
+    content: "";
+}
+
+.userClassContainer {
+    padding: 10px 0;
+    background: #ffffff;
+    border-radius: 0 0 6px 6px;
+    border: 1px solid #dddddd;
+}
+.userClassContainer .memberStatus {
+    text-align: right;
+    font-size: 18px;
+    color: #515151;
+}
+.userClassContainer .memberStatus .btn-default {
+    background-color: #dddddd;
+    border: none;
+    color: #2874be;
+    font-size: 18px;
+    margin-left: 10px;
+}
+.userClassContainer .userName {
+    margin: 3px 0;
+}
+.userClassContainer .userName img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    border: 2px solid #87badd;
+}
+.dashboardContainer .whitebgcolor {
+    background: #ffffff;
+    border-radius: 4px 4px;
+}
+label.custom-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.custom-select select {
+    display: inline-block;
+    border: 1px solid #dddddd;
+    padding: 6px 3px 5px 5px;
+    margin: 0;
+    font: inherit;
+    font-weight: normal;
+    outline: none;
+    /* remove focus ring from Webkit */
+    
+    line-height: 1.2;
+    background: #ffffff;
+    width: 100%;
+    -webkit-appearance: none;
+    /* remove the strong OSX influence from Webkit */
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+/* for Webkit's CSS-only solution */
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .custom-select select {
+        padding-right: 30px;
+    }
+}
+/* Since we removed the default focus styles, we have to add our own */
+
+.custom-select select:focus {}
+/* Select arrow styling */
+
+.custom-select:after {
+    content: "▼";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 60%;
+    line-height: 30px;
+    padding: 0 7px;
+    background: #dddddd;
+    color: #515151;
+    pointer-events: none;
+    -webkit-border-radius: 0 6px 6px 0;
+    -moz-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
+}
+.no-pointer-events .custom-select:after {
+    content: none;
+}
+.dashboardContainer .dashboardMenuBlock {
+    border-bottom: 1px solid #dddddd;
+}
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul {
+    margin: 0 0;
+    padding: 0 0;
+}
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li {
+    margin: 0 0;
+    padding: 0 0;
+    display: table-cell;
+}
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li:first-child a:hover {
+    border-radius: 4px 0 0 0;
+}
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li a {
+    display: block;
+    color: #a19999;
+    padding: 18px 25px;
+    font-size: 18px;
+}
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li a:hover,
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li a:focus {
+    background: #e7f1f9;
+    color: #4897ce;
+    text-decoration: none;
+}
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li.active a {
+    background: #e7f1f9;
+    color: #4897ce;
+    text-decoration: none;
+}
+.dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li:first-child.active a {
+    border-radius: 4px 0 0 0;
+}
+.dashboardContainer .dashboardMenuBlock .scoreStatus {
+    text-align: right;
+    padding: 6px 6px;
+    float: right;
+}
+.dashboardContainer .dashboardMenuBlock .scoreStatus div {
+    display: table-cell;
+    padding: 8px 15px;
+    width: 62px;
+    text-align: center;
+    font-weight: bold;
+}
+.dashboardContainer .dashboardMenuBlock .scoreStatus div.red {
+    background: #e08282;
+    color: #ffffff;
+    border-radius: 4px 0 0 4px;
+}
+.dashboardContainer .dashboardMenuBlock .scoreStatus div.org {
+    background: #fec956;
+    color: #ffffff;
+}
+.dashboardContainer .dashboardMenuBlock .scoreStatus div.yellowgreen {
+    background: #edf167;
+    color: #ffffff;
+}
+.dashboardContainer .dashboardMenuBlock .scoreStatus div.lightgreen {
+    background: #a2de81;
+    color: #ffffff;
+}
+.dashboardContainer .dashboardMenuBlock .scoreStatus div.green {
+    background: #3fc380;
+    color: #ffffff;
+    border-radius: 0 4px 4px 0;
+}
+.dashboardContainer .dashboardDropDownContainer {
+    padding: 15px 15px;
+}
+.dashboardContainer .dashboardDropDownContainer .dropBox {
+    display: inline-block;
+    margin-right: 15px;
+}
+.dashboardContainer .dashboardDropDownContainer .dropBox p {
+    margin: 0 0 5px 0;
+}
+.dashboardContainer .dashboardDropDownContainer .dropBox.unitDrop {
+    width: 280px;
+}
+/* $activeColor: #c0392b; //red */
+/* $background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/13460/dark_wall.png'); */
+/* .slideOne */
+
+.slideOne {
+    width: 50px;
+    height: 10px;
+    background: #333;
+    margin: 20px auto;
+    position: relative;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+.slideOne label {
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    cursor: pointer;
+    background: #fcfff4;
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    border-radius: 50px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+.slideOne input[type=checkbox] {
+    visibility: hidden;
+}
+.slideOne input[type=checkbox]:checked + label {
+    left: 37px;
+}
+/* end .slideOne */
+/* .slideTwo */
+
+.slideTwo {
+    width: 80px;
+    height: 30px;
+    background: #333;
+    margin: 20px auto;
+    position: relative;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+.slideTwo:after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    height: 2px;
+    width: 52px;
+    background: #111;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+.slideTwo label {
+    display: block;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    position: absolute;
+    top: 4px;
+    z-index: 1;
+    left: 4px;
+    background: #fcfff4;
+    border-radius: 50px;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+}
+.slideTwo label:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: #333;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px black, 0px 1px 0px rgba(255, 255, 255, 0.9);
+}
+.slideTwo input[type=checkbox] {
+    visibility: hidden;
+}
+.slideTwo input[type=checkbox]:checked + label {
+    left: 54px;
+}
+.slideTwo input[type=checkbox]:checked + label:after {
+    background: #27ae60;
+    /*activeColor*/
+}
+/* end .slideTwo */
+/* .slideThree */
+
+.slideThree {
+    width: 80px;
+    height: 26px;
+    background: #333;
+    margin: 20px auto;
+    position: relative;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+.slideThree:after {
+    content: 'OFF';
+    color: #000;
+    position: absolute;
+    right: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.15);
+}
+.slideThree:before {
+    content: 'ON';
+    color: #27ae60;
+    position: absolute;
+    left: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+}
+.slideThree label {
+    display: block;
+    width: 34px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    z-index: 1;
+    background: #fcfff4;
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    border-radius: 50px;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+.slideThree input[type=checkbox] {
+    visibility: hidden;
+}
+.slideThree input[type=checkbox]:checked + label {
+    left: 43px;
+}
+/* end .slideThree */
+/* .roundedOne */
+
+.roundedOne {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    margin: 20px auto;
+    background: #fcfff4;
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.roundedOne label {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    background: -webkit-linear-gradient(top, #222222 0%, #45484d 100%);
+    background: linear-gradient(to bottom, #222222 0%, #45484d 100%);
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px white;
+}
+.roundedOne label:after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: #27ae60;
+    background: -webkit-linear-gradient(top, #27ae60 0%, #145b32 100%);
+    background: linear-gradient(to bottom, #27ae60 0%, #145b32 100%);
+    opacity: 0;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.roundedOne label:hover::after {
+    opacity: 0.3;
+}
+.roundedOne input[type=checkbox] {
+    visibility: hidden;
+}
+.roundedOne input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .roundedOne */
+/* .roundedTwo */
+
+.roundedTwo {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    margin: 20px auto;
+    background: #fcfff4;
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.roundedTwo label {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    cursor: pointer;
+    background: -webkit-linear-gradient(top, #222222 0%, #45484d 100%);
+    background: linear-gradient(to bottom, #222222 0%, #45484d 100%);
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px white;
+}
+.roundedTwo label:after {
+    content: '';
+    width: 9px;
+    height: 5px;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    border: 3px solid #fcfff4;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.roundedTwo label:hover::after {
+    opacity: 0.3;
+}
+.roundedTwo input[type=checkbox] {
+    visibility: hidden;
+}
+.roundedTwo input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .roundedTwo */
+/* .squaredOne */
+
+.squaredOne {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    border-radius: 4px 4px;
+    margin: 20px 0;
+    display: inline-block;
+    background: #fcfff4;
+    background: #dddddd;
+}
+.squaredOne label {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    border-radius: 4px 4px;
+    top: 1px;
+    left: 1px;
+    cursor: pointer;
+    background: #ffffff;
+}
+.squaredOne label:after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: -webkit-linear-gradient(top, #222222 0%, #45484d 100%);
+    background: linear-gradient(to bottom, #222222 0%, #45484d 100%);
+    border-radius: 4px 4px;
+    opacity: 0;
+}
+.squaredOne label:hover::after {
+    opacity: 0.3;
+}
+.squaredOne input[type=checkbox] {
+    visibility: hidden;
+}
+.squaredOne input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .squaredOne */
+/* .squaredTwo */
+
+.squaredTwo {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    margin: 20px auto;
+    background: #fcfff4;
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.squaredTwo label {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    background: -webkit-linear-gradient(top, #222222 0%, #45484d 100%);
+    background: linear-gradient(to bottom, #222222 0%, #45484d 100%);
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px white;
+}
+.squaredTwo label:after {
+    content: '';
+    width: 9px;
+    height: 5px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border: 3px solid #fcfff4;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.squaredTwo label:hover::after {
+    opacity: 0.3;
+}
+.squaredTwo input[type=checkbox] {
+    visibility: hidden;
+}
+.squaredTwo input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .squaredTwo */
+/* .squaredThree */
+
+.squaredThree {
+    width: 20px;
+    position: relative;
+    margin: 20px auto;
+}
+.squaredThree label {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+.squaredThree label:after {
+    content: '';
+    width: 12px;
+    height: 7px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border: 3px solid #000000;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.squaredThree label:hover::after {
+    opacity: 0.3;
+}
+.squaredThree input[type=checkbox] {
+    visibility: hidden;
+}
+.squaredThree input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .squaredThree */
+/* .squaredFour */
+
+.squaredFour {
+    width: 20px;
+    position: relative;
+    margin: 20px auto;
+}
+.squaredFour label {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fcfff4;
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    border-radius: 4px;
+    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.squaredFour label:after {
+    content: '';
+    width: 9px;
+    height: 5px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border: 3px solid #333;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.squaredFour label:hover::after {
+    opacity: 0.5;
+}
+.squaredFour input[type=checkbox] {
+    visibility: hidden;
+}
+.squaredFour input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .squaredFour */
+
+.dashboardContainer .dashboardDropDownContainer .dropBox.checkBoxes span {
+    margin: 0 20px;
+}
+/* start .tableStyle */
+
+.scrollingTable {
+    position: relative;
+}
+.scrollTBL {
+    width: 880px;
+    overflow-x: auto;
+    margin-left: 10em;
+    overflow-y: visible;
+    padding-bottom: 1px;
+}
+.headcol {
+    position: absolute;
+    width: 10em;
+    left: 0;
+    top: auto;
+    border-right: 0px none black;
+    border-top-width: 0px;
+    /*only relevant for first row*/
+    
+    margin-top: -1px;
+    /*compensate for top border*/
+    
+    border: none;
+    height: 35px;
+}
+.long {} .headcol img {
+    width: 27px;
+    height: 27px;
+}
+th.headcol {
+    padding: 3px 4px !important;
+    background: #f8fafb;
+}
+th.headcol.whitebg {
+    background: #ffffff;
+}
+.tableStyle {
+    margin-bottom: 0 !important;
+}
+.tableStyle thead {
+    background: #f8fafb;
+}
+.tableStyle > thead:first-child > tr:first-child > th {
+    border: 1px solid #ddd;
+}
+.tableStyle td.green {
+    background: #3fc380;
+}
+.tableStyle td.lightgreen {
+    background: #a2de81;
+}
+.tableStyle td.red {
+    background: #e08282;
+}
+.tableStyle td.yellowgreen {
+    background: #edf167;
+}
+/* end .tableStyle */
+
+.dashboardBodyBlock .scrollingTable {
+    padding: 0 0 25px 0;
+}
+.dashboardContainer .dashboardBodyBlock {
+    background: #f8fafb;
+}
+
+.LearningMapContainer .lessonMetaDataContainer{
+	background: #fafafa;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	float: left;
+	padding: 8px 0px;
+}
+
+.LearningMapContainer .lessonDataDescription{
+	padding: 19px 25px;
+	text-align:left;
+}
+.LearningMapContainer .lessonDataDescription p{
+	margin:0 0;
+}
+
+.LearningMapContainer .standardsBlock{
+	padding:5px 18px;
+	border-spacing:10px;
+}
+
+.LearningMapContainer .standardsBlock .lessonStandard{
+	display: inline-block;
+	padding: 8px 15px;
+	color: #fff;
+	border-radius: 4px 4px;
+	background: #515151;
+	font-weight: bold;
+}
+
+.LearningMapContainer .fractionsDetailsContainer{
+	background:#f7f6f6;
+	border-top: 1px solid #dddddd;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock{
+	padding:15px 15px;
+	border-spacing:10px;
+	border-right:1px solid #dddddd;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock .assessmentImageContainer{
+	display:table-cell;
+	vertical-align:top;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock .descriptionContainer{
+	display:table-cell;
+	vertical-align:top;
+}
+.LearningMapContainer .fractionsDetailsContainer .studyBlock .descriptionContainer h3{
+	font-size:18px;
+	color:#1076bb;
+	margin:0 0 5px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers{
+	padding:8px 8px;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group{
+	margin-bottom:0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item{
+	padding:0px 10px;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item .pull-left{
+	padding:12px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item .pull-right{
+	padding:12px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink{
+	padding:0 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink a{
+	padding:10px 15px;
+	display:block;
+	background:#85b9df;
+	text-align:center;
+	color:#ffffff;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink a:hover, .LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group-item.viewLink a:focus{
+	text-decoration:none;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .blueHighlightText{
+	font-size:28px;
+	font-weight:bold;
+	color:#85b9df;
+	padding:0 0 !important;
+}
+
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .greenHighlightText{
+	font-size:28px;
+	font-weight:bold;
+	color:#a5cba1;
+	padding:0 0 !important;
+}
+.resourceImgContainer{
+	padding:5px 18px;
+	border-spacing:10px;
+}
+.resourceImgContainer .videoSmall {
+    background:url(../images/Video_1.png) no-repeat;
+}
+.resourceImgContainer img {
+    height: 60px;
+    width: 80px;
+}
+.resourceImgContainer .resourceName {
+    color: #fff;
+    font-size: 12px;
+    height: 61px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 81px;
+}
+
+.resourceImgContainer a{
+	position:relative;
+	display:table-cell;
+	
+}
+.resourceImgContainer a:hover {
+    opacity: 0.6;
+}
+.resourceImgContainer a:hover .videoSmall {
+    display: none;
+}
+
+.LearningMapContainer .fractionsDetailsContainer .evidenceBlock{
+	padding:8px 8px;
+}
+.LearningMapContainer .fractionsDetailsContainer .evidenceBlock p{
+	margin:5px 0;
+}
+.LearningMapContainer .fractionsDetailsContainer .evidenceBlock .evidenceLink{
+	background:#ffffff;
+	border:1px solid #dddddd;
+	padding:8px 8px;
+	border-radius:4px 4px;
+	display:block;
+	min-height:126px;
+}
+.cursorPointer {
+	cursor: pointer;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+    .learningHeaderBlock .indicationBox div {
+        margin: 5px 0;
+    }
+    .learningHeaderBlock .indicationBox {
+        text-align: left;
+    }
+    .rowContainer .viewReport a {
+        padding: 20px 10px;
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        display: block;
+        margin: 0 0;
+    }
+    .student-blueBand .col-md-6-reset {
+        width: 50% !important;
+        float: left;
+    }
+    .student-blueBand h2 {
+        font-size: 15px;
+    }
+    .rightWhiteBox span {
+        font-size: 18px;
+    }
+    .tabsContainer .btn {
+        width: 135px;
+    }
+    .bannerImg {
+        display: none;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .learningHeaderBlock .indicationBox {
+        text-align: left;
+    }
+    .learningHeaderBlock .indicationBox div {
+        margin: 5px 0;
+    }
+    .rowContainer .viewReport a {
+        padding: 20px 10px;
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        display: block;
+        margin: 0 0;
+    }
+    .student-blueBand .col-md-6-reset {
+        width: 50% !important;
+        float: left;
+    }
+    .student-blueBand h2 {
+        font-size: 16px;
+    }
+    .rightWhiteBox span {
+        font-size: 18px;
+    }
+    .learningHeaderBlock .green-circle {
+        background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-small.png") no-repeat scroll 2px 5px;
+        height: 22px;
+        width: 22px;
+    }
+    .learningHeaderBlock .green-text {
+        height: 22px;
+        width: 22px;
+    }
+	.learningHeaderBlock .blue-circle {
+        height: 22px;
+        width: 22px;
+    }
+    .learningHeaderBlock .grey-circle {
+        height: 22px;
+        width: 22px;
+    }
+    .learningHeaderBlock .indicationBox div {
+        font-size: 11px;
+    }
+    .bannerImg {
+        display: none;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .student-blueBand .col-md-6-reset {
+        width: 50% !important;
+        float: left;
+    }
+    .student-blueBand h2 {
+        font-size: 25px;
+    }
+    .learningHeaderBlock .indicationBox {
+        text-align: center;
+    }
+    .learningHeaderBlock .indicationBox div {
+        margin: 5px 0;
+    }
+    .rowContainer .viewReport a {
+        padding: 20px 10px;
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        display: block;
+        margin: 0 0;
+    }
+    .bannerImg {
+        display: none;
+    }
+}
+@media (max-width: 767px) {
+    .student-blueBand h2 {
+        text-align: left;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .heighlightBlock,
+    .rowContainer .viewReport {
+        text-align: left;
+    }
+    .rowContainer .progressBlock .circle-main-container div {
+        margin: 0 0 5px 0;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .heighlightBlock,
+    .rowContainer .viewReport {
+        min-height: inherit;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .rowContainer .heighlightBlock p {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .rowContainer .progressBlock .circle-main-container div span {
+        width: 35px;
+        height: 35px;
+    }
+    .rowContainer .progressBlock .circle-main-container div {
+        margin: 0 5px 0 0;
+    }
+    .rowContainer .progressBlock .circle-main-container div.green-circle span {
+        background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 4px 7px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+
+@media (min-width: 240px) and (max-width: 319px) {
+    .LearningMapContainer .topBackLinkBox {
+        margin-bottom: 10px;
+    }
+    .rowContainer .progressBlockLeft {
+        padding: 6px 0;
+    }
+    .LearningMapContainer .headerBackLinkBox div {
+        font-size: 15px;
+        line-height: 16px;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .LearningMapContainer .topBackLinkBox {
+        margin-bottom: 10px;
+    }
+    .rowContainer .progressBlockLeft {
+        padding: 6px 0;
+    }
+    .LearningMapContainer .headerBackLinkBox div {
+        font-size: 15px;
+        line-height: 18px;
+    }
+    .LearningMapContainer .headerNextLinkBox div {
+        font-size: 15px;
+        line-height: 18px;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .LearningMapContainer .topBackLinkBox {
+        margin-bottom: 10px;
+    }
+    .rowContainer .progressBlockLeft {
+        padding: 6px 0;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+@media (min-width: 240px) and (max-width: 319px) {
+    .dashboardContainer .dashboardMenuBlock .scoreStatus div {
+        padding: 8px 0;
+        width: 50px;
+    }
+    .dashboardContainer .dashboardMenuBlock .scoreStatus {
+        float: none;
+    }
+    .dashboardContainer .dashboardDropDownContainer .dropBox {
+        display: block;
+        margin-bottom: 15px;
+    }
+    .dashboardContainer .dashboardDropDownContainer .dropBox.unitDrop {
+        width: auto
+    }
+    .squaredOne {
+        margin: 0 0;
+    }
+    .dashboardContainer .dashboardMenuBlock .dashLeftMenu ul {
+        border-bottom: 1px solid #dddddd;
+    }
+    .dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li {
+        display: table-cell;
+        float: none;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        width: 1%;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .dashboardContainer .dashboardMenuBlock .scoreStatus div {
+        width: 50px;
+    }
+    .dashboardContainer .dashboardMenuBlock .scoreStatus {
+        float: none;
+    }
+    .dashboardContainer .dashboardDropDownContainer .dropBox {
+        display: block;
+        margin-bottom: 15px;
+    }
+    .dashboardContainer .dashboardDropDownContainer .dropBox.unitDrop {
+        width: auto;
+    }
+    .squaredOne {
+        margin: 0 0;
+    }
+    .dashboardContainer .dashboardMenuBlock .dashLeftMenu ul {
+        border-bottom: 1px solid #dddddd;
+    }
+    .dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li {
+        display: table-cell;
+        float: none;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        width: 1%;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .dashboardContainer .dashboardMenuBlock .scoreStatus div {
+        width: 50px;
+    }
+    .dashboardContainer .dashboardMenuBlock .scoreStatus {
+        float: none;
+        margin: 0 auto;
+        width: 312px;
+    }
+    .dashboardContainer .dashboardDropDownContainer .dropBox {
+        display: block;
+        margin-bottom: 15px;
+    }
+    .dashboardContainer .dashboardDropDownContainer .dropBox.unitDrop {
+        float: none;
+        width: auto;
+    }
+    .squaredOne {
+        margin: 0 0;
+    }
+    .dashboardContainer .dashboardMenuBlock .dashLeftMenu ul {
+        border-bottom: 1px solid #dddddd;
+    }
+    .dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li {
+        display: table-cell;
+        float: none;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        width: 1%;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .dashboardContainer .dashboardDropDownContainer .dropBox.unitDrop {
+        width: auto;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .dashboardContainer .dashboardDropDownContainer .dropBox.unitDrop {
+        width: auto;
+    }
+}
+@media (min-width: 1200px) {}
+
+@media (min-width: 240px) and (max-width: 319px) {
+	.LearningMapContainer .standardsBlock .lessonStandard{
+		display:block;
+		margin-bottom:10px;
+	}
+	.LearningMapContainer .fractionsDetailsContainer .studyBlock .assessmentImageContainer{
+		display:block;
+		text-align:center;
+	}
+	.resourceImgContainer {
+    border-spacing: 5px;
+    padding: 5px;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 .LearningMapContainer .standardsBlock .lessonStandard{
+		display:block;
+		margin-bottom:10px;
+		text-align:center;
+	}
+	.LearningMapContainer .fractionsDetailsContainer .studyBlock .assessmentImageContainer{
+		display:block;
+		text-align:center;
+	}
+	.resourceImgContainer {
+    border-spacing: 5px;
+    padding: 5px;
+}
+}
+@media (min-width: 480px) and (max-width: 767px) {}
+@media (min-width: 768px) and (max-width: 991px) {}
+@media (min-width: 992px) and (max-width: 1199px) {}
+@media (min-width: 1200px) {}

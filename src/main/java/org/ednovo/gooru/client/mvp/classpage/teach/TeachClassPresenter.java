@@ -1,7 +1,27 @@
-
-/**
- * 
-*/
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ *
+ *  http://www.goorulearning.org/
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
@@ -9,10 +29,15 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -38,6 +63,12 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	EditClassPresenter editClassPresenter;
 	
+	EditClassSettingsPresenter editClassSettingsPresenter;
+	
+	EditClassContentPresenter editClassContentPresenter;
+	
+	EditClassStudentPresenter editClassStudentPresenter;
+	
 	String classpageId="";
 	
 	private boolean isApiCalled = false;
@@ -48,10 +79,13 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	}
 
 	@Inject
-	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassPresenter editClassPresenter){
+	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassPresenter editClassPresenter,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter,EditClassStudentPresenter editClassStudentPresenter){
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.editClassPresenter=editClassPresenter;
+		this.editClassSettingsPresenter=editClassSettingsPresenter;
+		this.editClassContentPresenter=editClassContentPresenter;
+		this.editClassStudentPresenter=editClassStudentPresenter;
 		
 	}
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
@@ -64,13 +98,24 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		setInSlot(SLOT_BODYMENU, editClassPresenter);
+		/*String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
+		if(view.equalsIgnoreCase("classSettings")){
+			setInSlot(SLOT_BODYMENU, editClassSettingsPresenter);
+		}else if(view.equalsIgnoreCase("classContent")){
+			setInSlot(SLOT_BODYMENU, editClassContentPresenter);
+		}else if(view.equalsIgnoreCase("student")){
+			setInSlot(SLOT_BODYMENU, editClassStudentPresenter);
+		}
+		else{
+			setInSlot(SLOT_BODYMENU, editClassPresenter);
+		}*/
 		getClassDetails();
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
 		/*setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -95,6 +140,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReset() {
        super.onReset();
+       loadNavigationPage();
 	}
 	
 	public void getClassDetails(){
@@ -120,6 +166,24 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	 */
 	public void setCollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
+	}
+	
+	public void  loadNavigationPage(){
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		clearSlot(EMPTY_TAB);
+		clearSlot(STUDENT_TAB);
+		clearSlot(CLASS_SETTINGS_TAB);
+		clearSlot(CLASS_CONTENT_TAB);
+		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)) {
+			addToSlot(STUDENT_TAB, editClassStudentPresenter);
+		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)) {
+			addToSlot(CLASS_SETTINGS_TAB, editClassSettingsPresenter);
+		}else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SETTINGS)){
+			addToSlot(CLASS_CONTENT_TAB, editClassContentPresenter);
+		}else{
+			addToSlot(EMPTY_TAB, editClassPresenter);
+		}
+		
 	}
 
 }

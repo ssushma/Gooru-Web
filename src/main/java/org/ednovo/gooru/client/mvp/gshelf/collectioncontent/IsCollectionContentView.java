@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,9 @@ package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 
 /**
  * @author Search Team
@@ -38,9 +40,78 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	 * @param result
 	 * @param folderDo
 	 */
-	public void setData(CollectionDo result,FolderDo folderDo);
+	public void setData(CollectionDo result,FolderDo folderDo,RefreshType type);
 	/**
 	 * This method is used to reset the widgets positions
 	 */
 	public void resetWidgetPositions();
+	/**
+	 * This method is used to set the presenter reference.
+	 * @param collectionContentPresenter
+	 */
+	public void setCollectionContentPresenter(CollectionContentPresenter collectionContentPresenter);
+
+	/**
+	 *
+	 * @function displayNewResourcePopup
+	 *
+	 * @created_date : 03-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void displayNewResourcePopup();
+
+	/**
+	 *
+	 * @function setDisplayResourceItem
+	 *
+	 * @created_date : 03-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param collectionItem
+	 * @parm(s) : @param type
+	 * @parm(s) : @param index
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void setDisplayResourceItem(CollectionItemDo collectionItem,RefreshType type, int index);
+	/**
+	 *
+	 * @function updateDeleteItem
+	 *
+	 * @created_date : 03-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	public void updateDeleteItem(String collectionItemId, int itemSequence);
 }

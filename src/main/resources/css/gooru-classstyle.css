@@ -51,7 +51,7 @@
 }
 #getStartedContainer .getStarted{
 	text-align:center;
-	margin-top: 49px;
+/* 	margin-top: 49px; */
 	padding-bottom: 30px;
 }
 #getStartedContainer .getStarted h1{
@@ -71,6 +71,427 @@
 #getStartedContainer .videoBlock .img-responsive{
 	display:inline-block;
 	border:1px solid #eaeaea;
+}
+.gradeContainer {
+	background: #333333;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#f5f5f5));
+	background: -webkit-linear-gradient(top, #ffffff, #f5f5f5);
+	background: -moz-linear-gradient(top, #ffffff, #f5f5f5);
+	background: -ms-linear-gradient(top, #ffffff, #f5f5f5);
+	background: -o-linear-gradient(top, #ffffff, #f5f5f5);
+	margin-top: 40px;
+}
+.mainHeader{
+	padding: 15px 15px;
+	border-bottom: 1px solid #dddddd;
+	margin-top: 49px;
+}
+.standardBlueBand{
+	background:#87badd;
+	position:fixed;
+	padding:5px 0;
+	top:49px;
+	width:100%;
+	z-index:9;
+}
+.standardBlueBand .topBlueRight{
+	text-align:right;
+}
+.standardBlueBand h2{
+	color:#ffffff;
+	margin:9px 0;
+	font-size:24px;
+	font-weight:bold;
+}
+
+.standardBlueBand .rightWhiteBox, .standardBlueBand .settingsMenu{
+
+	display:inline-block;
+	vertical-align:middle;
+}
+.standardBlueBand .settingsMenu a{
+	color:#ffffff;
+	display:inline-block;
+	margin-right:10px;
+	font-weight:bold;
+}
+.standardBlueBand .settingsMenu a:hover,  .standardBlueBand .settingsMenu a:focus{
+	opacity:.8;
+	text-decoration:none;
+}
+.standardBlueBand .rightWhiteBox  span{
+    background: #ffffff none repeat scroll 0 0;
+    color: #515151;
+    font-size: 26px;
+    font-weight: normal;
+	border-radius:4px 4px;
+	-webkit-border-radius:4px 4px;
+	-moz-border-radius:4px 4px;
+    padding: 6px 12px;
+	display:inline-block;
+}
+.mainBodySupportBlock{
+	position:relative;
+	margin-top:90px;
+}
+.mainBodySupportBlock .whiteBG{
+	background:#ffffff;
+}
+
+.MainHeader{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+
+.MainHeader h2{
+	font-size:20px;
+	color:#5151512;
+	margin:0 0;
+}
+
+.geryBackgroundBody{
+	background:#f8fafb;
+		border:1px solid #dddddd;
+		border-top:none;
+}
+
+.paddingBlock{
+	padding:15px 15px;
+}
+
+/**class settings css**/  
+.classSettingsContainer{
+
+	margin:0 auto;
+}
+
+.classSettingsContainer .form-control{
+	font-size:12px;
+	color:#515151;
+}
+
+.classSettingsContainer .gradesContainer {
+    background: #e8e7e7 none repeat scroll 0 0;
+    padding: 20px;
+	margin-bottom:15px;
+}
+
+.classSettingsContainer .classSettingsInner{
+	padding:5% 10%; 
+}
+  .classSettingsContainer  .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+   .classSettingsContainer .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+	.classSettingsContainer p{
+		margin:0 0 5px 0;
+	}
+	.classSettingsContainer  .form-control{
+		margin-bottom:15px;
+	}
+	  .classSettingsContainer .uploadImage .btn-default{
+		  background-color:#dddddd;
+		  border:none;
+		  font-size:13px;
+		  color:#1076bb;
+	  }
+	  
+	    .classSettingsContainer .rightWhiteBox span {
+    background: #ffffff none repeat scroll 0 0;
+    border-radius: 4px;
+    color: #515151;
+    display: inline-block;
+    font-size: 26px;
+    font-weight: normal;
+    padding: 4px 24px;
+	border:1px solid #dddddd;
+	margin-bottom:20px;
+}
+
+.classSettingsContainer .visibilityBlock {
+    margin-top: 40px;
+}
+.classSettingsContainer .visibilityBlock a {
+    border: 2px solid transparent;
+    border-radius: 4px;
+    color: #515151;
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+.classSettingsContainer .visibilityBlock a:hover, .classSettingsContainer .visibilityBlock a:focus {
+    border: 2px solid #85b9df;
+    color: #515151;
+    display: block;
+	text-decoration:none;
+    opacity: 1;
+}
+.classSettingsContainer .visibilityBlock a.active {
+    border: 2px solid #85b9df;
+    color: #515151;
+    display: block;
+    opacity: 1;
+}
+
+.classSettingsContainer .visiblityHeader{
+	margin-bottom: 5px;
+	display: inline-block;
+}
+
+.classSettingsContainer .visibilityBlock .anchorCls{
+	color:#515151;
+	display:block;
+	border:2px solid #f8fafb;
+    padding:5px 5px;
+	border-radius:4px 4px;
+	cursor:pointer;
+}
+
+.classSettingsContainer .visibilityBlock .anchorCls:hover{
+	color:#515151;
+	display:block;
+	border:2px solid #85b9df;
+	opacity:1;
+	cursor:pointer;
+}
+.classSettingsContainer .visibilityBlock .anchorCls.active{
+	color:#515151;
+	display:block;
+	border:2px solid #85b9df;
+	opacity:1;
+}
+.classSettingsContainer .visibilityBlock .anchorCls{
+	margin:0 0;
+}
+
+.classSettingsContainer .actionButtons{
+	margin:50px 0;
+	text-align:center;
+}
+.classSettingsContainer .actionButtons button.primary{
+	padding:7px 20px;
+}
+
+
+
+
+@media (min-width: 240px) and (max-width: 319px) {
+	.standardBlueBand{
+		position:relative;
+	}
+	.mainBodySupportBlock{
+		margin-top:0;
+	}
+	.classSettingsContainer .classSettingsInner{
+		padding:5% 0;
+	}
+.standardBlueBand .settingsMenu{
+	text-align:center;
+	width:100%;
+	padding:12px 0;
+	margin:8px 0;
+	background:#79afd4;
+	border-top:1px solid #6da3c8;
+	border-bottom:1px solid #6da3c8;
+}
+
+.standardBlueBand .settingsMenu img{
+	width:19px;
+}
+.standardBlueBand .settingsMenu a:last-child{
+	margin-right:0;
+	margin-bottom:0;
+}
+.standardBlueBand  .blueBand{
+	text-align:center;
+}
+.standardBlueBand .settingsMenu a{
+	margin-bottom:10px;
+	border:1px solid #a2d0f0;
+	padding:6px 6px;
+	background:#87badd;
+}
+.standardBlueBand .topBlueRight{
+	text-align:center;
+}
+.standardBlueBand h2{
+	text-align:center;
+}
+.standardBlueBand .rightWhiteBox, .standardBlueBand .settingsMenu{
+	width:100%;
+}
+.standardBlueBand .rightWhiteBox span{
+	width:98%;
+}
+.classSettingsContainer .gradesContainer ul li.gradeTypes {
+
+    margin:0 0 10px 0;
+    width: 100%;
+}
+.classSettingsContainer .gradesContainer ul{
+	margin:0 0 18px 0;
+}
+.classSettingsContainer .gradesContainer ul li a {
+
+    height: 25px;
+    line-height: 25px;
+    width: 25px;
+}
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+	.standardBlueBand{
+		position:relative;
+	}
+	.mainBodySupportBlock{
+		margin-top:0;
+	}
+	.classSettingsContainer .classSettingsInner{
+		padding:5% 0;
+	}
+.standardBlueBand .settingsMenu{
+	text-align:center;
+	width:100%;
+	padding:12px 0;
+	margin:8px 0;
+	background:#79afd4;
+	border-top:1px solid #6da3c8;
+	border-bottom:1px solid #6da3c8;
+}
+
+.standardBlueBand .settingsMenu img{
+	width:19px;
+}
+.standardBlueBand .settingsMenu a:last-child{
+	margin-right:0;
+}
+.standardBlueBand  .blueBand{
+	text-align:center;
+}
+.standardBlueBand .topBlueRight{
+	text-align:center;
+}
+.standardBlueBand h2{
+	text-align:center;
+}
+.standardBlueBand .rightWhiteBox, .standardBlueBand .settingsMenu{
+	width:100%;
+}
+.standardBlueBand .rightWhiteBox span{
+	width:68%;
+}
+.classSettingsContainer .gradesContainer ul li.gradeTypes {
+
+    margin:0 0 10px 0;
+    width: 100%;
+}
+.classSettingsContainer .gradesContainer ul{
+	margin:0 0 18px 0;
+}
+.classSettingsContainer .gradesContainer ul li a {
+
+    height: 25px;
+    line-height: 25px;
+    width: 25px;
+}
+}
+
+
+@media (min-width: 480px) and (max-width: 767px){
+	.standardBlueBand{
+		position:relative;
+	}
+	.mainBodySupportBlock{
+		margin-top:0;
+	}
+.classSettingsContainer .classSettingsInner {
+    padding: 5% 6%;
+}
+.standardBlueBand .settingsMenu{
+	text-align:center;
+	width:100%;
+	padding:12px 0;
+	margin:8px 0;
+	background:#79afd4;
+	border-top:1px solid #6da3c8;
+	border-bottom:1px solid #6da3c8;
+}
+
+.standardBlueBand .settingsMenu img{
+	width:19px;
+}
+.standardBlueBand .settingsMenu a:last-child{
+	margin-right:0;
+}
+.standardBlueBand  .blueBand{
+	text-align:center;
+}
+.standardBlueBand .topBlueRight{
+	text-align:center;
+}
+.standardBlueBand h2{
+	text-align:center;
+}
+.standardBlueBand .rightWhiteBox, .standardBlueBand .settingsMenu{
+	width:100%;
+}
+.standardBlueBand .rightWhiteBox span{
+	width:65%;
+}
+}
+
+
+	@media (min-width: 768px) and (max-width: 991px) {
+		.mainBodySupportBlock{
+			margin-top:100px;
+		}
+		.classSettingsContainer .classSettingsInner{
+			padding:5% 0;
+		}
+	
+.standardBlueBand h2{
+	font-size:16px;
+	margin-left:6px;
+}
+.standardBlueBand .settingsMenu img{
+	width:20px;
+}
+.standardBlueBand .rightWhiteBox{
+	margin-right:6px;
+}
+.standardBlueBand .rightWhiteBox span{
+	font-size:18px;
+}
+	}
+
+
+
+		@media (min-width: 992px) and (max-width: 1199px) {
+			
+		.standardBlueBand .settingsMenu img{
+			width:25px;
+		}
+			
+		}
+@media (min-width: 1200px) {
+.standardBlueBand .settingsMenu img{
+			width:30px;
+		}
 }
 @media (min-width: 240px) and (max-width: 319px) {
 #getStartedContainer .settingsMenu{
@@ -178,12 +599,473 @@
 			width:30px;
 		}
 }
-.gradeContainer {
-	background: #333333;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#f5f5f5));
-	background: -webkit-linear-gradient(top, #ffffff, #f5f5f5);
-	background: -moz-linear-gradient(top, #ffffff, #f5f5f5);
-	background: -ms-linear-gradient(top, #ffffff, #f5f5f5);
-	background: -o-linear-gradient(top, #ffffff, #f5f5f5);
-	margin-top: 40px;
+
+/** content settings css **/
+
+.labelStyle.customs-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.customs-select select {
+    display: inline-block;
+    border: 1px solid #dddddd;
+    padding: 8px 8px 8px 4px;
+    margin: 0;
+    font: inherit;
+    font-weight: normal;
+    outline: none;
+    /* remove focus ring from Webkit */
+    
+    line-height: 1.2;
+    background: #ffffff;
+    width: 100%;
+    -webkit-appearance: none;
+    /* remove the strong OSX influence from Webkit */
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    height: 40px;
+}
+/* Select arrow styling */
+
+.customs-select:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    font-size: 60%;
+    line-height: 30px;
+    padding: 6px 7px;
+    width: 23px;
+    background: #ffffff url(${cdn.endpoint}/images/downarrow.png) no-repeat 0px 14px;
+    color: #515151;
+    pointer-events: none;
+    -webkit-border-radius: 0 6px 6px 0;
+    -moz-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
+    border: 1px solid #dddddd;
+    border-left: 0px solid #dddddd;
+}
+.no-pointer-events .customs-select:after {
+    content: none;
+}
+select option {
+    color: #515151;
+    padding: 8px 10px
+}
+.contentSettingsContainer .unitLeft p {
+    margin: 0 0 2px 0;
+    font-size: 13px;
+}
+.contentSettingsContainer .unitLeft .customs-select select {
+    font-size: 18px;
+    color: #515151;
+}
+.contentSettingsContainer .contentSettingsTable .contentTable {
+    display: table;
+    width: 100%;
+}
+.contentSettingsContainer .contentSettingsTable .contentTable p {
+    margin: 0 0;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableHeading {
+    display: table-row;
+    font-weight: bold;
+    text-align: center;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableRow {
+    display: table-row;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableCell {
+    display: table-cell;
+    border: solid;
+    border-width: 1px;
+    padding: 0 0;
+    border-color: #dddddd;
+    vertical-align: top;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner {
+    display: table;
+    width: 100%;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableCellInner {
+    display: table-cell;
+    border-right: 1px solid #dddddd;
+    padding: 4px 10px;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableRowInner {
+    display: table-row;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableRowInner .contentTableCellInner {
+    border-bottom: 1px solid #dddddd;
+    color: #1076bb;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableRowInner:last-child .contentTableCellInner {
+    border-bottom: none;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableCellInner {
+    width: 16%;
+    border-right: none;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableCellInner:first-child {
+    width: 35%;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableCellInner:nth-child(2) {
+    width: 18%;
+    text-align: center;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableCellInner:nth-child(3) {
+    text-align: right;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableCellInner:nth-child(3) {
+    text-align: center;
+    padding: 4px 0;
+    width: 10%;
+}
+.contentSettingsContainer .contentSettingsTable .contentTableInner .contentTableCellInner:nth-child(4) {
+    text-align: center;
+    padding: 4px 0;
+    width: 10%;
+}
+.contentSettingsContainer .contentSettingsTable .lessonHeading h4 {
+    margin: 0 0 3px 0;
+    font-weight: bold;
+}
+.contentSettingsContainer .contentSettingsTable .lessonHeading p {
+    margin: 0 0 0 0;
+    font-weight: bold;
+}
+.contentSettingsContainer .contentSettingsTable .firstColumDiv {
+    position: relative;
+    width: 20%;
+}
+.contentSettingsContainer .contentSettingsTable .squaredOne {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    border-radius: 4px 4px;
+    margin: 0 auto;
+    display: block;
+    background: #fcfff4;
+    background: #85b9df;
+}
+.contentSettingsContainer .contentSettingsTable .squaredOne label {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    border-radius: 4px 4px;
+    top: 1px;
+    left: 1px;
+    cursor: pointer;
+    background: #f8fafb;
+}
+.contentSettingsContainer .contentSettingsTable .squaredOne label:after {
+    content: '';
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #85b9df;
+    border-radius: 4px 4px;
+    opacity: 0;
+}
+.contentSettingsContainer .contentSettingsTable .squaredOne label:hover::after {
+    opacity: 0.3;
+}
+.contentSettingsContainer .contentSettingsTable .squaredOne input[type=checkbox] {
+    visibility: hidden;
+}
+.contentSettingsContainer .contentSettingsTable .squaredOne input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .squaredOne */
+
+.contentSettingsContainer .contentSettingsTableIndications {
+    text-align: right;
+    padding: 10px 10px;
+}
+.contentSettingsContainer .contentSettingsTableIndications .makeallVisible {
+    display: inline-block;
+}
+.contentSettingsContainer .contentSettingsTableIndications .visible {
+    display: inline-block;
+    margin-right: 8px;
+    margin-left: 11%;
+}
+.contentSettingsContainer .contentSettingsTableIndications .hiddenOpt {
+    display: inline-block;
+}
+.contentSettingsContainer .contentSettingsTableIndications .squaredOne {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    border-radius: 4px 4px;
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    background: #fcfff4;
+    background: #85b9df;
+}
+.contentSettingsContainer .contentSettingsTableIndications .squaredOne label {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    border-radius: 4px 4px;
+    top: 1px;
+    left: 1px;
+    cursor: pointer;
+    background: #f8fafb;
+}
+.contentSettingsContainer .contentSettingsTableIndications .squaredOne label:after {
+    content: '';
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #85b9df;
+    border-radius: 4px 4px;
+    opacity: 0;
+}
+.contentSettingsContainer .contentSettingsTableIndications .squaredOne label:hover::after {
+    opacity: 0.3;
+}
+.contentSettingsContainer .contentSettingsTableIndications .squaredOne input[type=checkbox] {
+    visibility: hidden;
+}
+.contentSettingsContainer .contentSettingsTableIndications .squaredOne input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+/* end .squaredOne */
+
+.contentSettingsTable .contentTable .lessonHeading {
+    position: absolute;
+    left: 10%;
+    right: 0;
+    top: 31%;
+    bottom: 35%;
+}
+.contentSettingsTable .contentTable .lessonHeader {
+    padding: 4px 15px;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+    .contentSettingsContainer .contentSettingsTable {
+        width: 750px;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .contentSettingsContainer .contentSettingsTable {
+        width: 750px;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .contentSettingsContainer .contentSettingsTable {
+        width: 750px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+/* for Webkit's CSS-only solution */
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .customs-select select {
+        padding-right: 30px;
+    }
+}
+
+
+/** class content css**/
+
+.classMenuBlock{
+	border-bottom:1px solid #dddddd;
+	background: #fff;
+}
+
+.classMenuBlock .classMenuLeft ul{
+	margin:0 0;
+	padding:0 0;
+}
+.classMenuBlock .classMenuLeft{
+	border-right:1px solid #dddddd;
+}
+.classMenuBlock .classMenuLeft ul li{
+	margin:0 0;
+	padding:0 0;
+	display:table-cell;
+}
+.classMenuBlock .classMenuLeft ul li a{
+	display:block;
+	padding:15px 15px;
+	color:#9999a6;
+	font-weight:bold;
+}
+.classMenuBlock .classTitle{
+	color: #515151;
+	font-weight: bold;
+	margin: 0 8px;
+}
+.classMenuBlock .classMenuLeft ul li a:hover, .classMenuBlock .classMenuLeft ul li a:focus {
+	background:#e7f1f9;
+	color:#1076bb;
+	text-decoration:none;
+}
+.classMenuBlock .classMenuLeft ul li.active a{
+	background:#e7f1f9;
+	color:#1076bb;
+}
+.classMenuBlock .classMenuRight{
+	float:right;
+
+}
+.classMenuBlock .classMenuRight .coureEditActions, .classMenuBlock .classMenuRight .stPriviewButton{
+	display:table-cell;
+}
+.classMenuBlock .classMenuRight .coureEditActions, .classMenuBlock .classMenuRight .stPriviewButton{
+	padding:6px 5px;
+}
+.classMenuBlock .classMenuRight .coureEditActions{
+	padding:6px 5px;
+	border-right:1px solid #dddddd;
+
+}
+.classMenuBlock .classMenuRight .coureEditActions a{
+	display:inline-block;
+	color:#515151;
+	font-weight:bold;
+	margin:0 6px;
+}
+.classMenuBlock .classMenuRight .coureEditActions a:hover, .classMenuBlock .classMenuRight .coureEditActions a:focus{
+	opacity:1;
+	text-decoration:none;
+}
+.classMenuBlock .classMenuRight .coureEditActions .folderIcon{
+	background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px;
+	width:35px;
+	height:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.classMenuBlock .scoreStatus {
+    text-align: right;
+    padding: 6px 6px;
+    float: right;
+}
+.classMenuBlock .scoreStatus div {
+    display: table-cell;
+    padding: 8px 15px;
+    width: 62px;
+    text-align: center;
+    font-weight: bold;
+}
+.classMenuBlock .scoreStatus div.red {
+    background: #e08282;
+    color: #ffffff;
+    border-radius: 4px 0 0 4px;
+}
+.classMenuBlock .scoreStatus div.org {
+    background: #fec956;
+    color: #ffffff;
+}
+.classMenuBlock .scoreStatus div.yellowgreen {
+    background: #edf167;
+    color: #ffffff;
+}
+.classMenuBlock .scoreStatus div.lightgreen {
+    background: #a2de81;
+    color: #ffffff;
+}
+.classMenuBlock .scoreStatus div.green {
+    background: #3fc380;
+    color: #ffffff;
+    border-radius: 0 4px 4px 0;
+}
+
+
+
+
+.setScoreContainer {
+	padding:15px 0;
+}
+.setScoreContainer .setScoreLeft p{
+	margin:0 0 0 0;
+}
+.setScoreContainer .setScoreLeft p.help-block{
+	font-style:italic;
+}
+.setScoreContainer .setScoreLeft .scoreBox{
+	width:95px;
+	margin:6px 0;
+}
+.setScoreContainer .setScoreLeft .scoreBox .form-control{
+	font-size:24px;
+	font-weight:bolder;
+	color:#78b172;
+}
+.setScoreContainer  .actionButtons{
+	text-align:center;
+	margin:30px 0;
+}
+.setScoreContainer  .actionButtons button{
+	padding:8px 20px;
+}
+
+
+
+@media (min-width: 240px) and (max-width: 319px) {
+ .classMenuBlock .classMenuLeft{
+			 border-bottom:1px solid #dddddd;
+		 }
+	 .classMenuBlock .classMenuLeft ul li{
+		width:1%;
+		overflow:hidden;
+		text-align:center;
+	}
+}
+@media (min-width: 320px) and (max-width: 479px) {
+	 	 .classMenuBlock .classMenuLeft{
+			 border-bottom:1px solid #dddddd;
+		 }
+	 .classMenuBlock .classMenuLeft ul li{
+		width:1%;
+		overflow:hidden;
+		text-align:center;
+	}
+	.classMenuBlock .classMenuRight {
+    float: none;
+}
+.classMenuBlock .classMenuRight .coureEditActions{
+	display:block;
+	 border-bottom:1px solid #dddddd;
+	 text-align:center;
+}
+.classMenuBlock .classMenuRight .stPriviewButton{
+	display:block;
+	text-align:center;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	 .classMenuBlock .classMenuLeft{
+			 border-bottom:1px solid #dddddd;
+		 }
+	 .classMenuBlock .classMenuLeft ul li{
+		width:1%;
+		overflow:hidden;
+		text-align:center;
+	}
+	.classMenuBlock .classMenuRight {
+    float: none;
+    margin: 0 auto;
+    width: 415px;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
 }

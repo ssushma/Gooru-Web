@@ -44,7 +44,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFo
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.EditAssessmentPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfResource;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.DOMUtils;
@@ -91,22 +90,11 @@ public class ShelfTreeWidget extends FocusPanel {
 	@UiField
 	HTML titleLbl;
 
-	/*@UiField
-	VerticalPanel contentVerPanel;*/
-
-	/*@UiField(provided = true)
-	ShelfListCBundle res;*/
-
 	@UiField
 	FocusPanel titleFocPanel;
 
-	/*@UiField
-	Label addSuccessMsg;*/
-	
 	@UiField
 	Button myShelfEditButton;
-	
-	/*@UiField HTML htmlToolTipContent;*/
 	
 	@UiField HTMLPanel panelToolTip;
 	
@@ -146,11 +134,15 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	private static final String O3_LEVEL = "o3";
 	
+	private String widgetType;
+	
 	private static final String ID = "id";
 	
 	private static final String ASSESSMENT = "assessment";
 	private static final String FOLDER = "folder";
 	private static final String COURSE = "course";
+	private static final String UNIT = "unit";
+	private static final String LESSON = "lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	
@@ -174,7 +166,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
 		}else{
-			setData();
+			setData(nextLevel);
 		}
 		this.getElement().setAttribute("style", "min-height: 42px;");
 		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -306,6 +298,10 @@ public class ShelfTreeWidget extends FocusPanel {
 		updateData(collectionDo);
 		if(collectionDo.getType().equals(COURSE)){
 			titleFocPanel.addStyleName(COURSE);
+		}else if(collectionDo.getType().equals(UNIT)) {
+			titleFocPanel.addStyleName(UNIT);
+		}else if(collectionDo.getType().equals(LESSON)) {
+			titleFocPanel.addStyleName(LESSON);
 		}else if(!collectionDo.getType().equals(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
@@ -325,44 +321,50 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else{
 			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
-		if(nextLevel == 1) {
-			titleLbl.setWidth("138px");
-			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
-		} else if(nextLevel == 2) {
-			titleLbl.setWidth("111px");
-			//titleFocPanel.setWidth("143px");
-			titleFocPanel.addStyleName("parent");
-			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
-		} else if(nextLevel == 3) {
-			titleLbl.setWidth("82px");
-			//titleFocPanel.setWidth("115px");
-			titleFocPanel.addStyleName("child");
-			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
-		} else if(nextLevel == 4) {
-			titleLbl.setWidth("100px");
-			//titleFocPanel.setWidth("89px");
-			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
-			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
-			titleFocPanel.addStyleName("collectionChild");
-			/*try {
-				titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
-			} catch (Exception e){
-				AppClientFactory.printSevereLogger(e.getMessage());
-			}*/
+		if(collectionDo.getType().equals(COURSE)||collectionDo.getType().equals(UNIT)||collectionDo.getType().equals(LESSON)){
+			setData(nextLevel);
+		}else{
+			if(nextLevel == 1) {
+				titleLbl.setWidth("138px");
+				titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+			} else if(nextLevel == 2) {
+				titleLbl.setWidth("111px");
+				titleFocPanel.addStyleName("parent");
+				titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+			} else if(nextLevel == 3) {
+				titleLbl.setWidth("82px");
+				titleFocPanel.addStyleName("child");
+				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
+			} else if(nextLevel == 4) {
+				titleLbl.setWidth("100px");
+				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
+				titleFocPanel.addStyleName("collectionChild");
+			}
 		}
 	}
 	
-	public void setData() {
+	public void setData(int nextLevel) {
 		String viewType=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(viewType!=null && viewType.equals(COLLECTION)){
 			titleFocPanel.addStyleName(COLLECTION);
 		}
-		titleLbl.setWidth("138px");
-		titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		if(nextLevel == 1) {
+			titleFocPanel.addStyleName(COURSE);
+			titleLbl.setWidth("138px");
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 2) {
+			titleLbl.setWidth("111px");
+			titleFocPanel.addStyleName("unit");
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 3) {
+			titleLbl.setWidth("82px");
+			titleFocPanel.addStyleName("lesson");
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
+		} else if(nextLevel == 4) {
+			titleLbl.setWidth("100px");
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
+			titleFocPanel.addStyleName("collectionChild");
+		}
 	}
 	
 	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
@@ -389,11 +391,9 @@ public class ShelfTreeWidget extends FocusPanel {
    							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
    						}
    					}
-
    				}
    			} 
            }
-			
 		}
 	};
 
@@ -418,29 +418,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleLbl.getElement().setAttribute("title", collectionDo.getTitle());
 	}
 
-
-
-
-	/**
-	 * Get collection item
-	 * 
-	 * @param collectionItemId
-	 *            get collection by collection item id
-	 * @return instance of {@link ShelfResource} as widget
-	 *//*
-	private ShelfResource getShelfResource(String collectionItemId) {
-		Iterator<Widget> widgets = contentVerPanel.iterator();
-		while (widgets.hasNext()) {
-			Widget widget = widgets.next();
-			if (widget instanceof ShelfResource
-					&& ((ShelfResource) widget).getCollectionItemDo().getGooruOid().equals(collectionItemId)) {
-				return (ShelfResource) widget;
-			}
-		}
-		return null;
-	}*/
-
-
 	public void setOpen(boolean isOpen) {
 		if(isOpen) {
 			titleFocPanel.addStyleName("open");
@@ -458,7 +435,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) &&!collectionDo.getType().equals(UNIT) &&!collectionDo.getType().equals(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
 		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
@@ -478,9 +455,10 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void openFolderItem() {
-		if(collectionDo!=null &&(collectionDo.getType().equals(FOLDER) || collectionDo.getType().equals(COURSE))) {
+		String type=(collectionDo!=null&&collectionDo.getType()!=null)?collectionDo.getType():"";
+		if(FOLDER.equalsIgnoreCase(type) || COURSE.equalsIgnoreCase(type) || UNIT.equalsIgnoreCase(type)|| LESSON.equalsIgnoreCase(type)){
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.MYCONTENT) && !isEditButtonSelected) {
-     			openFolderInShelf();
+				openFolderInShelf();
 			}
 		}
 	}
@@ -588,34 +566,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		}
 	}
 
-	/*public void addCollectionItem(FolderDo collectionItemDo, boolean isNew) { 
-		Document doc = Document.get();
-        if (doc.getElementById(collectionDo.getGooruOid()) != null)
-            doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
-		if (isNew) {
-			if (this.collectionDo.getCollectionItems() == null) {
-				this.collectionDo.setCollectionItems(new ArrayList<FolderItemDo>());
-			}
-			this.collectionDo.getCollectionItems().add(collectionItemDo);
-		}
-		ShelfResource shelfResource = new ShelfResource(collectionItemDo); 
-		int widgetCount = contentVerPanel.getWidgetCount();
-//		int sequence = collectionItemDo.getItemSequence() - 1;
-		int sequence = 0;
-		
-		if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection") ) { 
-//			contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: sequence : 0);
-			contentVerPanel.add(shelfResource); 
-		}
-		if (isNew) {
-			addSuccessMsg.setVisible(false);
-			contentVerPanel.setVisible(true);
-			shelfResource.glowTitle();
-	            if(contentVerPanel.getWidgetCount()==2 && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE))){
-	        		AppClientFactory.fireEvent(new UserInfoMsgShelfEvent(CONGRATS_MSG));
-	        	}
-		}
-	}*/
 	
 	public HashMap<String,String> getUrlParams() {
 		return urlParams;
@@ -627,39 +577,24 @@ public class ShelfTreeWidget extends FocusPanel {
 		} else {
 			titleFocPanel.removeStyleName("active");
 		}
-		
 	}
-
-	
-	public void setOpenStyle(boolean isOpen, int subElementsCount) 
-	{
+	public void setOpenStyle(boolean isOpen, int subElementsCount){
 		Element[] docElement = DOMUtils.getElementsByClassName("arrows", titleFocPanel.getElement());
-
-		if(docElement.length>0 && !(titleFocPanel.getStyleName().contains("folderStyle-collection")))
-		{
-
-			if(subElementsCount == 0)
-			{
-				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("block"))
-				{
+		if(docElement.length>0 && !(titleFocPanel.getStyleName().contains("folderStyle-collection"))){
+			if(subElementsCount == 0){
+				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("block")){
 					docElement[0].getStyle().setDisplay(Display.NONE);	
 				}
 			}
-			if(subElementsCount > 0)
-			{
-			if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("none"))
-			{
-				docElement[0].getStyle().setDisplay(Display.BLOCK);
+			if(subElementsCount > 0){
+				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("none")){
+					docElement[0].getStyle().setDisplay(Display.BLOCK);
+				}
 			}
-			}
-
 		}
-		if(isOpen) 
-		{
+		if(isOpen){
 			titleFocPanel.addStyleName("open");
-		} 
-		else 
-		{
+		}else {
 			titleFocPanel.removeStyleName("open");
 		}
 	}
@@ -734,21 +669,28 @@ public class ShelfTreeWidget extends FocusPanel {
 			}
 		}
 	};
-
-
 	/**
 	 * @return the titleLbl
 	 */
 	public HTML getTitleLbl() {
 		return titleLbl;
 	}
-
 	/**
 	 * @return the titleFocPanel
 	 */
 	public FocusPanel getTitleFocPanel() {
 		return titleFocPanel;
 	}
+
+	/**
+	 * Sets the tree widget type.
+	 * @param widgetType {@link String}
+	 */
+	public void setTreeWidgetType(String widgetType) {
+		this.widgetType = widgetType;
+	}
 	
-	
+	public String getTreeWidgetType(){
+		return widgetType;
+	}
 }
