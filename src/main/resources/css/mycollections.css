@@ -2746,25 +2746,25 @@ padding-left: 15px !important;
 /*unit info ends*/
 
 /* === For Collection info Css start ================================== */
-#pnlLessonInfo .floderRightContainer .courseHeader {
+#pnlCollectionInfo .floderRightContainer .courseHeader {
 	background:#f0f0f0;
 }
-#pnlLessonInfo .gliphIconImage {
+#pnlCollectionInfo .gliphIconImage {
   background: url("../images/gridicon.png") no-repeat scroll 0 0 transparent;
   width: 11px;
   height: 12px;
 }
-#pnlLessonInfo li:hover{
+#pnlCollectionInfo li:hover{
 background: none repeat scroll 0% 0% rgb(195, 221, 238);
 }
-#pnlLessonInfo .liPanelStyle
+#pnlCollectionInfo .liPanelStyle
 {
 text-align: left;
 font-weight: bold;
 padding-left: 10px;
 font-size: 9pt;
 }
-#pnlLessonInfo .liPanelStylenonBold
+#pnlCollectionInfo .liPanelStylenonBold
 {
 text-align: left;
 padding-left: 10px;
@@ -2772,96 +2772,101 @@ font-size: 9pt;
 padding-bottom: 10px;
 }
 
-#pnlLessonInfo .courseNameBlock{
+#pnlCollectionInfo .courseNameBlock{
 	border-bottom:1px solid #dddddd;
 	padding:15px 15px 15px 15px;
 }
-#pnlLessonInfo .questionsBlock{
+#pnlCollectionInfo .questionsBlock{
 	
 	padding:15px 0;
 		border-bottom:1px solid #dddddd;
 }
-#pnlLessonInfo .questionsBlock p{
+#pnlCollectionInfo .questionsBlockTextArea{
+padding-right: 15px !important;
+padding-left: 15px !important;
+width:100% !important;
+}
+#pnlCollectionInfo .questionsBlock p{
 	margin-bottom:5px;
 	color:#515151;
 }
-#pnlLessonInfo .dropDownRight{
+#pnlCollectionInfo .dropDownRight{
 	text-align:right;
 }
-#pnlLessonInfo .dropDownRight .btn{
+#pnlCollectionInfo .dropDownRight .btn{
 	font-size:12px;
 }
-#pnlLessonInfo .unitCoverBlock{
+#pnlCollectionInfo .unitCoverBlock{
 	padding:15px 0;
 }
 
-#pnlLessonInfo .unitCoverBody{
+#pnlCollectionInfo .unitCoverBody{
 	padding:15px 15px;
 }
-#pnlLessonInfo .unitCoverList {
+#pnlCollectionInfo .unitCoverList {
 	border:1px solid #dddddd;
 	border-radius:3px 3px;
 }
 
-#pnlLessonInfo .unitCoverList ul {
+#pnlCollectionInfo .unitCoverList ul {
     margin: 0;
     padding: 0;
 }
-#pnlLessonInfo .unitCoverList ul li {
+#pnlCollectionInfo .unitCoverList ul li {
 
     list-style: outside none none;
     margin: 0;
     padding: 0;
 }
 
-#pnlLessonInfo .unitCoverList ul li a {
+#pnlCollectionInfo .unitCoverList ul li a {
     color: #515151;
     display: block;
     font-size: 12px;
     margin: 0;
     padding: 8px 15px;
 }
-#pnlLessonInfo .unitCoverList ul li a:hover, #info .unitCoverList ul li a:focus {
+#pnlCollectionInfo .unitCoverList ul li a:hover, #info .unitCoverList ul li a:focus {
     background: #87badd none repeat scroll 0 0;
     color: #333333;
     opacity: 1;
     text-decoration: none;
 }
-#pnlLessonInfo .unitCoverListLeft{
+#pnlCollectionInfo .unitCoverListLeft{
 	border-right:1px solid #dddddd;
 }
-#pnlLessonInfo .unitCoverListMiddle{
+#pnlCollectionInfo .unitCoverListMiddle{
 	border-right:1px solid #dddddd;
 }
 
-#pnlLessonInfo .unitCoverListLeft, #info .unitCoverListMiddle, #info .unitCoverListRight{
+#pnlCollectionInfo .unitCoverListLeft, #info .unitCoverListMiddle, #info .unitCoverListRight{
 	min-height:398px;
 }
 
-#pnlLessonInfo .unitCoverListRight ul li{
+#pnlCollectionInfo .unitCoverListRight ul li{
 	font-style:italic;
 }
-#pnlLessonInfo .unitCoverListRight ul li:first-child{
+#pnlCollectionInfo .unitCoverListRight ul li:first-child{
 	font-style:normal;
 }
 @media (max-width: 767px) {
 	
-#pnlLessonInfo .unitCoverListLeft, #info .unitCoverListMiddle, #info .unitCoverListRight{
+#pnlCollectionInfo .unitCoverListLeft, #info .unitCoverListMiddle, #info .unitCoverListRight{
 	min-height:inherit;
 }
-#pnlLessonInfo .unitCoverListLeft{
+#pnlCollectionInfo .unitCoverListLeft{
 	border-right:none;
 		border-bottom:1px solid #dddddd;
 }
-#pnlLessonInfo .unitCoverListMiddle{
+#pnlCollectionInfo .unitCoverListMiddle{
 	border-right:none;
 		border-bottom:1px solid #dddddd;
 }
-#pnlLessonInfo .breadcrumbMain a{
+#pnlCollectionInfo .breadcrumbMain a{
 	font-size:13px;
 	padding:20px 20px
 }
-#pnlLessonInfo .folderBlockSitemap a{
+#pnlCollectionInfo .folderBlockSitemap a{
 	padding:16px 18px;
 }
 }
@@ -2895,82 +2900,82 @@ padding-bottom: 10px;
 }
 
 
-#pnlLessonInfo .btn-breadcrumb .btn.btn-default:not(:last-child):after {
+#pnlCollectionInfo .btn-breadcrumb .btn.btn-default:not(:last-child):after {
   border-left: 16px solid #f6f6f6;
 }
-#pnlLessonInfo .btn-breadcrumb .btn.btn-default:not(:last-child):before {
+#pnlCollectionInfo .btn-breadcrumb .btn.btn-default:not(:last-child):before {
   border-left: 16px solid #ffffff;
 }
 /*.btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
   border-left: 10px solid #b4d1b1;
 }*/
-#pnlLessonInfo .btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+#pnlCollectionInfo .btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
   border-left: 16px solid #ffffff;
 }
-#pnlLessonInfo .btn-breadcrumb .btn.btn-default.active {
+#pnlCollectionInfo .btn-breadcrumb .btn.btn-default.active {
 	background-color:#cddeea;
 	box-shadow:none;
 }
-#pnlLessonInfo .btn-breadcrumb .btn.btn-default.active:not(:last-child)::after {
+#pnlCollectionInfo .btn-breadcrumb .btn.btn-default.active:not(:last-child)::after {
     border-left: 16px solid #cddeea;
 }
 /* The responsive part */
 
-#pnlLessonInfo .btn-breadcrumb > * > div {
+#pnlCollectionInfo .btn-breadcrumb > * > div {
     /* With less: .text-overflow(); */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;    
 }
 
-#pnlLessonInfo .btn-breadcrumb > *:nth-child(n+2) {
+#pnlCollectionInfo .btn-breadcrumb > *:nth-child(n+2) {
   display:none;
 }
 
 /* === For phones =================================== */
 @media (max-width: 767px) {
-    #pnlLessonInfo .btn-breadcrumb > *:nth-last-child(-n+2) {
+    #pnlCollectionInfo .btn-breadcrumb > *:nth-last-child(-n+2) {
         display:block;
     } 
-    #pnlLessonInfo .btn-breadcrumb > * div {
+    #pnlCollectionInfo .btn-breadcrumb > * div {
         max-width: 60px;
     }
 }
 
 /* === For tablets ================================== */
 @media (min-width: 768px) and (max-width:991px) {
-    #pnlLessonInfo .btn-breadcrumb > *:nth-last-child(-n+4) {
+    #pnlCollectionInfo .btn-breadcrumb > *:nth-last-child(-n+4) {
         display:block;
     } 
-    #pnlLessonInfo .btn-breadcrumb > * div {
+    #pnlCollectionInfo .btn-breadcrumb > * div {
         max-width: 100px;
     }
 }
 
 /* === For desktops ================================== */
 @media (min-width: 992px) {
-    #pnlLessonInfo .btn-breadcrumb > *:nth-last-child(-n+6) {
+    #pnlCollectionInfo .btn-breadcrumb > *:nth-last-child(-n+6) {
         display:block;
     } 
-    #pnlLessonInfo .btn-breadcrumb > * div {
+    #pnlCollectionInfo .btn-breadcrumb > * div {
         max-width: 170px;
     }
 }
 
 */
 
-#pnlLessonInfo .deleteButton{
+#pnlCollectionInfo .deleteButton{
 	text-align:right;
 }
 
-#pnlLessonInfo .deleteButton a{
+#pnlCollectionInfo .deleteButton a{
 	color:#1076bb;
 	border-left:1px solid #dddddd;
 }
-#pnlLessonInfo .lessonCover{
+#pnlCollectionInfo .lessonCover{
 	padding:15px 15px;
 }
-#pnlLessonInfo .lessonCover .panel-heading{
+#pnlCollectionInfo .lessonCover .panel-heading{
 	background-color:transparent;
 	font-size:13px;
 	font-weight:bold;
@@ -2978,66 +2983,63 @@ padding-bottom: 10px;
 	padding:10px 10px;
 	
 }
-#pnlLessonInfo .lessonCover .panel-body{
+#pnlCollectionInfo .lessonCover .panel-body{
 	padding:0 0;
 }
-#pnlLessonInfo .lessonCover .fractionBlocks{
+#pnlCollectionInfo .lessonCover .fractionBlocks{
 
 	border-bottom:1px solid #dddddd;
 }
 
-#pnlLessonInfo .lessonCover .fractionBlocks .fractionMultiBlock{
+#pnlCollectionInfo .lessonCover .fractionBlocks .fractionMultiBlock{
 	padding:10px 10px;
 }
 
-#pnlLessonInfo .lessonCover .fractionBlocks .fractionMultiBlock.active{
+#pnlCollectionInfo .lessonCover .fractionBlocks .fractionMultiBlock.active{
 	background:#c3ddee;
 }
-#pnlLessonInfo .lessonCover .fractionBlocks p{
+#pnlCollectionInfo .lessonCover .fractionBlocks p{
 	margin:0 0;
 }
-#pnlLessonInfo .lessonCover .fractionBlocks .frLeft{
+#pnlCollectionInfo .lessonCover .fractionBlocks .frLeft{
 	font-size:17px;
 	color:#515151;
 }
-#pnlLessonInfo .lessonCover .fractionBlocks .singleBlock{
+#pnlCollectionInfo .lessonCover .fractionBlocks .singleBlock{
 
 		padding:10px 10px;
 }
-#pnlLessonInfo .lessonCover .fractionBlocks .singleBlock p{
+#pnlCollectionInfo .lessonCover .fractionBlocks .singleBlock p{
 	color:#515151;
 	font-weight:bold;
 }
-#pnlLessonInfo .unitCoverHeader .dropDownRight .btn-primary{
+#pnlCollectionInfo .unitCoverHeader .dropDownRight .btn-primary{
 	background-color:#87badd;
 	border:1px solid #ffffff;
 }
-#pnlLessonInfo .unitCoverHeader{
+#pnlCollectionInfo .unitCoverHeader{
 	text-align:center;
 }
 
-#pnlLessonInfo .dropDownRight{
-	text-align:center;
-}
 @media (max-width: 767px) {
-	#pnlLessonInfo .stepsButtonGroup{
+	#pnlCollectionInfo .stepsButtonGroup{
 		text-align:center;
 	}
-#pnlLessonInfo .stepsButtonGroup button{
+#pnlCollectionInfo .stepsButtonGroup button{
 	display:block;
 	width:100%;
 	margin-bottom:5px;
 }
-#pnlLessonInfo .breadcrumbMain a{
+#pnlCollectionInfo .breadcrumbMain a{
 	margin-bottom:2px;
 }
-#pnlLessonInfo .folderBlockSitemap a {
+#pnlCollectionInfo .folderBlockSitemap a {
   
     padding: 16px;
 
 }
 
-#pnlLessonInfo .dropDownRight .btn{
+#pnlCollectionInfo .dropDownRight .btn{
 	padding:6px 6px;
 }
 }

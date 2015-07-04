@@ -103,8 +103,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					unitInfoPresenter.callTaxonomyService();
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
-				}else{
+				}else if("Lesson".equalsIgnoreCase(type)){
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
+				}else{
+					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}
 		}else if(index==2){
 			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
@@ -126,9 +128,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 
 	@Override
-	public void setUnitTemplate(String type){
+	public void setUnitTemplate(String type){	
 		shelfMainPresenter.createNewUnitItem(type);
-		if("Unit".equalsIgnoreCase(type)){
+/*		if("Unit".equalsIgnoreCase(type)){
 			setInSlot(INNER_SLOT, unitInfoPresenter);
 		}else if("Lesson".equalsIgnoreCase(type)){
 			setInSlot(INNER_SLOT, lessonInfoPresenter);
@@ -136,7 +138,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			setInSlot(INNER_SLOT, collectionInfoPresenter);
 		}else if("Assessment".equalsIgnoreCase(type)){
 			//setInSlot(INNER_SLOT, lessonInfoPresenter);
-		}
+		}*/
 	}
 
 	/**

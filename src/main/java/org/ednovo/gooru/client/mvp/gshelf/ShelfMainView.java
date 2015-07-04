@@ -322,7 +322,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 			if(parent != null)parent.setSelected(false);
 			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-			shelfTreeWidget.setFolderOpenedStatus(true);
+			if(!"Collection".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType()) && !"Assessment".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType())){
+				shelfTreeWidget.setFolderOpenedStatus(true);
+			}else{
+				shelfTreeWidget.setCollectionOpenedStatus(true);
+			}
 			shelfTreeWidget.setActiveStyle(true);
 			ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 			if(previousshelfTreeWidget==null) {
@@ -645,12 +649,20 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget = new ShelfTreeWidget(null, 3);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDLESSON);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("lesson");
+		}else if("Collection".equalsIgnoreCase(type)){
+			shelfTreeWidget = new ShelfTreeWidget(null, 4);
+			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
+			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
 		treeChildSelectedItem.insertItem(0, item);
 		treeChildSelectedItem.setState(true);
 		
-		shelfTreeWidget.setFolderOpenedStatus(true);
+		if(!"Collection".equalsIgnoreCase(type) && !"Assessment".equalsIgnoreCase(type)){
+			shelfTreeWidget.setFolderOpenedStatus(true);
+		}else{
+			shelfTreeWidget.setCollectionOpenedStatus(true);
+		}
 		correctStyle(item);
 		treeChildSelectedItem=item;
 		setFolderActiveStatus();
