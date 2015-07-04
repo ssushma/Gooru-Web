@@ -6,6 +6,7 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -74,7 +75,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		        	String hsText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
   		         if(skip == false)
 					  {
-						answerChoice.setHTML(hsText);
+						answerChoice.setHTML(URL.decodeQueryString(hsText));
 							if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 								answerChoice.addStyleName(HS_INCORRECT);
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
