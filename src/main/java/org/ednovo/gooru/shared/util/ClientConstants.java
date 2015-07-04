@@ -217,6 +217,9 @@ public interface ClientConstants {
 	String MC = "MC";
 	String ZERO_NUMERIC = "0";
 	String INITIAL_COMMENT_LIMIT ="10";
+	String HS_INCORRECT="summaryHsanswer-wrong";
+	String HS_CORRECT="summaryHsanswer-right";
+	String HS_ONMULTIPULEATTEMPTS="summaryHsanswer-multiRight";
 	
 	/*************** Analytics End **************************************************/
 	

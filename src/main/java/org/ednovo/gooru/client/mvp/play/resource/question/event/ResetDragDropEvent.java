@@ -40,8 +40,7 @@ public class ResetDragDropEvent extends GwtEvent<ResetDragDropHandler> {
 	private int widgetIndex;
 	
 	
-	public ResetDragDropEvent(int widgetIndex) {
-		this.widgetIndex = widgetIndex;
+	public ResetDragDropEvent() {
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class ResetDragDropEvent extends GwtEvent<ResetDragDropHandler> {
 
 	@Override
 	protected void dispatch(ResetDragDropHandler handler) {
-		handler.resetReorder(widgetIndex);
+		handler.resetReorder();
 	}
 
 }

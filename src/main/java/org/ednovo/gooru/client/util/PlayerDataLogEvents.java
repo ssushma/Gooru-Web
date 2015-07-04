@@ -312,11 +312,7 @@ public class PlayerDataLogEvents {
 		try{
 			payLoadMap.put(QUESTIONTYPE, new JSONString(questionType));
 			payLoadMap.put(TOTALNOOFCHARACTER,new JSONNumber(oeAnswerText.length()));
-			if(questionType.equalsIgnoreCase("HT_RO")){
-				payLoadMap.put(TEXT,new JSONString(oeAnswerText));
-			}else{
-				payLoadMap.put(TEXT,new JSONString(StringUtil.replaceSpecial(oeAnswerText)));
-			}
+			payLoadMap.put(TEXT,new JSONString(StringUtil.replaceSpecial(oeAnswerText)));
 			payLoadMap.put(ATTEMPTSTATUS, new JSONString(createJsniIntArray(attemptStatus).toString()));
 			payLoadMap.put(ATTEMPTTRYSEQUENCE, new JSONString(createJsniIntArray(attemptTrySequence).toString()));
 			payLoadMap.put(ANSWERS, new JSONString(answerIdsObject.toString()));
