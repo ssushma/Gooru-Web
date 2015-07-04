@@ -26,9 +26,11 @@ package org.ednovo.gooru.client.mvp.classpages.studentclassview.reports;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.uc.LoadingUc;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -36,7 +38,9 @@ import com.google.gwt.user.client.ui.Widget;
  *  
  */
 public class StudentClassReportView extends BaseViewWithHandlers<StudentClassReportUiHandlers> implements IsStudentClassReportView {
-
+	
+	@UiField LoadingUc cropImageLoading;
+	
 	private static StudentClassReportViewUiBinder uiBinder = GWT
 			.create(StudentClassReportViewUiBinder.class);
 	
@@ -46,13 +50,16 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 			UiBinder<Widget, StudentClassReportView> {
 	}
 
-	/**
-	 * Class constructor
-	 */
 	public StudentClassReportView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		setDebugIds();
 	}
 
+	private void setDebugIds() {
+		cropImageLoading.setLoadingText(i18n.GL1234());
+		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
+	}
+	
 	@Override
 	public void reset() {
 		super.reset();

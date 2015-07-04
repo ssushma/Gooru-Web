@@ -55,21 +55,22 @@ import com.google.gwt.user.client.ui.Widget;
 public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentClassLearningMapUiHandlers> implements IsStudentClassLearningMapView {
 
 	@UiField HTMLPanel containerData, learningMapContainer, headerLinksContainer, topBackLinkBox, standardsBlock;
-	@UiField SpanPanel allContentTxt, currentContentName, previousContentName, nextContentName, spanTxt;
+	@UiField SpanPanel allContentTxt, currentContentName, previousContentName, nextContentName, spanTxt, headerLeftArrow;
 	@UiField HTMLEventPanel allContentPanel, previousContentPanel, nextContentPanel;
+	@UiField HTMLPanel learnMapScore, reportScore;
 	
 	@UiField LoadingUc cropImageLoading;
 	
 	String allContentStr = null, previousContentStr = null, nextContentStr = null;
 	
-	private static StudentClassLearningMapViewUiBinder uiBinder = GWT
-			.create(StudentClassLearningMapViewUiBinder.class);
+	private static final String ALL = "all";
+	private static final String NS = "NS";
+	
+	private static StudentClassLearningMapViewUiBinder uiBinder = GWT.create(StudentClassLearningMapViewUiBinder.class);
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface StudentClassLearningMapViewUiBinder extends
-			UiBinder<Widget, StudentClassLearningMapView> {
-	}
+	interface StudentClassLearningMapViewUiBinder extends UiBinder<Widget, StudentClassLearningMapView> {}
 	
 	public StudentClassLearningMapView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -88,42 +89,52 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	
 	public void getContentData() {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW);
-		spanTxt.setText("NS");
-		learningMapContainer.clear();
+		String pageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
 		
-		allContentStr = "all";
+		allContentStr = ALL;
 		previousContentStr = "id";
 		nextContentStr = "id1";
 		
-		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-			allContentTxt.setText("You have 7 Units to complete");
-			headerLinksContainer.setVisible(false);
-			topBackLinkBox.setVisible(false);
-			standardsBlock.setVisible(false);
-			for(int i=0;i<10;i++) {
-				learningMapContainer.add(new StudentClassLearningMapContainer());
+		learningMapContainer.clear();
+		if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
+			setScoreMapVisiblity(true);
+			if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+				spanTxt.setText(NS);
+				setNavLinksData("You have 7 Units to complete", null, null, null);
+				setTextPanelsVisiblity(false,true,false,false);
+				for(int i=0;i<10;i++) {
+					learningMapContainer.add(new StudentClassLearningMapContainer());
+				}
+			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+				setNavLinksData("All Units", "Unit 2", "Number & Operations - Fractions", "Unit 4");
+				setTextPanelsVisiblity(true,true,false,true);
+				for(int i=0;i<10;i++) {
+					learningMapContainer.add(new StudentClassLessonContainer("green-circle"));
+				}
+			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_CONTENT_VIEW)) {
+				setNavLinksData("All Lessons", "Lesson 2", "Fractions and whole numbers", "Lesson 4");
+				setTextPanelsVisiblity(true,true,true,true);
+				for(int i=0;i<4;i++) {
+					learningMapContainer.add(new SlmAssessmentChildView());
+				}
 			}
-		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-			allContentTxt.setText("All Units");
-			previousContentName.setText("Unit 2");
-			currentContentName.setText("Number & Operations - Fractions");
-			nextContentName.setText("Unit 4");
-			headerLinksContainer.setVisible(true);
-			topBackLinkBox.setVisible(true);
-			standardsBlock.setVisible(false);
-			for(int i=0;i<10;i++) {
-				learningMapContainer.add(new StudentClassLessonContainer("green-circle"));
-			}
-		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_CONTENT_VIEW)) {
-			allContentTxt.setText("All Lessons");
-			previousContentName.setText("Lesson 2");
-			currentContentName.setText("Fractions and whole numbers");
-			nextContentName.setText("Lesson 4");
-			headerLinksContainer.setVisible(true);
-			topBackLinkBox.setVisible(true);
-			standardsBlock.setVisible(true);
-			for(int i=0;i<4;i++) {
-				learningMapContainer.add(new SlmAssessmentChildView());
+		} else if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
+			setScoreMapVisiblity(false);
+			if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+				setNavLinksData("Your progress for this class", null, null, null);
+				headerLeftArrow.setVisible(false);
+				setTextPanelsVisiblity(false,true,false,false);
+				for(int i=0;i<10;i++) {
+					learningMapContainer.add(new StudentClassLessonContainer("green-circle"));
+				}
+			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+				setNavLinksData("All Units", "Unit 2", "Number & Operations - Fractions", "Unit 4");
+				setTextPanelsVisiblity(true,true,false,true);
+				for(int i=0;i<10;i++) {
+					learningMapContainer.add(new StudentClassLessonContainer("green-circle"));
+				}
+			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_CONTENT_VIEW)) {
+				
 			}
 		}
 		setContentVisiblity(true);
@@ -155,7 +166,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		String lId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
 		String pageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT);
 		
-		if(id.equalsIgnoreCase("all")) {
+		if(id.equalsIgnoreCase(ALL)) {
 			if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW);
 				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
@@ -182,5 +193,25 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	private void setContentVisiblity(boolean isVisible) {
 		containerData.setVisible(isVisible);
 		cropImageLoading.setVisible(!isVisible);
+	}
+
+	private void setScoreMapVisiblity(boolean isVisible) {
+		learnMapScore.setVisible(isVisible);
+		reportScore.setVisible(!isVisible);
+		spanTxt.setVisible(isVisible);
+	}
+
+	private void setTextPanelsVisiblity(boolean isHeaderVisible, boolean isTopLinkVisible, boolean isStandardsVisible, boolean isArrowVisible) {
+		headerLinksContainer.setVisible(isHeaderVisible);
+		topBackLinkBox.setVisible(isTopLinkVisible);
+		standardsBlock.setVisible(isStandardsVisible);
+		headerLeftArrow.setVisible(isArrowVisible);
+	}
+	
+	private void setNavLinksData(String allTxt, String previousLinkTxt, String currentLinkTxt, String nextLinkTxt) {
+		allContentTxt.setText(allTxt);
+		previousContentName.setText(previousLinkTxt);
+		currentContentName.setText(currentLinkTxt);
+		nextContentName.setText(nextLinkTxt);
 	}
 }
