@@ -25,12 +25,10 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
-import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 
