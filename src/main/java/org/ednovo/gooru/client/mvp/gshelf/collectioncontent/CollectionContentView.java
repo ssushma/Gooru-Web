@@ -90,13 +90,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		ancAddResource.addClickHandler(new NewResourceClickEvent());
 		ancAddQuestion.addClickHandler(new NewQuestionClickEvent());
 
-		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, this);
-	}
-
-	private void addRegisteredHandler(
-			Type<InsertCollectionItemInAddResourceHandler> type2,
-			CollectionContentView collectionContentView) {
-
 	}
 
 	@Override
@@ -120,7 +113,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		if (index == 0){
 			pnlReosurceList.clear();
 		}else if (tmpIndex ==-1){
-			index = listOfContent.getCollectionItems().size();
+			index = listOfContent != null && listOfContent.getCollectionItems() != null ? listOfContent.getCollectionItems().size() : 0;
 		}
 
 		if (type.equals(RefreshType.INSERT)){
