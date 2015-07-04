@@ -226,7 +226,7 @@ public class ResourceFrameBreakerView extends Composite implements ClientConstan
 	 */
 	@UiHandler("btnResourceLink")
 	public void openResurceLink(ClickEvent event){
-		MixpanelUtil.mixpanelEvent("Player_Click_Linked_Out_Resource");
+		//MixpanelUtil.mixpanelEvent("Player_Click_Linked_Out_Resource");
 		Window.open(collectionItemDo.getResource().getUrl(), "_blank", "");
 	}
 	
