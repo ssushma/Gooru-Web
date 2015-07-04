@@ -745,7 +745,6 @@ button.btn-disabled{
 	vertical-align:middle;
 	
 }
-
 #gShelfCousesList .tableColumn:first-child{
 	background:#f9fcfe;
 	padding:10px 15px;
@@ -809,7 +808,9 @@ button.btn-disabled{
 	position:relative;
 	cursor:pointer;
 }
-
+#gShelfCousesList .addCourse .pnlCreate{
+	display: inline-block;
+}
 #gShelfCousesList .addCourse input{
     bottom: 0;
     height: 55px;

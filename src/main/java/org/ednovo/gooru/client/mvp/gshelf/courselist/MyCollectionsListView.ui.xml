@@ -15,8 +15,12 @@
 			<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList"/>
 			<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
 				<input type="file" name="fileField" id="fileField"/>
-					<span>+</span>
+					<span>+ Add New</span>
 					<g:Label ui:field="lblAddNew"/>
+					<g:HTMLPanel ui:field="pnlCreate" styleName="pnlCreate">
+						<g:Label ui:field="lblAddNewForResource" styleName="pnlCreate"/> or 
+						<g:Label ui:field="lblAddNewForQuestion" styleName="pnlCreate"/>
+					</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:ScrollPanel> 
