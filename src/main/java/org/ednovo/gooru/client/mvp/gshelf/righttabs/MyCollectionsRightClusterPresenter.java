@@ -125,6 +125,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			setInSlot(INNER_SLOT, unitInfoPresenter);
 		}else if("Lesson".equalsIgnoreCase(type)){
 			setInSlot(INNER_SLOT, lessonInfoPresenter);
+		}else if("Collection".equalsIgnoreCase(type)){
+			//setInSlot(INNER_SLOT, lessonInfoPresenter);
+		}else if("Assessment".equalsIgnoreCase(type)){
+			//setInSlot(INNER_SLOT, lessonInfoPresenter);
 		}
 	}
 
