@@ -47,7 +47,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	ShelfMainPresenter shelfMainPresenter;
 
-	FolderDo folderObj;
 
 	CollectionContentPresenter collectionContentPresenter;
 
@@ -78,11 +77,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
-		if(folderObj!=null){
-			this.folderObj=folderObj;
-		}
 		clearSlot(INNER_SLOT);
-		getView().setBreadCrumbSlot(this.folderObj,type);
+		getView().setBreadCrumbSlot(folderObj,type);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 //		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
@@ -98,6 +94,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
 				}else{
+					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}
 		}else if(index==2){

@@ -29,9 +29,11 @@ import java.util.Iterator;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView.BreadCrumbLabel;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -55,6 +57,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	interface MyCollectionsRightViewUiBinder extends UiBinder<Widget, MyCollectionsRightClusterView> {
 	}
 	
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare;
 	
@@ -76,6 +80,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	String oldO1Value=null,oldO2Value=null,oldO3Value=null;
 	
 	ArrayList<String> breadCumsSting=new ArrayList<String>();
+	
 	
 	public MyCollectionsRightClusterView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -126,9 +131,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	@Override
 	public void setBreadCrumbSlot(FolderDo folderObj, String type){
-		 this.folderObj=folderObj;
-		 String title=folderObj.getTitle();
-//		 setBreadCums(title);
+		if(folderObj!=null){
+			this.folderObj=folderObj;
+		}
+		 String title=folderObj!=null?folderObj.getTitle():"";
 		 setBreadCrumbs(title,type);
 		 
 	}
@@ -139,40 +145,57 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param type
 	 */
 	private void setBreadCrumbs(String title, String type) {
+		
 		if(COURSE.equalsIgnoreCase(type)){
 			pnlBreadCrumbMain.clear();
-			pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+			pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3347():title, type));
 		}else if(UNIT.equalsIgnoreCase(type)){
 			if(pnlBreadCrumbMain.getWidgetCount()<2){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3364():title, type));
 			}else{
-				getBreadCrumbs(title,type);
+				getBreadCrumbs(title,type,2);
 			}
 		}else if(LESSON.equalsIgnoreCase(type)){
 			if(pnlBreadCrumbMain.getWidgetCount()<3){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
+				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3365():title, type));
 			}else{
-				getBreadCrumbs(title,type);
+				getBreadCrumbs(title,type,3);
 			}
 		}else{
 			
 		}
 	}
 	
-	
-	public void getBreadCrumbs(String title,String type){
-//		Widget widget=pnlBreadCrumbMain.getWidget(breadCrumbItemIndex);
+	/**
+	 * gets the current bread crumbs item and updates the title.
+	 * @param title {@link String}
+	 * @param type {@link String}
+	 * @param index {@link int}
+	 */
+	public void getBreadCrumbs(String title,String type,int index){
 		Iterator<Widget> breadCrumbswidgets = pnlBreadCrumbMain.iterator();
 		while(breadCrumbswidgets.hasNext()){
 			Widget widget = breadCrumbswidgets.next();
 			if(widget instanceof BreadcrumbItem && ((BreadcrumbItem) widget).getType().equalsIgnoreCase(type)){ 
 				BreadcrumbItem breadCrumbItem=(BreadcrumbItem)widget;
 				breadCrumbItem.getLabel().setText(title);
+				removeBreadCrumbs(index);
 			}
 		}
 	}
 	
-	
+	/**
+	 * Removes the the bread crumbs.
+	 * @param index
+	 */
+	private void removeBreadCrumbs(int index) {
+		int widgetCount=pnlBreadCrumbMain.getWidgetCount();
+		for(int i=index;i<widgetCount;){
+			BreadcrumbItem breadCrumbItem=(BreadcrumbItem)pnlBreadCrumbMain.getWidget(i);
+			breadCrumbItem.removeFromParent();
+			widgetCount=pnlBreadCrumbMain.getWidgetCount();
+		}
+	}
 	/**
 	 * This method is used to set breadcums
 	 * @param title
@@ -220,7 +243,13 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			 HTMLPanel panel=new HTMLPanel("");
 			 panel.setStyleName("active");
 			 InlineLabel spnIcon=new InlineLabel();
-			 spnIcon.setStyleName("courseFolderCloseIcon");
+			 if(COURSE.equalsIgnoreCase(type)){
+				 spnIcon.setStyleName("courseFolderCloseIcon");
+			 }else if(UNIT.equalsIgnoreCase(type)){
+				 spnIcon.setStyleName("unitFolderCloseIcon");
+			 }else{
+				 spnIcon.setStyleName("lessonFolderCloseIcon");
+			 }
 			 lblTitle=new Label(title);
 			 lblTitle.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 			 panel.add(spnIcon);

@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -69,7 +70,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
 	@UiField Button saveCourseBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
-	
+	 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
@@ -146,5 +147,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
 		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),true,ASSESSMENT);
+	}
+	@Override
+	public void setLessonInfoData(FolderDo folderObj) {
+		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
 	}
 }

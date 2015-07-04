@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -64,6 +65,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@UiTemplate("UnitInfoView.ui.xml")
 	interface UnitInfoViewUiBinder extends UiBinder<Widget, UnitInfoView> {
 	}	
+	
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel unitInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
@@ -205,8 +208,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@Override
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObj=courseObj;
-		if(null!=courseObj){
-			unitTitle.setText(courseObj.getTitle());
-		}
+		unitTitle.setText(courseObj==null?i18n.GL3365():courseObj.getTitle());
 	}
 }
