@@ -25,7 +25,7 @@
             <g:HTMLPanel styleName="tabsContainer">
                <g:HTMLPanel styleName="container">
                   <g:HTMLPanel styleName="row">
-                     <g:HTMLPanel styleName="btn-group">
+                     <g:HTMLPanel styleName="btn-group" ui:field="btnGroup">
                         <g:Button styleName="btn btn-default active" ui:field="learningMapBtn">Learning Map</g:Button>
                         <g:Button styleName="btn btn-default" ui:field="reportsBtn">Reports</g:Button>
                      </g:HTMLPanel>

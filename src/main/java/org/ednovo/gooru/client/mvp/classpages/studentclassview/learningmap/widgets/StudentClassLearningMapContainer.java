@@ -39,7 +39,6 @@ public class StudentClassLearningMapContainer extends Composite {
 	public void setCircleContainerItems() {
 		unitCountName.setText("Unit 1");
 		unitName.setText("Operations & Algebraic Thinking");
-		
 		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));
 		circleContainer.add(new StudentClassLearningMapCircle("green-text"));
 		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));

@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,10 +43,10 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
- * @author Search TeamUnitInfoPresenter.java
+ * @author Search Team
  *
  */
-public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implements UnitInfoUiHandlers {
+public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoView> implements CollectionInfoUiHandlers {
 
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
@@ -55,11 +55,9 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String SUBJECT="subject";
 	
-	final String UNIT="unit";
+	final String COURSE="course";
 	
-	private String LESSON = "Lesson";
-	
-	private static final String O1_LEVEL = "o1";
+	private String UNIT = "Unit";
 	
 	/**
 	 * Class constructor
@@ -67,7 +65,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public UnitInfoPresenter( EventBus eventBus,IsUnitInfoView view) {
+	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 	}
@@ -95,7 +93,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().setCourseList(result);
+			//	getView().setCourseList(result);
 				if(result.size()>0){
 					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
 				}
@@ -104,53 +102,63 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
-		getTaxonomyService().getSubjectsList(subjectId, UNIT, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
+					//getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
 				}
 			}
 		});
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateLesson) {
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
+	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateUnit) {
+		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
-				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-				params.put("o2", uri[uri.length-1]);
-				params.put("view", "Course");
+				params.put("o1", uri[uri.length-1]);
+				params.put("view", COURSE);
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
-				if(isCreateLesson){
-					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
+					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
 				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
+					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
-	@Override
-	public void showUnitInfo() {
-		//myCollectionsRightClusterPresenter.setUnitInfo();
-	}
-	@Override
-	public void showUnitTemplate() {
-		//myCollectionsRightClusterPresenter.setUnitTemplate();
-	}
-
-	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+	public void setMyCollectionRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 
 	public void setData(FolderDo folderObj) {
 		getView().setCouseData(folderObj);
+	}
+
+	@Override
+	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit) {
+		AppClientFactory.getInjector().getfolderService().updateCourse(id, text, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				FolderDo folderDo = new FolderDo();
+				folderDo.setTitle(text);
+				folderDo.setType(COURSE);
+				//folderDo.setGooruOid(id);
+				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
+					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
+				}
+			}
+		});
 	}
 }
