@@ -42,12 +42,12 @@
 .learningHeaderBlock {
     background: #fafafa;
     border-radius: 6px 6px 0 0;
-    padding: 10px 0;
     margin-bottom: 10px;
 }
 .learningHeaderBlock .indicationBox {
-    text-align: right;
-    padding-top: 3px;
+	text-align: right;
+	padding: 12px 0px;
+	height: 40px;
 }
 .learningHeaderBlock .indicationBox div {
     font-size: 12px;
@@ -199,6 +199,7 @@
     font-size: 20px;
     font-weight: bold;
     color: #515151;
+    margin-top: 8px;
 }
 .LearningMapContainer .topBackLinkBox div span {
     display: table-cell;
@@ -284,19 +285,20 @@
 .rowContainer .heighlightBlock .lessonDetails p {
     line-height: 15px;
 }
-.LearningMapContainer .lessonDescription div {
+.LearningMapContainer .lessonDescription .divcontainer {
     display: table-cell;
     padding: 11px 10px;
     position: relative;
     width: 95px;
+    float: left;
 }
-.LearningMapContainer .lessonDescription div.blueBorder img {
+.LearningMapContainer .lessonDescription .divcontainer.blueBorder img {
     border-left: 5px solid #0074be;
 }
-.LearningMapContainer .lessonDescription div.orgBorder img {
+.LearningMapContainer .lessonDescription .divcontainer.orgBorder img {
     border-left: 5px solid #fdb128;
 }
-.LearningMapContainer .lessonDescription div.selected:before {
+.LearningMapContainer .lessonDescription .divcontainer.selected:before {
     left: 10px;
     right: 10px;
     bottom: 12px;
@@ -305,7 +307,7 @@
     background: rgba(131, 184, 126, 0.7) url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
     content: "";
 }
-.LearningMapContainer .lessonDescription div.blueselected:before {
+.LearningMapContainer .lessonDescription .divcontainer.blueselected:before {
     left: 10px;
     right: 10px;
     bottom: 12px;
@@ -314,7 +316,7 @@
     background: rgba(113, 170, 212, 0.7);
     content: "";
 }
-.LearningMapContainer .lessonDescription div.emptyselected:before {
+.LearningMapContainer .lessonDescription .divcontainer.emptyselected:before {
     left: 10px;
     right: 10px;
     bottom: 12px;
@@ -322,6 +324,68 @@
     position: absolute;
     background: url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
     content: "";
+}
+
+.LearningMapContainer .lessonDescription .scoreWidget {
+	color: #fff;
+	height: 55px;
+	width: 65px;
+	padding: 9px 5px;
+	margin: 11px 0px;
+}
+
+.LearningMapContainer .lessonDescription .scoreWidget p{
+	font-size: 9px;
+	color: #fff;
+	margin: 0;
+	text-align: center;
+}
+
+.LearningMapContainer .lessonDescription .scoreWidget h3{
+	margin-top: 5px;
+	font-size: 22px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.LearningMapContainer .lessonDescription .timeWidget {
+	color: #fff;
+	height: 55px;
+	width: 100px;
+	padding: 22px 10px;
+	margin-right: 20px;
+}
+
+.LearningMapContainer .lessonDescription .timeWidget p{
+	font-size: 9px;
+	color: #515151;
+	margin: 0;
+	text-align: center;
+}
+
+.LearningMapContainer .lessonDescription .timeWidget h3{
+	margin-top: 5px;
+	font-size: 20px;
+	color: #515151;
+	font-weight: bold;
+	text-align: center;
+}
+
+.red-widget {
+    background: #e08282;
+}
+.orange-widget {
+    background: #fec956;
+}
+.yellowgreen-widget {
+    background: #edf167;
+}
+.lightgreen-widget {
+    background: #a2de81;
+}
+.green-widget {
+    background: #3fc380;
 }
 
 .userClassContainer {
@@ -382,6 +446,34 @@ label.custom-select {
     -moz-border-radius: 4px;
     border-radius: 4px;
 }
+
+.LearningMapContainer .lessonDescription .blueLeftBorder{
+	border-left: 5px solid #0074be;
+	padding: 5px 0px;
+	background: #dddddd;
+}
+
+.LearningMapContainer .lessonDescription .orangeLeftBorder{
+	border-left: 5px solid #fdb128;
+	padding: 5px 0px;
+	background: #dddddd;
+}
+
+.LearningMapContainer .lessonDescription h3 {
+	margin: 0;
+	font-size: 18px;
+	color: #515151;
+	font-weight: bold;
+	text-align: center;
+}
+
+.LearningMapContainer .lessonDescription p {
+	font-size: 10px;
+	color: #515151;
+	margin: 0;
+	text-align: center;
+}
+
 /* for Webkit's CSS-only solution */
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
@@ -448,36 +540,36 @@ label.custom-select {
 .dashboardContainer .dashboardMenuBlock .dashLeftMenu ul li:first-child.active a {
     border-radius: 4px 0 0 0;
 }
-.dashboardContainer .dashboardMenuBlock .scoreStatus {
+.learningHeaderBlock .scoreStatus {
     text-align: right;
-    padding: 6px 6px;
     float: right;
+    margin-right: -15px;
 }
-.dashboardContainer .dashboardMenuBlock .scoreStatus div {
+.learningHeaderBlock .scoreStatus div {
     display: table-cell;
     padding: 8px 15px;
     width: 62px;
     text-align: center;
     font-weight: bold;
 }
-.dashboardContainer .dashboardMenuBlock .scoreStatus div.red {
+.learningHeaderBlock .scoreStatus div.red {
     background: #e08282;
     color: #ffffff;
     border-radius: 4px 0 0 4px;
 }
-.dashboardContainer .dashboardMenuBlock .scoreStatus div.org {
+.learningHeaderBlock .scoreStatus div.org {
     background: #fec956;
     color: #ffffff;
 }
-.dashboardContainer .dashboardMenuBlock .scoreStatus div.yellowgreen {
+.learningHeaderBlock .scoreStatus div.yellowgreen {
     background: #edf167;
     color: #ffffff;
 }
-.dashboardContainer .dashboardMenuBlock .scoreStatus div.lightgreen {
+.learningHeaderBlock .scoreStatus div.lightgreen {
     background: #a2de81;
     color: #ffffff;
 }
-.dashboardContainer .dashboardMenuBlock .scoreStatus div.green {
+.learningHeaderBlock .scoreStatus div.green {
     background: #3fc380;
     color: #ffffff;
     border-radius: 0 4px 4px 0;
@@ -1324,11 +1416,11 @@ th.headcol.whitebg {
 }
 @media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
 @media (min-width: 240px) and (max-width: 319px) {
-    .dashboardContainer .dashboardMenuBlock .scoreStatus div {
+    .learningHeaderBlock .scoreStatus div {
         padding: 8px 0;
         width: 50px;
     }
-    .dashboardContainer .dashboardMenuBlock .scoreStatus {
+    .learningHeaderBlock .scoreStatus {
         float: none;
     }
     .dashboardContainer .dashboardDropDownContainer .dropBox {
@@ -1354,10 +1446,10 @@ th.headcol.whitebg {
     }
 }
 @media (min-width: 320px) and (max-width: 479px) {
-    .dashboardContainer .dashboardMenuBlock .scoreStatus div {
+    .learningHeaderBlock .scoreStatus div {
         width: 50px;
     }
-    .dashboardContainer .dashboardMenuBlock .scoreStatus {
+    .learningHeaderBlock .scoreStatus {
         float: none;
     }
     .dashboardContainer .dashboardDropDownContainer .dropBox {
@@ -1383,10 +1475,10 @@ th.headcol.whitebg {
     }
 }
 @media (min-width: 480px) and (max-width: 767px) {
-    .dashboardContainer .dashboardMenuBlock .scoreStatus div {
+    .learningHeaderBlock .scoreStatus div {
         width: 50px;
     }
-    .dashboardContainer .dashboardMenuBlock .scoreStatus {
+    .learningHeaderBlock .scoreStatus {
         float: none;
         margin: 0 auto;
         width: 312px;
