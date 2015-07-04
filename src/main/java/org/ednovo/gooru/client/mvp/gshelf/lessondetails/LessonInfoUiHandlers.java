@@ -38,5 +38,5 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 
 	void showStandardsPopup(String standardVal);
 
-	public void createAndSaveCourseDetails(String text);
+	public void createAndSaveCourseDetails(String text,final boolean isCreateCollOrAssessment,String creationType);
 }

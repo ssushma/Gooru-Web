@@ -101,7 +101,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}
 		}else if(index==2){
-			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || true){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
@@ -127,6 +127,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			setInSlot(INNER_SLOT, unitInfoPresenter);
 		}else if("Lesson".equalsIgnoreCase(type)){
 			setInSlot(INNER_SLOT, lessonInfoPresenter);
+		}else if("Collection".equalsIgnoreCase(type)){
+			//setInSlot(INNER_SLOT, lessonInfoPresenter);
+		}else if("Assessment".equalsIgnoreCase(type)){
+			//setInSlot(INNER_SLOT, lessonInfoPresenter);
 		}
 	}
 
