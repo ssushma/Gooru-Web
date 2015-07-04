@@ -134,6 +134,8 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	private static final String O3_LEVEL = "o3";
 	
+	private String widgetType;
+	
 	private static final String ID = "id";
 	
 	private static final String ASSESSMENT = "assessment";
@@ -678,5 +680,17 @@ public class ShelfTreeWidget extends FocusPanel {
 	 */
 	public FocusPanel getTitleFocPanel() {
 		return titleFocPanel;
+	}
+
+	/**
+	 * Sets the tree widget type.
+	 * @param widgetType {@link String}
+	 */
+	public void setTreeWidgetType(String widgetType) {
+		this.widgetType = widgetType;
+	}
+	
+	public String getTreeWidgetType(){
+		return widgetType;
 	}
 }
