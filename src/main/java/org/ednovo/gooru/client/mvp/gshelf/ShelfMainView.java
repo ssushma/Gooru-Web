@@ -257,6 +257,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 					setFolderActiveStatus();
 				}
+				
+				if(shelfTreeWidget.getCollectionDo()==null){
+					String widgetType = shelfTreeWidget.getTreeWidgetType();
+					getUiHandlers().setRightPanelData(getFolderDo(), widgetType, null);
+				}
 			}
 		});
 		floderTreeContainer.add(shelfFolderTree);
@@ -599,6 +604,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 			organizeRootPnl.removeStyleName("active");
 			ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 1);
+			shelfTreeWidget.setTreeWidgetType(COURSE);
 			TreeItem treeItem = new TreeItem(shelfTreeWidget);
 			shelfFolderTree.insertItem(0, treeItem);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
@@ -633,12 +639,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		}
 		selectedWidget.setOpen(true);
 		ShelfTreeWidget shelfTreeWidget = null;
-		if("Unit".equalsIgnoreCase(type)){
+		if(UNIT.equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 2);
+			shelfTreeWidget.setTreeWidgetType(UNIT);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDUNIT);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("unit");
-		}else if("Lesson".equalsIgnoreCase(type)){
+		}else if(LESSON.equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 3);
+			shelfTreeWidget.setTreeWidgetType(LESSON);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDLESSON);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("lesson");
 		}
