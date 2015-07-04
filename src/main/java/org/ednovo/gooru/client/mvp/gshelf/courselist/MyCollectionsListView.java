@@ -207,6 +207,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
+				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;
 			}

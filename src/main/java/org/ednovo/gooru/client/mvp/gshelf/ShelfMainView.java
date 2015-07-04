@@ -258,7 +258,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					setFolderActiveStatus();
 				}
 				if(shelfTreeWidget.getCollectionDo()==null){
-					getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
+					getUiHandlers().setRightPanelData(getFolderDo(), COURSE,null);
 				}
 			}
 		});
@@ -434,7 +434,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				folderListDoChild.add(widget.getCollectionDo());
 			}
 			if(COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
-				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType());
+				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
 			}else{
 				getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
 			}
@@ -599,7 +599,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfFolderTree.insertItem(0, treeItem);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
-			getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
+			getUiHandlers().setRightPanelData(getFolderDo(), COURSE,null);
 			treeChildSelectedItem=treeItem;
 			correctStyle(treeItem);
 			floderTreeContainer.add(shelfFolderTree);
