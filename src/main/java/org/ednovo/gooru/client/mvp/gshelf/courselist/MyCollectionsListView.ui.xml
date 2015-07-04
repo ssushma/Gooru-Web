@@ -7,6 +7,8 @@
 	</g:HTMLPanel>
 	<g:HTMLPanel styleName="courseCreateContainer" ui:field="pnlCreateContainer">
 		<g:Button styleName="primary createButton" ui:field="btnCreate"/>
+		<g:Button styleName="primary createButton" ui:field="btnCreateQuestion"/>
+		<g:Button styleName="primary createButton" ui:field="btnCreateResource"/>
 	</g:HTMLPanel>
 	<g:ScrollPanel ui:field="listScrollPanel" styleName="coursesList">
 		<g:HTMLPanel>
@@ -14,7 +16,7 @@
 			<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
 				<input type="file" name="fileField" id="fileField"/>
 					<span>+</span>
-					Add new course
+					<g:Label ui:field="lblAddNew"/>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:ScrollPanel> 
