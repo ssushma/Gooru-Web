@@ -164,8 +164,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
-        	if(!target)
-        	{
+        	if(!target){
         		if (isEditResourceClicked && ulGradePanel != null){
         			ulGradePanel.setVisible(ulGradePanel.isVisible() ? false : true);
         			isEditResourceClicked = false;
@@ -188,7 +187,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		}
 
 		lblItemSequence.setText(indexVal+"");
-		lblResourceTitle.getElement().setInnerHTML(collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"");
+		lblResourceTitle.getElement().setInnerHTML(collectionItem.getResourceTitle()!=null? StringUtil.removeAllHtmlCss(collectionItem.getResourceTitle()):"");
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 
 		String resourceType = collectionItem.getResource().getResourceType().getName();
