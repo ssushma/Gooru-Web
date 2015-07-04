@@ -261,7 +261,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public ScrollPanel getScrollPanel(){
 		return listScrollPanel;
 	}
-
+	/**
+	 * This method is used to update the url parameters
+	 * @param params
+	 * @param folderObj
+	 * @return
+	 */
 	public Map<String,String> updateParameters(Map<String,String> params,FolderDo folderObj){
 		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
