@@ -420,7 +420,9 @@ button.btn-disabled{
 #gShelfMainContainer .folderLevel.unit.open {
     background-image: url('../images/folders/panel/u-open.png')!important;
 }
-
+#gShelfMainContainer .folderLevel.lesson.open {
+    background-image: url('../images/folders/panel/l-open.png')!important;
+}
 #gShelfMainContainer .folderLevel.collection {
     background-image: url('../images/folders/panel/collection-icon.png') !important;
 }
@@ -2486,6 +2488,15 @@ display:inline-block;
 	height:24px;
 	display:inline-block;
 	vertical-align:middle;
+}
+
+.lessonFolderCloseIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -279px
+		-520px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .floderRightContainer .courseHeader {

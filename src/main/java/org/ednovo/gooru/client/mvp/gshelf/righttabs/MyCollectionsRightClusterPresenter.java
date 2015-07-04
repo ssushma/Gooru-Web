@@ -25,13 +25,11 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
-import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 
@@ -52,7 +50,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	ShelfMainPresenter shelfMainPresenter;
 
-	FolderDo folderObj;
 
 	CollectionContentPresenter collectionContentPresenter;
 	
@@ -86,11 +83,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
-		if(folderObj!=null){
-			this.folderObj=folderObj;
-		}
 		clearSlot(INNER_SLOT);
-		getView().setSlotPanel(this.folderObj);
+		getView().setBreadCrumbSlot(folderObj,type);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		if(index==1){
@@ -104,6 +98,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
 				}else if("Lesson".equalsIgnoreCase(type)){
+					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else{
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
@@ -116,8 +111,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
-		}else if(index==3){
-
 		}
 	}
 	//This method is not using present
@@ -130,15 +123,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setUnitTemplate(String type){	
 		shelfMainPresenter.createNewUnitItem(type);
-/*		if("Unit".equalsIgnoreCase(type)){
-			setInSlot(INNER_SLOT, unitInfoPresenter);
-		}else if("Lesson".equalsIgnoreCase(type)){
-			setInSlot(INNER_SLOT, lessonInfoPresenter);
-		}else if("Collection".equalsIgnoreCase(type)){
-			setInSlot(INNER_SLOT, collectionInfoPresenter);
-		}else if("Assessment".equalsIgnoreCase(type)){
-			//setInSlot(INNER_SLOT, lessonInfoPresenter);
-		}*/
 	}
 
 	/**

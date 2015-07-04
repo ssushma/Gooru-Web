@@ -38,13 +38,21 @@ public class StudentClassLessonContainer extends Composite {
 	}
 	
 	public void setCircleContainerItems() {
-		lessonCountName.setText("Lesson 1");
-		lessonName.setText("Comparing Fractions with Common Debominators & Numerators");
-		
-		lessonContainer.add(new StudentClassContentWidget("blueBorder","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/2092/3457/e6cfc5e1-0611-48d8-9637-92a0dce76786_1371894b-c2af-4468-a077-c93ecc4f7ede-160x120.png"));
-		lessonContainer.add(new StudentClassContentWidget("orgBorder selected","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4383/9a76aa68-bd60-4fe4-8d02-f54c8e105290-160x120.png"));
-		lessonContainer.add(new StudentClassContentWidget("orgBorder blueselected","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4385/f236d78f-681e-43e4-b648-9dc564780623-160x120.png"));
-		lessonContainer.add(new StudentClassContentWidget("orgBorder selected","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4415/322bab19-05bc-42e9-b47c-498a98a924bb-160x120.png"));
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
+			lessonCountName.setText("Unit 1");
+			lessonName.setText("Unit with Common Debominators & Numerators");
+			lessonContainer.add(new StudentProgressContentWidget("4 of 8","Collections Viewed","collection"));
+			lessonContainer.add(new StudentProgressContentWidget("2 of 8","Assessments Attempted","assessment"));
+			lessonContainer.add(new StudentProgressScoreWidget("89%", "red-widget", "45 min"));
+		} else {
+			lessonCountName.setText("Lesson 1");
+			lessonName.setText("Comparing Fractions with Common Debominators & Numerators");
+			lessonContainer.add(new StudentClassContentWidget("blueBorder","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/2092/3457/e6cfc5e1-0611-48d8-9637-92a0dce76786_1371894b-c2af-4468-a077-c93ecc4f7ede-160x120.png"));
+			lessonContainer.add(new StudentClassContentWidget("orgBorder selected","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4383/9a76aa68-bd60-4fe4-8d02-f54c8e105290-160x120.png"));
+			lessonContainer.add(new StudentClassContentWidget("orgBorder blueselected","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4385/f236d78f-681e-43e4-b648-9dc564780623-160x120.png"));
+			lessonContainer.add(new StudentClassContentWidget("orgBorder selected","http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4415/322bab19-05bc-42e9-b47c-498a98a924bb-160x120.png"));
+		}
 	}
 	
 	public class LessonPageRedirection implements ClickHandler{
