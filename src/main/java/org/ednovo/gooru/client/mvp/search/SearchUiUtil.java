@@ -31,7 +31,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
@@ -94,7 +96,7 @@ public class SearchUiUtil{
 			}
 		}
 	}
-	public static void renderStandardsforCollection(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
+	public static void renderStandardsforCollection(FlowPanel standardsContainer, CollectionSearchResultDo searchResultDo) {
 		if (searchResultDo.getStandards() != null) {
 			List<Map<String, String>> standards = searchResultDo.getStandards();
 			Iterator<Map<String, String>> iterator = standards.iterator();
