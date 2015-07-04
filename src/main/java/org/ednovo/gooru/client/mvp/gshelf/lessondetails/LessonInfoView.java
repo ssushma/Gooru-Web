@@ -87,13 +87,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public LessonInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		lessonInfo.getElement().setId("pnlLessonInfo");
-		Window.addResizeHandler(new ResizeHandler() {
-			@Override
-			public void onResize(ResizeEvent event) {
-				lessonInfo.setHeight((Window.getClientHeight() - 190)+""+Unit.PX);
-			}
-		});
-		lessonInfo.setHeight((Window.getClientHeight() - 190)+""+Unit.PX);
 		lessonInfo.getElement().getStyle().setOverflowY(Overflow.AUTO);
 		populateStandardValues();
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {

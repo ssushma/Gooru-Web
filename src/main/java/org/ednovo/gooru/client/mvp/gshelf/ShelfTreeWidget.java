@@ -44,7 +44,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFo
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.EditAssessmentPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfResource;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.DOMUtils;
@@ -91,22 +90,11 @@ public class ShelfTreeWidget extends FocusPanel {
 	@UiField
 	HTML titleLbl;
 
-	/*@UiField
-	VerticalPanel contentVerPanel;*/
-
-	/*@UiField(provided = true)
-	ShelfListCBundle res;*/
-
 	@UiField
 	FocusPanel titleFocPanel;
 
-	/*@UiField
-	Label addSuccessMsg;*/
-	
 	@UiField
 	Button myShelfEditButton;
-	
-	/*@UiField HTML htmlToolTipContent;*/
 	
 	@UiField HTMLPanel panelToolTip;
 	
@@ -354,7 +342,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void setData(int nextLevel) {
-		System.out.println("setData"+nextLevel);
 		String viewType=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(viewType!=null && viewType.equals(COLLECTION)){
 			titleFocPanel.addStyleName(COLLECTION);
@@ -428,29 +415,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleLbl.getElement().setAttribute("alt", collectionDo.getTitle());
 		titleLbl.getElement().setAttribute("title", collectionDo.getTitle());
 	}
-
-
-
-
-	/**
-	 * Get collection item
-	 * 
-	 * @param collectionItemId
-	 *            get collection by collection item id
-	 * @return instance of {@link ShelfResource} as widget
-	 *//*
-	private ShelfResource getShelfResource(String collectionItemId) {
-		Iterator<Widget> widgets = contentVerPanel.iterator();
-		while (widgets.hasNext()) {
-			Widget widget = widgets.next();
-			if (widget instanceof ShelfResource
-					&& ((ShelfResource) widget).getCollectionItemDo().getGooruOid().equals(collectionItemId)) {
-				return (ShelfResource) widget;
-			}
-		}
-		return null;
-	}*/
-
 
 	public void setOpen(boolean isOpen) {
 		if(isOpen) {
@@ -600,34 +564,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		}
 	}
 
-	/*public void addCollectionItem(FolderDo collectionItemDo, boolean isNew) { 
-		Document doc = Document.get();
-        if (doc.getElementById(collectionDo.getGooruOid()) != null)
-            doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
-		if (isNew) {
-			if (this.collectionDo.getCollectionItems() == null) {
-				this.collectionDo.setCollectionItems(new ArrayList<FolderItemDo>());
-			}
-			this.collectionDo.getCollectionItems().add(collectionItemDo);
-		}
-		ShelfResource shelfResource = new ShelfResource(collectionItemDo); 
-		int widgetCount = contentVerPanel.getWidgetCount();
-//		int sequence = collectionItemDo.getItemSequence() - 1;
-		int sequence = 0;
-		
-		if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection") ) { 
-//			contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: sequence : 0);
-			contentVerPanel.add(shelfResource); 
-		}
-		if (isNew) {
-			addSuccessMsg.setVisible(false);
-			contentVerPanel.setVisible(true);
-			shelfResource.glowTitle();
-	            if(contentVerPanel.getWidgetCount()==2 && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE))){
-	        		AppClientFactory.fireEvent(new UserInfoMsgShelfEvent(CONGRATS_MSG));
-	        	}
-		}
-	}*/
 	
 	public HashMap<String,String> getUrlParams() {
 		return urlParams;

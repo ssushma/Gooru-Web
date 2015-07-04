@@ -257,9 +257,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 					setFolderActiveStatus();
 				}
-				/*if(shelfTreeWidget.getCollectionDo()==null){
-					getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
-				}*/
 			}
 		});
 		floderTreeContainer.add(shelfFolderTree);
@@ -336,10 +333,18 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	}
 
 	public void callChilds(ShelfTreeWidget shelfTreeWidget,String typeVal){
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-		getUiHandlers().getChildFolderItemsForCourse(o1, o2, o3, typeVal, shelfTreeWidget.getFolderOpenedStatus());
+		String courseId=null,unitId=null,lessonId=null;
+		if(COURSE.equalsIgnoreCase(typeVal)){
+			courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		}else if(UNIT.equalsIgnoreCase(typeVal)){
+			courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		}else{
+		    courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			lessonId=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		}
+		getUiHandlers().getChildFolderItemsForCourse(courseId, unitId, lessonId, typeVal, shelfTreeWidget.getFolderOpenedStatus());
 	}
 	/* (non-Javadoc)
 	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
@@ -433,7 +438,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				folderListDoChild.add(widget.getCollectionDo());
 			}
 			if(COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
-				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType());
+				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
 			}else{
 				getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
 			}
@@ -598,7 +603,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfFolderTree.insertItem(0, treeItem);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
-			getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
+			getUiHandlers().setRightPanelData(getFolderDo(), COURSE,null);
 			treeChildSelectedItem=treeItem;
 			correctStyle(treeItem);
 			floderTreeContainer.add(shelfFolderTree);
