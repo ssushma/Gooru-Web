@@ -208,6 +208,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@Override
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObj=courseObj;
-		unitTitle.setText(courseObj==null?i18n.GL3365():courseObj.getTitle());
+		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
 	}
 }

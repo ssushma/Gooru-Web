@@ -22,46 +22,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.studentclassview.reports;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.client.uc.LoadingUc;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Widget;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team
- *  
+ *
  */
-public class StudentClassReportView extends BaseViewWithHandlers<StudentClassReportUiHandlers> implements IsStudentClassReportView {
+public interface CollectionInfoUiHandlers extends BaseUiHandlers {
+	/**
+	 * This method will call the taxonomy service method
+	 */
+	public void callTaxonomyService();
 	
-	@UiField LoadingUc cropImageLoading;
-	
-	private static StudentClassReportViewUiBinder uiBinder = GWT
-			.create(StudentClassReportViewUiBinder.class);
-	
-	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-
-	interface StudentClassReportViewUiBinder extends
-			UiBinder<Widget, StudentClassReportView> {
-	}
-
-	public StudentClassReportView() {
-		setWidget(uiBinder.createAndBindUi(this));
-		setDebugIds();
-	}
-
-	private void setDebugIds() {
-		cropImageLoading.setLoadingText(i18n.GL1234());
-		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
-	}
-	
-	@Override
-	public void reset() {
-		super.reset();
-	}
+	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
+    
+	/**
+	 * To Create Course
+	 * @param courseTitle {@link String} 
+	 * @param isCreateUnit {@link boolean} 
+	 */
+	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateUnit);
+	/**
+	 * To update the course details
+	 * @param courseTitle {@link String} 
+	 */
+	public void updateCourseDetails(String text, String id,boolean isCreateUnit);
 }

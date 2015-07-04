@@ -58,4 +58,6 @@ public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHan
 	 */
 	void clearAll();
 
+	void setButtonHighlight();
+	
 }
