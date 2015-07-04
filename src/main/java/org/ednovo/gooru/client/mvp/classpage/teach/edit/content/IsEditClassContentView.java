@@ -43,4 +43,6 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  */
 public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
 
+	void setNavigationTab();
+
 }

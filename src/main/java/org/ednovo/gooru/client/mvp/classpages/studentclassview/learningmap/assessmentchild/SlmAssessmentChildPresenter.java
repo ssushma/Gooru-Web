@@ -22,21 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.assessmentchild;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.child.ChildPresenter;
 
 /**
  * @author Search Team
- *
+ * 
  */
-public interface LessonInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
+public class SlmAssessmentChildPresenter extends ChildPresenter<SlmAssessmentChildPresenter, IsSlmAssessmentView>{
 
-	void showStandardsPopup(String standardVal);
+	public SlmAssessmentChildPresenter(IsSlmAssessmentView childView) {
+		super(childView);
+	}
 
-	public void createAndSaveCourseDetails(String text,final boolean isCreateCollOrAssessment,String creationType);
 }

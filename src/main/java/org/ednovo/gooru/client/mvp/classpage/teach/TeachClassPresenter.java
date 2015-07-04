@@ -29,12 +29,15 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -64,6 +67,8 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	EditClassContentPresenter editClassContentPresenter;
 	
+	EditClassStudentPresenter editClassStudentPresenter;
+	
 	String classpageId="";
 	
 	private boolean isApiCalled = false;
@@ -74,12 +79,13 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	}
 
 	@Inject
-	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassPresenter editClassPresenter,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter){
+	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassPresenter editClassPresenter,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter,EditClassStudentPresenter editClassStudentPresenter){
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.editClassPresenter=editClassPresenter;
 		this.editClassSettingsPresenter=editClassSettingsPresenter;
 		this.editClassContentPresenter=editClassContentPresenter;
+		this.editClassStudentPresenter=editClassStudentPresenter;
 		
 	}
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
@@ -92,20 +98,24 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
-		if(view.equalsIgnoreCase("classSeetings")){
+		/*String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
+		if(view.equalsIgnoreCase("classSettings")){
 			setInSlot(SLOT_BODYMENU, editClassSettingsPresenter);
 		}else if(view.equalsIgnoreCase("classContent")){
 			setInSlot(SLOT_BODYMENU, editClassContentPresenter);
-		}else{
-			setInSlot(SLOT_BODYMENU, editClassPresenter);
+		}else if(view.equalsIgnoreCase("student")){
+			setInSlot(SLOT_BODYMENU, editClassStudentPresenter);
 		}
+		else{
+			setInSlot(SLOT_BODYMENU, editClassPresenter);
+		}*/
 		getClassDetails();
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
 		/*setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -130,6 +140,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReset() {
        super.onReset();
+       loadNavigationPage();
 	}
 	
 	public void getClassDetails(){
@@ -155,6 +166,24 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	 */
 	public void setCollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
+	}
+	
+	public void  loadNavigationPage(){
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		clearSlot(EMPTY_TAB);
+		clearSlot(STUDENT_TAB);
+		clearSlot(CLASS_SETTINGS_TAB);
+		clearSlot(CLASS_CONTENT_TAB);
+		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)) {
+			addToSlot(STUDENT_TAB, editClassStudentPresenter);
+		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)) {
+			addToSlot(CLASS_SETTINGS_TAB, editClassSettingsPresenter);
+		}else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SETTINGS)){
+			addToSlot(CLASS_CONTENT_TAB, editClassContentPresenter);
+		}else{
+			addToSlot(EMPTY_TAB, editClassPresenter);
+		}
+		
 	}
 
 }

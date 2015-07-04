@@ -60,6 +60,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
+	private String currentTypeView;
 	String o1,o2,o3;
 	String oldO1Value=null,oldO2Value=null,oldO3Value=null;
 	
@@ -94,7 +95,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		public void onClick(ClickEvent event) {
 			resetHilightStyles();
 			selectedTab.setStyleName(ACTIVE);
-			getUiHandlers().setTabItems(index, "Unit",folderObj);
+			getUiHandlers().setTabItems(index, currentTypeView,folderObj);
 		}
 	}
 	@Override
@@ -188,5 +189,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(oldO3Value==null){
 			oldO3Value=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		}
+	}
+	@Override
+	public void setCurrentTypeView(String currentTypeView) {
+		this.currentTypeView =currentTypeView;
 	}
 }
