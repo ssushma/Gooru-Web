@@ -20,7 +20,7 @@ public class StudentClassContentWidget extends Composite {
 	public StudentClassContentWidget(String circleStyle, String url) {
 		initWidget(uiBinder.createAndBindUi(this));
 		if(!circleStyle.isEmpty()) {
-			contentPanel.setStyleName(circleStyle);
+			contentPanel.addStyleName(circleStyle);
 		}
 		imagePanel.setUrl(url);
 		imagePanel.setHeight("55px");

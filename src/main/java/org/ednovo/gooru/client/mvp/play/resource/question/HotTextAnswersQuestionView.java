@@ -385,22 +385,19 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 			int j=0;
 
-			String answerText="";
-			AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+			//String answerText="";
+			//AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
 				Element el=(Element) widget.getElement().getLastChild();
 				if(widget instanceof Draggable && el!=null && !el.getId().equalsIgnoreCase("")){
 					Draggable draggable=(Draggable)widget;
 					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
-					userAttemptedValueList.add("["+htAnswerOption.getAnswerText()+"]");
-					answerText=answerText+"["+htAnswerOption.getAnswerText()+"]";
-					if(i<optionsContainer.getWidgetCount()-2){
-						answerText=answerText+",";
-					}
-					answerIds.add(Integer.parseInt(el.getId()));
-					if(el.getId()!=null && !el.getId().equalsIgnoreCase("")){
-
+					String answerText=StringUtil.replaceSpecial(removeHtmlTags(htAnswerOption.getAnswerText()));
+					userAttemptedValueList.add(answerText);
+						AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+					if(el!=null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+						answerIds.add(Integer.parseInt(el.getId()));
 						if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
 							el.addClassName(STYLE_DND_CORRECT);
 							answerOptionResult.put(Integer.parseInt(el.getId()), true);
@@ -413,14 +410,16 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						}
 						j++;
 					}
+					answerAttemptDo.setText(answerText);
+					answerAttemptDo.setAnswerId(0);
+					answerAttemptDo.setOrder("0");
+
+					userAttemptedOptionsList.add(answerAttemptDo);
 				}
+				
 			}
 
-			answerAttemptDo.setText("\""+answerText+"\"");
-			answerAttemptDo.setAnswerId(0);
-			answerAttemptDo.setOrder("0");
-
-			userAttemptedOptionsList.add(answerAttemptDo);
+			
 
 			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
@@ -456,7 +455,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
 				InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
-				answerIds.add(i);
+				answerIds.add(i+1);
 				if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
 
 					if(lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
@@ -496,7 +495,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 			}
 			userAttemptedValueList.add("["+answerText+"]");
-			answerAttemptDo.setText("\""+answerText+"\"");
+			answerAttemptDo.setText("\""+answerText);
 			answerAttemptDo.setAnswerId(0);
 			answerAttemptDo.setOrder("0");
 			userAttemptedOptionsList.add(answerAttemptDo);
@@ -571,7 +570,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	ResetDragDropHandler resetReorderData=new ResetDragDropHandler() {
 
 		@Override
-		public void resetReorder(int widgetIndex) {
+		public void resetReorder() {
 
 			if(checkAnswer.getStyleName().contains(STYLE_INACTIVE_BUTTON)){
 				clearReorderAnswers();

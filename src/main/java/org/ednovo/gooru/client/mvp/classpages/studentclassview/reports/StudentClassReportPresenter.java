@@ -50,7 +50,6 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 	@Override
 	public void onBind() {
 		super.onBind();
-		
 	}
 
 	@Override
