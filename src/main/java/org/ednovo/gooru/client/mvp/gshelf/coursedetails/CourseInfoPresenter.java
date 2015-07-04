@@ -123,10 +123,11 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				params.put("view", COURSE);
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
-					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
+					myCollectionsRightClusterPresenter.setUnitTemplate(UNIT);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
