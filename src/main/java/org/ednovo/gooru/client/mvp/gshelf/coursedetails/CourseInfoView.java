@@ -230,6 +230,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}else{
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(courseTitle.getText());
+			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 			if(id!=null){
 				getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
@@ -251,5 +252,21 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public String getCourseTitle() {
 		return courseTitle.getTitle();
 	}
-	
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedCourseIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+			}
+		}
+		return taxonomyCourseIds;
+	}
 }

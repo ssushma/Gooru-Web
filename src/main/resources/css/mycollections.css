@@ -746,7 +746,7 @@ button.btn-disabled{
 	
 }
 #gShelfCousesList .tableColumn:first-child{
-	width: 6%;
+	width: 8%;
 	font-weight: bold;
 	padding: 18px;
 	font-size: 18px;
@@ -780,6 +780,43 @@ button.btn-disabled{
 	width: 45px;
 	float: left;
 	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .courseImage{
+	background: #f9fcfe url('../images/folders/panel/c-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .unitImage{
+	background: #f9fcfe url('../images/folders/panel/u-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .folderImage{
+	background: #f9fcfe url('../images/folders/panel/folder-icon.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .collectionImage{
+	background: #f9fcfe url('../images/folders/panel/collection-icon.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+	border: 0;
+}
+#gShelfCousesList .tableColumn .assessmentImage{
+	background: #f9fcfe url('../images/folders/panel/assessment-type.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+	border: 0;
 }
 #gShelfCousesList .tableMainHeader h3{
 	margin:0 0 2px 0;
