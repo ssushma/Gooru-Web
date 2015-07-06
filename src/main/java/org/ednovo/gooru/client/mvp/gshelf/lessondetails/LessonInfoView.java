@@ -27,27 +27,30 @@ package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 import java.util.Arrays;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -69,7 +72,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
 	@UiField Button saveCourseBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
-	
+	@UiField Label lblErrorMessage;
+	 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
@@ -86,13 +90,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public LessonInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		lessonInfo.getElement().setId("pnlLessonInfo");
-		Window.addResizeHandler(new ResizeHandler() {
-			@Override
-			public void onResize(ResizeEvent event) {
-				lessonInfo.setHeight((Window.getClientHeight() - 190)+""+Unit.PX);
-			}
-		});
-		lessonInfo.setHeight((Window.getClientHeight() - 190)+""+Unit.PX);
 		lessonInfo.getElement().getStyle().setOverflowY(Overflow.AUTO);
 		populateStandardValues();
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
@@ -103,6 +100,12 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}else{
 					standardsDropListValues.getElement().removeAttribute("style");
 				}
+			}
+		});
+		lessonTitle.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, false);
 			}
 		});
 	}
@@ -137,14 +140,33 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),false,null);
+		getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null);
 	}
 	@UiHandler("btnSaveAndCreateCollection")
 	public void clickOnSaveAndCreateCollection(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),true,COLLECTION);
+		getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION);
 	}
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),true,ASSESSMENT);
+		getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT);
+	}
+	@Override
+	public void callCreateAndUpdate(boolean isCreate,boolean result,String type){
+		if(result){
+			SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, result);
+		}else{
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setTitle(lessonTitle.getText());
+			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+			if(id!=null){
+				getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,type);
+			}else{
+				getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,type);
+			}
+		}
+	}
+	@Override
+	public void setLessonInfoData(FolderDo folderObj) {
+		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
 	}
 }

@@ -191,7 +191,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
 				enableDisableCourseButton(false);
-			    organizelbl.setText(i18n.GL3334());
+			    organizelbl.setText(i18n.GL0180());
 				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}
 		}
@@ -223,8 +223,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			btnSelectedText.setText(i18n.GL3335());
 		}else if(tabView.equals(FOLDER)){
 			enableDisableCourseButton(false);
-			organizelbl.setText(i18n.GL3334());
-			btnSelectedText.setText(i18n.GL3334());
+			organizelbl.setText(i18n.GL0180());
+			btnSelectedText.setText(i18n.GL0180());
 		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);
@@ -257,8 +257,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 					setFolderActiveStatus();
 				}
+				
 				if(shelfTreeWidget.getCollectionDo()==null){
-					getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
+					String widgetType = shelfTreeWidget.getTreeWidgetType();
+					getUiHandlers().setRightPanelData(getFolderDo(), widgetType, null);
 				}
 			}
 		});
@@ -285,7 +287,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void setFolderActiveStatus() { 
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getCollectionDo()!=null){
-			//if(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url")){
 				if("folder".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "course".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "unit".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || "lesson".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType())) {
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
@@ -322,7 +323,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 			if(parent != null)parent.setSelected(false);
 			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-			shelfTreeWidget.setFolderOpenedStatus(true);
+			if(!"Collection".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType()) && !"Assessment".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType())){
+				shelfTreeWidget.setFolderOpenedStatus(true);
+			}else{
+				shelfTreeWidget.setCollectionOpenedStatus(true);
+			}
 			shelfTreeWidget.setActiveStyle(true);
 			ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 			if(previousshelfTreeWidget==null) {
@@ -337,10 +342,18 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	}
 
 	public void callChilds(ShelfTreeWidget shelfTreeWidget,String typeVal){
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-		getUiHandlers().getChildFolderItemsForCourse(o1, o2, o3, typeVal, shelfTreeWidget.getFolderOpenedStatus());
+		String courseId=null,unitId=null,lessonId=null;
+		if(COURSE.equalsIgnoreCase(typeVal)){
+			courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		}else if(UNIT.equalsIgnoreCase(typeVal)){
+			courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		}else{
+		    courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			lessonId=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		}
+		getUiHandlers().getChildFolderItemsForCourse(courseId, unitId, lessonId, typeVal, shelfTreeWidget.getFolderOpenedStatus());
 	}
 	/* (non-Javadoc)
 	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
@@ -434,7 +447,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				folderListDoChild.add(widget.getCollectionDo());
 			}
 			if(COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
-				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType());
+				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
 			}else{
 				getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
 			}
@@ -595,11 +608,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 			organizeRootPnl.removeStyleName("active");
 			ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(null, 1);
+			shelfTreeWidget.setTreeWidgetType(COURSE);
 			TreeItem treeItem = new TreeItem(shelfTreeWidget);
 			shelfFolderTree.insertItem(0, treeItem);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
-			getUiHandlers().setRightPanelData(getFolderDo(), COURSE);
+			getUiHandlers().setRightPanelData(getFolderDo(), COURSE,null);
 			treeChildSelectedItem=treeItem;
 			correctStyle(treeItem);
 			floderTreeContainer.add(shelfFolderTree);
@@ -629,20 +643,30 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		}
 		selectedWidget.setOpen(true);
 		ShelfTreeWidget shelfTreeWidget = null;
-		if("Unit".equalsIgnoreCase(type)){
+		if(UNIT.equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 2);
+			shelfTreeWidget.setTreeWidgetType(UNIT);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDUNIT);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("unit");
-		}else if("Lesson".equalsIgnoreCase(type)){
+		}else if(LESSON.equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 3);
+			shelfTreeWidget.setTreeWidgetType(LESSON);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDLESSON);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("lesson");
+		}else if("Collection".equalsIgnoreCase(type)){
+			shelfTreeWidget = new ShelfTreeWidget(null, 4);
+			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
+			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
 		treeChildSelectedItem.insertItem(0, item);
 		treeChildSelectedItem.setState(true);
 		
-		shelfTreeWidget.setFolderOpenedStatus(true);
+		if(!"Collection".equalsIgnoreCase(type) && !"Assessment".equalsIgnoreCase(type)){
+			shelfTreeWidget.setFolderOpenedStatus(true);
+		}else{
+			shelfTreeWidget.setCollectionOpenedStatus(true);
+		}
 		correctStyle(item);
 		treeChildSelectedItem=item;
 		setFolderActiveStatus();
@@ -714,7 +738,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget(); 
-		if(shelfTreeWidget==null || !organizeRootPnl.getStyleName().contains("active")) {
+		if(shelfTreeWidget==null || organizeRootPnl.getStyleName().contains("active")) {
 			if(id!=null) {
 				gooruOid = id;
 			} else {
@@ -730,7 +754,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			if(treeChildSelectedItem.getState()==false){
 				treeChildSelectedItem.setState(true);
 			}
-			if(!organizeRootPnl.getStyleName().contains("active")) {
+			if(organizeRootPnl.getStyleName().contains("active")) {
 				gooruOid = o1;
 			} else if(shelfTreeWidget.getLevel()==1) {
 				if(id==null){

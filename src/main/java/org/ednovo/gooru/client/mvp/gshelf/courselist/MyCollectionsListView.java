@@ -37,9 +37,12 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -51,6 +54,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -63,17 +67,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer;
+	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
-	@UiField Button btnCreate;
+	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
 	@UiField ScrollPanel listScrollPanel;
+	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion;
+	@UiField HTMLEventPanel createPanel;
 	
 	int index=0;
 	
 	String type;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment";
 	
 	private static final String VIEW= "view";
 
@@ -94,6 +100,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				setScrollHeight();
 			}
 		});
+		btnCreate.addClickHandler(new CreateContentEvent());
 	}
 	/**
 	 * This method is used to set id's
@@ -150,7 +157,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				pnlAddContainer.setVisible(false);
 			}else{
 				btnCreate.setVisible(true);
-				btnCreate.setText("Create Unit");
+				lblAddNew.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				pnlAddContainer.setVisible(true);
 			}
 		}else{
@@ -184,6 +191,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			index=pnlCourseList.getWidgetCount();
 			setLastWidgetArrowVisiblity(true);
 		}
+		setCreateText();
 		if(listOfContent!=null && listOfContent.size()>0){
 			for (FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
@@ -207,10 +215,60 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
+				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;
 			}
 			setLastWidgetArrowVisiblity(false);
+		}
+	}
+	public void enableCreateButtons(boolean isEnabled){
+		btnCreateResource.setVisible(isEnabled);
+		btnCreateQuestion.setVisible(isEnabled);
+		pnlCreate.setVisible(isEnabled);
+	}
+	/**
+	 * This method is used to set the create text
+	 * @param typeVal
+	 */
+	public void setCreateText(){
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
+		enableCreateButtons(false);
+		if(id!=null){
+			enableCreateButtons(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1110(), i18n.GL1110());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0308());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL0308(), i18n.GL0308());
+			lblAddNewForResource.setText(i18n.GL2000());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2000(), i18n.GL2000());
+			lblAddNewForQuestion.setText(i18n.GL3218());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3218(), i18n.GL3218());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+		}else if(o3!=null){
+			enableCreateButtons(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
+			lblAddNewForResource.setText(i18n.GL2001());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
+			lblAddNewForQuestion.setText(i18n.GL3372());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3372(), i18n.GL3372());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+		}else if(o2!=null){
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3371());
+			lblAddNew.setText(i18n.GL0910().toLowerCase());
+		}else if(o1!=null){
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
+			lblAddNew.setText(i18n.GL3281().toLowerCase());
 		}
 	}
 	/**
@@ -260,24 +318,29 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public ScrollPanel getScrollPanel(){
 		return listScrollPanel;
 	}
-
+	/**
+	 * This method is used to update the url parameters
+	 * @param params
+	 * @param folderObj
+	 * @return
+	 */
 	public Map<String,String> updateParameters(Map<String,String> params,FolderDo folderObj){
-		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 		if( view!=null){
 			params.put(VIEW,view);
 		}else{
 			params.put(VIEW,"Course");
 		}
-		if(o1==null && o2==null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)){
+		if(o1==null && o2==null && o3==null && id==null){
 			params.put(O1_LEVEL,folderObj.getGooruOid());
-		} else if(o1!=null && o2==null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)){
+		} else if(o1!=null && o2==null && o3==null && id==null){
 			params.put(O1_LEVEL, o1);
 			params.put(O2_LEVEL,folderObj.getGooruOid());
-		}else if(o1!=null && o2!=null && o3==null && id==null && folderObj.getType().equalsIgnoreCase(FOLDER)) {
+		}else if(o1!=null && o2!=null && o3==null && id==null) {
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
@@ -288,5 +351,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			params.put(ID,folderObj.getGooruOid());
 		}
 		return params;
+	}
+	/**
+	 * This class used for to add course/unit/lesson 
+	 * @author Gooru team
+	 *
+	 */
+	public class CreateContentEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+		    String type = StringUtil.isEmpty(btnCreate.getText())?null:btnCreate.getText();
+			getUiHandlers().addNewContent(type);
+		}
 	}
 }

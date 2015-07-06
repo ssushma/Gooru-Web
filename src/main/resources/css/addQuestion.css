@@ -956,6 +956,17 @@
 	padding: 5px;
 	cursor: pointer;
 }
+.hsanswer-multiRight {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 3px solid #FBB03B;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
 .hsanswer-answerOptionContent {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
@@ -967,6 +978,137 @@
 }
 .marginTop20 {
 	margin-top: 20px;
+}
+.summaryWrapper {
+	margin: 0 auto;
+	border: 1px solid #cccccc;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	background: #ffffff;
+	width: 630px;
+	height:430px;
+	color: #515151;
+	margin: 0px auto;
+	position: relative;
+	font-family: arial;
+	font-size: 12px;
+	border-radius: 4px;
+	border: 1px solid #999;
+}
+
+.summaryPopUpHeader {
+	background: #515151;
+	padding: 10px 10px;
+}
+.summaryTitle {
+	font-size: 18px;
+	line-height: 120%;
+	color: #fff;
+	padding: 8px 5px 5px 10px;
+}
+
+.summaryClose {
+	background: url("${cdn.endpoint}/images/sprites-login.png") no-repeat;
+	background-position: -52px -116px;
+	width: 18px;
+	height: 19px;
+	cursor: pointer;
+	float: right;
+	margin-top: 8px;
+}
+.summaryPopupBody{
+	padding: 20px 15px;
+	height: 380px;
+	overflow-y:auto;
+}
+.summaryHsImg {
+	display: inline-block;
+	margin: 8px;
+	width :100px;
+	height:100px;
+	border: 2px solid;
+}
+.summaryViewResponse {
+	padding: 3px;
+	text-align: center;
+	cursor: pointer;
+	color: #1076bb;
+}
+.summaryHsanswer-right {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 3px solid #4d9645;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+.summaryHsanswer-wrong {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 3px solid #db0f0f;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+.summaryHsanswer-multiRight {
+	float: left;
+	width: 100%;
+	min-width: 410px;
+	min-height: 40px;
+	border: 3px solid #FBB03B;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.summaryHtHiglightText.correct {
+	background-color: #a6caa2;
+    border: 1px solid  #4d9645;
+	cursor: pointer;
+	position:relative;
+}
+.summaryHtHiglightText.correct:after {
+	display: inline-block;
+	content: "\2714";
+	color: #4d9645;
+	font-size: 15px;
+    line-height: 12px;
+}
+
+.summaryHtHiglightText.inCorrect {
+	background-color: #f09f9f;
+    border: 1px solid  #db0f0f;
+	cursor: pointer;
+	position:relative;
+}
+.summaryHtHiglightText.inCorrect:after {
+	display: inline-block;
+	content: "\2717";
+	color: #db0f0f;
+}
+.summaryHtHiglightText.multiCorrect {
+	background-color: #fdd79d;
+    border: 1px solid  #fbb03b;
+	cursor: pointer;
+	position:relative;
+}
+.summaryHtHiglightText.multiCorrect:after {
+	display: inline-block;
+	content: "\2714";
+	color: #fbb03b;
+	font-size: 15px;
+    line-height: 12px;
+}
+.summaryHtPlayerAns {
+	margin-right: 3px;
+	line-height: 20px;
+	border: 1px solid #fff;
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {

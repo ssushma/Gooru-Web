@@ -1,9 +1,14 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<g:HTMLPanel ui:field="mainContainer" >
 	 <g:HTMLPanel styleName="greyBox"><p>Choose your standards at the last level</p></g:HTMLPanel>
-	<g:HTMLPanel styleName="standarBodyContainer">		
+	 		<g:FlowPanel ui:field="cropImageWidgetFloPanel" >
+			 <g:FlowPanel ui:field="imageLoader" >
+					<gg:LoadingUc ui:field="imageLoadingIcon" />
+			</g:FlowPanel>
+		</g:FlowPanel>
+	<g:HTMLPanel ui:field="standardsContainer" styleName="standarBodyContainer">		
 		<g:HTMLPanel styleName="listGroup no-gutter">
 		<g:HTMLPanel styleName="col-md-2 col-sm-2 border-right">
 			<uc:UlPanel  ui:field="levelOneStandards" styleName="list-unstyled"/>	    

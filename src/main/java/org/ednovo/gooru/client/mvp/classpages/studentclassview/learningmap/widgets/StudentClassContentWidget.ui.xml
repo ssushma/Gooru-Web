@@ -1,7 +1,0 @@
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style src="" />
-	<g:HTMLPanel styleName="blueBorder" ui:field="contentPanel">
-	    <g:Image ui:field="imagePanel"/>
-	</g:HTMLPanel>
-</ui:UiBinder>

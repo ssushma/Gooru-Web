@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
@@ -115,9 +116,9 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateLesson) {
+	public void createAndSaveCourseDetails(CreateDo createDo,final boolean isCreateLesson) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -127,13 +128,45 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				if(isCreateLesson){
-					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
 				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
+					myCollectionsRightClusterPresenter.getFolderListDoChild().clear();
+					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+			}
+		});
+	}
+	@Override
+	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
+		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,createDo, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				FolderDo folderDo = new FolderDo();
+				folderDo.setTitle(createDo.getTitle());
+				folderDo.setType(UNIT);
+				//folderDo.setGooruOid(id);
+				myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
+					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
+				}
+			}
+		});
+	}
+	@Override
+	public void checkProfanity(String textValue,final boolean isCreate,final int index){
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				getView().callCreateAndUpdate(isCreate,value,index);
 			}
 		});
 	}

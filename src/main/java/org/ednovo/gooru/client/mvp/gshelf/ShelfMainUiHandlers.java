@@ -100,8 +100,9 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	 * To show Folder/Course/Collection content on Right side panel when clicking on Lift side tree.
 	 * @param folderObj
 	 * @param clickedItemType
+	 * @param folderListDoChild 
 	 */
-	public void setRightPanelData(FolderDo folderObj,String clickedItemType);
+	public void setRightPanelData(FolderDo folderObj,String clickedItemType, List<FolderDo> folderListDoChild);
     /**
      * To show List of user content
      * @param listOfContent

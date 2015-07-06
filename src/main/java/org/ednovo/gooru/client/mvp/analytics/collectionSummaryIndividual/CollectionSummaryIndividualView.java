@@ -43,6 +43,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -683,7 +684,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						            
 						            //Set Answer choices
 						            String questionType= result.get(i).getType();
-						            if(questionType==null){
+						            if(questionType.equalsIgnoreCase("HS")){
 						            	questionType= result.get(i).getQuestionType();
 						            }
 						            String correctAnser = null;
@@ -808,91 +809,59 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        	}else if(HT_RO.equalsIgnoreCase(questionType)){
 						        		VerticalPanel answerspnl=new VerticalPanel();
 						        		if(result.get(i).getAnswerObject()!=null) {
-						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
-						        			 JSONObject answerObject = value.isObject();
-						        			 Set<String> keys=answerObject.keySet();
-						        			 Iterator<String> itr = keys.iterator();
-						        			 boolean isCorrect=false;
-						        		      while(itr.hasNext()) {
-						        		    	  answerspnl.clear();
-						        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-						        		         for(int j=0;j<attemptsObj.size();j++){
-						        		        	Label answerChoice=new Label();
-						        		            String showMessage = null;
-						        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
-						        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-						        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-						 	        		         if(skip == false)
-						 							  {
-						 	        		        	showMessage=removeHtmlTags(matext);
-														answerChoice.setText(showMessage);
-														
-						 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
-						 										answerChoice.getElement().getStyle().setColor(INCORRECT);
-						 										 isCorrect=true;
-						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
-						 										answerChoice.getElement().getStyle().setColor(CORRECT);
-						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-						 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-						 									}
-						 							  }else{
-						 								 isCorrect=true;
-						 							  }
-						 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
-						 	        		        answerspnl.add(answerChoice);
-						        		         }
-						        		      }
-						        		      if(!isCorrect){
-													 isTickdisplay=true;
-												}
+						        			Label viewResponselbl=new Label(VIEWRESPONSE);
+						        			viewResponselbl.setStyleName("summaryViewResponse");
+						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						        			answerspnl.add(viewResponselbl);
 						        		}
 						        		 answerspnl.setStyleName(res.css().setMarginAuto());
 						        		 data.setValue(i, 3, answerspnl.toString());
-						        	}else if(HS_TXT.equalsIgnoreCase(questionType)){
+						        	}else if(HT_HL.equalsIgnoreCase(questionType)){
 						        		VerticalPanel answerspnl=new VerticalPanel();
 						        		if(result.get(i).getAnswerObject()!=null) {
-						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
-						        			 JSONObject answerObject = value.isObject();
-						        			 Set<String> keys=answerObject.keySet();
-						        			 Iterator<String> itr = keys.iterator();
-						        			 boolean isCorrect=false;
-						        		      while(itr.hasNext()) {
-						        		    	  answerspnl.clear();
-						        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-						        		         for(int j=0;j<attemptsObj.size();j++){
-						        		        	Label answerChoice=new Label();
-						        		            String showMessage = null;
-						        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
-						        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-						        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-						 	        		         if(skip == false)
-						 							  {
-						 	        		        	showMessage=removeHtmlTags(matext);
-														answerChoice.setText(showMessage);
-														
-						 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
-						 										answerChoice.getElement().getStyle().setColor(INCORRECT);
-						 										 isCorrect=true;
-						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
-						 										answerChoice.getElement().getStyle().setColor(CORRECT);
-						 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-						 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-						 									}
-						 							  }else{
-						 								 isCorrect=true;
-						 							  }
-						 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
-						 	        		        answerspnl.add(answerChoice);
-						        		         }
-						        		      }
-						        		      if(!isCorrect){
-													 isTickdisplay=true;
-												}
+						        			Label viewResponselbl=new Label(VIEWRESPONSE);
+						        			viewResponselbl.setStyleName("summaryViewResponse");
+						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						        			answerspnl.add(viewResponselbl);
 						        		}
 						        		 answerspnl.setStyleName(res.css().setMarginAuto());
 						        		 data.setValue(i, 3, answerspnl.toString());
 						        	}
 						        	
+						        	else if(HS_TXT.equalsIgnoreCase(questionType)){
+						        		VerticalPanel answerspnl=new VerticalPanel();
+						        		if(result.get(i).getAnswerObject()!=null) {
+						        			Label viewResponselbl=new Label(VIEWRESPONSE);
+						        			viewResponselbl.setStyleName("summaryViewResponse");
+						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						        			answerspnl.add(viewResponselbl);
+						        		}
+						        		 answerspnl.setStyleName(res.css().setMarginAuto());
+						        		 data.setValue(i, 3, answerspnl.toString());
+						        	}
+						        	else if(HS_IMG.equalsIgnoreCase(questionType)){
+						        		VerticalPanel answerspnl=new VerticalPanel();
+						        		if(result.get(i).getAnswerObject()!=null) {
+						        			Label viewResponselbl=new Label(VIEWRESPONSE);
+						        			viewResponselbl.setStyleName("summaryViewResponse");
+						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						        			answerspnl.add(viewResponselbl);
+						        		}
+						        		answerspnl.setStyleName(res.css().setMarginAuto());
+						        		data.setValue(i, 2, answerspnl.toString());
+						        	}
 						        	Image correctImg=new Image();      	            
 						        	if(isTickdisplay){
 						        		 correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
@@ -916,6 +885,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        Options options = Options.create();
 			        options.setAllowHtml(true);
 			        Table table = new Table(data, options);
+			        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 			        printScoredData.add(table);
 			        if(result.size()==0){
 			        	Label erroeMsg=new Label();
@@ -961,8 +931,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					           
 					            //Set Answer choices
 					            String questionType= result.get(i).getType();
-					            if(questionType==null){
-					            	questionType=result.get(i).getQuestionType();
+					            if(questionType.equalsIgnoreCase("HS")){
+					            	questionType= result.get(i).getQuestionType();
 					            }
 					            String correctAnser = null;
 					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
@@ -1072,41 +1042,58 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        	}else if(HT_RO.equalsIgnoreCase(questionType)){
 					        		VerticalPanel answerspnl=new VerticalPanel();
 					        		if(result.get(i).getAnswerObject()!=null) {
-					        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
-					        			 JSONObject answerObject = value.isObject();
-					        			 Set<String> keys=answerObject.keySet();
-					        			 Iterator<String> itr = keys.iterator();
-					        		      while(itr.hasNext()) {
-					        		    	  answerspnl.clear();
-					        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-					        		         for(int j=0;j<attemptsObj.size();j++){
-					        		        	Label answerChoice=new Label();
-					        		            String showMessage = null;
-					        		            
-					        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
-					        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-					        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-					 	        		         if(skip == false)
-					 							  {
-					 	        		        	showMessage=removeHtmlTags(matext);
-													answerChoice.setText(showMessage);
-					 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
-					 										answerChoice.getElement().getStyle().setColor(INCORRECT);
-					 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
-					 										answerChoice.getElement().getStyle().setColor(CORRECT);
-					 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-					 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-					 									}
-					 							  }
-					 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
-					 	        		        answerspnl.add(answerChoice);
-					        		         }
-					        		      }
+					        			Label viewResponselbl=new Label(VIEWRESPONSE);
+					        			viewResponselbl.setStyleName("summaryViewResponse");
+					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+					        			answerspnl.add(viewResponselbl);
+					        		}
+					        		 answerspnl.setStyleName(res.css().setMarginAuto());
+					        		 data.setValue(i, 2, answerspnl.toString());
+					        	}else if(HT_HL.equalsIgnoreCase(questionType)){
+					        		VerticalPanel answerspnl=new VerticalPanel();
+					        		if(result.get(i).getAnswerObject()!=null) {
+					        			Label viewResponselbl=new Label(VIEWRESPONSE);
+					        			viewResponselbl.setStyleName("summaryViewResponse");
+					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+					        			answerspnl.add(viewResponselbl);
 					        		}
 					        		 answerspnl.setStyleName(res.css().setMarginAuto());
 					        		 data.setValue(i, 2, answerspnl.toString());
 					        	}
-					        	
+					        	else if(HS_TXT.equalsIgnoreCase(questionType)){
+					        		VerticalPanel answerspnl=new VerticalPanel();
+					        		if(result.get(i).getAnswerObject()!=null) {
+					        			Label viewResponselbl=new Label(VIEWRESPONSE);
+					        			viewResponselbl.setStyleName("summaryViewResponse");
+					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+					        			answerspnl.add(viewResponselbl);
+					        		}
+					        		 answerspnl.setStyleName(res.css().setMarginAuto());
+					        		 data.setValue(i, 2, answerspnl.toString());
+					        	}
+					        	else if(HS_IMG.equalsIgnoreCase(questionType)){
+					        		VerticalPanel answerspnl=new VerticalPanel();
+					        		if(result.get(i).getAnswerObject()!=null) {
+					        			Label viewResponselbl=new Label(VIEWRESPONSE);
+					        			viewResponselbl.setStyleName("summaryViewResponse");
+					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+					        			answerspnl.add(viewResponselbl);
+					        		}
+					        		answerspnl.setStyleName(res.css().setMarginAuto());
+					        		data.setValue(i, 2, answerspnl.toString());
+					        	}
 					           
 					            //Set attempts
 					            Label attempts=new Label(Integer.toString(noOfAttempts));
@@ -1124,6 +1111,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        Options options = Options.create();
 		        options.setAllowHtml(true);
 		        Table table = new Table(data, options);
+		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 		        table.getElement().setId("individulaDataScored");
 		        individualScoredData.add(table);
 		        if(result.size()==0){
@@ -1282,4 +1270,30 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
         return html;
 	}
+	
+	
+	/**
+	 * This class is used to handle the click event on the table cell
+	 */
+	public class SummaryPopupClick implements ClickHandler{
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			Element ele=event.getNativeEvent().getEventTarget().cast();
+			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId")) && !StringUtil.isEmpty(ele.getAttribute("answerObj"))){
+				 JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
+    			 JSONObject answerObject = value.isObject();
+    			 Set<String> keys=answerObject.keySet();
+    			 Iterator<String> itr = keys.iterator();
+    			 JSONArray attemptsObj=null;
+    		      while(itr.hasNext()) {
+    		         attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+    		       }
+    		      if(attemptsObj!=null){
+    		      SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
+    		      }
+			}
+		}
+	};
+	
 }
