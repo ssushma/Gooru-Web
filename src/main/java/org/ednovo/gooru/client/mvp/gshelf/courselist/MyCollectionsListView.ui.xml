@@ -1,26 +1,32 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:event="urn:import:org.ednovo.gooru.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:event="urn:import:org.ednovo.gooru.client.ui">
 	<g:HTMLPanel ui:field="courseListContainer">
-	<g:HTMLPanel styleName="courseHeader" ui:field="pnlH2TitleContainer">
-		<panel:H2Panel ui:field="h2Title"/>
-	</g:HTMLPanel>
-	<g:HTMLPanel styleName="courseCreateContainer" ui:field="pnlCreateContainer">
-		<g:Button styleName="primary createButton" ui:field="btnCreate"/>
-		<g:Button styleName="primary createButton" ui:field="btnCreateQuestion"/>
-		<g:Button styleName="primary createButton" ui:field="btnCreateResource"/>
-	</g:HTMLPanel>
-	<g:ScrollPanel ui:field="listScrollPanel" styleName="coursesList">
-		<g:HTMLPanel>
-			<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList"/>
-			<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
-				<input type="file" name="fileField" id="fileField"/>
-				<event:HTMLEventPanel ui:field="createPanel">
-					<span>+</span>
-					<g:Label ui:field="lblAddNew"/>
-				</event:HTMLEventPanel>
-			</g:HTMLPanel>
+		<g:HTMLPanel styleName="courseHeader" ui:field="pnlH2TitleContainer">
+			<panel:H2Panel ui:field="h2Title" />
 		</g:HTMLPanel>
-	</g:ScrollPanel> 
+		<g:HTMLPanel styleName="courseCreateContainer" ui:field="pnlCreateContainer">
+			<g:Button styleName="primary createButton" ui:field="btnCreate" />
+			<g:Button styleName="primary createButton" ui:field="btnCreateQuestion" />
+			<g:Button styleName="primary createButton" ui:field="btnCreateResource" />
+		</g:HTMLPanel>
+		<g:ScrollPanel ui:field="listScrollPanel" styleName="coursesList">
+			<g:HTMLPanel>
+				<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList" />
+				<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
+					<input type="file" name="fileField" id="fileField" />
+					<event:HTMLEventPanel ui:field="createPanel">
+						<span>+ Add New</span>
+						<g:Label ui:field="lblAddNew" />
+					</event:HTMLEventPanel>
+					<g:HTMLPanel ui:field="pnlCreate" styleName="pnlCreate">
+						<g:Label ui:field="lblAddNewForResource" styleName="pnlCreate" />
+						or
+						<g:Label ui:field="lblAddNewForQuestion" styleName="pnlCreate" />
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:ScrollPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

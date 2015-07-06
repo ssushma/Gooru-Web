@@ -50,4 +50,11 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 * @param courseObj
 	 */
 	void setCouseData(FolderDo courseObj);
+	/**
+	 * This method is used to for creating and updating the unit
+	 * @param isCreate
+	 * @param result
+	 * @param index
+	 */
+	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
 }

@@ -194,7 +194,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnLessonsCount.setVisible(false);
 			pnlArrows.setVisible(false);
 			pnlMoveToEdit.setVisible(true);
-		}else if(COLLECTION.equalsIgnoreCase(typeVal)){
+		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal)){
 			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
 			spnUnitsCount.setVisible(false);

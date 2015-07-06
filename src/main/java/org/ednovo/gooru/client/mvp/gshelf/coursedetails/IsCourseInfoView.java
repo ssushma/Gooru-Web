@@ -30,8 +30,6 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
-import com.google.gwt.user.client.ui.TextBox;
-
 /**
  * @author Search Team
  *
@@ -57,4 +55,10 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 * @return {@link String}
 	 */
 	String getCourseTitle();
+	/**
+	 * This method is used for calling create and update api
+	 * @param isCreate
+	 * @param result
+	 */
+	void callCreateAndUpdate(boolean isCreate,boolean result);
 }

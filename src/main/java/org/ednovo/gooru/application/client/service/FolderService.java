@@ -160,7 +160,7 @@ public interface FolderService extends BaseService {
 	 * @param courseTitle
 	 * @throws GwtException
 	 */
-	public void updateCourse(String courseId, String courseTitle) throws GwtException, ServerDownException;
+	public void updateCourse(String courseId,String unitId,String lessonId, String courseTitle) throws GwtException, ServerDownException;
 	
 	public CollectionDo  copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf) throws GwtException, ServerDownException;
 	
