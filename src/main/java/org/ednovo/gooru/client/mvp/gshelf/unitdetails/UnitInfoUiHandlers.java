@@ -56,7 +56,7 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	 * @param textValue
 	 * @param isCreate
 	 */
-	void checkProfanity(String textValue,final boolean isCreate);
+	void checkProfanity(String textValue,final boolean isCreate,int index);
 
 	void showUnitInfo();
 

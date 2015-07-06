@@ -55,6 +55,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -77,7 +78,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveCourseBtn,nextUnitBtn;
 	@UiField TextBox unitTitle;
-	@UiField Label lblErrorMessage;
+	@UiField Label lblErrorMessage,lblErrorMessageForBig,lblErrorMessageForEssential;
+	@UiField TextArea txaBigIdeas,txaEssentialQuestions;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
@@ -98,6 +100,18 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			@Override
 			public void onBlur(BlurEvent event) {
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, false);
+			}
+		});
+		txaBigIdeas.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextArea(txaBigIdeas, lblErrorMessageForBig, false);
+			}
+		});
+		txaEssentialQuestions.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, false);
 			}
 		});
 	}
@@ -209,12 +223,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(unitTitle.getText().trim(),false);
+		getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0);
 	}
 	
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(unitTitle.getText().trim(),true);
+		getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0);
 	}
 	/**
 	 * This method is used to call create and update API
@@ -222,15 +236,25 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result){
-		if(result){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,int index){
+		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, result);
+		}else if(result && index==1){
+			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaBigIdeas, lblErrorMessageForBig, result);
+		}else if(result && index==2){
+			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
 		}else{
-			String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-			if(id!=null){
-				getUiHandlers().updateCourseDetails(unitTitle.getText(),id,isCreate);
-			}else{
-				getUiHandlers().createAndSaveCourseDetails(unitTitle.getText(),isCreate);
+			if(index==0){
+				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),true,1);
+			}else if(index==1){
+				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),true,2);
+			}else if(index==2){
+				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+				if(id!=null){
+					getUiHandlers().updateCourseDetails(unitTitle.getText(),id,isCreate);
+				}else{
+					getUiHandlers().createAndSaveCourseDetails(unitTitle.getText(),isCreate);
+				}
 			}
 		}
 	}
