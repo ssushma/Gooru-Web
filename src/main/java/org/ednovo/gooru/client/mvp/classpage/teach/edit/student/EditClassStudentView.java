@@ -100,7 +100,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField VerticalPanel tableContainer,pendingContainer;
 	
-	@UiField HTMLPanel panelSuggestBox/*,panelActions,panelCode*/;
+	@UiField HTMLPanel panelSuggestBox, rosterContainer/*,panelActions,panelCode*/;
 	
 	@UiField Label lblPleaseWait,lblErrorMessage;
 	
@@ -118,8 +118,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField HTMLPanel pendindUserContainer,activeUserConatiner;
 
-	@UiField LiPanel studentReports;
-	
 	@UiField FlowPanel reportBox;
 	
 	private static EditClassStudentViewUiBinder uiBinder = GWT.create(EditClassStudentViewUiBinder.class);
@@ -134,31 +132,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		
-		for(int i=0;i<=3;i++){
-			tableContainer.add(new MembersViewVc("joined") {
-				
-				@Override
-				public void setStudentsListContainer(ClickEvent event) {			
-				}
-				
-				@Override
-				public void setCollabCount(int count, String type) {
-				}
-			});
-			pendingContainer.add(new MembersViewVc("pending") {
-				
-				@Override
-				public void setStudentsListContainer(ClickEvent event) {
-					throw new RuntimeException("Not implemented");
-				}
-				
-				@Override
-				public void setCollabCount(int count, String type) {
-					throw new RuntimeException("Not implemented");
-				}
-			});
-		}
 	}
 	
 	public void setIds(){
@@ -347,25 +320,51 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 	}
 
-	@UiHandler("studentReports")
-	public void clickStudentReports(ClickEvent event) {
-		PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-		request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS);
-		request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		AppClientFactory.getPlaceManager().revealPlace(request);
-	}
-	
 	@Override
 	public void setReportView() {
 		reportBox.clear();
+		setReportVisiblity(true);
 		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		
 		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			reportBox.add(new TeachCourseReportChildView());
 		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 			reportBox.add(new TeachUnitReportChildView());
 		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			reportBox.add(new TeachLessonReportChildView());
+		}
+	}
+	
+	private void setReportVisiblity(boolean isVisible) {
+		reportBox.setVisible(isVisible);
+		rosterContainer.setVisible(!isVisible);
+	}
+
+	@Override
+	public void setRoasterView() {
+		setReportVisiblity(false);
+		for(int i=0;i<=3;i++){
+			tableContainer.add(new MembersViewVc("joined") {
+				
+				@Override
+				public void setStudentsListContainer(ClickEvent event) {			
+				}
+				
+				@Override
+				public void setCollabCount(int count, String type) {
+				}
+			});
+			pendingContainer.add(new MembersViewVc("pending") {
+				
+				@Override
+				public void setStudentsListContainer(ClickEvent event) {
+					throw new RuntimeException("Not implemented");
+				}
+				
+				@Override
+				public void setCollabCount(int count, String type) {
+					throw new RuntimeException("Not implemented");
+				}
+			});
 		}
 	}
 }
