@@ -49,4 +49,11 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	 * @param courseTitle {@link String} 
 	 */
 	public void updateCourseDetails(String text, String id,boolean isCreateUnit);
+	
+	/**
+	 * This method is used for profanity checker
+	 * @param textValue
+	 * @param index
+	 */
+	public void checkProfanity(String textValue,boolean isCreate);
 }

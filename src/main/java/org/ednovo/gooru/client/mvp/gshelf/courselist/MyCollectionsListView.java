@@ -66,12 +66,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer;
+	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
 	@UiField ScrollPanel listScrollPanel;
-	@UiField Label lblAddNew;
+	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion;
 	
 	int index=0;
 	
@@ -219,6 +219,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			setLastWidgetArrowVisiblity(false);
 		}
 	}
+	public void enableCreateButtons(boolean isEnabled){
+		btnCreateResource.setVisible(isEnabled);
+		btnCreateQuestion.setVisible(isEnabled);
+		pnlCreate.setVisible(isEnabled);
+	}
 	/**
 	 * This method is used to set the create text
 	 * @param typeVal
@@ -228,34 +233,39 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-		btnCreateResource.setVisible(false);
-		btnCreateQuestion.setVisible(false);
+		enableCreateButtons(false);
 		if(id!=null){
-			btnCreateResource.setVisible(true);
-			btnCreateQuestion.setVisible(true);
+			enableCreateButtons(true);
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());
 			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1110(), i18n.GL1110());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0308());
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL0308(), i18n.GL0308());
+			lblAddNewForResource.setText(i18n.GL2000());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2000(), i18n.GL2000());
+			lblAddNewForQuestion.setText(i18n.GL3218());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3218(), i18n.GL3218());
 			
 			btnCreate.setVisible(false);
 			lblAddNew.setVisible(false);
 		}else if(o3!=null){
-			btnCreateResource.setVisible(true);
-			btnCreateQuestion.setVisible(true);
+			enableCreateButtons(true);
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
+			lblAddNewForResource.setText(i18n.GL2001());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
+			lblAddNewForQuestion.setText(i18n.GL3418());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3418());
 			
 			btnCreate.setVisible(false);
 			lblAddNew.setVisible(false);
 		}else if(o2!=null){
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3417());
-			lblAddNew.setText(i18n.GL3417());
+			lblAddNew.setText(i18n.GL0910().toLowerCase());
 		}else if(o1!=null){
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3416());
-			lblAddNew.setText(i18n.GL3416());
+			lblAddNew.setText(i18n.GL3281().toLowerCase());
 		}
 	}
 	/**

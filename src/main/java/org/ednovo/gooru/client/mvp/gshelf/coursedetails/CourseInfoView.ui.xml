@@ -5,7 +5,10 @@
 	<g:HTMLPanel ui:field="courseInfo">
 			<div class="courseNameBlock">
 				<p>Course Name</p>
-				<p><g:TextBox styleName="form-control" ui:field="courseTitle" text="{i18n.GL3347}" title="{i18n.GL3347}"/></p>
+				<p>
+				<g:TextBox styleName="form-control" ui:field="courseTitle" text="{i18n.GL3347}" title="{i18n.GL3347}"/>
+				<g:Label ui:field="lblErrorMessage"></g:Label>
+				</p>
 			</div>
 			<div class="tagCoursePanel">
 				<p>Tag your course. What do you plan to cover?</p>

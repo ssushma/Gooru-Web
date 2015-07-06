@@ -70,7 +70,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	
 	void updateFolder(String folderId, String title, String ideas, String questions, String performance, AsyncCallback<Void> simpleAsyncCallback);
    
-	void updateCourse(String courseId, String courseTitle,AsyncCallback<Void> simpleAsyncCallback);
+	void updateCourse(String courseId,String unitId,String lessonId, String courseTitle,AsyncCallback<Void> simpleAsyncCallback);
 	
 	void copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf, AsyncCallback<CollectionDo> simpleAsyncCallback);
 

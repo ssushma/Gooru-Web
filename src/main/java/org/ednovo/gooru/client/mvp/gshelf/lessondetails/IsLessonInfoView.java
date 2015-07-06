@@ -35,5 +35,5 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void setLessonInfoData(FolderDo folderObj); 
 	
-
+	void callCreateAndUpdate(boolean isCreate,boolean result,String type);
 }
