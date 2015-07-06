@@ -3,9 +3,15 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc"  xmlns:uc="urn:import:org.ednovo.gooru.client.uc.suggestbox.widget">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="tableRow">
+		<g:HTMLPanel styleName="tableColumn">
+			<div class="tableMainHeader">
+				<g:Label ui:field="lblIndex"></g:Label>
+			</div>
+		</g:HTMLPanel>
 		<g:HTMLPanel styleName="tableColumn" ui:field="pnlTitleContainer">
 			<div class="tableMainHeader">
-			<panel:H3Panel ui:field="h3CourseTitle"/>
+				<g:Label ui:field="lblImage"/>
+				<panel:H3Panel ui:field="h3CourseTitle"/>
 				<uc:Paragraph ui:field="pTitle"></uc:Paragraph>
 			</div>
 		</g:HTMLPanel>

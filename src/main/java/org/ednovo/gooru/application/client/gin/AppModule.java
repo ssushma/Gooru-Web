@@ -70,6 +70,16 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpAfterThirt
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfileView;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpTurnsAfterThirteenView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.IsStudentClassView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter.IsStudentClassProxy;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.IsStudentClassLearningMapView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapPresenter;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.IsStudentClassReportView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportView;
 import org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
@@ -82,7 +92,11 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassSettingsNavigationView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView;
@@ -104,16 +118,6 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.IsStudentAssignmentVie
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.IsStudentClassView;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassPresenter;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassPresenter.IsStudentClassProxy;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.StudentClassView;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.IsStudentClassLearningMapView;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.StudentClassLearningMapPresenter;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.learningmap.StudentClassLearningMapView;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.IsStudentClassReportView;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.StudentClassReportPresenter;
-import org.ednovo.gooru.client.mvp.classpages.studentclassview.reports.StudentClassReportView;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter.IsClassCodeProxy;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodeView;
@@ -694,6 +698,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(EditClassSettingsPresenter.class, IsEditClassSettingsView.class, EditClassSettingsView.class);
 		bindPresenterWidget(EditClassContentPresenter.class, IsEditClassContentView.class, EditClassContentView.class);
 		bindPresenterWidget(EditClassStudentPresenter.class, IsEditClassStudentView.class, EditClassStudentView.class);
+		bindPresenterWidget(EditClassSettingsNavigationPresenter.class, IsEditClassSettingsNavigationView.class, EditClassSettingsNavigationView.class);
 		
 
 		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);

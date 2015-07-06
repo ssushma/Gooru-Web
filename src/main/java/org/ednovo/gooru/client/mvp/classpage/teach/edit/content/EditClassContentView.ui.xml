@@ -3,27 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src=""></ui:style>
-	<g:HTMLPanel>
-		<g:HTMLPanel styleName="classMenuBlock no-gutter">
-		<g:HTMLPanel styleName="col-md-7 col-sm-5">
-			<g:HTMLPanel styleName="classMenuLeft">
-				<ul>
-				    <uc:LiPanel ui:field="minLiPnl"><g:Anchor ui:field="minmumScoreAnr"></g:Anchor></uc:LiPanel>
-				    <uc:LiPanel ui:field="settLiPanel"><g:Anchor ui:field="contentSettingsAnr"></g:Anchor></uc:LiPanel>
-				</ul>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
-		
-		<g:HTMLPanel styleName="col-md-5 col-sm-7">
-			<g:HTMLPanel styleName="classMenuRight">
-				<g:HTMLPanel styleName="coureEditActions"><g:InlineLabel ui:field="courseLbl"></g:InlineLabel><span class="folderIcon"></span><g:InlineLabel styleName="classTitle" ui:field="titleLbl">4th Grade Math</g:InlineLabel> 
-				    <g:Button styleName="primary" ui:field="editCourseBtn"></g:Button>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="stPriviewButton"><g:Button styleName="primary" ui:field="studentPreviewbtn"></g:Button></g:HTMLPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
-		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-		</g:HTMLPanel>
 		<g:HTMLPanel styleName="geryBackgroundBody paddingBlock">
 			<g:HTMLPanel styleName="setScoreContainer" ui:field="scoreContainer">
 					<g:HTMLPanel styleName="col-md-6 col-sm-6">
@@ -96,7 +75,6 @@
 			</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-	</g:HTMLPanel>
 </ui:UiBinder> 
 
 
