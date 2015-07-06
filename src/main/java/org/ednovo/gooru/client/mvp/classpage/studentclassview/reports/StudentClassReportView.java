@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- *
+ * 
  *  http://www.goorulearning.org/
- *
+ * 
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- *
+ * 
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- *
+ * 
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,25 +22,46 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.uc.LoadingUc;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @fileName : IsEditStudentView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 03-Jul-2015
- *
- * @Author tumbalam
- *
- * @Reviewer: 
+ * @author Search Team
+ *  
  */
-public interface IsEditClassStudentView extends IsViewWithHandlers<EditClassStudentViewUiHandler>{
-	public void setReportView();
+public class StudentClassReportView extends BaseViewWithHandlers<StudentClassReportUiHandlers> implements IsStudentClassReportView {
+	
+	@UiField LoadingUc cropImageLoading;
+	
+	private static StudentClassReportViewUiBinder uiBinder = GWT
+			.create(StudentClassReportViewUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
+	interface StudentClassReportViewUiBinder extends
+			UiBinder<Widget, StudentClassReportView> {
+	}
+
+	public StudentClassReportView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		setDebugIds();
+	}
+
+	private void setDebugIds() {
+		cropImageLoading.setLoadingText(i18n.GL1234());
+		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
+	}
+	
+	@Override
+	public void reset() {
+		super.reset();
+	}
 }

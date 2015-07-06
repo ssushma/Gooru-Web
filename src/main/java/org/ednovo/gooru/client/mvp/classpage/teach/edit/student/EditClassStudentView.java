@@ -24,18 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson.TeachLessonReportChildView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildView;
+import org.ednovo.gooru.client.uc.LiPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -54,6 +58,10 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentViewUiHandler> implements IsEditClassStudentView {
 
+	@UiField LiPanel studentReports;
+	
+	@UiField FlowPanel reportBox;
+	
 	private static EditClassStudentViewUiBinder uiBinder = GWT.create(EditClassStudentViewUiBinder.class);
 
 	interface EditClassStudentViewUiBinder extends UiBinder<Widget, EditClassStudentView> {
@@ -63,4 +71,25 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 
+	@UiHandler("studentReports")
+	public void clickStudentReports(ClickEvent event) {
+		PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		request = request.with(UrlNavigationTokens.TEACHER_CLASSSUB_PAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS);
+		request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		AppClientFactory.getPlaceManager().revealPlace(request);
+	}
+	
+	@Override
+	public void setReportView() {
+		reportBox.clear();
+		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		
+		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			reportBox.add(new TeachCourseReportChildView());
+		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			reportBox.add(new TeachUnitReportChildView());
+		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			reportBox.add(new TeachLessonReportChildView());
+		}
+	}
 }

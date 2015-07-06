@@ -8,7 +8,7 @@
 			<g:HTMLPanel styleName="classMenuLeft">
 				<ul>
 				    <uc:LiPanel styleName="active"><g:Anchor>Roster</g:Anchor></uc:LiPanel>
-				    <uc:LiPanel><g:Anchor>Unit Report</g:Anchor></uc:LiPanel>
+				    <uc:LiPanel ui:field="studentReports"><g:Anchor>Unit Report</g:Anchor></uc:LiPanel>
 				    <uc:LiPanel><g:Anchor>Collection Report</g:Anchor></uc:LiPanel>
 				</ul>
 			</g:HTMLPanel>
@@ -23,6 +23,7 @@
            </div>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		<g:FlowPanel ui:field="reportBox"></g:FlowPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
 
