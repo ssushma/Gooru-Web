@@ -24,7 +24,7 @@
 	      </g:HTMLPanel>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-	</g:HTMLPanel> 
+	</g:HTMLPanel>
 	<g:HTMLPanel styleName="geryBackgroundBody">
 	   <g:HTMLPanel styleName="rosterContainer">
 	      <g:HTMLPanel styleName="classSettingsInner">
@@ -81,6 +81,7 @@
 		 </g:HTMLPanel>
 	   </g:HTMLPanel>
 	</g:HTMLPanel>
+	<g:FlowPanel ui:field="reportBox"></g:FlowPanel>
   </g:HTMLPanel>
 </ui:UiBinder>
 

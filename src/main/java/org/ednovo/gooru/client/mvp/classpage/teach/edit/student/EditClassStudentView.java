@@ -30,12 +30,10 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsView.MouseOutHideToolTip1;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsView.MouseOutHideToolTip2;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsView.MouseOverShowClassCodeToolTip1;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsView.MouseOverShowClassCodeToolTip2;
-import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.MouseOutHideToolTip3;
-import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.MouseOverShowClassCodeToolTip3;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson.TeachLessonReportChildView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildView;
 import org.ednovo.gooru.client.uc.H5Panel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
@@ -55,12 +53,10 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -69,6 +65,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -121,6 +118,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField HTMLPanel pendindUserContainer,activeUserConatiner;
 
+	@UiField LiPanel studentReports;
+	
+	@UiField FlowPanel reportBox;
+	
 	private static EditClassStudentViewUiBinder uiBinder = GWT.create(EditClassStudentViewUiBinder.class);
 	
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
@@ -346,4 +347,25 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 	}
 
+	@UiHandler("studentReports")
+	public void clickStudentReports(ClickEvent event) {
+		PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS);
+		request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		AppClientFactory.getPlaceManager().revealPlace(request);
+	}
+	
+	@Override
+	public void setReportView() {
+		reportBox.clear();
+		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		
+		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			reportBox.add(new TeachCourseReportChildView());
+		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			reportBox.add(new TeachUnitReportChildView());
+		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			reportBox.add(new TeachLessonReportChildView());
+		}
+	}
 }
