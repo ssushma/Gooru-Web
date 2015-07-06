@@ -745,6 +745,12 @@ button.btn-disabled{
 	vertical-align:middle;
 	
 }
+#gShelfCousesList .tableColumn:first-child{
+	width: 6%;
+	font-weight: bold;
+	padding: 18px;
+	font-size: 18px;
+}
 #gShelfCousesList .tableColumn:nth-child(2){
 	background:#f9fcfe;
 	padding:10px 15px;
