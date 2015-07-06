@@ -88,6 +88,7 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 				for(int i=0;i<result.size();i++) {
 					getView().SetData(result.get(i),i);
 				}
+
 				
 			}
 		});		

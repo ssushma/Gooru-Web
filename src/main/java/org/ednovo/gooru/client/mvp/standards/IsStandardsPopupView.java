@@ -51,6 +51,8 @@ public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<Stan
 	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
 
 	void hidePopup();
+
+	void hideLoaderIcon();
 	
 
 }
