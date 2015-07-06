@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
@@ -62,7 +63,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 
 	void createFolder(String folderName, String parentId, boolean addToShelf, AsyncCallback<FolderDo> callback);
 	
-	void createCourse(String folderName, boolean addToShelf,String courseId, String unitId, AsyncCallback<FolderDo> callback);
+	void createCourse(CreateDo createDo, boolean addToShelf,String courseId, String unitId, AsyncCallback<FolderDo> callback);
 
 	void moveCollectionIntoFolder(String sourceId, String targetId,AsyncCallback<Void> callback);
 
@@ -70,7 +71,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	
 	void updateFolder(String folderId, String title, String ideas, String questions, String performance, AsyncCallback<Void> simpleAsyncCallback);
    
-	void updateCourse(String courseId,String unitId,String lessonId, String courseTitle,AsyncCallback<Void> simpleAsyncCallback);
+	void updateCourse(String courseId,String unitId,String lessonId,CreateDo createDo,AsyncCallback<Void> simpleAsyncCallback);
 	
 	void copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf, AsyncCallback<CollectionDo> simpleAsyncCallback);
 

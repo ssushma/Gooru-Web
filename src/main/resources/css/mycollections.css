@@ -745,7 +745,7 @@ button.btn-disabled{
 	vertical-align:middle;
 	
 }
-#gShelfCousesList .tableColumn:first-child{
+#gShelfCousesList .tableColumn:nth-child(2){
 	background:#f9fcfe;
 	padding:10px 15px;
 	width:30%;
@@ -754,15 +754,37 @@ button.btn-disabled{
 #gShelfCousesList .tableColumn:last-child{
 	width:6%;
 }
-
+#gShelfCousesList .tableColumn .courseImage{
+	background: #f9fcfe url('../images/folders/panel/c-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .unitImage{
+	background: #f9fcfe url('../images/folders/panel/u-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .lessonImage{
+	background: #f9fcfe url('../images/folders/panel/l-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
 #gShelfCousesList .tableMainHeader h3{
 	margin:0 0 2px 0;
 	font-size:17px;
 	font-weight:bold;
 	color:#515151;
+	margin-left: 26%;
 }
 #gShelfCousesList .tableMainHeader p{
 	margin:0 0;
+	margin-left: 26%;
 	color:#515151;
 }
 #gShelfCousesList .tableListOrder .topArrow {
