@@ -243,4 +243,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		this.courseObj=courseObj;
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
 	}
+
+	/**
+	 * @return the courseTitle
+	 */
+	@Override
+	public String getCourseTitle() {
+		return courseTitle.getTitle();
+	}
+	
 }

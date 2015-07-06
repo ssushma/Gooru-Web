@@ -111,9 +111,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-
 	@Override
 	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateUnit) {
+
 	}
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {

@@ -133,7 +133,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
 				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
+					myCollectionsRightClusterPresenter.getFolderListDoChild().clear();
+					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
