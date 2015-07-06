@@ -108,10 +108,9 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(String text) {
+	public void createAndSaveCourseDetails(String text,final boolean isCreateCollOrAssessment,final String creationType) {
 	String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 	String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		
 		AppClientFactory.getInjector().getfolderService().createCourse(text, true, o1,o2, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
@@ -120,17 +119,56 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
 				params.put("o2", AppClientFactory.getPlaceManager().getRequestParameter("o2"));
 				params.put("o3", uri[uri.length-1]);
-				params.put("view", "course");
+				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				if(isCreateCollOrAssessment && creationType!=null){
+					myCollectionsRightClusterPresenter.setTabItems(1, creationType, result);
+					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
+				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
-		
 	}
-	public void setMyCollectionRightClusterPresenter(
-			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+	@Override
+	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit,final String type) {
+		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,text, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				FolderDo folderDo = new FolderDo();
+				folderDo.setTitle(text);
+				folderDo.setType(LESSON);
+				//folderDo.setGooruOid(id);
+				myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				if(isCreateUnit && type!=null){
+					myCollectionsRightClusterPresenter.setTabItems(1, type, null);
+					myCollectionsRightClusterPresenter.setUnitTemplate(type);
+				}
+			}
+		});
+	}
+	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+	}
+
+	public void setLessonData(FolderDo folderObj) {
+		getView().setLessonInfoData(folderObj);
+	}
+
+	@Override
+	public void checkProfanity(String textValue, final boolean isCreate,final String type) {
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				getView().callCreateAndUpdate(isCreate,value,type);
+			}
+		});		
 	}
 }

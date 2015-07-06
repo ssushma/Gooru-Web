@@ -176,6 +176,9 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentView;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.IsCollectionContentView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.IsCourseInfoView;
@@ -681,6 +684,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CourseInfoPresenter.class,IsCourseInfoView.class,CourseInfoView.class);
 		bindPresenterWidget(UnitInfoPresenter.class,IsUnitInfoView.class,UnitInfoView.class);
 		bindPresenterWidget(LessonInfoPresenter.class,IsLessonInfoView.class,LessonInfoView.class);
+		bindPresenterWidget(CollectionInfoPresenter.class,IsCollectionInfoView.class,CollectionInfoView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
 		bindPresenterWidget(CollectionContentPresenter.class,IsCollectionContentView.class, CollectionContentView.class);

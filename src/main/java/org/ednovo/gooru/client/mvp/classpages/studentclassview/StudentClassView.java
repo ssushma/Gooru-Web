@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.studentclassview;
 
+import java.util.Iterator;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -38,6 +40,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -62,6 +65,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@UiField H2Panel courseName;
 	@UiField Button learningMapBtn, reportsBtn;
 	@UiField SimplePanel learningMapContainer;
+	@UiField HTMLPanel btnGroup;
 	
 	private static StudentClassViewUiBinder uiBinder = GWT.create(StudentClassViewUiBinder.class);
 
@@ -75,8 +79,8 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	public StudentClassView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setCourseData();
-		learningMapBtn.addClickHandler(new ClasspageTabNavigator(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM,learningMapBtn));
-		reportsBtn.addClickHandler(new ClasspageTabNavigator(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM,reportsBtn));
+		learningMapBtn.addClickHandler(new ClasspageTabNavigator(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM));
+		reportsBtn.addClickHandler(new ClasspageTabNavigator(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM));
 	}
 
 	@Override
@@ -108,21 +112,28 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 
 	public class ClasspageTabNavigator implements ClickHandler{
 		String token = null;
-		Button button =null;
-		public ClasspageTabNavigator(String token, Button button) {
+		public ClasspageTabNavigator(String token) {
 			this.token = token;
-			this.button = button;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			learningMapBtn.removeStyleName(CssTokens.ACTIVE);
-			reportsBtn.removeStyleName(CssTokens.ACTIVE);
-			button.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, token);
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 	}
-	
+
+	@Override
+	public void setButtonHighlight() {
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
+		learningMapBtn.removeStyleName(CssTokens.ACTIVE);
+		reportsBtn.removeStyleName(CssTokens.ACTIVE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
+			learningMapBtn.addStyleName(CssTokens.ACTIVE);
+		} else {
+			reportsBtn.addStyleName(CssTokens.ACTIVE);
+		}
+	}
+
 }

@@ -706,6 +706,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}else{
 				HTMLPanel widgetsContainer=new HTMLPanel("");
 				widgetsContainer.getElement().setId(pageNumber+"");
+				searchResultPanel.clear();
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
@@ -725,6 +726,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			pnlBackToTop.setVisible(false);
 			panelBorderBox.getElement().getStyle().setBackgroundColor("#FFFFFF");
 			searchResults.setVisible(false);
+			searchResultPanel.clear();
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}else{
 			lblLoadingText.setVisible(false);

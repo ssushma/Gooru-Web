@@ -272,7 +272,7 @@ public class HeaderUc extends Composite
 
 	DiscoverToolTipUc discoverToolTip;
 
-	OrganizeToolTip organizeToolTip;
+	//OrganizeToolTip organizeToolTip;
 
 	static PreFilterPopup prefilter=null;
 
@@ -299,7 +299,7 @@ public class HeaderUc extends Composite
 	@UiField
 	HTMLPanel settingOptionsPopup;
 
-	@UiField HTMLPanel discovertooltippop,myCollectionsPop,myDashBoardPop;
+	@UiField HTMLPanel discovertooltippop,myDashBoardPop;
 
 	@UiField static HTMLPanel myClassesPop;
 
@@ -549,20 +549,18 @@ public class HeaderUc extends Composite
 		organizeLinkContainer
 				.addClickHandler(new OnClickOrganizeEventHandler());
 
-		organizeToolTip = new OrganizeToolTip();
+		//organizeToolTip = new OrganizeToolTip();
 		/*organizeToolTip.getElement().getStyle()
 				.setBackgroundColor("transparent");
 		organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		organizeToolTip.getElement().getStyle().setZIndex(99);*/
-		myCollectionsPop.add(organizeToolTip);
+		//myCollectionsPop.add(organizeToolTip);
 		/*myCollectionsPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		myCollectionsPop.getElement().getStyle().setZIndex(99);*/
-		myCollectionsPop.setVisible(false);
-		organizeToolTip.getElement().getStyle().setMarginLeft(78, Unit.PCT);
-		organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		//myCollectionsPop.setVisible(false);
+		//organizeToolTip.getElement().getStyle().setMarginLeft(78, Unit.PCT);
+	//	organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 
-		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
-		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
 
 		teachLinkContainer.addClickHandler(new OnClickTeachEventHandler());
 
@@ -595,8 +593,7 @@ public class HeaderUc extends Composite
 		myDashBoardPop.getElement().getStyle().setZIndex(99);
 		myDashBoardPop.setVisible(false);
 
-		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
-		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
+
 
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
@@ -1114,7 +1111,7 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					manageDotsMenuSelection(organizeLink);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 
 				}
 			});
@@ -1236,25 +1233,6 @@ public class HeaderUc extends Composite
 		}
 	}
 
-	public class OrganizeMouseOver implements MouseOverHandler {
-
-		@Override
-		public void onMouseOver(final MouseOverEvent event) {
-			if (!AppClientFactory.isAnonymous()) {
-				myCollectionsPop.setVisible(true);
-			}
-		}
-	}
-
-	public class OrganizeMouseOut implements MouseOutHandler {
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			if (!AppClientFactory.isAnonymous()) {
-				myCollectionsPop.setVisible(false);
-			}
-		}
-	}
 
 
 	public class DashBoardMouseOver implements MouseOverHandler {

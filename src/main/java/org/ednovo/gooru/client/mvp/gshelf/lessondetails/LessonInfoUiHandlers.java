@@ -38,5 +38,20 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 
 	void showStandardsPopup(String standardVal);
 
-	public void createAndSaveCourseDetails(String text);
+	public void createAndSaveCourseDetails(String text,final boolean isCreateCollOrAssessment,String creationType);
+	/**
+	 * This method is used for checking profanity
+	 * @param textValue
+	 * @param isCreate
+	 * @param type
+	 */
+	public void checkProfanity(String textValue,boolean isCreate,String type);
+	/**
+	 * This method is used to update lesson details
+	 * @param text
+	 * @param id
+	 * @param isCreateUnit
+	 * @param type
+	 */
+	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit,String type);
 }

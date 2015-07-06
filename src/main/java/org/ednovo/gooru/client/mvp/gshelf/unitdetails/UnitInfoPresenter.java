@@ -127,13 +127,44 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				if(isCreateLesson){
-					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+			}
+		});
+	}
+	@Override
+	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit) {
+		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,text, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				FolderDo folderDo = new FolderDo();
+				folderDo.setTitle(text);
+				folderDo.setType(UNIT);
+				//folderDo.setGooruOid(id);
+				myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
+					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
+				}
+			}
+		});
+	}
+	@Override
+	public void checkProfanity(String textValue,final boolean isCreate,final int index){
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				getView().callCreateAndUpdate(isCreate,value,index);
 			}
 		});
 	}
