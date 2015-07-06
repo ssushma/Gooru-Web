@@ -146,4 +146,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setFolderListDoChild(List<FolderDo> folderListDoChild) {
 		this.folderListDoChild = folderListDoChild;
 	}
+	public void updateBreadCrumbsTitle(FolderDo folderObj, String type) { 
+		getView().setBreadCrumbSlot(folderObj, type);
+	}
 }
