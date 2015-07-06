@@ -49,6 +49,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
@@ -393,11 +394,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				if(widget instanceof Draggable && el!=null && !el.getId().equalsIgnoreCase("")){
 					Draggable draggable=(Draggable)widget;
 					HTAnswerChoiceOptionView htAnswerOption=(HTAnswerChoiceOptionView) draggable.getWidget();
-					String answerText=StringUtil.replaceSpecial(removeHtmlTags(htAnswerOption.getAnswerText()));
+					String answerText=URL.encodeQueryString(htAnswerOption.getAnswerText());
 					userAttemptedValueList.add(answerText);
 						AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 					if(el!=null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
-						answerIds.add(Integer.parseInt(el.getId()));
+						answerIds.add(Integer.parseInt(el.getId())+1);
 						if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
 							el.addClassName(STYLE_DND_CORRECT);
 							answerOptionResult.put(Integer.parseInt(el.getId()), true);

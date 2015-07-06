@@ -113,10 +113,10 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
 		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-		        	String hlText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+		        	String htROText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 		         if(skip == false)
 					  {
-						answerChoice.setHTML(hlText);
+						answerChoice.setHTML(URL.decodeQueryString(htROText));
 						if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 							answerChoice.addStyleName(HS_INCORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
