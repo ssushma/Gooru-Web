@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -72,6 +73,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
 	@UiField ScrollPanel listScrollPanel;
 	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion;
+	@UiField HTMLEventPanel createPanel;
 	
 	int index=0;
 	
@@ -98,6 +100,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				setScrollHeight();
 			}
 		});
+		btnCreate.addClickHandler(new CreateContentEvent());
 	}
 	/**
 	 * This method is used to set id's
@@ -255,16 +258,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
 			lblAddNewForResource.setText(i18n.GL2001());
 			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
-			lblAddNewForQuestion.setText(i18n.GL3418());
-			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3418());
+			lblAddNewForQuestion.setText(i18n.GL3372());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3372(), i18n.GL3372());
 			
 			btnCreate.setVisible(false);
 			lblAddNew.setVisible(false);
 		}else if(o2!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3417());
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3371());
 			lblAddNew.setText(i18n.GL0910().toLowerCase());
 		}else if(o1!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3416());
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
 			lblAddNew.setText(i18n.GL3281().toLowerCase());
 		}
 	}
@@ -348,5 +351,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			params.put(ID,folderObj.getGooruOid());
 		}
 		return params;
+	}
+	/**
+	 * This class used for to add course/unit/lesson 
+	 * @author Gooru team
+	 *
+	 */
+	public class CreateContentEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+		    String type = StringUtil.isEmpty(btnCreate.getText())?null:btnCreate.getText();
+			getUiHandlers().addNewContent(type);
+		}
 	}
 }

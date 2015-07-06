@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,39 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+
 
 /**
- * @author Search Team
+ * @fileName : IsEditClassContentSettingsView.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Jul-2015
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer: 
  */
-public interface CourseInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
-	
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
-    
-	/**
-	 * To Create Course
-	 * @param courseTitle {@link String} 
-	 * @param isCreateUnit {@link boolean} 
-	 */
-	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateUnit);
-	/**
-	 * To update the course details
-	 * @param courseTitle {@link String} 
-	 */
-	public void updateCourseDetails(CreateDo createDo, String id,boolean isCreateUnit);
-	
-	/**
-	 * This method is used for profanity checker
-	 * @param textValue
-	 * @param index
-	 */
-	public void checkProfanity(String textValue,boolean isCreate);
+public interface IsEditClassSettingsNavigationView extends IsViewWithHandlers<EditClassSettingsNavigationUiHandler>{
+
 }

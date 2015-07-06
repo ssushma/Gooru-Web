@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
@@ -108,10 +109,10 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(String text,final boolean isCreateCollOrAssessment,final String creationType) {
+	public void createAndSaveCourseDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
 	String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 	String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(text, true, o1,o2, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -126,21 +127,22 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, result);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
 				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
+					myCollectionsRightClusterPresenter.getFolderListDoChild().clear();
+					myCollectionsRightClusterPresenter.setTabItems(2, "collection", result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
 	@Override
-	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit,final String type) {
+	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final String type) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,text, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
-				folderDo.setTitle(text);
+				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(LESSON);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);

@@ -16,7 +16,6 @@
 						<g:HTMLPanel styleName="settingsMenu">
 						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="studentAnr"><img src="images/Classpage/studentsIco.png"/><g:InlineLabel ui:field="studentLbl"/></panel:HTMLEventPanel>
 						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="classSettingsAnr"><img src="images/Classpage/classSettingsIco.png"/><g:InlineLabel ui:field="settingsLbl"/></panel:HTMLEventPanel>
-						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="classContentAnr"><img src="images/Classpage/classContentIco.png"/><g:InlineLabel ui:field="contentLbl"></g:InlineLabel></panel:HTMLEventPanel>
 						 </g:HTMLPanel>
 						<g:HTMLPanel styleName="rightWhiteBox"><uc:SpanPanel ui:field="classCodePanel"></uc:SpanPanel></g:HTMLPanel>
 					</g:HTMLPanel>
@@ -27,11 +26,11 @@
 		<g:HTMLPanel styleName="mainBodySupportBlock">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row">
-					<g:HTMLPanel styleName="whiteBG" ui:field="tabTitleContainer">
+					<!-- <g:HTMLPanel styleName="whiteBG" ui:field="tabTitleContainer">
 						<g:HTMLPanel styleName="MainHeader">
 						<uc:H3Panel ui:field="tabTitle"></uc:H3Panel>
 						</g:HTMLPanel>
-					</g:HTMLPanel>
+					</g:HTMLPanel> -->
 					<g:SimplePanel ui:field="bodyMenuView"></g:SimplePanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
