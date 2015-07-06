@@ -1067,6 +1067,50 @@
 	cursor: pointer;
 }
 
+.summaryHtHiglightText.correct {
+	background-color: #a6caa2;
+    border: 1px solid  #4d9645;
+	cursor: pointer;
+	position:relative;
+}
+.summaryHtHiglightText.correct:after {
+	display: inline-block;
+	content: "\2714";
+	color: #4d9645;
+	font-size: 15px;
+    line-height: 12px;
+}
+
+.summaryHtHiglightText.inCorrect {
+	background-color: #f09f9f;
+    border: 1px solid  #db0f0f;
+	cursor: pointer;
+	position:relative;
+}
+.summaryHtHiglightText.inCorrect:after {
+	display: inline-block;
+	content: "\2717";
+	color: #db0f0f;
+}
+.summaryHtHiglightText.multiCorrect {
+	background-color: #fdd79d;
+    border: 1px solid  #fbb03b;
+	cursor: pointer;
+	position:relative;
+}
+.summaryHtHiglightText.multiCorrect:after {
+	display: inline-block;
+	content: "\2714";
+	color: #fbb03b;
+	font-size: 15px;
+    line-height: 12px;
+}
+.summaryHtPlayerAns {
+	margin-right: 3px;
+	line-height: 20px;
+	border: 1px solid #fff;
+}
+
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
 		float: left;
