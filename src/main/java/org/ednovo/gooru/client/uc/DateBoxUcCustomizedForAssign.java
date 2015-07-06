@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class DateBoxUcCustomizedForAssign extends FlowPanel {
 
@@ -34,13 +34,13 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 
 	private DatePickerUc datePickerUc;
 //	private DatePicker datePicker;
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	boolean isRegistration = true;
 
 	private static final String AFTER_CURRENT_DATE = i18n.GL1504();
-	
+
 	private static final String BEFORE_CURRENT_DATE = i18n.GL1505();
 
 	/**
@@ -50,10 +50,10 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 		super();
 		this.isRegistration = isRegistration;
 		UcCBundle.INSTANCE.css().ensureInjected();
-		
+
 		calendarIcon = new Label();
 		calendarIcon.setStyleName(UcCBundle.INSTANCE.css().gooruCalendarIcon());
-		
+
 		dateBox = new TextBox();
 		dateBox.getElement().setId("tbBirthday");
 		dateBox.setReadOnly(true);
@@ -68,12 +68,12 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 				calendarIcon.addStyleName(UcCBundle.INSTANCE.css().iconPosition());
 			}
 		}
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
         	this.getElement().getStyle().setZIndex(9999999);
         }else{
         	this.getElement().getStyle().clearZIndex();
         }
-		
+
 		datePickerUc = new DatePickerUc(isRegistration);
 		dateBox.setStyleName(UcCBundle.INSTANCE.css().gooruDateText());
 		if(!isStudent){
@@ -83,16 +83,16 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 		this.add(calendarIcon);
 		datePickerUc.getDoneButton().addClickHandler(new OnDoneClick());
 		datePickerUc.getTodayButton().addClickHandler(new OnTodayClick());
-		datePickerUc.getDatePicker().addValueChangeHandler(new OnDateChange()); 
+		datePickerUc.getDatePicker().addValueChangeHandler(new OnDateChange());
 		datePickerUc.hide();
 		datePickerUc.listYear.addChangeHandler(new OnYearChange());
 		datePickerUc.listMonths.addChangeHandler(new OnMonthChange());
-		
+
 	}
 
 	private class OnIconClick implements ClickHandler {
 		@Override
-		
+
 		public void onClick(ClickEvent event) {
 			//datePickerUc.reset();
 			int left = calendarIcon.getAbsoluteLeft() - 153;
@@ -102,7 +102,7 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 			if(!datePickerUc.isRegistration){
 				datePickerUc.reset();
 			}
-			
+
 		}
 
 	}
@@ -123,7 +123,7 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 		@Override
 		public void onChange(ChangeEvent event) {
 			String selectedMonth = (Integer.parseInt(datePickerUc.listMonths.getValue(datePickerUc.listMonths.getSelectedIndex())) + 1) + "";
-			
+
 			dateBox.setText(dateBox.getText() != null && !dateBox.getText().isEmpty() ?  (selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateBox.getText().substring(2) : "");
 		}
 	}
@@ -142,7 +142,7 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 			datePickerUc.hide();
 		}
 	}
-	
+
 	public boolean dateValidation(){
 		boolean isValid = isRegistration ? hasValidateDate() : hasValidateForDate();
 		if (isValid) {
@@ -151,7 +151,7 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 				return true;
 			}
 			return false;
-		} else { 
+		} else {
 			if (isRegistration){
 				new AlertContentUc(i18n.GL0065(), AFTER_CURRENT_DATE);
 			}else{
@@ -164,10 +164,10 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 	private class OnDateChange implements ValueChangeHandler<Date> {
 		@Override
 		public void onValueChange(ValueChangeEvent<Date> event) {
-			
+
 			try {
-				Date selectedDate = datePickerUc.getDatePicker().getValue(); 
-//				Date selectedDate = event.getValue(); 
+				Date selectedDate = datePickerUc.getDatePicker().getValue();
+//				Date selectedDate = event.getValue();
 				if(datePickerUc.isRegistration){
 					if(selectedDate.before(new Date())||selectedDate.equals(new Date())){
 						datePickerUc.listMonths.clear();
@@ -198,13 +198,13 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 						int yearCount = currentYear-1900;
 						datePickerUc.listYear.setSelectedIndex(Integer.parseInt(datePickerUc.listYear.getValue(datePickerUc.listYear.getSelectedIndex()))-yearCount);
 						String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);
-					
+
 						String selectedMonth = (Integer.parseInt(datePickerUc.listMonths.getValue(datePickerUc.listMonths.getSelectedIndex())) + 1) + "";
-				
+
 						dateBox.setText((selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateString.substring(2));
 						Element errorMessageElement=Document.get().getElementById("datePickerErrorMessageLabel");
 						errorMessageElement.getStyle().setDisplay(Display.NONE);
-						
+
 					}
 				}
 			} catch (Exception e) {
@@ -212,17 +212,17 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 			}
 		}
 	}
-		
+
 
 	/**
 	 * @return selected date
-	 */	
+	 */
 	public String getDate() {
 		Date selectedDate = datePickerUc.getDatePicker().getValue();
 		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);
-		
+
 		return dateString;
-	
+
 	}
 
 	/**
@@ -240,7 +240,7 @@ return year;
 
 	/**
 	 * View datePickerPopup
-	 * 
+	 *
 	 * @param left
 	 *            position of the popup
 	 * @param top
@@ -249,7 +249,7 @@ return year;
 	public void showDatePickerPopup(int left, int top) {
 		datePickerUc.setPopupPosition(left, top);
 		datePickerUc.show();
-		
+
 	}
 
 	/**
@@ -264,7 +264,7 @@ return year;
 		}
 		return isValid;
 	}
-	
+
 	/**
 	 * @return true if date is valid else false
 	 */
@@ -283,7 +283,7 @@ return year;
 	}
 
 	public Button getDoneButton() {
-		
+
 		return datePickerUc.getDoneButton();
 	}
 

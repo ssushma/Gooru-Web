@@ -239,8 +239,12 @@ public class AssignmentProgressVc extends Composite{
 				parms.put("id", classpageItemDo.getCollectionId());
 				parms.put("cid", classpageItemDo.getCollectionItemId());
 				parms.put("page", "study");
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, parms, false);
+				}else{
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
+				}
 
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
 			}
 		});
 		Event.addNativePreviewHandler(new NativePreviewHandler() {

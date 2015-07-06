@@ -300,7 +300,7 @@ public class EmailShareUc extends PopupPanel{
 				msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 				msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) ){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) ){
 				subTxt.setText(StringUtil.generateMessage(i18n.GL1997(),i18n.GL2001()));
 				subTxt.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL1997(),i18n.GL2001()));
 				subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2001()));
@@ -337,7 +337,7 @@ public class EmailShareUc extends PopupPanel{
 		this.hide();
 		String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		triggerEmailEvent(false);
-		if(!placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)|| !placeToken.equals(PlaceTokens.RESOURCE_PLAY)) {
+		if(!placeToken.equals(PlaceTokens.ASSESSMENT_PLAY) || !placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)|| !placeToken.equals(PlaceTokens.RESOURCE_PLAY)) {
 			Window.enableScrolling(true);
 		}
 		if (placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
@@ -455,7 +455,7 @@ public class EmailShareUc extends PopupPanel{
 													hide();
 													triggerEmailEvent(true);
 													String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-													if(!(placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
+													if(!(placeToken.equals(PlaceTokens.ASSESSMENT_PLAY) || placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
 														Window.enableScrolling(true);
 													}
 													new SentEmailSuccessVc(toTxt.getText());

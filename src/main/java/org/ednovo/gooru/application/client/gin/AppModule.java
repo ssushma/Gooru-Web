@@ -61,6 +61,69 @@ import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsColle
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherView;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter.IsAssessmentsPlayerProxy;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.IsAssessmentsPlayerView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.add.AddAssessmentsPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.add.AddAssessmentsView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.add.IsAddAssessmentsView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.body.AssessmentsPlayerMetadataPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.body.AssessmentsPlayerMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.body.IsAssessmentsPlayerMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.end.AssessmentsEndPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.end.AssessmentsEndView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.end.IsAssessmentsEndView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.end.study.AssessmentsHomeMetadataPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.end.study.AssessmentsHomeMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.end.study.IsAssessmentsHomeMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.flag.AssessmentsFlagPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.flag.AssessmentsFlagView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.flag.IsAssessmentsFlagView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.info.AssessmentsResourceInfoPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.info.AssessmentsResourceInfoView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.info.IsAssessmentsResourceInfoView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter.IsAssessmentsPreviewPlayerProxy;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.IsAssessmentsPreviewPlayerView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.end.AssessmentsPreviewEndPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.end.AssessmentsPreviewEndView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.end.IsAssessmentsPreviewEndView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.AssessmentsPreviewHomePresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.AssessmentsPreviewHomeView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.IsAssessmentsPreviewHomeView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.AssessmentsPreviewPlayerMetadataPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.AssessmentsPreviewPlayerMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.IsAssessmentsPreviewPlayerMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.share.AssessmentsSharePresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.share.AssessmentsShareView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.share.IsAssessmentsShareView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.toc.AssessmentsPlayerTocPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.toc.AssessmentsPlayerTocView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.toc.IsAssessmentsPlayerTocView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.AssessmentsResourcePlayerPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.AssessmentsResourcePlayerPresenter.IsAssessmentsResourcePlayerProxy;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.AssessmentsResourcePlayerView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.IsAssessmentsResourcePlayerView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.add.AddResourceAssessmentsPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.add.AddResourceAssessmentsView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.add.IsAddResourceAssessmentsView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsResourcePlayerMetadataPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsResourcePlayerMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.body.IsAssessmentsResourcePlayerMetadataView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.flag.AssessmentsResourceFlagPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.flag.AssessmentsResourceFlagView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.flag.IsAssessmentsResourceFlag;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.narration.AssessmentsResourceNarrationPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.narration.AssessmentsResourceNarrationView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.narration.IsAssessmentsResourceNarrationView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.question.AssessmentsQuestionResourcePresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.question.AssessmentsQuestionResourceView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.question.IsAssessmentsQuestionResourceView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.share.AssessmentsResourceSharePresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.share.AssessmentsResourceShareView;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.share.IsAssessmentsResourceShareView;
 import org.ednovo.gooru.client.mvp.authentication.IsSignUpView;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpView;
@@ -82,7 +145,6 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentView;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView;
@@ -451,6 +513,7 @@ import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalytics;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
+//colleciton player//
 
 /**
  *
@@ -691,13 +754,39 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(EditClassSettingsPresenter.class, IsEditClassSettingsView.class, EditClassSettingsView.class);
 		bindPresenterWidget(EditClassContentPresenter.class, IsEditClassContentView.class, EditClassContentView.class);
 		bindPresenterWidget(EditClassStudentPresenter.class, IsEditClassStudentView.class, EditClassStudentView.class);
-		
+
 
 		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);
-		
+
 		bindPresenterWidget(StudentClassLearningMapPresenter.class,IsStudentClassLearningMapView.class, StudentClassLearningMapView.class);
-		
+
 		bindPresenterWidget(StudentClassReportPresenter.class,IsStudentClassReportView.class, StudentClassReportView.class);
-		
+
+
+
+		bindPresenter(AssessmentsPlayerPresenter.class, IsAssessmentsPlayerView.class, AssessmentsPlayerView.class,IsAssessmentsPlayerProxy.class);
+		bindPresenterWidget(AddAssessmentsPresenter.class, IsAddAssessmentsView.class, AddAssessmentsView.class);
+		bindPresenterWidget(AssessmentsPlayerMetadataPresenter.class, IsAssessmentsPlayerMetadataView.class, AssessmentsPlayerMetadataView.class);
+		bindPresenterWidget(AssessmentsEndPresenter.class, IsAssessmentsEndView.class, AssessmentsEndView.class);
+		bindPresenterWidget(AssessmentsHomeMetadataPresenter.class, IsAssessmentsHomeMetadataView.class, AssessmentsHomeMetadataView.class);
+		bindPresenterWidget(AssessmentsFlagPresenter.class,IsAssessmentsFlagView.class,AssessmentsFlagView.class);
+		bindPresenterWidget(AssessmentsResourceInfoPresenter.class, IsAssessmentsResourceInfoView.class, AssessmentsResourceInfoView.class);
+
+		bindPresenter(AssessmentsPreviewPlayerPresenter.class,IsAssessmentsPreviewPlayerView.class,AssessmentsPreviewPlayerView.class,IsAssessmentsPreviewPlayerProxy.class);
+		bindPresenterWidget(AssessmentsPreviewHomePresenter.class,IsAssessmentsPreviewHomeView.class,AssessmentsPreviewHomeView.class);
+		bindPresenterWidget(AssessmentsPreviewPlayerMetadataPresenter.class,IsAssessmentsPreviewPlayerMetadataView.class,AssessmentsPreviewPlayerMetadataView.class);
+		bindPresenterWidget(AssessmentsSharePresenter.class, IsAssessmentsShareView.class, AssessmentsShareView.class);
+		bindPresenterWidget(AssessmentsPlayerTocPresenter.class, IsAssessmentsPlayerTocView.class, AssessmentsPlayerTocView.class);
+		bindPresenter(AssessmentsResourcePlayerPresenter.class, IsAssessmentsResourcePlayerView.class, AssessmentsResourcePlayerView.class,IsAssessmentsResourcePlayerProxy.class);
+
+		bindPresenterWidget(AddResourceAssessmentsPresenter.class, IsAddResourceAssessmentsView.class, AddResourceAssessmentsView.class);
+		bindPresenterWidget(AssessmentsResourcePlayerMetadataPresenter.class, IsAssessmentsResourcePlayerMetadataView.class, AssessmentsResourcePlayerMetadataView.class);
+
+		bindPresenterWidget(AssessmentsResourceFlagPresenter.class,IsAssessmentsResourceFlag.class,AssessmentsResourceFlagView.class);
+		bindPresenterWidget(AssessmentsResourceNarrationPresenter.class, IsAssessmentsResourceNarrationView.class, AssessmentsResourceNarrationView.class);
+		bindPresenterWidget(AssessmentsQuestionResourcePresenter.class, IsAssessmentsQuestionResourceView.class, AssessmentsQuestionResourceView.class);
+		bindPresenterWidget(AssessmentsResourceSharePresenter.class, IsAssessmentsResourceShareView.class, AssessmentsResourceShareView.class);
+		bindPresenterWidget(AssessmentsPreviewEndPresenter.class,IsAssessmentsPreviewEndView.class,AssessmentsPreviewEndView.class);
+
 	}
 }
