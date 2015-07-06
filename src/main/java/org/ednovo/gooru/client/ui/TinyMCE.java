@@ -114,7 +114,7 @@ public class TinyMCE extends Composite{
         	hidePopup(event);
           }
         });
-
+        this.addStyleName("tinyMCETable");
     }
     @UiConstructor
     public TinyMCE(Integer characterLimit) {
@@ -127,6 +127,7 @@ public class TinyMCE extends Composite{
 
     public void initializeTinyMce(){
     	initilizeTinyMce(this,id);
+    	 this.addStyleName("tinyMCETable");
     }
     public void hidePopup(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){

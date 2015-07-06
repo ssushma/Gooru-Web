@@ -57,6 +57,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -152,7 +153,20 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			if(collectionItemDo.getResource().getType()==8){
 
 				if(attemptedAnswerDo!=null){
-					String text=removeHtmlTags(attemptedAnswerDo.getAnswersText());
+					HTML ansHtml=new HTML(URL.decodeQueryString(attemptedAnswerDo.getAnswersText()));
+					ansHtml.addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							optionsContainerFpnl.clear();
+							setRenderAnswers(answersSet);
+							enableCheckAnswerButton();
+						}
+					});
+					
+					optionsContainerFpnl.add(ansHtml);
+					
+					/*String text=removeHtmlTags(attemptedAnswerDo.getAnswersText());
 					String[] temp;
 					String delimiter;
 					if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
@@ -187,7 +201,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							}
 						});
 						optionsContainerFpnl.add(lbl);
-					}
+					}*/
 
 					showPreviousResult();
 
@@ -323,7 +337,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	public void showPreviousResult(){
-
+/*
 		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
 			InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
@@ -335,7 +349,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					lbl.addStyleName(STYLE_INCORRECT);
 				}
 			}
-		}
+		}*/
 	}
 
 
@@ -453,6 +467,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 			AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 			String answerText="";
+			HTML ansText=new HTML();
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 
 				InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
@@ -464,14 +479,13 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						answerOptionResult.put(1, true);
 						answerAttemptDo.setStatus("1");
 						if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-							answerText=answerText+START_CORRECT_DELIMITER+lbl.getText().trim()+END_CORRECT_DELIMITER+SPACE;
+							//answerText=answerText+START_CORRECT_DELIMITER+lbl.getText().trim()+END_CORRECT_DELIMITER+SPACE;
 						}else{
-							String inLblTxt=lbl.getText()+END_CORRECT_DELIMITER+DOT;						
+							//String inLblTxt=lbl.getText()+END_CORRECT_DELIMITER+DOT;						
 							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
-								inLblTxt=lbl.getText().replace(DOT, END_CORRECT_DELIMITER+DOT);
+								//inLblTxt=lbl.getText().replace(DOT, END_CORRECT_DELIMITER+DOT);
 							}
-
-							answerText=answerText+START_CORRECT_DELIMITER+inLblTxt;
+							//answerText=answerText+START_CORRECT_DELIMITER+inLblTxt;
 						}
 
 					}else {
@@ -480,23 +494,27 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						answerAttemptDo.setStatus("0");
 						HTHLChoiceStatus=false;
 						if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-							answerText=answerText+START_DELIMITER+lbl.getText().trim()+END_DELIMITER+SPACE;
+							//answerText=answerText+START_DELIMITER+lbl.getText().trim()+END_DELIMITER+SPACE;
 						}else{
 
-							String inLblTxt=lbl.getText()+END_DELIMITER+DOT;						
+							/*String inLblTxt=lbl.getText()+END_DELIMITER+DOT;						
 							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
 								inLblTxt=lbl.getText().replace(DOT, END_DELIMITER+DOT);
 							}
-							answerText=answerText+START_DELIMITER+inLblTxt;
+							answerText=answerText+START_DELIMITER+inLblTxt;*/
 						}
 					}
 				}else {
-					answerText=answerText+lbl.getText();
+					//answerText=answerText+lbl.getText();
 				}
-
+				answerText=answerText+lbl.toString();
+				ansText.setHTML(lbl.toString());
 			}
-			userAttemptedValueList.add("["+answerText+"]");
-			answerAttemptDo.setText("\""+answerText);
+			//userAttemptedValueList.add("["+answerText+"]");
+			//answerAttemptDo.setText("\""+answerText);
+			ansText.setHTML(answerText);
+			userAttemptedValueList.add(URL.encodeQueryString(ansText.toString()));
+			answerAttemptDo.setText(URL.encodeQueryString(ansText.toString()));
 			answerAttemptDo.setAnswerId(0);
 			answerAttemptDo.setOrder("0");
 			userAttemptedOptionsList.add(answerAttemptDo);
@@ -504,7 +522,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
 				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
 			}
-			attempteAnswersDo.setAnswersText(answerText);
+			attempteAnswersDo.setAnswersText(URL.encodeQueryString(optionsContainerFpnl.toString()));
 			attempteAnswersDo.setAnswerOptionResult(answerOptionResult);
 
 			setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
