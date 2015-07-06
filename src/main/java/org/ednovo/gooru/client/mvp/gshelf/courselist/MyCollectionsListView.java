@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -72,6 +73,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
 	@UiField ScrollPanel listScrollPanel;
 	@UiField Label lblAddNew;
+	@UiField HTMLEventPanel createPanel;
 	
 	int index=0;
 	
@@ -98,6 +100,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				setScrollHeight();
 			}
 		});
+		btnCreate.addClickHandler(new CreateContentEvent());
 	}
 	/**
 	 * This method is used to set id's
@@ -338,5 +341,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			params.put(ID,folderObj.getGooruOid());
 		}
 		return params;
+	}
+	/**
+	 * This class used for to add course/unit/lesson 
+	 * @author Gooru team
+	 *
+	 */
+	public class CreateContentEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+		    String type = StringUtil.isEmpty(btnCreate.getText())?null:btnCreate.getText();
+			getUiHandlers().addNewContent(type);
+		}
 	}
 }

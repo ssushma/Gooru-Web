@@ -30,6 +30,8 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
+import com.google.gwt.user.client.ui.TextBox;
+
 /**
  * @author Search Team
  *
@@ -50,4 +52,9 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 * @param courseObj
 	 */
 	void setCouseData(FolderDo courseObj);
+	/**
+	 * To get the course title 
+	 * @return {@link String}
+	 */
+	String getCourseTitle();
 }

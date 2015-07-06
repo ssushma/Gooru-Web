@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:event="urn:import:org.ednovo.gooru.client.ui">
 	<g:HTMLPanel ui:field="courseListContainer">
 	<g:HTMLPanel styleName="courseHeader" ui:field="pnlH2TitleContainer">
 		<panel:H2Panel ui:field="h2Title"/>
@@ -15,8 +15,10 @@
 			<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList"/>
 			<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
 				<input type="file" name="fileField" id="fileField"/>
+				<event:HTMLEventPanel ui:field="createPanel">
 					<span>+</span>
 					<g:Label ui:field="lblAddNew"/>
+				</event:HTMLEventPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:ScrollPanel> 
