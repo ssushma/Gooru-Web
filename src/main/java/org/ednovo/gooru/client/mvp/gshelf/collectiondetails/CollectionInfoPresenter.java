@@ -128,7 +128,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
 				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+					myCollectionsRightClusterPresenter.getFolderListDoChild().clear();
+					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}

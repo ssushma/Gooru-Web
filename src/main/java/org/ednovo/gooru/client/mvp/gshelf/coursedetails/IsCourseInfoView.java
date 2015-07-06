@@ -51,6 +51,11 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 */
 	void setCouseData(FolderDo courseObj);
 	/**
+	 * To get the course title 
+	 * @return {@link String}
+	 */
+	String getCourseTitle();
+	/**
 	 * This method is used for calling create and update api
 	 * @param isCreate
 	 * @param result
