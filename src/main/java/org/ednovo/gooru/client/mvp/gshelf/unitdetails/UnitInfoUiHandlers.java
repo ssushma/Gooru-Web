@@ -44,6 +44,19 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	 * @param isCreateLesson {@link boolean} 
 	 */
 	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateLesson);
+	/**
+	 * This method is used to update the unit info details
+	 * @param text
+	 * @param id
+	 * @param isCreateUnit
+	 */
+	void updateCourseDetails(final String text, final String id,final boolean isCreateUnit);
+	/**
+	 * This method is used to check profanity checker
+	 * @param textValue
+	 * @param isCreate
+	 */
+	void checkProfanity(String textValue,final boolean isCreate);
 
 	void showUnitInfo();
 
