@@ -245,9 +245,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),true,1);
+				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),true,2);
+				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2);
 			}else if(index==2){
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 				if(id!=null){

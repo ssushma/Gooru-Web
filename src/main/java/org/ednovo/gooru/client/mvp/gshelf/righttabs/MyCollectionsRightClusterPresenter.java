@@ -122,7 +122,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	@Override
 	public void setUnitTemplate(String type){	
+		//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, null, true, true, null);
+		//setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 		shelfMainPresenter.createNewUnitItem(type);
+		folderListDoChild=null;
 	}
 
 	/**

@@ -191,7 +191,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			index=pnlCourseList.getWidgetCount();
 			setLastWidgetArrowVisiblity(true);
 		}
-		setCreateText();
+		//setCreateText();
+		setCreateText(type);
 		if(listOfContent!=null && listOfContent.size()>0){
 			for (FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
@@ -270,6 +271,51 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3416());
 			lblAddNew.setText(i18n.GL3281().toLowerCase());
 		}
+	}
+	
+	/**
+	 * This method is used to set the create text
+	 * @param typeVal
+	 */
+	public void setCreateText(String type){
+		if(COURSE.equalsIgnoreCase(type)){
+			enableCreateButtons(false);
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3416());
+			lblAddNew.setText(i18n.GL3281().toLowerCase());
+		}else if(UNIT.equalsIgnoreCase(type)){
+			enableCreateButtons(false);
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3417());
+			lblAddNew.setText(i18n.GL0910().toLowerCase());
+		}else if(LESSON.equalsIgnoreCase(type)){
+			enableCreateButtons(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+			lblAddNewForResource.setText(i18n.GL2001());
+			lblAddNewForQuestion.setText(i18n.GL3418());
+			
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3418());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+		}else{
+			enableCreateButtons(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0308());
+			lblAddNewForResource.setText(i18n.GL2000());
+			lblAddNewForQuestion.setText(i18n.GL3218());
+			
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1110(), i18n.GL1110());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL0308(), i18n.GL0308());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2000(), i18n.GL2000());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3218(), i18n.GL3218());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+		}
+		
 	}
 	/**
 	 * This inner class is used to handle the click event on title container
