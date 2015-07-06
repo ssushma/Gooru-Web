@@ -255,16 +255,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
 			lblAddNewForResource.setText(i18n.GL2001());
 			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
-			lblAddNewForQuestion.setText(i18n.GL3418());
-			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3418());
+			lblAddNewForQuestion.setText(i18n.GL3372());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3372(), i18n.GL3372());
 			
 			btnCreate.setVisible(false);
 			lblAddNew.setVisible(false);
 		}else if(o2!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3417());
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3371());
 			lblAddNew.setText(i18n.GL0910().toLowerCase());
 		}else if(o1!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3416());
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
 			lblAddNew.setText(i18n.GL3281().toLowerCase());
 		}
 	}

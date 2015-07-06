@@ -45,6 +45,7 @@ import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
@@ -623,7 +624,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 	
 	@Override
-	public FolderDo createCourse(String folderName,boolean addToShelf, String courseId, String unitId) throws GwtException {
+	public FolderDo createCourse(CreateDo createDo,boolean addToShelf, String courseId, String unitId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		FolderDo folderDo = new FolderDo();
@@ -636,14 +637,15 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		JSONObject courseObject=new JSONObject();
 		try {
-			courseObject.put(TITLE, folderName);
+			courseObject.put(TITLE, createDo.getTitle());
 			if(addToShelf) {
 				courseObject.put(ADD_TO_SHELF, addToShelf);
 			}
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),courseObject.toString());
-
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDo, null);
 			logger.info("createCourse : "+url);
-			logger.info("CourseObject : "+courseObject.toString());
+			logger.info("dataPassing: "+dataPassing);
+			
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRep);
@@ -657,7 +659,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public void updateCourse(String courseId,String unitId,String lessonId,String courseTitle) throws GwtException, ServerDownException {
+	public void updateCourse(String courseId,String unitId,String lessonId,CreateDo createDo) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 	
@@ -671,10 +673,11 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		
 		JSONObject courseObj=new JSONObject();
 		try {
-			courseObj.put(TITLE, courseTitle);
+			courseObj.put(TITLE, createDo.getTitle());
 			logger.info("updateCourse : "+url);
-			logger.info("CourseObject : "+courseObj.toString());
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),courseObj.toString());
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDo, null);
+			logger.info("dataPassing : "+dataPassing);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),dataPassing);
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}

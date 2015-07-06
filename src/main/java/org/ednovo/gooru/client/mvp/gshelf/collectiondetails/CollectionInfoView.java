@@ -59,9 +59,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@UiField HTMLPanel collectionInfo;
 	@UiField TextBox collectionTitle;
-
-
-
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	

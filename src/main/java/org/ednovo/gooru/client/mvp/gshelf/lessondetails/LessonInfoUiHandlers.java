@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 
 /**
  * @author Search Team
@@ -37,8 +38,13 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	public void callTaxonomyService();
 
 	void showStandardsPopup(String standardVal);
-
-	public void createAndSaveCourseDetails(String text,final boolean isCreateCollOrAssessment,String creationType);
+	/**
+	 * This method is used to create lesson
+	 * @param createObj
+	 * @param isCreateCollOrAssessment
+	 * @param creationType
+	 */
+	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateCollOrAssessment,String creationType);
 	/**
 	 * This method is used for checking profanity
 	 * @param textValue
@@ -48,10 +54,10 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	public void checkProfanity(String textValue,boolean isCreate,String type);
 	/**
 	 * This method is used to update lesson details
-	 * @param text
+	 * @param createObj
 	 * @param id
 	 * @param isCreateUnit
 	 * @param type
 	 */
-	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit,String type);
+	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type);
 }
