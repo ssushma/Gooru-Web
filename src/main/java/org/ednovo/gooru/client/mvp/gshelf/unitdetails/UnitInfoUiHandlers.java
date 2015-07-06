@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 
 /**
  * @author Search Team
@@ -40,10 +41,23 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
     
 	/**
 	 * To Create and Save the details of Course
-	 * @param courseTitle {@link String} 
+	 * @param createDo {@link String} 
 	 * @param isCreateLesson {@link boolean} 
 	 */
-	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateLesson);
+	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateLesson);
+	/**
+	 * This method is used to update the unit info details
+	 * @param createDo
+	 * @param id
+	 * @param isCreateUnit
+	 */
+	void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit);
+	/**
+	 * This method is used to check profanity checker
+	 * @param textValue
+	 * @param isCreate
+	 */
+	void checkProfanity(String textValue,final boolean isCreate,int index);
 
 	void showUnitInfo();
 

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,39 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
-
-import java.util.List;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+
 
 /**
- * @author Search Team
+ * @fileName : IsEditClassContentSettingsView.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Jul-2015
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer: 
  */
-public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
-	
-	/**
-	 * This method will display the Grades according to the subject
-	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,String selectedText);
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link CourseSubjectDo} as List
-	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
-	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 */
-	void setCouseData(FolderDo courseObj);
-	/**
-	 * This method is used to for creating and updating the unit
-	 * @param isCreate
-	 * @param result
-	 * @param index
-	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
+public interface IsEditClassSettingsNavigationView extends IsViewWithHandlers<EditClassSettingsNavigationUiHandler>{
+
 }
