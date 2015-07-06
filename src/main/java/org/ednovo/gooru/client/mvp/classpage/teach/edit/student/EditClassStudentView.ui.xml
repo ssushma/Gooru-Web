@@ -8,9 +8,9 @@
 	   <g:HTMLPanel styleName="col-md-6 col-sm-6">
 	      <g:HTMLPanel styleName="studentsLeftMenu">
 	         <ul>
-	            <uc:LiPanel styleName="active" ui:field="roasterPanel"><g:Anchor ui:field="roasterAnr"></g:Anchor></uc:LiPanel>
-	            <uc:LiPanel ui:field="unitPanel"><g:Anchor ui:field="unitRepoAnr"></g:Anchor></uc:LiPanel>
-	            <uc:LiPanel ui:field="collectionPanel"><g:Anchor ui:field="collRepoAnr"></g:Anchor></uc:LiPanel>
+	            <uc:LiPanel ui:field="roasterPanel"><g:Anchor ui:field="roasterAnr"></g:Anchor></uc:LiPanel>
+	            <uc:LiPanel ui:field="reportPanel"><g:Anchor ui:field="reportPanelAnr"></g:Anchor></uc:LiPanel>
+	           <!--  <uc:LiPanel ui:field="collectionPanel"><g:Anchor ui:field="collRepoAnr"></g:Anchor></uc:LiPanel> -->
 	         </ul>
 	      </g:HTMLPanel>
 	   </g:HTMLPanel>
@@ -26,7 +26,7 @@
 	   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel> 
 	<g:HTMLPanel styleName="geryBackgroundBody">
-	   <g:HTMLPanel styleName="rosterContainer">
+	   <g:HTMLPanel styleName="rosterContainer" ui:field="roasterMainConatiner">
 	      <g:HTMLPanel styleName="classSettingsInner">
 	         <g:HTMLPanel styleName="col-md-3 col-sm-4">
 	            <uc:PPanel ui:field="classCodePanel"></uc:PPanel>
@@ -80,6 +80,26 @@
 			  <g:VerticalPanel styleName="tableDiv" ui:field="tableContainer"></g:VerticalPanel>
 		 </g:HTMLPanel>
 	   </g:HTMLPanel>
+	   <g:HTMLPanel styleName="classReportMenuBlock no-gutter" ui:field="reportContainer">
+		   <g:HTMLPanel styleName="col-md-5 col-sm-7">
+		      <g:HTMLPanel styleName="classMenuLeft">
+		        <ul>
+		            <uc:LiPanel><g:Anchor ui:field="notePanel"></g:Anchor></uc:LiPanel>
+		        </ul>
+		      </g:HTMLPanel>
+		   </g:HTMLPanel>
+		   <g:HTMLPanel styleName="col-md-7 col-sm-5">
+		      <g:HTMLPanel styleName="classMenuRight">
+		         <g:HTMLPanel styleName="coureEditActions">
+		             <g:Image ui:field="studentImage"/><g:Anchor ui:field="studentAnr">Students</g:Anchor>
+		             <g:Button styleName="primary" ui:field="addStudentBtn"></g:Button>
+		             <g:Button styleName="primary" ui:field="connectCourseBtn"></g:Button>
+		             <g:InlineLabel styleName="courseLblStyle" ui:field="courseHeaderLbl"></g:InlineLabel><g:InlineLabel styleName="folderIcon"></g:InlineLabel><g:InlineLabel styleName="classTitle" ui:field="courseTitleLbl">4th Grade Math</g:InlineLabel>
+		        </g:HTMLPanel>
+		   </g:HTMLPanel>
+		</g:HTMLPanel>
+	   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	 </g:HTMLPanel>
 	</g:HTMLPanel>
   </g:HTMLPanel>
 </ui:UiBinder>

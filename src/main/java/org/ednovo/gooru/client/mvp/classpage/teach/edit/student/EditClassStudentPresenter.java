@@ -46,5 +46,11 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	protected void onHide() {
 		super.onHide();
 	}
+	
+	@Override
+	protected void onReset() {
+		super.onReset();
+		getView().setNavigationTab();
+	}
 
 }

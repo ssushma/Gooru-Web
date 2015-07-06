@@ -45,4 +45,6 @@ public interface IsEditClassStudentView extends IsViewWithHandlers<EditClassStud
 	
 	public void createAutoSuggestBox() ;
 
+	public void setNavigationTab();
+
 }

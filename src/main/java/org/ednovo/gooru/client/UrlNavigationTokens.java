@@ -65,8 +65,9 @@ public interface UrlNavigationTokens{
 	String TEACHER_CLASS_SETTINGS_INFO="class-info";
 	String TEACHER_CLASS_CONTENT_SETTINGS="class-content";
 	String TEACHER_CLASS_CONTENT_SUB_SCORE="min-score";
-	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-visb";
-	String TEACHER_CLASS_STUDENTE_ROASTER="roaster-view";
+	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-visibility";
+	String TEACHER_CLASS_STUDENTS_ROASTER="roaster-view";
+	String TEACHER_CLASS_STUDENTS_REPORT="report";
 	
 	
 	
