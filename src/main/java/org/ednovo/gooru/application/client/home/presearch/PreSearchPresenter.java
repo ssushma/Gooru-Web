@@ -103,6 +103,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 					getView().setSearchFilter(searchFilterDo);
 				}
 			});
+			getView().getUlSubjectPanel().clear();
 		}
 	}
 

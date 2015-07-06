@@ -882,4 +882,14 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		return panelGrades;
 	}
 
+	@Override
+	public UlPanel getUlSubjectPanel() {
+		return ulSubjectPanel;
+	}
+
+
+	public void setUlSubjectPanel(UlPanel ulSubjectPanel) {
+		this.ulSubjectPanel = ulSubjectPanel;
+	}
+
 }
