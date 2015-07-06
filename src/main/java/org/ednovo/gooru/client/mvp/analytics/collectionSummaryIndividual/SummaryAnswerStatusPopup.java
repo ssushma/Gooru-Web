@@ -6,6 +6,7 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -74,7 +75,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		        	String hsText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
   		         if(skip == false)
 					  {
-						answerChoice.setHTML(hsText);
+						answerChoice.setHTML(URL.decodeQueryString(hsText));
 							if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 								answerChoice.addStyleName(HS_INCORRECT);
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
@@ -93,17 +94,20 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
 		        	String hlText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+		        	
   		         if(skip == false)
-					  {
-						answerChoice.setHTML(hlText);
-						if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
-							answerChoice.addStyleName(HS_INCORRECT);
-						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
-							answerChoice.addStyleName(HS_CORRECT);
-						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-							answerChoice.addStyleName(HS_ONMULTIPULEATTEMPTS);
-						}
-					  }
+  		         {
+  		        	 if(hlText.contains(PLAYER_HT_HL)){
+  		        		 hlText=hlText.replaceAll(PLAYER_HT_HL, SUMMARY_HT_HL);
+  		        	 }
+  		        	 if(hlText.contains(PLAYER_HT_ANS)){
+  		        		 hlText=hlText.replaceAll(PLAYER_HT_ANS, SUMMARY_HTPLAYER_ANS);
+  		        	 }
+  		        	 if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+  		        		hlText=hlText.replaceAll(CORRECT_WORD, MULTI_CORRECT_WORD);
+  		        	 }
+  		        	 answerChoice.setHTML(URL.decodeQueryString(hlText));
+  		         }
   		       ansFlowPnl.add(answerChoice);
 		         }
 		}else if(HT_RO.equalsIgnoreCase(questionType)){
@@ -112,10 +116,10 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
 		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-		        	String hlText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+		        	String htROText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 		         if(skip == false)
 					  {
-						answerChoice.setHTML(hlText);
+						answerChoice.setHTML(URL.decodeQueryString(htROText));
 						if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 							answerChoice.addStyleName(HS_INCORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {

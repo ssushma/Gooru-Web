@@ -8,7 +8,10 @@
 <div class="courseNameBlock">
 
 <p>Unit Name</p>
-<p><g:TextBox styleName="form-control" ui:field="unitTitle" text="{i18n.GL3364}" title="{i18n.GL3364}"/></p>
+<p>
+<g:TextBox styleName="form-control" ui:field="unitTitle" text="{i18n.GL3364}" title="{i18n.GL3364}"/>
+<g:Label ui:field="lblErrorMessage"></g:Label>
+</p>
 
 
 </div>
@@ -19,12 +22,17 @@
 
 <div class="col-md-6 col-sm-6 questionsBlockTextArea">
 <p>Big Idea</p>
-<p><textarea class="form-control" rows="3"></textarea></p>
+<p>
+<g:TextArea styleName="form-control" ui:field="txaBigIdeas" />
+<g:Label ui:field="lblErrorMessageForBig"></g:Label>
+</p>
 
 </div>
 <div class="col-md-6 col-sm-6 questionsBlockTextArea">
 <p>Essential Questions</p>
-<p><textarea class="form-control" rows="3"></textarea></p>
+<p><g:TextArea styleName="form-control" ui:field="txaEssentialQuestions" />
+<g:Label ui:field="lblErrorMessageForEssential"></g:Label>
+</p>
 
 </div>
 

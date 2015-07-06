@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +33,6 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
@@ -47,7 +46,7 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  * @author Search Team
  *
  */
-public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> implements CourseInfoUiHandlers {
+public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoView> implements CollectionInfoUiHandlers {
 
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
@@ -66,7 +65,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CourseInfoPresenter( EventBus eventBus,IsCourseInfoView view) {
+	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 	}
@@ -94,7 +93,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().setCourseList(result);
+			//	getView().setCourseList(result);
 				if(result.size()>0){
 					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
 				}
@@ -107,34 +106,14 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
+					//getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
 				}
 			}
 		});
 	}
-
 	@Override
-	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null, new SimpleAsyncCallback<FolderDo>() {
-			@Override
-			public void onSuccess(FolderDo result) {
-				String[] uri=result.getUri().split("/");
-				Map<String, String> params= new HashMap<String, String>();
-				params.put("o1", uri[uri.length-1]);
-				params.put("view", COURSE);
-				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
-				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(UNIT);
-				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
-				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
-			}
-		});
+	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateUnit) {
+
 	}
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
@@ -146,32 +125,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,createObj, new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
-				folderDo.setTitle(createObj.getTitle());
-				folderDo.setType(COURSE);
-				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
-				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
-				}
-			}
-		});
-	}
-	@Override
-	public void checkProfanity(String textValue,final boolean isCreate){
-		final Map<String, String> parms = new HashMap<String, String>();
-		parms.put("text",textValue);
-		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-			@Override
-			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value);
-			}
-		});
+	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit) {
+
 	}
 }

@@ -191,7 +191,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
 				enableDisableCourseButton(false);
-			    organizelbl.setText(i18n.GL3334());
+			    organizelbl.setText(i18n.GL0180());
 				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}
 		}
@@ -223,8 +223,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			btnSelectedText.setText(i18n.GL3335());
 		}else if(tabView.equals(FOLDER)){
 			enableDisableCourseButton(false);
-			organizelbl.setText(i18n.GL3334());
-			btnSelectedText.setText(i18n.GL3334());
+			organizelbl.setText(i18n.GL0180());
+			btnSelectedText.setText(i18n.GL0180());
 		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);
@@ -323,7 +323,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 			if(parent != null)parent.setSelected(false);
 			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-			shelfTreeWidget.setFolderOpenedStatus(true);
+			if(!"Collection".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType()) && !"Assessment".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType())){
+				shelfTreeWidget.setFolderOpenedStatus(true);
+			}else{
+				shelfTreeWidget.setCollectionOpenedStatus(true);
+			}
 			shelfTreeWidget.setActiveStyle(true);
 			ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 			if(previousshelfTreeWidget==null) {
@@ -649,12 +653,20 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setTreeWidgetType(LESSON);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDLESSON);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("lesson");
+		}else if("Collection".equalsIgnoreCase(type)){
+			shelfTreeWidget = new ShelfTreeWidget(null, 4);
+			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
+			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
 		treeChildSelectedItem.insertItem(0, item);
 		treeChildSelectedItem.setState(true);
 		
-		shelfTreeWidget.setFolderOpenedStatus(true);
+		if(!"Collection".equalsIgnoreCase(type) && !"Assessment".equalsIgnoreCase(type)){
+			shelfTreeWidget.setFolderOpenedStatus(true);
+		}else{
+			shelfTreeWidget.setCollectionOpenedStatus(true);
+		}
 		correctStyle(item);
 		treeChildSelectedItem=item;
 		setFolderActiveStatus();

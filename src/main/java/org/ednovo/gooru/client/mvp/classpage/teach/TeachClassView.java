@@ -63,17 +63,17 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandlers> implements IsTeachClassView {
 
 	
-	@UiField HTMLPanel startContainer,tabTitleContainer;
+	@UiField HTMLPanel startContainer/*,tabTitleContainer*/;
 	
 	@UiField SimplePanel bodyMenuView;
 	
 	@UiField H2Panel titlePanel;
 	
-	@UiField H3Panel tabTitle;
+	//@UiField H3Panel tabTitle;
 	
-	@UiField InlineLabel settingsLbl,contentLbl,studentLbl;
+	@UiField InlineLabel settingsLbl,studentLbl;
 	
-	@UiField HTMLEventPanel classSettingsAnr,studentAnr,classContentAnr;
+	@UiField HTMLEventPanel classSettingsAnr,studentAnr;
 	
 	@UiField SpanPanel classCodePanel;
 	
@@ -88,9 +88,8 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	public TeachClassView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		classSettingsAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS,classSettingsAnr));
-		studentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTES,studentAnr));
-		classContentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SETTINGS,classContentAnr));
+		classSettingsAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS,UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classSettingsAnr));
+		studentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTES,UrlNavigationTokens.TEACHER_CLASS_STUDENTE_ROASTER,studentAnr));
 	}
 
 
@@ -126,11 +125,6 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		settingsLbl.getElement().setAttribute("alt",i18n.GL3345());
 		settingsLbl.getElement().setAttribute("title",i18n.GL3345());
 		
-		contentLbl.getElement().setId("contentLblId");
-		contentLbl.setText(i18n.GL3346());
-		contentLbl.getElement().setAttribute("alt",i18n.GL3346());
-		contentLbl.getElement().setAttribute("title",i18n.GL3346());
-		
 		classCodePanel.setText("XYPRSZ");
 		
 		//startContainer.getElement().setAttribute("alt","startContainer);
@@ -142,7 +136,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	public void addToSlot(Object slot, Widget content) {
 		super.addToSlot(slot, content);
 		String viewPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
-		tabTitleContainer.setVisible(true);
+		/*//tabTitleContainer.setVisible(true);
 		if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)){
 			tabTitle.setText(i18n.GL1624());
 		}else if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
@@ -151,7 +145,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 			tabTitle.setText(i18n.GL3346());
 		}else{
 			tabTitleContainer.setVisible(false);
-		}
+		}*/
 		if (content != null) {
 			bodyMenuView.setWidget(content);
 		}
@@ -161,16 +155,19 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	public class TeacherClassNavigationHandler implements ClickHandler{
 
 		String token;
+		String subToken;
 		HTMLEventPanel htmlEventPanel;
 		
-		public TeacherClassNavigationHandler(String token,HTMLEventPanel htmlEventPanel){
+		public TeacherClassNavigationHandler(String token,String subToken,HTMLEventPanel htmlEventPanel){
 			this.token=token;
+			this.subToken=subToken;
 			this.htmlEventPanel=htmlEventPanel;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, token);
+			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subToken);
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 		

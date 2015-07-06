@@ -1285,11 +1285,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
     			 JSONObject answerObject = value.isObject();
     			 Set<String> keys=answerObject.keySet();
     			 Iterator<String> itr = keys.iterator();
+    			 JSONArray attemptsObj=null;
     		      while(itr.hasNext()) {
-    		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-    		         SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
+    		         attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+    		       }
+    		      if(attemptsObj!=null){
+    		      SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
     		      }
-				
 			}
 		}
 	};

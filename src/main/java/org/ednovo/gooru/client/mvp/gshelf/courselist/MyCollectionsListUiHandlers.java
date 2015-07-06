@@ -78,4 +78,9 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 */
 	public ScrollPanel getScrollPanel();
 	ShelfMainPresenter getShelfMainPresenter();
+	/**
+	 * To add new course/unit/lesson
+	 * @param type {@link String}
+	 */
+	public void addNewContent(String type);
 }

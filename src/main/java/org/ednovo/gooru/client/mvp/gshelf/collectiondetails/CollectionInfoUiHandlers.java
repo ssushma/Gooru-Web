@@ -22,39 +22,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import java.util.List;
-
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team
  *
  */
-public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
+public interface CollectionInfoUiHandlers extends BaseUiHandlers {
+	/**
+	 * This method will call the taxonomy service method
+	 */
+	public void callTaxonomyService();
 	
+	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
+    
 	/**
-	 * This method will display the Grades according to the subject
+	 * To Create Course
+	 * @param courseTitle {@link String} 
+	 * @param isCreateUnit {@link boolean} 
 	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,String selectedText);
+	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateUnit);
 	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link CourseSubjectDo} as List
+	 * To update the course details
+	 * @param courseTitle {@link String} 
 	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
-	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 */
-	void setCouseData(FolderDo courseObj);
-	/**
-	 * This method is used to for creating and updating the unit
-	 * @param isCreate
-	 * @param result
-	 * @param index
-	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
+	public void updateCourseDetails(String text, String id,boolean isCreateUnit);
 }

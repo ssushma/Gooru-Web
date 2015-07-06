@@ -2,19 +2,25 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:ppanel="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
-	<g:HTMLPanel ui:field="lessonInfo">
+	<g:HTMLPanel ui:field="collectionInfo">
 
 
 <div class="courseNameBlock">
 
-<p>Lesson Name</p>
-<p><g:TextBox styleName="form-control" ui:field="lessonTitle" text="{i18n.GL3365}" title="{i18n.GL3365}"/>
-<g:Label ui:field="lblErrorMessage"></g:Label>
-</p>
+<p>Collection Title</p>
+<p><g:TextBox styleName="form-control" ui:field="collectionTitle" text="{i18n.GL3367}" title="{i18n.GL3367}"/></p>
 
 
 </div>
 
+<div class="questionsBlock">
+
+<div class="col-md-8 col-sm-8 questionsBlockTextArea">
+<p>Learining Objective</p>
+<p><textarea class="form-control" rows="3"></textarea></p>
+
+</div>
+</div>
 
 
 
@@ -27,7 +33,7 @@
 
 <div class="unitCoverHeader">
 
-<div class="col-md-6 col-sm-6"><ppanel:PPanel text="{i18n.GL3320}"/></div>
+<div class="col-md-3 col-sm-3"><ppanel:PPanel text="{i18n.GL3369}"/></div>
 <div class="col-md-6 col-sm-6">
 <div class="dropDownRight">
 
@@ -164,11 +170,8 @@
 
 <div class="stepsButtonGroup">
 
-<g:Button styleName="secondary" ui:field="saveCourseBtn" text="{i18n.GL3366}"/>
+<g:Button styleName="secondary" ui:field="saveCollectionBtn" text="{i18n.GL3366}"/>
 
-<g:Button styleName="secondary" ui:field="btnSaveAndCreateCollection" text="Next: Create a Collection"/>
-or
-<g:Button styleName="secondary" ui:field="btnSaveAndCreateAssessment" text="Next: Create an Assessment"/>
 
 </div>
 

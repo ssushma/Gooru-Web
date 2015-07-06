@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import java.util.List;
 
@@ -34,27 +34,12 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
  * @author Search Team
  *
  */
-public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
+public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
 	
-	/**
-	 * This method will display the Grades according to the subject
-	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,String selectedText);
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link CourseSubjectDo} as List
-	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
+
 	/**
 	 * To set the Updated course data
 	 * @param courseObj
 	 */
 	void setCouseData(FolderDo courseObj);
-	/**
-	 * This method is used to for creating and updating the unit
-	 * @param isCreate
-	 * @param result
-	 * @param index
-	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
 }

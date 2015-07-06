@@ -61,7 +61,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField Label lblTopArrow,lblDownArrow;
+	@UiField Label lblTopArrow,lblDownArrow,lblIndex,lblImage;
 	@UiField TextBox txtMoveTextBox;
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount,spnResourcesCount,spnQuestionsCount;
@@ -81,7 +81,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		this.type=type;
 		
 		if(folderObj.getTitle()!=null){
-			pTitle.setText(folderObj.getTitle());
+			h3CourseTitle.setText(folderObj.getTitle());
 		}
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
@@ -98,10 +98,11 @@ public abstract class ContentWidgetWithMove extends Composite {
 		pnlMoveToEdit.setVisible(false);
 	
 		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getCollectionType())){
-			h3CourseTitle.setText(i18n.GL3007()+" "+indexVal);
+			pTitle.setText(i18n.GL3007());
 		}else{
-			h3CourseTitle.setText(StringUtil.capitalizeFirstLetter(folderObj.getCollectionType())+" "+indexVal);
+			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj.getCollectionType()));
 		}
+		lblIndex.setText(indexVal+"");
 		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
 		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
@@ -184,9 +185,12 @@ public abstract class ContentWidgetWithMove extends Composite {
 	 * @param typeVal
 	 */
 	public void enableAndDisableCount(String typeVal){
+		lblImage.setStyleName("courseImage");
 		if(UNIT.equalsIgnoreCase(typeVal)){
 			spnUnitsCount.setVisible(false);
+			lblImage.setStyleName("unitImage");
 		}else if(LESSON.equalsIgnoreCase(typeVal)){
+			lblImage.setStyleName("lessonImage");
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(typeVal)){
@@ -194,7 +198,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnLessonsCount.setVisible(false);
 			pnlArrows.setVisible(false);
 			pnlMoveToEdit.setVisible(true);
-		}else if(COLLECTION.equalsIgnoreCase(typeVal)){
+		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal)){
 			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
 			spnUnitsCount.setVisible(false);

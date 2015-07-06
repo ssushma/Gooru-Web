@@ -62,13 +62,17 @@ public interface UrlNavigationTokens{
 	String TEACHER_CLASSPAGE_STUDENT_ID = "s-id";
 	
 	//Teacher Class Page View tabs
-	String TEACHER_CLASSSUB_PAGE_VIEW = "subpage-view";
+	String TEACHER_CLASS_SUBPAGE_VIEW = "subpage-view";
 	String TEACHER_CLASS_STUDENTES="students";
 	String TEACHER_CLASS_SETTINGS="class-settings";
+	String TEACHER_CLASS_SETTINGS_INFO="class-info";
 	String TEACHER_CLASS_CONTENT_SETTINGS="class-content";
-	String TEACHER_CLASS_CONTENT_SUB_SCORE="mini-score";
-	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-set";
+
 	String TEACHER_CLASS_CONTENT_SUB_REPORTS="reports";
+
+	String TEACHER_CLASS_CONTENT_SUB_SCORE="min-score";
+	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-visb";
+	String TEACHER_CLASS_STUDENTE_ROASTER="roaster-view";
 	
 	//Teacher Class Page Report tokens
 	String TEACHER_CLASSPAGE_REPORT_TYPE = "report-type";
