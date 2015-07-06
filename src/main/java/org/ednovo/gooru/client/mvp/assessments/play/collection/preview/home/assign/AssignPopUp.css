@@ -1,0 +1,956 @@
+/* Assign Tab in collection Edit */
+.mainContainer{
+	padding: 10px 0px 0px 16px;
+	width: 100%;
+	min-height: 250px;
+}
+.labelText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;
+	padding-bottom: 30px;
+	padding-top: 8px;	
+	width: 50%;
+	float: left;
+	font-weight:normal;
+}
+
+.processing{
+	text-align: center;
+	width: 95%;
+	color: #999 !important;
+	font-style: italic;
+	padding: 10px;
+	margin-top: 5px;
+	font-size: 12px;
+}
+
+
+.dropdownContainer{
+	background-color:rgb(255,255,255);
+	width:310px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: absolute;
+	margin-left: 100px;
+}
+.classpageContainerFont{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+	
+}
+
+.controlsContainer{
+	float:left;
+	margin-top:30px;
+}
+
+.labelTitlePrivateText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:center;
+	padding-top: 3px;
+}
+
+.labelTitleText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:18px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align: center;
+	padding-top: 8px;
+	
+}
+
+.placeHolderText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(153,153,153);
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	width: 90%;
+	font-weight: normal;
+}
+
+.arrow {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	top: -9px;
+	float: right;
+	margin-top: 10px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+
+
+.assignmentsContainer{
+	float : left;
+}
+
+.buttonAssignContainer{
+	clear: both;
+	float: right;
+}
+
+
+.scrollPanelContainer{
+	background-color:rgb(255,255,255);
+	/* width:310px; */
+	width:100%;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 29px;
+	left: 4px;
+	z-index: 9;
+	position: absolute !important;
+	margin-left: -5px;
+	height: auto;
+	max-height: 108px;
+}
+
+
+.classpageTitleText {
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(81,81,81);
+	padding: 7px 0 6px 6px;
+	font-size:12px;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 98%;
+	text-align:left;
+	font-weight: normal;
+	
+}
+.classpageTitleText:hover {
+ 	background-color: #CFE3F1;
+	cursor: pointer;
+}
+
+.selectedClasspageText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:#515151;
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 281px;
+}
+
+
+.disableAssignButon{
+	display: inline-block;
+	clear: both;
+	float: left;
+	color: #999;
+	padding: 7px 9px;
+	border-radius: 4px;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	opacity: 1;
+}
+
+.activeAssignButton:hover{
+	cursor:pointer;
+	background: #1076BB;
+	clear: both;
+}
+.activeAssignButton{
+	color: white;
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	cursor: pointer;
+	clear: both;
+	float: left;
+	background-color: #1076bb;
+}
+
+.errorMessage{
+	color: #FBB03B;
+	clear: both;
+	width: 400px;
+	font-size: 12px !important;
+	margin-top: 34px;
+	margin-left: -50px;
+}
+
+/* End Assign Tab in collection Edit */
+
+/* Success popup */
+.assignDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: left;
+	padding: 10px 0px 30px 2px;
+	width: 94%;
+}
+
+.assignDescLogin {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: left;
+	padding: 60px 0px 30px 19px;
+	width: 94%;
+padding-bottom: 25%;
+text-align:center;
+}
+
+.assignMiddle {
+	padding: 15px 0px 0px 120px;
+}
+
+.assignCollection {
+	float: left;
+}
+
+.assignSprite {
+	background: url(images/Classpage/assign-sprite.png) no-repeat;
+}
+
+.assignCollectionIcon {
+	background-position: -52px -206px;
+	width: 25px;
+	height: 25px;
+	float: left;
+}
+
+.assignCollectionDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: center;
+	display:inline;
+}
+
+.assignTo {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81,81,81);
+	text-align: center;
+	padding: 12px 0px;
+}
+
+.assignClasspageTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: center;
+	font-weight: bold;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.assignAssignmentTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: center;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.assignHeader {
+	padding: 10px 0px 10px 10px;
+	background-color: rgb(81,81,81);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	
+}
+
+.assignTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(255,255,255);
+	width: 94%;
+}
+.assignCloseMarker {
+	float: left;
+}
+
+.assignCloseMark {
+	background-position: -52px -116px;
+	width: 18px;
+	height: 19px;
+	cursor: pointer;
+}
+.assign {
+	background-color: #fff;
+	width: 418px;
+}
+
+.assignContent {
+	background-color: transparent;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+	height:630px;
+}
+.shareContent {
+	background-color: transparent;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+	height:344px;
+}
+.assignContentLoginCustomize {
+	background-color: transparent;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+	height:100%;
+}
+.conent{
+	width: 100%;
+	text-align: center;
+	padding: 10px 10px 40px 10px;
+}
+
+.conentLogin{
+	width: 99%;
+	text-align: center;
+	padding: 55px 15px 40px 10px;
+}
+
+.conentLoginPop{
+	width: 99%;
+	text-align: center;
+	padding: 15px 15px 40px 10px;
+	
+}
+
+.labelTextDisable{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:#999;
+	text-align:left;
+	padding-bottom: 30px;
+	padding-top: 8px;	
+	width: 43%;
+	float: left;
+}
+
+.labelNoClasspageText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;
+	padding-top: 8px;
+	padding-bottom: 20px;
+	float: left;
+}
+
+.labelTeachLink{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	text-align:left;
+	padding-top: 8px;	
+	float: left;
+	text-decoration: none !important;
+	color: #515151; 
+	/* cursor: pointer; */
+}
+
+/* .labelTeachLink:hover{
+	color: #87BADD;
+} */
+
+.noClasspageContianer{
+	padding: 0px 0px 15px 0px;
+	min-height: 50px;
+	width: 75%;
+}
+.loadingpanelImage{
+	background: url(images/core/B-Dot.gif) no-repeat;
+	height:170px;
+	width: 233px;
+	margin: 0 auto;
+}
+.container{
+	padding: 10px 0px 0px 16px;
+	min-height: 250px;
+	width: 60%;
+}
+.noAssignments{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: #999;
+	text-align: left;
+	padding-top: 8px;
+	padding-left: 5px;
+	margin-left: 100px;
+	position: absolute;
+}
+
+.popup {
+	background-color: #FFF;
+	width: 500px;
+	margin: 50px auto;
+	padding: 3px;
+}
+.popupInner {
+	border: 1px solid #DDD;
+}
+.popupHeader {
+	padding: 10px 15px;
+	color: #FFF;
+	background-color: #515151;
+	font-size: 16px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+
+}
+.popupHeaderTitle {
+	color: #fff;
+	display: inline-block;
+}
+.popupContent {
+	font-size: 20px;
+	font-weight: bold;
+	color: rgb(81,81,81);
+	padding: 15px;
+}
+.heightClasspagecontainer{
+/* 	height:155px; */
+	margin-right: auto;
+	display: inline-block;
+	width:100%;
+}
+.classContainer{
+	margin-right: auto;
+	display: inline-block;
+	margin-top:10px;
+}
+.contentTitle {
+	color: #fff;
+	display: inline-block;
+}
+.btn {
+	width: 115px;
+	margin: auto;
+	margin-bottom: 15px;
+}
+button.LoginText {
+	margin-top:15px;
+}
+
+.popupDesc {
+	font-weight: normal;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+}
+.txtboxDesc {
+	font-weight: normal;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+}
+.txtboxerrorColor {
+	font-weight: normal;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	color:red;
+}
+.popupDescLogin {
+	font-weight: normal;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	margin-left: 15px;
+	width: 86%;
+}
+.popupDesc {
+	font-weight: normal;
+	font-size: 12px;
+	padding-top: 5px;
+}
+.popupcornerBg {
+	padding: 10px;
+	font-size: 12px;
+	font-weight: normal;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-color: #F0F0F0;
+	border: 1px solid #CCC;
+	margin: 10px 30px 0px 30px;
+}
+.url {
+	display: inline-block;
+	font-weight: normal;
+	color: #1076BB;
+	cursor: pointer;
+	font-size: 12px;
+	margin: 5px 0px 30px 30px;
+}
+.shareTextarea {
+	color: #414141;
+	font-size: 12px;
+	height: 46px;
+	resize: none;
+	width: 364px;
+	border: 1px solid #CCC;
+	padding: 10px;
+	font-weight: normal;
+	overflow:auto;
+}
+.sociaMediaText {
+	display: inline-block;
+	font-weight: normal;
+	font-size: 13px;
+	color: #515151;
+	padding-right: 10px;
+	vertical-align: top;
+	width:100%;
+}
+.clear {
+	clear: both;
+}
+.socialiconContainer {
+	height: 40px;
+	margin-left: 1.5em;
+	margin-right: auto;
+	display: inline-block;
+	height:40px;
+}
+.socialiconOuterDiv {
+	display: inline-block;
+	padding: 4px 6px 0 0;
+	vertical-align: top;
+}
+.fbButtonBg {
+	background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0, #3B5996), color-stop(1, #3B5996));
+	background-image: -webkit-linear-gradient(-90deg, #3B5996 0, #3B5996 100%);
+	background-image: -o-linear-gradient(-90deg, #3b5996 0, #3b5996 100%);
+	background-image: -ms-linear-gradient(-90deg, #3b5996 0, #3b5996 100%);
+	width: 30px;
+	height: 30px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #3B5996;
+	cursor: pointer;
+	background-image: -moz-linear-gradient(-90deg, #3b5996 0, #3b5996 100%);
+	filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+}
+.twitterButtonBg {
+	background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0, #00ACF0), color-stop(1, #00ACF0));
+	background-image: -webkit-linear-gradient(-90deg, #00ACF0 0, #00ACF0 100%);
+	background-image: -o-linear-gradient(-90deg, #00acf0 0, #00acf0 100%);
+	background-image: -ms-linear-gradient(-90deg, #00acf0 0, #00acf0 100%);
+	width: 30px;
+	height: 30px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #00ACF0;
+	cursor: pointer;
+	background-image: -moz-linear-gradient(-90deg, #00acf0 0, #00acf0 100%);
+	filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+}
+.shareButtonBg {
+	background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0, #4C98CC), color-stop(1, #1076BB));
+	background-image: -webkit-linear-gradient(-90deg, #4C98CC 0, #1076BB 100%);
+	background-image: -o-linear-gradient(-90deg, #4c98cc 0, #1076bb 100%);
+	background-image: -ms-linear-gradient(-90deg, #4c98cc 0, #1076bb 100%);
+	width: 30px;
+	height: 30px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #1076BB;
+	cursor: pointer;
+	background-image: -moz-linear-gradient(-90deg, #4c98cc 0, #1076bb 100%);
+	filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+}
+.shareButtonBg:hover {
+	background: #1076BB;
+}
+.btnAlign {
+	display: inline-block;
+	padding-top: 5px;
+}
+.fb {
+	background-position: -25px -23px !important;
+	width: 30px;
+	height: 20px;
+}
+.twitter {
+	background-position: -26px -45px !important;
+	width: 30px;
+	height: 30px;
+}
+.email {
+	background-position: -24px -72px !important;
+	width: 30px;
+	height: 30px;
+}
+.sprite {
+	background: url(../images/FTE.png) no-repeat;
+}
+.contentBorder {
+	text-align: center;
+	margin-top: -13px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid rgb(221,221,221);
+}
+.contentBorderShare {
+	text-align: center;
+	margin-top: -15px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid rgb(221,221,221);
+}
+.inputBlockOuter {
+	width: 300px;
+	margin: 0 auto;
+	/* padding-top: 20px; */
+	padding-left: 35px;
+}
+.inputBlock {
+	display: block;
+	width: 300px;
+	height: 28px;
+	margin-bottom: 10px;
+	border: 1px solid rgb(221,221,221);
+}
+.popupTitle {
+	text-align: center;
+}
+.popupTitleLogin {
+	text-align: center;
+	font-family: Arial;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 8px;
+}
+.pwdTxt {
+	font-size: 12px;
+	font-weight: normal;
+	color: rgb(16,118,186);
+	position: relative;
+	text-align: left;
+}
+.signUp {
+	font-size: 12px;
+	color: rgb(81,81,81);
+	text-align: center;
+	font-weight: normal;
+}
+
+.shareLinkContainer {
+	float: left;
+	width: 98%;
+	margin-left: 2%;
+	margin-top: -20px;
+}
+
+.shareLink {
+	padding: 20px;
+	width: 46%;
+	float: left;
+	padding-left: 10px;
+}
+
+.shareLinkFlowPanel {
+	margin-top: 20px;
+    margin-left: 71px;
+}
+
+.shareLinkBoxContainer {
+	height: 59px;
+	padding: 5px 10px;
+	/* background: #f0f0f0; */
+	width: 82%;
+	margin-top: 8px;
+}
+
+.shareLinkBox {
+	border: 1px solid #ccc;
+	color: #414141;
+	font-size: 12px;
+	height: 46px;
+	resize: none;
+	width: 96%;
+	padding: 5px;
+}
+
+.shareLinkBoxDisabled {
+	-webkit-user-select: none;
+	/* 	-moz-user-select: none; */
+	user-select: none;
+}
+
+.shareLinkSwitchUrl{
+	float: left;
+    margin-top: 5px;
+    color: #1076bb;
+    cursor:pointer;
+}
+.shareLinkSwitchEmbed{
+	float: left;
+    margin-top: 5px;
+    margin-left: 20px;
+    color: #1076bb;
+    cursor:pointer;
+}
+
+.labeldNoClassPageText{
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.noClassPageBanner{
+	margin-left: -23spx;
+}
+
+.assignClassPageBtn {
+	
+}
+
+.cpSuccessMsg {
+	width: 100%;
+	text-align: left;
+	margin-left: 21px;
+}
+.loadingImageMainDiv {
+	width: 100%;
+    height: 100%;
+	position: absolute;
+	/* background-color: #FFF; */
+	/* opacity: 0.4; */
+	top: 0px;
+    left: 0px;
+    z-index:1;
+}
+
+.loadingImageForSelfEdit {
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 175px;
+	margin: 0 auto;
+	margin-top: 173px;;
+	position: absolute;
+	z-index: 5;
+	margin-left: 31%;
+}
+
+.loadingImageForShare {
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 175px;
+	margin: 0 auto;
+	margin-top: 94px;;
+	position: absolute;
+	z-index: 5;
+	margin-left: 31%;
+}
+
+.loadingImageForSelfEditCustomize {
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 175px;
+	margin: 0 auto;
+	margin-top: 17%;;
+	position: absolute;
+	z-index: 5;
+	margin-left: 31%;
+}
+.assignmentLabel{
+	color:#1076bb;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	text-align:left;
+	padding-bottom: 30px;
+	float: right;
+	font-weight:normal;
+	margin-top: -44px;
+	margin-right: 79px;
+	cursor: pointer;
+}
+.inputTextBoxSyle {
+	float: left;
+	width: 424px;
+	border: #CCC 1px solid;
+	padding: 5px;
+	font-size: 12px;
+}
+.popupButtons {
+	font-size: 20px;
+	font-weight: bold;
+	color: rgb(81,81,81);
+	text-align: center;
+}
+
+.popupTextbox {
+	font-size: 20px;
+	font-weight: bold;
+	color: rgb(81,81,81);
+	padding: 15px;
+	text-align: center;
+	padding-top: 6%;
+	height:90px;
+}
+
+.collectionSearchRenamePopupButtons {
+	font-size: 20px;
+	font-weight: bold;
+	color: rgb(81,81,81);
+	text-align: center;
+	margin-top: -25px;
+}
+
+.collectionSearchRenameTxtboxErrorColor {
+	font-weight: normal;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	color:orange;
+	float:left;
+}
+
+.gConnectButton {
+	padding:16px 16px 15px 64px;
+	color:white;
+	background: #1076BB url("images/login/g.png") left center no-repeat;
+	background: url("images/login/g.png") left center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: url("images/login/g.png") left center no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/login/g.png") left center no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/login/g.png") left center no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+	border-radius:4px;
+	border:1px solid #1076BB;
+	/* margin-bottom: 15px; */
+	cursor: pointer;
+}
+
+.gConnectButton:hover {
+	background: #1076BB url("images/login/g.png") left center no-repeat;
+}
+
+.divider {
+	border-bottom:1px solid #ddd;
+	width:100%;
+	height:1em;
+	margin:10px 0px 20px 0px;
+}
+
+.dividerText {
+	display:inline;
+	position:relative;
+	top:.5em;
+	padding:0px 10px;
+	background-color:white;
+	font-size: 12px;
+}
+
+/*End Success popup */
+
+.privacyAlignStyle{
+	margin-right: 2px;
+}
+
+.privacyContainer{
+	margin: 0px;
+	text-align: left;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: 70%;
+}
+
+.errorLabel {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(250,176,58);
+	text-align: right;
+	margin-right: -53px;
+	float: right;
+}
+
+
+.popupStyle{
+	z-index: 99999;
+	visibility: visible;
+	position: absolute;
+	top: 26px !important;
+	
+	overflow: visible;
+}

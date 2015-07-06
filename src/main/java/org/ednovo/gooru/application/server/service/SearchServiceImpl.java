@@ -155,7 +155,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 
 	@Autowired
 	private AutoSearchKeyWordDeSerializer autoSearchKeyWordDeSerializer;
-	
+
 	String  query;
 	String collectionQuery;
 	@Override
@@ -451,7 +451,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				}
 			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE))
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
-			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY))
+			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || params.get(TYPE).equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY))
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
 			else {
 				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){

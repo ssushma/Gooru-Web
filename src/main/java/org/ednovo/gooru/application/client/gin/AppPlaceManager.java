@@ -43,10 +43,10 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
 
 /**
- * 
+ *
  * @fileName : AppPlaceManager.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -65,31 +65,31 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	private PlaceRequest errorPlaceRequest;
 
 	private PlaceRequest previousRequest = null;
-	
+
 	private PlaceRequest playerBackRequest=null;
 
 	private boolean refreshPlace = true;
-	
+
 	private PlaceRequest previousRequestUrl;
-	
+
 	private PlaceRequest previousPlayerRequestUrl;
-	
+
 	private PlaceRequest searchMovedPlaceRequest=null;
-	
+
 	private String beforePlayerOpenSeoToken="";
-	
+
 	private String classpageEventId="";
-	
+
 	private String classpageId=null;
-	
+
 	private String userShelfId=null;
-	
+
 	private boolean isLibraryEventTriggered=false;
-	
+
 	private ArrayList<String> libraryList;
-	
+
 	private Map<String,Boolean> libraryEventMap=new HashMap<String, Boolean>();
-	
+
 	private String isLibraryEventId=null;
 
 	@Inject
@@ -114,16 +114,16 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		setRefreshPlace(refresh);
 		super.revealPlace(place);
 	}
-	
+
 	@Override
 	public void revealPlace(boolean refresh, PlaceRequest place,boolean isPlayerRequest) {
 		setRefreshPlace(refresh);
 		super.revealPlace(place);
 	}
-	
+
 	@Override
 	public PlaceRequest preparePlaceRequest(String viewToken, Map<String,String> params) {
-		PlaceRequest placeRequest = new PlaceRequest(viewToken); 
+		PlaceRequest placeRequest = new PlaceRequest(viewToken);
 		if (params != null) {
 			for (String key : params.keySet()) {
 				placeRequest = placeRequest.with(key, params.get(key));
@@ -168,7 +168,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 
 	@Override
 	public void revealPlace(String viewToken, Map<String, String> params, boolean onlyIfNew) {
-		PlaceRequest placeRequest = new PlaceRequest(viewToken); 
+		PlaceRequest placeRequest = new PlaceRequest(viewToken);
 		if (params != null) {
 			for (String key : params.keySet()) {
 				placeRequest = placeRequest.with(key, params.get(key));
@@ -253,7 +253,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			revealPlace(defaultViewToken);
 		}
 	}
-	
+
 	@Override
 	public void revealPlayerPreviousPlace(boolean refresh, String defaultViewToken) {
 		if (playerBackRequest != null) {
@@ -262,7 +262,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			revealPlace(defaultViewToken);
 		}
 	}
-	
+
 	public void revealClosePlayer(){
 		revealPlace(false, getPreviousPlayerRequestUrl());
 	}
@@ -272,13 +272,13 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		setRefreshPlace(true);
 		super.revealPlace(new PlaceRequest(viewToken));
 	}
-	
+
 	 @Override
 	  public void revealPlace(final PlaceRequest request, final boolean updateBrowserUrl) {
 		 setPreviousRequestUrl(request);
 		 super.revealPlace(request, updateBrowserUrl);
 	  }
-	
+
 	@Override
 	 public PlaceRequest getCurrentPlaceRequest() {
 	    if (getCurrentPlaceHierarchy().size() > 0) {
@@ -300,7 +300,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	      return new PlaceRequest();
 	    }
 	  }
-	
+
 	public PlaceRequest getReplacedPlaceRequest(PlaceRequest placeRequest){
 		PlaceRequest newPlaceRequest=new PlaceRequest(replaceNameToken(placeRequest.getNameToken()));
 		Set<String> parameters=placeRequest.getParameterNames();
@@ -311,7 +311,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		}
 		return newPlaceRequest;
 	}
-	
+
 	public PlaceRequest getModifiedPlaceRequest(PlaceRequest placeRequest){
 		PlaceRequest newPlaceRequest=new PlaceRequest(modifyNameToken(placeRequest.getNameToken()));
 		Set<String> parameters=placeRequest.getParameterNames();
@@ -326,7 +326,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		  String unescapedHistoryToken = URL.decodeQueryString(historyToken);
 		  if(unescapedHistoryToken.startsWith("!")){
 			  unescapedHistoryToken=unescapedHistoryToken.substring(1);
-		  }	  
+		  }
 		  return unescapedHistoryToken;
 	}
 	public String replaceNameToken(String historyToken){
@@ -341,15 +341,15 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		public PlaceRequest getPreviousRequestUrl() {
 			return previousRequestUrl;
 		}
-		
+
 		/**
 		 * @param previousRequestUrl the previousRequestUrl to set
 		 */
 		public void setPreviousRequestUrl(PlaceRequest previousRequestUrl) {
 			String viewToken=previousRequestUrl.getNameToken();
-			if(viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY)||viewToken.equals(PlaceTokens.COLLECTION)){
+			if(viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.ASSESSMENT_PLAY)|| viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY)||viewToken.equals(PlaceTokens.COLLECTION)){
 				String previousViewToken=this.previousRequestUrl!=null?this.previousRequestUrl.getNameToken():"";
-				if(!previousViewToken.equals(PlaceTokens.PREVIEW_PLAY)&&!previousViewToken.equals(PlaceTokens.COLLECTION_PLAY)&&!previousViewToken.equals(PlaceTokens.RESOURCE_PLAY)){
+				if(!previousViewToken.equals(PlaceTokens.PREVIEW_PLAY) && !previousViewToken.equals(PlaceTokens.ASSESSMENT_PLAY) && !previousViewToken.equals(PlaceTokens.COLLECTION_PLAY)&&!previousViewToken.equals(PlaceTokens.RESOURCE_PLAY)){
 					setPreviousPlayerRequestUrl(getPreviousRequestUrl());
 					setBeforePlayerOpenSeoToken(Window.getTitle());
 				}
@@ -358,7 +358,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 				this.previousRequestUrl = previousRequestUrl;
 			}
 		}
-		
+
 		/**
 		 * @return the previousPlayerRequestUrl
 		 */
@@ -375,23 +375,23 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 					pageLocation="shelf-search";
 				}
 				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
-					pageLocation="profile-search";					
+					pageLocation="profile-search";
 				}
 				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
-					pageLocation="teach-search";			
+					pageLocation="teach-search";
 				}
 				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
-					pageLocation="study-search";			
+					pageLocation="study-search";
 				}
 				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT)){
-					pageLocation="study-search";			
+					pageLocation="study-search";
 				}
 			}else{
 				pageLocation="home-search";
 			}
 			return pageLocation;
 		}
-		
+
 		public String getPageLocation(){
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
@@ -429,14 +429,14 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return pageLocation;
 		}
-		
+
 		public boolean isLibraryToken(String token){
 			if(libraryList!=null){
 				return libraryList.contains(token);
 			}
 			return false;
 		}
-		
+
 		public void addAllLibraries(){
 			libraryList=new ArrayList<String>();
 			libraryList.add(PlaceTokens.RUSD_LIBRARY);
@@ -463,7 +463,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			libraryList.add(PlaceTokens.TICAL);
 			libraryList.add(PlaceTokens.YCGL_LIBRARY);
 		}
-		
+
 		public String getPlayerMode(){
 			String mode=PlayerDataLogEvents.PREVIEW;
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
@@ -510,11 +510,11 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return folderIds;
 		}
-		
+
 		public void setDataLogClasspageId(String classpageId){
 			this.classpageId=classpageId;
 		}
-		
+
 		public String getDataLogClasspageId(){
 			return this.classpageId;
 		}
@@ -530,19 +530,19 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		public void setPreviousPlayerRequestUrl(PlaceRequest previousPlayerRequestUrl) {
 			this.previousPlayerRequestUrl = previousPlayerRequestUrl;
 		}
-		
+
 		public PlaceRequest getDefaultPlayerPlaceRequest(){
 			return new PlaceRequest(PlaceTokens.HOME);
 		}
 
-		/** 
+		/**
 		 * This method is to get the beforePlayerOpenSeoToken
 		 */
 		public String getBeforePlayerOpenSeoToken() {
 			return beforePlayerOpenSeoToken;
 		}
 
-		/** 
+		/**
 		 * This method is to set the beforePlayerOpenSeoToken
 		 */
 		public void setBeforePlayerOpenSeoToken(String beforePlayerOpenSeoToken) {
@@ -567,18 +567,18 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		public String getLibaryEventId() {
 			return this.isLibraryEventId;
 		}
-		
+
 		@Override
 		public void setLibraryEventId(String libraryEventId){
 			this.isLibraryEventId=libraryEventId;
 		}
-		
+
 		@Override
 		public void setLibaryEventTriggered(String libraryName){
 			libraryEventMap.put(libraryName, true);
 			isLibraryEventTriggered=true;
 		}
-		
+
 		@Override
 		public void resetLibraryEventData(String libraryName){
 			libraryEventMap.remove(libraryName);
@@ -602,12 +602,12 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return parentGooruId;
 		}
-		
+
 
 		public void setUserShelfId(String userShelfId) {
 			this.userShelfId = userShelfId;
 		}
-		
-		
+
+
 
 }

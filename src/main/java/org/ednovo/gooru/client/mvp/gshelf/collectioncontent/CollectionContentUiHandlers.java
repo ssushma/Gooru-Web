@@ -24,11 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 
 /**
  * @author Search Team
@@ -87,5 +89,240 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 *
 	 */
 	void addResourcePopup(CollectionDo collectionDo, String clickType);
+	/**
+	 *
+	 * @function updateQustionImage
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param collectionItemId
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void updateQustionImage(String collectionItemId);
+	/**
+	 *
+	 * @function removeQuestionImage
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param collectionQuestionId
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void removeQuestionImage(String collectionQuestionId);
+
+	/**
+	 *
+	 * @function updateResourceInfo
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param collectionItemDo
+	 * @parm(s) : @param tagList
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void updateResourceInfo(CollectionItemDo collectionItemDo,
+			List<String> tagList);
+	/**
+	 *
+	 * @function imageEditResourceUpload
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void imageEditResourceUpload();
+
+	/**
+	 *
+	 * @function getBrowseStandardsInfo
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param val
+	 * @parm(s) : @param userResource
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void getBrowseStandardsInfo(boolean val, boolean userResource);
+
+	/**
+	 *
+	 * @function addUpdatedBrowseStandards
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void addUpdatedBrowseStandards();
+
+	/**
+	 *
+	 * @function closeBrowseStandardsPopup
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void closeBrowseStandardsPopup();
+
+	/**
+	 *
+	 * @function imageEditUserOwnResourceUpload
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void imageEditUserOwnResourceUpload();
+	/**
+	 *
+	 * @function editUserOwnResource
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param jsonString
+	 * @parm(s) : @param gooruOid
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void editUserOwnResource(String jsonString, String gooruOid);
+
+	/**
+	 *
+	 * @function updateQuestionResource
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param questionItemId
+	 * @parm(s) : @param collectionQuestionItemDo
+	 * @parm(s) : @param thumbnailUrl
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void updateQuestionResource(String questionItemId,
+			CollectionQuestionItemDo collectionQuestionItemDo,
+			String thumbnailUrl);
+
+	/**
+	 *
+	 * @function showEditQuestionResourcePopup
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param collectionItem
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	public void showEditQuestionResourcePopup(CollectionItemDo collectionItem);
 
 }
