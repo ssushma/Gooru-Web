@@ -22,27 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
+package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 
 /**
- * @fileName : IsEditStudentView.java
+ * @fileName : EditClassSettingsNavigationUiHandler.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 03-Jul-2015
+ * @date: 06-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer: 
  */
-public interface IsEditClassStudentView extends IsViewWithHandlers<EditClassStudentViewUiHandler>{
+public interface EditClassSettingsNavigationUiHandler extends BaseUiHandlers{
 	
-	public void createAutoSuggestBox() ;
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> CLASS_SETTINGS_TAB = new Type<RevealContentHandler<?>>();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> CLASS_CONETENT_TAB = new Type<RevealContentHandler<?>>();
+	
+	
 
 }

@@ -505,6 +505,7 @@
 }
 #getStartedContainer .settingsMenu img{
 	width:19px;
+	margin: 0 8px;
 }
 #getStartedContainer .settingsMenu a:last-child{
 	margin-right:0;
@@ -537,6 +538,7 @@
 
 #getStartedContainer .settingsMenu img{
 	width:19px;
+	margin: 0 8px;
 }
 #getStartedContainer .settingsMenu a:last-child{
 	margin-right:0;
@@ -562,6 +564,7 @@
 
 #getStartedContainer .settingsMenu img{
 	width:19px;
+	margin: 0 8px;
 }
 #getStartedContainer .settingsMenu a:last-child{
 	margin-right:0;
@@ -581,6 +584,7 @@
 }
 #getStartedContainer .settingsMenu img{
 	width:20px;
+	margin: 0 8px;
 }
 #getStartedContainer .rightWhiteBox{
 	margin-right:6px;
@@ -592,11 +596,13 @@
 @media (min-width: 992px) and (max-width: 1199px) {
 		#getStartedContainer .settingsMenu img{
 			width:25px;
+			margin: 0 8px;
 }
 }
 @media (min-width: 1200px) {
 	#getStartedContainer .settingsMenu img{
 			width:30px;
+			margin: 0 8px;
 		}
 }
 
@@ -890,7 +896,7 @@ select option {
 	padding:0 0;
 }
 .classMenuBlock .classMenuLeft{
-	border-right:1px solid #dddddd;
+	/* border-right:1px solid #dddddd; */
 }
 .classMenuBlock .classMenuLeft ul li{
 	margin:0 0;
@@ -899,7 +905,7 @@ select option {
 }
 .classMenuBlock .classMenuLeft ul li a{
 	display:block;
-	padding:15px 15px;
+	padding:24px 24px;
 	color:#9999a6;
 	font-weight:bold;
 }
@@ -907,6 +913,12 @@ select option {
 	color: #515151;
 	font-weight: bold;
 	margin: 0 8px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 150px;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
 }
 .classMenuBlock .classMenuLeft ul li a:hover, .classMenuBlock .classMenuLeft ul li a:focus {
 	background:#e7f1f9;
@@ -925,10 +937,10 @@ select option {
 	display:table-cell;
 }
 .classMenuBlock .classMenuRight .coureEditActions, .classMenuBlock .classMenuRight .stPriviewButton{
-	padding:6px 5px;
+	padding:15px 5px;
 }
 .classMenuBlock .classMenuRight .coureEditActions{
-	padding:6px 5px;
+	padding:15px 5px;
 	border-right:1px solid #dddddd;
 
 }
@@ -937,6 +949,9 @@ select option {
 	color:#515151;
 	font-weight:bold;
 	margin:0 6px;
+}
+.classMenuBlock .classMenuRight .coureEditActions .courseLblStyle{
+	padding :10px;
 }
 .classMenuBlock .classMenuRight .coureEditActions a:hover, .classMenuBlock .classMenuRight .coureEditActions a:focus{
 	opacity:1;
@@ -949,45 +964,6 @@ select option {
 	display:inline-block;
 	vertical-align:middle;
 }
-
-.classMenuBlock .scoreStatus {
-    text-align: right;
-    padding: 6px 6px;
-    float: right;
-}
-.classMenuBlock .scoreStatus div {
-    display: table-cell;
-    padding: 8px 15px;
-    width: 62px;
-    text-align: center;
-    font-weight: bold;
-}
-.classMenuBlock .scoreStatus div.red {
-    background: #e08282;
-    color: #ffffff;
-    border-radius: 4px 0 0 4px;
-}
-.classMenuBlock .scoreStatus div.org {
-    background: #fec956;
-    color: #ffffff;
-}
-.classMenuBlock .scoreStatus div.yellowgreen {
-    background: #edf167;
-    color: #ffffff;
-}
-.classMenuBlock .scoreStatus div.lightgreen {
-    background: #a2de81;
-    color: #ffffff;
-}
-.classMenuBlock .scoreStatus div.green {
-    background: #3fc380;
-    color: #ffffff;
-    border-radius: 0 4px 4px 0;
-}
-
-
-
-
 .setScoreContainer {
 	padding:15px 0;
 }
@@ -1013,9 +989,6 @@ select option {
 .setScoreContainer  .actionButtons button{
 	padding:8px 20px;
 }
-
-
-
 @media (min-width: 240px) and (max-width: 319px) {
  .classMenuBlock .classMenuLeft{
 			 border-bottom:1px solid #dddddd;
@@ -1069,3 +1042,347 @@ select option {
 }
  @media (min-width: 1200px) {
 }
+
+/** student roaster css **/
+
+.studentsMenuBlock {
+    border-bottom: 1px solid #dddddd;
+    background: #fff;
+}
+.studentsMenuBlock .studentsLeftMenu ul {
+    margin: 0 0;
+    padding: 0 0;
+}
+.studentsMenuBlock .studentsLeftMenu ul li {
+    margin: 0 0;
+    padding: 0 0;
+    display: table-cell;
+}
+.studentsMenuBlock .studentsLeftMenu ul li:first-child a:hover {
+    border-radius: 4px 0 0 0;
+}
+.studentsMenuBlock .studentsLeftMenu ul li a {
+    display: block;
+    color: #a19999;
+    padding: 18px 25px;
+    font-size: 18px;
+}
+.studentsMenuBlock .studentsLeftMenu ul li a:hover,
+.studentsMenuBlock .studentsLeftMenu ul li a:focus {
+    background: #e7f1f9;
+    color: #4897ce;
+    text-decoration: none;
+}
+.studentsMenuBlock .studentsLeftMenu ul li.active a {
+    background: #e7f1f9;
+    color: #4897ce;
+    text-decoration: none;
+}
+.studentsMenuBlock .studentsLeftMenu ul li:first-child.active a {
+    border-radius: 4px 0 0 0;
+}
+.studentsMenuBlock .scoreStatus {
+    text-align: right;
+    padding: 6px 6px;
+    float: right;
+}
+.studentsMenuBlock .scoreStatus div {
+    display: table-cell;
+    padding: 8px 15px;
+    width: 62px;
+    text-align: center;
+    font-weight: bold;
+}
+.studentsMenuBlock .scoreStatus div.red {
+    background: #e08282;
+    color: #ffffff;
+    border-radius: 4px 0 0 4px;
+}
+.studentsMenuBlock .scoreStatus div.org {
+    background: #fec956;
+    color: #ffffff;
+}
+.studentsMenuBlock .scoreStatus div.yellowgreen {
+    background: #edf167;
+    color: #ffffff;
+}
+.studentsMenuBlock .scoreStatus div.lightgreen {
+    background: #a2de81;
+    color: #ffffff;
+}
+.studentsMenuBlock .scoreStatus div.green {
+    background: #3fc380;
+    color: #ffffff;
+    border-radius: 0 4px 4px 0;
+}
+.rosterContainer .rightWhiteBox span {
+    background: #ffffff none repeat scroll 0 0;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    color: #515151;
+    display: inline-block;
+    font-size: 26px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    padding: 4px 24px;
+}
+.rosterContainer .inviteStudents h5 {
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 10px;
+	margin-bottom: 10px;
+}
+.rosterContainer .inviteStudents p {
+    margin: 0 0 10px;
+}
+.rosterContainer .inviteBox {
+    position: relative;
+}
+.rosterContainer .inviteBox .form-control {
+    font-size: 12px;
+    width: 90%;
+}
+.rosterContainer .inviteBox button {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    padding: 7px 25px;
+}
+.rosterContainer {
+    padding: 15px 0;
+}
+.rosterContainer .inviteStudents {
+    padding: 10px 15px 25px 15px;
+}
+.rosterContainer .joinedStudentsBlock {
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+.rosterContainer .joinedStudentsBlock .tableDiv {
+    border-collapse: collapse;
+    display: table;
+    width: 100%;
+}
+.rosterContainer .joinedStudentsBlock .tablerow {
+   /*  display: table-row; */
+    position: relative;
+    
+}
+.rosterContainer .joinedStudentsBlock .tablecell {
+    border: medium none;
+    display: inline-block;
+    padding: 10px;
+}
+.rosterContainer .joinedStudentsBlock .tablerow:hover {
+    background: #ffffff;
+}
+.rosterContainer .joinedStudentsBlock .studentsImage {
+    width: 65px;
+}
+.rosterContainer .joinedStudentsBlock .tablerow .removeButton {
+    text-align: right;
+    position: absolute;
+    right: 0px;
+    top: 6px;
+}
+.rosterContainer .joinedStudentsBlock .tablerow:hover .removeButton {
+    display: block;
+}
+.rosterContainer .joinedStudentsBlock .studentsImage img {
+    border: 3px solid #87badd;
+    border-radius: 50%;
+    height: 43px;
+    width: 43px;
+}
+.rosterContainer .joinedStudentsBlock .studentsName {
+    width: 120px;
+}
+.rosterContainer .joinedStudentsBlock .studentsName p {
+    margin: 0 0;
+}
+.rosterContainer .joinedStudentsBlock .tablecell {
+    border: medium none;
+    display: table-cell;
+    padding: 10px;
+    vertical-align: middle;
+}
+.rosterContainer .joinedStudentsBlock h5 {
+    font-weight: bold;
+    font-size: 13px;
+}
+.rosterContainer .joinedStudentsBlock .indiactionText {
+    text-align: right;
+}
+
+.rosterContainer .tooltipContainer {
+	display: none;
+}
+
+.rosterContainer .tooltipContainer {
+	position: absolute;
+	left: -134px;
+	z-index: 97;
+}
+.rosterContainer button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
+	display:block;
+}
+.rosterContainer .arrowBorder {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+	margin: auto;
+	border-top: none;
+	left: 65px;
+}
+
+.rosterContainer .arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	margin: auto;
+	top: -9px;
+	border-top: none;
+	z-index: 97;
+	left: 65px;
+}
+
+.rosterContainer .tooltipContent {
+	text-align: left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	position: relative;
+	top: -10px;
+	width: 155px;
+	float: left;
+}
+
+.rosterContainer .pleaseWait{
+	font-style: italic;
+	color: #515151;
+	height: 24px;
+	margin-top: 8px;
+}
+
+.rosterContainer .error{
+	text-align: right;
+	width: 86%;
+	word-wrap: break-word;
+}
+.rosterContainer .buttonContainer {
+	text-align: left;
+	display: inline-block;
+	width: 100%;
+}
+
+.rosterContainer .buttonTooltip{
+	display: inline-block;
+	position: relative;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+    .studentsMenuBlock .studentsLeftMenu {
+        border-bottom: 1px solid #dddddd;
+    }
+    .studentsMenuBlock .studentsLeftMenu ul li {
+        width: 1%;
+    }
+    .studentsMenuBlock .studentsLeftMenu ul li a {
+        font-size: 15px;
+        padding: 18px 0px;
+        text-align: center;
+    }
+    .studentsMenuBlock .scoreStatus {
+        float: none;
+        text-align: center;
+    }
+    .studentsMenuBlock .scoreStatus div {
+        display: inline-block;
+        margin-left: -3px;
+    }
+    .rosterContainer .joinedStudentsBlock h5 {
+        text-align: left;
+    }
+    .rosterContainer .joinedStudentsBlock .indiactionText {
+        text-align: left;
+    }
+    .rosterContainer .joinedStudentsBlock .studentsName {
+        width: auto;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .studentsMenuBlock .studentsLeftMenu {
+        border-bottom: 1px solid #dddddd;
+    }
+    .studentsMenuBlock .studentsLeftMenu ul li {
+        width: 1%;
+    }
+    .studentsMenuBlock .studentsLeftMenu ul li a {
+        font-size: 15px;
+        padding: 18px 0px;
+        text-align: center;
+    }
+    .studentsMenuBlock .scoreStatus {
+        float: none;
+        text-align: center;
+    }
+    .studentsMenuBlock .scoreStatus div {
+        display: inline-block;
+        margin-left: -3px;
+    }
+    .rosterContainer .joinedStudentsBlock h5 {
+        text-align: left;
+    }
+    .rosterContainer .joinedStudentsBlock .indiactionText {
+        text-align: left;
+    }
+    .rosterContainer .joinedStudentsBlock .studentsName {
+        width: auto;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .studentsMenuBlock .studentsLeftMenu {
+        border-bottom: 1px solid #dddddd;
+    }
+    .studentsMenuBlock .studentsLeftMenu ul li {
+        width: 1%;
+    }
+    .studentsMenuBlock .studentsLeftMenu ul li a {
+        padding: 17px 7px;
+        text-align: center;
+    }
+    .studentsMenuBlock .scoreStatus {
+        float: none;
+        text-align: center;
+    }
+    .studentsMenuBlock .scoreStatus div {
+        display: inline-block;
+        margin-left: -3px;
+    }
+    .rosterContainer .joinedStudentsBlock h5 {
+        text-align: left;
+    }
+    .rosterContainer .joinedStudentsBlock .indiactionText {
+        text-align: left;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .studentsMenuBlock .studentsLeftMenu ul li a {
+        font-size: 15px;
+        padding: 21px 20px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}

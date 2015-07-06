@@ -82,7 +82,11 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassSettingsNavigationView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView;
@@ -694,6 +698,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(EditClassSettingsPresenter.class, IsEditClassSettingsView.class, EditClassSettingsView.class);
 		bindPresenterWidget(EditClassContentPresenter.class, IsEditClassContentView.class, EditClassContentView.class);
 		bindPresenterWidget(EditClassStudentPresenter.class, IsEditClassStudentView.class, EditClassStudentView.class);
+		bindPresenterWidget(EditClassSettingsNavigationPresenter.class, IsEditClassSettingsNavigationView.class, EditClassSettingsNavigationView.class);
 		
 
 		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);

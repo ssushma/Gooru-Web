@@ -70,19 +70,15 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class EditClassContentView extends BaseViewWithHandlers<EditClassContentViewUiHandler> implements IsEditClassContentView {
 	
 	
-	@UiField Anchor minmumScoreAnr,contentSettingsAnr;
+	@UiField InlineLabel markAllLbl,visiblLbl,hiddenLbl;
 	
-	@UiField InlineLabel courseLbl,titleLbl,markAllLbl,visiblLbl,hiddenLbl;
-	
-	@UiField Button editCourseBtn,studentPreviewbtn,saveBtn;
+	@UiField Button saveBtn;
 	
 	@UiField HTMLPanel scoreContainer,contentSeetingsContainer;
 	
 	@UiField PPanel scorePanel,helpPanel,unitPanel,choseTxtPanel,noteTxtPanel;
 	
 	@UiField TextBox scoreTextBox;
-	
-	@UiField LiPanel minLiPnl,settLiPanel;
 	
 	@UiField HTMLPanel unitList;
 	
@@ -119,44 +115,18 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	@Override
 	public void setNavigationTab(){
-		String tabView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSSUB_PAGE_VIEW,"");
+		String tabView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(tabView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE)){
 			setTabVisible(true);
-			minLiPnl.addStyleName(CssTokens.ACTIVE);
 		}else if(tabView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
 			setTabVisible(false);
-			settLiPanel.addStyleName(CssTokens.ACTIVE);
 		}else{
 			setTabVisible(true);
 		}
 	}
 	
 	public void setId(){
-		minmumScoreAnr.setText(i18n.GL3403());
-		minmumScoreAnr.getElement().setId("minmumAnrId");
-		minmumScoreAnr.getElement().setAttribute("alt",i18n.GL3403());
-		minmumScoreAnr.getElement().setAttribute("title",i18n.GL3403());
-		
-		contentSettingsAnr.setText(i18n.GL3404());
-		contentSettingsAnr.getElement().setId("contentSettingAnrId");
-		contentSettingsAnr.getElement().setAttribute("alt",i18n.GL3404());
-		contentSettingsAnr.getElement().setAttribute("title",i18n.GL3404());
-		
-		courseLbl.setText(i18n.GL0326());
-		courseLbl.getElement().setId("courseLblId");
-		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
-		courseLbl.getElement().setAttribute("title",i18n.GL0326());
-		
-		editCourseBtn.setText(i18n.GL3405());
-		editCourseBtn.getElement().setId("editCourseId");
-		editCourseBtn.getElement().setAttribute("alt",i18n.GL3405());
-		editCourseBtn.getElement().setAttribute("title",i18n.GL3405());
-		
-		studentPreviewbtn.setText(i18n.GL3406());
-		studentPreviewbtn.getElement().setId("previwBtnId");
-		studentPreviewbtn.getElement().setAttribute("alt",i18n.GL3406());
-		studentPreviewbtn.getElement().setAttribute("title",i18n.GL3406());
-		
+
 		scorePanel.setText(i18n.GL3407());
 		scorePanel.getElement().setId("scorePnlId");
 		scorePanel.getElement().setAttribute("alt",i18n.GL3407());
@@ -210,14 +180,14 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		
 		
 		
-		minmumScoreAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
-		contentSettingsAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
+		/*minmumScoreAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
+		contentSettingsAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));*/
 		
 		
 		
 	}
 	
-	public class ContentTabNavigationHandler implements ClickHandler{
+	/*public class ContentTabNavigationHandler implements ClickHandler{
 
 		String view;
 		LiPanel liPanel;
@@ -227,19 +197,19 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 			this.liPanel=liPanel;
 		}
 		
-		/* (non-Javadoc)
+		 (non-Javadoc)
 		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 */
+		 
 		@Override
 		public void onClick(ClickEvent event) {
 			minLiPnl.removeStyleName(CssTokens.ACTIVE);
 			settLiPanel.removeStyleName(CssTokens.ACTIVE);
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-			request = request.with(UrlNavigationTokens.TEACHER_CLASSSUB_PAGE_VIEW, view);
+			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, view);
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 		
-	}
+	}*/
 
 }
