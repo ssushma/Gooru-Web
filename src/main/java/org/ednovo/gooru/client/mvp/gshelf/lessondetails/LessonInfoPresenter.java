@@ -127,8 +127,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, result);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
 				}else{
-					myCollectionsRightClusterPresenter.getFolderListDoChild().clear();
-					myCollectionsRightClusterPresenter.setTabItems(2, "collection", result);
+					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
