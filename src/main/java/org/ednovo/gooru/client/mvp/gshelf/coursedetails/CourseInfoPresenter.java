@@ -162,4 +162,15 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			}
 		});
 	}
+	@Override
+	public void checkProfanity(String textValue,final boolean isCreate){
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				getView().callCreateAndUpdate(isCreate,value);
+			}
+		});
+	}
 }

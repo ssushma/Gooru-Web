@@ -39,8 +39,11 @@ import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -51,6 +54,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -73,6 +77,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveCourseBtn,nextUnitBtn;
 	@UiField TextBox courseTitle;
+	@UiField Label lblErrorMessage;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
@@ -89,6 +94,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		courseInfo.getElement().setId("pnlCourseInfo");
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
+		lblErrorMessage.setText("");
+		courseTitle.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				lblErrorMessage.setVisible(false);
+			}
+		});
 	}
 	
 	/**
@@ -198,24 +210,31 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-		if(id!=null){
-			getUiHandlers().updateCourseDetails(courseTitle.getText(),id,false);
-		}else{
-			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),false);
-		}
+		getUiHandlers().checkProfanity(courseTitle.getText().trim(),false);
 	}
 	
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
-		String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-		if(id!=null){
-			getUiHandlers().updateCourseDetails(courseTitle.getText(),id,true);
+		getUiHandlers().checkProfanity(courseTitle.getText().trim(),true);
+	}
+	/**
+	 * This method is used to call create and update API
+	 * @param index
+	 * @param isCreate
+	 */
+	@Override
+	public void callCreateAndUpdate(boolean isCreate,boolean result){
+		if(result){
+			SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, result);
 		}else{
-			getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),true);
+			String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+			if(id!=null){
+				getUiHandlers().updateCourseDetails(courseTitle.getText(),id,isCreate);
+			}else{
+				getUiHandlers().createAndSaveCourseDetails(courseTitle.getText(),isCreate);
+			}
 		}
 	}
-
 	@Override
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObj=courseObj;
