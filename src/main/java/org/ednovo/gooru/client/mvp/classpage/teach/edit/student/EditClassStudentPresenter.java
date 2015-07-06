@@ -48,7 +48,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	@Override
 	public void onReset() {
 		super.onReset();
-		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSSUB_PAGE_VIEW,"");
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
 			getView().setReportView();
 		}
