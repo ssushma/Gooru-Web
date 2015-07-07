@@ -15,6 +15,7 @@ public class CreateDo implements Serializable{
 	private String ideas;
 	private String description;
 	private String questions;
+	private String collectionType;
 	private List<Integer> taxonomyCourseIds;
 	private List<Integer> audienceIds;
 	private List<Integer> domainIds;
@@ -67,5 +68,13 @@ public class CreateDo implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String getCollectionType() {
+		return collectionType;
+	}
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+	
+	
 	
 }
