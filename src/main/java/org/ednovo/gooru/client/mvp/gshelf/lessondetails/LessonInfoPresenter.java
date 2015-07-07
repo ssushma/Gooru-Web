@@ -60,7 +60,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	
-	final String LESSON="lesson";
+	final String LESSON="Lesson";
 
 	/**
 	 * Class constructor

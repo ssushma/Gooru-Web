@@ -71,9 +71,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
 	
-	private static final String COURSE = "course";
-	private static final String UNIT = "unit";
-	private static final String LESSON = "lesson";
+	private static final String COURSE = "Course";
+	private static final String UNIT = "Unit";
+	private static final String LESSON = "Lesson";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
