@@ -346,8 +346,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		if(view==null){
 			view=type;
 		}
-		System.out.println("id::"+id);
-		System.out.println("folderDo::"+folderDo);
 		if(id!=null && folderDo!=null){
 			getView().getCollectionLabel().setVisible(true);
 			setCollectionContent(folderDo);
@@ -436,5 +434,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setBreadCrumbs(HashMap<String, String> selectedWidgetsTitleType) {
 		getMyCollectionsRightClusterPresenter().setMycontentBreadcrumbs(selectedWidgetsTitleType);
+	}
+
+	/**
+	 * Sets all courses on right cluster.
+	 */
+	public void setUserAllCourses(String deletedTreeWidgetId) {
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId);
 	}
 }
