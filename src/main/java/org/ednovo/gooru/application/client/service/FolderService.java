@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/folderService")
@@ -195,4 +196,6 @@ public interface FolderService extends BaseService {
 	 * @throws ServerDownException
 	 */
 	Map<String,String> getFolderRouteNodes(String folderId) throws GwtException,ServerDownException;
+	
+	String deleteCourse(String o1CourseId) throws GwtException,ServerDownException;
 }

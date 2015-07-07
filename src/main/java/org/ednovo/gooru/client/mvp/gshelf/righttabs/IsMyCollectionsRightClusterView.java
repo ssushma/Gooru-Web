@@ -52,4 +52,10 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 */
 	public void setDefaultActiveTab(int tabIndex);
 	public void setCurrentTypeView(String type);
+	
+	/**
+	 * This method is used to set the content on delete of course.
+	 * @param o1CourseId 
+	 */
+	public void onDeleteCourseSuccess(String o1CourseId);
 }
