@@ -121,14 +121,17 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 	@Override
 	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);		
+		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);		
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {				
 				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
+				params.put(O1_LEVEL, o1);
+				params.put(O2_LEVEL, o2);
+				params.put(O3_LEVEL, o3);
 				params.put("id", uri[uri.length-1]);
 				params.put("view", COLLECTION);
 				try{
