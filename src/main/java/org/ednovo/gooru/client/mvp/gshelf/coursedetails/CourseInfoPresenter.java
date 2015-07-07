@@ -56,9 +56,9 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	
 	final String SUBJECT="subject";
 	
-	final String COURSE="course";
+	final String COURSE="COURSE";
 	
-	private String UNIT = "Unit";
+	private String UNIT = "UNIT";
 	
 	/**
 	 * Class constructor
