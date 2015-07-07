@@ -173,13 +173,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	@Override
 	public void checkProfanity(String textValue,final boolean isCreate,final int index){
-			final Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text",textValue);
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-				@Override
-				public void onSuccess(Boolean value) {
-					getView().callCreateAndUpdate(isCreate,value,index);
-				}
-			});
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				getView().callCreateAndUpdate(isCreate,value,index);
+			}
+		});
 	}
 }
