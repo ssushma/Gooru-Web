@@ -25,13 +25,14 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView.BreadCrumbLabel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -47,7 +48,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollectionsRightClusterUiHandlers> implements IsMyCollectionsRightClusterView,ClientConstants  {
@@ -129,15 +129,28 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}
 		}
 	}
-	@Override
-	public void setBreadCrumbSlot(FolderDo folderObj, String type){
+	@Override	
+	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType){
 		if(folderObj!=null){
 			this.folderObj=folderObj;
 		}
-		 String title=folderObj!=null?folderObj.getTitle():"";
-		 setBreadCrumbs(title,type);
-		 
+		
+		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
+			if(selectedWidgetsTitleType.containsKey(COURSE)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
+			}
+			if(selectedWidgetsTitleType.containsKey(UNIT)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(UNIT), UNIT);
+			}
+			if(selectedWidgetsTitleType.containsKey(LESSON)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(LESSON), LESSON);
+			}
+		}else{
+			String title=folderObj!=null?folderObj.getTitle():"";
+			setBreadCrumbs(title,type);
+		}
 	}
+	
 	
 	/**
 	 * Used to set the Bread crumbs.

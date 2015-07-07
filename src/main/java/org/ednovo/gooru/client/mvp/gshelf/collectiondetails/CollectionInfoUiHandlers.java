@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 
 /**
  * @author Search Team
@@ -40,13 +41,15 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
     
 	/**
 	 * To Create Course
-	 * @param courseTitle {@link String} 
+	 * @param createObj {@link String} 
 	 * @param isCreateUnit {@link boolean} 
 	 */
-	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateUnit);
+	void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit);
 	/**
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(String text, String id,boolean isCreateUnit);
+	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit);
+
+	public void checkProfanity(String trim, boolean b, int i);
 }

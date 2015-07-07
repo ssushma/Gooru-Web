@@ -11,7 +11,7 @@
 			margin:50px 0;
 			}
 		</ui:style>
-		
+
 		<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}" ui:field="panelAssign">
 		<g:HTMLPanel styleName="{res.css.assignContentLoginCustomize}">
 			<g:HTMLPanel styleName="{res.css.assignHeader}">
@@ -26,9 +26,9 @@
 			<g:HTMLPanel  ui:field="popupcontentCustomize">
 			<g:HTMLPanel ui:field="loginCustom" styleName="{res.css.conentLoginPop}">
 			</g:HTMLPanel>
-		<g:HTMLPanel ui:field="copyCollectionSuccess" styleName="{res.css.popupContent}">  
-		<g:Label ui:field="lblpopupTitle" styleName="{res.css.popupTitle}"/>	
-		<g:Label styleName="{res.css.popupDesc}" ui:field="assignDes"/>	  
+		<g:HTMLPanel ui:field="copyCollectionSuccess" styleName="{res.css.popupContent}">
+		<g:Label ui:field="lblpopupTitle" styleName="{res.css.popupTitle}"/>
+		<g:Label styleName="{res.css.popupDesc}" ui:field="assignDes"/>
 
  		<g:HTMLPanel styleName="{res.css.popupTextbox}" ui:field="popupContentAssign">
  		 <g:Label styleName="{res.css.txtboxDesc}" ui:field="lbltxtBoxTitle"/>
@@ -45,4 +45,4 @@
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>
 
-</ui:UiBinder> 
+</ui:UiBinder>

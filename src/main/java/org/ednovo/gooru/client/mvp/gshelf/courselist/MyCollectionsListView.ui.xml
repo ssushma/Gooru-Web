@@ -15,7 +15,6 @@
 			<g:HTMLPanel>
 				<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList" />
 				<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
-					<input type="file" name="fileField" id="fileField" />
 					<event:HTMLEventPanel ui:field="createPanel">
 						<span>+ Add New</span>
 						<g:Label ui:field="lblAddNew" />

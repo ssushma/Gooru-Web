@@ -305,7 +305,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousRequest();
 
 			//This is used for handling folder toc back button code
-			if(placeRequest!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.FOLDER_TOC.equalsIgnoreCase(placeRequest.getNameToken())){
+			if(placeRequest!=null && !PlaceTokens.ASSESSMENT_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.FOLDER_TOC.equalsIgnoreCase(placeRequest.getNameToken())){
 				String paramerersString="";
 				Set<String> parameters=placeRequest.getParameterNames();
 				if(parameters.size()>0){

@@ -624,16 +624,18 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 	
 	@Override
-	public FolderDo createCourse(CreateDo createDo,boolean addToShelf, String courseId, String unitId) throws GwtException {
+	public FolderDo createCourse(CreateDo createDo,boolean addToShelf, String courseId, String unitId, String lessonId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		FolderDo folderDo = new FolderDo();
-		if(courseId==null && unitId==null){
+		if(courseId==null && unitId==null && lessonId==null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
-		}else if(courseId!=null && unitId==null){
+		}else if(courseId!=null && unitId==null && lessonId==null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
-		}else{
+		}else if(courseId!=null && unitId!=null && lessonId==null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
+		}else{
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COLLECTION,courseId,unitId,lessonId);
 		}
 		JSONObject courseObject=new JSONObject();
 		try {
@@ -657,13 +659,17 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return folderDo;
 	}
+	
+	
 
 	@Override
-	public void updateCourse(String courseId,String unitId,String lessonId,CreateDo createDo) throws GwtException, ServerDownException {
+	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 	
-		if(courseId!=null && unitId!=null && lessonId!=null){
+		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId,collectionId);
+		}else if(courseId!=null && unitId!=null && lessonId!=null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_LESSON, courseId,unitId,lessonId);
 		}else if(courseId!=null && unitId!=null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_UNIT, courseId,unitId);

@@ -1299,11 +1299,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 			questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
 		}
-		
+
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 
 	}
-	
+
 	public void setHotTextHLFields(){
 		questionHotTextAnswerChoiceContainer.clear();
 		int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
@@ -1315,7 +1315,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 
 	}
-	
+
 
     public void setHotTextAnswers(final AddHotTextQuestionAnswerChoice addQuestionAnswer){
 
@@ -2766,29 +2766,39 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			 */
 			int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 			String explanation = collectionItemDo.getResource().getExplanation() != null ? collectionItemDo.getResource().getExplanation() : collectionItemDo.getQuestionInfo().getExplanation();
+			AppClientFactory.printInfoLogger("Type 1");
 			if(type==4){
+				AppClientFactory.printInfoLogger("Type 2");
 				 while(it.hasNext()){
+					 AppClientFactory.printInfoLogger("Type 3");
 					 QuestionAnswerDo answer = it.next();
 					 questionAnswerDoList.add(answer);
 				 }
+				 AppClientFactory.printInfoLogger("Type 4");
 				 String fillInTheBlankQuestion = collectionItemDo.getResource().getTitle();
 				 String[] fibArray = fillInTheBlankQuestion.split(FIB_SEPARATOR);
 				 List<String> questionArray = Arrays.asList(fibArray);
+				 AppClientFactory.printInfoLogger("Type 5");
 				 int answerArraySize = answerChoicesSet.size();
 				 StringBuffer questionText = new StringBuffer();
 				 for(int j = 0; j < questionArray.size(); j++) {
 					 questionText.append(questionArray.get(j));
+					 AppClientFactory.printInfoLogger("Type 6");
 					 if(j<answerArraySize) {
+						 AppClientFactory.printInfoLogger("Type 7");
 							 questionText.append("["+questionAnswerDoList.get(j).getAnswerText()+"]");
 					 }
 				 }
+				 AppClientFactory.printInfoLogger("Type 8");
 				 questionNameTextArea.setText(questionText.toString());
 				 questionNameTextArea.getElement().setAttribute("alt", questionText.toString());
 				 questionNameTextArea.getElement().setAttribute("title", questionText.toString());
 				 explainationTextArea.setText(explanation);
 				 explainationTextArea.getElement().setAttribute("alt", explanation);
 				 explainationTextArea.getElement().setAttribute("title", explanation);
+				 AppClientFactory.printInfoLogger("Type 9");
 			 }else{
+				 AppClientFactory.printInfoLogger("Type 10");
 				 questionNameTextArea.setText(collectionItemDo.getResource().getTitle());
 				 questionNameTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
 				 questionNameTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
@@ -2800,6 +2810,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		catch(Exception e){
 			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printInfoLogger("Type 11");
 		}
 
 		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
@@ -2810,9 +2821,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			int widgetCount=hintsContainer.getWidgetCount();
 	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
 	        addHintsTextArea(addHints);
+	        AppClientFactory.printInfoLogger("Type 12");
 		}
 		int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 		if(type==1){
+			AppClientFactory.printInfoLogger("Type 13");
 			addResourceFormTitleChoice.setText(i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("alt", i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("title", i18n.GL0864());
@@ -2824,19 +2837,24 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			noLabelText.setVisible(false);
 			questionAnswerChoiceContainer.clear();
 			while (it.hasNext()) {
+				AppClientFactory.printInfoLogger("Type 14");
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 
 				final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
 				addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 				if(answer.isIsCorrect()){
+					AppClientFactory.printInfoLogger("Type 15");
 					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
 				}else{
+					AppClientFactory.printInfoLogger("Type 16");
 					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
 				}
 				addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
+				AppClientFactory.printInfoLogger("Type 17");
 			}
 		}else if(type==7){
+			AppClientFactory.printInfoLogger("Type 8");
 			addResourceFormTitleChoice.setText("Enter answers and select correct ones *");
 			addResourceFormTitleChoice.getElement().setAttribute("alt", "Enter answers and select correct ones *");
 			addResourceFormTitleChoice.getElement().setAttribute("title", "Enter answers and select correct ones *");
@@ -2851,21 +2869,27 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			correctText.getElement().setAttribute("alt", "No");
 			correctText.getElement().setAttribute("title", "No");
 			setYesOrNoLabelStyles();
+			AppClientFactory.printInfoLogger("Type 19");
 			questionAnswerChoiceContainer.clear();
 			while (it.hasNext()) {
+				AppClientFactory.printInfoLogger("Type 20");
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 				final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
 				addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 				addQuestionAnswer.showAnswerChoicesForMultipleAnswers();
 				if(answer.isIsCorrect()){
+					AppClientFactory.printInfoLogger("Type 21");
 					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
 				}else{
+					AppClientFactory.printInfoLogger("Type 22");
 					addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerSelected());
 				}
+				AppClientFactory.printInfoLogger("Type 23");
 				addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
 			}
 		}else if(type==3){
+			AppClientFactory.printInfoLogger("Type 24");
 			addResourceFormTitleChoice.setText(i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("alt", i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("title", i18n.GL0864());
@@ -2877,14 +2901,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			noLabelText.setVisible(false);
 			setMultipleChoiceAnswerFields();
 			int answerCount=0;
+			AppClientFactory.printInfoLogger("Type 25");
 			while (it.hasNext()) {
+				AppClientFactory.printInfoLogger("Type 26");
 				QuestionAnswerDo answer = it.next();
 				selectTrueOrFallseCorrectAnswerOption(answerCount,answer.isIsCorrect());
 				answerCount++;
 			}
 		}else if(type==8){
 			questionHotTextAnswerChoiceContainer.clear();
+			AppClientFactory.printInfoLogger("Type 27");
 			while (it.hasNext()) {
+				AppClientFactory.printInfoLogger("Type 28");
 				QuestionAnswerDo answer = it.next();
 				AddHotTextQuestionAnswerChoice addHotTextAnsChoice = new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[0], answer.getAnswerText());
 
@@ -2895,39 +2923,46 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219_1())){
 					addHotTextAnsChoice.wordRDButtonClick();
+					AppClientFactory.printInfoLogger("Type 29");
 				}else{
+					AppClientFactory.printInfoLogger("Type 30");
 					addHotTextAnsChoice.sentenceRDButtonClick();
 				}
-
+				AppClientFactory.printInfoLogger("Type 31");
 				questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
 			}
 
 		}else if(type==9){
+			AppClientFactory.printInfoLogger("Type 32");
 			questionHotTextAnswerChoiceContainer.clear();
 			int k=0;
 			while (it.hasNext()) {
 				QuestionAnswerDo answer = it.next();
+				AppClientFactory.printInfoLogger("Type 33");
 				if(k==0){
-			AddHotTextQuestionAnswerChoice addHotTextAnsChoice=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[k], answer.getAnswerText());
-			addHotTextAnsChoice.setHeadLabelFields(true);
-			setHotTextAnswers(addHotTextAnsChoice);
-			questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
+					AppClientFactory.printInfoLogger("Type 34");
+					AddHotTextQuestionAnswerChoice addHotTextAnsChoice=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[k], answer.getAnswerText());
+					addHotTextAnsChoice.setHeadLabelFields(true);
+					setHotTextAnswers(addHotTextAnsChoice);
+					questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
 				}else{
+					AppClientFactory.printInfoLogger("Type 35");
 					AddHotTextQuestionAnswerChoice addHotTextAnsChoice=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[k], answer.getAnswerText());
 					addHotTextAnsChoice.setHeadLabelFields(false);
 					questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
 				}
 				k++;
-
 			}
 		}
 
 		else{
+			AppClientFactory.printInfoLogger("Type 36");
 			setMultipleChoiceAnswerFields();
 		}
 		if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
-		int checkBoxCount=0;
-		for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {
+			int checkBoxCount=0;
+			for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {
+				AppClientFactory.printInfoLogger("Type 37");
 			   if(item.isSelected()){
 				   if(checkBoxCount==0)
 				   chkLevelRecall.setChecked(true);
@@ -2940,13 +2975,16 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			   }
 			   checkBoxCount++;
 			}
+			AppClientFactory.printInfoLogger("Type 38");
 		}
 
 		if(collectionItemDo.getStandards()!=null){
+			AppClientFactory.printInfoLogger("Type 39");
 			standardsPanel.clear();
 			standardsDo.clear();
 			String codeID="",code="",label="";
 			for (Map<String, String> map: collectionItemDo.getStandards()) {
+				AppClientFactory.printInfoLogger("Type 40");
 				 CodeDo codeObj=new CodeDo();
 				for (Map.Entry<String, String> entry : map.entrySet()) {
 					String key = entry.getKey();
@@ -2970,6 +3008,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
 			centuryPanel.clear();
+			AppClientFactory.printInfoLogger("Type 41");
 			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
 				 CodeDo codeObj=new CodeDo();
 				 codeObj.setCodeId(standardObj.getCodeId());
@@ -2984,6 +3023,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setHintsContainer();
 		setStandardsContainer();
 		setCenturyContainer();
+		AppClientFactory.printInfoLogger("Type 42");
 
 	}
 
@@ -3251,8 +3291,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		     setDOKCheckBoxes();
 		}
      }
-     
-     
+
+
      public void setDOKCheckBoxes(){
     	 if(chkLevelRecall.isChecked())
 	     {
@@ -3315,7 +3355,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	     }
 
      }
-     
+
 
      public abstract void callBrowseStandards();
 
@@ -3534,7 +3574,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 	}
-	
+
 
 	public void setAncTabs(){
 		explanationContainer.setVisible(!addExplanationLabel.isVisible());

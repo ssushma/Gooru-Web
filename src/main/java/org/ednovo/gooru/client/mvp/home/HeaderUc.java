@@ -349,8 +349,8 @@ public class HeaderUc extends Composite
 	@UiField
 	Label thanksLbl;
 
-	@UiField
-	static Label arrowLbl;
+	/*@UiField
+	static Label arrowLbl;*/
 
 
 	@UiField
@@ -414,7 +414,7 @@ public class HeaderUc extends Composite
 					getEditSearchTxtBox().hideSuggestionList();
 				}
 
-				arrowLbl.setVisible(true);
+				/*arrowLbl.setVisible(true);*/
 				if(prefilter!=null){
 					prefilter.hide();
 				}
@@ -1760,7 +1760,7 @@ public class HeaderUc extends Composite
 				@Override
 				public void onSuccess() {
 
-					arrowLbl.setVisible(true);
+					//arrowLbl.setVisible(true);
 					if(prefilter!=null){
 						prefilter.hide();
 					}
@@ -2193,9 +2193,9 @@ public class HeaderUc extends Composite
 	}
 
 
-	public  Label getArrowLbl() {
+	/*public  Label getArrowLbl() {
 		return arrowLbl;
-	}
+	}*/
 
 	public static void setPrefilterObj(PreFilterPopup prefilterObj) {
 		prefilter=prefilterObj;

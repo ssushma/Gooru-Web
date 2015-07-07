@@ -24,7 +24,7 @@
 									<uc:AppSuggestBox ui:field="editSearchTxtBox"
 										styleName="form-control" />
 									<!-- <g:Label ui:field="gooruLabel" styleName="goorusearchTextFont"></g:Label> -->
-									<g:Label styleName="arrowLable" ui:field="arrowLbl" visible="true"></g:Label>
+									<!-- <g:Label styleName="arrowLable" ui:field="arrowLbl" visible="true"></g:Label> DO-7870-->
 								</g:FlowPanel>
 								<g:Button styleName="primary" ui:field="editSearchBtn" />
 							</g:HTMLPanel>

@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -49,6 +50,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	UnitInfoPresenter unitInfoPresenter;
 
 	ShelfMainPresenter shelfMainPresenter;
+	
+	private HashMap<String, String> selectedWidgetsTitleType;
 
 
 	CollectionContentPresenter collectionContentPresenter;
@@ -77,6 +80,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionContentPresenter=collectionContentPresenter;
 
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
+		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		unitInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		lessonInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);
@@ -84,7 +88,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
-		getView().setBreadCrumbSlot(folderObj,type);
+		if(folderObj==null){
+			selectedWidgetsTitleType = null;
+		}
+		getView().setBreadCrumbSlot(folderObj,type,selectedWidgetsTitleType);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		if(index==1){
@@ -122,7 +129,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	@Override
 	public void setUnitTemplate(String type){	
+		//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, null, true, true, null);
+		//setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 		shelfMainPresenter.createNewUnitItem(type);
+		folderListDoChild=null;
 	}
 
 	/**
@@ -147,7 +157,12 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.folderListDoChild = folderListDoChild;
 	}
 	public void updateBreadCrumbsTitle(FolderDo folderObj, String type) { 
-		getView().setBreadCrumbSlot(folderObj, type);
+		getView().setBreadCrumbSlot(folderObj, type,null);
+	}
+	
+	
+	public void setMycontentBreadcrumbs(HashMap<String, String> selectedWidgetsTitleType) {
+		this.selectedWidgetsTitleType = selectedWidgetsTitleType;
 	}
 	/**
 	 * To add new course/unit/lesson

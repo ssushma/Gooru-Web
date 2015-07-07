@@ -56,9 +56,9 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	
 	final String SUBJECT="subject";
 	
-	final String COURSE="course";
+	final String COURSE="COURSE";
 	
-	private String UNIT = "Unit";
+	private String UNIT = "UNIT";
 	
 	/**
 	 * Class constructor
@@ -115,7 +115,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -123,7 +123,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				params.put("o1", uri[uri.length-1]);
 				params.put("view", COURSE);
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 				if(isCreateUnit){
@@ -147,7 +147,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,createObj, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
@@ -155,7 +155,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				folderDo.setType(COURSE);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");

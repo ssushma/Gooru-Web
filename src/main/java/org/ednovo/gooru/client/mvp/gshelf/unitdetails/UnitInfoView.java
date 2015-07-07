@@ -77,7 +77,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@UiField HTMLPanel unitInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveCourseBtn,nextUnitBtn;
+	@UiField Button saveUnitBtn,nextCreateLessonBtn;
 	@UiField TextBox unitTitle;
 	@UiField Label lblErrorMessage,lblErrorMessageForBig,lblErrorMessageForEssential;
 	@UiField TextArea txaBigIdeas,txaEssentialQuestions;
@@ -222,13 +222,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 	}
 	
-	@UiHandler("saveCourseBtn")
-	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+	@UiHandler("saveUnitBtn")
+	public void clickOnSaveUnitBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0);
 	}
 	
-	@UiHandler("nextUnitBtn")
-	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
+	@UiHandler("nextCreateLessonBtn")
+	public void clickOnNextLessonBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0);
 	}
 	/**
@@ -246,9 +246,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),true,1);
+				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),true,2);
+				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2);
 			}else if(index==2){
 				CreateDo createOrUpDate=new CreateDo();
 				createOrUpDate.setTitle(unitTitle.getText());
@@ -256,9 +256,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+					getUiHandlers().updateUnitDetails(createOrUpDate,id,isCreate);
 				}else{
-					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate);
 				}
 			}
 		}
@@ -266,9 +266,11 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
-		this.courseObj=courseObj;
-		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
-		txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
-		txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		if(courseObj!=null){
+			this.courseObj=courseObj;
+			unitTitle.setText(courseObj.getTitle()==null?i18n.GL3364():courseObj.getTitle());
+			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
+			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		}
 	}
 }

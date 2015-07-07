@@ -117,7 +117,7 @@ public class ViewResponsesPopup extends PopupPanel {
 	@Override
 	protected void onUnload() {
 		super.onUnload();
-		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
 			  Window.enableScrolling(false);
 			}else{
 			   Window.enableScrolling(true);

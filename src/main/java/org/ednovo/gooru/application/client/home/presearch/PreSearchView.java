@@ -33,8 +33,12 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
@@ -43,8 +47,11 @@ import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.SampleReportView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
+import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -56,6 +63,10 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -97,12 +108,14 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	private HandlerRegistration handlerRegistration=null;
 
-	@UiField Button btnStudentSignUp, btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
+	@UiField Button  btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
 	@UiField Anchor ancLogin, lblSampleReports,btnLearnAboutApproach;
 	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup;
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
 	@UiField Label lblErrorMessage;
+	@UiField Button enterLbl;
+	@UiField TextBoxWithPlaceholder classCodeTxtBox;
 
 	private final String QUERY = "query";
 	private final String FLT_SUBJECTNAME = "flt.subjectName";
@@ -111,6 +124,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private final String FLT_COLLECTIONTYPE = "flt.collectionType";
 	private final String ALL = "all";
 	private final String COLLECTION = "collection";
+	AlertMessageUc alertMessageUc;
+	private boolean isValid = true;
+	private boolean toClear = false;
 
 	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
 	HashMap<String, String> selectedSubjects = new HashMap<String, String>();
@@ -129,6 +145,29 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	        	hidePopup(event);
 	          }
 	    });
+		enterLbl.addClickHandler(new OnEnterClassCodeClick());
+		enterLbl.setText(i18n.GL1065());
+		enterLbl.getElement().setId("btnEnter");
+		enterLbl.getElement().setAttribute("alt",i18n.GL1065());
+		enterLbl.getElement().setAttribute("title",i18n.GL1065());
+		enterLbl.setWidth("35%");
+		classCodeTxtBox.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				setButtonStatus("active");
+			}
+		});
+		classCodeTxtBox.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				setButtonStatus("active");
+			}
+		});
+		classCodeTxtBox.setText("");
+		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
+		classCodeTxtBox.getElement().setId("txtClassCode");
+		classCodeTxtBox.setPlaceholder(i18n.GL1762_1());
 
 	}
 
@@ -177,9 +216,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 */
 	private void setDebugIds() {
-		btnStudentSignUp.setText(i18n.GL0186());
 
-		StringUtil.setAttributes(btnStudentSignUp.getElement(), "btnStudentSignUp", i18n.GL0186(), i18n.GL0186());
+		//StringUtil.setAttributes(btnStudentSignUp.getElement(), "btnStudentSignUp", i18n.GL0186(), i18n.GL0186());
 		StringUtil.setAttributes(btnLearnAboutApproach.getElement(), "btnLearnAboutApproach", i18n.GL3315(), i18n.GL3315());
 
 //		btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
@@ -196,17 +234,16 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	/* */
 	@Override
 	public void setButtonVisibility(){
-		btnStudentSignUp.setVisible(AppClientFactory.isAnonymous());
 		panelAlreadyHave.setVisible(AppClientFactory.isAnonymous());
 	}
 
 
 	/* UI Handlers...*/
 
-	@UiHandler("btnStudentSignUp")
+	/*@UiHandler("btnStudentSignUp")
 	public void onClickStudentSignUp(ClickEvent event){
 		openSignUp();
-	}
+	}*/
 
 	@UiHandler("btnLearnAboutApproach")
 	public void onClickLearnAboutApproach(ClickEvent event){
@@ -881,5 +918,283 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	public HTMLPanel getPanelGrades() {
 		return panelGrades;
 	}
+	private void setButtonStatus(final String status) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			@Override
+			public void onSuccess() {
+				if (status.equalsIgnoreCase("active")) {
+					enterLbl.getElement().removeClassName("disabled");
+					enterLbl.setEnabled(true);
+				} else {
+					enterLbl.getElement().addClassName("disabled");
+					enterLbl.setEnabled(false);
+				}
+			}
+		});
+	}
+	/**
+	 *
+	 * @fileName : ClasspageListVc.java
+	 *
+	 * @description :
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
+	public class OnEnterClassCodeClick implements ClickHandler {
 
+		@Override
+		public void onClick(ClickEvent event) {
+			GWT.runAsync(new SimpleRunAsyncCallback() {
+
+				@Override
+				public void onSuccess() {
+					setButtonStatus("active");
+					if (classCodeTxtBox.getText().trim().equalsIgnoreCase("")
+							|| classCodeTxtBox.getText().trim() == null) {
+						alertMessageUc = new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
+						ClickHandler alertHandler = new ClickHandler() {
+
+							@Override
+							public void onClick(ClickEvent event) {
+								isValid = false;
+								setButtonStatus("");
+							}
+						};
+						alertMessageUc.appPopUp.addDomHandler(alertHandler,
+								ClickEvent.getType());
+
+						alertMessageUc.okButton.addClickHandler(new ClickHandler() {
+
+							@Override
+							public void onClick(ClickEvent event) {
+								isValid = false;
+								setButtonStatus("");
+							}
+						});
+						return;
+					}
+
+					MixpanelUtil.ClickOnStudyNow();
+					AppClientFactory
+							.getInjector()
+							.getClasspageService()
+							.v2getClasspageByCode(classCodeTxtBox.getText().trim(),
+									new SimpleAsyncCallback<CollectionDo>() {
+										@Override
+										public void onSuccess(CollectionDo result) {
+											setButtonStatus("");
+											if (result.getGooruOid() == null) {
+												Window.enableScrolling(false);
+												AppClientFactory
+														.fireEvent(new SetHeaderZIndexEvent(
+																98, false));
+												alertMessageUc = new AlertMessageUc(
+														i18n.GL0061(), new Label(i18n.GL0244()));
+												ClickHandler alertHandler = new ClickHandler() {
+
+													@Override
+													public void onClick(ClickEvent event) {
+														isValid = false;
+													}
+												};
+												alertMessageUc.appPopUp.addDomHandler(
+														alertHandler,
+														ClickEvent.getType());
+
+												alertMessageUc.okButton
+														.addClickHandler(new ClickHandler() {
+
+															@Override
+															public void onClick(
+																	ClickEvent event) {
+																isValid = false;
+															}
+														});
+											} else if (result
+													.getCreator()
+													.getGooruUId()
+													.equalsIgnoreCase(
+															AppClientFactory
+																	.getGooruUid())) {
+												if (AppClientFactory
+														.getCurrentPlaceToken().equals(
+																PlaceTokens.HOME)) {
+													MixpanelUtil
+															.Click_Study_LandingPage();
+												}
+
+												Map<String, String> params = new HashMap<String, String>();
+												params.put("id", result.getGooruOid());
+												params.put("pageSize", "10");
+												params.put("pageNum", "0");
+												params.put("pos", "1");
+												AppClientFactory.getPlaceManager()
+														.revealPlace(
+																PlaceTokens.STUDENT,
+																params);
+												classCodeTxtBox.setText("");
+												if (alertMessageUc != null)
+													alertMessageUc.hide();
+											} else if (result.getSharing()
+													.equalsIgnoreCase("private")) {
+
+												if (result
+														.getCreator()
+														.getGooruUId()
+														.equalsIgnoreCase(
+																AppClientFactory
+																		.getGooruUid())) {
+													if (AppClientFactory
+															.getCurrentPlaceToken()
+															.equals(PlaceTokens.HOME)) {
+														MixpanelUtil
+																.Click_Study_LandingPage();
+													}
+
+													Map<String, String> params = new HashMap<String, String>();
+													params.put("id",
+															result.getGooruOid());
+													params.put("pageSize", "10");
+													params.put("pageNum", "0");
+													params.put("pos", "1");
+													AppClientFactory
+															.getPlaceManager()
+															.revealPlace(
+																	PlaceTokens.STUDENT,
+																	params);
+													classCodeTxtBox.setText("");
+													if (alertMessageUc != null)
+														alertMessageUc.hide();
+
+													StudentAssignmentView
+															.setPrivatePage();
+
+												} else if (result.getStatus()
+														.equalsIgnoreCase("active")) {
+													if (AppClientFactory
+															.getCurrentPlaceToken()
+															.equals(PlaceTokens.HOME)) {
+														MixpanelUtil
+																.Click_Study_LandingPage();
+													}
+
+													Map<String, String> params = new HashMap<String, String>();
+													params.put("id",
+															result.getGooruOid());
+													params.put("pageSize", "10");
+													params.put("pageNum", "0");
+													params.put("pos", "1");
+													AppClientFactory
+															.getPlaceManager()
+															.revealPlace(
+																	PlaceTokens.STUDENT,
+																	params);
+													classCodeTxtBox.setText("");
+													if (alertMessageUc != null)
+														alertMessageUc.hide();
+
+													StudentAssignmentView
+															.setPrivatePageActive();
+
+												} else if (result.getStatus()
+														.equalsIgnoreCase("pending")) {
+													if (AppClientFactory
+															.getCurrentPlaceToken()
+															.equals(PlaceTokens.HOME)) {
+														MixpanelUtil
+																.Click_Study_LandingPage();
+													}
+
+													Map<String, String> params = new HashMap<String, String>();
+													params.put("id",
+															result.getGooruOid());
+													params.put("pageSize", "10");
+													params.put("pageNum", "0");
+													params.put("pos", "1");
+													AppClientFactory
+															.getPlaceManager()
+															.revealPlace(
+																	PlaceTokens.STUDENT,
+																	params);
+													classCodeTxtBox.setText("");
+													if (alertMessageUc != null)
+														alertMessageUc.hide();
+
+													StudentAssignmentView
+															.setPrivatePagePending();
+
+												} else {
+													if (AppClientFactory.isAnonymous()) {
+														new SentEmailSuccessVc(i18n.GL1177(),
+																i18n.GL1535());
+													} else {
+														new SentEmailSuccessVc(i18n.GL1177(),
+																i18n.GL1535_1());
+													}
+												}
+
+											} else {
+												toClear = true;
+												if (AppClientFactory
+														.getCurrentPlaceToken().equals(
+																PlaceTokens.HOME)) {
+													MixpanelUtil
+															.Click_Study_LandingPage();
+												}
+
+												Map<String, String> params = new HashMap<String, String>();
+												params.put("id", result.getGooruOid());
+												params.put("pageSize", "10");
+												params.put("pageNum", "0");
+												params.put("pos", "1");
+												AppClientFactory.getPlaceManager()
+														.revealPlace(
+																PlaceTokens.STUDENT,
+																params);
+												classCodeTxtBox.setText("");
+												if (alertMessageUc != null)
+													alertMessageUc.hide();
+
+												if (result
+														.getCreator()
+														.getGooruUId()
+														.equalsIgnoreCase(
+																AppClientFactory
+																		.getGooruUid())) {
+													StudentAssignmentView
+															.setPublicPage();
+												} else if (result.getStatus()
+														.equalsIgnoreCase("active")) {
+													StudentAssignmentView
+															.setPublicPageActive();
+												} else {
+													StudentAssignmentView
+															.setPublicPagePending();
+												}
+
+											}
+											setButtonStatus("");
+										}
+
+									});
+				}
+			});
+
+		}
+	}
+
+	@Override
+	public UlPanel getUlSubjectPanel() {
+		return ulSubjectPanel;
+	}
+	public void setUlSubjectPanel(UlPanel ulSubjectPanel) {
+		this.ulSubjectPanel = ulSubjectPanel;
+	}
 }
