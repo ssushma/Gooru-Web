@@ -87,16 +87,11 @@ public class AssessmentsPlayerMetadataPresenter extends PresenterWidget<IsAssess
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
-		addRegisteredHandler(AssessmentsSetPlayerLoginStatusEvent.TYPE, this);
 	}
 
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
 		getView().setCollectionMetadata(collectionDo);
-
-		getView().setPlayerLoginStatus(AppClientFactory.isAnonymous() ? false : true);
-
-		getCollectionCommentsList(collectionDo.getGooruOid(), ZERO_NUMERIC, INITIAL_COMMENT_LIMIT);
 		setRelatedConcepts(collectionDo);
 	}
 
@@ -154,77 +149,6 @@ public class AssessmentsPlayerMetadataPresenter extends PresenterWidget<IsAssess
 	public void setCommentsListDoAsync(SimpleAsyncCallback<CommentsListDo> commentsListDoAsync) {
 		this.commentsListDoAsync = commentsListDoAsync;
 	}
-
-
-	@Override
-	public void setPlayerLoginStatusHandler(boolean isLoggedIn) {
-		getView().setPlayerLoginStatus(isLoggedIn);
-		if(collectionPlayerPresenter!=null){
-			collectionPlayerPresenter.updateHeaderView();
-		}
-	}
-
-	private void getCollectionCommentsList(String gooruOid, final String offset, String limit) {
-		this.playerAppService.getCollectionCommentsList(gooruOid, offset, limit, new SimpleAsyncCallback<CommentsListDo>() {
-			@Override
-			public void onSuccess(CommentsListDo commentDoList) {
-				getView().setCommentsData(commentDoList,collectionDo, Integer.parseInt(offset) >0 ? false : true);
-			}
-		});
-	}
-
-	@Override
-	public void createCommentForCollection(String gooruOid, String comment) {
-		collectionPlayerPresenter.triggerCommentDataLogEvent(null, PlayerDataLogEvents.COMMENT_CREATE, comment);
-		this.playerAppService.createCommentForCollection(gooruOid, comment, new SimpleAsyncCallback<CommentsDo>() {
-			@Override
-			public void onSuccess(CommentsDo commentsDo) {
-				getView().setCommentsWidget(commentsDo, CREATE.toUpperCase());
-				getView().displaySuccessMsg(false);
-			}
-		});
-	}
-
-
-	public void updateCommentChildView(String commentUid, String action) {
-		getView().updateCommentChildView(commentUid, action);
-	}
-
-	@Override
-	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit,String commentText) {
-		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,commentText);
-		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void noResult) {
-				if(Integer.parseInt(offset)>=9)
-				insertCommentAfterDeletion(gooruOid, offset, limit);
-			}
-		});
-	}
-	public void insertCommentAfterDeletion(final String gooruOid,final String offset, String limit){
-		this.playerAppService.getCollectionCommentsList(gooruOid, offset, limit, new SimpleAsyncCallback<CommentsListDo>() {
-			@Override
-			public void onSuccess(CommentsListDo commentDoList) {
-				getView().setCommentsWidget(commentDoList.getSearchResults().get(0), FEATCHINGCOMMENT.toUpperCase());
-			}
-		});
-	}
-
-	public void editCommentChildView(String commentUid, String commentText, String action) {
-		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);
-		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
-			@Override
-			public void onSuccess(CommentsDo result) {
-				getView().updateCommentChildView("", EDIT.toUpperCase());
-			}
-		});
-	}
-
-	@Override
-	public void getPaginationResults(String gooruOid, String offset, String limit) {
-		getCollectionCommentsList(gooruOid, offset, limit);
-	}
-
 
 
 	public void getFlagedReport(String gooruOid) {
@@ -318,16 +242,6 @@ public class AssessmentsPlayerMetadataPresenter extends PresenterWidget<IsAssess
 		}else{
 			return null;
 		}
-	}
-	@Override
-	public void updateCommentsStatus(String commentsStatus){
-		if(collectionPlayerPresenter!=null){
-			collectionPlayerPresenter.updateCommentsStatus(commentsStatus);
-		}
-	}
-
-	public void changeCommentsButton(CollectionDo collectionDoObj){
-		getView().changeCommentsButton(collectionDoObj);
 	}
 
 }
