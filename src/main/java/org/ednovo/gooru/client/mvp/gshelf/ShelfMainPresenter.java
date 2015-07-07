@@ -346,6 +346,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		if(view==null){
 			view=type;
 		}
+		System.out.println("id::"+id);
+		System.out.println("folderDo::"+folderDo);
 		if(id!=null && folderDo!=null){
 			getView().getCollectionLabel().setVisible(true);
 			setCollectionContent(folderDo);

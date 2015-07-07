@@ -52,4 +52,5 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 */
 	public void setDefaultActiveTab(int tabIndex);
 	public void setCurrentTypeView(String type);
+	public void enableAndHideTabs(boolean isVisible);
 }

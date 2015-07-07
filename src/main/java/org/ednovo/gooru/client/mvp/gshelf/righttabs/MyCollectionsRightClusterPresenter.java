@@ -102,7 +102,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		if(index==1){
-				//For displaying template
+				//For displaying template and data
+				getView().enableAndHideTabs(true);
 				if(COURSE.equalsIgnoreCase(type)){ 
 					courseInfoPresenter.callTaxonomyService();
 					courseInfoPresenter.setData(folderObj);
@@ -116,8 +117,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else if("Assessment".equalsIgnoreCase(type) || "Collection".equalsIgnoreCase(type)){
 					collectionInfoPresenter.setCollectionType(type);
+					collectionInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else{
+					getView().enableAndHideTabs(false);
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){

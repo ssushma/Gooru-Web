@@ -295,4 +295,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void setCurrentTypeView(String currentTypeView) {
 		this.currentTypeView =currentTypeView;
 	}
+	
+	@Override
+	public void enableAndHideTabs(boolean isVisible){
+		lnkContent.setVisible(isVisible);
+		lnkshare.setVisible(isVisible);
+	}
 }
