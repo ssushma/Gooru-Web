@@ -668,7 +668,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		String url = null;
 	
 		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId);
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId,collectionId);
 		}else if(courseId!=null && unitId!=null && lessonId!=null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_LESSON, courseId,unitId,lessonId);
 		}else if(courseId!=null && unitId!=null){
@@ -687,5 +687,14 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}
+	}
+
+	@Override
+	public String deleteCourse(String o1CourseId) throws GwtException,ServerDownException {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_COURSE, o1CourseId);
+		getLogger().info("DELETE_COURSE:::::::"+url);
+		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		
+		return null;
 	}
 }

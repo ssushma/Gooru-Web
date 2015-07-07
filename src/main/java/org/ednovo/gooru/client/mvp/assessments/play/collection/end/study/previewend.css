@@ -84,28 +84,25 @@ background-color: #DDD;
 }
 
 .preview {
-	width: 150px;
-    font-size:24px;
-    font-weight:bold;
-    float: right;
-    color:#FFF;
-    border-radius: 4px;
-    /* padding:10px 48px 10px 0px; */
-    padding: 13px 70px 14px 15px;
-    margin-top: -10px !important;
-    /* Old browsers */
-	background: #1076BB ;
-	background: url("images/preview-arrow.png") 125px center no-repeat, #1076BB;
-	background: url("images/preview-arrow.png") 125px center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
-	background: url("images/preview-arrow.png") 125px center no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
-	background: url("images/preview-arrow.png") 125px center no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
-	background: url("images/preview-arrow.png") 125px center no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
-	background: url("images/preview-arrow.png") 125px center no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
-
+	width: 257px;
+	font-size: 24px;
+	font-weight: bold;
+	float: right;
+	color: #fff;
+	border-radius: 4px;
+	padding: 13px 27px 14px 15px;
+	margin-top: -10px !important;
+	background: #fbb03b;
+	background: url(images/preview-arrow.png) 239px center no-repeat, #fbb03b;
+	background: url(images/preview-arrow.png) 239px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#fbb03b), to(#fbb03b));
+	background: url(images/preview-arrow.png) 239px center no-repeat, -webkit-linear-gradient(top, #fbb03b, #fbb03b);
+	background: url(images/preview-arrow.png) 239px center no-repeat, -moz-linear-gradient(top, #fbb03b, #fbb03b);
+	background: url(images/preview-arrow.png) 239px center no-repeat, -ms-linear-gradient(top, #fbb03b, #fbb03b);
+	background: url(images/preview-arrow.png) 239px center no-repeat, -o-linear-gradient(top, #fbb03b, #fbb03b);
 }
 
 .preview:hover {
-    background: url("images/preview-arrow.png") 125px center no-repeat, #1076BB;
+    background: url(images/preview-arrow.png) 239px center no-repeat, #fbb03b;
     cursor: pointer;
 }
 .block{

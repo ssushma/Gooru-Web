@@ -39,6 +39,8 @@ import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -46,6 +48,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -69,8 +72,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField Button saveCollectionBtn;
 	@UiField TextArea learningObjective;
 	@UiField Label lblErrorMessage, lblErrorMessageForLO;
+	@UiField Image collThumbnail;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	
+	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
+	
+	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
+
 	
 	final String COLLECTION = "collection";
 	
@@ -114,17 +123,59 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 	}
 	
+	@Override
+	public void setCollectionType(String collectionType) {
+
+			if(collectionType.equalsIgnoreCase("collection"))
+			{
+			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
+			}
+			else
+			{
+			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
+			}
+
+	}
+	
 
 	@Override
-	public void setCouseData(FolderDo courseObj) {
+	public void setCouseData(final FolderDo courseObj) {
 		this.courseObj=courseObj;
 		if(null!=courseObj){
 			collectionTitle.setText(courseObj.getTitle());
+			collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+		
 		}
+		else
+		{
+			if(courseObj.getCollectionType()!=null && courseObj.getCollectionType().equalsIgnoreCase("collection"))
+			{
+			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
+			}
+			else
+			{
+			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
+			}
+		}
+		collThumbnail.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				if(courseObj.getCollectionType()!=null && courseObj.getCollectionType().equalsIgnoreCase("collection"))
+				{
+				collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
+				}
+				else
+				{
+				collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
+				}
+				
+			}
+		});
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),false,0);
+		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0);
 	}
 	
 	/**
@@ -154,6 +205,5 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				}
 			}
 		}
-		
 	}
 }

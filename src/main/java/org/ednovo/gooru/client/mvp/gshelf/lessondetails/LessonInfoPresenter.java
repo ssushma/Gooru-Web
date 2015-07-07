@@ -60,7 +60,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	
-	final String LESSON="lesson";
+	final String LESSON="Lesson";
 
 	/**
 	 * Class constructor
@@ -109,7 +109,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
+	public void createAndSaveLessonDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
 	String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 	String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
@@ -134,7 +134,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		});
 	}
 	@Override
-	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final String type) {
+	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final String type) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {

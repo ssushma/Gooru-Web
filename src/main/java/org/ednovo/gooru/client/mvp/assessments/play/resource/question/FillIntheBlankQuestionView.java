@@ -249,12 +249,9 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 							if(isFibStatus){
 								isFibStatus=true;
 							}
-							textBoxArray.get(i).addStyleName("answerCorrectTextBox");
 						}else{
 							answerAttemptDo.setStatus("0");
 							isFibStatus=false;
-							textBoxArray.get(i).addStyleName("answerWrongTextBox");
-							showResultPanel(i,questionAnswerDo.getAnswerText());
 						}
 						textBoxArray.get(i).setReadOnly(true);
 						i++;
@@ -323,29 +320,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 			isUserAnswerAttempted(true);
 		}
 	}
-	/**
-	 * THis method is used to show the result panel which will show what is the correct answer.
-	 * @param blankNum
-	 * @param correctAnswer
-	 */
-	private void showResultPanel(int blankNum,String correctAnswer){
-		FlowPanel resultContianer=new FlowPanel();
-		resultContianer.setStyleName("resultPanelConatiner");
-		HTMLPanel blankHtml=new HTMLPanel(i18n.GL1455()+" "+(blankNum+1)+i18n.GL_SPL_SEMICOLON()+" ");
-		blankHtml.setStyleName("resultPanelText");
-		Label answerWrongImagePanel=new Label();
-		answerWrongImagePanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
-		answerWrongImagePanel.addStyleName("resultPanelAnswerImageFIB");
 
-		HTML answerOptiontext=new HTML();
-		answerOptiontext.setHTML(i18n.GL1456()+i18n.GL_SPL_SEMICOLON()+" "+correctAnswer);
-		answerOptiontext.setStyleName("resultPanelText");
-		resultContianer.add(blankHtml);
-		resultContianer.add(answerWrongImagePanel);
-		resultContianer.add(answerOptiontext);
-		resultPanel.add(resultContianer);
-		resultPanel.setStyleName("resultPanel");
-	}
 	/**
 	 * This method is used to set the FIB answer's data
 	 * @param enteredFibAnswersData

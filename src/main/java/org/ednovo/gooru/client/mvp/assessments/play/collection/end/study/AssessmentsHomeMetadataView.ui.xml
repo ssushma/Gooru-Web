@@ -10,8 +10,10 @@
   		</g:FlowPanel>
         <g:HTMLPanel styleName="col-md-8 col-sm-8 collectionsbuttons">
             <g:HTMLPanel  styleName="player-buttonsContainer">
+
 	            <g:Button styleName="secondary" ui:field="shareCollectionBtn"></g:Button>
 	            <g:Button styleName="secondary" ui:field="customizeCollectionBtn"></g:Button>
+	            <g:Label styleName="col-md-4 col-sm-4 playerAssessmentTitle" ui:field="lblAssessmentTitle"></g:Label>
 	            <g:Button ui:field="studyButton" styleName="{playerStyle.preview}"></g:Button>
             </g:HTMLPanel>
             <hr/>

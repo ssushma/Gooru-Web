@@ -54,6 +54,7 @@
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
 	min-height:530px;	
+	background: none repeat scroll 0% 0% rgb(240, 240, 240);
 }
 #gShelfMainContainer .collectionScrlPanel > div{
 	height: 100%
@@ -81,11 +82,9 @@
 	cursor: pointer;
 }
 
-#gShelfMainContainer .floderLeftContainer .createMenu .btn, #gShelfMainContainer .floderLeftContainer .createMenu .plus
-	{
+#gShelfMainContainer .floderLeftContainer .createMenu .btn, #gShelfMainContainer .floderLeftContainer .createMenu .plus{
 	height: 40px;
 }
-
 #gShelfMainContainer .floderLeftContainer .folderLeftMainHeader {
 	color: #515151;
 	font-size: 18px;
@@ -745,6 +744,12 @@ button.btn-disabled{
 	vertical-align:middle;
 	
 }
+#gShelfCousesList .tableColumn:first-child{
+	width: 8%;
+	font-weight: bold;
+	padding: 18px;
+	font-size: 18px;
+}
 #gShelfCousesList .tableColumn:nth-child(2){
 	background:#f9fcfe;
 	padding:10px 15px;
@@ -774,6 +779,43 @@ button.btn-disabled{
 	width: 45px;
 	float: left;
 	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .courseImage{
+	background: #f9fcfe url('../images/folders/panel/c-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .unitImage{
+	background: #f9fcfe url('../images/folders/panel/u-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .folderImage{
+	background: #f9fcfe url('../images/folders/panel/folder-icon.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .collectionImage{
+	background: #f9fcfe url('../images/folders/panel/collection-icon.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+	border: 0;
+}
+#gShelfCousesList .tableColumn .assessmentImage{
+	background: #f9fcfe url('../images/folders/panel/assessment-type.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+	border: 0;
 }
 #gShelfCousesList .tableMainHeader h3{
 	margin:0 0 2px 0;
@@ -1167,11 +1209,28 @@ button.btn-disabled {
 	background: #f6f6f6;
 	border-top: 0px;
 }
-
+#gShelfMainContainer .lblCollectionTitle {
+	height: 56px;
+	text-align: left;
+	background: #f0f0f0;
+	box-shadow: 0 0 6px rgba(0,0,0,0.05);
+	/* vertical-align: middle; */
+	margin: 0;
+	padding: 11px;
+	font-size: 22px;
+}
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;
 }
-
+#gShelfCourseInfo .deleteButton{
+	display: inline-block;
+	float: right;
+}
+#gShelfCourseInfo .folderBlockSitemap .deleteButton a {
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	color: #1076bb;
+}
 #gShelfCourseInfo .folderBlockSitemap a {
 	padding: 16px 25px;
 	display: inline-block;
@@ -3441,3 +3500,408 @@ width:100% !important;
    
 }
 /* === For Collection info Css end ================================== */
+
+/* === For Collection Share Css Start ================================== */
+.shareColContainer .shareThisCollection{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+.shareColContainer .shareThisCollection p{
+	margin:0 0 5px 0;
+}
+.shareColContainer .shareThisCollection .form-control,.shareColContainer .shareThisCollection .linkFormat{
+	width:75%;
+}
+.shareColContainer .shareThisCollection .linkFormat{
+	text-align:right;
+	display:block;
+	color:#1076bb;
+
+}
+.shareColContainer .shareThisCollection .linkFormat a:hover, .shareColContainer .shareThisCollection .linkFormat a:focus{
+	color:#1f66ac;
+	text-decoration:none;
+	opacity:1;
+}
+.shareColContainer .collectionVisibility{
+		padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+.shareColContainer .collectionVisibility p{
+	margin:0 0 5px 0;
+}
+.shareColContainer .collectionVisibility a{
+	color:#515151;
+	border:2px solid transparent;
+	display:block;
+	border-radius:4px 4px;
+	padding:10px 10px;
+	width:75%;
+	margin-bottom:20px;
+	
+}
+.shareColContainer .collectionVisibility a:hover, .shareColContainer .collectionVisibility a:focus{
+
+	border:2px solid #87badd;
+	opacity:1;
+	text-decoration:none;
+
+}
+.shareColContainer .collectionVisibility .visibilityHeader{
+	font-size:18px;
+	margin-bottom:10px;
+}
+
+
+.shareColContainer .addCollaborators{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+	margin-right:15%;
+}
+.shareColContainer .addCollaborators .inviteBox{
+	position:relative;
+}
+.shareColContainer .addCollaborators .inviteBox .form-control{
+	width:90%;
+	font-size:12px;
+}
+.shareColContainer .addCollaborators .inviteBox button{
+position:absolute;
+top:1px;
+right:1px;
+}
+
+.shareColContainer h5{
+	font-size:13px;
+	font-weight:bold;
+	margin:0 0 8px 0;
+}
+	.shareColContainer .currentCollaborators{
+		background:#f8fafb;
+		padding:15px 15px;
+		border-bottom:1px solid #dddddd;
+	}
+	
+	
+	 .shareColContainer .currentCollaborators .tableDiv
+    {
+        display: table;
+    }
+    
+    
+   .shareColContainer .currentCollaborators  .tablerow
+    {
+        display: table-row;
+    }
+   .shareColContainer .currentCollaborators  .tablecell
+    {
+        display: table-cell;
+		border:none;
+		padding:10px 10px;
+    }
+	
+	.shareColContainer .currentCollaborators .collaboratorsImage img{
+		width:43px;
+		height:43px;
+		border-radius:50% 50%;
+		border:2px solid #87badd;
+	}
+	
+		.shareColContainer .currentCollaborators .collaboratorsImage{
+			width:90px;
+		}
+		
+		.shareColContainer .currentCollaborators .collaboratorsName{
+			width:120px;
+		}
+ @media (min-width: 240px) and (max-width: 319px) {
+	.shareColContainer .shareThisCollection .form-control, .shareColContainer .shareThisCollection .linkFormat{
+		width:100%;
+	}
+	.shareColContainer .collectionVisibility a{
+		width:100%;
+		padding:5px 4px;
+	}
+	.shareColContainer .addCollaborators{
+		margin-right:0;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsImage{
+		width:auto;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsName {
+    width: auto;
+}
+.shareColContainer .addCollaborators .inviteBox .form-control{
+	width:85%;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 .shareColContainer .shareThisCollection .form-control, .shareColContainer .shareThisCollection .linkFormat{
+		width:100%;
+	}
+	.shareColContainer .collectionVisibility a{
+		width:100%;
+	}
+	.shareColContainer .addCollaborators{
+		margin-right:0;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsImage{
+		width:auto;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsName {
+    width: auto;
+}
+.shareColContainer .addCollaborators .inviteBox .form-control{
+	width:85%;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	 .shareColContainer .addCollaborators .inviteBox .form-control{
+	width:85%;
+}
+ }
+  @media (min-width: 768px) and (max-width: 991px) {
+	  .shareColContainer .collectionVisibility a{
+		  width:100%;
+	  }
+  }
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+
+
+@media all and (min-width: 50px)   {  body  { font-size:0.1em;  } }
+@media all and (min-width: 100px)  {  body  { font-size:0.2em;  } }
+@media all and (min-width: 200px)  {  body  { font-size:0.4em;  } }
+@media all and (min-width: 300px)  {  body  { font-size:0.6em;  } }
+@media all and (min-width: 400px)  {  body  { font-size:0.8em;  } }
+@media all and (min-width: 500px)  {  body  { font-size:1.0em;  } }
+@media all and (min-width: 600px)  {  body  { font-size:1.2em;  } }
+@media all and (min-width: 700px)  {  body  { font-size:1.4em;  } }
+@media all and (min-width: 800px)  {  body  { font-size:1.6em;  } }
+@media all and (min-width: 900px)  {  body  { font-size:1.8em;  } }
+@media all and (min-width: 1000px) {  body  { font-size:2.0em;  } }
+@media all and (min-width: 1100px) {  body  { font-size:2.2em;  } }
+@media all and (min-width: 1200px) {  body  { font-size:2.4em;  } }
+@media all and (min-width: 1300px) {  body  { font-size:2.6em;  } }
+@media all and (min-width: 1400px) {  body  { font-size:2.8em;  } }
+@media all and (min-width: 1500px) {  body  { font-size:3.0em;  } }
+@media all and (min-width: 1500px) {  body  { font-size:3.2em;  } }
+@media all and (min-width: 1600px) {  body  { font-size:3.4em;  } }
+@media all and (min-width: 1700px) {  body  { font-size:3.6em;  } }
+
+/* === For Collection Share Css end ================================== */
+
+/* === Assessment popup start ================================== */
+#addAssessmentPopup {
+	padding:25px 0;
+}
+#addAssessmentPopup .modal-dialog{
+	width:438px;
+	margin:0 auto;
+}
+#addAssessmentPopup .modal-header{
+	background-color:#515151;
+	color:#ffffff;
+	border-radius:6px 6px 0 0;
+	margin-top:-2px;
+	
+}
+#addAssessmentPopup .close{
+	font-size:35px;
+	color:#ffffff;
+	opacity:1;
+}
+#addAssessmentPopup .modal-footer button.primary{
+	padding:7px 20px;
+}
+
+#addAssessmentPopup .modal-body{
+	padding:0 0;
+}
+#addAssessmentPopup .indications{
+	background:#dddddd;
+	padding:6px 15px;
+}
+#addAssessmentPopup .assessmentInnerBlock{
+	padding:20px 0;
+	border-bottom:1px solid #dddddd;
+}
+#addAssessmentPopup .assessmentInnerBlock button.primary{
+	padding:10px 6px;
+}
+#addAssessmentPopup .assessmentInnerBlock:last-child{
+	border-bottom:none;
+}
+#addAssessmentPopup .assessmentInnerBlock p{
+	margin:0 0;
+}
+#addAssessmentPopup .noteText{
+	padding:15px 0 30px 0;
+}
+@media (min-width: 240px) and (max-width: 319px){
+	#addAssessmentPopup .modal-dialog{
+		width:auto;
+		margin-left:10px;
+		margin-right:10px;
+	}
+	.colxs6-reset{
+		width:100% !important;
+	}
+	
+}
+@media (min-width: 320px) and (max-width: 479px) {
+	#addAssessmentPopup .modal-dialog{
+		width:auto;
+		margin-left:10px;
+		margin-right:10px;
+	}
+	.colxs6-reset{
+		width:100% !important;
+	}
+}
+
+@media (min-width: 480px) and (max-width: 767px)  {
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+			
+}
+@media (min-width: 1200px) {
+	
+}
+/* === Assessment popup start ================================== */
+
+/* === Assessment info start ================================== */
+
+#pnlExternalAssessmentContainter .folderBlockSitemap .AcItem {
+	text-align: right;
+}
+#pnlExternalAssessmentContainter  .breadcrumbMain a.active:last-child:before {
+	border-bottom: none;
+	border-left: none;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentTitle,#pnlExternalAssessmentContainter .existingAssessment .assessmentURL,#pnlExternalAssessmentContainter .assessmentTitle,#pnlExternalAssessmentContainter .existingAssessment .assessmentDescription{
+	padding: 10px 15px;
+	border-bottom: 1px solid #dddddd;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy,#pnlExternalAssessmentContainter .existingAssessment .assessmentRequires{
+		padding: 15px 15px;
+	border-bottom: 1px solid #dddddd;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy p,#pnlExternalAssessmentContainter .existingAssessment .assessmentRequires p{
+	margin:3px 0;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader {
+	padding: 0 0 !important;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader span {
+	float: left;
+	padding: 13px 15px;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader span.plus {
+	background: #4d99cd none repeat scroll 0 0;
+	color: #ffffff;
+	display: block;
+	font-size: 40px;
+	font-weight: normal;
+	line-height: 52px;
+	padding: 0;
+	text-align: center;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader span.plus {
+	float: right;
+	height: 52px;
+	width: 52px;
+}
+#pnlExternalAssessmentContainter  input[type=radio].css-checkbox {
+	position: absolute;
+	z-index: -1000;
+	left: -1000px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+}
+#pnlExternalAssessmentContainter  input[type=radio].css-checkbox + label.css-label {
+	padding-left: 23px;
+	height: 18px;
+	display: inline-block;
+	line-height: 18px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	font-size: 12px;
+	font-weight: normal;
+	vertical-align: middle;
+	cursor: pointer;
+	margin-left: 25px;
+	margin-bottom:0;
+}
+#pnlExternalAssessmentContainter input[type=radio].css-checkbox:checked + label.css-label {
+	background-position: 0 -18px;
+}
+#pnlExternalAssessmentContainter label.css-label {
+	background-image: url(../images/radioButtons.png);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy label.css-label img {
+	width: 18px;
+	height: 18px;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+	 #pnlExternalAssessmentContainter  .assessmentSubmenu .menuLinks{
+		 text-align:left;
+		 border-bottom:none;
+	 }
+	 #pnlExternalAssessmentContainter  .assessmentSubmenu .AcItem {
+	    text-align: right;
+	}
+	input.css-checkbox[type="radio"] + label.css-label{
+		margin-left:0;
+	}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 #pnlExternalAssessmentContainter .assessmentSubmenu .menuLinks{
+		 text-align:left;
+		 border-bottom:none;
+	 }
+	 #pnlExternalAssessmentContainter  .assessmentSubmenu .AcItem {
+	    text-align: right;
+	}
+	#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + label.css-label{
+		margin-left:0;
+	}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	 #pnlExternalAssessmentContainter .assessmentSubmenu .menuLinks{
+			 text-align:left;
+			 border-bottom:none;
+	   }
+		#pnlExternalAssessmentContainter .assessmentSubmenu .AcItem {
+		    text-align: right;
+		}
+		#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + label.css-label{
+			margin-left:0;
+		}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+/* === Assessment info end ================================== */
