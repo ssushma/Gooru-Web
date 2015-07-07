@@ -3,8 +3,6 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="lessonInfo">
-
-
 <div class="courseNameBlock">
 
 <p>Lesson Name</p>
@@ -14,15 +12,6 @@
 
 
 </div>
-
-
-
-
-
-
-
-
-
 <div class="unitCoverBlock">
 
 <div class="unitCoverHeader">
