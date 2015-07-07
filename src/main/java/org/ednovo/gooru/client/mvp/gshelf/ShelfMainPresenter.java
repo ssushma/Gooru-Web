@@ -207,6 +207,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				callWorkspaceApi();
 				version = AppClientFactory.getLoggedInUser().getToken();
 			}
+			
 		}
 	}
 	/**
@@ -398,8 +399,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getView().createNewItem(type);
 	}
 
-	public void updateTitleOfTreeWidget(FolderDo courseDo) {
-		getView().updateTitleOfTreeWidget(courseDo);
+	public void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag) {
+		getView().updateTitleOfTreeWidget(courseDo, flag);
 	}
 	
 	@Override
@@ -414,5 +415,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 */
 	public void enableCreateCourseButton(boolean isEnable) {
 		getView().enableDisableCourseButton(isEnable);
+	}
+
+	@Override
+	public void setBreadCrumbs(HashMap<String, String> selectedWidgetsTitleType) {
+		getMyCollectionsRightClusterPresenter().setMycontentBreadcrumbs(selectedWidgetsTitleType);
 	}
 }

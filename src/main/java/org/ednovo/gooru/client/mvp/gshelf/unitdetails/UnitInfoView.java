@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -245,15 +246,19 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),true,1);
+				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),true,2);
+				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2);
 			}else if(index==2){
+				CreateDo createOrUpDate=new CreateDo();
+				createOrUpDate.setTitle(unitTitle.getText());
+				createOrUpDate.setIdeas(txaBigIdeas.getText());
+				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 				if(id!=null){
-					getUiHandlers().updateCourseDetails(unitTitle.getText(),id,isCreate);
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
 				}else{
-					getUiHandlers().createAndSaveCourseDetails(unitTitle.getText(),isCreate);
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
 			}
 		}
@@ -261,7 +266,11 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
-		this.courseObj=courseObj;
-		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
+		if(courseObj!=null){
+			this.courseObj=courseObj;
+			unitTitle.setText(courseObj.getTitle()==null?i18n.GL3364():courseObj.getTitle());
+			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
+			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		}
 	}
 }

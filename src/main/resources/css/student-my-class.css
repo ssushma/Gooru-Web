@@ -1031,9 +1031,8 @@ label.custom-select {
     position: relative;
 }
 .scrollTBL {
-    width: 880px;
+    width: 1000px;
     overflow-x: auto;
-    margin-left: 10em;
     overflow-y: visible;
     padding-bottom: 1px;
 }
@@ -1551,3 +1550,1207 @@ th.headcol.whitebg {
 @media (min-width: 768px) and (max-width: 991px) {}
 @media (min-width: 992px) and (max-width: 1199px) {}
 @media (min-width: 1200px) {}
+
+@charset "utf-8";
+/* CSS Document */
+
+.bannerInner {
+    position: relative;
+}
+.bannerInner .bannerCaptions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 25%;
+}
+.bannerInner .bannerCaptions h1 {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 46px;
+    margin: 15px 0;
+}
+.bannerInner .bannerCaptions .rightWhiteBox {
+    text-align: right;
+    background: rgba(255, 255, 255, .5);
+    padding: 15px 15px;
+    display: inline-block;
+    float: right;
+    border-radius: 4px 4px;
+}
+.bannerInner .bannerCaptions .rightWhiteBox span {
+    background: rgba(255, 255, 255, .9);
+    color: #515151;
+    font-size: 26px;
+    font-weight: normal;
+    border-radius: 4px 4px;
+    -webkit-border-radius: 4px 4px;
+    -moz-border-radius: 4px 4px;
+    padding: 6px 12px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.bannerInner .bannerCaptions .studentDetailsRight {
+    text-align: right;
+    margin: 0 15px 0 0;
+    display: inline-block;
+    color: #ffffff;
+    font-weight: bold;
+    vertical-align: middle;
+}
+.bannerInner .bannerCaptions .studentDetailsRight img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50% 50%;
+    border: 3px solid #85b9df;
+}
+.whiteBand {
+    background: #ffffff;
+    padding: 0 0;
+    height: 50px;
+}
+.whiteBand .studentDetailsLeft {
+    color: #515151;
+    font-size: 26px;
+    margin: 5px 0;
+}
+.whiteBand .studentDetailsLeft img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50% 50%;
+    border: 5px solid #85b9df;
+    margin-top: -8px;
+}
+.planProgress {
+    border-radius: 4px 4px;
+    margin: 5px 0px;
+    padding: 5px 5px;
+    text-align: right;
+}
+.planProgress .Switch {
+    margin: 0 6px;
+}
+.planProgress .planView,
+.planProgress .Switch,
+.planProgress .progressView {
+    display: inline-block;
+    vertical-align: middle;
+}
+.planProgress .planView,
+.planProgress .progressView {
+    font-size: 18px;
+    color: #515151;
+    line-height: 18px;
+}
+.planProgress .planView ul {
+    margin: 0 0;
+    padding: 0 0;
+    position: relative;
+    display: inline-block;
+}
+.planProgress .planView ul:before {
+    content: "";
+    position: absolute;
+    top: 9px;
+    height: 2px;
+    background: #dddddd;
+    width: 35px;
+}
+.planProgress .planView ul li {
+    margin: 0 0;
+    padding: 0 0;
+    display: inline-block;
+    list-style: none;
+    height: 10px;
+    width: 10px;
+    border-radius: 50% 50%;
+    background: #85b9df;
+    z-index: 999;
+    position: relative;
+}
+.planProgress .planView ul li.green {
+    background: #a2de81;
+}
+.onoffswitch {
+    position: relative;
+    width: 75px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s;
+    -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+    display: block;
+    float: left;
+    width: 50%;
+    height: 26px;
+    padding: 0;
+    line-height: 30px;
+    font-size: 14px;
+    color: white;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-weight: bold;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "";
+    padding-left: 10px;
+    background-color: #D8D8D8;
+    color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "";
+    padding-right: 10px;
+    background-color: #EEEEEE;
+    color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block;
+    width: 30px;
+    height: 30px;
+    /*		margin: -2.5px;*/
+    
+    background: #4897CE;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 43px;
+    -moz-transition: all 0.3s ease-in 0s;
+    -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+.Switch label {
+    margin-bottom: 0;
+}
+.classProgressIndications {
+    background: #ffffff;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+.classProgressIndications .studentCourseReportProgressHeader {
+    font-size: 22px;
+    color: #515151;
+    padding: 14px 15px;
+}
+.classProgressIndications .scoreStatus {
+    float: right;
+    text-align: right;
+}
+.classProgressIndications .scoreStatus div.red {
+    background: #e08282 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.org {
+    background: #fec956 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.yellowgreen {
+    background: #edf167 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.lightgreen {
+    background: #a2de81 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.green {
+    background: #3fc380 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div {
+    display: table-cell;
+    font-weight: bold;
+    padding: 13px 15px;
+    text-align: center;
+    width: 62px;
+}
+.courseReportsBodyBlock {
+    background: #fafafa;
+    border-radius: 0 0 6px 6px;
+}
+.wrapCircles {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40%;
+}
+.wrapCirclesViews {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    color: #515151;
+}
+.wrapCirclesViews h3 {
+    margin: 0 0;
+    font-weight: bold;
+}
+.wrapCirclesViews small {
+    display: inline-block;
+    width: 75px;
+    line-height: 11px;
+}
+/* -------------------------------------
+ * Bar container
+ * ------------------------------------- */
+
+.progress-radial {
+    float: left;
+    margin-right: 15px;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #dddddd;
+}
+/* -------------------------------------
+ * Optional centered circle w/text
+ * ------------------------------------- */
+
+.progress-radial .overlay {
+    background-color: #fafafa;
+    border-radius: 50%;
+    font-size: 16px;
+    height: 68px;
+    line-height: 68px;
+    margin-left: 6px;
+    margin-top: 6px;
+    position: absolute;
+    text-align: center;
+    width: 68px;
+}
+/* -------------------------------------
+ * Mixin for progress-% class Blue
+ * ------------------------------------- */
+
+.blue-progress-0 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-5 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-10 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-15 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-20 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-25 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-30 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-35 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-40 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-45 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-50 {
+    background-image: linear-gradient(-90deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-55 {
+    background-image: linear-gradient(-72deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-60 {
+    background-image: linear-gradient(-54deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-65 {
+    background-image: linear-gradient(-36deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-70 {
+    background-image: linear-gradient(-18deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-75 {
+    background-image: linear-gradient(0deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-80 {
+    background-image: linear-gradient(18deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-85 {
+    background-image: linear-gradient(36deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-90 {
+    background-image: linear-gradient(54deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-95 {
+    background-image: linear-gradient(72deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+.blue-progress-100 {
+    background-image: linear-gradient(90deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
+}
+/* -------------------------------------
+ * Mixin for progress-% class Org
+ * ------------------------------------- */
+
+.org-progress-0 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-5 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-10 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-15 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-20 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-25 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-30 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-35 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-40 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-45 {
+    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-50 {
+    background-image: linear-gradient(-90deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-55 {
+    background-image: linear-gradient(-72deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-60 {
+    background-image: linear-gradient(-54deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-65 {
+    background-image: linear-gradient(-36deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-70 {
+    background-image: linear-gradient(-18deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-75 {
+    background-image: linear-gradient(0deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-80 {
+    background-image: linear-gradient(18deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-85 {
+    background-image: linear-gradient(36deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-90 {
+    background-image: linear-gradient(54deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-95 {
+    background-image: linear-gradient(72deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.org-progress-100 {
+    background-image: linear-gradient(90deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
+}
+.rowContainer .progressBlock,
+.rowContainer .timeAndScore .avgScore,
+.rowContainer .timeAndScore .totalStudy,
+.rowContainer .heighlightBlock {
+    min-height: 105px;
+}
+.timeAndScore {
+    display: block;
+    text-align: right;
+    border-left: 1px solid #dddddd;
+}
+.timeAndScore p {
+    margin: 0 0;
+}
+.timeAndScore h3,
+.timeAndScore h2 {
+    margin: 0 0;
+}
+.timeAndScore .totalStudy,
+.timeAndScore .avgScore {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+.timeAndScore .totalStudy {
+    padding: 25px 5px;
+    min-width: 135px;
+    color: #515151;
+    text-align: center;
+}
+.timeAndScore .totalStudy h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0 0 0;
+}
+.timeAndScore .avgScore {
+    padding: 21px 15px;
+    color: #ffffff;
+    width: 105px;
+}
+.timeAndScore .avgScore h2 {
+    font-weight: bold;
+    margin: 15px 0 0 0;
+}
+.timeAndScore .avgScore.lightGreen {
+    background: #a2de81;
+}
+.timeAndScore .avgScore.darkGreen {
+    background: #3fc380;
+}
+.timeAndScore .avgScore.yellowGreen {
+    background: #edf167;
+}
+.timeAndScore .avgScore.org {
+    background: #fec956;
+}
+.timeAndScore .avgScore.red {
+    background: #e08282;
+}
+.rowContainer {
+    border-bottom: 1px solid #dddddd;
+}
+.rowContainer:last-child {
+    border-bottom: none;
+}
+.rowContainer .heighlightBlock {
+    padding: 30px 10px;
+    background: #eef3f7;
+}
+.rowContainer .heighlightBlock h3 {
+    margin: 0 0;
+    padding-bottom: 5px;
+    font-size: 22px;
+    color: #515151;
+    font-weight: bold;
+}
+.rowContainer .heighlightBlock p {
+    font-weight: bold;
+    font-size: 12px;
+    color: #515151;
+    margin: 0 0;
+}
+.rowContainer .progressBlock {
+    padding: 12px 8px;
+    text-align: center;
+}
+.rowContainer .progressBlock ul {
+    margin: 0 0;
+    padding: 0 0;
+    display: block;
+}
+.rowContainer .progressBlock ul li {
+    margin: 0 8px 0 0;
+    padding: 0 0;
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+.rowContainer .progressBlock ul li span {
+    width: 45px;
+    height: 45px;
+    border-radius: 50% 50%;
+    background: #dddddd;
+    display: block;
+}
+.rowContainer .viewReport {
+    text-align: center;
+}
+.rowContainer .viewReport a {
+    color: #0074cb;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 19px 0;
+    vertical-align: middle;
+    line-height: 15px;
+}
+.rowContainer .viewReport a:hover,
+.rowContainer .viewReport a:focus {
+    text-decoration: none;
+}
+.rowContainer .progressBlock ul li.greenCircle span {
+    background: #a5cba1 url(../images/checkMark-big.png) no-repeat 10px 12px;
+}
+.rowContainer .progressBlock ul li.blueCircle span {
+    background: #85b9df;
+}
+.rowContainer .progressBlock ul li.greyCircle span {
+    background: #d1cfcf;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+    header {
+        position: relative;
+    }
+    .gooruBodySupportContainer {
+        margin-top: 0;
+    }
+    .bannerInner .bannerCaptions {
+        position: relative;
+        background: #ffffff;
+        text-align: center;
+        margin: 0 0 15px;
+        padding: 15px 0;
+    }
+    .bannerInner .bannerImg {
+        display: none;
+    }
+    .bannerInner .bannerCaptions h1 {
+        color: #515151;
+        margin: 0 0;
+        font-size: 35px;
+        padding: 0 0 15px 0;
+    }
+    .bannerInner .bannerCaptions .rightWhiteBox {
+        background: rgba(0, 0, 0, .15);
+        float: none;
+    }
+    .whiteBand {
+        height: auto;
+        text-align: center;
+        padding: 10px 0;
+    }
+    .planProgress {
+        text-align: center;
+    }
+    .planProgress .planView,
+    .planProgress .progressView {
+        font-size: 13px;
+    }
+    .onoffswitch {
+        width: 60px;
+    }
+    .whiteBand .studentDetailsLeft img {
+        margin-top: 0;
+    }
+    .whiteBand .studentDetailsLeft {
+        border-bottom: 1px solid #ddd;
+        margin: 0;
+        padding: 0 0 10px;
+    }
+    .classProgressIndications .scoreStatus {
+        float: none;
+        text-align: left;
+    }
+    .classProgressIndications .scoreStatus div {
+        width: 1%;
+    }
+    .rowContainer .progressBlock {
+        text-align: left;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .timeAndScore .avgScore,
+    .rowContainer .timeAndScore .totalStudy,
+    .rowContainer .heighlightBlock {
+        min-height: inherit;
+    }
+    .rowContainer .heighlightBlock {
+        padding: 15px 10px;
+    }
+    .progress-radial .overlay {
+        height: 55px;
+        line-height: 55px;
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 55px;
+    }
+    .progress-radial {
+        height: 65px;
+        margin-right: 15px;
+        width: 65px;
+    }
+    .timeAndScore {
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        text-align: center;
+    }
+    .timeAndScore .totalStudy {
+        min-width: inherit;
+    }
+    .timeAndScore .avgScore {
+        width: auto;
+    }
+    .timeAndScore div {
+        width: 1% !important;
+        float: none;
+        overflow: hidden;
+        display: table-cell !important;
+    }
+    .timeAndScore .totalStudy {
+        padding: 15px 5px;
+    }
+    .timeAndScore .avgScore {
+        padding: 10px 15px;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    header {
+        position: relative;
+    }
+    .gooruBodySupportContainer {
+        margin-top: 0;
+    }
+    .bannerInner .bannerCaptions {
+        position: relative;
+        background: #ffffff;
+        text-align: center;
+        margin: 0 0 15px;
+        padding: 15px 0;
+    }
+    .bannerInner .bannerImg {
+        display: none;
+    }
+    .bannerInner .bannerCaptions h1 {
+        color: #515151;
+        margin: 0 0;
+        font-size: 35px;
+        padding: 0 0 15px 0;
+    }
+    .bannerInner .bannerCaptions .rightWhiteBox {
+        background: rgba(0, 0, 0, .15);
+        float: none;
+    }
+    .whiteBand {
+        height: auto;
+        text-align: center;
+        padding: 10px 0;
+    }
+    .planProgress {
+        text-align: center;
+    }
+    .planProgress .planView,
+    .planProgress .progressView {
+        font-size: 13px;
+    }
+    .onoffswitch {
+        width: 60px;
+    }
+    .whiteBand .studentDetailsLeft img {
+        margin-top: 0;
+    }
+    .whiteBand .studentDetailsLeft {
+        border-bottom: 1px solid #ddd;
+        margin: 0;
+        padding: 0 0 10px;
+    }
+    .classProgressIndications .scoreStatus {
+        float: none;
+        text-align: left;
+    }
+    .classProgressIndications .scoreStatus div {
+        width: 1%;
+    }
+    .rowContainer .progressBlock {
+        text-align: left;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .timeAndScore .avgScore,
+    .rowContainer .timeAndScore .totalStudy,
+    .rowContainer .heighlightBlock {
+        min-height: inherit;
+    }
+    .rowContainer .heighlightBlock {
+        padding: 15px 10px;
+    }
+    .progress-radial .overlay {
+        height: 55px;
+        line-height: 55px;
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 55px;
+    }
+    .progress-radial {
+        height: 65px;
+        margin-right: 15px;
+        width: 65px;
+    }
+    .timeAndScore {
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        text-align: center;
+    }
+    .timeAndScore .totalStudy {
+        min-width: inherit;
+    }
+    .timeAndScore .avgScore {
+        width: auto;
+    }
+    .timeAndScore div {
+        width: 1% !important;
+        float: none;
+        overflow: hidden;
+        display: table-cell !important;
+    }
+    .timeAndScore .totalStudy {
+        padding: 15px 5px;
+    }
+    .timeAndScore .avgScore {
+        padding: 10px 15px;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    header {
+        position: relative;
+    }
+    .gooruBodySupportContainer {
+        margin-top: 0;
+    }
+    .bannerInner .bannerCaptions {
+        position: relative;
+        background: #ffffff;
+        text-align: center;
+        margin: 0 0 15px;
+        padding: 15px 0;
+    }
+    .bannerInner .bannerImg {
+        display: none;
+    }
+    .bannerInner .bannerCaptions h1 {
+        color: #515151;
+        margin: 0 0;
+        font-size: 35px;
+        padding: 0 0 15px 0;
+    }
+    .bannerInner .bannerCaptions .rightWhiteBox {
+        background: rgba(0, 0, 0, .15);
+        float: none;
+    }
+    .whiteBand {
+        height: auto;
+        text-align: center;
+        padding: 10px 0;
+    }
+    .planProgress {
+        text-align: center;
+    }
+    .classProgressIndications .scoreStatus {
+        float: none;
+        text-align: left;
+    }
+    .classProgressIndications .scoreStatus div {
+        width: 1%;
+    }
+    .rowContainer .progressBlock {
+        text-align: left;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .timeAndScore .avgScore,
+    .rowContainer .timeAndScore .totalStudy,
+    .rowContainer .heighlightBlock {
+        min-height: inherit;
+    }
+    .rowContainer .heighlightBlock {
+        padding: 15px 10px;
+    }
+    .progress-radial .overlay {
+        height: 55px;
+        line-height: 55px;
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 55px;
+    }
+    .progress-radial {
+        height: 65px;
+        margin-right: 15px;
+        width: 65px;
+    }
+    .timeAndScore {
+        border-top: 1px solid #dddddd;
+        border-left: none;
+        text-align: center;
+    }
+    .timeAndScore .totalStudy {
+        min-width: inherit;
+    }
+    .timeAndScore .avgScore {
+        width: auto;
+    }
+    .timeAndScore div {
+        width: 1% !important;
+        float: none;
+        overflow: hidden;
+        display: table-cell !important;
+    }
+    .timeAndScore .totalStudy {
+        padding: 15px 5px;
+    }
+    .timeAndScore .avgScore {
+        padding: 10px 15px;
+    }
+}
+/*@media (max-width: 767px) {
+	
+
+}*/
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .timeAndScore .avgScore {
+        padding: 32px 10px;
+        width: auto;
+    }
+    .timeAndScore .totalStudy {
+        min-width: inherit;
+        padding: 38px 5px;
+    }
+    .timeAndScore .totalStudy h3 {
+        font-size: 16px;
+    }
+    .timeAndScore .avgScore h2 {
+        font-size: 24px;
+    }
+    .progress-radial .overlay {
+        height: 60px;
+        line-height: 60px;
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 60px;
+    }
+    .progress-radial {
+        height: 70px;
+        width: 70px;
+    }
+    .rowContainer .progressBlock,
+    .rowContainer .timeAndScore .avgScore,
+    .rowContainer .timeAndScore .totalStudy,
+    .rowContainer .heighlightBlock {
+        min-height: 125px;
+    }
+    .rowContainer .progressBlock {
+        padding: 25px 8px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .timeAndScore .totalStudy {
+        min-width: 130px;
+    }
+    .timeAndScore .totalStudy {
+        min-width: inherit;
+    }
+    .timeAndScore .avgScore {
+        width: auto;
+    }
+    .timeAndScore div {
+        width: 1% !important;
+        float: none;
+        overflow: hidden;
+        display: table-cell !important;
+    }
+}
+@media (min-width: 1200px) {} @charset "utf-8";
+/* CSS Document */
+
+.classProgressIndications .topBackLinkBox {
+    padding:15px 15px;
+}
+.classProgressIndications .topBackLinkBox a {
+    color: #515151;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+.classProgressIndications .topBackLinkBox a span.left-arrow {
+    background: url("../images/gooru-sprite.png") no-repeat -320px -326px;
+    height: 25px;
+    width: 25px;
+}
+.classProgressIndications .topBackLinkBox a span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.studentUnitReportViewContainer .headerLinksContainer {
+    background: #fafafa none repeat scroll 0 0;
+    border-bottom: 1px solid #dddddd;
+    padding: 8px 0;
+}
+.studentUnitReportViewContainer .headerBackLinkBox a {
+    color: #515151;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+.studentUnitReportViewContainer .headerBackLinkBox a span.left-arrow {
+    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -320px -326px;
+    height: 25px;
+    width: 25px;
+}
+.studentUnitReportViewContainer .headerBackLinkBox a span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.studentUnitReportViewContainer .headerNextLinkBox {
+    float: right;
+}
+.studentUnitReportViewContainer .headerNextLinkBox a span.next-arrow {
+    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -339px -326px;
+    height: 25px;
+    width: 25px;
+}
+.studentUnitReportViewContainer .headerNextLinkBox a {
+    color: #515151;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+.studentUnitReportViewContainer .headerNextLinkBox a span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.rowContainer .numaricOrder {
+    color: #515151;
+    display: table-cell;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 6px 14px;
+    text-align: center;
+    vertical-align: top;
+}
+.rowContainer .progressBlockLeft {
+    display: table-cell;
+    padding: 6px 0;
+    vertical-align: middle;
+}
+.rowContainer .lessonDetails {
+    display: table-cell;
+    vertical-align: middle;
+}
+.rowContainer .progressBlockLeft div {
+    display: inline-block;
+    margin: 0 0;
+    padding: 0;
+    vertical-align: middle;
+}
+.rowContainer .progressBlockLeft div span {
+    background: #dddddd;
+    border-radius: 50%;
+    display: block;
+    height: 42px;
+    width: 42px;
+}
+.rowContainer .heighlightBlockUnitReports h3 {
+    color: #515151;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0;
+    padding-right: 5px;
+}
+.rowContainer .progressBlockLeft div.greenCircle span {
+    background: #a5cba1 url("../images/whiteCheckMark.png") no-repeat 11px 13px;
+}
+.rowContainer .heighlightBlockUnitReports {
+    background: #eef3f7 none repeat scroll 0 0;
+    padding: 6px 10px;
+    display: table-cell;
+    width: 100%;
+}
+.rowContainer .heighlightBlockUnitReports {
+    height: 105px;
+}
+.wrapCirclesViews .viewsDetails {
+    font-size: 14px;
+}
+.wrapCirclesViews .viewsDetails span {
+    font-weight: bold;
+}
+.statusScrollContainer {
+    width: 64.400% !important;
+}
+.rowContainer .statusScrollContainer .progressBlock {
+    padding: 12px 0;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock {
+    margin-left: 25px;
+    margin-right: 25px;
+    position: relative;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollLeftArrow {
+    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -320px -326px;
+    height: 25px;
+    width: 25px;
+    left: -2%;
+    top: 45%;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollRightArrow {
+    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -339px -326px;
+    height: 25px;
+    width: 25px;
+    right: -2%;
+    top: 45%;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock div.itemList {
+    float: left;
+    width: 33.3333%;
+    border-right: 1px solid #dddddd;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock div.itemList.lastItem {
+    border-right: none;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .wrapCircles {
+    width: auto;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .cursorArrows {
+    position: absolute;
+}
+.progress-radial .overlay {
+    line-height: 25px;
+}
+.progress-radial .overlay span {
+    display: block;
+    font-weight: bold;
+    line-height: 18px;
+    margin: 18px 0;
+}
+.progress-radial .overlay span small {
+    display: block;
+    font-size: 9px;
+    font-weight: normal;
+}
+div.dotted.round {
+    width: 4.5vw;
+    height: 4.5vw;
+    gborder: solid 3px;
+    border-radius: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    /*Demo, debug: show me edges */
+}
+div.dotted.round span {
+    display: block;
+    margin: 17px 0 5px 13px;
+    position: relative;
+    font-weight: normal;
+}
+div.dotted.round span em {
+    font-style: normal;
+    font-weight: bold;
+}
+svg.dotted.round {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: 100%;
+    width: 100%;
+    stroke: #dddddd;
+    stroke-width: 12px;
+    stroke-dasharray: 0.25, 30;
+    stroke-dashoffset: 8;
+    stroke-linecap: round;
+    fill: none;
+    overflow: visible;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+    .statusScrollContainer {
+        width: 100% !important;
+    }
+    .rowContainer .statusScrollContainer .progressBlock {
+        text-align: center;
+    }
+    .statusScrollscrollInnerBlock div.dotted.round {
+        height: 45px;
+        width: 45px;
+    }
+    .statusScrollscrollInnerBlock svg.dotted.round {
+        left: 5px;
+        top: 5px;
+    }
+    .statusScrollscrollInnerBlock div.dotted.round span {
+        font-size: 11px;
+    }
+    .statusScrollscrollInnerBlock .progress-radial .overlay span {
+        margin: 10px 0;
+    }
+    .statusScrollscrollInnerBlock .progress-radial {
+        margin-right: 0;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .statusScrollContainer {
+        width: 100% !important;
+    }
+    .rowContainer .statusScrollContainer .progressBlock {
+        text-align: center;
+    }
+    .statusScrollscrollInnerBlock div.dotted.round {
+        height: 45px;
+        width: 45px;
+    }
+    .statusScrollscrollInnerBlock svg.dotted.round {
+        left: 5px;
+        top: 5px;
+    }
+    .statusScrollscrollInnerBlock div.dotted.round span {
+        font-size: 11px;
+    }
+    .statusScrollscrollInnerBlock .progress-radial .overlay span {
+        margin: 10px 0;
+    }
+    .statusScrollscrollInnerBlock .progress-radial {
+        margin-right: 0;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .statusScrollContainer {
+        width: 100% !important;
+    }
+    .rowContainer .statusScrollContainer .progressBlock {
+        text-align: center;
+    }
+    .statusScrollscrollInnerBlock div.dotted.round {
+        height: 45px;
+        width: 45px;
+    }
+    .statusScrollscrollInnerBlock svg.dotted.round {
+        left: 5px;
+        top: 5px;
+    }
+    .statusScrollscrollInnerBlock div.dotted.round span {
+        font-size: 11px;
+    }
+    .statusScrollscrollInnerBlock .progress-radial .overlay span {
+        margin: 10px 0;
+    }
+    .statusScrollscrollInnerBlock .progress-radial {
+        margin-right: 0;
+    }
+}
+/*@media (max-width: 767px) {
+	
+
+}*/
+
+@media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}

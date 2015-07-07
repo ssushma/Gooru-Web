@@ -107,4 +107,9 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	public ShelfMainPresenter getShelfMainPresenter() {
 		return shelfMainPresenter;
 	}
+
+	@Override
+	public void addNewContent(String type) {
+		myCollectionsRightClusterPresenter.addNewContent(type);
+	}
 }

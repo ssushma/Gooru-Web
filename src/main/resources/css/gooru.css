@@ -3384,3 +3384,7 @@ div#spnlDisclosureContentSimPanel>div:first-child {
 	overflow-x: hidden;
 	background-color: #FFF !important;
 }
+.tinyMCETable table {
+	width:100%;
+}
+}

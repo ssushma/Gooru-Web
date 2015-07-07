@@ -223,8 +223,8 @@ margin:0 0 0 -20px !important;
 	padding: 5px 9px;
 	background: #ccc;
 	border-radius: 0px 0px 3px 3px;
-	/* border-top: 1px solid #ddd;
-	min-height: 51px; */
+	/* border-top: 1px solid #ddd;*/
+	min-height: 49px;
 }
 #gooruSearchMainContainer .userDetailsResources  .user{
 	font-size:13px;
@@ -259,6 +259,7 @@ margin:0 0 0 -20px !important;
 	margin-left:-3%;
 	margin-top: 0px;
 	min-height: 27px;
+	line-height: 21px;
 }
 #gooruSearchMainContainer .userDetailsResources .user img{
 	border-radius: 50px;

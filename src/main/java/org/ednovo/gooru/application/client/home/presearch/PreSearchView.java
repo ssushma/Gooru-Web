@@ -114,10 +114,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
 	@UiField Label lblErrorMessage;
-	@UiField
-	Button enterLbl;
-	@UiField
-	TextBoxWithPlaceholder classCodeTxtBox;
+	@UiField Button enterLbl;
+	@UiField TextBoxWithPlaceholder classCodeTxtBox;
 
 	private final String QUERY = "query";
 	private final String FLT_SUBJECTNAME = "flt.subjectName";
@@ -922,7 +920,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	}
 	private void setButtonStatus(final String status) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-
 			@Override
 			public void onSuccess() {
 				if (status.equalsIgnoreCase("active")) {
@@ -1191,5 +1188,13 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			});
 
 		}
+	}
+
+	@Override
+	public UlPanel getUlSubjectPanel() {
+		return ulSubjectPanel;
+	}
+	public void setUlSubjectPanel(UlPanel ulSubjectPanel) {
+		this.ulSubjectPanel = ulSubjectPanel;
 	}
 }

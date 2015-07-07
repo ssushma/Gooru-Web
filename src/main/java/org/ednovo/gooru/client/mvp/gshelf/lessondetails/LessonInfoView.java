@@ -30,6 +30,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -154,11 +155,13 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		if(result){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, result);
 		}else{
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setTitle(lessonTitle.getText());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 			if(id!=null){
-				getUiHandlers().updateCourseDetails(lessonTitle.getText(),id,isCreate,type);
+				getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,type);
 			}else{
-				getUiHandlers().createAndSaveCourseDetails(lessonTitle.getText(),isCreate,type);
+				getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,type);
 			}
 		}
 	}

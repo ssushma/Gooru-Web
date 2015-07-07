@@ -47,27 +47,38 @@ public interface UrlNavigationTokens{
 	String STUDENT_CLASSPAGE_REPORT_ITEM = "student-report";
 	//Student Class page view tokens
 	String STUDENT_CLASSPAGE_PAGE_DIRECT = "page-view";
+	String STUDENT_CLASSPAGE_COURSE_VIEW = "course-view";
 	String STUDENT_CLASSPAGE_UNIT_VIEW = "unit-view";
 	String STUDENT_CLASSPAGE_LESSON_VIEW = "lesson-view";
-	String STUDENT_CLASSPAGE_CONTENT_VIEW = "content-view";
-	String STUDENT_CLASSPAGE_UNIT_REPORT_VIEW = "unit-report-view";
+	String STUDENT_CLASSPAGE_COURSE_REPORT_VIEW = "course-report-view";
 	String STUDENT_CLASSPAGE_ASSESSMENT_REPORT_VIEW = "assessment-report-view";
 	//Student Class page unique ids
 	String STUDENT_CLASSPAGE_CLASS_ID = "id";
+	String STUDENT_CLASSPAGE_COURSE_ID = "c-id";
 	String STUDENT_CLASSPAGE_UNIT_ID = "u-id";
 	String STUDENT_CLASSPAGE_LESSON_ID = "l-id";
 	String STUDENT_CLASSPAGE_ASSESSMENT_ID = "a-id";
+	String TEACHER_CLASSPAGE_COLLECTION_ID = "d-id";
+	String TEACHER_CLASSPAGE_STUDENT_ID = "s-id";
 	
 	//Teacher Class Page View tabs
-	String TEACHER_CLASSSUB_PAGE_VIEW = "subpage-view";
+	String TEACHER_CLASS_SUBPAGE_VIEW = "subpage-view";
 	String TEACHER_CLASS_STUDENTES="students";
 	String TEACHER_CLASS_SETTINGS="class-settings";
+	String TEACHER_CLASS_SETTINGS_INFO="class-info";
 	String TEACHER_CLASS_CONTENT_SETTINGS="class-content";
-	String TEACHER_CLASS_CONTENT_SUB_SCORE="mini-score";
-	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-set";
+
+	String TEACHER_CLASS_CONTENT_SUB_REPORTS="reports";
+
+	String TEACHER_CLASS_CONTENT_SUB_SCORE="min-score";
+	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-visibility";
+	String TEACHER_CLASS_STUDENTS_ROASTER="roaster-view";
+	String TEACHER_CLASS_STUDENTS_REPORT="report";
 	
-	
-	
-	
+	//Teacher Class Page Report tokens
+	String TEACHER_CLASSPAGE_REPORT_TYPE = "report-type";
+	String TEACHER_CLASSPAGE_CONTENT = "content";
+	String TEACHER_CLASSPAGE_COLLECTION = "collection";
+	String TEACHER_CLASSPAGE_ASSESSMENT = "assessment";
 	
 }

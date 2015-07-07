@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
@@ -115,9 +116,9 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateLesson) {
+	public void createAndSaveCourseDetails(CreateDo createDo,final boolean isCreateLesson) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true, o1,null, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -126,7 +127,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("o2", uri[uri.length-1]);
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				if(isCreateLesson){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
@@ -139,17 +140,17 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit) {
+	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,text, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
-				folderDo.setTitle(text);
+				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(UNIT);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);

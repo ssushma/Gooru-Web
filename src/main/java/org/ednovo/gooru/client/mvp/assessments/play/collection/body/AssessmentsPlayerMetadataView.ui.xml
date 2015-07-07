@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"
+	xmlns:metadata="urn:import:org.ednovo.gooru.client.mvp.assessments.play.collection.body">
+	<ui:style field= "playerStyle" src="collectionplayermetadata.css" type="org.ednovo.gooru.client.mvp.assessments.play.collection.body.AssessmentsPlayerStyleBundle" />
+	<ui:style>
+		.commentsBtnContainer {
+			padding-left:10px;
+		}
+	</ui:style>
+	    <g:FlowPanel ui:field="studyMainContianer" styleName="container metatDataContainer">
+	    	<g:HTMLPanel  styleName="row">
+	    		<g:HTMLPanel  styleName="greybackground">
+     	      		 <g:FlowPanel styleName="col-md-9 col-sm-12 player-leftPanel" ui:field="leftPanelContainer">
+     	      		     <g:HTMLPanel>
+			            	<html5:SectionTag ui:field="metadataContainer" styleName="{playerStyle.block}"></html5:SectionTag>
+							<html5:SectionTag styleName="{playerStyle.block} {playerStyle.commentsSection}" ui:field="commentssection">
+								<g:HTMLPanel styleName="col-md-12">
+								   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
+								   <g:HTMLPanel styleName="{playerStyle.onoffbtns}" ui:field="switchContainer">
+										<g:InlineLabel ui:field="requiredLabel">Comments On</g:InlineLabel>
+										<label class="{playerStyle.switchContainer} switchGreen">
+										 	<g:SimpleCheckBox styleName="switchInput" ui:field="changeAssignmentStatusButton" checked="true"></g:SimpleCheckBox>
+											<g:InlineLabel styleName="switchLabel"></g:InlineLabel>
+											<g:InlineLabel styleName="switchHandle" ui:field="sequenceNumberLabel"></g:InlineLabel>
+										</label>
+										<g:InlineLabel ui:field="optionalLabel">Comments Off</g:InlineLabel>
+									</g:HTMLPanel>
+								   <g:VerticalPanel ui:field="commentsContainer" styleName="{playerStyle.commentsTable}"/>
+								   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
+								   <g:Label ui:field="noCommentsLbl"/>
+								   <g:HTMLPanel styleName="{playerStyle.avatarblock}" ui:field="addComment">
+								      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2">
+								     		<g:Image styleName="{playerStyle.userPhoto}" ui:field="userPhoto"></g:Image>
+								      </g:HTMLPanel>
+								      <g:HTMLPanel styleName="col-md-10 col-xs-6 col-sm-8">
+								      		<g:Label ui:field="lblCharLimitComments" styleName="{playerStyle.commentsCharLimit}"/>
+								          	<g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
+										      	<g:Label ui:field="loginMessagingText"></g:Label>
+										      	<g:Anchor ui:field="loginUrl"/>
+										      	<g:Label ui:field="orText"></g:Label>
+										      	<g:Anchor ui:field="signupUrl" />
+										      	<g:Label ui:field="toCommentText"></g:Label>
+								      		</g:HTMLPanel>
+								      		<g:TextArea styleName="{playerStyle.commentField} form-control" ui:field="commentField"></g:TextArea>
+								      		<g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessageCommentsSection}"/>
+								      </g:HTMLPanel>
+									  <g:Label styleName="col-md-10 col-xs-6 col-sm-8 {playerStyle.successPostMsg}" ui:field="successPostMsg" />
+								      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2 {style.commentsBtnContainer}">
+									      <g:Button styleName="secondary disabled" ui:field="postCommentBtn"/>
+									      <g:Button styleName="secondary {playerStyle.marginTop10}" ui:field="postCommentCancel"/>
+									  </g:HTMLPanel>
+									  <g:Label styleName="clearfix"></g:Label>
+								    </g:HTMLPanel>
+								</g:HTMLPanel>
+							 </html5:SectionTag>
+							 </g:HTMLPanel>
+						</g:FlowPanel>
+						<metadata:AssessmentsMetadataWidget ui:field="rightPanelMetadata"></metadata:AssessmentsMetadataWidget>
+       				 <g:HTMLPanel styleName="clear"></g:HTMLPanel>
+       			</g:HTMLPanel>
+       		</g:HTMLPanel>
+        </g:FlowPanel>
+</ui:UiBinder>
