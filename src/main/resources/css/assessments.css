@@ -1,0 +1,188 @@
+#fpnlAssessmentsMainContianer .player-buttonsContainer .playerAssessmentTitle{
+	font-size: 20px;
+	padding: 0px;
+	width: 210px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#fpnlAssessmentsMainContianer .assessmentsProgressContainerMain{
+	width: 100%;
+}
+
+#fpnlAssessmentsMainContianer .maincontainer {
+	background-color: white;
+	text-align: center;
+}
+
+#fpnlAssessmentsMainContianer .summary_title {
+	float: left;
+	text-align: center;
+	/* width: 75%; */
+	width: 100%;
+	font-size: 24px;
+	font-weight: bold;
+	color: #515151;
+	margin-top: 3%;
+	/* margin-left: 14%; */
+}
+
+#fpnlAssessmentsMainContianer .htmlpanlProgress {
+	overflow: hidden;
+	width: 100%;
+	margin: 2%;
+	clear:both;
+	/* border-right: 1px solid #eee;
+	border-left: 1px solid #eee; */
+}
+#fpnlAssessmentsMainContianer .pnlSummary{
+	width:98%;
+}
+
+#fpnlAssessmentsMainContianer .filterDropDown {
+	border: 1px solid #ddd;
+	cursor: pointer;
+	background-color: white;
+	color: rgb(81, 81, 81);
+	padding: 5px 0px 5px 5px;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	display: inline-block;
+	text-indent: 0.01px;
+	text-overflow: '';
+	margin-top: 20px;
+}
+#fpnlAssessmentsMainContianer .filterDropDownSessions {
+	border: 1px solid #ddd;
+	cursor: pointer;
+	background-color: white;
+	color: rgb(81, 81, 81);
+	padding: 5px 0px 5px 5px;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	display: inline-block;
+	text-indent: 0.01px;
+	text-overflow: '';
+}
+
+#fpnlAssessmentsMainContianer .collectionSummaryDetailsWrapper {
+	font-size: 13px;
+	padding: 10px 0;
+	margin: -1px 0;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	clear: both;
+}
+#fpnlAssessmentsMainContianer .container{}
+#fpnlAssessmentsMainContianer .collectionsProgressContainerMain{
+	width: 100%;
+}
+#fpnlAssessmentsMainContianer .left_container {
+	width: 100%;
+	float: left;
+}
+
+#fpnlAssessmentsMainContianer .collection_teacher_img {
+	float: left;
+	width: 7%;
+}
+
+#fpnlAssessmentsMainContianer .collection_details_teacher {
+	width: 65%;
+	float: left;
+	margin-left: 12px;
+	text-align: left;
+}
+
+#fpnlAssessmentsMainContianer .question_resource_details {
+	line-height: 30px;
+	display: inline-block;
+}
+
+#fpnlAssessmentsMainContianer .resource_in_collection_teacher_summary {
+	width: 25%;
+	float: left;
+}
+
+#fpnlAssessmentsMainContianer .collectionLastAccessed {
+	font-weight: bold;
+}
+
+#fpnlAssessmentsMainContianer .gooru_session_data_content {
+	border-bottom: 1px solid #DDDDDD;
+	border-top: 1px solid #DDDDDD;
+	clear: both;
+	color: #515151;
+	float: left;
+	font-size: 14px;
+	width: 100%;
+}
+
+#fpnlAssessmentsMainContianer .left_session {
+	height: 40px;
+	line-height: 40px;
+	float: left;
+}
+
+#fpnlAssessmentsMainContianer .collection_last_accessed {
+	margin-top: 0px;
+	width: 100%;
+	padding-top: 0px;
+	float: left;
+	clear: both;
+	font-size: 13px;
+}
+
+#fpnlAssessmentsMainContianer .right_session {
+	float: right;
+	width: 25%;
+	display: block;
+}
+
+#fpnlAssessmentsMainContianer .d_filter_session_text {
+	clear: both;
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	/* width: 40%; */
+	width: 39%;
+}
+
+#fpnlAssessmentsMainContianer .session_data {
+	float: left;
+	margin-top: 5px;
+	width: 60%;
+}
+#fpnlAssessmentsMainContianer .loadingImageMainDiv {
+	width: 100%;
+    height: 300px;
+	position: relative;
+	/* background-color: #FFF; */
+	/* opacity: 0.4; */
+	top: 0px;
+    left: 0px;
+    z-index:1;
+}
+
+#fpnlAssessmentsMainContianer .loadingImageForSelfEdit {
+	background: url("${cdn.endpoint}/images/core/B-Dot.gif");
+	width: 166px;
+	height: 170px;
+	margin: 0 auto;
+	margin-top: 65px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
+}
+#fpnlAssessmentsMainContianer .sessionpnl{
+	line-height: 39px;
+	width: 73%;
+	padding:0;
+}
+#fpnlAssessmentsMainContianer .collection_session_panel{
+	width:27%;
+}
+#fpnlAssessmentsMainContianer .collection_image{
+	width:11%;
+}
