@@ -32,6 +32,9 @@ import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.application.client.newhome.NewHomePresenter;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.AssessmentsResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter;
@@ -205,6 +208,8 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<CollectionPlayerPresenter> getCollectionPlayerPresenter();
 
+	AsyncProvider<AssessmentsPlayerPresenter> getAssessmentsPlayerPresenter();
+
 	AsyncProvider<FolderTocPresenter> getFolderTocPresenter();
 
 	AsyncProvider<ResourcePlayerPresenter> getResourcePlayerPresenter();
@@ -270,13 +275,13 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<ValVerdeLibraryPresenter> getValVerdeLibraryPresenter();
 
 	AsyncProvider<RusdLibraryPresenter> getRusdLibraryPresenter();
-	
+
 	AsyncProvider<YumaCountryLibraryPresenter> getYumaCountryLibraryPresenter();
 
 	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
 
 	AsyncProvider<CoreLibraryPresenter> getCoreLibraryPresenter();
-	
+
 	AsyncProvider<YesdLibraryPresenter> getYesdLibraryPresenter();
 
 	AsyncProvider<EsypLibraryPresenter> getEsypLibraryPresenter();
@@ -298,7 +303,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 
 	AddCenturyPresenter getAddCenturyPresenterWidget();
-	
+
 	GooruGradesPresenter getGooruGradePresenter();
 
 	SearchAddResourceToCollectionPresenter getRemixPresenterWidget();
@@ -308,22 +313,26 @@ public interface AppInjector extends ServiceInjector {
 	MyCollectionsListPresenter getMyCollectionsListPresenter();
 
 	AsyncProvider<HomeBannerPresenter> getHomeBannerPresenter();
-	
+
 	AsyncProvider<PreSearchPresenter> getPreSearchPresenter();
-	
+
 	AsyncProvider<StudentClassPresenter> getStudentClassPresenter();
 
 	AsyncProvider<StudentClassLearningMapPresenter> getStudentClassLearningMapPresenter();
-	
+
 	AsyncProvider<StudentClassReportPresenter> getStudentClassReportPresenter();
 
 	AsyncProvider<TeachClassPresenter> getTeachClassPresenter();
-	
+
 	AsyncProvider<EditClassPresenter>  getEditClassPresenter();
-	
+
 	AsyncProvider<EditClassSettingsPresenter> getEditClassSettingsPresenter();
-	
+
 	AsyncProvider<EditClassContentPresenter> getEditClassContentPresenter();
-	
+
 	AsyncProvider<EditClassStudentPresenter> getEditClassStudentPresenter();
+
+	AsyncProvider<AssessmentsPreviewPlayerPresenter> getAssessmentsPreviewPlayerPresenter();
+
+	AsyncProvider<AssessmentsResourcePlayerPresenter> getAssessmentsResourcePlayerPresenter();
  }

@@ -41,9 +41,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -503,6 +503,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public TextBox getTextBox(){
 		return txtMoveTextBox;
 	}
+
+	@UiHandler("editInfoLbl")
+	public void onClickEditInfo(ClickEvent event){
+		editResource(collectionItem);
+	}
+
 	/**
 	 * Edit collection item , update collection item
 	 * @param clickEvent
@@ -798,6 +804,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 
 	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);
+
+	public abstract void editResource(CollectionItemDo collectionItem);
 
 	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter=collectionContentPresenter;

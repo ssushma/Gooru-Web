@@ -360,6 +360,10 @@ public enum UrlToken {
 	
 	V1_CREATE_LESSON("/v1/course/{0}/unit/{1}/lesson?"),
 	
+	V1_CREATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection?"),
+	
+	V1_UPDATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
+	
 	V1_UPDATE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
 
 	V2_DELETE_FOLDER("/v2/folder/{0}?"),

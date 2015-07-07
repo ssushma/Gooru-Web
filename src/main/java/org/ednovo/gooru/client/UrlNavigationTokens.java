@@ -71,8 +71,9 @@ public interface UrlNavigationTokens{
 	String TEACHER_CLASS_CONTENT_SUB_REPORTS="reports";
 
 	String TEACHER_CLASS_CONTENT_SUB_SCORE="min-score";
-	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-visb";
-	String TEACHER_CLASS_STUDENTE_ROASTER="roaster-view";
+	String TEACHER_CLASS_CONTENT_SUB_SETTINGS="content-visibility";
+	String TEACHER_CLASS_STUDENTS_ROASTER="roaster-view";
+	String TEACHER_CLASS_STUDENTS_REPORT="report";
 	
 	//Teacher Class Page Report tokens
 	String TEACHER_CLASSPAGE_REPORT_TYPE = "report-type";

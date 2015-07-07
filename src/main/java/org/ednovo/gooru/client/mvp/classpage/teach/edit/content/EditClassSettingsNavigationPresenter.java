@@ -82,7 +82,7 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	protected void onReset() {
 		super.onReset();
 		loadNavigationPage();
-		//getView().setNavigationTab();
+		getView().setActiveStyles();
 	}
 	
 	public void  loadNavigationPage(){

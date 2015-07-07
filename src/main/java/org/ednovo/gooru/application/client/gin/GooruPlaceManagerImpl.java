@@ -590,15 +590,15 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
 	public PlaceRequest getPreviousRequestUrl() {
 		return previousRequestUrl;
 	}
-	
+
 	/**
 	 * @param previousRequestUrl the previousRequestUrl to set
 	 */
 	public void setPreviousRequestUrl(PlaceRequest previousRequestUrl) {
 		String viewToken=previousRequestUrl.getNameToken();
-		if(viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY)||viewToken.equals(PlaceTokens.COLLECTION)){
+		if(viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.ASSESSMENT_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY)||viewToken.equals(PlaceTokens.COLLECTION)){
 			String previousViewToken=this.previousRequestUrl!=null?this.previousRequestUrl.getNameToken():"";
-			if(!previousViewToken.equals(PlaceTokens.PREVIEW_PLAY)&&!previousViewToken.equals(PlaceTokens.COLLECTION_PLAY)&&!previousViewToken.equals(PlaceTokens.RESOURCE_PLAY)){
+			if(!previousViewToken.equals(PlaceTokens.PREVIEW_PLAY)&&!previousViewToken.equals(PlaceTokens.ASSESSMENT_PLAY)&&!previousViewToken.equals(PlaceTokens.COLLECTION_PLAY)&&!previousViewToken.equals(PlaceTokens.RESOURCE_PLAY)){
 				setPreviousPlayerRequestUrl(getPreviousRequestUrl());
 			}
 			this.previousRequestUrl = previousRequestUrl;
