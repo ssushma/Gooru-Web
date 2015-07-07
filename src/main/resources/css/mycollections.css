@@ -3499,3 +3499,195 @@ width:100% !important;
    
 }
 /* === For Collection info Css end ================================== */
+
+/* === For Collection Share Css Start ================================== */
+.shareColContainer .shareThisCollection{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+.shareColContainer .shareThisCollection p{
+	margin:0 0 5px 0;
+}
+.shareColContainer .shareThisCollection .form-control,.shareColContainer .shareThisCollection .linkFormat{
+	width:75%;
+}
+.shareColContainer .shareThisCollection .linkFormat{
+	text-align:right;
+	display:block;
+	color:#1076bb;
+
+}
+.shareColContainer .shareThisCollection .linkFormat a:hover, .shareColContainer .shareThisCollection .linkFormat a:focus{
+	color:#1f66ac;
+	text-decoration:none;
+	opacity:1;
+}
+.shareColContainer .collectionVisibility{
+		padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+.shareColContainer .collectionVisibility p{
+	margin:0 0 5px 0;
+}
+.shareColContainer .collectionVisibility a{
+	color:#515151;
+	border:2px solid transparent;
+	display:block;
+	border-radius:4px 4px;
+	padding:10px 10px;
+	width:75%;
+	margin-bottom:20px;
+	
+}
+.shareColContainer .collectionVisibility a:hover, .shareColContainer .collectionVisibility a:focus{
+
+	border:2px solid #87badd;
+	opacity:1;
+	text-decoration:none;
+
+}
+.shareColContainer .collectionVisibility .visibilityHeader{
+	font-size:18px;
+	margin-bottom:10px;
+}
+
+
+.shareColContainer .addCollaborators{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+	margin-right:15%;
+}
+.shareColContainer .addCollaborators .inviteBox{
+	position:relative;
+}
+.shareColContainer .addCollaborators .inviteBox .form-control{
+	width:90%;
+	font-size:12px;
+}
+.shareColContainer .addCollaborators .inviteBox button{
+position:absolute;
+top:1px;
+right:1px;
+}
+
+.shareColContainer h5{
+	font-size:13px;
+	font-weight:bold;
+	margin:0 0 8px 0;
+}
+	.shareColContainer .currentCollaborators{
+		background:#f8fafb;
+		padding:15px 15px;
+		border-bottom:1px solid #dddddd;
+	}
+	
+	
+	 .shareColContainer .currentCollaborators .tableDiv
+    {
+        display: table;
+    }
+    
+    
+   .shareColContainer .currentCollaborators  .tablerow
+    {
+        display: table-row;
+    }
+   .shareColContainer .currentCollaborators  .tablecell
+    {
+        display: table-cell;
+		border:none;
+		padding:10px 10px;
+    }
+	
+	.shareColContainer .currentCollaborators .collaboratorsImage img{
+		width:43px;
+		height:43px;
+		border-radius:50% 50%;
+		border:2px solid #87badd;
+	}
+	
+		.shareColContainer .currentCollaborators .collaboratorsImage{
+			width:90px;
+		}
+		
+		.shareColContainer .currentCollaborators .collaboratorsName{
+			width:120px;
+		}
+ @media (min-width: 240px) and (max-width: 319px) {
+	.shareColContainer .shareThisCollection .form-control, .shareColContainer .shareThisCollection .linkFormat{
+		width:100%;
+	}
+	.shareColContainer .collectionVisibility a{
+		width:100%;
+		padding:5px 4px;
+	}
+	.shareColContainer .addCollaborators{
+		margin-right:0;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsImage{
+		width:auto;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsName {
+    width: auto;
+}
+.shareColContainer .addCollaborators .inviteBox .form-control{
+	width:85%;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 .shareColContainer .shareThisCollection .form-control, .shareColContainer .shareThisCollection .linkFormat{
+		width:100%;
+	}
+	.shareColContainer .collectionVisibility a{
+		width:100%;
+	}
+	.shareColContainer .addCollaborators{
+		margin-right:0;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsImage{
+		width:auto;
+	}
+	.shareColContainer .currentCollaborators .collaboratorsName {
+    width: auto;
+}
+.shareColContainer .addCollaborators .inviteBox .form-control{
+	width:85%;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	 .shareColContainer .addCollaborators .inviteBox .form-control{
+	width:85%;
+}
+ }
+  @media (min-width: 768px) and (max-width: 991px) {
+	  .shareColContainer .collectionVisibility a{
+		  width:100%;
+	  }
+  }
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+
+
+@media all and (min-width: 50px)   {  body  { font-size:0.1em;  } }
+@media all and (min-width: 100px)  {  body  { font-size:0.2em;  } }
+@media all and (min-width: 200px)  {  body  { font-size:0.4em;  } }
+@media all and (min-width: 300px)  {  body  { font-size:0.6em;  } }
+@media all and (min-width: 400px)  {  body  { font-size:0.8em;  } }
+@media all and (min-width: 500px)  {  body  { font-size:1.0em;  } }
+@media all and (min-width: 600px)  {  body  { font-size:1.2em;  } }
+@media all and (min-width: 700px)  {  body  { font-size:1.4em;  } }
+@media all and (min-width: 800px)  {  body  { font-size:1.6em;  } }
+@media all and (min-width: 900px)  {  body  { font-size:1.8em;  } }
+@media all and (min-width: 1000px) {  body  { font-size:2.0em;  } }
+@media all and (min-width: 1100px) {  body  { font-size:2.2em;  } }
+@media all and (min-width: 1200px) {  body  { font-size:2.4em;  } }
+@media all and (min-width: 1300px) {  body  { font-size:2.6em;  } }
+@media all and (min-width: 1400px) {  body  { font-size:2.8em;  } }
+@media all and (min-width: 1500px) {  body  { font-size:3.0em;  } }
+@media all and (min-width: 1500px) {  body  { font-size:3.2em;  } }
+@media all and (min-width: 1600px) {  body  { font-size:3.4em;  } }
+@media all and (min-width: 1700px) {  body  { font-size:3.6em;  } }
+
+/* === For Collection Share Css end ================================== */
