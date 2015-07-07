@@ -41,4 +41,6 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 	void setCouseData(FolderDo courseObj);
 
 	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
+
+	void setCollectionType(String collectionType);
 }

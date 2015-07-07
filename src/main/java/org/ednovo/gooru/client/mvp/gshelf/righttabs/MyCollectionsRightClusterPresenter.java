@@ -112,6 +112,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else{
+					collectionInfoPresenter.setCollectionType(type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}
 		}else if(index==2){
