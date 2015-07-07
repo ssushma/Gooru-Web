@@ -7,7 +7,9 @@
 <div class="collectionTitleDetails">
 
 <p>Collection Title</p>
-<p><g:TextBox styleName="form-control" ui:field="collectionTitle" text="{i18n.GL3367}" title="{i18n.GL3367}"/></p>
+<p><g:TextBox styleName="form-control" ui:field="collectionTitle" text="{i18n.GL3367}" title="{i18n.GL3367}"/>
+<g:Label ui:field="lblErrorMessage"></g:Label>
+</p>
 
 
 </div>
@@ -28,7 +30,10 @@
 
 <div class="learningObjective">
 <p>Learning Objective</p>
-<p><textarea class="form-control" rows="3"></textarea></p>
+<p>
+<g:TextArea styleName="form-control" ui:field="learningObjective" />
+<g:Label ui:field="lblErrorMessageForLO"></g:Label>
+</p>
 
 </div>
 
@@ -58,10 +63,10 @@
 <div class="dropDownRight">
 <div class="btn-group">
   <button class="btn btn-primary" type="button">Select other from taxonomy</button>
-  <button aria-expanded="false" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
-<span aria-hidden="true" class="glyphicon glyphicon-align-justify"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
+	<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
+	<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
+	<g:InlineLabel styleName="sr-only"></g:InlineLabel>
+	</g:HTMLPanel>
   <ul role="menu" class="dropdown-menu">
     <li><a href="#">My Folders</a></li>
     <li><a href="#">My Collections</a></li>
@@ -72,9 +77,10 @@
 
 <panel:HTMLEventPanel styleName="btn-group" ui:field="btnStandardsBrowse">
 <g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
-  <g:Button styleName="btn btn-primary dropdown-toggle"></g:Button>
+  <g:HTMLPanel  styleName="btn btn-primary dropdown-toggle">
     <g:InlineLabel styleName="caret"></g:InlineLabel>
-    <g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+    <g:InlineLabel styleName="sr-only"></g:InlineLabel>
+  </g:HTMLPanel>
 	</panel:HTMLEventPanel>
   
   <ul role="menu" class="dropdown-menu pull-right">
@@ -89,10 +95,14 @@
 <div class="clearfix"></div>
 
 </div>
+
+
+<div class="lessonCover">
+<div class="panel panel-default">
+<div class="panel-heading">Apply and extend previous understandings of multiplication and division to devide fractions by fractions.</div>
 <div class="panel-body">
 
 <div class="fractionBlocks no-gutter">
-<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
 <div class="fractionMultiBlock">
 <div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
 <div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
@@ -131,11 +141,6 @@
 <div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
 <div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
 <div class="clearfix"></div>
-<div class="subFractions">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-</div>
 </div>
 
 
@@ -162,7 +167,7 @@
 <div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
 <div class="clearfix"></div>
 </div>
-
+<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
 </div>
 
 
@@ -178,6 +183,18 @@
 
 </ul>
 </div>
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
 
 
 
@@ -227,7 +244,7 @@
 
 
 <div class="stepsButtonGroup">
-<g:Button styleName="secondary" ui:field="saveCollectionBtn" text="{i18n.GL3366}"/>
+<g:Button styleName="secondary" ui:field="saveCollectionBtn" text="{i18n.GL3368}"/>
 
 
 </div>

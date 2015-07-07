@@ -3424,4 +3424,20 @@ width:100% !important;
     border-bottom: 1px solid #dddddd;
     padding: 15px;
 }
+#pnlCollectionInfo .createMenu .btn-default.active, #gShelfMainContainer .createMenu .btn-default.focus, #gShelfMainContainer .createMenu .btn-default:active, #gShelfMainContainer .createMenu .btn-default:focus, #gShelfMainContainer .createMenu .btn-default:hover, #gShelfMainContainer .createMenu .open > .dropdown-toggle.btn-default {
+    background-color:#ffffff;
+    border-color:transparent;
+    color: #333;
+	box-shadow:none;
+}
+#pnlCollectionInfo .createMenu .open > .dropdown-menu{
+	width:100%;
+	text-align: left;
+}
+#pnlCollectionInfo .createMenu .caret {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px dashed;
+   
+}
 /* === For Collection info Css end ================================== */

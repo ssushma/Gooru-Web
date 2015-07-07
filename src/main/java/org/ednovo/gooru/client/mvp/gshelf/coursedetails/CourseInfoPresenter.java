@@ -115,7 +115,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -147,7 +147,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,createObj, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();

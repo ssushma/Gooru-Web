@@ -323,10 +323,17 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 			if(parent != null)parent.setSelected(false);
 			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+			if(shelfTreeWidget.getCollectionDo()!=null)
+			{
 			if(!"Collection".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType()) && !"Assessment".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType())){
 				shelfTreeWidget.setFolderOpenedStatus(true);
 			}else{
 				shelfTreeWidget.setCollectionOpenedStatus(true);
+			}
+			}
+			else
+			{
+				shelfTreeWidget.setFolderOpenedStatus(true);
 			}
 			shelfTreeWidget.setActiveStyle(true);
 			ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();

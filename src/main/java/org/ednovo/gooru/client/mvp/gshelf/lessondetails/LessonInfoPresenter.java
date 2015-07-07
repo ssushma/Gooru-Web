@@ -112,7 +112,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void createAndSaveCourseDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
 	String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 	String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -138,7 +138,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final String type) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,createDo, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
