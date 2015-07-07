@@ -170,7 +170,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		assessmentPopup.setGlassEnabled(true);
 		assessmentPopup.show();
 		assessmentPopup.center();
-		//
 	}
 	@Override
 	public void callCreateAndUpdate(boolean isCreate,boolean result,String type){

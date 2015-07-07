@@ -62,6 +62,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	
 	private String COLLECTION = "Collection";
 	
+	private String type;
+	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
