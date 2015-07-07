@@ -276,12 +276,12 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 			map.remove("callback");
 			map.remove("type");
 			map.remove("rp");
-			if (!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) &&
+			if (!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY) &&
 					!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.FOLDER_TOC)&&!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
 				map.remove("id");
 			}
 
-			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 				PlaceRequest placeRequest = new PlaceRequest(AppClientFactory.getCurrentPlaceToken());
 				if (map != null) {
 					for (String key : map.keySet()) {
@@ -348,7 +348,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab",null);
 		if(tabView != null)
 		{
-		if((viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY))&&
+		if((viewToken.equals(PlaceTokens.COLLECTION_PLAY) || viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY))&&
 				(tabView!=null)&&(tabView.equals("add")||tabView.equals("flag"))){
 
 		}else{

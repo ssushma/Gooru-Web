@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
@@ -126,7 +127,7 @@ public interface FolderService extends BaseService {
 	 * @return serialized created {@link FolderDo}
 	 * @throws GwtException
 	 */
-	public FolderDo createCourse(String folderName,boolean addToShelf,String courseId, String unitId) throws GwtException, ServerDownException;
+	public FolderDo createCourse(CreateDo createDo,boolean addToShelf,String courseId,String unitId,String lessonId) throws GwtException, ServerDownException;
 
 	/**
 	 * delete a folder from organize
@@ -160,7 +161,7 @@ public interface FolderService extends BaseService {
 	 * @param courseTitle
 	 * @throws GwtException
 	 */
-	public void updateCourse(String courseId, String courseTitle) throws GwtException, ServerDownException;
+	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException;
 	
 	public CollectionDo  copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf) throws GwtException, ServerDownException;
 	
@@ -194,5 +195,4 @@ public interface FolderService extends BaseService {
 	 * @throws ServerDownException
 	 */
 	Map<String,String> getFolderRouteNodes(String folderId) throws GwtException,ServerDownException;
-
 }

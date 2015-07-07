@@ -1031,9 +1031,8 @@ label.custom-select {
     position: relative;
 }
 .scrollTBL {
-    width: 880px;
+    width: 1000px;
     overflow-x: auto;
-    margin-left: 10em;
     overflow-y: visible;
     padding-bottom: 1px;
 }

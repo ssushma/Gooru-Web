@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsBundle;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
@@ -46,6 +47,7 @@ import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -54,6 +56,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -71,7 +74,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	interface StandardsPopupViewUiBinder extends UiBinder<Widget, StandardsPopupView> {
 	}	
 
-	@UiField HTMLPanel mainContainer;
+	@UiField HTMLPanel mainContainer,standardsContainer;
 
 	private AppPopUpStandards appPopUp;
 	
@@ -80,6 +83,8 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	@UiField Button addBtn;	
 	@UiField UlPanel levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
 	@UiField UlPanel ulSelectedItems;
+	@UiField FlowPanel imageLoader;
+	@UiField LoadingUc imageLoadingIcon;
 
 	
 	private boolean scienceCodeVal, instantVal = false;
@@ -116,6 +121,9 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 		appPopUp = new AppPopUpStandards();
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
+		imageLoader.setVisible(true);
+		imageLoader.setHeight("350"+Unit.PX);
+		standardsContainer.setVisible(false);
 		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -334,6 +342,8 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 			}
 		}
 	}
+		imageLoader.setVisible(false);
+		standardsContainer.setVisible(true);
 	//	appPopUp.getElement().setAttribute("style", "width:1000px;height:599px;z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
 	}
 	
@@ -704,6 +714,16 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
 		scienceCodeVal = false;
+		imageLoader.setVisible(true);
+		imageLoader.setHeight("350"+Unit.PX);
+		standardsContainer.setVisible(false);
+	}
+
+	@Override
+	public void hideLoaderIcon() {
+	imageLoader.setVisible(false);
+	//imageLoader.setHeight("550"+Unit.PX);
+	standardsContainer.setVisible(true);
 	}
 	@Override
 	public void hidePopup()

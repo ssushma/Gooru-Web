@@ -8,7 +8,9 @@
 <div class="courseNameBlock">
 
 <p>Lesson Name</p>
-<p><g:TextBox styleName="form-control" ui:field="lessonTitle" text="{i18n.GL3365}" title="{i18n.GL3365}"/></p>
+<p><g:TextBox styleName="form-control" ui:field="lessonTitle" text="{i18n.GL3365}" title="{i18n.GL3365}"/>
+<g:Label ui:field="lblErrorMessage"></g:Label>
+</p>
 
 
 </div>

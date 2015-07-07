@@ -45,6 +45,7 @@ import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
@@ -358,40 +359,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		return folderDo;
 	}
 	
-	@Override
-	public FolderDo createCourse(String folderName,boolean addToShelf, String courseId, String unitId) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = null;
-		FolderDo folderDo = new FolderDo();
-		if(courseId==null && unitId==null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
-		}else if(courseId!=null && unitId==null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
-		}else{
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
-		}
-		JSONObject courseObject=new JSONObject();
-		try {
-			courseObject.put(TITLE, folderName);
-			if(addToShelf) {
-				courseObject.put(ADD_TO_SHELF, addToShelf);
-			}
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),courseObject.toString());
-
-			logger.info("createCourse : "+url);
-			logger.info("CourseObject : "+courseObject.toString());
-
-			jsonRep=jsonResponseRep.getJsonRepresentation();
-			folderDo = deserializeCreatedFolder(jsonRep);
-			logger.info("folderDo obj : "+folderDo);
-		} catch (JSONException e) {
-			logger.error("Exception::", e);
-		} catch (Exception e) {
-			logger.error("Exception::", e);
-		}
-		return folderDo;
-	}
-
+	
 	public FolderDo deserializeCreatedFolder(JsonRepresentation jsonRep) {
 		try {
 			getLogger().info("jsonRep.getJsonObject().toString():::::::"+jsonRep.getJsonObject().toString());
@@ -654,18 +622,68 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return folderList;
 	}
-
+	
 	@Override
-	public void updateCourse(String courseId, String courseTitle)
-			throws GwtException, ServerDownException {
+	public FolderDo createCourse(CreateDo createDo,boolean addToShelf, String courseId, String unitId, String lessonId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA, courseId);
+		FolderDo folderDo = new FolderDo();
+		if(courseId==null && unitId==null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
+		}else if(courseId!=null && unitId==null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
+		}else if(courseId!=null && unitId!=null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
+		}else{
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COLLECTION,courseId,unitId,lessonId);
+		}
+		JSONObject courseObject=new JSONObject();
+		try {
+			courseObject.put(TITLE, createDo.getTitle());
+			if(addToShelf) {
+				courseObject.put(ADD_TO_SHELF, addToShelf);
+			}
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDo, null);
+			logger.info("createCourse : "+url);
+			logger.info("dataPassing: "+dataPassing);
+			
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
+
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRep);
+			logger.info("folderDo obj : "+folderDo);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
+	
+	
+
+	@Override
+	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+	
+		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId);
+		}else if(courseId!=null && unitId!=null && lessonId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_LESSON, courseId,unitId,lessonId);
+		}else if(courseId!=null && unitId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_UNIT, courseId,unitId);
+		}else{
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA, courseId);
+		}
+		
 		JSONObject courseObj=new JSONObject();
 		try {
-			courseObj.put(TITLE, courseTitle);
-			
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),courseObj.toString());
+			courseObj.put(TITLE, createDo.getTitle());
+			logger.info("updateCourse : "+url);
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDo, null);
+			logger.info("dataPassing : "+dataPassing);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),dataPassing);
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}

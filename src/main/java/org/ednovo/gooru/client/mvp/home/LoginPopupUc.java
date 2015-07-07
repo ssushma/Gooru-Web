@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,6 +34,9 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusEvent;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsShowCollectionTabWidgetEvent;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.comment.events.AssessmentsSetCommentsOptionsEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -87,10 +90,10 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
- * 
+ *
  */
 public abstract class LoginPopupUc extends PopupPanel{
- 
+
 	@UiField
 	TextBoxWithPlaceholder loginTxtBox;
 
@@ -98,16 +101,16 @@ public abstract class LoginPopupUc extends PopupPanel{
 	TextBoxWithPlaceholder passwordTxtBox;
 
 	@UiField Anchor forgotPwd,ancRegisterHere;
-	
+
 	@UiField Label lblLoginHeading,lblDoYouHaveAccount,lblOr, lblPleaseWait, lblWelcomeBack,lblLoginWithGooru;
 
 //	@UiField CheckBox lblKeepMeLogedIn;
-	
+
 	@UiField Anchor cancelButton;
-	
+
 	@UiField Button  loginButton,gmailButton;
 
-	
+
 	@UiField(provided = true)
 	LoginPopUpCBundle res;
 
@@ -116,18 +119,18 @@ public abstract class LoginPopupUc extends PopupPanel{
 	protected UserDo userDo;
 
 	private SimpleAsyncCallback<UserDo> signedInDataAsyncCallback;
-	
+
 	private String nameToken = "";
-	
+
 	public String eventType = "";
-	
+
 	private String emailId = null;
 
 	int age = 0;
 
-	
+
 	private String widgetMode=null;
-	
+
 
 	private static final String LOGINEVENT = "loginEvent";
 	private static final int HTTP_UNAUTHORISED_STATUS_CODE = 401;
@@ -135,30 +138,30 @@ public abstract class LoginPopupUc extends PopupPanel{
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
 	private static final String UNAUTHORIZED_MSG ="Please double-check your password and try signing in again.";
 	private static final String USER_ID_WRONG_MSG = "Please double-check your email address and password, and then try logging in again.";
-	
-	
+
+
 	private static final String ERR_GL0078 = "401-GL0078";
 	private static final String ERR_GL0079 = "401-GL0079";
 	private static final String ERR_GL010501 = "401-GL010501";
 	private static final String ERR_GL010502 = "401-GL010502";
 	private static final String ERR_GL010503 = "401-GL010503";
 	private static final String ERR_GL0081="401-GL0081";
-	
-	
-	
+
+
+
 	@UiTemplate("LoginPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, LoginPopupUc> {
 
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
-	
+
 	 private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	/**
-	 * Class constructor , to create Login Popup. 
+	 * Class constructor , to create Login Popup.
 	 */
-	
+
 	public LoginPopupUc(){
 		super(false);
         this.res = LoginPopUpCBundle.INSTANCE;
@@ -166,15 +169,15 @@ public abstract class LoginPopupUc extends PopupPanel{
         this.setGlassStyleName(LoginPopUpCBundle.INSTANCE.css().loginPopupGlassStyle());
         this.setGlassEnabled(true);
        	this.getElement().getStyle().setZIndex(99999);
-       	
+
         add(binder.createAndBindUi(this));
         setTextAndIds();
-        
+
 		lblPleaseWait.setVisible(false);
 		setHandlers();
 		this.center();
 	}
-	
+
 	public LoginPopupUc(String emailId){
 		this();
 		this.emailId = emailId;
@@ -182,7 +185,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	/**
 	 * Class constructor , assign {@link HeaderUc} instance
-	 * 
+	 *
 	 * @param headerUc
 	 *            instance of {@link HeaderUc}
 	 */
@@ -200,110 +203,110 @@ public abstract class LoginPopupUc extends PopupPanel{
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
 		setHandlers();
-		
-		this.center();		
+
+		this.center();
 	}
 	/**
-	 * 
-	 * @function setHandlers 
-	 * 
+	 *
+	 * @function setHandlers
+	 *
 	 * @created_date : 15-09-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	private void setHandlers(){
 
 	/*	this.setSize("515px", "547px");
-	*/	
+	*/
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @function setText 
-	 * 
+	 *
+	 * @function setText
+	 *
 	 * @created_date : Aug 25, 2013
-	 * 
+	 *
 	 * @description
 	 * 	To the labels for each controls.
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	public void setTextAndIds(){
-		
+
 		lblLoginHeading.setText(i18n.GL0187());
 		StringUtil.setAttributes(lblLoginHeading.getElement(), "lblLoginHeading", i18n.GL0187(), i18n.GL0187());
-		
+
 		gmailButton.setText(i18n.GL0203());
 		StringUtil.setAttributes(gmailButton.getElement(), "gmailButton", i18n.GL0203(), i18n.GL0203());
-		
+
         loginTxtBox.setPlaceholder(i18n.GL0202());
         loginTxtBox.getElement().setAttribute("placeholder", i18n.GL0202());
 		loginTxtBox.setFocus(true);
         passwordTxtBox.setPlaceholder(i18n.GL0204());
-       
+
         forgotPwd.setText(i18n.GL0205());
         StringUtil.setAttributes(forgotPwd.getElement(), "lnkForgotPwd", i18n.GL0205(), i18n.GL0205());
-        
-        
+
+
 //        lblKeepMeLogedIn.setText(i18n.GL0206);
         loginButton.setText(i18n.GL0187());
         StringUtil.setAttributes(loginButton.getElement(), "btnLogin", i18n.GL0187(), i18n.GL0187());
-		
+
         ancRegisterHere.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
         StringUtil.setAttributes(ancRegisterHere.getElement(), "lnkRegisterHere", i18n.GL0207()+i18n.GL_SPL_EXCLAMATION(), i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
-       
+
         lblDoYouHaveAccount.setText(i18n.GL0208());
         StringUtil.setAttributes(lblDoYouHaveAccount.getElement(), "lblDoYouHaveAccount", i18n.GL0208(), i18n.GL0208());
-        
-        
+
+
         lblOr.setText(i18n.GL0209());
         StringUtil.setAttributes(lblOr.getElement(), "lblOr", i18n.GL0209(), i18n.GL0209());
-        
+
         lblPleaseWait.setText(i18n.GL0242());
         StringUtil.setAttributes(lblPleaseWait.getElement(), "lblPleaseWait", i18n.GL0242(), i18n.GL0242());
-        
+
         loginTxtBox.getElement().setId("tbLoginUsername");
         passwordTxtBox.getElement().setId("tbLoginPassword");
-        
+
         lblPleaseWait.setVisible(false);
-        
+
         lblWelcomeBack.setText(i18n.GL0345());
         StringUtil.setAttributes(lblWelcomeBack.getElement(), "lblWelcomeBack", i18n.GL0345(), i18n.GL0345());
-        
+
         lblLoginWithGooru.setText(i18n.GL0346());
         StringUtil.setAttributes(lblLoginWithGooru.getElement(), "lblLoginWithGooru", i18n.GL0346(), i18n.GL0346());
-        
+
         cancelButton.getElement().setId("btnCancel");
 	}
 
-	
+
 
 	/**
 	 * User login popup allows to sign in if correct credentials and set user
 	 * info on header view
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -311,45 +314,45 @@ public abstract class LoginPopupUc extends PopupPanel{
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
-	
+
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
-		
+
 			@Override
 			public void onSuccess(String result) {
 				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				Window.Location.replace(result);
-				
-				
+
+
 			}
 		});
 	}
-	
+
 	/**
 	 * Added click handler to perform Login operation by taking entered user name and password from the user.
 	 * @param clickEvent instance of {@link ClickEvent}
 	 */
-	
+
 	@UiHandler("loginButton")
 	public void onLoginClicked(ClickEvent clickEvent) {
-	
+
 		if (isCookieEnabled()) {
-			
+
 			final String username = loginTxtBox.getText().trim();
 			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim());
-			
+
 			if (username.length() > 1 && password.length() > 1) {
-				
+
 				JSONObject login = new JSONObject();
 				login.put("username", new JSONString(username));
 				login.put("password", new JSONString(password));
-				
+
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
 
 				AppClientFactory.getInjector().getAppService().v2Signin(username,password, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-						
+
 						int statusCode = result.getStatusCode();
 						String errorCode = null;
 						String errorMessage = null;
@@ -361,7 +364,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 						if(statusCode==HTTP_SUCCESS_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
-								MixpanelUtil.Registration_turns13(); 
+								MixpanelUtil.Registration_turns13();
 								com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat
 											.getFormat("yyyy-MM-dd hh:mm:ss.S");
 								Date convertedCurrentDate = null;
@@ -380,10 +383,10 @@ public abstract class LoginPopupUc extends PopupPanel{
 							if (refresh_token != null){
 								UserDo user = AppClientFactory.getLoggedInUser();
 								user.setRefreshToken(refresh_token);
-							
+
 								AppClientFactory.setLoggedInUser(user);
 							}
-							
+
 							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
 							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
 							//to Set the Options butts visibility in Player for comments.
@@ -393,24 +396,33 @@ public abstract class LoginPopupUc extends PopupPanel{
 							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 								AppClientFactory.fireEvent(new SetCommentsOptionsEvent());
 							}
-							
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+								AppClientFactory.fireEvent(new AssessmentsSetCommentsOptionsEvent());
+							}
+
 							hide();
-							
+
 						    AppClientFactory.fireEvent(new SetHeaderEvent(result));
-						    
+
 						    AppClientFactory.setUserflag(true);
 							AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }
-						    
+						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY)){
+						    	AppClientFactory.fireEvent(new AssessmentsShowCollectionTabWidgetEvent(getWidgetMode(), false));
+						    }
+
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), false));
 						    }
-						    
+
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
 						    	AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
-						    } 
+						    }
+						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY)){
+						    	AppClientFactory.fireEvent(new AssessmentsSetPlayerLoginStatusEvent(true));
+						    }
 						    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
 							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.MYCONTENT)){
@@ -452,12 +464,12 @@ public abstract class LoginPopupUc extends PopupPanel{
 								Window.enableScrolling(true);
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 							}
-						   
+
 						    showNewGooruTryOut(result);
 						    if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME)) {
 						    	AppClientFactory.fireEvent(new SetLoginStatusEvent(true));
 						    }
-						    
+
 						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
 						    	AppClientFactory.fireEvent(new SetMarkButtonEvent());
@@ -496,15 +508,15 @@ public abstract class LoginPopupUc extends PopupPanel{
 						}
 						//To get the refresh token once user is logged in to the system.
 						AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
-							
+
 							@Override
 							public void onSuccess(String result) {
 								UserDo user = AppClientFactory.getLoggedInUser();
 								user.setRefreshToken(result);
-							
+
 								AppClientFactory.setLoggedInUser(user);
 							}
-							
+
 							@Override
 							public void onFailure(Throwable caught) {
 
@@ -512,7 +524,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 						});
 						onLoginSuccess();
 					}
-					
+
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -523,7 +535,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 				handleInProgress();
 				new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 			}
-		} else  { 
+		} else  {
 			handleInProgress();
 			new AlertMessageUc(i18n.GL0738(), new HTML(i18n.GL0348()));
 		}
@@ -532,33 +544,36 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	/**
 	 * Added click handler to hide the login popup.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
-		
+
 		StudentAssignmentView.islogin = false;
-		
-		/* * Checks for parameter value if it is true then it will remove the parameter, so that it will avoid 
+
+		/* * Checks for parameter value if it is true then it will remove the parameter, so that it will avoid
 		 * invoking login popup multiple times on refresh.*/
-		 
+
 		if(AppClientFactory.getPlaceManager().getRequestParameter(LOGINEVENT) != null && AppClientFactory.getPlaceManager().getRequestParameter(LOGINEVENT).equalsIgnoreCase("true")){
 			hide();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		}
 		if( AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
-			AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), true));
+//			AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), true));
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
-	    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), true));
-	    } 
+//	    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), true));
+	    }
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY)){
+	    	AppClientFactory.fireEvent(new AssessmentsShowCollectionTabWidgetEvent(getWidgetMode(), true));
+	    }
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
-	    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), true));
+//	    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), true));
 		}
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT))
-	    {	    	
+	    {
 	    	if(!StudentAssignmentView.getMainContainerStatus())
 	    	{
 	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -586,7 +601,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	/**
 	 * Get register popup and set popup location
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -594,7 +609,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 	public void onRegisterClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Arrive_Register_popup();
 		DataLogEvents.signUp(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "");
-		
+
 		 PlaceRequest checkTabvalue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
          String tabValue = checkTabvalue.getParameter("tab", null);
 		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
@@ -614,22 +629,22 @@ public abstract class LoginPopupUc extends PopupPanel{
 		params.remove("tab");
 		}
 		this.hide();
-		
+
 		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
-	
-		
+
+
 		/*RegisterVc registerVc = new RegisterVc();
 		registerVc.center();
 		registerVc.show();*/
-		
+
 	}
 
 	/**
 	 * Get forgot password popup while clicking on forgot password link on login
 	 * popup
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -640,12 +655,12 @@ public abstract class LoginPopupUc extends PopupPanel{
 		forgotPasswordVc.show();
 		forgotPasswordVc.center();
 		this.hide();
-				
+
 	}
 
 	/**
 	 * creating inner class implementing KeyUpHandler interface.
-	 * 
+	 *
 	 */
 	public class LoginKeyupHandler implements KeyUpHandler {
 
@@ -660,20 +675,20 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	/**
 	 * Update user view flag
-	 * 
+	 *
 	 * @param user
 	 *            instance of {@link UserDo}
 	 */
-	private void showNewGooruTryOut(UserDo user) { 
+	private void showNewGooruTryOut(UserDo user) {
 		if (user != null) {
 			int flag = user.getViewFlag() != null ? user.getViewFlag() : 0;
 			if (flag == 0 && !AppClientFactory.isAnonymous()) {
 				/*ImprovedGooruPopUpView popupview=new ImprovedGooruPopUpView();
 				popupview.show();
 				popupview.center();*/
-				
+
 				//new TryItOutVc();
-				
+
 				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo newUser) {
@@ -685,29 +700,29 @@ public abstract class LoginPopupUc extends PopupPanel{
 			}
 		}
 	}
-	
+
 	private static native boolean isCookieEnabled() /*-{
 		return navigator.cookieEnabled;
 	 }-*/;
 
 	/**
-	 * 
+	 *
 	 * @return instance of UserDo.
 	 */
-	
+
 	public SimpleAsyncCallback<UserDo> getSignedInDataAsyncCallback() {
 		return signedInDataAsyncCallback;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param signedInDataAsyncCallback {@link SimpleAsyncCallback<UserDo>}
 	 */
 	public void setSignedInDataAsyncCallback(SimpleAsyncCallback<UserDo> signedInDataAsyncCallback) {
 		this.signedInDataAsyncCallback = signedInDataAsyncCallback;
 	}
-	
-	public void setNameToken(String nameToken) { 
+
+	public void setNameToken(String nameToken) {
 		this.nameToken=nameToken;
 	}
 
@@ -717,9 +732,9 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	public String getMixPanelEvent() {
 		return eventType;
-		
+
 	}
-	
+
 	public void onLoad(){
 		super.onLoad();
 		Scheduler.get().scheduleDeferred(new  ScheduledCommand(){
@@ -751,7 +766,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	}
 	public void openClasspage() {
-		
+
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 	}
 	private void OpenClasspageEdit(String gooruOId) {
@@ -763,23 +778,23 @@ public abstract class LoginPopupUc extends PopupPanel{
 		AppClientFactory.getPlaceManager().revealPlace(
 				PlaceTokens.EDIT_CLASSPAGE, params);
 	}
-	
+
 	/**
-	 * 
-	 * @function handleInProgress 
-	 * 
+	 *
+	 * @function handleInProgress
+	 *
 	 * @created_date : 22-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */

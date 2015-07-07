@@ -30,16 +30,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -50,6 +55,8 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -72,6 +79,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveCourseBtn,nextUnitBtn;
 	@UiField TextBox unitTitle;
+	@UiField Label lblErrorMessage,lblErrorMessageForBig,lblErrorMessageForEssential;
+	@UiField TextArea txaBigIdeas,txaEssentialQuestions;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
@@ -88,6 +97,24 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		unitInfo.getElement().setId("pnlCourseInfo");
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
+		unitTitle.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, false);
+			}
+		});
+		txaBigIdeas.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextArea(txaBigIdeas, lblErrorMessageForBig, false);
+			}
+		});
+		txaEssentialQuestions.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, false);
+			}
+		});
 	}
 	
 	/**
@@ -197,17 +224,53 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(unitTitle.getText(),false);
+		getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0);
 	}
 	
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().createAndSaveCourseDetails(unitTitle.getText(),true);
+		getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0);
+	}
+	/**
+	 * This method is used to call create and update API
+	 * @param index
+	 * @param isCreate
+	 */
+	@Override
+	public void callCreateAndUpdate(boolean isCreate,boolean result,int index){
+		if(result && index==0){
+			SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, result);
+		}else if(result && index==1){
+			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaBigIdeas, lblErrorMessageForBig, result);
+		}else if(result && index==2){
+			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
+		}else{
+			if(index==0){
+				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1);
+			}else if(index==1){
+				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2);
+			}else if(index==2){
+				CreateDo createOrUpDate=new CreateDo();
+				createOrUpDate.setTitle(unitTitle.getText());
+				createOrUpDate.setIdeas(txaBigIdeas.getText());
+				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
+				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+				if(id!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+				}else{
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+				}
+			}
+		}
 	}
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
-		this.courseObj=courseObj;
-		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
+		if(courseObj!=null){
+			this.courseObj=courseObj;
+			unitTitle.setText(courseObj.getTitle()==null?i18n.GL3364():courseObj.getTitle());
+			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
+			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		}
 	}
 }

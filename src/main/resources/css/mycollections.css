@@ -745,8 +745,7 @@ button.btn-disabled{
 	vertical-align:middle;
 	
 }
-
-#gShelfCousesList .tableColumn:first-child{
+#gShelfCousesList .tableColumn:nth-child(2){
 	background:#f9fcfe;
 	padding:10px 15px;
 	width:30%;
@@ -755,15 +754,37 @@ button.btn-disabled{
 #gShelfCousesList .tableColumn:last-child{
 	width:6%;
 }
-
+#gShelfCousesList .tableColumn .courseImage{
+	background: #f9fcfe url('../images/folders/panel/c-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .unitImage{
+	background: #f9fcfe url('../images/folders/panel/u-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .lessonImage{
+	background: #f9fcfe url('../images/folders/panel/l-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
 #gShelfCousesList .tableMainHeader h3{
 	margin:0 0 2px 0;
 	font-size:17px;
 	font-weight:bold;
 	color:#515151;
+	margin-left: 26%;
 }
 #gShelfCousesList .tableMainHeader p{
 	margin:0 0;
+	margin-left: 26%;
 	color:#515151;
 }
 #gShelfCousesList .tableListOrder .topArrow {
@@ -809,7 +830,9 @@ button.btn-disabled{
 	position:relative;
 	cursor:pointer;
 }
-
+#gShelfCousesList .addCourse .pnlCreate{
+	display: inline-block;
+}
 #gShelfCousesList .addCourse input{
     bottom: 0;
     height: 55px;
@@ -2757,6 +2780,317 @@ padding-left: 15px !important;
 /*unit info ends*/
 
 /* === For Collection info Css start ================================== */
+
+
+
+
+#pnlCollectionInfo .collectionTitleDetails .form-control {
+    border: 1px solid #87badd;
+}
+
+
+#pnlCollectionInfo .collectionImageDetails {
+border-bottom: 1px solid #dddddd;
+    display: table;
+    padding: 15px;
+    width: 100%;
+}
+
+
+#pnlCollectionInfo .collectionImageDetails p{
+	margin:0 0 5px 0;
+}
+
+
+#pnlCollectionInfo .collectionImageDetails .collectionThumbnail{
+display: table-cell;
+  	  width: 120px;
+}
+#pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage{
+	position:relative;
+
+}
+#pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage img{
+	  width: 120px;
+	height:90px;
+	border-left:10px solid #1076bb;
+}
+#pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .thunailHover{
+	position:absolute;
+	top:25px;
+	left:5px;
+	right:5px;
+	bottom:0;
+	display:none;
+}
+#pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage:hover .thunailHover{
+	display:block;
+}
+#pnlCollectionInfo .collectionImageDetails .learningObjective{
+display: table-cell;
+	padding-left:50px;
+}
+
+
+
+#pnlCollectionInfo .collectionCoverBlock {
+    padding: 15px 0;
+	    border-bottom: 1px solid #dddddd;
+}
+
+
+#pnlCollectionInfo .fractionDetailsTable {
+    padding: 15px;
+}
+
+#pnlCollectionInfo .fractionDetailsTable .panel-heading {
+    background-color: transparent;
+    
+}
+
+#pnlCollectionInfo .fractionDetailsTable .panel-heading  h3{
+	font-size:18px;
+	font-weight:bold;
+	margin:5px 0;
+}
+
+#pnlCollectionInfo .fractionDetailsTable  .dropDownRight{
+	text-align:right;
+}
+#pnlCollectionInfo .fractionDetailsTable  .dropDownRight .btn, #pnlCollectionInfo .fractionDetailsTable  .dropDownRight .dropdown-menu > li > a {
+    font-size: 12px;
+}
+
+#pnlCollectionInfo .fractionDetailsTable  .dropDownRight .dropdown-menu{
+	min-width:100%;
+}
+#pnlCollectionInfo .fractionDetailsTable  .dropDownRight .btn-primary {
+    background-color: #87badd;
+    border: 1px solid transparent;
+}
+
+#pnlCollectionInfo .fractionDetailsTable .panel-body {
+    padding: 0;
+}
+#pnlCollectionInfo .fractionDetailsTable .fractionBlocks {
+
+}
+#pnlCollectionInfo .fractionDetailsTable .fractionMultiBlock {
+    padding: 10px;
+	border-bottom:1px solid #dddddd;
+}
+
+#pnlCollectionInfo .fractionDetailsTable .singleBlock {
+    padding: 10px;
+	border-bottom:1px solid #dddddd;
+}
+#pnlCollectionInfo .fractionDetailsTable .singleBlock p{
+	margin:0 0;
+	font-weight:bold;
+}
+
+#pnlCollectionInfo .fractionDetailsTable .fractionBlocks .frLeft {
+    color: #515151;
+    font-size: 17px;
+}
+
+#pnlCollectionInfo .fractionDetailsTable .fractionBlocks .subFractions{
+	margin-left:40px;
+}
+.filterTags {
+    display: inline-block;
+    margin: 0 8px;
+    vertical-align: middle;
+}
+.filterTags ul {
+    margin: 0;
+    padding: 0;
+}
+.filterTags ul li {
+    background: #87badd none repeat scroll 0 0;
+    border-radius: 4px;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: bold;
+    list-style: outside none none;
+    margin: 0;
+    padding: 8px 10px;
+}
+.filterTags ul li a {
+    color: #ffffff;
+    font-size: 10px;
+    padding: 0 0 0 5px;
+}
+
+#pnlCollectionInfo .tagCourseOptions {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+}
+
+
+#pnlCollectionInfo .tagCourseOptions  .list-group-item{
+	padding:6px 15px;
+}
+
+#pnlCollectionInfo .tagCourseOptions .list-group-item.active, #pnlCollectionInfo .tagCourseOptions .list-group-item.active:focus, #pnlCollectionInfo .tagCourseOptions .list-group-item.active:hover {
+    background-color: #c3ddee;
+    border-color:transparent;
+	color:#515151;
+    z-index: 2;
+}
+
+
+
+
+#pnlCollectionInfo .addOptions{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+
+#pnlCollectionInfo .addOptions a{
+	border:1px solid #dddddd;
+	border-radius:4px 4px;
+	padding:8px 6px;
+	display:inline-block;
+	margin-bottom:3px;
+}
+#pnlCollectionInfo .addOptions a:hover, #pnlCollectionInfo .addOptions a:focus{
+	text-decoration:none;
+}
+#pnlCollectionInfo .stepsButtonGroup {
+    margin: 15px;
+    text-align: center;
+}
+
+
+@media (min-width: 240px) and (max-width: 319px) {
+.myCollectionLeftSidebar{
+		margin-right:0;
+	}
+	.myCollectionSubMenu a{
+		padding:16px 5px;
+	}
+	.myCollectionSubMenu .actionItems {
+    margin: 8px 3px !important;
+}
+.myCollectionSubMenu .actionItems .dropdown-menu{
+	left:auto;
+	right:0;
+}
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight{
+	text-align:center;
+}
+
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight .btn{
+overflow: hidden;
+    text-overflow: ellipsis;
+    width: 110px;
+
+}
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight  .btn-group > .btn + .dropdown-toggle {
+    padding-left: 6px;
+    padding-right: 6px;
+	width:30px;
+}
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+	.myCollectionLeftSidebar{
+		margin-right:0;
+	}
+	.myCollectionSubMenu a{
+		padding:16px 5px;
+	}
+	.myCollectionSubMenu .actionItems {
+    margin: 8px 3px !important;
+}
+.myCollectionSubMenu .actionItems .dropdown-menu{
+	left:auto;
+	right:0;
+}
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight{
+	text-align:center;
+}
+
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight .btn{
+overflow: hidden;
+    text-overflow: ellipsis;
+    width: 110px;
+
+}
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight  .btn-group > .btn + .dropdown-toggle {
+    padding-left: 6px;
+    padding-right: 6px;
+	width:30px;
+}
+}
+
+@media (min-width: 480px) and (max-width: 767px){
+	.myCollectionSubMenu a{
+		padding:16px 10px;
+	}
+		.myCollectionSubMenu .actionItems {
+
+}
+.myCollectionSubMenu .actionItems .dropdown-menu{
+	left:auto;
+	right:0;
+}
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight {
+    text-align: left;
+}
+.myCollectionSubMenu .AcItem{
+	text-align:right;
+}
+}
+
+	@media (min-width: 768px) and (max-width: 991px) {
+		.myCollectionLeftSidebar .myCollectionMainHeader span {
+    float: left;
+    padding: 8px 10px;
+}
+.myCollectionLeftSidebar .myCollectionMainHeader span.plus {
+ 
+    font-size: 40px;
+    line-height: 40px;
+
+}
+.myCollectionLeftSidebar .myCollectionMainHeader span.plus {
+
+    height: 40px;
+    width: 40px;
+}
+.folderListBlock ul li a{
+	padding:10px 10px;
+}
+#pnlCollectionInfo .fractionDetailsTable .dropDownRight{
+	text-align:left;
+}
+	}
+	
+	
+		@media (min-width: 992px) and (max-width: 1199px) {
+			
+			
+			
+		}
+
+
+
+
+
+@media (min-width: 1200px) {
+	
+	
+	
+
+	
+	
+}
+#pnlCollectionInfo .collectionTitleDetails {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+}
 #pnlCollectionInfo .floderRightContainer .courseHeader {
 	background:#f0f0f0;
 }
@@ -2909,7 +3243,10 @@ width:100% !important;
 	
 	
 }
-
+#pnlCollectionInfo .collectionTitleDetails {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+}
 
 #pnlCollectionInfo .btn-breadcrumb .btn.btn-default:not(:last-child):after {
   border-left: 16px solid #f6f6f6;
@@ -3029,7 +3366,7 @@ width:100% !important;
 	border:1px solid #ffffff;
 }
 #pnlCollectionInfo .unitCoverHeader{
-	text-align:center;
+	text-align:left;
 }
 
 @media (max-width: 767px) {
@@ -3083,5 +3420,24 @@ width:100% !important;
 	
 }
 
-
+#pnlCollectionInfo .collectionTitleDetails {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+}
+#pnlCollectionInfo .createMenu .btn-default.active, #gShelfMainContainer .createMenu .btn-default.focus, #gShelfMainContainer .createMenu .btn-default:active, #gShelfMainContainer .createMenu .btn-default:focus, #gShelfMainContainer .createMenu .btn-default:hover, #gShelfMainContainer .createMenu .open > .dropdown-toggle.btn-default {
+    background-color:#ffffff;
+    border-color:transparent;
+    color: #333;
+	box-shadow:none;
+}
+#pnlCollectionInfo .createMenu .open > .dropdown-menu{
+	width:100%;
+	text-align: left;
+}
+#pnlCollectionInfo .createMenu .caret {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px dashed;
+   
+}
 /* === For Collection info Css end ================================== */

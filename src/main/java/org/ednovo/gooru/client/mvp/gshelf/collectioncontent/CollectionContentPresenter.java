@@ -24,20 +24,31 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
@@ -49,8 +60,25 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	final String SUBJECT="subject";
 
 	final String COURSE="course";
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	private boolean isQuestionResource=false;
+	private boolean isUserOwnResource = false;
+
+
 
 	AddResourcePresenter addResourcePresenter=null;
+	ImageUploadPresenter imgUploadPresenter=null;
+	AddStandardsPresenter addStandardsPresenter = null;
+	private SimpleAsyncCallback<Void> removeImageAsyncCallback;
+
+	private SimpleAsyncCallback<CollectionItemDo> updateResourceItemAsyncCallback;
+
+	@Inject
+	private ResourceServiceAsync resourceService;
 
 	/**
 	 * Class constructor
@@ -58,11 +86,13 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter) {
+	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		getView().setCollectionContentPresenter(this);
 		this.addResourcePresenter = addResourcePresenter;
+		this.imgUploadPresenter = imgUploadPresenter;
+		this.addStandardsPresenter = addStandardsPresenter;
 
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
 
@@ -146,5 +176,174 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
     	addResourcePresenter.setCollectionDoAndType(collectionDo, clickType);
         addToPopupSlot(addResourcePresenter);
 
-    }
+	}
+
+	@Override
+	public void updateQustionImage(String collectionItemId) {
+		addToPopupSlot(imgUploadPresenter);
+        imgUploadPresenter.setCollectionImage(false);
+        imgUploadPresenter.setUpdateQuestionImage(true);
+        imgUploadPresenter.setCollectionItemId(collectionItemId);
+        imgUploadPresenter.setEditResourceImage(false);
+
+	}
+	@Override
+	public void removeQuestionImage(String collectionQuestionId) {
+		getResourceService().removeQuestionImage(collectionQuestionId, getRemoveImageAsyncCallback());
+	}
+
+	public ResourceServiceAsync getResourceService() {
+		return resourceService;
+	}
+
+	public void setResourceService(ResourceServiceAsync resourceService) {
+		this.resourceService = resourceService;
+	}
+
+	public SimpleAsyncCallback<Void> getRemoveImageAsyncCallback() {
+
+		if (removeImageAsyncCallback == null) {
+			removeImageAsyncCallback = new SimpleAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+
+//					getView().removeUpdateQuestionView();
+				}
+			};
+		}
+		return removeImageAsyncCallback;
+	}
+
+	@Override
+	public void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList) {
+		getResourceService().updateResourceInfo(collectionItemDo, tagList,getUpdateResourceItemAsyncCallback());
+	}
+
+	/**
+	 * This method is to get the updateResourceItemAsyncCallback
+	 */
+	public SimpleAsyncCallback<CollectionItemDo> getUpdateResourceItemAsyncCallback() {
+		if (updateResourceItemAsyncCallback == null) {
+			updateResourceItemAsyncCallback = new SimpleAsyncCallback<CollectionItemDo>() {
+
+				@Override
+				public void onSuccess(CollectionItemDo result) {
+					getView().hideUpdateResourcePopup();
+
+					getView().updateCollectionItem(result);
+				}
+			};
+		}
+		return updateResourceItemAsyncCallback;
+	}
+
+	@Override
+	public void imageEditResourceUpload() {
+		 addToPopupSlot(imgUploadPresenter);
+         imgUploadPresenter.setEditResourceImage(true);
+         imgUploadPresenter.setCollectionImage(false);
+         imgUploadPresenter.setQuestionImage(false);
+	}
+
+	@Override
+	public void getBrowseStandardsInfo(final boolean val,final boolean userResource) {
+
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									isQuestionResource = val;
+									isUserOwnResource = userResource;
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addToPopupSlot(addStandardsPresenter);
+									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+					}
+
+					}
+
+				});
+	}
+
+	@Override
+	public void addUpdatedBrowseStandards() {
+		List<Map<String,String>> selectedStandList=addStandardsPresenter.getStandardListArray();
+		if(selectedStandList.size()!=0){
+			for(int i=0;i<selectedStandList.size();i++){
+				getView().setUpdatedStandardsCode(selectedStandList.get(i).get("selectedCodeVal"), Integer.parseInt(selectedStandList.get(i).get("selectedCodeId")),selectedStandList.get(i).get("selectedCodeDesc"),this.isQuestionResource, this.isUserOwnResource);
+			}
+		}
+	}
+
+	@Override
+	public void closeBrowseStandardsPopup() {
+		addStandardsPresenter.hidePopup();
+	}
+
+	@Override
+	public void imageEditUserOwnResourceUpload() {
+		 addToPopupSlot(imgUploadPresenter);
+		 imgUploadPresenter.setEditUserOwnResourceImage(true);
+         imgUploadPresenter.setEditResourceImage(false);
+         imgUploadPresenter.setCollectionImage(false);
+         imgUploadPresenter.setQuestionImage(false);
+         imgUploadPresenter.getView().isFromEditQuestion(true);
+	}
+
+	@Override
+	public void editUserOwnResource(String jsonString, String gooruOid) {
+		MixpanelUtil.Resource_Edit_Info_Success();
+		AppClientFactory.getInjector().getResourceService().updateUserOwnResource(jsonString,gooruOid,new SimpleAsyncCallback<CollectionItemDo>(){
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				getView().hideUpdateOwnResourcePopup();
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+
+				getView().updateCollectionItem(result);
+			}
+		});
+	}
+
+	@Override
+	public void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
+
+
+	}
+
+	@Override
+	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {
+		 addResourcePresenter.setCollectionItemDo(collectionItemDo);
+		 addResourcePresenter.setCollectionDoAndType(null, "QuestionEdit");
+		 addToPopupSlot(addResourcePresenter);
+	}
 }
+

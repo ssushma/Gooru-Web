@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 
 /**
  * @author Search Team
@@ -43,10 +44,17 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	 * @param courseTitle {@link String} 
 	 * @param isCreateUnit {@link boolean} 
 	 */
-	public void createAndSaveCourseDetails(String courseTitle,boolean isCreateUnit);
+	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateUnit);
 	/**
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(String text, String id,boolean isCreateUnit);
+	public void updateCourseDetails(CreateDo createDo, String id,boolean isCreateUnit);
+	
+	/**
+	 * This method is used for profanity checker
+	 * @param textValue
+	 * @param index
+	 */
+	public void checkProfanity(String textValue,boolean isCreate);
 }
