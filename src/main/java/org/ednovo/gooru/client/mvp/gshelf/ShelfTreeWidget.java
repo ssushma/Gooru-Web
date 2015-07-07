@@ -181,10 +181,13 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(collectionDo!= null){
+				if(collectionDo!=null)
+				{
+				if(collectionDo.getCollectionType()!= null){
 					if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
 						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
+				}
 				}
 			}
 		});
@@ -311,8 +314,11 @@ public class ShelfTreeWidget extends FocusPanel {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
 		}
+		if(collectionDo.getCollectionType()!=null)
+		{
 		if(collectionDo.getCollectionType().contains(ASSESSMENT)){
 			titleFocPanel.addStyleName("assessment");
+		}
 		}
 		if(collectionDo.getSharing()!=null && !collectionDo.getSharing().equalsIgnoreCase("") && collectionDo.getSharing().equals("public")) {
 			if(collectionDo.getCollectionType().equals(COLLECTION) ){
@@ -444,6 +450,10 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
+			if(collectionDo!=null)
+			{
+			if(collectionDo.getType()!=null)
+			{
 			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) &&!collectionDo.getType().equals(UNIT) &&!collectionDo.getType().equals(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
@@ -459,6 +469,8 @@ public class ShelfTreeWidget extends FocusPanel {
 		        	}
 		        	setOpen();
 		        }  
+			}
+			}
 			}
 		}
 	}

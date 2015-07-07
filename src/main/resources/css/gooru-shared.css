@@ -558,5 +558,16 @@
     background-position: 14px 10px;
     
 }
-
+.classCodeTxtBoxStyle {
+	width: 118px;
+	border: 1px #E3E3E3 solid !important;
+	background-color: #FFF !important;
+	font-size: 12px !important;
+	outline: 0;
+	display: inline-block;
+	padding: 6px;
+	font-family: Tahoma, sans-serif !important;
+	text-transform: uppercase;
+	
+}
 

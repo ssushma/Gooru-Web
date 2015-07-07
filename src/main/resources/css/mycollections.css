@@ -745,6 +745,12 @@ button.btn-disabled{
 	vertical-align:middle;
 	
 }
+#gShelfCousesList .tableColumn:first-child{
+	width: 8%;
+	font-weight: bold;
+	padding: 18px;
+	font-size: 18px;
+}
 #gShelfCousesList .tableColumn:nth-child(2){
 	background:#f9fcfe;
 	padding:10px 15px;
@@ -774,6 +780,43 @@ button.btn-disabled{
 	width: 45px;
 	float: left;
 	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .courseImage{
+	background: #f9fcfe url('../images/folders/panel/c-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .unitImage{
+	background: #f9fcfe url('../images/folders/panel/u-close.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .folderImage{
+	background: #f9fcfe url('../images/folders/panel/folder-icon.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+}
+#gShelfCousesList .tableColumn .collectionImage{
+	background: #f9fcfe url('../images/folders/panel/collection-icon.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+	border: 0;
+}
+#gShelfCousesList .tableColumn .assessmentImage{
+	background: #f9fcfe url('../images/folders/panel/assessment-type.png') no-repeat 0px 0px;
+	height: 25px;
+	width: 45px;
+	float: left;
+	margin-top: 4%;
+	border: 0;
 }
 #gShelfCousesList .tableMainHeader h3{
 	margin:0 0 2px 0;
@@ -1167,7 +1210,16 @@ button.btn-disabled {
 	background: #f6f6f6;
 	border-top: 0px;
 }
-
+#gShelfMainContainer .lblCollectionTitle {
+	height: 56px;
+	text-align: left;
+	background: #f0f0f0;
+	box-shadow: 0 0 6px rgba(0,0,0,0.05);
+	/* vertical-align: middle; */
+	margin: 0;
+	padding: 11px;
+	font-size: 22px;
+}
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;
 }

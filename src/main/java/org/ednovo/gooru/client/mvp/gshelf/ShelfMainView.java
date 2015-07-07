@@ -93,7 +93,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiField Anchor lnkMyCourses,lnkMyFoldersAndCollecctions;
 	
-	@UiField Label organizelbl;
+	@UiField Label organizelbl,lblCollectionTitle;
 	
 	@UiField static ScrollPanel collectionListScrollpanel;
 	
@@ -382,6 +382,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String o2 = null, o3 = null, selectedFolder = null, selectedFolderName = null, id = null;
 		FolderDo folderDo = null;
 		TreeItem selectedItem = null;
+		ShelfTreeWidget shelfTreeWidget=null;
 		ShelfTreeWidget selectedWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		if(folderListDo!=null) {
 			int nextLevel = 1;
@@ -398,7 +399,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				nextLevel = 4;
 			}
 			for(int i=0;i<folderListDo.size();i++) {
-				ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(folderListDo.get(i), nextLevel);
+				shelfTreeWidget = new ShelfTreeWidget(folderListDo.get(i), nextLevel);
 				shelfTreeWidget.setWidgetPositions(nextLevel, i, selectedWidget.getUrlParams());
 				TreeItem item = new TreeItem(shelfTreeWidget);
 				treeChildSelectedItem.addItem(item);
@@ -442,7 +443,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			ShelfTreeWidget selectedWidget1 = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 			selectedWidget1.setFolderOpenedStatus(true);
 		}
-		
 		//This will set the data in the right panel
 		if(selectedWidget!=null){
 			folderListDoChild.clear();
@@ -559,6 +559,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}else{
 				callChilds(shelfTreeWidget,type);
 			}
+		}else{
+			getUiHandlers().setCollectionContent(shelfTreeWidget.getCollectionDo());
 		}
 		ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 		if(previousshelfTreeWidget!=null) {
@@ -877,5 +879,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	public void setCreateCourse(boolean isCreateCourse) {
 		this.isCreateCourse = isCreateCourse;
+	}
+	@Override
+	public Label getCollectionLabel(){
+		return lblCollectionTitle;
 	}
 }

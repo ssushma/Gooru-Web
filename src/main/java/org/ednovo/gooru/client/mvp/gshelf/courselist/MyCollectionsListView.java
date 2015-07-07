@@ -377,21 +377,21 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-		if( view!=null){
+		if(view!=null){
 			params.put(VIEW,view);
 		}else{
 			params.put(VIEW,"Course");
 		}
-		if(o1==null && o2==null && o3==null && id==null){
+		if(o1==null && o2==null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,folderObj.getGooruOid());
-		} else if(o1!=null && o2==null && o3==null && id==null){
+		} else if(o1!=null && o2==null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL, o1);
 			params.put(O2_LEVEL,folderObj.getGooruOid());
-		}else if(o1!=null && o2!=null && o3==null && id==null) {
+		}else if(o1!=null && o2!=null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())) {
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
-		}else{
+		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,o3);
