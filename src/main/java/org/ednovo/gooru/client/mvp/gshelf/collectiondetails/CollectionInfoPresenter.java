@@ -133,19 +133,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				params.put(O2_LEVEL, o2);
 				params.put(O3_LEVEL, o3);
 				params.put("id", uri[uri.length-1]);
-				params.put("view", COLLECTION);
-
+				params.put("view", "course");
+				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COLLECTION); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
-
-				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1,COLLECTION , null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(COLLECTION);
-				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, result);
-				}
-
+				myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, result);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
@@ -172,27 +165,21 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setCollectionType(COLLECTION);
 				//folderDo.setGooruOid(id);
-				
 				myCollectionsRightClusterPresenter.setTabItems(1, COLLECTION, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
-				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1, COLLECTION, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(COLLECTION);
-				}
 			}
 		});
 	}
 
 	@Override
 	public void checkProfanity(String textValue,final boolean isCreate,final int index){
-		final Map<String, String> parms = new HashMap<String, String>();
-		parms.put("text",textValue);
-		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-			@Override
-			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index);
-			}
-		});
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text",textValue);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+					getView().callCreateAndUpdate(isCreate,value,index);
+				}
+			});
 	}
-
-	}
+}
