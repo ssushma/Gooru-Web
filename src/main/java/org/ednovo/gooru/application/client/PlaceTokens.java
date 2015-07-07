@@ -103,5 +103,6 @@ public interface PlaceTokens {
 	String TEST = "test";
 
 	String STUDENT_VIEW = "student-view";
+	String ASSESSMENT_PLAY = "assessment-play";
 
 }

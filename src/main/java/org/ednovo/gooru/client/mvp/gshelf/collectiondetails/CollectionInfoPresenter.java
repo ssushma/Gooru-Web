@@ -111,28 +111,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-
 	@Override
 	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().createCourse(courseTitle, true,null,null, new SimpleAsyncCallback<FolderDo>() {
-			@Override
-			public void onSuccess(FolderDo result) {
-				String[] uri=result.getUri().split("/");
-				Map<String, String> params= new HashMap<String, String>();
-				params.put("o1", uri[uri.length-1]);
-				params.put("view", COURSE);
-				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
-				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
-					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
-				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
-				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
-			}
-		});
+
 	}
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
@@ -145,20 +126,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	@Override
 	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit) {
-		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,text, new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
-				folderDo.setTitle(text);
-				folderDo.setType(COURSE);
-				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
-				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
-				}
-			}
-		});
+
 	}
 }

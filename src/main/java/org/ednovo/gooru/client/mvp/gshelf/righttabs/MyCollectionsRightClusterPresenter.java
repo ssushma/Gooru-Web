@@ -122,7 +122,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	@Override
 	public void setUnitTemplate(String type){	
+		//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, null, true, true, null);
+		//setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 		shelfMainPresenter.createNewUnitItem(type);
+		folderListDoChild=null;
 	}
 
 	/**
@@ -149,4 +152,25 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void updateBreadCrumbsTitle(FolderDo folderObj, String type) { 
 		getView().setBreadCrumbSlot(folderObj, type);
 	}
+	/**
+	 * To add new course/unit/lesson
+	 * @param type
+	 */
+	public void addNewContent(String type) {
+		if(type!=null){
+			if(type.contains(COURSE)){
+			    setTabItems(1,COURSE , null);
+				setUnitTemplate(COURSE);
+				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
+			}else if(type.contains(UNIT)){	
+			    setTabItems(1, UNIT, null);
+				setUnitTemplate(UNIT);
+				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
+			}else{
+				setTabItems(1, LESSON, null);
+				setUnitTemplate(LESSON);
+			}
+		}
+	}
+	
 }

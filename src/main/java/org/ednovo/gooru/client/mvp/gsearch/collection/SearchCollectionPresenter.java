@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
@@ -50,6 +51,8 @@ import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -102,13 +105,19 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.viewmorePeoplePresenter=viewmorePeoplePresenter;
 		getView().setUiHandlers(this);
+
+//		((ServiceDefTarget)searchService)
+//		   .setServiceEntryPoint(AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint() + GWT.getModuleBaseURL() + "/greet");
+
+
+
 	}
 
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.SEARCH_COLLECTION;
 	}
-	
+
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, SearchMainPresenter.TYPE_VIEW, this);

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.json.client.JSONArray;

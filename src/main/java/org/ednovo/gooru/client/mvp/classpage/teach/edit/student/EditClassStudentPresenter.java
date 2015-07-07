@@ -4,6 +4,9 @@
 */
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -43,14 +46,20 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	}
 
 	@Override
+	public void onReset() {
+		super.onReset();
+		getView().setNavigationTab();
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
+			getView().setReportView();
+		} else {
+			getView().setRoasterView();
+		}
+	}
+
+	@Override
 	protected void onHide() {
 		super.onHide();
 	}
 	
-	@Override
-	protected void onReset() {
-		super.onReset();
-		getView().setNavigationTab();
-	}
-
 }

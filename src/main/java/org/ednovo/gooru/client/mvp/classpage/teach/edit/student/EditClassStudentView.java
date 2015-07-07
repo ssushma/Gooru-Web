@@ -32,6 +32,9 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson.TeachLessonReportChildView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildView;
 import org.ednovo.gooru.client.uc.H5Panel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
@@ -53,6 +56,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -98,7 +105,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	@UiField VerticalPanel tableContainer,pendingContainer;
 	
 	@UiField HTMLPanel panelSuggestBox,roasterMainConatiner,reportContainer/*,panelActions,panelCode*/;
-	
+
 	@UiField Label lblPleaseWait,lblErrorMessage;
 	
 	private static final String QUESTIONIMAGE = "images/question.png";
@@ -123,6 +130,8 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField Button connectCourseBtn,addStudentBtn;
 
+	@UiField FlowPanel reportBox;
+	
 	private static EditClassStudentViewUiBinder uiBinder = GWT.create(EditClassStudentViewUiBinder.class);
 	
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
@@ -135,34 +144,11 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		
-		for(int i=0;i<=3;i++){
-			tableContainer.add(new MembersViewVc("joined") {
-				
-				@Override
-				public void setStudentsListContainer(ClickEvent event) {			
-				}
-				
-				@Override
-				public void setCollabCount(int count, String type) {
-				}
-			});
-			pendingContainer.add(new MembersViewVc("pending") {
-				
-				@Override
-				public void setStudentsListContainer(ClickEvent event) {
-					throw new RuntimeException("Not implemented");
-				}
-				
-				@Override
-				public void setCollabCount(int count, String type) {
-					throw new RuntimeException("Not implemented");
-				}
-			});
-		}
-		
+
+		reportContainer.setVisible(false);
 		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
 		reportPanel.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_REPORT,reportPanel));
+
 	}
 	
 	public void setIds(){
@@ -400,4 +386,51 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 	}
 
+	@Override
+	public void setReportView() {
+		reportBox.clear();
+		setReportVisiblity(true);
+		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			reportBox.add(new TeachCourseReportChildView());
+		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			reportBox.add(new TeachUnitReportChildView());
+		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			reportBox.add(new TeachLessonReportChildView());
+		}
+	}
+	
+	private void setReportVisiblity(boolean isVisible) {
+		reportBox.setVisible(isVisible);
+		roasterMainConatiner.setVisible(!isVisible);
+	}
+
+	@Override
+	public void setRoasterView() {
+		setReportVisiblity(false);
+		for(int i=0;i<=3;i++){
+			tableContainer.add(new MembersViewVc("joined") {
+				
+				@Override
+				public void setStudentsListContainer(ClickEvent event) {			
+				}
+				
+				@Override
+				public void setCollabCount(int count, String type) {
+				}
+			});
+			pendingContainer.add(new MembersViewVc("pending") {
+				
+				@Override
+				public void setStudentsListContainer(ClickEvent event) {
+					throw new RuntimeException("Not implemented");
+				}
+				
+				@Override
+				public void setCollabCount(int count, String type) {
+					throw new RuntimeException("Not implemented");
+				}
+			});
+		}
+	}
 }
