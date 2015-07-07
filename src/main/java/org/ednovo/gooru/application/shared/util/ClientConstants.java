@@ -272,6 +272,7 @@ public interface ClientConstants {
 	String ASSESSMENT_QUESTION="assessment-question";
 	String EMBED="embed";
 	String COLLECTION="collection";
+	String ASSESSMENT="assessment";
 	String VIDEO_YOUTUBE="video/youtube";
 	String PROFILE="profile";
 	String PRIVATE="private";
