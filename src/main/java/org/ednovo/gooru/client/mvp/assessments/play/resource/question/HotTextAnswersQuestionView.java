@@ -203,7 +203,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						optionsContainerFpnl.add(lbl);
 					}*/
 
-					showPreviousResult();
 
 				}else{
 					setRenderAnswers(answersSet);
@@ -225,7 +224,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						htAnswerOptionView.getElement().setId(String.valueOf(entry.getKey()));
 						int beforeIndex=k+1;
 						optionsContainer.addDraggable(htAnswerOptionView,beforeIndex,entry.getKey());
-						showPreviousResult(entry.getKey(),htAnswerOptionView,entry.getValue());
 						k++;
 					}
 
@@ -326,31 +324,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 
-	public void showPreviousResult(int answerId,HTAnswerChoiceOptionView htAnswerOptionView,boolean isCorrect){
-
-		if(isCorrect){
-			htAnswerOptionView.addStyleName(STYLE_DND_CORRECT);
-		}else{
-			htAnswerOptionView.addStyleName(STYLE_DND_INCORRECT);
-		}
-
-	}
-
-	public void showPreviousResult(){
-/*
-		for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
-
-			InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
-			if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
-
-				if(lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
-					lbl.addStyleName(STYLE_CORRECT);
-				}else {
-					lbl.addStyleName(STYLE_INCORRECT);
-				}
-			}
-		}*/
-	}
 
 
 	@UiHandler("checkAnswer")
@@ -414,11 +387,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					if(el!=null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
 						answerIds.add(Integer.parseInt(el.getId())+1);
 						if(el.getId().equalsIgnoreCase(correctAnsSequence[j])){
-							el.addClassName(STYLE_DND_CORRECT);
+							//el.addClassName(STYLE_DND_CORRECT);
 							answerOptionResult.put(Integer.parseInt(el.getId()), true);
 							answerAttemptDo.setStatus("1");
 						}else{
-							el.addClassName(STYLE_DND_INCORRECT);
+							//el.addClassName(STYLE_DND_INCORRECT);
 							HTDragChoiceStatus=false;
 							answerOptionResult.put(Integer.parseInt(el.getId()), false);
 							answerAttemptDo.setStatus("0");
