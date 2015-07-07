@@ -116,7 +116,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(CreateDo createDo,final boolean isCreateLesson) {
+	public void createAndSaveUnitDetails(CreateDo createDo,final boolean isCreateLesson) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
@@ -140,7 +140,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
+	public void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
