@@ -44,7 +44,7 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 
 	int getChildPageNumber();
 
-	void setUserShelfData(List<FolderDo> searchResult, boolean clrPanel);
+	void setUserMetaData(List<FolderDo> searchResult, boolean clrPanel);
 	
 	HTMLPanel getSlot();
 
@@ -69,7 +69,7 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
      * Updating tree widget 
      * @param courseDo {@link FolderDo}
      */
-	void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag);
+	void updateTreeWidget(FolderDo courseDo, boolean flag);
 
 	void enableDisableCourseButton(boolean isEnable);
 	/**

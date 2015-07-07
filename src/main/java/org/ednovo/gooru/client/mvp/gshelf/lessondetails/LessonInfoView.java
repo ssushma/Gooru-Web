@@ -71,7 +71,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
-	@UiField Button saveCourseBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
+	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
 	@UiField Label lblErrorMessage;
 	 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -138,7 +138,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			standardsDropListValues.add(liPanel);
 		}
 	}
-	@UiHandler("saveCourseBtn")
+	@UiHandler("saveLessonBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null);
 	}
@@ -159,9 +159,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			createOrUpDate.setTitle(lessonTitle.getText());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 			if(id!=null){
-				getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,type);
+				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type);
 			}else{
-				getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,type);
+				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
 			}
 		}
 	}

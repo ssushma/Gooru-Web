@@ -280,7 +280,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 							myCollectionsListPresenter.setData(type,result.getSearchResult(),clrPanel,false,null);
 						}
 					}
-					getView().setUserShelfData(result.getSearchResult(),clrPanel);
+					getView().setUserMetaData(result.getSearchResult(),clrPanel);
 				}
 			};
 		}
@@ -409,7 +409,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 
 	public void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag) {
-		getView().updateTitleOfTreeWidget(courseDo, flag);
+		getView().updateTreeWidget(courseDo, flag);
 	}
 	
 	@Override
