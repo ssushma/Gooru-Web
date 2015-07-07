@@ -54,6 +54,7 @@
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
 	min-height:530px;	
+	background: none repeat scroll 0% 0% rgb(240, 240, 240);
 }
 #gShelfMainContainer .collectionScrlPanel > div{
 	height: 100%
