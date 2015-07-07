@@ -378,6 +378,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 		}
 	}
+	/**
+	 * To get the child items of particular tree widget
+	 */
 	@Override
 	public void getChildFolderItems(List<FolderDo> folderListDo) {
 		String o2 = null, o3 = null, selectedFolder = null, selectedFolderName = null, id = null;
@@ -488,9 +491,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void setChildPageNumber(Integer childPageNumber) {
 		this.childPageNumber = childPageNumber;
 	}
-
+    /**
+     * To set the user meta data
+     */
 	@Override
-	public void setUserShelfData(List<FolderDo> collections, boolean clearShelfPanel) {
+	public void setUserMetaData(List<FolderDo> collections, boolean clearShelfPanel) {
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		if (clearShelfPanel) {
@@ -607,7 +612,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		getUiHandlers().setRightListData(SHELF_COLLECTIONS,null);
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
-	
+	/**
+	 * To create couse template and adding to the root tree
+	 * @param event
+	 */
 	@UiHandler("createNewCourse")
 	public void createNewCourseOrCollection(ClickEvent event) {
 		if(FOLDER!=getViewType()&&isCreateCourse()){
@@ -633,6 +641,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 		}
 	}
+	/**
+	 * To add new unit/lesson/collection/assessment template to the existing tree
+	 */
 	@Override
 	public void createNewItem(String type) {
 		ShelfTreeWidget selectedWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
@@ -668,6 +679,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
 			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
+			shelfTreeWidget.setLevel(4);
+		}else if("Assessment".equalsIgnoreCase(type)){
+			shelfTreeWidget = new ShelfTreeWidget(null, 4);
+			shelfTreeWidget.getTitleLbl().setText("UntitledAssessment");
+			shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
 			shelfTreeWidget.setLevel(4);
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
@@ -741,7 +757,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
    	public String getViewType(){
 		return AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
    	}
-
+    /**
+     * Highlight the Tree based on id's when reveal the page.
+     */
 	@Override
 	public void updateLeftShelfPanelActiveStyle() {
 		String gooruOid = null;
@@ -799,18 +817,24 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			 setFolderActiveStatus();
 			 return;
 		 }
-	   }
+	   } 
 	}
-	
+	/**
+	 * set basic data of course and get the folderObj
+	 * @return folderObj 
+	 */
 	public FolderDo getFolderDo(){
 		FolderDo folderObj = new FolderDo();
 		folderObj.setTitle(UNTITLEDCOURSE);
 		folderObj.setType("course");
 		return folderObj;
 	}
-
+   /**
+    * Updates the respective tree widget,
+    * as we create/update course/unit/lesson/collection 
+    */
 	@Override
-	public void updateTitleOfTreeWidget(FolderDo courseDo,boolean flag) {
+	public void updateTreeWidget(FolderDo courseDo,boolean flag) {
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		shelfTreeWidget.updateData(courseDo);
 		String type = shelfTreeWidget.getTreeWidgetType();
@@ -862,12 +886,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 			shelfTreeWidget.setUrlParams(urlParams);
 		}
-
-
 	}
 
 	/**
-	 * sets the boolean value to enable or disable the course create.
+	 * Sets the boolean value to enable or disable the course create.
 	 */
 	@Override
 	public void enableDisableCourseButton(boolean isEnable) {

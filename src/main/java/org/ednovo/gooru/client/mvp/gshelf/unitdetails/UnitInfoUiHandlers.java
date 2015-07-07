@@ -44,14 +44,14 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	 * @param createDo {@link String} 
 	 * @param isCreateLesson {@link boolean} 
 	 */
-	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateLesson);
+	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson);
 	/**
 	 * This method is used to update the unit info details
 	 * @param createDo
 	 * @param id
 	 * @param isCreateUnit
 	 */
-	void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit);
+	void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit);
 	/**
 	 * This method is used to check profanity checker
 	 * @param textValue
