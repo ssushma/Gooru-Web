@@ -128,19 +128,19 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			@Override
 			public void onSuccess(FolderDo result) {
 				
-				String uri=result.getGooruOid();
+				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
-				params.put("id", uri);
-				params.put("view", COURSE);
-				result.setGooruOid(uri);
+				params.put("id", uri[uri.length-1]);
+				System.out.println("idval::"+uri[uri.length-1]);
+				params.put("view", COLLECTION);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COLLECTION); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 				if(isCreateUnit){
-					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(UNIT);
+					myCollectionsRightClusterPresenter.setTabItems(1,COLLECTION , null);
+					myCollectionsRightClusterPresenter.setUnitTemplate(COLLECTION);
 				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
+					myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
@@ -166,7 +166,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
 				folderDo.setTitle(createDo.getTitle());
-				folderDo.setType(COLLECTION);
+				folderDo.setCollectionType(COLLECTION);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, COLLECTION, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);

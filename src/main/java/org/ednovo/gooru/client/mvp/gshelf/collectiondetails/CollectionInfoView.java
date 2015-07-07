@@ -72,6 +72,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
+	final String COLLECTION = "collection";
+	
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
@@ -143,6 +145,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				CreateDo createOrUpDate=new CreateDo();
 				createOrUpDate.setTitle(collectionTitle.getText());
 				createOrUpDate.setDescription(learningObjective.getText());
+				createOrUpDate.setCollectionType(COLLECTION);
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
