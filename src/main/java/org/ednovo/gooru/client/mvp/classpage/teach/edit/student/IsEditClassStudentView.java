@@ -44,5 +44,7 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 public interface IsEditClassStudentView extends IsViewWithHandlers<EditClassStudentViewUiHandler>{
 	public void setReportView();
 	public void createAutoSuggestBox() ;
+	public void setNavigationTab();
 	public void setRoasterView();
+
 }
