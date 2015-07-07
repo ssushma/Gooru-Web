@@ -73,9 +73,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
 	
-	private static final String COURSE = "course";
-	private static final String UNIT = "unit";
-	private static final String LESSON = "lesson";
+	private static final String COURSE = "Course";
+	private static final String UNIT = "Unit";
+	private static final String LESSON = "Lesson";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -138,6 +138,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 		
 		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
+			System.out.println("-- at right cluster title -- "+selectedWidgetsTitleType.get(COURSE));
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
 			}

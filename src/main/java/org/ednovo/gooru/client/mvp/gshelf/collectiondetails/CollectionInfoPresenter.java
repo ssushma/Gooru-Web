@@ -56,7 +56,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	
 	final String SUBJECT="subject";
 	
-	final String COURSE="course";
+	final String COURSE="Course";
 	
 	private String UNIT = "Unit";
 	
