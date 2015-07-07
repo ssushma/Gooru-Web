@@ -128,11 +128,14 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	HashMap<String,String> urlParams = new HashMap<String,String>();
 	
+	HashMap<String,String> updateWidgetTitles = new HashMap<String,String>();
+	
 	private static final String O1_LEVEL = "o1";
 	
 	private static final String O2_LEVEL = "o2";
 	
 	private static final String O3_LEVEL = "o3";
+	
 	
 	private String widgetType;
 	
@@ -503,21 +506,37 @@ public class ShelfTreeWidget extends FocusPanel {
 		this.position = position;
 		if(level==1) {
 			this.urlParams.put(O1_LEVEL, collectionDo.getGooruOid());
+			this.urlParams.put(COURSE, collectionDo.getTitle());
 		}
 		if(level==2) {
 			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			this.urlParams.put(O2_LEVEL, collectionDo.getGooruOid());
+
+			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
+			this.urlParams.put(UNIT, collectionDo.getTitle());
 		}
 		if(level==3) {
 			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			this.urlParams.put(O3_LEVEL, collectionDo.getGooruOid());
+			
+			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
+			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
+			this.urlParams.put(LESSON, collectionDo.getTitle());
 		}
 		if(level==4) {
 			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			this.urlParams.put(O3_LEVEL, urlParams.get(O3_LEVEL));
 			this.urlParams.put(ID, collectionDo.getGooruOid());
+			
+			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
+			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
+			this.urlParams.put(LESSON, urlParams.get(LESSON));
+			
+//			this.urlParams.put("levelFourType", collectionDo.getTitle()+"#"+"Collection");
+			
+			
 		}
 	}
 	
@@ -571,6 +590,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		return urlParams;
 	}
 	
+	
 	public void setActiveStyle(boolean isActive) {
 		if(isActive){
 			titleFocPanel.addStyleName("active");
@@ -599,29 +619,32 @@ public class ShelfTreeWidget extends FocusPanel {
 		}
 	}
 	public void openFolderInShelf() {
-		AppClientFactory.printInfoLogger("Openfolderinshelf"+getLevel());
 		Map<String,String> params = new HashMap<String,String>();
+		HashMap<String,String> widgetTitles = new HashMap<String,String>();
 		if(getLevel()==1) {
 			params.put(O1_LEVEL, collectionDo.getGooruOid());
+			widgetTitles.put(COURSE, collectionDo.getTitle());
 		} else if(getLevel()==2) {
-			AppClientFactory.printInfoLogger(" urlParams.get(O1_LEVEL):"+ urlParams.get(O1_LEVEL));
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			params.put(O2_LEVEL, collectionDo.getGooruOid());
+			
+			widgetTitles.put(COURSE, urlParams.get(COURSE));
+			widgetTitles.put(UNIT, collectionDo.getTitle());
+			
 		} else if(getLevel()==3) {
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			params.put(O3_LEVEL, collectionDo.getGooruOid());
+			
+			widgetTitles.put(COURSE, urlParams.get(COURSE));
+			widgetTitles.put(UNIT, urlParams.get(UNIT));
+			widgetTitles.put(LESSON, collectionDo.getTitle());
+			
 		}
 		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view")); 
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
-		/*AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),true,new SimpleAsyncCallback<FolderTocDo>() {
-			@Override
-			public void onSuccess(FolderTocDo result) {
-				AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaDataTocAPI(result)));
-				
-			}
-		});*/
+		
 	}
 	
 	public void openCollectionInShelf() {
@@ -692,5 +715,40 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	public String getTreeWidgetType(){
 		return widgetType;
+	}
+	
+	public void setUpdatedWidgetsTitleType( HashMap<String,String> updateWidgetTitles) {
+		this.updateWidgetTitles = updateWidgetTitles;
+	}
+	
+	public HashMap<String,String> getUpdatedWidgetsTitleType() {
+		return updateWidgetTitles;
+	}
+
+	public void updateWidgetData(FolderDo courseDo, HashMap<String, String> urlParams, String type) {
+		if(type.equalsIgnoreCase(COURSE)){ 
+			/*this.urlParams.put(O1_LEVEL, courseDo.getGooruOid());
+			this.urlParams.put(COURSE, courseDo.getTitle());*/
+		}else if(type.equalsIgnoreCase(UNIT)){
+			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			this.urlParams.put(O2_LEVEL, courseDo.getGooruOid());
+
+			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
+			this.urlParams.put(UNIT, courseDo.getTitle());
+		}else if(type.equalsIgnoreCase("")){
+			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			this.urlParams.put(O3_LEVEL, courseDo.getGooruOid());
+			
+			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
+			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
+			this.urlParams.put(LESSON, courseDo.getTitle());
+		}
+		
+	}
+	
+
+	public void setUrlParams(HashMap<String, String> urlParams) {
+		this.urlParams = urlParams;
 	}
 }

@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
@@ -43,6 +44,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -52,6 +54,8 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -84,13 +88,13 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentViewUiHandler> implements IsEditClassStudentView {
 	
-	@UiField LiPanel roasterPanel,unitPanel,collectionPanel;
+	@UiField LiPanel roasterPanel,reportPanel;
 	
-	@UiField Anchor roasterAnr,unitRepoAnr,collRepoAnr;
+	@UiField Anchor roasterAnr,reportPanelAnr,studentAnr;
 	
 	@UiField PPanel classCodePanel,shareLnkPanel,emailAddTxt,analyPanel;
 	
-	@UiField InlineLabel classCodeTxtPanel;
+	@UiField InlineLabel classCodeTxtPanel,courseHeaderLbl,courseTitleLbl;
 	
 	@UiField TextBox sharTxtBox/*,inviteTxtBox*/;
 	
@@ -100,11 +104,13 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField VerticalPanel tableContainer,pendingContainer;
 	
-	@UiField HTMLPanel panelSuggestBox, rosterContainer/*,panelActions,panelCode*/;
-	
+	@UiField HTMLPanel panelSuggestBox,roasterMainConatiner,reportContainer/*,panelActions,panelCode*/;
+
 	@UiField Label lblPleaseWait,lblErrorMessage;
 	
 	private static final String QUESTIONIMAGE = "images/question.png";
+	
+	private static final String STUDENTIMAGE = "images/Classpage/studentsIco.png";
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -117,6 +123,12 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	//@UiField Image pendingImage;
 	
 	@UiField HTMLPanel pendindUserContainer,activeUserConatiner;
+	
+	@UiField Image studentImage;
+	
+	@UiField Anchor notePanel;
+	
+	@UiField Button connectCourseBtn,addStudentBtn;
 
 	@UiField FlowPanel reportBox;
 	
@@ -132,17 +144,19 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
+
+		reportContainer.setVisible(false);
+		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
+		reportPanel.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_REPORT,reportPanel));
+
 	}
 	
 	public void setIds(){
 		roasterAnr.setText(i18n.GL3416());
 		roasterAnr.getElement().setId("roasterAnrId");
 		
-		unitRepoAnr.setText(i18n.GL3417());
-		unitRepoAnr.getElement().setId("unitRepoAnrId");
-		
-		collRepoAnr.setText(i18n.GL3418());
-		collRepoAnr.getElement().setId("collRepoAnrId");
+		reportPanelAnr.setText(i18n.GL3421());
+		reportPanelAnr.getElement().setId("reportPanelId");
 		
 		classCodePanel.setText(i18n.GL0184());
 		classCodePanel.getElement().setId("classCodePanelId");
@@ -177,15 +191,25 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		image2.addMouseOverHandler(new MouseOverShowClassCodeToolTip2());
 		image2.addMouseOutHandler(new MouseOutHideToolTip2());
 		
-		//pendingImage.setUrl(QUESTIONIMAGE);
-		//pendingImage.addMouseOverHandler(new MouseOverShowClassCodeToolTip3());
-		//pendingImage.addMouseOutHandler(new MouseOutHideToolTip3());
+		notePanel.setText(i18n.GL3422());
+		notePanel.getElement().setId("notePanelId");
+		
+		studentImage.setUrl(STUDENTIMAGE);
+		
+		addStudentBtn.setText(i18n.GL3423());
+		addStudentBtn.getElement().setId("addStudentBtnId");
+		
+		connectCourseBtn.setText(i18n.GL3424());
+		connectCourseBtn.getElement().setId("connectCourseBtnId");
+		
+		courseHeaderLbl.setText(i18n.GL0574());
+		courseHeaderLbl.getElement().setId("courseHeaderLblId");
+		
 		
 		classCodeTxtPanel.setText("XYZRS");
 		
 		classCodePanel.add(image);
 		shareLnkPanel.add(image2);
-		//studentPendingPanel.add(pendingImage);
 		
 		studentPendingPanel.setText(i18n.GL1525());
 		studentPendingPanel.getElement().setId("studentPendingPanelId");
@@ -197,6 +221,11 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		createAutoSuggestBox();
 		
 		
+	}
+	
+	public void setTabVisible(boolean isVisible){
+		roasterMainConatiner.setVisible(isVisible);
+		reportContainer.setVisible(!isVisible);
 	}
 	
 	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
@@ -319,6 +348,43 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			toolTipPopupPanelNew2.hide();
 		}
 	}
+	
+	public class EditClassStudentTabHandler implements ClickHandler{
+
+		String subView;
+		LiPanel liPanel;
+		
+		public EditClassStudentTabHandler(String subView,LiPanel liPanel){
+			this.subView=subView;
+			this.liPanel=liPanel;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			roasterPanel.removeStyleName(CssTokens.ACTIVE);
+			reportPanel.removeStyleName(CssTokens.ACTIVE);
+			liPanel.addStyleName(CssTokens.ACTIVE);
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView#setNavigationTab()
+	 */
+	@Override
+	public void setNavigationTab() {
+		String subView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
+		if(subView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER)){
+			setTabVisible(true);
+			roasterPanel.setStyleName(CssTokens.ACTIVE);
+		}else{
+			setTabVisible(false);
+			reportPanel.setStyleName(CssTokens.ACTIVE);
+		}
+	}
 
 	@Override
 	public void setReportView() {
@@ -336,7 +402,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	private void setReportVisiblity(boolean isVisible) {
 		reportBox.setVisible(isVisible);
-		rosterContainer.setVisible(!isVisible);
+		roasterMainConatiner.setVisible(!isVisible);
 	}
 
 	@Override

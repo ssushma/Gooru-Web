@@ -28,10 +28,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,8 +42,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -59,8 +66,13 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@UiField HTMLPanel collectionInfo;
 	@UiField TextBox collectionTitle;
+	@UiField Button saveCollectionBtn;
+	@UiField TextArea learningObjective;
+	@UiField Label lblErrorMessage, lblErrorMessageForLO;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	
+	final String COLLECTION = "collection";
 	
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
@@ -73,7 +85,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public CollectionInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
-
 	}	
 
 	/**
@@ -103,7 +114,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 	}
 	
-	
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
@@ -112,6 +122,38 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			collectionTitle.setText(courseObj.getTitle());
 		}
 	}
-
-
+	@UiHandler("saveCollectionBtn")
+	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),false,0);
+	}
+	
+	/**
+	 * This method is used to call create and update API
+	 * @param index
+	 * @param isCreate
+	 */
+	@Override
+	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index) {
+		if(result && index==0){
+			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
+		}else if(result && index==1){
+			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
+		}else{
+			if(index==0){
+				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1);
+			}else if(index==1){
+				CreateDo createOrUpDate=new CreateDo();
+				createOrUpDate.setTitle(collectionTitle.getText());
+				createOrUpDate.setDescription(learningObjective.getText());
+				createOrUpDate.setCollectionType(COLLECTION);
+				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+				if(id!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+				}else{
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+				}
+			}
+		}
+		
+	}
 }
