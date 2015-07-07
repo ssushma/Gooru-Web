@@ -89,7 +89,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
 		classSettingsAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS,UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classSettingsAnr));
-		studentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTES,UrlNavigationTokens.TEACHER_CLASS_STUDENTE_ROASTER,studentAnr));
+		studentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTES,UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,studentAnr));
 	}
 
 

@@ -43,4 +43,6 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  */
 public interface IsEditClassSettingsNavigationView extends IsViewWithHandlers<EditClassSettingsNavigationUiHandler>{
 
+	void setActiveStyles();
+
 }
