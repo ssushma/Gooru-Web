@@ -31,5 +31,5 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  *
  */
 public interface IsStudentClassReportView extends IsViewWithHandlers<StudentClassReportUiHandlers> {
-	
+	public void setReportData();
 }

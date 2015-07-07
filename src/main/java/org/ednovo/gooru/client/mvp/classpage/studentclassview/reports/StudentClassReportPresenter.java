@@ -56,7 +56,12 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 	public void onReveal() {
 		super.onReveal();
 		getView().onLoad();
-		getView().reset();
+	}
+
+	@Override
+	public void onReset() {
+		super.onReset();
+		getView().setReportData();
 	}
 
 	@Override
