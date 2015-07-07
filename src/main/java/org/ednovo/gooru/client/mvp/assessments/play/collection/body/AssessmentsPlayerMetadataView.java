@@ -317,7 +317,7 @@ public class AssessmentsPlayerMetadataView extends BaseViewWithHandlers<Assessme
 	}
 	public void setLabelAndIds() {
 		studyMainContianer.getElement().getStyle().setPosition(Position.RELATIVE);
-		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
+		studyMainContianer.getElement().setId("fpnlAssessmentsMainContianer");
 		commentCount.getElement().setId("lblCommentCount");
 		commentsContainer.getElement().setId("vpnlCommentsContainer");
 		seeMoreButton.setText(i18n.GL0508());
