@@ -919,7 +919,13 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	}
 
 	@Override
-	public void removeDeletedTreeWidget(String deletedTreeWidgetId) {
+	public void removeDeletedTreeWidget(String deletedTreeWidgetId){
+		for (FolderDo folderDo : SHELF_COLLECTIONS) {
+			if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
+				SHELF_COLLECTIONS.remove(folderDo);
+				break;
+			}
+		}
 		getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);
 		treeChildSelectedItem.remove();
 		organizeRootPnl.addStyleName("active");
