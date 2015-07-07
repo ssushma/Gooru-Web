@@ -38,4 +38,7 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	 */
 	public void setDefaultActiveTab();
 	void setUnitTemplate(String type);
+	
+	public void deleteCourseContent(String o1CourseId);
+	public void setRightClusterContent(String o1CourseId);
 }

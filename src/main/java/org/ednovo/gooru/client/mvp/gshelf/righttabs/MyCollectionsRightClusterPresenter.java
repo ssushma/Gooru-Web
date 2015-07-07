@@ -26,7 +26,9 @@ package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
@@ -183,6 +185,24 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setUnitTemplate(LESSON);
 			}
 		}
+	}
+	
+	/**
+	 * calls API to delete cousrse.
+	 */
+	@Override
+	public void deleteCourseContent(final String o1CourseId) {
+		AppClientFactory.getInjector().getfolderService().deleteCourse(o1CourseId, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				getView().onDeleteCourseSuccess(o1CourseId);
+			}
+		});
+	}
+	@Override
+	public void setRightClusterContent(String o1CourseId) {
+		shelfMainPresenter.setUserAllCourses(o1CourseId);
 	}
 	
 }

@@ -915,4 +915,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public Label getCollectionLabel(){
 		return lblCollectionTitle;
 	}
+
+	@Override
+	public void removeDeletedTreeWidget(String deletedTreeWidgetId) {
+		getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);
+		treeChildSelectedItem.remove();
+		organizeRootPnl.addStyleName("active");
+	}
 }

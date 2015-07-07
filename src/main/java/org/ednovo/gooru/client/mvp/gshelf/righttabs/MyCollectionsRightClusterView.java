@@ -29,10 +29,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -60,11 +62,13 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
-	@UiField Anchor lnkInfo,lnkContent,lnkshare;
+	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete;
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
 	FolderDo folderObj;
+	
+	DeletePopupViewVc deletePopup = null;
 	
 	final String ACTIVE="active";
 	private static final String O1_LEVEL = "o1";
@@ -74,6 +78,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
+	
+	
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -88,6 +94,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkInfo.addClickHandler(new TabClickHandler(1,lnkInfo));
 		lnkContent.addClickHandler(new TabClickHandler(2,lnkContent));
 		lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
+		lnkDelete.addClickHandler(new DeleteContent()); 
 	}
 	public void setIds(){
 		mainPanel.getElement().setId("gShelfCourseInfo");
@@ -296,4 +303,81 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void setCurrentTypeView(String currentTypeView) {
 		this.currentTypeView =currentTypeView;
 	}
+	
+	/**
+	 * 
+	 * This inner class is used to delete the user content like C/U/L and Collection.
+	 *
+	 */
+	private class DeleteContent implements ClickHandler{
+		DeleteContent(){
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId); 
+			
+		}
+	}
+	
+	/**
+	 * Invokes the delete course popup.
+	 * 
+	 * @param currentTypeView {@link String}
+	 * @param o1CourseId {@link String}
+	 * @param o2UnitId {@link String}
+	 * @param o3LessonId {@link String}
+	 * @param deletePopup {@link DeletePopupViewVc}
+	 */
+	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId, String o2UnitId,String o3LessonId) {
+		deletePopup = new DeletePopupViewVc() {
+			
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
+					getUiHandlers().deleteCourseContent(o1CourseId);
+				}
+				
+			}
+			
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				hide(); 
+			}
+		};
+		
+		deletePopup.setPopupTitle(i18n.GL0748());
+		if(currentTypeView.equalsIgnoreCase(COURSE)){
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle()));
+			deletePopup.setDescText("If you delete this Course, it will no longer be available.<br>This is a permanent action!");
+		}
+		deletePopup.setDeleteValidate("delete");
+		deletePopup.setPositiveButtonText(i18n.GL0190());
+		deletePopup.setNegitiveButtonText(i18n.GL0142());
+		deletePopup.setPleaseWaitText(i18n.GL0339());
+		deletePopup.show();
+		deletePopup.center();
+		
+	}
+	
+	/**
+	 * This method defines functionality after deleting the course.
+	 */
+	@Override
+	public void onDeleteCourseSuccess(String o1CourseId) {
+		hideDeletePopup();
+		Map<String, String> params= new HashMap<String, String>();
+		params.put("view", COURSE);
+		getUiHandlers().setRightClusterContent(o1CourseId);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		
+	}
+	private void hideDeletePopup() {
+		if(deletePopup!=null){
+			deletePopup.hide();
+		}
+	}
+	
 }

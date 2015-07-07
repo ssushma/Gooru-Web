@@ -432,4 +432,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setBreadCrumbs(HashMap<String, String> selectedWidgetsTitleType) {
 		getMyCollectionsRightClusterPresenter().setMycontentBreadcrumbs(selectedWidgetsTitleType);
 	}
+
+	/**
+	 * Sets all courses on right cluster.
+	 */
+	public void setUserAllCourses(String deletedTreeWidgetId) {
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId);
+	}
 }
