@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
@@ -58,6 +59,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	final String COURSE="course";
 	
 	private String UNIT = "Unit";
+	
+	private String COLLECTION = "Collection";
+	
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
+	private static final String O3_LEVEL = "o3";
+	
 	
 	/**
 	 * Class constructor
@@ -112,8 +120,41 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		});
 	}
 	@Override
-	public void createAndSaveCourseDetails(String courseTitle,final boolean isCreateUnit) {
-
+	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
+		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);		
+		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {				
+				String[] uri=result.getUri().split("/");
+				Map<String, String> params= new HashMap<String, String>();
+				params.put("id", uri[uri.length-1]);
+				params.put("view", COLLECTION);
+				try{
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COLLECTION); 
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
+				}
+				catch(Exception ex)
+				{
+					
+				}
+				try{
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1,COLLECTION , null);
+					myCollectionsRightClusterPresenter.setUnitTemplate(COLLECTION);
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, result);
+				}
+				}
+				catch(Exception ex)
+				{
+					
+				}
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+			}
+		});
 	}
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
@@ -125,7 +166,38 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void updateCourseDetails(final String text, final String id,final boolean isCreateUnit) {
+	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
+		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				FolderDo folderDo = new FolderDo();
+				folderDo.setTitle(createDo.getTitle());
+				folderDo.setCollectionType(COLLECTION);
+				//folderDo.setGooruOid(id);
+				myCollectionsRightClusterPresenter.setTabItems(1, COLLECTION, folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, COLLECTION, null);
+					myCollectionsRightClusterPresenter.setUnitTemplate(COLLECTION);
+				}
+			}
+		});
+	}
+
+	@Override
+	public void checkProfanity(String textValue,final boolean isCreate,final int index){
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				getView().callCreateAndUpdate(isCreate,value,index);
+			}
+		});
+	}
 
 	}
-}

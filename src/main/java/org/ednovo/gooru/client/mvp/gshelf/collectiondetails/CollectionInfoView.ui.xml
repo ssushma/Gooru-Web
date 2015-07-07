@@ -4,57 +4,85 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="collectionInfo">
 
-
-<div class="courseNameBlock">
+<div class="collectionTitleDetails">
 
 <p>Collection Title</p>
-<p><g:TextBox styleName="form-control" ui:field="collectionTitle" text="{i18n.GL3367}" title="{i18n.GL3367}"/></p>
+<p><g:TextBox styleName="form-control" ui:field="collectionTitle" text="{i18n.GL3367}" title="{i18n.GL3367}"/>
+<g:Label ui:field="lblErrorMessage"></g:Label>
+</p>
 
 
 </div>
 
-<div class="questionsBlock">
 
-<div class="col-md-8 col-sm-8 questionsBlockTextArea">
-<p>Learining Objective</p>
-<p><textarea class="form-control" rows="3"></textarea></p>
+
+<div class="collectionImageDetails">
+<div class="collectionThumbnail">
+<p>Collection Image</p>
+<div class="thimbnailImage">
+<g:Image ui:field="collThumbnail" url="images/collectionThumbnail.png"> </g:Image>
+<span class="thunailHover">
+<button class="secondary btn-block" type="submit">Upload Image</button>
+</span>
+</div>
 
 </div>
+
+<div class="learningObjective">
+<p>Learning Objective</p>
+<p>
+<g:TextArea styleName="form-control" ui:field="learningObjective" />
+<g:Label ui:field="lblErrorMessageForLO"></g:Label>
+</p>
+
+</div>
+
+
 </div>
 
 
 
 
 
-
-
-
-<div class="unitCoverBlock">
+<div class="collectionCoverBlock">
 
 <div class="unitCoverHeader">
 
-<div class="col-md-3 col-sm-3"><ppanel:PPanel text="{i18n.GL3369}"/></div>
-<div class="col-md-6 col-sm-6">
-<div class="dropDownRight">
+<div class="col-md-12 col-sm-12"> <p>What will this Collection cover?</p></div>
 
-	<panel:HTMLEventPanel styleName="btn-group" ui:field="btnStandardsBrowse">
-	<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
+<div class="clearfix"></div>
+</div>
+
+<div class="fractionDetailsTable">
+<div class="panel panel-default">
+<div class="panel-heading no-gutter">
+<div class="col-md-4">
+<h3>The Number System</h3>
+</div>
+<div class="col-md-8">
+<div class="dropDownRight">
+<div class="btn-group">
+  <button class="btn btn-primary" type="button">Select other from taxonomy</button>
 	<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
 	<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 	<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 	</g:HTMLPanel>
-  	<ppanel:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"></ppanel:UlPanel>
+  <ul role="menu" class="dropdown-menu">
+    <li><a href="#">My Folders</a></li>
+    <li><a href="#">My Collections</a></li>
+   
+  </ul>
+</div>
+
+
+<panel:HTMLEventPanel styleName="btn-group" ui:field="btnStandardsBrowse">
+<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
+  <g:HTMLPanel  styleName="btn btn-primary dropdown-toggle">
+    <g:InlineLabel styleName="caret"></g:InlineLabel>
+    <g:InlineLabel styleName="sr-only"></g:InlineLabel>
+  </g:HTMLPanel>
 	</panel:HTMLEventPanel>
-
-
-
-
-<div class="btn-group">
-  <button class="btn btn-primary" type="button">The Number System  </button>
-  <button aria-expanded="false" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
+  
   <ul role="menu" class="dropdown-menu pull-right">
     <li><a href="#">My Folders</a></li>
     <li><a href="#">My Collections</a></li>
@@ -62,12 +90,12 @@
   </ul>
 </div>
 </div>
-
-
- </div>
+</div>
 
 <div class="clearfix"></div>
+
 </div>
+
 
 <div class="lessonCover">
 <div class="panel panel-default">
@@ -163,19 +191,66 @@
 
 
 
+</div>
+
+
+
+
+
+
 
 </div>
 
 
 
-<div class="stepsButtonGroup">
 
-<g:Button styleName="secondary" ui:field="saveCollectionBtn" text="{i18n.GL3366}"/>
+
+
+
+<div class="tagCourseOptions">
+
+<p>Audience &amp; Purpose</p>
+<div class="row">
+<div class="col-md-6">
+<div class="list-group">
+
+  <a class="list-group-item" href="#">All Students</a>
+  <a class="list-group-item  active" href="#">Students who need Intervention and Support</a>
+  <a class="list-group-item" href="#">Advanced Learner</a>
+  <a class="list-group-item" href="#">English Learner</a>
+    <a class="list-group-item" href="#">Teachers</a>
+</div>
+</div>
+
+<div class="clearfix"></div>
+</div>
+
+</div>
+
+
+
+<div class="addOptions">
+
+
+<a href="">+ Depth of Knowledge </a>
+<a href="">+ 21st Century Skills</a>
+<a href="">+ Language Objective</a>
+
+</div>
+
+
+
+
+
+
+<div class="stepsButtonGroup">
+<g:Button styleName="secondary" ui:field="saveCollectionBtn" text="{i18n.GL3368}"/>
 
 
 </div>
 
 <div class="clearfix"></div>
+
 
 
 

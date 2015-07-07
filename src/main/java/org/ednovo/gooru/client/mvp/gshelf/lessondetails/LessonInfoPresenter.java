@@ -112,7 +112,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void createAndSaveCourseDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
 	String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 	String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				String[] uri=result.getUri().split("/");
@@ -122,13 +122,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				params.put("o3", uri[uri.length-1]);
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
 				if(isCreateCollOrAssessment && creationType!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, result);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
 				}else{
-					myCollectionsRightClusterPresenter.getFolderListDoChild().clear();
-					myCollectionsRightClusterPresenter.setTabItems(2, "collection", result);
+					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
@@ -138,7 +137,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final String type) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,createDo, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
@@ -146,7 +145,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				folderDo.setType(LESSON);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit && type!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, type, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(type);

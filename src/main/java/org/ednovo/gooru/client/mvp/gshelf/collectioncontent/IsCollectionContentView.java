@@ -30,6 +30,8 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 
+import com.google.gwt.user.client.ui.Button;
+
 /**
  * @author Search Team
  *
@@ -114,4 +116,92 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	 *
 	 */
 	public void updateDeleteItem(String collectionItemId, int itemSequence);
+	/**
+	 *
+	 * @function hideUpdateResourcePopup
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void hideUpdateResourcePopup();
+	void updateCollectionItem(CollectionItemDo collectionItem);
+	/**
+	 *
+	 * @function OnBrowseStandardsClickEvent
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param addStandardsBtn
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void OnBrowseStandardsClickEvent(Button addStandardsBtn);
+
+	/**
+	 *
+	 * @function setUpdatedStandardsCode
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param setStandardsVal
+	 * @parm(s) : @param codeId
+	 * @parm(s) : @param setStandardDesc
+	 * @parm(s) : @param value
+	 * @parm(s) : @param userResource
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,
+			String setStandardDesc, boolean value, boolean userResource);
+
+	/**
+	 *
+	 * @function hideUpdateOwnResourcePopup
+	 *
+	 * @created_date : 04-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void hideUpdateOwnResourcePopup();
 }

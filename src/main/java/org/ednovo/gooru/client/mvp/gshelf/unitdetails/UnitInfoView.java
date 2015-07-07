@@ -246,9 +246,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),true,1);
+				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),true,2);
+				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2);
 			}else if(index==2){
 				CreateDo createOrUpDate=new CreateDo();
 				createOrUpDate.setTitle(unitTitle.getText());
@@ -266,9 +266,11 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
-		this.courseObj=courseObj;
-		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
-		txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
-		txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		if(courseObj!=null){
+			this.courseObj=courseObj;
+			unitTitle.setText(courseObj.getTitle()==null?i18n.GL3364():courseObj.getTitle());
+			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
+			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		}
 	}
 }

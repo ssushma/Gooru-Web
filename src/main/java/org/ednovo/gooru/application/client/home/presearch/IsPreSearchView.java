@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -175,5 +176,26 @@ public interface IsPreSearchView extends IsViewWithHandlers<PreSearchUiHandlers>
 	 *
 	 */
 	HTMLPanel getPanelGrades();
+
+	/**
+	 *
+	 * @function getUlSubjectPanel
+	 *
+	 * @created_date : 06-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @return
+	 *
+	 * @return : UlPanel
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	UlPanel getUlSubjectPanel();
 
 }

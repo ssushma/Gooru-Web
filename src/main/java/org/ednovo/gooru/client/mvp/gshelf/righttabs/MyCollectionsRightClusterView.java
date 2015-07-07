@@ -25,7 +25,9 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -69,9 +71,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
 	
-	private static final String COURSE = "Course";
-	private static final String UNIT = "Unit";
-	private static final String LESSON = "Lesson";
+	private static final String COURSE = "course";
+	private static final String UNIT = "unit";
+	private static final String LESSON = "lesson";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -127,15 +129,28 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}
 		}
 	}
-	@Override
-	public void setBreadCrumbSlot(FolderDo folderObj, String type){
+	@Override	
+	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType){
 		if(folderObj!=null){
 			this.folderObj=folderObj;
 		}
-		 String title=folderObj!=null?folderObj.getTitle():"";
-		 setBreadCrumbs(title,type);
-		 
+		
+		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
+			if(selectedWidgetsTitleType.containsKey(COURSE)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
+			}
+			if(selectedWidgetsTitleType.containsKey(UNIT)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(UNIT), UNIT);
+			}
+			if(selectedWidgetsTitleType.containsKey(LESSON)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(LESSON), LESSON);
+			}
+		}else{
+			String title=folderObj!=null?folderObj.getTitle():"";
+			setBreadCrumbs(title,type);
+		}
 	}
+	
 	
 	/**
 	 * Used to set the Bread crumbs.
