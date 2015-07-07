@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+		<g:FlowPanel styleName="col-md-6 col-sm-6" ui:field="questionsMainPanel">
+          	  <g:HTMLPanel styleName="openEndedQuestionAnswerTitle" ui:field="answertext"></g:HTMLPanel>
+          	  <g:HTMLPanel>
+          	  	<g:Label styleName="systemMessageStyle" ui:field="messageBodyText"></g:Label>
+          	  	<g:Label styleName="charLimit" ui:field="lblCharLimit"/>
+          	  </g:HTMLPanel>
+              <g:TextArea styleName="openEndedQuestionAnswer" ui:field="openEndedAnswerTextArea"></g:TextArea>
+              <g:Label ui:field="errorMessageText" styleName="errorMessageStyle"></g:Label>
+              <g:FlowPanel styleName="questionSubmitButton">
+              		<g:Button styleName="hintsInActiveButton addjustSubmitButton" ui:field="submitButton"></g:Button>
+              </g:FlowPanel>
+              <g:HTMLPanel styleName="openEndedQuestionAnswerHolder" ui:field="answetTextAfterSubmission"></g:HTMLPanel>
+              <g:Label ui:field="submittedText" styleName="openEndedQuestionAnswerText"></g:Label>
+        </g:FlowPanel>
+</ui:UiBinder>

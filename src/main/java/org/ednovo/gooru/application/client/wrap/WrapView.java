@@ -252,7 +252,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		MouseDownHandler hanlder=new MouseDownHandler() {
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
-				displayPreFilterpopup();
+				//displayPreFilterpopup();
 			}
 		};
 		headerUc.getEditSearchTxtBox().addDomHandler(hanlder, MouseDownEvent.getType());
@@ -271,13 +271,13 @@ public class WrapView extends BaseView implements IsWrapView {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			displayPreFilterpopup();
+			//displayPreFilterpopup();
 		}
 	}
 
 	@Override
 	public void openPreFilter() {
-		displayPreFilterpopup();
+		//displayPreFilterpopup();
 	}
 
 	public void displayPreFilterpopup() {

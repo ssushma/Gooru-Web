@@ -24,9 +24,10 @@
 	      </g:HTMLPanel>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-	</g:HTMLPanel> 
+	</g:HTMLPanel>
 	<g:HTMLPanel styleName="geryBackgroundBody">
-	   <g:HTMLPanel styleName="rosterContainer">
+	   <g:FlowPanel ui:field="reportBox"></g:FlowPanel>
+	   <g:HTMLPanel styleName="rosterContainer" ui:field="rosterContainer">
 	      <g:HTMLPanel styleName="classSettingsInner">
 	         <g:HTMLPanel styleName="col-md-3 col-sm-4">
 	            <uc:PPanel ui:field="classCodePanel"></uc:PPanel>

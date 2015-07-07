@@ -109,7 +109,7 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 				getView().reset();
 				fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
 				playerType=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(playerType.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+				if(playerType.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || playerType.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
 					fireEvent(new RefreshCollectionInShelfListInPlayEvent(result.getGooruOid()));
 					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
 				}else if(playerType.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){

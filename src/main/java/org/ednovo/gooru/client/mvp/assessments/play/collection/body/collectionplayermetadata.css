@@ -1,0 +1,672 @@
+.container {
+    background:#f0f0f0;
+    min-height:100%;
+    width:940px;
+    margin:auto;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+   /*   margin-top:50px; */
+}
+.clearfix:after { 
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+.leftPanel {
+    width:700px;
+   /*  min-height:100%; */
+   	min-height:650px;
+    float:left;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    padding:30px;
+    background:white;
+    border-right:1px solid #ddd;
+}
+.rightPanel {
+    width:240px;
+   /*  height:100%; */
+    min-height:650px;
+    float:right;
+    padding: 30px 20px 20px 20px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+
+.hrShadow {
+    width:700px;
+    height:34px;
+    background:url('images/hrShadow.png') no-repeat;
+    margin-left:-30px;
+    margin-top:50px
+}
+
+.commentField {
+	/* max-width: 490px; */
+	max-height: 80px;
+    float:left;
+    font-size: 12px;
+    margin-right:10px;
+    min-height: 80px;
+	/* min-width: 490px; */
+	border: 1px solid #dddddd;
+	padding: 5px;
+	resize: none;
+}
+
+.infoSection{
+    margin-top:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ddd;
+}
+.infoSection:last-child {
+    border-bottom:none;
+}
+.infoSection:first-child {
+    margin-top:0px;
+}
+.infoSection h3{
+	margin-bottom:10px;
+}
+  .userImageContainer {
+    margin-right:10px;
+    width:40px;
+    height:40px;
+    border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+    border:3px solid #87BADD;
+    box-sizing: content-box;
+}
+ .userImage{
+    width:40px;
+    height:40px;
+     border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+}
+ .username {
+    display:inline-block;
+    vertical-align:middle;
+}
+.standard {
+    background-color:#515151;
+    color:white;
+    display:inline-block;
+    padding:3px 5px;
+    border-radius:4px;
+    margin-bottom:5px;
+    font-size:10px;
+    font-weight:bold
+}
+ .relatedConcepts a {
+    display:block;
+    margin:1px 0px;
+}
+ a.flagCollection {
+    color: #515151;
+    padding-left:30px;
+    background:url('images/flag.png') no-repeat;
+}
+
+.flagCollection {
+    color: #515151;
+    padding-left:30px;
+    background:url('images/flag.png') no-repeat;
+}
+a.flaggedCollection {
+    color: #999;
+    padding-left:30px;
+    background:url('images/flagged.png') no-repeat;
+}
+.flaggedCollection {
+    color: #999;
+    padding-left:30px;
+    background:url('images/flagged.png') no-repeat;
+}
+ a.flaggedCollection:hover {
+    opacity:1;
+    cursor:default;
+}
+.flaggedCollection:hover {
+    opacity:1;
+    cursor:default;
+}
+.courseTitle{
+	
+}
+.views{
+	font-size: 1.17em;
+	font-weight: bold;
+}
+.nextSteps{
+	background-color: white;
+	border: 1px solid #DDD;
+	text-align: center;
+	padding: 15px;
+	margin: 10px 0px 10px 0px;
+}
+.nextSteps .h2{
+	background: url('images/whatnext_banner.png') no-repeat;
+	height: 35px;
+	margin-top: -30px;
+	color: #FFF;
+	font-size: 14px;
+	padding-top: 7px;
+	margin-bottom:10px;
+}
+.nextSteps h3{
+	font-weight: normal;
+	font-size: 12px;
+	margin-bottom: 10px;
+	font-family: Arial, sans-serif !important;
+}
+.nextSteps a{
+	display: block;
+	margin: 10px 0px;
+}
+
+.commentsSection{
+	border-top:1px solid #dedede;
+
+	/* -webkit-box-shadow:0 2px 2px rgba(0,0,0,.08),0 1px 0 rgba(0,0,0,.08);
+  box-shadow:0 2px 2px rgba(0,0,0,.08),0 1px 0 rgba(0,0,0,.08);*/
+background: -moz-linear-gradient(top,  #efefef 0%, #f9f9f9 20%, #ffffff 40%, #ffffff 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efefef), color-stop(20%,#f9f9f9), color-stop(40%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* W3C */
+
+}
+ .userPhoto {
+    margin-right:10px;
+    width:40px;
+    height:40px;
+    border-radius:40px;
+    float:left;
+    border:3px solid #87BADD;
+    background-color:#f0f0f0;
+}
+
+.commentsSection .username {
+    font-weight:bold;
+    display:inline-block;
+    margin-right:10px;
+    float:left;
+}
+
+.commentsSection .addComment,
+.commentsSection .editComment {
+    margin-top:30px
+}
+
+
+.loginMessaging {
+   width: 100%;
+/* min-height: 100px; */
+	height: 100px;
+	background: #f0f0f0;
+	border: 1px solid #ddd;
+	color: #999;
+	/* line-height: 100px; */
+	text-align: center;
+	padding: 5px;
+	line-height: 6.25em;
+	vertical-align: middle;
+}
+
+.commentsSection .addComment button#post,
+.commentsSection .editComment button#post,
+.commentsSection .editComment button#cancel {
+    float:left;
+}
+
+.marginTop10 {
+	margin-top: 10px;
+}
+
+.successPostMsg {
+	text-align: center;
+	height: 80px;
+	float: left;
+	padding-top: 30px;
+	border: 1px solid #dddddd;
+}
+
+.deleteMsg {
+	border-bottom: 1px solid #ddd;
+	padding: 30px 0px;
+	transition: height 1s ease;
+	position: relative;
+	background: #f0f0f0;
+	text-align: center;
+}
+
+.commentsH2 {
+	margin-bottom: 10px;
+	display: inline-block;
+	font-size: 1.5em;
+	font-weight: bold;
+	width: 58%;
+}
+.standard_section{
+	display:inline-block;
+}
+
+.seeMore {
+	border-bottom: 1px solid #ddd;
+	padding: 10px 0;
+	transition: height 1s ease;
+	position: relative;
+	text-align: center;
+	width: 100%;
+	color: #1076BB;
+	cursor: pointer;
+}
+
+.seeMore:hover {
+	opacity: 0.5;
+}
+
+.errorMessage {
+	float: right;
+	margin-right: 80px;
+	margin-top: 10px;
+}
+.errorMessageCommentsSection {
+	float: right;
+	margin-top: 10px;
+}
+
+.conceptTitle {
+	color: #1076bb;
+	cursor: pointer;
+	padding: 1px 0px;
+}
+
+.conceptTitle:hover {
+	opacity: 0.7;
+}
+
+.marginBotton10Px{
+	margin-bottom: 10px;
+}
+
+
+/*///////////////////////////////////// insights iFrame ////////////////*/
+
+.insightsFrame {	 	
+    clear:both;
+    min-height: 100px;
+	max-height: 100%;
+	width: 900px;
+	padding: 20px;
+	background-color: #EEE;
+	margin: 0 auto;
+	background: none repeat scroll 0 0 #F2F1F1;
+    padding-bottom:30px;
+    border-top:1px solid #ddd;
+    -webkit-box-shadow: inset 0 12px 30px -6px #eee;
+    -moz-box-shadow: inset 0 12px 30px -6px #eee;
+    box-shadow: inset 0 12px 30px -6px #eee;
+}
+
+.insightsFrameContainer {	 	
+    min-height: 100px;
+	max-height: 100%;
+	width: 900px;
+	background-color: #EEE;
+	margin: 0 auto;
+	background: none repeat scroll 0 0 #F2F1F1;
+}
+
+.insightsFrame .buttonGroup {
+    float:right;
+}
+
+.insightsFrame .buttonGroup button {
+    padding:4px;
+    font-size:16px;
+}
+
+.insightsFrame h3 {
+    text-align:center;
+    clear:both;
+}
+
+.insightsFrame .emptyMessage {
+	clear:both;
+    color:#999;
+    font-style:italic;
+    text-align:center;
+}
+
+.loginStatus .loggingIcon {
+    width:20px;
+    height:20px;
+    display:inline-block;
+    position:relative;
+    vertical-align:middle;
+    margin-right:5px;
+    margin-left:-5px;
+}
+
+.loginStatus.loggedOut .loggingIcon {
+    opacity:.6;
+}
+
+.loginStatus .loggingIcon .progress {
+    background-color: white;
+    border-radius:100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.loginStatus .loggingIcon .remainingTrack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 100%;
+    clip: rect(0px, 10px, 20px, 0px);
+}
+
+.loginStatus .loggingIcon .trackInner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 100%;
+    background-color:#46873F;
+    opacity:.8;
+    clip: rect(0px, 10px, 10px, 0px);
+}
+
+.loginStatus.loggedOut .loggingIcon .remainingTrack {
+    display:none;
+}
+
+.loginStatus .loggingIcon .innerDot {
+    border:5px solid #46873F;
+    background-color:white;
+    width:6px;
+    height:6px;
+    position:absolute;
+    top:2px;
+    right:2px;
+    border-radius:100%;
+}
+
+.ribbon {
+ 	font-size: 16px !important;
+ 	/* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
+ 	width: 50%;
+ 	position: relative;
+ 	background: #87BADD;
+ 	color: #fff;
+ 	text-align: center;
+ 	padding: .5em 1em; /* Adjust to suit */
+ 	margin: -2.5em auto 3em; /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px themselves so we double it. */
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.3);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.3);
+	box-shadow: 0 0 10px rgba(0,0,0,.3);
+}
+.ribbon:before, .ribbon:after {
+ 	content: "";
+ 	position: absolute;
+ 	display: block;
+	bottom: -.5em;
+	border: 1em solid #579ECF;
+	z-index: -1;
+}
+.ribbon:before {
+	left: -1.2em;
+	border-right-width: 1.2em;
+	border-left-color: transparent;
+}
+.ribbon:after {
+	right: -1.2em;
+	border-left-width: 1.2em;
+	border-right-color: transparent;
+}
+.ribbon .ribbonContent:before, .ribbon .ribbonContent:after {
+	content: "";
+	position: absolute;
+	display: block;
+	border-style: solid;
+	border-color: #1076BB transparent transparent transparent;
+	bottom: -.5em;
+}
+.ribbon .ribbonContent:before {
+	left: 0;
+	border-width: .5em 0 0 1em;
+}
+.ribbon .ribbonContent:after {
+	right: 0;
+ 	border-width: .5em 1em 0 0;
+}
+
+.classInfo {
+    background:white;
+    border:1px solid #ddd;
+    padding:15px;
+    position:relative;
+    z-index:0;
+    margin-top:15px;
+}
+
+.collectionSummary{
+	text-align: center;
+	clear: both;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.classInfoRibbon{
+	text-align: center;
+}
+
+.classInfoRibbon .h2{
+	background: url('images/whatnext_banner.png') no-repeat;
+	height: 35px;
+	margin-top: -30px;
+	color: #FFF;
+	font-size: 14px;
+	padding-top: 7px;
+	margin-bottom:10px;
+}
+.insightsFrameContent{
+	width:100%;
+	min-height: 500px;
+	height:100%;
+}
+.messageContainer{
+	padding: 20px;
+	margin: 0 auto;
+	text-align: center;
+}
+.messageTextHeader{
+	padding: 10px;
+	font-size: 24px;
+	color:#515151;
+	font-weight: bold;
+}
+.messagecontentText{
+	font-size: 12px;
+	color:#999;
+	font-style: italic;
+}
+.clearBoth{
+	clear: both;
+}
+.mutedText{
+	color:#EEEEEE;
+}
+.timeTextBig{
+	color:#fff;
+	font-size:30px;
+}
+.timeTextSmall{
+	color:#fff;
+	font-size:20px;
+}
+.teacherTipOuterContainer{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+}
+.depthofKnow{
+	background: -moz-linear-gradient(center top, #666, #515151) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#666), to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background-image: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	padding: 3px;
+	cursor: default !important;
+}
+.reactionCanExplain{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -7px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionCanUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -53px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionDonotUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -141px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionMeh{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -95px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionNeedHelp{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -184px -4px;
+	width: 35px;
+	height: 35px;
+}
+
+.commentsCharLimit{
+	margin-top: -10px;
+	color: #999;
+	text-align: right;
+}
+.onoffbtns{
+	display:inline-block;
+	margin-left:15px;
+}
+
+.switchContainer {
+
+ 	 position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 59px;
+	height: 28px;
+	padding: 3px;
+	vertical-align: middle;
+	background-color: white;
+	border-radius: 18px;
+	cursor: pointer;
+}
+
+.block{
+    padding: 30px 0;
+}
+
+.avatarblock{
+	width:100%;
+/*	margin:25px 0;*/
+	padding:35px 0;
+	border-bottom:1px solid #dedede;
+}
+
+.avatarblock .avatar{
+	width:48px;
+	height:48px;
+	display:inline-block;
+	margin-right: 15px;
+	   vertical-align: top;
+}
+.avatarblock .commentsSection{
+display: inline-block;
+    vertical-align: top;
+    width:70%;
+}
+.avatarblock:last-child{
+	border-bottom:none;
+}
+
+.avatarblock .commentsHeader{
+	font-size:15px;
+	font-weight:bold;
+	margin-bottom:10px;
+}
+
+
+.avatarblock .commentsStatus{
+    display: inline-block;
+    width: auto;
+	color:#adadad;
+	font-weight:bold;
+	text-align:right;
+	vertical-align:top;
+	float:right;
+	
+}
+
+.avatarblock .ActiveButton{
+	float:right;
+	margin-right:0;
+	margin-top:0;
+	margin-bottom:0;
+}
+
+.avatarblock .commentsSection textarea{
+	width:100%;
+	border:1px solid #e1e1e1;
+}
+
+.commentsTable{
+	width:100%;
+ 	position: relative;
+	vertical-align: top;
+	padding: 3px;
+	vertical-align: middle;
+	background-color: white;
+	cursor: pointer;
+
+}
