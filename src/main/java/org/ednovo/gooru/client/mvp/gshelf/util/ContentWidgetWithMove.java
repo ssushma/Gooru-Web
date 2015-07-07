@@ -97,10 +97,10 @@ public abstract class ContentWidgetWithMove extends Composite {
 		pnlArrows.setVisible(true);
 		pnlMoveToEdit.setVisible(false);
 	
-		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getCollectionType())){
+		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getType())){
 			pTitle.setText(i18n.GL3007());
 		}else{
-			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj!=null?folderObj.getCollectionType():""));
+			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj!=null?(folderObj.getType()!=null?folderObj.getCollectionType():""):""));
 		}
 		lblIndex.setText(indexVal+"");
 		txtMoveTextBox.setText(indexVal+"");

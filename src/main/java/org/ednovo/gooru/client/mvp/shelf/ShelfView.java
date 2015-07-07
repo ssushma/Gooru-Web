@@ -1470,9 +1470,15 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					{
 						params.put("folderId", selectedFolderId);
 						params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
-						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-						AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+						if(collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);							
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+						}else{
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+						}
 						break;
 					}
 				}
@@ -1482,9 +1488,15 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 		else
 		{
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);			
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			if(collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);			
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);			
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
 		}
 
 		

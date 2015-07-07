@@ -25,22 +25,11 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
  *
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
-	
+public interface IsCollectionShareTabView extends IsViewWithHandlers<CollectionShareTabUiHandlers> {
 
-	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 */
-	void setCouseData(FolderDo courseObj);
-
-	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
-
-	void setCollectionType(String collectionType);
 }

@@ -62,6 +62,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	
 	private String COLLECTION = "Collection";
 	
+	private String type;
+	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
@@ -119,6 +121,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
+	
+	@Override
+	public void setCollectionType(String templateType) {
+		getView().setCollectionType(templateType);
+	}
+	
 	@Override
 	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
@@ -173,13 +181,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	@Override
 	public void checkProfanity(String textValue,final boolean isCreate,final int index){
-			final Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text",textValue);
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-				@Override
-				public void onSuccess(Boolean value) {
-					getView().callCreateAndUpdate(isCreate,value,index);
-				}
-			});
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				getView().callCreateAndUpdate(isCreate,value,index);
+			}
+		});
 	}
 }

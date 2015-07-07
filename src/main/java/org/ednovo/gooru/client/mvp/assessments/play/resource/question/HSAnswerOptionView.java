@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- *
+ * 
  *  http://www.goorulearning.org/
- *
+ * 
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- *
+ * 
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- *
+ * 
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -35,7 +35,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class HSAnswerOptionView extends Composite{
-
+	
 	public interface QuestionAnswerOptionViewUiBinder extends UiBinder<Widget,HSAnswerOptionView>{
 
 	}
@@ -48,8 +48,8 @@ public class HSAnswerOptionView extends Composite{
 	private String answerText="";
 	boolean isChecked;
 	public static QuestionAnswerOptionViewUiBinder questionAnswerOptionViewUiBinder=GWT.create(QuestionAnswerOptionViewUiBinder.class);
-
-	public HSAnswerOptionView(String questionText,String questionSerialNum){
+	
+	public HSAnswerOptionView(String questionText,String questionSerialNum){ 
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
 		this.answerText=questionText;
 		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
@@ -60,13 +60,13 @@ public class HSAnswerOptionView extends Composite{
 	}
 	private String removeHtmlTags(String text){
 		/**
-		 * Commented the following line to fix issue with displaying math symbols.
+		 * Commented the following line to fix issue with displaying math symbols. 
 		 */
 		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return text;
 	}
-
-
+	
+	
 	public int getAnswerId() {
 		return answerId;
 	}
@@ -85,5 +85,5 @@ public class HSAnswerOptionView extends Composite{
 	public void setAnswerText(String answerText) {
 		this.answerText = answerText;
 	}
-
+	
 }

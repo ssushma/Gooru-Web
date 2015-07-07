@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -48,6 +49,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -73,6 +75,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField HTMLEventPanel btnStandardsBrowse;
 	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
 	@UiField Label lblErrorMessage;
+	AssessmentPopupWidget assessmentPopup;
 	 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -81,6 +84,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	final String ACTIVE="active";
 	final String COLLECTION="Collection";
 	final String ASSESSMENT="Assessment";
+	final String ASSESSMENTEXTERNAL="ExternalAssessment";
 	
 	/**
 	 * Class constructor 
@@ -148,7 +152,26 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT);
+		Window.enableScrolling(false);
+		assessmentPopup=new AssessmentPopupWidget() {
+			@Override
+			public void clickOnNoramlAssessmentClick() {
+				assessmentPopup.hide();
+				Window.enableScrolling(true);
+				//This will display the normal assessment info
+				getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT);
+			}
+			@Override
+			public void clickOnExternalAssessmentClick() {
+				assessmentPopup.hide();
+				Window.enableScrolling(true);
+				//This will display the external assessment info
+				getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENTEXTERNAL);
+			}
+		};
+		assessmentPopup.setGlassEnabled(true);
+		assessmentPopup.show();
+		assessmentPopup.center();
 	}
 	@Override
 	public void callCreateAndUpdate(boolean isCreate,boolean result,String type){

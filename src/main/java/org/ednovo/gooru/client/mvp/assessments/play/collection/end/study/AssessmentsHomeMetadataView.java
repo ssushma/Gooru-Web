@@ -87,6 +87,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 	@UiField HTML collectionGoal;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn,studyButton;
 	@UiField FlowPanel assessmentImageContainter;
+	@UiField Label lblAssessmentTitle;
 
 	private boolean isAssignPopup = false;
 
@@ -112,24 +113,26 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 	@Inject
 	public AssessmentsHomeMetadataView(){
 		setWidget(uiBinder.createAndBindUi(this));
+
 		customizeCollectionBtn.setText(i18n.GL2037());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
+		customizeCollectionBtn.setVisible(false);
 
 		shareCollectionBtn.setText(i18n.GL0536());
 		shareCollectionBtn.getElement().setId("btnShareCollectionBtn");
 		shareCollectionBtn.getElement().setAttribute("alt",i18n.GL0536());
 		shareCollectionBtn.getElement().setAttribute("title",i18n.GL0536());
-
+		shareCollectionBtn.setVisible(false);
 
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
 		collectionGoal.getElement().setId("htmlCollectionGoal");
 
-		studyButton.setText(i18n.GL0594());
-		studyButton.getElement().setId("btnStudyCollectionBtn");
-		studyButton.getElement().setAttribute("alt",i18n.GL0594());
-		studyButton.getElement().setAttribute("title",i18n.GL0594());
+		studyButton.setText(i18n.GL3451());
+		studyButton.getElement().setId("btnAssessmentPlay");
+		studyButton.getElement().setAttribute("alt",i18n.GL3451());
+		studyButton.getElement().setAttribute("title",i18n.GL3451());
 
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
@@ -146,6 +149,10 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 
 		this.collectionDo=collectionDo;
+
+		lblAssessmentTitle.setText(collectionDo.getTitle());
+		StringUtil.setAttributes(lblAssessmentTitle.getElement(), "lblAssessmentTitle", collectionDo.getTitle(), collectionDo.getTitle());
+
 		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
 		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 

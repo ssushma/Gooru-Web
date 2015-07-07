@@ -24,23 +24,52 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
  * @author Search Team
  *
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
+public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalAssessmentView> implements ExternalAssessmentInfoUiHandlers {
+
+	@Inject
+	private TaxonomyServiceAsync taxonomyService;
+
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
-
 	/**
-	 * To set the Updated course data
-	 * @param courseObj
+	 * Class constructor
+	 * @param view {@link View}
+	 * @param proxy {@link Proxy}
 	 */
-	void setCouseData(FolderDo courseObj);
+	@Inject
+	public ExternalAssessmentInfoPresenter(EventBus eventBus,IsExternalAssessmentView view) {
+		super(eventBus,view);
+		getView().setUiHandlers(this);
+	}
 
-	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
 
-	void setCollectionType(String collectionType);
+	@Override
+	protected void onReveal(){
+		super.onReveal();
+	}
+
+	public TaxonomyServiceAsync getTaxonomyService() {
+		return taxonomyService;
+	}
+
+	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
+		this.taxonomyService = taxonomyService;
+	}
 }
