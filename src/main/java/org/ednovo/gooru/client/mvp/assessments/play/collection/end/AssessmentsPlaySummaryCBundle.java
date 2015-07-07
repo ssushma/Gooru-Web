@@ -30,15 +30,12 @@ public interface AssessmentsPlaySummaryCBundle extends ClientBundle{
 			String collection_image();
 
 	}
-	@NotStrict
-	@Source("collectionSummary.css")
-	CollectionSummaryCss css();
 
 	@NotStrict
-	@Source("res_collectionSummary.css")
+	@Source("res_assessmentsSummary.css")
 	CollectionSummaryCss getResponsiveStyle();
 
 	@NotStrict
-	@Source("res_collectionSummary1.css")
+	@Source("res_assessmentsSummary1.css")
 	CollectionSummaryCss getResponsive1Style();
 }
