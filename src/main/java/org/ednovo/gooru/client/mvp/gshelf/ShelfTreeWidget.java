@@ -299,6 +299,8 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
+		if(collectionDo.getType()!=null)
+		{
 		if(collectionDo.getType().equals(COURSE)){
 			titleFocPanel.addStyleName(COURSE);
 		}else if(collectionDo.getType().equals(UNIT)) {
@@ -307,6 +309,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			titleFocPanel.addStyleName(LESSON);
 		}else if(!collectionDo.getType().equals(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
+		}
 		}
 		if(collectionDo.getCollectionType().contains(ASSESSMENT)){
 			titleFocPanel.addStyleName("assessment");
@@ -324,6 +327,8 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else{
 			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 		}
+		if(collectionDo.getType()!=null)
+		{
 		if(collectionDo.getType().equals(COURSE)||collectionDo.getType().equals(UNIT)||collectionDo.getType().equals(LESSON)){
 			setData(nextLevel);
 		}else{
@@ -343,6 +348,7 @@ public class ShelfTreeWidget extends FocusPanel {
 				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 				titleFocPanel.addStyleName("collectionChild");
 			}
+		}
 		}
 	}
 	
