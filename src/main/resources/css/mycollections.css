@@ -3499,3 +3499,89 @@ width:100% !important;
    
 }
 /* === For Collection info Css end ================================== */
+
+
+/* === Assessment popup start ================================== */
+#addAssessmentPopup {
+	padding:25px 0;
+}
+#addAssessmentPopup .modal-dialog{
+	width:438px;
+	margin:0 auto;
+}
+#addAssessmentPopup .modal-header{
+	background-color:#515151;
+	color:#ffffff;
+	border-radius:6px 6px 0 0;
+	margin-top:-2px;
+	
+}
+#addAssessmentPopup .close{
+	font-size:35px;
+	color:#ffffff;
+	opacity:1;
+}
+#addAssessmentPopup .modal-footer button.primary{
+	padding:7px 20px;
+}
+
+#addAssessmentPopup .modal-body{
+	padding:0 0;
+}
+#addAssessmentPopup .indications{
+	background:#dddddd;
+	padding:6px 15px;
+}
+#addAssessmentPopup .assessmentInnerBlock{
+	padding:20px 0;
+	border-bottom:1px solid #dddddd;
+}
+#addAssessmentPopup .assessmentInnerBlock button.primary{
+	padding:10px 6px;
+}
+#addAssessmentPopup .assessmentInnerBlock:last-child{
+	border-bottom:none;
+}
+#addAssessmentPopup .assessmentInnerBlock p{
+	margin:0 0;
+}
+#addAssessmentPopup .noteText{
+	padding:15px 0 30px 0;
+}
+@media (min-width: 240px) and (max-width: 319px){
+	#addAssessmentPopup .modal-dialog{
+		width:auto;
+		margin-left:10px;
+		margin-right:10px;
+	}
+	.colxs6-reset{
+		width:100% !important;
+	}
+	
+}
+@media (min-width: 320px) and (max-width: 479px) {
+	#addAssessmentPopup .modal-dialog{
+		width:auto;
+		margin-left:10px;
+		margin-right:10px;
+	}
+	.colxs6-reset{
+		width:100% !important;
+	}
+}
+
+@media (min-width: 480px) and (max-width: 767px)  {
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+			
+}
+@media (min-width: 1200px) {
+	
+}
+/* === Assessment popup start ================================== */
