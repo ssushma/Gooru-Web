@@ -122,7 +122,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				params.put("o1", uri[uri.length-1]);
 				params.put("view", COURSE);
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
@@ -153,7 +153,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				folderDo.setType(COURSE);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");

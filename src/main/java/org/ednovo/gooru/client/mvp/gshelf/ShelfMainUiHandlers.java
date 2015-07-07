@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
@@ -118,4 +119,6 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	 * @param collectionDo
 	 */
 	void setCollectionContent(FolderDo collectionDo);
+	
+	void setBreadCrumbs(HashMap<String, String> selectedWidgetsTitleType);
 }
