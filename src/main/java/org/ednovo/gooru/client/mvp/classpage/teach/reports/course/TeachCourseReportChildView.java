@@ -107,7 +107,8 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	        scrollCollapse: true,
 	        paging:         false,
 	        bFilter:false,
-	        bInfo: false
+	        bInfo: false,
+	        sort: false
 	    });
 	    new $wnd.$.fn.dataTable.FixedColumns(table,{
 	        leftColumns: 1

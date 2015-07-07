@@ -47,7 +47,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPresenter> implements IsTeachUnitReportView {
 
-	@UiField HTMLPanel lessonTablePanel;
+	@UiField HTMLPanel unitTablePanel;
 	
 	final AdvancedFlexTable assessmentTableWidget = new AdvancedFlexTable();
 	final AdvancedFlexTable collectionTableWidget = new AdvancedFlexTable();
@@ -65,7 +65,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	
 	public void getData() {
 		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-		lessonTablePanel.clear();
+		unitTablePanel.clear();
 		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
 			setAssessmentTableData();
 		} else if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
@@ -76,9 +76,9 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	@Override
 	public void setAssessmentTableData() {
 		assessmentTableWidget.getElement().setId("unit-table-report-data-id");
-		lessonTablePanel.add(assessmentTableWidget);
-		lessonTablePanel.getElement().setId("courseTableID");
-		lessonTablePanel.getElement().setClassName("scrollTBL");
+		unitTablePanel.add(assessmentTableWidget);
+		unitTablePanel.getElement().setId("courseTableID");
+		unitTablePanel.getElement().setClassName("scrollTBL");
 		assessmentTableWidget.addStyleName("table table-bordered tableStyle");
 		Label studentNameLbl = new Label("");
 		studentNameLbl.setStyleName("");
@@ -189,9 +189,9 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	@Override
 	public void setCollectionTableData() {
 		collectionTableWidget.getElement().setId("unit-table-report-data-id");
-		lessonTablePanel.add(collectionTableWidget);
-		lessonTablePanel.getElement().setId("courseTableID");
-		lessonTablePanel.getElement().setClassName("scrollTBL");
+		unitTablePanel.add(collectionTableWidget);
+		unitTablePanel.getElement().setId("courseTableID");
+		unitTablePanel.getElement().setClassName("scrollTBL");
 		collectionTableWidget.addStyleName("table table-bordered tableStyle");
 		Label studentNameLbl = new Label("");
 		studentNameLbl.setStyleName("");
