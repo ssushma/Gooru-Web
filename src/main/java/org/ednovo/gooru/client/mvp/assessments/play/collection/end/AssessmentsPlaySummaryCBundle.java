@@ -30,6 +30,9 @@ public interface AssessmentsPlaySummaryCBundle extends ClientBundle{
 			String collection_image();
 
 	}
+	@NotStrict
+	@Source("assessmentsSummary.css")
+	CollectionSummaryCss css();
 
 	@NotStrict
 	@Source("res_assessmentsSummary.css")

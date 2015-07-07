@@ -97,7 +97,7 @@
 							<g:Label styleName="{unitStyle.css.loadingImageForSelfEdit}" />
 						</g:HTMLPanel>
 
-					<g:FlowPanel styleName="container {playerStyle.insightsFrameContainer} {unitStyle.css.collectionsProgressContainerMain}" ui:field="frameContainer">
+					<g:FlowPanel styleName="container {playerStyle.insightsFrameContainer} assessmentsProgressContainerMain" ui:field="frameContainer">
 	             	 <g:HTMLPanel styleName="{unitStyle.css.summary_title}" ui:field="collectionSummaryText"></g:HTMLPanel>
 					      <!-- Collection Summary Top -->
 					     <g:HTMLPanel ui:field="collectionMetaDataPnl">
