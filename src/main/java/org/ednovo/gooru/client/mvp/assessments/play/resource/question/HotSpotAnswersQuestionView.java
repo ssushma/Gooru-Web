@@ -42,6 +42,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
@@ -269,7 +270,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			isUserAnswerAttempted(true);
 			checkSelectedRadioButton();
 
-		}
+		}	
 	}
 
 	private void checkSelectedRadioButton(){
@@ -332,8 +333,8 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(questionAnswerOptionView.getAnswerText());
-					//answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText()));
+					answerAttemptDo.setText(URL.encodeQueryString(questionAnswerOptionView.getAnswerText())); 
+					//answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText())); 
 					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);
@@ -361,7 +362,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 				AddAnswerImg answerImg=(AddAnswerImg)widget;
 
 				if(answerImg.selectedImage){
-
+					
 					AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 					attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
 					attempteAnswersDo.setAttemptResult(answerImg.isAnswerCorrect());
@@ -369,11 +370,11 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(answerImg.getAnswerImage());
+					answerAttemptDo.setText(answerImg.getAnswerImage()); 
 					answerAttemptDo.setAnswerId(answerImg.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);
-
+					
 					if(answerImg.isAnswerCorrect()){
 						if(hsChoiceStatus){
 							hsChoiceStatus=true;
