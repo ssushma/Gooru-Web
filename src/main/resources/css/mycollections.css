@@ -3729,7 +3729,7 @@ right:1px;
 	border-bottom:1px solid #dddddd;
 }
 #addAssessmentPopup .assessmentInnerBlock button.primary{
-	padding:10px 6px;
+	padding:10px 5px;
 }
 #addAssessmentPopup .assessmentInnerBlock:last-child{
 	border-bottom:none;
@@ -3791,6 +3791,12 @@ right:1px;
 	padding: 10px 15px;
 	border-bottom: 1px solid #dddddd;
 }
+#pnlExternalAssessmentContainter .existingAssessment input,textarea{
+	border-radius:4px;
+}
+#pnlExternalAssessmentContainter .existingAssessment p{
+	margin: 0 0 10px;
+}
 #pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy,#pnlExternalAssessmentContainter .existingAssessment .assessmentRequires{
 		padding: 15px 15px;
 	border-bottom: 1px solid #dddddd;
@@ -3819,6 +3825,10 @@ right:1px;
 	float: right;
 	height: 52px;
 	width: 52px;
+}
+#pnlExternalAssessmentContainter .setPaddingLeft{
+	padding-right: 15px !important;
+	padding-left: 15px !important;
 }
 #pnlExternalAssessmentContainter  input[type=radio].css-checkbox {
 	position: absolute;

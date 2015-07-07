@@ -304,6 +304,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		this.currentTypeView =currentTypeView;
 	}
 	
+	@Override
+	public void enableAndHideTabs(boolean isVisible){
+		lnkContent.setVisible(isVisible);
+		lnkshare.setVisible(isVisible);
+	}
 	/**
 	 * 
 	 * This inner class is used to delete the user content like C/U/L and Collection.
@@ -318,7 +323,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId); 
-			
 		}
 	}
 	
@@ -333,13 +337,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 */
 	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId, String o2UnitId,String o3LessonId) {
 		deletePopup = new DeletePopupViewVc() {
-			
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 				if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteCourseContent(o1CourseId);
 				}
-				
 			}
 			
 			@Override
@@ -347,7 +349,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				hide(); 
 			}
 		};
-		
 		deletePopup.setPopupTitle(i18n.GL0748());
 		if(currentTypeView.equalsIgnoreCase(COURSE)){
 			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle()));
@@ -359,9 +360,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		deletePopup.setPleaseWaitText(i18n.GL0339());
 		deletePopup.show();
 		deletePopup.center();
-		
 	}
-	
 	/**
 	 * This method defines functionality after deleting the course.
 	 */
@@ -379,5 +378,4 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			deletePopup.hide();
 		}
 	}
-	
 }

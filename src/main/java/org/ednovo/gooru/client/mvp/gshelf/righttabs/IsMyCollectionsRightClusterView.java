@@ -52,6 +52,7 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 */
 	public void setDefaultActiveTab(int tabIndex);
 	public void setCurrentTypeView(String type);
+	public void enableAndHideTabs(boolean isVisible);
 	
 	/**
 	 * This method is used to set the content on delete of course.

@@ -23,7 +23,7 @@
 		
 		<div class="assessmentPrivacy">
 		<div class="row">
-		<div class="col-md-2 col-sm-3">
+		<div class="col-md-2 col-sm-3 setPaddingLeft">
 		<p>Privacy</p>
 		</div>
 		<div class="col-md-10 col-sm-9">
@@ -37,7 +37,7 @@
 		
 		<div class="assessmentRequires">
 		<div class="row">
-		<div class="col-md-2 col-sm-3">
+		<div class="col-md-2 col-sm-3 setPaddingLeft">
 		<p>Requires Log In?</p>
 		</div>
 		<div class="col-md-10 col-sm-9">
