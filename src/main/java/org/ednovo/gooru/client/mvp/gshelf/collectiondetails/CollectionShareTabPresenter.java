@@ -24,23 +24,37 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
- * @author Search Team
+ * @author Search TeamUnitInfoPresenter.java
  *
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
-	
+public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionShareTabView> implements CollectionShareTabUiHandlers {
 
 	/**
-	 * To set the Updated course data
-	 * @param courseObj
+	 * Class constructor
+	 * @param view {@link View}
+	 * @param proxy {@link Proxy}
 	 */
-	void setCouseData(FolderDo courseObj);
+	@Inject
+	public CollectionShareTabPresenter( EventBus eventBus,IsCollectionShareTabView view) {
+		super(eventBus,view);
+		getView().setUiHandlers(this);
+	}
 
-	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
 
-	void setCollectionType(String collectionType);
+	@Override
+	protected void onReveal(){
+		super.onReveal();
+	}
+
 }

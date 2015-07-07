@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionShareTabPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.ExternalAssessmentInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
@@ -58,6 +59,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	CollectionContentPresenter collectionContentPresenter;
 	
+	CollectionShareTabPresenter collectionShareTabPresenter = null;
+	
 	List<FolderDo> folderListDoChild;
 
 	final String COLLECTION="Collection";
@@ -73,7 +76,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter,CollectionShareTabPresenter collectionShareTabPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
@@ -81,7 +84,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionInfoPresenter=collectionInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
 		this.externalAssessmentInfoPresenter=externalAssessmentInfoPresenter;
-		
+		this.collectionShareTabPresenter=collectionShareTabPresenter;
+
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		unitInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -98,7 +102,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		if(index==1){
-			System.out.println("type::"+type);
 				//For displaying template
 				if(COURSE.equalsIgnoreCase(type)){ 
 					courseInfoPresenter.callTaxonomyService();
@@ -112,6 +115,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else if("Assessment".equalsIgnoreCase(type) || "Collection".equalsIgnoreCase(type)){
+					collectionInfoPresenter.setCollectionType(type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else{
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
@@ -123,6 +127,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			}else{
 				shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
+			}
+		}else if(index==3){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+				//CollectionShareTabPresenter.setData(folderObj);
+				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
 		}
 	}

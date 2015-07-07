@@ -24,23 +24,37 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 /**
  * @author Search Team
  *
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
+public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShareTabUiHandlers> implements IsCollectionShareTabView {
+
+	private static CollectionShareTabViewUiBinder uiBinder = GWT.create(CollectionShareTabViewUiBinder.class);
 	
+	@UiTemplate("CollectionShareTabView.ui.xml")
+	interface CollectionShareTabViewUiBinder extends UiBinder<Widget, CollectionShareTabView> {
+	}	
+	
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
-	 * To set the Updated course data
-	 * @param courseObj
+	 * Class constructor 
+	 * @param eventBus {@link EventBus}
 	 */
-	void setCouseData(FolderDo courseObj);
-
-	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
-
-	void setCollectionType(String collectionType);
+	@Inject
+	public CollectionShareTabView() {
+		setWidget(uiBinder.createAndBindUi(this));
+	}
+	
 }
