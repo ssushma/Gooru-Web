@@ -246,7 +246,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	@Override
 	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
 		this.addStandardsPresenter=addStandardsPresenter;
-		headerUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
+		//headerUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
 
 		//This is used for handle the mouse left click event to display the search prefilter popup.
 		MouseDownHandler hanlder=new MouseDownHandler() {

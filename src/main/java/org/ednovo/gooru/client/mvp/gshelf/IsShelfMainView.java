@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 
 /**
  * @author Search Team
@@ -71,4 +72,9 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag);
 
 	void enableDisableCourseButton(boolean isEnable);
+	/**
+	 * This method is used to get the collection title label
+	 * @return
+	 */
+	Label getCollectionLabel();
 }

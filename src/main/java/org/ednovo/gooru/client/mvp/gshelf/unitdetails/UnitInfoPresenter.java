@@ -56,7 +56,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String SUBJECT="subject";
 	
-	final String UNIT="unit";
+	final String UNIT="Unit";
 	
 	private String LESSON = "Lesson";
 	
