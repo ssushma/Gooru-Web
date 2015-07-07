@@ -77,7 +77,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@UiField HTMLPanel unitInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveCourseBtn,nextUnitBtn;
+	@UiField Button saveUnitBtn,nextCreateLessonBtn;
 	@UiField TextBox unitTitle;
 	@UiField Label lblErrorMessage,lblErrorMessageForBig,lblErrorMessageForEssential;
 	@UiField TextArea txaBigIdeas,txaEssentialQuestions;
@@ -222,13 +222,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 	}
 	
-	@UiHandler("saveCourseBtn")
-	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+	@UiHandler("saveUnitBtn")
+	public void clickOnSaveUnitBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0);
 	}
 	
-	@UiHandler("nextUnitBtn")
-	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
+	@UiHandler("nextCreateLessonBtn")
+	public void clickOnNextLessonBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0);
 	}
 	/**
@@ -256,9 +256,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+					getUiHandlers().updateUnitDetails(createOrUpDate,id,isCreate);
 				}else{
-					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate);
 				}
 			}
 		}
