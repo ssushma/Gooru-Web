@@ -121,6 +121,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
+	
+	@Override
+	public void setCollectionType(String templateType) {
+		getView().setCollectionType(templateType);
+	}
+	
 	@Override
 	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
