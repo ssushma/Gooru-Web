@@ -68,7 +68,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField HTMLPanel pnlTitleContainer,pnlArrows,pnlMoveToEdit;
 	@UiField Paragraph pTitle;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url",ASSESSMENT="Assessment";
 	
 	String type;
 	/**
@@ -194,11 +194,17 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(typeVal)){
+			lblImage.setStyleName("folderImage");
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
 			pnlArrows.setVisible(false);
 			pnlMoveToEdit.setVisible(true);
-		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal)){
+		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal) || ASSESSMENT.equalsIgnoreCase(typeVal)){
+			if(COLLECTION.equalsIgnoreCase(typeVal)){
+				lblImage.setStyleName("collectionImage");
+			}else{
+				lblImage.setStyleName("assessmentImage");
+			}
 			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
 			spnUnitsCount.setVisible(false);

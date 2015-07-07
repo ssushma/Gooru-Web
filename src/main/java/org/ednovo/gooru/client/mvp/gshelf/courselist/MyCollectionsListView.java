@@ -101,6 +101,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}
 		});
 		btnCreate.addClickHandler(new CreateContentEvent());
+		createPanel.addClickHandler(new CreateContentEvent());
 	}
 	/**
 	 * This method is used to set id's
@@ -280,23 +281,23 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public void setCreateText(String type){
 		if(COURSE.equalsIgnoreCase(type)){
 			enableCreateButtons(false);
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3416());
-			lblAddNew.setText(i18n.GL3281().toLowerCase());
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
+			lblAddNew.setText(i18n.GL3281());
 		}else if(UNIT.equalsIgnoreCase(type)){
 			enableCreateButtons(false);
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3417());
-			lblAddNew.setText(i18n.GL0910().toLowerCase());
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3371());
+			lblAddNew.setText(i18n.GL0910());
 		}else if(LESSON.equalsIgnoreCase(type)){
 			enableCreateButtons(true);
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 			lblAddNewForResource.setText(i18n.GL2001());
-			lblAddNewForQuestion.setText(i18n.GL3418());
+			lblAddNewForQuestion.setText(i18n.GL3372());
 			
 			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
 			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
-			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3418());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3372());
 			
 			btnCreate.setVisible(false);
 			lblAddNew.setVisible(false);
@@ -376,21 +377,21 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-		if( view!=null){
+		if(view!=null){
 			params.put(VIEW,view);
 		}else{
 			params.put(VIEW,"Course");
 		}
-		if(o1==null && o2==null && o3==null && id==null){
+		if(o1==null && o2==null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,folderObj.getGooruOid());
-		} else if(o1!=null && o2==null && o3==null && id==null){
+		} else if(o1!=null && o2==null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL, o1);
 			params.put(O2_LEVEL,folderObj.getGooruOid());
-		}else if(o1!=null && o2!=null && o3==null && id==null) {
+		}else if(o1!=null && o2!=null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())) {
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
-		}else{
+		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,o3);

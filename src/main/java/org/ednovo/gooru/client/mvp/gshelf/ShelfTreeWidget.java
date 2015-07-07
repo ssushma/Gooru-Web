@@ -181,10 +181,13 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(collectionDo!= null){
+				if(collectionDo!=null)
+				{
+				if(collectionDo.getCollectionType()!= null){
 					if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
 						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
+				}
 				}
 			}
 		});
@@ -299,17 +302,24 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
-		if(collectionDo.getType().equalsIgnoreCase(COURSE)){
+
+		if(collectionDo.getType()!=null)
+		{
+		if(collectionDo.getType().equals(COURSE)){
 			titleFocPanel.addStyleName("course");
-		}else if(collectionDo.getType().equalsIgnoreCase(UNIT)) {
+		}else if(collectionDo.getType().equals(UNIT)) {
 			titleFocPanel.addStyleName("unit");
-		}else if(collectionDo.getType().equalsIgnoreCase(LESSON)) {
+		}else if(collectionDo.getType().equals(LESSON)) {
 			titleFocPanel.addStyleName("lesson");
-		}else if(!collectionDo.getType().equalsIgnoreCase(FOLDER)) {
+		}else if(!collectionDo.getType().equals(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
+		}
+		if(collectionDo.getCollectionType()!=null)
+		{
 		if(collectionDo.getCollectionType().contains(ASSESSMENT)){
 			titleFocPanel.addStyleName("assessment");
+		}
 		}
 		if(collectionDo.getSharing()!=null && !collectionDo.getSharing().equalsIgnoreCase("") && collectionDo.getSharing().equals("public")) {
 			if(collectionDo.getCollectionType().equals(COLLECTION) ){
@@ -324,7 +334,10 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else{
 			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		if(collectionDo.getType().equalsIgnoreCase(COURSE)||collectionDo.getType().equalsIgnoreCase(UNIT)||collectionDo.getType().equalsIgnoreCase(LESSON)){
+		
+		if(collectionDo.getType()!=null)
+		{
+			if(collectionDo.getType().equalsIgnoreCase(COURSE)||collectionDo.getType().equalsIgnoreCase(UNIT)||collectionDo.getType().equalsIgnoreCase(LESSON)){
 			setData(nextLevel);
 		}else{
 			if(nextLevel == 1) {
@@ -343,6 +356,7 @@ public class ShelfTreeWidget extends FocusPanel {
 				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 				titleFocPanel.addStyleName("collectionChild");
 			}
+		}
 		}
 	}
 	
@@ -438,21 +452,28 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
-				if (event.getSource().equals(titleFocPanel)) {
-		        	MixpanelUtil.Expand_CollectionPanel();
-		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
-		          		Storage stockStore = Storage.getLocalStorageIfSupported();
-		                if (stockStore != null) {
-		                    stockStore.setItem("tabKey", "resourceTab");
-		                }
-		                if(isValue){
-		                	openCollectionInShelf();
-		                }
-		                isValue=true;
-		        	}
-		        	setOpen();
-		        }  
+
+			if(collectionDo!=null)
+			{
+				if(collectionDo.getType()!=null)
+				{
+					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+						if (event.getSource().equals(titleFocPanel)) {
+							MixpanelUtil.Expand_CollectionPanel();
+							if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
+								Storage stockStore = Storage.getLocalStorageIfSupported();
+								if (stockStore != null) {
+									stockStore.setItem("tabKey", "resourceTab");
+								}
+								if(isValue){
+									openCollectionInShelf();
+								}
+								isValue=true;
+							}
+							setOpen();
+						}  
+					}
+				}
 			}
 		}
 	}
