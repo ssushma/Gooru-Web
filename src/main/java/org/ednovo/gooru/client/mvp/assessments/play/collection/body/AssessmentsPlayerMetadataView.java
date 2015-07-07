@@ -176,7 +176,7 @@ public class AssessmentsPlayerMetadataView extends BaseViewWithHandlers<Assessme
 	}
 	public void setLabelAndIds() {
 		studyMainContianer.getElement().getStyle().setPosition(Position.RELATIVE);
-		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
+		studyMainContianer.getElement().setId("fpnlAssessmentsMainContianer");
 	}
 	public void setCourseTitle(String title){
 	}

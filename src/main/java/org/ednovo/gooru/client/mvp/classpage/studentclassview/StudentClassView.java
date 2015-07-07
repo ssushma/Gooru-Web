@@ -24,14 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.studentclassview;
 
-import java.util.Iterator;
-
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.H1Panel;
 import org.ednovo.gooru.client.uc.SpanPanel;
 
 import com.google.gwt.core.client.GWT;
@@ -40,7 +38,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -62,10 +63,10 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandlers> implements IsStudentClassView ,ClickHandler{
 	
 	@UiField SpanPanel classCodeSpan;
-	@UiField H2Panel courseName;
-	@UiField Button learningMapBtn, reportsBtn;
+	@UiField H1Panel courseName;
 	@UiField SimplePanel learningMapContainer;
-	@UiField HTMLPanel btnGroup;
+	@UiField Image classImage;
+	@UiField SimpleCheckBox switchCheckBox;
 	
 	private static StudentClassViewUiBinder uiBinder = GWT.create(StudentClassViewUiBinder.class);
 
@@ -79,8 +80,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	public StudentClassView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setCourseData();
-		learningMapBtn.addClickHandler(new ClasspageTabNavigator(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM));
-		reportsBtn.addClickHandler(new ClasspageTabNavigator(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM));
+		switchCheckBox.addClickHandler(new ClasspageTabNavigator());
 	}
 
 	@Override
@@ -94,6 +94,11 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	}
 	
 	public void setCourseData() {
+		switchCheckBox.getElement().setId("myonoffswitch");
+		switchCheckBox.getElement().setAttribute("name", "onoffswitch");
+		classImage.setUrl("https://qa.goorulearning.org/images/Classpage/default-classpage.png");
+		classImage.setWidth("1000px");
+		classImage.setHeight("165px");
 		setClassCodeText("XYPRSZ");
 	}
 	
@@ -111,28 +116,25 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	}
 
 	public class ClasspageTabNavigator implements ClickHandler{
-		String token = null;
-		public ClasspageTabNavigator(String token) {
-			this.token = token;
-		}
-		
 		@Override
 		public void onClick(ClickEvent event) {
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, token);
+			if(switchCheckBox.isChecked()) {
+				request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM);
+			} else {
+				request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
+			}
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 	}
-
+	
 	@Override
 	public void setButtonHighlight() {
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
-		learningMapBtn.removeStyleName(CssTokens.ACTIVE);
-		reportsBtn.removeStyleName(CssTokens.ACTIVE);
 		if(page.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
-			learningMapBtn.addStyleName(CssTokens.ACTIVE);
+			switchCheckBox.setChecked(false);
 		} else {
-			reportsBtn.addStyleName(CssTokens.ACTIVE);
+			switchCheckBox.setChecked(true);
 		}
 	}
 

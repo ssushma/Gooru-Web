@@ -416,7 +416,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setCollectionContent(FolderDo collectionDo){
 		clearSlot(RIGHT_SLOT);
 		getMyCollectionsRightClusterPresenter().setTabItems(1, "collection",collectionDo);
-		getView().getCollectionLabel().setVisible(true);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		if(FOLDER.equalsIgnoreCase(view)){
+			getView().getCollectionLabel().setVisible(true);
+		}
 		getView().getCollectionLabel().setText(collectionDo.getTitle());
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter(),false);	
 	}
@@ -431,5 +434,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setBreadCrumbs(HashMap<String, String> selectedWidgetsTitleType) {
 		getMyCollectionsRightClusterPresenter().setMycontentBreadcrumbs(selectedWidgetsTitleType);
+	}
+
+	/**
+	 * Sets all courses on right cluster.
+	 */
+	public void setUserAllCourses(String deletedTreeWidgetId) {
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId);
 	}
 }

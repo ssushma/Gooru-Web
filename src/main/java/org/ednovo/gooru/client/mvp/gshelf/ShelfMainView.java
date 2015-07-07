@@ -304,11 +304,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					}
 					shelfTreeWidget.setFolderOpenedStatus(true);
 				}else{
-					String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-					if(view!=null && FOLDER.equalsIgnoreCase(view)){
-						getUiHandlers().setCollectionContent(shelfTreeWidget.getCollectionDo());
-						shelfTreeWidget.setCollectionOpenedStatus(true);
-					}
+					getUiHandlers().setCollectionContent(shelfTreeWidget.getCollectionDo());
+					shelfTreeWidget.setCollectionOpenedStatus(true);
 				}
 				shelfTreeWidget.setActiveStyle(true);
 				ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
@@ -680,7 +677,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setLevel(4);
-		}else if("Assessment".equalsIgnoreCase(type)){
+		}else if("Assessment".equalsIgnoreCase(type) || "ExternalAssessment".equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
 			shelfTreeWidget.getTitleLbl().setText("UntitledAssessment");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
@@ -919,5 +916,18 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@Override
 	public Label getCollectionLabel(){
 		return lblCollectionTitle;
+	}
+
+	@Override
+	public void removeDeletedTreeWidget(String deletedTreeWidgetId){
+		for (FolderDo folderDo : SHELF_COLLECTIONS) {
+			if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
+				SHELF_COLLECTIONS.remove(folderDo);
+				break;
+			}
+		}
+		getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);
+		treeChildSelectedItem.remove();
+		organizeRootPnl.addStyleName("active");
 	}
 }

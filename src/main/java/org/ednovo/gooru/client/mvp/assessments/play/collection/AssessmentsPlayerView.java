@@ -123,6 +123,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	CollectionItemDo  collectionItemDo=null;
 	CollectionDo collectionDo=null;
 	boolean isSeeMoreClicked=false;
+	RequestToLoginPopupUc requestToLogin = null;
 
 	private int userRating=0;
 	private HandlerRegistration autoHideHandler;
@@ -192,7 +193,27 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		  }
 		  setUiText();
 
+
+		  if (AppClientFactory.isAnonymous()){
+			  requestToLogin = new RequestToLoginPopupUc();
+			  requestToLogin.getBtnLoginAndContinue().addClickHandler(new RequestLoginPopupEvent());
+			  requestToLogin.center();
+			  requestToLogin.show();
+		  }
+
 	}
+
+	private class RequestLoginPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(AppClientFactory.isAnonymous() && requestToLogin != null){
+				requestToLogin.hide();
+				getUiHandlers().showLoginPopupWidget(AssessmentsPlayerPresenter.UPDATE_HEADER);
+			}
+		}
+	}
+
+
 
 	@UiHandler("closeIpadBtn")
 	public void onIpadCloseClick(ClickEvent clickEvent){

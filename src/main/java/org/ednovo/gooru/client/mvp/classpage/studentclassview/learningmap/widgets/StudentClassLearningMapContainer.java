@@ -13,6 +13,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -22,6 +23,7 @@ public class StudentClassLearningMapContainer extends Composite {
 	@UiField HTMLPanel circleContainer;
 	@UiField H3Panel unitCountName;
 	@UiField PPanel unitName;
+	@UiField Label numericOrder;
 	
 	private static StudentClassLearningMapContainerUiBinder uiBinder = GWT
 			.create(StudentClassLearningMapContainerUiBinder.class);
@@ -30,20 +32,21 @@ public class StudentClassLearningMapContainer extends Composite {
 			UiBinder<Widget, StudentClassLearningMapContainer> {
 	}
 
-	public StudentClassLearningMapContainer() {
+	public StudentClassLearningMapContainer(int count) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setCircleContainerItems();
+		setCircleContainerItems(count);
 		unitBlock.addClickHandler(new LessonPageRedirection("unitId"));
 	}
 	
-	public void setCircleContainerItems() {
-		unitCountName.setText("Unit 1");
-		unitName.setText("Operations & Algebraic Thinking");
+	public void setCircleContainerItems(int count) {
+		numericOrder.setText((count+1)+"");
+		unitCountName.setText("Operations & Algebraic Thinking");
+		unitName.setText("Unit");
 		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("green-text"));
+		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
 		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));
 		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("green-text"));
+		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
 		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
 		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
 		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
