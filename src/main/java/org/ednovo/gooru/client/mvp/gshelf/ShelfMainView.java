@@ -110,6 +110,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
+	private static final String COLLECTION = "collection";
 	
 	private static final String UNTITLEDCOURSE = i18n.GL3347();
 	private static final String UNTITLEDUNIT = i18n.GL3364();
@@ -808,6 +809,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		
 		
 		String type = shelfTreeWidget.getTreeWidgetType();
+		if(type!=null)
+		{
 		if(type.equalsIgnoreCase(COURSE)){
 			HashMap<String,String> urlParams = new HashMap<String,String>();
 			urlParams.put(COURSE, courseDo.getTitle()); 
@@ -830,6 +833,20 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 //			shelfTreeWidget.updateWidgetData(courseDo,urlParams,type); 
 			
 		}
+		}
+		else{
+			ShelfTreeWidget shelfTreeWidget1 = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			HashMap<String,String> urlParams = new HashMap<String,String>();
+			urlParams.put(COURSE,shelfTreeWidget1.getUpdatedWidgetsTitleType().get(COURSE));
+			urlParams.put(COLLECTION, courseDo.getTitle());
+			urlParams.put("o1",shelfTreeWidget1.getUrlParams().get("o1"));
+			urlParams.put("o2",shelfTreeWidget1.getUrlParams().get("o2"));
+			urlParams.put("o3",shelfTreeWidget1.getUrlParams().get("o2"));
+			urlParams.put("id",courseDo.getGooruOid());
+			
+			shelfTreeWidget.setUrlParams(urlParams);
+		}
+		
 		
 	}
 

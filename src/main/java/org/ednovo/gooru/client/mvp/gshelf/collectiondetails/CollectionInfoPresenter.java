@@ -131,14 +131,26 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				Map<String, String> params= new HashMap<String, String>();
 				params.put("id", uri[uri.length-1]);
 				params.put("view", COLLECTION);
+				try{
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COLLECTION); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
+				}
+				catch(Exception ex)
+				{
+					
+				}
+				try{
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1,COLLECTION , null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(COLLECTION);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, result);
+				}
+				}
+				catch(Exception ex)
+				{
+					
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
