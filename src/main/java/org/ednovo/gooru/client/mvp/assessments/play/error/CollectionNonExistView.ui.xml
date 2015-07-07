@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="errorStyle" src="CollectionNonExistStyle.css" />
+
+	<g:FlowPanel styleName="{errorStyle.collectionWrapper1}">
+		<g:HTMLPanel styleName="{errorStyle.collectionContent1}">
+			<g:Image styleName="{errorStyle.collectionImage}" ui:field="recycleImage"></g:Image>
+		</g:HTMLPanel>
+		<g:FlowPanel styleName="{errorStyle.collectionSpecsRight}">
+			<g:HTMLPanel styleName="{errorStyle.h3Header}" ui:field="noLongerText"></g:HTMLPanel>
+			<g:HTMLPanel styleName="{errorStyle.collectionDesc}" ui:field="madePrivateOrDeletedText"></g:HTMLPanel>
+			<!-- or deleted for not meeting our <g:Anchor styleName="{errorStyle.communityStandardStyle}" 
+				href=" http://support.goorulearning.org/entries/24471116-Gooru-Community-Standards" 
+				target="_blank">Community Standards.</g:Anchor> -->
+		</g:FlowPanel>
+		<g:HTMLPanel styleName="{errorStyle.clearFloats}"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{errorStyle.collectionSpecs}" ui:field="meanTimetext"></g:HTMLPanel>
+		<g:FlowPanel styleName="{errorStyle.collectionCoursecontent}"
+			ui:field="feautredCollectionContainer">
+			<g:Button styleName="primary" ui:field="btnLibrary"></g:Button>
+		</g:FlowPanel>
+	</g:FlowPanel>
+
+</ui:UiBinder> 

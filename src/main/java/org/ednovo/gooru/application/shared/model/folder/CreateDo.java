@@ -13,6 +13,7 @@ public class CreateDo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String title;
 	private String ideas;
+	private String description;
 	private String questions;
 	private List<Integer> taxonomyCourseIds;
 	private List<Integer> audienceIds;
@@ -60,4 +61,11 @@ public class CreateDo implements Serializable{
 	public void setStandardIds(List<Integer> standardIds) {
 		this.standardIds = standardIds;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }

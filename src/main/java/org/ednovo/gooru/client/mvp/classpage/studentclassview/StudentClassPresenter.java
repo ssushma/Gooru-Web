@@ -37,11 +37,11 @@ import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentCla
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.JSONNumber;
