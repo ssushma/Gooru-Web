@@ -135,8 +135,8 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompletePr
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpTurnsAfterThirteenView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.IsStudentClassView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter.IsStudentClassProxy;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.IsStudentClassLearningMapView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapView;
@@ -155,7 +155,6 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentView;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView;
@@ -241,7 +240,10 @@ import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentVie
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.IsCollectionContentView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.ExternalAssessmentInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.ExternalAssessmentView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsExternalAssessmentView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.IsCourseInfoView;
@@ -752,6 +754,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
 		bindPresenterWidget(CollectionContentPresenter.class,IsCollectionContentView.class, CollectionContentView.class);
+		bindPresenterWidget(ExternalAssessmentInfoPresenter.class,IsExternalAssessmentView.class, ExternalAssessmentView.class);
 
 
 		bindPresenterWidget(HomeBannerPresenter.class,IsHomeBannerView.class, HomeBannerView.class);

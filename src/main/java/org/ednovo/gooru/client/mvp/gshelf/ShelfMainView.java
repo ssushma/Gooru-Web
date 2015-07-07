@@ -680,7 +680,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setLevel(4);
-		}else if("Assessment".equalsIgnoreCase(type)){
+		}else if("Assessment".equalsIgnoreCase(type) || "ExternalAssessment".equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
 			shelfTreeWidget.getTitleLbl().setText("UntitledAssessment");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
