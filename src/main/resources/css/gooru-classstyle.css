@@ -1386,3 +1386,121 @@ select option {
     }
 }
 @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+
+/** student reports css **/
+
+.classReportMenuBlock{
+	border-bottom:1px solid #dddddd;
+}
+
+.classReportMenuBlock .classMenuLeft ul{
+	margin:0 0;
+	padding:0 0;
+}
+.classReportMenuBlock .classMenuLeft{
+	/* border-right:1px solid #dddddd; */
+}
+.classReportMenuBlock .classMenuLeft ul li{
+	margin:0 0;
+	padding:0 0;
+	display:table-cell;
+}
+.classReportMenuBlock .classMenuLeft ul li a{
+	display:block;
+	padding:24px 24px;
+	color:#9999a6;
+	font-weight:bold;
+}
+.classReportMenuBlock .classTitle{
+	color: #515151;
+	font-weight: bold;
+	margin: 0 8px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 150px;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
+}
+.classReportMenuBlock .classMenuLeft ul li.active a{
+	background:#e7f1f9;
+}
+.classReportMenuBlock .classMenuRight .coureEditActions, .classMenuBlock .classMenuRight .stPriviewButton{
+	display:table-cell;
+}
+.classReportMenuBlock .classMenuRight .coureEditActions, .classMenuBlock .classMenuRight .stPriviewButton{
+	padding:15px 5px;
+}
+.classReportMenuBlock .classMenuRight .coureEditActions{
+	padding:15px 5px;
+}
+.classReportMenuBlock .classMenuRight .coureEditActions a{
+	display:inline-block;
+	font-weight:bold;
+	margin:0 6px;
+}
+.classReportMenuBlock .classMenuRight .coureEditActions a:hover, .classMenuBlock .classMenuRight .coureEditActions a:focus{
+	opacity:1;
+	text-decoration:none;
+}
+.classReportMenuBlock .classMenuRight .coureEditActions .folderIcon{
+	background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px;
+	width:35px;
+	height:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+ .classReportMenuBlock .classMenuLeft{
+			 border-bottom:1px solid #dddddd;
+		 }
+	 .classReportMenuBlock .classMenuLeft ul li{
+		width:1%;
+		overflow:hidden;
+		text-align:center;
+	}
+}
+@media (min-width: 320px) and (max-width: 479px) {
+	 	 .classReportMenuBlock .classMenuLeft{
+			 border-bottom:1px solid #dddddd;
+		 }
+	 .classReportMenuBlock .classMenuLeft ul li{
+		width:1%;
+		overflow:hidden;
+		text-align:center;
+	}
+	.classReportMenuBlock .classMenuRight {
+    float: none;
+}
+.classReportMenuBlock .classMenuRight .coureEditActions{
+	display:block;
+	 border-bottom:1px solid #dddddd;
+	 text-align:center;
+}
+.classReportMenuBlock .classMenuRight .stPriviewButton{
+	display:block;
+	text-align:center;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	 .classReportMenuBlock .classMenuLeft{
+			 border-bottom:1px solid #dddddd;
+		 }
+	 .classReportMenuBlock .classMenuLeft ul li{
+		width:1%;
+		overflow:hidden;
+		text-align:center;
+	}
+	.classReportMenuBlock .classMenuRight {
+    float: none;
+    margin: 0 auto;
+    width: 415px;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+

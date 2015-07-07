@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
+import java.util.HashMap;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
@@ -37,8 +39,9 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	/**
 	 * This method is used to set folder data
 	 * @param folderObj
+	 * @param selectedWidgetsTitleType 
 	 */
-	public void setBreadCrumbSlot(FolderDo folderObj, String type);
+	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType);
 	/**
 	 * This method is used to clear tab active status
 	 */

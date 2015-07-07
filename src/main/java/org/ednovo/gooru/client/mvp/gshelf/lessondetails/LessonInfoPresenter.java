@@ -122,7 +122,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				params.put("o3", uri[uri.length-1]);
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
 				if(isCreateCollOrAssessment && creationType!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, result);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
