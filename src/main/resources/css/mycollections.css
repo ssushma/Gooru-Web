@@ -81,11 +81,9 @@
 	cursor: pointer;
 }
 
-#gShelfMainContainer .floderLeftContainer .createMenu .btn, #gShelfMainContainer .floderLeftContainer .createMenu .plus
-	{
+#gShelfMainContainer .floderLeftContainer .createMenu .btn, #gShelfMainContainer .floderLeftContainer .createMenu .plus{
 	height: 40px;
 }
-
 #gShelfMainContainer .floderLeftContainer .folderLeftMainHeader {
 	color: #515151;
 	font-size: 18px;
@@ -1223,7 +1221,15 @@ button.btn-disabled {
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;
 }
-
+#gShelfCourseInfo .deleteButton{
+	display: inline-block;
+	float: right;
+}
+#gShelfCourseInfo .folderBlockSitemap .deleteButton a {
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	color: #1076bb;
+}
 #gShelfCourseInfo .folderBlockSitemap a {
 	padding: 16px 25px;
 	display: inline-block;
