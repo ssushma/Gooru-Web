@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionShareTabPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.ExternalAssessmentInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
@@ -52,8 +53,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	ShelfMainPresenter shelfMainPresenter;
 	
+	ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter;
+	
 	private HashMap<String, String> selectedWidgetsTitleType;
-
 
 	CollectionContentPresenter collectionContentPresenter;
 	
@@ -74,13 +76,14 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter, CollectionShareTabPresenter collectionShareTabPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter,CollectionShareTabPresenter collectionShareTabPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
 		this.unitInfoPresenter=unitInfoPresenter;
 		this.collectionInfoPresenter=collectionInfoPresenter;
 		this.collectionContentPresenter=collectionContentPresenter;
+		this.externalAssessmentInfoPresenter=externalAssessmentInfoPresenter;
 		this.collectionShareTabPresenter=collectionShareTabPresenter;
 
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -111,9 +114,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if("Lesson".equalsIgnoreCase(type)){
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
-				}else{
+				}else if("Assessment".equalsIgnoreCase(type) || "Collection".equalsIgnoreCase(type)){
 					collectionInfoPresenter.setCollectionType(type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
+				}else{
+					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
 			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){

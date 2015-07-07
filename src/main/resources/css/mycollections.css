@@ -3777,3 +3777,131 @@ right:1px;
 	
 }
 /* === Assessment popup start ================================== */
+
+/* === Assessment info start ================================== */
+
+#pnlExternalAssessmentContainter .folderBlockSitemap .AcItem {
+	text-align: right;
+}
+#pnlExternalAssessmentContainter  .breadcrumbMain a.active:last-child:before {
+	border-bottom: none;
+	border-left: none;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentTitle,#pnlExternalAssessmentContainter .existingAssessment .assessmentURL,#pnlExternalAssessmentContainter .assessmentTitle,#pnlExternalAssessmentContainter .existingAssessment .assessmentDescription{
+	padding: 10px 15px;
+	border-bottom: 1px solid #dddddd;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy,#pnlExternalAssessmentContainter .existingAssessment .assessmentRequires{
+		padding: 15px 15px;
+	border-bottom: 1px solid #dddddd;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy p,#pnlExternalAssessmentContainter .existingAssessment .assessmentRequires p{
+	margin:3px 0;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader {
+	padding: 0 0 !important;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader span {
+	float: left;
+	padding: 13px 15px;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader span.plus {
+	background: #4d99cd none repeat scroll 0 0;
+	color: #ffffff;
+	display: block;
+	font-size: 40px;
+	font-weight: normal;
+	line-height: 52px;
+	padding: 0;
+	text-align: center;
+}
+#pnlExternalAssessmentContainter .floderLeftContainer .folderLeftMainHeader span.plus {
+	float: right;
+	height: 52px;
+	width: 52px;
+}
+#pnlExternalAssessmentContainter  input[type=radio].css-checkbox {
+	position: absolute;
+	z-index: -1000;
+	left: -1000px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+}
+#pnlExternalAssessmentContainter  input[type=radio].css-checkbox + label.css-label {
+	padding-left: 23px;
+	height: 18px;
+	display: inline-block;
+	line-height: 18px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	font-size: 12px;
+	font-weight: normal;
+	vertical-align: middle;
+	cursor: pointer;
+	margin-left: 25px;
+	margin-bottom:0;
+}
+#pnlExternalAssessmentContainter input[type=radio].css-checkbox:checked + label.css-label {
+	background-position: 0 -18px;
+}
+#pnlExternalAssessmentContainter label.css-label {
+	background-image: url(../images/radioButtons.png);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy label.css-label img {
+	width: 18px;
+	height: 18px;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+	 #pnlExternalAssessmentContainter  .assessmentSubmenu .menuLinks{
+		 text-align:left;
+		 border-bottom:none;
+	 }
+	 #pnlExternalAssessmentContainter  .assessmentSubmenu .AcItem {
+	    text-align: right;
+	}
+	input.css-checkbox[type="radio"] + label.css-label{
+		margin-left:0;
+	}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 #pnlExternalAssessmentContainter .assessmentSubmenu .menuLinks{
+		 text-align:left;
+		 border-bottom:none;
+	 }
+	 #pnlExternalAssessmentContainter  .assessmentSubmenu .AcItem {
+	    text-align: right;
+	}
+	#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + label.css-label{
+		margin-left:0;
+	}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	 #pnlExternalAssessmentContainter .assessmentSubmenu .menuLinks{
+			 text-align:left;
+			 border-bottom:none;
+	   }
+		#pnlExternalAssessmentContainter .assessmentSubmenu .AcItem {
+		    text-align: right;
+		}
+		#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + label.css-label{
+			margin-left:0;
+		}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+/* === Assessment info end ================================== */

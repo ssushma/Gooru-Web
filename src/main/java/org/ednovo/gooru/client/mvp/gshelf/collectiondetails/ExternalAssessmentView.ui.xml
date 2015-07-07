@@ -1,0 +1,55 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<g:HTMLPanel ui:field="pnlExternalAssessmentContainter">
+		<div class="existingAssessment">
+		
+		
+		<div class="assessmentTitle">
+		<p>Assessment Title</p>
+		<p><input type="text" value="" class="form-control" maxlength="3"/> </p>
+		</div>
+		
+		
+		<div class="assessmentURL">
+		<p>Assessment URL</p>
+		<p><input type="text" value="" class="form-control" maxlength="3"/> </p>
+		</div>
+		
+		<div class="assessmentDescription">
+		<p>Descrption</p>
+		<p><textarea class="form-control" rows="3"></textarea></p>
+		</div>
+		
+		<div class="assessmentPrivacy">
+		<div class="row">
+		<div class="col-md-2 col-sm-3">
+		<p>Privacy</p>
+		</div>
+		<div class="col-md-10 col-sm-9">
+		<input type="radio" class="css-checkbox" id="radio6" name="radiog_dark"/><label class="css-label radGroup2" for="radio6"> <img src="images/publicIcon.png"/> Public</label>
+		<input type="radio" class="css-checkbox" id="radio7" name="radiog_dark"/><label class="css-label radGroup3" for="radio7"><img src="images/sharableIcon.png"/>  Sharable</label>
+		<input type="radio" class="css-checkbox" id="radio8" name="radiog_dark"/><label class="css-label radGroup2" for="radio8"><img src="images/privateIcon.png"/> Private</label>
+		</div>
+		<div class="clearfix"></div>
+		</div>
+		</div>
+		
+		<div class="assessmentRequires">
+		<div class="row">
+		<div class="col-md-2 col-sm-3">
+		<p>Requires Log In?</p>
+		</div>
+		<div class="col-md-10 col-sm-9">
+		<input type="radio" class="css-checkbox" id="radio9" name="radiog_dark"/><label class="css-label radGroup9" for="radio9"> Yes</label>
+		<input type="radio" class="css-checkbox" id="radio10" name="radiog_dark"/><label class="css-label radGroup10" for="radio10">No</label>
+		
+		</div>
+		<div class="clearfix"></div>
+		</div>
+		</div>
+		
+		
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 
