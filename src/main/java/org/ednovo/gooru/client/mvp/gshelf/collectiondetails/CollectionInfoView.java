@@ -124,7 +124,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),false,0);
+		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0);
 	}
 	
 	/**
@@ -154,6 +154,5 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				}
 			}
 		}
-		
 	}
 }

@@ -80,6 +80,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionContentPresenter=collectionContentPresenter;
 
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
+		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		unitInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		lessonInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		getView().setUiHandlers(this);

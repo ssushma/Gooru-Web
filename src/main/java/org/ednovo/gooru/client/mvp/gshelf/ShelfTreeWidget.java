@@ -143,9 +143,9 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	private static final String ASSESSMENT = "assessment";
 	private static final String FOLDER = "folder";
-	private static final String COURSE = "course";
-	private static final String UNIT = "unit";
-	private static final String LESSON = "lesson";
+	private static final String COURSE = "Course";
+	private static final String UNIT = "Unit";
+	private static final String LESSON = "Lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	
@@ -181,10 +181,13 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(collectionDo!= null){
+				if(collectionDo!=null)
+				{
+				if(collectionDo.getCollectionType()!= null){
 					if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
 						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
+				}
 				}
 			}
 		});
@@ -299,20 +302,24 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
+
 		if(collectionDo.getType()!=null)
 		{
-		if(collectionDo.getType().equals(COURSE)){
-			titleFocPanel.addStyleName(COURSE);
-		}else if(collectionDo.getType().equals(UNIT)) {
-			titleFocPanel.addStyleName(UNIT);
-		}else if(collectionDo.getType().equals(LESSON)) {
-			titleFocPanel.addStyleName(LESSON);
+		if(collectionDo.getType().equalsIgnoreCase(COURSE)){
+			titleFocPanel.addStyleName("course");
+		}else if(collectionDo.getType().equalsIgnoreCase(UNIT)) {
+			titleFocPanel.addStyleName("unit");
+		}else if(collectionDo.getType().equalsIgnoreCase(LESSON)) {
+			titleFocPanel.addStyleName("lesson");
 		}else if(!collectionDo.getType().equals(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
 		}
+		if(collectionDo.getCollectionType()!=null)
+		{
 		if(collectionDo.getCollectionType().contains(ASSESSMENT)){
 			titleFocPanel.addStyleName("assessment");
+		}
 		}
 		if(collectionDo.getSharing()!=null && !collectionDo.getSharing().equalsIgnoreCase("") && collectionDo.getSharing().equals("public")) {
 			if(collectionDo.getCollectionType().equals(COLLECTION) ){
@@ -327,9 +334,10 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else{
 			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 		}
+		
 		if(collectionDo.getType()!=null)
 		{
-		if(collectionDo.getType().equals(COURSE)||collectionDo.getType().equals(UNIT)||collectionDo.getType().equals(LESSON)){
+			if(collectionDo.getType().equalsIgnoreCase(COURSE)||collectionDo.getType().equalsIgnoreCase(UNIT)||collectionDo.getType().equalsIgnoreCase(LESSON)){
 			setData(nextLevel);
 		}else{
 			if(nextLevel == 1) {
@@ -358,7 +366,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
 		if(nextLevel == 1) {
-			titleFocPanel.addStyleName(COURSE);
+			titleFocPanel.addStyleName("course");
 			titleLbl.setWidth("138px");
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 2) {
@@ -444,21 +452,28 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equals(COURSE) &&!collectionDo.getType().equals(UNIT) &&!collectionDo.getType().equals(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
-				if (event.getSource().equals(titleFocPanel)) {
-		        	MixpanelUtil.Expand_CollectionPanel();
-		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
-		          		Storage stockStore = Storage.getLocalStorageIfSupported();
-		                if (stockStore != null) {
-		                    stockStore.setItem("tabKey", "resourceTab");
-		                }
-		                if(isValue){
-		                	openCollectionInShelf();
-		                }
-		                isValue=true;
-		        	}
-		        	setOpen();
-		        }  
+
+			if(collectionDo!=null)
+			{
+				if(collectionDo.getType()!=null)
+				{
+					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON) && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+						if (event.getSource().equals(titleFocPanel)) {
+							MixpanelUtil.Expand_CollectionPanel();
+							if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
+								Storage stockStore = Storage.getLocalStorageIfSupported();
+								if (stockStore != null) {
+									stockStore.setItem("tabKey", "resourceTab");
+								}
+								if(isValue){
+									openCollectionInShelf();
+								}
+								isValue=true;
+							}
+							setOpen();
+						}  
+					}
+				}
 			}
 		}
 	}
@@ -548,6 +563,10 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	
 	public int getPosition() {
@@ -730,29 +749,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	public HashMap<String,String> getUpdatedWidgetsTitleType() {
 		return updateWidgetTitles;
 	}
-
-	public void updateWidgetData(FolderDo courseDo, HashMap<String, String> urlParams, String type) {
-		if(type.equalsIgnoreCase(COURSE)){ 
-			/*this.urlParams.put(O1_LEVEL, courseDo.getGooruOid());
-			this.urlParams.put(COURSE, courseDo.getTitle());*/
-		}else if(type.equalsIgnoreCase(UNIT)){
-			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
-			this.urlParams.put(O2_LEVEL, courseDo.getGooruOid());
-
-			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
-			this.urlParams.put(UNIT, courseDo.getTitle());
-		}else if(type.equalsIgnoreCase("")){
-			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
-			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
-			this.urlParams.put(O3_LEVEL, courseDo.getGooruOid());
-			
-			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
-			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
-			this.urlParams.put(LESSON, courseDo.getTitle());
-		}
-		
-	}
-	
 
 	public void setUrlParams(HashMap<String, String> urlParams) {
 		this.urlParams = urlParams;
