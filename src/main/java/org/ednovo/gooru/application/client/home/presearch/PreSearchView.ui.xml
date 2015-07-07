@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc" >
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel styleName="gradeContainer">
 			<section class="focusBlock animate fadeInUp animated" data-animate="fadeInUp">
@@ -85,7 +85,10 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3298}" />
 									<div class="callToAction">
-										<g:Button styleName="primary" ui:field="btnStudentSignUp"></g:Button>
+										<!-- <g:Button styleName="primary" ui:field="btnStudentSignUp"></g:Button> -->
+										<tbp:TextBoxWithPlaceholder
+											ui:field="classCodeTxtBox" styleName="classCodeTxtBoxStyle" />
+										<g:Button styleName="primary" ui:field="enterLbl"></g:Button>
 									</div>
 								</div>
 							</div>
