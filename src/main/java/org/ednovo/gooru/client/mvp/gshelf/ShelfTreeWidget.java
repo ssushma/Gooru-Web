@@ -305,11 +305,11 @@ public class ShelfTreeWidget extends FocusPanel {
 
 		if(collectionDo.getType()!=null)
 		{
-		if(collectionDo.getType().equals(COURSE)){
+		if(collectionDo.getType().equalsIgnoreCase(COURSE)){
 			titleFocPanel.addStyleName("course");
-		}else if(collectionDo.getType().equals(UNIT)) {
+		}else if(collectionDo.getType().equalsIgnoreCase(UNIT)) {
 			titleFocPanel.addStyleName("unit");
-		}else if(collectionDo.getType().equals(LESSON)) {
+		}else if(collectionDo.getType().equalsIgnoreCase(LESSON)) {
 			titleFocPanel.addStyleName("lesson");
 		}else if(!collectionDo.getType().equals(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
@@ -563,6 +563,10 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	
 	public int getPosition() {
