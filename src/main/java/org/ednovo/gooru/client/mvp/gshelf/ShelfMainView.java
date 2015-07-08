@@ -452,6 +452,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
 				folderListDoChild.add(widget.getCollectionDo());
 			}
+			selectedWidget.setFolderListDo(folderListDoChild);
 			if(COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
 				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
 			}else{
@@ -808,13 +809,13 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private void checkFolderItemStyle(TreeItem item, String gooruOid) {
 		ShelfTreeWidget updatedItem = (ShelfTreeWidget) item.getWidget();
 		if(gooruOid!=null){
-		 if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
-			 treeChildSelectedItem = item;
-			 //updatedItem.setActiveStyle(true);
-			 setFolderActiveStatus();
-			 return;
-		 }
-	   } 
+			if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
+				treeChildSelectedItem = item;
+				//updatedItem.setActiveStyle(true);
+				setFolderActiveStatus();
+				return;
+			}
+		} 
 	}
 	/**
 	 * set basic data of course and get the folderObj
@@ -836,42 +837,39 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		shelfTreeWidget.updateData(courseDo);
 		String type = shelfTreeWidget.getTreeWidgetType();
 
-		if(type!=null)
-		{
-			if(COURSE.equalsIgnoreCase(type)){
-				HashMap<String,String> urlParams = new HashMap<String,String>();
-				urlParams.put(COURSE, courseDo.getTitle()); 
-				urlParams.put(O1_LEVEL,courseDo.getGooruOid());
-				shelfTreeWidget.setUrlParams(urlParams);
+		if(COURSE.equalsIgnoreCase(type)){
+			HashMap<String,String> urlParams = new HashMap<String,String>();
+			urlParams.put(COURSE, courseDo.getTitle()); 
+			urlParams.put(O1_LEVEL,courseDo.getGooruOid());
+			shelfTreeWidget.setUrlParams(urlParams);
 
-			}else if(UNIT.equalsIgnoreCase(type)){
+		}else if(UNIT.equalsIgnoreCase(type)){
 
-				ShelfTreeWidget parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
-				HashMap<String,String> urlParams = new HashMap<String,String>();
-				urlParams.put(COURSE,parentShelfTreeWidget.getUrlParams().get(COURSE));
-				urlParams.put(UNIT, courseDo.getTitle());
-				urlParams.put(O1_LEVEL,parentShelfTreeWidget.getUrlParams().get("o1"));
-				urlParams.put(O2_LEVEL,courseDo.getGooruOid());
-				shelfTreeWidget.setUrlParams(urlParams);
+			ShelfTreeWidget parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			HashMap<String,String> urlParams = new HashMap<String,String>();
+			urlParams.put(COURSE,parentShelfTreeWidget.getUrlParams().get(COURSE));
+			urlParams.put(UNIT, courseDo.getTitle());
+			urlParams.put(O1_LEVEL,parentShelfTreeWidget.getUrlParams().get("o1"));
+			urlParams.put(O2_LEVEL,courseDo.getGooruOid());
+			shelfTreeWidget.setUrlParams(urlParams);
 
-			}else if(LESSON.equalsIgnoreCase(type)){
+		}else if(LESSON.equalsIgnoreCase(type)){
 
-				ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
-				HashMap<String,String> urlParams = new HashMap<String,String>();
-				urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
-				urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get("o1"));
+			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
+			HashMap<String,String> urlParams = new HashMap<String,String>();
+			urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
+			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get("o1"));
 
-				ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
-				urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
-				urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get("o2"));
+			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
+			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get("o2"));
 
-				urlParams.put(LESSON,courseDo.getTitle());
-				urlParams.put(O3_LEVEL,courseDo.getGooruOid());
+			urlParams.put(LESSON,courseDo.getTitle());
+			urlParams.put(O3_LEVEL,courseDo.getGooruOid());
 
-				shelfTreeWidget.setUrlParams(urlParams);
-			}
+			shelfTreeWidget.setUrlParams(urlParams);
 		}
-		else{
+		/*else{
 			ShelfTreeWidget shelfTreeWidget1 = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 			HashMap<String,String> urlParams = new HashMap<String,String>();
 			urlParams.put(COURSE,shelfTreeWidget1.getUpdatedWidgetsTitleType().get(COURSE));
@@ -882,7 +880,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put("id",courseDo.getGooruOid());
 
 			shelfTreeWidget.setUrlParams(urlParams);
-		}
+		}*/
 	}
 
 	/**
@@ -919,15 +917,25 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	}
 
 	@Override
-	public void removeDeletedTreeWidget(String deletedTreeWidgetId){
-		for (FolderDo folderDo : SHELF_COLLECTIONS) {
-			if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
-				SHELF_COLLECTIONS.remove(folderDo);
-				break;
+	public void removeDeletedTreeWidget(String deletedTreeWidgetId,String currentTypeView){
+		
+		if(COURSE.equalsIgnoreCase(currentTypeView)){
+			for (FolderDo folderDo : SHELF_COLLECTIONS) {
+				if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
+					SHELF_COLLECTIONS.remove(folderDo);
+					break;
+				}
 			}
+			organizeRootPnl.addStyleName("active");
+			getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);
+			treeChildSelectedItem.remove();
+		}else if(UNIT.equalsIgnoreCase(currentTypeView)){
+			ShelfTreeWidget deletedTreeParentWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			TreeItem treeItem = treeChildSelectedItem.getParentItem();
+			getUiHandlers().setRightPanelData(deletedTreeParentWidget.getCollectionDo(), deletedTreeParentWidget.getCollectionDo().getType(),folderListDoChild);
+			treeChildSelectedItem.remove();
+			checkFolderItemStyle(treeItem,deletedTreeParentWidget.getCollectionDo().getGooruOid());
+			getUiHandlers().onDeleteSetBreadCrumbs(deletedTreeParentWidget.getCollectionDo().getTitle(),COURSE);
 		}
-		getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);
-		treeChildSelectedItem.remove();
-		organizeRootPnl.addStyleName("active");
 	}
 }

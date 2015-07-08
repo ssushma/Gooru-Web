@@ -106,7 +106,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		if(index==1){
 				//For displaying template and data
 				getView().enableAndHideTabs(true);
-				if(COURSE.equalsIgnoreCase(type)){ 
+				if(COURSE.equalsIgnoreCase(type)){
 					courseInfoPresenter.callTaxonomyService();
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
@@ -210,15 +210,48 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 */
 	@Override
 	public void deleteCourseContent(final String o1CourseId) {
-		AppClientFactory.getInjector().getfolderService().deleteCourse(o1CourseId, new SimpleAsyncCallback<String>() {
+		AppClientFactory.getInjector().getfolderService().deleteCourse(o1CourseId, new SimpleAsyncCallback<Integer>() {
 			@Override
-			public void onSuccess(String result) {
-				getView().onDeleteCourseSuccess(o1CourseId);
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteCourseSuccess(o1CourseId);
+				}
 			}
 		});
 	}
+	
+	/**
+	 * Sets the right side view on delete of course.
+	 */
 	@Override
-	public void setRightClusterContent(String o1CourseId) {
-		shelfMainPresenter.setUserAllCourses(o1CourseId);
+	public void setRightClusterContent(String o1CourseId,String currentTypeView) {
+		if(shelfMainPresenter!=null){
+			shelfMainPresenter.setUserAllCourses(o1CourseId,currentTypeView);
+		}
+	}
+	
+	
+	/**
+	 * calls API to delete Unit.
+	 */
+	@Override
+	public void deleteUnitContent(final String o1CourseId, final String o2UnitId) {
+		AppClientFactory.getInjector().getfolderService().deleteUnit(o1CourseId,o2UnitId, new SimpleAsyncCallback<Integer>() {
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteUnitSuccess(o1CourseId,o2UnitId);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Sets the right side view on delete of Unit.
+	 */
+	@Override
+	public void setUnitsListOnRightCluster(String o1CourseId,String o2DeletedUnitId,String currentTypeView) {
+		shelfMainPresenter.setUserAllUnits(o1CourseId, o2DeletedUnitId,currentTypeView);
 	}
 }

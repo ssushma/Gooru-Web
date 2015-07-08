@@ -101,6 +101,8 @@ public class ShelfTreeWidget extends FocusPanel {
 	private String draggedCollectionId="";
 	
 	private FolderDo collectionDo;
+	
+	private List<FolderDo> folderListDoChild;
 
 	private ResourceDropController dropController;
 	
@@ -752,5 +754,14 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	public void setUrlParams(HashMap<String, String> urlParams) {
 		this.urlParams = urlParams;
+	}
+
+	public void setFolderListDo(List<FolderDo> folderListDoChild) {
+		this.folderListDoChild = folderListDoChild;
+	}
+	
+
+	public List<FolderDo> getFolderListDo() {
+		return folderListDoChild;
 	}
 }
