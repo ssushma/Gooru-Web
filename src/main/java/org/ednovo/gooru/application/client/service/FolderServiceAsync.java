@@ -86,6 +86,8 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	
 	void getFolderRouteNodes(String folderId, AsyncCallback<Map<String,String>> callback);
 
-	void deleteCourse(String o1CourseId,AsyncCallback<String> callback);
+	void deleteCourse(String o1CourseId,AsyncCallback<Integer> callback); 
+
+	void deleteUnit(String o1CourseId, String o2UnitId,AsyncCallback<Integer> callback);
 	
 }
