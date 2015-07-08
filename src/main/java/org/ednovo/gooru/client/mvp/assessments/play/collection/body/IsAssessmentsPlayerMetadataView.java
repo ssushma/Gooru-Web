@@ -65,18 +65,5 @@ public interface IsAssessmentsPlayerMetadataView extends IsViewWithHandlers<Asse
 
 	public void setClasspageInsightsUrl(String classpageId, String sessionId);
 
-	public void setCommentsData(CommentsListDo commentDoList, CollectionDo collectionDo, boolean isToClearCommentContainer);
-
-	public void setCommentsWidget(CommentsDo commentsDo, String action);
-
-	public void displaySuccessMsg(boolean isVisible);
-
-	public void updateCommentChildView(String commentUid, String action);
-
-	public void clearCommentContainer(boolean isClear);
-
-	public void setPlayerLoginStatus(boolean isLoggedIn);
-
-	public void changeCommentsButton(CollectionDo collectionDoObj);
 
 }
