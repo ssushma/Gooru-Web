@@ -89,15 +89,15 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			embedurl=shareUrlsList.get(ClientConstants.EMBEDURLRAWURL).toString();
 			setIframeUrl(embedurl);		
 		}
-		collectionShareMap.put(i18n.GL0643(), shareUrl);
-		collectionShareMap.put(i18n.GL0639(), shareBitlyUrl);
-		embedLink.setText(i18n.GL0640());
-		embedLink.getElement().setAttribute("alt",i18n.GL0640());
-		embedLink.getElement().setAttribute("title",i18n.GL0640());
+		collectionShareMap.put(i18n.GL0643_1(), shareUrl);
+		collectionShareMap.put(i18n.GL0639_1(), shareBitlyUrl);
+		embedLink.setText(i18n.GL0640_1());
+		embedLink.getElement().setAttribute("alt",i18n.GL0640_1());
+		embedLink.getElement().setAttribute("title",i18n.GL0640_1());
 
-		bitlyLink.setText(i18n.GL0639());
-		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.setText(i18n.GL0639_1());
+		bitlyLink.getElement().setAttribute("alt",i18n.GL0639_1());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639_1());
 
 		shareTextArea.setText(shareUrl);
 		shareTextArea.getElement().setAttribute("alt",shareUrl);
@@ -106,7 +106,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 
 	public void setIframeUrl(String iframeBitlyUrl){
 		embedBitlyUrl = "<iframe width=\"1024px\" height=\"768px\" src=\"" + iframeBitlyUrl + "\" frameborder=\"0\" ></iframe>";
-		collectionShareMap.put(i18n.GL0640(), embedBitlyUrl);
+		collectionShareMap.put(i18n.GL0640_1(), embedBitlyUrl);
 	}
 
 	@UiHandler("embedLink")
