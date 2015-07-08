@@ -73,6 +73,7 @@ public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionSha
 
 	public void setData(FolderDo collectionDo) { 
 		this.collectionDo=collectionDo;
+		getView().setData(collectionDo);
 		getShortenShareUrl();
 	}
 
