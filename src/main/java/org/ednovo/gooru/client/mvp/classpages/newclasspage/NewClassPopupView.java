@@ -106,14 +106,14 @@ public abstract class NewClassPopupView extends AppPopUp {
 	
 	String grades;
 	
-	String sharing;
+	boolean sharing;
 	
 
 	interface NewClassPopupViewUiBinder extends UiBinder<Widget, NewClassPopupView> {
 	}
 
 	
-	public abstract void createNewClasspage(String title,String grade,String sharing);
+	public abstract void createNewClasspage(String title,String grade,boolean sharing);
 	
 	public NewClassPopupView() {
 		this.res = NewClasspagePopupCBundle.INSTANCE;
@@ -322,7 +322,9 @@ public abstract class NewClassPopupView extends AppPopUp {
 			if (validateFields()){
 				final String title = classpageTitleTxt.getText().trim();
 				final String grade = join(gradeList, ",");
-				//final String privacy = sharing;
+				System.out.println("grade:"+grade);
+				final boolean privacy = sharing;
+				System.out.println("privacy:"+sharing);
 
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", title);
@@ -376,9 +378,9 @@ public abstract class NewClassPopupView extends AppPopUp {
 		}
 		
 		if(publicPanel.getStyleName().contains("active")){
-			sharing="public";
+			sharing=true;
 		}else if(privatePanel.getStyleName().contains("active")){
-			sharing="private";
+			sharing=false;
 		}else{
 			return false;
 		}

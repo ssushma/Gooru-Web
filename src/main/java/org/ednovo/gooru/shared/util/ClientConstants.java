@@ -47,6 +47,12 @@ public interface ClientConstants {
 	
 	String GRADE = "grade";
 	
+	String GRADES = "grades";
+	
+	String NAME = "name";
+	
+	String VISIBILITY = "visibility";
+	
 	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
 	
 	

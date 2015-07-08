@@ -76,6 +76,9 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private CollectionSettingsDo settings;
 	private String gooruOid;
 	
+	private String name;
+	private String classUid;
+	
 	private String type;
 	public CollectionDo(){}
 	public String getStringTypeValue() {
@@ -390,6 +393,30 @@ public class CollectionDo extends ResourceDo implements Serializable{
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+	/** 
+	 * This method is to get the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/** 
+	 * This method is to set the name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/** 
+	 * This method is to get the classUid
+	 */
+	public String getClassUid() {
+		return classUid;
+	}
+	/** 
+	 * This method is to set the classUid
+	 */
+	public void setClassUid(String classUid) {
+		this.classUid = classUid;
 	}
 
 
