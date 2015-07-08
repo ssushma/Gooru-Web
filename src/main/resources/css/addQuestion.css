@@ -172,6 +172,7 @@
 	border: 1px solid #ccc;
 	height: 90px;
 	display: inline-block;
+	width: 100%;
 }
 .addAnswerDeletebg {
 	position: absolute;

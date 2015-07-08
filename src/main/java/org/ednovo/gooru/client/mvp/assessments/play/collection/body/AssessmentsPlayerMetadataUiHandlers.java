@@ -25,21 +25,11 @@
 package org.ednovo.gooru.client.mvp.assessments.play.collection.body;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.event.EditCommentChildViewHandler;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusHandler;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.event.UpdateCommentChildViewHandler;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 
-public interface AssessmentsPlayerMetadataUiHandlers extends BaseUiHandlers,AssessmentsSetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
-
-	public void createCommentForCollection(String gooruOid, String comment);
-
-	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);
-
-	public void getPaginationResults(String gooruOid, String offset, String limit);
+public interface AssessmentsPlayerMetadataUiHandlers extends BaseUiHandlers {
 
 	public FlowPanel getMenuContainer();
 
-	void updateCommentsStatus(String commentsStatus);
 }

@@ -20,7 +20,7 @@
 <div class="collectionThumbnail">
 <p>Collection Image</p>
 <div class="thimbnailImage">
-<g:Image ui:field="collThumbnail" url="images/collectionThumbnail.png"> </g:Image>
+<g:Image ui:field="collThumbnail" > </g:Image>
 <span class="thunailHover">
 <button class="secondary btn-block" type="submit">Upload Image</button>
 </span>

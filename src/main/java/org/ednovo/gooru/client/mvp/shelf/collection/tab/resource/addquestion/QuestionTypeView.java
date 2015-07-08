@@ -26,7 +26,11 @@ import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
+import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
+import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerChoice;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddHintsView;
@@ -176,6 +180,10 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
 
 	ArrayList<String> isValidHintsList = new ArrayList<String>();
+	
+	private TermsAndPolicyVc termsAndPolicyVc;
+	private TermsOfUse termsOfUse;
+	private CopyRightPolicyVc copyRightPolicy;
 
 	public QuestionTypeView() {
 		initializeAutoSuggestedBox();
@@ -2395,5 +2403,84 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		collectionQuestionItemDo.setMoreOptions(moreOptions);
 		return collectionQuestionItemDo;
 	}
+	
+	/**
+	 * Opens up Terms of Use pop-up.
+	 *
+	 * @param event instance of {@link ClickEvent}
+	 */
 
+	@UiHandler("termsAndPolicyAnr")
+	public void onClickTrems(ClickEvent event){
+		Window.enableScrolling(false);
+		termsOfUse = new TermsOfUse() {
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
+			}
+		};
+
+		termsOfUse.show();
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999);
+
+	}
+
+	/**
+	 * Opens up Privacy pop-up.
+	 *
+	 * @param event instance of {@link ClickEvent}
+	 */
+
+	@UiHandler("privacyAnr")
+	public void onClickPrivacy(ClickEvent event){
+		Window.enableScrolling(false);
+		termsAndPolicyVc = new TermsAndPolicyVc(false) {
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
+			}
+		};
+
+		termsAndPolicyVc.show();
+		termsAndPolicyVc.center();
+		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
+
+	}
+
+	/**
+	 * Opens up Copy rights pop-up.
+	 *
+	 * @param event instance of {@link ClickEvent}
+	 */
+
+	@UiHandler("copyRightAnr")
+	public void onClickCopyright(ClickEvent event){
+		Window.enableScrolling(false);
+		copyRightPolicy = new  CopyRightPolicyVc() {
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98,false));
+			}
+		};
+
+		copyRightPolicy.show();
+		copyRightPolicy.center();
+		copyRightPolicy.getElement().getStyle().setZIndex(999);
+	}
+	@UiHandler("commuGuideLinesAnr")
+	public void onClickCommunityGuide(ClickEvent event){
+		Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank","");
+
+	}
+
+	/**
+     * Gets the name of the used browser.
+     */
+     public static native String getBrowserName() /*-{
+         return navigator.userAgent.toLowerCase();
+     }-*/;
 }

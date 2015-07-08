@@ -82,6 +82,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	private static final String VIEW= "view";
 	
+	private static final String ID= "id";
+	
 	private static final String FOLDER = "Folder";
 	
 	public static final  Object RIGHT_SLOT = new Object();
@@ -203,7 +205,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			getView().setNoDataForAnonymousUser(true);
 		}else{
 			if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
-				AppClientFactory.printInfoLogger("callAPI");
 				callWorkspaceApi();
 				version = AppClientFactory.getLoggedInUser().getToken();
 			}
@@ -279,7 +280,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 							myCollectionsListPresenter.setData(type,result.getSearchResult(),clrPanel,false,null);
 						}
 					}
-					getView().setUserShelfData(result.getSearchResult(),clrPanel);
+					getView().setUserMetaData(result.getSearchResult(),clrPanel);
 				}
 			};
 		}
@@ -331,6 +332,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightPanelData(FolderDo folderObj,String clickedItemType,List<FolderDo> folderListDoChild){
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
+		getView().getCollectionLabel().setVisible(false);
 		getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
 		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
@@ -340,11 +342,18 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo){
 		clearSlot(RIGHT_SLOT);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 		if(view==null){
 			view=type;
 		}
-		myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
-		setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+		if(id!=null && folderDo!=null){
+			getView().getCollectionLabel().setVisible(true);
+			setCollectionContent(folderDo);
+		}else{
+			getView().getCollectionLabel().setVisible(false);
+			myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
+			setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+		}
 	}
 
 	private void setPaginatedChildFolders(String folderId,String typeVal, boolean isDataCalled) {
@@ -400,14 +409,19 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 
 	public void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag) {
-		getView().updateTitleOfTreeWidget(courseDo, flag);
+		getView().updateTreeWidget(courseDo, flag);
 	}
 	
 	@Override
 	public void setCollectionContent(FolderDo collectionDo){
 		clearSlot(RIGHT_SLOT);
-		collectionContentPresenter.setData(collectionDo);
-		setInSlot(RIGHT_SLOT, collectionContentPresenter,false);	
+		getMyCollectionsRightClusterPresenter().setTabItems(1, collectionDo.getType(),collectionDo);
+		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		if(FOLDER.equalsIgnoreCase(view)){
+			getView().getCollectionLabel().setVisible(true);
+		}
+		getView().getCollectionLabel().setText(collectionDo.getTitle());
+		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter(),false);	
 	}
 	/**
 	 * To enable course button based on the boolean parameter.
@@ -420,5 +434,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setBreadCrumbs(HashMap<String, String> selectedWidgetsTitleType) {
 		getMyCollectionsRightClusterPresenter().setMycontentBreadcrumbs(selectedWidgetsTitleType);
+	}
+
+	/**
+	 * Sets all courses on right cluster.
+	 */
+	public void setUserAllCourses(String deletedTreeWidgetId) {
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId);
 	}
 }

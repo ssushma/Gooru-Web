@@ -127,11 +127,9 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 		if(attemptedAnswerDo!=null){
 			if(attemptedAnswerDo.getAnswerId()==answerId){
 				if(attemptedAnswerDo.isAttemptResult()){
-					questionAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
 					questionAnswerOptionView.radioButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
 					questionAnswerOptionView.answerOptionRadioButton.setValue(true);
 				}else{
-					questionAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 					questionAnswerOptionView.radioButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
 					questionAnswerOptionView.answerOptionRadioButton.setValue(true);
 				}
@@ -212,11 +210,6 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 					score=questionAnswerOptionView.isAnswerCorrect()?1:0;
 
 					setAnswersDetailsWitithTime(questionAnswerOptionView.getAnswerId(),questionAnswerOptionView.isAnswerCorrect()?1:0,(i+1),score,!isFirstTry);
-					if(questionAnswerOptionView.isAnswerCorrect()){
-						questionAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
-					}else{
-						questionAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
-					}
 					List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 					answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText()));

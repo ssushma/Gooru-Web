@@ -3,17 +3,20 @@
      xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
     <g:HTMLPanel styleName="rowContainer no-gutter">
-       <g:HTMLPanel styleName="col-md-3 col-sm-3">
-          <uc:HTMLEventPanel styleName="heighlightBlock" ui:field="unitBlock">
-             <span:H3Panel ui:field="unitCountName"></span:H3Panel>
-             <span:PPanel ui:field="unitName"></span:PPanel>
-          </uc:HTMLEventPanel>
-       </g:HTMLPanel>
-       <g:HTMLPanel styleName="col-md-9 col-sm-9">
-          <g:HTMLPanel styleName="progressBlock">
-             <g:HTMLPanel styleName="circle-main-container" ui:field="circleContainer"/>
-          </g:HTMLPanel>
-       </g:HTMLPanel>
-       <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		<g:HTMLPanel styleName="col-md-3 col-sm-3">
+		   <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
+		   <uc:HTMLEventPanel styleName="heighlightBlockUnitReports" ui:field="unitBlock">
+		      <g:HTMLPanel styleName="lessonDetails">
+	             <span:H3Panel ui:field="unitCountName"></span:H3Panel>
+	             <span:PPanel ui:field="unitName"></span:PPanel>
+		      </g:HTMLPanel>
+		   </uc:HTMLEventPanel>
+		</g:HTMLPanel>
+        <g:HTMLPanel styleName="col-md-9 col-sm-9">
+           <g:HTMLPanel styleName="progressBlock">
+              <g:HTMLPanel styleName="circle-main-container" ui:field="circleContainer"/>
+           </g:HTMLPanel>
+        </g:HTMLPanel>
+        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

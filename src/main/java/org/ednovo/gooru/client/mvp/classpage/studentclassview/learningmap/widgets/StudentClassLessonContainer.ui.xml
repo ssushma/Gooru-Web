@@ -3,19 +3,20 @@
     xmlns:span="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
 	<g:HTMLPanel styleName="rowContainer no-gutter">
-	   <g:HTMLPanel styleName="col-md-4 col-sm-4">
-	      <g:HTMLPanel styleName="heighlightBlock">
-	         <g:HTMLPanel styleName="progressBlockLeft">
-	            <g:HTMLPanel ui:field="circleIcon">
-	                <span></span>
-	            </g:HTMLPanel>
-	         </g:HTMLPanel>
-	         <span:HTMLEventPanel styleName="lessonDetails" ui:field="lessonWidget">
+	   	<g:HTMLPanel styleName="col-md-4 col-sm-4">
+		   <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
+		   <span:HTMLEventPanel styleName="heighlightBlockUnitReports" ui:field="lessonWidget">
+		      <g:HTMLPanel styleName="lessonDetails">
 	             <uc:H3Panel ui:field="lessonCountName"></uc:H3Panel>
 	             <uc:PPanel ui:field="lessonName"></uc:PPanel>
-	         </span:HTMLEventPanel>
-	      </g:HTMLPanel>
-	   </g:HTMLPanel>
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="progressBlockLeft">
+				  <g:HTMLPanel ui:field="circleIcon">
+		                <span></span>
+		          </g:HTMLPanel>
+		      </g:HTMLPanel>
+		   </span:HTMLEventPanel>
+		</g:HTMLPanel>
 	   <g:HTMLPanel styleName="col-md-8 col-sm-8">
 			<g:HTMLPanel styleName="lessonDescription" ui:field="lessonContainer"/>
 	   </g:HTMLPanel>

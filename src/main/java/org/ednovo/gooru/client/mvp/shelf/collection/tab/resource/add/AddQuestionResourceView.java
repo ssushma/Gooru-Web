@@ -1749,7 +1749,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						        	ERROR_MSG_QUESTION_LENGTH=i18n.GL0880();
     						        }
     						        errorMessageForExplanation.setText("");
-    						        if(questionNameText.length()>questionMaxLength){
+    						        if(questionName.length()>questionMaxLength){
     						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
     						        	isAddBtnClicked=true;

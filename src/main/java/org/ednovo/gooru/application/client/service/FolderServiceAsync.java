@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -84,5 +85,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void getFolderMetaData(String folderId, AsyncCallback<FolderDo> callback);
 	
 	void getFolderRouteNodes(String folderId, AsyncCallback<Map<String,String>> callback);
+
+	void deleteCourse(String o1CourseId,AsyncCallback<String> callback);
 	
 }

@@ -68,7 +68,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField HTMLPanel pnlTitleContainer,pnlArrows,pnlMoveToEdit;
 	@UiField Paragraph pTitle;
 	
-	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url";
+	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url",ASSESSMENT="Assessment";
 	
 	String type;
 	/**
@@ -80,7 +80,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.type=type;
 		
-		if(folderObj.getTitle()!=null){
+		if(folderObj!=null && folderObj.getTitle()!=null){
 			h3CourseTitle.setText(folderObj.getTitle());
 		}
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
@@ -97,10 +97,10 @@ public abstract class ContentWidgetWithMove extends Composite {
 		pnlArrows.setVisible(true);
 		pnlMoveToEdit.setVisible(false);
 	
-		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getCollectionType())){
+		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getType())){
 			pTitle.setText(i18n.GL3007());
 		}else{
-			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj.getCollectionType()));
+			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj!=null?(folderObj.getType()!=null?folderObj.getCollectionType():""):""));
 		}
 		lblIndex.setText(indexVal+"");
 		txtMoveTextBox.setText(indexVal+"");
@@ -194,11 +194,17 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(typeVal)){
+			lblImage.setStyleName("folderImage");
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
 			pnlArrows.setVisible(false);
 			pnlMoveToEdit.setVisible(true);
-		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal)){
+		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal) || ASSESSMENT.equalsIgnoreCase(typeVal)){
+			if(COLLECTION.equalsIgnoreCase(typeVal)){
+				lblImage.setStyleName("collectionImage");
+			}else{
+				lblImage.setStyleName("assessmentImage");
+			}
 			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
 			spnUnitsCount.setVisible(false);

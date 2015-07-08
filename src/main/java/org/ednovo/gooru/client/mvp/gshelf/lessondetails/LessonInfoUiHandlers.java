@@ -44,7 +44,7 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	 * @param isCreateCollOrAssessment
 	 * @param creationType
 	 */
-	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateCollOrAssessment,String creationType);
+	public void createAndSaveLessonDetails(CreateDo createObj,final boolean isCreateCollOrAssessment,String creationType);
 	/**
 	 * This method is used for checking profanity
 	 * @param textValue
@@ -59,5 +59,5 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	 * @param isCreateUnit
 	 * @param type
 	 */
-	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type);
+	public void updateLessonDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type);
 }
