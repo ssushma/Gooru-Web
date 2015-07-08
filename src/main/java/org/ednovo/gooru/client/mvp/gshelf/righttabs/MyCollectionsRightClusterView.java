@@ -179,7 +179,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			if(pnlBreadCrumbMain.getWidgetCount()<3){
 				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3365():title, type));
 			}else{
-				getBreadCrumbs(title,type,3);
+				getBreadCrumbs(title,type,3); 
 			}
 		}else{
 			
@@ -335,7 +335,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param o3LessonId {@link String}
 	 * @param deletePopup {@link DeletePopupViewVc}
 	 */
-	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId,final String o2UnitId,String o3LessonId) {
+	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId,final String o2UnitId,final String o3LessonId) {
 		deletePopup = new DeletePopupViewVc() {
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
@@ -343,6 +343,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					getUiHandlers().deleteUnitContent(o1CourseId,o2UnitId);
 				}else if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteCourseContent(o1CourseId);
+				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){
+					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);
 				}
 			}
 			
@@ -353,11 +355,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		};
 		deletePopup.setPopupTitle(i18n.GL0748());
 		if(currentTypeView.equalsIgnoreCase(COURSE)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle()));
-			deletePopup.setDescText("If you delete this Course, it will no longer be available.<br>This is a permanent action!");
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COURSE));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COURSE));
 		}else if(UNIT.equalsIgnoreCase(currentTypeView)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle()));
-			deletePopup.setDescText("If you delete this Unit, it will no longer be available.<br>This is a permanent action!");
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), UNIT));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
+		}else if(LESSON.equalsIgnoreCase(currentTypeView)){
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), LESSON));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
 		}
 		deletePopup.setDeleteValidate("delete");
 		deletePopup.setPositiveButtonText(i18n.GL0190());
@@ -397,5 +402,19 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setOnDeleteBreadCrumbs(String title, String type) {
 		setBreadCrumbs(title,type);
+	}
+	
+	/**
+	 * On deleting the lesson, reveals the my content and loads the respective right cluster.
+	 */
+	@Override
+	public void onDeleteLessonSuccess(String o1CourseId, String o2UnitId,String o3LessDeletedonId) {
+		hideDeletePopup();
+		Map<String, String> params= new HashMap<String, String>();
+		params.put("view", COURSE);
+		params.put(O1_LEVEL, o1CourseId);
+		params.put(O2_LEVEL, o2UnitId);
+		getUiHandlers().setLessonsListOnRightCluster(o1CourseId,o2UnitId,o3LessDeletedonId,currentTypeView);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 	}
 }

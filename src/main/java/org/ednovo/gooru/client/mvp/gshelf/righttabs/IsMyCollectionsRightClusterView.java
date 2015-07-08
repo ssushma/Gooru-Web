@@ -62,5 +62,9 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void onDeleteUnitSuccess(String o1CourseId, String o2UnitId);
 	
+	public void onDeleteLessonSuccess(String o1CourseId, String o2UnitId,String o3LessonId);
+	
 	public void setOnDeleteBreadCrumbs(String title, String type);
+	
+	
 }
