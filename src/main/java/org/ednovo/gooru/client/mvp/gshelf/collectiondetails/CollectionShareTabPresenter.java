@@ -24,6 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.application.client.SimpleAsyncCallback;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -36,6 +44,7 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  */
 public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionShareTabView> implements CollectionShareTabUiHandlers {
 
+	FolderDo collectionDo;
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -56,5 +65,36 @@ public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionSha
 	protected void onReveal(){
 		super.onReveal();
 	}
+	
+	@Override
+	protected void onReset() {
+		super.onReset();
+	}
 
+	public void setData(FolderDo collectionDo) { 
+		this.collectionDo=collectionDo;
+		getShortenShareUrl();
+	}
+
+	public void getShortenShareUrl(){
+		final Map<String, String> params = new HashMap<String, String>();
+		params.put(ClientConstants.TYPE, AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
+		params.put(ClientConstants.SHARETYPE, ClientConstants.SHARE);
+		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collectionDo.getGooruOid(),params, new SimpleAsyncCallback<Map<String,String>>() {
+			@Override
+			public void onSuccess(final Map<String, String> collectionShare) {
+				String shareUrl=collectionShare.get(ClientConstants.DECODERAWURL);
+				getView().setShareUrl(shareUrl);
+				params.put(ClientConstants.SHARETYPE, ClientConstants.EMBED);
+				AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collectionDo.getGooruOid(),params, new SimpleAsyncCallback<Map<String,String>>() {
+					@Override
+					public void onSuccess(Map<String, String> result) {
+						collectionShare.put(ClientConstants.EMBEDURLRAWURL, result.get(ClientConstants.DECODERAWURL));
+						getView().setCollectionShareData(collectionShare);
+					}
+				});
+				
+			}
+		});
+	}
 }
