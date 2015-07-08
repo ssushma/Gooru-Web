@@ -42,7 +42,6 @@ public class PPanel extends ComplexPanel implements InsertPanel,HasClickHandlers
 
 	@Override
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
-		// TODO Auto-generated method stub
 		return addDomHandler(handler, ClickEvent.getType());
 	}
 

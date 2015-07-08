@@ -8,28 +8,59 @@
          <g:HTMLPanel>
             <g:HTMLPanel styleName="bannerInner">
                <g:HTMLPanel styleName="container">
-                  <g:HTMLPanel styleName="row">
-                     <img src="https://qa.goorulearning.org/images/Classpage/default-classpage.png" class="img-responsive student-banner-image"/>
-                     <g:HTMLPanel styleName="student-blueBand">
-                        <g:HTMLPanel styleName="col-md-6 col-sm-6 col-md-6-reset">
-                           <span:H2Panel ui:field="courseName"/>
-                        </g:HTMLPanel>
-                        <g:HTMLPanel styleName="col-md-6 col-sm-6 col-md-6-reset">
-                           <g:HTMLPanel styleName="rightWhiteBox"><span:SpanPanel ui:field="classCodeSpan"></span:SpanPanel></g:HTMLPanel>
-                        </g:HTMLPanel>
-                        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-                     </g:HTMLPanel>
-                  </g:HTMLPanel>
-               </g:HTMLPanel>
-            </g:HTMLPanel>
-            <g:HTMLPanel styleName="tabsContainer">
-               <g:HTMLPanel styleName="container">
-                  <g:HTMLPanel styleName="row">
-                     <g:HTMLPanel styleName="btn-group" ui:field="btnGroup">
-                        <g:Button styleName="btn btn-default active" ui:field="learningMapBtn">Learning Map</g:Button>
-                        <g:Button styleName="btn btn-default" ui:field="reportsBtn">Reports</g:Button>
-                     </g:HTMLPanel>
-                  </g:HTMLPanel>
+				<div class="row">
+				   <div class="bannerInner">
+				      <div class="bannerImg">
+				         <g:Image styleName="img-responsive" ui:field="classImage"/>
+				      </div>
+				      <div class="bannerCaptions">
+				         <div class="col-md-6 col-sm-6">
+				             <span:H1Panel ui:field="courseName"/>
+				         </div>
+				         <div class="col-md-6 col-sm-6">
+				            <div class="rightWhiteBox">
+				               <div class="studentDetailsRight">
+				                  <img src="http://profile-demo.s3.amazonaws.com/profile-prod/c3a96812-62a1-4318-846f-f16fdb99f8d4.png?0.39592762291431427"/> LindaS's Class
+				               </div>
+				               <span:SpanPanel ui:field="classCodeSpan"></span:SpanPanel>
+				            </div>
+				         </div>
+				         <div class="clearfix"></div>
+				      </div>
+				   </div>
+				   <div class="whiteBand">
+				      <div class="col-md-5 col-sm-5 col-md-5-reset">
+				         <div class="studentDetailsLeft">
+				            <img src="http://profile-demo.s3.amazonaws.com/profile-prod/c3a96812-62a1-4318-846f-f16fdb99f8d4.png?0.39592762291431427"/> Hello, JonnaP!
+				         </div>
+				      </div>
+				      <div class="col-md-7 col-sm-7 col-md-7-reset">
+				         <div class="planProgress">
+				            <div class="planView">
+				               <ul>
+				                  <li class="green"></li>
+				                  <li class="green"></li>
+				                  <li></li>
+				               </ul>
+				               Plan View
+				            </div>
+				            <g:HTMLPanel styleName="Switch">
+				               <g:HTMLPanel styleName="onoffswitch">
+				                  <g:SimpleCheckBox ui:field="switchCheckBox" styleName="onoffswitch-checkbox"></g:SimpleCheckBox>
+				                  <label class="onoffswitch-label" for="myonoffswitch">
+					                  <span class="onoffswitch-inner"></span>
+					                  <span class="onoffswitch-switch"></span>
+				                  </label>
+				               </g:HTMLPanel>
+				            </g:HTMLPanel>
+				            <div class="progressView">
+				               <img src="../images/Classpage/student/progressIcon.png"/> Progress View
+				            </div>
+				         </div>
+				      </div>
+				      <div class="clearfix"></div>
+				   </div>
+				</div>
                </g:HTMLPanel>
             </g:HTMLPanel>
             <g:SimplePanel styleName="LearningMapContainer" ui:field="learningMapContainer"/>

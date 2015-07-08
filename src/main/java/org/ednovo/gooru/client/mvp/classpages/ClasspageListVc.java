@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AttachToDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
@@ -42,6 +43,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleHandler;
+import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
@@ -107,7 +109,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	ClasspageListDo classpageListDo = null;
 
-	Map<String, CollectionDo> classpageList = new HashMap<String, CollectionDo>();
+	Map<String, ClasspageDo> classpageList = new HashMap<String, ClasspageDo>();
 	ArrayList<String> listClasspage = new ArrayList<String>();
 
 	AlertMessageUc alertMessageUc;
@@ -131,7 +133,8 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	private NewClasspagePopupView newPopup = null;
+	
+	private NewClassPopupView newPopup = null;
 
 
 
@@ -561,10 +564,8 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 						classpageList.clear();
 					}
 					for (int i = 0; i < resultSize; i++) {
-						String classpageId = classpageListDo.getSearchResults().get(i)
-								.getGooruOid();
-						classpageList.put(classpageId, classpageListDo
-								.getSearchResults().get(i));
+						String classpageId = classpageListDo.getSearchResults().get(i).getGooruOid();
+						//classpageList.put(classpageId, classpageListDo.getSearchResults().get(i));
 						listClasspage.add(classpageId);
 					}
 				} else {
@@ -617,28 +618,36 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			public void onSuccess() {
 				MixpanelUtil.ClickOnNewClassPage();
 				HeaderUc.closeClassContainer();
-				newPopup = new NewClasspagePopupView() {
-
+				newPopup = new NewClassPopupView() {
+					
 					@Override
-					public void createNewClasspage(String title) {
+					public void createNewClasspage(String title, String grade,	boolean sharing) {
+						
+						System.out.println("title:"+title);
+						System.out.println("grade:"+grade);
+						System.out.println("sharing:"+sharing);
 
 						MixpanelUtil.Create_NewClasspage();
 						CollectionDo collectionDo = new CollectionDo();
 						collectionDo.setTitle(title);
 						collectionDo.setCollectionType("classpage");
-						AppClientFactory
-								.getInjector()
-								.getClasspageService()
-								.createClassPage(collectionDo.getTitle(),
-										new SimpleAsyncCallback<CollectionDo>() {
+						AppClientFactory.getInjector().getClasspageService().createClass(title, grade, sharing,	new SimpleAsyncCallback<ClasspageDo>() {
 
 											@Override
-											public void onSuccess(CollectionDo result) {
-												final String classpageId = result
-														.getGooruOid();
-												AssignmentDo assignmentDo = new AssignmentDo();
-												assignmentDo
-														.setClasspageId(classpageId);
+											public void onSuccess(ClasspageDo result) {
+												System.out
+														.println("##OnSuccess");
+												final String classpageId = result.getUri();
+												String[] uri=result.getUri().split("/");
+												String id=  uri[uri.length-1];
+												System.out
+														.println("id:"+id);
+												System.out
+														.println("classpageId:"+classpageId);
+												String title = result.getName();
+												System.out.println("title:"+title);
+												/*AssignmentDo assignmentDo = new AssignmentDo();
+												assignmentDo.setClasspageId(classpageId);
 
 												TaskDo taskDo = new TaskDo();
 												taskDo.setTitle(i18n.GL0121());
@@ -647,14 +656,16 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 												AttachToDo attachToDo = new AttachToDo();
 												attachToDo.setId(classpageId);
-												attachToDo.setType("classpage");
+												attachToDo.setType("classpage");*/
 
-												assignmentDo.setAttachTo(attachToDo);
-												listClasspage.add(0, classpageId);
+												//assignmentDo.setAttachTo(attachToDo);
+												listClasspage.add(0, id);
 
-												classpageList.put(classpageId, result);
+												classpageList.put(id, result);
+												OpenClasspageEdit(id);
+												newPopup.ClosePopup();
 
-												AppClientFactory
+												/*AppClientFactory
 														.getInjector()
 														.getClasspageService()
 														.v2CreateAssignment(
@@ -669,7 +680,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 																		OpenClasspageEdit(classpageId);
 																		newPopup.ClosePopup();
 																	}
-																});
+																});*/
 											}
 										});
 					}
@@ -703,18 +714,14 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			@Override
 			public void onSuccess() {
 				setClassapageItemSeleted(gooruOId);
-				AppClientFactory.getInjector().getClasspageService().v2GetClasspageById(gooruOId, new SimpleAsyncCallback<CollectionDo>() {
+				AppClientFactory.getInjector().getClasspageService().v3GetClassById(gooruOId, new SimpleAsyncCallback<ClasspageDo>() {
 					@Override
-					public void onSuccess(CollectionDo result) {
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
+					public void onSuccess(ClasspageDo result) {
+						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
 						{
 							Map<String, String> params = new HashMap<String, String>();
 							params.put("classpageid", gooruOId);
-							params.put("pageNum", "0");
-							params.put("pageSize", "10");
-							params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.EDIT_CLASSPAGE, params);
+						    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS, params);
 						}
 						else
 						{
@@ -723,8 +730,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 							params.put("pageNum", "0");
 							params.put("pageSize", "10");
 							params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.STUDENT, params);
+						    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
 						}
 					}
 				});

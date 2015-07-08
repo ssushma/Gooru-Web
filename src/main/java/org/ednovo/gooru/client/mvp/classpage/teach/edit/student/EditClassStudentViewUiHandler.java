@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 
@@ -42,5 +44,9 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  * @Reviewer: 
  */
 public interface EditClassStudentViewUiHandler extends BaseUiHandlers {
+	
+	void generateShareLink(String classpageId);
+
+	void addStudents(String classpageId, List<String> lstEmailID);
 
 }

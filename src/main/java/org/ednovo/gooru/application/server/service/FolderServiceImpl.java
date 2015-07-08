@@ -690,11 +690,34 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public String deleteCourse(String o1CourseId) throws GwtException,ServerDownException {
+	public Integer deleteCourse(String o1CourseId) throws GwtException,ServerDownException {
+		JsonRepresentation jsonRep = null;
+		
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_COURSE, o1CourseId);
 		getLogger().info("DELETE_COURSE:::::::"+url);
-		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		Integer statusCode = jsonResponseRep.getStatusCode();
+		return statusCode;
+	}
+
+	@Override
+	public Integer deleteUnit(String o1CourseId, String o2UnitId) throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_UNIT, o1CourseId,o2UnitId);
+		getLogger().info("DELETE_Unit:::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		Integer statusCode = jsonResponseRep.getStatusCode();
+		return statusCode;
+	}
+
+	@Override
+	public Integer deleteLesson(String o1CourseId, String o2UnitId,	String o3LessonId) throws GwtException, ServerDownException {
 		
-		return null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_LESSON, o1CourseId,o2UnitId,o3LessonId);
+		getLogger().info("Lesson delete:::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		Integer statusCode = jsonResponseRep.getStatusCode();
+		return statusCode;
 	}
 }

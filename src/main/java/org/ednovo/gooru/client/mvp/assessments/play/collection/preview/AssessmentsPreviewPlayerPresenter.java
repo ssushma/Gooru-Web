@@ -1511,7 +1511,6 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			}
 		}else if(widgetMode==null && !isLoginRequestCancel ){//This will handle the click event on the signup button (as we are not passing any widget).
-			metadataPresenter.setPlayerLoginStatusHandler(true);//This will enable the comments.
 		}
 		else if(!isLoginRequestCancel&&COLLECTION_RESOURCE_THUMBS_WIDGET_MODE.equalsIgnoreCase(widgetMode)){
 		}else if(!isLoginRequestCancel&&COLLECTION_RESOURCE_FLAG.equalsIgnoreCase(widgetMode)){
@@ -1519,7 +1518,6 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 			CollectionItemDo collectionItemDo=getCollectionItemDo(collectionItemId);
 			isResourceContentReported(collectionItemDo.getResource().getGooruOid());
 			setResourceFlagView(collectionItemId);
-			metadataPresenter.setPlayerLoginStatusHandler(true);
 		}else if(!isLoginRequestCancel&&COLLECTION_RESOURCE_ADD_WIDGET.equalsIgnoreCase(widgetMode)){
 			String collectionItemId=getPlaceManager().getRequestParameter("rid", null);
 			if(collectionItemId!=null){
@@ -1529,16 +1527,11 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 			}else{
 				setAddCollectionView(getPlaceManager().getRequestParameter("id", null));
 			}
-			metadataPresenter.setPlayerLoginStatusHandler(true);
 		}else if(!isLoginRequestCancel&&COLLECTION_FLAG.equalsIgnoreCase(widgetMode)){
 			metadataPresenter.getFlagedReport(collectionDo.getGooruOid());
 			setCollectionFlagView(collectionDo.getGooruOid());
-			metadataPresenter.setPlayerLoginStatusHandler(true);
 		}else if(!isLoginRequestCancel&&REACTIONWIDGET.equalsIgnoreCase(widgetMode)){
 			isResourceContentReaction(collectionItemDo.getResource().getGooruOid());
-			metadataPresenter.setPlayerLoginStatusHandler(true);
-		}else if(!isLoginRequestCancel&&COLLECTION_COMMENTS.equalsIgnoreCase(widgetMode)){
-			metadataPresenter.setPlayerLoginStatusHandler(true);
 		}else if(!isLoginRequestCancel&&STAR_RATING_WIDGET.equalsIgnoreCase(widgetMode)){
 			isResourceContentRating(collectionItemDo.getResource().getGooruOid());
 		}

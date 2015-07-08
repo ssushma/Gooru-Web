@@ -16,8 +16,8 @@
 				</div>
 
 				<div class="buttonActions">
-				    <g:Button ui:field="btnGoBack" styleName="secondary buttonSpacing" text="{i18n.GL3455}"/>
-				    <g:Button ui:field="btnSubmit" styleName="primary" text="{i18n.GL3456}"></g:Button>
+				    <g:Button ui:field="btnGoBack" styleName="secondary buttonSpacing" text="{i18n.GL3456_1}"/>
+				    <g:Button ui:field="btnSubmit" styleName="primary" text="{i18n.GL3456_2}"></g:Button>
 				</div>
 			</div>
 		</div>

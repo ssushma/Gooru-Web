@@ -41,13 +41,13 @@
 }
 .learningHeaderBlock {
     background: #fafafa;
-    border-radius: 6px 6px 0 0;
-    margin-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+	margin-top: 15px;
 }
 .learningHeaderBlock .indicationBox {
 	text-align: right;
 	padding: 12px 0px;
-	height: 40px;
+	height: 45px;
 }
 .learningHeaderBlock .indicationBox div {
     font-size: 12px;
@@ -131,12 +131,12 @@
     min-height: 68px;
 }
 .rowContainer .progressBlock {
-    padding: 14px 6px;
+    padding: 12px 6px;
     border-right: 1px solid #dddddd;
 }
 .rowContainer .progressBlock .circle-main-container {
     margin: 0 0;
-    padding: 0px 13px;
+    padding: 5px 13px;
     display: block;
 }
 .rowContainer .progressBlock .circle-main-container div {
@@ -147,8 +147,8 @@
     vertical-align: middle;
 }
 .rowContainer .progressBlock .circle-main-container div span {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50% 50%;
     background: #dddddd;
     display: block;
@@ -170,7 +170,7 @@
     text-decoration: none;
 }
 .rowContainer .progressBlock .circle-main-container div.green-circle span {
-    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 6px 10px;
+    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 11px 15px;
 }
 .rowContainer .progressBlock .circle-main-container div.green-text span {
     background: #a5cba1;
@@ -301,26 +301,26 @@
 .LearningMapContainer .lessonDescription .divcontainer.selected:before {
     left: 10px;
     right: 10px;
-    bottom: 12px;
-    top: 12px;
+    bottom: 11px;
+    top: 11px;
     position: absolute;
-    background: rgba(131, 184, 126, 0.7) url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
+    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
     content: "";
 }
 .LearningMapContainer .lessonDescription .divcontainer.blueselected:before {
     left: 10px;
     right: 10px;
-    bottom: 12px;
-    top: 12px;
+    bottom: 11px;
+    top: 11px;
     position: absolute;
-    background: rgba(113, 170, 212, 0.7);
+    background: #85b9df;
     content: "";
 }
 .LearningMapContainer .lessonDescription .divcontainer.emptyselected:before {
     left: 10px;
     right: 10px;
-    bottom: 12px;
-    top: 12px;
+    bottom: 11px;
+    top: 11px;
     position: absolute;
     background: url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
     content: "";
@@ -1794,6 +1794,31 @@ th.headcol.whitebg {
     text-align: center;
     width: 62px;
 }
+
+.teachReportUnitNavigationView {
+	margin: 0px !important;
+	background: #ffffff !important;
+	border-bottom: 1px solid #ddd;
+}
+
+.classProgressIndications .contentStatus {
+	border: 1px solid #4897ce;
+	border-radius: 4px;
+	margin: 5px;
+}
+
+.classProgressIndications .contentStatus div{
+	display: table-cell;
+	padding: 10px 15px;
+	text-align: center;
+	color: #4897ce;
+	cursor: pointer;
+}
+
+.classProgressIndications .contentStatus div.activeDiv {
+	background: #e7f1f9;
+}
+
 .courseReportsBodyBlock {
     background: #fafafa;
     border-radius: 0 0 6px 6px;
@@ -1985,7 +2010,7 @@ th.headcol.whitebg {
 .rowContainer .timeAndScore .avgScore,
 .rowContainer .timeAndScore .totalStudy,
 .rowContainer .heighlightBlock {
-    min-height: 105px;
+    min-height: 90px;
 }
 .timeAndScore {
     display: block;
@@ -2063,10 +2088,7 @@ th.headcol.whitebg {
     color: #515151;
     margin: 0 0;
 }
-.rowContainer .progressBlock {
-    padding: 12px 8px;
-    text-align: center;
-}
+
 .rowContainer .progressBlock ul {
     margin: 0 0;
     padding: 0 0;
@@ -2111,6 +2133,21 @@ th.headcol.whitebg {
 .rowContainer .progressBlock ul li.greyCircle span {
     background: #d1cfcf;
 }
+.myclasses-assessment-small-icon{
+	background:url("${cdn.endpoint}/images/folderIcon-sprite.png") no-repeat scroll 5px -36px rgba(0, 0, 0, 0);
+}
+.myclasses-collection-small-icon{
+	background:url("${cdn.endpoint}/images/folderIcon-sprite.png") no-repeat scroll 5px 9px rgba(0, 0, 0, 0);
+}
+
+.myclasses-mastery-unit-cell-style {
+	width: 100px;
+	color: #4897ce;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 @media (min-width: 240px) and (max-width: 319px) {
     header {
         position: relative;
@@ -2564,6 +2601,7 @@ th.headcol.whitebg {
     font-size: 17px;
     font-weight: bold;
     margin: 0;
+    padding-bottom: 5px;
     padding-right: 5px;
 }
 .rowContainer .progressBlockLeft div.greenCircle span {
@@ -2571,15 +2609,18 @@ th.headcol.whitebg {
 }
 .rowContainer .heighlightBlockUnitReports {
     background: #eef3f7 none repeat scroll 0 0;
-    padding: 6px 10px;
+    padding: 10px 10px;
     display: table-cell;
     width: 100%;
 }
 .rowContainer .heighlightBlockUnitReports {
-    height: 105px;
+    height: 104px;
 }
 .wrapCirclesViews .viewsDetails {
     font-size: 14px;
+}
+.wrapCirclesViews .viewsDetails.marginTop {
+    margin-top: 10px;
 }
 .wrapCirclesViews .viewsDetails span {
     font-weight: bold;
@@ -2587,8 +2628,9 @@ th.headcol.whitebg {
 .statusScrollContainer {
     width: 64.400% !important;
 }
-.rowContainer .statusScrollContainer .progressBlock {
+.rowContainer .statusScrollContainer .progressReportBlock {
     padding: 12px 0;
+    text-align: center;
 }
 .rowContainer .statusScrollContainer .statusScrollscrollInnerBlock {
     margin-left: 25px;
@@ -2677,7 +2719,7 @@ svg.dotted.round {
     .statusScrollContainer {
         width: 100% !important;
     }
-    .rowContainer .statusScrollContainer .progressBlock {
+    .rowContainer .statusScrollContainer .progressReportBlock {
         text-align: center;
     }
     .statusScrollscrollInnerBlock div.dotted.round {
@@ -2702,7 +2744,7 @@ svg.dotted.round {
     .statusScrollContainer {
         width: 100% !important;
     }
-    .rowContainer .statusScrollContainer .progressBlock {
+    .rowContainer .statusScrollContainer .progressReportBlock {
         text-align: center;
     }
     .statusScrollscrollInnerBlock div.dotted.round {
@@ -2727,7 +2769,7 @@ svg.dotted.round {
     .statusScrollContainer {
         width: 100% !important;
     }
-    .rowContainer .statusScrollContainer .progressBlock {
+    .rowContainer .statusScrollContainer .progressReportBlock {
         text-align: center;
     }
     .statusScrollscrollInnerBlock div.dotted.round {

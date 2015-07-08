@@ -135,8 +135,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
-
-		if(listOfContent.getCollectionItems().size()>0){
+		if(listOfContent.getCollectionItems()!=null && listOfContent.getCollectionItems().size()>0){
 			index=0;
 			for (CollectionItemDo collectionItem : listOfContent.getCollectionItems()) {
 				setDisplayResourceItem(collectionItem, type, index);
@@ -144,7 +143,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			}
 			setLastWidgetArrowVisiblity(false);
 		}else{
-			AppClientFactory.printInfoLogger("TODO -- No Resources...");
 			pnlReosurceList.clear();
 			pnlReosurceList.add(new Label(i18n.GL0854()));
 		}

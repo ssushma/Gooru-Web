@@ -52,10 +52,19 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 */
 	public void setDefaultActiveTab(int tabIndex);
 	public void setCurrentTypeView(String type);
+	public void enableAndHideTabs(boolean isVisible);
 	
 	/**
 	 * This method is used to set the content on delete of course.
 	 * @param o1CourseId 
 	 */
 	public void onDeleteCourseSuccess(String o1CourseId);
+	
+	public void onDeleteUnitSuccess(String o1CourseId, String o2UnitId);
+	
+	public void onDeleteLessonSuccess(String o1CourseId, String o2UnitId,String o3LessonId);
+	
+	public void setOnDeleteBreadCrumbs(String title, String type);
+	
+	
 }

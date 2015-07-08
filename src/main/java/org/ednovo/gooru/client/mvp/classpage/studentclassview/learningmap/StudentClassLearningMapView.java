@@ -55,7 +55,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentClassLearningMapUiHandlers> implements IsStudentClassLearningMapView {
 
 	@UiField HTMLPanel containerData, learningMapContainer, headerLinksContainer, topBackLinkBox, standardsBlock;
-	@UiField SpanPanel allContentTxt, currentContentName, previousContentName, nextContentName, spanTxt, headerLeftArrow;
+	@UiField SpanPanel allContentTxt, currentContentName, previousContentName, nextContentName, headerLeftArrow;
 	@UiField HTMLEventPanel allContentPanel, previousContentPanel, nextContentPanel;
 	@UiField HTMLPanel learnMapScore, reportScore;
 	
@@ -64,7 +64,6 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	String allContentStr = null, previousContentStr = null, nextContentStr = null;
 	
 	private static final String ALL = "all";
-	private static final String NS = "NS";
 	
 	private static StudentClassLearningMapViewUiBinder uiBinder = GWT.create(StudentClassLearningMapViewUiBinder.class);
 	
@@ -99,42 +98,23 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
 			setScoreMapVisiblity(true);
 			if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-				spanTxt.setText(NS);
 				setNavLinksData("You have 7 Units to complete", null, null, null);
 				setTextPanelsVisiblity(false,true,false,false);
 				for(int i=0;i<10;i++) {
-					learningMapContainer.add(new StudentClassLearningMapContainer());
+					learningMapContainer.add(new StudentClassLearningMapContainer(i));
 				}
 			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-				setNavLinksData("All Units", "Unit 2", "Number & Operations - Fractions", "Unit 4");
+				setNavLinksData("All Units", "Unit 2", "Unit 3: Number & Operations - Fractions", "Unit 4");
 				setTextPanelsVisiblity(true,true,false,true);
 				for(int i=0;i<10;i++) {
-					learningMapContainer.add(new StudentClassLessonContainer("green-circle"));
+					learningMapContainer.add(new StudentClassLessonContainer("green-circle",i+1));
 				}
 			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				setNavLinksData("All Lessons", "Lesson 2", "Fractions and whole numbers", "Lesson 4");
+				setNavLinksData("All Lessons", "Lesson 2", "Lesson 3: Fractions and whole numbers", "Lesson 4");
 				setTextPanelsVisiblity(true,true,true,true);
 				for(int i=0;i<4;i++) {
 					learningMapContainer.add(new SlmAssessmentChildView());
 				}
-			}
-		} else if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
-			setScoreMapVisiblity(false);
-			if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-				setNavLinksData("Your progress for this class", null, null, null);
-				headerLeftArrow.setVisible(false);
-				setTextPanelsVisiblity(false,true,false,false);
-				for(int i=0;i<10;i++) {
-					learningMapContainer.add(new StudentClassLessonContainer("green-circle"));
-				}
-			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-				setNavLinksData("All Units", "Unit 2", "Number & Operations - Fractions", "Unit 4");
-				setTextPanelsVisiblity(true,true,false,true);
-				for(int i=0;i<10;i++) {
-					learningMapContainer.add(new StudentClassLessonContainer("green-circle"));
-				}
-			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				
 			}
 		}
 		setContentVisiblity(true);
@@ -198,7 +178,6 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	private void setScoreMapVisiblity(boolean isVisible) {
 		learnMapScore.setVisible(isVisible);
 		reportScore.setVisible(!isVisible);
-		spanTxt.setVisible(isVisible);
 	}
 
 	private void setTextPanelsVisiblity(boolean isHeaderVisible, boolean isTopLinkVisible, boolean isStandardsVisible, boolean isArrowVisible) {
