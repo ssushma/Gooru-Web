@@ -208,6 +208,8 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 					pnlPrivate.addStyleName(SELECTEDSTYLE);
 				}
 			}
+		}else{
+			txtAssessmentTitle.setText("UntitledAssessment");
 		}
 	}
 }
