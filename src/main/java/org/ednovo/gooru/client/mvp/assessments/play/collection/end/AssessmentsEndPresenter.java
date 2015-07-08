@@ -27,6 +27,9 @@ package org.ednovo.gooru.client.mvp.assessments.play.collection.end;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -37,6 +40,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
@@ -44,25 +48,28 @@ import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectio
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.end.study.AssessmentsHomeMetadataPresenter;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.end.AssessmentsPreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.AssessmentsPreviewHomePresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsResourcePlayerMetadataView;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
-public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndView> implements AssessmentsEndUiHandlers{
+public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndView> implements AssessmentsEndUiHandlers,ClientConstants{
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -112,6 +119,10 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	ClasspageItemDo classpageItemDo=null;
 
 	int count=0;
+	
+	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
+	final List<Integer> questionRowIndex=new ArrayList<Integer>();
+	private int collectionProgressCount=1;
 
 	@Inject
 	public AssessmentsEndPresenter(EventBus eventBus, IsAssessmentsEndView view,AssessmentsPreviewHomePresenter previewHomePresenter,
@@ -165,7 +176,13 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 		collectionSummaryIndividualPresenter.setTeacherImage(classpageItemDo);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
+		
+		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 	}
+	
+	
+	
+	
 	public void clearslot(){
 		getView().resetData();
 		getView().resetCollectionMetaData();
@@ -510,5 +527,110 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			}
 		});
 	}
+	
+	
+	/*analytics*/
+	
+	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+
+				//getView().enableAndDisableEmailButton(isSummary);
+				analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+						if(!StringUtil.checkNull(result)){
+							//getView().setIndividualCollectionMetaData(result,printUserDataDO);
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+					
+					}
+				});
+				analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<UserDataDo> result) {
+						if(!StringUtil.checkNull(result)){
+							setIndividualData(result,loadingImage);
+						}
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
+			}
+		});
+	}
+	
+	
+	public void setIndividualData(final ArrayList<UserDataDo> result,final HTMLPanel loadingImage) {
+		
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				collectionProgressCount=0;
+				Collections.sort(result,new Comparator<UserDataDo>() {
+		        	public int compare(UserDataDo o1, UserDataDo o2) {
+		        		 Integer obj1 = new Integer(o1.getItemSequence());
+						 Integer obj2 = new Integer(o2.getItemSequence());
+		        	     return obj1.compareTo(obj2);
+		        	}
+		        });
+				for (UserDataDo userDataDo : result) {
+					if(userDataDo.getStatus()==0){
+						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
+							if(!OE.equalsIgnoreCase(userDataDo.getType())){
+								questionsData.add(userDataDo);
+							}
+							questionRowIndex.add(collectionProgressCount);
+						}
+						collectionProgressCount++;
+					}
+				}
+				getView().setQuestionsData(questionsData);
+				getView().setQuestionsPrintData(questionsData);
+		
+			}
+		});
+	}
+
+	@Override
+	public void setHtmltopdf(final String htmlString, final String fileName,final boolean isClickedOnEmail) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+
+				analyticService.setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
+					@Override
+					public void onSuccess(String result) {
+
+						if(!StringUtil.checkNull(result)){
+							if(isClickedOnEmail){
+								getView().setPdfForEmail(result);
+							}else{
+								getView().getFrame().setUrl(result);
+							}
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
+
+			}
+		});
+	}
+
 
 }
