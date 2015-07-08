@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -55,10 +55,10 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
- * 
+ *
  * @fileName : StudentClassPresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -70,20 +70,20 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @Reviewer:
  */
 public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView, IsStudentClassProxy> implements StudentClassUiHandlers {
-	
+
 	SignUpPresenter signUpViewPresenter = null;
-	
+
 	StudentClassLearningMapPresenter studentClassLearningMapPresenter = null;
-	
+
 	StudentClassReportPresenter studentClassReportPresenter = null;
-	
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT_VIEW)
 	public interface IsStudentClassProxy extends ProxyPlace<StudentClassPresenter> {
 	}
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
-		
+
 	@Inject
 	public StudentClassPresenter(IsStudentClassView view,IsStudentClassProxy proxy,SignUpPresenter signUpViewPresenter, StudentClassLearningMapPresenter studentClassLearningMapPresenter, StudentClassReportPresenter studentClassReportPresenter) {
 		super(view, proxy);
@@ -92,15 +92,15 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		this.studentClassReportPresenter = studentClassReportPresenter;
 		getView().setUiHandlers(this);
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
-	}	
-	
-	
+	}
+
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -109,7 +109,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
-		
+
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -124,18 +124,18 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	private void initParam() {
 		getView().clearAll();
 	}
-	
+
 	@Override
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		loadNavigationPage();
-		
+
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		
+
 		if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
 			Window.enableScrolling(false);
@@ -153,15 +153,15 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			update.show();
 			update.center();
 		}
-		
+
 	}
-	
+
 	private void loadNavigationPage() {
 		//String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
 		getView().setButtonHighlight();
 		clearSlot(LEARNING_MAP_TAB);
 		addToSlot(LEARNING_MAP_TAB, studentClassLearningMapPresenter);
-		
+
 		/*clearSlot(CLASSPAGE_REPORT_TAB);
 		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
 			addToSlot(LEARNING_MAP_TAB, studentClassLearningMapPresenter);
@@ -169,7 +169,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			addToSlot(CLASSPAGE_REPORT_TAB, studentClassReportPresenter);
 		}*/
 	}
-	
+
 	@Override
 	protected void onHide() {
 		AppClientFactory.getPlaceManager().setClasspageEventId(null);
@@ -179,24 +179,24 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	public String getViewToken() {
 		return PlaceTokens.STUDENT_VIEW;
 	}
-	
+
 	/**
-	 * 
-	 * @function triggerClassPageNewDataLogStartStopEvent 
-	 * 
+	 *
+	 * @function triggerClassPageNewDataLogStartStopEvent
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageId
 	 * @parm(s) : @param classCode
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -212,7 +212,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study"));
 		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
-		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0));
+		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0, 0));
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
