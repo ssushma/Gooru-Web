@@ -415,7 +415,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setCollectionContent(FolderDo collectionDo){
 		clearSlot(RIGHT_SLOT);
-		getMyCollectionsRightClusterPresenter().setTabItems(1, "collection",collectionDo);
+		getMyCollectionsRightClusterPresenter().setTabItems(1, collectionDo.getType(),collectionDo);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			getView().getCollectionLabel().setVisible(true);
@@ -438,8 +438,21 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	/**
 	 * Sets all courses on right cluster.
+	 * @param currentTypeView 
 	 */
-	public void setUserAllCourses(String deletedTreeWidgetId) {
-		getView().removeDeletedTreeWidget(deletedTreeWidgetId);
+	public void setUserAllCourses(String deletedTreeWidgetId, String currentTypeView) { 
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
+	}
+
+	public void setUserAllUnits(String o1CourseId, String deletedTreeWidgetId, String currentTypeView) { 
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
+	}
+
+	/**
+	 * This is used to set the bread crumbs after delete.
+	 */
+	@Override
+	public void onDeleteSetBreadCrumbs(String title, String course) {
+		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
 }

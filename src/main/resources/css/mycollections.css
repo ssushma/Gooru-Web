@@ -3540,6 +3540,10 @@ width:100% !important;
 	margin-bottom:20px;
 	
 }
+.shareColContainer .inActive {
+	opacity: 0.6;
+}
+
 .shareColContainer .collectionVisibility a:hover, .shareColContainer .collectionVisibility a:focus{
 
 	border:2px solid #87badd;
@@ -3729,7 +3733,7 @@ right:1px;
 	border-bottom:1px solid #dddddd;
 }
 #addAssessmentPopup .assessmentInnerBlock button.primary{
-	padding:10px 6px;
+	padding:10px 5px;
 }
 #addAssessmentPopup .assessmentInnerBlock:last-child{
 	border-bottom:none;
@@ -3791,6 +3795,12 @@ right:1px;
 	padding: 10px 15px;
 	border-bottom: 1px solid #dddddd;
 }
+#pnlExternalAssessmentContainter .existingAssessment input,textarea{
+	border-radius:4px;
+}
+#pnlExternalAssessmentContainter .existingAssessment p{
+	margin: 0 0 10px;
+}
 #pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy,#pnlExternalAssessmentContainter .existingAssessment .assessmentRequires{
 		padding: 15px 15px;
 	border-bottom: 1px solid #dddddd;
@@ -3820,6 +3830,14 @@ right:1px;
 	height: 52px;
 	width: 52px;
 }
+#pnlExternalAssessmentContainter .setPaddingLeft{
+	padding-right: 15px !important;
+	padding-left: 15px !important;
+}
+#pnlExternalAssessmentContainter .saveButton{
+	min-height: 66px;
+	height: auto;
+}
 #pnlExternalAssessmentContainter  input[type=radio].css-checkbox {
 	position: absolute;
 	z-index: -1000;
@@ -3832,7 +3850,7 @@ right:1px;
 	padding: 0;
 	border: 0;
 }
-#pnlExternalAssessmentContainter  input[type=radio].css-checkbox + label.css-label {
+#pnlExternalAssessmentContainter  input[type=radio].css-checkbox + div.css-label {
 	padding-left: 23px;
 	height: 18px;
 	display: inline-block;
@@ -3846,10 +3864,10 @@ right:1px;
 	margin-left: 25px;
 	margin-bottom:0;
 }
-#pnlExternalAssessmentContainter input[type=radio].css-checkbox:checked + label.css-label {
-	background-position: 0 -18px;
+#pnlExternalAssessmentContainter .setSelected {
+	background-position: 0 -18px !important;
 }
-#pnlExternalAssessmentContainter label.css-label {
+#pnlExternalAssessmentContainter div.css-label {
 	background-image: url(../images/radioButtons.png);
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -3858,7 +3876,7 @@ right:1px;
 	-ms-user-select: none;
 	user-select: none;
 }
-#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy label.css-label img {
+#pnlExternalAssessmentContainter .existingAssessment .assessmentPrivacy div.css-label img {
 	width: 18px;
 	height: 18px;
 }
@@ -3870,7 +3888,7 @@ right:1px;
 	 #pnlExternalAssessmentContainter  .assessmentSubmenu .AcItem {
 	    text-align: right;
 	}
-	input.css-checkbox[type="radio"] + label.css-label{
+	input.css-checkbox[type="radio"] + div.css-label{
 		margin-left:0;
 	}
 }
@@ -3882,7 +3900,7 @@ right:1px;
 	 #pnlExternalAssessmentContainter  .assessmentSubmenu .AcItem {
 	    text-align: right;
 	}
-	#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + label.css-label{
+	#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + div.css-label{
 		margin-left:0;
 	}
 }
@@ -3894,7 +3912,7 @@ right:1px;
 		#pnlExternalAssessmentContainter .assessmentSubmenu .AcItem {
 		    text-align: right;
 		}
-		#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + label.css-label{
+		#pnlExternalAssessmentContainter input.css-checkbox[type="radio"] + div.css-label{
 			margin-left:0;
 		}
 }

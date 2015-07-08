@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpage.teach;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -69,13 +70,17 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	
 	@UiField H2Panel titlePanel;
 	
-	//@UiField H3Panel tabTitle;
+	@UiField HTMLPanel mainContainer;
 	
 	@UiField InlineLabel settingsLbl,studentLbl;
 	
 	@UiField HTMLEventPanel classSettingsAnr,studentAnr;
 	
 	@UiField SpanPanel classCodePanel;
+	
+	String classPageId;
+	
+	ClasspageDo classpageDo;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -125,27 +130,13 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		settingsLbl.getElement().setAttribute("alt",i18n.GL3345());
 		settingsLbl.getElement().setAttribute("title",i18n.GL3345());
 		
-		classCodePanel.setText("XYPRSZ");
-		
-		//startContainer.getElement().setAttribute("alt","startContainer);
-		//startContainer.getElement().setAttribute("title",i18n.GL0747());
-		titlePanel.setText("My First Class");
+		titlePanel.getElement().setId("titleId");
+		classCodePanel.getElement().setId("classCodePanelId");
 	}
 	
 	@Override
 	public void addToSlot(Object slot, Widget content) {
 		super.addToSlot(slot, content);
-		String viewPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
-		/*//tabTitleContainer.setVisible(true);
-		if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)){
-			tabTitle.setText(i18n.GL1624());
-		}else if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
-			tabTitle.setText(i18n.GL3345());
-		}else if(viewPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SETTINGS)){
-			tabTitle.setText(i18n.GL3346());
-		}else{
-			tabTitleContainer.setVisible(false);
-		}*/
 		if (content != null) {
 			bodyMenuView.setWidget(content);
 		}
@@ -171,5 +162,26 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView#setClassHeaderView()
+	 */
+	@Override
+	public void setClassHeaderView(ClasspageDo classpageDo) {
+		System.out.println("Teach setClassHeaderView");
+		this.classpageDo=classpageDo;
+		if(classpageDo != null){
+			titlePanel.setText(classpageDo.getName());
+			titlePanel.getElement().setAttribute("alt",classpageDo.getName());
+			titlePanel.getElement().setAttribute("title",classpageDo.getName());
+			
+			classCodePanel.setText(classpageDo.getClassCode());
+			classCodePanel.getElement().setAttribute("alt",classpageDo.getClassCode());
+			classCodePanel.getElement().setAttribute("title",classpageDo.getClassCode());
+			
+			mainContainer.getElement().setId(classpageDo.getClassUid());
+		}
 	}
 }

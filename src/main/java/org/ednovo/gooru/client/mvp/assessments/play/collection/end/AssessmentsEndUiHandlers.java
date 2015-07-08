@@ -28,12 +28,7 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusHandler;
 
-public interface AssessmentsEndUiHandlers extends BaseUiHandlers, AssessmentsSetPlayerLoginStatusHandler {
-	public void createCommentForCollection(String gooruOid, String comment);
-
-	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);
-
-	public void getPaginationResults(String gooruOid, String offset, String limit);
+public interface AssessmentsEndUiHandlers extends BaseUiHandlers {
 
 	public void resetCollectionActivityEventId();
 

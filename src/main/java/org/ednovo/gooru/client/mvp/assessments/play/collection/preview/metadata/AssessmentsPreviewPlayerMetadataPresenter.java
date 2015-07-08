@@ -92,32 +92,14 @@ public class AssessmentsPreviewPlayerMetadataPresenter extends PresenterWidget<I
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
-		addRegisteredHandler(AssessmentsSetPlayerLoginStatusEvent.TYPE, this);
-		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
-		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
-		getView().clearCommentContainer(true);
 		getView().setCollectionMetadata(collectionDo);
-		if(AppClientFactory.isAnonymous()) {
-			getView().setPlayerLoginStatus(false);
-		} else {
-			getView().setPlayerLoginStatus(true);
-		}
-		getCollectionCommentsList(collectionDo.getGooruOid(), INITIAL_OFFSET, INITIAL_COMMENT_LIMIT);
 		setRelatedConcepts(collectionDo);
 	}
 
-	private void getCollectionCommentsList(String gooruOid, final String offset, String limit) {
-		this.playerAppService.getCollectionCommentsList(gooruOid, offset, limit, new SimpleAsyncCallback<CommentsListDo>() {
-			@Override
-			public void onSuccess(CommentsListDo commentDoList) {
-				getView().setCommentsData(commentDoList,collectionDo, Integer.parseInt(offset) >0 ? false : true);
-			}
-		});
-	}
 
 	public void displayAuthorDetails(boolean isDisplayDetails){
 		getView().displayAuthorDetails(isDisplayDetails);
@@ -147,11 +129,6 @@ public class AssessmentsPreviewPlayerMetadataPresenter extends PresenterWidget<I
 		getView().resetMetadataFields();
 	}
 
-	@Override
-	public void setPlayerLoginStatusHandler(boolean isLoggedIn) {
-		getView().setPlayerLoginStatus(isLoggedIn);
-	}
-
 	public PlayerAppServiceAsync getPlayerAppService() {
 		return playerAppService;
 	}
@@ -166,55 +143,6 @@ public class AssessmentsPreviewPlayerMetadataPresenter extends PresenterWidget<I
 
 	public void setCommentsListDoAsync(SimpleAsyncCallback<CommentsListDo> commentsListDoAsync) {
 		this.commentsListDoAsync = commentsListDoAsync;
-	}
-
-	@Override
-	public void createCommentForCollection(String gooruOid, String comment) {
-		this.playerAppService.createCommentForCollection(gooruOid, comment, new SimpleAsyncCallback<CommentsDo>() {
-			@Override
-			public void onSuccess(CommentsDo commentsDo) {
-				getView().setCommentsWidget(commentsDo, CREATE);
-				getView().displaySuccessMsg(false);
-			}
-		});
-	}
-
-	@Override
-	public void updateCommentChildView(String commentUid, String action) {
-		getView().updateCommentChildView(commentUid, action);
-	}
-
-	@Override
-	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit) {
-		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void noResult) {
-				if(Integer.parseInt(offset)>=9)
-				insertCommentAfterDeletion(gooruOid, offset, limit);
-			}
-		});
-	}
-	public void insertCommentAfterDeletion(final String gooruOid,final String offset, String limit){
-		this.playerAppService.getCollectionCommentsList(gooruOid, offset, limit, new SimpleAsyncCallback<CommentsListDo>() {
-			@Override
-			public void onSuccess(CommentsListDo commentDoList) {
-				getView().setCommentsWidget(commentDoList.getSearchResults().get(0), FEATCHINGCOMMENT);
-			}
-		});
-	}
-	@Override
-	public void editCommentChildView(String commentUid, String commentText, String action) {
-		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
-			@Override
-			public void onSuccess(CommentsDo result) {
-				getView().updateCommentChildView("", EDIT);
-			}
-		});
-	}
-
-	@Override
-	public void getPaginationResults(String gooruOid, String offset, String limit) {
-		getCollectionCommentsList(gooruOid, offset, limit);
 	}
 
 

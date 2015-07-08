@@ -40,5 +40,9 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	void setUnitTemplate(String type);
 	
 	public void deleteCourseContent(String o1CourseId);
-	public void setRightClusterContent(String o1CourseId);
+	public void setRightClusterContent(String o1CourseId, String currentTypeView);
+	
+	public void deleteUnitContent(String o1CourseId, String o2UnitId);
+	
+	public void setUnitsListOnRightCluster(String o1CourseId,String o2DeletedUnitId, String currentTypeView);
 }

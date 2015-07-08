@@ -453,8 +453,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
 		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
-		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
-		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
 	}
 
@@ -2652,8 +2650,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				public void onSuccess(CollectionDo result) {
 					if(result!=null){
 					collectionDo.getSettings().setComment(result.getSettings().getComment());
-					metadataPresenter.changeCommentsButton(result);
-					collectionEndPresenter.changeCommentsButton(result);
 					}
 				}
 			};
@@ -2665,22 +2661,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	public void closePreviewPlayer(boolean isClose) {
 		getView().closePreviewPlayer();
 
-	}
-
-	public void editCommentChildView(String commentUid, String commentText, String action) {
-		if(getPlaceManager().getRequestParameter("view")!=null){
-			collectionEndPresenter.editCommentChildView(commentUid, commentText, action);
-		}else{
-			metadataPresenter.editCommentChildView(commentUid, commentText, action);
-		}
-	}
-
-	public void updateCommentChildView(String commentUid, String action){
-		if(getPlaceManager().getRequestParameter("view")!=null){
-			collectionEndPresenter.updateCommentChildView(commentUid, action);
-		}else{
-			metadataPresenter.updateCommentChildView(commentUid,action);
-		}
 	}
 
 	@Override
@@ -2758,4 +2738,5 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			}
 		});
 	}
+
 }

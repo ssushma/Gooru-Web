@@ -17,9 +17,9 @@
                         </g:HTMLPanel>
                     </g:HTMLPanel> -->
                 </g:HTMLPanel>
-				<g:HTMLPanel styleName="myShelfEditButtonContainer">
+				<!-- <g:HTMLPanel styleName="myShelfEditButtonContainer">
 					<g:Button ui:field="myShelfEditButton" styleName="secondary"></g:Button>
-				</g:HTMLPanel>
+				</g:HTMLPanel> -->
 			</g:FlowPanel>
 		</g:FocusPanel>
 		<!-- <g:DisclosurePanel styleName="{res.css.shelfCollection}" ui:field="disPanel" animationEnabled="true">
