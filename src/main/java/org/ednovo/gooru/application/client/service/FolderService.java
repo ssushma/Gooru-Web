@@ -201,5 +201,7 @@ public interface FolderService extends BaseService {
 	
 	Integer deleteUnit(String o1CourseId, String o2UnitId) throws GwtException,ServerDownException ;
 	
+	Integer deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId)throws GwtException,ServerDownException;
+	
 	
 }

@@ -601,8 +601,11 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
+	
+	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
+	
+	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?");
 
-	DELETE_UNIT("/v1/course/{0}/unit/{1}?");
 
 	private String url;
 
