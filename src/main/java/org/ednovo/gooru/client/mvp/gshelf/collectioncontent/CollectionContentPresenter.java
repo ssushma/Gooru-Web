@@ -93,9 +93,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
-
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
-
 			@Override
 			public void insertCollectionItemInAddResource(
 					CollectionItemDo collectionItem, RefreshType refreshType) {
@@ -116,13 +114,12 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
 	public void setData(final FolderDo folderDo) {
-		/**As off now the API create lession is not implemented hardcode the collection id for testing **/
-
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		if(collectionId!=null){
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionId,true, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
+					System.out.println("result.getCollectionItems().size():::"+result.getCollectionItems().size());
 					getView().setData(result,folderDo, RefreshType.INSERT);
 				}
 			});
