@@ -126,51 +126,35 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	
 	@Override
 	public void setCollectionType(String collectionType) {
-
-			if(collectionType.equalsIgnoreCase("collection"))
-			{
-			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
-			}
-			else
-			{
-			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
-			}
-
+		setDetaultImage(collectionType);
 	}
-	
+	public void setDetaultImage(String collectionType){
+		if(collectionType.equalsIgnoreCase("collection")){
+			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
+		}else{
+			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
+		}
+	}
 
 	@Override
 	public void setCouseData(final FolderDo courseObj) {
 		this.courseObj=courseObj;
 		if(null!=courseObj){
 			collectionTitle.setText(courseObj.getTitle());
-			String url = courseObj.getThumbnails()==null?null:StringUtil.isEmpty(courseObj.getThumbnails().getUrl())?null:courseObj.getThumbnails().getUrl();
-			collThumbnail.setUrl(url==null?"":url);
-		}
-		else
-		{
-			if(courseObj.getCollectionType()!=null && courseObj.getCollectionType().equalsIgnoreCase("collection"))
-			{
-			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
-			}
-			else
-			{
-			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
+			if(courseObj.getThumbnails()!=null){
+				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+			}else{
+				setDetaultImage(courseObj.getType());
 			}
 		}
 		collThumbnail.addErrorHandler(new ErrorHandler() {
-			
 			@Override
 			public void onError(ErrorEvent event) {
-				if(courseObj.getCollectionType()!=null && courseObj.getCollectionType().equalsIgnoreCase("collection"))
-				{
-				collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
+				if(courseObj.getCollectionType()!=null && courseObj.getCollectionType().equalsIgnoreCase("collection")){
+					collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
+				}else{
+					collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
 				}
-				else
-				{
-				collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
-				}
-				
 			}
 		});
 	}

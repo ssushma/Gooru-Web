@@ -78,5 +78,5 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	 */
 	Label getCollectionLabel();
 
-	void removeDeletedTreeWidget(String deletedTreeWidgetId); 
+	void removeDeletedTreeWidget(String deletedTreeWidgetId, String currentTypeView);  
 }

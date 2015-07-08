@@ -80,7 +80,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.type=type;
 		
-		if(folderObj.getTitle()!=null){
+		if(folderObj!=null && folderObj.getTitle()!=null){
 			h3CourseTitle.setText(folderObj.getTitle());
 		}
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
