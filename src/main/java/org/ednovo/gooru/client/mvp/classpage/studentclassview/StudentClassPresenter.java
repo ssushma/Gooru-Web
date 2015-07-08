@@ -157,17 +157,15 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	}
 	
 	private void loadNavigationPage() {
-		//String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
 		getView().setButtonHighlight();
 		clearSlot(LEARNING_MAP_TAB);
-		addToSlot(LEARNING_MAP_TAB, studentClassLearningMapPresenter);
-		
-		/*clearSlot(CLASSPAGE_REPORT_TAB);
+		clearSlot(CLASSPAGE_REPORT_TAB);
 		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
 			addToSlot(LEARNING_MAP_TAB, studentClassLearningMapPresenter);
 		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
 			addToSlot(CLASSPAGE_REPORT_TAB, studentClassReportPresenter);
-		}*/
+		}
 	}
 	
 	@Override

@@ -688,4 +688,13 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			logger.error("Exception::", e);
 		}
 	}
+
+	@Override
+	public String deleteCourse(String o1CourseId) throws GwtException,ServerDownException {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_COURSE, o1CourseId);
+		getLogger().info("DELETE_COURSE:::::::"+url);
+		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		
+		return null;
+	}
 }

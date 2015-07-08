@@ -48,19 +48,7 @@ public interface IsAssessmentsPreviewPlayerMetadataView extends IsViewWithHandle
 
 	public void displayAuthorDetails(boolean isDisplayDetails);
 
-	public void setPlayerLoginStatus(boolean isLoggedIn);
-
-	public void setCommentsData(CommentsListDo commentDoList, CollectionDo collectionDo, boolean isToClearCommentContainer);
-
-	public void setCommentsWidget(CommentsDo commentsDo, String action);
-
-	public void displaySuccessMsg(boolean isVisible);
-
-	public void updateCommentChildView(String commentUid, String action);
-
 	public Anchor getFlagButton();
-
-	public void clearCommentContainer(boolean isClear);
 
 	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList, String coursePage, String subject, String lessonId, String libraryName);
 

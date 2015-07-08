@@ -676,7 +676,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setLevel(4);
-		}else if("Assessment".equalsIgnoreCase(type)){
+		}else if("Assessment".equalsIgnoreCase(type) || "ExternalAssessment".equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
 			shelfTreeWidget.getTitleLbl().setText("UntitledAssessment");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
@@ -915,5 +915,18 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@Override
 	public Label getCollectionLabel(){
 		return lblCollectionTitle;
+	}
+
+	@Override
+	public void removeDeletedTreeWidget(String deletedTreeWidgetId){
+		for (FolderDo folderDo : SHELF_COLLECTIONS) {
+			if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
+				SHELF_COLLECTIONS.remove(folderDo);
+				break;
+			}
+		}
+		getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);
+		treeChildSelectedItem.remove();
+		organizeRootPnl.addStyleName("active");
 	}
 }

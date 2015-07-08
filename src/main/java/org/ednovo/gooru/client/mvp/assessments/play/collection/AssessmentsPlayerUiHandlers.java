@@ -37,7 +37,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPla
 import com.google.gwt.user.client.ui.FlowPanel;
 
 public interface AssessmentsPlayerUiHandlers extends BaseUiHandlers,UpdateCollectionViewCountEventHandler,
-					AssessmentsShowCollectionTabWidgetEventHandler,RefreshCollectionInShelfListInPlayHandler,UpdateFlagIconColorEventHandler,EditCommentChildViewHandler,UpdateCommentChildViewHandler,CloseAssessmentsPlayerHandler,PostUserReviewEventHandler{
+					AssessmentsShowCollectionTabWidgetEventHandler,RefreshCollectionInShelfListInPlayHandler,UpdateFlagIconColorEventHandler,CloseAssessmentsPlayerHandler,PostUserReviewEventHandler{
 	public void updateResourceThumbsRating(int userThumbsRataing);
 	public void showLoginPopupWidget(String widgetMode);
 	public void resetCollectionPlayer();

@@ -240,6 +240,10 @@ import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentVie
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.IsCollectionContentView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.ExternalAssessmentInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.ExternalAssessmentView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsExternalAssessmentView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionShareTabPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionShareTabView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
@@ -755,6 +759,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
 		bindPresenterWidget(CollectionContentPresenter.class,IsCollectionContentView.class, CollectionContentView.class);
+		bindPresenterWidget(ExternalAssessmentInfoPresenter.class,IsExternalAssessmentView.class, ExternalAssessmentView.class);
 
 
 		bindPresenterWidget(HomeBannerPresenter.class,IsHomeBannerView.class, HomeBannerView.class);
