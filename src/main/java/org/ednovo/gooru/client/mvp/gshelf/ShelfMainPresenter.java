@@ -444,10 +444,27 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
 	}
 
+	/**
+	 * 
+	 * @param o1CourseId
+	 * @param deletedTreeWidgetId
+	 * @param currentTypeView
+	 */
 	public void setUserAllUnits(String o1CourseId, String deletedTreeWidgetId, String currentTypeView) { 
 		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
 	}
 
+	/**
+	 * 
+	 * @param o1CourseId
+	 * @param o2UnitId
+	 * @param o3LessDeletedonId
+	 * @param currentTypeView
+	 */
+	public void setUserAllLessons(String o1CourseId, String o2UnitId,String o3LessDeletedonId, String currentTypeView) {
+		getView().removeDeletedTreeWidget(o3LessDeletedonId,currentTypeView);
+	}
+	
 	/**
 	 * This is used to set the bread crumbs after delete.
 	 */

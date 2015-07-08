@@ -709,4 +709,15 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		Integer statusCode = jsonResponseRep.getStatusCode();
 		return statusCode;
 	}
+
+	@Override
+	public Integer deleteLesson(String o1CourseId, String o2UnitId,	String o3LessonId) throws GwtException, ServerDownException {
+		
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_LESSON, o1CourseId,o2UnitId,o3LessonId);
+		getLogger().info("Lesson delete:::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		Integer statusCode = jsonResponseRep.getStatusCode();
+		return statusCode;
+	}
 }

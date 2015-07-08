@@ -592,7 +592,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	DELETE_COURSE("/v1/course/{0}?"),
 	
-	DELETE_UNIT("/v1/course/{0}/unit/{1}?");
+	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
+	
+	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?");
 
 
 	private String url;
