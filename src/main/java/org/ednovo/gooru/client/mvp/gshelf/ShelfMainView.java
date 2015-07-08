@@ -252,14 +252,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			public void onSelection(SelectionEvent<TreeItem> event) {
 				organizeRootPnl.removeStyleName("active");
 				ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) event.getSelectedItem().getWidget();
-				if((shelfTreeWidget.getCollectionDo()==null ||shelfTreeWidget.getCollectionDo().getCollectionType()==null)|| 
-						(!shelfTreeWidget.getCollectionDo().getCollectionType().equals("assessment/url"))){
-					treeChildSelectedItem = event.getSelectedItem();
-					((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
-					getUiHandlers().setBreadCrumbs(shelfTreeWidget.getUrlParams());
-					setFolderActiveStatus();
 					
-				}
+				treeChildSelectedItem = event.getSelectedItem();
+				((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
+				getUiHandlers().setBreadCrumbs(shelfTreeWidget.getUrlParams());
+				setFolderActiveStatus();
 				
 				if(shelfTreeWidget.getCollectionDo()==null){
 					String widgetType = shelfTreeWidget.getTreeWidgetType();
@@ -834,7 +831,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		shelfTreeWidget.updateData(courseDo);
 		String type = shelfTreeWidget.getTreeWidgetType();
-
 		if(type!=null)
 		{
 			if(COURSE.equalsIgnoreCase(type)){
