@@ -594,6 +594,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_GET_COLLECTIONS_BY_COLLECTIONID("/v1/course/{0}/unit/{1}/lesson/{2}/collection"),
 	
+	V3_GET_COLLECTION_RESOURCES("/v3/collection/{0}?"),
+	
 	V3_GET_LISTTEACHCLASSES("/v3/class/teach?"),
 
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
@@ -601,9 +603,6 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	DELETE_COURSE("/v1/course/{0}?"),
 
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?");
-
-
-
 
 	private String url;
 
