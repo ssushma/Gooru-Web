@@ -6,9 +6,9 @@
             <div class="shareThisCollection">
               <h5>Share This Collection</h5>
               <p>
-                <input type="text" maxlength="3" class="form-control" value="https://www.goorulearning.org/mysupercollection225iwe90fi2jsfc"></input>
+                <g:TextArea styleName="form-control" ui:field="shareTextArea"></g:TextArea>
               </p>
-              <div class="linkFormat"><a href="">Bit.ly</a> <span class="devider">|</span> <a href="">Embed</a></div>
+              <div class="linkFormat"><g:Anchor ui:field="bitlyLink">Bit.ly</g:Anchor> <span class="devider">|</span> <g:Anchor ui:field="embedLink">Embed</g:Anchor></div>
             </div>
             <div class="collectionVisibility no-gutter">
               <h5>Collection Visibility</h5>

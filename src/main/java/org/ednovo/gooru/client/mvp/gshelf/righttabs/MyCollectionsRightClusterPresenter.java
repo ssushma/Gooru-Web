@@ -135,7 +135,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			}
 		}else if(index==3){
 			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
-				//CollectionShareTabPresenter.setData(folderObj);
+				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
 		}
