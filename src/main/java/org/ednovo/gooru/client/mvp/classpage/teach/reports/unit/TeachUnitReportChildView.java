@@ -24,9 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.unit;
 
+import java.util.Map;
+
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
+import org.ednovo.gooru.client.uc.SpanPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
@@ -35,11 +43,14 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Gooru Team
@@ -48,10 +59,18 @@ import com.google.gwt.user.client.ui.Widget;
 public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPresenter> implements IsTeachUnitReportView {
 
 	@UiField HTMLPanel unitTablePanel;
+	@UiField Label assessementLink, collectionLink;
+	@UiField SpanPanel textLbl, currentContentName, previousContentName, nextContentName;
+	@UiField HTMLPanel topContainer, learningMapContainer, headerLinksContainer;
+	@UiField HTMLEventPanel previousContentPanel, currentContentPanel, nextContentPanel, allContentPanel;
 	
 	final AdvancedFlexTable assessmentTableWidget = new AdvancedFlexTable();
 	final AdvancedFlexTable collectionTableWidget = new AdvancedFlexTable();
 	
+	String allContentStr = null, previousContentStr = null, nextContentStr = null;
+	
+	private static final String ALL = "all";
+
 	private static TeachUnitReportChildViewViewUiBinder uiBinder = GWT.create(TeachUnitReportChildViewViewUiBinder.class);
 
 	interface TeachUnitReportChildViewViewUiBinder extends UiBinder<Widget, TeachUnitReportChildView> {
@@ -60,16 +79,40 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	public TeachUnitReportChildView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new TeachUnitReportChildPresenter(this));
+		assessementLink.addClickHandler(new ContentClickHandler("assessment"));
+		collectionLink.addClickHandler(new ContentClickHandler("collection"));
 		getData();
 	}
 	
 	public void getData() {
+		setNavigationData();
 		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
 		unitTablePanel.clear();
 		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
+			setContentLinksHighlight("activeDiv","");
 			setAssessmentTableData();
 		} else if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+			setContentLinksHighlight("","activeDiv");
 			setCollectionTableData();
+		}
+	}
+	
+	private void setContentLinksHighlight(String assessmentStyle, String collectionStyle) {
+		assessementLink.setStyleName(assessmentStyle);
+		collectionLink.setStyleName(collectionStyle);
+	}
+	
+	public class ContentClickHandler implements ClickHandler{
+		String contentType = null;
+		public ContentClickHandler(String contentType) {
+			this.contentType = contentType;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, contentType);
+			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 	}
 	
@@ -264,5 +307,78 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 				}
 			}
 		}
-	}	
+	}
+
+	public void setNavigationData() {
+		headerLinksContainer.setVisible(false);
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		
+		allContentStr = ALL;
+		previousContentStr = "id";
+		nextContentStr = "id1";
+		
+		setContentVisibility(false);
+		
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			setNavLinksData("All Units", "Unit 2", "Unit 3: Number & Operations - Fractions", "Unit 4");
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			
+		}
+		setContentVisibility(true);
+	}
+	
+	@UiHandler("allContentPanel")
+	public void ClickAllContentPanel(ClickEvent event) {
+		navigateToPage(allContentStr);
+	}
+	@UiHandler("previousContentPanel")
+	public void ClickPreviousContentPanel(ClickEvent event) {
+		navigateToPage(previousContentStr);
+	}
+	@UiHandler("nextContentPanel")
+	public void ClickNextContentPanel(ClickEvent event) {
+		navigateToPage(nextContentStr);
+	}
+	
+	public void navigateToPage(String id) {
+		Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
+		
+		String uId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
+		String lId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
+		String pageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE);
+		
+		if(id.equalsIgnoreCase(ALL)) {
+			if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+				params.put(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
+				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
+				params.remove(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT);
+			}
+		} else {
+			if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
+				if(uId!=null&&!uId.isEmpty()) {
+					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, id);
+				}
+			}
+		}
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS, params);
+	}
+	
+	private void setNavLinksData(String allTxt, String previousLinkTxt, String currentLinkTxt, String nextLinkTxt) {
+		textLbl.setText(allTxt);
+		previousContentName.setText(previousLinkTxt);
+		currentContentName.setText(currentLinkTxt);
+		nextContentName.setText(nextLinkTxt);
+	}
+
+	private void setContentVisibility(boolean isVisible) {
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		topContainer.setVisible(isVisible);
+		learningMapContainer.setVisible(isVisible);
+		if(!pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			headerLinksContainer.setVisible(isVisible);
+		}
+	}
+
 }
