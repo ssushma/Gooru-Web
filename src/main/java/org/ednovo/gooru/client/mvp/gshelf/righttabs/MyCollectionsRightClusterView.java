@@ -355,14 +355,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		};
 		deletePopup.setPopupTitle(i18n.GL0748());
 		if(currentTypeView.equalsIgnoreCase(COURSE)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle()));
-			deletePopup.setDescText("If you delete this Course, it will no longer be available.<br>This is a permanent action!");
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COURSE));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COURSE));
 		}else if(UNIT.equalsIgnoreCase(currentTypeView)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle()));
-			deletePopup.setDescText("If you delete this Unit, it will no longer be available.<br>This is a permanent action!");
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), UNIT));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
 		}else if(LESSON.equalsIgnoreCase(currentTypeView)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle()));
-			deletePopup.setDescText("If you delete this Lesson, it will no longer be available.<br>This is a permanent action!");
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), LESSON));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
 		}
 		deletePopup.setDeleteValidate("delete");
 		deletePopup.setPositiveButtonText(i18n.GL0190());
