@@ -27,6 +27,8 @@ package org.ednovo.gooru.application.client.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.application.shared.exception.GwtException;
+import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
@@ -178,5 +180,19 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void v2GetAllClass(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
 	
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
+	
+	
+	
+	/** new class **/
+	
+	public void v3GetClassById(String classpageId, AsyncCallback<ClasspageDo> callback);
+	
+	public void createClass(String title,String grade,boolean visiblity,AsyncCallback<ClasspageDo> callback);
+	
+	public void  v3GetUserClasses(String limit, String offSet, String randomId,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
+	
+	public void  v3GetUserStudyClasses(String limit, String offSet, String randomId,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
+	
+	//public void inviteStudentToClass_V3(String classId,List<String> lstEmailId, AsyncCallback<ArrayList<CollaboratorsDo>> simpleAsyncCallback);
 	
 }

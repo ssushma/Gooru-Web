@@ -181,6 +181,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(lessonTitle.getText());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+			System.out.println("id val:::"+id);
 			if(id!=null){
 				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type);
 			}else{

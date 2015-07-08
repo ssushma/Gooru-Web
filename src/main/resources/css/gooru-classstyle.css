@@ -1152,7 +1152,7 @@ select option {
     padding: 15px 0;
 }
 .rosterContainer .inviteStudents {
-    padding: 10px 15px 25px 15px;
+    padding: 10px 15px 40px 15px;
 }
 .rosterContainer .joinedStudentsBlock {
     padding: 15px;
@@ -1292,6 +1292,10 @@ select option {
 .rosterContainer .buttonTooltip{
 	display: inline-block;
 	position: relative;
+}
+
+.rosterContainer .joinedStudentsBlock.seeMoreActive, .seeMorePending, .pleaseWait{
+	float: right;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     .studentsMenuBlock .studentsLeftMenu {
