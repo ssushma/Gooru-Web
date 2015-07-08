@@ -270,13 +270,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo getCollection(String collectionGooruOid, boolean skipCollectionItem) {
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_COLLECTION_RESOURCES, collectionGooruOid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
-		params.put(GooruConstants.SKIP_COLL_ITEM, String.valueOf(skipCollectionItem));
-		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );
-		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
-		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
-		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDU_ITEMS,GooruConstants.TRUE);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("get coll res url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
