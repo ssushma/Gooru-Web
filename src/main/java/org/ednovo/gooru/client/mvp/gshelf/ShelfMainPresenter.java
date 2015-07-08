@@ -438,8 +438,21 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	/**
 	 * Sets all courses on right cluster.
+	 * @param currentTypeView 
 	 */
-	public void setUserAllCourses(String deletedTreeWidgetId) {
-		getView().removeDeletedTreeWidget(deletedTreeWidgetId);
+	public void setUserAllCourses(String deletedTreeWidgetId, String currentTypeView) { 
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
+	}
+
+	public void setUserAllUnits(String o1CourseId, String deletedTreeWidgetId, String currentTypeView) { 
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
+	}
+
+	/**
+	 * This is used to set the bread crumbs after delete.
+	 */
+	@Override
+	public void onDeleteSetBreadCrumbs(String title, String course) {
+		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
 }
