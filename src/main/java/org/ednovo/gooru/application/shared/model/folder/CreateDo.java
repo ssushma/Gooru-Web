@@ -20,6 +20,11 @@ public class CreateDo implements Serializable{
 	private List<Integer> audienceIds;
 	private List<Integer> domainIds;
 	private List<Integer> standardIds;
+	private String url;
+	private String goals;
+	private String sharing;
+	private String isLoginRequired;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -74,7 +79,28 @@ public class CreateDo implements Serializable{
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
 	}
-	
-	
-	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getGoals() {
+		return goals;
+	}
+	public void setGoals(String goals) {
+		this.goals = goals;
+	}
+	public String getSharing() {
+		return sharing;
+	}
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
+	}
+	public String getIsLoginRequired() {
+		return isLoginRequired;
+	}
+	public void setIsLoginRequired(String isLoginRequired) {
+		this.isLoginRequired = isLoginRequired;
+	}
 }

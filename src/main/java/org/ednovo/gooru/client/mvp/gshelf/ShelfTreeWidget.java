@@ -92,9 +92,6 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	@UiField
 	FocusPanel titleFocPanel;
-
-	@UiField
-	Button myShelfEditButton;
 	
 	@UiField HTMLPanel panelToolTip;
 	
@@ -163,10 +160,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	 */
 	public ShelfTreeWidget(final FolderDo collectionDo, final int nextLevel) {
 		setWidget(uiBinder.createAndBindUi(this));
-		myShelfEditButton.setText(i18n.GL0140());
-		myShelfEditButton.getElement().setAttribute("alt", i18n.GL0140());
-		myShelfEditButton.getElement().setAttribute("title", i18n.GL0140());
-		myShelfEditButton.getElement().setId("btnMyShelfEdit");
 		if(collectionDo!=null){
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
@@ -174,25 +167,10 @@ public class ShelfTreeWidget extends FocusPanel {
 			setData(nextLevel);
 		}
 		this.getElement().setAttribute("style", "min-height: 42px;");
-		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
-		myShelfEditButton.getElement().getStyle().setMarginRight(20, Unit.PX);
 		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
 		titleLbl.getElement().setId("htmlTitleLbl");
 		panelToolTip.getElement().setId("pnlPanelToolTip");
 		titleFocPanel.addClickHandler(new ClickOnFolderItem());
-		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(collectionDo!=null)
-				{
-				if(collectionDo.getCollectionType()!= null){
-					if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
-						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
-					}
-				}
-				}
-			}
-		});
 		titleFocPanel.addMouseOutHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
@@ -204,84 +182,12 @@ public class ShelfTreeWidget extends FocusPanel {
 				}*/
 			}
 		});
-		myShelfEditButton.addMouseOverHandler(new MouseOverHandler() {
-		
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
-					String tooltipText="";
-					if(collectionDo.getType().equalsIgnoreCase(FOLDER)){
-						tooltipText = i18n.GL1472();
-					}else{
-						tooltipText = i18n.GL1473();
-					}
-					
-					toolTipPopupPanel.clear();
-					toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(tooltipText,""));
-					toolTipPopupPanel.setStyleName("");
-					toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
-					toolTipPopupPanel.show();
-				}
-				
-			}
-			
-		});
-		myShelfEditButton.addMouseOutHandler(new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				toolTipPopupPanel.hide();
-			}
-		});
-		
 		AppClientFactory.getEventBus().addHandler(CollectionAssignShareEvent.TYPE, handler);
 
 		AppClientFactory.getEventBus().addHandler(UpdateShelfFolderNameEvent.TYPE,updateShelfFolderName);
 		/*if(ASSESSMENT_URL.equalsIgnoreCase(collectionDo.getCollectionType())){
 			showAssessmentUrlInfo(collectionDo);
 		}*/
-	}
-
-	@UiHandler("myShelfEditButton")
-	public void myShelfEditButtonHandler(ClickEvent event){
-		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
-			myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
-			isValue=false;
-			if(collectionDo.getType().equalsIgnoreCase(FOLDER)){
-				MixpanelUtil.mixpanelEvent("Search_click_folder_edit");
-				isEditButtonSelected=true;
-				openFolderInShelf();
-			}else {
-				openCollectionInShelf();
-			}
-		}else{
-			if(ASSESSMENT_URL.equals(collectionDo.getCollectionType())){
-				Window.enableScrolling(false);
-				editAssessmentPopup=new EditAssessmentPopup(collectionDo) {
-					@Override
-					public void clickEventOnSaveAssessmentHandler(FolderDo result) {
-						if(result!=null){
-							showAssessmentUrlInfo(result);
-							AppClientFactory.fireEvent(new UpdateAssmntUrlOnMycollEvent(result));
-							
-						}
-						editAssessmentPopup.hide();
-					}
-					
-					@Override
-					public void clickEventOnCancelAssessmentHandler(ClickEvent event) {
-						editAssessmentPopup.hide();
-					}
-				};
-					
-					
-				
-				editAssessmentPopup.setGlassEnabled(true);
-				editAssessmentPopup.show();
-				editAssessmentPopup.center();
-			}
-		}
-		
 	}
 	
 	/**

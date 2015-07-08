@@ -33,8 +33,6 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
-import org.ednovo.gooru.application.shared.model.player.CommentsDo;
-import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -69,18 +67,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 
 	public void setClasspageInsightsUrl(String classpageId, String sessionId);
 
-	public void setCommentsData(CommentsListDo commentDoList, CollectionDo collectionDo, boolean isToClearCommentContainer);
-
-	public void setCommentsWidget(CommentsDo commentsDo, String action);
-
-	public void displaySuccessMsg(boolean isVisible);
-
-	public void updateCommentChildView(String commentUid, String action);
-
-	public void clearCommentContainer(boolean isClear);
-
-	public void setPlayerLoginStatus(boolean isLoggedIn);
-
 	public void displaySpendTime(Long hours,Long mins, Double secs);
 
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
@@ -93,7 +79,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 
 	public void dispalyTime();
 
-	public void changeCommentsButton(CollectionDo collectionDoObj);
 
 	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
 
@@ -110,4 +95,5 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void showMessageWhenDataNotFound();
 
 	public void displayWhatsNextContent(FolderWhatsNextCollectionDo result, String urlValue);
+
 }
