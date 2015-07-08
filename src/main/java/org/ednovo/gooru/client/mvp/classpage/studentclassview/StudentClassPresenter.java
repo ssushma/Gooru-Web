@@ -161,11 +161,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		getView().setButtonHighlight();
 		clearSlot(LEARNING_MAP_TAB);
 
-		addToSlot(LEARNING_MAP_TAB, studentClassLearningMapPresenter);
-
-		/*clearSlot(CLASSPAGE_REPORT_TAB);
 		clearSlot(CLASSPAGE_REPORT_TAB);
-
 		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
 			addToSlot(LEARNING_MAP_TAB, studentClassLearningMapPresenter);
 		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
@@ -219,4 +215,5 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
+
 }
