@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
@@ -37,5 +38,7 @@ public interface IsCollectionShareTabView extends IsViewWithHandlers<CollectionS
 	void setCollectionShareData(Map<String, String> result);
 
 	void setShareUrl(String shareUrl);
+
+	void setData(FolderDo collectionDo);
 
 }
