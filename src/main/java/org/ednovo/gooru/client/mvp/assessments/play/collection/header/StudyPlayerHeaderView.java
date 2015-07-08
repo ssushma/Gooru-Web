@@ -43,8 +43,10 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -61,6 +63,10 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 	@UiField InlineLabel wishLabel,loginUserName,wishingText;
 
 	@UiField StudyPlayerStyle headerStyle;
+
+	@UiField HTMLPanel panelSubmitContainer;
+
+	@UiField Button btnSubmitAllAnswers;
 
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
@@ -88,6 +94,7 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		wishLabel.getElement().getStyle().setFloat(Float.LEFT);
 		wishingText.getElement().getStyle().setFloat(Float.LEFT);
 		loginMessageText.getElement().setId("lblLoginMessageText");
+
 	}
 
 	public void setResourceTitle(String title){
@@ -176,5 +183,13 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
+	}
+
+	public Button getBtnSubmitAllAnswers() {
+		return btnSubmitAllAnswers;
+	}
+
+	public void setBtnSubmitAllAnswers(Button btnSubmitAllAnswers) {
+		this.btnSubmitAllAnswers = btnSubmitAllAnswers;
 	}
 }
