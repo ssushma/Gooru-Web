@@ -1,5 +1,5 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:ppanel="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui" xmlns:ppanel="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="collectionInfo">
@@ -22,7 +22,8 @@
 <div class="thimbnailImage">
 <g:Image ui:field="collThumbnail" > </g:Image>
 <span class="thunailHover">
-<button class="secondary btn-block" type="submit">Upload Image</button>
+<g:Button styleName="secondary btn-block" ui:field="uploadImageLbl"></g:Button> 
+
 </span>
 </div>
 
@@ -48,14 +49,14 @@
 
 <div class="unitCoverHeader">
 
-<div class="col-md-12 col-sm-12"> <p>What will this Collection cover?</p></div>
+<div class="col-md-12 col-sm-12"> <p class="tagcollection">What will this Collection cover?</p></div>
 
 <div class="clearfix"></div>
 </div>
 
 <div class="fractionDetailsTable">
 <div class="panel panel-default">
-<div class="panel-heading no-gutter">
+<div class="no-gutter">
 <div class="col-md-4">
 <h3>The Number System</h3>
 </div>
@@ -83,11 +84,7 @@
   </g:HTMLPanel>
 	</panel:HTMLEventPanel>
   
-  <ul role="menu" class="dropdown-menu pull-right">
-    <li><a href="#">My Folders</a></li>
-    <li><a href="#">My Collections</a></li>
-   
-  </ul>
+   	<ppanel:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"></ppanel:UlPanel>
 </div>
 </div>
 </div>
@@ -229,15 +226,19 @@
 
 
 
-<div class="addOptions">
+<g:HTMLPanel styleName="addOptions">
 
 
-<a href="">+ Depth of Knowledge </a>
-<a href="">+ 21st Century Skills</a>
-<a href="">+ Language Objective</a>
-
-</div>
-
+<g:Anchor ui:field="dok" text="{i18n.GL3376}"></g:Anchor>
+	
+<g:Anchor ui:field="centurySkills" text="{i18n.GL3377}"></g:Anchor>
+<g:Anchor ui:field="languageObj" text="{i18n.GL3378}"></g:Anchor>
+ 	 
+</g:HTMLPanel>
+	<g:HTMLPanel styleName="standardDiv" ui:field="newdok">
+			<g:Label styleName="title" ui:field="newlbl"></g:Label>
+			<g:HTMLPanel styleName="normal" ui:field="newtype"></g:HTMLPanel>
+		</g:HTMLPanel>
 
 
 
