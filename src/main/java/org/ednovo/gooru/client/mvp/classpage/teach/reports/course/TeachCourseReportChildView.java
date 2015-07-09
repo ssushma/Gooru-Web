@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpage.teach.reports.course;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
@@ -150,11 +151,9 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW);
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, courseId);
-			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-			AppClientFactory.getPlaceManager().revealPlace(request);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget();
+			popup.center();
+			popup.show();
 		}
 	}	
 
