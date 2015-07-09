@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.assessments.play.collection.end;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
@@ -65,5 +66,7 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void setPdfForEmail(String result);
 
 	public Frame getFrame();
+	
+	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo);
 
 }

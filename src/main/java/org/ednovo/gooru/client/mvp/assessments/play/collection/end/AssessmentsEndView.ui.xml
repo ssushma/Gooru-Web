@@ -69,8 +69,7 @@
 
 								<g:FlowPanel styleName="attemptsBlock">
 									<g:FlowPanel styleName="custom-select">
-										<g:ListBox ui:field="sessionsDropDown"
-											styleName="{unitStyle.css.filterDropDownSessions}">
+										<g:ListBox ui:field="sessionsDropDown">
 										</g:ListBox>
 									</g:FlowPanel>
 									<uc:PPanel ui:field="lastModifiedTime"></uc:PPanel>

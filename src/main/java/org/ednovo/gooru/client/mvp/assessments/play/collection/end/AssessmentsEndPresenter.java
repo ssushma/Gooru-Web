@@ -34,10 +34,13 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
@@ -50,6 +53,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.Request;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -78,6 +82,10 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	PrintUserDataDO printData=new PrintUserDataDO();
 
 	String classpageId=null;
+	
+	ClasspageItemDo classpageItemDo=null;
+	
+	
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -210,6 +218,11 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		});
 
 	}
+	
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
+		this.classpageItemDo=classpageItemDo;
+	}
+	
 
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
@@ -379,5 +392,34 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		});
 	}
 
+	public void getAssessmentSummaryDetails(){
+		
+		String classId=AppClientFactory.getPlaceManager().getRequestParameter("class");
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("course");
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unit");
+		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSON);
+		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter("assessment");
+		
+		ClassDo classObj=new ClassDo();
+		classObj.setClassId(classId);
+		classObj.setCourse(courseId);
+		classObj.setLesson(lessonId);
+		classObj.setUnit(unitId);
+		classObj.setAssessment(assessmentId);
+		
+		
+		this.analyticService.getAssessmentSummary(classObj, new AsyncCallback<AssessmentSummaryStatusDo>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				throw new RuntimeException("Not implemented");
+			}
+
+			@Override
+			public void onSuccess(AssessmentSummaryStatusDo result) {
+				getView().displaySummaryMetadata(result);
+			}
+		});
+	}
 
 }

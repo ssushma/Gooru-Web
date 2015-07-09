@@ -34,6 +34,7 @@ import java.util.Set;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
@@ -275,12 +276,12 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			if(result.get(0).getThumbnail()!=null && !result.get(0).getThumbnail().trim().equalsIgnoreCase("")){
 				collectionImage.setUrl(result.get(0).getThumbnail());
 			}else{
-				collectionImage.setUrl("images/analytics/default-collection-image.png");
+				collectionImage.setUrl("images/default-assessment-image -160x120.png");
 			}
 			collectionImage.addErrorHandler(new ErrorHandler() {
 				@Override
 				public void onError(ErrorEvent event) {
-					collectionImage.setUrl("images/analytics/default-collection-image.png");
+					collectionImage.setUrl("images/default-assessment-image -160x120.png");
 				}
 			});
 			collectionResourcesCount.setText(result.get(0).getNonResourceCount()+" Questions");
@@ -862,6 +863,13 @@ public static native void destoryTables() /*-{
 	var table = $wnd.$('#report').DataTable();
   	table.destroy();
 }-*/;
+
+
+
+@Override
+public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
+	throw new RuntimeException("Not implemented");
+}
 
 
 }
