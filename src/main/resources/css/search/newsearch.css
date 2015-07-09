@@ -233,6 +233,8 @@
     cursor:pointer;
     max-height:42px;
     overflow: hidden;
+    margin-left: 10px;
+	margin-top: 10px;
 }
 
 #gooruSearchMainContainer .libraryMainContainerBlock .collectionTitleincoll{
@@ -248,8 +250,9 @@
 }
 #gooruSearchMainContainer .libraryMainContainerBlock .resourceAuthorDetails{
 	white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  	text-overflow: ellipsis;
+  	overflow: hidden;
+  	margin-left: 10px;
 }
 #gooruSearchMainContainer .userDetails img{
 	width:30px;

@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
 import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
@@ -43,6 +44,8 @@ import org.ednovo.gooru.application.shared.model.analytics.FeedBackResponseDataD
 import org.ednovo.gooru.application.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.AnalyticsServiceConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
@@ -989,5 +992,26 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String url= AddQueryParameter.constructQueryParams(partialUrl, params);
 		logger.info("exportProgress url:+"+url);
 		return url;
+	}
+	
+
+	@Override
+	public AssessmentSummaryStatusDo getAssessmentSummary(ClassDo classObj){
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_ASSESSMENT_SUMMARY_DETAILS,classObj.getClassId(),classObj.getCourse(),classObj.getUnit(),classObj.getLesson(),classObj.getAssessment());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeAssessmentSummary(jsonRep);
+	}
+	
+	public AssessmentSummaryStatusDo deserializeAssessmentSummary(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), AssessmentSummaryStatusDo.class);
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
+		}
+		return new AssessmentSummaryStatusDo();
 	}
 }

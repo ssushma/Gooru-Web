@@ -567,4 +567,27 @@ public class AssessmentsResourcePlayerMetadataPresenter extends PresenterWidget<
 			collectionPlayerPresenter.updateRatReacSessionActivityItem(emoticRatingNumber, gooruOid, isRatingsReactions);
 		}
 	}
+
+	/**
+	 *
+	 * @function navigateToNextResource
+	 *
+	 * @created_date : 09-Jul-2015
+	 *
+	 * @description This method is used to navigate to next resource once user clicks on save and next.
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	public void navigateToNextResource(PlaceRequest resourceRequest){
+		getView().navigateToNextResource(resourceRequest);
+	}
 }

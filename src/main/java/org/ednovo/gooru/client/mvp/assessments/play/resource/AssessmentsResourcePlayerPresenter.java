@@ -1173,4 +1173,8 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 		});
 	}
 
+	public void navigateNextResource(){
+//		resoruceMetadataPresenter.navigateToNextResource(AppClientFactory);
+	}
+
 }

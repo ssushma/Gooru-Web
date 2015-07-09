@@ -965,11 +965,11 @@ public class EditClasspageView extends
 							@Override
 							public void onSuccess(ClasspageListDo result) {
 
-								if (result.getSearchResults().size()>0){
+								/*if (result.getSearchResults().size()>0){
 									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 									}else{
 									AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-								}
+								}*/
 							}
 					});
 					}
