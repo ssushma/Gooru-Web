@@ -65,6 +65,9 @@ public class ClasspageDo implements Serializable{
 	private String classUid;
 	private String classCode;
 	private UserDo user;
+	private String courseGooruOid;
+	private String mediaFilename;
+	private int minimumScore;
 
 	public ClasspageDo(){}
 
@@ -329,6 +332,48 @@ public class ClasspageDo implements Serializable{
 	 */
 	public void setUser(UserDo user) {
 		this.user = user;
+	}
+
+	/** 
+	 * This method is to get the courseGooruOid
+	 */
+	public String getCourseGooruOid() {
+		return courseGooruOid;
+	}
+
+	/** 
+	 * This method is to set the courseGooruOid
+	 */
+	public void setCourseGooruOid(String courseGooruOid) {
+		this.courseGooruOid = courseGooruOid;
+	}
+
+	/** 
+	 * This method is to get the mediaFilename
+	 */
+	public String getMediaFilename() {
+		return mediaFilename;
+	}
+
+	/** 
+	 * This method is to set the mediaFilename
+	 */
+	public void setMediaFilename(String mediaFilename) {
+		this.mediaFilename = mediaFilename;
+	}
+
+	/** 
+	 * This method is to get the minimumScore
+	 */
+	public int getMinimumScore() {
+		return minimumScore;
+	}
+
+	/** 
+	 * This method is to set the minimumScore
+	 */
+	public void setMinimumScore(int minimumScore) {
+		this.minimumScore = minimumScore;
 	}
 
 

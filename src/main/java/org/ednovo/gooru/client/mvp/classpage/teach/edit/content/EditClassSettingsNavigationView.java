@@ -79,7 +79,6 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 	public EditClassSettingsNavigationView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		System.out.println("Edit class Cons");
 		setIds();
 		//setActiveStyles();
 	} 
@@ -117,7 +116,6 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	
 	@Override
 	public void setActiveStyles(){
-		System.out.println("setActiveStyles");
 		String subPageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO)){
 			classInfo.setStyleName(CssTokens.ACTIVE);

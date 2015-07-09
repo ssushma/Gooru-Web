@@ -170,7 +170,6 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	 */
 	@Override
 	public void setClassHeaderView(ClasspageDo classpageDo) {
-		System.out.println("Teach setClassHeaderView");
 		this.classpageDo=classpageDo;
 		if(classpageDo != null){
 			titlePanel.setText(classpageDo.getName());
