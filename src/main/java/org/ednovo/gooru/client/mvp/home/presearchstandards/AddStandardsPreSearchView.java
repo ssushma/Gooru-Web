@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -79,63 +79,63 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
  *
  */
 public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStandardsPreSearchUiHandlers> implements IsAddStandardsPreSearchView {
-	
-	
+
+
 	ToolTip toolTip;
-	
+
 	@UiField Button commonStandards1,texasKnowledge1,ngss1,californiaStandards1,addBtn;
-	
+
 	@UiField HTMLPanel addStandardsPanel;
 	@UiField UlPanel levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
 	@UiField Label subjects,grade,course,standard;
 
 	private boolean isCheckedValue;
-	
+
 	private boolean scienceCodeVal, instantVal = false;
 
 	private String scienceStrCode = "";
 	private CollectionDo collectionDo;
-	
+
 	List<Map<String, String>> standListArray= new ArrayList<Map<String,String>>();
-	
+
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
-	
+
 //	public static final String GRADE_INFO = MessageProperties.GL0320;
 
 //	public static final String COURSE_INFO = MessageProperties.GL0321;
 
 	private static final String GOORU_UID = "gooruuid";
-	
+
 	String selectedCodeVal = "";
-	
+
 	Integer selectedCodeId = 0;
 	String selectedCodeDesc = "";
 	private static AddStandardsPreSearchViewUiBinder uiBinder = GWT.create(AddStandardsPreSearchViewUiBinder.class);
-	
+
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
-	
+
 	private static String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
-	
+
 	boolean isHavingBadWords;
-	
+
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
-	
+
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
-	
+
 	private boolean isBrowseStandardsToolTip = false;
-	
+
 	@UiTemplate("AddStandardsPreSearchView.ui.xml")
 	interface AddStandardsPreSearchViewUiBinder extends UiBinder<Widget, AddStandardsPreSearchView> {
 	}
 	BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip(i18n.GL3050(),i18n.GL0192());
 
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 * @param eventBus {@link EventBus}
 	 */
 	@Inject
@@ -150,14 +150,14 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		texasKnowledge1 = new Button();
 		ngss1 = new Button();
 		californiaStandards1 = new Button();
-	
-	
+
+
 		AddStandardsBundle.INSTANCE.css().ensureInjected();
 
-		
+
 		commonStandards1.setStyleName("primary");
 		commonStandards1.addStyleName(AddStandardsBundle.INSTANCE.css().btnStandardsStyle());
-	
+
 		commonStandards1.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -178,7 +178,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	          }
 	    });
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadData()
 	 */
@@ -188,10 +188,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		addBtn.setEnabled(false);
 		addBtn.removeStyleName("primary");
 		addBtn.addStyleName("secondary");
-	
+
 
 	}
-	
+
 	/**
 	 * To set the Standards
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#SetData(org.ednovo.gooru.shared.model.code.StandardsLevel1DO, int)
@@ -212,19 +212,19 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		{
 			scienceStrCode = levelOneData.getCodeId().toString();
 			instantVal = true;
-			scienceCodeVal = true;	
+			scienceCodeVal = true;
 		}
 		}
 		if(!scienceStrCode.isEmpty())
-		{			
+		{
 			liPanel.getElement().setAttribute("dupid", scienceStrCode);
 		}
 		if(valArr==0)
 		{
-			liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+			liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 		}
 		liPanel.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				LiPanel clickedElement = (LiPanel)event.getSource();
@@ -245,12 +245,12 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				{
 					getFirstLevelObjects("1",codeStandardsVal);
 				}
-				
+
 				for(int l=0;l<levelOneStandards.getWidgetCount();l++)
 				{
 					levelOneStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 				}
-				clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+				clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 			}
 		});
 		liPanel.add(levelOneStandardsInner);
@@ -259,7 +259,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		{
 		levelOneStandards.add(liPanel.asWidget());
 		}
-		
+
 		if(valArr == 0)
 		{
 		for(int i=0;i<levelOneData.getNode().size();i++)
@@ -272,10 +272,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			liPanel2.getElement().setAttribute("id", levelOneData.getNode().get(i).getCodeId().toString());
 			if(i==0)
 			{
-				liPanel2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+				liPanel2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 			}
 			liPanel2.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					LiPanel clickedElement = (LiPanel)event.getSource();
@@ -285,8 +285,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					{
 						levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					}
-					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-					
+					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+
 				}
 			});
 			liPanel2.add(levelOneStandardsInner2);
@@ -302,10 +302,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				liPanel3.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getCodeId().toString());
 				if(j==0)
 				{
-					liPanel3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 				}
 				liPanel3.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						LiPanel clickedElement = (LiPanel)event.getSource();
@@ -316,7 +316,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 							levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 						}
 						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-						
+
 					}
 				});
 				liPanel3.add(levelOneStandardsInner3);
@@ -334,12 +334,12 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					final String codeVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId();
 					final String codeDesc = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel();
-				
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
@@ -413,7 +413,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		addBtn.addStyleName("secondary");
 		getUiHandlers().getThirdLevelObjects(levelOrder,standardCodeSelected);
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadSecondLevelContianerObjects(java.util.ArrayList)
 	 */
@@ -423,22 +423,22 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
 		standListArray.clear();
-		
+
 		for(int i=0;i<levelOneData.size();i++)
 		{
 			try
 			{
-			LiPanel liPanel1=new LiPanel();	
+			LiPanel liPanel1=new LiPanel();
 			Anchor levelOneStandardsInner2 = new Anchor();
 			liPanel1.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 			levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.get(i).getLabel());
 			liPanel1.getElement().setAttribute("id", levelOneData.get(i).getCodeId().toString());
 			if(i==0)
 			{
-				liPanel1.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+				liPanel1.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 			}
 			liPanel1.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					LiPanel clickedElement = (LiPanel)event.getSource();
@@ -449,7 +449,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					}
 					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-					
+
 				}
 			});
 			liPanel1.add(levelOneStandardsInner2);
@@ -465,10 +465,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				liPanel.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getCodeId().toString());
 				if(j==0)
 				{
-					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 				}
 				liPanel.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						LiPanel clickedElement = (LiPanel)event.getSource();
@@ -479,7 +479,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 							levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 						}
 						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-						
+
 					}
 				});
 				liPanel.add(levelOneStandardsInner3);
@@ -498,19 +498,18 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					final String codeVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId();
 					final String codeDesc = levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel();
-					
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -523,8 +522,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								selectedStadDetails.put("selectedCodeDesc", codeDesc);
 								standListArray.add(selectedStadDetails);
 								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-							}	
-							
+							}
+
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -539,7 +538,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			}
 		}
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadThirdLevelContianerObjects(java.util.ArrayList)
 	 */
@@ -548,21 +547,21 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
 		standListArray.clear();
-		
+
 			for(int j=0;j<levelOneData.size();j++)
 			{
 				try{
-				LiPanel liPanel=new LiPanel();	
+				LiPanel liPanel=new LiPanel();
 				Anchor levelOneStandardsInner3 = new Anchor();
 				liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 				levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.get(j).getLabel());
 				liPanel.getElement().setAttribute("id", levelOneData.get(j).getCodeId().toString());
 				if(j==0)
 				{
-					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 				}
 				liPanel.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						LiPanel clickedElement = (LiPanel)event.getSource();
@@ -573,7 +572,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 							levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 						}
 						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-						
+
 					}
 				});
 				liPanel.add(levelOneStandardsInner3);
@@ -592,19 +591,18 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					final String codeVal = levelOneData.get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(j).getNode().get(k).getCodeId();
 					final String codeDesc = levelOneData.get(j).getNode().get(k).getLabel();
-					
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(j).getNode().get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							
+
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -617,8 +615,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								selectedStadDetails.put("selectedCodeDesc", codeDesc);
 								standListArray.add(selectedStadDetails);
 								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-							}	
-							
+							}
+
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -632,7 +630,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				}
 
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadFourthLevelContianerObjects(java.util.ArrayList)
 	 */
@@ -653,12 +651,12 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					final String codeVal = levelOneData.get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(k).getCodeId();
 					final String codeDesc = levelOneData.get(k).getLabel();
-					
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
@@ -677,8 +675,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								selectedStadDetails.put("selectedCodeDesc", codeDesc);
 								standListArray.add(selectedStadDetails);
 								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-							}	
-							
+							}
+
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -688,10 +686,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				}
-				
+
 
 	}
-	
+
 
 
 	/** (non-Javadoc)
@@ -718,7 +716,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		levelFourStandards.clear();
 		scienceCodeVal = false;
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setDefaultCCSS()
 	 */
@@ -749,7 +747,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	@Override
 	public void onUnload() {
 		// TODO Auto-generated method stub
-		
+
 	}
 	/**
 	 * return the addBtn
@@ -771,7 +769,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	public void setAddBtn(Button addBtn) {
 		this.addBtn = addBtn;
 	}
-	
+
 	/**(non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setStandardsVal()
 	 */
@@ -781,7 +779,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		String standardVal = selectedCodeVal;
 		return standardVal;
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setStandardsIdVal()
 	 */
@@ -791,7 +789,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		Integer standardVal = selectedCodeId;
 		return standardVal;
 	}
-	
+
 	/**
 	 * texasKnowledge1 button ClickEvent
 	 * @param click {@link ClickEvent}
@@ -868,7 +866,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		ngss1.addStyleName("primary");
 		getUiHandlers().loadStateStandards("NGSS");
 		}else{
-			
+
 		}
 	}
 	/**
@@ -919,7 +917,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			Window.enableScrolling(false);
 		}
 	}
-	
+
 	/**
 	 * californiaStandards1 button MouseEvent
 	 * @param mouseEvent {@link MouseEvent}
@@ -936,7 +934,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			Window.enableScrolling(false);
 		}
 	}
-	
+
 	/**
 	 * californiaStandards1 button ClickEvent
 	 * @param clickEvent {@link ClickEvent}
@@ -961,7 +959,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		californiaStandards1.addStyleName("primary");
 		getUiHandlers().loadStateStandards("CA");
 		}else{
-			
+
 		}
 	}
 
@@ -1012,7 +1010,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		californiaStandards1.removeStyleName("secondary");
 		californiaStandards1.addStyleName("primary");
 	}
-	
+
 	/** (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setEnableStandardButtons(boolean, boolean, boolean, boolean)
 	 */
@@ -1024,7 +1022,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		this.isNGSSAvailable = isNGSSAvailable1;
 		this.isTEKSAvailable = isTEKSAvailable1;
 		this.isCAAvailable = isCAAvailable1;
-		
+
 		if(isCCSSAvailable == true){
 			commonStandards1.getElement().getStyle().clearColor();
 			commonStandards1.setStyleName("primary");
@@ -1041,7 +1039,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			ngss1.getElement().getStyle().setColor("#999");
 			ngss1.getElement().addClassName("disabled");
 		}
-		
+
 		if(isTEKSAvailable == true){
 			texasKnowledge1.getElement().getStyle().clearColor();
 			texasKnowledge1.getElement().removeClassName("disabled");
@@ -1049,7 +1047,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			texasKnowledge1.getElement().getStyle().setColor("#999");
 			texasKnowledge1.getElement().addClassName("disabled");
 		}
-		
+
 		if(isCAAvailable == true){
 			californiaStandards1.getElement().getStyle().clearColor();
 			californiaStandards1.getElement().removeClassName("disabled");
@@ -1057,7 +1055,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			californiaStandards1.getElement().getStyle().setColor("#999");
 			californiaStandards1.getElement().addClassName("disabled");
 		}
-		
+
 	}
 
 	/** (non-Javadoc)
@@ -1076,9 +1074,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			setDefaultCA();
 		}
 	}
-	
+
 	/**
-	 * To hide Browse Standards Popup 
+	 * To hide Browse Standards Popup
 	 * @param event {@link NativePreviewEvent}
 	 */
 	public void hideBrowseStandardsPopup(NativePreviewEvent event){
@@ -1098,7 +1096,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @param event {@link NativeEvent}
 	 * @return false	{@link Boolean}
@@ -1114,7 +1112,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @return the addStandardsPanel
 	 */
@@ -1122,43 +1120,43 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	public HTMLPanel getAddStandardsPanel() {
 		return addStandardsPanel;
 	}
-	
+
 	@UiHandler("subjects")
 	public void subjectdropdown(ClickEvent clickEvent){
 		invokestandrs1();
 	}
-	
+
 	@UiHandler("grade")
 	public void gradedropdown(ClickEvent clickEvent){
 		invokestandrs2();
 	}
-	
+
 	@UiHandler("course")
 	public void courseropdown(ClickEvent clickEvent){
 		invokestandrs3();
 	}
-	
+
 	@UiHandler("standard")
 	public void standarddropdown(ClickEvent clickEvent){
 		invokestandrs4();
 	}
 
 	public static native void invokestandrs1() /*-{
-		
+
 		$wnd.searchStandard1();
 	}-*/;
-	
+
 	public static native void invokestandrs2() /*-{
-		
+
 		$wnd.searchStandard2();
 	}-*/;
-	
+
 	public static native void invokestandrs3() /*-{
-		
+
 		$wnd.searchStandard3();
 	}-*/;
 	public static native void invokestandrs4() /*-{
-	
+
 		$wnd.searchStandard4();
 	}-*/;
 }

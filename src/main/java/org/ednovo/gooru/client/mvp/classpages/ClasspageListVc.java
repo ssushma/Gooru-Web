@@ -133,7 +133,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	
+
 	private NewClassPopupView newPopup = null;
 
 
@@ -619,13 +619,9 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 				MixpanelUtil.ClickOnNewClassPage();
 				HeaderUc.closeClassContainer();
 				newPopup = new NewClassPopupView() {
-					
+
 					@Override
 					public void createNewClasspage(String title, String grade,	boolean sharing) {
-						
-						System.out.println("title:"+title);
-						System.out.println("grade:"+grade);
-						System.out.println("sharing:"+sharing);
 
 						MixpanelUtil.Create_NewClasspage();
 						CollectionDo collectionDo = new CollectionDo();
@@ -645,7 +641,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 												System.out
 														.println("classpageId:"+classpageId);
 												String title = result.getName();
-												System.out.println("title:"+title);
 												/*AssignmentDo assignmentDo = new AssignmentDo();
 												assignmentDo.setClasspageId(classpageId);
 

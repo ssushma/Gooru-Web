@@ -124,7 +124,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	 *
 	 */
 	public void callServiceRequestsToBindData() {
-		System.out.println("callServiceRequestsToBindData");
 		ownerClassesContainer.clear();
 		joinedClassesContainer.clear();
 		txtCode.setText("");
@@ -137,11 +136,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
-						System.out.println("v2TeachGetUserClasses");
-						System.out.println("result.getTotalHitCount():"+result.getTotalHitCount());
-						System.out.println("result.getSearchResults().size():"+result.getSearchResult());
 						try{
-							System.out.println("result.getSearchResults().size():"+result.getSearchResult().size());
 						if(result.getTotalHitCount()>pageInitialLimitOwner)
 						{
 							seeMorebtnOwner.setVisible(true);
@@ -175,8 +170,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
-						System.out.println("v2GetUserStudyClasses");
-						System.out.println("result.getSearchResults().size():"+result.getSearchResult().size());
 						if(result.getTotalHitCount()>pageInitialLimitJoined)
 						{
 							seeMorebtnJoined.setVisible(true);
@@ -345,7 +338,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 			MixpanelUtil.ClickOnNewClassPage();
 
 			newPopup = new NewClassPopupView() {
-				
+
 				@Override
 				public void createNewClasspage(String title, String grade, boolean sharing) {
 
@@ -360,13 +353,10 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 										@Override
 										public void onSuccess(ClasspageDo result) {
-											System.out.println("##OnSuccess");
 											//final String classpageId = result.getUri();
 											String[] uri=result.getUri().split("/");
 											final String classpageId =  uri[uri.length-1];
-											System.out.println("classpageId:"+classpageId);
 											String title = result.getName();
-											System.out.println("title:"+title);
 											OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
 											newPopup.ClosePopup();
 												}
@@ -630,7 +620,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								seeMorebtnOwner.setVisible(false);
 							}
 
-							System.out.println("result.getSearchResults().size():"+result.getSearchResult().size());
 							for(int i = 0; i<result.getSearchResult().size();i++)
 							{
 								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();

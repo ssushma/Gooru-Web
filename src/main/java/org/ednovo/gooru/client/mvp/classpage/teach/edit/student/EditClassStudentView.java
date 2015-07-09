@@ -83,7 +83,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * @fileName : EditClassStudentView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -92,87 +92,87 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  *
  * @Author tumbalam
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentViewUiHandler> implements IsEditClassStudentView {
-	
+
 	@UiField LiPanel roasterPanel,reportPanel;
-	
+
 	@UiField Anchor roasterAnr,reportPanelAnr,studentAnr;
-	
+
 	@UiField PPanel classCodePanel,shareLnkPanel,emailAddTxt,analyPanel;
-	
+
 	@UiField InlineLabel classCodeTxtPanel,courseHeaderLbl,courseTitleLbl;
-	
+
 	@UiField TextBox sharTxtBox/*,inviteTxtBox*/;
-	
+
 	@UiField Button inviteBtn;
-	
+
 	@UiField H5Panel inviteEmailTxt,studentJoinPanel,studentPendingPanel;
-	
+
 	@UiField VerticalPanel tableContainer,pendingContainer;
-	
+
 	@UiField HTMLPanel panelSuggestBox,roasterMainConatiner,reportContainer/*,panelActions,panelCode*/;
 
 	@UiField Label lblPleaseWait,lblErrorMessage;
-	
+
 	private static final String QUESTIONIMAGE = "images/question.png";
-	
+
 	private static final String STUDENTIMAGE = "images/Classpage/studentsIco.png";
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
-	
+
 	private PopupPanel toolTipPopupPanelNew1 = new PopupPanel();
-	
+
 	private PopupPanel toolTipPopupPanelNew2 = new PopupPanel();
-	
+
 	//@UiField Image pendingImage;
-	
+
 	@UiField HTMLPanel pendindUserContainer,activeUserConatiner;
-	
+
 	@UiField Image studentImage;
-	
+
 	@UiField Anchor notePanel,ancPendingListSeeMore,ancActiveListSeeMore;
-	
+
 	@UiField Label lblActivePleaseWait,lblPendingPleaseWait;
-	
+
 	@UiField Button connectCourseBtn,addStudentBtn;
 
 	@UiField FlowPanel reportBox;
-	
+
 	private int  activeListPageNum=0;
-	
+
 	private static final String SHORTEN_URL = "shortenUrl";
-	
+
 	ClasspageDo classpageDo;
-	
+
 	int currentStudentsCount=0;
-	
+
 	int overAllStudentsCount = 0;
-	
+
 	private static int studentsLimitCount = 500;
-	
+
 	private int pendingListTotalCount=0;
-	
+
 	private int pendingOffsetValue=0;
-	
+
 	private int pageSize = 20;
-	
+
 	private int activeListTotalCount=0;
-	
+
 	String classPageId;
-	
+
 	private static EditClassStudentViewUiBinder uiBinder = GWT.create(EditClassStudentViewUiBinder.class);
-	
+
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-	
+
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
 	interface EditClassStudentViewUiBinder extends UiBinder<Widget, EditClassStudentView> {
 	}
-	
+
 	AutoSuggestForm autoSuggetTextBox =null;
 
 	public EditClassStudentView() {
@@ -184,68 +184,68 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		reportPanelAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));
 
 	}
-	
+
 	public void setIds(){
 		roasterAnr.setText(i18n.GL3416());
 		roasterAnr.getElement().setId("roasterAnrId");
-		
+
 		reportPanelAnr.setText(i18n.GL3421());
 		reportPanelAnr.getElement().setId("reportPanelId");
-		
+
 		classCodePanel.setText(i18n.GL0184());
 		classCodePanel.getElement().setId("classCodePanelId");
-		
+
 		shareLnkPanel.setText(i18n.GL1594());
 		shareLnkPanel.getElement().setId("sharelnkPanel");
-		
+
 		inviteEmailTxt.setText(i18n.GL3419());
 		inviteEmailTxt.getElement().setId("inviteEmailTxtId");
-		
+
 		emailAddTxt.setText(i18n.GL1591());
 		emailAddTxt.getElement().setId("emailAddTextId");
-		
+
 		inviteBtn.setText(i18n.GL0944());
 		inviteBtn.getElement().setId("inviteBtnId");
-		
-		
+
+
 		studentJoinPanel.setText(i18n.GL1526());
 		studentJoinPanel.getElement().setId("studentJoinPanelId");
-		
+
 		analyPanel.setText(i18n.GL1633());
 		analyPanel.getElement().setId("analyPanelId");
-		
+
 		Image image = new Image(QUESTIONIMAGE);
 		image.getElement().setId("classCodeImageId");
 		image.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
 		image.addMouseOutHandler(new MouseOutHideToolTip1());
-		
-		
+
+
 		Image image2 = new Image(QUESTIONIMAGE);
 		image2.getElement().setId("sharLnkId");
 		image2.addMouseOverHandler(new MouseOverShowClassCodeToolTip2());
 		image2.addMouseOutHandler(new MouseOutHideToolTip2());
-		
+
 		notePanel.setText(i18n.GL3422());
 		notePanel.getElement().setId("notePanelId");
-		
+
 		studentImage.setUrl(STUDENTIMAGE);
-		
+
 		addStudentBtn.setText(i18n.GL3423());
 		addStudentBtn.getElement().setId("addStudentBtnId");
-		
+
 		connectCourseBtn.setText(i18n.GL3424());
 		connectCourseBtn.getElement().setId("connectCourseBtnId");
-		
+
 		courseHeaderLbl.setText(i18n.GL0574());
 		courseHeaderLbl.getElement().setId("courseHeaderLblId");
-		
-		
+
+
 		lblPleaseWait.setText(i18n.GL1137());
 		lblPleaseWait.getElement().setId("lblPleaseWait");
 		lblPleaseWait.getElement().setAttribute("alt",i18n.GL1137());
 		lblPleaseWait.getElement().setAttribute("title",i18n.GL1137());
-		
-		
+
+
 		ancPendingListSeeMore.setText(i18n.GL0508().toLowerCase());
 		ancPendingListSeeMore.getElement().setId("lnkPendingListSeeMore");
 		ancPendingListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
@@ -256,10 +256,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		ancActiveListSeeMore.getElement().setId("lnkActiveListSeeMore");
 		ancActiveListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
 		ancActiveListSeeMore.getElement().setAttribute("title",i18n.GL0508().toLowerCase());
-		
+
 		lblPendingPleaseWait.setVisible(false);
 		lblActivePleaseWait.setVisible(false);
-		
+
 		lblPendingPleaseWait.setText(i18n.GL0339().toLowerCase());
 		lblPendingPleaseWait.getElement().setId("lblPendingPleaseWait");
 		lblPendingPleaseWait.getElement().setAttribute("alt",i18n.GL0339().toLowerCase());
@@ -269,27 +269,27 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		lblActivePleaseWait.getElement().setId("lblActivePleaseWait");
 		lblActivePleaseWait.getElement().setAttribute("alt",i18n.GL0339().toLowerCase());
 		lblActivePleaseWait.getElement().setAttribute("title",i18n.GL0339().toLowerCase());
-		
+
 		classCodePanel.add(image);
 		shareLnkPanel.add(image2);
-		
+
 		studentPendingPanel.setText(i18n.GL1525());
 		studentPendingPanel.getElement().setId("studentPendingPanelId");
-		
+
 		panelSuggestBox.getElement().setId("pnlSuggestbox");
 		//panelActions.getElement().setId("pnlActions");
 		//panelCode.getElement().setId("pnlCode");
-		
+
 		createAutoSuggestBox();
-		
-		
+
+
 	}
-	
+
 	public void setTabVisible(boolean isVisible){
 		roasterMainConatiner.setVisible(isVisible);
 		reportContainer.setVisible(!isVisible);
 	}
-	
+
 	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
 
 		@Override
@@ -303,7 +303,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 
 	}
-	
+
 	public class MouseOutHideToolTip1 implements MouseOutHandler{
 
 		@Override
@@ -311,7 +311,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			toolTipPopupPanelNew.hide();
 		}
 	}
-	
+
 	public class MouseOverShowClassCodeToolTip2 implements MouseOverHandler{
 
 		@Override
@@ -325,7 +325,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 
 	}
-	
+
 	public class MouseOutHideToolTip2 implements MouseOutHandler{
 
 		@Override
@@ -333,7 +333,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			toolTipPopupPanelNew1.hide();
 		}
 	}
-	
+
 	@Override
 	public void createAutoSuggestBox() {
 		panelSuggestBox.setStyleName("auto_suggest");
@@ -381,14 +381,14 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		panelSuggestBox.add(autoSuggetTextBox);
 		autoSuggetTextBox.getTxtInput().getTxtInputBox().setFocus(true);
 	}
-	
+
 	public void showErrorMessage(String errorMessage){
 		lblErrorMessage.setText(errorMessage);
 		lblErrorMessage.getElement().setAttribute("alt",errorMessage);
 		lblErrorMessage.getElement().setAttribute("title",errorMessage);
 		lblErrorMessage.setVisible(true);
 	}
-	
+
 	public class MouseOverShowClassCodeToolTip3 implements MouseOverHandler{
 
 		@Override
@@ -402,7 +402,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 
 	}
-	
+
 	public class MouseOutHideToolTip3 implements MouseOutHandler{
 
 		@Override
@@ -410,17 +410,17 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			toolTipPopupPanelNew2.hide();
 		}
 	}
-	
+
 	public class EditClassStudentTabHandler implements ClickHandler{
 
 		String subView;
 		LiPanel liPanel;
-		
+
 		public EditClassStudentTabHandler(String subView,LiPanel liPanel){
 			this.subView=subView;
 			this.liPanel=liPanel;
 		}
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			roasterPanel.removeStyleName(CssTokens.ACTIVE);
@@ -430,7 +430,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -451,7 +451,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	@Override
 	public void setReportView() {
 		reportBox.clear();
-		System.out.println("setReportView");
 		setReportVisiblity(true);
 		reportPanel.setStyleName(CssTokens.ACTIVE);
 		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
@@ -463,9 +462,8 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			reportBox.add(new TeachLessonReportChildView());
 		}
 	}
-	
+
 	private void setReportVisiblity(boolean isVisible) {
-		System.out.println("isVisible:"+isVisible);
 		reportBox.setVisible(isVisible);
 		roasterMainConatiner.setVisible(!isVisible);
 		reportContainer.setVisible(false);
@@ -476,26 +474,26 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		roasterPanel.setStyleName(CssTokens.ACTIVE);
 		tableContainer.clear();
 		pendingContainer.clear();
-		
+
 		setReportVisiblity(false);
 		for(int i=0;i<=3;i++){
 			tableContainer.add(new MembersViewVc("joined") {
-				
+
 				@Override
-				public void setStudentsListContainer(ClickEvent event) {			
+				public void setStudentsListContainer(ClickEvent event) {
 				}
-				
+
 				@Override
 				public void setCollabCount(int count, String type) {
 				}
 			});
 			pendingContainer.add(new MembersViewVc("pending") {
-				
+
 				@Override
 				public void setStudentsListContainer(ClickEvent event) {
 					throw new RuntimeException("Not implemented");
 				}
-				
+
 				@Override
 				public void setCollabCount(int count, String type) {
 					throw new RuntimeException("Not implemented");
@@ -510,14 +508,11 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	@Override
 	public void setClassView(ClasspageDo classpageDo) {
 		this.classpageDo=classpageDo;
-		System.out.println("setClassHeaderView");
-		System.out.println("class code:"+classpageDo.getClassCode());
-		
+
 		classCodeTxtPanel.setText(classpageDo.getClassCode());
-		System.out.println("before--classpageDo.Id:"+classpageDo.getClassUid());
 		getUiHandlers().generateShareLink(classpageDo.getClassUid());
-		
-		
+
+
 	}
 
 	/* (non-Javadoc)
@@ -526,24 +521,20 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	@Override
 	public void setShortenUrl(Map<String, String> shortenUrl) {
 		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
-			System.out.println("shortenUrl.get(SHORTEN_URL):"+shortenUrl.get(SHORTEN_URL));
 			sharTxtBox.setText(shortenUrl.get(SHORTEN_URL));
 		}
 	}
-	
+
 	@UiHandler("inviteBtn")
 	public void OnClickInvite(ClickEvent event){
-		System.out.println("clicked on invite");
 		//Check for null - Check for Empty
 		lblPleaseWait.setVisible(true);
 		/*lblActiveMembers.setVisible(true);
 		lblActiveMembersDesc.setVisible(true);*/
 		inviteBtn.setVisible(false);
 		String studentsEmailIds = autoSuggetTextBox.getSelectedItemsAsString();
-		System.out.println("studentsEmailIds:"+studentsEmailIds);
 		String emailIds[] = studentsEmailIds.trim().split("\\s*,\\s*");
 		List<String> lstEmailID = new ArrayList<String>();
-		System.out.println("emailIds:"+emailIds);
 		for (int i=0; i<emailIds.length; i++){
 			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");
 		}
@@ -596,11 +587,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		getUiHandlers().addStudents(classpageDo.getClassUid(), lstEmailID);	// this will callback the displayPendingMembersList method.
 
 	}
-	
+
 	@Override
 	public void displayInvitationSuccessPopUp(int listSize) {
 		Window.enableScrolling(false);
-		System.out.println("listSize:"+listSize);
 		SuccessPopupViewVc success = new SuccessPopupViewVc() {
 
 			@Override
@@ -627,7 +617,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		success.show();
 
 	}
-	
+
 	@Override
 	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount,boolean increasePageNum,boolean insertTop) {
 		//setLoadingPanelVisibility(false);
@@ -674,7 +664,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			}
 		}
 	}
-	
+
 	@Override
 	 public void insertPendingUserAfterDeletion(final CollaboratorsDo lstPendingMembers, boolean isNew, int totalCount, int intPos,boolean insertAtTop){
 				final MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstPendingMembers, classpageDo,intPos) {
@@ -722,18 +712,18 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 				pendingContainer.add(membersViewVc);
 			}
 	 }
-	
+
 	@Override
 	public Button getInviteButton() {
 		return inviteBtn;
 	}
 
-	
+
 	@Override
 	public Label getLblPleaseWait() {
 		return lblPleaseWait;
 	}
-	
+
 	@UiHandler("ancPendingListSeeMore")
 	public void onClickPendingListSeeMore(ClickEvent event){
 		lblPendingPleaseWait.setVisible(true);
