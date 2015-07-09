@@ -856,16 +856,27 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	@Override
 	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException {
-		JsonRepresentation jsonRep = null;
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId);
 		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
+		getLogger().info("addQuestionResource --- "+ url);
+		getLogger().info("addQuestionResource data --- "+ collectionQuestionData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+			getLogger().info("response --- "+ jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			getLogger().info("getURlresource --- "+getURL);
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return deserializeCollectionItem(jsonRepGet);
 	}
 
 
