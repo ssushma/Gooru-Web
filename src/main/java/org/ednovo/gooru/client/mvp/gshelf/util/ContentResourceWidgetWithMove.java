@@ -190,7 +190,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		lblResourceTitle.getElement().setInnerHTML(collectionItem.getTitle()!=null? StringUtil.removeAllHtmlCss(collectionItem.getTitle()):"");
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 
-		String 	resourceType=collectionItem.getResource().getResourceType().getName();
+		String resourceType;
+		if(collectionItem.getResource().getResourceType().getResourceType()!=null){
+			resourceType=collectionItem.getResource().getResourceType().getResourceType();
+		}else{
+			resourceType=collectionItem.getResource().getResourceType().getName();
+		}
 		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
 		checkYoutubeResourceOrNot(collectionItem,youtube);
 		enableEditInfoButton();
