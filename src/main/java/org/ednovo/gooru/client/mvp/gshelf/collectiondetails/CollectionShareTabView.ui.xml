@@ -26,8 +26,16 @@
                 </a> </panel:HTMLEventPanel>
               <div class="clearfix"></div>
               <p>
-                <button class="primary" type="submit">Publish</button>
+              <!--   <button class="primary" type="submit">Publish</button> -->
+                <g:HTMLPanel ui:field="rbPublicPanel">
+			    <g:Button styleName="primary" ui:field="rbPublic">Publish</g:Button>
+			    <g:Label ui:field="lblPublishPending"></g:Label>
+				</g:HTMLPanel>
               </p>
+              <g:HTMLPanel styleName="publishPanel" ui:field="publishedPanel">
+			    <g:Image url="images/right-mark.png"></g:Image>
+			    <g:Label styleName="published" ui:field="lblPublish"></g:Label>
+		   	</g:HTMLPanel>
             </div>
             <div class="addCollaborators">
               <h5>Add Collaborators</h5>

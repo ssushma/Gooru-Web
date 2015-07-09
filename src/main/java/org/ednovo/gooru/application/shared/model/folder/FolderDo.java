@@ -58,6 +58,7 @@ public class FolderDo implements Serializable{
 	private String description;
 	private String url;
 	private String uri;
+	private String publishStatus;
 	private String goals;
 	private int itemSequence;
 	private CollectionSettingsDo settings;
@@ -288,5 +289,20 @@ public class FolderDo implements Serializable{
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
+
+	/**
+	 * @return the publishStatus
+	 */
+	public String getPublishStatus() {
+		return publishStatus;
+	}
+
+	/**
+	 * @param publishStatus the publishStatus to set
+	 */
+	public void setPublishStatus(String publishStatus) {
+		this.publishStatus = publishStatus;
+	}
+	
 	
 }
