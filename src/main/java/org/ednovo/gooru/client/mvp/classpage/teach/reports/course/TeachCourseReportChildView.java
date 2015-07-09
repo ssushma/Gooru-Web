@@ -152,8 +152,6 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 		@Override
 		public void onClick(ClickEvent event) {
 			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget();
-			popup.center();
-			popup.show();
 		}
 	}	
 
