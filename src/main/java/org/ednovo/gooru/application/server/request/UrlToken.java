@@ -134,7 +134,7 @@ public enum UrlToken {
 
 	UPDATE_USER_VIEW("/user/{0}/view/flag?"),
 
-	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?"),
+	ADD_NEW_RESOURCE("/v3/collection/{0}/resource?"),
 
 	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?"),
 
@@ -222,7 +222,7 @@ public enum UrlToken {
 
 	CHECK_SHORTEN_URL("/resource/search.json?url={0}&feature=player_embedded&checkShortenedUrl=true&"),
 
-	V2_ADD_QUESTION_ITEM("/v2/collection/{0}/question?"),
+	V2_ADD_QUESTION_ITEM("/v3/collection/{0}/question?"),
 
 	V2_FEATURED_THEME_COLLECTIONS("/v2/theme/{0}?"),
 
