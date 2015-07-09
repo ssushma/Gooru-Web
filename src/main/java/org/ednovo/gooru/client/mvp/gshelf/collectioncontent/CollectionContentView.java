@@ -180,11 +180,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				}
 				@Override
 				public void editResource(final CollectionItemDo collectionItem) {
-					String resourceType;
-					if(collectionItem.getResource().getResourceType().getResourceType()!=null){
-						resourceType=collectionItem.getResource().getResourceType().getResourceType();
-					}else{
+					String resourceType="";
+					if(collectionItem.getResource().getResourceType().getName()!=null){
 						resourceType=collectionItem.getResource().getResourceType().getName();
+						if(resourceType.equalsIgnoreCase("assessment-question")){
+							resourceType=collectionItem.getResource().getResourceFormat().getDisplayName();
+						}
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (resourceType.equalsIgnoreCase("Question")) {

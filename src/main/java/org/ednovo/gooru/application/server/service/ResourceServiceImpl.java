@@ -335,6 +335,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), CollectionItemDo.class);
 					ResourceDo resoruce=new ResourceDo();
 					resoruce=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), ResourceDo.class);
+					item.setQuestionInfo(resoruce);
 					item.setResource(resoruce);
 					collectionItems.add(item);
 				}
@@ -355,6 +356,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				ResourceDo resoruce=new ResourceDo();
 				resoruce=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
 				item.setResource(resoruce);
+				item.setQuestionInfo(resoruce);
 				return item;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);

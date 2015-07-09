@@ -1388,7 +1388,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		}
 	}
 	public void setImage(String url, final String category){
-		if (thumbnailUrlStr.endsWith("null")) {
+		if (thumbnailUrlStr!=null && thumbnailUrlStr.endsWith("null")) {
 			if (url.indexOf("youtube") >0){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
 				thumbnailUrlStr = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
@@ -1403,7 +1403,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				setThumbnailImage.setUrl(DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG);
 			}
 		});
-		setThumbnailImage.setUrl(thumbnailUrlStr);
+		setThumbnailImage.setUrl(thumbnailUrlStr!=null?thumbnailUrlStr:"");
 	}
 	public void updateUi() {
 		setThumbnailImage.setVisible(true);
