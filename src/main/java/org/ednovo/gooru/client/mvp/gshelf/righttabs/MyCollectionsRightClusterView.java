@@ -191,7 +191,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) ){
 			if(pnlBreadCrumbMain.getWidgetCount()<4){
 				pnlBreadCrumbMain.add(new BreadcrumbItem((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
-					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL0121():title, type,"collection"));
+					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():title, type,"collection"));
 			}else{
 				getBreadCrumbs(title,type,4); 
 			}
