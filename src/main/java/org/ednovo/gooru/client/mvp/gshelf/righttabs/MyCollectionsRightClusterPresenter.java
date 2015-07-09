@@ -51,7 +51,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	CollectionInfoPresenter collectionInfoPresenter;
 
-	UnitInfoPresenter unitInfoPresenter;
+	UnitInfoPresenter unitInfoPresenter; 
+	
 
 	ShelfMainPresenter shelfMainPresenter;
 	
@@ -122,7 +123,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else if("Assessment".equalsIgnoreCase(type) || "Collection".equalsIgnoreCase(type)){
 					collectionInfoPresenter.setCollectionType(type);
-					collectionInfoPresenter.setData(folderObj);
+					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else{
 					getView().enableAndHideTabs(false);
