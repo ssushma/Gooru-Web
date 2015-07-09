@@ -941,9 +941,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void resetSummary(){
-		collectionEndPresenter.dispalyTime();
 		displayScoreCount(0,0);
-		collectionEndPresenter.showAvgReaction(0);
 	}
 
 	public void setClasspageInsightsUrl(boolean isHomeView){
@@ -2476,15 +2474,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	public void updateFlagColor() {
 		getView().makeFlagButtonOrange();
 	}
-	public void convertMilliSecondsToTime(Long milliSeconds){
-		double totalSecs = (double)milliSeconds/1000;
-	    long hours = (long) (totalSecs / 3600);
-	    long mins = (long) ((totalSecs / 60) % 60);
-	    double secs = (double) (totalSecs % 60);
-	    String formattedResult=roundToTwo(secs);
-	    collectionEndPresenter.displaySpendTime(hours,mins,Double.valueOf(formattedResult));
-    }
-
 
 
 	public static native String roundToTwo(double number) /*-{

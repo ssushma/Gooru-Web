@@ -37,7 +37,6 @@ public interface AssessmentsEndUiHandlers extends BaseUiHandlers {
 
 	public void getAvgReaction();
 
-	public void updateCommentsStatus(String string);
 
 	public void getSessionsDataByUser(String collectionId, String classId, String userId);
 

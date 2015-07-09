@@ -139,12 +139,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		this.collectionDo=collectionDo;
 		this.classpageId=classpageId;
 		getView().setCollectionMetadata(collectionDo);
-		setRelatedConcepts(collectionDo);
 	}
 
-	public void displayAuthorDetails(boolean isDisplayDetails){
-		getView().displayAuthorDetails(isDisplayDetails);
-	}
 	public void setPreviewHomePresenter(){
 		previewHomePresenter.setCollectionMetadata(collectionDo);
 		previewHomePresenter.removeAssignmentButtons();
@@ -190,18 +186,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		setInSlot(COLLECTION_REPORTS_SLOT,null,false);
 	}
 
-	public void setViewCount(String viewCount){
-		getView().setViewCount(viewCount);
-	}
-
-	public void updateLikesCount(int likesCount){
-		//getView().setLikesCount(likesCount);
-	}
-
-	public void setUserProfileName(String gooruUid){
-		getView().setUserProfileName(gooruUid);
-	}
-
 	public void resetMetadataFields(){
 		getView().resetMetadataFields();
 	}
@@ -220,76 +204,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	public void setCommentsListDoAsync(SimpleAsyncCallback<CommentsListDo> commentsListDoAsync) {
 		this.commentsListDoAsync = commentsListDoAsync;
-	}
-
-	public void getFlagedReport(String gooruOid) {
-		playerAppService.getContentReport(collectionDo.getGooruOid(), AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
-			@Override
-			public void onSuccess(ArrayList<ContentReportDo> result) {
-				String gooruFlagId="";
-				if(result.size()==0){
-					getView().getFlagButton().setText(i18n.GL0556());
-					getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-					getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-				}else{
-					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						getView().getFlagButton().setText(i18n.GL0557());
-						getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-
-					}
-			}
-			}
-		});
-
-	}
-
-	public void setRelatedConcepts(final CollectionDo collectionDo) {
-		final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject");
-		final String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", "123");
-		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.DISCOVER);
-		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-		final String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId");
-
-		if(folderId==null && folderItemId==null) {
-			getView().hideNextCollectionContainer(true);
-			if(subject!=null) {
-				this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {
-					@Override
-					public void onSuccess(ArrayList<ConceptDo> conceptDoList) {
-						getView().isConceptsContainerVisible(true);
-						getView().setRelatedConceptsContent(conceptDoList, PAGE, subject, lessonId, libraryType);
-						if(conceptDoList!=null){
-							for(int i=0;i<conceptDoList.size();i++){
-								if(!conceptDoList.get(i).getGooruOid().equals(collectionDo.getGooruOid())){
-									getNextCollectionDetails(conceptDoList.get(i).getGooruOid(),PAGE,subject,lessonId,libraryType);
-									return;
-								}
-							}
-						}
-					}
-				});
-			} else {
-				getView().isConceptsContainerVisible(false);
-			}
-		}
-		else
-		{
-		getNextCollectionItem(folderId,folderItemId,collectionDo.getUrl());
-		}
-
-
-	}
-
-	public void getNextCollectionDetails(String gooruOid, String page, final String subject,final  String lessonId, final String libraryType){
-		getView().hideNextCollectionContainer(false);
-		AppClientFactory.getInjector().getPlayerAppService().getSimpleCollectionDetils(null, gooruOid, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
-			@Override
-			public void onSuccess(CollectionDo result) {
-				getView().displayNextCollectionDetails(result,subject, lessonId,libraryType);
-			}
-		});
 	}
 
 	public void setCollectionDoOnRefresh(CollectionDo collectionDo) {
@@ -322,7 +236,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	public void clearDashBoardIframe(){
 		collectionSummaryIndividualPresenter.clearFrame();
-		getView().clearDashBoardIframe();
 	}
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		getView().setClasspageInsightsUrl(classpageId, sessionId);
@@ -339,51 +252,12 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			collectionPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
 		}
 	}
-	public void displaySpendTime(Long hours,Long mins, Double secs){
-		getView().displaySpendTime( hours,mins, secs);
-	}
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions){
 		getView().displayScoreCount(collectionScore,noOfQuestions);
 	}
 
 	@Override
 	public void getAvgReaction() {
-	}
-
-	public void showAvgReaction(Integer averageReaction){
-		averageReaction=averageReaction!=null?averageReaction:0;
-		String reactionType=null;
-
-		switch (averageReaction) {
-		case 5:
-			reactionType=AssessmentsResourcePlayerMetadataView.REACTION_CAN_EXPLAIN;
-			break;
-		case 4:
-			reactionType=AssessmentsResourcePlayerMetadataView.REACTION_CAN_UNDERSTAND;
-			break;
-		case 2:
-			reactionType=AssessmentsResourcePlayerMetadataView.REACTION_DONOT_UNDERSTAND;
-			break;
-		case 3:
-			reactionType=AssessmentsResourcePlayerMetadataView.REACTION_MEH;
-			break;
-		case 1:
-			reactionType=AssessmentsResourcePlayerMetadataView.REACTION_NEED_HELP;
-			break;
-		}
-		getView().showAvgReaction(reactionType);
-	}
-
-	public void dispalyTime(){
-		getView().dispalyTime();
-	}
-
-	@Override
-	public void updateCommentsStatus(String commentsStatus) {
-		if(collectionPlayerPresenter!=null){
-			collectionPlayerPresenter.updateCommentsStatus(commentsStatus);
-		}
-
 	}
 
 	public AnalyticsServiceAsync getAnalyticService() {
@@ -422,16 +296,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		});
 
 	}
-	public void convertMilliSecondsToTime(Long milliSeconds){
-		//milliSeconds=milliSeconds>0&&milliSeconds<1000?1000:milliSeconds;
-		double totalSecs = (double)milliSeconds/1000;
-		//totalSecs=Math.round(totalSecs);
-	    long hours = (long) (totalSecs / 3600);
-	    long mins = (long) ((totalSecs / 60) % 60);
-	    double secs = (double) (totalSecs % 60);
-	    String formattedResult=roundToTwo(secs);
-	    displaySpendTime(hours,mins,Double.valueOf(formattedResult));
-    }
 
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
@@ -468,8 +332,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 						if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
 								count = 0;
-								showAvgReaction( result.get(0).getAvgReaction());
-								convertMilliSecondsToTime(result.get(0).getAvgTimeSpent());
 								displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
 								getView().setCollectionMetaDataByUserAndSession(result);
 								setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
@@ -482,8 +344,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 								          } else {
 								        	  	if (count >= 10) {
 												   getView().showMessageWhenDataNotFound();
-												   showAvgReaction(0);
-												   convertMilliSecondsToTime(0L);
 												   displayScoreCount(0,0);
 								        	  	}
 								          }
@@ -502,32 +362,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	}
 
-	public void getNextCollectionItem(String folderId,String folderItemId,final String urlVal) {
-		if(folderId!=null && folderItemId!=null) {
-			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
-				@Override
-				public void onSuccess(FolderWhatsNextCollectionDo result) {
-					if(result.getTitle()!=null){
-						getCollection(result.getGooruOid(),result);
-					}else{
-						getView().hideNextCollectionContainer(true);
-					}
-				}
-			});
-		} else {
-			getView().hideNextCollectionContainer(true);
-		}
-	}
-	public void getCollection(String nextCollId,final FolderWhatsNextCollectionDo result){
-
-		this.playerAppService.getSimpleCollectionDetils(null,nextCollId,null,null, null, new SimpleAsyncCallback<CollectionDo>() {
-			@Override
-			public void onSuccess(CollectionDo collectionDo) {
-				getView().displayWhatsNextContent(result,collectionDo.getUrl());
-			}
-		});
-	}
-	
 	
 	/*analytics*/
 	

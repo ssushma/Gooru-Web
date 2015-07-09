@@ -136,74 +136,6 @@
         
         
           <g:HTMLPanel>
-      	<g:FlowPanel styleName="row">
-      		<!--  new design start -->
-      		<g:FlowPanel styleName="{playerStyle.collectionEnd}">
-      			<g:FlowPanel styleName="col-md-12">
-
-						<html5:SectionTag styleName="{playerStyle.block}">
-						   <g:FlowPanel styleName="col-md-9">
-						    <g:FlowPanel styleName="{playerStyle.collections}">
-								<g:FlowPanel styleName="">
-									<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
-								</g:FlowPanel>
-					    	</g:FlowPanel>
-      					<g:FlowPanel styleName="timespend">
-							<g:FlowPanel styleName="collectionEndImageContainer" >
-								<g:Image ui:field="collectionThumbnail" styleName="{playerStyle.collectionImage}"></g:Image>
-								<g:FlowPanel ui:field="thumbnailContainer">
-									<g:HTMLPanel styleName="{playerStyle.collectionreplay}"><g:Label styleName="{playerStyle.collectionreplayText}" ui:field="replayCollection"></g:Label></g:HTMLPanel>
-								</g:FlowPanel>
- 							</g:FlowPanel>
-							<g:FlowPanel styleName="playRight">
-								<g:FlowPanel styleName="playBlockTop">
-									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBoxTime} ">
-										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2084}"></g:Label>
-										<g:FlowPanel ui:field="spendTimeContainer"></g:FlowPanel>
-									</g:FlowPanel>
-									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBox} " ui:field="scoreMainContainer" >
-										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2085}"></g:Label>
-										<g:FlowPanel ui:field="scoreContainer"></g:FlowPanel>
-									</g:FlowPanel>
-									<g:FlowPanel styleName="playBoxTime {playerStyle.PlayBox}">
-										<g:Label styleName="{playerStyle.smallTxt}" text="{i18n.GL2086}"></g:Label>
-											<g:FlowPanel styleName="{playerStyle.bigTxt}">
-												<g:Label styleName="{playerStyle.timeTextBig}" ui:field="avgReactionImage"></g:Label>
-											</g:FlowPanel>
-									</g:FlowPanel>
-
-								</g:FlowPanel>
-								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">
-									<g:FlowPanel styleName="endButtonsContainer endButtonsContainer clearfix">
-										<g:Button styleName="secondary" ui:field="shareCollectionBtn"></g:Button>
-	           							<g:Button styleName="secondary  {playerStyle.buttonmargin}" ui:field="customizeCollectionBtn"></g:Button>
-									</g:FlowPanel>
-								</g:FlowPanel>
-								<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-							</g:FlowPanel>
-							<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-
-					 	</g:FlowPanel>
-					 	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
-					 	</g:FlowPanel>
-					 	<g:FlowPanel styleName="col-md-3">
-					 	    <g:FlowPanel styleName="whatsnext" ui:field="nextCollectionContainer">
-								 <g:Label styleName="smallTxt" text="{i18n.GL2087}"></g:Label>
-						    	 <g:Image ui:field="nextCollectionThumbnail"></g:Image>
-								 <g:Label styleName="bigTxt" ui:field="whatNextCollectionTitle"></g:Label>
-								 <g:HTMLPanel styleName="{playerStyle.displayBlock}">
-								     <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="resourceCount"></g:Label>
-									 <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="questionCount"></g:Label>
-								 </g:HTMLPanel>
-							</g:FlowPanel>
-
-					 	</g:FlowPanel>
-					 	<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-      				</html5:SectionTag>
-      			</g:FlowPanel>
-      		</g:FlowPanel>
-      	</g:FlowPanel>
-      		<!--  new design end -->
 
       		<g:HTMLPanel styleName="{playerStyle.summary}">
 
@@ -280,11 +212,6 @@
 		        </html5:SectionTag>
 	        </g:FlowPanel>
         </g:FlowPanel>
-            <g:FlowPanel  styleName="row">
-                <g:FlowPanel styleName="col-md-12 {playerStyle.whitebg}">
-       			 <g:Label styleName="{playerStyle.hrShadow}"></g:Label>
-       		 </g:FlowPanel>
-            </g:FlowPanel>
 		 </g:HTMLPanel>
 		</g:HTMLPanel>
         </g:FlowPanel>
