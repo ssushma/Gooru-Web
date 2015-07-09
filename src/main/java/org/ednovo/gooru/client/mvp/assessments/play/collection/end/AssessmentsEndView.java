@@ -44,7 +44,6 @@ import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
-import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
@@ -52,7 +51,6 @@ import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.EmailPopup;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.SummaryAnswerStatusPopup;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualView.SummaryPopupClick;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
@@ -75,6 +73,7 @@ import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -101,6 +100,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
@@ -116,8 +116,8 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
+import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
 import com.google.inject.Inject;
@@ -424,6 +424,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	public void setLabelAndIds() {
+		
+		PrintPnl.getElement().getStyle().setHeight(Window.getClientHeight()-106, Unit.PX);
 
 		insightsHeaderText.setText(i18n.GL1626());
 		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
@@ -1110,25 +1112,29 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			public void onSuccess() {
 
 				questionsTable.clear();
+				destoryTables();
 
-				DataTable data = DataTable.create();
-				data.addColumn(ColumnType.NUMBER, i18n.GL3259());
-				data.addColumn(ColumnType.STRING, i18n.GL0308());
-				data.addColumn(ColumnType.STRING, i18n.GL0315());
-				data.addColumn(ColumnType.STRING, i18n.GL3270());
-				data.addColumn(ColumnType.STRING, i18n.GL2084());
-				data.addColumn(ColumnType.STRING, i18n.GL3271());
+				AdvancedFlexTable adTable=new AdvancedFlexTable();
+				adTable.getElement().setId("report");
 
-				data.addRows(result.size());
+				adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
+				adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
+				adTable.setHeaderWidget(2, new Label(i18n.GL0315()));
+				adTable.setHeaderWidget(3, new Label(i18n.GL2288()));
+				adTable.setHeaderWidget(4, new Label(i18n.GL2084()));
+				adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
+
+
 				if(result.size()!=0){
 					for(int i=0;i<result.size();i++) {
-						data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-
 						Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 						questionTitle.setStyleName(STYLE_TABLE_CENTER);
 						questionTitle.setStyleName(STYLE_TXTLEFT);
-						data.setValue(i, 1, questionTitle.toString());
+						adTable.setWidget(i, 0,new Label(String.valueOf(i+1)));
+						adTable.setWidget(i, 1,questionTitle);
+
 						int noOfAttempts=result.get(i).getAttempts();
+						int score= result.get(i).getScore();
 
 						//Set Answer choices
 						String questionType= result.get(i).getType();
@@ -1157,7 +1163,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 								}
 							}
 							anserlbl.setStyleName(STYLE_TABLE_CENTER);
-							data.setValue(i, 2, anserlbl.toString());
+							adTable.setWidget(i, 2,anserlbl);
 						}else if (FIB.equalsIgnoreCase(questionType)){
 							VerticalPanel answerspnl=new VerticalPanel();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
@@ -1200,7 +1206,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 								}
 							}
 							answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-							data.setValue(i, 2, answerspnl.toString());
+							adTable.setWidget(i, 2,answerspnl);
+							//data.setValue(i, 2, answerspnl.toString());
 						}else  if(MA.equalsIgnoreCase(questionType)){
 							VerticalPanel answerspnl=new VerticalPanel();
 							if(result.get(i).getAnswerObject()!=null) {
@@ -1239,9 +1246,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 								}
 							}
 							answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-							data.setValue(i, 2, answerspnl.toString());
+							adTable.setWidget(i, 2,answerspnl);
 						}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-							VerticalPanel answerspnl=new VerticalPanel();
 							if(result.get(i).getAnswerObject()!=null) {
 								Label viewResponselbl=new Label(VIEWRESPONSE);
 								viewResponselbl.setStyleName("summaryViewResponse");
@@ -1249,38 +1255,44 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 								viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 								viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 								viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-								answerspnl.add(viewResponselbl);
+								adTable.setWidget(i, 2,viewResponselbl);
 							}
-							answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-							data.setValue(i, 2, answerspnl.toString());
 						}   
 
 						//Set attempts
-						Label attempts=new Label(Integer.toString(noOfAttempts));
+						Label attempts=new Label(i18n.GL2269());
 						attempts.setStyleName(STYLE_TABLE_CENTER);
-						data.setValue(i, 3, attempts.toString());
+						attempts.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+
+
+						if(ZERO_NUMERIC.equalsIgnoreCase(String.valueOf(score))) {
+							adTable.setWidget(i, 3,attempts);
+							adTable.getRowFormatter().addStyleName(i, STYLE_WHITE);
+						} else if(ONE.equalsIgnoreCase(String.valueOf(score))) {
+							Image correctImg=new Image();   
+							correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
+							adTable.setWidget(i, 3,correctImg);
+							adTable.getRowFormatter().addStyleName(i, STYLE_GREEN);
+						}
 
 						//Set time spent
-						data.setValue(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+						adTable.setWidget(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
 
 						//Set reactions
 						int reaction=result.get(i).getReaction();
-						data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
+						adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 					}
-				}
-				Options options = Options.create();
-				options.setAllowHtml(true);
-				Table table = new Table(data, options);
-				table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
-				table.getElement().setId("individulaDataScored");
-				questionsTable.add(table);
-				if(result.size()==0){
+					sortAndFixed();
+					adTable.addStyleName("table table-bordered reportTableStyle");
+					questionsTable.add(adTable);
+
+				}else if(result.size()==0){
 					Label erroeMsg=new Label();
 					erroeMsg.setStyleName(STYLE_ERROR_MSG);
 					erroeMsg.setText(i18n.GL3265());
 					questionsTable.add(erroeMsg);
 				}
-				table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
+
 
 			}
 		});
@@ -1568,6 +1580,10 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				printWidget.add(scoredQuestionHeading);
 				printWidget.add(printScoredData);
 				printScoredData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+				
+				printButton.setVisible(false);
+				downloadButton.setVisible(false);
+				timer1.schedule(1000);
 
 				//To add resource breakdown
 				//printWidget.add(collectionOverViewWidget);
@@ -1576,13 +1592,23 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 					printWidget.clear();
 				}else{
-					Print.it(style,printWidget);
+					Print.it(style,PrintPnl);
 					printWidget.clear();
 				}
 
 			}
 		});
 	}
+	
+
+	Timer timer1=new Timer() {
+		@Override
+		public void run() {
+			printButton.setVisible(true);
+			downloadButton.setVisible(true);
+		}
+	};
+	
 
 	@UiHandler("printButton")
 	public void printButtonClick(ClickEvent event){
@@ -1609,5 +1635,20 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public Frame getFrame() {
 		return downloadFile;
 	}
+	
+	public static native void sortAndFixed() /*-{
+	 var table =$wnd.$('#report').DataTable({
+       scrollY:        "300px",
+       scrollX:        true,
+       scrollCollapse: true,
+       paging:         false,
+       bFilter:false,
+       bInfo: false
+   });
+}-*/;
+public static native void destoryTables() /*-{
+	var table = $wnd.$('#report').DataTable();
+  	table.destroy();
+}-*/;
 
 }

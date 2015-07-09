@@ -48,6 +48,8 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 
 	@UiField HTMLPanel lessonTablePanel;
 	
+	final AdvancedFlexTable lessonTablePanelWidget = new AdvancedFlexTable();
+	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
 
 	interface TeachCourseReportChildViewUiBinder extends UiBinder<Widget, TeachLessonReportChildView> {
@@ -61,27 +63,24 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	public void getData() {
 		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
 		lessonTablePanel.clear();
-		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
-			setAssessmentTableData();
-		} else if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
-			setCollectionTableData();
-		}
+		setDataTable(contentView);
 	}
 	
 	public static native void sortAndFixed() /*-{
-	    var table =$wnd.$('#lesson-table-report-data-id').DataTable({
-	        scrollX:        true,
+	    var table =$wnd.$('#collection-table-report-data-id').DataTable({
+	        scrollX: true,
 	        scrollCollapse: true,
-	        paging:         false,
+	        paging: false,
+	        sort: false,
 	        bFilter:false,
 	        bInfo: false
 	    });
 	    new $wnd.$.fn.dataTable.FixedColumns(table,{
-	        leftColumns: 1
+	        leftColumns: 2
 	    });
 	}-*/;
 	public static native void destoryTables() /*-{
-		var table = $wnd.$('#lesson-table-report-data-id').DataTable();
+		var table = $wnd.$('#collection-table-report-data-id').DataTable();
 	  	table.destroy();
 	}-*/;
 
@@ -91,38 +90,42 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		sortAndFixed();
 	}
 	
-	public class ClickUnitName implements ClickHandler {
-		private String unitId = null;
-		public ClickUnitName(String unitId) {
-			this.unitId = unitId;
+	@Override
+	public void setDataTable(String contentView) {
+		boolean isAssessment = false;
+		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
+			isAssessment = true;
 		}
 		
-		@Override
-		public void onClick(ClickEvent event) {
-			
-		}
-	}
-
-	@Override
-	public void setAssessmentTableData() {
-		final AdvancedFlexTable lessonTablePanelWidget = new AdvancedFlexTable();
-		lessonTablePanelWidget.getElement().setId("lesson-table-report-data-id");
+		lessonTablePanelWidget.getElement().setId("collection-table-report-data-id");
 		lessonTablePanel.add(lessonTablePanelWidget);
 		lessonTablePanel.getElement().setId("lessonTablePanelID");
 		lessonTablePanel.getElement().setClassName("scrollTBL");
 		lessonTablePanelWidget.addStyleName("table table-bordered tableStyle");
 		Label studentNameLbl = new Label("Student");
-		studentNameLbl.setStyleName("");
+		studentNameLbl.setStyleName("text-center");
 		studentNameLbl.setWidth("100px");
 		int columnCount = 0;
 		lessonTablePanelWidget.setHeaderWidget(0, studentNameLbl);
 		columnCount++;
-		for(int headerColumnCount=1;headerColumnCount<20;headerColumnCount++) {
-			HTML unitName = new HTML("U"+headerColumnCount+"&nbsp;Unit&nbsp;Name&nbsp;"+headerColumnCount);
-			unitName.setStyleName("");
-			unitName.setWidth("100px");
-			unitName.addClickHandler(new ClickUnitName("unitId"));
-			lessonTablePanelWidget.setHeaderWidget(headerColumnCount, unitName);
+		
+		Label scoreLbl = new Label("Score");
+		scoreLbl.setStyleName("text-center");
+		scoreLbl.setWidth("75px");
+		lessonTablePanelWidget.setHeaderWidget(1, scoreLbl);
+		columnCount++;
+		
+		for(int headerColumnCount=2;headerColumnCount<20;headerColumnCount++) {
+			String headerTitle = "";
+			if(isAssessment) {
+				headerTitle = headerColumnCount+": &nbsp;Question";
+			} else {
+				headerTitle = headerColumnCount+": &nbsp;Resource";
+			}
+			HTML resourceName = new HTML(headerTitle);
+			resourceName.setStyleName("text-center");
+			resourceName.setWidth("75px");
+			lessonTablePanelWidget.setHeaderWidget(headerColumnCount, resourceName);
 			columnCount++;
 		}
 		
@@ -130,56 +133,59 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
 				if(columnWidgetCount==0) {
 					Anchor studentName = new Anchor("Student "+rowWidgetCount);
-					studentName.setStyleName("");
-					studentName.addClickHandler(new ClickUnitName("studentId"));
+					studentName.setStyleName("text-center");
+					//studentName.addClickHandler(new ClickUnitName("studentId"));
 					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
 					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
+				} else if(columnWidgetCount==1) {
+					final HTMLPanel scoreWidget = new HTMLPanel("");
+					scoreWidget.add(new Label("8/10"));
+					scoreWidget.add(new Label("80%"));
+					scoreWidget.setStyleName("text-center");
+					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, scoreWidget);
+					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
 				} else {
-					Label scoreLbl = new Label("90%");
-					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount,scoreLbl);
+					if(isAssessment) {
+						if(columnWidgetCount%2==1) {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("B"));
+						} else {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("View Answer"));
+						}
+					} else {
+						if(columnWidgetCount%2==1) {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionResourceData("03:14"));
+						} else {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionQuestionData("A","04:15"));
+						}
+					}
 					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().setClassName("lightgreen");
 				}
 			}
 		}
 	}
-
-	@Override
-	public void setCollectionTableData() {
-		final AdvancedFlexTable lessonTablePanelWidget = new AdvancedFlexTable();
-		lessonTablePanelWidget.getElement().setId("lesson-table-report-data-id");
-		lessonTablePanel.add(lessonTablePanelWidget);
-		lessonTablePanel.getElement().setId("lessonTablePanelID");
-		lessonTablePanel.getElement().setClassName("scrollTBL");
-		lessonTablePanelWidget.addStyleName("table table-bordered tableStyle");
-		Label studentNameLbl = new Label("Student");
-		studentNameLbl.setStyleName("");
-		studentNameLbl.setWidth("100px");
-		int columnCount = 0;
-		lessonTablePanelWidget.setHeaderWidget(0, studentNameLbl);
-		columnCount++;
-		for(int headerColumnCount=1;headerColumnCount<20;headerColumnCount++) {
-			HTML unitName = new HTML("U"+headerColumnCount+"&nbsp;Unit&nbsp;Name&nbsp;"+headerColumnCount);
-			unitName.setStyleName("");
-			unitName.setWidth("100px");
-			unitName.addClickHandler(new ClickUnitName("unitId"));
-			lessonTablePanelWidget.setHeaderWidget(headerColumnCount, unitName);
-			columnCount++;
-		}
-		
-		for(int rowWidgetCount=0;rowWidgetCount<20;rowWidgetCount++) {
-			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
-				if(columnWidgetCount==0) {
-					Anchor studentName = new Anchor("Student "+rowWidgetCount);
-					studentName.setStyleName("");
-					studentName.addClickHandler(new ClickUnitName("studentId"));
-					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
-				} else {
-					Label scoreLbl = new Label("90%");
-					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount,scoreLbl);
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().setClassName("lightgreen");
-				}
-			}
-		}
-	}	
+	
+	private HTMLPanel getCollectionResourceData(String timeSpent) {
+		final HTMLPanel panel = new HTMLPanel("");
+		panel.add(new Label("--"));
+		panel.add(new Label(timeSpent));
+		panel.addStyleName("text-center");
+		return panel;
+	}
+	
+	private HTMLPanel getCollectionQuestionData(String value, String timeSpent) {
+		final HTMLPanel panel = new HTMLPanel("");
+		panel.add(new Label(value));
+		panel.add(new Label(timeSpent));
+		panel.addStyleName("green");
+		panel.addStyleName("text-center");
+		return panel;
+	}
+	
+	private HTMLPanel getAssessmentQuestionData(String value) {
+		final HTMLPanel panel = new HTMLPanel("");
+		panel.add(new Label(value));
+		panel.addStyleName("green");
+		panel.addStyleName("text-center");
+		return panel;
+	}
 }

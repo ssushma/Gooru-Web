@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
+import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -62,7 +63,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
-	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete;
+	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete; 
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -78,8 +79,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
-	
-	
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -322,7 +321,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId); 
+			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
 		}
 	}
 	
@@ -342,6 +341,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				if(!StringUtil.isEmpty(o2UnitId) && UNIT.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteUnitContent(o1CourseId,o2UnitId);
 				}else if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
+					
 					getUiHandlers().deleteCourseContent(o1CourseId);
 				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);
@@ -384,6 +384,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		
 	}
 	
+
+	/**
+	 * On deleting the Unit, reveals the my content and loads the respective right cluster.
+	 */
+	
 	@Override
 	public void onDeleteUnitSuccess(String o1CourseId, String o2DeletedUnitId) {
 		hideDeletePopup();
@@ -416,5 +421,17 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		params.put(O2_LEVEL, o2UnitId);
 		getUiHandlers().setLessonsListOnRightCluster(o1CourseId,o2UnitId,o3LessDeletedonId,currentTypeView);
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+	}
+	
+	/**
+	 * Invokes the delete functionality if the course is not associated with class.
+	 */
+	@Override
+	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId,Integer classpageList) {
+		if(classpageList>0){
+			new AlertContentUc("Oops", "This course is associated with the class.");
+		}else{
+			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId);
+		}
 	}
 }

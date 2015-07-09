@@ -66,6 +66,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	List<FolderDo> folderListDoChild;
 
 	final String COLLECTION="Collection";
+	
+	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	
@@ -281,6 +283,21 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView) {
 		shelfMainPresenter.setUserAllLessons(o1CourseId,o2UnitId, o3LessDeletedonId,currentTypeView);
+	}
+	
+	/**
+	 * Calls API to check weather Course is assigned to class or not.
+	 */
+	@Override
+	public void isAssignedToClassPage(final String o1CourseId,final String o2UnitId, final String o3LessonId) { 
+		
+		AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<Integer>() { 
+
+			@Override
+			public void onSuccess(Integer result) {
+				getView().invokeContentDeletePopup(o1CourseId,o2UnitId,o3LessonId,result);
+			} 
+		});
 	}
 	
 }

@@ -224,7 +224,7 @@
 	padding: 13px 0;
 }
 .studentAssessmentBodyBlock {
-	background: #f7f6f6;
+	background: #fff;
 	border-radius: 0 0 6px 6px;
 }
 .studentAssessmentReportViewContainer .headerBackLinkBox div {
@@ -247,7 +247,7 @@
 }
 .studentAssessmentReportViewContainer .scoreBrief {
 	padding: 0 15px;
-	background: #fafafa;
+	background: #ffffff;
 	border-bottom: 1px solid #dddddd;
 }
 .studentAssessmentReportViewContainer .scoreBrief .lessonDetails .thumbnailImage, .studentAssessmentReportViewContainer .scoreBrief .lessonDetails .lessionDescription {
@@ -468,7 +468,7 @@
 	border-right: 1px solid #979797;
 }
 .studentAssessmentReportViewContainer .questionsTable {
-	background: #f7f6f6;
+	background: #fff;
 	padding: 0 20px 20px 20px;
 }
 .studentAssessmentReportViewContainer .scoreBrief .colmd3-reset {
@@ -639,3 +639,58 @@
 	padding: 24px;
 	text-align: center;
 }
+/* start .tableStyle */
+
+.scrollingReportTable {
+    position: relative;
+}
+.scrollReportTBL {
+    width: 1000px;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-bottom: 1px;
+}
+.headcol {
+    position: absolute;
+    width: 10em;
+    left: 0;
+    top: auto;
+    border-right: 0px none black;
+    border-top-width: 0px;
+    /*only relevant for first row*/
+    
+    margin-top: -1px;
+    /*compensate for top border*/
+    
+    border: none;
+    height: 35px;
+}
+.long {} .headcol img {
+    width: 27px;
+    height: 27px;
+}
+th.headcol {
+    padding: 3px 4px !important;
+    background: #f8fafb;
+}
+th.headcol.whitebg {
+    background: #ffffff;
+}
+.reportTableStyle {
+    margin-bottom: 0 !important;
+}
+.reportTableStyle thead {
+    background: #fff;
+}
+.reportTableStyle > thead:first-child > tr:first-child > th {
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.reportTableStyle tr.green {
+    background: #d2e5cf;
+}
+.reportTableStyle tr.white {
+    background: #fff;
+}
+
+/* end .tableStyle */

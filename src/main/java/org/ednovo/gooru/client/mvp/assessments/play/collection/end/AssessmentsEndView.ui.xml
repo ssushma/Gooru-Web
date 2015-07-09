@@ -101,8 +101,8 @@
 						<g:FlowPanel styleName="col-md-6 col-sm-6">
 							<g:FlowPanel styleName="optionMenu">
 								<g:FlowPanel styleName="btn-group"> 
-								 <!--  <button class="btn btn-default active" type="button">Scored Questions</button>
-								 <button class="btn btn-default" type="button">Open-Ended Questions</button>--> </g:FlowPanel> 
+								 <g:Button styleName="btn btn-default active" text="{i18n.GL2282}"></g:Button>
+								 <!--  <button class="btn btn-default" type="button">Open-Ended Questions</button>--> </g:FlowPanel> 
 							</g:FlowPanel>
 						</g:FlowPanel>
 
@@ -111,10 +111,8 @@
 							<g:FlowPanel styleName="printOptions">
 							    
 							    <g:Button ui:field="printButton" styleName="secondary printIcon">
-							     <!--    <g:InlineLabel styleName="printIcon"></g:InlineLabel> -->
 							       </g:Button>
 							        <g:Button ui:field="downloadButton " styleName="secondary downloadIcon">
-							      <!--   <g:InlineLabel styleName="downloadIcon"></g:InlineLabel> -->
 							      </g:Button>
 							    
 							</g:FlowPanel>
