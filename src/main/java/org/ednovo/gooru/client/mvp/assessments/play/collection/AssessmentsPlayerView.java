@@ -719,24 +719,22 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	private class ShowPopUp implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			submit = new SubmitYourAnswersPopupUc();
-			submit.getBtnSubmit().addClickHandler(new SubmitAndNavigate());
+			submit = new SubmitYourAnswersPopupUc() {
+
+				@Override
+				public void onClickSubmit(ClickEvent event) {
+					submit.hide();
+					Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
+					parms.put("view", "end");
+					parms.remove("rid");
+					AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken(), parms);
+				}
+			};
 			submit.center();
 			submit.show();
 		}
 	}
 
-	private class SubmitAndNavigate implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			submit.hide();
-			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
-			parms.put("view", "end");
-			parms.remove("rid");
-			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken(), parms);
-
-		}
-	}
 
 	private class ShowLoginPopupEvent implements ClickHandler{
 		@Override
