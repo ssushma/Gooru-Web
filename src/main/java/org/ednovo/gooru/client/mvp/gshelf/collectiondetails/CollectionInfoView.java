@@ -89,7 +89,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 
-	final String COLLECTION = "Collection";
+	final String COLLECTION = "collection";
 
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
