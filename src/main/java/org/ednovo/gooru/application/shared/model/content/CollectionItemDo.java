@@ -64,7 +64,9 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private RatingDo rating;
 
 	public CollectionItemDo(){
-
+		//Right now we are not getting the resourcedo so reseting the values to resoruceDo
+		resource=new ResourceDo();
+		resource=this;
 	}
 
 	/**
@@ -183,7 +185,11 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	}
 
 	public String getUrl() {
-        return getResource().getThumbnails().getUrl();
+		if(getResource().getThumbnails()!=null){
+			 return getResource().getThumbnails().getUrl();
+		}else{
+			return null;
+		}
     }
 
 	public String getViews() {

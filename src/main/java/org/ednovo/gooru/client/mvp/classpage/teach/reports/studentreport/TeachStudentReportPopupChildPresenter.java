@@ -22,26 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.client.child.ChildPresenter;
 
 /**
  * @author Search Team
- *
+ * 
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
-	
+public class TeachStudentReportPopupChildPresenter extends ChildPresenter<TeachStudentReportPopupChildPresenter, IsTeachStudentReportPopupView> implements TeachStudentReportPopupUiHandlers{
 
-	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 * @param type 
-	 */
-	void setCouseData(FolderDo courseObj, String type); 
+	public TeachStudentReportPopupChildPresenter(IsTeachStudentReportPopupView childView) {
+		super(childView);
+	}
 
-	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
-
-	void setCollectionType(String collectionType);
 }

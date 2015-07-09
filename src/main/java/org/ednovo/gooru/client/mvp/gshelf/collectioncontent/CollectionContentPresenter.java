@@ -167,11 +167,9 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
     public void addResourcePopup(CollectionDo collectionDo, String clickType) {
-
     	addResourcePresenter.setCollectionDo(collectionDo);
     	addResourcePresenter.setCollectionDoAndType(collectionDo, clickType);
         addToPopupSlot(addResourcePresenter);
-
 	}
 
 	@Override

@@ -181,8 +181,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		this.classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 		reportContainer.setVisible(false);
 		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
-		reportPanelAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));
-
+		reportPanelAnr.addClickHandler(new MasteryReportPlace(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));
 	}
 
 	public void setIds(){
@@ -410,6 +409,34 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			toolTipPopupPanelNew2.hide();
 		}
 	}
+
+
+	public class MasteryReportPlace implements ClickHandler{
+
+		String subView;
+		LiPanel liPanel;
+
+		public MasteryReportPlace(String subView,LiPanel liPanel){
+			this.subView=subView;
+			this.liPanel=liPanel;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			roasterPanel.removeStyleName(CssTokens.ACTIVE);
+			reportPanel.removeStyleName(CssTokens.ACTIVE);
+			liPanel.addStyleName(CssTokens.ACTIVE);
+			PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
+			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
+			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
+			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}
+
+	}
+
 
 	public class EditClassStudentTabHandler implements ClickHandler{
 
