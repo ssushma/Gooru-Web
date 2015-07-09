@@ -110,8 +110,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
-	private static final String COLLECTION = "Collection";
-	private static final String ASSESSMENT = "Assessment";
+	private static final String COLLECTION = "collection";
+	private static final String ASSESSMENT = "assessment";
 	
 	private static final String UNTITLEDCOURSE = i18n.GL3347();
 	private static final String UNTITLEDUNIT = i18n.GL3364();
@@ -855,15 +855,34 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
 			HashMap<String,String> urlParams = new HashMap<String,String>();
 			urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
-			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get("o1"));
+			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 
 			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
-			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get("o2"));
+			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
 
 			urlParams.put(LESSON,courseDo.getTitle());
 			urlParams.put(O3_LEVEL,courseDo.getGooruOid());
 
+			shelfTreeWidget.setUrlParams(urlParams);
+		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)){
+			
+			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getParentItem().getWidget();
+			HashMap<String,String> urlParams = new HashMap<String,String>();
+			urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
+			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
+
+			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
+			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
+			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
+
+			ShelfTreeWidget lessonShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			urlParams.put(LESSON, lessonShelfTreeWidget.getUrlParams().get(LESSON));
+			urlParams.put(O3_LEVEL,unitShelfTreeWidget.getUrlParams().get(O3_LEVEL));
+			
+			urlParams.put("id",courseDo.getGooruOid());
+			urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:ASSESSMENT,courseDo.getTitle());
+			
 			shelfTreeWidget.setUrlParams(urlParams);
 		}
 		/*else{

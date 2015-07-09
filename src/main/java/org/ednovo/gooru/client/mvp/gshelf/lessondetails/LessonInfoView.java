@@ -82,8 +82,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	final String ACTIVE="active";
-	final String COLLECTION="Collection";
-	final String ASSESSMENT="Assessment";
+	final String COLLECTION="collection";
+	final String ASSESSMENT="assessment";
 	final String ASSESSMENTEXTERNAL="ExternalAssessment";
 
 	/**
