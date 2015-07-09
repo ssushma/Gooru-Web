@@ -458,9 +458,9 @@ public class StringUtil implements ClientConstants {
 	}
 	/**
 	 * @function setAttributes
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @param object
 	 * @param altValue
 	 * @param titleValue
@@ -597,7 +597,6 @@ public class StringUtil implements ClientConstants {
 	 *
 	 */
 	public static void SysOut(String message){
-//		System.out.println(message);
 	}
 	/**
 	 * To set the default image based on collectionType value

@@ -338,7 +338,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 			MixpanelUtil.ClickOnNewClassPage();
 
 			newPopup = new NewClassPopupView() {
-				
+
 				@Override
 				public void createNewClasspage(String title, String grade, boolean sharing) {
 

@@ -64,7 +64,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : NewClassPopupView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -73,12 +73,12 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Author tumbalam
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public abstract class NewClassPopupView extends AppPopUp {
 
 	private static NewClassPopupViewUiBinder uiBinder = GWT.create(NewClassPopupViewUiBinder.class);
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField(provided = true)
@@ -89,32 +89,32 @@ public abstract class NewClassPopupView extends AppPopUp {
 	@UiField TextBox classpageTitleTxt;
 
 	@UiField Label panelLoading;
-	
+
 	@UiField H4Panel headerPanel;
-	
+
 	@UiField PPanel titlePanel,gradePanel,visiblityPanel;
 
 	@UiField HTMLPanel panelControls,popupHeader,panelPleaseWait,gradeWidget,gradeBlock;
-	
+
 	GooruGradesPresenter gooruGradesPresenterWidget = AppClientFactory.getInjector().getGooruGradePresenter();
-	
+
 	@UiField Label anyonwwithLink,anyonwwithLinkTxt,privateLbl,privateLblTxt;
-	
+
 	@UiField HTMLEventPanel publicPanel,privatePanel;
-	
+
 	private static final List<String> gradeList = new ArrayList<String>();
-	
+
 	String grades;
-	
+
 	boolean sharing;
-	
+
 
 	interface NewClassPopupViewUiBinder extends UiBinder<Widget, NewClassPopupView> {
 	}
 
-	
+
 	public abstract void createNewClasspage(String title,String grade,boolean sharing);
-	
+
 	public NewClassPopupView() {
 		this.res = NewClasspagePopupCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -134,43 +134,43 @@ public abstract class NewClassPopupView extends AppPopUp {
 		btnAdd.setText(i18n.GL0590());
 		btnAdd.getElement().setAttribute("alt",i18n.GL0590());
 		btnAdd.getElement().setAttribute("title",i18n.GL0590());
-		
+
 		publicPanel.getElement().setId("panelPublic");
 		publicPanel.getElement().setAttribute("alt","public");
 		publicPanel.getElement().setAttribute("title","public");
-		
+
 		privatePanel.getElement().setId("panelPrivate");
 		publicPanel.getElement().setAttribute("alt","public");
 		publicPanel.getElement().setAttribute("title","public");
-		
-		
+
+
 
 		/*btnCancel.setText(i18n.GL0142());
 		btnCancel.getElement().setId("btnCancel");
 		btnCancel.getElement().setAttribute("alt",i18n.GL0142());
 		btnCancel.getElement().setAttribute("title",i18n.GL0142());*/
-		
+
 		anyonwwithLink.getElement().setInnerText(i18n.GL3338());
 		anyonwwithLinkTxt.getElement().setInnerText(i18n.GL3339());
 		privateLbl.getElement().setInnerText(i18n.GL3340());
 		privateLblTxt.getElement().setInnerText(i18n.GL3341());
-		
+
 
 		titlePanel.getElement().setInnerText(i18n.GL3337());
 		titlePanel.getElement().setId("pnlTitle");
 		titlePanel.getElement().setAttribute("alt",i18n.GL3337());
 		titlePanel.getElement().setAttribute("title",i18n.GL3337());
-		
+
 		gradePanel.getElement().setInnerText(i18n.GL0325());
 		gradePanel.getElement().setId("pnlGrade");
 		gradePanel.getElement().setAttribute("alt",i18n.GL0325());
 		gradePanel.getElement().setAttribute("title",i18n.GL0325());
-		
+
 		visiblityPanel.getElement().setInnerText(i18n.GL3342());
 		visiblityPanel.getElement().setId("pnlVisiblity");
 		visiblityPanel.getElement().setAttribute("alt",i18n.GL3342());
 		visiblityPanel.getElement().setAttribute("title",i18n.GL3342());
-		
+
 
 		headerPanel.getElement().setInnerText(i18n.GL1771());
 		headerPanel.getElement().setId("pnlHeader");
@@ -223,17 +223,17 @@ public abstract class NewClassPopupView extends AppPopUp {
 		panelLoading.getElement().setId("pnlLoading");
 		panelControls.getElement().setId("pnlControls");
 		gradeWidget.getElement().setId("gooruSearchMainContainer");
-		
+
 		popupHeader.getElement().setId("create-class-popup");
 		gooruGradesPresenterWidget.getView().getGradeHeader().setVisible(false);
 		gradeBlock.add(gooruGradesPresenterWidget.getWidget());
-		
+
 		publicPanel.addClickHandler(new SharingVisiblityClickHandler(publicPanel));
 		privatePanel.addClickHandler(new SharingVisiblityClickHandler(privatePanel));
-		
-		
+
+
 	}
-	
+
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
@@ -244,7 +244,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 			}
 		}
 	};
-	
+
 	/**
 	 *
 	 * @fileName : NewClasspagePopupView.java
@@ -374,7 +374,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 			mandatoryClasspageTitleLbl.setVisible(true);
 			return false;
 		}
-		
+
 		if(publicPanel.getStyleName().contains("active")){
 			sharing=true;
 		}else if(privatePanel.getStyleName().contains("active")){
@@ -410,11 +410,11 @@ public abstract class NewClassPopupView extends AppPopUp {
        panelPleaseWait.setVisible(false);
 	   hide();
 	}
-	
+
    private class SharingVisiblityClickHandler implements ClickHandler{
-	   
+
 	 HTMLEventPanel eventPanel;
-	 
+
 	 public SharingVisiblityClickHandler(HTMLEventPanel eventPanel){
 		 this.eventPanel=eventPanel;
 	 }
@@ -436,7 +436,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 			}
 		}
    }
-   
+
    private String join(List<?> list,String separator){
 		StringBuilder builder =null;
 		if(list != null){

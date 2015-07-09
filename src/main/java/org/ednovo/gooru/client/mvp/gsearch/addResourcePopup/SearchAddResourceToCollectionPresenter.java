@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -57,10 +57,10 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 /**
- * 
+ *
  * @fileName : SearchAddResourceToCollectionPresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -85,16 +85,16 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	CollectionSearchWidget collectionSearchWidget=null;
 	private static final String ASSESSMENT = "assessment";
 	private static final String QUESTION = "question";
-	
+
 	HashMap<String,String> successparams = new HashMap<String, String>();
-	
+
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@Inject
 	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view, CollectionFormPresenter collectionFormPresenter) {
 		super(eventBus, view);
-		getView().setUiHandlers(this);	
+		getView().setUiHandlers(this);
 		this.collectionFormPresenter = collectionFormPresenter;
 	}
 
@@ -116,7 +116,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		getView().setDefaultPanelVisibility(true);
 		getWorkspaceData(0,20,true,searchType);
 	}
-	
+
 	@Override
 	public void getUserShelfCollectionsData(String collectionId,String searchType) {
 		this.collectionSearchWidget=null;
@@ -193,7 +193,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			final CollectionDo collection = new CollectionDo();
 			if(searchType.equalsIgnoreCase("collection")){
 				collection.setGooruOid(getCollectionGooruId());
-			
+
 			collection.setSharing("anyonewithlink");
 			if(selectedFolderOrCollectionid!=null){
 				O1_LEVEL_VALUE = urlparams.get("o1");
@@ -207,7 +207,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					parentId=O1_LEVEL_VALUE;
 				}
 
-				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,getCollectionGooruId(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
+				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,getCollectionGooruId(),parentId,false,new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo result) {
 						FolderDo folderDo=getFolderDo(result);
@@ -241,7 +241,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	private String getCollectionGooruId() {
 		String gooruOid="";
 		if(AppClientFactory.getCurrentPlaceToken().contains("search")){
-			System.out.println("insearch");
 			gooruOid = searchResultDo.getGooruOid();
 		}else{
 			gooruOid =  collectionId;
@@ -275,15 +274,15 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		}
 		return folderDo;
 	}
-	
+
 	@Override
 	public void addCollectionToMyCollections(String object,String currentsearchType) {
 		final CollectionDo collection = new CollectionDo();
 		if(currentsearchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(getCollectionGooruId());
-			AppClientFactory.getInjector().getResourceService().copyCollection(collection, "true", null,getSaveCollectionAsyncCallback());			
+			AppClientFactory.getInjector().getResourceService().copyCollection(collection, "true", null,getSaveCollectionAsyncCallback());
 	}
-		
+
 }
 	/**
 	 * @return instance of collectionDo after collection save
@@ -308,12 +307,12 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		}
 		return saveCollectionAsyncCallback;
 	}
-	
+
 	@Override
 	public Button getAddButton() {
 		return getView().getAddButton();
 	}
-	
+
 
 	@Override
 	public void hidePopup() {
