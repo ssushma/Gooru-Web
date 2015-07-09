@@ -53,13 +53,13 @@ import com.google.gwt.user.client.ui.Widget;
 *
 * @Reviewer: Gooru Team.
 */
-public class CollectionNonExistView extends Composite{
+public class AssessmentsNonExistView extends Composite{
 
-	public interface CollectionNonExistViewUiBinder extends UiBinder<Widget,CollectionNonExistView>{
+	public interface AssessmentsNonExistViewUiBinder extends UiBinder<Widget,AssessmentsNonExistView>{
 
 	}
 
-	public static CollectionNonExistViewUiBinder collectionNonExistViewUiBinder=GWT.create(CollectionNonExistViewUiBinder.class);
+	public static AssessmentsNonExistViewUiBinder collectionNonExistViewUiBinder=GWT.create(AssessmentsNonExistViewUiBinder.class);
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -71,7 +71,7 @@ public class CollectionNonExistView extends Composite{
 	/**
 	 * Class constructor.
 	 */
-	public CollectionNonExistView(){
+	public AssessmentsNonExistView(){
 		initWidget(collectionNonExistViewUiBinder.createAndBindUi(this));
 		btnLibrary.setText(i18n.GL1831());
 		btnLibrary.getElement().setId("btnLibrary");

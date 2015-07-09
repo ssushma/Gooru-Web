@@ -249,6 +249,24 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		});
 	}
 	
+
+	/**
+	 * calls API to delete Lesson.
+	 */
+	@Override
+	public void deleteLessonContent(final String o1CourseId, final String o2UnitId,	final String o3LessonId) {
+		AppClientFactory.getInjector().getfolderService().deleteLesson(o1CourseId,o2UnitId,o3LessonId, new SimpleAsyncCallback<Integer>() {
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteLessonSuccess(o1CourseId,o2UnitId,o3LessonId);
+				}
+			}
+			
+		});
+	}
+	
 	/**
 	 * Sets the right side view on delete of Unit.
 	 */
@@ -256,4 +274,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setUnitsListOnRightCluster(String o1CourseId,String o2DeletedUnitId,String currentTypeView) {
 		shelfMainPresenter.setUserAllUnits(o1CourseId, o2DeletedUnitId,currentTypeView);
 	}
+	
+	/**
+	 * Sets the right side view on delete of Lesson.
+	 */
+	@Override
+	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView) {
+		shelfMainPresenter.setUserAllLessons(o1CourseId,o2UnitId, o3LessDeletedonId,currentTypeView);
+	}
+	
 }

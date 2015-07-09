@@ -7,7 +7,7 @@
 	<g:HTMLPanel>
 	<g:HTMLPanel ui:field="startContainer">
 		<g:HTMLPanel styleName="standardBlueBand">
-			<g:HTMLPanel styleName="container">
+			<g:HTMLPanel styleName="container" ui:field="mainContainer">
 				<g:HTMLPanel styleName="no-gutter">
 					<g:HTMLPanel styleName="col-md-6 col-sm-5">
 					<uc:H2Panel ui:field="titlePanel"></uc:H2Panel>
