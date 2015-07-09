@@ -193,6 +193,13 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void  v3GetUserStudyClasses(String limit, String offSet, String randomId,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
+	public void  getActiveAssociatedStudentInClassListByCode(String classCode, int offSet, int pageSize, String statusType,AsyncCallback<StudentsAssociatedListDo> callback) throws GwtException,ServerDownException;
+	
+	public void getAssociatedPendingStudentListByCode(String classCode,  int offSet, int pageSize, String statusType,AsyncCallback<StudentsAssociatedListDo> callback) throws GwtException,ServerDownException;
+	
+	public void removePendingStudentFromClass(String classCode, boolean type, String emailIds,AsyncCallback<Void> simpleAsyncCallback);
+	
+	public void removeActiveStudentFromClass(String classUid,boolean visiblity,String gooruUids,AsyncCallback<Void> simpleAsyncCallback) throws GwtException,ServerDownException;
 	//public void inviteStudentToClass_V3(String classId,List<String> lstEmailId, AsyncCallback<ArrayList<CollaboratorsDo>> simpleAsyncCallback);
 	
 }

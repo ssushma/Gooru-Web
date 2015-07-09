@@ -1354,7 +1354,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_INVITE_STUDENT_TO_CLASS, classId);
 		getLogger().info("url:"+url);
 		String formData = lstEmailId.toString();
-		System.out.println("formData:"+formData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), formData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1408,6 +1407,24 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 		return deserializeStudentsList(jsonRep);
 	}
+	
+	@Override
+	public StudentsAssociatedListDo getAssociatedPendingStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)
+			throws GwtException {
+
+		JsonRepresentation jsonRep = null;
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_PENDINGMEMBER_LIST_BY_CODE, classCode);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.STATUS, statusType);
+		params.put(GooruConstants.LIMIT, ""+pageSize);
+		params.put(GooruConstants.OFFSET, offSet+"");
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("pending list:"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+
+		return deserializeStudentsList(jsonRep);
+	}
 
 	@Override
 	public void removeStudentFromClass(String classCode, String type, String emailIds)
@@ -1419,6 +1436,41 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 
 	}
+	
+	@Override
+	public void removePendingStudentFromClass(String classCode, boolean type, String emailIds)	throws GwtException {
+
+		try{
+			
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_PENDINGMEMBER_LIST_BY_CODE, classCode);
+			Map<String, String> params = new HashMap<String, String>();
+			params.put(GooruConstants.EMAILID, emailIds);
+			String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+			getLogger().info("###delete pending users api:"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
+			
+		}catch(Exception e){
+			logger.error("removePendingStudentFromClass Exception::", e);
+		}
+		
+		/*if(jsonResponseRep.getStatusCode()==200){
+			
+		}*/
+		
+	}
+	
+	@Override
+	public void removeActiveStudentFromClass(String classUid, boolean type, String gooruUid)	throws GwtException {
+		
+		getLogger().info("classUId:"+classUid);
+		getLogger().info("gooruUid:"+gooruUid);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_DLETE_ACTIVE_USERS_CLASS, classUid,gooruUid);
+		getLogger().info("###delete active  users api:"+url);
+		ServiceProcessor.delete(url,"", "");
+		
+	}
+	
+	
 	/**
 	 *
 	 * @function deserializeCollaborators
@@ -1530,6 +1582,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		params.put(GooruConstants.OFFSET, offSet+"");
 		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("--- Active memb assoc students -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+
+		return deserializeStudentsList(jsonRep);
+	}
+	
+	@Override
+	public StudentsAssociatedListDo getActiveAssociatedStudentInClassListByCode(String classCode, int offSet, int pageSize, String statusType)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_MEMBER_LIST_BY_CODE, classCode);
+		Map<String,String> params = new HashMap<String, String>();
+		params.put(GooruConstants.LIMIT, ""+pageSize);
+		params.put(GooruConstants.OFFSET, offSet+"");
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("--- v3 Active memb assoc students -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 

@@ -410,11 +410,11 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 			}
 
 			MixpanelUtil.ClickOnStudyNow();
-			AppClientFactory.getInjector().getClasspageService().v2getClasspageByCode(txtCode.getText().trim(), new SimpleAsyncCallback<CollectionDo>(){
+			AppClientFactory.getInjector().getClasspageService().v3GetClassById(txtCode.getText().trim(), new SimpleAsyncCallback<ClasspageDo>(){
 				@Override
-				public void onSuccess(CollectionDo result) {
+				public void onSuccess(ClasspageDo result) {
 					 setEnterLblVisbility(false);
-					 if(result.getGooruOid()==null){
+					 if(result.getClassUid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
@@ -435,11 +435,11 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								isValid=false;
 							}
 						});
-					}else if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+					}else if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 					{
 
 						Map<String, String> params = new HashMap<String, String>();
-						params.put("id",result.getGooruOid());
+						params.put("id",result.getClassUid());
 						params.put("pageSize", "10");
 						params.put("pageNum", "0");
 						params.put("pos", "1");
@@ -448,16 +448,16 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 					}
-					 else if(result.getSharing().equalsIgnoreCase("private")){
+					 else if(!result.isVisibility()){
 
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 						{
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 								MixpanelUtil.Click_Study_LandingPage();
 							}
 
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
+							params.put("id",result.getClassUid());
 							params.put("pageSize", "10");
 							params.put("pageNum", "0");
 							params.put("pos", "1");
@@ -477,7 +477,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							}
 
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
+							params.put("id",result.getClassUid());
 							params.put("pageSize", "10");
 							params.put("pageNum", "0");
 							params.put("pos", "1");
@@ -496,7 +496,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							}
 
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
+							params.put("id",result.getClassUid());
 							params.put("pageSize", "10");
 							params.put("pageNum", "0");
 							params.put("pos", "1");
@@ -521,7 +521,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					else
 					{
 						Map<String, String> params = new HashMap<String, String>();
-						params.put("id",result.getGooruOid());
+						params.put("id",result.getClassUid());
 						params.put("pageSize", "10");
 						params.put("pageNum", "0");
 						params.put("pos", "1");
@@ -530,7 +530,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 							StudentAssignmentView.setPublicPage();
 						}else if(result.getStatus().equalsIgnoreCase("active")){
 							StudentAssignmentView.setPublicPageActive();

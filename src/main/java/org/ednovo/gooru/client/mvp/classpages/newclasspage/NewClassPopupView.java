@@ -238,7 +238,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
 			if("add".equals(addOrRemove)){
-				gradeList.add(filterValue);
+				gradeList.add(filterValue.replace("Grade ", ""));
 			}else{
 				gradeList.remove(filterValue);
 			}

@@ -49,7 +49,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 /**
  * @fileName : TeachClassPresenter.java
  *
- * @description :
+ * @description : 
  *
  *
  * @version : 1.0
@@ -58,23 +58,23 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  *
  * @Author tumbalam
  *
- * @Reviewer:
+ * @Reviewer: 
  */
 public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, IsTeachClassProxy> implements TeachClassViewUiHandlers{
-
-
+	
+	
 	EditClassPresenter editClassPresenter;
-
+	
 	EditClassStudentPresenter editClassStudentPresenter;
-
+	
 	EditClassSettingsNavigationPresenter editClassSettingsNavigationPresenter;
-
+	
 	String classpageId="";
-
+	
 	private boolean isApiCalled = false;
-
+	
 	ClasspageDo classpageDo;
-
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.EDIT_CLASS)
 	public interface IsTeachClassProxy extends ProxyPlace<TeachClassPresenter> {
@@ -87,20 +87,20 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 		this.editClassPresenter=editClassPresenter;
 		this.editClassStudentPresenter=editClassStudentPresenter;
 		this.editClassSettingsNavigationPresenter=editClassSettingsNavigationPresenter;
-
+		
 	}
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
-
+	
 	@Override
 	public String getViewToken() {
 		throw new RuntimeException("Not implemented");
 	}
-
+	
 	@Override
 	protected void onReveal() {
 		super.onReveal();
 	}
-
+	
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -125,48 +125,52 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 			}
 		});*/
 	}
-
+	
 	@Override
 	protected void onReset() {
        super.onReset();
        getClassDetails();
        loadNavigationPage();
 	}
-
+	
 	public void getClassDetails(){
-
+		
 		classpageId = getPlaceManager().getRequestParameter("classpageid");
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		String subloadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		String pageSize = getPlaceManager().getRequestParameter("pageSize");
 		String pageNum = getPlaceManager().getRequestParameter("pageNum");
 		String pos = getPlaceManager().getRequestParameter("pos");
-		AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
+		if(loadPage.isEmpty() || subloadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER) && classpageId != null){
+			AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 
-			@Override
-			public void onSuccess(ClasspageDo result) {
-				classpageDo=result;
-				getView().setClassHeaderView(classpageDo);
-				editClassStudentPresenter.setClassDetails(classpageDo);
-			}
-
-		});
+				@Override
+				public void onSuccess(ClasspageDo result) {
+					classpageDo=result;
+					getView().setClassHeaderView(classpageDo);
+					editClassStudentPresenter.setClassDetails(classpageDo);
+				}
+				
+			});
+		}
 	}
+	
+	
 
-
-
-	/**
+	/** 
 	 * This method is to get the collectionAsyncCallback
 	 */
 	public SimpleAsyncCallback<CollectionDo> getCollectionAsyncCallback() {
 		return collectionAsyncCallback;
 	}
 
-	/**
+	/** 
 	 * This method is to set the collectionAsyncCallback
 	 */
 	public void setCollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
 	}
-
+	
 	public void  loadNavigationPage(){
 		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
 		clearSlot(EMPTY_TAB);
@@ -179,7 +183,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 		}else{
 			addToSlot(EMPTY_TAB, editClassPresenter);
 		}
-
+		
 	}
 
 }
