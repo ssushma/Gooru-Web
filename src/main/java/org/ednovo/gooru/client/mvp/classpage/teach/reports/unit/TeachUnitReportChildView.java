@@ -30,8 +30,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -181,7 +180,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 					if(columnWidgetCount==0) {
 						Anchor studentName = new Anchor("Student "+rowWidgetCount);
 						studentName.setStyleName("");
-						studentName.addClickHandler(new ClickUnitName("studentId"));
+						studentName.addClickHandler(new StudentUnitView("studentId"));
 						assessmentTableWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
 						assessmentTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
 					} else {
@@ -295,7 +294,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						Anchor studentName = new Anchor("Student "+rowWidgetCount);
 						studentName.setStyleName("");
 						studentName.setWidth("100px");
-						studentName.addClickHandler(new ClickUnitName("studentId"));
+						studentName.addClickHandler(new StudentUnitView("studentId"));
 						collectionTableWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
 						collectionTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 					} else {
@@ -381,4 +380,17 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		}
 	}
 
+	public class StudentUnitView implements ClickHandler {
+		private String courseId = null;
+		public StudentUnitView(String courseId) {
+			this.courseId = courseId;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget();
+			popup.center();
+			popup.show();
+		}
+	}	
 }
