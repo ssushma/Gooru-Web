@@ -606,8 +606,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
 	
-	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?");
-
+	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
+	
+    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?");
 
 	private String url;
 
