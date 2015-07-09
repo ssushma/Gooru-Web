@@ -238,7 +238,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
 			if("add".equals(addOrRemove)){
-				gradeList.add(filterValue);
+				gradeList.add(filterValue.replace("Grade ", ""));
 			}else{
 				gradeList.remove(filterValue);
 			}
@@ -322,9 +322,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 			if (validateFields()){
 				final String title = classpageTitleTxt.getText().trim();
 				final String grade = join(gradeList, ",");
-				System.out.println("grade:"+grade);
 				final boolean privacy = sharing;
-				System.out.println("privacy:"+sharing);
 
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", title);

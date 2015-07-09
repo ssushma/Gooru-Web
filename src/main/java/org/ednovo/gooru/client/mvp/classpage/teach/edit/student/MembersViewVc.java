@@ -133,19 +133,19 @@ public abstract class MembersViewVc extends Composite {
 		
 	}
 
-	public MembersViewVc(String placeToken, boolean isNew, CollaboratorsDo collaboratorsDo, ClasspageDo classpageDo, int k) {
+	public MembersViewVc(String placeToken, boolean isNew, CollaboratorsDo collaboratorsDo, ClasspageDo classpageDo, int k,String status) {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		this.isNew = isNew;
 		this.collaboratorsDo = collaboratorsDo;
 		this.classpageDo = classpageDo;
 		this.position = k;
-
-		/*panelMembers.addMouseOverHandler(new MouseOverHandler() {
+		this.status=status;
+		panelMembers.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				btnRemove.setVisible(true);
-				panelMembers.getElement().getStyle().setBackgroundColor("#F0F0F0");
+				//panelMembers.getElement().getStyle().setBackgroundColor("#F0F0F0");
 			}
 		});
 
@@ -154,9 +154,9 @@ public abstract class MembersViewVc extends Composite {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				btnRemove.setVisible(false);
-				panelMembers.getElement().getStyle().clearBackgroundColor();
+				//panelMembers.getElement().getStyle().clearBackgroundColor();
 			}
-		});*/
+		});
 
 		btnRemove.setVisible(false);
 
@@ -190,11 +190,15 @@ public abstract class MembersViewVc extends Composite {
 	 *
 	 */
 	public void setDebugId() {
-		String emailId =  "ravinder@goorulearning.org";
+		/*String emailId =  "ravinder@goorulearning.org";
 		String email =  "ravinder@goorulearnig.org";
 		String userName =  "RavinderV";
-		String firstandlastName="Ravinder Vasala";
-
+		String firstandlastName="Ravinder Vasala";*/
+		
+		String emailId = collaboratorsDo.getEmailId() != null ? collaboratorsDo.getEmailId() : null;
+		String email = collaboratorsDo.getEmail() != null ? collaboratorsDo.getEmail() : null;
+		String userName = collaboratorsDo.getUsername() != null ? collaboratorsDo.getUsername() : null;
+		//String status = collaboratorsDo.getStatus();
 		//String status = "pending";
 
 		//panelCollaboratorsListContainer.getElement().setId(emailId);
@@ -247,7 +251,7 @@ public abstract class MembersViewVc extends Composite {
 			lblUserName.getElement().setAttribute("title",userName);
 
 			lblEmailId.setText(emailId != null ? emailId : email);
-			lbllastandFirstName.setText(firstandlastName);
+			//lbllastandFirstName.setText(firstandlastName);
 			lblEmailId.getElement().setAttribute("alt",emailId != null ? emailId : email);
 			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
 			imgProfileImage.setUrl(defaultProfileImage);
