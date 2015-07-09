@@ -359,7 +359,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					displayNewResourcePopup();
 				}
 			}catch(Exception e){
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printInfoLogger(e.getMessage());
 			}
 		}
 
