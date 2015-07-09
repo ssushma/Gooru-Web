@@ -134,7 +134,7 @@ public enum UrlToken {
 
 	UPDATE_USER_VIEW("/user/{0}/view/flag?"),
 
-	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?"),
+	ADD_NEW_RESOURCE("/v3/collection/{0}/resource?"),
 
 	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?"),
 
@@ -220,7 +220,7 @@ public enum UrlToken {
 
 	CHECK_SHORTEN_URL("/resource/search.json?url={0}&feature=player_embedded&checkShortenedUrl=true&"),
 
-	V2_ADD_QUESTION_ITEM("/v2/collection/{0}/question?"),
+	V2_ADD_QUESTION_ITEM("/v3/collection/{0}/question?"),
 
 	V2_FEATURED_THEME_COLLECTIONS("/v2/theme/{0}?"),
 
@@ -592,21 +592,28 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_GET_COLLECTIONS_BY_COLLECTIONID("/v1/course/{0}/unit/{1}/lesson/{2}/collection"),
 	
+	V3_GET_COLLECTION_RESOURCES("/v3/collection/{0}?"),
+	
 	V3_GET_LISTTEACHCLASSES("/v3/class/teach?"),
 
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
 
-	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
-	
 	V3_GET_MEMBER_LIST_BY_CODE("/v3/class/{0}/member?"),
 	
 	V2_GET_PENDINGMEMBER_LIST_BY_CODE("/v2/invite/class/{0}?"),
 	
 	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
 	
-	V3_DLETE_ACTIVE_USERS_CLASS("/v3/class/{0}/member/{1}?");
+	V3_DLETE_ACTIVE_USERS_CLASS("/v3/class/{0}/member/{1}?"),
+	
+	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
+	
+	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
+	
+	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?");
+
 
 
 	private String url;

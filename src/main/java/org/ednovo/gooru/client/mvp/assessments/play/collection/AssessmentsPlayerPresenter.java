@@ -59,7 +59,7 @@ import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.Assessmen
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.share.AssessmentsSharePresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.toc.AssessmentsPlayerTocPresenter;
-import org.ednovo.gooru.client.mvp.assessments.play.error.CollectionNonExistView;
+import org.ednovo.gooru.client.mvp.assessments.play.error.AssessmentsNonExistView;
 import org.ednovo.gooru.client.mvp.assessments.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.add.AddResourceAssessmentsPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsResourcePlayerMetadataPresenter;
@@ -1926,7 +1926,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		enablePlayerButton(false, false, false, false, false, false,false);
 		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
-		getView().getPlayerBodyContainer().add(new CollectionNonExistView());
+		getView().getPlayerBodyContainer().add(new AssessmentsNonExistView());
 	}
 
 	public void resetCollectionPlayer(){
@@ -2157,7 +2157,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			}
 			collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 			totalTimeSpendInMs=collectionEndTime-newCollectionStartTime;
-			collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(collectionEndTime-newCollectionStartTime, getCollectionScore()));
+			int viewCount = "start".equalsIgnoreCase(eventType) ? 0 : 1;
+			collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(collectionEndTime-newCollectionStartTime, getCollectionScore(), viewCount));
 			JSONObject playLoad=new JSONObject();
 			if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 				String searchTerm=getSearchKeyword();
@@ -2202,7 +2203,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		String playerMode=getPlayerMode();
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId, eventType, playerMode,questionTypeString,null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
-		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore()));
+		int viewCount1 = "start".equalsIgnoreCase(eventType) ? 0 : 1;
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore(), viewCount1));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray,null));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
@@ -2236,7 +2238,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		String playerMode=getPlayerMode();
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,"question",null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
-		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0,0));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray,null));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
@@ -2261,7 +2263,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		String playerMode=getPlayerMode();
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,questionTypeString,reactionType,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
-		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(reactionEndTime-reactionStartTime, 0));
+
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(reactionEndTime-reactionStartTime, 0, 0));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(reactionType));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}

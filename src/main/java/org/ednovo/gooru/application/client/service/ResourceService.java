@@ -195,6 +195,8 @@ public interface ResourceService extends BaseService {
 	public CollectionDo updateCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode,String mediaType, String action)  throws GwtException, ServerDownException;
 	
 	
+	void updateCollection(String collectionType, String collectionId, String title, String sharing, List<String> depthOfKnowledgeIds, List<String> skillsIds, List<String> audienceIds, String mediaFilename, String buildTypeId) throws GwtException, ServerDownException;
+	
 	/**
 	 * Update collection metadata item info
 	 * @param collectionItemId of the collection item

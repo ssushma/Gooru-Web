@@ -1989,7 +1989,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 			@Override
 			public void onSuccess(List<ProfanityCheckDo> result) {
-				if(questionType.equalsIgnoreCase("HS_IMG") && hsType.equalsIgnoreCase(i18n.GL3228_1())){
+				if(questionType.equalsIgnoreCase("HS_TXT")){
 					AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
 					for(int i=0;i<addQuestionAnswerChoice.textAnsContainer.getWidgetCount();i++)
 					{
@@ -1998,7 +1998,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						addAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
 						SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addAnswerChoice.answerTextBox, addAnswerChoice.errorMessageforAnswerChoice, result.get(i).questionValue);
 						if(result.get(i)!=null && result.get(i).questionValue==true){
-							addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "float: left;left: 24px;");
+							addAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "float: left;left: 24px;");
 							validationValue=true;
 							isAddBtnClicked=true;
 						}

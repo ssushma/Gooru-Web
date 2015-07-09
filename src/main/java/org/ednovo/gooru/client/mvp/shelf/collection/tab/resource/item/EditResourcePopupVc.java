@@ -1331,7 +1331,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	public void displayResourceInfo() {
 		updateStandardsAdvancedSetupStyle();
-		String url = collectionItemDo.getResource().getUrl();
+		String url = collectionItemDo.getResource().getUrl()!=null?collectionItemDo.getResource().getUrl():"";
+		
 		if(collectionItemDo.getResource().getResourceTags()!=null){
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
 				tagListGlobal.add("\""+collectionItemDo.getResource().getResourceTags().get(i).getLabel()+"\"");
@@ -1353,7 +1354,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		urlTextLbl.setText(url);
 		urlTextLbl.getElement().setAttribute("alt", i18n.GL0827());
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
-	String	userUrlStr = URL.encode(url);
+		String	userUrlStr = URL.encode(url);
 		if(userUrlStr.indexOf("youtube") >0){
 						setVideoCategory();
 						if(websiteClickHandler!=null){
@@ -1398,6 +1399,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
 						audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
 					}
+		
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription().substring(0, 300));
@@ -1421,7 +1423,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 
 		setThumbnailImage.setVisible(true);
-		String category = collectionItemDo.getResource().getCategory().trim();
+		String category = collectionItemDo.getResource().getResourceFormat().getValue();
 		
 		if (category.equalsIgnoreCase("Video")||category.equalsIgnoreCase("Videos")) {
 			resourceCategoryLabel.setText(i18n.GL0918());
@@ -1513,7 +1515,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
-		
 		if( collectionItemDo.getResource().getEducationalUse()!=null){
 			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
 				
@@ -1581,7 +1582,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void setImage(String thumbnailUrlImage, String category){
-		if (thumbnailUrlImage.endsWith("null") || thumbnailUrlImage.contains("images/defaultRes.png")) {
+		if (thumbnailUrlImage==null || (thumbnailUrlImage.endsWith("null") || thumbnailUrlImage.contains("images/defaultRes.png"))) {
 			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 		} 
 		if (thumbnailUrlImage!=null && thumbnailUrlImage.indexOf("youtube") >0){
@@ -1712,6 +1713,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												if (thumbnailUrlStr!=null){
 													collectionItemDo.getResource().getThumbnails().setUrl(thumbnailUrlStr);
 												}else{
+													if(collectionItemDo.getResource().getThumbnails()!=null)
 													collectionItemDo.getResource().getThumbnails().setUrl(null);
 												}
 												if(!resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
@@ -2022,7 +2024,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {
 		String thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
-		setImage(thumbnailUrlStr, collectionItemDo.getResource().getCategory());
+		setImage(thumbnailUrlStr, collectionItemDo.getResource().getResourceFormat().getDisplayName());
 		
 		leftArrowLbl.setVisible(false);
 		if (urlTextLbl.getText().contains("youtube")) {

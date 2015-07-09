@@ -12,24 +12,33 @@
             </div>
             <div class="collectionVisibility no-gutter">
               <h5>Collection Visibility</h5>
-              <div class="col-md-4 col-xs-4 col-sm-4"> <a href="">
-                <div class="visibilityHeader"><img src="images/publicIcon.png"></img> Public</div>
+              <panel:HTMLEventPanel styleName="col-md-4 col-xs-4 col-sm-4" ui:field="publicShareFloPanel"> <a>
+                <div class="visibilityHeader"><img src="images/signup/Public_Selected.png"></img> Public</div>
                 <p>Allows others to find and learn from your collection</p>
-                </a> </div>
-              <div class="col-md-4 col-xs-4 col-sm-4"> <a href="">
+                </a> </panel:HTMLEventPanel>
+              <panel:HTMLEventPanel styleName="col-md-4 col-xs-4 col-sm-4" ui:field="linkShareFloPanel"> <a>
                 <div class="visibilityHeader"><img src="images/sharableIcon.png"/> Sharable</div>
                 <p>Allows you to share with only those who have a link</p>
-                </a> </div>
-              <div class="col-md-4 col-xs-4 col-sm-4"> <a href="">
-                <div class="visibilityHeader"><img src="images/privateIcon.png"/> Private</div>
+                </a> </panel:HTMLEventPanel>
+              <panel:HTMLEventPanel styleName="col-md-4 col-xs-4 col-sm-4" ui:field="privateShareFloPanel"> <a>
+                <div class="visibilityHeader"><img src="images/signup/Private_Selected.png"/> Private</div>
                 <p>Only you can see this collection</p>
-                </a> </div>
+                </a> </panel:HTMLEventPanel>
               <div class="clearfix"></div>
               <p>
-                <button class="primary" type="submit">Publish</button>
+              <!--   <button class="primary" type="submit">Publish</button> -->
+                <g:HTMLPanel ui:field="rbPublicPanel">
+			    <g:Button styleName="primary" ui:field="rbPublic">Publish</g:Button>
+			    <g:Label ui:field="lblPublishPending">pending</g:Label>
+				</g:HTMLPanel>
               </p>
+              <g:HTMLPanel styleName="publishPanel" ui:field="publishedPanel">
+			    <g:Image url="images/right-mark.png"></g:Image>
+			    <g:Label styleName="published" ui:field="lblPublish">Published</g:Label>
+		   	</g:HTMLPanel>
             </div>
-            <div class="addCollaborators">
+            <g:HTMLPanel ui:field="collaboratorPanel"></g:HTMLPanel>
+            <!-- <div class="addCollaborators">
               <h5>Add Collaborators</h5>
               <p>Teaching is more fun with friends! Use this page to add up to 20 collaborators. Anyone added as a collaborator will have permission to edit this collection.</p>
               <p>(Note: Only the original creator of this collection can add collaborators or delete this collection)</p>
@@ -86,6 +95,6 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </g:HTMLPanel>
 </ui:UiBinder>

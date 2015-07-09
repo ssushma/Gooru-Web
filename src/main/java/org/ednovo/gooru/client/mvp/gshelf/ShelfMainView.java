@@ -110,7 +110,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
-	private static final String COLLECTION = "collection";
+	private static final String COLLECTION = "Collection";
+	private static final String ASSESSMENT = "Assessment";
 	
 	private static final String UNTITLEDCOURSE = i18n.GL3347();
 	private static final String UNTITLEDUNIT = i18n.GL3364();
@@ -257,11 +258,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 				getUiHandlers().setBreadCrumbs(shelfTreeWidget.getUrlParams());
 				setFolderActiveStatus();
-				
 				if(shelfTreeWidget.getCollectionDo()==null){
 					String widgetType = shelfTreeWidget.getTreeWidgetType();
 					getUiHandlers().setBreadCrumbs(null);
-					getUiHandlers().setRightPanelData(getFolderDo(), widgetType, null);
+					getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(), widgetType, null);
 				}
 			}
 		});
@@ -443,7 +443,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 						ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
 						folderListDoChild.add(widget.getCollectionDo());
 					}
-					if(COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
+					if(FOLDER.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
 						getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
 					}else{
 						getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
@@ -670,11 +670,13 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setLevel(3);
 		}else if("Collection".equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
-			shelfTreeWidget.getTitleLbl().setText("UntitledCollection");
+			shelfTreeWidget.setTreeWidgetType(COLLECTION);
+			shelfTreeWidget.getTitleLbl().setText(i18n.GL3367());
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setLevel(4);
 		}else if("Assessment".equalsIgnoreCase(type) || "ExternalAssessment".equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
+			shelfTreeWidget.setTreeWidgetType(ASSESSMENT);
 			shelfTreeWidget.getTitleLbl().setText("UntitledAssessment");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
 			shelfTreeWidget.setLevel(4);
@@ -931,6 +933,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			treeChildSelectedItem.remove();
 			checkFolderItemStyle(treeItem,deletedTreeParentWidget.getCollectionDo().getGooruOid());
 			getUiHandlers().onDeleteSetBreadCrumbs(deletedTreeParentWidget.getCollectionDo().getTitle(),COURSE);
+			
+		}else if(LESSON.equalsIgnoreCase(currentTypeView)){
+			ShelfTreeWidget deletedTreeParentWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			TreeItem treeItem = treeChildSelectedItem.getParentItem();
+			getUiHandlers().setRightPanelData(deletedTreeParentWidget.getCollectionDo(), deletedTreeParentWidget.getCollectionDo().getType(),folderListDoChild);
+			treeChildSelectedItem.remove();
+			checkFolderItemStyle(treeItem,deletedTreeParentWidget.getCollectionDo().getGooruOid());
+			getUiHandlers().onDeleteSetBreadCrumbs(deletedTreeParentWidget.getCollectionDo().getTitle(),UNIT);
 		}
 	}
 }

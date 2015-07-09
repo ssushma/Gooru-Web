@@ -190,11 +190,11 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
-	
+
 		shareLbl.setText(i18n.GL0526());
 		shareLbl.getElement().setAttribute("alt",i18n.GL0526());
 		shareLbl.getElement().setAttribute("title",i18n.GL0526());
-		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)) {
+		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)) {
 			addLbl.setText(i18n.GL0590());
 			analyticsInfoLbl.setText(i18n.GL3101());
 		}else{

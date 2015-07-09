@@ -71,6 +71,7 @@ public interface ApiKeyParams {
 	String MERGE = "merge";
 	String INCLUDE_CONTENT_PROVDER = "includeContentProvider";
 	String INCLUDE_CUSTOM_FIELDS = "includeCustomFields";
+	String INCLUDU_ITEMS = "includeItems";
 	String ROOT_NODE_ID = "rootNodeId";
 	String PAGE_NUM = "pageNum";
 	String PAGE_SIZE = "pageSize";

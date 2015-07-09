@@ -100,7 +100,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getType())){
 			pTitle.setText(i18n.GL3007());
 		}else{
-			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj!=null?(folderObj.getType()!=null?folderObj.getCollectionType():""):""));
+			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj!=null?(folderObj.getType()!=null?folderObj.getType():""):""));
 		}
 		lblIndex.setText(indexVal+"");
 		txtMoveTextBox.setText(indexVal+"");

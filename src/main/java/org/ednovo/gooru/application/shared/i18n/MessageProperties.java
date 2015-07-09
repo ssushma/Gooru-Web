@@ -822,11 +822,14 @@ public interface MessageProperties extends Constants {
 
 	//For Share popup in collection preview.
 	String GL0638();  //HTMLPanel
-	String GL0639(); //Label.
+	String GL0639();  //Label.
+	String GL0639_1();  //Anchor.
 	String GL0640(); //Label.
+	String GL0640_1(); //Label.
 	String GL0641(); //dynamic text
 	String GL0642(); //dynamic text
 	String GL0643(); //dynamic text
+	String GL0643_1(); //dynamic text
 	String GL0644();  //HTMLPanel
 
 	//collection play share.
@@ -3209,6 +3212,11 @@ public interface MessageProperties extends Constants {
 				String GL4001();
 				String GL4002();
 				String GL4003();
+				String GL4004();
+				String GL4005();
+				String GL4006();
+				String GL4007();
+				String GL4008();
 
 				String GL3401();
 				String GL3402();
@@ -3248,5 +3256,13 @@ public interface MessageProperties extends Constants {
 				String GL3452();
 				String GL3453();
 				String GL3454();
+				String GL3455();
+				String GL3456();
+				String GL3456_1();
+				String GL3456_2();
+				String GL3458();
+				String GL3459();
+				String GL3460();
+
 
 }

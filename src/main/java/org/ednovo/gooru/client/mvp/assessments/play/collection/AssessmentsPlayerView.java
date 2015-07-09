@@ -63,6 +63,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -125,6 +126,8 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	boolean isSeeMoreClicked=false;
 	RequestToLoginPopupUc requestToLogin = null;
 
+
+
 	private int userRating=0;
 	private HandlerRegistration autoHideHandler;
 
@@ -158,6 +161,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		pnlBackToCollection.addClickHandler(new ExitFullScreenPlayer());
 
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
+		headerView.getBtnSubmitAllAnswers().addClickHandler(new ShowPopUp());
 		menuButton.addClickHandler(new ShowAuthorContainerEvent());
 		menuButton.addTouchStartHandler(new ShowAuthorContainerTouchEvent());
 		setAutoHideOnNavigationEventEnabled(true);
@@ -200,6 +204,8 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 			  requestToLogin.center();
 			  requestToLogin.show();
 		  }
+
+
 
 	}
 
@@ -708,6 +714,28 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 			}
 		}
 	}
+
+	private class ShowPopUp implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc();
+			  submit.getBtnSubmit().addClickHandler(new SubmitAndNavigate());
+			  submit.center();
+			  submit.show();
+		}
+	}
+
+	private class SubmitAndNavigate implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
+			parms.put("view", "end");
+			System.out.println("parms.toString() : "+parms.toString());
+			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), parms, true);
+
+		}
+	}
+
 	private class ShowLoginPopupEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -719,28 +747,46 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 	@Override
 	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId) {
+		System.out.println("isHidePlayerButtons :"+isHidePlayerButtons);
+
+		System.out.println("collectionId :"+collectionId);
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		if(!StringUtil.isEmpty(collectionId)){
+			System.out.println("isHidePlayerButtons 1 :"+isHidePlayerButtons);
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
+				System.out.println("isHidePlayerButtons 2 :"+isHidePlayerButtons);
 				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(false);
 			}else{
+				System.out.println("isHidePlayerButtons 3 :"+isHidePlayerButtons);
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				String rid= AppClientFactory.getPlaceManager().getRequestParameter("rid",null);
+				if(rid!=null){
+					headerView.getBtnSubmitAllAnswers().setVisible(true);
+				}else{
+					headerView.getBtnSubmitAllAnswers().setVisible(false);
+				}
 			}
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
 		}else{
+			System.out.println("isHidePlayerButtons 4 :"+isHidePlayerButtons);
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName("scrollStudyContainer");
 				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(false);
+				System.out.println("isHidePlayerButtons 5 :"+isHidePlayerButtons);
 			}
 			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
 			{
 				appPopUp.removeStyleName("scrollStudyContainer");
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(false);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
+				System.out.println("isHidePlayerButtons 6 :"+isHidePlayerButtons);
 			}
 			else{
 				if(view==null && resourceId != null)
@@ -751,7 +797,9 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 				{
 					appPopUp.addStyleName("scrollStudyContainer");
 				}
+				System.out.println("isHidePlayerButtons 7 :"+isHidePlayerButtons);
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(isHidePlayerButtons);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
 			}
@@ -765,6 +813,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 	public void hideAuthorInHeader(boolean showOrHide){
 		headerView.getAuthorContainer().setVisible(showOrHide);
+		headerView.getBtnSubmitAllAnswers().setVisible(!showOrHide);
 	}
 
 	public void scrollStudyPage(){

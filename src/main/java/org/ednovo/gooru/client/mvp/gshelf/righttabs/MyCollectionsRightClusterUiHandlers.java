@@ -39,10 +39,19 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	public void setDefaultActiveTab();
 	void setUnitTemplate(String type);
 	
-	public void deleteCourseContent(String o1CourseId);
+	
 	public void setRightClusterContent(String o1CourseId, String currentTypeView);
+	
+	public void deleteCourseContent(String o1CourseId);
 	
 	public void deleteUnitContent(String o1CourseId, String o2UnitId);
 	
+	public void deleteLessonContent(String o1CourseId, String o2UnitId,String o3LessonId);
+	
 	public void setUnitsListOnRightCluster(String o1CourseId,String o2DeletedUnitId, String currentTypeView);
+	
+	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView);
+	
+	public void isAssignedToClassPage(String o1CourseId, String o2UnitId, String o3LessonId);  
+	
 }

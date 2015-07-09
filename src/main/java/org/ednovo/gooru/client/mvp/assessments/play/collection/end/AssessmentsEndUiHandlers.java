@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.assessments.play.collection.end;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusHandler;
+import org.ednovo.gooru.client.uc.H3Panel;
 
 public interface AssessmentsEndUiHandlers extends BaseUiHandlers {
 
@@ -47,4 +48,6 @@ public interface AssessmentsEndUiHandlers extends BaseUiHandlers {
 	public void setCollectionSummaryBasedOnClasspageIdSessionId();
 
 	public void clearslot();
+
+	public void setHtmltopdf(String string, String collectionTitle,boolean isClickedOnEmail);
 }
