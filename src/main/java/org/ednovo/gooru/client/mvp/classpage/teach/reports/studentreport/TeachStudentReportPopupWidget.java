@@ -30,16 +30,15 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 	interface TeachStudentReportPopupWidgetUiBinder extends
 			UiBinder<Widget, TeachStudentReportPopupWidget> {
 	}
-
+	
 	public TeachStudentReportPopupWidget() {
 		setWidget(uiBinder.createAndBindUi(this));
-		this.getElement().getStyle().setWidth(1000, Unit.PX);
-		this.getElement().getStyle().setHeight(600, Unit.PX);
 		this.getElement().getStyle().setZIndex(999999);
-		Window.enableScrolling(false);
+		this.setWidth((Window.getClientWidth()-100)+"px");
 		this.setGlassEnabled(true);
+		this.setPopupPosition(50, Window.getScrollTop()+50);
+		this.show();
 		setData();
-		this.center();
 	}
 
 	public void setData() {
@@ -58,7 +57,6 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 	@UiHandler("closeButton")
 	public void CloseButton(ClickEvent event) {
 		this.hide();
-		Window.enableScrolling(true);
 	}
 	
 }
