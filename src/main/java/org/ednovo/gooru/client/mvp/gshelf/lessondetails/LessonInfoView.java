@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -64,10 +64,10 @@ import com.google.inject.Inject;
 public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> implements IsLessonInfoView {
 
 	private static LessonViewUiBinder uiBinder = GWT.create(LessonViewUiBinder.class);
-	
+
 	@UiTemplate("LessonInfoView.ui.xml")
 	interface LessonViewUiBinder extends UiBinder<Widget, LessonInfoView> {
-	}	
+	}
 
 	@UiField HTMLPanel lessonInfo;
 	@UiField TextBox lessonTitle;
@@ -76,7 +76,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
 	@UiField Label lblErrorMessage;
 	AssessmentPopupWidget assessmentPopup;
-	 
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
@@ -85,9 +85,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
 	final String ASSESSMENTEXTERNAL="ExternalAssessment";
-	
+
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 * @param eventBus {@link EventBus}
 	 */
 	@Inject
@@ -114,7 +114,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		});
 	}
 	public void populateStandardValues(){
-		for(int i=0; i<standardsTypesArray.length; i++){		
+		for(int i=0; i<standardsTypesArray.length; i++){
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray[i].toString().split(","));
 			LiPanel liPanel = new LiPanel();
 			for(int j=0; j<standardsDescriptionList.size(); j++){
@@ -127,14 +127,14 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					}
 					headerDiv.setStyleName("liPanelStyle");
 				}else{
-					headerDiv.setStyleName("liPanelStylenonBold");	
+					headerDiv.setStyleName("liPanelStylenonBold");
 				}
 				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j).toString());
 				liPanel.add(headerDiv);
 			}
 			liPanel.addClickHandler(new ClickHandler() {
 				@Override
-				public void onClick(ClickEvent event) {				
+				public void onClick(ClickEvent event) {
 					String standardsVal = event.getRelativeElement().getAttribute("id");
 					getUiHandlers().showStandardsPopup(standardsVal);
 				}
@@ -181,7 +181,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(lessonTitle.getText());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
-			System.out.println("id val:::"+id);
 			if(id!=null){
 				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type);
 			}else{

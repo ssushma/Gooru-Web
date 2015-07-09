@@ -317,7 +317,29 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
+				CollectionDo obj=new CollectionDo();
+				obj.setCollectionType(jsonRep.getJsonObject().getString("collectionType"));
+				obj.setType(jsonRep.getJsonObject().getString("type"));
+				obj.setGooruOid(jsonRep.getJsonObject().getString("gooruOid"));
+				obj.setTitle(jsonRep.getJsonObject().getString("title"));
+				obj.setSharing(jsonRep.getJsonObject().getString("sharing"));
+				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
+				UserDo user=new UserDo();
+				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
+				obj.setUser(user);
+				
+				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
+				List<CollectionItemDo> collectionItems=new ArrayList<CollectionItemDo>();
+				for(int i=0;i<array.length();i++){
+					CollectionItemDo item=new CollectionItemDo();
+					item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), CollectionItemDo.class);
+					ResourceDo resoruce=new ResourceDo();
+					resoruce=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), ResourceDo.class);
+					item.setResource(resoruce);
+					collectionItems.add(item);
+				}
+				obj.setCollectionItems(collectionItems);
+				return obj;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
@@ -328,7 +350,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
+				CollectionItemDo item=new CollectionItemDo();
+				item=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
+				ResourceDo resoruce=new ResourceDo();
+				resoruce=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
+				item.setResource(resoruce);
+				return item;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
@@ -737,8 +764,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if(tagList!=null && tagList.size()!=0 ){
 			resourceMap.put(RESOURCE_TAGS, tagList);
 		}
-		JsonRepresentation jsonRep = null;
-
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.TITLE, URLEncoder.encode(titleStr).toString());
@@ -756,7 +782,16 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+			getLogger().info("response --- "+ jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
+			getLogger().info("getURlresource --- "+getURL);
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return deserializeCollectionItem(jsonResponseRepget);
 	}
 
 	@Override
@@ -852,7 +887,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
 		resourceFormat.setValue(collectionItemDo.getResource().getCategory());
 
-		String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails().getUrl();
+		String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails()!=null?collectionItemDo.getResource().getThumbnails().getUrl():"";
 		if (thumbnailImgSrcStr==null){
 			thumbnailImgSrcStr="";
 		}

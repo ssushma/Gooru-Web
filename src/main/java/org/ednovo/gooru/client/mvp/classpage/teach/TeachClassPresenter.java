@@ -136,20 +136,23 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	public void getClassDetails(){
 		
 		classpageId = getPlaceManager().getRequestParameter("classpageid");
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		String subloadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		String pageSize = getPlaceManager().getRequestParameter("pageSize");
 		String pageNum = getPlaceManager().getRequestParameter("pageNum");
 		String pos = getPlaceManager().getRequestParameter("pos");
-		System.out.println("classpageId:"+classpageId);
-		AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
+		if(loadPage.isEmpty() || subloadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER) && classpageId != null){
+			AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 
-			@Override
-			public void onSuccess(ClasspageDo result) {
-				classpageDo=result;
-				getView().setClassHeaderView(classpageDo);
-				editClassStudentPresenter.setClassDetails(classpageDo);
-			}
-			
-		});
+				@Override
+				public void onSuccess(ClasspageDo result) {
+					classpageDo=result;
+					getView().setClassHeaderView(classpageDo);
+					editClassStudentPresenter.setClassDetails(classpageDo);
+				}
+				
+			});
+		}
 	}
 	
 	

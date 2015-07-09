@@ -37,6 +37,7 @@ public class CollaboratorsDo implements Serializable{
 	private String associatedDate;
 	private String firstName;
 	private String lastName;
+	private String gooruUId;
 	
 	/** 
 	 * This method is to get the firstName
@@ -183,6 +184,20 @@ public class CollaboratorsDo implements Serializable{
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/** 
+	 * This method is to get the gooruUId
+	 */
+	public String getGooruUId() {
+		return gooruUId;
+	}
+
+	/** 
+	 * This method is to set the gooruUId
+	 */
+	public void setGooruUId(String gooruUId) {
+		this.gooruUId = gooruUId;
 	}
 	
 }

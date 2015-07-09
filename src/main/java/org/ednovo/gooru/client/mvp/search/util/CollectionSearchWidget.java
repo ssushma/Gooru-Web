@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.search.util;
 
@@ -59,9 +59,9 @@ public class CollectionSearchWidget extends Composite {
 	interface CollectionSearchWidgetUiBinder extends
 			UiBinder<Widget, CollectionSearchWidget> {
 	}
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private PopupPanel toolTipPopupPanelCustomize = new PopupPanel();
 	public static boolean isCustomizePopup = false;
 	String CUSTOMIZE = "customize";
@@ -72,23 +72,26 @@ public class CollectionSearchWidget extends Composite {
 	@UiField Image imgAuthor,imgCollection;
 	@UiField FlowPanel standardsDataPanel;
 	@UiField Button remixBtn;
-	
+
 	private final FlowPanel profilePanel=new FlowPanel();
-		
+
 	private static final String USER_META_ACTIVE_FLAG = "0";
-	
+
 	private static String DEFULT_IMAGE = "images/default-collection-image.png";
-	
+
 	private static final String ASSESSMENT = "assessment";
-	
+
 	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
 	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
 	public static final String YUMA_COUNTY_SS = "YumaCountySS";
 	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
 	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
-	
+
+	CollectionSearchResultDo collectionSearchResultDo = null;
+
 	public CollectionSearchWidget(final CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.collectionSearchResultDo = collectionSearchResultDo;
 		//set the data
 		imgAuthor.setUrl(collectionSearchResultDo.getAssetURI()+collectionSearchResultDo.getOwner().getGooruUId()+".png");
 		imgAuthor.addErrorHandler(new ErrorHandler() {
@@ -97,12 +100,12 @@ public class CollectionSearchWidget extends Composite {
 				imgAuthor.setUrl("images/settings/setting-user-image.png");
 			}
 		});
-		
+
 		toolTipPopupPanelCustomize.clear();
 		toolTipPopupPanelCustomize.hide();
 		remixBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		remixBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
-	
+
 		collectionTitle.setText(StringUtil.removeAllHtmlCss(collectionSearchResultDo.getResourceTitle()));
 		String collectionDesc=StringUtil.removeAllHtmlCss(collectionSearchResultDo.getDescription());
 		collectionDescription.getElement().setAttribute("title", collectionDesc);
@@ -150,13 +153,18 @@ public class CollectionSearchWidget extends Composite {
 					resourceImageWidget.getElement().setId(collectionItemSearchResultDo.getResource().getGooruOid());
 					pnlResourceWidget.add(resourceImageWidget);
 					resourceImageWidget.getImgResourceImg().addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							Map<String, String> params = new HashMap<String, String>();
 							params.put("id", collectionSearchResultDo.getGooruOid());
 							params.put("rid",collectionItemSearchResultDo.getCollectionItemId());
-							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+							PlaceRequest placeRequest=null;
+							if (collectionSearchResultDo.getCollectionType()!=null && collectionSearchResultDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+								placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+							}else{
+								placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+							}
 							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 						}
 					});
@@ -173,7 +181,7 @@ public class CollectionSearchWidget extends Composite {
 			}
 		}
 		SearchUiUtil.renderStandardsforCollection(standardsDataPanel, collectionSearchResultDo);
-		
+
 		StringUtil.setAttributes(pnlResourceWidget.getElement(), "pnlResourceWidget", "", "");
 		StringUtil.setAttributes(creatorPanel.getElement(), "pnlcreatorPanel", "", "");
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
@@ -186,16 +194,16 @@ public class CollectionSearchWidget extends Composite {
 		StringUtil.setAttributes(collectionTitle.getElement(), "lblCollectionTitle", collectionSearchResultDo.getResourceTitle(), collectionSearchResultDo.getResourceTitle());
 	}
 	/**
-	 * 
-	 * @function oncustomizeCollectionBtnClicked 
-	 * 
+	 *
+	 * @function oncustomizeCollectionBtnClicked
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param clickEvent
-	 * 
+	 *
 	 * @return : void
 	 *category
 	 * @throws : <Mentioned if any exceptions>
@@ -217,7 +225,7 @@ public class CollectionSearchWidget extends Composite {
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
-					this.hide();	
+					this.hide();
 				}
 			};
 			//Window.scrollTo(0, 0);
@@ -230,7 +238,7 @@ public class CollectionSearchWidget extends Composite {
 			}
 			successPopupVc.show();
 			successPopupVc.center();
-			
+
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
@@ -246,9 +254,9 @@ public class CollectionSearchWidget extends Composite {
 			toolTipPopupPanelCustomize.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanelCustomize.show();
 		}
-		
+
 	}
-	
+
 	public class OncustomizeCollectionBtnMouseOut implements MouseOutHandler{
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
@@ -276,7 +284,11 @@ public class CollectionSearchWidget extends Composite {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", gooruOid);
 					Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					PlaceRequest placeRequest=null;
+					if (collectionSearchResultDo.getCollectionType()!=null && collectionSearchResultDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+
+					}
+					placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}
 			});
@@ -284,14 +296,14 @@ public class CollectionSearchWidget extends Composite {
 	}
 	/**
 	 * To show collection creator/partner info
-	 * @param collectionSearchResultDo 
+	 * @param collectionSearchResultDo
 	 */
 	private void collectionCreatorDetails(final CollectionSearchResultDo collectionSearchResultDo) {
 		if(StringUtil.isPartnerUser(collectionSearchResultDo.getOwner().getUsername())) {
 			authorName.getElement().getStyle().setColor("#1076bb");
 			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
 			authorName.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					MixpanelUtil.Click_Username();
@@ -300,7 +312,7 @@ public class CollectionSearchWidget extends Composite {
 					AppClientFactory.getPlaceManager().revealPlace(collectionSearchResultDo.getOwner().getUsername());
 				}
 			});
-			
+
 			authorName.addMouseOverHandler(new MouseOverHandler() {
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
@@ -318,7 +330,7 @@ public class CollectionSearchWidget extends Composite {
 					creatorPanel.add(profilePanel);
 				}
 			});
-			
+
 			authorName.addMouseOutHandler(new MouseOutHandler() {
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
@@ -326,7 +338,7 @@ public class CollectionSearchWidget extends Composite {
 					creatorPanel.clear();
 				}
 			});
-			
+
 		}else if(YUMA_COUNTY_SCIENCE.equals(collectionSearchResultDo.getOwner().getUsername())|| YUMA_COUNTY_MATH.equals(collectionSearchResultDo.getOwner().getUsername()) ||
 				YUMA_COUNTY_SS.equals(collectionSearchResultDo.getOwner().getUsername()) || YUMA_COUNTY_ELA.equals(collectionSearchResultDo.getOwner().getUsername())||
 				YUMA_COUNTY_PD.equals(collectionSearchResultDo.getOwner().getUsername())){
@@ -339,8 +351,8 @@ public class CollectionSearchWidget extends Composite {
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.YCGL_LIBRARY);
 				}
 			});
-			
-			
+
+
 		}else{
 			authorName.getElement().getStyle().setColor("#1076bb");
 			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
@@ -356,7 +368,7 @@ public class CollectionSearchWidget extends Composite {
 			});
 		}
 	}
-	
+
 	public Button getRemixBtn() {
 		return remixBtn;
 	}

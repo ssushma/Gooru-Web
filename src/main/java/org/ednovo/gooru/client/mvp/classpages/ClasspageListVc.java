@@ -623,10 +623,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 					@Override
 					public void createNewClasspage(String title, String grade,	boolean sharing) {
 						
-						System.out.println("title:"+title);
-						System.out.println("grade:"+grade);
-						System.out.println("sharing:"+sharing);
-
 						MixpanelUtil.Create_NewClasspage();
 						CollectionDo collectionDo = new CollectionDo();
 						collectionDo.setTitle(title);
@@ -635,17 +631,10 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 											@Override
 											public void onSuccess(ClasspageDo result) {
-												System.out
-														.println("##OnSuccess");
 												final String classpageId = result.getUri();
 												String[] uri=result.getUri().split("/");
 												String id=  uri[uri.length-1];
-												System.out
-														.println("id:"+id);
-												System.out
-														.println("classpageId:"+classpageId);
 												String title = result.getName();
-												System.out.println("title:"+title);
 												/*AssignmentDo assignmentDo = new AssignmentDo();
 												assignmentDo.setClasspageId(classpageId);
 

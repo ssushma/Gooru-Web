@@ -67,4 +67,14 @@ public interface IsEditClassStudentView extends IsViewWithHandlers<EditClassStud
 	void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers,boolean isNew, int totalCount,boolean increasePageNum,boolean insertAtTop);
 	
 	public void insertPendingUserAfterDeletion(CollaboratorsDo lstPendingMembers, boolean isNew,int totalCount,int intPos,boolean insertAtTop);
+	
+	public void displayActiveMembersList(List<CollaboratorsDo> lstActiveMembers,boolean isNew, int totalCount,boolean increasePageNum);
+	
+	public void enableInvite();
+	
+	public void insertActiveUserAfterDeletion(CollaboratorsDo lstPendingMembers,boolean isNew, int totalCount, int intPos);
+	
+	public void getPendingMembersList();
+		
+	public void removePendingUserWidget(MembersViewVc membersViewVc,boolean pendingFlag);
 }

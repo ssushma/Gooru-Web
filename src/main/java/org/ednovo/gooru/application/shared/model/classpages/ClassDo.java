@@ -22,73 +22,61 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.application.shared.model.content;
+package org.ednovo.gooru.application.shared.model.classpages;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
+/**
+ * @fileName : AssessmentSummaryStatusDo.java
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
+ */
 @JsonInclude(Include.NON_NULL)
-public class StudentsAssociatedListDo implements Serializable {
+public class ClassDo implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3223243025838735212L;
-	private List<CollaboratorsDo> searchResults;
-	private Integer totalHitCount;
-	private List<CollaboratorsDo> searchResult;
-
 	
-	public StudentsAssociatedListDo(){}
-
-
-
-
-	public List<CollaboratorsDo> getSearchResults() {
-		return searchResults;
+	private static final long serialVersionUID = 1L;
+	private String classId;
+	private String course;
+	private String unit;
+	private String lesson;
+	private String assessment;
+	public String getClassId() {
+		return classId;
 	}
-
-
-
-
-	public void setSearchResults(List<CollaboratorsDo> searchResults) {
-		this.searchResults = searchResults;
+	public String getCourse() {
+		return course;
 	}
-
-
-
-
-	public Integer getTotalHitCount() {
-		return totalHitCount;
+	public String getUnit() {
+		return unit;
 	}
-
-
-	public void setTotalHitCount(Integer totalHitCount) {
-		this.totalHitCount = totalHitCount;
+	public String getLesson() {
+		return lesson;
 	}
-
-
-
-
-	/** 
-	 * This method is to get the searchResult
-	 */
-	public List<CollaboratorsDo> getSearchResult() {
-		return searchResult;
+	public String getAssessment() {
+		return assessment;
 	}
-
-
-
-
-	/** 
-	 * This method is to set the searchResult
-	 */
-	public void setSearchResult(List<CollaboratorsDo> searchResult) {
-		this.searchResult = searchResult;
+	public void setClassId(String classId) {
+		this.classId = classId;
 	}
-	
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public void setLesson(String lesson) {
+		this.lesson = lesson;
+	}
+	public void setAssessment(String assessment) {
+		this.assessment = assessment;
+	}
 	
 }
