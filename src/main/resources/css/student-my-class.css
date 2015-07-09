@@ -2148,6 +2148,13 @@ th.headcol.whitebg {
 	cursor: pointer;
 }
 
+.myclasses-mastery-collection-cell-style {
+	color: #4897ce;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 .student-report-details-popup-panel {
     color: #515151;
     font-size: 26px;
@@ -2168,6 +2175,11 @@ th.headcol.whitebg {
 }
 .modal-widget-1000 {
 	width: 1000px;
+	background: #fff;
+}
+.teach-popup-student-content-margin {
+	margin: 0px 15px;
+	padding-bottom: 0px;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     header {
