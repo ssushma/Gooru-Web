@@ -133,7 +133,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		if(listOfContent.getCollectionItems()!=null && listOfContent.getCollectionItems().size()>0){
 			index=0;
 			for (CollectionItemDo collectionItem : listOfContent.getCollectionItems()) {
-				System.out.println("title:::"+collectionItem.getResource().getTitle());
 				setDisplayResourceItem(collectionItem, type, index);
 				index++;
 			}
@@ -181,12 +180,17 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				}
 				@Override
 				public void editResource(final CollectionItemDo collectionItem) {
-
+					String resourceType;
+					if(collectionItem.getResource().getResourceType().getResourceType()!=null){
+						resourceType=collectionItem.getResource().getResourceType().getResourceType();
+					}else{
+						resourceType=collectionItem.getResource().getResourceType().getName();
+					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
-					if (collectionItem.getResource().getCategory().equalsIgnoreCase("Question")) {
+					if (resourceType.equalsIgnoreCase("Question")) {
 						getUiHandlers().showEditQuestionResourcePopup(collectionItem);
-					} else if(collectionItem.getResourceType().equals("resource/url") || collectionItem.getResourceType().equals("video/youtube")
-							|| collectionItem.getResource().getResourceType().equals("vimeo/video")){
+					} else if(resourceType.equals("resource/url") || resourceType.equals("video/youtube")
+							|| resourceType.equals("vimeo/video")){
 						editResoruce = new EditResourcePopupVc(collectionItem) {
 
 						@Override

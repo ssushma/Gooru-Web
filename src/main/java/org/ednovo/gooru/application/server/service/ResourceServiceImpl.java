@@ -317,7 +317,19 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
+				CollectionDo obj=new CollectionDo();
+				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
+				List<CollectionItemDo> collectionItems=new ArrayList<CollectionItemDo>();
+				for(int i=0;i<array.length();i++){
+					CollectionItemDo item=new CollectionItemDo();
+					item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), CollectionItemDo.class);
+					ResourceDo resoruce=new ResourceDo();
+					resoruce=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), ResourceDo.class);
+					item.setResource(resoruce);
+					collectionItems.add(item);
+				}
+				obj.setCollectionItems(collectionItems);
+				return obj;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
@@ -817,7 +829,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
 		resourceFormat.setValue(collectionItemDo.getResource().getCategory());
 
-		String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails().getUrl();
+		String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails()!=null?collectionItemDo.getResource().getThumbnails().getUrl():"";
 		if (thumbnailImgSrcStr==null){
 			thumbnailImgSrcStr="";
 		}

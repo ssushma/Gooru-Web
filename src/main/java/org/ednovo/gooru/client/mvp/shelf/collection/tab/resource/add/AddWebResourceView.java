@@ -1692,7 +1692,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												hostName=GOOGLE_DRIVE;
 											}
 
-											if(collectionDo.getSharing().equalsIgnoreCase("public")){
+											if(collectionDo.getSharing()!=null && collectionDo.getSharing().equalsIgnoreCase("public")){
 												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 											}
 											else{
