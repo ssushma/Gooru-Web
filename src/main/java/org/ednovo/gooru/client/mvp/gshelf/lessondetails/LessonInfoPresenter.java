@@ -126,7 +126,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
 				if(isCreateCollOrAssessment && creationType!=null){
-					myCollectionsRightClusterPresenter.setTabItems(1, creationType, result);
+					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
@@ -136,7 +136,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		});
 	}
 	@Override
-	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final String type) {
+	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateColl,final String type) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		System.out.println("update call");
@@ -148,8 +148,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				folderDo.setType(LESSON);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
-				if(isCreateUnit && type!=null){
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateColl);
+				if(isCreateColl && type!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, type, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(type);
 				}
