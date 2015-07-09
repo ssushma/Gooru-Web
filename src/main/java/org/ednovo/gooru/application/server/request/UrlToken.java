@@ -200,8 +200,6 @@ public enum UrlToken {
 
 	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?"),
 	
-	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
-
 	V2_UPDATE_ASSIGNMENT("/v2/assignment/{0}"),
 
 	V2_DELETE_ASSIGNMENT("/v2/assignment/{0}?"),
@@ -601,6 +599,14 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
+
+	V3_GET_MEMBER_LIST_BY_CODE("/v3/class/{0}/member?"),
+	
+	V2_GET_PENDINGMEMBER_LIST_BY_CODE("/v2/invite/class/{0}?"),
+	
+	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
+	
+	V3_DLETE_ACTIVE_USERS_CLASS("/v3/class/{0}/member/{1}?"),
 	
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
 	
@@ -609,6 +615,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
 	
     GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?");
+
 
 	private String url;
 

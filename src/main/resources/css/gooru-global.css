@@ -981,6 +981,10 @@ textarea {
 .headerpadding{
 	padding:5px;
 }
+.noActiveClassStudents{
+	margin: 50px auto;
+	text-align: center;
+}
 @media (min-width: 240px) and (max-width: 319px){
 	#create-class-popup .modal-dialog{
 		width:auto;

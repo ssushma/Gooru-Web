@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
 import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
@@ -121,7 +122,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		setQuestionTypeCaption();
 
 		answerText.getElement().setInnerHTML(i18n.GL0665());
-		checkAnswer.setText(i18n.GL0666());
+		checkAnswer.setText(i18n.GL3460());
 	}
 
 	private void setQuestionTypeCaption(){
@@ -155,7 +156,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				if(attemptedAnswerDo!=null){
 					HTML ansHtml=new HTML(URL.decodeQueryString(attemptedAnswerDo.getAnswersText()));
 					ansHtml.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							optionsContainerFpnl.clear();
@@ -163,9 +164,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							enableCheckAnswerButton();
 						}
 					});
-					
+
 					optionsContainerFpnl.add(ansHtml);
-					
+
 					/*String text=removeHtmlTags(attemptedAnswerDo.getAnswersText());
 					String[] temp;
 					String delimiter;
@@ -333,6 +334,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("primary");
 			checkAnswer.addStyleName(STYLE_INACTIVE_BUTTON);
+			AppClientFactory.fireEvent(new AssessmentsNextResourceEvent());
 		}
 
 	}
@@ -404,10 +406,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 					userAttemptedOptionsList.add(answerAttemptDo);
 				}
-				
+
 			}
 
-			
+
 
 			AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getType()!=null){
@@ -454,7 +456,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
 							//answerText=answerText+START_CORRECT_DELIMITER+lbl.getText().trim()+END_CORRECT_DELIMITER+SPACE;
 						}else{
-							//String inLblTxt=lbl.getText()+END_CORRECT_DELIMITER+DOT;						
+							//String inLblTxt=lbl.getText()+END_CORRECT_DELIMITER+DOT;
 							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
 								//inLblTxt=lbl.getText().replace(DOT, END_CORRECT_DELIMITER+DOT);
 							}
@@ -470,7 +472,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							//answerText=answerText+START_DELIMITER+lbl.getText().trim()+END_DELIMITER+SPACE;
 						}else{
 
-							/*String inLblTxt=lbl.getText()+END_DELIMITER+DOT;						
+							/*String inLblTxt=lbl.getText()+END_DELIMITER+DOT;
 							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
 								inLblTxt=lbl.getText().replace(DOT, END_DELIMITER+DOT);
 							}

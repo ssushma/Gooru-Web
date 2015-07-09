@@ -68,4 +68,24 @@ public interface IsAssessmentsResourcePlayerMetadataView extends IsViewWithHandl
 	public void setPreviousRating(double previousRating);
 	public double getPreviousRating();
 	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
+	/**
+	 *
+	 * @function navigateToNextResource
+	 *
+	 * @created_date : 09-Jul-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) : @param resourceRequest
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	void navigateToNextResource(PlaceRequest resourceRequest);
 }

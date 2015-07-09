@@ -35,13 +35,13 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
-import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.UpdateCollectionViewCountEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.UpdatePreviewViewCountEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.assign.AssignPopupPlayerVc;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
+import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -149,7 +149,6 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 
 		this.collectionDo=collectionDo;
-
 		lblAssessmentTitle.setText(collectionDo.getTitle());
 		StringUtil.setAttributes(lblAssessmentTitle.getElement(), "lblAssessmentTitle", collectionDo.getTitle(), collectionDo.getTitle());
 
