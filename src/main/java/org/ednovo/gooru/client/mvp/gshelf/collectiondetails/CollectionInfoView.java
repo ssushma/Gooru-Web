@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -63,7 +64,7 @@ import com.google.inject.Inject;
 public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHandlers> implements IsCollectionInfoView {
 
 	private static CollectionInfoViewUiBinder uiBinder = GWT.create(CollectionInfoViewUiBinder.class);
-	
+
 	@UiTemplate("CollectionInfoView.ui.xml")
 	interface CollectionInfoViewUiBinder extends UiBinder<Widget, CollectionInfoView> {
 	}	
@@ -74,16 +75,22 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField TextArea learningObjective;
 	@UiField Label lblErrorMessage, lblErrorMessageForLO;
 	@UiField Image collThumbnail;
-	
+
+	private String type="";
+
+	private static final String ASSESSMENT = "Assessment";
+
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
-	
+
 	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
-	
+
 	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
 
-	
-	final String COLLECTION = "collection";
-	
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
+
+
+	final String COLLECTION = "Collection";
+
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
@@ -123,38 +130,33 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		}
 	}
-	
+
 	@Override
 	public void setCollectionType(String collectionType) {
 		setDetaultImage(collectionType);
 	}
+
 	public void setDetaultImage(String collectionType){
-		if(collectionType.equalsIgnoreCase("collection")){
-			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
-		}else{
-			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
-		}
+		collThumbnail.setUrl(COLLECTION.equalsIgnoreCase(collectionType)?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 	}
 
 	@Override
-	public void setCouseData(final FolderDo courseObj) {
-		this.courseObj=courseObj;
-		if(null!=courseObj){
-			collectionTitle.setText(courseObj.getTitle());
+	public void setCouseData(final FolderDo courseObj, String type) {
+		this.type = type;
+		if(courseObj!=null){
+			this.courseObj=courseObj;
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
 		}
+		collectionTitle.setText((courseObj==null&&"Collection".equalsIgnoreCase(type))?i18n.GL3367():(courseObj==null&&"Assessment".equalsIgnoreCase(type))?i18n.GL0121():courseObj.getTitle());
+
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
-				if(courseObj.getCollectionType()!=null && courseObj.getCollectionType().equalsIgnoreCase("collection")){
-					collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
-				}else{
-					collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
-				}
+				collThumbnail.setUrl(("Collection".equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
 	}
@@ -162,7 +164,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0);
 	}
-	
+
 	/**
 	 * This method is used to call create and update API
 	 * @param index

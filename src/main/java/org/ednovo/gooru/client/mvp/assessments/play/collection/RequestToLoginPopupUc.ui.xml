@@ -10,7 +10,7 @@
 	        <g:Label styleName="popupHeader" text="{i18n.GL3452}"></g:Label>
 	        <div class="popupBody">
 				<div class="container1">
-				    <img src="images/player/checkmark.png" />
+				    <img src="/images/player/checkmark.png" />
 				</div>
 				<div class="messaage">
 				    <g:Label styleName="" text="{i18n.GL3453}"></g:Label>

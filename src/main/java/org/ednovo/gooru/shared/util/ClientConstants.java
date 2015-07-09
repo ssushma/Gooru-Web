@@ -181,7 +181,7 @@ public interface ClientConstants {
 	String RED = "#EAB4B3 !important";
 	String ORANGE = "#FFE7C2 !important";
 	String WHITE = "#FFF";
-	String VIEWRESPONSE = "View Response";
+	String VIEWRESPONSE = "View Answer";
 	String QUESTION = "question";
 	String RESOURCE="resource";
 	String OE = "OE";
@@ -232,6 +232,12 @@ public interface ClientConstants {
 	String MULTI_CORRECT_WORD="multiCorrect";
 	String SUMMARY_HTPLAYER_ANS="summaryHtPlayerAns";
 	String PLAYER_HT_ANS ="htPlayerAns ";
+	String STYLE_TABLE_CENTER="alignCenterAndBackground";
+	String STYLE_TXTLEFT="alignLeft";
+	String STYLE_MARGIN_AUTO="setMarginAuto";
+	String STYLE_ERROR_MSG="displayMessageTextForScoredQuestions";
+	String STYLE_WHITE="white";
+	String STYLE_GREEN="green";
 	
 	/*************** Analytics End **************************************************/
 	

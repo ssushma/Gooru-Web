@@ -89,5 +89,9 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void deleteCourse(String o1CourseId,AsyncCallback<Integer> callback); 
 
 	void deleteUnit(String o1CourseId, String o2UnitId,AsyncCallback<Integer> callback);
+
+	void deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId,AsyncCallback<Integer> callback);
+
+	void getClassesAssociatedWithCourse(String o1CourseId,AsyncCallback<Integer> callback); 
 	
 }

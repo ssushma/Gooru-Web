@@ -37,10 +37,11 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.ResourceCurosal;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.NavigationConfirmPopup;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.uc.TocAssessmentsEndView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.uc.TocAssessmentsHomeView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.uc.TocAssessmentsResourceView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.client.uc.TocCollectionEndView;
-import org.ednovo.gooru.client.uc.TocCollectionHomeView;
 import org.ednovo.gooru.client.uc.TocResourceView;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -104,6 +105,7 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 	}
 	@Override
 	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
+
 		if(collectionDo!=null){
 			int resourcesSize=collectionDo.getCollectionItems()!=null?collectionDo.getCollectionItems().size():0;
 			String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
@@ -115,19 +117,19 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 				nextButton.setVisible(true);
 				previousButton.setVisible(true);
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
-				TocCollectionHomeView tocCollectionHomeView=null;
-			if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
-			{
-				tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl(),collectionType);
-			}
-			else
-			{
-				if(collectionDo.getCollectionType().equals("assessment")){
-					tocCollectionHomeView=new TocCollectionHomeView("images/default-assessment-image -160x120.png",collectionType);
-				}else{
-					tocCollectionHomeView=new TocCollectionHomeView("images/default-collection-image-160x120.png",collectionType);
+				TocAssessmentsHomeView tocCollectionHomeView=null;
+				if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
+				{
+					tocCollectionHomeView=new TocAssessmentsHomeView(collectionDo.getThumbnails().getUrl(),collectionType);
 				}
-			}
+				else
+				{
+					if(collectionDo.getCollectionType().equals("assessment")){
+						tocCollectionHomeView=new TocAssessmentsHomeView("images/default-assessment-image -160x120.png",collectionType);
+					}else{
+						tocCollectionHomeView=new TocAssessmentsHomeView("images/default-collection-image-160x120.png",collectionType);
+					}
+				}
 
 				if(!isCollectionHome){
 					tocCollectionHomeView.hideResourceThumbnailContainer(true);
@@ -144,7 +146,7 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 							}
 						}
 						CollectionItemDo collectionItemDo=collectionItems.get(i);
-						TocResourceView tocResoruceView=new TocResourceView(collectionItemDo,i+1,true,false);
+						TocAssessmentsResourceView tocResoruceView=new TocAssessmentsResourceView(collectionItemDo,i+1,true,false);
 						tocResoruceView.addClickHandler(new ResourceRequest(collectionItemDo));
 						tocResoruceView.setCollectionItemId(collectionItemDo.getCollectionItemId());
 						if(!isCollectionHome){
@@ -154,17 +156,17 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 					}
 
 			}
-				TocCollectionEndView tocCollectionEndView=null;
+				TocAssessmentsEndView tocCollectionEndView=null;
 				if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
 				{
-					tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl(), collectionType);
+					tocCollectionEndView=new TocAssessmentsEndView(collectionDo.getThumbnails().getUrl(), collectionType);
 				}
 				else
 				{
 					if(collectionDo.getCollectionType().equals("assessment")){
-						tocCollectionEndView=new TocCollectionEndView("images/default-assessment-image -160x120.png",collectionType);
+						tocCollectionEndView=new TocAssessmentsEndView("images/default-assessment-image -160x120.png",collectionType);
 					}else{
-						tocCollectionEndView=new TocCollectionEndView("images/default-collection-image-160x120.png",collectionType);
+						tocCollectionEndView=new TocAssessmentsEndView("images/default-collection-image-160x120.png",collectionType);
 					}
 				}
 				tocCollectionEndView.addClickHandler(new EndRequest());
@@ -210,17 +212,19 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 				setResourceThumbnailVisibility(isCollectionHome);
 			}
 		}
+
 	}
+
 	public void setResourceThumbnailVisibility(boolean visibility){
 		int widgetsCount=navgationTocContainer.getWidgetCount();
 		for(int i=0;i<widgetsCount;i++){
 			Widget widget=navgationTocContainer.getWidget(i);
-			if(widget instanceof TocCollectionHomeView){
-				((TocCollectionHomeView)widget).hideResourceThumbnailContainer(!visibility);
-			}else if(widget instanceof TocResourceView){
-				((TocResourceView)widget).hideResourceThumbnailContainer(!visibility);
-			} else if(widget instanceof TocCollectionEndView){
-				((TocCollectionEndView)widget).hideResourceThumbnailContainer(!visibility);
+			if(widget instanceof TocAssessmentsHomeView){
+				((TocAssessmentsHomeView)widget).hideResourceThumbnailContainer(!visibility);
+			}else if(widget instanceof TocAssessmentsResourceView){
+				((TocAssessmentsResourceView)widget).hideResourceThumbnailContainer(!visibility);
+			} else if(widget instanceof TocAssessmentsEndView){
+				((TocAssessmentsEndView)widget).hideResourceThumbnailContainer(!visibility);
 			}
 		}
 
