@@ -79,8 +79,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
-	private static final String COLLECTION = "Collection";
-	private static final String ASSESSMENT = "Assessment";
+	private static final String COLLECTION = "collection";
+	private static final String ASSESSMENT = "assessment";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
