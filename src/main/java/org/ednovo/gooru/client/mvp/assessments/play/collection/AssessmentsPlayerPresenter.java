@@ -890,7 +890,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		collectionEndPresenter.clearslot();
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
 		collectionEndPresenter.setCollectionMetadata(collectionDo,classpageId);
-		collectionEndPresenter.clearDashBoardIframe();
 		 showSignupPopup();
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){

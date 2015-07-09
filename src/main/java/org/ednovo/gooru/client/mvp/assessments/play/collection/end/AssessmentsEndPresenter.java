@@ -31,32 +31,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
-import org.ednovo.gooru.application.client.service.LibraryServiceAsync;
-import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
-import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
-import org.ednovo.gooru.application.shared.model.library.ConceptDo;
-import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.end.study.AssessmentsHomeMetadataPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.end.AssessmentsPreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.AssessmentsPreviewHomePresenter;
-import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsResourcePlayerMetadataView;
-import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -65,22 +53,15 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndView> implements AssessmentsEndUiHandlers,ClientConstants{
 
-	@Inject
-	private PlayerAppServiceAsync playerAppService;
-
-	@Inject
-	private LibraryServiceAsync libraryService;
 
 	@Inject
 	private AnalyticsServiceAsync analyticService;
 
-    private SimpleAsyncCallback<CommentsListDo> commentsListDoAsync;
 
 	private CollectionDo collectionDo=null;
 
@@ -92,23 +73,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	private AssessmentsHomeMetadataPresenter collectionHomeMetadataPresenter;
 
-	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
-
 	public static final  Object METADATA_PRESENTER_SLOT = new Object();
-
-	private static final String PAGE = "course-page";
-
-	private static final String CREATE = "CREATE";
-
-	private static final String EDIT = "EDIT";
-
-	private static final String FEATCHINGCOMMENT = "FEATCHINGCOMMENT";
-
-	private static final String INITIAL_COMMENT_LIMIT = "10";
-
-	private static final String INITIAL_OFFSET = "0";
-
-	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
 
 	PrintUserDataDO printData=new PrintUserDataDO();
 
@@ -116,7 +81,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	ClasspageItemDo classpageItemDo=null;
 
 	int count=0;
 	
@@ -126,13 +90,12 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	@Inject
 	public AssessmentsEndPresenter(EventBus eventBus, IsAssessmentsEndView view,AssessmentsPreviewHomePresenter previewHomePresenter,
-			AssessmentsPreviewEndPresenter previewEndPresenter,AssessmentsHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
+			AssessmentsPreviewEndPresenter previewEndPresenter,AssessmentsHomeMetadataPresenter collectionHomeMetadataPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
-		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 	}
 
 	public void setCollectionMetadata(final CollectionDo collectionDo,String classpageId){
@@ -166,44 +129,15 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
-		if(AppClientFactory.isAnonymous()){
-			getView().getLoadingImageLabel().setVisible(false);
-		}
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
-		collectionSummaryIndividualPresenter.setTeacherImage(classpageItemDo);
-		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
-		
-		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
+		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,printData);
 	}
 	
-	
-	
-	
 	public void clearslot(){
-		getView().resetData();
 		getView().resetCollectionMetaData();
-		clearSlot(COLLECTION_REPORTS_SLOT);
-		setInSlot(COLLECTION_REPORTS_SLOT,null,false);
 	}
 
 	public void resetMetadataFields(){
 		getView().resetMetadataFields();
-	}
-
-	public PlayerAppServiceAsync getPlayerAppService() {
-		return playerAppService;
-	}
-
-	public void setPlayerAppService(PlayerAppServiceAsync playerAppService) {
-		this.playerAppService = playerAppService;
-	}
-
-	public SimpleAsyncCallback<CommentsListDo>  getCommentsListDoAsync() {
-		return commentsListDoAsync;
-	}
-
-	public void setCommentsListDoAsync(SimpleAsyncCallback<CommentsListDo> commentsListDoAsync) {
-		this.commentsListDoAsync = commentsListDoAsync;
 	}
 
 	public void setCollectionDoOnRefresh(CollectionDo collectionDo) {
@@ -220,10 +154,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		previewHomePresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 	}
 
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
-		this.classpageItemDo=classpageItemDo;
-	}
-
 	public void setDataInsightsSummaryUrl(String sessionId){
 		getView().setDataInsightsSummaryUrl(sessionId);
 	}
@@ -234,16 +164,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	public Button getBackToClassButton(){
 		return previewHomePresenter.getBackToClassButton();
 	}
-	public void clearDashBoardIframe(){
-		collectionSummaryIndividualPresenter.clearFrame();
-	}
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		getView().setClasspageInsightsUrl(classpageId, sessionId);
-	}
-
-	@Override
-	public void resetCollectionActivityEventId() {
-		collectionPlayerPresenter.resetcollectionActivityEventId();
 	}
 
 	@Override
@@ -256,9 +178,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		getView().displayScoreCount(collectionScore,noOfQuestions);
 	}
 
-	@Override
-	public void getAvgReaction() {
-	}
 
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
@@ -281,11 +200,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
 					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId(),printData);
 					getView().setSessionsData(result);
-				}else{
-					clearSlot(COLLECTION_REPORTS_SLOT);
-					getView().hidePanel();
-					collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
-					setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 				}
 			}
 
@@ -343,7 +257,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 								        	  count++;
 								          } else {
 								        	  	if (count >= 10) {
-												   getView().showMessageWhenDataNotFound();
 												   displayScoreCount(0,0);
 								        	  	}
 								          }
@@ -365,7 +278,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	
 	/*analytics*/
 	
-	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
+	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			
 			@Override
@@ -391,7 +304,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {
 						if(!StringUtil.checkNull(result)){
-							setIndividualData(result,loadingImage);
+							setIndividualData(result);
 						}
 					}
 					
@@ -405,7 +318,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	
 	
-	public void setIndividualData(final ArrayList<UserDataDo> result,final HTMLPanel loadingImage) {
+	public void setIndividualData(final ArrayList<UserDataDo> result) {
 		
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			

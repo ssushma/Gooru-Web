@@ -2,218 +2,122 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style field= "playerStyle" src="collectionend.css" type="org.ednovo.gooru.client.mvp.assessments.play.collection.body.AssessmentsPlayerStyleBundle" />
-		<ui:style>
-		.commentsBtnContainer {
-			padding-left:10px;
-		}
-		.analyticsCollectionImg{
-			float:left;
-			padding-right: 12px;
-		}
-	</ui:style>
-	<ui:with type="org.ednovo.gooru.client.mvp.assessments.play.collection.end.AssessmentsPlaySummaryCBundle" field="unitStyle"/>
-	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
-	
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n"
+		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+
 	<g:HTMLPanel>
+		<g:FlowPanel styleName="studentAssessmentReportViewContainer">
+			<g:FlowPanel styleName="container">
+				<g:FlowPanel styleName="row">
 
+					<g:FlowPanel styleName="headerLinksContainer">
 
-	<g:FlowPanel styleName="studentAssessmentReportViewContainer">
-		<g:FlowPanel styleName="container">
-			<g:FlowPanel styleName="row">
+						<g:FlowPanel styleName="col-md-6 col-xs-8 col-sm-6">
 
-				<g:FlowPanel styleName="headerLinksContainer">
-
-					<g:FlowPanel styleName="col-md-6 col-xs-8 col-sm-6">
-
-						<g:FlowPanel styleName="headerBackLinkBox">
-							<g:HTMLPanel ui:field="collectionSummaryText"></g:HTMLPanel>
+							<g:FlowPanel styleName="headerBackLinkBox">
+								<g:HTMLPanel ui:field="collectionSummaryText"></g:HTMLPanel>
+							</g:FlowPanel>
 						</g:FlowPanel>
+
+						<g:FlowPanel styleName="clearfix" />
 					</g:FlowPanel>
 
-					<g:FlowPanel styleName="clearfix" />
-				</g:FlowPanel>
-
-				<g:FlowPanel styleName="studentAssessmentBodyBlock" ui:field="PrintPnl" >
+					<g:FlowPanel styleName="studentAssessmentBodyBlock"
+						ui:field="PrintPnl">
 
 
-					<g:FlowPanel styleName="scoreBrief no-gutter">
+						<g:FlowPanel styleName="scoreBrief no-gutter">
 
-						<g:FlowPanel styleName="col-md-5 col-sm-4">
-							<g:FlowPanel styleName="lessonDetails">
-								<g:FlowPanel styleName="thumbnailImage orgBorder">
-									<g:Image ui:field="collectionImage"></g:Image>
+							<g:FlowPanel styleName="col-md-5 col-sm-4">
+								<g:FlowPanel styleName="lessonDetails">
+									<g:FlowPanel styleName="thumbnailImage orgBorder">
+										<g:Image ui:field="collectionImage"></g:Image>
+									</g:FlowPanel>
+									<g:FlowPanel styleName="lessionDescription">
+										<uc:H3Panel ui:field="collectionTitle"></uc:H3Panel>
+										<uc:PPanel>
+											<g:InlineLabel ui:field="collectionResourcesCount"></g:InlineLabel>
+										</uc:PPanel>
+									</g:FlowPanel>
+
 								</g:FlowPanel>
-								<g:FlowPanel styleName="lessionDescription">
-									<uc:H3Panel ui:field="collectionTitle"></uc:H3Panel>
-									<uc:PPanel>
-										<g:InlineLabel ui:field="collectionResourcesCount"></g:InlineLabel>
-									</uc:PPanel>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="col-md-2 col-sm-2">
+								<g:FlowPanel styleName="totalIndividualScore">
+									<uc:H4Panel ui:field="scoreTitle" text="{i18n.GL4004}"></uc:H4Panel>
+									<uc:H2Panel styleName="blue" ui:field="score"></uc:H2Panel>
+									<uc:PPanel ui:field="goal"></uc:PPanel>
 								</g:FlowPanel>
-
 							</g:FlowPanel>
-						</g:FlowPanel>
-						<g:FlowPanel styleName="col-md-2 col-sm-2">
-							<g:FlowPanel styleName="totalIndividualScore">
-								<uc:H4Panel ui:field="scoreTitle" text="{i18n.GL4004}"></uc:H4Panel>
-								<uc:H2Panel styleName="blue" ui:field="score"></uc:H2Panel>
-								<uc:PPanel ui:field="goal"></uc:PPanel>
-							</g:FlowPanel>
-						</g:FlowPanel>
-						<g:FlowPanel styleName="col-md-3 col-sm-3 colmd3-reset">
+							<g:FlowPanel styleName="col-md-3 col-sm-3 colmd3-reset">
 
-							<g:FlowPanel styleName="infoGraphic">
-								<g:FlowPanel styleName="wrapCircles">
-									<g:FlowPanel ui:field="progressRadial" styleName="progress-radial">
-										<g:FlowPanel styleName="overlay">
-											<g:InlineLabel ui:field="correctStatus"></g:InlineLabel>
+								<g:FlowPanel styleName="infoGraphic">
+									<g:FlowPanel styleName="wrapCircles">
+										<g:FlowPanel ui:field="progressRadial" styleName="progress-radial">
+											<g:FlowPanel styleName="overlay">
+												<g:InlineLabel ui:field="correctStatus"></g:InlineLabel>
+											</g:FlowPanel>
 										</g:FlowPanel>
+									</g:FlowPanel>
+								</g:FlowPanel>
+
+							</g:FlowPanel>
+
+							<g:FlowPanel styleName="col-md-2 colmd2-reset">
+
+								<g:FlowPanel styleName="attemptsBlock">
+									<g:FlowPanel styleName="custom-select">
+										<g:ListBox ui:field="sessionsDropDown"
+											styleName="{unitStyle.css.filterDropDownSessions}">
+										</g:ListBox>
+									</g:FlowPanel>
+									<uc:PPanel ui:field="lastModifiedTime"></uc:PPanel>
+								</g:FlowPanel>
+
+							</g:FlowPanel>
+
+							<g:FlowPanel styleName="clearfix" />
+
+						</g:FlowPanel>
+
+						<g:FlowPanel styleName="optionsBlock no-gutter">
+
+							<g:FlowPanel styleName="col-md-6 col-sm-6">
+								<g:FlowPanel styleName="optionMenu">
+									<g:FlowPanel styleName="btn-group">
+										<g:Button styleName="btn btn-default active" text="{i18n.GL2282}"></g:Button>
+										<!-- <button class="btn btn-default" type="button">Open-Ended Questions</button> -->
 									</g:FlowPanel>
 								</g:FlowPanel>
 							</g:FlowPanel>
 
-						</g:FlowPanel>
 
-						<g:FlowPanel styleName="col-md-2 colmd2-reset">
+							<g:FlowPanel styleName="col-md-6 col-sm-6">
+								<g:FlowPanel styleName="printOptions">
 
-							<g:FlowPanel styleName="attemptsBlock">
-								<g:FlowPanel styleName="custom-select">
-									<g:ListBox ui:field="sessionsDropDown"
-										styleName="{unitStyle.css.filterDropDownSessions}">
-									</g:ListBox>
+									<g:Button ui:field="printButton" styleName="secondary printIcon">
+									</g:Button>
+									<g:Button ui:field="downloadButton " styleName="secondary downloadIcon">
+									</g:Button>
+
 								</g:FlowPanel>
-								<uc:PPanel ui:field="lastModifiedTime"></uc:PPanel>
 							</g:FlowPanel>
+
+							<g:FlowPanel styleName="clearfix"></g:FlowPanel>
 
 						</g:FlowPanel>
 
-						<g:FlowPanel styleName="clearfix" />
+						<g:FlowPanel ui:field="questionsTable" styleName="questionsTable">
 
-					</g:FlowPanel>
-
-
-
-					<g:FlowPanel styleName="optionsBlock no-gutter">
-
-
-						<g:FlowPanel styleName="col-md-6 col-sm-6">
-							<g:FlowPanel styleName="optionMenu">
-								<g:FlowPanel styleName="btn-group"> 
-								 <g:Button styleName="btn btn-default active" text="{i18n.GL2282}"></g:Button>
-								 <!--  <button class="btn btn-default" type="button">Open-Ended Questions</button>--> </g:FlowPanel> 
-							</g:FlowPanel>
 						</g:FlowPanel>
-
-
-						<g:FlowPanel styleName="col-md-6 col-sm-6">
-							<g:FlowPanel styleName="printOptions">
-							    
-							    <g:Button ui:field="printButton" styleName="secondary printIcon">
-							       </g:Button>
-							        <g:Button ui:field="downloadButton " styleName="secondary downloadIcon">
-							      </g:Button>
-							    
-							</g:FlowPanel>
-						</g:FlowPanel>
-
-						<g:FlowPanel styleName="clearfix"></g:FlowPanel>
-
-					</g:FlowPanel>
-
-					<g:FlowPanel ui:field="questionsTable" styleName="questionsTable">
-
 					</g:FlowPanel>
 				</g:FlowPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>
-	</g:FlowPanel>
-        <g:HTMLPanel ui:field="printWidget" ></g:HTMLPanel>
-        <g:Frame ui:field="downloadFile"></g:Frame>
-        
-         <g:FlowPanel ui:field="studyMainContianer" styleName="container studyMainContainer">
-        
-        
-          <g:HTMLPanel>
+		<g:HTMLPanel ui:field="printWidget"></g:HTMLPanel>
+		<g:Frame ui:field="downloadFile"></g:Frame>
 
-      		<g:HTMLPanel styleName="{playerStyle.summary}">
-
-      	<g:FlowPanel styleName="row">
-	      	<g:FlowPanel styleName="col-md-12 {playerStyle.whitebg}">
-				<html5:SectionTag styleName="endPageIframe" ui:field="dataInsightsPanel">
-			          	<!--  insights -->
-			          	<g:HTMLPanel styleName="{unitStyle.css.loadingImageMainDiv}" ui:field="loadingImageLabel">
-							<g:Label styleName="{unitStyle.css.loadingImageForSelfEdit}" />
-						</g:HTMLPanel>
-
-					<g:FlowPanel styleName="container {playerStyle.insightsFrameContainer} assessmentsProgressContainerMain" ui:field="frameContainer">
-	      <!--        	 <g:HTMLPanel styleName="{unitStyle.css.summary_title}" ui:field="collectionSummaryText"></g:HTMLPanel> -->
-					      <!-- Collection Summary Top -->
-					     <g:HTMLPanel ui:field="collectionMetaDataPnl">
-						    <g:HTMLPanel styleName="{unitStyle.css.collectionSummaryDetailsWrapper}">
-								<g:HTMLPanel styleName="{unitStyle.css.left_container}">
-									<g:HTMLPanel styleName="col-md-9 col-sm-8 {playerStyle.paddingClear}">
-									 <g:HTMLPanel styleName="{playerStyle.paddingClear} {style.analyticsCollectionImg}">
-									    <!--  <g:Image  ui:field="collectionImage"></g:Image> -->
-									 </g:HTMLPanel>
-									<g:HTMLPanel styleName="col-md-10 col-sm-10 {playerStyle.paddingClear}">
-										<!-- <g:InlineLabel ui:field="collectionTitle"></g:InlineLabel> -->
-										<br/>
-										<!-- <g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.css.question_resource_details}"></g:InlineLabel>
-										 --></g:HTMLPanel>
-										<g:HTMLPanel styleName="clearfix"/>
-									</g:HTMLPanel>
-									<g:HTMLPanel styleName="col-md-3 col-sm-4 {playerStyle.paddingClear}">
-									<g:HTMLPanel styleName="{unitStyle.css.resource_in_collection_teacher_summary}" ui:field="pnlCollectionLastAccessed">
-										<g:InlineLabel styleName="{unitStyle.css.collectionLastAccessed}" text="{i18n.GL2271}"></g:InlineLabel>
-										<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.css.question_resource_details}"></g:InlineLabel>
-									</g:HTMLPanel>
-									</g:HTMLPanel>
-								</g:HTMLPanel>
-								<g:HTMLPanel styleName="clearfix"/>
-							</g:HTMLPanel>
-						 </g:HTMLPanel>
-					  <!-- Collection Summary Top  End-->
-					  <!-- Sessions start-->
-					  <g:HTMLPanel ui:field="sessionspnl">
-						   <g:HTMLPanel styleName="{unitStyle.css.gooru_session_data_content}">
-					       		<g:HTMLPanel styleName="col-md-6 {unitStyle.css.sessionpnl}">
-									<g:HTMLPanel styleName="{unitStyle.css.collection_last_accessed}">
-										<g:InlineLabel  styleName="collectionLastAccessed" text="{i18n.GL2272}"></g:InlineLabel>
-										<!-- <g:InlineLabel ui:field="lastModifiedTime"></g:InlineLabel> -->
-									</g:HTMLPanel>
-								</g:HTMLPanel>
-					       		<g:HTMLPanel styleName="col-md-6 {unitStyle.css.collection_session_panel}">
-					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.css.d_filter_session_text} col-md-6 col-xs-6 {playerStyle.paddingClear}">
-								    <g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel>
-								    <span class="tooltip-icon hidden-sm hidden-xs"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span>
-								</g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.css.session_data} col-md-6 col-xs-6 {playerStyle.paddingClear}">
-								<!--  <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.css.filterDropDownSessions}">
-								 </g:ListBox> -->
-								</g:HTMLPanel>
-								</g:HTMLPanel>
-								</g:HTMLPanel>
-								<g:HTMLPanel styleName="clearfix"/>
-				      	 </g:HTMLPanel>
-						 </g:HTMLPanel>
-					  <!-- Sessions end-->
-	             	 <g:HTMLPanel styleName="{unitStyle.css.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
-					 <g:HTMLPanel ui:field="pnlSummary" styleName="{unitStyle.css.pnlSummary}"/>
-					 </g:HTMLPanel>
-	             	</g:FlowPanel>
-	             	<!--  insights -->
-			            <g:FlowPanel styleName="{playerStyle.messageContainer}" ui:field="messageContainer">
-			             	<g:Label styleName="{playerStyle.messageTextHeader}" ui:field="insightsHeaderText"></g:Label>
-			             	<g:Label styleName="{playerStyle.messagecontentText}" ui:field="insightsContentText"></g:Label>
-			            </g:FlowPanel>
-		        </html5:SectionTag>
-	        </g:FlowPanel>
-        </g:FlowPanel>
-		 </g:HTMLPanel>
-		</g:HTMLPanel>
-        </g:FlowPanel>
-        </g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder>

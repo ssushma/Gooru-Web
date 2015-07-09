@@ -34,7 +34,6 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 
 import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 public interface IsAssessmentsEndView extends IsViewWithHandlers<AssessmentsEndUiHandlers>{
@@ -44,8 +43,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void resetMetadataFields();
 
 	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList, String coursePage, String subject, String lessonId, String libraryName);
-
-	public void isConceptsContainerVisible(boolean isVisible);
 
 	public void setDataInsightsSummaryUrl(String sessionId);
 
@@ -60,15 +57,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> result);
 
 	public void resetCollectionMetaData();
-
-	public HTMLPanel getLoadingImageLabel();
-
-	public void hidePanel();
-
-	public void resetData();
-
-	public void showMessageWhenDataNotFound();
-
 
 	public void setQuestionsData(ArrayList<UserDataDo> questionsData);
 

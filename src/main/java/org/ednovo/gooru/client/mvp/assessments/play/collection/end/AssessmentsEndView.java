@@ -33,7 +33,6 @@ import java.util.Set;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
@@ -42,25 +41,19 @@ import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
-import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.EmailPopup;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.SummaryAnswerStatusPopup;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.body.AssessmentsPlayerStyleBundle;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
@@ -69,7 +62,6 @@ import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Clear;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -77,10 +69,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -90,10 +78,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Navigator;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -101,7 +86,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
@@ -109,28 +93,17 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
 import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHandlers> implements IsAssessmentsEndView,ClientConstants{
 	@UiField
-	static FlowPanel studyMainContianer,PrintPnl;
-	@UiField
-	FlowPanel messageContainer;
-
-	@UiField SectionTag dataInsightsPanel;
+	static FlowPanel PrintPnl;
 
 	@UiField
-	FlowPanel frameContainer,progressRadial,questionsTable;
-
-
-	@UiField Label 
-	insightsHeaderText,insightsContentText;
-	@UiField HTMLPanel pnlSummary, pnlCollectionLastAccessed,sessionspnl,collectionSummaryText,collectionMetaDataPnl,loadingImageLabel;
-	@UiField AssessmentsPlayerStyleBundle playerStyle;
-
+	FlowPanel progressRadial,questionsTable;
+	@UiField HTMLPanel  collectionSummaryText;
 	@UiField ListBox sessionsDropDown;
-	@UiField Image collectionImage,sessionsTooltip;
-	@UiField InlineLabel collectionResourcesCount,collectionLastAccessed,correctStatus;
+	@UiField Image collectionImage;
+	@UiField InlineLabel collectionResourcesCount,correctStatus;
 	@UiField H3Panel collectionTitle;
 	@UiField H4Panel scoreTitle;
 	@UiField H2Panel score;
@@ -142,73 +115,13 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	HTMLPanel printScoredData=new HTMLPanel("");
 	EmailPopup emailPopup=null;
 
-	private ToolTip toolTip;
-
 	Map<String, Long> sessionData=new HashMap<String, Long>();
 	PrintUserDataDO printData=new PrintUserDataDO();
 	String urlDomain = "";
 	String style="";
 
-	@Inject
-	private ResourceServiceAsync resourceService;
-
-	/*@UiField Frame insightsFrame;*/
-	private String languageObjectiveValue;
-
 	private CollectionDo collectionDo=null;
 
-	private CollectionDo nextCollectionDo = null;
-
-	FolderWhatsNextCollectionDo folderCollectionWhatsNext = null;
-
-	public static final String STANDARD_CODE = "code";
-
-	public static final String STANDARD_DESCRIPTION = "description";
-
-	private static final String COLLECTION_COMMENTS="COLLECTION_COMMENTS";
-
-	private static final String INITIAL_COMMENT_LIMIT = "10";
-
-	private static final String CREATE = "CREATE";
-
-	private static final String DELETE = "DELETE";
-
-	private static final String EDIT = "EDIT";
-
-	private static final String PAGINATION = "page";
-
-
-	private static final String PRIMARY_STYLE = "primary";
-
-	private static final String SECONDARY_STYLE = "secondary";
-
-	private static final String DISABLED_STYLE = "disabled";
-
-	private static final int INCREMENT_BY_ONE = 1;
-
-	private static final int DECREMENT_BY_ONE = -1;
-
-	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
-	private Anchor usernameAnchor;
-
-	private int totalCommentCount = 0;
-
-	private int totalHitCount = 0;
-
-	private int paginationCount = 0;
-
-	private boolean isHavingBadWords;
-
-	private boolean isCustomizePopup = false;
-
-	private boolean isSharePopup = false;
-
-	private HandlerRegistration whatsNextHandler;
-
-	SearchAddResourceToCollectionPresenter remixPresenterWidget = AppClientFactory.getInjector().getRemixPresenterWidget();
-
-
-	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
 	private static AssessmentsPlayerMetadataViewUiBinder uiBinder = GWT.create(AssessmentsPlayerMetadataViewUiBinder.class);
 
@@ -221,30 +134,11 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public AssessmentsEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
-		pnlCollectionLastAccessed.setVisible(false);
 		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
-		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'><link href='"+urlDomain+"/css/assessment.css' rel='stylesheet' type='text/css'>";
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/main-styles.min.css'>";
 		downloadFile.setVisible(false);
-		//teacherContainer.setVisible(false);
-		messageContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
-
-
-
-		sessionsTooltip.addMouseOverHandler(new QuestionMarkHover());
-		sessionsTooltip.addMouseOutHandler(new QuestionMarkHoverOut());
-		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
-		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		{
-			studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-
-		}
-		else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-		{
-			studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-		}
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 
 		StringUtil.loadVisualizationLibraries();
@@ -263,35 +157,9 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	}
 
 
-	public class QuestionMarkHover implements MouseOverHandler{
-
-		@Override
-		public void onMouseOver(MouseOverEvent event) {
-			toolTip = new ToolTip(i18n.GL3113());
-			toolTip.getLblLink().setVisible(false);
-			toolTip.getElement().getStyle().setBackgroundColor("transparent");
-			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			toolTip.setPopupPosition(sessionsTooltip.getAbsoluteLeft()-72, sessionsTooltip.getAbsoluteTop()+25);
-			toolTip.getElement().getStyle().setZIndex(99999);
-			toolTip.show();
-		}
-	}
-
-	public class QuestionMarkHoverOut implements MouseOutHandler{
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			toolTip.hide();
-		}
-	}
-
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
-		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();
-		setReplyLink();
-		getAverageReaction();
-
 	}
 
 
@@ -307,42 +175,15 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		return standardsList;
 	}
 
-	@Override
-	public void setInSlot(Object slot, Widget content) {
-		 if(slot==AssessmentsEndPresenter.COLLECTION_REPORTS_SLOT){
-			pnlSummary.clear();
-			if(content!=null){
-				pnlSummary.add(content);
-			}
-		}
-	}
-
 
 	public void setLabelAndIds() {
 		
 		PrintPnl.getElement().getStyle().setHeight(Window.getClientHeight()-106, Unit.PX);
 
-		insightsHeaderText.setText(i18n.GL1626());
-		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
-		insightsHeaderText.getElement().setAttribute("alt",i18n.GL1626());
-		insightsHeaderText.getElement().setAttribute("title",i18n.GL1626());
-
-		insightsContentText.setText(i18n.GL1627());
-		insightsContentText.getElement().setId("lblInsightsContentText");
-		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
-		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
-
-		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
-
-		dataInsightsPanel.getElement().setId("pnlDataInsightsPanel");
-		messageContainer.getElement().setId("fpnlMessageContainer");
 		progressRadial.getElement().setId("fpnlprogressRadial");
-
-
 
 		collectionSummaryText.getElement().setInnerText(i18n.GL4006());
 		StringUtil.setAttributes(collectionSummaryText.getElement(), "pnlCollectionSummaryText", i18n.GL4006(), i18n.GL4006());
-
 
 		printButton.getElement().setId("printButton");
 		downloadButton.getElement().setId("downloadButton");
@@ -352,38 +193,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		downloadButton.setText(i18n.GL4008());
 		
 	}
-
-
-
-
-	public void setReplyLink(){
-		Anchor resourceAnchor=new Anchor();
-		resourceAnchor.setHref(getReplayLink());
-		resourceAnchor.setStyleName("");
-		HTMLPanel collectionHTMLPanel = new HTMLPanel("");
-		resourceAnchor.addClickHandler(new ReplayCollectionEvent());
-		collectionHTMLPanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionreplayContainer());
-		Label collectionReplayButton=new Label(i18n.GL0632());
-		collectionReplayButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionreplayText());
-		collectionHTMLPanel.add(collectionReplayButton);
-		resourceAnchor.getElement().appendChild(collectionHTMLPanel.getElement());
-	}
-
-	private class ReplayCollectionEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			getUiHandlers().resetCollectionActivityEventId();
-		}
-	}
-	public String getReplayLink(){
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		String resourceLink="#"+viewToken+"&id="+collectionId;
-		resourceLink += AssessmentsPreviewPlayerPresenter.setConceptPlayerParameters();
-		return resourceLink;
-	}
-
-
 
 	public void resetMetadataFields(){
 		this.collectionDo=null;
@@ -396,69 +205,25 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	}
 
-	@Override
-	public void isConceptsContainerVisible(boolean isVisible) {
-
-	}
 
 
 	public void setDataInsightsUrl(){
-		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-		frameContainer.setVisible(true);
-		if(AppClientFactory.isAnonymous()){
-			messageContainer.setVisible(true);
-			frameContainer.setVisible(false);
-			loadingImageLabel.setVisible(false);
-		}else{
-			messageContainer.setVisible(false);
+		
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-		}
 	}
 
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		if(sessionId==null) {
 			sessionId = "";
 		}
-		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-		frameContainer.setVisible(true);
-		if(AppClientFactory.isAnonymous()){
-			messageContainer.setVisible(true);
-			frameContainer.setVisible(false);
-
-			loadingImageLabel.setVisible(false);
-		}else{
-			messageContainer.setVisible(false);
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-		}
 	}
 
 	public void setDataInsightsSummaryUrl(String sessionId){
-		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-		frameContainer.setVisible(true);
-		if(AppClientFactory.isAnonymous()){
-			messageContainer.setVisible(true);
-			frameContainer.setVisible(false);
-			loadingImageLabel.setVisible(false);
-		}else{
-			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-		}
 	}
 
-	public class DataInsightsIframe extends Composite{
-		private Frame dataInsightsFrame=null;
-		private String insightsUrl="";
-		public DataInsightsIframe(String insightsUrl){
-			initWidget(dataInsightsFrame=new Frame());
-			this.insightsUrl=insightsUrl;
-			dataInsightsFrame.setStyleName(playerStyle.insightsFrameContent());
-			dataInsightsFrame.getElement().setAttribute("id", "student-dashboard");
-		}
-		public void onLoad(){
-			dataInsightsFrame.setUrl(insightsUrl);
-		}
-	}
 
 	
 	public void displayScore(Integer collectionScore, Integer noOfQuestions){
@@ -482,26 +247,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	}
 
 
-
-	public void  getAverageReaction(){
-		getUiHandlers().getAvgReaction();
-	}
-
-
-	public ResourceServiceAsync getResourceService() {
-		return resourceService;
-	}
-
-	public void setResourceService(ResourceServiceAsync resourceService) {
-		this.resourceService = resourceService;
-	}
-
-
-
 	@Override
 	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result) {
-		sessionspnl.setVisible(true);
-		collectionMetaDataPnl.setVisible(true);
 		sessionsDropDown.clear();
 		sessionData.clear();
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
@@ -525,7 +272,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> result) {
 		if(result.size()!=0){
 			collectionTitle.setText(result.get(0).getTitle());
-			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
 			if(result.get(0).getThumbnail()!=null && !result.get(0).getThumbnail().trim().equalsIgnoreCase("")){
 				collectionImage.setUrl(result.get(0).getThumbnail());
 			}else{
@@ -544,15 +290,10 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	@Override
 	public void resetCollectionMetaData(){
 		collectionTitle.setText("");
-		collectionLastAccessed.setText("");
 		collectionImage.setUrl("");
 		collectionResourcesCount.setText("");
 	}
 
-	@Override
-	public HTMLPanel getLoadingImageLabel() {
-		return loadingImageLabel;
-	}
 
 	/**
 	 * @function removeHtmlTags
@@ -573,24 +314,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
 		return html;
 	}
-	@Override
-	public void hidePanel(){
-		sessionspnl.setVisible(false);
-		collectionMetaDataPnl.setVisible(false);
-	}
-	@Override
-	public void resetData(){
-		pnlSummary.clear();
-	}
-
-	@Override
-	public void showMessageWhenDataNotFound() {
-		messageContainer.setVisible(true);
-		frameContainer.setVisible(false);
-		loadingImageLabel.setVisible(false);
-		insightsContentText.setText(i18n.GL2038());
-	}
-
 
 
 	@Override
@@ -1072,7 +795,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				
 				printButton.setVisible(false);
 				downloadButton.setVisible(false);
-				timer1.schedule(1000);
+				timer1.schedule(100);
 
 				//To add resource breakdown
 				//printWidget.add(collectionOverViewWidget);
