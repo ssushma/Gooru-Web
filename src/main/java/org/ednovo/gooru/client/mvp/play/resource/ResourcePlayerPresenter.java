@@ -1173,4 +1173,11 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		});
 	}
 
+
+	public void checkPreviousSessionPlayed(){
+
+	}
+
+
+
 }

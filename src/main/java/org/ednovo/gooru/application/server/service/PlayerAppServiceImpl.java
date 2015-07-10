@@ -52,6 +52,7 @@ import org.ednovo.gooru.application.shared.model.content.ReactionDo;
 import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
@@ -1511,6 +1512,49 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions, String sessionId) throws GwtException, ServerDownException {
 
 
+
 	}
+
+
+	@Override
+	public List<UserPlayedSessionDo> getPreviousSessionDataForUser(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId){
+		List<UserPlayedSessionDo> userPlayedSessions = null;
+
+
+		JSONObject dataObject = new JSONObject();
+		try {
+			dataObject.put("gooruUid", gooruUid);
+			dataObject.put("classGooruId", classGooruId);
+			dataObject.put("classGooruId", lessonGooruId);
+			dataObject.put("unitGooruId", unitGooruId);
+			dataObject.put("courseGooruId", courseGooruId);
+		} catch (Exception e) {
+			getLogger().error("-- "+e.getMessage());
+		}
+
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_LAST_PLAYER_ASSESSMENT_INFO, assessmentId);
+
+		url = AddQueryParameter.constructQueryParams(url, GooruConstants.DATA, dataObject.toString());
+
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+
+		JSONObject resourceObj;
+		try {
+			resourceObj = jsonRep.getJsonObject();
+			if(resourceObj!=null){
+				if(resourceObj.optJSONArray("content") != null){
+					userPlayedSessions = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<UserPlayedSessionDo>>() {});
+				}
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return userPlayedSessions;
+	}
+
 
 }
