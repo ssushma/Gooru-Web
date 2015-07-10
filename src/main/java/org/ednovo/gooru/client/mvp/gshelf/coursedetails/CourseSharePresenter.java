@@ -22,30 +22,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
+package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
- * @fileName : IsEditClassContentView.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jul-2015
- *
- * @Author tumbalam
- *
- * @Reviewer: 
  */
-public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
+public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> implements CourseShareUiHandlers {
 
-	void setNavigationTab();
+	FolderDo folderDo;
+	
+	/**
+	 * Class constructor
+	 * @param view {@link View}
+	 * @param proxy {@link Proxy}
+	 */
+	@Inject
+	public CourseSharePresenter( EventBus eventBus,IsCourseShareView view,StandardsPopupPresenter standardsPopupPresenter) {
+		super(eventBus,view);
+		getView().setUiHandlers(this);
+	}
 
-	void setClassData(ClasspageDo classpageDo);
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
 
+	@Override
+	protected void onReveal(){
+		super.onReveal();
+	}
+
+	public void setData(FolderDo folderObj) {
+		folderDo=folderObj;
+	}
 }

@@ -22,30 +22,39 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
+package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 /**
- * @fileName : IsEditClassContentView.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jul-2015
- *
- * @Author tumbalam
- *
- * @Reviewer: 
  */
-public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
+public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers> implements IsCourseShareView {
 
-	void setNavigationTab();
+	private static CourseShareViewUiBinder uiBinder = GWT.create(CourseShareViewUiBinder.class);
 
-	void setClassData(ClasspageDo classpageDo);
-
+	@UiTemplate("CourseShareView.ui.xml")
+	interface CourseShareViewUiBinder extends UiBinder<Widget, CourseShareView> {
+	}
+	
+	@UiField ListBox classListBox;
+	/**
+	 * Class constructor
+	 * @param eventBus {@link EventBus}
+	 */
+	@Inject
+	public CourseShareView() {
+		setWidget(uiBinder.createAndBindUi(this));
+	}
+	
 }

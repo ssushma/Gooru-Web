@@ -44,26 +44,10 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
  */
 public interface IsTeachClassView extends IsViewWithHandlers<TeachClassViewUiHandlers> {
 
-	/**
-	 * @function setClassHeaderView 
-	 * 
-	 * @created_date : 07-Jul-2015
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
 	
 	void setClassHeaderView(ClasspageDo classpageDo);
+		
+	void setNavaigationTab();
 
 	
 }
