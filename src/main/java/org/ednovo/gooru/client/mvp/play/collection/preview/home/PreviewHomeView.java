@@ -170,8 +170,8 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	
 	@Override
 	public void setCollectionMetadata(final CollectionDo collectionDo){
-		setCollectionImage(collectionDo.getThumbnails().getUrl());
-		setCollectionEndImage(collectionDo.getThumbnails().getUrl());
+		setCollectionImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():"");
+		setCollectionEndImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():"");
 		setCollectionGoal(collectionDo.getGoals());
 		collectionTitle = collectionDo.getTitle();
 		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
@@ -334,34 +334,24 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				}else{
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 				}
-				
-				Map<String,String> params = new HashMap<String,String>();
-				if(AppClientFactory.getPlaceManager().getRequestParameter("id")!=null)
-					params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
-					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
-					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
-					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
-					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
+
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			}
 	}
 	/**
-	 * 
-	 * @function oncustomizeCollectionBtnClicked 
-	 * 
+	 *
+	 * @function oncustomizeCollectionBtnClicked
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param clickEvent
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>

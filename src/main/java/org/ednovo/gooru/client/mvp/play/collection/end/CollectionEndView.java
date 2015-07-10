@@ -390,7 +390,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}else{
 			scoreMainContainer.setVisible(true);
 		}
-		setCollectionImage(collectionDo.getThumbnails().getUrl());
+		setCollectionImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():"");
 
 		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();
 
@@ -728,7 +728,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				successPopupVc.center();
 				successPopupVc.show();*/
 
-				Map<String,String> params = new HashMap<String,String>();
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 
 				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null){

@@ -543,7 +543,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
         Window.addCloseHandler(new CloseHandler<Window>() {
                @Override
                public void onClose(CloseEvent<Window> event){
-            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null){
+            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null || AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null){
             		   setCookieValues();
             	   }
              }
@@ -853,10 +853,12 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		showClasspageButton();
 		setOpenEndedAnswerSubmited(true);
 		getView().setResourceTitle(collectionDo.getTitle());
-
+		
 		collectionEndPresenter.clearslot();
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
 		collectionEndPresenter.setCollectionMetadata(collectionDo,classpageId);
+		collectionEndPresenter.setSessionId(sessionId);
+		
 		 showSignupPopup();
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){
@@ -1483,17 +1485,10 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 				}
 			}else{
-				this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-					@Override
-					public void onSuccess(String sessionId) {
-						AssessmentsPlayerPresenter.this.sessionId=sessionId;
-						/**
-						 * Triggers collection start event.
-						 */
-						triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-						escalateToTriggerEvents(sessionId);
-					}
-				});
+				sessionId = GwtUUIDGenerator.uuid();
+				AssessmentsPlayerPresenter.this.sessionId=sessionId;
+				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+				escalateToTriggerEvents(sessionId);
 			}
 		}
 	}
@@ -2671,12 +2666,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			parentGooruOid=classpageId;
 			mode="class";
 		}
-		this.playerAppService.createSessionTracker(collectionDo.getGooruOid(), parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionId) {
-				AssessmentsPlayerPresenter.this.sessionId=sessionId;
-			}
-		});
+		sessionId = GwtUUIDGenerator.uuid();
+		
 	}
 
 

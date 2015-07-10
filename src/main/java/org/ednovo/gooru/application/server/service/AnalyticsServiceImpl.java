@@ -137,16 +137,19 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 
 	@Override
-	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(
-			String collectionId, String classId, String userId) {
+	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(ClassDo classObj,String collectionId, String classId, String userId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryUsersDataDo> sessionDataList=new ArrayList<CollectionSummaryUsersDataDo>();
 		String jsonString = getSessionsDataByUserJsonString(classId,userId);
 
 //		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}";
-		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, collectionId);
+		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, classObj.getAssessmentId());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonString);
-		logger.info("url:+------ "+url);
+		
+		String newurl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER,classObj.getSessionId(), classObj.getAssessmentId());
+		
+		logger.info("getSessionsDataByUser --newurl:+------ "+newurl);
+		logger.info("getSessionsDataByUser --url:+------ "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -998,7 +1001,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	@Override
 	public AssessmentSummaryStatusDo getAssessmentSummary(ClassDo classObj){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_ASSESSMENT_SUMMARY_DETAILS,classObj.getClassId(),classObj.getCourse(),classObj.getUnit(),classObj.getLesson(),classObj.getAssessment());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_ASSESSMENT_SUMMARY_DETAILS,classObj.getClassId(),classObj.getCourseId(),classObj.getUnitId(),classObj.getLessonId(),classObj.getAssessmentId());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeAssessmentSummary(jsonRep);

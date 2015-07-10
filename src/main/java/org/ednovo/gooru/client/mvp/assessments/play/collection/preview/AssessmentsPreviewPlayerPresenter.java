@@ -1208,17 +1208,15 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode,new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionId) {
-				AssessmentsPreviewPlayerPresenter.this.sessionId=sessionId;
-				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-				createResourceDataLog();
-				if(collectionItemDo!=null){
-					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
-				}
-			}
-		});
+		
+		sessionId = GwtUUIDGenerator.uuid();
+		AssessmentsPreviewPlayerPresenter.this.sessionId=sessionId;
+		triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+		createResourceDataLog();
+		if(collectionItemDo!=null){
+			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
+		}
+		
 	}
 
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status){
@@ -1736,6 +1734,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String isStudent=AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
 
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId",null);
 		String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId",null);
@@ -1776,6 +1775,10 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		if(courseId!=null) {
 			params.put("courseId", courseId);
 		}
+		if(isStudent!=null) {
+			params.put("isStudent", isStudent);
+		}
+
 		return params;
 	}
 

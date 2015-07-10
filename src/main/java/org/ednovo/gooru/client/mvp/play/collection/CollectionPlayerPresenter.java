@@ -536,7 +536,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
         Window.addCloseHandler(new CloseHandler<Window>() {
                @Override
                public void onClose(CloseEvent<Window> event){
-            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null){
+            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null || AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null){
             		   setCookieValues();
             	   }
              }
@@ -852,6 +852,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
 		collectionEndPresenter.setCollectionMetadata(collectionDo,classpageId);
 		collectionEndPresenter.clearDashBoardIframe();
+		collectionEndPresenter.setSessionId(sessionId);
 		 showSignupPopup();
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){
@@ -1480,17 +1481,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 				}
 			}else{
-				this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-					@Override
-					public void onSuccess(String sessionId) {
-						CollectionPlayerPresenter.this.sessionId=sessionId;
-						/**
-						 * Triggers collection start event.
-						 */
-						triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-						escalateToTriggerEvents(sessionId);
-					}
-				});
+				sessionId = GwtUUIDGenerator.uuid();
+				CollectionPlayerPresenter.this.sessionId=sessionId;
+				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+				escalateToTriggerEvents(sessionId);
+				
 			}
 		}
 	}
@@ -2689,11 +2684,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			parentGooruOid=classpageId;
 			mode="class";
 		}
-		this.playerAppService.createSessionTracker(collectionDo.getGooruOid(), parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionId) {
-				CollectionPlayerPresenter.this.sessionId=sessionId;
-			}
-		});
+		sessionId = GwtUUIDGenerator.uuid();
 	}
+
 }

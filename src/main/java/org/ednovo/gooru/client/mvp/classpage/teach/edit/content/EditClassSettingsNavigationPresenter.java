@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
 
@@ -53,6 +54,8 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	EditClassSettingsPresenter editClassSettingsPresenter;
 	
 	EditClassContentPresenter editClassContentPresenter;
+	
+	ClasspageDo classpageDo;
 	
 	
 	@Inject
@@ -95,6 +98,12 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 			addToSlot(CLASS_CONETENT_TAB, editClassContentPresenter);
 		}
 		
+	}
+
+	public void setClassDetails(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
+		editClassSettingsPresenter.setClassData(classpageDo);
+		editClassContentPresenter.setClassData(classpageDo);
 	}
 	
 }
