@@ -125,6 +125,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
 				if(isCreateCollOrAssessment && creationType!=null){
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
 				}else{
@@ -145,11 +146,14 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(LESSON);
 				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);
+				
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateColl);
 				if(isCreateColl && type!=null){
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);
 					myCollectionsRightClusterPresenter.setTabItems(1, type, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(type);
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, folderDo);
 				}
 			}
 		});

@@ -173,7 +173,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setCollectionType(COLLECTION);
 				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, COLLECTION, folderDo);
+				myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
 			}
 		});
