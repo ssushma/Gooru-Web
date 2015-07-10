@@ -1734,6 +1734,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String isStudent=AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
 
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId",null);
 		String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId",null);
@@ -1774,6 +1775,10 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		if(courseId!=null) {
 			params.put("courseId", courseId);
 		}
+		if(isStudent!=null) {
+			params.put("isStudent", isStudent);
+		}
+
 		return params;
 	}
 

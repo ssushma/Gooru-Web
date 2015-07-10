@@ -60,6 +60,7 @@ public interface UrlNavigationTokens{
 	String STUDENT_CLASSPAGE_ASSESSMENT_ID = "a-id";
 	String TEACHER_CLASSPAGE_COLLECTION_ID = "d-id";
 	String TEACHER_CLASSPAGE_STUDENT_ID = "s-id";
+	String TEACHER_CLASS_PAGE_ID = "classpageId";
 	
 	//Teacher Class Page View tabs
 	String TEACHER_CLASS_SUBPAGE_VIEW = "subpage-view";
@@ -81,4 +82,7 @@ public interface UrlNavigationTokens{
 	String TEACHER_CLASSPAGE_COLLECTION = "collection";
 	String TEACHER_CLASSPAGE_ASSESSMENT = "assessment";
 	
+	String TEACHER_PREVIEW_MODE = "teach-preview";
+	String TRUE = "true";
+	String FALSE = "false";
 }

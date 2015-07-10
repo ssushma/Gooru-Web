@@ -234,6 +234,11 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
      */
 	private boolean checkSelectedGrades(String[] stringArray, String selectedValue) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT);
+		
+		System.out.println("chekSelectedGrade");
+		
+		System.out.println("selected value:"+selectedValue);
+		
 		if(grades!=null && stringArray!=null){
 			grades+=selectedValue;
 			for(int i=1;i<stringArray.length;i++){
@@ -347,5 +352,24 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	@Override
 	public void setGradePanel(HTMLPanel panel) {
 		gradePanelWidget=panel;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.gsearch.util.IsGooruGradesView#setGrade(java.lang.String)
+	 */
+	@Override
+	public void setGrade(String grades) {
+		System.out.println("setGrade");
+		String [] gradesSplit = grades.split(",");
+		for(int i=0; i<gradesSplit.length; i++){
+			System.out.println("gradesSplit[i]:"+gradesSplit[i]);
+			if(gradesSplit[i].equals("12gte")){
+				gradesSplit[i] = i18n.GL3084();
+			}
+			updateFilterStyle(gradesSplit[i], "add");
+		    if(!gradesSplit[i].equals("Pre-K") && !gradesSplit[i].equals("12gte")){
+		    	highlightGradeLevel(gradesSplit[i]);
+		    }
+		}
 	}
 }

@@ -22,46 +22,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild;
+package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
-import org.ednovo.gooru.application.client.child.ChildView;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.UrlNavigationTokens;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 /**
- * @author Gooru Team
- * 
+ * @author Search Team
+ *
  */
-public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresenter> implements IsSlmAssessmentView {
+public interface IsCourseShareView extends IsViewWithHandlers<CourseShareUiHandlers> {
 
-	@UiField Anchor reportUrl;
-	
-	@UiField HTMLPanel reportView;
-	
-	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
-
-	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
-	}
-
-	public SlmAssessmentChildView() {
-		initWidget(uiBinder.createAndBindUi(this));
-		setData();
-	}
-	
-	public void setData() {
-		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
-		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-			reportView.setVisible(false);
-		} else {
-			reportView.setVisible(true);
-		}
-	}
-	
 }

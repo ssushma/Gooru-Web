@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -44,6 +46,9 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  * @Reviewer: 
  */
 public class EditClassContentPresenter extends PresenterWidget<IsEditClassContentView> implements EditClassContentViewUiHandler {
+	
+	ClasspageDo classpageDo;
+	
 	
 	@Inject
 	public EditClassContentPresenter(EventBus eventBus,IsEditClassContentView view){
@@ -70,6 +75,11 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	protected void onReset() {
 		super.onReset();
 		getView().setNavigationTab();
+	}
+
+	public void setClassData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
+		getView().setClassData(classpageDo);
 	}
 
 }

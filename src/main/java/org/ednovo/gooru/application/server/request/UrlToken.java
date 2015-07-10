@@ -614,7 +614,12 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
 	
-    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?");
+    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?"),
+    
+    DELETE_LESSON_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
+    
+	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?");
+	
 
 
 	private String url;

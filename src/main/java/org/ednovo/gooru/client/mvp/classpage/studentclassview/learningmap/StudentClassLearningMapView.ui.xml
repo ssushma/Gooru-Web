@@ -5,28 +5,23 @@
 	<g:HTMLPanel styleName="container">
 	   <span:LoadingUc ui:field="cropImageLoading"/>
 	   <g:HTMLPanel styleName="row" ui:field="containerData">
-			<g:HTMLPanel styleName="learningHeaderBlock">
+			<g:HTMLPanel styleName="learningHeaderBlock" ui:field="learingHeaderBlock">
 			   <g:HTMLPanel styleName="col-md-4">
-			    <g:HTMLPanel styleName="emptyBox"></g:HTMLPanel>
-			    <g:HTMLPanel styleName="topBackLinkBox" ui:field="topBackLinkBox">
-			 		<panel:HTMLEventPanel ui:field="allContentPanel" styleName="cursorPointer">
-			 		    <span:SpanPanel styleName="left-arrow" ui:field="headerLeftArrow"></span:SpanPanel><span:SpanPanel ui:field="allContentTxt"></span:SpanPanel>
-			 		</panel:HTMLEventPanel>
-				</g:HTMLPanel>
+				    <g:HTMLPanel styleName="emptyBox"></g:HTMLPanel>
+				    <g:HTMLPanel styleName="topBackLinkBox" ui:field="topBackLinkBox">
+				 		<panel:HTMLEventPanel ui:field="allContentPanel" styleName="cursorPointer">
+				 		    <span:SpanPanel styleName="left-arrow" ui:field="headerLeftArrow"></span:SpanPanel><span:SpanPanel ui:field="allContentTxt"></span:SpanPanel>
+				 		</panel:HTMLEventPanel>
+					</g:HTMLPanel>
 			    </g:HTMLPanel>
 			    <g:HTMLPanel styleName="col-md-8">
 			       <g:HTMLPanel styleName="indicationBox" ui:field="learnMapScore">
-			          <g:HTMLPanel><span:SpanPanel styleName="green-circle"></span:SpanPanel><g:Label>Score Met</g:Label></g:HTMLPanel>
-			          <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label>Score Not Yet Met</g:Label></g:HTMLPanel>
-			          <g:HTMLPanel><span:SpanPanel styleName="grey-circle"></span:SpanPanel><g:Label>Not Attempted</g:Label></g:HTMLPanel>
+			          <g:HTMLPanel ui:field="colorPanel">
+				          <g:HTMLPanel><span:SpanPanel styleName="green-circle"></span:SpanPanel><g:Label>Score Met</g:Label></g:HTMLPanel>
+				          <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label>Score Not Yet Met</g:Label></g:HTMLPanel>
+				          <g:HTMLPanel><span:SpanPanel styleName="grey-circle"></span:SpanPanel><g:Label>Not Attempted</g:Label></g:HTMLPanel>
+			          </g:HTMLPanel>
 			       </g:HTMLPanel>
-			       <g:HTMLPanel styleName="scoreStatus" ui:field="reportScore">
-					   <g:Label styleName="red">Below 60%</g:Label>
-					   <g:Label styleName="org">60%- 69%</g:Label>
-					   <g:Label styleName="yellowgreen">70%- 79%</g:Label>
-					   <g:Label styleName="lightgreen">80%- 89%</g:Label>
-					   <g:Label styleName="green">90%- 100%</g:Label>
-					</g:HTMLPanel>
 			    </g:HTMLPanel>
 			    <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
