@@ -302,25 +302,20 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				}
 				successPopupVc.show();
 				successPopupVc.center();*/
-				Map<String,String> params = new HashMap<String,String>();
-				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
-					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
-					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
 			}
 	}
 	/**
-	 * 
-	 * @function oncustomizeCollectionBtnClicked 
-	 * 
+	 *
+	 * @function oncustomizeCollectionBtnClicked
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param clickEvent
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>

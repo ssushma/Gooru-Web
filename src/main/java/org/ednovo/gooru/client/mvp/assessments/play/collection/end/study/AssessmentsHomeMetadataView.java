@@ -310,12 +310,8 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 				}
 				successPopupVc.show();
 				successPopupVc.center();*/
-				Map<String,String> params = new HashMap<String,String>();
-				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
-					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
-					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
+
 			}
 	}
 	/**
