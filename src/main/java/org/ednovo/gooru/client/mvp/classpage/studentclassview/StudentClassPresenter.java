@@ -109,7 +109,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
-
+		
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -167,6 +167,13 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
 			addToSlot(CLASSPAGE_REPORT_TAB, studentClassReportPresenter);
 		}
+		
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.FALSE)) {
+			getView().setPreviewClassMode(false);
+		} else {
+			getView().setPreviewClassMode(true);
+		}
 	}
 
 	@Override
@@ -214,6 +221,11 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0, 0));
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
+	}
+
+	@Override
+	public void joinStudentClass() {
+		
 	}
 
 }
