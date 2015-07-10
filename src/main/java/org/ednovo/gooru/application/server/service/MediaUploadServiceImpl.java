@@ -36,10 +36,13 @@ import org.ednovo.gooru.application.server.request.ServiceProcessor;
 import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.model.content.CollectionAddQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
@@ -59,6 +62,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 
 /**
  * @author Search Team
@@ -75,6 +80,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 	private static final long serialVersionUID = -8673556966040594979L;
 	private static final String ADDED = "added";
+	private static final String TITLE = "title";
 	private static final Logger logger = LoggerFactory.getLogger(MediaUploadServiceImpl.class);
 	private static final String HEADER_GOORU_SESSION_TOKEN = "Gooru-Session-Token";
 	@Override
@@ -108,19 +114,49 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public String saveImageCollection(String gooruOid, String fileName) {
-		String filePath = null;
-		JsonRepresentation jsonRep = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.MEDIA_FILE_SAVE, gooruOid);
-		String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.MEDIA_FILE_NAME,fileName);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
+	public String saveImageCollection(String courseId, String unitId, String lessonId, String collectionId, CreateDo createDo, String fileName) {
+		createDo.setMediaFilename(fileName);
+		JsonRepresentation jsonRep1 = null;
+		String url1 = null;
+		
+		String filepath ="";
+	
+		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+			url1 = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId,collectionId);
+		}
+		
+		JSONObject courseObj=new JSONObject();
 		try {
-			filePath = jsonRep.getText();
+			courseObj.put(TITLE, createDo.getTitle());
+			logger.info("updateCourse : "+url1);
+			logger.info("updateCoursetoken : "+getLoggedInSessionToken());
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDo, null);
+			logger.info("dataPassing : "+dataPassing);
+			JsonResponseRepresentation jsonResponseRep1=ServiceProcessor.put(url1, getRestUsername(), getRestPassword(),dataPassing);
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}
-		return filePath;
+		CollectionDo collDo = new CollectionDo();
+		String urlGet = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId,collectionId);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlGet, getRestUsername(), getRestPassword());
+		jsonRep1 = jsonResponseRep.getJsonRepresentation();
+		collDo = deserializeCreatedCollInFolder(jsonRep1);
+		logger.info("collDo : "+collDo);
+		logger.info("collDo1 : "+collDo.getThumbnails().getUrl());
+		filepath = collDo.getThumbnailUrl();
+		return filepath;
+		
+		
+	}
+	public CollectionDo deserializeCreatedCollInFolder(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<CollectionDo>() {});
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return new CollectionDo();
 	}
 
 	@Override

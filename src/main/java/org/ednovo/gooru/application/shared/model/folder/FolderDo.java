@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -51,6 +52,7 @@ public class FolderDo implements Serializable{
 	private List<FolderItemDo> collectionItems;
 	private ResourceFormatDo resourceFormat;
 	private ResourceTypeDo resourceTypeDo;
+	private List<checkboxSelectedDo> depthOfKnowledges;
 	private String ideas;
 	private String performanceTasks;
 	private String questions;
@@ -288,6 +290,15 @@ public class FolderDo implements Serializable{
 	 */
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+
+	public List<checkboxSelectedDo> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+
+	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
 	}
 
 	/**

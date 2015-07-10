@@ -197,8 +197,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 			lblImage.setStyleName("folderImage");
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
-			pnlArrows.setVisible(false);
-			pnlMoveToEdit.setVisible(true);
+			pnlArrows.setVisible(true);
+			//pnlMoveToEdit.setVisible(true);
 		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal) || ASSESSMENT.equalsIgnoreCase(typeVal)){
 			if(COLLECTION.equalsIgnoreCase(typeVal)){
 				lblImage.setStyleName("collectionImage");
@@ -211,8 +211,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnLessonsCount.setVisible(false);
 			spnCollectionsCount.setVisible(false);
 			spnAssessmentsCount.setVisible(false);
-			pnlArrows.setVisible(false);
-			pnlMoveToEdit.setVisible(true);
+			pnlArrows.setVisible(true);
+			//pnlMoveToEdit.setVisible(true);
 		}
 	}
 	/**

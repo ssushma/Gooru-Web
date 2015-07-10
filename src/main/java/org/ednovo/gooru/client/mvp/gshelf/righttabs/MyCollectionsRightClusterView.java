@@ -463,4 +463,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId);
 		}
 	}
+	/**
+	 * This method is used to hide the bread cums panel
+	 */
+	@Override
+	public void disableAndEnableBreadCums(boolean isVisible){
+		pnlBreadCrumbMain.setVisible(isVisible);
+	}
 }

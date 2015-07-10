@@ -68,6 +68,6 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId, Integer classpageList);
 	
-	
+	public void disableAndEnableBreadCums(boolean isVisible);
 	
 }
