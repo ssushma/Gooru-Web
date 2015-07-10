@@ -180,11 +180,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				}
 				@Override
 				public void editResource(final CollectionItemDo collectionItem) {
-					String resourceType;
-					if(collectionItem.getResource().getResourceType().getResourceType()!=null){
-						resourceType=collectionItem.getResource().getResourceType().getResourceType();
-					}else{
+					String resourceType="";
+					if(collectionItem.getResource().getResourceType().getName()!=null){
 						resourceType=collectionItem.getResource().getResourceType().getName();
+						if(resourceType.equalsIgnoreCase("assessment-question")){
+							resourceType=collectionItem.getResource().getResourceFormat().getDisplayName();
+						}
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (resourceType.equalsIgnoreCase("Question")) {
@@ -262,15 +263,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}else{
 			AppClientFactory.printInfoLogger("collectionItem.getItemSequence() : "+collectionItem.getItemSequence());
 			pnlReosurceList.remove(collectionItem.getItemSequence() - 1);
-			AppClientFactory.printInfoLogger("1");
 			listOfContent.getCollectionItems().remove(collectionItem.getItemSequence()-1);
-			AppClientFactory.printInfoLogger("2");
 			listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
-			AppClientFactory.printInfoLogger("3");
 			setDisplayResourceItem(collectionItem, RefreshType.INSERT, (collectionItem.getItemSequence()-1));
-			AppClientFactory.printInfoLogger("4");
 		}
-
 		if (tmpIndex ==-1){
 			setLastWidgetArrowVisiblity(false);
 			resetWidgetPositions();

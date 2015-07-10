@@ -127,6 +127,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, result);
 					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(UNIT);
 				}else{
@@ -154,11 +155,14 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				folderDo.setTitle(createObj.getTitle());
 				folderDo.setType(COURSE);
 				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
+				
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, folderDo);
 				}
 			}
 		});

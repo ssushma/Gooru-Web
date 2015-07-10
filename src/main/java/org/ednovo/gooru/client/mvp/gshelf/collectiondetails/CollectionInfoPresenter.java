@@ -36,8 +36,11 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -54,6 +57,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
+	StandardsPopupPresenter standardsPopupPresenter;
+	
 	final String SUBJECT="subject";
 	
 	final String COURSE="Course";
@@ -68,6 +73,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
 	
+	ImageUploadPresenter imgUploadPresenter=null;
+	
 	
 	/**
 	 * Class constructor
@@ -75,19 +82,23 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view) {
+	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view,ImageUploadPresenter imgUploadPresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+		this.imgUploadPresenter = imgUploadPresenter;
+		this.standardsPopupPresenter=standardsPopupPresenter;
 	}
 
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
 	}
 
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+		Window.enableScrolling(true);
 	}
 
 	public TaxonomyServiceAsync getTaxonomyService() {
@@ -151,6 +162,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
+
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
@@ -158,6 +170,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
+	}
+	
+	@Override
+	public void showStandardsPopup(String standardVal) {
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal);
+		addToPopupSlot(standardsPopupPresenter);
 	}
 
 	@Override
@@ -173,7 +191,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setCollectionType(COLLECTION);
 				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, COLLECTION, folderDo);
+				myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
 			}
 		});
@@ -190,4 +208,21 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
+
+	@Override
+	public void uploadCollectionImage(CreateDo createDoObj) {
+		addToPopupSlot(imgUploadPresenter);
+		CreateDo createOrUpDate=new CreateDo();
+		createOrUpDate.setTitle(createDoObj.getTitle());
+		createOrUpDate.setDescription(createDoObj.getDescription());
+		createOrUpDate.setCollectionType(COLLECTION);
+		imgUploadPresenter.setCollectionData(createDoObj);
+        imgUploadPresenter.setCollectionImage(true);
+        imgUploadPresenter.setClassPageImage(false);
+        imgUploadPresenter.setUpdateQuestionImage(false);
+        imgUploadPresenter.setEditResourceImage(false);
+		
+	}
+
+	
 }

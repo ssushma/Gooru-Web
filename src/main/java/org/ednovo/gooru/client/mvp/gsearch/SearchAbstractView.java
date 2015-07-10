@@ -705,8 +705,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				isApiInProgressBack=true;
 			}else{
 				HTMLPanel widgetsContainer=new HTMLPanel("");
-				widgetsContainer.getElement().setId(pageNumber+"");
-				searchResultPanel.clear();
+				widgetsContainer.getElement().setId(pageNumber+"");			
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));

@@ -170,7 +170,7 @@ public enum UrlToken {
 
 	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?"),
 
-	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?"),
+	UPDATE_RESOURCE_INFO("/v3/collection/{0}/resource/{1}?"),
 
 	UPDATE_USER("/user/{0}?format=json&username={1}&userrole={2}"),
 
