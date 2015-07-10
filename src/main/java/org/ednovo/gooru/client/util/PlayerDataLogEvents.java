@@ -108,6 +108,8 @@ public class PlayerDataLogEvents {
 	public static final String COURSEID="courseGooruId";
 	public static final String UNITID="unitGooruId";
 	public static final String COLLECTIONTYPE = "collectionType";
+	public static final String ISSTUDENT = "isStudent";
+
 	public static final String LESSONID="lessonGooruId";
 	public static final String MODE="mode";
 	public static final String VERSION="version";
@@ -215,6 +217,7 @@ public class PlayerDataLogEvents {
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
 		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
 //		int totalQuestionsCount
 		String collectionType = null;
 
@@ -263,7 +266,9 @@ public class PlayerDataLogEvents {
 			if(collectionType !=null){
 				contextMap.put(COLLECTIONTYPE, new JSONString(collectionType));
 			}
-
+			if(isStudent !=null){
+				contextMap.put(COLLECTIONTYPE, new JSONString(isStudent));
+			}
 
 
 			contextMap.put(MODE, new JSONString(mode));
