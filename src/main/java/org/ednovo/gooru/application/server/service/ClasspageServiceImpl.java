@@ -1633,7 +1633,34 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3UpdateClass(java.lang.String, org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public ClasspageDo v3UpdateClass(String classId, ClasspageDo classpageDo) throws GwtException, ServerDownException {
+		ClasspageDo classDo=null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASSPAGE_BY_ID, classId);
+		String form = "";
+		try{
+			if(classpageDo != null){
+				form = ResourceFormFactory.generateStringDataForm(classpageDo, null);
+			}
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),form);
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			if(jsonResponseRep.getStatusCode()==200){
+				classDo=classpageDo;
+			}else{
+				classDo=new ClasspageDo();
+			}
+		}catch(Exception e){
+			getLogger().error("v3UpdateClass ..:"+e.getMessage());
+		}
+		return classDo;
+	}
+		
+	
 	@Override
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence) throws GwtException {
 		JsonRepresentation jsonRep = null;
@@ -1650,6 +1677,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 			logger.error("Exception::", e);
 		}
 	}
+
+	
 
 	
 }
