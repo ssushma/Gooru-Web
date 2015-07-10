@@ -95,7 +95,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 			lblTopArrow.setVisible(false);
 		}
 		pnlArrows.setVisible(true);
-		//pnlMoveToEdit.setVisible(false);
+		pnlMoveToEdit.setVisible(false);
 	
 		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getType())){
 			pTitle.setText(i18n.GL3007());
