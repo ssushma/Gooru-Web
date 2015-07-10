@@ -725,5 +725,16 @@ th.headcol.whitebg {
     background: #fff;
 }
 
+.reportTableStyle td img {
+    text-align:center;
+}
+
+.reportTableStyle td:nth-child(4) {
+    text-align:center;
+}
+.reportTableStyle tr.green td {
+	 border: 1px solid #c5d8c2;
+}
+
 /* end .tableStyle */
 

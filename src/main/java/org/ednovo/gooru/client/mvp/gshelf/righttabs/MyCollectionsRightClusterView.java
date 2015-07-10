@@ -426,6 +426,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else if(LESSON.equalsIgnoreCase(currentTypeView)){
 			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), LESSON));
 			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
+		}else if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COLLECTION.equalsIgnoreCase(currentTypeView)?COLLECTION:ASSESSMENT));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
 		}
 		deletePopup.setDeleteValidate("delete");
 		deletePopup.setPositiveButtonText(i18n.GL0190());

@@ -82,7 +82,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	StudentClassReportPresenter studentClassReportPresenter = null;
 
 	ClasspageDo classpageDo = new ClasspageDo();
-	
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT_VIEW)
 	public interface IsStudentClassProxy extends ProxyPlace<StudentClassPresenter> {
@@ -115,9 +115,9 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
-		
+
 		getClasspageDetails();
-		
+
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -175,7 +175,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
 			addToSlot(CLASSPAGE_REPORT_TAB, studentClassReportPresenter);
 		}
-		
+
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
 		if(page.equalsIgnoreCase(UrlNavigationTokens.FALSE)) {
 			getView().setPreviewClassMode(false);
@@ -224,7 +224,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study"));
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study", 0));
 		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0, 0));
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
@@ -233,10 +233,12 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 */
 	@Override
 	public void joinStudentClass() {
+
 		getView().setJoinClassData();
 		getView().initiateJoinClassPopup();
+
 	}
-	
+
 	private void getClasspageDetails() {
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
@@ -253,10 +255,10 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 				//nothing to write
 				}
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
-				
+
 			}
 		});
 	}
@@ -293,3 +295,4 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	}
 	
 }
+

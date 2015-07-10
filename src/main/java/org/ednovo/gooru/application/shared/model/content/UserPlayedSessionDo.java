@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,37 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.standards;
+package org.ednovo.gooru.application.shared.model.content;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
-import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
-import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
-import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import com.gwtplatform.mvp.client.PopupView;
+@JsonInclude(Include.NON_NULL)
+public class UserPlayedSessionDo implements Serializable{
 
-/**
- * @author Search Team
- *
- */
-public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<StandardsPopupUiHandlers> {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 8466467783549379325L;
 
-	void loadData();
 
-	void SetData(StandardsLevel1DO levelOneData, int valArr, String titleVal);
+	private String sessionId=null;
+	private Integer sequence=0;
+	private Long eventTime=0L;
 
-	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
-
-	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
-
-	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
-
-	void hidePopup();
-
-	void hideLoaderIcon();
-	
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	public Integer getSequence() {
+		return sequence;
+	}
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
+	}
+	public Long getEventTime() {
+		return eventTime;
+	}
+	public void setEventTime(Long eventTime) {
+		this.eventTime = eventTime;
+	}
 
 }

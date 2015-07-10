@@ -85,6 +85,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	
 	ClasspageItemDo classpageItemDo=null;
 	
+	String sessionId=null;
+	
 	
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -197,7 +199,17 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	@Override
 	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+		
+		ClassDo classObj=new ClassDo();
+		classObj.setAssessmentId(collectionId);
+		classObj.setClassId(classId);
+		classObj.setSessionId(sessionId);
+		
+		System.out.println("sessionId--"+sessionId);
+		System.out.println("classId--"+classId);
+		System.out.println("collectionId--"+collectionId);
+		
+		this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -402,10 +414,10 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		
 		ClassDo classObj=new ClassDo();
 		classObj.setClassId(classId);
-		classObj.setCourse(courseId);
-		classObj.setLesson(lessonId);
-		classObj.setUnit(unitId);
-		classObj.setAssessment(assessmentId);
+		classObj.setCourseId(courseId);
+		classObj.setLessonId(lessonId);
+		classObj.setUnitId(unitId);
+		classObj.setAssessmentId(assessmentId);
 		
 		
 		this.analyticService.getAssessmentSummary(classObj, new AsyncCallback<AssessmentSummaryStatusDo>() {
@@ -421,5 +433,10 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			}
 		});
 	}
+	public void setSessionId(String sessionId){
+		System.out.println("set sessionId--"+sessionId);
+		this.sessionId=sessionId;
+	}
+	
 
 }

@@ -79,7 +79,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3322(),i18n.GL3379(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	final String ACTIVE="active";
 	final String COLLECTION="collection";
@@ -124,10 +124,11 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						liPanel.getElement().setId("CA");
 					}else{
 						liPanel.getElement().setId(standardsDescriptionList.get(j).toString());
-					}
+					}					
 					headerDiv.setStyleName("liPanelStyle");
 				}else{
 					headerDiv.setStyleName("liPanelStylenonBold");
+					liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j).toString());
 				}
 				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j).toString());
 				liPanel.add(headerDiv);
@@ -136,7 +137,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				@Override
 				public void onClick(ClickEvent event) {
 					String standardsVal = event.getRelativeElement().getAttribute("id");
-					getUiHandlers().showStandardsPopup(standardsVal);
+					String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+					getUiHandlers().showStandardsPopup(standardsVal,standardsDesc);
 				}
 			});
 			standardsDropListValues.add(liPanel);
