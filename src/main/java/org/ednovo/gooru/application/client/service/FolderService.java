@@ -204,4 +204,8 @@ public interface FolderService extends BaseService {
 	Integer deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId)throws GwtException,ServerDownException;
 	
 	public Integer getClassesAssociatedWithCourse(String o1CourseId) throws GwtException,ServerDownException;
+	
+	public Integer deleteCollectionAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String assessmentCollectionId) throws GwtException,ServerDownException;
+	
+	
 }
