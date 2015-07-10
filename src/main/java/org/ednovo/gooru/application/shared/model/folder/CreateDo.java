@@ -3,6 +3,8 @@ package org.ednovo.gooru.application.shared.model.folder;
 import java.io.Serializable;
 import java.util.List;
 
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -24,6 +26,8 @@ public class CreateDo implements Serializable{
 	private String goals;
 	private String sharing;
 	private String isLoginRequired;
+	private String mediaFilename;
+	private ThumbnailDo thumbnails;
 	
 	public String getTitle() {
 		return title;
@@ -103,4 +107,18 @@ public class CreateDo implements Serializable{
 	public void setIsLoginRequired(String isLoginRequired) {
 		this.isLoginRequired = isLoginRequired;
 	}
+	public String getMediaFilename() {
+		return mediaFilename;
+	}
+	public void setMediaFilename(String mediaFilename) {
+		this.mediaFilename = mediaFilename;
+	}
+	public ThumbnailDo getThumbnails() {
+		return thumbnails;
+	}
+	public void setThumbnails(ThumbnailDo thumbnails) {
+		this.thumbnails = thumbnails;
+	}
+	
+	
 }
