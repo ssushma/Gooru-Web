@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
@@ -108,6 +109,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	PrintUserDataDO printData=new PrintUserDataDO();
 
 	String classpageId=null;
+	
+	String sessionId=null;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -465,7 +468,13 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+		
+		ClassDo classObj=new ClassDo();
+		classObj.setAssessmentId(collectionId);
+		classObj.setClassId(classId);
+		classObj.setSessionId(sessionId);
+		
+		this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -595,6 +604,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 				getView().displayWhatsNextContent(result,collectionDo.getUrl());
 			}
 		});
+	}
+	
+	public void setSessionId(String sessionId){
+		this.sessionId=sessionId;
 	}
 	
 }
