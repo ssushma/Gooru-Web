@@ -293,10 +293,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		this.currentTypeView =currentTypeView;
 		showPreviewBtn();
 	}
-	
+	/**
+	 * Hiding preview button when type is course/unit/lesson/folder
+	 */
 	private void showPreviewBtn() {
 		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(true);
+		}else{
+			lnkPreview.setVisible(false);
 		}
 	}
 	@Override
