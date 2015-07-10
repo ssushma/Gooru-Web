@@ -7,7 +7,7 @@
 				<div class="tableMainHeader">
 					<g:Label styleName="resourceNumber" ui:field="lblItemSequence"/>
 					<div class="resourceNameBlock">
-						<span class="interactiveIcon"></span>
+						<g:InlineLabel ui:field="spnResourceType"/>
 						<g:Label styleName="resourceTitle" ui:field="lblResourceTitle"/>
 					</div>
 				</div>

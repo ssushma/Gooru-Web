@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;

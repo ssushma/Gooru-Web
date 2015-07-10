@@ -84,7 +84,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	final String ACTIVE="active";
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
-	final String ASSESSMENTEXTERNAL="ExternalAssessment";
+	private static final String ASSESSMENT_URL = "assessment/url";
 
 	/**
 	 * Class constructor
@@ -166,7 +166,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				assessmentPopup.hide();
 				Window.enableScrolling(true);
 				//This will display the external assessment info
-				getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENTEXTERNAL);
+				getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL);
 			}
 		};
 		assessmentPopup.setGlassEnabled(true);

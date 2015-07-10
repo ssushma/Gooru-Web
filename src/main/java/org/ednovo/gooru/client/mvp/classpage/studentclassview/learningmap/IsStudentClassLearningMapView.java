@@ -32,4 +32,5 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  */
 public interface IsStudentClassLearningMapView extends IsViewWithHandlers<StudentClassLearningMapUiHandlers> {
 	public void setContent();
+	public void setPreviewClassMode(boolean isPreview);
 }

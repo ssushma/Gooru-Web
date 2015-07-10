@@ -48,7 +48,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
-	final String ASSESSMENTURL="Assessment/url";
+	final String ASSESSMENTURL="assessment/url";
 	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
