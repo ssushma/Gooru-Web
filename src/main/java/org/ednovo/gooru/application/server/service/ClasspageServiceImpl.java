@@ -1535,7 +1535,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 	
 	
 	@Override
-	public void v3StudentJoinIntoClass(String classCode, String emailId )	throws GwtException {
+	public void v3StudentJoinIntoClass(String classCode)	throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_MEMBER_LIST_BY_CODE, classCode);
 		getLogger().info("v3 Student Join Class:"+url);
