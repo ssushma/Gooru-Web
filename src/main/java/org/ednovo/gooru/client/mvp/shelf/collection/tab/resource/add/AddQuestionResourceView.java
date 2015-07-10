@@ -3600,6 +3600,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				 for (checkboxSelectedDo checkboxSelectedDo : depthOfKnowledges) {
 					 if(pnlWidget.getListValuesDo().getId()==checkboxSelectedDo.getId()){
 						 pnlWidget.checkbox.setValue(true);
+						 depthOfKnowledgesList.add(pnlWidget.getListValuesDo().getId());
 					 }else{
 						 pnlWidget.checkbox.setValue(false);
 					 }
