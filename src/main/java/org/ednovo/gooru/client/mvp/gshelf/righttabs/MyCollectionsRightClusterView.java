@@ -81,6 +81,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String LESSON = "Lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
+	private static final String ASSESSMENT_URL = "assessment/url";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -142,7 +143,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(folderObj!=null){
 			this.folderObj=folderObj;
 		}
-
 		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
@@ -158,6 +158,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}
 			if(selectedWidgetsTitleType.containsKey(ASSESSMENT)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(ASSESSMENT), ASSESSMENT);
+			}
+			if(selectedWidgetsTitleType.containsKey(ASSESSMENT_URL)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(ASSESSMENT_URL), ASSESSMENT_URL);
 			}
 		}else{
 			String title=folderObj!=null?folderObj.getTitle():"";
@@ -188,10 +191,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{
 				getBreadCrumbs(title,type,3); 
 			}
-		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) ){
+		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
 			if(pnlBreadCrumbMain.getWidgetCount()<4){
 				pnlBreadCrumbMain.add(new BreadcrumbItem((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
-					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():title, type,"collection"));
+					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
+					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type,ASSESSMENT.equalsIgnoreCase(type)?"assessment":"collection"));
 			}else{
 				getBreadCrumbs(title,type,4); 
 			}

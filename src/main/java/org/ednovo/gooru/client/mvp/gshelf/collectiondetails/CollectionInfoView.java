@@ -78,7 +78,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	private String type="";
 
-	private static final String ASSESSMENT = "Assessment";
+	private static final String ASSESSMENT = "assessment";
 
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 
@@ -90,6 +90,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 
 	final String COLLECTION = "collection";
+	private static final String ASSESSMENT_URL = "assessment/url";
 
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
@@ -151,12 +152,13 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				setDetaultImage(courseObj.getType());
 			}
 		}
-		collectionTitle.setText((courseObj==null&&"Collection".equalsIgnoreCase(type))?i18n.GL3367():(courseObj==null&&"Assessment".equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
+								(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
 
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
-				collThumbnail.setUrl(("Collection".equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
+				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
 	}
