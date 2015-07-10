@@ -145,8 +145,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		Window.addWindowScrollHandler(new com.google.gwt.user.client.Window.ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
+				//This will check the placetoken,o1 and id values for pagination purpose
 				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(placeToken.equals(PlaceTokens.MYCONTENT)){
+				String o1=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
+				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null){
 					if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 						getView().executeScroll(false);
 					}
