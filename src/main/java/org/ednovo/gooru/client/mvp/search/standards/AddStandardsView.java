@@ -392,7 +392,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -547,7 +546,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -645,7 +643,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -712,7 +709,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}

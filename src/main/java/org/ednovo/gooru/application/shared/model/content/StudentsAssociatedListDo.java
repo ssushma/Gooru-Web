@@ -39,6 +39,7 @@ public class StudentsAssociatedListDo implements Serializable {
 	private static final long serialVersionUID = -3223243025838735212L;
 	private List<CollaboratorsDo> searchResults;
 	private Integer totalHitCount;
+	private List<CollaboratorsDo> searchResult;
 
 	
 	public StudentsAssociatedListDo(){}
@@ -67,6 +68,26 @@ public class StudentsAssociatedListDo implements Serializable {
 
 	public void setTotalHitCount(Integer totalHitCount) {
 		this.totalHitCount = totalHitCount;
+	}
+
+
+
+
+	/** 
+	 * This method is to get the searchResult
+	 */
+	public List<CollaboratorsDo> getSearchResult() {
+		return searchResult;
+	}
+
+
+
+
+	/** 
+	 * This method is to set the searchResult
+	 */
+	public void setSearchResult(List<CollaboratorsDo> searchResult) {
+		this.searchResult = searchResult;
 	}
 	
 	

@@ -54,4 +54,8 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	public void checkProfanity(String trim, boolean b, int i);
 
 	void setCollectionType(String templateType);
+
+	public void uploadCollectionImage(CreateDo createOrUpDate);
+
+	public void showStandardsPopup(String standardsVal);
 }

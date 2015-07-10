@@ -14,7 +14,7 @@
 				<g:Anchor ui:field="lnkDelete" text="{i18n.GL0558}"></g:Anchor>
 			</div>
 			<div class="deleteButton">
-				<a href="">Preview</a>
+				<g:Anchor ui:field="lnkPreview" text="{i18n.GL1714}">Preview</g:Anchor>
 			</div>
 		</div>
 		<g:HTMLPanel ui:field="pnlSlotInnerContent"/>

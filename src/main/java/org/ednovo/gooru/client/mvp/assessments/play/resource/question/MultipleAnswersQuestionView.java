@@ -31,10 +31,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
@@ -92,7 +95,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 		this.attemptedAnswerDo=attemptedAnswerDo;
 		renderQuestionAnswerOptions();
 		answerText.getElement().setInnerHTML(i18n.GL0665());
-		checkAnswer.setText(i18n.GL0666());
+		checkAnswer.setText(i18n.GL3460());
 	}
 
 	private void setQuestionTypeCaption(){
@@ -224,6 +227,8 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("primary");
 			checkAnswer.addStyleName("hintsInActiveButton");
+			AppClientFactory.fireEvent(new AssessmentsNextResourceEvent());
+
 		}
 	}
 

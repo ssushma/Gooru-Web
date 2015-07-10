@@ -22,34 +22,61 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.application.client.service;
+package org.ednovo.gooru.application.shared.model.classpages;
 
-import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
+import java.io.Serializable;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
+ * @fileName : AssessmentSummaryStatusDo.java
  * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface MediaUploadServiceAsync extends BaseServiceAsync {
+@JsonInclude(Include.NON_NULL)
+public class ClassDo implements Serializable{
 
-	void imageWebUpload(String imageURL, AsyncCallback<MediaUploadDo> callback);
-
-	void saveImage(String gooruOid, String resourceId, String fileName, AsyncCallback<CollectionItemDo> callback);
+	/**
+	 * 
+	 */
 	
-	void saveImageCollection(String courseId, String unitId, String lessonId, String collectionId, CreateDo createDo, String fileName, AsyncCallback<String> callback);
-	
-	void cropImage(String fileName, String height, String width, String xPostion, String yPostion,String imageUrl, AsyncCallback<String> callback);
-	
-	void imageFileUpload(String response, AsyncCallback<MediaUploadDo> callback);
-	
-	void saveQuestionImage(String collectionItemId, String fileName, AsyncCallback<CollectionItemDo> callback);
-//	Below service method not used.
-//	void saveResourceImage(String gooruOid, String fileName, AsyncCallback<String> callback);
-	
-	void uploadProfileImage(String fileNameWithOutRepository,String fileName,AsyncCallback<String> callback);
+	private static final long serialVersionUID = 1L;
+	private String classId;
+	private String course;
+	private String unit;
+	private String lesson;
+	private String assessment;
+	public String getClassId() {
+		return classId;
+	}
+	public String getCourse() {
+		return course;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public String getLesson() {
+		return lesson;
+	}
+	public String getAssessment() {
+		return assessment;
+	}
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public void setLesson(String lesson) {
+		this.lesson = lesson;
+	}
+	public void setAssessment(String assessment) {
+		this.assessment = assessment;
+	}
 	
 }

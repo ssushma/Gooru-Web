@@ -134,7 +134,7 @@ public enum UrlToken {
 
 	UPDATE_USER_VIEW("/user/{0}/view/flag?"),
 
-	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?"),
+	ADD_NEW_RESOURCE("/v3/collection/{0}/resource?"),
 
 	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?"),
 
@@ -170,7 +170,7 @@ public enum UrlToken {
 
 	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?"),
 
-	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?"),
+	UPDATE_RESOURCE_INFO("/v3/collection/{0}/resource/{1}?"),
 
 	UPDATE_USER("/user/{0}?format=json&username={1}&userrole={2}"),
 
@@ -200,8 +200,6 @@ public enum UrlToken {
 
 	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?"),
 	
-	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
-
 	V2_UPDATE_ASSIGNMENT("/v2/assignment/{0}"),
 
 	V2_DELETE_ASSIGNMENT("/v2/assignment/{0}?"),
@@ -222,7 +220,7 @@ public enum UrlToken {
 
 	CHECK_SHORTEN_URL("/resource/search.json?url={0}&feature=player_embedded&checkShortenedUrl=true&"),
 
-	V2_ADD_QUESTION_ITEM("/v2/collection/{0}/question?"),
+	V2_ADD_QUESTION_ITEM("/v3/collection/{0}/question?"),
 
 	V2_FEATURED_THEME_COLLECTIONS("/v2/theme/{0}?"),
 
@@ -601,10 +599,22 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
+
+	V3_GET_MEMBER_LIST_BY_CODE("/v3/class/{0}/member?"),
+	
+	V2_GET_PENDINGMEMBER_LIST_BY_CODE("/v2/invite/class/{0}?"),
+	
+	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
+	
+	V3_DLETE_ACTIVE_USERS_CLASS("/v3/class/{0}/member/{1}?"),
 	
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
 	
-	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?");
+	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
+	
+	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
+	
+    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?");
 
 
 	private String url;
