@@ -29,11 +29,11 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -93,5 +93,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId,AsyncCallback<Integer> callback);
 
 	void getClassesAssociatedWithCourse(String o1CourseId,AsyncCallback<Integer> callback); 
+	
+	void getDepthOfKnowledgesList(AsyncCallback<List<ListValuesDo>> callback);
 	
 }

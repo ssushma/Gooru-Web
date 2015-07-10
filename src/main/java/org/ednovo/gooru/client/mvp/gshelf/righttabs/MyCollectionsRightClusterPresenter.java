@@ -71,6 +71,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
+	private static final String ASSESSMENT_URL = "assessment/url";
 	
 	
 	private static final String O1_LEVEL = "o1";
