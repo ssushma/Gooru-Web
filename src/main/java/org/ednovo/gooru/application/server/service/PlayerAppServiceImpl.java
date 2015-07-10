@@ -462,7 +462,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			sessionItemAttemptTry.put("contentGooruId", contentGooruOid);
 			//sessionItemAttemptTry.put("answerId",answerId);
 			sessionItemAttemptTry.put("answerStatus",attemptStatus);
-			sessionItemAttemptTry.put("sessionActivityId",Long.parseLong(sessionTrackerId));
+			sessionItemAttemptTry.put("sessionActivityId",sessionTrackerId);
 			sessionItemAttemptTry.put("answerText",attemptAnswerResult);
 			//sessionItemAttemptTry.put("answerOptionSequence","");
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);

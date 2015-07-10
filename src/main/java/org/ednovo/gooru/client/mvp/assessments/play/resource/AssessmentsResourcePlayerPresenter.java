@@ -610,16 +610,13 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		this.playerAppService.createSessionTracker(collectionGooruOid,parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionId) {
-				AssessmentsResourcePlayerPresenter.this.sessionId=sessionId;
-				startResourceInsightDataLog();
-				if(collectionItemDo!=null){
-					createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),"open");
-				}
-			}
-		});
+		
+		sessionId = GwtUUIDGenerator.uuid();
+		AssessmentsResourcePlayerPresenter.this.sessionId=sessionId;
+		startResourceInsightDataLog();
+		if(collectionItemDo!=null){
+			createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),"open");
+		}
 	}
 
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){

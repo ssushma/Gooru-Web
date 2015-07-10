@@ -170,8 +170,8 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	
 	@Override
 	public void setCollectionMetadata(final CollectionDo collectionDo){
-		setCollectionImage(collectionDo.getThumbnails().getUrl());
-		setCollectionEndImage(collectionDo.getThumbnails().getUrl());
+		setCollectionImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():"");
+		setCollectionEndImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():"");
 		setCollectionGoal(collectionDo.getGoals());
 		collectionTitle = collectionDo.getTitle();
 		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
