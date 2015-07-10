@@ -3545,7 +3545,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void resetDepthOfKnowledges(){
 
 	}
-	
+	/**
+	 * This inner class is used for generate check boxes
+	 */
 	class DepthOfKnowledgePanel extends Composite{
 		HTMLPanel panel;
 		CheckBox checkbox;
@@ -3585,6 +3587,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			pnlDepthOfKnowledges.add(new DepthOfKnowledgePanel(listValuesDo));
 		}
 	}
+	/**
+	 * This will set the depth of knowledges when editing question
+	 * @param depthOfKnowledges
+	 */
 	public void setCheckedData(List<checkboxSelectedDo> depthOfKnowledges){
 		Iterator<Widget> widgets=pnlDepthOfKnowledges.iterator();
 		while(widgets.hasNext()){
@@ -3594,6 +3600,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				 for (checkboxSelectedDo checkboxSelectedDo : depthOfKnowledges) {
 					 if(pnlWidget.getListValuesDo().getId()==checkboxSelectedDo.getId()){
 						 pnlWidget.checkbox.setValue(true);
+						 depthOfKnowledgesList.add(pnlWidget.getListValuesDo().getId());
 					 }else{
 						 pnlWidget.checkbox.setValue(false);
 					 }

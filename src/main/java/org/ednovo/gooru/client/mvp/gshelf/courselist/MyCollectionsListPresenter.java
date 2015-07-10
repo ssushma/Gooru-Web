@@ -33,7 +33,6 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsListView> implements MyCollectionsListUiHandlers{
@@ -88,11 +87,6 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 				getView().resetWidgetPositions();
 			}
 		});
-	}
-
-	@Override
-	public ScrollPanel getScrollPanel() {
-		return getView().getScrollPanel();
 	}
 
 	public void setShelfMainPresenter(ShelfMainPresenter shelfMainPresenter) {

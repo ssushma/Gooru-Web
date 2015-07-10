@@ -1,0 +1,37 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:ppanel="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n"
+		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:HTMLPanel styleName="shareMainContainer">
+		<div class="selectClassBlock">
+			<p>Select classes that will use this course</p>
+			<g:FlowPanel styleName="custom-select">
+			    <g:ListBox ui:field="classListBox"></g:ListBox>
+				<!-- <select>
+					<option>The Number System</option>
+					<option>Blue cheese with crackers</option>
+					<option>Steak</option>
+					<option>Other</option>
+				</select> -->
+			</g:FlowPanel>
+
+		</div>
+		<div class="courseDetailsContainer no-gutter">
+
+			<p>This course is found in</p>
+
+			<div class="col-md-6 col-sm-6 col-xs-5">
+
+				<a href="">AdNum Block 1</a>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-7">
+				<div class="text-right">
+					<a href="">Edit class content visibility</a>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</g:HTMLPanel>
+</ui:UiBinder>

@@ -85,6 +85,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
+	
+	LiPanel tempLiPanel=null;
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -196,6 +198,12 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			if(tempLiPanel!=null){
+				tempLiPanel.removeStyleName(ACTIVE);
+				tempLiPanel=liPanel;
+			}else{
+				tempLiPanel=liPanel;
+			}
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(selectedText).size()>0){
 					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
@@ -208,7 +216,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			}
 		}
 	}
-	
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(courseTitle.getText().trim(),false);

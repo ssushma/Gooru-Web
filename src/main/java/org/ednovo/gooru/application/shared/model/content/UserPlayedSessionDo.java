@@ -22,30 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
+package org.ednovo.gooru.application.shared.model.content;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
+public class UserPlayedSessionDo implements Serializable{
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 8466467783549379325L;
 
 
-/**
- * @fileName : IsEditClassContentView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jul-2015
- *
- * @Author tumbalam
- *
- * @Reviewer: 
- */
-public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
+	private String sessionId=null;
+	private Integer sequence=0;
+	private Long eventTime=0L;
 
-	void setNavigationTab();
-
-	void setClassData(ClasspageDo classpageDo);
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	public Integer getSequence() {
+		return sequence;
+	}
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
+	}
+	public Long getEventTime() {
+		return eventTime;
+	}
+	public void setEventTime(Long eventTime) {
+		this.eventTime = eventTime;
+	}
 
 }
