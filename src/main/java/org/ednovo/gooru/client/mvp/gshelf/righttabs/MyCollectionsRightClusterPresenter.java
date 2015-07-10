@@ -202,7 +202,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			    setTabItems(1, UNIT, null);
 				setUnitTemplate(UNIT);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
-			}else{
+			}else if(type.contains(LESSON)){
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON);
 			}

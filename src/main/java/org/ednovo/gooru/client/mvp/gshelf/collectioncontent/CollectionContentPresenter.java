@@ -119,7 +119,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionId,true, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
-					System.out.println("result.getCollectionItems().size():::"+result.getCollectionItems().size());
 					getView().setData(result,folderDo, RefreshType.INSERT);
 				}
 			});
