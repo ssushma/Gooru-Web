@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget.EditClassLessonView;
@@ -87,6 +88,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	@UiField HTMLPanel tableConatiner;
 	
 	EditClassLessonView editClassLessonView;
+	
+	ClasspageDo classpageDo;
 	
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -183,6 +186,16 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		/*minmumScoreAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
 		contentSettingsAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));*/
 		
+		
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setClassData(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public void setClassData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
 		
 		
 	}

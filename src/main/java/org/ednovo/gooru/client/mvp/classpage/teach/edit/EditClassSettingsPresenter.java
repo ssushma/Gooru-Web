@@ -24,7 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -52,6 +57,10 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	private ImageUploadPresenter imageUploadPresenter;
 	
 	String classpageId="";
+	
+	ClasspageDo classpageDo;
+	
+	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 
 	@Inject
 	public EditClassSettingsPresenter(EventBus eventBus,IsEditClassSettingsView view,ImageUploadPresenter imageUploadPresenter) {
@@ -64,6 +73,12 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	@Override
 	public void onBind() {
 		super.onBind();
+		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String, String>>() {
+			@Override
+			public void onSuccess(Map<String, String> shortenUrl) {
+				getView().setShortenUrl(shortenUrl);
+			}
+		});
 		
 	}
 
@@ -85,6 +100,40 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setClasspageId(classpageId);
 		addToPopupSlot(imageUploadPresenter);
+	}
+
+	
+	public void setClassData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
+		getView().setData(classpageDo);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsViewUiHandler#generateShareLink(java.lang.String)
+	 */
+	@Override
+	public void generateShareLink(String classUid) {
+		try{
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
+			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareUrlGenerationAsyncCallback());
+		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
+		}
+	}
+
+	/** 
+	 * This method is to get the shareUrlGenerationAsyncCallback
+	 */
+	public SimpleAsyncCallback<Map<String, String>> getShareUrlGenerationAsyncCallback() {
+		return shareUrlGenerationAsyncCallback;
+	}
+
+	/** 
+	 * This method is to set the shareUrlGenerationAsyncCallback
+	 */
+	public void setShareUrlGenerationAsyncCallback(SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback) {
+		this.shareUrlGenerationAsyncCallback = shareUrlGenerationAsyncCallback;
 	}
 	
 }

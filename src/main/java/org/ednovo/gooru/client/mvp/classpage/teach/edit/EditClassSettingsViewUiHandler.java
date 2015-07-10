@@ -43,25 +43,10 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  */
 public interface EditClassSettingsViewUiHandler extends BaseUiHandlers{
 
-	/**
-	 * @function showImageUploadWidget 
-	 * 
-	 * @created_date : 02-Jul-2015
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
 	
 	void showImageUploadWidget();
+
+	
+	void generateShareLink(String classUid);
 
 }
