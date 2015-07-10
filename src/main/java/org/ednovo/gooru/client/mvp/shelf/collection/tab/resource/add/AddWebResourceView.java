@@ -1554,7 +1554,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 										String descriptionStr = descriptionTxtAera.getText().trim(); // tinyMce.getText().trim();
 										final String titleStr = titleTextBox.getText().trim();
 										final String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
-										final String idStr = "";
+										final String idStr = collectionDo.getGooruOid();
 
 
 										if (urlStr.contains("goorulearning.org")) {
@@ -1691,8 +1691,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											if(isGoogleDriveFile){
 												hostName=GOOGLE_DRIVE;
 											}
-
-											if(collectionDo.getSharing().equalsIgnoreCase("public")){
+											if(collectionDo.getSharing()!=null && collectionDo.getSharing().equalsIgnoreCase("public")){
 												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 											}
 											else{

@@ -121,8 +121,6 @@ public class ClasspageWidgetView extends Composite {
 	 */
 	public void setClassPageImage(final CollectionDo collectionDoObj,String pageMode) {
 
-		System.out.println("collectionDoObj.getName():"+collectionDoObj.getName());
-		
 		classTitle.getElement().setInnerHTML(collectionDoObj.getName());
 		classTitle.getElement().setAttribute("alt",collectionDoObj.getName());
 		classTitle.getElement().setAttribute("title",collectionDoObj.getName());
@@ -175,13 +173,15 @@ public class ClasspageWidgetView extends Composite {
 		}
 		else
 		{
-		if(collectionDoObj.getItemCount() == 1)
-		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
-		}
-		else
-		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
+		if(collectionDoObj.getItemCount() != null){
+			if(collectionDoObj.getItemCount() == 1)
+			{
+				assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+			}
+			else
+			{
+				assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
+			}
 		}
 		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUserName()+"'s"+" "+"class");
 		imgUserProfile.setVisible(true);

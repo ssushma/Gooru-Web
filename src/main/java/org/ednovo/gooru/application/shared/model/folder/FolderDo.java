@@ -60,6 +60,7 @@ public class FolderDo implements Serializable{
 	private String description;
 	private String url;
 	private String uri;
+	private String publishStatus;
 	private String goals;
 	private int itemSequence;
 	private CollectionSettingsDo settings;
@@ -291,12 +292,27 @@ public class FolderDo implements Serializable{
 		this.uri = uri;
 	}
 
+
 	public List<checkboxSelectedDo> getDepthOfKnowledges() {
 		return depthOfKnowledges;
 	}
 
 	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
 		this.depthOfKnowledges = depthOfKnowledges;
+	}
+
+	/**
+	 * @return the publishStatus
+	 */
+	public String getPublishStatus() {
+		return publishStatus;
+	}
+
+	/**
+	 * @param publishStatus the publishStatus to set
+	 */
+	public void setPublishStatus(String publishStatus) {
+		this.publishStatus = publishStatus;
 	}
 	
 	

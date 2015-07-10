@@ -168,8 +168,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 
-	public void setData(FolderDo folderObj) {
-		getView().setCouseData(folderObj);
+	public void setData(FolderDo folderObj, String type) {
+		getView().setCouseData(folderObj,type);
 	}
 	
 	@Override

@@ -34,6 +34,5 @@ import org.ednovo.gooru.application.client.child.IsChildView;
  * 
  */
 public interface IsTeachLessonReportView extends IsChildView<TeachLessonReportChildPresenter> {
-	public void setAssessmentTableData();
-	public void setCollectionTableData();
+	public void setDataTable(String contentView);
 }

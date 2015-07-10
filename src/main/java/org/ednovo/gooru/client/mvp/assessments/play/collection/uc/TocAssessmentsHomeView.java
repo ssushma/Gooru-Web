@@ -128,7 +128,6 @@ public class TocAssessmentsHomeView extends Composite implements HasClickHandler
 	}
 
 	public void hideResourceThumbnailContainer(boolean hide){
-		System.out.println("hideResourceThumbnailContainer hide : "+hide);
 		if(hide){
 			resourceThumbnailContainer.setVisible(false);
 		}else{

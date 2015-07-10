@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -52,15 +52,15 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
-	
+
 	StandardsPopupPresenter standardsPopupPresenter;
-	
+
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
-	
+
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
-	
+
 	final String LESSON="Lesson";
 
 	/**
@@ -92,7 +92,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
 	}
-	
+
 	@Override
 	public void showStandardsPopup(String standardVal) {
 		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal);
@@ -106,14 +106,13 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			public void onSuccess(List<LibraryCodeDo> result) {
 				//getView().setCourseList(result);
 			}
-		});		
+		});
 	}
 
 	@Override
 	public void createAndSaveLessonDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		System.out.println("create call");
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
@@ -126,7 +125,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
 				if(isCreateCollOrAssessment && creationType!=null){
-					myCollectionsRightClusterPresenter.setTabItems(1, creationType, result);
+					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
@@ -136,10 +135,9 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		});
 	}
 	@Override
-	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final String type) {
+	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateColl,final String type) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-		System.out.println("update call");
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
@@ -148,8 +146,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				folderDo.setType(LESSON);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
-				if(isCreateUnit && type!=null){
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateColl);
+				if(isCreateColl && type!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, type, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(type);
 				}
@@ -173,6 +171,6 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			public void onSuccess(Boolean value) {
 				getView().callCreateAndUpdate(isCreate,value,type);
 			}
-		});		
+		});
 	}
 }

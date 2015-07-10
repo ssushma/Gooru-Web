@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
+import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -62,7 +63,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
-	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete;
+	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete; 
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -78,8 +79,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
-	
-	
+	private static final String COLLECTION = "Collection";
+	private static final String ASSESSMENT = "Assessment";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -141,7 +142,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(folderObj!=null){
 			this.folderObj=folderObj;
 		}
-		
+
 		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
@@ -151,6 +152,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}
 			if(selectedWidgetsTitleType.containsKey(LESSON)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(LESSON), LESSON);
+			}
+			if(selectedWidgetsTitleType.containsKey(COLLECTION)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(COLLECTION), COLLECTION);
+			}
+			if(selectedWidgetsTitleType.containsKey(ASSESSMENT)){
+				setBreadCrumbs(selectedWidgetsTitleType.get(ASSESSMENT), ASSESSMENT);
 			}
 		}else{
 			String title=folderObj!=null?folderObj.getTitle():"";
@@ -165,24 +172,29 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param type
 	 */
 	public void setBreadCrumbs(String title, String type) {
-		
+
 		if(COURSE.equalsIgnoreCase(type)){
 			pnlBreadCrumbMain.clear();
-			pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3347():title, type));
+			pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3347():title, type,"courseFolderCloseIcon"));
 		}else if(UNIT.equalsIgnoreCase(type)){
 			if(pnlBreadCrumbMain.getWidgetCount()<2){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3364():title, type));
+				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3364():title, type,"unitFolderCloseIcon"));
 			}else{
 				getBreadCrumbs(title,type,2);
 			}
 		}else if(LESSON.equalsIgnoreCase(type)){
 			if(pnlBreadCrumbMain.getWidgetCount()<3){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3365():title, type));
+				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3365():title, type,"lessonFolderCloseIcon"));
 			}else{
 				getBreadCrumbs(title,type,3); 
 			}
-		}else{
-			
+		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) ){
+			if(pnlBreadCrumbMain.getWidgetCount()<4){
+				pnlBreadCrumbMain.add(new BreadcrumbItem((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
+					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():title, type,"collection"));
+			}else{
+				getBreadCrumbs(title,type,4); 
+			}
 		}
 	}
 	
@@ -216,29 +228,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			widgetCount=pnlBreadCrumbMain.getWidgetCount();
 		}
 	}
-	/**
-	 * This method is used to set breadcums
-	 * @param title
-	 */
-	public void setBreadCums(String title){
-		setRequestParams();
-		if(o1==null || !oldO1Value.equals(o1)){
-			breadCumsSting.clear();
-			pnlBreadCrumbMain.clear();
-		}
-		if(!breadCumsSting.contains(title)){
-			breadCumsSting.add(title);
-			pnlBreadCrumbMain.add(new BreadcrumbItem(title, folderObj.getCollectionType()));
-		}else{
-			int index= breadCumsSting.indexOf(title);
-			if(index!=-1){
-				for(int i=pnlBreadCrumbMain.getWidgetCount();i>(index+1);i--){
-					pnlBreadCrumbMain.getWidget(i-1).removeFromParent();
-					breadCumsSting.remove(i-1);
-				}
-			}
-		}
-	}
+
 	
 	@Override
 	public void setDefaultActiveTab(int tabIndex){
@@ -258,18 +248,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	class BreadcrumbItem extends Composite {
 		 Label lblTitle;
 		 private String type;
-		 public BreadcrumbItem(String title,String type) {
+		 public BreadcrumbItem(String title,String type,String imageStyle) {
 			 this.type = type;
 			 HTMLPanel panel=new HTMLPanel("");
 			 panel.setStyleName("active");
 			 InlineLabel spnIcon=new InlineLabel();
-			 if(COURSE.equalsIgnoreCase(type)){
-				 spnIcon.setStyleName("courseFolderCloseIcon");
-			 }else if(UNIT.equalsIgnoreCase(type)){
-				 spnIcon.setStyleName("unitFolderCloseIcon");
-			 }else{
-				 spnIcon.setStyleName("lessonFolderCloseIcon");
-			 }
+			 spnIcon.setStyleName(imageStyle);
 			 lblTitle=new Label(title);
 			 lblTitle.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 			 panel.add(spnIcon);
@@ -322,7 +306,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId); 
+			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
 		}
 	}
 	
@@ -342,6 +326,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				if(!StringUtil.isEmpty(o2UnitId) && UNIT.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteUnitContent(o1CourseId,o2UnitId);
 				}else if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
+					
 					getUiHandlers().deleteCourseContent(o1CourseId);
 				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);
@@ -384,6 +369,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		
 	}
 	
+
+	/**
+	 * On deleting the Unit, reveals the my content and loads the respective right cluster.
+	 */
+	
 	@Override
 	public void onDeleteUnitSuccess(String o1CourseId, String o2DeletedUnitId) {
 		hideDeletePopup();
@@ -416,5 +406,17 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		params.put(O2_LEVEL, o2UnitId);
 		getUiHandlers().setLessonsListOnRightCluster(o1CourseId,o2UnitId,o3LessDeletedonId,currentTypeView);
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+	}
+	
+	/**
+	 * Invokes the delete functionality if the course is not associated with class.
+	 */
+	@Override
+	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId,Integer classpageList) {
+		if(classpageList>0){
+			new AlertContentUc("Oops", "This course is associated with the class.");
+		}else{
+			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId);
+		}
 	}
 }

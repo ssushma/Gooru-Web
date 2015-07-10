@@ -70,7 +70,7 @@ import com.google.inject.Inject;
 public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHandlers> implements IsCollectionInfoView {
 
 	private static CollectionInfoViewUiBinder uiBinder = GWT.create(CollectionInfoViewUiBinder.class);
-	
+
 	@UiTemplate("CollectionInfoView.ui.xml")
 	interface CollectionInfoViewUiBinder extends UiBinder<Widget, CollectionInfoView> {
 	}	
@@ -91,17 +91,22 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	Map<String, ArrayList<String>> selectedValues=new HeashMap<String,ArrayList<String>>();
 	
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 	
+	private String type="";
+
+	private static final String ASSESSMENT = "Assessment";
+
 	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
-	
+
 	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
 
 	
-	final String COLLECTION = "collection";
-	
+
+	final String COLLECTION = "Collection";
+
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObjG;
 	final String ACTIVE="active";
@@ -161,9 +166,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		}
 	}
-	
+
 	@Override
 	public void setCollectionType(String collectionType) {
+<<<<<<< HEAD
 
 			if(collectionType.equalsIgnoreCase("collection"))
 			{
@@ -203,10 +209,18 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			});
 			standardsDropListValues.add(liPanel);
 		}
+=======
+		setDetaultImage(collectionType);
+	}
+
+	public void setDetaultImage(String collectionType){
+		collThumbnail.setUrl(COLLECTION.equalsIgnoreCase(collectionType)?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
+>>>>>>> fade37c98dffc1534d28daa0c1f3a0ba2ab49b09
 	}
 	
 
 	@Override
+<<<<<<< HEAD
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObjG=courseObj;
 		if(courseObj!=null){
@@ -241,12 +255,25 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			else
 			{
 			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
+=======
+	public void setCouseData(final FolderDo courseObj, String type) {
+		this.type = type;
+		if(courseObj!=null){
+			this.courseObj=courseObj;
+			if(courseObj.getThumbnails()!=null){
+				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+			}else{
+				setDetaultImage(courseObj.getType());
+>>>>>>> fade37c98dffc1534d28daa0c1f3a0ba2ab49b09
 			}
 		}
+		collectionTitle.setText((courseObj==null&&"Collection".equalsIgnoreCase(type))?i18n.GL3367():(courseObj==null&&"Assessment".equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			
 			@Override
 			public void onError(ErrorEvent event) {
+<<<<<<< HEAD
 				if(courseObjG.getCollectionType()!=null && courseObjG.getCollectionType().equalsIgnoreCase("collection"))
 				{
 				collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
@@ -256,6 +283,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
 				}
 				
+=======
+				collThumbnail.setUrl(("Collection".equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
+>>>>>>> fade37c98dffc1534d28daa0c1f3a0ba2ab49b09
 			}
 		});
 	}
@@ -263,6 +293,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0);
 	}
+<<<<<<< HEAD
 	
 	@UiHandler("uploadImageLbl")
 	public void clickOnUploadImg(ClickEvent saveCourseEvent){
@@ -273,6 +304,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		getUiHandlers().uploadCollectionImage(createOrUpDate);
 	}	
 	
+=======
+
+>>>>>>> fade37c98dffc1534d28daa0c1f3a0ba2ab49b09
 	/**
 	 * This method is used to call create and update API
 	 * @param index

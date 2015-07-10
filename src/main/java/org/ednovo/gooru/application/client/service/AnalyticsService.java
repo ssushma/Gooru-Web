@@ -27,6 +27,7 @@ package org.ednovo.gooru.application.client.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
@@ -34,6 +35,7 @@ import org.ednovo.gooru.application.shared.model.analytics.FeedBackResponseDataD
 import org.ednovo.gooru.application.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -74,4 +76,6 @@ public interface AnalyticsService extends BaseService {
 
 	HashMap<String, String> getResourceAndCollectionCounts(String Id,
 			String searchType);
+
+	public AssessmentSummaryStatusDo getAssessmentSummary(ClassDo classObj);
 }

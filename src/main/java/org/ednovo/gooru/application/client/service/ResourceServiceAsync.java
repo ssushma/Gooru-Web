@@ -80,6 +80,8 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void updateCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType, String action, AsyncCallback<CollectionDo> callback);
 	
+	void updateCollection(String collectionType, String collectionId, String title, String sharing, List<String> depthOfKnowledgeIds, List<String> skillsIds, List<String> audienceIds, String mediaFilename, String buildTypeId, AsyncCallback<Void> callback);
+	
 	void updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop, AsyncCallback<CollectionItemDo> callback);
 	
 	void getYoutubeDuration(String videoId,AsyncCallback<String> callback);

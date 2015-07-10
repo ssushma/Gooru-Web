@@ -30,8 +30,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -137,7 +136,6 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 			HTML unitName = new HTML("L"+headerColumnCount+"&nbsp;Lesson&nbsp;Name&nbsp;"+headerColumnCount);
 			unitName.setStyleName("");
 			unitName.setWidth("100px");
-			unitName.addClickHandler(new ClickUnitName("unitId"));
 			assessmentTableWidget.setWidget(0, headerColumnCount,unitName);
 			assessmentTableWidget.getWidget(0, headerColumnCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 			assessmentTableWidget.getWidget(0, headerColumnCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
@@ -171,6 +169,8 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						assessmentTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
 					} else {
 						Label scoreLbl = new Label("A"+columnWidgetCount);
+						scoreLbl.addStyleName("myclasses-mastery-collection-cell-style");
+						scoreLbl.addClickHandler(new CollectionAssessmentView("contentId",UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT));
 						assessmentTableWidget.setWidget(rowWidgetCount, columnWidgetCount,scoreLbl);
 						assessmentTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 						assessmentTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
@@ -181,7 +181,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 					if(columnWidgetCount==0) {
 						Anchor studentName = new Anchor("Student "+rowWidgetCount);
 						studentName.setStyleName("");
-						studentName.addClickHandler(new ClickUnitName("studentId"));
+						studentName.addClickHandler(new StudentUnitView("studentId"));
 						assessmentTableWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
 						assessmentTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
 					} else {
@@ -248,7 +248,6 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		for(int headerColumnCount=1;headerColumnCount<5;headerColumnCount++) {
 			HTML unitName = new HTML("L"+headerColumnCount+"&nbsp;Lesson&nbsp;Name&nbsp;"+headerColumnCount);
 			unitName.setStyleName("");
-			unitName.addClickHandler(new ClickUnitName("unitId"));
 			collectionTableWidget.setWidget(0, headerColumnCount,unitName);
 			collectionTableWidget.getWidget(0, headerColumnCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 			collectionTableWidget.getWidget(0, headerColumnCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
@@ -283,7 +282,8 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						collectionTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
 					} else {
 						Label scoreLbl = new Label("C"+columnWidgetCount);
-						scoreLbl.setWidth("80px");
+						scoreLbl.addStyleName("myclasses-mastery-collection-cell-style");
+						scoreLbl.addClickHandler(new CollectionAssessmentView("contentId",UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION));
 						collectionTableWidget.setWidget(rowWidgetCount, columnWidgetCount,scoreLbl);
 						collectionTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 						collectionTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
@@ -295,7 +295,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						Anchor studentName = new Anchor("Student "+rowWidgetCount);
 						studentName.setStyleName("");
 						studentName.setWidth("100px");
-						studentName.addClickHandler(new ClickUnitName("studentId"));
+						studentName.addClickHandler(new StudentUnitView("studentId"));
 						collectionTableWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
 						collectionTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 					} else {
@@ -380,5 +380,33 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 			headerLinksContainer.setVisible(isVisible);
 		}
 	}
+	
+	public class CollectionAssessmentView implements ClickHandler {
+		private String contentId = null, contentType = null;
+		public CollectionAssessmentView(String contentId, String contentType) {
+			this.contentId = contentId;
+			this.contentType = contentType;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, contentId);
+			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, contentType);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}
+	}
 
+	public class StudentUnitView implements ClickHandler {
+		private String courseId = null;
+		public StudentUnitView(String courseId) {
+			this.courseId = courseId;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget();
+		}
+	}
 }
