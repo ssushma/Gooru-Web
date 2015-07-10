@@ -635,6 +635,7 @@ margin:0 0 0 -20px !important;
 	margin: 0;
 	z-index: 9999;
 	height: 275px;
+	overflow-x:hidden !important;
 }
 #addResourcefolderTreePanel table{
 	width:100%;

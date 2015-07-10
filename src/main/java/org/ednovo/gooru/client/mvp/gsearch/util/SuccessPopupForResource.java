@@ -96,7 +96,7 @@ public class SuccessPopupForResource extends PopupPanel {
 				element.removeAttribute("style");
 			}
 			hide();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, getParams()); 
 			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
 			AppClientFactory.fireEvent(new CloseCollectionPlayerEvent(true));
 			if("resource".equals(searchType)){

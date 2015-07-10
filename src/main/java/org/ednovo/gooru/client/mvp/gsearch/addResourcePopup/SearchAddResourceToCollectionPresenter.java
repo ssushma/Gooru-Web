@@ -85,6 +85,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	CollectionSearchWidget collectionSearchWidget=null;
 	private static final String ASSESSMENT = "assessment";
 	private static final String QUESTION = "question";
+	private static final String MYCONTENT ="coursebuilder";
 	
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	
@@ -129,16 +130,23 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		if(COLLECTION.equalsIgnoreCase(searchType)){
 			type= FOLDER;
 			accessType = ACESSTEXT;
-		}else{
+		}else if(MYCONTENT.equalsIgnoreCase(searchType)){
+			type="course";
+		}
+		else{
 			type=null;
 			accessType = ACESSTEXT;
 		}
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
-				if(folderListDo.getCount()==0){
-					getView().displayNoCollectionsMsg(searchType);
-				}else{
+				if(type.equalsIgnoreCase(FOLDER)){
+					if(folderListDo.getCount()==0){
+						getView().displayNoCollectionsMsg(searchType);
+					}else{
+						getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
+					}
+				}else if(type.equalsIgnoreCase("course")){
 					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 				}
 			}
@@ -210,6 +218,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,getCollectionGooruId(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
 					@Override
 					public void onSuccess(CollectionDo result) {
+						Window.alert("result:::::"+result.getCollectionType());
 						FolderDo folderDo=getFolderDo(result);
 						HashMap<String,String> params = new HashMap<String,String>();
 						if(O3_LEVEL_VALUE!=null) {
@@ -221,7 +230,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						if(O1_LEVEL_VALUE!=null) {
 							params.put("o1", O1_LEVEL_VALUE);
 						}
-						params.put("from", "SearchAddResourcePresenter");
+						params.put("view", "Folder");
 						AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
 							@Override
 							public void onSuccess(HashMap<String, String> result) {
@@ -328,4 +337,17 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		}
 		return flag;
 	}
+
+	@Override
+	public void getCourseItems(final TreeItem item,String courseId, String UnitId,
+			String lessionId, String typeValue) {
+		AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,courseId, UnitId, lessionId, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo result) {
+				getView().setFolderItems(item,result);
+			}
+		});
+	
+	}
+
 }

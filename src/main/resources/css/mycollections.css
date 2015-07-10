@@ -1226,6 +1226,11 @@ button.btn-disabled {
 	display: inline-block;
 	float: right;
 }
+#gShelfCourseInfo .actions .deleteButton{
+	display: inline-block;
+	float: none;
+	vertical-align: middle;
+}
 #gShelfCourseInfo .folderBlockSitemap .deleteButton a {
 	border-left: 1px solid #dddddd;
 	border-right: 1px solid #dddddd;

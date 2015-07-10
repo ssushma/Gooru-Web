@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -62,7 +63,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
-	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete;
+	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete,copyLbl,moveLbl;
+	@UiField HTMLEventPanel popupPanelDropDwn,copyPopupPanel;
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -74,6 +76,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
+	private static final String ID = "id";
 	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
@@ -95,6 +98,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkContent.addClickHandler(new TabClickHandler(2,lnkContent));
 		lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
 		lnkDelete.addClickHandler(new DeleteContent()); 
+		copyPopupPanel.getElement().setAttribute("style", "min-width: 50px;");
+		popupPanelDropDwn.addClickHandler(new openDropDownFilters());
+		copyLbl.addClickHandler(new onCopyClickHandler());
+		copyLbl.setText("copy");
+		moveLbl.setText("move");
+		moveLbl.addClickHandler(new onMoveClickHandler());
 	}
 	public void setIds(){
 		mainPanel.getElement().setId("gShelfCourseInfo");
@@ -377,5 +386,33 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(deletePopup!=null){
 			deletePopup.hide();
 		}
+	}
+	private class openDropDownFilters implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			String displayValue=copyPopupPanel.getElement().getStyle().getDisplay();
+			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
+				copyPopupPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+			}else{
+				copyPopupPanel.getElement().getStyle().setDisplay(Display.NONE);
+			}
+		}
+		
+	}
+	private class onCopyClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
+			getUiHandlers().getUserShelfData(collectionId,"collection");
+		}
+	}
+	private class onMoveClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
+			getUiHandlers().getUserShelfData(collectionId,"collection");
+		}
+		
 	}
 }

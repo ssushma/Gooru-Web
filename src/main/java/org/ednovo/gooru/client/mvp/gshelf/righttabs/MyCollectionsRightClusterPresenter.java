@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
@@ -63,6 +64,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	CollectionShareTabPresenter collectionShareTabPresenter = null;
 	
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
+	
 	List<FolderDo> folderListDoChild;
 
 	final String COLLECTION="Collection";
@@ -78,7 +81,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter,CollectionShareTabPresenter collectionShareTabPresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter,CollectionShareTabPresenter collectionShareTabPresenter,
+			SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
@@ -87,6 +91,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionContentPresenter=collectionContentPresenter;
 		this.externalAssessmentInfoPresenter=externalAssessmentInfoPresenter;
 		this.collectionShareTabPresenter=collectionShareTabPresenter;
+		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -221,4 +226,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setRightClusterContent(String o1CourseId) {
 		shelfMainPresenter.setUserAllCourses(o1CourseId);
 	}
+	@Override
+	public void getUserShelfData(String collectionId,String valuetype) {
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, valuetype);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+	}
+
 }

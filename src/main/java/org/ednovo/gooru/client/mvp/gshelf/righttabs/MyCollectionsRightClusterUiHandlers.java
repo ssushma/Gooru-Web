@@ -41,4 +41,5 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void deleteCourseContent(String o1CourseId);
 	public void setRightClusterContent(String o1CourseId);
+	public void getUserShelfData(String collectionId,String valuetype);
 }

@@ -66,4 +66,5 @@ public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers,
 	void addCollectionToMyCollections(String object, String currentsearchType);
 	void getUserShelfCollectionsData(String collectionId, String searchType);
 	public boolean validateIsAssessments(String getcollectionType); 
+	public void getCourseItems(final TreeItem item,String courseId, String UnitId,String lessionId,String typeValue);
 }
