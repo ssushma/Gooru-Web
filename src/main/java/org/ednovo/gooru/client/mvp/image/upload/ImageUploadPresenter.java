@@ -246,7 +246,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					folderDo.setCollectionType(createDoObj.getCollectionType());
 					folderDo.setThumbnails(thumbnailObj);
 					
-					getShelfView().setCouseData(folderDo);
+					getShelfView().setCouseData(folderDo,createDoObj.getCollectionType());
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
