@@ -429,7 +429,8 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			reportPanel.removeStyleName(CssTokens.ACTIVE);
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
-			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
+			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
+			String id = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
@@ -500,8 +501,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	@Override
 	public void setRoasterView() {
 		roasterPanel.setStyleName(CssTokens.ACTIVE);
-		tableContainer.clear();
-		pendingContainer.clear();
 		setReportVisiblity(false);
 	}
 
@@ -639,11 +638,14 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			/*Label noActiveStudents = new Label(i18n.GL1527());
 			noActiveStudents.getElement().addClassName("noActiveClassStudents");
 			pendingContainer.add(noActiveStudents);*/
+			pendindUserContainer.setVisible(false);
 			ancPendingListSeeMore.setVisible(false);
 		}else if(pendingListTotalCount==0){
 			ancPendingListSeeMore.setVisible(false);
+			pendindUserContainer.setVisible(false);
 		}else{
 			lblPendingPleaseWait.setVisible(false);
+			pendindUserContainer.setVisible(true);
 			for (int k=0; k<lstPendingMembers.size();k++){
 				if(insertTop){
 					pendingOffsetValue++;
@@ -847,6 +849,16 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else{
 			getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView#setReportDataView()
+	 */
+	@Override
+	public void setReportDataView() {
+		reportBox.setVisible(false);
+		roasterMainConatiner.setVisible(false);
+		reportContainer.setVisible(true);
 	}
 	
 	

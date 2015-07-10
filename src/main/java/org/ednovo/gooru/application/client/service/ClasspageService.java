@@ -76,6 +76,9 @@ public interface ClasspageService extends BaseService {
 	
 	public void removeActiveStudentFromClass(String classId,boolean visiblity,String gooruUid) throws GwtException,ServerDownException;
 	
+	public void v3StudentJoinIntoClass(String classCode, String emailId) throws GwtException, ServerDownException;
+	
+	public ClasspageDo v3UpdateClass(String classId,ClasspageDo classpageDo) throws GwtException,ServerDownException;
 	/**
 	 * Get Classpage by Classpage id
 	 * @param String classpageID

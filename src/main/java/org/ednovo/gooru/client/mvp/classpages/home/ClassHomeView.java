@@ -443,7 +443,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						params.put("pageSize", "10");
 						params.put("pageNum", "0");
 						params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 						txtCode.setText("");
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
@@ -461,7 +461,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							params.put("pageSize", "10");
 							params.put("pageNum", "0");
 							params.put("pos", "1");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
 
 							if(alertMessageUc!=null)
@@ -470,7 +470,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							StudentAssignmentView.setPrivatePage();
 
 						}
-						else if(result.getStatus().equalsIgnoreCase("active"))
+						/*else if(result.getStatus().equalsIgnoreCase("active"))
 						{
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 								MixpanelUtil.Click_Study_LandingPage();
@@ -478,18 +478,15 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 							Map<String, String> params = new HashMap<String, String>();
 							params.put("id",result.getClassUid());
-							params.put("pageSize", "10");
-							params.put("pageNum", "0");
-							params.put("pos", "1");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 
 							StudentAssignmentView.setPrivatePageActive();
 
-						}
-						else if(result.getStatus().equalsIgnoreCase("pending"))
+						}*/
+						/*else if(result.getStatus().equalsIgnoreCase("pending"))
 						{
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 								MixpanelUtil.Click_Study_LandingPage();
@@ -497,46 +494,40 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 							Map<String, String> params = new HashMap<String, String>();
 							params.put("id",result.getClassUid());
-							params.put("pageSize", "10");
-							params.put("pageNum", "0");
-							params.put("pos", "1");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 
 							StudentAssignmentView.setPrivatePagePending();
 
-						}
-						else
+						}*/
+						/*else
 						{
 							       if(AppClientFactory.isAnonymous()){
 							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
 							       }else{
 							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 							       }
-						}
+						}*/
 
 					}
 					else
 					{
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id",result.getClassUid());
-						params.put("pageSize", "10");
-						params.put("pageNum", "0");
-						params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 						txtCode.setText("");
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 
 						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 							StudentAssignmentView.setPublicPage();
-						}else if(result.getStatus().equalsIgnoreCase("active")){
+						}/*else if(result.getStatus().equalsIgnoreCase("active")){
 							StudentAssignmentView.setPublicPageActive();
 						}else {
 							StudentAssignmentView.setPublicPagePending();
-						}
+						}*/
 
 					}
 					setEnterLblVisbility(false);
