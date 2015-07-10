@@ -30,41 +30,25 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class checkboxSelectedDo implements Serializable
+public class ListValuesDo implements Serializable
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private boolean selected;
-	private String value;
-	private String name;
 	private Integer id;
+	private String name;
 	
-	public checkboxSelectedDo() {}
+	
+	public ListValuesDo() {}
+
 	public Integer getId() {
 		return id;
 	}
+
+
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 
