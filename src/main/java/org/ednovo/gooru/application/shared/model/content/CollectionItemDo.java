@@ -58,6 +58,7 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private Integer totalHitCount;
 	private Integer statusCode;
 	private ResourceDo questionInfo;
+	private String parentGooruOid;
 
 	private List<Map<String, String>> standards;
 
@@ -67,6 +68,12 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 		//Right now we are not getting the resourcedo so reseting the values to resoruceDo
 		resource=new ResourceDo();
 		resource=this;
+	}
+	public String getParentGooruOid() {
+		return parentGooruOid;
+	}
+	public void setParentGooruOid(String parentGooruOid) {
+		this.parentGooruOid = parentGooruOid;
 	}
 
 	/**
