@@ -65,9 +65,7 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private RatingDo rating;
 
 	public CollectionItemDo(){
-		//Right now we are not getting the resourcedo so reseting the values to resoruceDo
-		resource=new ResourceDo();
-		resource=this;
+		
 	}
 	public String getParentGooruOid() {
 		return parentGooruOid;
