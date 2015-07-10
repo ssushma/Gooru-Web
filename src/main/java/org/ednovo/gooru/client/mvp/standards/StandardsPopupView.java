@@ -134,14 +134,14 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		});
 
 
-
+		appPopUp.setViewTitle(i18n.GL0575());
 		
 		
 		appPopUp.setGlassEnabled(true);
 		//appPopUp.setGlassStyleName(AddStandardsBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		
-	
+
 
 		
 		mainContainer.getElement().setId("standardsDetails");

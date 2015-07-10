@@ -92,7 +92,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 	
 	private String type="";
 
