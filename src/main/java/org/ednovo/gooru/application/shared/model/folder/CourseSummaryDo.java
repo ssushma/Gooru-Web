@@ -37,6 +37,8 @@ public class CourseSummaryDo implements Serializable {
 	private Integer collectionCount;
 	private Integer unitCount;
 	private Integer assessmentCount;
+	private Integer resourceCount;
+	private Integer questionCount;
 	
 	CourseSummaryDo(){}
 	
@@ -63,5 +65,21 @@ public class CourseSummaryDo implements Serializable {
 	}
 	public void setAssessmentCount(Integer assessmentCount) {
 		this.assessmentCount = assessmentCount;
+	}
+
+	public Integer getResourceCount() {
+		return resourceCount;
+	}
+
+	public void setResourceCount(Integer resourceCount) {
+		this.resourceCount = resourceCount;
+	}
+
+	public Integer getQuestionCount() {
+		return questionCount;
+	}
+
+	public void setQuestionCount(Integer questionCount) {
+		this.questionCount = questionCount;
 	}
 }
