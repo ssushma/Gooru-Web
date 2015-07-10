@@ -310,6 +310,5 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			newdok.setVisible(false);
 			isDepthOfKnlzeInfo = false;
 		}
-
 	}
 }
