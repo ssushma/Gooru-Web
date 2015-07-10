@@ -105,7 +105,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	
 
-	final String COLLECTION = "Collection";
+	final String COLLECTION = "collection";
 
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObjG;

@@ -40,12 +40,12 @@ import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
-import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.body.GwtEarthWidget;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.SubmitYourAnswersPopupUc;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceHandler;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
@@ -89,7 +89,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -691,27 +690,49 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-
 			navigateToNextResource(resourceRequest);
-
-
 		}
 
 	}
 
 	@Override
 	public void navigateToNextResource(final PlaceRequest resourceRequest) {
-		if(!getUiHandlers().isOeAnswerSubmited()){
-			NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+		String view  = resourceRequest.getParameter("view", null);
+		System.out.println("navigateToNextResource View : "+view);
+		if (view != null && view.equalsIgnoreCase("end")){
+			SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
+
 				@Override
-				public void navigateToNextResource() {
-					super.hide();
-					AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+				public void onClickSubmit(ClickEvent event) {
+					if(!getUiHandlers().isOeAnswerSubmited()){
+						NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+							@Override
+							public void navigateToNextResource() {
+								super.hide();
+								AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+							}
+						};
+					}else{
+						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+					}
 				}
 			};
+			submit.show();
+			submit.center();
 		}else{
-			AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+			if(!getUiHandlers().isOeAnswerSubmited()){
+				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+					}
+				};
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+			}
 		}
+
 	}
 
 	/*

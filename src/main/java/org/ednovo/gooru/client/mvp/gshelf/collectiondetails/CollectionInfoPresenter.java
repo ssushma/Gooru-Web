@@ -65,7 +65,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	
 	private String UNIT = "Unit";
 	
-	private String COLLECTION = "Collection";
+	private String COLLECTION = "collection";
 	
 	private String type;
 	
