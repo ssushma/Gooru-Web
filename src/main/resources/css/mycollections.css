@@ -3923,3 +3923,87 @@ right:1px;
  @media (min-width: 1200px) {
 }
 /* === Assessment info end ================================== */
+
+/* === Course Share Start ================================== */
+
+.shareMainContainer  label.custom-select {
+	position: relative;
+	display: inline-block;
+	width: 300px;
+}
+.shareMainContainer p {
+	margin: 0 0 10px;
+}
+.shareMainContainer .custom-select select {
+	display: inline-block;
+	border: 1px solid #dddddd;
+	padding: 8px 8px 8px 4px;
+	margin: 0;
+	font: inherit;
+	font-weight: normal;
+	outline: none; /* remove focus ring from Webkit */
+	line-height: 1.2;
+	background: #ffffff;
+	width: 36%;
+	-webkit-appearance: none; /* remove the strong OSX influence from Webkit */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	height:40px;
+}
+
+    /* for Webkit's CSS-only solution */
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+.shareMainContainer  .custom-select select {
+	padding-right: 30px;
+}
+}
+
+/* Select arrow styling */
+.shareMainContainer  .custom-select:after {
+	content:"";
+	position: absolute;
+	top: 0;
+	right: -1px;
+	bottom: 0;
+	font-size: 60%;
+	line-height: 30px;
+	padding: 6px 7px;
+	width:23px;
+	background: #ffffff url("${cdn.endpoint}/images/downarrow.png") no-repeat 0px 14px;
+	color: #515151;
+	pointer-events: none;
+	-webkit-border-radius: 0 6px 6px 0;
+	-moz-border-radius: 0 6px 6px 0;
+	border-radius: 0 6px 6px 0;
+	border:1px solid #dddddd;
+	border-left:0px solid #dddddd;
+}
+.no-pointer-events .custom-select:after {
+	content: none;
+}
+
+.custom-select select option {color:#6666;font-weight:bold; padding:8px 10px}
+
+.shareMainContainer .selectClassBlock{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+
+.shareMainContainer .courseDetailsContainer{
+		padding:15px 15px;
+}
+
+@media (max-width: 767px) {
+	.shareMainContainer  label.custom-select{
+		width:100%;
+	}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+
+/* ======== Course Share end =========== */
