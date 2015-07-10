@@ -31,10 +31,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerImg;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
@@ -96,9 +98,9 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 		answerText.getElement().setInnerHTML(i18n.GL0665());
 		answerText.getElement().setAttribute("alt",i18n.GL0665());
 		answerText.getElement().setAttribute("title",i18n.GL0665());
-		checkAnswer.setText(i18n.GL0666());
-		checkAnswer.getElement().setAttribute("alt",i18n.GL0666());
-		checkAnswer.getElement().setAttribute("title",i18n.GL0666());
+		checkAnswer.setText(i18n.GL3460());
+		checkAnswer.getElement().setAttribute("alt",i18n.GL3460());
+		checkAnswer.getElement().setAttribute("title",i18n.GL3460());
 	}
 
 	private void setQuestionTypeCaption(){
@@ -255,7 +257,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			isUserAnswerAttempted(true);
 			checkSelectedRadioButton();
 
-		}	
+		}
 	}
 
 	private void checkSelectedRadioButton(){
@@ -290,6 +292,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("primary");
 			checkAnswer.addStyleName("hintsInActiveButton");
+			AppClientFactory.fireEvent(new AssessmentsNextResourceEvent());
 		}
 	}
 
@@ -316,8 +319,8 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(URL.encodeQueryString(questionAnswerOptionView.getAnswerText())); 
-					//answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText())); 
+					answerAttemptDo.setText(URL.encodeQueryString(questionAnswerOptionView.getAnswerText()));
+					//answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText()));
 					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);
@@ -343,7 +346,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 				AddAnswerImg answerImg=(AddAnswerImg)widget;
 
 				if(answerImg.selectedImage){
-					
+
 					AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 					attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
 					attempteAnswersDo.setAttemptResult(answerImg.isAnswerCorrect());
@@ -351,11 +354,11 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(answerImg.getAnswerImage()); 
+					answerAttemptDo.setText(answerImg.getAnswerImage());
 					answerAttemptDo.setAnswerId(answerImg.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerIds.add(i+1);
-					
+
 					if(answerImg.isAnswerCorrect()){
 						if(hsChoiceStatus){
 							hsChoiceStatus=true;

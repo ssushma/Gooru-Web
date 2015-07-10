@@ -51,7 +51,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	CollectionInfoPresenter collectionInfoPresenter;
 
-	UnitInfoPresenter unitInfoPresenter;
+	UnitInfoPresenter unitInfoPresenter; 
+	
 
 	ShelfMainPresenter shelfMainPresenter;
 	
@@ -65,7 +66,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	List<FolderDo> folderListDoChild;
 
-	final String COLLECTION="Collection";
+	final String COLLECTION="collection";
+	final String ASSESSMENT="assessment";
 	
 	
 	private static final String O1_LEVEL = "o1";
@@ -120,9 +122,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if("Lesson".equalsIgnoreCase(type)){
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
-				}else if("Assessment".equalsIgnoreCase(type) || "Collection".equalsIgnoreCase(type)){
+				}else if(ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(type)){
 					collectionInfoPresenter.setCollectionType(type);
-					collectionInfoPresenter.setData(folderObj);
+					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else{
 					getView().enableAndHideTabs(false);

@@ -22,26 +22,61 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
+package org.ednovo.gooru.application.shared.model.classpages;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
- *
+ * @fileName : AssessmentSummaryStatusDo.java
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
-	
+@JsonInclude(Include.NON_NULL)
+public class ClassDo implements Serializable{
 
 	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 * @param type 
+	 * 
 	 */
-	void setCouseData(FolderDo courseObj, String type); 
-
-	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
-
-	void setCollectionType(String collectionType);
+	
+	private static final long serialVersionUID = 1L;
+	private String classId;
+	private String course;
+	private String unit;
+	private String lesson;
+	private String assessment;
+	public String getClassId() {
+		return classId;
+	}
+	public String getCourse() {
+		return course;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public String getLesson() {
+		return lesson;
+	}
+	public String getAssessment() {
+		return assessment;
+	}
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public void setLesson(String lesson) {
+		this.lesson = lesson;
+	}
+	public void setAssessment(String assessment) {
+		this.assessment = assessment;
+	}
+	
 }

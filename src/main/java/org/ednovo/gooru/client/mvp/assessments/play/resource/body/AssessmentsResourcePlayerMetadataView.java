@@ -40,10 +40,12 @@ import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
-import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.body.GwtEarthWidget;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.SubmitYourAnswersPopupUc;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceHandler;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
@@ -87,7 +89,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -119,6 +120,8 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
 
 	@UiField FlowPanel rowPanel;
+
+	PlaceRequest nextResoruceRequest= null;
 
 	/*@UiField SimpleRadioButton rating1;
 	@UiField SimpleRadioButton rating2;
@@ -309,6 +312,17 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 					}
 				}
 			});
+
+			AssessmentsNextResourceHandler resourceHandler = new AssessmentsNextResourceHandler() {
+
+				@Override
+				public void loadNextResource() {
+					navigateToNextResource();
+				}
+			};
+
+			AppClientFactory.getEventBus().addHandler(AssessmentsNextResourceEvent.TYPE,
+					resourceHandler);
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -368,6 +382,7 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 		if(AppClientFactory.isAnonymous()){
 			setDefaultReaction();
 		}
+		this.nextResoruceRequest = nextResoruceRequest;
 		if(collectionItemDo!=null){
 			collectionContainer.setVisible(true);
 			this.collectionItemDo = collectionItemDo;
@@ -397,7 +412,6 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 			forwardButtonHandler=forwardButton.addClickHandler(new ShowResourceView(nextResoruceRequest));
 			backwardButtonHandler=backwardButton.addClickHandler(new ShowResourceView(previousResourceRequest));
 		}
-
 	}
 	/**
 	 *
@@ -435,63 +449,10 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 			resourceplayUrl=collectionItemDo.getResource().getUrl();
 		}
 		wrapperContainerField.getElement().getStyle().clearHeight();
-		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
-			String utubeId=ResourceImageUtil.getYoutubeVideoId(resourceplayUrl);
-			getUiHandlers().getYoutubeFeedCallback(utubeId);
-		}else if(resourceTypeName.equalsIgnoreCase("animation/kmz")){
-			resourceWidgetContainer.add(new GwtEarthWidget(resourceplayUrl));
-		}else if(resourceTypeName.equalsIgnoreCase("animation/swf")){
-			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)){
-				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
-			}else{
-				resourceWidgetContainer.add(new WebResourceWidget(resourceplayUrl));
-			}
-		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
+		if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
-		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")||resourceTypeName.equalsIgnoreCase("vimeo/video")){
-			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
-				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
-			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
-				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
-			}
-			else{
-				if(resourceTypeName.equalsIgnoreCase("image/png")){
-					HTMLPanel htmlPanel = new HTMLPanel("");
-					htmlPanel.addStyleName("collectionPlayerImage");
-					Image img = new Image();
-					img.addStyleName("img-responsive");
-					img.setHeight("100%");
-					img.setUrl(resourceplayUrl);
-					htmlPanel.add(img);
-
-					resourceWidgetContainer.add(htmlPanel);
-				}
-				else{
-					collectionItemDo.getResource().setUrl(resourceplayUrl);
-					if(collectionItemDo.getResource().getUrl().contains("docs.google.com")){
-						getUiHandlers().getGoogleDriveFile(resourceplayUrl);
-					}else{
-						final WebResourceWidget webResourceWidget=new WebResourceWidget(resourceplayUrl);
-						resourceWidgetContainer.add(webResourceWidget);
-					}
-				}
-			}
 		}else {
-
-			if(collectionItemDo.getResource().getUrl() != null){
-				String[] urlFormat = collectionItemDo.getResource().getUrl().split("\\.");
-				String urlExtension = urlFormat[urlFormat.length - 1];
-				if(urlExtension.equalsIgnoreCase("pdf")){
-					String signedFlag=resourceplayUrl.contains("http")||resourceplayUrl.contains("https")?"0":"1";
-					String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
-					String endPage=collectionItemDo.getStop()!=null?collectionItemDo.getStop():"";
-					resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage="+endPage+"&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
-				}
-				else
-				{
-					resourceWidgetContainer.add(new WebResourceWidget(resourceplayUrl));
-				}
-			}
+			AppClientFactory.printInfoLogger("Need to handle other url.");
 		}
 	}
 	/**
@@ -729,6 +690,36 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			navigateToNextResource(resourceRequest);
+		}
+
+	}
+
+	@Override
+	public void navigateToNextResource(final PlaceRequest resourceRequest) {
+		String view  = resourceRequest.getParameter("view", null);
+		System.out.println("navigateToNextResource View : "+view);
+		if (view != null && view.equalsIgnoreCase("end")){
+			SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
+
+				@Override
+				public void onClickSubmit(ClickEvent event) {
+					if(!getUiHandlers().isOeAnswerSubmited()){
+						NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+							@Override
+							public void navigateToNextResource() {
+								super.hide();
+								AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+							}
+						};
+					}else{
+						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+					}
+				}
+			};
+			submit.show();
+			submit.center();
+		}else{
 			if(!getUiHandlers().isOeAnswerSubmited()){
 				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
 					@Override
@@ -741,6 +732,7 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 				AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
 			}
 		}
+
 	}
 
 	/*
@@ -1967,6 +1959,18 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
      		toolTipPopupPanel.hide();
 		}
 
+	}
+
+	private void navigateToNextResource(){
+		final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		final String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+		final String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+		final String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+
+		navigateToNextResource(nextResoruceRequest);
+
+//		showResourceView(resourceId,tabView,view);
+//		showCollectionEndView(collectionId, tabView);
 	}
 
 }

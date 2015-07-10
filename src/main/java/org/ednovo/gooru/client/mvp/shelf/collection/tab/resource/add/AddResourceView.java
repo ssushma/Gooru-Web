@@ -573,8 +573,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				@Override
 				public void execute() {
 					AppClientFactory.printInfoLogger("12");
-					AppClientFactory.printInfoLogger("collectionItemDo.getCollectionItemId() 2 :"+collectionItemDo.getCollectionItemId());
-					AppClientFactory.printInfoLogger("collectionItemDo.getResource().getType() :"+collectionItemDo.getResource().getType());
 					if(collectionItemDo!=null){
 						int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 						if(type==10 || type==11){
@@ -976,7 +974,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 //				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
-				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
+				if(collectionDo!=null&&collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
 					hideTabButtons(false, true, true);
 				}else{
 					hideTabButtons(false, true, false);

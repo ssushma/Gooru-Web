@@ -68,7 +68,13 @@ public interface ClasspageService extends BaseService {
 	
 	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
 	
+	public StudentsAssociatedListDo getAssociatedPendingStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)	throws GwtException, ServerDownException;
 	
+	public StudentsAssociatedListDo getActiveAssociatedStudentInClassListByCode(String classCode, int offSet, int pageSize, String statusType) throws GwtException, ServerDownException;
+	
+	public void removePendingStudentFromClass(String classCode, boolean type, String emailIds) throws GwtException, ServerDownException;
+	
+	public void removeActiveStudentFromClass(String classId,boolean visiblity,String gooruUid) throws GwtException,ServerDownException;
 	
 	/**
 	 * Get Classpage by Classpage id

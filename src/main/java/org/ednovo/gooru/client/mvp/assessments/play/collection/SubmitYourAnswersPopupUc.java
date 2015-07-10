@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class SubmitYourAnswersPopupUc extends PopupPanel{
+public abstract class SubmitYourAnswersPopupUc extends PopupPanel{
 
 	@UiTemplate("SubmitYourAnswersPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, SubmitYourAnswersPopupUc> {
@@ -99,6 +99,12 @@ public class SubmitYourAnswersPopupUc extends PopupPanel{
 	public void onClickContinue(ClickEvent event){
 		hide();
 	}
+
+	@UiHandler("btnSubmit")
+	public void onSubmit(ClickEvent event){
+		onClickSubmit(event);
+	}
+	public abstract void onClickSubmit(ClickEvent event);
 
 }
 

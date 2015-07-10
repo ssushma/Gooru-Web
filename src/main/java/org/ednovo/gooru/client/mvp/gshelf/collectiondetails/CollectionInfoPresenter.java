@@ -60,7 +60,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	
 	private String UNIT = "Unit";
 	
-	private String COLLECTION = "Collection";
+	private String COLLECTION = "collection";
 	
 	private String type;
 	
@@ -156,8 +156,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 
-	public void setData(FolderDo folderObj) {
-		getView().setCouseData(folderObj);
+	public void setData(FolderDo folderObj, String type) {
+		getView().setCouseData(folderObj,type);
 	}
 
 	@Override
