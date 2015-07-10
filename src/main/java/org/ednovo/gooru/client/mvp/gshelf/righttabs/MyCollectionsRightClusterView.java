@@ -100,6 +100,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
 		lnkDelete.addClickHandler(new DeleteContent()); 
 		lnkPreview.addClickHandler(new PreviewClickHandler());
+		lnkPreview.setVisible(false);
 	}
 	public void setIds(){
 		mainPanel.getElement().setId("gShelfCourseInfo");
@@ -290,8 +291,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setCurrentTypeView(String currentTypeView) {
 		this.currentTypeView =currentTypeView;
+		showPreviewBtn();
 	}
 	
+	private void showPreviewBtn() {
+		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
+			lnkPreview.setVisible(true);
+		}
+	}
 	@Override
 	public void enableAndHideTabs(boolean isVisible){
 		lnkContent.setVisible(isVisible);
