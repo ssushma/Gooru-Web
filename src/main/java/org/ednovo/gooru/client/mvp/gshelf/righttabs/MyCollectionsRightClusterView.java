@@ -45,6 +45,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -52,6 +53,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollectionsRightClusterUiHandlers> implements IsMyCollectionsRightClusterView,ClientConstants  {
 
@@ -63,7 +65,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent;
-	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete; 
+	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete,lnkPreview; 
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -81,6 +83,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String LESSON = "Lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
+	private static final String ASSESSMENT_URL = "assessment/url";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -96,6 +99,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkContent.addClickHandler(new TabClickHandler(2,lnkContent));
 		lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
 		lnkDelete.addClickHandler(new DeleteContent()); 
+		lnkPreview.addClickHandler(new PreviewClickHandler());
+		lnkPreview.setVisible(false);
 	}
 	public void setIds(){
 		mainPanel.getElement().setId("gShelfCourseInfo");
@@ -286,8 +291,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setCurrentTypeView(String currentTypeView) {
 		this.currentTypeView =currentTypeView;
+		showPreviewBtn();
 	}
 	
+	private void showPreviewBtn() {
+		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
+			lnkPreview.setVisible(true);
+		}
+	}
 	@Override
 	public void enableAndHideTabs(boolean isVisible){
 		lnkContent.setVisible(isVisible);
@@ -308,6 +319,46 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
 		}
+	}
+	/**
+	 * This inner class is used to Open the respective collection/Assessment player
+	 *  when click on preview.
+	 *
+	 */
+	private class PreviewClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			String placeToken,folderId;
+			if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+				folderId=AppClientFactory.getPlaceManager().getRequestParameter("o3");
+			}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+				folderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
+			}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+				folderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
+			}else{	
+				folderId="";
+			}
+			 
+			String type = folderObj==null?null:StringUtil.isEmpty(folderObj.getType())?null:folderObj.getType();
+			HashMap<String,String> params = new HashMap<String,String>();
+			params.put("id", folderObj.getGooruOid());
+			if(!folderId.isEmpty()){
+				params.put("folderId", folderId);
+			}
+			if(type!=null){
+				placeToken=COLLECTION.equalsIgnoreCase(type)?PlaceTokens.COLLECTION_PLAY:ASSESSMENT.equalsIgnoreCase(type)?PlaceTokens.ASSESSMENT_PLAY:"";
+				if(!placeToken.isEmpty()){
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
+					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				}else{
+					System.out.println("folderObj.getUrl()::"+folderObj.getUrl());
+					Window.open(folderObj.getUrl(), "", "");
+				}
+			}
+			
+		}
+		
 	}
 	
 	/**
