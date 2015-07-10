@@ -22,46 +22,44 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild;
+package org.ednovo.gooru.application.shared.model.content;
 
-import org.ednovo.gooru.application.client.child.ChildView;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.UrlNavigationTokens;
+import java.io.Serializable;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-/**
- * @author Gooru Team
- * 
- */
-public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresenter> implements IsSlmAssessmentView {
-
-	@UiField Anchor reportUrl;
+@JsonInclude(Include.NON_NULL)
+public class ListValuesDo implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer id;
+	private String name;
 	
-	@UiField HTMLPanel reportView;
 	
-	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
+	public ListValuesDo() {}
 
-	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
+	public Integer getId() {
+		return id;
 	}
 
-	public SlmAssessmentChildView() {
-		initWidget(uiBinder.createAndBindUi(this));
-		setData();
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	
-	public void setData() {
-		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
-		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-			reportView.setVisible(false);
-		} else {
-			reportView.setVisible(true);
-		}
+
+
+	public String getName() {
+		return name;
 	}
-	
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 }
