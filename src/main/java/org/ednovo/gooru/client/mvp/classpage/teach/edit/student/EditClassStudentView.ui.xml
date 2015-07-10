@@ -67,6 +67,8 @@
 			   </g:HTMLPanel>
 			  <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			  <g:VerticalPanel styleName="tableDiv" ui:field="pendingContainer"></g:VerticalPanel>
+			  <g:Anchor ui:field="ancPendingListSeeMore" styleName="seeMoreActive"/>
+			  <g:Label ui:field="lblPendingPleaseWait" styleName="systemMessage pleaseWait"/>
 		 </g:HTMLPanel>
 	      <g:HTMLPanel styleName="joinedStudentsBlock" ui:field="activeUserConatiner">
 			   <g:HTMLPanel styleName="col-md-5 col-sm-4">
@@ -79,6 +81,8 @@
 			   </g:HTMLPanel>
 			  <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			  <g:VerticalPanel styleName="tableDiv" ui:field="tableContainer"></g:VerticalPanel>
+			  <g:Anchor ui:field="ancActiveListSeeMore" styleName="seeMoreActive"/>
+			  <g:Label ui:field="lblActivePleaseWait" styleName="pleaseWait"/>
 		 </g:HTMLPanel>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="classReportMenuBlock no-gutter" ui:field="reportContainer">

@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.footer.StudyPlayerFooterView;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.header.StudyPlayerHeaderView;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
@@ -63,6 +64,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -125,6 +127,8 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	boolean isSeeMoreClicked=false;
 	RequestToLoginPopupUc requestToLogin = null;
 
+	SubmitYourAnswersPopupUc submit=null;
+
 	private int userRating=0;
 	private HandlerRegistration autoHideHandler;
 
@@ -158,6 +162,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		pnlBackToCollection.addClickHandler(new ExitFullScreenPlayer());
 
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
+		headerView.getBtnSubmitAllAnswers().addClickHandler(new ShowPopUp());
 		menuButton.addClickHandler(new ShowAuthorContainerEvent());
 		menuButton.addTouchStartHandler(new ShowAuthorContainerTouchEvent());
 		setAutoHideOnNavigationEventEnabled(true);
@@ -200,6 +205,8 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 			  requestToLogin.center();
 			  requestToLogin.show();
 		  }
+
+
 
 	}
 
@@ -708,6 +715,27 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 			}
 		}
 	}
+
+	private class ShowPopUp implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			submit = new SubmitYourAnswersPopupUc() {
+
+				@Override
+				public void onClickSubmit(ClickEvent event) {
+					submit.hide();
+					Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
+					parms.put("view", "end");
+					parms.remove("rid");
+					AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken(), parms);
+				}
+			};
+			submit.center();
+			submit.show();
+		}
+	}
+
+
 	private class ShowLoginPopupEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -719,13 +747,21 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 	@Override
 	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId) {
+
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		if(!StringUtil.isEmpty(collectionId)){
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(false);
 			}else{
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				String rid= AppClientFactory.getPlaceManager().getRequestParameter("rid",null);
+				if(rid!=null){
+					headerView.getBtnSubmitAllAnswers().setVisible(true);
+				}else{
+					headerView.getBtnSubmitAllAnswers().setVisible(false);
+				}
 			}
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
@@ -734,11 +770,13 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName("scrollStudyContainer");
 				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(false);
 			}
 			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
 			{
 				appPopUp.removeStyleName("scrollStudyContainer");
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(false);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
 			}
@@ -752,6 +790,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 					appPopUp.addStyleName("scrollStudyContainer");
 				}
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(isHidePlayerButtons);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
 			}
@@ -765,6 +804,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 	public void hideAuthorInHeader(boolean showOrHide){
 		headerView.getAuthorContainer().setVisible(showOrHide);
+		headerView.getBtnSubmitAllAnswers().setVisible(!showOrHide);
 	}
 
 	public void scrollStudyPage(){

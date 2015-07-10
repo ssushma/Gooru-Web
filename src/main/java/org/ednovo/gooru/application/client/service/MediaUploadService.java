@@ -30,6 +30,7 @@ package org.ednovo.gooru.application.client.service;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -89,5 +90,5 @@ public interface MediaUploadService extends BaseService {
 			String fileName);
 
 	
-	String saveImageCollection(String gooruOid, String fileName) throws GwtException, ServerDownException;
+	String saveImageCollection(String courseId, String unitId, String lessonId, String collectionId, CreateDo createDo, String fileName) throws GwtException, ServerDownException;
 }

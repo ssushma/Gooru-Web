@@ -270,13 +270,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo getCollection(String collectionGooruOid, boolean skipCollectionItem) {
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_COLLECTION_RESOURCES, collectionGooruOid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
-		params.put(GooruConstants.SKIP_COLL_ITEM, String.valueOf(skipCollectionItem));
-		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );
-		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
-		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
-		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDU_ITEMS,GooruConstants.TRUE);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("get coll res url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -321,7 +317,30 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
+				CollectionDo obj=new CollectionDo();
+				obj.setCollectionType(jsonRep.getJsonObject().isNull("collectionType")?"":jsonRep.getJsonObject().getString("collectionType"));
+				obj.setType(jsonRep.getJsonObject().isNull("type")?"":jsonRep.getJsonObject().getString("type"));
+				obj.setGooruOid(jsonRep.getJsonObject().isNull("gooruOid")?"":jsonRep.getJsonObject().getString("gooruOid"));
+				obj.setTitle(jsonRep.getJsonObject().isNull("title")?"":jsonRep.getJsonObject().getString("title"));
+				obj.setSharing(jsonRep.getJsonObject().isNull("sharing")?"":jsonRep.getJsonObject().getString("sharing"));
+				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
+				UserDo user=new UserDo();
+				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
+				obj.setUser(user);
+				
+				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
+				List<CollectionItemDo> collectionItems=new ArrayList<CollectionItemDo>();
+				for(int i=0;i<array.length();i++){
+					CollectionItemDo item=new CollectionItemDo();
+					item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), CollectionItemDo.class);
+					ResourceDo resoruce=new ResourceDo();
+					resoruce=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), ResourceDo.class);
+					item.setQuestionInfo(resoruce);
+					item.setResource(resoruce);
+					collectionItems.add(item);
+				}
+				obj.setCollectionItems(collectionItems);
+				return obj;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
@@ -332,7 +351,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
+				CollectionItemDo item=new CollectionItemDo();
+				item=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
+				ResourceDo resoruce=new ResourceDo();
+				resoruce=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
+				item.setResource(resoruce);
+				item.setQuestionInfo(resoruce);
+				return item;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
@@ -502,6 +527,41 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 		}
 	    return collectionDoObj;
+	}
+	
+	@Override
+	public void updateCollection(String collectionType,String collectionId, String title, String sharing, 
+			List<String> depthOfKnowledgeIds, List<String> skillsIds, List<String> audienceIds, String mediaFilename,String buildTypeId) {
+		JsonRepresentation jsonRep = null;
+		CollectionDo collectionDoObj= new CollectionDo();
+	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId);
+	    JSONObject classPageJsonObject=new JSONObject();
+		JSONObject collectionTypeJsonObject=new JSONObject();
+		try{
+			if(title!=null){
+				collectionTypeJsonObject.put(TITLE, title);
+			}
+			if(collectionType != null){
+				collectionTypeJsonObject.put("collectionType", collectionType);
+			}
+			if(sharing!=null){
+				collectionTypeJsonObject.put("sharing", sharing);
+			}
+			classPageJsonObject.put("collection", collectionTypeJsonObject);
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+	 	getLogger().info("updateCollection::API:"+url);
+	 	getLogger().info("data passed:::"+classPageJsonObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), classPageJsonObject.toString());
+	    jsonRep = jsonResponseRep.getJsonRepresentation();
+	    if(jsonResponseRep.getStatusCode()==200){
+			collectionDoObj = deserializeCollection(jsonRep);
+			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+		}else{
+			collectionDoObj=new CollectionDo();
+			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+		}
 	}
 	@Override
 	public CollectionDo update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData){
@@ -706,8 +766,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if(tagList!=null && tagList.size()!=0 ){
 			resourceMap.put(RESOURCE_TAGS, tagList);
 		}
-		JsonRepresentation jsonRep = null;
-
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.TITLE, URLEncoder.encode(titleStr).toString());
@@ -725,7 +784,16 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+			getLogger().info("response --- "+ jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
+			getLogger().info("getURlresource --- "+getURL);
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return deserializeCollectionItem(jsonResponseRepget);
 	}
 
 	@Override
@@ -790,16 +858,27 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	@Override
 	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException {
-		JsonRepresentation jsonRep = null;
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId);
 		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
+		getLogger().info("addQuestionResource --- "+ url);
+		getLogger().info("addQuestionResource data --- "+ collectionQuestionData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+			getLogger().info("response --- "+ jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			getLogger().info("getURlresource --- "+getURL);
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return deserializeCollectionItem(jsonRepGet);
 	}
 
 
@@ -808,7 +887,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url =null;
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO, collectionItemDo.getCollectionItemId());
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO,collectionItemDo.getParentGooruOid(), collectionItemDo.getCollectionItemId());
 
 		NewResourceDo newResourceDo = new NewResourceDo();
 
@@ -821,7 +900,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
 		resourceFormat.setValue(collectionItemDo.getResource().getCategory());
 
-		String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails().getUrl();
+		String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails()!=null?collectionItemDo.getResource().getThumbnails().getUrl():"";
 		if (thumbnailImgSrcStr==null){
 			thumbnailImgSrcStr="";
 		}

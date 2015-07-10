@@ -53,13 +53,13 @@ import com.google.gwt.user.client.ui.Widget;
 *
 * @Reviewer: Gooru Team.
 */
-public class CollectionNonExistView extends Composite{
+public class AssessmentsNonExistView extends Composite{
 
-	public interface CollectionNonExistViewUiBinder extends UiBinder<Widget,CollectionNonExistView>{
+	public interface AssessmentsNonExistViewUiBinder extends UiBinder<Widget,AssessmentsNonExistView>{
 
 	}
 
-	public static CollectionNonExistViewUiBinder collectionNonExistViewUiBinder=GWT.create(CollectionNonExistViewUiBinder.class);
+	public static AssessmentsNonExistViewUiBinder collectionNonExistViewUiBinder=GWT.create(AssessmentsNonExistViewUiBinder.class);
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -71,28 +71,28 @@ public class CollectionNonExistView extends Composite{
 	/**
 	 * Class constructor.
 	 */
-	public CollectionNonExistView(){
+	public AssessmentsNonExistView(){
 		initWidget(collectionNonExistViewUiBinder.createAndBindUi(this));
 		btnLibrary.setText(i18n.GL1831());
 		btnLibrary.getElement().setId("btnLibrary");
 		btnLibrary.getElement().setAttribute("alt",i18n.GL1831());
 		btnLibrary.getElement().setAttribute("title",i18n.GL1831());
 
-		noLongerText.getElement().setInnerHTML(i18n.GL0655());
+		noLongerText.getElement().setInnerHTML(i18n.GL3460_1());
 		noLongerText.getElement().setId("pnlNoLongerText");
-		noLongerText.getElement().setAttribute("alt",i18n.GL0655());
-		noLongerText.getElement().setAttribute("title",i18n.GL0655());
+		noLongerText.getElement().setAttribute("alt",i18n.GL3460_1());
+		noLongerText.getElement().setAttribute("title",i18n.GL3460_1());
 
 		recycleImage.setUrl("images/collection_error.png");
-		madePrivateOrDeletedText.getElement().setInnerHTML(i18n.GL0656());
+		madePrivateOrDeletedText.getElement().setInnerHTML(i18n.GL3460_2());
 		madePrivateOrDeletedText.getElement().setId("pnlMadePrivateOrDeletedText");
-		madePrivateOrDeletedText.getElement().setAttribute("alt",i18n.GL0656());
-		madePrivateOrDeletedText.getElement().setAttribute("title",i18n.GL0656());
+		madePrivateOrDeletedText.getElement().setAttribute("alt",i18n.GL3460_2());
+		madePrivateOrDeletedText.getElement().setAttribute("title",i18n.GL3460_2());
 
-		meanTimetext.getElement().setInnerHTML(i18n.GL0657());
+		meanTimetext.getElement().setInnerHTML(i18n.GL3460_3());
 		meanTimetext.getElement().setId("pnlMeanTimetext");
-		meanTimetext.getElement().setAttribute("alt",i18n.GL0657());
-		meanTimetext.getElement().setAttribute("title",i18n.GL0657());
+		meanTimetext.getElement().setAttribute("alt",i18n.GL3460_3());
+		meanTimetext.getElement().setAttribute("title",i18n.GL3460_3());
 
 		btnLibrary.setText(i18n.GL1831());
 		btnLibrary.getElement().setAttribute("alt",i18n.GL1831());

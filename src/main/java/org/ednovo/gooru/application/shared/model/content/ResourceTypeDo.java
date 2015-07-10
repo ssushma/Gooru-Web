@@ -36,6 +36,7 @@ public class ResourceTypeDo implements Serializable {
 	private String name;
 	private String description;
 	private String type;
+	private String resourceType;
 	
 	public ResourceTypeDo(){}
 
@@ -61,5 +62,13 @@ public class ResourceTypeDo implements Serializable {
 
 	public String getType() {
 		return type;
+	}
+
+	public String getResourceType() {
+		return resourceType;
+	}
+
+	public void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
 	}
 }

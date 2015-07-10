@@ -38,6 +38,8 @@ public class ClasspageListDo extends ResourceDo {
 	private static final long serialVersionUID = -3223243025838735212L;
 	private List<CollectionDo> searchResults;
 	
+	private List<CollectionDo> searchResult;
+	
 	private String category;
 	private Integer totalHitCount;
 	
@@ -121,5 +123,19 @@ public class ClasspageListDo extends ResourceDo {
 	 */
 	public void setSearchResults(List<CollectionDo> searchResults) {
 		this.searchResults = searchResults;
+	}
+
+	/** 
+	 * This method is to get the searchResult
+	 */
+	public List<CollectionDo> getSearchResult() {
+		return searchResult;
+	}
+
+	/** 
+	 * This method is to set the searchResult
+	 */
+	public void setSearchResult(List<CollectionDo> searchResult) {
+		this.searchResult = searchResult;
 	}
 }

@@ -58,13 +58,20 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private Integer totalHitCount;
 	private Integer statusCode;
 	private ResourceDo questionInfo;
+	private String parentGooruOid;
 
 	private List<Map<String, String>> standards;
 
 	private RatingDo rating;
 
 	public CollectionItemDo(){
-
+		
+	}
+	public String getParentGooruOid() {
+		return parentGooruOid;
+	}
+	public void setParentGooruOid(String parentGooruOid) {
+		this.parentGooruOid = parentGooruOid;
 	}
 
 	/**
@@ -183,7 +190,11 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	}
 
 	public String getUrl() {
-        return getResource().getThumbnails().getUrl();
+		if(getResource().getThumbnails()!=null){
+			 return getResource().getThumbnails().getUrl();
+		}else{
+			return null;
+		}
     }
 
 	public String getViews() {

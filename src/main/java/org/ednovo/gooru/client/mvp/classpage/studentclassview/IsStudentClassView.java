@@ -60,4 +60,8 @@ public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHan
 
 	void setButtonHighlight();
 	
+	void setPreviewClassMode(boolean isPreview);
+	
+	void setJoinClassData();
+	
 }

@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -82,9 +83,9 @@ public abstract class OpendEndedQuestionView extends Composite{
 		answertext.getElement().setInnerHTML(i18n.GL0665());
 		answertext.getElement().setAttribute("alt",i18n.GL0665());
 		answertext.getElement().setAttribute("title",i18n.GL0665());
-		submitButton.setText(i18n.GL0666());
-		submitButton.getElement().setAttribute("alt",i18n.GL0666());
-		submitButton.getElement().setAttribute("title",i18n.GL0666());
+		submitButton.setText(i18n.GL3460());
+		submitButton.getElement().setAttribute("alt",i18n.GL3460());
+		submitButton.getElement().setAttribute("title",i18n.GL3460());
 		showPreviousAttemptResult(attemptedAnswerDo);
 
 		String value = StringUtil.generateMessage(i18n.GL2103(), "1000");
@@ -176,6 +177,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 			 errorMessageText.setText(i18n.GL1459()+i18n.GL_SPL_FULLSTOP());
 		 }
 		}
+		AppClientFactory.fireEvent(new AssessmentsNextResourceEvent());
 	}
 
 	public void showSubmitedText(){

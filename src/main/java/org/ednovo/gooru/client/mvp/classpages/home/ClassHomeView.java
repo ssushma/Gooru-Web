@@ -33,10 +33,12 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AttachToDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -92,7 +94,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 	AlertMessageUc alertMessageUc;
 
-	private NewClasspagePopupView newPopup = null;
+	private NewClassPopupView newPopup = null;
 
 	private boolean isValid=true;
 
@@ -130,10 +132,11 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		offsetLimitOwner = 0;
 		offsetLimitJoined = 0;
 
-		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
+						try{
 						if(result.getTotalHitCount()>pageInitialLimitOwner)
 						{
 							seeMorebtnOwner.setVisible(true);
@@ -143,13 +146,13 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							seeMorebtnOwner.setVisible(false);
 						}
 
-						if(result.getSearchResults().size()>0)
+						if(result.getSearchResult().size()>0)
 						{
 							ownerClassesContainer.getElement().setInnerHTML("");
-						for(int i = 0; i<result.getSearchResults().size();i++)
+						for(int i = 0; i<result.getSearchResult().size();i++)
 						{
 							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-							classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Teach");
+							classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
 							ownerClassesContainer.add(classpageWidget);
 						}
 						}
@@ -157,11 +160,13 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						{
 							ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
 						}
-
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 					}
 				});
 
-		AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+		AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
@@ -173,13 +178,13 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						{
 							seeMorebtnJoined.setVisible(false);
 						}
-						if(result.getSearchResults().size()>0)
+						if(result.getSearchResult().size()>0)
 						{
 						joinedClassesContainer.getElement().setInnerHTML("");
-						for(int i = 0; i<result.getSearchResults().size();i++)
+						for(int i = 0; i<result.getSearchResult().size();i++)
 						{
 							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-							classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Study");
+							classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
 							joinedClassesContainer.add(classpageWidget);
 						}
 						}
@@ -309,8 +314,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			params.put("tab","classList");
 		}
-		AppClientFactory.getPlaceManager().revealPlace(
-				token, params);
+		AppClientFactory.getPlaceManager().revealPlace(token, params);
 	}
 	/**
 	 *
@@ -333,10 +337,10 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		public void onClick(ClickEvent event) {
 			MixpanelUtil.ClickOnNewClassPage();
 
-			newPopup = new NewClasspagePopupView() {
+			newPopup = new NewClassPopupView() {
 
 				@Override
-				public void createNewClasspage(String title) {
+				public void createNewClasspage(String title, String grade, boolean sharing) {
 
 					MixpanelUtil.Create_NewClasspage();
 					CollectionDo collectionDo = new CollectionDo();
@@ -345,47 +349,19 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					AppClientFactory
 							.getInjector()
 							.getClasspageService()
-							.createClassPage(collectionDo.getTitle(),
-									new SimpleAsyncCallback<CollectionDo>() {
+							.createClass(title,grade,sharing,new SimpleAsyncCallback<ClasspageDo>() {
 
 										@Override
-										public void onSuccess(CollectionDo result) {
-											final String classpageId = result
-													.getGooruOid();
-											AssignmentDo assignmentDo = new AssignmentDo();
-											assignmentDo
-													.setClasspageId(classpageId);
-
-											TaskDo taskDo = new TaskDo();
-											taskDo.setTitle(i18n.GL0121());
-											taskDo.setTypeName("assignment");
-											assignmentDo.setTask(taskDo);
-
-											AttachToDo attachToDo = new AttachToDo();
-											attachToDo.setId(classpageId);
-											attachToDo.setType("classpage");
-
-											assignmentDo.setAttachTo(attachToDo);
-
-											AppClientFactory
-													.getInjector()
-													.getClasspageService()
-													.v2CreateAssignment(
-															assignmentDo,
-															new SimpleAsyncCallback<AssignmentDo>() {
-
-																@Override
-																public void onSuccess(
-																		AssignmentDo result) {
-																	// Assig to
-																	// classpage.
-																	OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASSPAGE);
-																	newPopup.ClosePopup();
-																}
-															});
-										}
-									});
-				}
+										public void onSuccess(ClasspageDo result) {
+											//final String classpageId = result.getUri();
+											String[] uri=result.getUri().split("/");
+											final String classpageId =  uri[uri.length-1];
+											String title = result.getName();
+											OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
+											newPopup.ClosePopup();
+												}
+											});
+					}
 			};
 		}
 
@@ -434,11 +410,11 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 			}
 
 			MixpanelUtil.ClickOnStudyNow();
-			AppClientFactory.getInjector().getClasspageService().v2getClasspageByCode(txtCode.getText().trim(), new SimpleAsyncCallback<CollectionDo>(){
+			AppClientFactory.getInjector().getClasspageService().v3GetClassById(txtCode.getText().trim(), new SimpleAsyncCallback<ClasspageDo>(){
 				@Override
-				public void onSuccess(CollectionDo result) {
+				public void onSuccess(ClasspageDo result) {
 					 setEnterLblVisbility(false);
-					 if(result.getGooruOid()==null){
+					 if(result.getClassUid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
@@ -459,11 +435,11 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								isValid=false;
 							}
 						});
-					}else if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+					}else if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 					{
 
 						Map<String, String> params = new HashMap<String, String>();
-						params.put("id",result.getGooruOid());
+						params.put("id",result.getClassUid());
 						params.put("pageSize", "10");
 						params.put("pageNum", "0");
 						params.put("pos", "1");
@@ -472,16 +448,16 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 					}
-					 else if(result.getSharing().equalsIgnoreCase("private")){
+					 else if(!result.isVisibility()){
 
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 						{
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 								MixpanelUtil.Click_Study_LandingPage();
 							}
 
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
+							params.put("id",result.getClassUid());
 							params.put("pageSize", "10");
 							params.put("pageNum", "0");
 							params.put("pos", "1");
@@ -501,7 +477,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							}
 
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
+							params.put("id",result.getClassUid());
 							params.put("pageSize", "10");
 							params.put("pageNum", "0");
 							params.put("pos", "1");
@@ -520,7 +496,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							}
 
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
+							params.put("id",result.getClassUid());
 							params.put("pageSize", "10");
 							params.put("pageNum", "0");
 							params.put("pos", "1");
@@ -545,7 +521,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					else
 					{
 						Map<String, String> params = new HashMap<String, String>();
-						params.put("id",result.getGooruOid());
+						params.put("id",result.getClassUid());
 						params.put("pageSize", "10");
 						params.put("pageNum", "0");
 						params.put("pos", "1");
@@ -554,7 +530,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 							StudentAssignmentView.setPublicPage();
 						}else if(result.getStatus().equalsIgnoreCase("active")){
 							StudentAssignmentView.setPublicPageActive();
@@ -590,7 +566,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			offsetLimitJoined = pageInitialLimitJoined;
-			AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+			AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
@@ -600,9 +576,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							}else{
 								seeMorebtnJoined.setVisible(false);
 							}
-							for(int i = 0; i<result.getSearchResults().size();i++) {
+							for(int i = 0; i<result.getSearchResult().size();i++) {
 								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-								classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Study");
+								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
 								joinedClassesContainer.add(classpageWidget);
 							}
 						}
@@ -630,7 +606,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			offsetLimitOwner = pageInitialLimitOwner;
-			AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
@@ -644,11 +620,10 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								seeMorebtnOwner.setVisible(false);
 							}
 
-
-							for(int i = 0; i<result.getSearchResults().size();i++)
+							for(int i = 0; i<result.getSearchResult().size();i++)
 							{
 								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-								classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Teach");
+								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
 								ownerClassesContainer.add(classpageWidget);
 							}
 

@@ -27,6 +27,8 @@ package org.ednovo.gooru.application.shared.model.content;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.application.shared.model.user.UserDo;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -53,7 +55,19 @@ public class ClasspageDo implements Serializable{
 	private String creatorUsername;
 	private String creatorProfileImage;
 	private String itemCount;
+	
+	private String name;
+	private String grades;
+	private boolean visibility;
+	private String uri;
 	private String memberCount;
+	
+	private String classUid;
+	private String classCode;
+	private UserDo user;
+	private String courseGooruOid;
+	private String mediaFilename;
+	private int minimumScore;
 
 	public ClasspageDo(){}
 
@@ -220,6 +234,146 @@ public class ClasspageDo implements Serializable{
 
 	public void setMemberCount(String memberCount) {
 		this.memberCount = memberCount;
+	}
+
+	/** 
+	 * This method is to get the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/** 
+	 * This method is to set the name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/** 
+	 * This method is to get the grades
+	 */
+	public String getGrades() {
+		return grades;
+	}
+
+	/** 
+	 * This method is to set the grades
+	 */
+	public void setGrades(String grades) {
+		this.grades = grades;
+	}
+
+	/** 
+	 * This method is to get the visibility
+	 */
+	public boolean isVisibility() {
+		return visibility;
+	}
+
+	/** 
+	 * This method is to set the visibility
+	 */
+	public void setVisibility(boolean visibility) {
+		this.visibility = visibility;
+	}
+
+	/** 
+	 * This method is to get the uri
+	 */
+	public String getUri() {
+		return uri;
+	}
+
+	/** 
+	 * This method is to set the uri
+	 */
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	/** 
+	 * This method is to get the classUid
+	 */
+	public String getClassUid() {
+		return classUid;
+	}
+
+	/** 
+	 * This method is to set the classUid
+	 */
+	public void setClassUid(String classUid) {
+		this.classUid = classUid;
+	}
+
+	/** 
+	 * This method is to get the classCode
+	 */
+	public String getClassCode() {
+		return classCode;
+	}
+
+	/** 
+	 * This method is to set the classCode
+	 */
+	public void setClassCode(String classCode) {
+		this.classCode = classCode;
+	}
+
+	/** 
+	 * This method is to get the user
+	 */
+	public UserDo getUser() {
+		return user;
+	}
+
+	/** 
+	 * This method is to set the user
+	 */
+	public void setUser(UserDo user) {
+		this.user = user;
+	}
+
+	/** 
+	 * This method is to get the courseGooruOid
+	 */
+	public String getCourseGooruOid() {
+		return courseGooruOid;
+	}
+
+	/** 
+	 * This method is to set the courseGooruOid
+	 */
+	public void setCourseGooruOid(String courseGooruOid) {
+		this.courseGooruOid = courseGooruOid;
+	}
+
+	/** 
+	 * This method is to get the mediaFilename
+	 */
+	public String getMediaFilename() {
+		return mediaFilename;
+	}
+
+	/** 
+	 * This method is to set the mediaFilename
+	 */
+	public void setMediaFilename(String mediaFilename) {
+		this.mediaFilename = mediaFilename;
+	}
+
+	/** 
+	 * This method is to get the minimumScore
+	 */
+	public int getMinimumScore() {
+		return minimumScore;
+	}
+
+	/** 
+	 * This method is to set the minimumScore
+	 */
+	public void setMinimumScore(int minimumScore) {
+		this.minimumScore = minimumScore;
 	}
 
 

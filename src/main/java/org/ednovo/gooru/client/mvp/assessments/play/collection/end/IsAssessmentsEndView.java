@@ -27,58 +27,31 @@ package org.ednovo.gooru.client.mvp.assessments.play.collection.end;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
-import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Frame;
 
 
 public interface IsAssessmentsEndView extends IsViewWithHandlers<AssessmentsEndUiHandlers>{
 public void setCollectionMetadata(CollectionDo collectionDo);
 
-	public void setViewCount(String viewCount);
-
-	public void setUserProfileName(String gooruUid);
-
-	public void setLikesCount(int likesCount);
 
 	public void resetMetadataFields();
 
-	public void displayAuthorDetails(boolean isDisplayDetails);
-
-	public Anchor getFlagButton();
-
 	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList, String coursePage, String subject, String lessonId, String libraryName);
-
-	public void isConceptsContainerVisible(boolean isVisible);
-
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo);
 
 	public void setDataInsightsSummaryUrl(String sessionId);
 
 	public void setDataInsightsUrl();
 
-	public void clearDashBoardIframe();
-
 	public void setClasspageInsightsUrl(String classpageId, String sessionId);
 
-	public void displaySpendTime(Long hours,Long mins, Double secs);
-
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
-
-	public void displayNextCollectionDetails(CollectionDo collectionDo,String subjectId,String courseId,String libraryType);
-
-	public void hideNextCollectionContainer(boolean hide);
-
-	public void showAvgReaction(String averageReaction);
-
-	public void dispalyTime();
-
 
 	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
 
@@ -86,14 +59,14 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 
 	public void resetCollectionMetaData();
 
-	public HTMLPanel getLoadingImageLabel();
+	public void setQuestionsData(ArrayList<UserDataDo> questionsData);
 
-	public void hidePanel();
+	public void setQuestionsPrintData(ArrayList<UserDataDo> questionsData);
 
-	public void resetData();
+	public void setPdfForEmail(String result);
 
-	public void showMessageWhenDataNotFound();
-
-	public void displayWhatsNextContent(FolderWhatsNextCollectionDo result, String urlValue);
+	public Frame getFrame();
+	
+	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo);
 
 }

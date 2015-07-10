@@ -63,10 +63,10 @@
     margin-right: 5px;
 }
 .learningHeaderBlock .green-circle {
-	width: 20px;
-	height: 20px;
+	width: 23px;
+	height: 23px;
 	border-radius: 50% 50%;
-	background: #a5cba1 url("//127.0.0.1:8888/images/Classpage/student/checkmark-small.png") no-repeat 0px 4px;
+	background: #a5cba1 url("//127.0.0.1:8888/images/Classpage/student/checkmark-small.png") no-repeat 4px 7px;
     display: inline-block;
 }
 
@@ -84,15 +84,15 @@
 }
 
 .learningHeaderBlock .blue-circle {
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 23px;
     border-radius: 50% 50%;
     background: #85b9df;
     display: inline-block;
 }
 .learningHeaderBlock .grey-circle {
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 23px;
     border-radius: 50% 50%;
     background: #d1cfcf;
     display: inline-block;
@@ -1185,18 +1185,18 @@ th.headcol.whitebg {
 	color:#a5cba1;
 	padding:0 0 !important;
 }
-.resourceImgContainer{
+.lesson-view-data .resourceImgContainer{
 	padding:5px 18px;
 	border-spacing:10px;
 }
-.resourceImgContainer .videoSmall {
+.lesson-view-data .resourceImgContainer .videoSmall {
     background:url(../images/Video_1.png) no-repeat;
 }
-.resourceImgContainer img {
+.lesson-view-data .resourceImgContainer img {
     height: 60px;
     width: 80px;
 }
-.resourceImgContainer .resourceName {
+.lesson-view-data .resourceImgContainer .resourceName {
     color: #fff;
     font-size: 12px;
     height: 61px;
@@ -1206,15 +1206,15 @@ th.headcol.whitebg {
     width: 81px;
 }
 
-.resourceImgContainer a{
+.lesson-view-data .resourceImgContainer a{
 	position:relative;
 	display:table-cell;
 	
 }
-.resourceImgContainer a:hover {
+.lesson-view-data .resourceImgContainer a:hover {
     opacity: 0.6;
 }
-.resourceImgContainer a:hover .videoSmall {
+.lesson-view-data .resourceImgContainer a:hover .videoSmall {
     display: none;
 }
 
@@ -1526,7 +1526,7 @@ th.headcol.whitebg {
 		display:block;
 		text-align:center;
 	}
-	.resourceImgContainer {
+	.lesson-view-data .resourceImgContainer {
     border-spacing: 5px;
     padding: 5px;
 }
@@ -1541,7 +1541,7 @@ th.headcol.whitebg {
 		display:block;
 		text-align:center;
 	}
-	.resourceImgContainer {
+	.lesson-view-data .resourceImgContainer {
     border-spacing: 5px;
     padding: 5px;
 }
@@ -1665,7 +1665,6 @@ th.headcol.whitebg {
     width: 10px;
     border-radius: 50% 50%;
     background: #85b9df;
-    z-index: 999;
     position: relative;
 }
 .planProgress .planView ul li.green {
@@ -1794,6 +1793,31 @@ th.headcol.whitebg {
     text-align: center;
     width: 62px;
 }
+
+.teachReportUnitNavigationView {
+	margin: 0px !important;
+	background: #ffffff !important;
+	border-bottom: 1px solid #ddd;
+}
+
+.classProgressIndications .contentStatus {
+	border: 1px solid #4897ce;
+	border-radius: 4px;
+	margin: 5px;
+}
+
+.classProgressIndications .contentStatus div{
+	display: table-cell;
+	padding: 10px 15px;
+	text-align: center;
+	color: #4897ce;
+	cursor: pointer;
+}
+
+.classProgressIndications .contentStatus div.activeDiv {
+	background: #e7f1f9;
+}
+
 .courseReportsBodyBlock {
     background: #fafafa;
     border-radius: 0 0 6px 6px;
@@ -2115,6 +2139,50 @@ th.headcol.whitebg {
 	background:url("${cdn.endpoint}/images/folderIcon-sprite.png") no-repeat scroll 5px 9px rgba(0, 0, 0, 0);
 }
 
+.myclasses-mastery-unit-cell-style {
+	width: 100px;
+	color: #4897ce;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.myclasses-mastery-collection-cell-style {
+	color: #4897ce;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.student-report-details-popup-panel {
+    color: #515151;
+    font-size: 26px;
+    margin: 5px 0;
+}
+.student-report-details-popup-panel img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50% 50%;
+    border: 5px solid #85b9df;
+    margin-top: -8px;
+}
+.margin-top-zero {
+	margin-top: 0px;
+}
+.padding-top-5 {
+	padding-top: 5px;
+}
+.margin-top-20 {
+	margin-top: 20px;
+}
+.modal-widget-1000 {
+	width: 1000px;
+	background: #fff;
+}
+.teach-popup-student-content-margin {
+	margin: 0px 15px;
+	padding-bottom: 0px;
+}
 @media (min-width: 240px) and (max-width: 319px) {
     header {
         position: relative;

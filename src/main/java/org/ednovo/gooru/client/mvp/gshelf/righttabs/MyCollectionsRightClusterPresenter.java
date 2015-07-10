@@ -52,7 +52,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	CollectionInfoPresenter collectionInfoPresenter;
 
-	UnitInfoPresenter unitInfoPresenter;
+	UnitInfoPresenter unitInfoPresenter; 
+	
 
 	ShelfMainPresenter shelfMainPresenter;
 	
@@ -68,13 +69,18 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	List<FolderDo> folderListDoChild;
 
-	final String COLLECTION="Collection";
+	final String COLLECTION="collection";
+	final String ASSESSMENT="assessment";
+	private static final String ASSESSMENT_URL = "assessment/url";
+	
+	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
+	private static final String FOLDER = "Folder";
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -93,6 +99,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionShareTabPresenter=collectionShareTabPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 
+		externalAssessmentInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		unitInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -111,7 +118,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		if(index==1){
 				//For displaying template and data
 				getView().enableAndHideTabs(true);
-				if(COURSE.equalsIgnoreCase(type)){ 
+				if(COURSE.equalsIgnoreCase(type)){
 					courseInfoPresenter.callTaxonomyService();
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
@@ -122,12 +129,31 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if("Lesson".equalsIgnoreCase(type)){
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
-				}else if("Assessment".equalsIgnoreCase(type) || "Collection".equalsIgnoreCase(type)){
+				}else if(ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(type)){
+					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+						getView().disableAndEnableBreadCums(false);
+					}else{
+						getView().disableAndEnableBreadCums(true);
+					}
 					collectionInfoPresenter.setCollectionType(type);
-					collectionInfoPresenter.setData(folderObj);
+					collectionInfoPresenter.setData(folderObj,type);
+					setInSlot(INNER_SLOT, collectionInfoPresenter);
+				}else if(FOLDER.equalsIgnoreCase(type)){
+					//To disabel bread cums
+					getView().disableAndEnableBreadCums(false);
+					collectionInfoPresenter.setCollectionType(type);
+					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else{
+					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+						getView().disableAndEnableBreadCums(false);
+					}else{
+						getView().disableAndEnableBreadCums(true);
+					}
 					getView().enableAndHideTabs(false);
+					externalAssessmentInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
@@ -140,7 +166,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			}
 		}else if(index==3){
 			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
-				//CollectionShareTabPresenter.setData(folderObj);
+				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
 		}
@@ -203,7 +229,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			    setTabItems(1, UNIT, null);
 				setUnitTemplate(UNIT);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
-			}else{
+			}else if(type.contains(LESSON)){
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON);
 			}
@@ -215,16 +241,24 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 */
 	@Override
 	public void deleteCourseContent(final String o1CourseId) {
-		AppClientFactory.getInjector().getfolderService().deleteCourse(o1CourseId, new SimpleAsyncCallback<String>() {
+		AppClientFactory.getInjector().getfolderService().deleteCourse(o1CourseId, new SimpleAsyncCallback<Integer>() {
 			@Override
-			public void onSuccess(String result) {
-				getView().onDeleteCourseSuccess(o1CourseId);
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteCourseSuccess(o1CourseId);
+				}
 			}
 		});
 	}
+	
+	/**
+	 * Sets the right side view on delete of course.
+	 */
 	@Override
-	public void setRightClusterContent(String o1CourseId) {
-		shelfMainPresenter.setUserAllCourses(o1CourseId);
+	public void setRightClusterContent(String o1CourseId,String currentTypeView) {
+		if(shelfMainPresenter!=null){
+			shelfMainPresenter.setUserAllCourses(o1CourseId,currentTypeView);
+		}
 	}
 	@Override
 	public void getUserShelfData(String collectionId,String valuetype) {
@@ -235,4 +269,70 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 	}
 
+	/**
+	 * calls API to delete Unit.
+	 */
+	@Override
+	public void deleteUnitContent(final String o1CourseId, final String o2UnitId) {
+		AppClientFactory.getInjector().getfolderService().deleteUnit(o1CourseId,o2UnitId, new SimpleAsyncCallback<Integer>() {
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteUnitSuccess(o1CourseId,o2UnitId);
+				}
+			}
+		});
+	}
+	
+
+	/**
+	 * calls API to delete Lesson.
+	 */
+	@Override
+	public void deleteLessonContent(final String o1CourseId, final String o2UnitId,	final String o3LessonId) {
+		AppClientFactory.getInjector().getfolderService().deleteLesson(o1CourseId,o2UnitId,o3LessonId, new SimpleAsyncCallback<Integer>() {
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteLessonSuccess(o1CourseId,o2UnitId,o3LessonId);
+				}
+			}
+			
+		});
+	}
+	
+	/**
+	 * Sets the right side view on delete of Unit.
+	 */
+	@Override
+	public void setUnitsListOnRightCluster(String o1CourseId,String o2DeletedUnitId,String currentTypeView) {
+		shelfMainPresenter.setUserAllUnits(o1CourseId, o2DeletedUnitId,currentTypeView);
+	}
+	
+	/**
+	 * Sets the right side view on delete of Lesson.
+	 */
+	@Override
+	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView) {
+		shelfMainPresenter.setUserAllLessons(o1CourseId,o2UnitId, o3LessDeletedonId,currentTypeView);
+	}
+	
+	/**
+	 * Calls API to check weather Course is assigned to class or not.
+	 */
+	@Override
+	public void isAssignedToClassPage(final String o1CourseId,final String o2UnitId, final String o3LessonId) { 
+		
+		AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<Integer>() { 
+
+			@Override
+			public void onSuccess(Integer result) {
+				getView().invokeContentDeletePopup(o1CourseId,o2UnitId,o3LessonId,result);
+			} 
+		});
+	}
+	
+	
 }

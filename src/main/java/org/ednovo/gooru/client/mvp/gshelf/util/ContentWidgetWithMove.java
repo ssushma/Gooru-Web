@@ -80,7 +80,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.type=type;
 		
-		if(folderObj.getTitle()!=null){
+		if(folderObj!=null && folderObj.getTitle()!=null){
 			h3CourseTitle.setText(folderObj.getTitle());
 		}
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
@@ -100,7 +100,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		if(ASSESSMENTURL.equalsIgnoreCase(folderObj.getType())){
 			pTitle.setText(i18n.GL3007());
 		}else{
-			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj!=null?(folderObj.getType()!=null?folderObj.getCollectionType():""):""));
+			pTitle.setText(StringUtil.capitalizeFirstLetter(folderObj!=null?(folderObj.getType()!=null?folderObj.getType():""):""));
 		}
 		lblIndex.setText(indexVal+"");
 		txtMoveTextBox.setText(indexVal+"");
@@ -197,8 +197,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 			lblImage.setStyleName("folderImage");
 			spnUnitsCount.setVisible(false);
 			spnLessonsCount.setVisible(false);
-			pnlArrows.setVisible(false);
-			pnlMoveToEdit.setVisible(true);
+			pnlArrows.setVisible(true);
+			//pnlMoveToEdit.setVisible(true);
 		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal) || ASSESSMENT.equalsIgnoreCase(typeVal)){
 			if(COLLECTION.equalsIgnoreCase(typeVal)){
 				lblImage.setStyleName("collectionImage");
@@ -211,8 +211,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 			spnLessonsCount.setVisible(false);
 			spnCollectionsCount.setVisible(false);
 			spnAssessmentsCount.setVisible(false);
-			pnlArrows.setVisible(false);
-			pnlMoveToEdit.setVisible(true);
+			pnlArrows.setVisible(true);
+			//pnlMoveToEdit.setVisible(true);
 		}
 	}
 	/**

@@ -26,17 +26,10 @@ package org.ednovo.gooru.client.mvp.assessments.play.collection.end;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusHandler;
 
 public interface AssessmentsEndUiHandlers extends BaseUiHandlers {
 
-	public void resetCollectionActivityEventId();
-
 	public void triggerCollectionShareDataEvent(String collectionId,String itemType, String shareType, boolean confirmStatus) ;
-
-	public void getAvgReaction();
-
-	public void updateCommentsStatus(String string);
 
 	public void getSessionsDataByUser(String collectionId, String classId, String userId);
 
@@ -47,4 +40,6 @@ public interface AssessmentsEndUiHandlers extends BaseUiHandlers {
 	public void setCollectionSummaryBasedOnClasspageIdSessionId();
 
 	public void clearslot();
+
+	public void setHtmltopdf(String string, String collectionTitle,boolean isClickedOnEmail);
 }

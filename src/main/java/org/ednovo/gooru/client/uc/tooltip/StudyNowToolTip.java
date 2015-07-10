@@ -461,7 +461,7 @@ public class StudyNowToolTip extends PopupPanel {
 							for(int i = 0; i<resultSize;i++) 
 							{
 //								Label className = new Label("classList "+i);
-								String classpageId = classpageListDo.getSearchResults().get(i).getGooruOid();
+								String classpageId = classpageListDo.getSearchResults().get(i).getClassUid();
 								classpageList.put(classpageId, classpageListDo.getSearchResults().get(i));
 								listClasspage.add(classpageId);
 								/*className.setStyleName("studyNowToolTipLbl");

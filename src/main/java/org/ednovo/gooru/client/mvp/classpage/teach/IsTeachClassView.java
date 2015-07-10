@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpage.teach;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 
 /**
@@ -42,6 +43,27 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  * @Reviewer: 
  */
 public interface IsTeachClassView extends IsViewWithHandlers<TeachClassViewUiHandlers> {
+
+	/**
+	 * @function setClassHeaderView 
+	 * 
+	 * @created_date : 07-Jul-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setClassHeaderView(ClasspageDo classpageDo);
 
 	
 }

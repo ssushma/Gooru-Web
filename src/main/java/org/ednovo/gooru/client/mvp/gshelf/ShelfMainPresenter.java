@@ -332,7 +332,14 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightPanelData(FolderDo folderObj,String clickedItemType,List<FolderDo> folderListDoChild){
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
-		getView().getCollectionLabel().setVisible(false);
+		if(folderObj!=null){
+			if(!FOLDER.equalsIgnoreCase(folderObj.getType())){
+				getView().getCollectionLabel().setVisible(false);
+			}else{
+				getView().getCollectionLabel().setVisible(true);
+				getView().getCollectionLabel().setText(folderObj.getTitle());
+			}
+		}
 		getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
 		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
@@ -415,7 +422,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setCollectionContent(FolderDo collectionDo){
 		clearSlot(RIGHT_SLOT);
-		getMyCollectionsRightClusterPresenter().setTabItems(1, "collection",collectionDo);
+		getMyCollectionsRightClusterPresenter().setTabItems(1, collectionDo.getType(),collectionDo);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			getView().getCollectionLabel().setVisible(true);
@@ -438,8 +445,38 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	/**
 	 * Sets all courses on right cluster.
+	 * @param currentTypeView 
 	 */
-	public void setUserAllCourses(String deletedTreeWidgetId) {
-		getView().removeDeletedTreeWidget(deletedTreeWidgetId);
+	public void setUserAllCourses(String deletedTreeWidgetId, String currentTypeView) { 
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
+	}
+
+	/**
+	 * 
+	 * @param o1CourseId
+	 * @param deletedTreeWidgetId
+	 * @param currentTypeView
+	 */
+	public void setUserAllUnits(String o1CourseId, String deletedTreeWidgetId, String currentTypeView) { 
+		getView().removeDeletedTreeWidget(deletedTreeWidgetId,currentTypeView);
+	}
+
+	/**
+	 * 
+	 * @param o1CourseId
+	 * @param o2UnitId
+	 * @param o3LessDeletedonId
+	 * @param currentTypeView
+	 */
+	public void setUserAllLessons(String o1CourseId, String o2UnitId,String o3LessDeletedonId, String currentTypeView) {
+		getView().removeDeletedTreeWidget(o3LessDeletedonId,currentTypeView);
+	}
+	
+	/**
+	 * This is used to set the bread crumbs after delete.
+	 */
+	@Override
+	public void onDeleteSetBreadCrumbs(String title, String course) {
+		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
 }

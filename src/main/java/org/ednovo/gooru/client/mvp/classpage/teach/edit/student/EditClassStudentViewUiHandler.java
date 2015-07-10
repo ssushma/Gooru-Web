@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 
 /**
@@ -42,5 +45,16 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  * @Reviewer: 
  */
 public interface EditClassStudentViewUiHandler extends BaseUiHandlers {
+	
+	void generateShareLink(String classpageId);
 
+	void addStudents(String classpageId, List<String> lstEmailID);
+	
+	void getActiveMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum,boolean getPendingMembers);
+	
+	void getMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum);
+		
+	void removePendingUserFromCalss(ClasspageDo classpageDo, String emailId,int pendingOffSet, boolean pendingFlag, MembersViewVc membersViewVc);
+
+	void removeActiveUserFromClass(ClasspageDo classpageDo, String emailId,int pendingOffSet, boolean pendingFlag, MembersViewVc membersViewVc);
 }

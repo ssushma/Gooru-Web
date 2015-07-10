@@ -130,6 +130,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				if(isCreateLesson){
+					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
 				}else{
@@ -149,11 +150,13 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(UNIT);
 				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit){
+					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
+				}else{
+					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, folderDo);
 				}
 			}
 		});

@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
@@ -197,5 +198,13 @@ public interface FolderService extends BaseService {
 	 */
 	Map<String,String> getFolderRouteNodes(String folderId) throws GwtException,ServerDownException;
 	
-	String deleteCourse(String o1CourseId) throws GwtException,ServerDownException;
+	Integer deleteCourse(String o1CourseId) throws GwtException,ServerDownException;
+	
+	Integer deleteUnit(String o1CourseId, String o2UnitId) throws GwtException,ServerDownException ;
+	
+	Integer deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId)throws GwtException,ServerDownException;
+	
+	public Integer getClassesAssociatedWithCourse(String o1CourseId) throws GwtException,ServerDownException;
+
+	List<ListValuesDo> getDepthOfKnowledgesList() throws GwtException;
 }

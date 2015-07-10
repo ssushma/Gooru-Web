@@ -3,6 +3,8 @@ package org.ednovo.gooru.application.shared.model.folder;
 import java.io.Serializable;
 import java.util.List;
 
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -20,6 +22,13 @@ public class CreateDo implements Serializable{
 	private List<Integer> audienceIds;
 	private List<Integer> domainIds;
 	private List<Integer> standardIds;
+	private String url;
+	private String goals;
+	private String sharing;
+	private String isLoginRequired;
+	private String mediaFilename;
+	private ThumbnailDo thumbnails;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -74,7 +83,42 @@ public class CreateDo implements Serializable{
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
 	}
-	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getGoals() {
+		return goals;
+	}
+	public void setGoals(String goals) {
+		this.goals = goals;
+	}
+	public String getSharing() {
+		return sharing;
+	}
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
+	}
+	public String getIsLoginRequired() {
+		return isLoginRequired;
+	}
+	public void setIsLoginRequired(String isLoginRequired) {
+		this.isLoginRequired = isLoginRequired;
+	}
+	public String getMediaFilename() {
+		return mediaFilename;
+	}
+	public void setMediaFilename(String mediaFilename) {
+		this.mediaFilename = mediaFilename;
+	}
+	public ThumbnailDo getThumbnails() {
+		return thumbnails;
+	}
+	public void setThumbnails(ThumbnailDo thumbnails) {
+		this.thumbnails = thumbnails;
+	}
 	
 	
 }

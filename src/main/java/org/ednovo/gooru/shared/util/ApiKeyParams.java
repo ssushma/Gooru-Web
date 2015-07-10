@@ -71,6 +71,7 @@ public interface ApiKeyParams {
 	String MERGE = "merge";
 	String INCLUDE_CONTENT_PROVDER = "includeContentProvider";
 	String INCLUDE_CUSTOM_FIELDS = "includeCustomFields";
+	String INCLUDU_ITEMS = "includeItems";
 	String ROOT_NODE_ID = "rootNodeId";
 	String PAGE_NUM = "pageNum";
 	String PAGE_SIZE = "pageSize";
@@ -143,4 +144,5 @@ public interface ApiKeyParams {
 	String YOUTUBE_PART="part";
 	String COURSE="Course";
 	String CONTRIBUTOR_QUERY="contributorQuery";
+	String EMAILID="email";
 }

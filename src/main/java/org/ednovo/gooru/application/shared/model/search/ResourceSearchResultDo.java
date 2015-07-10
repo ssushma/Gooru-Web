@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.application.shared.model.content.LicenseDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.application.shared.model.content.SearchRatingsDo;
@@ -39,7 +40,7 @@ import org.ednovo.gooru.application.shared.model.content.SearchResultsTagsDo;
 import org.ednovo.gooru.application.shared.model.content.TagDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 
-public class ResourceSearchResultDo implements Serializable {
+public class ResourceSearchResultDo extends ResourceDo implements Serializable {
 
 	/**
 	 *
@@ -433,7 +434,7 @@ public class ResourceSearchResultDo implements Serializable {
 		this.folder = folder;
 	}
 
-	public SearchResourceFormatDO getResourceFormat() {
+	public SearchResourceFormatDO getNewResourceFormat() {
 		return resourceFormat;
 	}
 
@@ -508,7 +509,7 @@ public class ResourceSearchResultDo implements Serializable {
 	/**
 	 * @return the resourceTags
 	 */
-	public List<SearchResultsTagsDo> getResourceTags() {
+	public List<SearchResultsTagsDo> getNewResourceTags() {
 		return resourceTags;
 	}
 
@@ -534,10 +535,4 @@ public class ResourceSearchResultDo implements Serializable {
 	public void setResourceUsedUserCount(int resourceUsedUserCount) {
 		this.resourceUsedUserCount = resourceUsedUserCount;
 	}
-
-
-
-
-
-
 }

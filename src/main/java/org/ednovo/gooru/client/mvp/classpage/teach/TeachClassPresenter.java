@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpage.teach;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -72,6 +73,8 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	private boolean isApiCalled = false;
 	
+	ClasspageDo classpageDo;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.EDIT_CLASS)
 	public interface IsTeachClassProxy extends ProxyPlace<TeachClassPresenter> {
@@ -96,18 +99,6 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		/*String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
-		if(view.equalsIgnoreCase("classSettings")){
-			setInSlot(SLOT_BODYMENU, editClassSettingsPresenter);
-		}else if(view.equalsIgnoreCase("classContent")){
-			setInSlot(SLOT_BODYMENU, editClassContentPresenter);
-		}else if(view.equalsIgnoreCase("student")){
-			setInSlot(SLOT_BODYMENU, editClassStudentPresenter);
-		}
-		else{
-			setInSlot(SLOT_BODYMENU, editClassPresenter);
-		}*/
-		getClassDetails();
 	}
 	
 	@Override
@@ -138,19 +129,33 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReset() {
        super.onReset();
+       getClassDetails();
        loadNavigationPage();
 	}
 	
 	public void getClassDetails(){
+		
 		classpageId = getPlaceManager().getRequestParameter("classpageid");
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		String subloadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		String pageSize = getPlaceManager().getRequestParameter("pageSize");
 		String pageNum = getPlaceManager().getRequestParameter("pageNum");
 		String pos = getPlaceManager().getRequestParameter("pos");
-		//getView().setClasspageId(classpageId);
-		//getView().getClasspageById(classpageId, pageSize, pageNum, pos);
-		//getClasspageService.getCl
-		
+		if(loadPage.isEmpty() || subloadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER) && classpageId != null){
+			AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
+
+				@Override
+				public void onSuccess(ClasspageDo result) {
+					classpageDo=result;
+					getView().setClassHeaderView(classpageDo);
+					editClassStudentPresenter.setClassDetails(classpageDo);
+				}
+				
+			});
+		}
 	}
+	
+	
 
 	/** 
 	 * This method is to get the collectionAsyncCallback

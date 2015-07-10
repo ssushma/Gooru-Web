@@ -43,6 +43,7 @@ import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -56,6 +57,24 @@ public interface ClasspageService extends BaseService {
 	 * @throws GwtException
 	 */
 	public CollectionDo createClasspage(CollectionDo collectionDo)  throws GwtException, ServerDownException;
+	
+	/** new class v3 apis started
+	 */
+	public ClasspageDo createClass(String titlinviteStudentToClasse,String grades,boolean visiblity) throws GwtException,ServerDownException;
+	
+	public ClasspageDo v3GetClassById(String classpageId) throws GwtException,ServerDownException;
+	
+	public ClasspageListDo  v3GetUserClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	
+	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	
+	public StudentsAssociatedListDo getAssociatedPendingStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)	throws GwtException, ServerDownException;
+	
+	public StudentsAssociatedListDo getActiveAssociatedStudentInClassListByCode(String classCode, int offSet, int pageSize, String statusType) throws GwtException, ServerDownException;
+	
+	public void removePendingStudentFromClass(String classCode, boolean type, String emailIds) throws GwtException, ServerDownException;
+	
+	public void removeActiveStudentFromClass(String classId,boolean visiblity,String gooruUid) throws GwtException,ServerDownException;
 	
 	/**
 	 * Get Classpage by Classpage id
@@ -171,6 +190,8 @@ public interface ClasspageService extends BaseService {
 	public ClasspageListDo  v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
 	
 	public ClasspageListDo  v2GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	
+	//public ArrayList<CollaboratorsDo> inviteStudentToClass_V3(String classId,List<String> lstEmailId) throws GwtException, ServerDownException;
 	
 	public AssignmentDo v2CreateAssignment(AssignmentDo assignmentDo) throws GwtException, ServerDownException;
 

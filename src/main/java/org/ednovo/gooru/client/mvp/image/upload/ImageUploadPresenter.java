@@ -27,9 +27,14 @@ package org.ednovo.gooru.client.mvp.image.upload;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.MediaUploadServiceAsync;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEvent;
+import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
@@ -70,6 +75,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	private boolean isImageUploadedFromUrl=false;
 	private boolean isClassPageImage=false;
 	private String classpageId=null;
+	
+	CreateDo createDoObj = new CreateDo();
+	
 
 
 
@@ -94,7 +102,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 
 	private static final String GOORU_OID = "id";
 
-	private IsShelfView shelfView;
+	private IsCollectionInfoView shelfView;
 
 	private IsAddResourceView addResourceView;
 
@@ -113,7 +121,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	 * @param view instance of {@link View}
 	 */
 	@Inject
-	public ImageUploadPresenter(IsShelfView isShelfView, IsAddResourceView addResourceView, EventBus eventBus, IsImageUploadView view) {
+	public ImageUploadPresenter(IsCollectionInfoView isShelfView, IsAddResourceView addResourceView, EventBus eventBus, IsImageUploadView view) {
 		super(eventBus, view);
 		this.setShelfView(isShelfView);
 		this.setAddResourceView(addResourceView);
@@ -205,7 +213,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					}else{
 						MixpanelUtil.AddImageFromMyComputer();
 					}
-					getShelfView().onPostCollectionImageUpload(collDo.getUrl());
+					//getShelfView().setCouseData(cco)
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -220,6 +228,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setSaveImageCollectionAsyncCallback(new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String url) {
+				System.out.println("image url::"+url);
 				if(isClassPageImage){
 					AppClientFactory.fireEvent(new UpdateClasspageImageEvent(url));
 				}else{
@@ -228,7 +237,16 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					}else{
 						MixpanelUtil.AddImageFromMyComputer();
 					}
-					getShelfView().onPostCollectionImageUpload(url);
+					ThumbnailDo thumbnailObj = new ThumbnailDo();
+					thumbnailObj.setUrl(url);
+
+					
+					FolderDo folderDo = new FolderDo();
+					folderDo.setTitle(createDoObj.getTitle());
+					folderDo.setCollectionType(createDoObj.getCollectionType());
+					folderDo.setThumbnails(thumbnailObj);
+					
+					getShelfView().setCouseData(folderDo,createDoObj.getCollectionType());
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -318,24 +336,11 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 
 	@Override
 	public void saveImageCollection(String gooruOid, String fileName) {
-		this.getMediaUploadService().saveImageCollection(gooruOid, fileName, getSaveImageCollectionAsyncCallback());
-
-
-/*		AppClientFactory.getInjector().getMediaUploadService().saveImageCollection(gooruOid, fileName, new AsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
-				getShelfView().onPostCollectionImageUpload(result);
-				getView().closeImageUploadWidget();
-				getView().resetImageUploadWidget();
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});*/
+		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		this.getMediaUploadService().saveImageCollection(o1,o2,o3,o4,createDoObj, fileName, getSaveImageCollectionAsyncCallback());
 	}
 
 
@@ -408,11 +413,11 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		return cropImageAsyncCallback;
 	}
 
-	public void setShelfView(IsShelfView shelfView) {
+	public void setShelfView(IsCollectionInfoView shelfView) {
 		this.shelfView = shelfView;
 	}
 
-	public IsShelfView getShelfView() {
+	public IsCollectionInfoView getShelfView() {
 		return shelfView;
 	}
 
@@ -430,6 +435,10 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 
 	public void setCollectionImage(boolean isCollectionImage) {
 		this.isCollectionImage = isCollectionImage;
+	}
+	
+	public void setCollectionData(CreateDo createDo) {
+		this.createDoObj = createDo;
 	}
 
 	public IsAddResourceView getAddResourceView() {
