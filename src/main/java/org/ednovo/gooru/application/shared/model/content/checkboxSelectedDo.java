@@ -39,9 +39,15 @@ public class checkboxSelectedDo implements Serializable
 	private boolean selected;
 	private String value;
 	private String name;
-	
+	private Integer id;
 	
 	public checkboxSelectedDo() {}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 
 	public boolean isSelected() {
