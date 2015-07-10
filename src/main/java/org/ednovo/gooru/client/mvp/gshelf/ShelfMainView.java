@@ -112,6 +112,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	private static final String LESSON = "Lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
+	private static final String ASSESSMENT_URL = "assessment/url";
 	
 	private static final String UNTITLEDCOURSE = i18n.GL3347();
 	private static final String UNTITLEDUNIT = i18n.GL3364();
@@ -668,24 +669,23 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDLESSON);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("lesson");
 			shelfTreeWidget.setLevel(3);
-		}else if("Collection".equalsIgnoreCase(type)){
+		}else if(COLLECTION.equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
 			shelfTreeWidget.setTreeWidgetType(COLLECTION);
 			shelfTreeWidget.getTitleLbl().setText(i18n.GL3367());
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setLevel(4);
-		}else if("Assessment".equalsIgnoreCase(type) || "ExternalAssessment".equalsIgnoreCase(type)){
+		}else if(ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 4);
-			shelfTreeWidget.setTreeWidgetType(ASSESSMENT);
-			shelfTreeWidget.getTitleLbl().setText("UntitledAssessment");
+			shelfTreeWidget.setTreeWidgetType(ASSESSMENT.equalsIgnoreCase(type)?ASSESSMENT:ASSESSMENT_URL);
+			shelfTreeWidget.getTitleLbl().setText(ASSESSMENT.equalsIgnoreCase(type)?"UntitledAssessment":"UntitledExternalAssessment");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
 			shelfTreeWidget.setLevel(4);
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
 		treeChildSelectedItem.insertItem(0, item);
 		treeChildSelectedItem.setState(true);
-		
-		if(!"Collection".equalsIgnoreCase(type) && !"Assessment".equalsIgnoreCase(type)){
+		if(!COLLECTION.equalsIgnoreCase(type) && !type.contains(ASSESSMENT)){ 
 			shelfTreeWidget.setFolderOpenedStatus(true);
 		}else{
 			shelfTreeWidget.setCollectionOpenedStatus(true);
@@ -865,7 +865,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O3_LEVEL,courseDo.getGooruOid());
 
 			shelfTreeWidget.setUrlParams(urlParams);
-		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)){
+		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
 			
 			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getParentItem().getWidget();
 			HashMap<String,String> urlParams = new HashMap<String,String>();
@@ -881,22 +881,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O3_LEVEL,unitShelfTreeWidget.getUrlParams().get(O3_LEVEL));
 			
 			urlParams.put("id",courseDo.getGooruOid());
-			urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:ASSESSMENT,courseDo.getTitle());
+			urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:ASSESSMENT_URL.equalsIgnoreCase(type)?
+					       ASSESSMENT_URL:ASSESSMENT,courseDo.getTitle());
 			
 			shelfTreeWidget.setUrlParams(urlParams);
 		}
-		/*else{
-			ShelfTreeWidget shelfTreeWidget1 = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
-			HashMap<String,String> urlParams = new HashMap<String,String>();
-			urlParams.put(COURSE,shelfTreeWidget1.getUpdatedWidgetsTitleType().get(COURSE));
-			urlParams.put(COLLECTION, courseDo.getTitle());
-			urlParams.put("o1",shelfTreeWidget1.getUrlParams().get("o1"));
-			urlParams.put("o2",shelfTreeWidget1.getUrlParams().get("o2"));
-			urlParams.put("o3",shelfTreeWidget1.getUrlParams().get("o2"));
-			urlParams.put("id",courseDo.getGooruOid());
-
-			shelfTreeWidget.setUrlParams(urlParams);
-		}*/
 	}
 
 	/**

@@ -41,10 +41,12 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	@UiField TextBox txtAssessmentTitle,txtAssessmentURL;
 	@UiField TextArea txaAssessmentDescription;
 	
-	final String SELECTEDSTYLE="setSelected",ASSESSMENTURL="Assessment/url";
+	final String SELECTEDSTYLE="setSelected",ASSESSMENTURL="assessment/url";
 	final String PUBLIC="public",PRIVATE="private",ANYONEWITHLINK="anyonewithlink";
 	
 	String selectedSharing,isLoginRequired;
+	
+	FolderDo folderObj;
 	
 	public ExternalAssessmentView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -179,7 +181,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				createOrUpDate.setTitle(txtAssessmentTitle.getText());
 				createOrUpDate.setUrl(txtAssessmentURL.getText());
 				createOrUpDate.setGoals(txaAssessmentDescription.getText());
-				createOrUpDate.setCollectionType(ASSESSMENTURL.toLowerCase());
+				createOrUpDate.setCollectionType(ASSESSMENTURL);
 				createOrUpDate.setSharing(selectedSharing);
 				createOrUpDate.setIsLoginRequired(isLoginRequired);
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
@@ -195,6 +197,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	@Override
 	public void setData(FolderDo folderObj) {
 		if(folderObj!=null){
+			this.folderObj = folderObj;
 			txtAssessmentTitle.setText(folderObj.getTitle());
 			txtAssessmentURL.setText(folderObj.getUrl());
 			txaAssessmentDescription.setText(folderObj.getGoals());
@@ -209,7 +212,11 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				}
 			}
 		}else{
-			txtAssessmentTitle.setText("UntitledAssessment");
+			txtAssessmentTitle.setText("UntitledExternalAssessment");
+			txtAssessmentURL.setText("Paste URL here");
+			pnlSharable.addStyleName(SELECTEDSTYLE);
+			lblRequiresNo.addStyleName(SELECTEDSTYLE);
 		}
+		
 	}
 }
