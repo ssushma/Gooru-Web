@@ -73,10 +73,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param folderId
 	 */
 	public void setDataInContentSlot(String type,String folderId,boolean isInnerSlot);
-	/**
-	 * This method is used to get scrollpanel
-	 */
-	public ScrollPanel getScrollPanel();
+
 	ShelfMainPresenter getShelfMainPresenter();
 	/**
 	 * To add new course/unit/lesson
