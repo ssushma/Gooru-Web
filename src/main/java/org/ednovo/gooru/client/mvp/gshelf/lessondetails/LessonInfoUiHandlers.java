@@ -37,7 +37,7 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	 */
 	public void callTaxonomyService();
 
-	void showStandardsPopup(String standardVal);
+	void showStandardsPopup(String standardVal, String titleVal);
 	/**
 	 * This method is used to create lesson
 	 * @param createObj
