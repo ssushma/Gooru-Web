@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.studentclassview;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H1Panel;
 import org.ednovo.gooru.client.uc.SpanPanel;
@@ -37,10 +37,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -67,6 +68,9 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@UiField SimplePanel learningMapContainer;
 	@UiField Image classImage;
 	@UiField SimpleCheckBox switchCheckBox;
+	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel;
+	@UiField Button joinClassBtn, teachViewBtn;
+	@UiField Label studentViewLbl;
 	
 	private static StudentClassViewUiBinder uiBinder = GWT.create(StudentClassViewUiBinder.class);
 
@@ -138,4 +142,31 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 		}
 	}
 
+	@Override
+	public void setPreviewClassMode(boolean isPreview) {
+		editClassMetadataPanel.setVisible(!isPreview);
+		previewClassMetadataPanel.setVisible(isPreview);
+		joinClassBtn.setVisible(false);
+	}
+
+	@Override
+	public void setJoinClassData() {
+		setPreviewClassMode(true);
+		joinClassBtn.setVisible(true);
+		teachViewBtn.setVisible(false);
+		studentViewLbl.setVisible(false);
+	}
+	
+	@UiHandler("joinClassBtn")
+	public void clickJoinClassBtn(ClickEvent event) {
+		
+	}
+	
+	@UiHandler("teachViewBtn")
+	public void clickTeachViewBtn(ClickEvent event) {
+		PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
+		request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
+		request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO);
+		AppClientFactory.getPlaceManager().revealPlace(request);
+	}
 }

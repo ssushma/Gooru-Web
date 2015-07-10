@@ -3,15 +3,15 @@
     xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
 	<g:HTMLPanel styleName="rowContainer no-gutter">
-	   <g:HTMLPanel styleName="col-md-3 col-sm-3">
+	   <uc:HTMLEventPanel styleName="col-md-3 col-sm-3 cursorPointer" ui:field="unitBlock">
 		   <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
-		   <uc:HTMLEventPanel styleName="heighlightBlockUnitReports" ui:field="unitBlock">
+		   <g:HTMLPanel styleName="heighlightBlockUnitReports">
 		      <g:HTMLPanel styleName="lessonDetails">
 	             <span:H3Panel ui:field="unitCountName"></span:H3Panel>
 	             <span:PPanel ui:field="unitName"></span:PPanel>
 		      </g:HTMLPanel>
-		   </uc:HTMLEventPanel>
-	   </g:HTMLPanel>
+		   </g:HTMLPanel>
+	   </uc:HTMLEventPanel>
 	   <div class="col-md-3 col-sm-3 col-xs-6">
 	      <div class="progressBlock">
 	         <div class="wrapCircles">

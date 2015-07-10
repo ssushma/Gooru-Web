@@ -42,16 +42,21 @@ public class StudentClassLearningMapContainer extends Composite {
 		numericOrder.setText((count+1)+"");
 		unitCountName.setText("Operations & Algebraic Thinking");
 		unitName.setText("Unit");
-		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("green-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle("blue-circle"));
-		circleContainer.add(new StudentClassLearningMapCircle(""));
-		circleContainer.add(new StudentClassLearningMapCircle(""));
+		String circleType = "green-circle";
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+			circleType = "";
+		}
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
+		circleContainer.add(new StudentClassLearningMapCircle(circleType));
 	}
 	
 	public class LessonPageRedirection implements ClickHandler{
