@@ -79,8 +79,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
-public class ClasspageServiceImpl extends BaseServiceImpl implements
-		ClasspageService {
+public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClasspageServiceImpl.class);
 
@@ -1533,6 +1532,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return classpageDo;
 	}
+	
+	
+	@Override
+	public void v3StudentJoinIntoClass(String classCode, String emailId )	throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_MEMBER_LIST_BY_CODE, classCode);
+		getLogger().info("v3 Student Join Class:"+url);
+		try {
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+	}
 
 	@Override
 	public List<String> getSuggestionByName(String emailId){
@@ -1637,6 +1650,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			logger.error("Exception::", e);
 		}
 	}
+
+	
 }
 
 

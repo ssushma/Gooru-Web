@@ -28,6 +28,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -156,6 +157,9 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			studentAnr.removeStyleName(CssTokens.ACTIVE);
+			classSettingsAnr.removeStyleName(CssTokens.ACTIVE);
+			htmlEventPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, token);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subToken);
@@ -181,6 +185,20 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 			classCodePanel.getElement().setAttribute("title",classpageDo.getClassCode());
 			
 			mainContainer.getElement().setId(classpageDo.getClassUid());
+		}
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView#setNavaigationTab()
+	 */
+	@Override
+	public void setNavaigationTab() {
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
+			classSettingsAnr.addStyleName(CssTokens.ACTIVE);
+		}else{
+			studentAnr.addStyleName(CssTokens.ACTIVE);
 		}
 	}
 }

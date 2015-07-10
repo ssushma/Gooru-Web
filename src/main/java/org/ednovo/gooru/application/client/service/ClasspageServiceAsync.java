@@ -200,6 +200,8 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void removePendingStudentFromClass(String classCode, boolean type, String emailIds,AsyncCallback<Void> simpleAsyncCallback);
 	
 	public void removeActiveStudentFromClass(String classUid,boolean visiblity,String gooruUids,AsyncCallback<Void> simpleAsyncCallback) throws GwtException,ServerDownException;
+	
+	public void v3StudentJoinIntoClass(String classCode, String emailId,AsyncCallback<Void> callback) throws GwtException,ServerDownException;
 	//public void inviteStudentToClass_V3(String classId,List<String> lstEmailId, AsyncCallback<ArrayList<CollaboratorsDo>> simpleAsyncCallback);
 	
 }
