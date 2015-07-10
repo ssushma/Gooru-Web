@@ -728,7 +728,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				successPopupVc.center();
 				successPopupVc.show();*/
 
-				Map<String,String> params = new HashMap<String,String>();
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 
 				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null){

@@ -369,7 +369,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			 }else{
 				 
 			}
-			Window.enableScrolling(false);
 		}else{
 
 		}
@@ -723,10 +722,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				getUiHandlers().getMoreListItems(20, pageNumber, false);
 			}
 		}else{
-			if(getUiHandlers().getMyCollectionsListPresenter().getScrollPanel().getVerticalScrollPosition() == getUiHandlers().getMyCollectionsListPresenter().getScrollPanel().getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
-				pageNumber = pageNumber + 1;
-				getUiHandlers().getMoreListItems(20, pageNumber, false);
-			}
+			pageNumber = pageNumber + 1;
+			getUiHandlers().getMoreListItems(20, pageNumber, false);
 		}
 	}
    	@Override
@@ -744,7 +741,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
    		}else{
    			pnlMainContainer.setVisible(true);
    			pnlNoDataContainer.setVisible(false);
-   			Window.enableScrolling(false);
    		}
    	}
    	/**

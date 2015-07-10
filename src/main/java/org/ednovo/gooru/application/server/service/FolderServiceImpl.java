@@ -45,6 +45,7 @@ import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
@@ -180,7 +181,31 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		Collections.sort(collectionItemDo, new ArrayListSorter("itemSequence", true));
 		return collectionItemDo;
 	}
+	
+	@Override
+	public List<ListValuesDo> getDepthOfKnowledgesList() throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_DEPTHOFKNOWLEDGELIST);
+		getLogger().info("-- getdepthOfKnowledge -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
 
+		return listValues;
+	}
+
+	public List<ListValuesDo> deserializeListValues(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<ListValuesDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return new ArrayList<ListValuesDo>();
+	}
+	
 	public List<CollectionItemDo> deserializeWorkspace(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {

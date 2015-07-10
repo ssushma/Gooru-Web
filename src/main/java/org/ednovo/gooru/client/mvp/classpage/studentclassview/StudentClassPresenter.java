@@ -28,6 +28,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
@@ -48,6 +49,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -77,6 +79,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 
 	StudentClassReportPresenter studentClassReportPresenter = null;
 
+	ClasspageDo classpageDo = new ClasspageDo();
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT_VIEW)
 	public interface IsStudentClassProxy extends ProxyPlace<StudentClassPresenter> {
@@ -109,6 +113,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
+		
+		getClasspageDetails();
 		
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
@@ -186,7 +192,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		return PlaceTokens.STUDENT_VIEW;
 	}
 
-	/**
+/*	*//**
 	 *
 	 * @function triggerClassPageNewDataLogStartStopEvent
 	 *
@@ -205,7 +211,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	 *
 	 *
 	 *
-	 */
+	 *//*
 	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
 		JSONObject classpageDataLog=new JSONObject();
 		String classpageEventId=GwtUUIDGenerator.uuid();
@@ -222,10 +228,26 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
-
+*/
 	@Override
 	public void joinStudentClass() {
-		
+		getView().setJoinClassData();
 	}
-
+	
+	private void getClasspageDetails() {
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
+		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
+			@Override
+			public void onSuccess(ClasspageDo result) {
+				classpageDo = result;
+				getView().setCourseData(classpageDo);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
+	
 }

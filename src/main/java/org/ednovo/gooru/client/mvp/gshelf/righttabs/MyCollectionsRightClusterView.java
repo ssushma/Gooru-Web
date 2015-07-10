@@ -295,12 +295,24 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setCurrentTypeView(String currentTypeView) {
 		this.currentTypeView =currentTypeView;
-		showPreviewBtn();
+		enableAndHideTabs(true);
+		enableOrHidePreviewBtn();
+		enableOrHideShareTab();
+	}
+	/**
+	 * To enable and disable the share tab based on type.
+	 */
+	private void enableOrHideShareTab() {
+		if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView) || ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
+			lnkshare.setVisible(false);
+		}else{
+			lnkshare.setVisible(true);
+		}
 	}
 	/**
 	 * Hiding preview button when type is course/unit/lesson/folder
 	 */
-	private void showPreviewBtn() {
+	private void enableOrHidePreviewBtn() {
 		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(true);
 		}else{

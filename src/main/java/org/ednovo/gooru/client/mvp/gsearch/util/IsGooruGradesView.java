@@ -52,5 +52,7 @@ public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandl
 
 	public void setGradePanel(HTMLPanel panel);
 
+	void setGrade(String grades);
+
 
 }
