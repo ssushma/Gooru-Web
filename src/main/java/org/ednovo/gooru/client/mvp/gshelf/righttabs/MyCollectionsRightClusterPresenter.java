@@ -130,7 +130,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else if(ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(type)){
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
-					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){ 
 						getView().disableAndEnableBreadCums(false);
 					}else{
 						getView().disableAndEnableBreadCums(true);
@@ -299,6 +299,22 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	
 	/**
+	 * calls API to delete Collection/Assessment.
+	 */
+	@Override
+	public void deleteCollectionContent(final String o1CourseId, final String o2UnitId,	final String o3LessonId, final String assessmentCollectionId) {
+		AppClientFactory.getInjector().getfolderService().deleteCollectionAssessment(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId, new SimpleAsyncCallback<Integer>() {
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteCollectionAssessmentSuccess(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
+				}
+			}
+		});
+	}
+	
+	/**
 	 * Sets the right side view on delete of Unit.
 	 */
 	@Override
@@ -312,6 +328,15 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView) {
 		shelfMainPresenter.setUserAllLessons(o1CourseId,o2UnitId, o3LessDeletedonId,currentTypeView);
+	}
+	
+	
+	/**
+	 * Sets the right side view on delete of Collection/Assesssment.
+	 */
+	@Override
+	public void setCollectionsListOnRightCluster(String o1CourseId,String o2UnitId, String o3LessonId,String deletedAssessmentCollectionId, String currentTypeView) {
+		shelfMainPresenter.setUserAllCollAssessment(o1CourseId,o2UnitId, o3LessonId,deletedAssessmentCollectionId,currentTypeView); 
 	}
 	
 	/**

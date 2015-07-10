@@ -671,6 +671,7 @@ button.btn-disabled{
   display:none;
 }
 
+
 /* === For phones =================================== */
 @media (max-width: 767px) {
    #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+2) {
@@ -1313,6 +1314,33 @@ button.btn-disabled {
 	display: inline-block;
 	vertical-align: middle;
 }
+
+#gShelfCourseInfo .breadCrumbTitle {
+	display: inline-block;
+	width: 60px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+#gShelfCourseInfo .breadcrumbsCollectionIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -519px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#gShelfCourseInfo .breadcrumbsAssessmentIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
 #gShelfCourseInfo .filterTags ul li {
   background: #87badd none repeat scroll 0 0;
   border-radius: 4px;
