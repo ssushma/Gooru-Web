@@ -335,6 +335,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), CollectionItemDo.class);
 					ResourceDo resoruce=new ResourceDo();
 					resoruce=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), ResourceDo.class);
+					item.setQuestionInfo(resoruce);
 					item.setResource(resoruce);
 					collectionItems.add(item);
 				}
@@ -355,6 +356,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				ResourceDo resoruce=new ResourceDo();
 				resoruce=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
 				item.setResource(resoruce);
+				item.setQuestionInfo(resoruce);
 				return item;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
@@ -856,16 +858,27 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	@Override
 	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException {
-		JsonRepresentation jsonRep = null;
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId);
 		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
+		getLogger().info("addQuestionResource --- "+ url);
+		getLogger().info("addQuestionResource data --- "+ collectionQuestionData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+			getLogger().info("response --- "+ jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			getLogger().info("getURlresource --- "+getURL);
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return deserializeCollectionItem(jsonRepGet);
 	}
 
 
