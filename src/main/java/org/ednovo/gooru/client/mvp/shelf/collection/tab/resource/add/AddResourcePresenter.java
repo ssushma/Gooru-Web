@@ -49,6 +49,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
@@ -160,6 +161,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.isCollResourceTabView = isCollResourceTabView;
 		this.drivePresenter=drivePresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
+		getDepthOfKnowledges();
 	}
 
 	@Override
@@ -612,6 +614,14 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void setHSEditData() {
 		questionTypePresenter.getView().setEditData();
 	}
-
+	@Override
+	public void getDepthOfKnowledges(){
+		AppClientFactory.getInjector().getfolderService().getDepthOfKnowledgesList(new SimpleAsyncCallback<List<ListValuesDo>>() {
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				getView().setDepthOfKnowledges(result);
+			}
+		});
+	}
 }
 

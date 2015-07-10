@@ -159,7 +159,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
 
-	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
+	ArrayList<Integer> depthOfKnowledges= new ArrayList<Integer>();
 	private HandlerRegistration handlerRegistration=null;
 
 	boolean isAddBtnClicked=true,isRightsClicked=false,validationValue=false,isSaveButtonClicked=false;
@@ -893,7 +893,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	
 	
 	public void setDOKCheckBoxes(){
-		if(chkLevelRecall.isChecked())
+		/*if(chkLevelRecall.isChecked())
 		{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
@@ -951,7 +951,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelExtendedThinking.getText());
 			depthOfKnowledges.add(depthObj);
-		}
+		}*/
 	}
 	
 	
@@ -1851,9 +1851,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
 			taxonomySet.put("taxonomyCode", standardsDo);
 			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
-			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
-			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
-			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+			collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledges);
 
 			if(questionType.equalsIgnoreCase("HS_IMG")){
 				collectionQuestionItemDo.setHlType(hsType);
@@ -2260,12 +2258,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		};
 		timer1.schedule(0);
 		
-		if(collectionQuestionItemDo.getDepthOfKnowledges()!=null){
+		if(collectionQuestionItemDo.getDepthOfKnowledgeIds()!=null){
 			int checkBoxCount=0;
 			resetDepthOfKnowledges();
 			depthOfKnowledges.clear();
-			for (checkboxSelectedDo item : collectionQuestionItemDo.getDepthOfKnowledges().get("depthOfKnowledge")) {
-				
+			for (Integer item : collectionQuestionItemDo.getDepthOfKnowledgeIds()) {
+				/*
 				   if(item.isSelected()){
 					   if(checkBoxCount==0)
 					   chkLevelRecall.setChecked(true);
@@ -2275,7 +2273,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				       chkLevelStrategicThinking.setChecked(true);
 					   if(checkBoxCount==3)
 				       chkLevelExtendedThinking.setChecked(true);
-				   }
+				   }*/
 				   checkBoxCount++;
 				}
 			
@@ -2349,9 +2347,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public CollectionQuestionItemDo getMetadata(){
 		final CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
 
-		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
-		depthOfKnowledge.put("depthOfKnowledge",depthOfKnowledges);
-
 		Timer timer2=new Timer() {
 			@Override
 			public void run() {
@@ -2359,7 +2354,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		collectionQuestionItemDo.setExplanation(explainationTextArea!=null && explainationTextArea.getText()!=null?explainationTextArea.getText():"");
 			}
 		};
-		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+		collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledges);
 
 		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
 		HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();

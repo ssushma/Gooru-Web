@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -97,11 +98,19 @@ public class PlayerDataLogEvents {
 	public static final String CONTEXT="context";
 	public static final String CONTENTGOORUID="contentGooruId";
 	public static final String PARENTGOORUID="parentGooruId";
+	public static final String CLASSGOORUID="classGooruId";
+
 	public static final String PARENTEVENTID="parentEventId";
 	public static final String TYPE="type";
 	public static final String CLIENTSOURCE="clientSource";
 	public static final String PATH="path";
 	public static final String PAGELOCATION="pageLocation";
+	public static final String COURSEID="courseGooruId";
+	public static final String UNITID="unitGooruId";
+	public static final String COLLECTIONTYPE = "collectionType";
+	public static final String ISSTUDENT = "isStudent";
+
+	public static final String LESSONID="lessonGooruId";
 	public static final String MODE="mode";
 	public static final String VERSION="version";
 	public static final String LOGAPI="logApi";
@@ -204,12 +213,30 @@ public class PlayerDataLogEvents {
 	public static JSONString getDataLogContextObject(String collectionId,String parentGooruId,String parentEventId,String eventType,String mode,
 							String resourceType,String reactionType,String path,String pageLocation){
 		JSONObject contextMap=new JSONObject();
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
+		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
+//		int totalQuestionsCount
+		String collectionType = null;
+
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+			collectionType = "assessment";
+		}else{
+			collectionType = "collection";
+		}
+
 		try{
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
 			parentGooruId=parentGooruId==null?"":parentGooruId;
 			if(parentGooruId!=null){
 				contextMap.put(PARENTGOORUID, new JSONString(parentGooruId));
 			}
+			if (cid!=null){
+				contextMap.put(CLASSGOORUID, new JSONString(cid));
+			}
+
 			if(parentEventId!=null){
 				contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
 			}
@@ -225,6 +252,25 @@ public class PlayerDataLogEvents {
 			}else{
 				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
 			}
+			if(courseId!=null){
+				contextMap.put(COURSEID, new JSONString(courseId));
+			}
+			if(unitId!=null){
+				contextMap.put(UNITID, new JSONString(unitId));
+			}
+
+			if(lessonId !=null){
+				contextMap.put(LESSONID, new JSONString(lessonId));
+			}
+
+			if(collectionType !=null){
+				contextMap.put(COLLECTIONTYPE, new JSONString(collectionType));
+			}
+			if(isStudent !=null){
+				contextMap.put(COLLECTIONTYPE, new JSONString(isStudent));
+			}
+
+
 			contextMap.put(MODE, new JSONString(mode));
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
@@ -235,6 +281,9 @@ public class PlayerDataLogEvents {
 
 	public static JSONString getDataLogContextObjectForItemLoad(String collectionId,String contentItemId,String parentEventId,String parentGooruOid,String parentItemId,
 			String mode,String path,String pageLocation,String url){
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
 		JSONObject contextMap=new JSONObject();
 		try{
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
@@ -257,6 +306,17 @@ public class PlayerDataLogEvents {
 			if(mode!=null){
 				contextMap.put(MODE, new JSONString(mode));
 			}
+			if(courseId!=null){
+				contextMap.put(COURSEID, new JSONString(courseId));
+			}
+			if(unitId!=null){
+				contextMap.put(UNITID, new JSONString(unitId));
+			}
+
+			if(lessonId !=null){
+				contextMap.put(LESSONID, new JSONString(lessonId));
+			}
+
 			contextMap.put(URL, new JSONString(url));
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
@@ -569,6 +629,7 @@ public class PlayerDataLogEvents {
 
 	public static void triggerItemShareDataLogEvent(String itemGooruOid, String itemContentItemId,String parentEventId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
+
 		JSONObject collectionDataLog=new JSONObject();
 		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));

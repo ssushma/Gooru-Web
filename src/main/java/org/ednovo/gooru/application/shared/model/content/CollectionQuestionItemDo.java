@@ -28,6 +28,7 @@ package org.ednovo.gooru.application.shared.model.content;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
@@ -59,7 +60,7 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,ArrayList<QuestionAnswerDo>> answers;
 	private HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse;
 	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
-	private HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledges;
+	private List<Integer>  depthOfKnowledgeIds;
 	
 	private ArrayList<String> mediaFiles;
 
@@ -168,15 +169,6 @@ public class CollectionQuestionItemDo implements Serializable {
 		this.taxonomySet = taxonomySet;
 	}
 
-	public HashMap<String, ArrayList<checkboxSelectedDo>> getDepthOfKnowledges() {
-		return depthOfKnowledges;
-	}
-
-	public void setDepthOfKnowledges(
-			HashMap<String, ArrayList<checkboxSelectedDo>> depthOfKnowledges) {
-		this.depthOfKnowledges = depthOfKnowledges;
-	}
-
 	public HashMap<String, ArrayList<checkboxSelectedDo>> getEducationalUse() {
 		return educationalUse;
 	}
@@ -225,7 +217,12 @@ public class CollectionQuestionItemDo implements Serializable {
 	public void setMoreOptions(HashMap<String, Boolean> moreOptions) {
 		this.moreOptions = moreOptions;
 	}
-	
-	
-	
+
+	public List<Integer> getDepthOfKnowledgeIds() {
+		return depthOfKnowledgeIds;
+	}
+
+	public void setDepthOfKnowledgeIds(List<Integer> depthOfKnowledgeIds) {
+		this.depthOfKnowledgeIds = depthOfKnowledgeIds;
+	}
 }

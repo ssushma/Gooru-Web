@@ -335,17 +335,8 @@ public class AssessmentsPreviewHomeView extends BaseViewWithHandlers<Assessments
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 				}
 
-				Map<String,String> params = new HashMap<String,String>();
-				if(AppClientFactory.getPlaceManager().getRequestParameter("id")!=null)
-					params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
-					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
-					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
-					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
-					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
+
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -387,17 +378,7 @@ public class AssessmentsPreviewHomeView extends BaseViewWithHandlers<Assessments
 			successPopupVc.show();
 			successPopupVc.center();
 
-			Map<String,String> params = new HashMap<String,String>();
-			if(AppClientFactory.getPlaceManager().getRequestParameter("id")!=null)
-				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-			if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
-				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-			if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
-				params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-			if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
-				params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
-			if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
-				params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
+			Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
 			params.put("customize", "yes");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);

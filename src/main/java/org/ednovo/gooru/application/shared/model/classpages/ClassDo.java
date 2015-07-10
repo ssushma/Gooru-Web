@@ -22,46 +22,61 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild;
+package org.ednovo.gooru.application.shared.model.classpages;
 
-import org.ednovo.gooru.application.client.child.ChildView;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.UrlNavigationTokens;
+import java.io.Serializable;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Gooru Team
+ * @fileName : AssessmentSummaryStatusDo.java
  * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresenter> implements IsSlmAssessmentView {
+@JsonInclude(Include.NON_NULL)
+public class ClassDo implements Serializable{
 
-	@UiField Anchor reportUrl;
+	/**
+	 * 
+	 */
 	
-	@UiField HTMLPanel reportView;
-	
-	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
-
-	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
+	private static final long serialVersionUID = 1L;
+	private String classId;
+	private String course;
+	private String unit;
+	private String lesson;
+	private String assessment;
+	public String getClassId() {
+		return classId;
 	}
-
-	public SlmAssessmentChildView() {
-		initWidget(uiBinder.createAndBindUi(this));
-		setData();
+	public String getCourse() {
+		return course;
 	}
-	
-	public void setData() {
-		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
-		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-			reportView.setVisible(false);
-		} else {
-			reportView.setVisible(true);
-		}
+	public String getUnit() {
+		return unit;
+	}
+	public String getLesson() {
+		return lesson;
+	}
+	public String getAssessment() {
+		return assessment;
+	}
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public void setLesson(String lesson) {
+		this.lesson = lesson;
+	}
+	public void setAssessment(String assessment) {
+		this.assessment = assessment;
 	}
 	
 }

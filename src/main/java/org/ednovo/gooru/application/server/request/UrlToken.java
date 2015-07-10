@@ -170,7 +170,7 @@ public enum UrlToken {
 
 	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?"),
 
-	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?"),
+	UPDATE_RESOURCE_INFO("/v3/collection/{0}/resource/{1}?"),
 
 	UPDATE_USER("/user/{0}?format=json&username={1}&userrole={2}"),
 
@@ -612,8 +612,11 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
 	
-	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?");
-
+	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
+	
+	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
+	
+    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?");
 
 
 	private String url;

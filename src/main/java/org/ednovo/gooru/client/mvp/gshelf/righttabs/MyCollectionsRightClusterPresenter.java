@@ -66,7 +66,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	List<FolderDo> folderListDoChild;
 
-	final String COLLECTION="Collection";
+	final String COLLECTION="collection";
+	final String ASSESSMENT="assessment";
+	private static final String ASSESSMENT_URL = "assessment/url";
 	
 	
 	private static final String O1_LEVEL = "o1";
@@ -75,6 +77,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
+	private static final String FOLDER = "Folder";
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -121,11 +124,29 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if("Lesson".equalsIgnoreCase(type)){
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
-				}else if("Assessment".equalsIgnoreCase(type) || "Collection".equalsIgnoreCase(type)){
+				}else if(ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(type)){
+					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+						getView().disableAndEnableBreadCums(false);
+					}else{
+						getView().disableAndEnableBreadCums(true);
+					}
+					collectionInfoPresenter.setCollectionType(type);
+					collectionInfoPresenter.setData(folderObj,type);
+					setInSlot(INNER_SLOT, collectionInfoPresenter);
+				}else if(FOLDER.equalsIgnoreCase(type)){
+					//To disabel bread cums
+					getView().disableAndEnableBreadCums(false);
 					collectionInfoPresenter.setCollectionType(type);
 					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else{
+					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+						getView().disableAndEnableBreadCums(false);
+					}else{
+						getView().disableAndEnableBreadCums(true);
+					}
 					getView().enableAndHideTabs(false);
 					externalAssessmentInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
@@ -203,7 +224,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			    setTabItems(1, UNIT, null);
 				setUnitTemplate(UNIT);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
-			}else{
+			}else if(type.contains(LESSON)){
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON);
 			}

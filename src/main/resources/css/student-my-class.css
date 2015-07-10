@@ -63,10 +63,10 @@
     margin-right: 5px;
 }
 .learningHeaderBlock .green-circle {
-	width: 20px;
-	height: 20px;
+	width: 23px;
+	height: 23px;
 	border-radius: 50% 50%;
-	background: #a5cba1 url("//127.0.0.1:8888/images/Classpage/student/checkmark-small.png") no-repeat 0px 4px;
+	background: #a5cba1 url("//127.0.0.1:8888/images/Classpage/student/checkmark-small.png") no-repeat 4px 7px;
     display: inline-block;
 }
 
@@ -84,15 +84,15 @@
 }
 
 .learningHeaderBlock .blue-circle {
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 23px;
     border-radius: 50% 50%;
     background: #85b9df;
     display: inline-block;
 }
 .learningHeaderBlock .grey-circle {
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 23px;
     border-radius: 50% 50%;
     background: #d1cfcf;
     display: inline-block;
@@ -1185,18 +1185,18 @@ th.headcol.whitebg {
 	color:#a5cba1;
 	padding:0 0 !important;
 }
-.resourceImgContainer{
+.lesson-view-data .resourceImgContainer{
 	padding:5px 18px;
 	border-spacing:10px;
 }
-.resourceImgContainer .videoSmall {
+.lesson-view-data .resourceImgContainer .videoSmall {
     background:url(../images/Video_1.png) no-repeat;
 }
-.resourceImgContainer img {
+.lesson-view-data .resourceImgContainer img {
     height: 60px;
     width: 80px;
 }
-.resourceImgContainer .resourceName {
+.lesson-view-data .resourceImgContainer .resourceName {
     color: #fff;
     font-size: 12px;
     height: 61px;
@@ -1206,15 +1206,15 @@ th.headcol.whitebg {
     width: 81px;
 }
 
-.resourceImgContainer a{
+.lesson-view-data .resourceImgContainer a{
 	position:relative;
 	display:table-cell;
 	
 }
-.resourceImgContainer a:hover {
+.lesson-view-data .resourceImgContainer a:hover {
     opacity: 0.6;
 }
-.resourceImgContainer a:hover .videoSmall {
+.lesson-view-data .resourceImgContainer a:hover .videoSmall {
     display: none;
 }
 
@@ -1526,7 +1526,7 @@ th.headcol.whitebg {
 		display:block;
 		text-align:center;
 	}
-	.resourceImgContainer {
+	.lesson-view-data .resourceImgContainer {
     border-spacing: 5px;
     padding: 5px;
 }
@@ -1541,7 +1541,7 @@ th.headcol.whitebg {
 		display:block;
 		text-align:center;
 	}
-	.resourceImgContainer {
+	.lesson-view-data .resourceImgContainer {
     border-spacing: 5px;
     padding: 5px;
 }
@@ -1665,7 +1665,6 @@ th.headcol.whitebg {
     width: 10px;
     border-radius: 50% 50%;
     background: #85b9df;
-    z-index: 999;
     position: relative;
 }
 .planProgress .planView ul li.green {
@@ -2172,6 +2171,9 @@ th.headcol.whitebg {
 }
 .padding-top-5 {
 	padding-top: 5px;
+}
+.margin-top-20 {
+	margin-top: 20px;
 }
 .modal-widget-1000 {
 	width: 1000px;
