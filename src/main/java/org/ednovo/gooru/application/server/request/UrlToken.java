@@ -618,7 +618,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
     
     DELETE_LESSON_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
     
-	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
+	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?");
 	
 
 
