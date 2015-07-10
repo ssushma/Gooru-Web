@@ -94,8 +94,8 @@
 					<g:Label styleName="{addWebResourceStyle.addResourceFormTitle}"
 						ui:field="depthOfKnowledgeTitle" />
 					<g:FlowPanel styleName="{res1.css.questionDepthOfKnoweldgeContainer}">
-						<g:HTMLPanel styleName="{res1.css.checkBoxOuterContiner}">
-							<g:HTMLPanel styleName="{res1.css.checkBoxinnerContinerForQuestion}">
+						<g:HTMLPanel styleName="{res1.css.checkBoxOuterContiner}" ui:field="pnlDepthOfKnowledges">
+							<!-- <g:HTMLPanel styleName="{res1.css.checkBoxinnerContinerForQuestion}">
 								<g:CheckBox styleName="{res1.css.checkBoxlevels}"
 									ui:field="chkLevelRecall"></g:CheckBox>
 							</g:HTMLPanel>
@@ -110,7 +110,7 @@
 							<g:HTMLPanel styleName="{res1.css.checkBoxinnerContinerForQuestion}">
 								<g:CheckBox ui:field="chkLevelExtendedThinking"
 									styleName="{res1.css.checkBoxlevels}"></g:CheckBox>
-							</g:HTMLPanel>
+							</g:HTMLPanel> -->
 						</g:HTMLPanel>
 					</g:FlowPanel>
 					<g:FlowPanel styleName="gradeListCont">

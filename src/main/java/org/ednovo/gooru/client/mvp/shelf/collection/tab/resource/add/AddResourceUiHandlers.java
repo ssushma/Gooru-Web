@@ -103,5 +103,7 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> SLOT_QUESTION_TYPE = new Type<RevealContentHandler<?>>();
+	
+	public void getDepthOfKnowledges();
 
 }
