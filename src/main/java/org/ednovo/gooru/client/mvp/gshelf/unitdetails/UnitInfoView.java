@@ -309,9 +309,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
 			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
 		}
+		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null)
+		{
 		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
 			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),entry.getValue()+"");
 			break;
+		}
 		}
 		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
 		firstSelectedSubject.clear();
