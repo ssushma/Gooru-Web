@@ -26,8 +26,8 @@ package org.ednovo.gooru.application.shared.model.folder;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTypeDo;
@@ -65,6 +65,7 @@ public class FolderDo implements Serializable{
 	private String goals;
 	private int itemSequence;
 	private CollectionSettingsDo settings;
+	private List<CourseSubjectDo> taxonomyCourse;
 
 	public FolderDo(){}
 	
@@ -315,6 +316,12 @@ public class FolderDo implements Serializable{
 	public void setPublishStatus(String publishStatus) {
 		this.publishStatus = publishStatus;
 	}
-	
-	
+
+	public List<CourseSubjectDo> getTaxonomyCourse() {
+		return taxonomyCourse;
+	}
+
+	public void setTaxonomyCourse(List<CourseSubjectDo> taxonomyCourse) {
+		this.taxonomyCourse = taxonomyCourse;
+	}
 }
