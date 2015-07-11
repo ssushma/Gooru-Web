@@ -25,11 +25,14 @@
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 /**
  * @author Search Team
  *
  */
 public interface CourseShareUiHandlers extends BaseUiHandlers {
+
+	void assign2ClassPage(String value, ClasspageDo classpageObj);
 	
 }
