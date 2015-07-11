@@ -30,6 +30,9 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.EmPanel;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.SpanPanel;
@@ -42,6 +45,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -77,6 +81,10 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@UiField Button joinClassBtn, teachViewBtn;
 	@UiField Label studentViewLbl;
 	
+	ClasspageDo classpageDo;
+	
+	StudentJoinClassPopup joinClassPopup;
+	
 	private static final String DEFAULT_CLASSPAGE_IMAGE = "../images/Classpage/default-classpage.png";
 	
 	private static final String DEFAULT_USER_IMAGE = "../images/settings/setting-user-image.png";
@@ -111,6 +119,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	
 	@Override
 	public void setCourseData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
 		switchCheckBox.getElement().setId("myonoffswitch");
 		switchCheckBox.getElement().setAttribute("name", "onoffswitch");
 		String thumbnail = classpageDo.getThumbnailUrl();
@@ -194,7 +203,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	
 	@UiHandler("joinClassBtn")
 	public void clickJoinClassBtn(ClickEvent event) {
-		
+		initiateJoinClassPopup();
 	}
 	
 	@UiHandler("teachViewBtn")
@@ -203,5 +212,74 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 		request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
 		request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO);
 		AppClientFactory.getPlaceManager().revealPlace(request);
+	}
+
+	public static void setPublicPagePending() {
+		if(!AppClientFactory.isAnonymous()){
+			
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.studentclassview.IsStudentClassView#initiateJoinClassPopup()
+	 */
+	@Override
+	public void initiateJoinClassPopup() {
+		if(AppClientFactory.isAnonymous()){
+			LoginPopupUc loginPopupUc=new LoginPopupUc() {
+				@Override
+				public void onLoginSuccess() {
+					// TODO Auto-generated method stub
+				}
+			};
+		}else{
+			
+			joinClassPopup = new StudentJoinClassPopup(classpageDo) {
+				
+				@Override
+				void joinIntoClass() {
+					getUiHandlers().studentJoinClassPoup(classpageDo.getClassUid());
+				}
+				
+				@Override
+				public void closePoup() {
+					hide();
+					Window.enableScrolling(true);
+				}
+			};
+			int windowHeight=Window.getClientHeight()/2; //I subtract 10 from the client height so the window isn't maximized.
+			int windowWidth=Window.getClientWidth()/2;
+			joinClassPopup.setPopupPosition(windowWidth-253, windowHeight-70);
+			joinClassPopup.setPixelSize(506, 261);		
+			//joinPopup.center();
+			joinClassPopup.show();
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.studentclassview.IsStudentClassView#setSuccesspopup()
+	 */
+	@Override
+	public void setSuccesspopup() {
+		joinClassPopup.setVisible(false);
+		SuccessPopupViewVc success=new SuccessPopupViewVc(){
+			@Override
+			public void onClickPositiveButton(
+					ClickEvent event) {
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}
+				this.hide();
+				setPreviewClassMode(false);
+			}
+		};
+		success.setWidth("450px");
+        success.setPopupTitle(i18n.GL1553());
+        success.setDescText(i18n.GL1554()+" "+classpageDo.getName()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+        success.setPositiveButtonText(i18n.GL0190());
+        success.center();
+        success.show();
 	}
 }

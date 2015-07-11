@@ -462,6 +462,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
 			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
 			this.urlParams.put(LESSON, urlParams.get(LESSON));
+			this.urlParams.put(COLLECTION.equalsIgnoreCase(collectionDo.getType())?COLLECTION:(ASSESSMENT.equalsIgnoreCase(collectionDo.getType()))?ASSESSMENT:ASSESSMENT_URL,  collectionDo.getTitle());
 			
 //			this.urlParams.put("levelFourType", collectionDo.getTitle()+"#"+"Collection");
 			

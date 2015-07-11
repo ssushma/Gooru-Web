@@ -140,6 +140,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				folderDo.setType(UNIT);
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,UNIT); 
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);

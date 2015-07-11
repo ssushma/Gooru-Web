@@ -94,8 +94,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void showStandardsPopup(String standardVal) {
-		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal);
+	public void showStandardsPopup(String standardVal, String titleVal) {
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,titleVal);
 		addToPopupSlot(standardsPopupPresenter);
 	}
 

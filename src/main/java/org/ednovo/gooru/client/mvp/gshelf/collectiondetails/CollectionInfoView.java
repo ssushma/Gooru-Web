@@ -92,7 +92,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 	
 	private String type="";
 
@@ -194,6 +194,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					headerDiv.setStyleName("liPanelStyle");
 				}else{
 					headerDiv.setStyleName("liPanelStylenonBold");	
+					liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j).toString());
 				}
 				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j).toString());
 				liPanel.add(headerDiv);
@@ -202,7 +203,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				@Override
 				public void onClick(ClickEvent event) {				
 					String standardsVal = event.getRelativeElement().getAttribute("id");
-					getUiHandlers().showStandardsPopup(standardsVal);
+					String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+					getUiHandlers().showStandardsPopup(standardsVal,standardsDesc);
 				}
 			});
 			standardsDropListValues.add(liPanel);

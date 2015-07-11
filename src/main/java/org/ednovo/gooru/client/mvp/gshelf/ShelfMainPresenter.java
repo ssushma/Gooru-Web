@@ -479,6 +479,19 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getView().removeDeletedTreeWidget(o3LessDeletedonId,currentTypeView);
 	}
 	
+	
+	/**
+	 * 
+	 * @param o1CourseId
+	 * @param o2UnitId
+	 * @param o3LessonId
+	 * @param deletedAssessmentCollectionId
+	 * @param currentTypeView
+	 */
+	public void setUserAllCollAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String deletedAssessmentCollectionId,String currentTypeView) {
+		getView().removeDeletedTreeWidget(deletedAssessmentCollectionId,currentTypeView);
+	}
+
 	/**
 	 * This is used to set the bread crumbs after delete.
 	 */
@@ -486,4 +499,5 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onDeleteSetBreadCrumbs(String title, String course) {
 		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
+
 }

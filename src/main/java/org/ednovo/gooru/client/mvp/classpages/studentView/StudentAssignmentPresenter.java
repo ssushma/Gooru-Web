@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -63,10 +63,10 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
- * 
+ *
  * @fileName : StudentAssignmentPresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -79,48 +79,48 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  */
 public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssignmentView, IsStudentAssignmentProxy> implements StudentAssignmentUiHandlers {
 
-	
+
 	@Inject
 	private ClasspageServiceAsync classpageServiceAsync;
-	
+
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
-	
-	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;	
-	
+
+	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
+
 	SignUpPresenter signUpViewPresenter = null;
 	private Integer offset=0;
 	private Integer limit=5;
 	private Integer defaultOffsetForPath=0;
 	private Integer defaultLimitForPath=20;
 	private static final Integer DEFAULT_LIMITVALUE=5;
-	
+
 	private ClasspageDo classpageDo=null;
-	
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT)
 	public interface IsStudentAssignmentProxy extends ProxyPlace<StudentAssignmentPresenter> {
 	}
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	//IndirectProvider<AssignmentPresenter> assignmentFactory;
-	
+
 	@Inject
 	public StudentAssignmentPresenter(IsStudentAssignmentView view,IsStudentAssignmentProxy proxy,SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
-		getView().setUiHandlers(this);	
-		
+		getView().setUiHandlers(this);
+
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
-	}	
-	
-	
+	}
+
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -163,21 +163,21 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		getClasspage();
 	}
 	/**
-	 * 
-	 * @function getClasspage 
-	 * 
+	 *
+	 * @function getClasspage
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -198,7 +198,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 							getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
 							getView().setClasspageData(classpageDo);
 							triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
-							
+
 					}else{
 						ErrorPopup error = new ErrorPopup(i18n.GL1632());
 						error.center();
@@ -211,25 +211,25 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		}
 	}
 	/**
-	 * 
-	 * @function getClasspageItems 
-	 * 
+	 *
+	 * @function getClasspageItems
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageId
 	 * @parm(s) : @param offset
 	 * @parm(s) : @param limit
 	 * @parm(s) : @param isForAssignmentPath
 	 * @parm(s) : @param sortOrder
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -248,21 +248,21 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		});
 	}
 	/**
-	 * 
-	 * @function getOffsetValue 
-	 * 
+	 *
+	 * @function getOffsetValue
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : Integer
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -277,7 +277,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger(e.getMessage());
 		}
-		
+
 		return (((pageNumber-1)*DEFAULT_LIMITVALUE));
 	}
 	@Override
@@ -285,7 +285,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		 String sortingOrder=getPlaceManager().getRequestParameter("order",null);
 		getClasspageItems(classpageId,offset.toString(),limit.toString(),false,sortingOrder);
-		
+
 	}
 
 
@@ -315,7 +315,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		
+
 		if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
 			Window.enableScrolling(false);
@@ -333,10 +333,10 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			update.show();
 			update.center();
 		}
-		
+
 	}
-	
-	
+
+
 	@Override
 	protected void onHide() {
 		AppClientFactory.getPlaceManager().setClasspageEventId(null);
@@ -346,25 +346,25 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public String getViewToken() {
 		return PlaceTokens.STUDENT;
 	}
-	
+
 	public void setcollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
 	}
-	
-	/** 
+
+	/**
 	 * This method is to get the assignmentListAsyncCallback
 	 */
 	public SimpleAsyncCallback<CollectionDo> getcollectionAsyncCallback() {
 		return collectionAsyncCallback;
 	}
-	
+
 	public ClasspageServiceAsync getclasspageServiceAsync() {
 		return classpageServiceAsync;
 	}
-	
+
 	public void asyMethodCall(){
 		this.getclasspageServiceAsync().v2GetClasspageById(AppClientFactory.getPlaceManager().getRequestParameter("id"), getcollectionAsyncCallback());
-		
+
 	}
 	public void getAssignmentsList(String pageNum,String pageSize){
 		this.getclasspageServiceAsync().v2GetAssignemtsByClasspageId(AppClientFactory.getPlaceManager().getRequestParameter("id"), pageSize, pageNum, getAssignmentsListAsyncCallback());
@@ -379,22 +379,22 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		this.assignmentsListAsyncCallback = assignmentsListAsyncCallback;
 	}
 	/**
-	 * 
-	 * @function triggerClassPageNewDataLogStartStopEvent 
-	 * 
+	 *
+	 * @function triggerClassPageNewDataLogStartStopEvent
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageId
 	 * @parm(s) : @param classCode
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -408,7 +408,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study"));
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study", 0));
 		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0,0));
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
@@ -424,10 +424,10 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				Window.enableScrolling(true);
-				
+
 			}
 		});
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -437,7 +437,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public void getAssignmentsProgress(String classpageId, String offSet,
 			String limit) {
 		AppClientFactory.getInjector().getClasspageService().getClassPageItems(classpageId, offSet.toString(), limit.toString(),null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
-			
+
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){

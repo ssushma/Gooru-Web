@@ -50,7 +50,7 @@ public interface AnalyticsService extends BaseService {
 	
 	public ArrayList<UserDataDo> getCollectionResourceData(String collectionId,String classpageId,String pathwayId);
 	
-	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
+	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(ClassDo classObj,String collectionId,String classId,String userId);
 		 
 	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId);
 

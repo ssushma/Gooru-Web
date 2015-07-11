@@ -91,6 +91,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+
 	final String ACTIVE="active";
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
@@ -135,10 +136,11 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						liPanel.getElement().setId("CA");
 					}else{
 						liPanel.getElement().setId(standardsDescriptionList.get(j).toString());
-					}
+					}					
 					headerDiv.setStyleName("liPanelStyle");
 				}else{
 					headerDiv.setStyleName("liPanelStylenonBold");
+					liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j).toString());
 				}
 				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j).toString());
 				liPanel.add(headerDiv);
@@ -147,7 +149,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				@Override
 				public void onClick(ClickEvent event) {
 					String standardsVal = event.getRelativeElement().getAttribute("id");
-					getUiHandlers().showStandardsPopup(standardsVal);
+					String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+					getUiHandlers().showStandardsPopup(standardsVal,standardsDesc);
 				}
 			});
 			standardsDropListValues.add(liPanel);
