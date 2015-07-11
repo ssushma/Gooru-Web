@@ -40,6 +40,7 @@ import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -2717,8 +2718,14 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 					sessionId = sessionDo.getSessionId();
 					Cookies.setCookie("sessionId", sessionId);
 					AssessmentsPlayerPresenter.this.sessionId=sessionId;
-
-					AppClientFactory.getInjector().getAnalyticsService().getUserSessionDataByUser(assessmentGooruId, classGooruId, gooruUid, sessionId, classGooruId, new AsyncCallback<ArrayList<UserDataDo>>() {
+					ClassDo classDo = new ClassDo();
+					classDo.setAssessmentId(assessmentGooruId);
+					classDo.setClassId(classGooruId);
+					classDo.setCourseId(courseGooruId);
+					classDo.setLessonId(lessonGooruId);
+					classDo.setSessionId(sessionId);
+					classDo.setUnitId(unitGooruId);
+					AppClientFactory.getInjector().getAnalyticsService().getUserSessionDataByUser(classDo, assessmentGooruId, classGooruId, gooruUid, sessionId, classGooruId, new AsyncCallback<ArrayList<UserDataDo>>() {
 
 						@Override
 						public void onSuccess(ArrayList<UserDataDo> result) {
