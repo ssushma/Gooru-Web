@@ -51,11 +51,13 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	 */
 	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit);
 
-	public void checkProfanity(String trim, boolean b, int i);
+	public void checkProfanity(String textValue, boolean isCreate, int index,
+			String collectionType);
 
 	void setCollectionType(String templateType);
 
 	public void uploadCollectionImage(CreateDo createOrUpDate);
 
 	void showStandardsPopup(String standardVal, String standardsDesc);
+
 }

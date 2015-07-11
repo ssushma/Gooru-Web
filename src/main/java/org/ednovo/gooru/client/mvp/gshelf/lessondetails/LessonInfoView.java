@@ -205,9 +205,12 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
+		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null)
+		{
 		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
 			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
 			break;
+		}
 		}
 	}
 
