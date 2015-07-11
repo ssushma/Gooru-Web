@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassView;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
@@ -133,7 +134,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		offsetLimitOwner = 0;
 		offsetLimitJoined = 0;
 
-		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
@@ -167,7 +168,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					}
 				});
 
-		AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+		AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
@@ -308,7 +309,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	 */
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", gooruOId);
+		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
@@ -416,7 +417,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 				@Override
 				public void onSuccess(ClasspageDo result) {
 					 setEnterLblVisbility(false);
-					 
 					 if(result.getClassUid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
@@ -472,8 +472,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							txtCode.setText("");
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
-							//StudentAssignmentView.setPrivatePageActive();
-
 						}
 						else if(result.getStatus().equalsIgnoreCase("pending"))
 						{
@@ -486,8 +484,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							txtCode.setText("");
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
-							//StudentAssignmentView.setPrivatePagePending();
-
 						}
 						else
 						{
@@ -507,14 +503,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						txtCode.setText("");
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
-						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
-							//StudentAssignmentView.setPublicPage();
-						}else if(result.getStatus().equalsIgnoreCase("active")){
-							//StudentAssignmentView.setPublicPageActive();
-						}else {
-							//StudentAssignmentView.setPublicPagePending();
-							//StudentClassView.setPublicPagePending();
-						}
 					}
 					setEnterLblVisbility(false);
 				}
@@ -543,7 +531,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			offsetLimitJoined = pageInitialLimitJoined;
-			AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+			AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
@@ -583,7 +571,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			offsetLimitOwner = pageInitialLimitOwner;
-			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
