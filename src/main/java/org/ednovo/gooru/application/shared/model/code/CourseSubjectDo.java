@@ -43,9 +43,16 @@ public class CourseSubjectDo implements Serializable {
 	Integer domainId;
 	Integer subdomainId;
 	String description;
+	Integer id;
 	
-	CourseSubjectDo(){}
+	public CourseSubjectDo(){}
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
