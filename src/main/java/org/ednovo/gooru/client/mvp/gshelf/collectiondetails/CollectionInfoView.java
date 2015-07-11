@@ -35,6 +35,9 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -83,16 +86,19 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField Anchor dok,centurySkills,languageObj;
 	@UiField HTMLEventPanel btnStandardsBrowse;
 	@UiField UlPanel standardsDropListValues;
+	@UiField DepthKnowledgeView depthOfKnowledgeContainer;
+	@UiField LanguageView languageObjectiveContainer;
+	@UiField CenturySkillsView centurySkillContainer;
 	
-    
-    
+	private boolean isLanguageObjectInfo=false;
+	private boolean isCenturySkillsInfo=false;    
 	private boolean isDepthOfKnlzeInfo = false;
 	
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 	
 	private String type="";
 
@@ -121,7 +127,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
 		
-		
+		depthOfKnowledgeContainer.setVisible(true);
+		languageObjectiveContainer.setVisible(false);
+		centurySkillContainer.setVisible(false);
 		uploadImageLbl.setText(i18n.GL0912());
 		populateStandardValues();
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
@@ -136,8 +144,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		});
 		
 		dok.addClickHandler(new dokClickHandlers());
-		centurySkills.addClickHandler(new dokClickHandlers());
-		languageObj.addClickHandler(new dokClickHandlers());
+		centurySkills.addClickHandler(new CenturySkillsClickHandlers());
+		languageObj.addClickHandler(new Language_ObjectiveClickHandlers());
 	}	
 
 	/**
@@ -288,7 +296,25 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			setSelectedDepathOfKnowledge();
 			
+		}
+	}
+	private class CenturySkillsClickHandlers implements ClickHandler{
+		public CenturySkillsClickHandlers() {
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			setSelectedCenturySkills();
+		}
+	}
+	private class Language_ObjectiveClickHandlers implements ClickHandler{
+		public Language_ObjectiveClickHandlers() {
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			setSelectedLanguageObjective();
+
 			
 		}
 	}
@@ -313,6 +339,41 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}else{
 			newdok.setVisible(false);
 			isDepthOfKnlzeInfo = false;
+		}
+	}
+	
+	public void setSelectedDepathOfKnowledge(){
+		if(isDepthOfKnlzeInfo){
+			dok.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3376());
+			depthOfKnowledgeContainer.setVisible(false);
+			isDepthOfKnlzeInfo=false;
+		}else{
+			dok.setText("-"+"  "+i18n.GL3376());
+			depthOfKnowledgeContainer.setVisible(true);
+			isDepthOfKnlzeInfo=true;
+		}
+	}
+	public void setSelectedCenturySkills(){
+		if(isCenturySkillsInfo){
+			centurySkills.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3377());
+			centurySkillContainer.setVisible(false);
+			isCenturySkillsInfo=false;
+		}else{
+			centurySkills.setText("-"+"  "+i18n.GL3377());
+			centurySkillContainer.setVisible(true);
+			isCenturySkillsInfo=true;
+		}
+	}
+	public void setSelectedLanguageObjective(){
+		if(isLanguageObjectInfo){
+			languageObj.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3378());
+			languageObjectiveContainer.setVisible(false);
+			isLanguageObjectInfo=false;
+
+		}else{
+			languageObj.setText("-"+"  "+i18n.GL3378());
+			languageObjectiveContainer.setVisible(true);
+			isLanguageObjectInfo=true;
 		}
 	}
 }

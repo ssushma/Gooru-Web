@@ -79,7 +79,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	String[] standardsTypesArray = new String[]{i18n.GL3322(),i18n.GL3379(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	final String ACTIVE="active";
 	final String COLLECTION="collection";
