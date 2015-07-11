@@ -1040,10 +1040,14 @@ button.btn-disabled {
 	padding-bottom: 500px;
 }
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .subHeading {
-	display: inline-block;
 	margin: 0;
 	color: red;
 	padding: 8px 15px;
+	margin: 0;
+	background-color: #EFEDED;
+}
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .pnlBackGround {
+	background-color: #EFEDED;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul {
@@ -2679,22 +2683,33 @@ padding-left: 15px !important;
 #unitinfo .unitCoverBody{
 	padding:15px 15px;
 }
-#unitinfo .unitCoverList {
+#unitinfo .unitCoverList{
 	border:1px solid #dddddd;
 	border-radius:3px 3px;
 }
-
+#unitinfo .unitCoverList .pnlGradeDescription{
+	border-left: 1px solid #ddd;
+}
+#unitinfo .unitCoverList .pnlGradeDescription .pnlGradeDescInnerContainer{
+	padding: 20px;
+	background: #f7f7f7;
+	border: 10px solid #fff;
+	height: 440px;
+	overflow-y: auto;
+}
 #unitinfo .unitCoverList ul {
     margin: 0;
     padding: 0;
 }
 #unitinfo .unitCoverList ul li {
-
     list-style: outside none none;
     margin: 0;
     padding: 0;
 }
-
+#unitinfo .unitCoverList ul li.active a{
+    background: #87badd;
+	color: #333;
+}
 #unitinfo .unitCoverList ul li a {
     color: #515151;
     display: block;

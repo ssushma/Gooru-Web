@@ -201,11 +201,11 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaDataByUserAndSession(ClassDo classObj,
 			String collectionId, String classId, String userId, String sessionId) {
 
-		logger.info(" getCollectionMetaDataByUserAndSession started--- ");
+		logger.info(" getCollectionMetaDataByUserAndSession started--- count "+count);
 
 		JsonRepresentation jsonRep = null;
 		JsonRepresentation jsonRep2 = null;
-		//ArrayList<CollectionSummaryMetaDataDo> collectionSummaryMetaDataDoList=new ArrayList<CollectionSummaryMetaDataDo>();
+		ArrayList<CollectionSummaryMetaDataDo> collectionSummaryMetaDataDoList=new ArrayList<CollectionSummaryMetaDataDo>();
 		String jsonString = getCollMetaDataByUserAndSessionJsonStr(classId,userId, sessionId);
 		//		String dataPassing="{%22fields%22:%22thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22classId%22:%22"+classId+"%22}}";
 		//String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId);
@@ -214,43 +214,63 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA,sessionId,collectionId);
 		logger.info(" getCollectionMetaDataByUserAndSession url:+--- "+url);
 
-		String url2 = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER,collectionId,userId,classObj.getClassId(),classObj.getCourseId(),classObj.getUnitId(),classObj.getLessonId());
+		String url2 = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER,collectionId,userId,classObj.getClassId(),classObj.getCourseId(),classObj.getUnitId(),classObj.getLessonId(),sessionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 
 		try {
-			if(jsonResponseRep.getStatusCode()==200 && jsonRep.getJsonObject().getJSONObject("message").getString("status").equalsIgnoreCase("completed")){
-				System.out.println("Status 200"+jsonRep.getJsonObject().getJSONObject("message").getString("status"));
-
-				count=0;
+			
+			if(getSessionStatus(url)){
 				logger.info(" getCollectionMetaDataByUserAndSession url2:+--- "+url2);
 				JsonResponseRepresentation jsonResponseRep2 = ServiceProcessor.get(url2, getRestUsername(), getRestPassword(),true);
 				jsonRep2 = jsonResponseRep2.getJsonRepresentation();
 
-				ArrayList<CollectionSummaryMetaDataDo>	collectionSummaryMetaDataDoList= (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep2.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
+				collectionSummaryMetaDataDoList= (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep2.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
 
 				logger.info("API collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
-
-				return collectionSummaryMetaDataDoList;
-			}else{
-
-				if (count < 10) {
-					count++;
-					getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId,sessionId);
-
-				} else {
-					if (count >= 10) {
-						count=0;
-						return new ArrayList<CollectionSummaryMetaDataDo>();
-					}
-				}
-
 			}
+			
+			
+			
+			
+			logger.info("try end collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
-		logger.info("end collectionSummaryMetaDataDoList--");
-		return new ArrayList<CollectionSummaryMetaDataDo>();
+		logger.info("end collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
+		return  collectionSummaryMetaDataDoList;
+	}
+	
+	
+	public boolean getSessionStatus(String url){
+		JsonRepresentation jsonRep = null;
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		boolean status=false;
+
+		try {
+			if(jsonResponseRep.getStatusCode()==200){
+			if(jsonRep.getJsonObject().getJSONObject("message").getString("status").equalsIgnoreCase("completed")){
+				status= true;
+			}else{
+				if (count < 10) {
+					count++;
+					getSessionStatus(url);
+
+				} else if(count >=10){
+						count=0;
+						status=false;
+						return status;
+				}
+			}
+			}else{
+				return false;
+			}
+		}catch (JSONException e) {
+				// TODO: handle exception
+			}
+		return status;
+		
 	}
 
 

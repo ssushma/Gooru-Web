@@ -44,7 +44,7 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 * Set collection default course
 	 * @param libraryCode instance {@link CourseSubjectDo} as List
 	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
+	void setCourseList(List<CourseSubjectDo> libraryCode,String selectedText);
 	/**
 	 * To set the Updated course data
 	 * @param courseObj
@@ -57,4 +57,6 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 * @param index
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
+	
+	public List<Integer> getFirstSelectedValue();
 }
