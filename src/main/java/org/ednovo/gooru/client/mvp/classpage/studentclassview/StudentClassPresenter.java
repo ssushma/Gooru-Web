@@ -28,7 +28,9 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter.IsStudentClassProxy;
@@ -40,6 +42,7 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 
@@ -48,6 +51,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -76,6 +80,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	StudentClassLearningMapPresenter studentClassLearningMapPresenter = null;
 
 	StudentClassReportPresenter studentClassReportPresenter = null;
+
+	ClasspageDo classpageDo = new ClasspageDo();
 
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT_VIEW)
@@ -109,6 +115,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
+
+		getClasspageDetails();
 
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
@@ -167,6 +175,13 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
 			addToSlot(CLASSPAGE_REPORT_TAB, studentClassReportPresenter);
 		}
+
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.FALSE)) {
+			getView().setPreviewClassMode(false);
+		} else {
+			getView().setPreviewClassMode(true);
+		}
 	}
 
 	@Override
@@ -179,7 +194,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		return PlaceTokens.STUDENT_VIEW;
 	}
 
-	/**
+/*	*//**
 	 *
 	 * @function triggerClassPageNewDataLogStartStopEvent
 	 *
@@ -198,7 +213,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	 *
 	 *
 	 *
-	 */
+	 *//*
 	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
 		JSONObject classpageDataLog=new JSONObject();
 		String classpageEventId=GwtUUIDGenerator.uuid();
@@ -209,11 +224,75 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study"));
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study", 0));
 		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0, 0));
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
+*/
+	@Override
+	public void joinStudentClass() {
 
+		getView().setJoinClassData();
+		getView().initiateJoinClassPopup();
+
+	}
+
+	private void getClasspageDetails() {
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
+		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
+			@Override
+			public void onSuccess(ClasspageDo result) {
+				classpageDo = result;
+				getView().setCourseData(classpageDo);
+				setCheckClassVisiblity(classpageDo);
+				if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("not-invited")) {
+				//error popup
+				} else if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("pending")) {
+					joinStudentClass();
+				} else if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("active")) {
+				//nothing to write
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+			}
+		});
+	}
+	
+	public void setCheckClassVisiblity(ClasspageDo classpageDo){
+		String status = classpageDo.getStatus();
+		if(!classpageDo.isVisibility()){
+			if(status.equalsIgnoreCase("not-invited")){
+				new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
+			}else if(status.equalsIgnoreCase("pending")){
+				joinStudentClass();
+			}
+		}else{
+			if(status.equalsIgnoreCase("not-invited") || status.equalsIgnoreCase("pending")){
+				joinStudentClass();
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassUiHandlers#studentJoinClassPoup(java.lang.String)
+	 */
+	@Override
+	public void studentJoinClassPoup(String classUid) {
+		
+		AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classUid,new SimpleAsyncCallback<Void>(){
+
+			@Override
+			public void onSuccess(Void result) {
+				getView().setSuccesspopup();
+			}
+			
+		});
+	}
+	
 }
+

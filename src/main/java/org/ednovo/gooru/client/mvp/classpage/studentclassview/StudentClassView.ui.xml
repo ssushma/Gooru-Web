@@ -15,12 +15,12 @@
 				      </div>
 				      <div class="bannerCaptions">
 				         <div class="col-md-6 col-sm-6">
-				             <span:H1Panel ui:field="courseName"/>
+				             <span:H2Panel ui:field="courseName"/>
 				         </div>
 				         <div class="col-md-6 col-sm-6">
 				            <div class="rightWhiteBox">
 				               <div class="studentDetailsRight">
-				                  <img src="http://profile-demo.s3.amazonaws.com/profile-prod/c3a96812-62a1-4318-846f-f16fdb99f8d4.png?0.39592762291431427"/> LindaS's Class
+				                  <g:Image ui:field="teacherImage"></g:Image><span:EmPanel ui:field="teacherOwnership" styleName="font-style-normal margin-left-5"></span:EmPanel>
 				               </div>
 				               <span:SpanPanel ui:field="classCodeSpan"></span:SpanPanel>
 				            </div>
@@ -28,10 +28,10 @@
 				         <div class="clearfix"></div>
 				      </div>
 				   </div>
-				   <div class="whiteBand">
+				   <g:HTMLPanel styleName="whiteBand" ui:field="editClassMetadataPanel">
 				      <div class="col-md-5 col-sm-5 col-md-5-reset">
 				         <div class="studentDetailsLeft">
-				            <img src="http://profile-demo.s3.amazonaws.com/profile-prod/c3a96812-62a1-4318-846f-f16fdb99f8d4.png?0.39592762291431427"/> Hello, JonnaP!
+				             <g:Image ui:field="studentImage"></g:Image><span:SpanPanel ui:field="studentMessage" styleName="margin-left-5"></span:SpanPanel>
 				         </div>
 				      </div>
 				      <div class="col-md-7 col-sm-7 col-md-7-reset">
@@ -59,7 +59,23 @@
 				         </div>
 				      </div>
 				      <div class="clearfix"></div>
-				   </div>
+				   </g:HTMLPanel>
+				   <g:HTMLPanel styleName="whiteBand" ui:field="previewClassMetadataPanel">
+					   <div class="col-md-4 col-sm-4 col-md-4-reset">
+					      <g:Label styleName="studentDetailsLeft" ui:field="studentViewLbl">Student View</g:Label>
+					   </div>
+					   <div class="col-md-4 col-sm-4 col-md-4-reset">
+					      <div class="planProgress">
+					          <g:Button styleName="primary col-md-4 col-md-offset-4 pull-left" ui:field="joinClassBtn">Join Class</g:Button>
+				          </div>
+					   </div>
+					   <div class="col-md-4 col-sm-4 col-md-4-reset">
+					      <div class="planProgress">
+					          <g:Button styleName="primary" ui:field="teachViewBtn">Return to Teacher View</g:Button>
+				          </div>
+					   </div>
+					   <div class="clearfix"></div>
+					</g:HTMLPanel>
 				</div>
                </g:HTMLPanel>
             </g:HTMLPanel>

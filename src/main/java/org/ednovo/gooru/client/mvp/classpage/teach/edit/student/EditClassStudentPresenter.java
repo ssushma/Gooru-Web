@@ -52,6 +52,8 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	
 	ClasspageDo classpageDo;
 	
+	StudentsAssociatedListDo studentsAssociatedListDo;
+	
 	@Inject
 	public EditClassStudentPresenter(EventBus eventBus,IsEditClassStudentView view){
 		super(eventBus, view);
@@ -98,6 +100,11 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 		super.onReset();
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
+			/*if(classpageDo.getCourseGooruOid() != null){
+				getView().setReportDataView();
+			}else{
+				
+			}*/
 			getView().setReportView();
 		} else {
 			getView().setRoasterView();
@@ -214,6 +221,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			@Override
 			public void onSuccess(StudentsAssociatedListDo result) {
 				//Display all members in active list.
+				studentsAssociatedListDo=result;
 				getView().displayActiveMembersList(result.getSearchResult(), false, result.getTotalHitCount(),increasePageNum);
 				if(getPendingMembers){
 					getView().getPendingMembersList();

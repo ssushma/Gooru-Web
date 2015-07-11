@@ -57,5 +57,5 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 
 	public void uploadCollectionImage(CreateDo createOrUpDate);
 
-	public void showStandardsPopup(String standardsVal);
+	void showStandardsPopup(String standardVal, String standardsDesc);
 }

@@ -57,7 +57,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	@UiField HTMLPanel containerData, learningMapContainer, headerLinksContainer, topBackLinkBox, standardsBlock;
 	@UiField SpanPanel allContentTxt, currentContentName, previousContentName, nextContentName, headerLeftArrow;
 	@UiField HTMLEventPanel allContentPanel, previousContentPanel, nextContentPanel;
-	@UiField HTMLPanel learnMapScore, reportScore;
+	@UiField HTMLPanel learnMapScore, colorPanel, learingHeaderBlock;
 	
 	@UiField LoadingUc cropImageLoading;
 	
@@ -95,6 +95,14 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		nextContentStr = "id1";
 		
 		learningMapContainer.clear();
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+			setPreviewClassMode(true);
+			containerData.addStyleName("margin-top-20");
+		} else {
+			containerData.removeStyleName("margin-top-20");
+		}
+		
 		if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
 			setScoreMapVisiblity(true);
 			if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
@@ -177,7 +185,6 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 
 	private void setScoreMapVisiblity(boolean isVisible) {
 		learnMapScore.setVisible(isVisible);
-		reportScore.setVisible(!isVisible);
 	}
 
 	private void setTextPanelsVisiblity(boolean isHeaderVisible, boolean isTopLinkVisible, boolean isStandardsVisible, boolean isArrowVisible) {
@@ -192,5 +199,19 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		previousContentName.setText(previousLinkTxt);
 		currentContentName.setText(currentLinkTxt);
 		nextContentName.setText(nextLinkTxt);
+	}
+
+	@Override
+	public void setPreviewClassMode(boolean isPreview) {
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			learingHeaderBlock.setVisible(false);
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			learingHeaderBlock.setVisible(true);
+			colorPanel.setVisible(false);
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			learingHeaderBlock.setVisible(true);
+			colorPanel.setVisible(false);
+		}
 	}
 }

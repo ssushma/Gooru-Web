@@ -51,4 +51,9 @@ public interface StudentClassUiHandlers extends BaseUiHandlers {
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> CLASSPAGE_REPORT_TAB = new Type<RevealContentHandler<?>>();
+	
+	public void joinStudentClass();
+
+	public void studentJoinClassPoup(String classUid);
+	
 }

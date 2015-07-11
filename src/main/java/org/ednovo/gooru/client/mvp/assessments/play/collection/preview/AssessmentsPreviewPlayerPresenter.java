@@ -1208,17 +1208,15 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode,new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionId) {
-				AssessmentsPreviewPlayerPresenter.this.sessionId=sessionId;
-				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-				createResourceDataLog();
-				if(collectionItemDo!=null){
-					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
-				}
-			}
-		});
+		
+		sessionId = GwtUUIDGenerator.uuid();
+		AssessmentsPreviewPlayerPresenter.this.sessionId=sessionId;
+		triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+		createResourceDataLog();
+		if(collectionItemDo!=null){
+			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
+		}
+		
 	}
 
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status){
@@ -1736,6 +1734,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String isStudent=AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
 
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId",null);
 		String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId",null);
@@ -1776,6 +1775,10 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		if(courseId!=null) {
 			params.put("courseId", courseId);
 		}
+		if(isStudent!=null) {
+			params.put("isStudent", isStudent);
+		}
+
 		return params;
 	}
 
@@ -1878,7 +1881,8 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
 		}
 		String playerMode=AppClientFactory.getPlaceManager().getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null));
+		int totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : collectionDo.getCollectionItems().size();
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null, totalQuestionsCount));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		int viewCount = "start".equalsIgnoreCase(eventType) ? 0 : 1;
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(collectionEndTime-newCollectionStartTime, getCollectionScore(),viewCount));
@@ -1902,7 +1906,8 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
 		String playerMode=AppClientFactory.getPlaceManager().getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId, eventType, playerMode,questionTypeString,null,path,null));
+		int totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : collectionDo.getCollectionItems().size();
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId, eventType, playerMode,questionTypeString,null,path,null, totalQuestionsCount));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		int viewCount = "start".equalsIgnoreCase(eventType) ? 0 : 1;
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore(),viewCount));
@@ -1925,7 +1930,8 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
 		String playerMode=AppClientFactory.getPlaceManager().getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,"question",null,path,null));
+
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,"question",null,path,null,0));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0,0));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray,null));
@@ -1948,7 +1954,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
 		String playerMode=AppClientFactory.getPlaceManager().getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,questionTypeString,reactionType,path,null));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,questionTypeString,reactionType,path,null, 0));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(reactionEndTime-reactionStartTime, 0, 0));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(reactionType));

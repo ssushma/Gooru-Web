@@ -45,6 +45,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
@@ -96,5 +97,7 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	void questionMetadata(CollectionQuestionItemDo collectionQuestionItemDo);
 	
 	boolean checkQuestionSlot();
-
+	
+	void setDepthOfKnowledges(List<ListValuesDo> result);
+	
 }

@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch.util;
 
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
@@ -66,5 +68,10 @@ public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> imp
 	public void updateFilterStyle(String filterName){
 		getView().highlightGradeLevel(filterName);
 		getView().updateFilterStyle(filterName, "remove");
+	}
+
+	
+	public void setGrade(ClasspageDo classpageDo) {
+		getView().setGrade(classpageDo.getGrades());
 	}
 }

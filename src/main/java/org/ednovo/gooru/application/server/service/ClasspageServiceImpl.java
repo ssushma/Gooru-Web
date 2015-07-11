@@ -79,8 +79,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
-public class ClasspageServiceImpl extends BaseServiceImpl implements
-		ClasspageService {
+public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClasspageServiceImpl.class);
 
@@ -1533,6 +1532,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return classpageDo;
 	}
+	
+	
+	@Override
+	public void v3StudentJoinIntoClass(String classCode)	throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_MEMBER_LIST_BY_CODE, classCode);
+		getLogger().info("v3 Student Join Class:"+url);
+		try {
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+	}
 
 	@Override
 	public List<String> getSuggestionByName(String emailId){
@@ -1620,7 +1633,34 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3UpdateClass(java.lang.String, org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public ClasspageDo v3UpdateClass(String classId, ClasspageDo classpageDo) throws GwtException, ServerDownException {
+		ClasspageDo classDo=null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASSPAGE_BY_ID, classId);
+		String form = "";
+		try{
+			if(classpageDo != null){
+				form = ResourceFormFactory.generateStringDataForm(classpageDo, null);
+			}
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),form);
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			if(jsonResponseRep.getStatusCode()==200){
+				classDo=classpageDo;
+			}else{
+				classDo=new ClasspageDo();
+			}
+		}catch(Exception e){
+			getLogger().error("v3UpdateClass ..:"+e.getMessage());
+		}
+		return classDo;
+	}
+		
+	
 	@Override
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence) throws GwtException {
 		JsonRepresentation jsonRep = null;
@@ -1637,6 +1677,10 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			logger.error("Exception::", e);
 		}
 	}
+
+	
+
+	
 }
 
 

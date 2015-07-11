@@ -80,6 +80,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiField HTML resourceNarrationHtml;
 	@UiField Image imgDisplayIcon;
 	@UiField Button btnEdit;
+	@UiField InlineLabel spnResourceType;
 
 	//final strings
 	private static final String VIDEO_TIME =i18n.GL0974();
@@ -189,7 +190,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		lblItemSequence.setText(indexVal+"");
 		lblResourceTitle.getElement().setInnerHTML(collectionItem.getTitle()!=null? StringUtil.removeAllHtmlCss(collectionItem.getTitle()):"");
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
-
+		spnResourceType.setStyleName(collectionItem.getResource().getResourceFormat().getValue()+"Icon");
+		
 		String resourceType;
 		if(collectionItem.getResource().getResourceType().getResourceType()!=null){
 			resourceType=collectionItem.getResource().getResourceType().getResourceType();

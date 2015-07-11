@@ -25,11 +25,14 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild;
 
 import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -40,6 +43,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	@UiField Anchor reportUrl;
 	
+	@UiField HTMLPanel reportView;
+	
 	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
 
 	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
@@ -47,5 +52,16 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	public SlmAssessmentChildView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setData();
 	}
+	
+	public void setData() {
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+			reportView.setVisible(false);
+		} else {
+			reportView.setVisible(true);
+		}
+	}
+	
 }

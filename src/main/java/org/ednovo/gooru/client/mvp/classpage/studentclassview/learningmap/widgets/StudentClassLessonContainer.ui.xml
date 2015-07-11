@@ -3,9 +3,9 @@
     xmlns:span="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
 	<g:HTMLPanel styleName="rowContainer no-gutter">
-	   	<g:HTMLPanel styleName="col-md-4 col-sm-4">
+	   	<span:HTMLEventPanel styleName="col-md-4 col-sm-4 cursorPointer" ui:field="lessonWidget">
 		   <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
-		   <span:HTMLEventPanel styleName="heighlightBlockUnitReports" ui:field="lessonWidget">
+		   <g:HTMLPanel styleName="heighlightBlockUnitReports">
 		      <g:HTMLPanel styleName="lessonDetails">
 	             <uc:H3Panel ui:field="lessonCountName"></uc:H3Panel>
 	             <uc:PPanel ui:field="lessonName"></uc:PPanel>
@@ -15,8 +15,8 @@
 		                <span></span>
 		          </g:HTMLPanel>
 		      </g:HTMLPanel>
-		   </span:HTMLEventPanel>
-		</g:HTMLPanel>
+		   </g:HTMLPanel>
+		</span:HTMLEventPanel>
 	   <g:HTMLPanel styleName="col-md-8 col-sm-8">
 			<g:HTMLPanel styleName="lessonDescription" ui:field="lessonContainer"/>
 	   </g:HTMLPanel>

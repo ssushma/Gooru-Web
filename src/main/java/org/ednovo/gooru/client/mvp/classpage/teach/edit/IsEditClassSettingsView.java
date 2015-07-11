@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 
 /**
@@ -42,5 +45,9 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
  * @Reviewer: 
  */
 public interface IsEditClassSettingsView extends IsViewWithHandlers<EditClassSettingsViewUiHandler>{
+
+	void setData(ClasspageDo classpageDo);
+
+	void setShortenUrl(Map<String, String> shortenUrl);
 
 }

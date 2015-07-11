@@ -67,11 +67,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
-	@UiField ScrollPanel listScrollPanel;
 	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion;
 	@UiField HTMLEventPanel createPanel;
 	
@@ -94,12 +93,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		Window.addResizeHandler(new ResizeHandler() {
-			@Override
-			public void onResize(ResizeEvent event) {
-				setScrollHeight();
-			}
-		});
 		btnCreate.addClickHandler(new CreateContentEvent());
 		createPanel.addClickHandler(new CreateContentEvent());
 	}
@@ -111,7 +104,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
-		setScrollHeight();
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
@@ -271,6 +263,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else if(o1!=null){
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
 			lblAddNew.setText(i18n.GL3281().toLowerCase());
+		}else{
+			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0326());
+			lblAddNew.setText(i18n.GL0326().toLowerCase());
 		}
 	}
 	
@@ -349,21 +344,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public void setLastWidgetArrowVisiblity(boolean isVisible){
 		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
 		lastwidget.getDownArrow().setVisible(isVisible);
-	}
-	/**
-	 * This method will set the height and it will display the scroll
-	 */
-	public void setScrollHeight(){
-		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
-		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);
-	}
-	/**
-	 * This method will return the scroll panel
-	 * @return
-	 */
-	@Override
-	public ScrollPanel getScrollPanel(){
-		return listScrollPanel;
 	}
 	/**
 	 * This method is used to update the url parameters
