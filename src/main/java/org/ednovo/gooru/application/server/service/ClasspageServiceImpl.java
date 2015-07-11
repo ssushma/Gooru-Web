@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -45,6 +46,7 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsSearchDo;
@@ -79,7 +81,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
-public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageService {
+public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClasspageServiceImpl.class);
 
@@ -1678,9 +1680,59 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 		}
 	}
 
-	
-
-	
+	@Override
+	public ArrayList<PlanProgressDo> getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams) throws GwtException, ServerDownException {
+		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+		
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		String userId = getLoggedInUserUid();
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		
+		String endPoint = getAnalyticsEndPoint();
+		
+		if(type.equalsIgnoreCase("plan")) {
+			if(unitId!=null&&lessonId!=null) {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_LESSON_PLAN, classpageId, courseId, unitId, lessonId);
+				if(queryParams!=null) {
+					params.put("contentGooruIds", queryParams.get("contentGooruIds"));
+				}
+				params.put("userUid", userId);
+			} else if(unitId!=null) {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_UNIT_PLAN, classpageId, courseId, unitId);
+				params.put("userUid", userId);
+			} else {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_COURSE_PLAN, classpageId, courseId);
+				params.put("userUid", userId);
+			}
+		} else if (type.equalsIgnoreCase("progress")) {
+			if(unitId!=null) {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_UNIT_PROGRESS, classpageId, courseId, unitId);
+				params.put("userUid", userId);
+				params.put("pretty", "1");
+			} else {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_COURSE_PROGRESS, classpageId, courseId);
+				params.put("userUid", userId);
+			} 
+		}
+		
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info(url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		JSONObject resourceObj;
+		try {
+			resourceObj = jsonRep.getJsonObject();
+			if(resourceObj!=null){
+				if(resourceObj.optJSONArray("content") != null){
+					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+				}
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return dataList;
+	}
 }
-
-

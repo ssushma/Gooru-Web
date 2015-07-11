@@ -43,13 +43,8 @@ import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
-import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.json.client.JSONNumber;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -138,7 +133,6 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		super.onReset();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
-		loadNavigationPage();
 
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
@@ -161,6 +155,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			update.show();
 			update.center();
 		}
+
+		loadNavigationPage();
 
 	}
 
@@ -246,7 +242,9 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			public void onSuccess(ClasspageDo result) {
 				classpageDo = result;
 				getView().setCourseData(classpageDo);
-				setCheckClassVisiblity(classpageDo);
+				//setCheckClassVisiblity(classpageDo);
+				studentClassLearningMapPresenter.setClasspageDo(classpageDo);
+				studentClassReportPresenter.setClasspageDo(classpageDo);
 				if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("not-invited")) {
 				//error popup
 				} else if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("pending")) {

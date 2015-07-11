@@ -1,6 +1,9 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
@@ -32,31 +35,21 @@ public class StudentClassLearningMapContainer extends Composite {
 			UiBinder<Widget, StudentClassLearningMapContainer> {
 	}
 
-	public StudentClassLearningMapContainer(int count) {
+	public StudentClassLearningMapContainer(PlanProgressDo planProgressDo, int count) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setCircleContainerItems(count);
-		unitBlock.addClickHandler(new LessonPageRedirection("unitId"));
+		setCircleContainerItems(planProgressDo, count);
+		unitBlock.addClickHandler(new LessonPageRedirection(planProgressDo.getGooruOId()));
 	}
 	
-	public void setCircleContainerItems(int count) {
+	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count) {
 		numericOrder.setText((count+1)+"");
-		unitCountName.setText("Operations & Algebraic Thinking");
+		unitCountName.setText(planProgressDo.getTitle());
 		unitName.setText("Unit");
-		String circleType = "green-circle";
-		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
-		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-			circleType = "";
+		int size = planProgressDo.getItem().size();
+		ArrayList<PlanProgressDo> dataList = planProgressDo.getItem();
+		for(int i=0;i<size;i++) {
+			circleContainer.add(new StudentClassLearningMapCircle(dataList.get(i)));
 		}
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
-		circleContainer.add(new StudentClassLearningMapCircle(circleType));
 	}
 	
 	public class LessonPageRedirection implements ClickHandler{
