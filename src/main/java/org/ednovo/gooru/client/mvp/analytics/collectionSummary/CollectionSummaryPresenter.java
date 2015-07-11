@@ -142,13 +142,8 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			@Override
 			public void onSuccess() {
 				
-				ClassDo classObj=new ClassDo();
-				classObj.setAssessmentId(collectionId);
-				classObj.setClassId(classId);
-				classObj.setSessionId(sessionId);
-				
 
-				analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+				analyticService.getSessionsDataByUser(StringUtil.getClassObj(),collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 
 					@Override
 					public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {

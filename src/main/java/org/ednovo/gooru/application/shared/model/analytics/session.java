@@ -22,19 +22,49 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap;
+package org.ednovo.gooru.application.shared.model.analytics;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
- *
+ * @fileName : SessionDataDo.java
+ * 
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface IsStudentClassLearningMapView extends IsViewWithHandlers<StudentClassLearningMapUiHandlers> {
-	public void setContent(ArrayList<PlanProgressDo> dataList);
-	public void setPreviewClassMode(boolean isPreview);
-	public void setMetadataContent(ArrayList<PlanProgressDo> dataList);
+@JsonInclude(Include.NON_NULL)
+public class session implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String sessionId;
+	private int sequence;
+	private long eventTime;
+	public String getSessionId() {
+		return sessionId;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public long getEventTime() {
+		return eventTime;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	public void setEventTime(long eventTime) {
+		this.eventTime = eventTime;
+	}
+	
+	
+	
 }

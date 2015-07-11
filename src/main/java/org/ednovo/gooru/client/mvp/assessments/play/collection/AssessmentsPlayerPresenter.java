@@ -1354,12 +1354,20 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * Triggers collection stop event.
 	 */
 	public void stopCollectionDataLog(){
+		String eventType= null;
 		if(collectionActivityEventId!=null){
 			AppClientFactory.printInfoLogger("---Initiating to trigger collection stop event --- \n\n");
 			collectionEndTime=PlayerDataLogEvents.getUnixTime();
+			String rid =  AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+			String view =  AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+			if (rid != null && view != null && !"end".equalsIgnoreCase(view)){
+				eventType = PlayerDataLogEvents.PAUSE_EVENT_TYPE;
+			}else{
+				eventType = PlayerDataLogEvents.STOP_EVENT_TYPE;
+			}
 			PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 					PlayerDataLogEvents.STOP_EVENT_TYPE, collectionStartTime, collectionEndTime, collectionEndTime-collectionStartTime-totalTimeSpentOnSummaryPage, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
-			triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionEndTime,PlayerDataLogEvents.STOP_EVENT_TYPE,0);// TODO need to implement score
+			triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionEndTime,eventType,0);// TODO need to implement score
 		}else{
 			AppClientFactory.printInfoLogger("---In stopCollectionDataLog -- collectionActivityEventId is NULL --- \n");// shld remove this else part later as it is added for debugging purpose
 		}

@@ -354,17 +354,17 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 */
 	@Override
 	public void setGrade(String grades) {
-		System.out.println("setGrade");
-		String [] gradesSplit = grades.split(",");
-		for(int i=0; i<gradesSplit.length; i++){
-			System.out.println("gradesSplit[i]:"+gradesSplit[i]);
-			if(gradesSplit[i].equals("12gte")){
-				gradesSplit[i] = i18n.GL3084();
+		if(grades != null){
+			String [] gradesSplit = grades.split(",");
+			for(int i=0; i<gradesSplit.length; i++){
+				if(gradesSplit[i].equals("12gte")){
+					gradesSplit[i] = i18n.GL3084();
+				}
+				updateFilterStyle(gradesSplit[i], "add");
+			    if(!gradesSplit[i].equals("Pre-K") && !gradesSplit[i].equals("12gte")){
+			    	highlightGradeLevel(gradesSplit[i]);
+			    }
 			}
-			updateFilterStyle(gradesSplit[i], "add");
-		    if(!gradesSplit[i].equals("Pre-K") && !gradesSplit[i].equals("12gte")){
-		    	highlightGradeLevel(gradesSplit[i]);
-		    }
 		}
 	}
 }

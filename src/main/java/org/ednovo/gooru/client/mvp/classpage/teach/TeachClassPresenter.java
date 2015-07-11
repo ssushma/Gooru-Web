@@ -136,7 +136,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	public void getClassDetails(){
 		
-		classpageId = getPlaceManager().getRequestParameter("classpageid");
+		classpageId = getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classpageId != null){
 			AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 
