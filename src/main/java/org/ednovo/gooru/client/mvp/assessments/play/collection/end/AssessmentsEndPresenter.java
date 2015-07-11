@@ -282,6 +282,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					displayScoreCountData(result.get(0).getScore(),result.get(0).getScorableQuestionCount());
 					getView().setCollectionMetaDataByUserAndSession(result);
 					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+				}else{
+					getView().errorMsg();
 				}
 				
 				
@@ -325,6 +327,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			
 			@Override
 			public void onSuccess() {
+				
+				getView().loadingIcon();
 
 				//getView().enableAndDisableEmailButton(isSummary);
 				analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
@@ -341,7 +345,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					
 					}
 				});
-				analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+				analyticService.getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {
@@ -366,6 +370,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			
 			@Override
 			public void onSuccess() {
+				getView().loadingIcon();
 				collectionProgressCount=0;
 				Collections.sort(result,new Comparator<UserDataDo>() {
 		        	public int compare(UserDataDo o1, UserDataDo o2) {

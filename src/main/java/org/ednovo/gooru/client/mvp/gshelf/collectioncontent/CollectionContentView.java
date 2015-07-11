@@ -326,6 +326,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		public void onClick(ClickEvent event) {
 			MixpanelUtil.Click_On_AddResource();
 			clickType = "Url";
+			if(listOfContent!=null && listOfContent.getCollectionItems()!=null)
+			{
 			if (listOfContent.getCollectionItems().size() >= 25) {
 
 			} else {
@@ -333,6 +335,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				displayNewResourcePopup();
+			}
 			}
 		}
 	}

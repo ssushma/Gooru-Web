@@ -111,7 +111,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 					
 					}
 				});
-				analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+				analyticService.getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {

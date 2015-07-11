@@ -232,6 +232,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		this.type = type;
 		if(courseObj!=null){
 			this.courseObjG=courseObj;
+			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
 			}else{
@@ -250,7 +251,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0);
+		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
 	}
 	
 	@UiHandler("uploadImageLbl")
@@ -258,7 +259,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(collectionTitle.getText());
 		createOrUpDate.setDescription(learningObjective.getText());
-		createOrUpDate.setCollectionType(COLLECTION);
+		createOrUpDate.setCollectionType(type);
 		getUiHandlers().uploadCollectionImage(createOrUpDate);
 	}	
 	
@@ -268,19 +269,19 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index) {
+	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1);
+				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1,collectionType);
 			}else if(index==1){
 				CreateDo createOrUpDate=new CreateDo();
 				createOrUpDate.setTitle(collectionTitle.getText());
 				createOrUpDate.setDescription(learningObjective.getText());
-				createOrUpDate.setCollectionType(COLLECTION);
+				createOrUpDate.setCollectionType(collectionType);
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
