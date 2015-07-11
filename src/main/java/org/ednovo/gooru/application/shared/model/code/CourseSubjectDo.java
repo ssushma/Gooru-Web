@@ -41,6 +41,8 @@ public class CourseSubjectDo implements Serializable {
 	Integer subjectId;
 	Integer courseId;
 	Integer domainId;
+	Integer subdomainId;
+	String description;
 	
 	CourseSubjectDo(){}
 	
@@ -67,5 +69,21 @@ public class CourseSubjectDo implements Serializable {
 	}
 	public void setDomainId(Integer domainId) {
 		this.domainId = domainId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getSubdomainId() {
+		return subdomainId;
+	}
+
+	public void setSubdomainId(Integer subdomainId) {
+		this.subdomainId = subdomainId;
 	}
 }

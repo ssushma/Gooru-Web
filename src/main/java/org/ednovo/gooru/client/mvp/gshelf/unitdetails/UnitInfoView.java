@@ -75,7 +75,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField HTMLPanel unitInfo,pnlGradeContainer;
+	@UiField HTMLPanel unitInfo,pnlGradeContainer,pnlGradeDescContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveUnitBtn,nextCreateLessonBtn;
 	@UiField TextBox unitTitle;
@@ -87,6 +87,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
+	
+	LiPanel tempLiPanel=null;
+	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -121,11 +124,16 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * This method will display the Grades according to the subject
 	 */
 	@Override
-	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
+	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
 		pnlGradeContainer.clear();
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"domain") {
 			@Override
 			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
+				for(CourseSubjectDo courseSubjectDo : libraryCodeDo) {
+					if(courseSubjectDo.getSubdomainId()==codeId){
+						pnlGradeDescContainer.getElement().setInnerHTML(courseSubjectDo.getDescription());
+					}
+				}
 				if(isAdd){
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(lblvalue);
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
@@ -180,7 +188,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	}
 
 	@Override
-	public void setCourseList(List<CourseSubjectDo> libraryCode) {
+	public void setCourseList(List<CourseSubjectDo> libraryCode,String selectedText) {
 		ulMainGradePanel.clear();
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
@@ -192,6 +200,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				Anchor title=new Anchor(titleText);
 				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
 				liPanel.add(title);
+				if(Integer.parseInt(selectedText)==libraryCodeDo.getCourseId()){
+					liPanel.addStyleName(ACTIVE);
+					getUiHandlers().getDomainsBasedOnCourseId(libraryCodeDo.getCourseId(), titleText);
+				}
 				ulMainGradePanel.add(liPanel);
 			}
 		}
@@ -210,6 +222,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			if(tempLiPanel!=null){
+				tempLiPanel.removeStyleName(ACTIVE);
+				tempLiPanel=liPanel;
+			}else{
+				tempLiPanel=liPanel;
+			}
+			firstSelectedSubject.add(courseId);
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(selectedText).size()>0){
 					getUiHandlers().getDomainsBasedOnCourseId(courseId, selectedText);
@@ -255,6 +274,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				createOrUpDate.setTitle(unitTitle.getText());
 				createOrUpDate.setIdeas(txaBigIdeas.getText());
 				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
+				createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 				if(id!=null){
 					getUiHandlers().updateUnitDetails(createOrUpDate,id,isCreate);
@@ -263,6 +283,23 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				}
 			}
 		}
+	}
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedCourseIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+			}
+		}
+		return taxonomyCourseIds;
 	}
 
 	@Override
@@ -273,9 +310,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
 		}
 		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
+			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),entry.getValue()+"");
 			break;
 		}
 		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
+		firstSelectedSubject.clear();
+		selectedValues.clear();
+	}
+	@Override
+	public List<Integer> getFirstSelectedValue(){
+		return firstSelectedSubject;
 	}
 }
