@@ -1026,7 +1026,7 @@ button.btn-disabled {
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody {
 	border: 1px solid #dddddd;
-	margin-top: 0;
+	margin-top: 2%;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupBlock
@@ -1038,6 +1038,12 @@ button.btn-disabled {
 	border-right: 1px solid #dddddd;
 	margin-bottom: -500px;
 	padding-bottom: 500px;
+}
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .subHeading {
+	display: inline-block;
+	margin: 0;
+	color: red;
+	padding: 8px 15px;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul {
@@ -1277,6 +1283,7 @@ button.btn-disabled {
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader {
 	border: 1px solid #dddddd;
 	border-bottom-width: 0;
+	border-radius: 5px;
 }
 
 #gShelfCourseInfo .courseFolderOpenIcon {

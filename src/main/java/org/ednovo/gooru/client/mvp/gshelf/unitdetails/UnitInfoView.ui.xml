@@ -77,25 +77,24 @@
 
 <div class="unitCoverBody">
 <div class="unitCoverList no-gutter">
-<div class="col-md-3 col-sm-3">
-<div class="unitCoverListLeft">
-<uc:UlPanel ui:field="ulMainGradePanel"/>
-</div>
-</div>
-
-<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
+	<div class="col-md-3 col-sm-3">
+		<div class="unitCoverListLeft">
+		<uc:UlPanel ui:field="ulMainGradePanel"/>
+		</div>
+	</div>
+	<g:HTMLPanel styleName="col-md-3 col-sm-3" ui:field="pnlGradeContainer"/>
+	<g:HTMLPanel styleName="col-md-3 col-sm-3" ui:field="pnlGradeDescContainer"/>
 <div class="clearfix"></div>
 </div>
 </div>
 
 
 </div>
-
-	<div class="tagCoursePanelFooter">
-					<div class="filterTags">
-						<uc:UlPanel ui:field="ulSelectedItems"/>
-					</div>
-				</div>
+<div class="tagCoursePanelFooter">
+	<div class="filterTags">
+		<uc:UlPanel ui:field="ulSelectedItems"/>
+	</div>
+</div>
 
 <div class="stepsButtonGroup">
 	<g:Button styleName="secondary" ui:field="saveUnitBtn" text="{i18n.GL3362}"/>
