@@ -1822,7 +1822,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					collectionImage.setUrl("images/analytics/default-collection-image.png");
 				}
 			});
-			collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources | "+result.get(0).getNonResourceCount()+" Questions");
+			collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources | "+result.get(0).getQuestionCount()+" Questions");
 		}
 	}
 

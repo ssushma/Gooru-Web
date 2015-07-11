@@ -69,7 +69,7 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	private String questionCount;
 	private int scoreInPercentage;
 	private String oeCount; 
-	private ArrayList<session> sessionData;
+	private ArrayList<session> session;
 	
 	public int getUserCount() {
 		return userCount;
@@ -221,11 +221,11 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	public void setOeCount(String oeCount) {
 		this.oeCount = oeCount;
 	}
-	public ArrayList<session> getSessionData() {
-		return sessionData;
+	public ArrayList<session> getSession() {
+		return session;
 	}
-	public void setSessionData(ArrayList<session> sessionData) {
-		this.sessionData = sessionData;
+	public void setSession(ArrayList<session> session) {
+		this.session = session;
 	}
 	
 	

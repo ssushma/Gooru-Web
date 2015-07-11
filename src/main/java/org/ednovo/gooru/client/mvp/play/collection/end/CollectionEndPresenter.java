@@ -549,21 +549,20 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 				if(result.size()!=0 && result.get(0)!=null){
 					
 					
-					if(result.get(0).getSessionData()!=null && result.get(0).getSessionData().size()!=0){
+					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
 					
-					int sessionSize=result.get(0).getSessionData().size();	
+					int sessionSize=result.get(0).getSession().size();	
 						
-					int day=result.get(0).getSessionData().get(sessionSize-1).getSequence();
+					int day=result.get(0).getSession().get(sessionSize-1).getSequence();
 					printData.setUserName(null);
 					printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSessionData().get(sessionSize-1).getEventTime()))));
-					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(0).getSessionData().get(sessionSize-1).getSessionId(),printData);
-					getView().setSessionsData(result.get(0).getSessionData());
+					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
+					getView().setSessionsData(result.get(0).getSession());
 					}
 					
 					showAvgReaction( result.get(0).getAvgReaction());
-					convertMilliSecondsToTime(result.get(0).getAvgTimeSpent());
-					displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
+					convertMilliSecondsToTime(result.get(0).getTimeSpent());
+					displayScoreCountData(result.get(0).getScore(),Integer.parseInt(result.get(0).getQuestionCount()));
 					getView().setCollectionMetaDataByUserAndSession(result);
 					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 				}

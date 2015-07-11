@@ -285,7 +285,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					collectionImage.setUrl("images/default-assessment-image -160x120.png");
 				}
 			});
-			collectionResourcesCount.setText(result.get(0).getNonResourceCount()+" Questions");
+			collectionResourcesCount.setText(result.get(0).getScorableQuestionCount()+" Questions");
 		}
 	}
 

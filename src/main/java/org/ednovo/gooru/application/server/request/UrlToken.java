@@ -510,7 +510,7 @@ public enum UrlToken {
 
 	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?"),
 
-	V1_GETSESSIONSDATABYUSER("/v1/class/{0}/user/{1}/collection?classGooruId={2}&courseGooruId={3}&unitGooruId={4}&lessonGooruId={5}"),
+	V1_GETSESSIONSDATABYUSER("/v1/class/{0}/user/{1}/collection?classGooruId={2}&courseGooruId={3}&unitGooruId={4}&lessonGooruId={5}&sessionId={6}"),
 
 	V1_GETSESSIONDATABYUSERSESSION("/v1/classpage/{0}/resources.json?"),
 

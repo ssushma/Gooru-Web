@@ -36,7 +36,6 @@ import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
@@ -53,8 +52,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
@@ -271,20 +268,18 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 				
 				if(result!=null && result.size()!=0){
 					
-					
-					if(result.get(0).getSessionData()!=null && result.get(0).getSessionData().size()!=0){
+					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
 						
-						int sessionSize=result.get(0).getSessionData().size();	
+						int sessionSize=result.get(0).getSession().size();	
 							
-						int day=result.get(0).getSessionData().get(sessionSize-1).getSequence();
+						int day=result.get(0).getSession().get(sessionSize-1).getSequence();
 						printData.setUserName(null);
 						printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSessionData().get(sessionSize-1).getEventTime()))));
-						getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(0).getSessionData().get(sessionSize-1).getSessionId(),printData);
-						getView().setSessionsData(result.get(0).getSessionData());
+						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
+						getView().setSessionsData(result.get(0).getSession());
 						}
 					
-					displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
+					displayScoreCountData(result.get(0).getScore(),result.get(0).getScorableQuestionCount());
 					getView().setCollectionMetaDataByUserAndSession(result);
 					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 				}
