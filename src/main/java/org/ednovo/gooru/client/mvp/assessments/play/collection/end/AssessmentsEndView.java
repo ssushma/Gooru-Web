@@ -102,7 +102,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	@UiField
 	FlowPanel progressRadial,questionsTable;
-	@UiField HTMLPanel  collectionSummaryText;
+	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel;
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
 	@UiField InlineLabel collectionResourcesCount,correctStatus;
@@ -194,6 +194,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		printButton.setText(i18n.GL4007());
 		downloadButton.setText(i18n.GL4008());
 		
+		loadingImageLabel.setVisible(false);
 	}
 
 	public void resetMetadataFields(){
@@ -567,6 +568,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 			@Override
 			public void onSuccess() {
+				
+				loadingImageLabel.setVisible(false);
 
 				try{
 					printScoredData.clear();
@@ -871,6 +874,25 @@ public static native void destoryTables() /*-{
 public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
 	throw new RuntimeException("Not implemented");
 }
+
+
+
+@Override
+public void loadingIcon() {
+	loadingImageLabel.setVisible(true);
+}
+
+
+
+@Override
+public void errorMsg() {
+	Label erroeMsg=new Label();
+	erroeMsg.setStyleName(STYLE_ERROR_MSG);
+	erroeMsg.setText(i18n.GL3265());
+	questionsTable.add(erroeMsg);
+}
+
+
 
 
 }

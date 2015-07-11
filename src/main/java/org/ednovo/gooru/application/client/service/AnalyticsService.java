@@ -52,7 +52,7 @@ public interface AnalyticsService extends BaseService {
 	
 	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(ClassDo classObj,String collectionId,String classId,String userId);
 		 
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId);
+	public ArrayList<UserDataDo> getUserSessionDataByUser(ClassDo classObj,String collectionId,String classId,String userId,String sessionId,String pathwayId);
 
 	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder);
 	
