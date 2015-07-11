@@ -25,11 +25,14 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 import java.util.ArrayList;
 
+import org.apache.commons.collections.list.SetUniqueList;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -92,7 +95,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			public void onSuccess() {
 
 				getView().enableAndDisableEmailButton(isSummary);
-				analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				
+				
+				analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
