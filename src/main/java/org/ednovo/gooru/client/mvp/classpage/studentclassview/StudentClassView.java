@@ -208,7 +208,9 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	
 	@UiHandler("teachViewBtn")
 	public void clickTeachViewBtn(ClickEvent event) {
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
 		PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
+		request.with(UrlNavigationTokens.CLASSPAGEID, classpageId);
 		request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
 		request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO);
 		AppClientFactory.getPlaceManager().revealPlace(request);

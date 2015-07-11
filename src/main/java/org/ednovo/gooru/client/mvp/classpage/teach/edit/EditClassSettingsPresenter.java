@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -67,7 +68,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.imageUploadPresenter=imageUploadPresenter;
-		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 	}
 	
 	@Override

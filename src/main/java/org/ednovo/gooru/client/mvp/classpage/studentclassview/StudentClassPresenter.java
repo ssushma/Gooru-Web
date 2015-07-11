@@ -266,14 +266,22 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	public void setCheckClassVisiblity(ClasspageDo classpageDo){
 		String status = classpageDo.getStatus();
 		if(!classpageDo.isVisibility()){
-			if(status.equalsIgnoreCase("not-invited")){
-				new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
-			}else if(status.equalsIgnoreCase("pending")){
-				joinStudentClass();
+			if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+				if(status.equalsIgnoreCase("not-invited")){
+					new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
+				}else if(status.equalsIgnoreCase("pending")){
+					joinStudentClass();
+				}
+			}else{
+				getView().setPreviewClassMode(true);
 			}
 		}else{
-			if(status.equalsIgnoreCase("not-invited") || status.equalsIgnoreCase("pending")){
-				joinStudentClass();
+			if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+				if(status.equalsIgnoreCase("not-invited") || status.equalsIgnoreCase("pending")){
+					joinStudentClass();
+				}
+			}else{
+				getView().setPreviewClassMode(true);
 			}
 		}
 	}
