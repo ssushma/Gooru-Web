@@ -127,11 +127,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			}
 			getUiHandlers().callTaxonomyService(selectedIndex);
 		}
-		private void removeGradeButtonStyleName() {
-			btnK12.removeStyleName(ACTIVE);
-			btnHigherEducation.removeStyleName(ACTIVE);
-			btnHigherEducation.removeStyleName(ACTIVE);
-		}
+	}
+	/**
+	 * To remove hilight styles
+	 */
+	void removeGradeButtonStyleName() {
+		btnK12.removeStyleName(ACTIVE);
+		btnHigherEducation.removeStyleName(ACTIVE);
+		btnHigherEducation.removeStyleName(ACTIVE);
 	}
 	/**
 	 * This method will display the Grades according to the subject
@@ -200,6 +203,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public void setCourseList(List<CourseSubjectDo> libraryCode) {
 		ulMainGradePanel.clear();
+		removeGradeButtonStyleName();
+		btnK12.addStyleName(ACTIVE);
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
@@ -294,6 +299,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
+			//To set default selection if the user is already selected any subject
+			firstSelectedSubject.add(courseObj.getTaxonomyCourse().get(0).getSubjectId());
 			for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()) {
 				if(selectedValues.containsKey(courseSubjectDo.getSubjectId())){
 					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
