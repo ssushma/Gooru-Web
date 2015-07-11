@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
@@ -36,4 +39,8 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 	void setLessonInfoData(FolderDo folderObj); 
 	
 	void callCreateAndUpdate(boolean isCreate,boolean result,String type);
+	
+	public void setCourseList(List<CourseSubjectDo> libraryCode);
+	
+	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText);
 }
