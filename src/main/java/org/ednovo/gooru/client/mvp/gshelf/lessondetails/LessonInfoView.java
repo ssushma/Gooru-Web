@@ -260,7 +260,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@Override
 	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
 		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText)) {
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"") {
 			@Override
 			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
 				if(isAdd){

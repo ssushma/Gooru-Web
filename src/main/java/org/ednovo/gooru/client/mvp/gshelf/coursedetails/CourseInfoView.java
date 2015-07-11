@@ -105,15 +105,41 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, false);
 			}
 		});
+		btnK12.addClickHandler(new CallTaxonomy(1));
+		btnHigherEducation.addClickHandler(new CallTaxonomy(2));
+		btnProfessionalLearning.addClickHandler(new CallTaxonomy(3));
 	}
 	
+	class CallTaxonomy implements ClickHandler{
+		int selectedIndex;
+		CallTaxonomy(int selectedIndex){
+			this.selectedIndex=selectedIndex;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			removeGradeButtonStyleName();
+			if(selectedIndex==1){
+				btnK12.addStyleName(ACTIVE);
+			}else if(selectedIndex==2){
+				btnHigherEducation.addStyleName(ACTIVE);
+			}else{
+				btnProfessionalLearning.addStyleName(ACTIVE);
+			}
+			getUiHandlers().callTaxonomyService(selectedIndex);
+		}
+		private void removeGradeButtonStyleName() {
+			btnK12.removeStyleName(ACTIVE);
+			btnHigherEducation.removeStyleName(ACTIVE);
+			btnHigherEducation.removeStyleName(ACTIVE);
+		}
+	}
 	/**
 	 * This method will display the Grades according to the subject
 	 */
 	@Override
 	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
 		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText)) {
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"course") {
 			@Override
 			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
 				if(isAdd){
@@ -171,12 +197,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@Override
 	public void setCourseList(List<CourseSubjectDo> libraryCode) {
-		selectedValues.clear();
 		ulMainGradePanel.clear();
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
-				selectedValues.put(titleText, new ArrayList<String>());
+				if(!selectedValues.containsKey(titleText)){
+					selectedValues.put(titleText, new ArrayList<String>());
+				}
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
 				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getSubjectId()));
@@ -261,6 +288,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
 		ulSelectedItems.clear();
 		firstSelectedSubject.clear();
+		selectedValues.clear();
 	}
 
 	/**

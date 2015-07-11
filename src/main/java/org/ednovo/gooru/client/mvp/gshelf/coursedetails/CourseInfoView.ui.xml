@@ -25,6 +25,16 @@
 					     </div>
 					</div>
 				</div>
+				<div class="tagCoursePanelHeader">
+					<div class="btn-group btn-group-justified" role="group">
+			  			<div class="btn-group" role="group">
+			   					<div class="subHeading">Subject</div>
+			 			</div>
+						<div class="btn-group" role="group">
+						    <div class="subHeading">Course</div>
+						</div>
+					</div>
+				</div>
 				<div class="tagCoursePanelBody">
 					<div class="courseGroupBlock">
 						<div class="no-gutter">

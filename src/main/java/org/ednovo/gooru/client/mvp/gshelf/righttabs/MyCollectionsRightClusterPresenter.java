@@ -121,7 +121,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				//For displaying template and data
 				//getView().enableAndHideTabs(true);
 				if(COURSE.equalsIgnoreCase(type)){
-					courseInfoPresenter.callTaxonomyService();
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
 				}else if("Unit".equalsIgnoreCase(type)){ 

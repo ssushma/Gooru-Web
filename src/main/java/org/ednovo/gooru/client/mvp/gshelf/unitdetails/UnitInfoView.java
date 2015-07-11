@@ -123,7 +123,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@Override
 	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
 		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText)) {
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"domain") {
 			@Override
 			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
 				if(isAdd){
@@ -181,12 +181,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@Override
 	public void setCourseList(List<CourseSubjectDo> libraryCode) {
-		selectedValues.clear();
 		ulMainGradePanel.clear();
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
-				selectedValues.put(titleText, new ArrayList<String>());
+				if(!selectedValues.containsKey(titleText)){
+					selectedValues.put(titleText, new ArrayList<String>());
+				}
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
 				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
@@ -201,23 +202,23 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	class ClickOnSubject implements ClickHandler{
 		String selectedText;
 		LiPanel liPanel;
-		int subjectId;
-		ClickOnSubject(String selectedText,LiPanel liPanel,int subjectId){
+		int courseId;
+		ClickOnSubject(String selectedText,LiPanel liPanel,int courseId){
 			this.selectedText=selectedText;
 			this.liPanel=liPanel;
-			this.subjectId=subjectId;
+			this.courseId=courseId;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(selectedText).size()>0){
-					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
+					getUiHandlers().getDomainsBasedOnCourseId(courseId, selectedText);
 				}else{
 					liPanel.removeStyleName(ACTIVE);
 				}
 			}else{
 				liPanel.addStyleName(ACTIVE);
-				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
+				getUiHandlers().getDomainsBasedOnCourseId(courseId, selectedText);
 			}
 		}
 	}

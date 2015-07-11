@@ -35,7 +35,7 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	/**
 	 * This method will call the taxonomy service method
 	 */
-	public void callTaxonomyService();
+	public void callTaxonomyService(int classifierId);
 	
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
     

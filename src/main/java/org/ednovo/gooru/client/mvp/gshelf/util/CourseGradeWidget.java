@@ -53,10 +53,13 @@ public abstract class CourseGradeWidget extends Composite {
 	List<String> selectedValues;
 	
 	final String ACTIVE="active";
+	String type;
+	long codeId = 0;
 	
-	public CourseGradeWidget(final List<CourseSubjectDo> libraryCodeDo,List<String> selectedValues) {
+	public CourseGradeWidget(final List<CourseSubjectDo> libraryCodeDo,List<String> selectedValues,String type) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.selectedValues=selectedValues;
+		this.type=type;
 		if(libraryCodeDo!=null){
 			setData(libraryCodeDo);
 		}
@@ -66,7 +69,11 @@ public abstract class CourseGradeWidget extends Composite {
 		if(libraryCodeDo.size()>0){
 			for(int j=0; j<libraryCodeDo.size(); j++) {
 				final String gradeText=libraryCodeDo.get(j).getName();
-				final long codeId=libraryCodeDo.get(j).getCourseId();
+				if(type.equalsIgnoreCase("course")){
+					codeId=libraryCodeDo.get(j).getCourseId();
+				}else if(type.equalsIgnoreCase("domain")){
+					codeId=libraryCodeDo.get(j).getDomainId();
+				}
 				final LiPanel panel=new LiPanel();
 				if(selectedValues.contains(gradeText)){
 					panel.addStyleName(ACTIVE);

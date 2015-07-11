@@ -90,8 +90,8 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callTaxonomyService(int classifierId) {
+		getTaxonomyService().getSubjectsList(classifierId, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				getView().setCourseList(result);
@@ -151,6 +151,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	public void setData(FolderDo folderObj) {
 		getView().setCouseData(folderObj);
+		callTaxonomyService(1);
 	}
 
 	@Override

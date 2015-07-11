@@ -97,13 +97,24 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		getTaxonomyService().getSubjectsList(subjectId, selectedText, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
+				getView().setCourseList(result);
 				if(result.size()>0){
-					getView().setCourseList(result);
+					getDomainsBasedOnCourseId(result.get(0).getCourseId(),result.get(0).getName());
 				}
 			}
 		});
 	}
-
+	@Override
+	public void getDomainsBasedOnCourseId(int courseId,final String selectedText) {
+		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+			@Override
+			public void onSuccess(List<CourseSubjectDo> result) {
+				if(result.size()>0){
+					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
+				}
+			}
+		});
+	}
 	@Override
 	public void createAndSaveUnitDetails(CreateDo createDo,final boolean isCreateLesson) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
