@@ -25,6 +25,7 @@
 package org.ednovo.gooru.application.shared.model.analytics;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -59,6 +60,16 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	private long timeSpent;
 	private int resourceCount;
 	private int nonResourceCount;
+	private String evidence;
+	private int scorableQuestionCount;
+	private int goal;
+	private String resourceType;
+	private String username;
+	private String profileUrl;
+	private String questionCount;
+	private int scoreInPercentage;
+	private String oeCount; 
+	private ArrayList<session> session;
 	
 	public int getUserCount() {
 		return userCount;
@@ -156,4 +167,66 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	public void setLastAccessed(long lastAccessed) {
 		this.lastAccessed = lastAccessed;
 	}
+	public String getEvidence() {
+		return evidence;
+	}
+	public int getScorableQuestionCount() {
+		return scorableQuestionCount;
+	}
+	public int getGoal() {
+		return goal;
+	}
+	public String getResourceType() {
+		return resourceType;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public String getProfileUrl() {
+		return profileUrl;
+	}
+	public String getQuestionCount() {
+		return questionCount;
+	}
+	public int getScoreInPercentage() {
+		return scoreInPercentage;
+	}
+	public String getOeCount() {
+		return oeCount;
+	}
+	public void setEvidence(String evidence) {
+		this.evidence = evidence;
+	}
+	public void setScorableQuestionCount(int scorableQuestionCount) {
+		this.scorableQuestionCount = scorableQuestionCount;
+	}
+	public void setGoal(int goal) {
+		this.goal = goal;
+	}
+	public void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
+	public void setQuestionCount(String questionCount) {
+		this.questionCount = questionCount;
+	}
+	public void setScoreInPercentage(int scoreInPercentage) {
+		this.scoreInPercentage = scoreInPercentage;
+	}
+	public void setOeCount(String oeCount) {
+		this.oeCount = oeCount;
+	}
+	public ArrayList<session> getSession() {
+		return session;
+	}
+	public void setSession(ArrayList<session> session) {
+		this.session = session;
+	}
+	
+	
 }

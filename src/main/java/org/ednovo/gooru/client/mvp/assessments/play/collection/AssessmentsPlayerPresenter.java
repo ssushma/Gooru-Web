@@ -543,7 +543,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
         Window.addCloseHandler(new CloseHandler<Window>() {
                @Override
                public void onClose(CloseEvent<Window> event){
-            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null){
+            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null || AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null){
             		   setCookieValues();
             	   }
              }
@@ -853,10 +853,12 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		showClasspageButton();
 		setOpenEndedAnswerSubmited(true);
 		getView().setResourceTitle(collectionDo.getTitle());
-
+		
 		collectionEndPresenter.clearslot();
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
 		collectionEndPresenter.setCollectionMetadata(collectionDo,classpageId);
+		collectionEndPresenter.setSessionId(sessionId);
+		
 		 showSignupPopup();
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){
@@ -1352,12 +1354,20 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * Triggers collection stop event.
 	 */
 	public void stopCollectionDataLog(){
+		String eventType= null;
 		if(collectionActivityEventId!=null){
 			AppClientFactory.printInfoLogger("---Initiating to trigger collection stop event --- \n\n");
 			collectionEndTime=PlayerDataLogEvents.getUnixTime();
+			String rid =  AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+			String view =  AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+			if (rid != null && view != null && !"end".equalsIgnoreCase(view)){
+				eventType = PlayerDataLogEvents.PAUSE_EVENT_TYPE;
+			}else{
+				eventType = PlayerDataLogEvents.STOP_EVENT_TYPE;
+			}
 			PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 					PlayerDataLogEvents.STOP_EVENT_TYPE, collectionStartTime, collectionEndTime, collectionEndTime-collectionStartTime-totalTimeSpentOnSummaryPage, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
-			triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionEndTime,PlayerDataLogEvents.STOP_EVENT_TYPE,0);// TODO need to implement score
+			triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionEndTime,eventType,0);// TODO need to implement score
 		}else{
 			AppClientFactory.printInfoLogger("---In stopCollectionDataLog -- collectionActivityEventId is NULL --- \n");// shld remove this else part later as it is added for debugging purpose
 		}
@@ -1483,17 +1493,10 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 				}
 			}else{
-				this.playerAppService.createSessionTracker(collectionGooruOid, parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-					@Override
-					public void onSuccess(String sessionId) {
-						AssessmentsPlayerPresenter.this.sessionId=sessionId;
-						/**
-						 * Triggers collection start event.
-						 */
-						triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-						escalateToTriggerEvents(sessionId);
-					}
-				});
+				sessionId = GwtUUIDGenerator.uuid();
+				AssessmentsPlayerPresenter.this.sessionId=sessionId;
+				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+				escalateToTriggerEvents(sessionId);
 			}
 		}
 	}
@@ -2080,13 +2083,14 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			String path="";
 
 			String gooruOid= collectionDo != null && collectionDo.getGooruOid() != null ? collectionDo.getGooruOid() : "";
-
+			int totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : collectionDo.getCollectionItems().size();
 			if(classpageId!=null&&!classpageId.equals("")){
 				path=classpageId+"/"+collectionDo.getGooruOid();
 				if(classpageEventId==null||classpageEventId.equals("")){
 					classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
 				}
-				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null));
+
+				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null, totalQuestionsCount));
 			}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 				classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
 				if(classpageEventId==null||classpageEventId.equals("")){
@@ -2094,12 +2098,12 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				}
 				String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
 				path=libraryId+"/"+collectionDo.getGooruOid();
-				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), libraryId, classpageEventId, eventType, playerMode,"",null,path,null));
+				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), libraryId, classpageEventId, eventType, playerMode,"",null,path,null,totalQuestionsCount));
 			}else{
 				String parentGooruOid=AppClientFactory.getPlaceManager().getShelfParentGooruOid();
 
 				path=AppClientFactory.getPlaceManager().getFolderIds()+gooruOid;
-				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(gooruOid, parentGooruOid, classpageEventId, eventType, playerMode,"",null,path,null));
+				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(gooruOid, parentGooruOid, classpageEventId, eventType, playerMode,"",null,path,null,totalQuestionsCount));
 			}
 			collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 			totalTimeSpendInMs=collectionEndTime-newCollectionStartTime;
@@ -2147,7 +2151,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
 		String playerMode=getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId, eventType, playerMode,questionTypeString,null,path,null));
+		int totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : collectionDo.getCollectionItems().size();
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId, eventType, playerMode,questionTypeString,null,path,null, totalQuestionsCount));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		int viewCount1 = "start".equalsIgnoreCase(eventType) ? 0 : 1;
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore(), viewCount1));
@@ -2182,7 +2187,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
 		String playerMode=getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,"question",null,path,null));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,"question",null,path,null,0));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0,0));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray,null));
@@ -2207,7 +2212,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
 		String playerMode=getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,questionTypeString,reactionType,path,null));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,questionTypeString,reactionType,path,null,0));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(reactionEndTime-reactionStartTime, 0, 0));
@@ -2671,12 +2676,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			parentGooruOid=classpageId;
 			mode="class";
 		}
-		this.playerAppService.createSessionTracker(collectionDo.getGooruOid(), parentGooruOid,mode, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionId) {
-				AssessmentsPlayerPresenter.this.sessionId=sessionId;
-			}
-		});
+		sessionId = GwtUUIDGenerator.uuid();
+		
 	}
 
 

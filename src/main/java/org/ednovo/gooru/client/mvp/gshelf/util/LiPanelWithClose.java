@@ -35,6 +35,8 @@ import com.google.gwt.user.client.ui.Label;
 public class LiPanelWithClose extends Composite{
 	Anchor lnkClose;
 	long id;
+	String name;
+	int relatedId;
 	
 	public LiPanelWithClose(String text){
 		 LiPanel panel = new LiPanel();
@@ -56,5 +58,17 @@ public class LiPanelWithClose extends Composite{
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getRelatedId() {
+		return relatedId;
+	}
+	public void setRelatedId(int relatedId) {
+		this.relatedId = relatedId;
 	}
 }

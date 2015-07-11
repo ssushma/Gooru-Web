@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
@@ -55,10 +56,12 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePrese
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
@@ -108,6 +111,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	PrintUserDataDO printData=new PrintUserDataDO();
 
 	String classpageId=null;
+	
+	String sessionId=null;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -465,7 +470,12 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+		
+		
+		getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
+		
+		
+		/*this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -488,7 +498,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			public void onFailure(Throwable caught) {
 				
 			}
-		});
+		});*/
 
 	}
 	public void convertMilliSecondsToTime(Long milliSeconds){
@@ -532,10 +542,33 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-						if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
+				
+				if(result.size()!=0 && result.get(0)!=null){
+					
+					
+					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
+					
+					int sessionSize=result.get(0).getSession().size();	
+						
+					int day=result.get(0).getSession().get(sessionSize-1).getSequence();
+					printData.setUserName(null);
+					printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
+					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
+					getView().setSessionsData(result.get(0).getSession());
+					}
+					
+					showAvgReaction( result.get(0).getAvgReaction());
+					convertMilliSecondsToTime(result.get(0).getTimeSpent());
+					displayScoreCountData(result.get(0).getScore(),Integer.parseInt(result.get(0).getQuestionCount()));
+					getView().setCollectionMetaDataByUserAndSession(result);
+					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+				}
+				
+				
+						/*if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
 								count = 0;
 								showAvgReaction( result.get(0).getAvgReaction());
 								convertMilliSecondsToTime(result.get(0).getAvgTimeSpent());
@@ -559,8 +592,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 								        }
 								      };
 								      // Execute the timer to expire 2 seconds in the future
-								      timer.schedule(2000);	
-							}
+								    //  timer.schedule(2000);	
+							}*/
 			}
 			
 			@Override
@@ -595,6 +628,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 				getView().displayWhatsNextContent(result,collectionDo.getUrl());
 			}
 		});
+	}
+	
+	public void setSessionId(String sessionId){
+		this.sessionId=sessionId;
 	}
 	
 }

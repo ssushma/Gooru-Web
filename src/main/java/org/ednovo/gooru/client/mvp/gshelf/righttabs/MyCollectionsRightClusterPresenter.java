@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -81,6 +82,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
 	private static final String FOLDER = "Folder";
+	
+	Map<Integer,Integer> firstSelectedData;
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -118,11 +121,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				//For displaying template and data
 				//getView().enableAndHideTabs(true);
 				if(COURSE.equalsIgnoreCase(type)){
-					courseInfoPresenter.callTaxonomyService();
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
 				}else if("Unit".equalsIgnoreCase(type)){ 
-					unitInfoPresenter.callTaxonomyService();
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
 				}else if("Lesson".equalsIgnoreCase(type)){
@@ -130,7 +131,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else if(ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(type)){
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
-					if(view!=null && FOLDER.equalsIgnoreCase(view)){
+					if(view!=null && FOLDER.equalsIgnoreCase(view)){ 
 						getView().disableAndEnableBreadCums(false);
 					}else{
 						getView().disableAndEnableBreadCums(true);
@@ -299,6 +300,22 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	
 	/**
+	 * calls API to delete Collection/Assessment.
+	 */
+	@Override
+	public void deleteCollectionContent(final String o1CourseId, final String o2UnitId,	final String o3LessonId, final String assessmentCollectionId) {
+		AppClientFactory.getInjector().getfolderService().deleteCollectionAssessment(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId, new SimpleAsyncCallback<Integer>() {
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result==200){
+					getView().onDeleteCollectionAssessmentSuccess(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
+				}
+			}
+		});
+	}
+	
+	/**
 	 * Sets the right side view on delete of Unit.
 	 */
 	@Override
@@ -312,6 +329,15 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView) {
 		shelfMainPresenter.setUserAllLessons(o1CourseId,o2UnitId, o3LessDeletedonId,currentTypeView);
+	}
+	
+	
+	/**
+	 * Sets the right side view on delete of Collection/Assesssment.
+	 */
+	@Override
+	public void setCollectionsListOnRightCluster(String o1CourseId,String o2UnitId, String o3LessonId,String deletedAssessmentCollectionId, String currentTypeView) {
+		shelfMainPresenter.setUserAllCollAssessment(o1CourseId,o2UnitId, o3LessonId,deletedAssessmentCollectionId,currentTypeView); 
 	}
 	
 	/**
@@ -328,5 +354,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			} 
 		});
 	}
-	
+	public Map<Integer,Integer> getFirstSelectedData(){
+		return firstSelectedData;
+	}
+	@Override
+	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData){
+		this.firstSelectedData=firstSelectedData;
+	}
 }

@@ -44,39 +44,48 @@ public class ClassDo implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String classId;
-	private String course;
-	private String unit;
-	private String lesson;
-	private String assessment;
+	private String courseId;
+	private String unitId;
+	private String lessonId;
+	private String assessmentId;
+	private String sessionId;
+	
 	public String getClassId() {
 		return classId;
 	}
-	public String getCourse() {
-		return course;
+	public String getCourseId() {
+		return courseId;
 	}
-	public String getUnit() {
-		return unit;
+	public String getUnitId() {
+		return unitId;
 	}
-	public String getLesson() {
-		return lesson;
+	public String getLessonId() {
+		return lessonId;
 	}
-	public String getAssessment() {
-		return assessment;
+	public String getAssessmentId() {
+		return assessmentId;
 	}
 	public void setClassId(String classId) {
 		this.classId = classId;
 	}
-	public void setCourse(String course) {
-		this.course = course;
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
 	}
-	public void setUnit(String unit) {
-		this.unit = unit;
+	public void setUnitId(String unitId) {
+		this.unitId = unitId;
 	}
-	public void setLesson(String lesson) {
-		this.lesson = lesson;
+	public void setLessonId(String lessonId) {
+		this.lessonId = lessonId;
 	}
-	public void setAssessment(String assessment) {
-		this.assessment = assessment;
+	public void setAssessmentId(String assessmentId) {
+		this.assessmentId = assessmentId;
 	}
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	
 	
 }

@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -45,6 +46,7 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsSearchDo;
@@ -79,7 +81,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
-public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageService {
+public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClasspageServiceImpl.class);
 
@@ -425,7 +427,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 	}
 	
 	@Override
-	public ClasspageListDo v3GetUserClasses(String limit, String offSet, String randomId) throws GwtException {
+	public ClasspageListDo v3GetUserClasses(String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -434,7 +436,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 		Map<String,String> params = new HashMap<String, String>();
 		params.put(GooruConstants.LIMIT, limit);
 		params.put(GooruConstants.OFFSET, offSet);
-		params.put(GooruConstants.RANDOMID, randomId);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 
 		getLogger().info("V3_GET_LISTTEACHCLASSES API Call::::::"+url);
@@ -445,7 +446,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 	}
 
 	@Override
-	public ClasspageListDo v3GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException {
+	public ClasspageListDo v3GetUserStudyClasses(String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -453,7 +454,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.LIMIT, limit);
 		params.put(GooruConstants.OFFSET, offSet);
-		params.put(GooruConstants.RANDOMID, randomId);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("V3_GET_LISTSTUDYCLASSES API Call::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
@@ -512,10 +512,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 	@Override
 	public ClasspageDo v3GetClassById(String classpageId){
 		JsonRepresentation jsonRep = null;
-		// /v2/class/{0}?sessionToken={1}&merge=permissions
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
-		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
+		//String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
 		getLogger().info("V3_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
@@ -1549,7 +1547,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 	
 	
 	@Override
-	public void v3StudentJoinIntoClass(String classCode, String emailId )	throws GwtException {
+	public void v3StudentJoinIntoClass(String classCode)	throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_MEMBER_LIST_BY_CODE, classCode);
 		getLogger().info("v3 Student Join Class:"+url);
@@ -1717,9 +1715,59 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements 	ClasspageS
 		}
 	}
 
-	
-
-	
+	@Override
+	public ArrayList<PlanProgressDo> getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams) throws GwtException, ServerDownException {
+		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+		
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		String userId = getLoggedInUserUid();
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		
+		String endPoint = getAnalyticsEndPoint();
+		
+		if(type.equalsIgnoreCase("plan")) {
+			if(unitId!=null&&lessonId!=null) {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_LESSON_PLAN, classpageId, courseId, unitId, lessonId);
+				if(queryParams!=null) {
+					params.put("contentGooruIds", queryParams.get("contentGooruIds"));
+				}
+				params.put("userUid", userId);
+			} else if(unitId!=null) {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_UNIT_PLAN, classpageId, courseId, unitId);
+				params.put("userUid", userId);
+			} else {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_COURSE_PLAN, classpageId, courseId);
+				params.put("userUid", userId);
+			}
+		} else if (type.equalsIgnoreCase("progress")) {
+			if(unitId!=null) {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_UNIT_PROGRESS, classpageId, courseId, unitId);
+				params.put("userUid", userId);
+				params.put("pretty", "1");
+			} else {
+				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_COURSE_PROGRESS, classpageId, courseId);
+				params.put("userUid", userId);
+			} 
+		}
+		
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info(url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		JSONObject resourceObj;
+		try {
+			resourceObj = jsonRep.getJsonObject();
+			if(resourceObj!=null){
+				if(resourceObj.optJSONArray("content") != null){
+					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+				}
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return dataList;
+	}
 }
-
-

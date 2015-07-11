@@ -1,7 +1,6 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapCircle.MouseOutHideToolTip;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapCircle.MouseOverShowClassCodeToolTip;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
@@ -28,14 +27,15 @@ public class StudentClassContentWidget extends Composite {
 	
 	interface StudentClassContentWidgetUiBinder extends UiBinder<Widget, StudentClassContentWidget> {}
 	
-	public StudentClassContentWidget(String circleStyle, String url) {
+	public StudentClassContentWidget(PlanProgressDo planDo, String contentStyle) {
 		initWidget(uiBinder.createAndBindUi(this));
-		String contentName = "Collection 1: Fractions";
+		String contentName = planDo.getTitle();
 		contentPanel.addMouseOverHandler(new MouseOverShowClassCodeToolTip(contentName));
 		contentPanel.addMouseOutHandler(new MouseOutHideToolTip());
-		if(!circleStyle.isEmpty()) {
-			contentPanel.addStyleName(circleStyle);
+		if(!contentStyle.isEmpty()) {
+			contentPanel.addStyleName(contentStyle);
 		}
+		String url = "";
 		imagePanel.setUrl(url);
 		imagePanel.setHeight("55px");
 		imagePanel.setWidth("75px");

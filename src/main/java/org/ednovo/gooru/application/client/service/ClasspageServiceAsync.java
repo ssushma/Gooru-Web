@@ -26,9 +26,11 @@ package org.ednovo.gooru.application.client.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
@@ -189,9 +191,9 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void createClass(String title,String grade,boolean visiblity,AsyncCallback<ClasspageDo> callback);
 	
-	public void  v3GetUserClasses(String limit, String offSet, String randomId,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
+	public void  v3GetUserClasses(String limit, String offSet,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
-	public void  v3GetUserStudyClasses(String limit, String offSet, String randomId,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
+	public void  v3GetUserStudyClasses(String limit, String offSet,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
 	public void  getActiveAssociatedStudentInClassListByCode(String classCode, int offSet, int pageSize, String statusType,AsyncCallback<StudentsAssociatedListDo> callback) throws GwtException,ServerDownException;
 	
@@ -201,10 +203,13 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void removeActiveStudentFromClass(String classUid,boolean visiblity,String gooruUids,AsyncCallback<Void> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
-	public void v3StudentJoinIntoClass(String classCode, String emailId,AsyncCallback<Void> callback) throws GwtException,ServerDownException;
+	public void v3StudentJoinIntoClass(String classCode,AsyncCallback<Void> callback) throws GwtException,ServerDownException;
 	
 	public void v3UpdateClass(String classId,ClasspageDo classpageDo,AsyncCallback<ClasspageDo> callback) throws GwtException,ServerDownException;
 	
 	//public void inviteStudentToClass_V3(String classId,List<String> lstEmailId, AsyncCallback<ArrayList<CollaboratorsDo>> simpleAsyncCallback);
 	void getClassesAssociatedWithCourse(String courseId,AsyncCallback<ArrayList<ClasspageDo>> callback) throws GwtException,ServerDownException;
+	
+	public void getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
+	
 }

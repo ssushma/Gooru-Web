@@ -46,13 +46,13 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
 	
 	void getCollectionSummaryUsersData(String classpageId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
 	
-	void getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
+	void getCollectionMetaDataByUserAndSession(ClassDo classObj,String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
 	
 	void getCollectionResourceData(String collectionId,String classpageId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
 	
-	void getSessionsDataByUser(String collectionId,String classId,String userId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
+	void getSessionsDataByUser(ClassDo classObj,String collectionId,String classId,String userId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
 	
-	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
+	void getUserSessionDataByUser(ClassDo classObj,String collectionId,String classId,String userId,String sessionId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
    
 	void getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder,AsyncCallback<ArrayList<GradeJsonData>> callback);
    

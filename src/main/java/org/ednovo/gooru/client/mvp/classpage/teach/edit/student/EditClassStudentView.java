@@ -181,7 +181,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		this.classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		this.classPageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		reportContainer.setVisible(false);
 		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
 		reportPanelAnr.addClickHandler(new MasteryReportPlace(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));

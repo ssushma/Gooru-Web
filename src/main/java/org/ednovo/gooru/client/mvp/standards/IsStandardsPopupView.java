@@ -42,7 +42,7 @@ public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<Stan
 
 	void loadData();
 
-	void SetData(StandardsLevel1DO levelOneData, int valArr);
+	void SetData(StandardsLevel1DO levelOneData, int valArr, String titleVal);
 
 	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
 

@@ -763,4 +763,14 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return associatedClassesSize;
 	}
+
+	@Override
+	public Integer deleteCollectionAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String assessmentCollectionId)	throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_LESSON_COLLECTION, o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
+		getLogger().info("Lesson Collection delete:::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		Integer statusCode = jsonResponseRep.getStatusCode();
+		return statusCode;
+	}
 }
