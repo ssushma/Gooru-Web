@@ -28,8 +28,9 @@
 	padding: 10px 15px;
 }
 
-.popupContent .popupContent {
-	padding: 10px 75px;
+
+.popupContent .popupBody {
+	padding: 25px;
 }
 
 .popupModalContent .popupHeader {
