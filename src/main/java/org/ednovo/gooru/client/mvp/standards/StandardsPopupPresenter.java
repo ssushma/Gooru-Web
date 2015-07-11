@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.standards;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;

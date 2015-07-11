@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,46 +23,62 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 
-/**
- * @author Search Team
- *
- */
-public interface UnitInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
+package org.ednovo.gooru.client.mvp.gshelf.taxonomy;
+
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+
+public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView> implements TaxonomyPopupUiHandlers{
 	
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
-    
-	/**
-	 * To Create and Save the details of Course
-	 * @param createDo {@link String} 
-	 * @param isCreateLesson {@link boolean} 
-	 */
-	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson);
-	/**
-	 * This method is used to update the unit info details
-	 * @param createDo
-	 * @param id
-	 * @param isCreateUnit
-	 */
-	void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit);
-	/**
-	 * This method is used to check profanity checker
-	 * @param textValue
-	 * @param isCreate
-	 */
-	void checkProfanity(String textValue,final boolean isCreate,int index);
+	@Inject
+	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view){
+		super(eventBus,view);
+		getView().setUiHandlers(this);
+	}
+	
+	
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
 
-	void showUnitInfo();
+	@Override
+	protected void onReveal(){
+		super.onReveal();
+	}
+	
+	@Override
+	protected void onReset() {
+		super.onReset();
+	}
 
-	void showUnitTemplate();
 
-	public void invokeTaxonomyPopup(); 
+	public void getTaxonomySubjects() { 
+		getView().addTaxonomySubjects();
+	}
+
+
+	@Override
+	public void getCoursesBasedOnSelectedSub() {
+		getView().addTaxonomyCourses();
+	}
+
+
+	@Override
+	public void getDomainsBasedOnSelectedCourse() {
+		getView().addTaxonomyDomains();
+	}
+
+
+	@Override
+	public void getSubjectsBasedOnSelectedDomain() {
+		getView().addTaxonomyStandards();
+	}
+	
+	
+
 }
