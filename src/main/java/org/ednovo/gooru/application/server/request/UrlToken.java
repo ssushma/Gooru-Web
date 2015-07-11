@@ -55,7 +55,7 @@ public enum UrlToken {
 	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?"),
 
 	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?"),
-	
+
 	v2_SEARCH_SUGGEST_CONTRIBUTOR("/gooru-search/rest/search/contributor?"),
 
 	UPDATE_V2_COLLLECTION("/v2/collection/{0}?"),
@@ -151,7 +151,7 @@ public enum UrlToken {
 	CREATE_CLASSPAGE("/classpage"),
 
 	CREATE_CLASSPAGE_V2("/v2/class?"),
-	
+
 	CRETAE_CLASS_V3("/v3/class?"),
 
 	CREATE_CLASSPAGE_ITEM_V2("/v2/classpage/{0}/item?"),
@@ -199,7 +199,7 @@ public enum UrlToken {
 	V2_GET_CLASSPAGE_BY_CODE("/v2/class/code/{0}?"),
 
 	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?"),
-	
+
 	V2_UPDATE_ASSIGNMENT("/v2/assignment/{0}"),
 
 	V2_DELETE_ASSIGNMENT("/v2/assignment/{0}?"),
@@ -353,19 +353,19 @@ public enum UrlToken {
 	V2_LIST_CLASSPAGES_BY_USER_ID("/v2/classpage/collection/{0}?gooruUId={1}"),
 
 	V2_CREATE_FOLDER("/v2/folder?"),
-	
+
 	V1_CREATE_COURSE("/v1/course?"),
-	
+
 	V1_CREATE_UNIT("/v1/course/{0}/unit?"),
-	
+
 	V1_UPDATE_UNIT("/v1/course/{0}/unit/{1}?"),
-	
+
 	V1_CREATE_LESSON("/v1/course/{0}/unit/{1}/lesson?"),
-	
+
 	V1_CREATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection?"),
-	
+
 	V1_UPDATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
-	
+
 	V1_UPDATE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
 
 	V2_DELETE_FOLDER("/v2/folder/{0}?"),
@@ -377,7 +377,7 @@ public enum UrlToken {
 	V2_CREATE_COLLECTION_IN_FOLDER("/v2/collection?"),
 
 	V2_UPDATE_FOLDER_METADATA("/v2/folder/{0}?"),
-	
+
 	V1_UPDATE_COURSE_METADATA("/v1/course/{0}?"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
@@ -577,23 +577,23 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V2_GET_VIEW_COUNTS("/v2/stats/data?sessionToken={0}&gooruOId={1}"),
 
 	V2_GET_RESOURCE_BASED_USERS("/v2/resource/{0}/collection?sessionToken={1}&offset={2}&limit={3}"),
-	
+
 	V1_GET_SUBJECTS("/v1/subject?classificationTypeId={0}"),
-	
+
 	V1_GET_COURSES_BY_SUBJECTID("/v1/subject/{0}/taxonomycourse?offset={1}&limit={2}"),
-	
+
 	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?"),
-	
+
 	V1_GET_USER_COURSES_LIST("/v2/user/{0}/course?"),
-	
+
 	V1_GET_UNITS_BY_COURSEID("/v1/course/{0}/unit"),
-	
+
 	V1_GET_LESSONS_BY_LESSONID("/v1/course/{0}/unit/{1}/lesson"),
-	
+
 	V1_GET_COLLECTIONS_BY_COLLECTIONID("/v1/course/{0}/unit/{1}/lesson/{2}/collection"),
-	
+
 	V3_GET_COLLECTION_RESOURCES("/v3/collection/{0}?"),
-	
+
 	V3_GET_LISTTEACHCLASSES("/v3/class/teach?"),
 
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
@@ -601,25 +601,29 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	DELETE_COURSE("/v1/course/{0}?"),
 
 	V3_GET_MEMBER_LIST_BY_CODE("/v3/class/{0}/member?"),
-	
+
 	V2_GET_PENDINGMEMBER_LIST_BY_CODE("/v2/invite/class/{0}?"),
-	
+
 	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
-	
+
 	V3_DLETE_ACTIVE_USERS_CLASS("/v3/class/{0}/member/{1}?"),
-	
+
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
-	
+
 	DELETE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
-	
+
 	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
-	
+
+
+	GET_LAST_PLAYER_ASSESSMENT_INFO("/v1/class/{0}/assessment/sessions?"),
+
     GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?"),
-    
+
     DELETE_LESSON_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
-    
+
 	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?");
-	
+
+
 
 
 	private String url;

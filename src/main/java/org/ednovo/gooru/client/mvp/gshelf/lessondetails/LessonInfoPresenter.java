@@ -31,7 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -94,19 +94,9 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void showStandardsPopup(String standardVal) {
-		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal);
+	public void showStandardsPopup(String standardVal, String titleVal) {
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,titleVal);
 		addToPopupSlot(standardsPopupPresenter);
-	}
-
-	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
-			@Override
-			public void onSuccess(List<LibraryCodeDo> result) {
-				//getView().setCourseList(result);
-			}
-		});
 	}
 
 	@Override
@@ -158,6 +148,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			}
 		});
 	}
+	
+	@Override
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsRightClusterPresenter;
+	}
+	
 	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
@@ -174,6 +170,17 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			@Override
 			public void onSuccess(Boolean value) {
 				getView().callCreateAndUpdate(isCreate,value,type);
+			}
+		});
+	}
+	@Override
+	public void callCourseBasedOnSubject(int courseId,final String selectedText) {
+		getTaxonomyService().getSubjectsList(courseId, "domain", 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+			@Override
+			public void onSuccess(List<CourseSubjectDo> result) {
+				if(result.size()>0){
+					getView().setCourseList(result);
+				}
 			}
 		});
 	}

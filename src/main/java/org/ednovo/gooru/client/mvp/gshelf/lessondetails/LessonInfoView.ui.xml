@@ -56,7 +56,8 @@
 <div class="panel panel-default">
 <div class="panel-heading">Apply and extend previous understandings of multiplication and division to devide fractions by fractions.</div>
 <div class="panel-body">
-
+<uc:UlPanel ui:field="ulMainGradePanel"/>
+<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
 <div class="fractionBlocks no-gutter">
 <div class="fractionMultiBlock">
 <div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
@@ -133,10 +134,7 @@
 
 
 <div class="filterTags">
-<ul>
-<li>6.NS.B.3 <a href="">X</a></li>
-
-</ul>
+<uc:UlPanel ui:field="ulSelectedItems"/>
 </div>
 
 

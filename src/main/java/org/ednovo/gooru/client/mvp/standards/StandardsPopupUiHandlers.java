@@ -35,7 +35,7 @@ public interface StandardsPopupUiHandlers extends BaseUiHandlers {
 	 * This method will call the taxonomy service method
 	 */
 
-	void callStandardsBasedonTypeService(String standardVal);
+	void callStandardsBasedonTypeService(String standardVal,String titleVal);
 
 	void getFirstLevelObjects(String levelOrder, String standardCodeSelected);
 

@@ -66,5 +66,9 @@ public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHan
 	void setPreviewClassMode(boolean isPreview);
 	
 	void setJoinClassData();
+
+	void initiateJoinClassPopup();
+
+	void setSuccesspopup();
 	
 }
