@@ -610,14 +610,14 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		
+
 		sessionId = GwtUUIDGenerator.uuid();
 		ResourcePlayerPresenter.this.sessionId=sessionId;
 		startResourceInsightDataLog();
 		if(collectionItemDo!=null){
 			createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),"open");
 		}
-		
+
 	}
 
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid, String questionType, String status){
@@ -1170,12 +1170,4 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			}
 		});
 	}
-
-
-	public void checkPreviousSessionPlayed(){
-
-	}
-
-
-
 }
