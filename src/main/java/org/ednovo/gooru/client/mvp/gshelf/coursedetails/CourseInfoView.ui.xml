@@ -25,25 +25,19 @@
 					     </div>
 					</div>
 				</div>
-				<div class="tagCoursePanelHeader">
-					<div class="btn-group btn-group-justified" role="group">
-			  			<div class="btn-group" role="group">
-			   					<div class="subHeading">Subject</div>
-			 			</div>
-						<div class="btn-group" role="group">
-						    <div class="subHeading">Course</div>
-						</div>
-					</div>
-				</div>
 				<div class="tagCoursePanelBody">
 					<div class="courseGroupBlock">
 						<div class="no-gutter">
 							<div class="col-md-4 col-sm-5">
 								<div class="courseGroupLeft">
+									<div class="subHeading">Subject</div>
 									<uc:UlPanel ui:field="ulMainGradePanel"/>
 								</div>
 							</div>
-							<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
+							<div class="pnlBackGround">
+								<div class="subHeading">Course</div>
+								<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
+							</div>
 							<div class="clearfix"></div>
 						</div>
 					</div>

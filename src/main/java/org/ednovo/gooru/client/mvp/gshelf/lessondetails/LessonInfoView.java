@@ -262,29 +262,29 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		pnlGradeContainer.clear();
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"") {
 			@Override
-			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
+			public void setSelectedGrade(final CourseSubjectDo lessonObj, final long codeId,boolean isAdd) {
 				if(isAdd){
-					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(lblvalue);
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(lessonObj.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							//This will remove the selected value when we are trying by close button
 							for(Iterator<Map.Entry<String,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
 							     Map.Entry<String, ArrayList<String>> entry = it.next();
-							     if(entry.getValue().contains(lblvalue)){
-							    	 entry.getValue().remove(lblvalue);
+							     if(entry.getValue().contains(lessonObj.getName())){
+							    	 entry.getValue().remove(lessonObj.getName());
 							     }
 							 }
 							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
 							liPanelWithClose.removeFromParent();
 						}
 					});
-					selectedValues.get(selectedText).add(lblvalue);
+					selectedValues.get(selectedText).add(lessonObj.getName());
 					liPanelWithClose.setId(codeId);
 					ulSelectedItems.add(liPanelWithClose);
 				}else{
-					if(selectedValues.get(selectedText).contains(lblvalue)){
-						selectedValues.get(selectedText).remove(lblvalue);
+					if(selectedValues.get(selectedText).contains(lessonObj.getName())){
+						selectedValues.get(selectedText).remove(lessonObj.getName());
 					}
 					removeGradeWidget(ulSelectedItems,codeId);
 				}

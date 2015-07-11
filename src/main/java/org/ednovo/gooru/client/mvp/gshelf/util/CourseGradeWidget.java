@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.util;
 import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -54,7 +55,6 @@ public abstract class CourseGradeWidget extends Composite {
 	
 	final String ACTIVE="active";
 	String type;
-	long codeId = 0;
 	
 	public CourseGradeWidget(final List<CourseSubjectDo> libraryCodeDo,List<String> selectedValues,String type) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -69,10 +69,12 @@ public abstract class CourseGradeWidget extends Composite {
 		if(libraryCodeDo.size()>0){
 			for(int j=0; j<libraryCodeDo.size(); j++) {
 				final String gradeText=libraryCodeDo.get(j).getName();
+				final CourseSubjectDo libraryObj=libraryCodeDo.get(j);
+				long codeId = 0;
 				if(type.equalsIgnoreCase("course")){
 					codeId=libraryCodeDo.get(j).getCourseId();
 				}else if(type.equalsIgnoreCase("domain")){
-					codeId=libraryCodeDo.get(j).getDomainId();
+					codeId=libraryCodeDo.get(j).getSubdomainId();
 				}
 				final LiPanel panel=new LiPanel();
 				if(selectedValues.contains(gradeText)){
@@ -89,10 +91,10 @@ public abstract class CourseGradeWidget extends Composite {
 							public void onSuccess() {
 								if(panel.getStyleName().contains(ACTIVE)){
 									panel.removeStyleName(ACTIVE);
-									setSelectedGrade(gradeText,codeId,false);
+									setSelectedGrade(libraryObj,panel.getCodeId(),false);
 								}else{
 									panel.addStyleName(ACTIVE);
-									setSelectedGrade(gradeText,codeId,true);
+									setSelectedGrade(libraryObj,panel.getCodeId(),true);
 								}
 							}
 						});
@@ -109,5 +111,5 @@ public abstract class CourseGradeWidget extends Composite {
 	public UlPanel getGradePanel(){
 		return ulGradePanel;
 	}
-	public abstract void setSelectedGrade(String lblvalue,long codeId,boolean isAdd);
+	public abstract void setSelectedGrade(CourseSubjectDo libraryCodeDo,long codeId,boolean isAdd);
 }
