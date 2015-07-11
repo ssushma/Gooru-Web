@@ -95,6 +95,7 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		wishingText.getElement().getStyle().setFloat(Float.LEFT);
 		loginMessageText.getElement().setId("lblLoginMessageText");
 
+		btnSubmitAllAnswers.setVisible(false);
 	}
 
 	public void setResourceTitle(String title){
