@@ -64,11 +64,11 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			for(int i=0;i<4;i++) {
-				reportBodyBlock.add(new SlnCourseReportView(i+1));
+				//reportBodyBlock.add(new SlnCourseReportView(i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 			for(int i=0;i<10;i++) {
-				reportBodyBlock.add(new SlnUnitReportView(i+1));
+				//reportBodyBlock.add(new SlnUnitReportView(i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			
