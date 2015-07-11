@@ -134,16 +134,16 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		});
 
 
-
+		appPopUp.setViewTitle(i18n.GL0575());
 		
 		
 		appPopUp.setGlassEnabled(true);
 		//appPopUp.setGlassStyleName(AddStandardsBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		
-	
 
-		appPopUp.setViewTitle(i18n.GL0575());
+
+		
 		mainContainer.getElement().setId("standardsDetails");
 
 	}
@@ -156,7 +156,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		
 	}
 	@Override
-	public void SetData(final StandardsLevel1DO levelOneData, int valArr)
+	public void SetData(final StandardsLevel1DO levelOneData, int valArr, String titleVal)
 	{
 		instantVal = false;
 		LiPanel liPanel=new LiPanel();
@@ -164,6 +164,9 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 		levelOneStandardsInner.getElement().setInnerHTML(levelOneData.getLabel());
 		liPanel.getElement().setAttribute("id", levelOneData.getCodeId().toString());
+		
+		appPopUp.setViewTitle(titleVal);
+		
 		if(levelOneData.getCode()!= null)
 		{
 		if(levelOneData.getCode().equalsIgnoreCase("CA.SCI") && !scienceCodeVal)

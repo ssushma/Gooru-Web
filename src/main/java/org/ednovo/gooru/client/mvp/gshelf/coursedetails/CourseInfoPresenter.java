@@ -90,31 +90,31 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callTaxonomyService(int classifierId) {
+		getTaxonomyService().getSubjectsList(classifierId, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				getView().setCourseList(result);
 				if(result.size()>0){
-					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
+					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getSubjectId());
 				}
 			}
 		});
 	}
 	@Override
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
+	public void callCourseBasedOnSubject(int subjectId,final int selectedId) {
 		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
+					getView().showCourseDetailsBasedOnSubjectd(result,selectedId);
 				}
 			}
 		});
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
+	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit,FolderDo folderDo) {
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
@@ -123,6 +123,13 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				params.put("o1", uri[uri.length-1]);
 				params.put("view", COURSE);
 				result.setGooruOid(uri[uri.length-1]);
+				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
+				selectedValues.put(getView().getFirstSelectedValue().get(0),createObj.getTaxonomyCourseIds().get(0));
+				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
+					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
+				}
+				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
+				
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
@@ -144,16 +151,23 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	public void setData(FolderDo folderObj) {
 		getView().setCouseData(folderObj);
+		callTaxonomyService(1);
 	}
 
 	@Override
-	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit) {
+	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
 		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
 				folderDo.setTitle(createObj.getTitle());
 				folderDo.setType(COURSE);
+				
+				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
+				selectedValues.put(getView().getFirstSelectedValue().get(0),createObj.getTaxonomyCourseIds().get(0));
+				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
+					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
+				}
+				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
 				//folderDo.setGooruOid(id);
 				
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);

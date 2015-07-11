@@ -578,10 +578,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										emailId=AppClientFactory.getLoggedInUser().getEmailId();
 									}
 							
-							AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<Void>() {
+							AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 								@Override
-								public void onSuccess(Void result) {
+								public void onSuccess(ClasspageDo result) {
 									joinPopupPublic.hide();
 									mainContainer.setVisible(true);
 									SuccessPopupViewVc success=new SuccessPopupViewVc(){
@@ -711,10 +711,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											}else{
 												emailId=AppClientFactory.getLoggedInUser().getEmailId();
 											}
-									AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<Void>() {
+									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 										@Override
-										public void onSuccess(Void result) {
+										public void onSuccess(ClasspageDo result) {
 											joinPopupPrivate.hide();
 											mainContainer.setVisible(true);
 											SuccessPopupViewVc success=new SuccessPopupViewVc(){
@@ -1211,10 +1211,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									emailId=AppClientFactory.getLoggedInUser().getEmailId();
 								}
 						
-						AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<Void>() {
+						AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 							@Override
-							public void onSuccess(Void result) {
+							public void onSuccess(ClasspageDo result) {
 								joinPopupButtonClick.hide();
 								SuccessPopupViewVc success=new SuccessPopupViewVc(){
 
@@ -1443,10 +1443,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							}else{
 								emailId=AppClientFactory.getLoggedInUser().getEmailId();
 							}
-					AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<Void>() {
+					AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 						@Override
-						public void onSuccess(Void result) {
+						public void onSuccess(ClasspageDo result) {
 							joinPopupPrivate.hide();
 							mainContainer.setVisible(true);
 							SuccessPopupViewVc success=new SuccessPopupViewVc(){
@@ -1619,9 +1619,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									}else{
 										emailId=AppClientFactory.getLoggedInUser().getEmailId();
 									}
-									AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<Void>() {
+									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 										@Override
-										public void onSuccess(Void result) {
+										public void onSuccess(ClasspageDo result) {
 											joinPopupPublic.hide();
 											mainContainer.setVisible(true);
 											SuccessPopupViewVc success=new SuccessPopupViewVc(){
@@ -1828,10 +1828,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												emailId=AppClientFactory.getLoggedInUser().getEmailId();
 											}
 											
-											AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<Void>() {
+											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 												@Override
-												public void onSuccess(Void result) {
+												public void onSuccess(ClasspageDo result) {
 													joinPopupPublic.hide();
 													mainContainer.setVisible(true);
 													SuccessPopupViewVc success=new SuccessPopupViewVc(){
@@ -1960,10 +1960,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														emailId=AppClientFactory.getLoggedInUser().getEmailId();
 													}
 											
-											AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<Void>() {
+											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 												@Override
-												public void onSuccess(Void result) {
+												public void onSuccess(ClasspageDo result) {
 													joinPopupPrivate.hide();
 													mainContainer.setVisible(true);
 													SuccessPopupViewVc success=new SuccessPopupViewVc(){

@@ -173,8 +173,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 	
 	@Override
-	public void showStandardsPopup(String standardVal) {
-		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal);
+	public void showStandardsPopup(String standardVal, String standardsDesc) {
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
 		addToPopupSlot(standardsPopupPresenter);
 	}
 

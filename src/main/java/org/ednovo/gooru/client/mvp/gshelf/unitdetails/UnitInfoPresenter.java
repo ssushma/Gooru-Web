@@ -58,6 +58,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String SUBJECT="subject";
 	
+	final String COURSE="course";
+	
 	final String UNIT="Unit";
 	
 	private String LESSON = "Lesson";
@@ -95,22 +97,18 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
 	}
-
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
+		getTaxonomyService().getSubjectsList(subjectId, "course", 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().setCourseList(result);
-				if(result.size()>0){
-					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
-				}
+				getView().setCourseList(result,selectedText);
 			}
 		});
 	}
 	@Override
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
-		getTaxonomyService().getSubjectsList(subjectId, UNIT, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void getDomainsBasedOnCourseId(int courseId,final String selectedText) {
+		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
@@ -119,9 +117,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 			}
 		});
 	}
-
 	@Override
-	public void createAndSaveUnitDetails(CreateDo createDo,final boolean isCreateLesson) {
+	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
@@ -132,6 +129,14 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("o2", uri[uri.length-1]);
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
+				
+				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
+				selectedValues.put(getView().getFirstSelectedValue().get(0),createDo.getTaxonomyCourseIds().get(0));
+				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
+					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
+				}
+				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
+				
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				if(isCreateLesson){
@@ -155,6 +160,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(UNIT);
 				//folderDo.setGooruOid(id);
+				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
+				selectedValues.put(getView().getFirstSelectedValue().get(0),createDo.getTaxonomyCourseIds().get(0));
+				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
+					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
+				}
+				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,UNIT); 
 				if(isCreateUnit){
@@ -189,6 +200,16 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 
 	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+	}
+	
+	@Override
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsRightClusterPresenter;
+	}
+
+	public void setMyCollectionsRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter = myCollectionsRightClusterPresenter;
 	}
 
 	public void setData(FolderDo folderObj) {

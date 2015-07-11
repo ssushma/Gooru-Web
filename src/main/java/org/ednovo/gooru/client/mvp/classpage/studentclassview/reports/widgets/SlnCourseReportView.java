@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -39,11 +40,11 @@ public class SlnCourseReportView extends Composite {
 			UiBinder<Widget, SlnCourseReportView> {
 	}
 	
-	public SlnCourseReportView(int count) {
+	public SlnCourseReportView(PlanProgressDo planProgressDo, int count) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setDebugIds();
-		setCircleContainerItems(count);
-		unitBlock.addClickHandler(new LessonPageRedirection("unitId"));
+		setCircleContainerItems(planProgressDo, count);
+		unitBlock.addClickHandler(new LessonPageRedirection(planProgressDo.getGooruOId()));
 	}
 	
 	private void setDebugIds() {
@@ -53,19 +54,68 @@ public class SlnCourseReportView extends Composite {
 		scoreLbl.setText("Avg Score");
 	}
 	
-	public void setCircleContainerItems(int count) {
+	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count) {
 		numericOrder.setText(count+"");
-		unitCountName.setText("Operations & Algebraic Thinking");
+		unitCountName.setText(planProgressDo.getTitle());
 		unitName.setText("Unit");
-		collectionStudyCount.setText("4 of 8");
-		timeRadial.setStyleName(TIME_RADIAL_PERCENT_LABEL+"50");
-		assessmentStudyCount.setText("2 of 8");
-		scoreRadial.setStyleName(SCORE_RADIAL_PERCENT_LABEL+"40");
-		studyTimeValue.setText("3 hrs 45 min");
-		scoreValue.setText("84%");
-		avgScore.addStyleName("lightGreen");
-		//hideTimeRadial();
-		//hideScoreRadial();
+		collectionStudyCount.setText(planProgressDo.getCollectionsViewed()+" of "+planProgressDo.getCollectionCount());
+		double timeRadialPercent = 0;
+		if(planProgressDo.getCollectionCount()>0) {
+			timeRadialPercent = (planProgressDo.getCollectionsViewed() / planProgressDo.getCollectionCount()) * 100;
+		}
+		timeRadial.setStyleName(TIME_RADIAL_PERCENT_LABEL+timeRadialPercent);
+		assessmentStudyCount.setText(planProgressDo.getAssessmentsAttempted()+" of "+planProgressDo.getAssessmentCount());
+		double scorePercent = 0;
+		if(planProgressDo.getAssessmentCount()>0) {
+			scorePercent = (planProgressDo.getAssessmentsAttempted() / planProgressDo.getAssessmentCount()) * 100;
+		}
+		scoreRadial.setStyleName(SCORE_RADIAL_PERCENT_LABEL+scorePercent);
+		studyTimeValue.setText(planProgressDo.getTotalStudyTime()+"");
+		
+		String avgScoreTxt = "--";
+		
+		if(planProgressDo.getAssessmentCount()==0) {
+			avgScoreTxt = "NS";
+			hideScoreRadial(false);
+		} else if(planProgressDo.getAssessmentsAttempted()==0) {
+			avgScoreTxt = "--";
+		} else {
+			avgScoreTxt = planProgressDo.getAvgScore()+"%";
+		}
+		
+		if(planProgressDo.getCollectionCount()==0) {
+			hideTimeRadial(false);
+		}
+		scoreValue.setText(avgScoreTxt);
+		
+		int score = planProgressDo.getAvgScore();
+		String scoreStyle = "";
+		if(planProgressDo.getAssessmentCount()==0||planProgressDo.getAssessmentsAttempted()==0) {
+			scoreStyle = "darkGrey border-bottom-white";
+		} else {
+			if(score<60) {
+				scoreStyle = "red";
+			} else if(score>=60&&score<=69) {
+				scoreStyle = "org";
+			} else if(score>=70&&score<=79) {
+				scoreStyle = "yellowGreen";
+			} else if(score>=80&&score<=89) {
+				scoreStyle = "lightGreen";
+			} else if(score>=90&&score<=100) {
+				scoreStyle = "darkGreen";
+			}
+		}
+		avgScore.addStyleName(scoreStyle);
+		
+		if(planProgressDo.getAssessmentCount()==0) {
+			assessmentStudyCount.setText("--");
+			assessmentStudyLbl.setVisible(false);
+		}
+		if(planProgressDo.getCollectionCount()==0) {
+			collectionStudyCount.setText("--");
+			collectionStudyLbl.setVisible(false);
+		}
+		
 	}
 	
 	private void hideTimeRadial(boolean isNotVisible) {
@@ -91,5 +141,4 @@ public class SlnCourseReportView extends Composite {
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}	
 	}
-
 }

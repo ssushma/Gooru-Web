@@ -44,6 +44,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
@@ -371,7 +372,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
-		this.classpageId=getPlaceManager().getRequestParameter("classpageid");
+		this.classpageId=getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetEditClasspageView();
 		}
@@ -557,7 +558,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void getNextClasspageItems(Integer offset,Integer limit)
 	{
-		String classpageId=getPlaceManager().getRequestParameter("classpageid");
+		String classpageId=getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		String analyticsId=getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");
 		//getClasspageItems( classpageId,offset.toString(),limit.toString(), tab, analyticsId,monitorId,null);
@@ -582,7 +583,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	 *
 	 */
 	private void initParam() {
-		classpageId = getPlaceManager().getRequestParameter("classpageid");
+		classpageId = getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		String pageSize = getPlaceManager().getRequestParameter("pageSize");
 		String pageNum = getPlaceManager().getRequestParameter("pageNum");
 		String pos = getPlaceManager().getRequestParameter("pos");
@@ -593,7 +594,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void addAssignmentsContainerPopup(String classpageId) {
 		this.classpageId = classpageId;
-		assignmentContainer.setClasspageId(getPlaceManager().getRequestParameter("classpageid"),this);
+		assignmentContainer.setClasspageId(getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID),this);
 		assignmentContainer.getUserShelfData();
 		assignmentContainer.setEditClasspagePresenter(this);
 		addToPopupSlot(assignmentContainer);
@@ -704,7 +705,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"teach"));
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"teach", 0));
 		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0,0));
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));

@@ -471,7 +471,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
 				printUserDataDO.setUserName(studentName);
-				getUiHandlers().loadUserSessions(collectionId, classpageId, studentUid,pathwayId,printUserDataDO);
+				int selectedSessionIndex=sessionsDropDown.getSelectedIndex();
+				getUiHandlers().loadUserSessions(sessionsDropDown.getValue(selectedSessionIndex),collectionId, classpageId, studentUid,pathwayId,printUserDataDO);
 				sessionspnl.setVisible(true);
 				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(false);
 			}

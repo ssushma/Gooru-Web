@@ -6,11 +6,11 @@
 	        <g:HTMLPanel styleName="col-md-5 col-sm-5">
 	           <g:HTMLPanel styleName="studyBlock">
 	              <g:HTMLPanel styleName="assessmentImageContainer">
-	                 <img src="images/leason3.png" height="120" width="172"/>
+	                 <g:Image ui:field="contentImage"></g:Image>
 	              </g:HTMLPanel>
 	              <g:HTMLPanel styleName="descriptionContainer">
-	                 <h3>Whole Numbers as Fractions</h3>
-	                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing.</p>
+	                 <uc:H3Panel ui:field="contentName"/>
+	                 <uc:PPanel ui:field="contentDescription"/>
 	              </g:HTMLPanel>
 	           </g:HTMLPanel>
 	        </g:HTMLPanel>
@@ -23,17 +23,17 @@
 	                    <g:HTMLPanel styleName="list-group">
 	                       <g:HTMLPanel styleName="list-group-item timeSpent">
 	                          <g:HTMLPanel styleName="pull-left">Total Time Spent</g:HTMLPanel>
-	                          <g:HTMLPanel styleName="pull-right">20min</g:HTMLPanel>
+	                          <g:Label styleName="pull-right" ui:field="timeSpent"></g:Label>
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
 	                       <g:HTMLPanel styleName="list-group-item totalViews">
 	                          <g:HTMLPanel styleName="pull-left">Views</g:HTMLPanel>
-	                          <g:HTMLPanel styleName="pull-right">2</g:HTMLPanel>
+	                          <g:Label styleName="pull-right" ui:field="viewCount"></g:Label>
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
 	                       <g:HTMLPanel styleName="list-group-item lastSession">
 	                          <g:HTMLPanel styleName="pull-left">Last Session</g:HTMLPanel>
-	                          <g:HTMLPanel styleName="pull-right">05/27/2015 12:51PM</g:HTMLPanel>
+	                          <g:Label styleName="pull-right" ui:field="lastSession"></g:Label>
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
 	                       <g:HTMLPanel styleName="list-group-item viewLink">
