@@ -197,7 +197,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
 		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
 			classSettingsAnr.addStyleName(CssTokens.ACTIVE);
-		}else{
+		}else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)){
 			studentAnr.addStyleName(CssTokens.ACTIVE);
 		}
 	}

@@ -62,12 +62,12 @@ public interface ClasspageService extends BaseService {
 	/** new class v3 apis started
 	 */
 	public ClasspageDo createClass(String titlinviteStudentToClasse,String grades,boolean visiblity) throws GwtException,ServerDownException;
-	
+
 	public ClasspageDo v3GetClassById(String classpageId) throws GwtException,ServerDownException;
 	
-	public ClasspageListDo  v3GetUserClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	public ClasspageListDo  v3GetUserClasses(String limit, String offSet) throws GwtException, ServerDownException;
 	
-	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet) throws GwtException, ServerDownException;
 	
 	public StudentsAssociatedListDo getAssociatedPendingStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)	throws GwtException, ServerDownException;
 	

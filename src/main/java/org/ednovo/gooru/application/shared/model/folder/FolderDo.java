@@ -26,6 +26,7 @@ package org.ednovo.gooru.application.shared.model.folder;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
@@ -66,7 +67,7 @@ public class FolderDo implements Serializable{
 	private CollectionSettingsDo settings;
 
 	public FolderDo(){}
-
+	
 	public CourseSummaryDo getSummary() {
 		return summary;
 	}

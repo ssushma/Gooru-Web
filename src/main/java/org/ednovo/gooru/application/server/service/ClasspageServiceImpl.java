@@ -427,7 +427,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	}
 	
 	@Override
-	public ClasspageListDo v3GetUserClasses(String limit, String offSet, String randomId) throws GwtException {
+	public ClasspageListDo v3GetUserClasses(String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -436,7 +436,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		Map<String,String> params = new HashMap<String, String>();
 		params.put(GooruConstants.LIMIT, limit);
 		params.put(GooruConstants.OFFSET, offSet);
-		params.put(GooruConstants.RANDOMID, randomId);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 
 		getLogger().info("V3_GET_LISTTEACHCLASSES API Call::::::"+url);
@@ -447,7 +446,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	}
 
 	@Override
-	public ClasspageListDo v3GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException {
+	public ClasspageListDo v3GetUserStudyClasses(String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -455,7 +454,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.LIMIT, limit);
 		params.put(GooruConstants.OFFSET, offSet);
-		params.put(GooruConstants.RANDOMID, randomId);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("V3_GET_LISTSTUDYCLASSES API Call::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
@@ -514,10 +512,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	@Override
 	public ClasspageDo v3GetClassById(String classpageId){
 		JsonRepresentation jsonRep = null;
-		// /v2/class/{0}?sessionToken={1}&merge=permissions
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
-		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
+		//String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
 		getLogger().info("V3_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());

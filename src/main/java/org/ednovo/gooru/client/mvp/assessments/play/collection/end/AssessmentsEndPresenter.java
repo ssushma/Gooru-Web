@@ -205,11 +205,10 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		classObj.setClassId(classId);
 		classObj.setSessionId(sessionId);
 		
-		System.out.println("sessionId--"+sessionId);
-		System.out.println("classId--"+classId);
-		System.out.println("collectionId--"+collectionId);
+		getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId,printData);
+
 		
-		this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+		/*this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -227,7 +226,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			public void onFailure(Throwable caught) {
 
 			}
-		});
+		});*/
 
 	}
 	
@@ -266,10 +265,33 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-						if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
+				
+				if(result!=null && result.size()!=0){
+					
+					
+					if(result.get(0).getSessionData()!=null && result.get(0).getSessionData().size()!=0){
+						
+						int sessionSize=result.get(0).getSessionData().size();	
+							
+						int day=result.get(0).getSessionData().get(sessionSize-1).getSequence();
+						printData.setUserName(null);
+						printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
+						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSessionData().get(sessionSize-1).getEventTime()))));
+						getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(0).getSessionData().get(sessionSize-1).getSessionId(),printData);
+						getView().setSessionsData(result.get(0).getSessionData());
+						}
+					
+					displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
+					getView().setCollectionMetaDataByUserAndSession(result);
+					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+				}
+				
+				
+				
+				/*if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
 								count = 0;
 								displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
 								getView().setCollectionMetaDataByUserAndSession(result);
@@ -288,8 +310,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 								        }
 								      };
 								      // Execute the timer to expire 2 seconds in the future
-								      timer.schedule(2000);
-							}
+								     // timer.schedule(2000);
+							}*/
 			}
 
 			@Override
@@ -310,7 +332,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			public void onSuccess() {
 
 				//getView().enableAndDisableEmailButton(isSummary);
-				analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
