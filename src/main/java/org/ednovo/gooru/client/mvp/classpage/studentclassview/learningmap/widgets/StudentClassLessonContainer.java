@@ -1,6 +1,9 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
@@ -31,29 +34,50 @@ public class StudentClassLessonContainer extends Composite {
 			UiBinder<Widget, StudentClassLessonContainer> {
 	}
 
-	public StudentClassLessonContainer(String circleIconStyle, int count) {
+	public StudentClassLessonContainer(PlanProgressDo planProgressDo, int count) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setCircleContainerItems(circleIconStyle, count);
-		lessonWidget.addClickHandler(new LessonPageRedirection("lessonId"));
+		setCircleContainerItems(planProgressDo, count);
+		lessonWidget.addClickHandler(new LessonPageRedirection(planProgressDo.getGooruOId()));
 	}
 	
-	public void setCircleContainerItems(String circleIconStyle, int count) {
+	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count) {
 		numericOrder.setText(count+"");
-		lessonCountName.setText("Comparing Fractions with Common Denominators & Numerators");
+		lessonCountName.setText(planProgressDo.getTitle());
 		lessonName.setText("Lesson");
 		
-		String styleName = "selected";
+		ArrayList<PlanProgressDo> dataList = planProgressDo.getItem();
+		int size = dataList.size();
+		
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
-		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-			styleName = "";
-		} else {
+		if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+			String circleIconStyle = "";
+			if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
+				
+			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
+				circleIconStyle = "blue-circle";
+			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
+				circleIconStyle = "green-circle";
+			}
 			circleIcon.setStyleName(circleIconStyle);
 		}
 		
-		lessonContainer.add(new StudentClassContentWidget("blueBorder "+styleName,"http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/2092/3457/e6cfc5e1-0611-48d8-9637-92a0dce76786_1371894b-c2af-4468-a077-c93ecc4f7ede-160x120.png"));
-		lessonContainer.add(new StudentClassContentWidget("orgBorder "+styleName,"http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4383/9a76aa68-bd60-4fe4-8d02-f54c8e105290-160x120.png"));
-		lessonContainer.add(new StudentClassContentWidget("orgBorder "+styleName,"http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4385/f236d78f-681e-43e4-b648-9dc564780623-160x120.png"));
-		lessonContainer.add(new StudentClassContentWidget("orgBorder "+styleName,"http://d1lkwrtg12r0i3.cloudfront.net/prod1/f000/1151/4415/322bab19-05bc-42e9-b47c-498a98a924bb-160x120.png"));
+		for(int i=0;i<size;i++) {
+			PlanProgressDo planDo = dataList.get(i);
+			String styleName = "blueBorder ";
+			if(planDo.getType()!=null&&planDo.getType().equalsIgnoreCase("assessment")) {
+				styleName = "orgBorder ";
+			}
+			if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
+					styleName = styleName + "emptyselected";
+				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
+					styleName = styleName + "blueselected";
+				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
+					styleName = styleName + "selected";
+				}
+			}
+			lessonContainer.add(new StudentClassContentWidget(planDo, styleName));
+		}
 	}
 	
 	public class LessonPageRedirection implements ClickHandler{

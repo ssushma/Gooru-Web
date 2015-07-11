@@ -1,7 +1,8 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView.MouseOutHideToolTip1;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView.MouseOverShowClassCodeToolTip1;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -27,13 +28,26 @@ public class StudentClassLearningMapCircle extends Composite {
 	
 	interface StudentClassLearningMapCircleUiBinder extends UiBinder<Widget, StudentClassLearningMapCircle> {}
 
-	public StudentClassLearningMapCircle(String circleStyle) {
+	public StudentClassLearningMapCircle(PlanProgressDo planProgressDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		String lessonName = "Lesson 3: Fractions and Whole Numbers";
+		
+		String circleType = "";
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+			if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
+				
+			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
+				circleType = "blue-circle";
+			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
+				circleType = "green-circle";
+			}
+		}
+		
+		String lessonName = planProgressDo.getTitle();
 		circleField.addMouseOverHandler(new MouseOverShowClassCodeToolTip(lessonName));
 		circleField.addMouseOutHandler(new MouseOutHideToolTip());
-		if(!circleStyle.isEmpty()) {
-			circleField.setStyleName(circleStyle);
+		if(!circleType.isEmpty()) {
+			circleField.setStyleName(circleType);
 		}
 	}
 	
@@ -59,5 +73,4 @@ public class StudentClassLearningMapCircle extends Composite {
 			toolTipPopupPanel.hide();
 		}
 	}
-
 }
