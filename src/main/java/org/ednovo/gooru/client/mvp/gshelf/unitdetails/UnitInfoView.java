@@ -189,7 +189,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				selectedValues.put(titleText, new ArrayList<String>());
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
-				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getSubjectId()));
+				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
 				liPanel.add(title);
 				ulMainGradePanel.add(liPanel);
 			}
@@ -270,6 +270,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			this.courseObj=courseObj;
 			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
 			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		}
+		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
+			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
+			break;
 		}
 		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
 	}

@@ -26,16 +26,13 @@ package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 /**
  * @author Search Team
  *
  */
 public interface UnitInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
 	
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
     
@@ -62,4 +59,6 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	void showUnitInfo();
 
 	void showUnitTemplate();
+	
+	MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 }

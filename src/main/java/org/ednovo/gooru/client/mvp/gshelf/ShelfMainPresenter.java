@@ -51,7 +51,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.ui.PopupPanel;

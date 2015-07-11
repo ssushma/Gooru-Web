@@ -56,6 +56,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String SUBJECT="subject";
 	
+	final String COURSE="course";
+	
 	final String UNIT="Unit";
 	
 	private String LESSON = "Lesson";
@@ -90,26 +92,13 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
 	}
-
-	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
-			@Override
-			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().setCourseList(result);
-				if(result.size()>0){
-					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
-				}
-			}
-		});
-	}
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
-		getTaxonomyService().getSubjectsList(subjectId, UNIT, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(subjectId, selectedText, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
+					getView().setCourseList(result);
 				}
 			}
 		});
@@ -183,6 +172,16 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 
 	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+	}
+	
+	@Override
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsRightClusterPresenter;
+	}
+
+	public void setMyCollectionsRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter = myCollectionsRightClusterPresenter;
 	}
 
 	public void setData(FolderDo folderObj) {

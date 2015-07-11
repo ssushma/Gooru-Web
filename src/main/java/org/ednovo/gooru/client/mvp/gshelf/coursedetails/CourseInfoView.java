@@ -76,9 +76,9 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveCourseBtn,nextUnitBtn;
+	@UiField Button saveCourseBtn,nextUnitBtn,btnK12,btnHigherEducation,btnProfessionalLearning;
 	@UiField TextBox courseTitle;
-	@UiField Label lblErrorMessage;
+	@UiField Label lblErrorMessage,lblGradeErrorMsg;
 	
 	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 	
@@ -87,6 +87,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	final String ACTIVE="active";
 	
 	LiPanel tempLiPanel=null;
+	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -198,12 +199,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			lblGradeErrorMsg.setVisible(false);
 			if(tempLiPanel!=null){
 				tempLiPanel.removeStyleName(ACTIVE);
 				tempLiPanel=liPanel;
 			}else{
 				tempLiPanel=liPanel;
 			}
+			firstSelectedSubject.add(subjectId);
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(selectedText).size()>0){
 					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
@@ -237,12 +240,18 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}else{
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(courseTitle.getText());
-			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
-			String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-			if(id!=null){
-				getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+			if(getSelectedCourseIds().size()>0){
+				lblGradeErrorMsg.setVisible(false);
+				createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
+				String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+				if(id!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+				}else{
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+				}
 			}else{
-				getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+				lblGradeErrorMsg.setVisible(true);
+				lblGradeErrorMsg.setText("Select at least one Subject");
 			}
 		}
 	}
@@ -250,6 +259,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObj=courseObj;
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
+		ulSelectedItems.clear();
+		firstSelectedSubject.clear();
 	}
 
 	/**
@@ -275,5 +286,9 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			}
 		}
 		return taxonomyCourseIds;
+	}
+	@Override
+	public List<Integer> getFirstSelectedValue(){
+		return firstSelectedSubject;
 	}
 }
