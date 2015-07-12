@@ -225,6 +225,24 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public void setLessonInfoData(FolderDo folderObj) {
 		this.courseObj=folderObj;
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
+		if(folderObj!=null){
+			if(folderObj.getStandards()!=null && folderObj.getStandards().size()>0){
+				//Render the existing standards
+				for(final CourseSubjectDo courseSubjectDo : folderObj.getStandards()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
+							liPanelWithClose.removeFromParent();
+						}
+					});
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getName());
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			}
+		}
 		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
 			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
 				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
