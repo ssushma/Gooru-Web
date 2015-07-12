@@ -66,11 +66,25 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 	@Override
 	protected void onReveal(){
 		super.onReveal();
-		
+	}
+	
+	@Override
+	protected void onReset() {
+		super.onReset();
+		getView().clearSharePlanes();
+		getAssociatedClasses();
 	}
 
 	public void setData(FolderDo folderObj) {
 		folderDo=folderObj;
+		getTeachClassesList();
+	}
+	
+	/**
+	 * To get User teach classes with exclude course.
+	 */
+	private void getTeachClassesList() {
+		// TODO Auto-generated method stub
 		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses("20", "0",true, new SimpleAsyncCallback<ClasspageListDo>() {
 
 			@Override
@@ -79,9 +93,10 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 				
 			}
 		});
-		getAssociatedClasses();
 	}
-
+   /**
+    * To get classes of associated with Course
+    */
 	public void getAssociatedClasses() {
 		// TODO Auto-generated method stub
 		String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
@@ -100,6 +115,9 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 		
 	}
 
+	/**
+	 * To assign course to particular class.
+	 */
 	@Override
 	public void assign2ClassPage(String value, final ClasspageDo classpageDo) {
 		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(value, classpageDo, new SimpleAsyncCallback<ClasspageDo>() {

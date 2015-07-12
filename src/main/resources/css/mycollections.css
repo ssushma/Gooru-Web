@@ -4073,6 +4073,18 @@ right:1px;
 		padding:15px 15px;
 }
 
+.shareMainContainer .errorMsgStyle{
+	font-size: 12px;
+	height: 11px;
+	margin-top: 11px;
+	color: #fab03a;
+	font-style: italic;
+}
+
+.shareMainContainer  button.primary{
+	margin-left: 5px;
+}
+
 @media (max-width: 767px) {
 	.shareMainContainer  label.custom-select{
 		width:100%;
