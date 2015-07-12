@@ -1,11 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:with field="i18n"
-		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
-	<g:HTMLPanel styleName="LanguageObjectives openHideBlocks">
+	<ui:with field="i18n"	type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:HTMLPanel styleName="LanguageObjectives openHideBlocks" ui:field="mainContainer">
 		<h4>Language Objectives</h4>
-		<p class="help-text">Charater Limit : 500</p>
-		<g:TextArea styleName="form-control"></g:TextArea>
+		<p class="text-right">Charater Limit : 500</p>
+		<g:TextArea styleName="form-control" ui:field="languegeObjective"></g:TextArea>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -6,21 +6,14 @@
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="collectionInfo">
-
 		<div class="collectionTitleDetails">
-
 			<ppanel:PPanel ui:field="colltitle"></ppanel:PPanel>
 			<p>
 				<g:TextBox styleName="form-control" ui:field="collectionTitle"
 					text="{i18n.GL3367}" title="{i18n.GL3367}" />
 				<g:Label ui:field="lblErrorMessage"></g:Label>
 			</p>
-
-
 		</div>
-
-
-
 		<div class="collectionImageDetails">
 			<g:HTMLPanel ui:field="thumbnailImageContainer" styleName="collectionThumbnail">
 				<ppanel:PPanel ui:field="collimagetitle"></ppanel:PPanel>
@@ -29,9 +22,9 @@
 					</g:Image>
 					<span class="thunailHover">
 						<g:Button styleName="secondary btn-block" ui:field="uploadImageLbl"></g:Button>
-
 					</span>
 				</div>
+
 
 			</g:HTMLPanel>
 
@@ -41,18 +34,9 @@
 					<g:TextArea styleName="form-control" ui:field="learningObjective" />
 					<g:Label ui:field="lblErrorMessageForLO"></g:Label>
 				</p>
-
 			</div>
-
-
 		</div>
-
-
-
-
-
 		<div class="collectionCoverBlock">
-
 			<div class="unitCoverHeader">
 
 				<div class="col-md-12 col-sm-12">
@@ -151,30 +135,7 @@
 				</div>
 
 
-
-
-
-		<div class="tagCourseOptions">
-
-			<p>Audience &amp; Purpose</p>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="list-group">
-
-						<a class="list-group-item" href="#">All Students</a>
-						<a class="list-group-item  active" href="#">Students who need
-							Intervention and Support</a>
-						<a class="list-group-item" href="#">Advanced Learner</a>
-						<a class="list-group-item" href="#">English Learner</a>
-						<a class="list-group-item" href="#">Teachers</a>
-					</div>
-				</div>
-
-				<div class="clearfix"></div>
-			</div>
-
-		</div>
-
+		<w:AudienceView ui:field="audienceContainer"></w:AudienceView>
 
 
 		<g:HTMLPanel styleName="addOptions">
@@ -186,14 +147,15 @@
 			</g:Anchor>
 		</g:HTMLPanel>
 		<w:DepthKnowledgeView ui:field="depthOfKnowledgeContainer"></w:DepthKnowledgeView>
-		<w:CenturySkillsView ui:field="centurySkillContainer"></w:CenturySkillsView>
+		<g:HTMLPanel ui:field="centurySkillContainer"></g:HTMLPanel>
 		<w:LanguageView ui:field="languageObjectiveContainer"></w:LanguageView>
 		<g:HTMLPanel styleName="standardDiv" ui:field="newdok">
 			<g:Label styleName="title" ui:field="newlbl"></g:Label>
 			<g:HTMLPanel styleName="normal" ui:field="newtype"></g:HTMLPanel>
 		</g:HTMLPanel>
 		<div class="stepsButtonGroup">
-			<g:Button styleName="secondary" ui:field="saveCollectionBtn"	text="{i18n.GL3368}" />
+			<g:Button styleName="secondary" ui:field="saveCollectionBtn"
+				text="{i18n.GL3368}" />
 		</div>
 		<div class="clearfix"></div>
 	</g:HTMLPanel>

@@ -22,53 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills;
 
-import java.util.List;
+import java.util.Map;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
-
-import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 
 /**
  * @author Search Team
  *
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
-	
+public interface CenturySkillsUiHandlers extends BaseUiHandlers {
 
-	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 * @param type 
-	 */
-	void setCouseData(FolderDo courseObj, String type); 
+	void getAddCentury();
 
-	void callCreateAndUpdate(boolean isCreate, Boolean result, int index,
-			String collectionType);
+	void closeCenturyPopup();
 
-	void setCollectionType(String collectionType);
+	void setUpdatedCentury();
 
-
-	DepthKnowledgeView getDepthOfKnowledgeContainer();
-
-	LanguageView getLanguageObjectiveContainer();
-
-	HTMLPanel getCenturySkillContainer();
-
-	AudienceView getAudienceContainer();
-
-	void displayStandardsList(List<DomainStandardsDo> result);
-
-
-
-
+	void getAutoSuggestedCenturyList(SearchDo<StandardFo> centuryDo);
 }
