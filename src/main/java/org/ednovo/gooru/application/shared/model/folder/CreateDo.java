@@ -21,6 +21,7 @@ public class CreateDo implements Serializable{
 	private List<Integer> taxonomyCourseIds;
 	private List<Integer> audienceIds;
 	private List<Integer> domainIds;
+	private List<Integer> subdomainIds;
 	private List<Integer> standardIds;
 	private String url;
 	private String goals;
@@ -119,6 +120,10 @@ public class CreateDo implements Serializable{
 	public void setThumbnails(ThumbnailDo thumbnails) {
 		this.thumbnails = thumbnails;
 	}
-	
-	
+	public List<Integer> getSubdomainIds() {
+		return subdomainIds;
+	}
+	public void setSubdomainIds(List<Integer> subdomainIds) {
+		this.subdomainIds = subdomainIds;
+	}
 }
