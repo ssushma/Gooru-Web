@@ -125,115 +125,92 @@ public class ClasspageWidgetView extends Composite {
 		classTitle.getElement().setInnerHTML(collectionDoObj.getName());
 		classTitle.getElement().setAttribute("alt",collectionDoObj.getName());
 		classTitle.getElement().setAttribute("title",collectionDoObj.getName());
+		
+		System.out.println("courseid1:"+collectionDoObj.getCourseGooruOid());
+		final String courseId = collectionDoObj.getCourseGooruOid();
 
 		assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
 
 		try{
-			
-		if(pageMode.equalsIgnoreCase("Teach"))
-		{
-		if(collectionDoObj.getMemberCount() == 1)
-		{
-			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1932());
-		}
-		else
-		{
-			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1931());
-		}
-		if(collectionDoObj.getItemCount() != null){
-			if(collectionDoObj.getItemCount() == 1)
-			{
-				assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+		if(pageMode.equalsIgnoreCase("Teach")){
+			if(collectionDoObj.getMemberCount() == 1){
+				assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1932());
+			}else{
+				assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1931());
 			}
-			else
-			{
-				assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
+			if(collectionDoObj.getItemCount() != null){
+				if(collectionDoObj.getItemCount() == 1){
+					assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+				}else{
+					assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
+				}
+			}else{
+				assignmentsCount.getElement().setInnerHTML(0+" "+i18n.GL1933());
 			}
-		}else{
-			assignmentsCount.getElement().setInnerHTML(0+" "+i18n.GL1933());
-		}
-		
-
-		imgUserProfile.setVisible(false);
-		assignmentsCounter.setVisible(true);
-		ownerName.setVisible(false);
-		classpageContainer.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Map<String, String> params=new HashMap<String, String>();
-				params.put("pageSize", "5");
-				params.put(UrlNavigationTokens.CLASSPAGEID, collectionDoObj.getClassUid());
-				params.put("pageNum", "0");
-				params.put("pos", "1");
-
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
-
-			}
-		});
-		}
-		else
-		{
-		if(collectionDoObj.getItemCount() != null){
-			if(collectionDoObj.getItemCount() == 1)
-			{
-				assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
-			}
-			else
-			{
-				assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
-			}
-		}else{
-			assignmentsCount.getElement().setInnerHTML(0+" "+i18n.GL1933());
-		}
-		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUsername()+"'s"+" "+"class");
-		imgUserProfile.setVisible(true);
-		assignmentsCounter.setVisible(false);
-		ownerName.setVisible(true);
-		if(collectionDoObj.getUser().getProfileImageUrl() != null)
-		{
-		imgUserProfile.setUrl(collectionDoObj.getUser().getProfileImageUrl());
-		imgUserProfile.addErrorHandler(new ErrorHandler() {
-
+			imgUserProfile.setVisible(false);
+			assignmentsCounter.setVisible(true);
+			ownerName.setVisible(false);
+			classpageContainer.addClickHandler(new ClickHandler() {
+	
 				@Override
-				public void onError(ErrorEvent event) {
-					imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
-
+				public void onClick(ClickEvent event) {
+					Map<String, String> params=new HashMap<String, String>();
+					params.put(UrlNavigationTokens.CLASSPAGEID, collectionDoObj.getClassUid());
+					if(collectionDoObj.getCourseGooruOid() != null){
+						params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, collectionDoObj.getCourseGooruOid());
+					}
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
+	
 				}
 			});
-		}
-		else
-		{
-			imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
-		}
-		classpageContainer.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Map<String, String> params=new HashMap<String, String>();
-				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, collectionDoObj.getClassUid());
-				if(collectionDoObj.getCourseGooruOid() != null){
-					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, collectionDoObj.getCourseGooruOid());
+		}else{
+			if(collectionDoObj.getItemCount() != null){
+				if(collectionDoObj.getItemCount() == 1)	{
+					assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+				}else{
+					assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW, params);
-
+			}else{
+				assignmentsCount.getElement().setInnerHTML(0+" "+i18n.GL1933());
 			}
-		});
+			ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUsername()+"'s"+" "+"class");
+			imgUserProfile.setVisible(true);
+			assignmentsCounter.setVisible(false);
+			ownerName.setVisible(true);
+			if(collectionDoObj.getUser().getProfileImageUrl() != null){
+				imgUserProfile.setUrl(collectionDoObj.getUser().getProfileImageUrl());
+				imgUserProfile.addErrorHandler(new ErrorHandler() {
+					@Override
+					public void onError(ErrorEvent event) {
+						imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
+					}
+				});
+			}else{
+				imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
+			}
+			classpageContainer.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					Map<String, String> params=new HashMap<String, String>();
+					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, collectionDoObj.getClassUid());
+					if(courseId != null){
+						params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, courseId);
+					}
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW, params);
+				}
+			});
 		}
 		if(collectionDoObj.getThumbnailUrl() != null){
 			classImage.setUrl(collectionDoObj.getThumbnailUrl());
 			classImage.addErrorHandler(new ErrorHandler() {
-
 				@Override
 				public void onError(ErrorEvent event) {
 					classImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
-
 				}
 			});
 		}else{
 			classImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
 		}
-		
 		}catch(Exception e){
 			e.printStackTrace();
 		}

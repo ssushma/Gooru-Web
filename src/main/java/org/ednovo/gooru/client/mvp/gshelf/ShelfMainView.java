@@ -437,19 +437,19 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
 		}
 		//This will set the data in the right panel
-				if(selectedWidget!=null){
-					folderListDoChild.clear();
-					int childWidgetsCount=treeChildSelectedItem.getChildCount();
-					for (int i = 0; i < childWidgetsCount; i++) {
-						ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
-						folderListDoChild.add(widget.getCollectionDo());
-					}
-					if(FOLDER.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
-						getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
-					}else{
-						getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
-					}
-				}
+		if(selectedWidget!=null){
+			folderListDoChild.clear();
+			int childWidgetsCount=treeChildSelectedItem.getChildCount();
+			for (int i = 0; i < childWidgetsCount; i++) {
+				ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
+				folderListDoChild.add(widget.getCollectionDo());
+			}
+			if(FOLDER.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
+				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
+			}else{
+				getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
+			}
+		}
 		if(selectedFolder!=null&&selectedItem!=null) { 
 			checkShelfRefreshStatus(selectedItem, selectedFolder);
 			ShelfTreeWidget selectedWidget1 = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
