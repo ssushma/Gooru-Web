@@ -228,7 +228,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	}
 		        });
 				for (UserDataDo userDataDo : result) {
-					if(userDataDo.getStatus()==0){
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
@@ -240,7 +239,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 							resourceRowIndex.add(collectionProgressCount);
 						}
 						collectionProgressCount++;
-					}
 				}
 				setQuestionsData(questionsData);
 				setQuestionsPrintData(questionsData);
@@ -281,14 +279,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        data.addColumn(ColumnType.STRING, i18n.GL3261());
 				        int rowCount=0,rowVal=0;
 				        for(int i=0;i<result.size();i++) {
-				        	if(result.get(i).getStatus()==0){
 				        		rowCount=rowCount+1;
-				        	}
 				        }
 				        data.addRows(rowCount);
 				        
 				        for(int i=0;i<result.size();i++) {
-				         	if(result.get(i).getStatus()==0){
 				        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 				            //set Format
 				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
@@ -349,7 +344,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
 				            rowVal++;
 				        }
-				        }
 				        final Options options = Options.create();
 				        options.setAllowHtml(true);
 				        Table table = new Table(data, options);
@@ -394,14 +388,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        data.addColumn(ColumnType.STRING, i18n.GL3261());
 			        int rowCount=0,rowVal=0;
 			        for(int i=0;i<result.size();i++) {
-			        	if(result.get(i).getStatus()==0){
 			        		rowCount=rowCount+1;
-			        	}
 			        }
 			        data.addRows(rowCount);
 			        
 			        for(int i=0;i<result.size();i++) {
-			        	if(result.get(i).getStatus()==0){
 			        		data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 				            //set Format
 				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
@@ -459,7 +450,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            int reaction=result.get(i).getReaction();
 				            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
 				        	rowVal++;
-			        	}
 			        }
 			        final Options options = Options.create();
 			        options.setAllowHtml(true);
@@ -516,7 +506,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        data.addColumn(ColumnType.STRING, i18n.GL3262());
 			        data.addRows(result.size());
 			        for(int i=0;i<result.size();i++) {
-			        	if(result.get(i).getStatus()==0){
 			        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 			        	
 			            //Set Question Title
@@ -547,7 +536,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			            Label viewResponselbl=new Label(result.get(i).getText());
 			            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 			            data.setValue(i, 5, viewResponselbl.toString());
-			        	}
 			        }
 			        Options options = Options.create();
 			        options.setAllowHtml(true);
@@ -691,7 +679,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
 						        		Label anserlbl=new Label();
 						        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
+						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
 						        			 JSONObject authorObject = value.isObject();
 						        			 if(authorObject.keySet().size()!=0){
 						        				 String userSelectedOption=authorObject.keySet().iterator().next();
@@ -938,7 +926,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
 					        		Label anserlbl=new Label();
 					        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-					        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
+					        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
 					        			 JSONObject authorObject = value.isObject();
 					        			 if(authorObject.keySet().size()!=0){
 					        				 String userSelectedOption=authorObject.keySet().iterator().next();
