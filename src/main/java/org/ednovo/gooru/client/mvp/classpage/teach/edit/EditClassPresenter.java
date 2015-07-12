@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -45,10 +48,13 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  */
 public class EditClassPresenter extends PresenterWidget<IsEditClassView> implements EditClassViewUiHandlers{
 	
+	AddCourseToClassPresenter addCourseToClassPresenter;
+	
 	@Inject
-	public EditClassPresenter(EventBus eventBus,IsEditClassView view){
+	public EditClassPresenter(EventBus eventBus,IsEditClassView view,AddCourseToClassPresenter addCourseToClassPresenter){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.addCourseToClassPresenter=addCourseToClassPresenter;
 	}
 	
 	@Override
@@ -65,6 +71,18 @@ public class EditClassPresenter extends PresenterWidget<IsEditClassView> impleme
 	@Override
 	protected void onHide() {
 		super.onHide();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassViewUiHandlers#addCourseToClass()
+	 */
+	@Override
+	public void addCourseToClass() {
+		addCourseToClassPresenter.getUserShelfCourseData("", "class");
+		addCourseToClassPresenter.getView().getAppPopUp().show();
+		addCourseToClassPresenter.getView().getAppPopUp().center();
+		addCourseToClassPresenter.getView().getAppPopUp().setGlassEnabled(true);
+		
 	}
 
 }

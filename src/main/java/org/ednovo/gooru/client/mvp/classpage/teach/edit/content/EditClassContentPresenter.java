@@ -24,9 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -49,10 +52,10 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	
 	ClasspageDo classpageDo;
 	
-	
 	@Inject
 	public EditClassContentPresenter(EventBus eventBus,IsEditClassContentView view){
 		super(eventBus, view);
+		getView().setUiHandlers(this);
 	}
 	
 	@Override
@@ -80,6 +83,28 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	public void setClassData(ClasspageDo classpageDo) {
 		this.classpageDo=classpageDo;
 		getView().setClassData(classpageDo);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler#updateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public void updateClass(ClasspageDo classpageDo) {
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
+		if(!classId.isEmpty()){
+			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, classpageDo, new AsyncCallback<ClasspageDo>() {
+				
+				@Override
+				public void onSuccess(ClasspageDo result) {
+					getView().setUpdateClass(result);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		}
 	}
 
 }

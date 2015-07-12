@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskill
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -79,8 +80,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	final String COURSE="Course";
 	
 	private String UNIT = "Unit";
-	
-	private String COLLECTION = "collection";
 	
 	private String type;
 	
@@ -140,17 +139,17 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callTaxonomyService(int subdomainId) {
+		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 			@Override
-			public void onSuccess(List<CourseSubjectDo> result) {
-			//	getView().setCourseList(result);
+			public void onSuccess(List<DomainStandardsDo> result) {
 				if(result.size()>0){
-					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
+					getView().displayStandardsList(result);
 				}
 			}
 		});
 	}
+	
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
 		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
@@ -169,10 +168,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 	
 	@Override
-	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
+	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);		
+		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);	
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {				
@@ -185,9 +184,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				params.put("view", "course");
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COLLECTION); 
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
-				myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, result);
+				myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
@@ -200,6 +199,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
+		callTaxonomyService(1);
 	}
 	
 	@Override
@@ -219,22 +219,22 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			public void onSuccess(Void result) {
 				FolderDo folderDo = new FolderDo();
 				folderDo.setTitle(createDo.getTitle());
-				folderDo.setCollectionType(COLLECTION);
+				folderDo.setCollectionType(createDo.getCollectionType());
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,COLLECTION); 
-				myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, folderDo);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
+				myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 			}
 		});
 	}
 
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index){
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String collectionType){
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index);
+				getView().callCreateAndUpdate(isCreate,value,index,collectionType);
 			}
 		});
 	}
@@ -245,7 +245,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(createDoObj.getTitle());
 		createOrUpDate.setDescription(createDoObj.getDescription());
-		createOrUpDate.setCollectionType(COLLECTION);
+		createOrUpDate.setCollectionType(createDoObj.getCollectionType());
 		imgUploadPresenter.setCollectionData(createDoObj);
         imgUploadPresenter.setCollectionImage(true);
         imgUploadPresenter.setClassPageImage(false);

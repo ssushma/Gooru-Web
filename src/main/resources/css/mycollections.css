@@ -1026,7 +1026,7 @@ button.btn-disabled {
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody {
 	border: 1px solid #dddddd;
-	margin-top: 0;
+	margin-top: 2%;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupBlock
@@ -1038,6 +1038,16 @@ button.btn-disabled {
 	border-right: 1px solid #dddddd;
 	margin-bottom: -500px;
 	padding-bottom: 500px;
+}
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .subHeading {
+	margin: 0;
+	color: red;
+	padding: 8px 15px;
+	margin: 0;
+	background-color: #EFEDED;
+}
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .pnlBackGround {
+	background-color: #EFEDED;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul {
@@ -1277,6 +1287,7 @@ button.btn-disabled {
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader {
 	border: 1px solid #dddddd;
 	border-bottom-width: 0;
+	border-radius: 5px;
 }
 
 #gShelfCourseInfo .courseFolderOpenIcon {
@@ -1350,6 +1361,16 @@ button.btn-disabled {
   list-style: outside none none;
   margin: 0;
   padding: 8px 10px;
+  margin-left: 5px;
+}
+#gShelfCourseInfo .filterTags ul li div{
+	float: left;
+}
+#gShelfCourseInfo .filterTags ul li a{
+	color: #fff;
+	font-size: 12px;
+	padding: 0 0 0 22px;
+	float: left;
 }
 
 @media(max-width:767px){
@@ -2672,22 +2693,33 @@ padding-left: 15px !important;
 #unitinfo .unitCoverBody{
 	padding:15px 15px;
 }
-#unitinfo .unitCoverList {
+#unitinfo .unitCoverList{
 	border:1px solid #dddddd;
 	border-radius:3px 3px;
 }
-
+#unitinfo .unitCoverList .pnlGradeDescription{
+	border-left: 1px solid #ddd;
+}
+#unitinfo .unitCoverList .pnlGradeDescription .pnlGradeDescInnerContainer{
+	padding: 20px;
+	background: #f7f7f7;
+	border: 10px solid #fff;
+	height: 440px;
+	overflow-y: auto;
+}
 #unitinfo .unitCoverList ul {
     margin: 0;
     padding: 0;
 }
 #unitinfo .unitCoverList ul li {
-
     list-style: outside none none;
     margin: 0;
     padding: 0;
 }
-
+#unitinfo .unitCoverList ul li.active a{
+    background: #87badd;
+	color: #333;
+}
 #unitinfo .unitCoverList ul li a {
     color: #515151;
     display: block;
@@ -2930,6 +2962,22 @@ display: table-cell;
 	  width: 120px;
 	height:90px;
 	border-left:10px solid #1076bb;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage img{
+	  width: 120px;
+	height:90px;
+	border-left: 10px solid #feae29;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .thunailHover{
+	position:absolute;
+	top:25px;
+	left:5px;
+	right:5px;
+	bottom:0;
+	display:none;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage:hover .thunailHover{
+	display:block;
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .thunailHover{
 	position:absolute;
@@ -4019,21 +4067,21 @@ right:1px;
 /* Select arrow styling */
 .shareMainContainer  .custom-select:after {
 	content:"";
-	position: absolute;
+	position: relative;
 	top: 0;
-	right: -1px;
+	right: 80px;
 	bottom: 0;
 	font-size: 60%;
 	line-height: 30px;
 	padding: 6px 7px;
 	width:23px;
-	background: #ffffff url("${cdn.endpoint}/images/downarrow.png") no-repeat 0px 14px;
+	background: #ffffff url("${cdn.endpoint}/images/downarrow.png") no-repeat 0px 5px;
 	color: #515151;
 	pointer-events: none;
 	-webkit-border-radius: 0 6px 6px 0;
 	-moz-border-radius: 0 6px 6px 0;
 	border-radius: 0 6px 6px 0;
-	border:1px solid #dddddd;
+	/* border:1px solid #dddddd; */
 	border-left:0px solid #dddddd;
 }
 .no-pointer-events .custom-select:after {
@@ -4049,6 +4097,18 @@ right:1px;
 
 .shareMainContainer .courseDetailsContainer{
 		padding:15px 15px;
+}
+
+.shareMainContainer .errorMsgStyle{
+	font-size: 12px;
+	height: 11px;
+	margin-top: 11px;
+	color: #fab03a;
+	font-style: italic;
+}
+
+.shareMainContainer  button.primary{
+	margin-left: 5px;
 }
 
 @media (max-width: 767px) {

@@ -30,7 +30,7 @@
 			 <uc:PPanel  ui:field="visiblityPanel"></uc:PPanel>
 				 <g:HTMLPanel styleName="row less-gutter headerpadding">
 				 	 <g:HTMLPanel styleName="col-md-6 col-sm-6">
-						   <panel:HTMLEventPanel styleName="anchorCls active" ui:field="publicPanel">
+						   <panel:HTMLEventPanel styleName="anchorCls" ui:field="publicPanel">
 						     <strong class="visiblityHeader"><g:Label ui:field="anyonwwithLink"></g:Label></strong>
 						     <g:Label ui:field="anyonwwithLinkTxt"></g:Label>
 						   </panel:HTMLEventPanel>

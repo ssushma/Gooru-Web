@@ -650,7 +650,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	
 	@Override
 	public FolderDo createCourse(CreateDo createDo,boolean addToShelf, String courseId, String unitId, String lessonId) throws GwtException {
-		JsonRepresentation jsonRep = null;
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
 		String url = null;
 		FolderDo folderDo = new FolderDo();
 		if(courseId==null && unitId==null && lessonId==null){
@@ -673,9 +673,12 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			logger.info("dataPassing: "+dataPassing);
 			
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
-
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			folderDo = deserializeCreatedFolder(jsonRep);
+			
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRepGet);
 			logger.info("folderDo obj : "+folderDo);
 		} catch (JSONException e) {
 			logger.error("Exception::", e);

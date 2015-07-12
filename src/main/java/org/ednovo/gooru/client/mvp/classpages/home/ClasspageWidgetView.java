@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
@@ -162,7 +163,7 @@ public class ClasspageWidgetView extends Composite {
 			public void onClick(ClickEvent event) {
 				Map<String, String> params=new HashMap<String, String>();
 				params.put("pageSize", "5");
-				params.put("classpageid", collectionDoObj.getClassUid());
+				params.put(UrlNavigationTokens.CLASSPAGEID, collectionDoObj.getClassUid());
 				params.put("pageNum", "0");
 				params.put("pos", "1");
 
@@ -182,8 +183,10 @@ public class ClasspageWidgetView extends Composite {
 			{
 				assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
 			}
+		}else{
+			assignmentsCount.getElement().setInnerHTML(0+" "+i18n.GL1933());
 		}
-		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUserName()+"'s"+" "+"class");
+		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUsername()+"'s"+" "+"class");
 		imgUserProfile.setVisible(true);
 		assignmentsCounter.setVisible(false);
 		ownerName.setVisible(true);
@@ -208,12 +211,11 @@ public class ClasspageWidgetView extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String, String> params=new HashMap<String, String>();
-				params.put("pageSize", "5");
-				params.put("id", collectionDoObj.getGooruOid());
-				params.put("pageNum", "0");
-				params.put("pos", "1");
-
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, collectionDoObj.getClassUid());
+				if(collectionDoObj.getCourseGooruOid() != null){
+					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, collectionDoObj.getCourseGooruOid());
+				}
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW, params);
 
 			}
 		});

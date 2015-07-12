@@ -15,13 +15,13 @@
 				<div class="tagCoursePanelHeader">
 					<div class="btn-group btn-group-justified" role="group" aria-label="...">
 			  			<div class="btn-group" role="group">
-			   				 <button type="button" class="btn btn-default active">K-12</button>
+			   				 <g:Button styleName="btn btn-default active" ui:field="btnK12">K-12</g:Button>
 			 			</div>
 						<div class="btn-group" role="group">
-						    <button type="button" class="btn btn-default">Higher Education</button>
+						    <g:Button styleName="btn btn-default" ui:field="btnHigherEducation">Higher Education</g:Button>
 						</div>
 						<div class="btn-group" role="group">
-						    <button type="button" class="btn btn-default">Professional Learning</button>
+						    <g:Button styleName="btn btn-default" ui:field="btnProfessionalLearning">Professional Learning</g:Button>
 					     </div>
 					</div>
 				</div>
@@ -30,10 +30,14 @@
 						<div class="no-gutter">
 							<div class="col-md-4 col-sm-5">
 								<div class="courseGroupLeft">
+									<div class="subHeading">Subject</div>
 									<uc:UlPanel ui:field="ulMainGradePanel"/>
 								</div>
 							</div>
-							<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
+							<div class="pnlBackGround">
+								<div class="subHeading">Course</div>
+								<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
+							</div>
 							<div class="clearfix"></div>
 						</div>
 					</div>
@@ -42,6 +46,7 @@
 					<div class="filterTags">
 						<uc:UlPanel ui:field="ulSelectedItems"/>
 					</div>
+					<g:Label styleName="col-md-8 col-sm-7 mandatoryLabelError" ui:field="lblGradeErrorMsg"/>
 				</div>
 			<div class="tagCourseOptions">
 				<p>Audience &amp; Purpose</p>

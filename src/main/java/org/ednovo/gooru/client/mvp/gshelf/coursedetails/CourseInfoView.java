@@ -76,17 +76,19 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveCourseBtn,nextUnitBtn;
+	@UiField Button saveCourseBtn,nextUnitBtn,btnK12,btnHigherEducation,btnProfessionalLearning;
 	@UiField TextBox courseTitle;
-	@UiField Label lblErrorMessage;
+	@UiField Label lblErrorMessage,lblGradeErrorMsg;
 	
-	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	Map<Integer, ArrayList<String>> selectedValues=new HashMap<Integer,ArrayList<String>>();
 	
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
 	
 	LiPanel tempLiPanel=null;
+	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
+	
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -104,39 +106,70 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, false);
 			}
 		});
+		btnK12.addClickHandler(new CallTaxonomy(1));
+		btnHigherEducation.addClickHandler(new CallTaxonomy(2));
+		btnProfessionalLearning.addClickHandler(new CallTaxonomy(3));
 	}
 	
+	class CallTaxonomy implements ClickHandler{
+		int selectedIndex;
+		CallTaxonomy(int selectedIndex){
+			this.selectedIndex=selectedIndex;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			removeGradeButtonStyleName();
+			if(selectedIndex==1){
+				btnK12.addStyleName(ACTIVE);
+			}else if(selectedIndex==2){
+				btnHigherEducation.addStyleName(ACTIVE);
+			}else{
+				btnProfessionalLearning.addStyleName(ACTIVE);
+			}
+			getUiHandlers().callTaxonomyService(selectedIndex);
+		}
+	}
+	/**
+	 * To remove hilight styles
+	 */
+	void removeGradeButtonStyleName() {
+		btnK12.removeStyleName(ACTIVE);
+		btnHigherEducation.removeStyleName(ACTIVE);
+		btnHigherEducation.removeStyleName(ACTIVE);
+	}
 	/**
 	 * This method will display the Grades according to the subject
 	 */
 	@Override
-	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
+	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final int selectedId) {
 		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText)) {
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"course") {
 			@Override
-			public void setSelectedGrade(final String lblvalue, final long codeId,boolean isAdd) {
+			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
 				if(isAdd){
-					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(lblvalue);
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							//This will remove the selected value when we are trying by close button
-							for(Iterator<Map.Entry<String,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
-							     Map.Entry<String, ArrayList<String>> entry = it.next();
-							     if(entry.getValue().contains(lblvalue)){
-							    	 entry.getValue().remove(lblvalue);
+							for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+							     Map.Entry<Integer, ArrayList<String>> entry = it.next();
+							     if(entry.getValue().contains(courseObj.getName())){
+							    	 entry.getValue().remove(courseObj.getName());
 							     }
 							 }
 							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
 							liPanelWithClose.removeFromParent();
 						}
 					});
-					selectedValues.get(selectedText).add(lblvalue);
+					selectedValues.get(selectedId).add(courseObj.getName());
 					liPanelWithClose.setId(codeId);
+					liPanelWithClose.setName(courseObj.getName());
+					liPanelWithClose.setRelatedId(selectedId);
 					ulSelectedItems.add(liPanelWithClose);
 				}else{
-					if(selectedValues.get(selectedText).contains(lblvalue)){
-						selectedValues.get(selectedText).remove(lblvalue);
+					if(selectedValues.get(selectedId).contains(courseObj.getName())){
+						selectedValues.get(selectedId).remove(courseObj.getName());
 					}
 					removeGradeWidget(ulSelectedItems,codeId);
 				}
@@ -170,12 +203,15 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@Override
 	public void setCourseList(List<CourseSubjectDo> libraryCode) {
-		selectedValues.clear();
 		ulMainGradePanel.clear();
+		removeGradeButtonStyleName();
+		btnK12.addStyleName(ACTIVE);
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
-				selectedValues.put(titleText, new ArrayList<String>());
+				if(!selectedValues.containsKey(libraryCodeDo.getSubjectId())){
+					selectedValues.put(libraryCodeDo.getSubjectId(), new ArrayList<String>());
+				}
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
 				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getSubjectId()));
@@ -187,7 +223,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	/**
 	 * This inner class is used to get selected subjects grades
 	 */
-	class ClickOnSubject implements ClickHandler{
+	public class ClickOnSubject implements ClickHandler{
 		String selectedText;
 		LiPanel liPanel;
 		int subjectId;
@@ -198,21 +234,23 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			lblGradeErrorMsg.setVisible(false);
 			if(tempLiPanel!=null){
 				tempLiPanel.removeStyleName(ACTIVE);
 				tempLiPanel=liPanel;
 			}else{
 				tempLiPanel=liPanel;
 			}
+			firstSelectedSubject.add(subjectId);
 			if(liPanel.getStyleName().contains(ACTIVE)){
-				if(selectedValues.get(selectedText).size()>0){
-					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
+				if(selectedValues.get(subjectId).size()>0){
+					getUiHandlers().callCourseBasedOnSubject(subjectId, subjectId);
 				}else{
 					liPanel.removeStyleName(ACTIVE);
 				}
 			}else{
 				liPanel.addStyleName(ACTIVE);
-				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
+				getUiHandlers().callCourseBasedOnSubject(subjectId, subjectId);
 			}
 		}
 	}
@@ -237,19 +275,60 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}else{
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(courseTitle.getText());
-			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
-			String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-			if(id!=null){
-				getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+			List<Integer> taxonomyList=getSelectedCourseIds();
+			if(taxonomyList.size()>0){
+				lblGradeErrorMsg.setVisible(false);
+				createOrUpDate.setTaxonomyCourseIds(taxonomyList);
+				String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+				if(id!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObj);
+				}else{
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj);
+				}
 			}else{
-				getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+				lblGradeErrorMsg.setVisible(true);
+				lblGradeErrorMsg.setText("Select at least one Subject");
 			}
 		}
 	}
 	@Override
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObj=courseObj;
+		ulSelectedItems.clear();
+		firstSelectedSubject.clear();
+		selectedValues.clear();
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
+		//This will push the previous selected values to map
+		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
+			//To set default selection if the user is already selected any subject
+			firstSelectedSubject.add(courseObj.getTaxonomyCourse().get(0).getSubjectId());
+			for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()) {
+				if(selectedValues.containsKey(courseSubjectDo.getSubjectId())){
+					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
+				}else{
+					selectedValues.put(courseSubjectDo.getSubjectId(), new ArrayList<String>());
+					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
+				}
+				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
+				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+						     Map.Entry<Integer, ArrayList<String>> entry = it.next();
+						     if(entry.getValue().contains(courseSubjectDo.getName())){
+						    	 entry.getValue().remove(courseSubjectDo.getName());
+						     }
+						 }
+						removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
+						liPanelWithClose.removeFromParent();
+					}
+				});
+				liPanelWithClose.setId(courseSubjectDo.getId());
+				liPanelWithClose.setName(courseSubjectDo.getName());
+				liPanelWithClose.setRelatedId(courseSubjectDo.getSubjectId());
+				ulSelectedItems.add(liPanelWithClose);
+			}
+		}
 	}
 
 	/**
@@ -266,14 +345,25 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public List<Integer> getSelectedCourseIds(){
 		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
 		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
 		while (widgets.hasNext()) {
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
 				LiPanelWithClose obj=(LiPanelWithClose) widget;
 				Integer intVal = (int)obj.getId();
 				taxonomyCourseIds.add(intVal);
+				CourseSubjectDo courseObj=new CourseSubjectDo();
+				courseObj.setId((int)obj.getId());
+				courseObj.setName(obj.getName());
+				courseObj.setSubjectId(obj.getRelatedId());
+				courseList.add(courseObj);
 			}
 		}
+		courseObj.setTaxonomyCourse(courseList);
 		return taxonomyCourseIds;
+	}
+	@Override
+	public List<Integer> getFirstSelectedValue(){
+		return firstSelectedSubject;
 	}
 }

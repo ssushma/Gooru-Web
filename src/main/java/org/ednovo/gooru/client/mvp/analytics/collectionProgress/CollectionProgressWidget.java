@@ -261,7 +261,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 				        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
 			        		  }else{
 			        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
-			        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions();
+			        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
 			        			  String answer="";
 			        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
 			        			  if((typeOfQuestion!=null) && (typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE"))){

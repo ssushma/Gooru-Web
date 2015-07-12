@@ -85,4 +85,5 @@ public interface UrlNavigationTokens{
 	String TEACHER_PREVIEW_MODE = "teach-preview";
 	String TRUE = "true";
 	String FALSE = "false";
+	String CLASSPAGEID="classpageId";
 }

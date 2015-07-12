@@ -24,12 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild.SlmAssessmentChildView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapContainer;
@@ -86,13 +88,9 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		super.reset();
 	}
 	
-	public void getContentData() {
+	public void getContentData(ArrayList<PlanProgressDo> dataList) {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		String pageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
-		
-		allContentStr = ALL;
-		previousContentStr = "id";
-		nextContentStr = "id1";
 		
 		learningMapContainer.clear();
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
@@ -103,25 +101,24 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			containerData.removeStyleName("margin-top-20");
 		}
 		
+		int size = dataList.size();
+		
 		if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
 			setScoreMapVisiblity(true);
 			if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-				setNavLinksData("You have 7 Units to complete", null, null, null);
 				setTextPanelsVisiblity(false,true,false,false);
-				for(int i=0;i<10;i++) {
-					learningMapContainer.add(new StudentClassLearningMapContainer(i));
+				for(int i=0;i<size;i++) {
+					learningMapContainer.add(new StudentClassLearningMapContainer(dataList.get(i), i));
 				}
 			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-				setNavLinksData("All Units", "Unit 2", "Unit 3: Number & Operations - Fractions", "Unit 4");
 				setTextPanelsVisiblity(true,true,false,true);
-				for(int i=0;i<10;i++) {
-					learningMapContainer.add(new StudentClassLessonContainer("green-circle",i+1));
+				for(int i=0;i<size;i++) {
+					learningMapContainer.add(new StudentClassLessonContainer(dataList.get(i), i+1));
 				}
 			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				setNavLinksData("All Lessons", "Lesson 2", "Lesson 3: Fractions and whole numbers", "Lesson 4");
 				setTextPanelsVisiblity(true,true,true,true);
-				for(int i=0;i<4;i++) {
-					learningMapContainer.add(new SlmAssessmentChildView());
+				for(int i=0;i<size;i++) {
+					learningMapContainer.add(new SlmAssessmentChildView(dataList.get(i)));
 				}
 			}
 		}
@@ -142,9 +139,9 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	}
 	
 	@Override
-	public void setContent() {
+	public void setContent(ArrayList<PlanProgressDo> dataList) {
 		setContentVisiblity(false);
-		getContentData();
+		getContentData(dataList);
 	}
 	
 	public void navigateToPage(String id) {
@@ -196,6 +193,16 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	
 	private void setNavLinksData(String allTxt, String previousLinkTxt, String currentLinkTxt, String nextLinkTxt) {
 		allContentTxt.setText(allTxt);
+		if(previousLinkTxt==null) {
+			previousContentPanel.setVisible(false);
+		} else {
+			previousContentPanel.setVisible(true);
+		}
+		if(nextLinkTxt==null) {
+			nextContentPanel.setVisible(false);
+		} else {
+			nextContentPanel.setVisible(true);
+		}
 		previousContentName.setText(previousLinkTxt);
 		currentContentName.setText(currentLinkTxt);
 		nextContentName.setText(nextLinkTxt);
@@ -214,4 +221,66 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			colorPanel.setVisible(false);
 		}
 	}
+	
+	@Override
+	public void setMetadataContent(ArrayList<PlanProgressDo> dataList) {
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		allContentStr = ALL;
+		
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			setNavLinksData("You have "+dataList.size()+" Units to complete", null, null, null);
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
+			setLinksData(unitId, dataList, "All Units", "Unit");
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
+			setLinksData(lessonId, dataList, "All Lessons", "Lesson");
+		}
+	}
+	
+	private void setLinksData(String id, ArrayList<PlanProgressDo> dataList, String allTxt, String titleTxt) {
+		int size = dataList.size();
+		int matchedCount = 0;
+		String contentGooruIds = "";
+		String name = null, previousName = null, nextName = null;
+		for(int i=0;i<size;i++) {
+			PlanProgressDo planProgressDo = dataList.get(i);
+			if(planProgressDo.getGooruOId().equalsIgnoreCase(id)) {
+				matchedCount = i;
+				break;
+			}
+		}
+		if(titleTxt!=null&&titleTxt.equalsIgnoreCase("Lesson")) {
+			PlanProgressDo planProgressDo = dataList.get(matchedCount);
+			int contentSize = planProgressDo.getItem().size();
+			for(int j=0;j<contentSize;j++) {
+				String gooruOid = planProgressDo.getItem().get(j).getGooruOId();
+				contentGooruIds = contentGooruIds + gooruOid +",";
+			}
+			getUiHandlers().getLessonPlanData(contentGooruIds);
+		}
+		if(matchedCount==0&&size==1) {
+			previousContentStr = null;
+			nextContentStr = null;
+		} else if(matchedCount==0&&size>1) {
+			previousContentStr = null;
+			nextContentStr = dataList.get(matchedCount+1).getGooruOId();
+			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
+			nextName = titleTxt+" "+(matchedCount+2);
+		} else if(matchedCount==size-1) {
+			nextContentStr = null;
+			previousContentStr = dataList.get(matchedCount-1).getGooruOId();
+			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
+			previousName = titleTxt+" "+(matchedCount);
+		} else if(matchedCount<size-1) {
+			previousContentStr = dataList.get(matchedCount-1).getGooruOId();
+			nextContentStr = dataList.get(matchedCount+1).getGooruOId();
+			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
+			nextName = titleTxt+" "+(matchedCount+2);
+			previousName = titleTxt+" "+(matchedCount);
+		}
+		setNavLinksData(allTxt, previousName, name, nextName);
+	}
+
+
 }

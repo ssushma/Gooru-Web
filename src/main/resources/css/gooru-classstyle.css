@@ -978,13 +978,21 @@ select option {
 	font-style:italic;
 }
 .setScoreContainer .setScoreLeft .scoreBox{
-	width:95px;
 	margin:6px 0;
 }
 .setScoreContainer .setScoreLeft .scoreBox .form-control{
 	font-size:24px;
 	font-weight:bolder;
 	color:#78b172;
+	display: inline-block;
+	width: 85px;
+	vertical-align: middle;
+}
+.setScoreContainer .setScoreLeft .scoreBox .scorePercentage{
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 24px;
+	margin-left: 5px;
 }
 .setScoreContainer  .actionButtons{
 	text-align:center;
@@ -1300,6 +1308,12 @@ select option {
 
 .rosterContainer .joinedStudentsBlock.seeMoreActive, .seeMorePending, .pleaseWait{
 	float: right;
+}
+.rosterContainer .classSettingsInner p img {
+	margin-left: 5px;
+}
+.rosterContainer .classSettingsInner p{
+	margin-bottom: 5px;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     .studentsMenuBlock .studentsLeftMenu {

@@ -1,7 +1,9 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets;
 
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.uc.EmPanel;
 import org.ednovo.gooru.client.uc.SpanPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -29,23 +31,35 @@ public class SlnContentWidget extends Composite {
 			UiBinder<Widget, SlnContentWidget> {
 	}
 
-	public SlnContentWidget(String contentType, String lastItem) {
+	public SlnContentWidget(PlanProgressDo planProgressDo, String lastItem) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setData(contentType,lastItem);
+		setData(planProgressDo,lastItem);
 	}
 
-	public void setData(String contentType, String lastItem) {
-		setContentIcon(contentType);
-		if(contentType.equalsIgnoreCase("assessment")) {
-			int scoreLbl = 80;
-			assessmentViews.setText("2");
+	public void setData(PlanProgressDo planProgressDo, String lastItem) {
+		String type = "collection";
+		
+		if(planProgressDo.getType()!=null) {
+			type = planProgressDo.getType();
+		}
+		
+		System.out.println("type "+type);
+		
+		setContentIcon(type);
+		if(type.equalsIgnoreCase("assessment")) {
+			int scoreLbl = planProgressDo.getScoreInPercentage();
+			assessmentViews.setText(planProgressDo.getViews()+"");
 			score.setText(scoreLbl+"%");
 			assessmentRadial.addStyleName(ASSESSMENT_RADIAL+scoreLbl);
 			collectionCountData.setVisible(false);
 			collectionRadial.setVisible(false);
-		} else if(contentType.equalsIgnoreCase("collection")){
-			collectionViews.setText("4");
-			timeSpent.setText("20");
+		} else if(type.equalsIgnoreCase("collection")){
+			collectionViews.setText(planProgressDo.getViews()+"");
+			String timeSpentData = "--";
+			if(planProgressDo.getTimespent()>0) {
+				timeSpentData = StringUtil.getFormattedDate(planProgressDo.getTimespent(), "");
+			}
+			timeSpent.setText(timeSpentData);
 			assessmentCountData.setVisible(false);
 			assessmentRadial.setVisible(false);
 		}

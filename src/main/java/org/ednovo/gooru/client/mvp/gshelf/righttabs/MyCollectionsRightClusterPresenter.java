@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -81,6 +82,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
 	private static final String FOLDER = "Folder";
+	
+	Map<Integer,Integer> firstSelectedData;
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -118,11 +121,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				//For displaying template and data
 				//getView().enableAndHideTabs(true);
 				if(COURSE.equalsIgnoreCase(type)){
-					courseInfoPresenter.callTaxonomyService();
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
 				}else if("Unit".equalsIgnoreCase(type)){ 
-					unitInfoPresenter.callTaxonomyService();
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
 				}else if("Lesson".equalsIgnoreCase(type)){
@@ -135,6 +136,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					}else{
 						getView().disableAndEnableBreadCums(true);
 					}
+					System.out.println("intoi t::"+type);
 					collectionInfoPresenter.setCollectionType(type);
 					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
@@ -156,7 +158,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
-			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
@@ -353,5 +355,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			} 
 		});
 	}
-	
+	public Map<Integer,Integer> getFirstSelectedData(){
+		return firstSelectedData;
+	}
+	@Override
+	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData){
+		this.firstSelectedData=firstSelectedData;
+	}
 }

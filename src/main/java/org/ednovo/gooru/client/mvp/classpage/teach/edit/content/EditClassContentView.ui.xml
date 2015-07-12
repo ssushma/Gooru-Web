@@ -11,12 +11,16 @@
 							<uc:PPanel styleName="help-block" ui:field="helpPanel"></uc:PPanel>
 							<g:HTMLPanel styleName="scoreBox">
 							 <g:TextBox styleName="form-control" ui:field="scoreTextBox"></g:TextBox>
+							 <g:InlineLabel styleName="scorePercentage">%</g:InlineLabel>
+							 <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+							 <g:Label ui:field="errorLabel"></g:Label>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				<g:HTMLPanel styleName="actionButtons">
 				<g:Button styleName="primary" ui:field="saveBtn"></g:Button>
+				<g:Label ui:field="saveLblText"></g:Label>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="contentSettingsContainer no-gutter" ui:field="contentSeetingsContainer">
