@@ -512,12 +512,17 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	@Override
 	public ClasspageDo v3GetClassById(String classpageId){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
-		//String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
-		getLogger().info("V3_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
-				getRestPassword());
-		jsonRep =jsonResponseRep.getJsonRepresentation();
+		try{
+			String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
+			//String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+			getLogger().info("V3_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+					getRestPassword());
+			jsonRep =jsonResponseRep.getJsonRepresentation();	
+		}catch(Exception e){
+			getLogger().error("v3GetClassById ......:"+e.getMessage());
+		}
+		
 		return deserializeV2Class(jsonRep);
 	}
 
@@ -1640,11 +1645,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		ClasspageDo classDo=null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASSPAGE_BY_ID, classId);
+		getLogger().info("v3 update class :"+url);
 		String form = "";
 		try{
 			if(classpageDo != null){
 				form = ResourceFormFactory.generateStringDataForm(classpageDo, null);
 			}
+			getLogger().info("form:"+form);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),form);
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			if(jsonResponseRep.getStatusCode()==200){

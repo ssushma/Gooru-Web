@@ -212,6 +212,9 @@ public class ClasspageWidgetView extends Composite {
 			public void onClick(ClickEvent event) {
 				Map<String, String> params=new HashMap<String, String>();
 				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, collectionDoObj.getClassUid());
+				if(collectionDoObj.getCourseGooruOid() != null){
+					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, collectionDoObj.getCourseGooruOid());
+				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW, params);
 
 			}
