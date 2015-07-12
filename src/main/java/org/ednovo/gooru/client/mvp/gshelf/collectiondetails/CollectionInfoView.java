@@ -293,7 +293,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
 		this.type = type;
-
+		ulSelectedItems.clear();
+		selectedValues.clear();
 		if(courseObj!=null){
 			this.courseObjG=courseObj;
 			courseObjG.setCollectionType(type);
