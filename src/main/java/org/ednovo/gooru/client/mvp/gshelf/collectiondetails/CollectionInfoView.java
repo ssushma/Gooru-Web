@@ -318,13 +318,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		});
 	}
 	public void setStaticData(String type)
-	{
+	{   
 		if(type.equalsIgnoreCase(ASSESSMENT))
 		{
 			colltitle.setText(i18n.GL3381());
 			collimagetitle.setText(i18n.GL3382());
 			thumbnailImageContainer.setStyleName("assessmentThumbnail");
 			tagcollectiontitle.setText(i18n.GL3385());
+			saveCollectionBtn.setText(i18n.GL3386());
 		}
 		else
 		{
@@ -332,6 +333,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			collimagetitle.setText(i18n.GL3383());
 			thumbnailImageContainer.setStyleName("collectionThumbnail");	
 			tagcollectiontitle.setText(i18n.GL3384());
+			saveCollectionBtn.setText(i18n.GL3368());
 		}
 	}
 	@UiHandler("saveCollectionBtn")
