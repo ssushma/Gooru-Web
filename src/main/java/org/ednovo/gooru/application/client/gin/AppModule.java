@@ -159,6 +159,9 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSetting
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassSettingsNavigationView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassView;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.IsAddCourseToClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView;
@@ -781,6 +784,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(StudentClassLearningMapPresenter.class,IsStudentClassLearningMapView.class, StudentClassLearningMapView.class);
 
 		bindPresenterWidget(StudentClassReportPresenter.class,IsStudentClassReportView.class, StudentClassReportView.class);
+		bindPresenterWidget(AddCourseToClassPresenter.class, IsAddCourseToClassView.class, AddCourseToClassView.class);
 
 
 

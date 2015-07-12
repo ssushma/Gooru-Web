@@ -324,7 +324,6 @@ public abstract class NewClassPopupView extends AppPopUp {
 				final String title = classpageTitleTxt.getText().trim();
 				final String grade = join(gradeList, ",");
 				final boolean privacy = sharing;
-				System.out.println("grade:"+grade);
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", title);
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
