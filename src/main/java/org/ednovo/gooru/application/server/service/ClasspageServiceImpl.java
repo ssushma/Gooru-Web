@@ -512,12 +512,17 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	@Override
 	public ClasspageDo v3GetClassById(String classpageId){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
-		//String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
-		getLogger().info("V3_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
-				getRestPassword());
-		jsonRep =jsonResponseRep.getJsonRepresentation();
+		try{
+			String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
+			//String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+			getLogger().info("V3_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+					getRestPassword());
+			jsonRep =jsonResponseRep.getJsonRepresentation();	
+		}catch(Exception e){
+			getLogger().error("v3GetClassById ......:"+e.getMessage());
+		}
+		
 		return deserializeV2Class(jsonRep);
 	}
 
@@ -1155,6 +1160,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return classpagesList;
 	}
+	
+	
+	public ArrayList<ClasspageDo> deserializeArrayListClasses(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<ClasspageDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return new ArrayList<ClasspageDo>();
+	}
+	
 	protected ClasspageDo deserializeClassPage(JSONObject classpageJsonObject){
 		ClasspageDo classpageDo=new ClasspageDo();
 			try {
@@ -1632,6 +1651,29 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		return deserializeClasspageList(jsonRep);
 	}
 	
+	
+	@Override
+	public ArrayList<ClasspageDo> getClassesAssociatedWithCourse(String o1CourseId) throws GwtException, ServerDownException {
+
+		JsonRepresentation jsonRep = null;
+		ClasspageDo classpageDo = null;
+		ArrayList<ClasspageDo> classPagesList=new ArrayList<ClasspageDo>();
+		Integer associatedClassesSize = 0;
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSES_ASSOCIATED_WITH_COURSE, o1CourseId);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.LIMIT,"10");
+		getLogger().info("--- getClassesAssociatedWithCourse -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if(jsonResponseRep.getStatusCode()==200){
+			classPagesList=deserializeArrayListClasses(jsonRep);
+		}else{
+			 classpageDo=new ClasspageDo();
+			 classpageDo.setStatusCode(jsonResponseRep.getStatusCode());
+			 classPagesList.add(classpageDo);
+		}
+		return classPagesList;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3UpdateClass(java.lang.String, org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
@@ -1640,13 +1682,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		ClasspageDo classDo=null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASSPAGE_BY_ID, classId);
+		getLogger().info("v3UpdateClass:"+url);
 		String form = "";
 		try{
 			if(classpageDo != null){
 				form = ResourceFormFactory.generateStringDataForm(classpageDo, null);
 			}
+			getLogger().info("form:"+form);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),form);
 			jsonRep =jsonResponseRep.getJsonRepresentation();
+			getLogger().info("payload:"+jsonRep.toString());
 			if(jsonResponseRep.getStatusCode()==200){
 				classDo=classpageDo;
 			}else{

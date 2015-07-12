@@ -8,6 +8,7 @@
 			<p>Select classes that will use this course</p>
 			<g:FlowPanel styleName="custom-select">
 			    <g:ListBox ui:field="classListBox"></g:ListBox>
+			    <g:Button styleName="primary" ui:field="assignCourseBtn" text="{i18n.GL0104}"></g:Button>
 				<!-- <select>
 					<option>The Number System</option>
 					<option>Blue cheese with crackers</option>
@@ -15,22 +16,15 @@
 					<option>Other</option>
 				</select> -->
 			</g:FlowPanel>
-
+            <g:Label ui:field="errorMsgLbl">Please select class</g:Label>
 		</div>
 		<div class="courseDetailsContainer no-gutter">
 
 			<p>This course is found in</p>
 
-			<div class="col-md-6 col-sm-6 col-xs-5">
-
-				<a href="">AdNum Block 1</a>
-			</div>
-			<div class="col-md-6 col-sm-6 col-xs-7">
-				<div class="text-right">
-					<a href="">Edit class content visibility</a>
-				</div>
-			</div>
-			<div class="clearfix"></div>
+			<g:HTMLPanel ui:field="classListPnl"></g:HTMLPanel>
+			
+			
 		</div>
 
 	</g:HTMLPanel>

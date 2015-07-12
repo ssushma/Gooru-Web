@@ -31,27 +31,25 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget.EditClassLessonView;
-import org.ednovo.gooru.client.uc.LabelUc;
-import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -91,6 +89,9 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	ClasspageDo classpageDo;
 	
+	int miniScore;
+	
+	@UiField Label errorLabel,saveLblText;
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -103,12 +104,80 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 
 	public EditClassContentView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		scoreTextBox.setText("95");
+		scoreTextBox.setMaxLength(3);
 		setId();
 		for(int i=0; i<5 ;i++){
 			editClassLessonView = new EditClassLessonView();
 			tableConatiner.add(editClassLessonView);
 		}
+		saveBtn.setEnabled(false);
+		saveBtn.addStyleName(CssTokens.DISABLED);
+		scoreTextBox.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				String score = scoreTextBox.getText();
+				if(score.isEmpty()){
+					errorLabel.setText("Please enter the minimum score");
+					errorLabel.getElement().getStyle().setColor("orange");
+					errorLabel.setVisible(true);
+					saveEnabled(false);
+					saveBtn.addStyleName(CssTokens.DISABLED);
+				}else if(score != null || score != ""){
+					if(Integer.parseInt(score) >100 || Integer.parseInt(score) <=0){
+						errorLabel.setText(i18n.GL3425());
+						errorLabel.getElement().getStyle().setColor("orange");
+						errorLabel.setVisible(true);
+						saveEnabled(false);
+						saveBtn.addStyleName(CssTokens.DISABLED);
+					}else{
+						miniScore=Integer.valueOf(score);
+						saveEnabled(true);
+						saveBtn.removeStyleName(CssTokens.DISABLED);
+						errorLabel.setVisible(false);
+					}
+				}
+			}
+		});
+		scoreTextBox.addKeyPressHandler(new NumbersOnly());
+	}
+	
+	@UiHandler("saveBtn")
+	public void saveClass(ClickEvent event){
+		ClasspageDo classpageDo = new ClasspageDo();
+		classpageDo.setMinimumScore(miniScore);
+		saveLblText.setVisible(true);
+		saveBtn.setVisible(false);
+		saveEnabled(false);
+		saveBtn.addStyleName(CssTokens.DISABLED);
+		getUiHandlers().updateClass(classpageDo);
+	}
+	
+	private class NumbersOnly implements KeyPressHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.KeyPressHandler#onKeyPress(com.google.gwt.event.dom.client.KeyPressEvent)
+		 */
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			if (!Character.isDigit(event.getCharCode()) 
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+                ((TextBox) event.getSource()).cancelKey();
+            }
+			saveEnabled(true);
+			saveBtn.removeStyleName(CssTokens.DISABLED);
+			errorLabel.setVisible(false);
+		}
+	}
+	
+	public void saveEnabled(boolean isEnabled){
+		saveBtn.setEnabled(isEnabled);
 	}
 	
 	public void setTabVisible(boolean visible){
@@ -181,48 +250,27 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		visiblePanel.setText(i18n.GL3415());
 		visiblePanel.getElement().setId("visibliePanelId");
 		
+		errorLabel.getElement().setId("errorLblId");
+		saveLblText.setText(i18n.GL3426());
+		saveLblText.getElement().setId("saveLblTxtId");
 		
-		
-		/*minmumScoreAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
-		contentSettingsAnr.addClickHandler(new ContentTabNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));*/
-		
-		
+		saveLblText.setVisible(false);
+	}
+	@Override
+	public void setClassData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
+		if(classpageDo.getMinimumScore() >0){
+			scoreTextBox.setText(classpageDo.getMinimumScore()+"");
+		}
 		
 	}
 
 	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setClassData(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setUpdateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
 	@Override
-	public void setClassData(ClasspageDo classpageDo) {
-		this.classpageDo=classpageDo;
-		
-		
+	public void setUpdateClass(ClasspageDo result) {
+		saveLblText.setVisible(false);
+		saveBtn.setVisible(true);
 	}
-	
-	/*public class ContentTabNavigationHandler implements ClickHandler{
-
-		String view;
-		LiPanel liPanel;
-		
-		public ContentTabNavigationHandler(String view,LiPanel liPanel){
-			this.view=view;
-			this.liPanel=liPanel;
-		}
-		
-		 (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 
-		@Override
-		public void onClick(ClickEvent event) {
-			minLiPnl.removeStyleName(CssTokens.ACTIVE);
-			settLiPanel.removeStyleName(CssTokens.ACTIVE);
-			liPanel.addStyleName(CssTokens.ACTIVE);
-			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, view);
-			AppClientFactory.getPlaceManager().revealPlace(request);
-		}
-		
-	}*/
-
 }

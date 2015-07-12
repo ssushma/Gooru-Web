@@ -634,13 +634,13 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		if(increasePageNum){
 			pendingOffsetValue=pendingOffsetValue+pageSize;
 		}
-		if(pendingListTotalCount==0&&activeListTotalCount==0){
-			/*Label noActiveStudents = new Label(i18n.GL1527());
+		/*if(pendingListTotalCount==0&&activeListTotalCount==0){
+			Label noActiveStudents = new Label(i18n.GL1527());
 			noActiveStudents.getElement().addClassName("noActiveClassStudents");
-			pendingContainer.add(noActiveStudents);*/
+			pendingContainer.add(noActiveStudents);
 			pendindUserContainer.setVisible(false);
 			ancPendingListSeeMore.setVisible(false);
-		}else if(pendingListTotalCount==0){
+		}else */if(pendingListTotalCount==0){
 			ancPendingListSeeMore.setVisible(false);
 			pendindUserContainer.setVisible(false);
 		}else{
@@ -748,6 +748,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			ancActiveListSeeMore.setVisible(false);
 			Label noActiveStudents = new Label(i18n.GL1527());
 			noActiveStudents.getElement().addClassName("noActiveClassStudents");
+			tableContainer.clear();
 			tableContainer.add(noActiveStudents);
 		}else{
 			for (int k=0; k<lstActiveMembers.size();k++){
