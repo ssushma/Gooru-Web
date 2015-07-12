@@ -2170,4 +2170,28 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return resourceModelList;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ResourceService#getCourseDataById(java.lang.String)
+	 */
+	@Override
+	public FolderDo getCourseDataById(String courseId) throws GwtException,ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String partialUrlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSE,courseId);
+		getLogger().info("GET_COURSE_INFO get API call::::::"+partialUrlStr);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrlStr);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCourseInfo(jsonRep);
+	}
+	
+	public FolderDo deserializeCourseInfo(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), FolderDo.class);
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
+		}
+		return new FolderDo();
+	}
 }
