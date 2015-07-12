@@ -12,7 +12,9 @@
 	             <span:PPanel ui:field="lessonName"></span:PPanel>
 		      </g:HTMLPanel>
 		      <div class="progressBlockLeft">
-	            <div class="green-circle"><span></span></div>
+	            <g:HTMLPanel ui:field="circleIcon">
+	                <span></span>
+	            </g:HTMLPanel>
 	         </div>
 		   </g:HTMLPanel>
 	   </uc:HTMLEventPanel>

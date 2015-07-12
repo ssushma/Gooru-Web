@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowled
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -77,7 +78,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	interface CollectionInfoViewUiBinder extends UiBinder<Widget, CollectionInfoView> {
 	}	
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype;
+	@UiField HTMLPanel collectionInfo,newdok,newtype,thumbnailImageContainer;
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl;
 	@UiField TextArea learningObjective;
@@ -89,6 +90,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField DepthKnowledgeView depthOfKnowledgeContainer;
 	@UiField LanguageView languageObjectiveContainer;
 	@UiField CenturySkillsView centurySkillContainer;
+	@UiField PPanel colltitle,collimagetitle,tagcollectiontitle;
+	
 	
 	private boolean isLanguageObjectInfo=false;
 	private boolean isCenturySkillsInfo=false;    
@@ -232,12 +235,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		this.type = type;
 		if(courseObj!=null){
 			this.courseObjG=courseObj;
+			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
 		}
+		setStaticData(type);			
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 								(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
 
@@ -248,9 +253,26 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		});
 	}
+	public void setStaticData(String type)
+	{
+		if(type.equalsIgnoreCase(ASSESSMENT))
+		{
+			colltitle.setText(i18n.GL3381());
+			collimagetitle.setText(i18n.GL3382());
+			thumbnailImageContainer.setStyleName("assessmentThumbnail");
+			tagcollectiontitle.setText(i18n.GL3385());
+		}
+		else
+		{
+			colltitle.setText(i18n.GL3380());
+			collimagetitle.setText(i18n.GL3383());
+			thumbnailImageContainer.setStyleName("collectionThumbnail");	
+			tagcollectiontitle.setText(i18n.GL3384());
+		}
+	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0);
+		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
 	}
 	
 	@UiHandler("uploadImageLbl")
@@ -258,7 +280,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(collectionTitle.getText());
 		createOrUpDate.setDescription(learningObjective.getText());
-		createOrUpDate.setCollectionType(COLLECTION);
+		createOrUpDate.setCollectionType(type);
 		getUiHandlers().uploadCollectionImage(createOrUpDate);
 	}	
 	
@@ -268,19 +290,19 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index) {
+	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1);
+				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1,collectionType);
 			}else if(index==1){
 				CreateDo createOrUpDate=new CreateDo();
 				createOrUpDate.setTitle(collectionTitle.getText());
 				createOrUpDate.setDescription(learningObjective.getText());
-				createOrUpDate.setCollectionType(COLLECTION);
+				createOrUpDate.setCollectionType(collectionType);
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);

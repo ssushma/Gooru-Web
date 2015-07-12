@@ -2953,6 +2953,22 @@ display: table-cell;
 	height:90px;
 	border-left:10px solid #1076bb;
 }
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage img{
+	  width: 120px;
+	height:90px;
+	border-left: 10px solid #feae29;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .thunailHover{
+	position:absolute;
+	top:25px;
+	left:5px;
+	right:5px;
+	bottom:0;
+	display:none;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage:hover .thunailHover{
+	display:block;
+}
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .thunailHover{
 	position:absolute;
 	top:25px;
@@ -4041,21 +4057,21 @@ right:1px;
 /* Select arrow styling */
 .shareMainContainer  .custom-select:after {
 	content:"";
-	position: absolute;
+	position: relative;
 	top: 0;
-	right: -1px;
+	right: 80px;
 	bottom: 0;
 	font-size: 60%;
 	line-height: 30px;
 	padding: 6px 7px;
 	width:23px;
-	background: #ffffff url("${cdn.endpoint}/images/downarrow.png") no-repeat 0px 14px;
+	background: #ffffff url("${cdn.endpoint}/images/downarrow.png") no-repeat 0px 5px;
 	color: #515151;
 	pointer-events: none;
 	-webkit-border-radius: 0 6px 6px 0;
 	-moz-border-radius: 0 6px 6px 0;
 	border-radius: 0 6px 6px 0;
-	border:1px solid #dddddd;
+	/* border:1px solid #dddddd; */
 	border-left:0px solid #dddddd;
 }
 .no-pointer-events .custom-select:after {

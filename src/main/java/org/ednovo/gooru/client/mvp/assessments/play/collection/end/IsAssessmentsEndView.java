@@ -69,5 +69,9 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public Frame getFrame();
 	
 	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo);
+	
+	public void loadingIcon();
+	
+	public void errorMsg();
 
 }

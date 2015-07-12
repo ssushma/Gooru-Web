@@ -65,7 +65,7 @@ public interface ClasspageService extends BaseService {
 
 	public ClasspageDo v3GetClassById(String classpageId) throws GwtException,ServerDownException;
 	
-	public ClasspageListDo  v3GetUserClasses(String limit, String offSet) throws GwtException, ServerDownException;
+	public ClasspageListDo  v3GetUserClasses(String limit, String offSet, boolean isContainsCourse) throws GwtException, ServerDownException;
 	
 	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet) throws GwtException, ServerDownException;
 	
@@ -511,7 +511,7 @@ public interface ClasspageService extends BaseService {
 	public void v2ChangeAssignmentSequence(String classpageId,
 			String classpageAssignmentId, int sequence) throws GwtException, ServerDownException;
 	
+	ArrayList<ClasspageDo> getClassesAssociatedWithCourse(String courseId) throws GwtException, ServerDownException;
 	/** Student Plan and Progress **/
 	public ArrayList<PlanProgressDo> getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams) throws GwtException, ServerDownException;
-	
 }
