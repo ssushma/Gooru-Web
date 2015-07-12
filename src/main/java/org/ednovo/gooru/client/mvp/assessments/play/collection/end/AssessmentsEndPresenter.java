@@ -331,7 +331,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 				getView().loadingIcon();
 
 				//getView().enableAndDisableEmailButton(isSummary);
-				analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				/*analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
@@ -344,7 +344,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					public void onFailure(Throwable caught) {
 					
 					}
-				});
+				});*/
 				analyticService.getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 					
 					@Override
