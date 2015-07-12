@@ -32,6 +32,8 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -41,11 +43,14 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	
 	private String viewType;
 	
+	CourseInfoPresenter courseInfoPresenter;
+	
 	
 	@Inject
-	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view){
+	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view, CourseInfoPresenter courseInfoPresenter){
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+		this.courseInfoPresenter = courseInfoPresenter;
 	}
 	
 	
@@ -70,11 +75,12 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	 * @param viewType
 	 * @param classification
 	 * @param taxonomyType
-	 * @param offSet
+	 * @param offSet 
 	 * @param limit
 	 */
 	public void getTaxonomySubjects(String viewType, int classification,String taxonomyType,int offSet,int limit) {  
 		this.viewType = viewType;
+		getView().setCurrentTypeView(viewType); 
 		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 			@Override
@@ -232,6 +238,11 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 				});
 			}
 		});
+	}
+
+
+	@Override
+	public void addTaxonomyData() {
 	}
 	
 	
