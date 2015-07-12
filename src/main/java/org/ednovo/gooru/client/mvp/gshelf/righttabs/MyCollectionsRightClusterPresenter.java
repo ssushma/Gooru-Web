@@ -162,7 +162,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
-				shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
+				//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
+				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
 		}else if(index==3){

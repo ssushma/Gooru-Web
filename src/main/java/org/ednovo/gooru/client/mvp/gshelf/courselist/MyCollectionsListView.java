@@ -290,6 +290,20 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			
 			btnCreate.setVisible(false);
 			lblAddNew.setVisible(false);
+		}else if(FOLDER.equalsIgnoreCase(type)){
+			enableCreateButtons(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			lblAddNewForResource.setText(i18n.GL1450());
+			lblAddNewForQuestion.setText(i18n.GL1451());
+			
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1450(), i18n.GL1450());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL1451(), i18n.GL1451());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL1450(), i18n.GL1450());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL1451(), i18n.GL1451());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
 		}else{
 			enableCreateButtons(true);
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());

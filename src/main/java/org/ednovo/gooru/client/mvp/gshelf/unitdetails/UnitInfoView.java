@@ -104,10 +104,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
 		taxonomyBtn.getElement().setId("taxonomyBtn");
-		
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
-		
-		
 		unitTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -337,7 +334,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getSubdomain()!=null){
 			//To set default selection if the user is already selected any subject
-			firstSelectedSubject.add(courseObj.getSubdomain().get(0).getSubjectId());
+			firstSelectedSubject.add(courseObj.getSubdomain().get(0).getSubdomainId());
 			this.subjectId=courseObj.getSubdomain().get(0).getSubjectId();
 			getUiHandlers().callCourseBasedOnSubject(subjectId,courseObj.getSubdomain().get(0).getCourseId());
 			for (final CourseSubjectDo courseSubjectDo : courseObj.getSubdomain()) {
@@ -382,14 +379,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public List<Integer> getFirstSelectedValue(){
 		return firstSelectedSubject;
 	}
-	
 	private class OnClickTaxonomy implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			
 			getUiHandlers().invokeTaxonomyPopup(UNIT);
 		}
-		
 	}
 }

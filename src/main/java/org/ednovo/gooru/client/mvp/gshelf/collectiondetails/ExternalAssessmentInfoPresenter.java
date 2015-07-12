@@ -95,14 +95,13 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {				
-				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
 				params.put(O1_LEVEL, o1);
 				params.put(O2_LEVEL, o2);
 				params.put(O3_LEVEL, o3);
-				params.put("id", uri[uri.length-1]);
+				params.put("id",result.getGooruOid());
 				params.put("view", "course");
-				result.setGooruOid(uri[uri.length-1]);
+
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,ASSESSMENTURL); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
