@@ -15,6 +15,8 @@ public interface IsTaxonomyPopupView extends PopupView, IsViewWithHandlers<Taxon
 
 	void addTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList);
 
-	void addTaxonomyStandards();  
+	void addTaxonomyStandards();
 
+	void setCurrentTypeView(String viewType);  
+ 
 }
