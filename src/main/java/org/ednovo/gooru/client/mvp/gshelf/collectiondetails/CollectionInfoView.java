@@ -83,7 +83,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}	
 
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,humbnailImageContainer,standardsUI;
+	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,humbnailImageContainer,standardsUI,thumbnailImageContainer;
 
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl;
