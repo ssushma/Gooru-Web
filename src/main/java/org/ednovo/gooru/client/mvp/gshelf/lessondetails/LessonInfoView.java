@@ -194,6 +194,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}else{
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(lessonTitle.getText());
+			createOrUpDate.setStandardIds(getSelectedStandards());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 			if(id!=null){
 				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type);
@@ -201,6 +202,23 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
 			}
 		}
+	}
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandards(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+			}
+		}
+		return taxonomyCourseIds;
 	}
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
