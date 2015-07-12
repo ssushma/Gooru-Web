@@ -134,6 +134,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@Override
 	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final int selectedId) {
 		pnlGradeContainer.clear();
+		firstSelectedSubject.clear();
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"domain") {
 			@Override
 			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
@@ -142,6 +143,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 						pnlGradeDescContainer.getElement().setInnerHTML(courseSubjectDo.getDescription());
 					}
 				}
+				firstSelectedSubject.add((int)codeId);
 				if(isAdd){
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
@@ -211,8 +213,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				Anchor title=new Anchor(titleText);
 				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
 				liPanel.add(title);
-				System.out.println("selectedId::"+selectedId);
-				System.out.println("libraryCodeDo.getCourseId()::"+libraryCodeDo.getCourseId());
 				if(selectedId==libraryCodeDo.getCourseId()){
 					liPanel.addStyleName(ACTIVE);
 					tempLiPanel=liPanel;
@@ -242,7 +242,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			}else{
 				tempLiPanel=liPanel;
 			}
-			firstSelectedSubject.add(courseId);
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(courseId).size()>0){
 					getUiHandlers().getDomainsBasedOnCourseId(courseId, courseId);
@@ -327,7 +326,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
-		System.out.println("in side");
 		if(courseObj!=null){
 			this.courseObj=courseObj;
 			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");

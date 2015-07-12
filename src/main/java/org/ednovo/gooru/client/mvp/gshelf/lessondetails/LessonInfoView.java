@@ -97,7 +97,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	CourseGradeWidget courseGradeWidget;
-
+	public FolderDo courseObj;
+	
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -194,23 +195,41 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}else{
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(lessonTitle.getText());
+			createOrUpDate.setStandardIds(getSelectedStandards());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 			if(id!=null){
-				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type);
+				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type,courseObj);
 			}else{
 				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
 			}
 		}
 	}
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandards(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+			}
+		}
+		return taxonomyCourseIds;
+	}
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
+		this.courseObj=folderObj;
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
-		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null)
-		{
-		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
-			break;
-		}
+		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
+			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
+				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
+				break;
+			}
 		}
 	}
 
