@@ -190,18 +190,11 @@ public abstract class MembersViewVc extends Composite {
 	 *
 	 */
 	public void setDebugId() {
-		/*String emailId =  "ravinder@goorulearning.org";
-		String email =  "ravinder@goorulearnig.org";
-		String userName =  "RavinderV";
-		String firstandlastName="Ravinder Vasala";*/
 		
 		String emailId = collaboratorsDo.getEmailId() != null ? collaboratorsDo.getEmailId() : null;
 		String email = collaboratorsDo.getEmail() != null ? collaboratorsDo.getEmail() : null;
 		String userName = collaboratorsDo.getUsername() != null ? collaboratorsDo.getUsername() : null;
-		//String status = collaboratorsDo.getStatus();
-		//String status = "pending";
-
-		//panelCollaboratorsListContainer.getElement().setId(emailId);
+		
 		btnRemove.setText(i18N.GL0237());
 		btnRemove.getElement().setId("" + position);
 		btnRemove.getElement().setAttribute("alt",i18N.GL0237());

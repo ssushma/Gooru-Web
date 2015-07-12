@@ -124,6 +124,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
 				}else if("Unit".equalsIgnoreCase(type)){ 
+					System.out.println("unit info hitted");
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
 				}else if("Lesson".equalsIgnoreCase(type)){
@@ -136,6 +137,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					}else{
 						getView().disableAndEnableBreadCums(true);
 					}
+					System.out.println("intoi t::"+type);
 					collectionInfoPresenter.setCollectionType(type);
 					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
@@ -157,7 +159,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
-			if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{

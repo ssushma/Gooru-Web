@@ -57,6 +57,8 @@ public class EditClassView extends BaseViewWithHandlers<EditClassViewUiHandlers>
 	
 	
 	@UiField HTMLPanel startPanel;
+	
+	@UiField Button addCourseBtn;
 
 	private static EditClassViewUiBinder uiBinder = GWT.create(EditClassViewUiBinder.class);
 
@@ -66,6 +68,11 @@ public class EditClassView extends BaseViewWithHandlers<EditClassViewUiHandlers>
 	public EditClassView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		//startPanel.setVisible(false);
+	}
+	
+	@UiHandler("addCourseBtn")
+	public void addCourseToClass(ClickEvent event){
+		getUiHandlers().addCourseToClass();
 	}
 
 }

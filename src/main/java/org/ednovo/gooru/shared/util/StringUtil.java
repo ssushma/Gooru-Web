@@ -807,5 +807,39 @@ public class StringUtil implements ClientConstants {
 		classObj.setUnitId(unitId);
 		return classObj;
 	}
+	
+	public static String getFormattedDate(long different, String separator) {
+		long secondsInMilli = 1000;
+		long minutesInMilli = secondsInMilli * 60;
+		long hoursInMilli = minutesInMilli * 60;
+		long daysInMilli = hoursInMilli * 24;
+		
+		long d = different / daysInMilli;
+		different = different % daysInMilli;
+		
+		long h = different / hoursInMilli;
+		different = different % hoursInMilli;
+		
+		long m = different / minutesInMilli;
+		different = different % minutesInMilli;
+		
+		long s = different / secondsInMilli;
+	    
+		String format="";
+    	if(d>0) {
+    		h = (24*d)+h;
+    	}
+	    if(separator!=null&&separator.equalsIgnoreCase(":")) {
+	    	format = format + h + separator;
+		    format = format + m + separator;
+		    format = format + s;
+	    } else {    	
+	    	format = format + h +" hrs ";
+		    format = format + m +" min ";
+		    format = format + s +" sec";
+	    }
+	    return format;
+	}
+
 }
 

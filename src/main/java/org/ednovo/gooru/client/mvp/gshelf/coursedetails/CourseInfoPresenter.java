@@ -114,17 +114,17 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit,FolderDo folderDo) {
+	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit,final FolderDo folderDo) {
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
-				params.put("o1", uri[uri.length-1]);
+				params.put("o1", result.getGooruOid());
 				params.put("view", COURSE);
-				result.setGooruOid(uri[uri.length-1]);
 				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				selectedValues.put(getView().getFirstSelectedValue().get(0),createObj.getTaxonomyCourseIds().get(0));
+				if(getView().getFirstSelectedValue()!=null){
+					selectedValues.put(getView().getFirstSelectedValue().get(0),createObj.getTaxonomyCourseIds().get(0));
+				}
 				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
 					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
 				}

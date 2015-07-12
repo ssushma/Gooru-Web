@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -590,6 +591,14 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	@Override
 	public void closePreviewPlayer() {
 		AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
+		String rid = AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+		if (rid != null && view == null){
+			getUiHandlers().setLastEventType(PlayerDataLogEvents.PAUSE_EVENT_TYPE);
+		}else{
+			getUiHandlers().setLastEventType(PlayerDataLogEvents.STOP_EVENT_TYPE);
+		}
+
 		hide();
 		getUiHandlers().resetCollectionPlayer();
 	}

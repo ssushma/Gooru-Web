@@ -106,13 +106,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
 				params.put("o2", AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-				params.put("o3", uri[uri.length-1]);
+				params.put("o3",result.getGooruOid());
 				params.put("view", "Course");
-				result.setGooruOid(uri[uri.length-1]);
+
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
 				if(isCreateCollOrAssessment && creationType!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
@@ -126,24 +125,23 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		});
 	}
 	@Override
-	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateColl,final String type) {
+	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateColl,final String type,final FolderDo folderObj) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
-				folderDo.setTitle(createDo.getTitle());
-				folderDo.setType(LESSON);
+				folderObj.setTitle(createDo.getTitle());
+				folderObj.setType(LESSON);
 				//folderDo.setGooruOid(id);
 				
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateColl);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,isCreateColl);
 				if(isCreateColl && type!=null){
-					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderDo);
+					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderObj);
 					myCollectionsRightClusterPresenter.setTabItems(1, type, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(type);
 				}else{
-					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, folderDo);
+					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, folderObj);
 				}
 			}
 		});

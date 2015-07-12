@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Widget;
 public class LiPanel extends ComplexPanel implements InsertPanel,HasClickHandlers{
 	private long codeId;
+	private String title;
 	
 	public LiPanel() {
 		setElement(Document.get().createLIElement());
@@ -35,5 +36,19 @@ public class LiPanel extends ComplexPanel implements InsertPanel,HasClickHandler
 
 	public void setCodeId(long codeId) {
 		this.codeId = codeId;
+	}
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

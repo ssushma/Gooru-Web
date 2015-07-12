@@ -67,7 +67,7 @@ public class ClasspageDo implements Serializable{
 	private UserDo user;
 	private String courseGooruOid;
 	private String mediaFilename;
-	private int minimumScore;
+	private int minimumScore=0;
 
 	public ClasspageDo(){}
 
@@ -375,6 +375,8 @@ public class ClasspageDo implements Serializable{
 	public void setMinimumScore(int minimumScore) {
 		this.minimumScore = minimumScore;
 	}
+
+	
 
 
 

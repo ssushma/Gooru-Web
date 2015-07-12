@@ -257,7 +257,6 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 				String gooruOid = planProgressDo.getItem().get(j).getGooruOId();
 				contentGooruIds = contentGooruIds + gooruOid +",";
 			}
-			System.out.println("contentGooruIds "+contentGooruIds);
 			getUiHandlers().getLessonPlanData(contentGooruIds);
 		}
 		if(matchedCount==0&&size==1) {

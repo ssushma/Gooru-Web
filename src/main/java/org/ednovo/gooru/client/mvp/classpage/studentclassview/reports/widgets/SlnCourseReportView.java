@@ -8,6 +8,7 @@ import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.SmallPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -70,7 +71,12 @@ public class SlnCourseReportView extends Composite {
 			scorePercent = (planProgressDo.getAssessmentsAttempted() / planProgressDo.getAssessmentCount()) * 100;
 		}
 		scoreRadial.setStyleName(SCORE_RADIAL_PERCENT_LABEL+scorePercent);
-		studyTimeValue.setText(planProgressDo.getTotalStudyTime()+"");
+		
+		String timeSpentData = "--";
+		if(planProgressDo.getTimespent()>0) {
+			timeSpentData = StringUtil.getFormattedDate(planProgressDo.getTotalStudyTime(), "");
+		}
+		studyTimeValue.setText(timeSpentData);
 		
 		String avgScoreTxt = "--";
 		
