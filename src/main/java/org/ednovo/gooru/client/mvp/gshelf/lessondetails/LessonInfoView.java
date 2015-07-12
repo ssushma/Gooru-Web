@@ -97,7 +97,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	CourseGradeWidget courseGradeWidget;
-
+	public FolderDo courseObj;
+	
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -197,7 +198,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			createOrUpDate.setStandardIds(getSelectedStandards());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 			if(id!=null){
-				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type);
+				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type,courseObj);
 			}else{
 				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
 			}
@@ -222,13 +223,13 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
+		this.courseObj=folderObj;
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
-		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null)
-		{
-		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
-			break;
-		}
+		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
+			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
+				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
+				break;
+			}
 		}
 	}
 
