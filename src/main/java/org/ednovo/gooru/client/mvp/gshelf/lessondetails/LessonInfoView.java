@@ -281,7 +281,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			this.subjectId=subjectId;
 		}
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event){
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(selectedText).size()>0){
 					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
