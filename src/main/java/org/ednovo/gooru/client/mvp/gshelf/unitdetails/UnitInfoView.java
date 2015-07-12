@@ -88,6 +88,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public FolderDo courseObj;
 	final String ACTIVE="active";
 	
+	private static final String UNIT = "Unit";
+	
 	LiPanel tempLiPanel=null;
 	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
 	/**
@@ -331,7 +333,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup();
+			
+			getUiHandlers().invokeTaxonomyPopup(UNIT);
 		}
 		
 	}

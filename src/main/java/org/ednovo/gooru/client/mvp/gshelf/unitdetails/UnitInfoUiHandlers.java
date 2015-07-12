@@ -60,7 +60,7 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 
 	void showUnitTemplate();
 
-	public void invokeTaxonomyPopup(); 
+	public void invokeTaxonomyPopup(String type); 
 	
 	MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 	

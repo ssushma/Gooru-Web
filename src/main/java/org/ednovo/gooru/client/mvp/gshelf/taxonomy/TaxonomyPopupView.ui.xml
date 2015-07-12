@@ -41,24 +41,24 @@
 					
 					    <div class="col-md-3 col-sm-3 border-right">
 							<g:Label styleName="optinHeader" text="Subject"></g:Label>
-							<uc:UlPanel styleName="list-unstyled" ui:field="subjectUlContainer"></uc:UlPanel>
+							<uc:UlPanel styleName="list-unstyled containerHeight" ui:field="subjectUlContainer"></uc:UlPanel>
 						</div>
 						
 						<div class="col-md-2 col-sm-2 border-right">
 							<g:Label styleName="optinHeader" text="Course"></g:Label>
-							<uc:UlPanel styleName="list-unstyled" ui:field="courseUlContainer">
+							<uc:UlPanel styleName="list-unstyled containerHeight" ui:field="courseUlContainer">
 							</uc:UlPanel>
 						</div>
 						
 						<div class="col-md-3 col-sm-3 border-right domainColumn">
 							<g:Label styleName="optinHeader" text="Domain"></g:Label>
-							<uc:UlPanel styleName="list-unstyled" ui:field="domainUlContainer">
+							<uc:UlPanel styleName="list-unstyled containerHeight" ui:field="domainUlContainer">
 							</uc:UlPanel>
 						</div>
 						
 						<div class="col-md-4 col-sm-4 listGroupLast">
 							<g:Label styleName="optinHeader" text="Standards"></g:Label>
-							<uc:UlPanel styleName="list-unstyled" ui:field="standardsUlContainer">
+							<uc:UlPanel styleName="list-unstyled containerHeight" ui:field="standardsUlContainer">
 							</uc:UlPanel>
 						</div>
 						<div class="clearfix"></div>

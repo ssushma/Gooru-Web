@@ -25,6 +25,13 @@
 	
 }
 
+#taxonomyStructureSelectionPopup .containerHeight{
+	height: 424px;
+	overflow-y: auto;
+	overflow-x: hidden;
+
+}
+
 #taxonomyStructureSelectionPopup  .standerdTxt{
 	font-size:18px;
 	color:#ffffff;
@@ -80,6 +87,7 @@
 	color:#515151;
 	padding:6px 10px;
 	display:block;
+	line-height: 16px;
 }
 
 #taxonomyStructureSelectionPopup  .listGroup ul li a:hover{
