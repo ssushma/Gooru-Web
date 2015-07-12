@@ -732,7 +732,11 @@ button.btn-disabled{
 	width:100%;
 	border-collapse:collapse;
 }
-
+#gShelfCousesList .myCollectionsListView {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 #gShelfCousesList .tableRow{
 	display:table-row;
 	width:100%;
