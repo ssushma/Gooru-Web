@@ -103,6 +103,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void createAndSaveLessonDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		System.out.println("createDotype::"+isCreateCollOrAssessment);
+		System.out.println("createDotype::"+createDo.getCollectionType());
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
@@ -114,6 +116,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
+				System.out.println("creationType lesson::"+creationType);
 				if(isCreateCollOrAssessment && creationType!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);

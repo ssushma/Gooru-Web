@@ -159,12 +159,7 @@ public class CollectionSearchWidget extends Composite {
 							Map<String, String> params = new HashMap<String, String>();
 							params.put("id", collectionSearchResultDo.getGooruOid());
 							params.put("rid",collectionItemSearchResultDo.getCollectionItemId());
-							PlaceRequest placeRequest=null;
-							if (collectionSearchResultDo.getCollectionType()!=null && collectionSearchResultDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
-								placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
-							}else{
-								placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-							}
+							PlaceRequest placeRequest=placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 						}
 					});
@@ -284,11 +279,7 @@ public class CollectionSearchWidget extends Composite {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", gooruOid);
 					Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
-					PlaceRequest placeRequest=null;
-					if (collectionSearchResultDo.getCollectionType()!=null && collectionSearchResultDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
-
-					}
-					placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}
 			});

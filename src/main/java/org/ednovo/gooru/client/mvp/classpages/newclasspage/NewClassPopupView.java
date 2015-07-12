@@ -119,6 +119,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 		this.res = NewClasspagePopupCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		setModal(true);
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
 		//this.getElement().getStyle().setWidth(450,Unit.PX);
 		btnCancel.addClickHandler(new CloseExistsClickHandler());
@@ -209,16 +210,13 @@ public abstract class NewClassPopupView extends AppPopUp {
 
 
 		classpageTitleTxt.addKeyUpHandler(new TitleKeyUpHandler());
-        setModal(true);
-		Window.enableScrolling(true);
-		this.show();
+		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		mandatoryClasspageTitleLbl.setVisible(false);
 		panelPleaseWait.setVisible(false);
 		panelLoading.setText(i18n.GL0122());
 		panelControls.setVisible(true);
-		show();
-		center();
+		
 		classpageTitleTxt.setFocus(true);
 		panelLoading.getElement().setId("pnlLoading");
 		panelControls.getElement().setId("pnlControls");
@@ -231,16 +229,19 @@ public abstract class NewClassPopupView extends AppPopUp {
 		publicPanel.addClickHandler(new SharingVisiblityClickHandler(publicPanel));
 		privatePanel.addClickHandler(new SharingVisiblityClickHandler(privatePanel));
 
+		show();
+		center();
 
 	}
 
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
+			String grade = filterValue.replace("Grade ", "");
 			if("add".equals(addOrRemove)){
-				gradeList.add(filterValue.replace("Grade ", ""));
+				gradeList.add(grade);
 			}else{
-				gradeList.remove(filterValue);
+				gradeList.remove(grade);
 			}
 		}
 	};
@@ -323,7 +324,7 @@ public abstract class NewClassPopupView extends AppPopUp {
 				final String title = classpageTitleTxt.getText().trim();
 				final String grade = join(gradeList, ",");
 				final boolean privacy = sharing;
-
+				System.out.println("grade:"+grade);
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", title);
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {

@@ -82,13 +82,14 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@UiField Label lblErrorMessage,lblErrorMessageForBig,lblErrorMessageForEssential;
 	@UiField TextArea txaBigIdeas,txaEssentialQuestions;
 	
-	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	Map<Integer, ArrayList<String>> selectedValues=new HashMap<Integer,ArrayList<String>>();
 	
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
 	
 	private static final String UNIT = "Unit";
+	int subjectId;
 	
 	LiPanel tempLiPanel=null;
 	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
@@ -131,9 +132,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * This method will display the Grades according to the subject
 	 */
 	@Override
-	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
+	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final int selectedId) {
 		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"domain") {
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"domain") {
 			@Override
 			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
 				for(CourseSubjectDo courseSubjectDo : libraryCodeDo) {
@@ -147,8 +148,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 						@Override
 						public void onClick(ClickEvent event) {
 							//This will remove the selected value when we are trying by close button
-							for(Iterator<Map.Entry<String,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
-							     Map.Entry<String, ArrayList<String>> entry = it.next();
+							for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+							     Map.Entry<Integer, ArrayList<String>> entry = it.next();
 							     if(entry.getValue().contains(courseObj.getName())){
 							    	 entry.getValue().remove(courseObj.getName());
 							     }
@@ -157,12 +158,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 							liPanelWithClose.removeFromParent();
 						}
 					});
-					selectedValues.get(selectedText).add(courseObj.getName());
+					selectedValues.get(selectedId).add(courseObj.getName());
 					liPanelWithClose.setId(codeId);
+					liPanelWithClose.setName(courseObj.getName());
+					liPanelWithClose.setRelatedId(courseObj.getCourseId());
+					liPanelWithClose.setRelatedSubjectId(courseObj.getSubjectId());
 					ulSelectedItems.add(liPanelWithClose);
 				}else{
-					if(selectedValues.get(selectedText).contains(courseObj.getName())){
-						selectedValues.get(selectedText).remove(courseObj.getName());
+					if(selectedValues.get(selectedId).contains(courseObj.getName())){
+						selectedValues.get(selectedId).remove(courseObj.getName());
 					}
 					removeGradeWidget(ulSelectedItems,codeId);
 				}
@@ -195,21 +199,24 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	}
 
 	@Override
-	public void setCourseList(List<CourseSubjectDo> libraryCode,String selectedText) {
+	public void setCourseList(List<CourseSubjectDo> libraryCode,int selectedId) {
 		ulMainGradePanel.clear();
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
-				if(!selectedValues.containsKey(titleText)){
-					selectedValues.put(titleText, new ArrayList<String>());
+				if(!selectedValues.containsKey(libraryCodeDo.getCourseId())){
+					selectedValues.put(libraryCodeDo.getCourseId(), new ArrayList<String>());
 				}
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
 				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
 				liPanel.add(title);
-				if(Integer.parseInt(selectedText)==libraryCodeDo.getCourseId()){
+				System.out.println("selectedId::"+selectedId);
+				System.out.println("libraryCodeDo.getCourseId()::"+libraryCodeDo.getCourseId());
+				if(selectedId==libraryCodeDo.getCourseId()){
 					liPanel.addStyleName(ACTIVE);
-					getUiHandlers().getDomainsBasedOnCourseId(libraryCodeDo.getCourseId(), titleText);
+					tempLiPanel=liPanel;
+					getUiHandlers().getDomainsBasedOnCourseId(libraryCodeDo.getCourseId(), libraryCodeDo.getCourseId());
 				}
 				ulMainGradePanel.add(liPanel);
 			}
@@ -237,14 +244,14 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			}
 			firstSelectedSubject.add(courseId);
 			if(liPanel.getStyleName().contains(ACTIVE)){
-				if(selectedValues.get(selectedText).size()>0){
-					getUiHandlers().getDomainsBasedOnCourseId(courseId, selectedText);
+				if(selectedValues.get(courseId).size()>0){
+					getUiHandlers().getDomainsBasedOnCourseId(courseId, courseId);
 				}else{
 					liPanel.removeStyleName(ACTIVE);
 				}
 			}else{
 				liPanel.addStyleName(ACTIVE);
-				getUiHandlers().getDomainsBasedOnCourseId(courseId, selectedText);
+				getUiHandlers().getDomainsBasedOnCourseId(courseId, courseId);
 			}
 		}
 	}
@@ -281,12 +288,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				createOrUpDate.setTitle(unitTitle.getText());
 				createOrUpDate.setIdeas(txaBigIdeas.getText());
 				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
-				createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
+				createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 				if(id!=null){
-					getUiHandlers().updateUnitDetails(createOrUpDate,id,isCreate);
+					getUiHandlers().updateUnitDetails(createOrUpDate,id,isCreate,courseObj);
 				}else{
-					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate);
+					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate,courseObj);
 				}
 			}
 		}
@@ -295,34 +302,83 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * This method is used to get the selected course id's
 	 * @return
 	 */
-	public List<Integer> getSelectedCourseIds(){
+	public List<Integer> getSelectedSubDomainIds(){
 		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
 		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
 		while (widgets.hasNext()) {
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
 				LiPanelWithClose obj=(LiPanelWithClose) widget;
 				Integer intVal = (int)obj.getId();
 				taxonomyCourseIds.add(intVal);
+				CourseSubjectDo courseObj=new CourseSubjectDo();
+				courseObj.setId((int)obj.getId());
+				courseObj.setName(obj.getName());
+				courseObj.setSubjectId(obj.getRelatedSubjectId());
+				courseObj.setCourseId(obj.getRelatedId());
+				courseList.add(courseObj);
 			}
 		}
+		if(courseObj!=null)
+		courseObj.setSubdomain(courseList);
 		return taxonomyCourseIds;
 	}
 
 	@Override
 	public void setCouseData(FolderDo courseObj) {
+		System.out.println("in side");
 		if(courseObj!=null){
 			this.courseObj=courseObj;
 			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
 			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
 		}
-		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),entry.getValue()+"");
-			break;
-		}
 		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
+		ulSelectedItems.clear();
 		firstSelectedSubject.clear();
 		selectedValues.clear();
+		//This will push the previous selected values to map
+		if(courseObj!=null && courseObj.getSubdomain()!=null){
+			//To set default selection if the user is already selected any subject
+			firstSelectedSubject.add(courseObj.getSubdomain().get(0).getSubjectId());
+			this.subjectId=courseObj.getSubdomain().get(0).getSubjectId();
+			getUiHandlers().callCourseBasedOnSubject(subjectId,courseObj.getSubdomain().get(0).getCourseId());
+			for (final CourseSubjectDo courseSubjectDo : courseObj.getSubdomain()) {
+				if(selectedValues.containsKey(courseSubjectDo.getCourseId())){
+					selectedValues.get(courseSubjectDo.getCourseId()).add(courseSubjectDo.getName());
+				}else{
+					selectedValues.put(courseSubjectDo.getCourseId(), new ArrayList<String>());
+					selectedValues.get(courseSubjectDo.getCourseId()).add(courseSubjectDo.getName());
+				}
+				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
+				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+						     Map.Entry<Integer, ArrayList<String>> entry = it.next();
+						     if(entry.getValue().contains(courseSubjectDo.getName())){
+						    	 entry.getValue().remove(courseSubjectDo.getName());
+						     }
+						 }
+						removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
+						liPanelWithClose.removeFromParent();
+					}
+				});
+				liPanelWithClose.setId(courseSubjectDo.getId());
+				liPanelWithClose.setName(courseSubjectDo.getName());
+				liPanelWithClose.setRelatedId(courseSubjectDo.getCourseId());
+				liPanelWithClose.setRelatedSubjectId(courseSubjectDo.getSubjectId());
+				ulSelectedItems.add(liPanelWithClose);
+			}
+		}
+		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
+			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
+				this.subjectId=entry.getKey();
+				firstSelectedSubject.add(entry.getKey());
+				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),entry.getValue());
+				break;
+			}
+		}
 	}
 	@Override
 	public List<Integer> getFirstSelectedValue(){
