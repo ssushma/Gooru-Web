@@ -336,8 +336,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * @param isVisible
 	 */
 	public void setLastWidgetArrowVisiblity(boolean isVisible){
+		if(pnlCourseList.getWidgetCount()>=1)
+		{
 		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
 		lastwidget.getDownArrow().setVisible(isVisible);
+		}
 	}
 	/**
 	 * This method is used to update the url parameters
