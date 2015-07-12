@@ -134,7 +134,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@Override
 	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final int selectedId) {
 		pnlGradeContainer.clear();
-		firstSelectedSubject.clear();
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"domain") {
 			@Override
 			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
@@ -373,6 +372,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
 				this.subjectId=entry.getKey();
 				firstSelectedSubject.add(entry.getKey());
+				if(entry.getValue()!=null)
 				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),entry.getValue());
 				break;
 			}

@@ -331,7 +331,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 				getView().loadingIcon();
 
 				//getView().enableAndDisableEmailButton(isSummary);
-				analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				/*analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
@@ -344,7 +344,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					public void onFailure(Throwable caught) {
 					
 					}
-				});
+				});*/
 				analyticService.getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 					
 					@Override
@@ -380,7 +380,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		        	}
 		        });
 				for (UserDataDo userDataDo : result) {
-					if(userDataDo.getStatus()==0){
+					
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
@@ -388,7 +388,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 							questionRowIndex.add(collectionProgressCount);
 						}
 						collectionProgressCount++;
-					}
 				}
 				getView().setQuestionsData(questionsData);
 				getView().setQuestionsPrintData(questionsData);
