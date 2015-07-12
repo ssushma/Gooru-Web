@@ -61,5 +61,11 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 
+
 	void callTaxonomyService(int subdomainId);
+
+
+	
+	void invokeTaxonomyPopup(String type);
+
 }

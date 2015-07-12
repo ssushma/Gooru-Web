@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -57,6 +58,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	StandardsPopupPresenter standardsPopupPresenter;
 
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
+	
+	TaxonomyPopupPresenter taxonomyPopupPresenter;
 
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
@@ -70,9 +73,10 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public LessonInfoPresenter( EventBus eventBus,IsLessonInfoView view,StandardsPopupPresenter standardsPopupPresenter) {
+	public LessonInfoPresenter( EventBus eventBus,IsLessonInfoView view,StandardsPopupPresenter standardsPopupPresenter, TaxonomyPopupPresenter taxonomyPopupPresenter) {
 		super(eventBus,view);
 		this.standardsPopupPresenter = standardsPopupPresenter;
+		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -185,5 +189,10 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		});
 	}
 
+	@Override
+	public void invokeTaxonomyPopup(String viewType) {
+		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
+		addToPopupSlot(taxonomyPopupPresenter);
+	}
 
 }

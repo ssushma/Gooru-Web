@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 
 import com.gwtplatform.mvp.client.PopupView;
 
@@ -15,7 +16,7 @@ public interface IsTaxonomyPopupView extends PopupView, IsViewWithHandlers<Taxon
 
 	void addTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList);
 
-	void addTaxonomyStandards();
+	void addTaxonomyStandards(List<DomainStandardsDo> taxonomyStdList); 
 
 	void setCurrentTypeView(String viewType);  
  
