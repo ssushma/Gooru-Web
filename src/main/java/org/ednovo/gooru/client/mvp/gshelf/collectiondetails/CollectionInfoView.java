@@ -26,18 +26,17 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -81,7 +80,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	interface CollectionInfoViewUiBinder extends UiBinder<Widget, CollectionInfoView> {
 	}	
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype,thumbnailImageContainer,standardsUI;
+
+	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer;
+
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl;
 	@UiField TextArea learningObjective;
@@ -92,21 +93,20 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField UlPanel standardsDropListValues;
 	@UiField DepthKnowledgeView depthOfKnowledgeContainer;
 	@UiField LanguageView languageObjectiveContainer;
-	@UiField CenturySkillsView centurySkillContainer;
+	
+	@UiField AudienceView audienceContainer;
 	@UiField PPanel colltitle,collimagetitle,tagcollectiontitle;
 	@UiField UlPanel ulSelectedItems;
-	
-	
 	private boolean isLanguageObjectInfo=false;
 	private boolean isCenturySkillsInfo=false;    
 	private boolean isDepthOfKnlzeInfo = false;
-	
-	
+
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	List<Integer> selectedValues=new ArrayList<Integer>();
-	
+
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
-	
+
 	private String type="";
 
 	private static final String ASSESSMENT = "assessment";
@@ -115,7 +115,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
 
-	
+
 
 	final String COLLECTION = "collection";
 	private static final String ASSESSMENT_URL = "assessment/url";
@@ -123,7 +123,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObjG;
 	final String ACTIVE="active";
-	
+
 
 	/**
 	 * Class constructor 
@@ -133,7 +133,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public CollectionInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
-		
+
 		depthOfKnowledgeContainer.setVisible(true);
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
@@ -149,7 +149,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				}
 			}
 		});
-		
+
 		dok.addClickHandler(new dokClickHandlers());
 		centurySkills.addClickHandler(new CenturySkillsClickHandlers());
 		languageObj.addClickHandler(new Language_ObjectiveClickHandlers());
@@ -179,14 +179,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCollectionType(String collectionType) {
-			if(collectionType.equalsIgnoreCase("collection"))
-			{
+		if(collectionType.equalsIgnoreCase("collection"))
+		{
 			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
-			}
-			else
-			{
+		}
+		else
+		{
 			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
-			}
+		}
 
 	}
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
@@ -196,15 +196,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i));
 			final DomainStandardsDo domainStand = standardsList.get(i);
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					standardsCode.setStyleName("active");
-					
+
 					if(!selectedValues.contains(domainStand.getCodeId())){
 						selectedValues.add(domainStand.getCodeId());
 					}
-					
+
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
@@ -227,7 +227,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			});
 			standardsUI.add(standardsCode);
 		}
-		
+
 
 	}
 	/**
@@ -289,26 +289,45 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void setDetaultImage(String collectionType){
 		collThumbnail.setUrl(COLLECTION.equalsIgnoreCase(collectionType)?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 	}
-	
-
-	
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
 		this.type = type;
-
+		ulSelectedItems.clear();
+		selectedValues.clear();
 		if(courseObj!=null){
 			this.courseObjG=courseObj;
 			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
-				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+				//collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
 		}
+
+		if(courseObj!=null){
+            if(courseObj.getStandards()!=null && courseObj.getStandards().size()>0){
+                //Render the existing standards
+                for(final CourseSubjectDo courseSubjectDo : courseObj.getStandards()) {
+                	System.out.println("courseSubjectDo.getCode()::"+courseSubjectDo.getCode());
+                    final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+                    liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+                        @Override
+                        public void onClick(ClickEvent event) {
+                            removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
+                            liPanelWithClose.removeFromParent();
+                        }
+                    });
+                    liPanelWithClose.setId(courseSubjectDo.getId());
+                    liPanelWithClose.setName(courseSubjectDo.getName());
+                    ulSelectedItems.add(liPanelWithClose);
+                }
+            }
+        }
 		setStaticData(type);			
+
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
-								(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
 
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -318,13 +337,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		});
 	}
 	public void setStaticData(String type)
-	{
+	{   
 		if(type.equalsIgnoreCase(ASSESSMENT))
 		{
 			colltitle.setText(i18n.GL3381());
 			collimagetitle.setText(i18n.GL3382());
 			thumbnailImageContainer.setStyleName("assessmentThumbnail");
 			tagcollectiontitle.setText(i18n.GL3385());
+			saveCollectionBtn.setText(i18n.GL3386());
 		}
 		else
 		{
@@ -332,13 +352,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			collimagetitle.setText(i18n.GL3383());
 			thumbnailImageContainer.setStyleName("collectionThumbnail");	
 			tagcollectiontitle.setText(i18n.GL3384());
+			saveCollectionBtn.setText(i18n.GL3368());
 		}
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
 	}
-	
+
 	@UiHandler("uploadImageLbl")
 	public void clickOnUploadImg(ClickEvent saveCourseEvent){
 		CreateDo createOrUpDate=new CreateDo();
@@ -347,7 +368,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		createOrUpDate.setCollectionType(type);
 		getUiHandlers().uploadCollectionImage(createOrUpDate);
 	}	
-	
+
 	/**
 	 * This method is used to call create and update API
 	 * @param index
@@ -367,23 +388,24 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setTitle(collectionTitle.getText());
 				createOrUpDate.setDescription(learningObjective.getText());
 				createOrUpDate.setCollectionType(collectionType);
+				createOrUpDate.setStandardIds(getSelectedStandardsIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
 			}
 		}
 	}
-	
+
 	private class dokClickHandlers implements ClickHandler{
 		public dokClickHandlers() {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			setSelectedDepathOfKnowledge();
-			
+
 		}
 	}
 	private class CenturySkillsClickHandlers implements ClickHandler{
@@ -401,7 +423,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		public void onClick(ClickEvent event) {
 			setSelectedLanguageObjective();
 
-			
+
 		}
 	}
 	protected void setDepthOfKnlze() {
@@ -427,7 +449,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			isDepthOfKnlzeInfo = false;
 		}
 	}
-	
+
 	public void setSelectedDepathOfKnowledge(){
 		if(isDepthOfKnlzeInfo){
 			dok.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3376());
@@ -450,16 +472,65 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			isCenturySkillsInfo=true;
 		}
 	}
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandardsIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+			}
+		}
+		return taxonomyCourseIds;
+	}
 	public void setSelectedLanguageObjective(){
 		if(isLanguageObjectInfo){
 			languageObj.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3378());
 			languageObjectiveContainer.setVisible(false);
 			isLanguageObjectInfo=false;
-
 		}else{
 			languageObj.setText("-"+"  "+i18n.GL3378());
 			languageObjectiveContainer.setVisible(true);
 			isLanguageObjectInfo=true;
 		}
 	}
+	@Override
+	public DepthKnowledgeView getDepthOfKnowledgeContainer() {
+		return depthOfKnowledgeContainer;
+	}	
+	@Override
+	public LanguageView getLanguageObjectiveContainer() {
+		return languageObjectiveContainer;
+	}
+	@Override
+	public HTMLPanel getCenturySkillContainer() {
+		return centurySkillContainer;
+	}
+	@Override
+	public AudienceView getAudienceContainer() {
+		return audienceContainer;
+	}
+
+
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
+		super.setInSlot(slot, content);
+		if(slot==CollectionInfoPresenter.CENTURYSKILLS){
+			getCenturySkillContainer().clear();
+			getCenturySkillContainer().add(content);
+		}
+	}
+
+
+
+
+
 }

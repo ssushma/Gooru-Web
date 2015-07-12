@@ -22,43 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills;
+
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 
 /**
  * @author Search Team
  *
  */
-public interface CollectionInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService(int subdomainId);
-	
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
-    
-	/**
-	 * To Create Course
-	 * @param createObj {@link String} 
-	 * @param isCreateUnit {@link boolean} 
-	 */
-	void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit);
-	/**
-	 * To update the course details
-	 * @param courseTitle {@link String} 
-	 */
-	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit,FolderDo courseObj);
+public interface CenturySkillsUiHandlers extends BaseUiHandlers {
 
-	public void checkProfanity(String textValue, boolean isCreate, int index,
-			String collectionType);
+	void getAddCentury();
 
-	void setCollectionType(String templateType);
+	void closeCenturyPopup();
 
-	public void uploadCollectionImage(CreateDo createOrUpDate);
+	void setUpdatedCentury();
 
-	void showStandardsPopup(String standardVal, String standardsDesc);
-
+	void getAutoSuggestedCenturyList(SearchDo<StandardFo> centuryDo);
 }

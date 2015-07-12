@@ -31,7 +31,9 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -41,11 +43,14 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	
 	private String viewType;
 	
+	CourseInfoPresenter courseInfoPresenter;
+	
 	
 	@Inject
-	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view){
+	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view, CourseInfoPresenter courseInfoPresenter){
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+		this.courseInfoPresenter = courseInfoPresenter;
 	}
 	
 	
@@ -70,11 +75,12 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	 * @param viewType
 	 * @param classification
 	 * @param taxonomyType
-	 * @param offSet
+	 * @param offSet 
 	 * @param limit
 	 */
 	public void getTaxonomySubjects(String viewType, int classification,String taxonomyType,int offSet,int limit) {  
 		this.viewType = viewType;
+		getView().setCurrentTypeView(viewType); 
 		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 			@Override
@@ -92,6 +98,13 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+
+										@Override
+										public void onSuccess(List<DomainStandardsDo> result) {
+											getView().addTaxonomyStandards(result);
+										}
+									});
 								}
 							}
 						});
@@ -104,21 +117,33 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	@Override
 	public void getCoursesBasedOnSelectedSub(int classification, String taxonomyType, int offset, int limit) { 
+		
 		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, "course", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 			@Override
 			public void onSuccess(List<CourseSubjectDo> taxonomyCourseList) {
-				getView().addTaxonomyCourses(taxonomyCourseList);
-				
-				AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(taxonomyCourseList.get(0).getCourseId(),"domain", 0, 20,new SimpleAsyncCallback<List<CourseSubjectDo>>() {
-
-					@Override
-					public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
-						getView().addTaxonomyDomains(taxonomyDomainList);
-						if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+				if(taxonomyCourseList.size()>0){
+					getView().addTaxonomyCourses(taxonomyCourseList);
+					AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(taxonomyCourseList.get(0).getCourseId(),"domain", 0, 20,new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+						
+						@Override
+						public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
+							if(taxonomyDomainList.size()>0){
+								getView().addTaxonomyDomains(taxonomyDomainList);
+								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+										
+										@Override
+										public void onSuccess(List<DomainStandardsDo> result) {
+											getView().addTaxonomyStandards(result);
+										}
+									});
+								}
+							}
+							
 						}
-					}
-				});
+					});
+				}
 			}
 		});
 	}
@@ -130,9 +155,19 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().addTaxonomyDomains(result);
-				if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
-					getView().addTaxonomyStandards();
+				if(result.size()>0){
+					getView().addTaxonomyDomains(result);
+					if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+						AppClientFactory.getInjector().getTaxonomyService().getStandardsList(result.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+							
+							@Override
+							public void onSuccess(List<DomainStandardsDo> result) {
+								if(result.size()>0){
+									getView().addTaxonomyStandards(result);
+								}
+							}
+						});
+					}
 				}
 			}
 		});
@@ -140,14 +175,25 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	
 	@Override
-	public void getStdBasedOnSelectedDomain() { 
-//		getView().addTaxonomyStandards();
+	public void getStdBasedOnSelectedDomain(int subDomainId) { 
+		if("Lesson".equalsIgnoreCase(viewType)){
+			AppClientFactory.getInjector().getTaxonomyService().getStandardsList(subDomainId, new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+
+				@Override
+				public void onSuccess(List<DomainStandardsDo> result) {
+					if(result.size()>0){
+						getView().addTaxonomyStandards(result);
+					}
+				}
+			});
+		}
 	}
 
 
 	@Override
 	public void populateK12TaxonomyData(int classification,String taxonomyType,int offSet,int limit) { 
-		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		populateInitialTaxonomyData(classification,taxonomyType,offSet,limit);
+/*		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
@@ -164,13 +210,20 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+
+										@Override
+										public void onSuccess(List<DomainStandardsDo> result) {
+											getView().addTaxonomyStandards(result);
+										}
+									});
 								}
 							}
 						});
 					}
 				});
 			}
-		});
+		});*/
 	}
 	
 	
@@ -179,28 +232,46 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	 */
 	@Override
 	public void getPopulateHigherEduData(int classification,String taxonomyType,int offSet,int limit) {
+		populateInitialTaxonomyData(classification,taxonomyType,offSet,limit);
+	}
+
+
+	private void populateInitialTaxonomyData(int classification,String taxonomyType,int offSet,int limit) {
 		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().addTaxonomySubjects(result);
-				AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(result.get(0).getSubjectId(), "course", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+				if(result.size()>0){
+					getView().addTaxonomySubjects(result);
+					AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(result.get(0).getSubjectId(), "course", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
-					@Override
-					public void onSuccess(List<CourseSubjectDo> taxonomyCourseList) {
-						getView().addTaxonomyCourses(taxonomyCourseList);
-						
-						AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(taxonomyCourseList.get(0).getCourseId(),"domain", 0, 20,new SimpleAsyncCallback<List<CourseSubjectDo>>() {
-
-							@Override
-							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
-								getView().addTaxonomyDomains(taxonomyDomainList);
-								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
-								}
+						@Override
+						public void onSuccess(List<CourseSubjectDo> taxonomyCourseList) {
+							if(taxonomyCourseList.size()>0){
+								getView().addTaxonomyCourses(taxonomyCourseList);
+								AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(taxonomyCourseList.get(0).getCourseId(),"domain", 0, 20,new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+									@Override
+									public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
+										if(taxonomyDomainList.size()>0){
+											getView().addTaxonomyDomains(taxonomyDomainList);
+											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+												AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+													
+													@Override
+													public void onSuccess(List<DomainStandardsDo> result) {
+														if(result.size()>0){
+															getView().addTaxonomyStandards(result);
+														}
+													}
+												});
+											}
+										}
+									}
+								});
 							}
-						});
-					}
-				});
+						}
+					});
+				}
 			}
 		});
 	}
@@ -208,7 +279,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	@Override
 	public void populateProfLearningData(int classification,String taxonomyType,int offSet,int limit) {
-		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		populateInitialTaxonomyData(classification,taxonomyType,offSet,limit);
+		/*AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
@@ -225,13 +297,25 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+
+										@Override
+										public void onSuccess(List<DomainStandardsDo> result) {
+											getView().addTaxonomyStandards(result);
+										}
+									});
 								}
 							}
 						});
 					}
 				});
 			}
-		});
+		});*/
+	}
+
+
+	@Override
+	public void addTaxonomyData() {
 	}
 	
 	

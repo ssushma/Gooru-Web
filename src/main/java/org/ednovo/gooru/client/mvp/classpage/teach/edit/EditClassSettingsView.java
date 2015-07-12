@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
@@ -133,10 +134,11 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
+			String grade = filterValue.replace("Grade ", "");
 			if("add".equals(addOrRemove)){
-				gradeList.add(filterValue);
+				gradeList.add(grade);
 			}else{
-				gradeList.remove(filterValue);
+				gradeList.remove(grade);
 			}
 		}
 	};
@@ -363,9 +365,11 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 			classCodeTxtPanel.setText(classpageDo.getClassCode());
 			boolean visiblity = classpageDo.isVisibility();
 			if(visiblity){
-				publicPanel.addStyleName("active");
+				publicPanel.addStyleName(CssTokens.ACTIVE);
+				privatePanel.removeStyleName(CssTokens.ACTIVE);
 			}else{
 				privatePanel.addStyleName("active");
+				publicPanel.removeStyleName(CssTokens.ACTIVE);
 			}
 			if(classpageDo.getGrades() != null){
 				String [] grade = classpageDo.getGrades().split(",");

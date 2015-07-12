@@ -8,7 +8,7 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void getDomainsBasedOnSelectedCourse(int classification, String taxonomyType, int offset, int limit);
 
-	void getStdBasedOnSelectedDomain();
+	void getStdBasedOnSelectedDomain(int subDomainId);
 
 //	void getTaxonomySubjects();
 
@@ -16,6 +16,8 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void populateProfLearningData(int classification,String taxonomyType,int offSet,int limit);
 
-	void populateK12TaxonomyData(int classification, String taxonomyType, int offset, int limit);      
+	void populateK12TaxonomyData(int classification, String taxonomyType, int offset, int limit);
+
+	void addTaxonomyData();       
 
 }

@@ -418,4 +418,6 @@ public interface ResourceService extends BaseService {
 	 */
 	public CollectionDo update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData);
 	public ArrayList<ResourceCollDo> getResourceBasedUsersDetails(String resourceId,int offset,int limit)  throws GwtException, ServerDownException;
+	
+	public FolderDo getCourseDataById(String courseId) throws GwtException,ServerDownException;
 }
