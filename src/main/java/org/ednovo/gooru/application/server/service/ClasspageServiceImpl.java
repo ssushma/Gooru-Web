@@ -427,15 +427,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	}
 	
 	@Override
-	public ClasspageListDo v3GetUserClasses(String limit, String offSet) throws GwtException {
+	public ClasspageListDo v3GetUserClasses(String limit, String offSet, boolean isContainsCourse) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V3_GET_LISTTEACHCLASSES);
-
+		
 		Map<String,String> params = new HashMap<String, String>();
 		params.put(GooruConstants.LIMIT, limit);
 		params.put(GooruConstants.OFFSET, offSet);
+		params.put(GooruConstants.EXCLUDE_COURSE_CLASSES, String.valueOf(isContainsCourse));
 		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 
 		getLogger().info("V3_GET_LISTTEACHCLASSES API Call::::::"+url);

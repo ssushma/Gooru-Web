@@ -191,7 +191,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void createClass(String title,String grade,boolean visiblity,AsyncCallback<ClasspageDo> callback);
 	
-	public void  v3GetUserClasses(String limit, String offSet,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
+	public void  v3GetUserClasses(String limit, String offSet,boolean isContainsCourse, AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
 	public void  v3GetUserStudyClasses(String limit, String offSet,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
