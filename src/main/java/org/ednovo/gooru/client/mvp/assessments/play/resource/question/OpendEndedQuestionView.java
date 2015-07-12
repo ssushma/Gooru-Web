@@ -83,9 +83,9 @@ public abstract class OpendEndedQuestionView extends Composite{
 		answertext.getElement().setInnerHTML(i18n.GL0665());
 		answertext.getElement().setAttribute("alt",i18n.GL0665());
 		answertext.getElement().setAttribute("title",i18n.GL0665());
-		submitButton.setText(i18n.GL3460());
-		submitButton.getElement().setAttribute("alt",i18n.GL3460());
-		submitButton.getElement().setAttribute("title",i18n.GL3460());
+		submitButton.setText(i18n.GL3460_4());
+		submitButton.getElement().setAttribute("alt",i18n.GL3460_4());
+		submitButton.getElement().setAttribute("title",i18n.GL3460_4());
 		showPreviousAttemptResult(attemptedAnswerDo);
 
 		String value = StringUtil.generateMessage(i18n.GL2103(), "1000");
