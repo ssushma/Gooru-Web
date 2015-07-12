@@ -66,11 +66,20 @@
 				</div>
 				<div class="standarFooterContainer">
 					<div class="buttonGroupContainer">
-						<div class="col-md-6 col-sm-6 col-xs-6 filters">
+						<div class="col-md-10 col-sm-10 col-xs-10 filters">
+						    <div class="filterTags">
+						        <uc:UlPanel ui:field="selectedUlContainer"></uc:UlPanel>
+						     <!-- <ul>
+            					<li><a href="#">Earth Science:</a></li>
+            					<li><a href="#">Earth Science:</a></li>
+            					<li><a href="#">Earth Science</a></li>
+           						<li><a href="#">Engineering Design</a></li>
+          					</ul> -->
+          					</div>
 						</div>
 
-						<div class="col-md-6 col-sm-6 col-xs-6 addButton">
-							<button class="primary" type="submit"> Add</button>
+						<div class="col-md-2 col-sm-2 col-xs-2 addButton">
+							<g:Button styleName="primary" ui:field="addTaxonomyBtn"> Add</g:Button>
 						</div>
 
 						<div class="clearfix"></div>

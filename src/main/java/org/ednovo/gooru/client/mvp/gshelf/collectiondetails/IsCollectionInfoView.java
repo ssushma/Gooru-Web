@@ -27,8 +27,15 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
+
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 
 /**
@@ -50,7 +57,17 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	void setCollectionType(String collectionType);
 
+
+	DepthKnowledgeView getDepthOfKnowledgeContainer();
+
+	LanguageView getLanguageObjectiveContainer();
+
+	HTMLPanel getCenturySkillContainer();
+
+	AudienceView getAudienceContainer();
+
 	void displayStandardsList(List<DomainStandardsDo> result);
+
 
 
 

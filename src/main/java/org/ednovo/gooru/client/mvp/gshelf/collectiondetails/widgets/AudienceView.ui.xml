@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with field="i18n"
+		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:HTMLPanel styleName="tagCourseOptions" ui:field="mainContainer">
+		<p>Audience &amp; Purpose</p>
+		<g:HTMLPanel styleName="row">
+			<g:HTMLPanel styleName="col-md-6">
+				<g:HTMLPanel styleName="list-group"  ui:field="listGroup">
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+
+			<div class="clearfix"></div>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

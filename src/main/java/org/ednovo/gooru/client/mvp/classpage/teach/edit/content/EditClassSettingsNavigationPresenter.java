@@ -26,10 +26,12 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -74,6 +76,7 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		getCourseData();
 	}
 
 	@Override
@@ -104,6 +107,25 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 		this.classpageDo=classpageDo;
 		editClassSettingsPresenter.setClassData(classpageDo);
 		editClassContentPresenter.setClassData(classpageDo);
+	}
+	
+	public void getCourseData(){
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
+		if(courseId != null){
+			AppClientFactory.getInjector().getResourceService().getCourseDataById(courseId, new AsyncCallback<FolderDo>() {
+				
+				@Override
+				public void onSuccess(FolderDo result) {
+					getView().setCourseData(result);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		}
+		
 	}
 	
 }

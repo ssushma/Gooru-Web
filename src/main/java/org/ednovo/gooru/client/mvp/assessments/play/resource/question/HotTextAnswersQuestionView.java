@@ -122,7 +122,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		setQuestionTypeCaption();
 
 		answerText.getElement().setInnerHTML(i18n.GL0665());
-		checkAnswer.setText(i18n.GL3460());
+		checkAnswer.setText(i18n.GL3460_4());
 	}
 
 	private void setQuestionTypeCaption(){
