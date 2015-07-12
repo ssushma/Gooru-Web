@@ -1361,6 +1361,7 @@ button.btn-disabled {
   list-style: outside none none;
   margin: 0;
   padding: 8px 10px;
+  margin-left: 5px;
 }
 #gShelfCourseInfo .filterTags ul li div{
 	float: left;

@@ -245,7 +245,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
 			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
+				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"standards");
 				break;
 			}
 		}
