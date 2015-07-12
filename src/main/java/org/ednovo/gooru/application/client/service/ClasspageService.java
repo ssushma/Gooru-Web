@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
@@ -64,7 +65,7 @@ public interface ClasspageService extends BaseService {
 
 	public ClasspageDo v3GetClassById(String classpageId) throws GwtException,ServerDownException;
 	
-	public ClasspageListDo  v3GetUserClasses(String limit, String offSet) throws GwtException, ServerDownException;
+	public ClasspageListDo  v3GetUserClasses(String limit, String offSet, boolean isContainsCourse) throws GwtException, ServerDownException;
 	
 	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet) throws GwtException, ServerDownException;
 	

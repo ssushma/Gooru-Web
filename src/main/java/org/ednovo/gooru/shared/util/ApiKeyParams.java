@@ -145,4 +145,5 @@ public interface ApiKeyParams {
 	String COURSE="Course";
 	String CONTRIBUTOR_QUERY="contributorQuery";
 	String EMAILID="email";
+	String EXCLUDE_COURSE_CLASSES="flt.empty.exclude.course";
 }
