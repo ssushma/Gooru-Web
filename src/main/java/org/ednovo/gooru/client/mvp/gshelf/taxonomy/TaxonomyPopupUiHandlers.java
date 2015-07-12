@@ -8,7 +8,7 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void getDomainsBasedOnSelectedCourse(int classification, String taxonomyType, int offset, int limit);
 
-	void getStdBasedOnSelectedDomain();
+	void getStdBasedOnSelectedDomain(int subDomainId);
 
 //	void getTaxonomySubjects();
 

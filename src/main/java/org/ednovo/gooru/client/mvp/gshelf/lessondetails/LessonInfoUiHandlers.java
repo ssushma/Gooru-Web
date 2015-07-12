@@ -62,4 +62,6 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 	
 	public void callCourseBasedOnSubject(int courseId,final String selectedText);
+	
+	void invokeTaxonomyPopup(String type);
 }

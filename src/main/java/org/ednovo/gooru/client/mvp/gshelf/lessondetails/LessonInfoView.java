@@ -81,7 +81,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
-	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
+	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment,taxonomyBtn;
 	@UiField Label lblErrorMessage;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	
@@ -109,6 +109,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		lessonInfo.getElement().setId("pnlLessonInfo");
 		lessonInfo.getElement().getStyle().setOverflowY(Overflow.AUTO);
 		populateStandardValues();
+		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -354,5 +355,15 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}
 			}
 		}
+	}
+	
+	private class OnClickTaxonomy implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			getUiHandlers().invokeTaxonomyPopup("Lesson");
+		}
+		
 	}
 }
