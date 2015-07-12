@@ -115,7 +115,7 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 		JsonRepresentation jsonRep =null;
 		String url = null;
 
-		url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,subDomainId+"");
+		url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_STANDARDS_BY_DOMAIN,subDomainId+"");
 		
 		logger.info("getStandardsListurl::"+url);
 		if(url!=null){

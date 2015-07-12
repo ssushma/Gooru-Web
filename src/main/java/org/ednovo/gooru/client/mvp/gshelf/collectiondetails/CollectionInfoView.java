@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,10 +36,12 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -78,7 +81,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	interface CollectionInfoViewUiBinder extends UiBinder<Widget, CollectionInfoView> {
 	}	
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype,thumbnailImageContainer;
+	@UiField HTMLPanel collectionInfo,newdok,newtype,thumbnailImageContainer,standardsUI;
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl;
 	@UiField TextArea learningObjective;
@@ -91,6 +94,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField LanguageView languageObjectiveContainer;
 	@UiField CenturySkillsView centurySkillContainer;
 	@UiField PPanel colltitle,collimagetitle,tagcollectiontitle;
+	@UiField UlPanel ulSelectedItems;
 	
 	
 	private boolean isLanguageObjectInfo=false;
@@ -99,7 +103,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	List<Integer> selectedValues=new ArrayList<Integer>();
 	
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 	
@@ -166,14 +170,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		@Override
 		public void onClick(ClickEvent event) {
 			if(liPanel.getStyleName().contains(ACTIVE)){
-				if(selectedValues.get(selectedText).size()>0){
-					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
-				}else{
-					liPanel.removeStyleName(ACTIVE);
-				}
+				liPanel.removeStyleName(ACTIVE);
 			}else{
 				liPanel.addStyleName(ACTIVE);
-				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
 			}
 		}
 	}
@@ -189,6 +188,70 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
 			}
 
+	}
+	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
+		standardsUI.clear();
+		for(int i=0;i<standardsList.size();i++)
+		{
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i));
+			final DomainStandardsDo domainStand = standardsList.get(i);
+			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					standardsCode.setStyleName("active");
+					
+					if(!selectedValues.contains(domainStand.getCodeId())){
+						selectedValues.add(domainStand.getCodeId());
+					}
+					
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							//This will remove the selected value when we are trying by close button
+							if(selectedValues.contains(domainStand.getCodeId())){
+								selectedValues.remove(domainStand);
+							}
+							standardsCode.removeStyleName("active");
+							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+							liPanelWithClose.removeFromParent();
+						}
+					});
+					//selectedValues.add(domainStand.getCodeId());
+					liPanelWithClose.setId(domainStand.getCodeId());
+					liPanelWithClose.setName(domainStand.getCode());
+					liPanelWithClose.setRelatedId(domainStand.getCodeId());
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			});
+			standardsUI.add(standardsCode);
+		}
+		
+
+	}
+	/**
+	 * This method will remove the widget based on the codeId in the UlPanel
+	 * @param ulPanel
+	 * @param codeId
+	 */
+	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getId()==codeId){
+					obj.removeFromParent();
+				}
+			}
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;
+				if(obj.getCodeId()==codeId){
+					obj.removeStyleName("active");
+				}
+			}
+		}
 	}
 	public void populateStandardValues(){
 		for(int i=0; i<standardsTypesArray.length; i++){		
@@ -233,6 +296,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
 		this.type = type;
+
 		if(courseObj!=null){
 			this.courseObjG=courseObj;
 			courseObjG.setCollectionType(type);
