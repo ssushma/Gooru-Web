@@ -60,8 +60,12 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	public void updateLessonDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type,FolderDo folderObj);
 	
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
-	
-	public void callCourseBasedOnSubject(int courseId,final String selectedText);
+
+
+	void callTaxonomyService(int subdomainId);
+
+
 	
 	void invokeTaxonomyPopup(String type);
+
 }

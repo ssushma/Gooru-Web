@@ -26,19 +26,17 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -305,8 +303,28 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				setDetaultImage(courseObj.getType());
 			}
 		}
-		
-				setStaticData(type);			
+
+		if(courseObj!=null){
+            if(courseObj.getStandards()!=null && courseObj.getStandards().size()>0){
+                //Render the existing standards
+                for(final CourseSubjectDo courseSubjectDo : courseObj.getStandards()) {
+                	System.out.println("courseSubjectDo.getCode()::"+courseSubjectDo.getCode());
+                    final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+                    liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+                        @Override
+                        public void onClick(ClickEvent event) {
+                            removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
+                            liPanelWithClose.removeFromParent();
+                        }
+                    });
+                    liPanelWithClose.setId(courseSubjectDo.getId());
+                    liPanelWithClose.setName(courseSubjectDo.getName());
+                    ulSelectedItems.add(liPanelWithClose);
+                }
+            }
+        }
+		setStaticData(type);			
+
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
 
@@ -369,9 +387,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setTitle(collectionTitle.getText());
 				createOrUpDate.setDescription(learningObjective.getText());
 				createOrUpDate.setCollectionType(collectionType);
+				createOrUpDate.setStandardIds(getSelectedStandardsIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate);
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
@@ -451,6 +470,24 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			centurySkillContainer.setVisible(true);
 			isCenturySkillsInfo=true;
 		}
+	}
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandardsIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+			}
+		}
+		return taxonomyCourseIds;
 	}
 	public void setSelectedLanguageObjective(){
 		if(isLanguageObjectInfo){
