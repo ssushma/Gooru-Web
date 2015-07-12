@@ -117,7 +117,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	void deleteCollectionAssocInAssignment(String collectionId, AsyncCallback<Void> callback);
 	
-	public void getMyClassPages(String limit, String offset, AsyncCallback<ArrayList<ClasspageDo> > callback);
+	public void getMyClassPages(String limit, String offset, AsyncCallback<ArrayList<ClasspageDo>> callback);
 	
 	public void createClassPage(String classPageTitle, AsyncCallback<CollectionDo> callback);
 	
@@ -208,6 +208,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void v3UpdateClass(String classId,ClasspageDo classpageDo,AsyncCallback<ClasspageDo> callback) throws GwtException,ServerDownException;
 	
 	//public void inviteStudentToClass_V3(String classId,List<String> lstEmailId, AsyncCallback<ArrayList<CollaboratorsDo>> simpleAsyncCallback);
+	void getClassesAssociatedWithCourse(String courseId,AsyncCallback<ArrayList<ClasspageDo>> callback) throws GwtException,ServerDownException;
 	
 	public void getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
 	

@@ -24,6 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
+import java.util.ArrayList;
+
+import org.ednovo.gooru.application.client.SimpleAsyncCallback;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
@@ -60,9 +66,50 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+		
 	}
 
 	public void setData(FolderDo folderObj) {
 		folderDo=folderObj;
+		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses("20", "0", "", new SimpleAsyncCallback<ClasspageListDo>() {
+
+			@Override
+			public void onSuccess(ClasspageListDo classPageListDo) {
+				getView().setClassesList(classPageListDo.getSearchResult());
+				
+			}
+		});
+		getAssociatedClasses();
 	}
+
+	public void getAssociatedClasses() {
+		// TODO Auto-generated method stub
+		String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		if(courseId!=null){
+			AppClientFactory.getInjector().getClasspageService().getClassesAssociatedWithCourse(courseId, new SimpleAsyncCallback<ArrayList<ClasspageDo>>() {
+
+				@Override
+				public void onSuccess(ArrayList<ClasspageDo> result) {
+					if(result!=null && result.size()>0){
+						getView().showClassesInList(result);
+					}
+					
+				}
+			});
+		}
+		
+	}
+
+	@Override
+	public void assign2ClassPage(String value, final ClasspageDo classpageDo) {
+		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(value, classpageDo, new SimpleAsyncCallback<ClasspageDo>() {
+
+			@Override
+			public void onSuccess(ClasspageDo result) {
+				getView().showClassesInList(null);
+			}
+			
+		});
+	}
+	
 }
