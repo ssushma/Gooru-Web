@@ -68,6 +68,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	
 	@Override
 	public void setDataInContentSlot(final String type,String folderId,boolean isInnerSlot) {
+		getView().loadingImage();
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
