@@ -45,8 +45,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -84,11 +86,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	
 	private static final String ID = "id";
 	
+	HandlerRegistration handlerRegistration=null;
+	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		btnCreate.addClickHandler(new CreateContentEvent());
-		createPanel.addClickHandler(new CreateContentEvent());
+		/*btnCreate.addClickHandler(new CreateContentEvent(btnCreate));
+		//createPanel.addClickHandler(new CreateContentEvent(createPanel.getElement().getInnerText()));
+		//lblAddNewForResource.addClickHandler(new CreateContentEvent(lblAddNewForResource));
+		//lblAddNewForQuestion.addClickHandler(new CreateContentEvent(lblAddNewForQuestion));
+		btnCreateQuestion.addClickHandler(new CreateContentEvent(btnCreateQuestion));
+		btnCreateResource.addClickHandler(new CreateContentEvent(btnCreateResource));*/
 	}
 	/**
 	 * This method is used to set id's
@@ -215,54 +223,32 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		btnCreateQuestion.setVisible(isEnabled);
 		pnlCreate.setVisible(isEnabled);
 	}
-	/**
-	 * This method is used to set the create text
-	 * @param typeVal
-	 */
-	public void setCreateText(){
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-		enableCreateButtons(false);
-		if(id!=null){
-			enableCreateButtons(true);
-			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());
-			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1110(), i18n.GL1110());
-			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0308());
-			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL0308(), i18n.GL0308());
-			lblAddNewForResource.setText(i18n.GL2000());
-			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2000(), i18n.GL2000());
-			lblAddNewForQuestion.setText(i18n.GL3218());
-			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3218(), i18n.GL3218());
-			
-			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
-		}else if(o3!=null){
-			enableCreateButtons(true);
-			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
-			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
-			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
-			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
-			lblAddNewForResource.setText(i18n.GL2001());
-			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
-			lblAddNewForQuestion.setText(i18n.GL3372());
-			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3372(), i18n.GL3372());
-			
-			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
-		}else if(o2!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3371());
-			lblAddNew.setText(i18n.GL0910().toLowerCase());
-		}else if(o1!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
-			lblAddNew.setText(i18n.GL3281().toLowerCase());
-		}else{
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0326());
-			lblAddNew.setText(i18n.GL0326().toLowerCase());
-		}
+	@UiHandler("createPanel")
+	public void clickOnCreatePanel(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createPanel.getElement().getInnerText());
 	}
 	
+	@UiHandler("lblAddNewForResource")
+	public void clickOnResource(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(lblAddNewForResource.getText());
+	}
+	
+	@UiHandler("lblAddNewForQuestion")
+	public void clickOnQuestion(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(lblAddNewForQuestion.getText());
+	}
+	@UiHandler("btnCreate")
+	public void clickOnCreate(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(btnCreate.getText());
+	}
+	@UiHandler("btnCreateQuestion")
+	public void clickOnQues(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(btnCreateQuestion.getText());
+	}
+	@UiHandler("btnCreateResource")
+	public void clickOnRes(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(btnCreateResource.getText());
+	}
 	/**
 	 * This method is used to set the create text
 	 * @param typeVal
@@ -380,12 +366,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This class used for to add course/unit/lesson 
 	 * @author Gooru team
 	 *
-	 */
+	 *//*
 	public class CreateContentEvent implements ClickHandler{
+		Button btn;
+		public CreateContentEvent(Button btn) {
+			this.btn=btn;
+		}
 		@Override
 		public void onClick(ClickEvent event) {
-		    String type = StringUtil.isEmpty(btnCreate.getText())?null:btnCreate.getText();
+		    String type = StringUtil.isEmpty(btn.getText())?null:btn.getText();
 			getUiHandlers().addNewContent(type);
 		}
-	}
+	}*/
 }
