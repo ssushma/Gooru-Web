@@ -76,7 +76,6 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		setWidget(uiBinder.createAndBindUi(this));
 		classListBox.addChangeHandler(new SelectClassHandler());
 		errorMsgLbl.setVisible(false);
-		
 	}
 	
 	private class SelectClassHandler implements ChangeHandler{
@@ -101,7 +100,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	public void clickOnAssignBtn(ClickEvent clickEvent){
 		String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		if(courseId!=null){
-			if(!StringUtil.isEmpty(classListBox.getValue(classListBox.getSelectedIndex()))){
+			if(classListBox.getSelectedIndex()!=0 && !StringUtil.isEmpty(classListBox.getValue(classListBox.getSelectedIndex()))){
 				errorMsgLbl.setVisible(false);
 				ClasspageDo classpageObj= new ClasspageDo();
 				classpageObj.setCourseGooruOid(courseId);
@@ -122,6 +121,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	@Override
 	public void showClassesInList(ArrayList<ClasspageDo> classPageDo) {
 		if(classPageDo!=null){
+			classListPnl.clear();
 			for(ClasspageDo classObj:classPageDo){
 				ClassListWidget classListWidget = new ClassListWidget(classObj.getName(),classObj.getClassUid());
 				classListPnl.add(classListWidget);
@@ -133,5 +133,11 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 			classListPnl.add(classListWidget);
 		}
 		
+	}
+
+	@Override
+	public void clearSharePlanes() {
+		classListPnl.clear();
+		errorMsgLbl.setVisible(false);
 	}
 }

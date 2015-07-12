@@ -262,6 +262,9 @@ import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.IsMyCollectionsRightClusterView;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterView;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.IsTaxonomyPopupView;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupView;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.IsUnitInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoView;
@@ -761,6 +764,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionShareTabPresenter.class,IsCollectionShareTabView.class,CollectionShareTabView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
+		
 		bindPresenterWidget(CollectionContentPresenter.class,IsCollectionContentView.class, CollectionContentView.class);
 		bindPresenterWidget(ExternalAssessmentInfoPresenter.class,IsExternalAssessmentView.class, ExternalAssessmentView.class);
 
@@ -807,6 +811,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(AssessmentsQuestionResourcePresenter.class, IsAssessmentsQuestionResourceView.class, AssessmentsQuestionResourceView.class);
 		bindPresenterWidget(AssessmentsResourceSharePresenter.class, IsAssessmentsResourceShareView.class, AssessmentsResourceShareView.class);
 		bindPresenterWidget(AssessmentsPreviewEndPresenter.class,IsAssessmentsPreviewEndView.class,AssessmentsPreviewEndView.class);
-
+		bindPresenterWidget(TaxonomyPopupPresenter.class,IsTaxonomyPopupView.class, TaxonomyPopupView.class);
 	}
 }

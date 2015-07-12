@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -48,6 +49,7 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  *
  */
 public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implements UnitInfoUiHandlers {
+	
 
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
@@ -62,6 +64,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	private String LESSON = "Lesson";
 	
+	TaxonomyPopupPresenter taxonomyPopupPresenter;
+	
 	private static final String O1_LEVEL = "o1";
 	
 	/**
@@ -70,9 +74,10 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public UnitInfoPresenter( EventBus eventBus,IsUnitInfoView view) {
+	public UnitInfoPresenter( EventBus eventBus,IsUnitInfoView view, TaxonomyPopupPresenter taxonomyPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
 	}
 
 	@Override
@@ -210,5 +215,11 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 
 	public void setData(FolderDo folderObj) {
 		getView().setCouseData(folderObj);
+	}
+
+	@Override
+	public void invokeTaxonomyPopup(String viewType) {
+		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
+		addToPopupSlot(taxonomyPopupPresenter);
 	}
 }
