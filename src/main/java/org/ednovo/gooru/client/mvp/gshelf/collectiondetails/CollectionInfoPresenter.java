@@ -31,20 +31,28 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.FolderServiceAsync;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.Proxy;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
  * @author Search Team
@@ -55,6 +63,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
 
+	@Inject
+	private FolderServiceAsync folderServiceAsync;
+	
+	@ContentSlot public static final Type<RevealContentHandler<?>> CENTURYSKILLS = new Type<RevealContentHandler<?>>();  
+
+	CenturySkillsPresenter centurySkillsPresenter;
+	
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
 	StandardsPopupPresenter standardsPopupPresenter;
@@ -82,22 +97,28 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view,ImageUploadPresenter imgUploadPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view,ImageUploadPresenter imgUploadPresenter,StandardsPopupPresenter standardsPopupPresenter,CenturySkillsPresenter centurySkillsPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.standardsPopupPresenter=standardsPopupPresenter;
+		this.centurySkillsPresenter=centurySkillsPresenter;
 	}
 
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
+		
 	}
 
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
+		getCollectionDo();
+		setDepthofKnowledgeDetails();
+		setAudienceDetails();
 		Window.enableScrolling(true);
 	}
 
@@ -107,6 +128,15 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
+	}
+
+
+	public FolderServiceAsync getFolderServiceAsync() {
+		return folderServiceAsync;
+	}
+
+	public void setFolderServiceAsync(FolderServiceAsync folderServiceAsync) {
+		this.folderServiceAsync = folderServiceAsync;
 	}
 
 	@Override
@@ -225,4 +255,51 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	
+	public void setDepthofKnowledgeDetails(){
+		
+		getFolderServiceAsync().getDepthOfKnowledgesList(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				AppClientFactory.printInfoLogger("Depth of Knowledge Result....."+result.size());
+				getView().getDepthOfKnowledgeContainer().init(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+			}
+		});
+	}
+	
+	public void setAudienceDetails(){
+		getFolderServiceAsync().getAudienceList(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				AppClientFactory.printInfoLogger("Audience Result....."+result.size());
+				getView().getAudienceContainer().init(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+			}
+		});
+	}
+	
+	public void getCollectionDo(){
+		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
+		AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				centurySkillsPresenter.getView().setCollectionDo(result);
+				
+				
+			}
+		});
+	}
 }

@@ -22,42 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
+package org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills;
+
+import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 
 /**
  * @author Search Team
  *
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
-	
+public interface IsCenturySkillsView extends IsViewWithHandlers<CenturySkillsUiHandlers> {
 
-	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 * @param type 
-	 */
-	void setCouseData(FolderDo courseObj, String type); 
+	void setUpdatedCentury(Map<Long, String> selectedValues);
 
-	void callCreateAndUpdate(boolean isCreate, Boolean value, int index);
+	Map<Long, String> getSelectedCenturyValuesThroughAutosuggest();
 
-	void setCollectionType(String collectionType);
+	void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo);
 
-	DepthKnowledgeView getDepthOfKnowledgeContainer();
+	void OnCenturyClickEvent(Button addButton);
 
-	LanguageView getLanguageObjectiveContainer();
+	void setCollectionDo(CollectionDo collectionDo);
 
-	HTMLPanel getCenturySkillContainer();
-
-	AudienceView getAudienceContainer();
-
-
+	void onPostStandardUpdate(CollectionDo collectionDo);
 }

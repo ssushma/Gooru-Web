@@ -35,7 +35,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -77,7 +77,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	interface CollectionInfoViewUiBinder extends UiBinder<Widget, CollectionInfoView> {
 	}	
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype;
+	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer;
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl;
 	@UiField TextArea learningObjective;
@@ -88,7 +88,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField UlPanel standardsDropListValues;
 	@UiField DepthKnowledgeView depthOfKnowledgeContainer;
 	@UiField LanguageView languageObjectiveContainer;
-	@UiField CenturySkillsView centurySkillContainer;
+	@UiField AudienceView audienceContainer;
+	
 	
 	private boolean isLanguageObjectInfo=false;
 	private boolean isCenturySkillsInfo=false;    
@@ -223,9 +224,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void setDetaultImage(String collectionType){
 		collThumbnail.setUrl(COLLECTION.equalsIgnoreCase(collectionType)?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 	}
-	
-
-	
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
@@ -233,13 +231,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		if(courseObj!=null){
 			this.courseObjG=courseObj;
 			if(courseObj.getThumbnails()!=null){
-				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+				//collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
 		}
-		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
-								(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
 
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -369,11 +366,42 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			languageObj.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3378());
 			languageObjectiveContainer.setVisible(false);
 			isLanguageObjectInfo=false;
-
 		}else{
 			languageObj.setText("-"+"  "+i18n.GL3378());
 			languageObjectiveContainer.setVisible(true);
 			isLanguageObjectInfo=true;
 		}
 	}
+	@Override
+	public DepthKnowledgeView getDepthOfKnowledgeContainer() {
+		return depthOfKnowledgeContainer;
+	}	
+	@Override
+	public LanguageView getLanguageObjectiveContainer() {
+		return languageObjectiveContainer;
+	}
+	@Override
+	public HTMLPanel getCenturySkillContainer() {
+		return centurySkillContainer;
+	}
+	@Override
+	public AudienceView getAudienceContainer() {
+		return audienceContainer;
+	}
+	
+
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
+		super.setInSlot(slot, content);
+		if(slot==CollectionInfoPresenter.CENTURYSKILLS){
+			getCenturySkillContainer().clear();
+			getCenturySkillContainer().add(content);
+		}
+	}
+
+
+	
+	
+	
 }

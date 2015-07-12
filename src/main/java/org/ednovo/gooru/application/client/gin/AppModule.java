@@ -247,6 +247,9 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.ExternalAssessmentVi
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionShareTabView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsExternalAssessmentView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.IsCenturySkillsView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseSharePresenter;
@@ -624,6 +627,9 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(ViewMorePeoplePresenter.class,
 				IsViewMorePeopleView.class,
 				ViewMorePeopleView.class);
+		bindPresenterWidget(CenturySkillsPresenter.class,
+				IsCenturySkillsView.class,
+				CenturySkillsView.class);
 
 		bindPresenter(ClassCodePresenter.class, IsClassCodeView.class,
 				ClassCodeView.class, IsClassCodeProxy.class);
