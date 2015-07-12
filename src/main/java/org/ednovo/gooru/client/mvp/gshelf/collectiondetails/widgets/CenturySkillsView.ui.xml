@@ -1,7 +1,12 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
-	<g:HTMLPanel>
-	</g:HTMLPanel>
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n"
+		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<g:FlowPanel styleName="openHideBlocks">
+		<g:Button ui:field="centbrowseBtn" styleName="secondary">Browse</g:Button>
+	<!-- 	<uc:AppSuggestBox ui:field="centurySgstBox" width="176px"	height="31px" /> -->
+		<g:Label ui:field="centMaxMsg" />
+		<g:FlowPanel ui:field="centPanel" />
+	</g:FlowPanel>
 </ui:UiBinder> 

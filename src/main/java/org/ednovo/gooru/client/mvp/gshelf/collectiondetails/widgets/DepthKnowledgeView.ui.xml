@@ -2,6 +2,10 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
-	<g:HTMLPanel>
+	<g:HTMLPanel styleName="depth openHideBlocks" ui:field="mainContainer">
+		<h4>Depth of Knowledge</h4>
+		<p>Select te levels of DOK that correspond with the cognitive
+			complexity of your collection:</p>
+		<g:HTMLPanel ui:field="detailsContainer"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

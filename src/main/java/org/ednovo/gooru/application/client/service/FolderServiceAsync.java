@@ -97,5 +97,6 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void deleteCollectionAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String assessmentCollectionId,AsyncCallback<Integer> callback); 
 	
 	void getDepthOfKnowledgesList(AsyncCallback<List<ListValuesDo>> callback);
-	
+	void getAudienceList(AsyncCallback<List<ListValuesDo>> callback);
+
 }
