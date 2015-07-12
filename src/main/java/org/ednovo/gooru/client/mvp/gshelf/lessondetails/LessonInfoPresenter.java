@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
@@ -158,6 +159,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	public void setLessonData(FolderDo folderObj) {
 		getView().setLessonInfoData(folderObj);
+		callTaxonomyService(1);
 	}
 
 	@Override
@@ -172,14 +174,16 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		});
 	}
 	@Override
-	public void callCourseBasedOnSubject(int courseId,final String selectedText) {
-		getTaxonomyService().getSubjectsList(courseId, "domain", 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callTaxonomyService(int subdomainId) {
+		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 			@Override
-			public void onSuccess(List<CourseSubjectDo> result) {
+			public void onSuccess(List<DomainStandardsDo> result) {
 				if(result.size()>0){
-					getView().setCourseList(result);
+					getView().displayStandardsList(result);
 				}
 			}
 		});
 	}
+
+
 }
