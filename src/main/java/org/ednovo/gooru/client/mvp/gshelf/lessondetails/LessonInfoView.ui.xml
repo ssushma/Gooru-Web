@@ -21,7 +21,7 @@
 <div class="dropDownRight">
 
 	<panel:HTMLEventPanel styleName="btn-group" ui:field="btnStandardsBrowse">
-	<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
+	<g:Button styleName="btn btn-primary" text="{i18n.GL3209}" title="{i18n.GL3209}"/>
 	<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
 	<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 	<g:InlineLabel styleName="sr-only"></g:InlineLabel>
@@ -33,7 +33,7 @@
 
 
 <div class="btn-group">
-  <button class="btn btn-primary" type="button">The Number System  </button>
+  <g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">The Number System  </g:Button>
   <button aria-expanded="false" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
     <span class="caret"></span>
     <span class="sr-only">Toggle Dropdown</span>
