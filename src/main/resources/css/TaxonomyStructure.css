@@ -1,0 +1,248 @@
+@charset "utf-8";
+/* CSS Document */
+#taxonomyStructureSelectionPopup {
+	padding:25px 0;
+	background:rgba(0,0,0,0.3);
+}
+
+#taxonomyStructureSelectionPopup header{
+	position:relative;
+}
+#taxonomyStructureSelectionPopup  header.standerdHeader{
+	padding:8px 0;
+	border-radius:4px 4px 0 0; 
+	-webkit-border-radius:4px 4px 0 0;
+	-moz-border-radius:4px 4px 0 0;
+
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#666666), to(#515151));
+	background: -webkit-linear-gradient(top, #666666, #515151);
+		background: -moz-linear-gradient(top, #666666, #515151);
+	background: -ms-linear-gradient(top, #666666, #515151);
+	background: -o-linear-gradient(top, #666666, #515151);
+	
+	
+	
+}
+
+#taxonomyStructureSelectionPopup .containerHeight{
+	height: 424px;
+	overflow-y: auto;
+	overflow-x: hidden;
+
+}
+
+#taxonomyStructureSelectionPopup  .standerdTxt{
+	font-size:18px;
+	color:#ffffff;
+	font-weight:normal;
+	padding:4px 15px;
+}
+#taxonomyStructureSelectionPopup  .greyBox{
+	background:#dddddd;
+	padding:10px 15px;
+}
+#taxonomyStructureSelectionPopup  .greyBox p{
+	margin:0 0;
+	color:#515151;
+}
+#taxonomyStructureSelectionPopup  .standerdHeader .closeBtn{
+	margin-top:5px;
+	text-align:right;
+}
+
+#taxonomyStructureSelectionPopup  .standarBodyContainer{
+	background:#ffffff;
+	padding:15px 15px;
+}
+#taxonomyStructureSelectionPopup  .standarBodyContainer .optinHeader{
+	padding:6px 10px;
+	font-weight:bold;
+	background:#efeeee;
+	color:#515151;
+}
+#taxonomyStructureSelectionPopup .buttonGroupContainer{
+	padding:0 0 15px 0;
+}
+#taxonomyStructureSelectionPopup  .listGroup{
+	margin:0 0 0  0;
+	border:1px solid #dddddd;
+	border-radius:4px 4px;
+
+}
+#taxonomyStructureSelectionPopup  .standarFooterContainer{
+	background:#ffffff;
+	border-radius:0 0 4px 4px; 
+	-webkit-border-radius:0 0 4px 4px; 
+	-moz-border-radius:0 0 4px 4px; 
+}
+#taxonomyStructureSelectionPopup  .listGroup .border-right{
+	padding-left:0 !important;
+	padding-right:0 !important;
+		border-right:1px solid #cccccc;
+		 min-height: 450px;
+}
+
+#taxonomyStructureSelectionPopup  .listGroup ul li a{
+	color:#515151;
+	padding:6px 10px;
+	display:block;
+	line-height: 16px;
+}
+
+#taxonomyStructureSelectionPopup  .listGroup ul li a:hover{
+	color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	opacity:1;
+
+}
+#taxonomyStructureSelectionPopup .addButton{
+	text-align:right;
+}
+#taxonomyStructureSelectionPopup .addButton button.primary{
+	padding:8px 25px;
+}
+#taxonomyStructureSelectionPopup  .listGroup ul li.active a,.listGroup ul li.focus a{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+}
+#taxonomyStructureSelectionPopup  .listGroup ul li a:active,.listGroup ul li a:focus{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+}
+#taxonomyStructureSelectionPopup .domainColumn ul li a{
+	color:#000000;
+}
+
+#taxonomyStructureSelectionPopup  .listGroup .domainColumn ul li.active a, #taxonomyStructureSelectionPopup  .listGroup .domainColumn ul li.focus a{
+		color:#000000;
+	background:#cfe3f1;
+	text-decoration:none;
+}
+
+#taxonomyStructureSelectionPopup .taxonomyMenu{
+	padding:10px 15px 0 15px;
+	background:#ffffff;
+}
+#taxonomyStructureSelectionPopup .taxonomyMenu .btn-group-justified{
+	border:1px solid #dddddd;
+	border-radius:4px 4px;
+
+}
+#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default{
+	font-size:13px;
+	color:#999999;
+	font-weight:bold;
+	border:none;
+	padding:8px 12px;
+		background:#efeeee;
+}
+#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default.active, 
+#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default.focus, 
+#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default:active, 
+#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default:focus, 
+#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default:hover, 
+#taxonomyStructureSelectionPopup .taxonomyMenu .open > .dropdown-toggle.btn-default {
+    background-color: #d7e8f4;
+    color: #1076bb;
+	box-shadow:none;
+	outline:none;
+}
+@media (min-width: 240px) and (max-width: 319px){
+	#taxonomyStructureSelectionPopup .listGroup .border-right{
+		min-height:inherit;
+	}
+	#taxonomyStructureSelectionPopup .listGroup .border-right{
+		border-right:none;
+		border-bottom:1px solid #cccccc;
+	}
+	#taxonomyStructureSelectionPopup .btn-group-justified > .btn, 
+	#taxonomyStructureSelectionPopup .btn-group-justified > .btn-group{
+		display:block;
+		width:100%;
+	}
+	#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default{
+		font-size:13px;
+	}
+}
+
+
+
+
+@media (min-width: 320px) and (max-width: 479px) {
+#taxonomyStructureSelectionPopup .listGroup .border-right{
+		min-height:inherit;
+	}
+	#taxonomyStructureSelectionPopup .listGroup .border-right{
+		border-right:none;
+		border-bottom:1px solid #cccccc;
+	}	
+	#taxonomyStructureSelectionPopup .btn-group-justified > .btn, 
+	#taxonomyStructureSelectionPopup .btn-group-justified > .btn-group{
+		display:block;
+		width:100%;
+	}
+	#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default{
+		font-size:12px;
+	}
+}
+
+@media (min-width: 480px) and (max-width: 767px)  {
+	#taxonomyStructureSelectionPopup .listGroup .border-right{
+		min-height:inherit;
+	}
+	#taxonomyStructureSelectionPopup .listGroup .border-right{
+		border-right:none;
+		border-bottom:1px solid #cccccc;
+	}
+}
+
+
+	@media (min-width: 768px) and (max-width: 991px) {
+
+	}
+
+
+
+		@media (min-width: 992px) and (max-width: 1199px) {
+			
+			
+			
+		}
+
+
+
+
+
+@media (min-width: 1200px) {
+	
+	
+	
+
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -77,7 +77,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@UiField HTMLPanel unitInfo,pnlGradeContainer,pnlGradeDescContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveUnitBtn,nextCreateLessonBtn;
+	@UiField Button saveUnitBtn,nextCreateLessonBtn,taxonomyBtn;
 	@UiField TextBox unitTitle;
 	@UiField Label lblErrorMessage,lblErrorMessageForBig,lblErrorMessageForEssential;
 	@UiField TextArea txaBigIdeas,txaEssentialQuestions;
@@ -88,6 +88,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public FolderDo courseObj;
 	final String ACTIVE="active";
 	
+	private static final String UNIT = "Unit";
 	int subjectId;
 	
 	LiPanel tempLiPanel=null;
@@ -102,6 +103,11 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		unitInfo.getElement().setId("pnlCourseInfo");
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
+		taxonomyBtn.getElement().setId("taxonomyBtn");
+		
+		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
+		
+		
 		unitTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -377,5 +383,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@Override
 	public List<Integer> getFirstSelectedValue(){
 		return firstSelectedSubject;
+	}
+	
+	private class OnClickTaxonomy implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			getUiHandlers().invokeTaxonomyPopup(UNIT);
+		}
+		
 	}
 }
