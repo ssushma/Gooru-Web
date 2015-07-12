@@ -336,10 +336,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * @param isVisible
 	 */
 	public void setLastWidgetArrowVisiblity(boolean isVisible){
-		if(pnlCourseList.getWidgetCount()>=1)
-		{
-		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
-		lastwidget.getDownArrow().setVisible(isVisible);
+		if(pnlCourseList!=null && pnlCourseList.getWidgetCount()>0){
+			ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
+			lastwidget.getDownArrow().setVisible(isVisible);
 		}
 	}
 	/**

@@ -88,6 +88,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	
 	LiPanel tempLiPanel=null;
 	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
+	
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}

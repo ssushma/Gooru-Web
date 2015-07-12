@@ -93,40 +93,40 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		this.taxonomyService = taxonomyService;
 	}
 	@Override
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
+	public void callCourseBasedOnSubject(int subjectId,final int selectedId) {
 		getTaxonomyService().getSubjectsList(subjectId, "course", 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().setCourseList(result,selectedText);
+				getView().setCourseList(result,selectedId);
 			}
 		});
 	}
 	@Override
-	public void getDomainsBasedOnCourseId(int courseId,final String selectedText) {
+	public void getDomainsBasedOnCourseId(int courseId,final int selectedId) {
 		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
+					getView().showCourseDetailsBasedOnSubjectd(result,selectedId);
 				}
 			}
 		});
 	}
 	@Override
-	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson) {
+	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson,final FolderDo courseObj) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-				params.put("o2", uri[uri.length-1]);
+				params.put("o2", result.getGooruOid());
 				params.put("view", "Course");
-				result.setGooruOid(uri[uri.length-1]);
 				
 				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				selectedValues.put(getView().getFirstSelectedValue().get(0),createDo.getTaxonomyCourseIds().get(0));
+				if(getView().getFirstSelectedValue()!=null){
+					selectedValues.put(getView().getFirstSelectedValue().get(0),createDo.getSubdomainIds().get(0));
+				}
 				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
 					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
 				}
@@ -146,17 +146,18 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
+	public void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(UNIT);
+				folderDo.setIdeas(createDo.getIdeas());
+				folderDo.setQuestions(createDo.getQuestions());
 				//folderDo.setGooruOid(id);
 				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				selectedValues.put(getView().getFirstSelectedValue().get(0),createDo.getTaxonomyCourseIds().get(0));
+				selectedValues.put(getView().getFirstSelectedValue().get(0),createDo.getSubdomainIds().get(0));
 				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
 					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
 				}
