@@ -132,7 +132,6 @@
 }
 .rowContainer .progressBlock {
     padding: 12px 6px;
-    border-right: 1px solid #dddddd;
 }
 .rowContainer .progressBlock .circle-main-container {
     margin: 0 0;
@@ -2055,6 +2054,9 @@ th.headcol.whitebg {
     font-weight: bold;
     margin: 15px 0 0 0;
 }
+.timeAndScore .avgScore.darkGrey {
+    background: #ddd;
+}
 .timeAndScore .avgScore.lightGreen {
     background: #a2de81;
 }
@@ -2069,6 +2071,9 @@ th.headcol.whitebg {
 }
 .timeAndScore .avgScore.red {
     background: #e08282;
+}
+.border-bottom-white {
+	border-bottom: 1px solid #fff;
 }
 .rowContainer {
     border-bottom: 1px solid #dddddd;

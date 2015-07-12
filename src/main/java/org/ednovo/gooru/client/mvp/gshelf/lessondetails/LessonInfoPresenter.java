@@ -31,7 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -100,19 +100,11 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
-			@Override
-			public void onSuccess(List<LibraryCodeDo> result) {
-				//getView().setCourseList(result);
-			}
-		});
-	}
-
-	@Override
 	public void createAndSaveLessonDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		System.out.println("createDotype::"+isCreateCollOrAssessment);
+		System.out.println("createDotype::"+createDo.getCollectionType());
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
@@ -124,6 +116,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				params.put("view", "Course");
 				result.setGooruOid(uri[uri.length-1]);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
+				System.out.println("creationType lesson::"+creationType);
 				if(isCreateCollOrAssessment && creationType!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);
@@ -158,6 +151,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			}
 		});
 	}
+	
+	@Override
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsRightClusterPresenter;
+	}
+	
 	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
@@ -174,6 +173,17 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			@Override
 			public void onSuccess(Boolean value) {
 				getView().callCreateAndUpdate(isCreate,value,type);
+			}
+		});
+	}
+	@Override
+	public void callCourseBasedOnSubject(int courseId,final String selectedText) {
+		getTaxonomyService().getSubjectsList(courseId, "domain", 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+			@Override
+			public void onSuccess(List<CourseSubjectDo> result) {
+				if(result.size()>0){
+					getView().setCourseList(result);
+				}
 			}
 		});
 	}

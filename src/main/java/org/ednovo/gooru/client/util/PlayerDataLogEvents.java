@@ -63,6 +63,7 @@ public class PlayerDataLogEvents {
 	public static final String CLOSE_SESSION_STATUS="close";
 	public static final String START_EVENT_TYPE="start";
 	public static final String STOP_EVENT_TYPE="stop";
+	public static final String PAUSE_EVENT_TYPE="pause";
 
 	// new events implementation text
 	// Event Names
@@ -267,13 +268,13 @@ public class PlayerDataLogEvents {
 				contextMap.put(COLLECTIONTYPE, new JSONString(collectionType));
 			}
 			if(isStudent !=null){
-				contextMap.put(COLLECTIONTYPE, new JSONString(isStudent));
+				if ("true".equalsIgnoreCase(isStudent)){
+					contextMap.put(ISSTUDENT, JSONBoolean.getInstance(true));
+				}else{
+					contextMap.put(ISSTUDENT, JSONBoolean.getInstance(false));
+				}
 			}
-
-			if (totalQuestionsCount > 0){
-				contextMap.put(TOTALQUESTIONSCOUNT, new JSONNumber(totalQuestionsCount));
-			}
-
+			contextMap.put(TOTALQUESTIONSCOUNT, new JSONNumber(totalQuestionsCount));
 			contextMap.put(MODE, new JSONString(mode));
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());

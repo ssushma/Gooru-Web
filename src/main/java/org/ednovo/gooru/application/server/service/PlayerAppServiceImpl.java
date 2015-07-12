@@ -1520,23 +1520,17 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public List<UserPlayedSessionDo> getPreviousSessionDataForUser(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId){
 		List<UserPlayedSessionDo> userPlayedSessions = null;
 
-
-		JSONObject dataObject = new JSONObject();
-		try {
-			dataObject.put("gooruUid", gooruUid);
-			dataObject.put("classGooruId", classGooruId);
-			dataObject.put("classGooruId", lessonGooruId);
-			dataObject.put("unitGooruId", unitGooruId);
-			dataObject.put("courseGooruId", courseGooruId);
-		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
-		}
-
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_LAST_PLAYER_ASSESSMENT_INFO, assessmentId);
 
-		url = AddQueryParameter.constructQueryParams(url, GooruConstants.DATA, dataObject.toString());
+		url = AddQueryParameter.constructQueryParams(url, "classGooruId", classGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "userUid", gooruUid);
+		url = AddQueryParameter.constructQueryParams(url, "lessonGooruId", lessonGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "unitGooruId", unitGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "courseGooruId", courseGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "fetchOpenSession", "true");
 
+		getLogger().info("getPreviousSessionDataForUser - url: "+url);
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1545,7 +1539,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
-				if(resourceObj.optJSONArray("content") != null){
+				if(resourceObj.getJSONArray("content") != null && resourceObj.optJSONArray("content") != null){
 					userPlayedSessions = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<UserPlayedSessionDo>>() {});
 				}
 			}

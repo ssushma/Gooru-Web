@@ -36,7 +36,6 @@ import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
@@ -53,8 +52,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
@@ -205,11 +202,10 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		classObj.setClassId(classId);
 		classObj.setSessionId(sessionId);
 		
-		System.out.println("sessionId--"+sessionId);
-		System.out.println("classId--"+classId);
-		System.out.println("collectionId--"+collectionId);
+		getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId,printData);
+
 		
-		this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+		/*this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -227,7 +223,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			public void onFailure(Throwable caught) {
 
 			}
-		});
+		});*/
 
 	}
 	
@@ -266,10 +262,33 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-						if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
+				
+				if(result!=null && result.size()!=0){
+					
+					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
+						
+						int sessionSize=result.get(0).getSession().size();	
+							
+						int day=result.get(0).getSession().get(sessionSize-1).getSequence();
+						printData.setUserName(null);
+						printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
+						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
+						getView().setSessionsData(result.get(0).getSession());
+						}
+					
+					displayScoreCountData(result.get(0).getScore(),result.get(0).getScorableQuestionCount());
+					getView().setCollectionMetaDataByUserAndSession(result);
+					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+				}else{
+					getView().errorMsg();
+				}
+				
+				
+				
+				/*if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
 								count = 0;
 								displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
 								getView().setCollectionMetaDataByUserAndSession(result);
@@ -288,8 +307,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 								        }
 								      };
 								      // Execute the timer to expire 2 seconds in the future
-								      timer.schedule(2000);
-							}
+								     // timer.schedule(2000);
+							}*/
 			}
 
 			@Override
@@ -308,9 +327,11 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			
 			@Override
 			public void onSuccess() {
+				
+				getView().loadingIcon();
 
 				//getView().enableAndDisableEmailButton(isSummary);
-				analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
@@ -324,7 +345,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					
 					}
 				});
-				analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+				analyticService.getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {
@@ -349,6 +370,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			
 			@Override
 			public void onSuccess() {
+				getView().loadingIcon();
 				collectionProgressCount=0;
 				Collections.sort(result,new Comparator<UserDataDo>() {
 		        	public int compare(UserDataDo o1, UserDataDo o2) {

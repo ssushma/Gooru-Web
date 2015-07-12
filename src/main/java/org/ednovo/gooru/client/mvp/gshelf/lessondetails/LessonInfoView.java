@@ -24,15 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
+import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -50,6 +57,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -69,22 +77,26 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	interface LessonViewUiBinder extends UiBinder<Widget, LessonInfoView> {
 	}
 
-	@UiField HTMLPanel lessonInfo;
+	@UiField HTMLPanel lessonInfo,pnlGradeContainer;
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
 	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
 	@UiField Label lblErrorMessage;
+	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
+	
 	AssessmentPopupWidget assessmentPopup;
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
 
 	final String ACTIVE="active";
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
+	CourseGradeWidget courseGradeWidget;
 
 	/**
 	 * Class constructor
@@ -193,5 +205,117 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
+		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null)
+		{
+		for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
+			getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
+			break;
+		}
+		}
+	}
+
+	@Override
+	public void setCourseList(List<CourseSubjectDo> libraryCode) {
+		selectedValues.clear();
+		ulMainGradePanel.clear();
+		if (libraryCode.size()>0) {
+			for (CourseSubjectDo libraryCodeDo : libraryCode) {
+				String titleText=libraryCodeDo.getName().trim();
+				selectedValues.put(titleText, new ArrayList<String>());
+				LiPanel liPanel=new LiPanel();
+				Anchor title=new Anchor(titleText);
+				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
+				liPanel.add(title);
+				ulMainGradePanel.add(liPanel);
+			}
+		}
+	}
+	/**
+	 * This inner class is used to get selected subjects grades
+	 */
+	class ClickOnSubject implements ClickHandler{
+		String selectedText;
+		LiPanel liPanel;
+		int subjectId;
+		ClickOnSubject(String selectedText,LiPanel liPanel,int subjectId){
+			this.selectedText=selectedText;
+			this.liPanel=liPanel;
+			this.subjectId=subjectId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			if(liPanel.getStyleName().contains(ACTIVE)){
+				if(selectedValues.get(selectedText).size()>0){
+					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
+				}else{
+					liPanel.removeStyleName(ACTIVE);
+				}
+			}else{
+				liPanel.addStyleName(ACTIVE);
+				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
+			}
+		}
+	}
+	
+	/**
+	 * This method will display the Grades according to the subject
+	 */
+	@Override
+	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
+		pnlGradeContainer.clear();
+		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"") {
+			@Override
+			public void setSelectedGrade(final CourseSubjectDo lessonObj, final long codeId,boolean isAdd) {
+				if(isAdd){
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(lessonObj.getName());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							//This will remove the selected value when we are trying by close button
+							for(Iterator<Map.Entry<String,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+							     Map.Entry<String, ArrayList<String>> entry = it.next();
+							     if(entry.getValue().contains(lessonObj.getName())){
+							    	 entry.getValue().remove(lessonObj.getName());
+							     }
+							 }
+							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
+							liPanelWithClose.removeFromParent();
+						}
+					});
+					selectedValues.get(selectedText).add(lessonObj.getName());
+					liPanelWithClose.setId(codeId);
+					ulSelectedItems.add(liPanelWithClose);
+				}else{
+					if(selectedValues.get(selectedText).contains(lessonObj.getName())){
+						selectedValues.get(selectedText).remove(lessonObj.getName());
+					}
+					removeGradeWidget(ulSelectedItems,codeId);
+				}
+			}
+		};
+		pnlGradeContainer.add(courseGradeWidget);
+	}
+	/**
+	 * This method will remove the widget based on the codeId in the UlPanel
+	 * @param ulPanel
+	 * @param codeId
+	 */
+	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getId()==codeId){
+					obj.removeFromParent();
+				}
+			}
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;
+				if(obj.getCodeId()==codeId){
+					obj.removeStyleName("active");
+				}
+			}
+		}
 	}
 }

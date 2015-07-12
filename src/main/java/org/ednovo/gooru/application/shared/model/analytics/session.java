@@ -22,43 +22,49 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
+package org.ednovo.gooru.application.shared.model.analytics;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
- *
+ * @fileName : SessionDataDo.java
+ * 
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface LessonInfoUiHandlers extends BaseUiHandlers {
+@JsonInclude(Include.NON_NULL)
+public class session implements Serializable{
 
-	void showStandardsPopup(String standardVal, String titleVal);
 	/**
-	 * This method is used to create lesson
-	 * @param createObj
-	 * @param isCreateCollOrAssessment
-	 * @param creationType
+	 * 
 	 */
-	public void createAndSaveLessonDetails(CreateDo createObj,final boolean isCreateCollOrAssessment,String creationType);
-	/**
-	 * This method is used for checking profanity
-	 * @param textValue
-	 * @param isCreate
-	 * @param type
-	 */
-	public void checkProfanity(String textValue,boolean isCreate,String type);
-	/**
-	 * This method is used to update lesson details
-	 * @param createObj
-	 * @param id
-	 * @param isCreateUnit
-	 * @param type
-	 */
-	public void updateLessonDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type);
+	private static final long serialVersionUID = 1L;
+	private String sessionId;
+	private int sequence;
+	private long eventTime;
+	public String getSessionId() {
+		return sessionId;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public long getEventTime() {
+		return eventTime;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	public void setEventTime(long eventTime) {
+		this.eventTime = eventTime;
+	}
 	
-	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 	
-	public void callCourseBasedOnSubject(int courseId,final String selectedText);
+	
 }

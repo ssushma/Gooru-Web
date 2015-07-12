@@ -37,6 +37,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -790,6 +791,21 @@ public class StringUtil implements ClientConstants {
 	    if(original.length() == 0)
 	        return original;
 	    return original.substring(0, 1).toUpperCase() + original.substring(1);
+	}
+	
+	
+	public static ClassDo getClassObj(){
+		ClassDo classObj=new ClassDo();
+		String classId=AppClientFactory.getPlaceManager().getRequestParameter("class")!=null?AppClientFactory.getPlaceManager().getRequestParameter("class"):"";
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("course")!=null?AppClientFactory.getPlaceManager().getRequestParameter("course"):"";
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unit")!=null?AppClientFactory.getPlaceManager().getRequestParameter("unit"):"";
+		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("lesson")!=null?AppClientFactory.getPlaceManager().getRequestParameter("lesson"):"";
+		
+		classObj.setClassId(classId);
+		classObj.setCourseId(courseId);
+		classObj.setLessonId(lessonId);
+		classObj.setUnitId(unitId);
+		return classObj;
 	}
 }
 

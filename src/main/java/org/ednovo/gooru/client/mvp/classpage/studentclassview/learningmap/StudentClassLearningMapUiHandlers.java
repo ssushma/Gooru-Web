@@ -31,5 +31,5 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  *
  */
 public interface StudentClassLearningMapUiHandlers extends BaseUiHandlers{
-	
+	public void getLessonPlanData(String contentGooruOids);
 }
