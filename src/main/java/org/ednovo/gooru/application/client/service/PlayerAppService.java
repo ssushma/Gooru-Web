@@ -194,7 +194,9 @@ public interface PlayerAppService extends BaseService {
 
 	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions,String sessionId) throws GwtException, ServerDownException;
 
-	List<UserPlayedSessionDo> getPreviousSessionDataForUser(String gooruUid,
+	public List<UserPlayedSessionDo> getPreviousSessionDataForUser(String gooruUid,
 			String classGooruId, String lessonGooruId, String unitGooruId,
-			String courseGooruId, String assessmentId);
+			String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
+
+
 }

@@ -48,4 +48,6 @@ public interface IsEditClassContentView extends IsViewWithHandlers<EditClassCont
 
 	void setClassData(ClasspageDo classpageDo);
 
+	void setUpdateClass(ClasspageDo result);
+
 }

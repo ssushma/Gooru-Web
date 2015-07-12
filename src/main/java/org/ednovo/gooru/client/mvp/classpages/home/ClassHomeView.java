@@ -365,6 +365,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 											});
 					}
 			};
+			newPopup.center();
 		}
 
 	}

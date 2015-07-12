@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 
 /**
@@ -42,5 +43,7 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  * @Reviewer: 
  */
 public interface EditClassContentViewUiHandler extends BaseUiHandlers{
+
+	void updateClass(ClasspageDo classpageDo);
 
 }

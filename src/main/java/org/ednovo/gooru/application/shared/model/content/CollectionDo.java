@@ -78,6 +78,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	
 	private String name;
 	private String classUid;
+	private String courseGooruOid;
 	
 	private String type;
 	public CollectionDo(){}
@@ -417,6 +418,18 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	 */
 	public void setClassUid(String classUid) {
 		this.classUid = classUid;
+	}
+	/** 
+	 * This method is to get the courseGooruOid
+	 */
+	public String getCourseGooruOid() {
+		return courseGooruOid;
+	}
+	/** 
+	 * This method is to set the courseGooruOid
+	 */
+	public void setCourseGooruOid(String courseGooruOid) {
+		this.courseGooruOid = courseGooruOid;
 	}
 
 

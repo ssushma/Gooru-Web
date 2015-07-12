@@ -46,4 +46,8 @@ public interface AssessmentsPlayerUiHandlers extends BaseUiHandlers,UpdateCollec
 	public boolean isOpenEndedAnswerSubmited();
 	public void navigateToNext(String direction);
 	public void setFullScreenMode(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
+	void setLastViewedResource(String lastViewedResource);
+	public void setViewed(String requestParameter);
+
+	void setLastEventType(String lastEventType);
 	}
