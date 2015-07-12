@@ -380,7 +380,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		        	}
 		        });
 				for (UserDataDo userDataDo : result) {
-					if(userDataDo.getStatus()==0){
+					
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
@@ -388,7 +388,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 							questionRowIndex.add(collectionProgressCount);
 						}
 						collectionProgressCount++;
-					}
 				}
 				getView().setQuestionsData(questionsData);
 				getView().setQuestionsPrintData(questionsData);
