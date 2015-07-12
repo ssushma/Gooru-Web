@@ -2953,6 +2953,22 @@ display: table-cell;
 	height:90px;
 	border-left:10px solid #1076bb;
 }
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage img{
+	  width: 120px;
+	height:90px;
+	border-left: 10px solid #feae29;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .thunailHover{
+	position:absolute;
+	top:25px;
+	left:5px;
+	right:5px;
+	bottom:0;
+	display:none;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage:hover .thunailHover{
+	display:block;
+}
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .thunailHover{
 	position:absolute;
 	top:25px;

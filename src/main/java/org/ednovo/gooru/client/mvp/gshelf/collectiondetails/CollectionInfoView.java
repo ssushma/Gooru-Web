@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowled
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -77,7 +78,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	interface CollectionInfoViewUiBinder extends UiBinder<Widget, CollectionInfoView> {
 	}	
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype;
+	@UiField HTMLPanel collectionInfo,newdok,newtype,thumbnailImageContainer;
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl;
 	@UiField TextArea learningObjective;
@@ -89,6 +90,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField DepthKnowledgeView depthOfKnowledgeContainer;
 	@UiField LanguageView languageObjectiveContainer;
 	@UiField CenturySkillsView centurySkillContainer;
+	@UiField PPanel colltitle,collimagetitle,tagcollectiontitle;
+	
 	
 	private boolean isLanguageObjectInfo=false;
 	private boolean isCenturySkillsInfo=false;    
@@ -239,6 +242,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				setDetaultImage(courseObj.getType());
 			}
 		}
+		setStaticData(type);			
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 								(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
 
@@ -248,6 +252,23 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
+	}
+	public void setStaticData(String type)
+	{
+		if(type.equalsIgnoreCase(ASSESSMENT))
+		{
+			colltitle.setText(i18n.GL3381());
+			collimagetitle.setText(i18n.GL3382());
+			thumbnailImageContainer.setStyleName("assessmentThumbnail");
+			tagcollectiontitle.setText(i18n.GL3385());
+		}
+		else
+		{
+			colltitle.setText(i18n.GL3380());
+			collimagetitle.setText(i18n.GL3383());
+			thumbnailImageContainer.setStyleName("collectionThumbnail");	
+			tagcollectiontitle.setText(i18n.GL3384());
+		}
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
