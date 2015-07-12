@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -61,4 +62,6 @@ public interface TaxonomyService extends BaseService {
 	 * @throws ServerDownException
 	 */
 	List<CourseSubjectDo> getSubjectsList(int id,String type,int offset,int limit) throws GwtException, ServerDownException;
+	List<DomainStandardsDo> getStandardsList(int subDomainId)
+			throws GwtException, ServerDownException;
 }

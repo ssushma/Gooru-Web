@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
@@ -81,12 +82,13 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 		List<CourseSubjectDo> subjectCodeDo = new ArrayList<CourseSubjectDo>();
 		JsonRepresentation jsonRep =null;
 		String url = null;
+		String classificationId = String.valueOf(id);
 		if(type.equalsIgnoreCase("subject")){
-			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_SUBJECTS,id+"");
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_SUBJECTS,classificationId);
 		}else if(type.equalsIgnoreCase("course")){
-			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSES_BY_SUBJECTID,id+"",offset+"",limit+"");
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSES_BY_SUBJECTID,classificationId,String.valueOf(offset),limit+"");
 		}else if(type.equalsIgnoreCase("domain")){
-			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,id+"");
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,classificationId); 
 		}
 		logger.info("url::"+url);
 		if(url!=null){
@@ -102,6 +104,33 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 			}
 		}
 		return subjectCodeDo;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.TaxonomyService#getSubjectsList()
+	 */
+	@Override
+	public List<DomainStandardsDo> getStandardsList(int subDomainId) throws GwtException,ServerDownException {
+		List<DomainStandardsDo> domainStandardsCodeDo = new ArrayList<DomainStandardsDo>();
+		JsonRepresentation jsonRep =null;
+		String url = null;
+
+		url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_STANDARDS_BY_DOMAIN,subDomainId+"");
+		
+		logger.info("getStandardsListurl::"+url);
+		if(url!=null){
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			if (jsonRep != null) {
+				try {
+					domainStandardsCodeDo = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<DomainStandardsDo>>() {
+				  });
+				} catch (JSONException e) {
+					logger.error("Exception::", e);
+				}
+			}
+		}
+		return domainStandardsCodeDo;
 	}
 
 }

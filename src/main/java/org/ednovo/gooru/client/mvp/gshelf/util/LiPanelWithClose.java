@@ -37,6 +37,7 @@ public class LiPanelWithClose extends Composite{
 	long id;
 	String name;
 	int relatedId;
+	int relatedSubjectId;
 	
 	public LiPanelWithClose(String text){
 		 LiPanel panel = new LiPanel();
@@ -70,5 +71,11 @@ public class LiPanelWithClose extends Composite{
 	}
 	public void setRelatedId(int relatedId) {
 		this.relatedId = relatedId;
+	}
+	public int getRelatedSubjectId() {
+		return relatedSubjectId;
+	}
+	public void setRelatedSubjectId(int relatedSubjectId) {
+		this.relatedSubjectId = relatedSubjectId;
 	}
 }

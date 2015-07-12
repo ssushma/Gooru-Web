@@ -134,7 +134,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		offsetLimitOwner = 0;
 		offsetLimitJoined = 0;
 
-		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),
+		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
@@ -572,7 +572,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			offsetLimitOwner = pageInitialLimitOwner;
-			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),
+			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {

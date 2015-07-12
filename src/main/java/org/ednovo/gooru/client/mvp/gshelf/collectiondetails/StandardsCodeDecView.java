@@ -24,34 +24,65 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import java.util.List;
-
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 /**
  * @author Search Team
  *
  */
-public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoUiHandlers> {
+public class StandardsCodeDecView extends Composite{
+
+	private static StandardsCodeDescUiBinder uiBinder = GWT.create(StandardsCodeDescUiBinder.class);
+
+	@UiTemplate("StandardsCodeDescView.ui.xml")
+	interface StandardsCodeDescUiBinder extends UiBinder<Widget, StandardsCodeDecView> {
+	}	
+
+
+	@UiField Label standardCode;
+	@UiField PPanel standardDesc;
+	@UiField HTMLEventPanel widgetContainer;
+     
 	
-
+	
 	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 * @param type 
+	 * Class constructor 
+	 * @param eventBus {@link EventBus}
 	 */
-	void setCouseData(FolderDo courseObj, String type); 
+	@Inject
+	public StandardsCodeDecView(DomainStandardsDo standardsDo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		standardCode.setText(standardsDo.getCode());
+		standardDesc.setText(standardsDo.getLabel());
+	}
 
-	void callCreateAndUpdate(boolean isCreate, Boolean result, int index,
-			String collectionType);
-
-	void setCollectionType(String collectionType);
-
-	void displayStandardsList(List<DomainStandardsDo> result);
+	public HTMLEventPanel getWidgetContainer() {
+		return widgetContainer;
+	}
 
 
 
+	public void setWidgetContainer(HTMLEventPanel widgetContainer) {
+		this.widgetContainer = widgetContainer;
+	}
+	
+	
+	
+	
+	
+	
 }
