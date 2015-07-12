@@ -24,9 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 
 /**
  * @author Search Team
@@ -46,6 +49,8 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 			String collectionType);
 
 	void setCollectionType(String collectionType);
+
+	void displayStandardsList(List<DomainStandardsDo> result);
 
 
 

@@ -631,8 +631,12 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_STUDENT_LESSON_PLAN("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/plan?"),
 
 	V1_GET_STUDENT_COURSE_PROGRESS("/v1/class/{0}/course/{1}/progress?"),
+	
+	V1_GET_STANDARDS_BY_DOMAIN("/v1/sub-domain/{0}/standards?"),
 
-	V1_GET_STUDENT_UNIT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/progress?");
+	V1_GET_STUDENT_UNIT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/progress?"),
+	
+	V1_GET_COURSE("/v1/course/{0}?");
 
 
 

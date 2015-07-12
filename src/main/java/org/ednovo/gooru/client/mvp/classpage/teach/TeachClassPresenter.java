@@ -100,7 +100,6 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	protected void onReveal() {
 		super.onReveal();
 		getClassDetails();
-		getView().setNavaigationTab();
 	}
 	
 	@Override
@@ -132,6 +131,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	protected void onReset() {
        super.onReset();
        loadNavigationPage();
+       getView().setNavaigationTab();
 	}
 	
 	public void getClassDetails(){

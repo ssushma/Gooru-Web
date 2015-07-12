@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -108,17 +109,17 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callTaxonomyService(int subdomainId) {
+		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 			@Override
-			public void onSuccess(List<CourseSubjectDo> result) {
-			//	getView().setCourseList(result);
+			public void onSuccess(List<DomainStandardsDo> result) {
 				if(result.size()>0){
-					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
+					getView().displayStandardsList(result);
 				}
 			}
 		});
 	}
+	
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
 		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
@@ -144,14 +145,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {				
-				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
 				params.put(O1_LEVEL, o1);
 				params.put(O2_LEVEL, o2);
 				params.put(O3_LEVEL, o3);
-				params.put("id", uri[uri.length-1]);
+				params.put("id", result.getGooruOid());
 				params.put("view", "course");
-				result.setGooruOid(uri[uri.length-1]);
+
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
@@ -168,6 +168,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
+		callTaxonomyService(1);
 	}
 	
 	@Override
