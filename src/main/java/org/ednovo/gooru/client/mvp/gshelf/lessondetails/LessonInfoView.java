@@ -288,50 +288,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		}
 
-<<<<<<< HEAD
-=======
-	@Override
-	public void setCourseList(List<CourseSubjectDo> libraryCode) {
-		selectedValues.clear();
-		ulMainGradePanel.clear();
-		if (libraryCode.size()>0) {
-			for (CourseSubjectDo libraryCodeDo : libraryCode) {
-				String titleText=libraryCodeDo.getName().trim();
-				selectedValues.put(titleText, new ArrayList<String>());
-				LiPanel liPanel=new LiPanel();
-				Anchor title=new Anchor(titleText);
-				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
-				liPanel.add(title);
-				ulMainGradePanel.add(liPanel);
-			}
-		}
-	}
-	/**
-	 * This inner class is used to get selected subjects grades
-	 */
-	class ClickOnSubject implements ClickHandler{
-		String selectedText;
-		LiPanel liPanel;
-		int subjectId;
-		ClickOnSubject(String selectedText,LiPanel liPanel,int subjectId){
-			this.selectedText=selectedText;
-			this.liPanel=liPanel;
-			this.subjectId=subjectId;
-		}
-		@Override
-		public void onClick(ClickEvent event){
-			if(liPanel.getStyleName().contains(ACTIVE)){
-				if(selectedValues.get(selectedText).size()>0){
-					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
-				}else{
-					liPanel.removeStyleName(ACTIVE);
-				}
-			}else{
-				liPanel.addStyleName(ACTIVE);
-				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
-			}
-		}
->>>>>>> 2df2a2b8ec66bb5bbb14b39ec65c6792b095dd7b
+
+
 	}
 
 	
