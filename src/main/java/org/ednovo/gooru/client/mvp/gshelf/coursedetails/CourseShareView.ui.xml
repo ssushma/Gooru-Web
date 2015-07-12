@@ -16,7 +16,7 @@
 					<option>Other</option>
 				</select> -->
 			</g:FlowPanel>
-            <g:Label ui:field="errorMsgLbl">Please select class</g:Label>
+            <g:Label styleName="errorMsgStyle" ui:field="errorMsgLbl">Please select class</g:Label>
 		</div>
 		<div class="courseDetailsContainer no-gutter">
 

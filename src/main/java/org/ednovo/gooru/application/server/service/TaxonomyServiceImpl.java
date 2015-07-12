@@ -82,12 +82,13 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 		List<CourseSubjectDo> subjectCodeDo = new ArrayList<CourseSubjectDo>();
 		JsonRepresentation jsonRep =null;
 		String url = null;
+		String classificationId = String.valueOf(id);
 		if(type.equalsIgnoreCase("subject")){
-			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_SUBJECTS,id+"");
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_SUBJECTS,classificationId);
 		}else if(type.equalsIgnoreCase("course")){
-			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSES_BY_SUBJECTID,id+"",offset+"",limit+"");
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSES_BY_SUBJECTID,classificationId,String.valueOf(offset),limit+"");
 		}else if(type.equalsIgnoreCase("domain")){
-			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,id+"");
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,classificationId); 
 		}
 		logger.info("url::"+url);
 		if(url!=null){
