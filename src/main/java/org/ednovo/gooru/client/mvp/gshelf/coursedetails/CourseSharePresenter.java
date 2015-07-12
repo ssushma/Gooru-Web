@@ -71,7 +71,7 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 
 	public void setData(FolderDo folderObj) {
 		folderDo=folderObj;
-		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses("20", "0", "", new SimpleAsyncCallback<ClasspageListDo>() {
+		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses("20", "0",true, new SimpleAsyncCallback<ClasspageListDo>() {
 
 			@Override
 			public void onSuccess(ClasspageListDo classPageListDo) {
