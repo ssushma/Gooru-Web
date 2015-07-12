@@ -49,6 +49,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -83,6 +84,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String O3_LEVEL = "o3";
 	
 	private static final String ID = "id";
+
+	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
 	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -400,5 +403,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		    String type = StringUtil.isEmpty(btnCreate.getText())?null:btnCreate.getText();
 			getUiHandlers().addNewContent(type);
 		}
+	}
+	/**
+	 * This is used for adding loader image
+	 * @return
+	 */
+	@Override
+	public void loadingImage(){
+		Image loadingImage =  new Image();
+		loadingImage.setUrl(LOADER_IMAGE);
+		loadingImage.getElement().setId("myCollectionsListView");
+		pnlCourseList.add(loadingImage);
 	}
 }
