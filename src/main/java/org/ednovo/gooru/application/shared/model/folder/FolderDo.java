@@ -67,6 +67,7 @@ public class FolderDo implements Serializable{
 	private CollectionSettingsDo settings;
 	private List<CourseSubjectDo> taxonomyCourse;
 	private List<CourseSubjectDo> subdomain;
+	private List<CourseSubjectDo> standards;
 	
 	public FolderDo(){}
 	
@@ -331,5 +332,13 @@ public class FolderDo implements Serializable{
 	}
 	public void setSubdomain(List<CourseSubjectDo> subdomain) {
 		this.subdomain = subdomain;
+	}
+
+	public List<CourseSubjectDo> getStandards() {
+		return standards;
+	}
+
+	public void setStandards(List<CourseSubjectDo> standards) {
+		this.standards = standards;
 	}
 }

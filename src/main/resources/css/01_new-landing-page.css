@@ -880,6 +880,38 @@ footer ul li a {
 
 @media (max-width: 767px) {
 
+	.categoriesBlock .catBody .callToAction .classCodeTxtBoxStyle{
+		padding: 8px 6px;
+  		font-size: 11px !important;
+	}
+
+	.focusBlock .grade .dropdown-menu {
+    	left: auto;
+    	right: 0;
+		padding:0 0;
+	}
+
+	.focusBlock .grade .dropdown-menu::before {
+	    right: 9px;
+	    top: -7px;
+	}
+
+	.focusBlock .grade .dropdown-menu::before, .focusBlock .grade .dropdown-menu::after {
+	    left: 0 !important;
+	}
+	.focusBlock .grade .dropdown-menu::after {
+	    right: 10px;
+	    top: -6px;
+	}
+
+	.freeToOpenBlock .focusTextAlwys .BlueBg{
+		margin-bottom:10px;
+	}
+
+	.focusBlock .grade .subjectContainer .dropdown-menu {
+	    left: auto !important;
+	}
+
 	.aboutApproach{
 		width: auto;
 	}
@@ -1404,3 +1436,6 @@ footer ul li a {
   		height: 347px;
 	}
 }
+
+
+

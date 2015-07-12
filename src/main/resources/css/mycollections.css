@@ -1361,6 +1361,16 @@ button.btn-disabled {
   list-style: outside none none;
   margin: 0;
   padding: 8px 10px;
+  margin-left: 5px;
+}
+#gShelfCourseInfo .filterTags ul li div{
+	float: left;
+}
+#gShelfCourseInfo .filterTags ul li a{
+	color: #fff;
+	font-size: 12px;
+	padding: 0 0 0 22px;
+	float: left;
 }
 
 @media(max-width:767px){

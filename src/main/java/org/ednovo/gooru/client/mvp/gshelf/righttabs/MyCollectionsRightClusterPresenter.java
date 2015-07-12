@@ -124,7 +124,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
 				}else if("Unit".equalsIgnoreCase(type)){ 
-					System.out.println("unit info hitted");
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
 				}else if("Lesson".equalsIgnoreCase(type)){

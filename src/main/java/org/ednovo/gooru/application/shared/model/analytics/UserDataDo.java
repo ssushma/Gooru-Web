@@ -26,6 +26,7 @@ package org.ednovo.gooru.application.shared.model.analytics;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -48,7 +49,7 @@ public class UserDataDo implements Serializable{
 	private String text;
 	private int attemptStatus;
 	private int avgReaction;
-	private int status;
+	private String status;
 	private int itemSequence;
 	private String gooruUId;
 	private int score;
@@ -66,7 +67,7 @@ public class UserDataDo implements Serializable{
 	private String resourceGooruOId;
 	private String feedbackStatus;
 	private String answerObject;
-	private String options;
+	private Map<String, Integer> options;
 	private ArrayList<MetaDataDo> metaData;
 	private String gradeInPercentage;
 	private String firstName;
@@ -104,10 +105,10 @@ public class UserDataDo implements Serializable{
 	public void setAvgReaction(int avgReaction) {
 		this.avgReaction = avgReaction;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public String getGooruUId() {
@@ -194,10 +195,11 @@ public class UserDataDo implements Serializable{
 	public void setAnswerObject(String answerObject) {
 		this.answerObject = answerObject;
 	}
-	public String getOptions() {
+	
+	public Map<String, Integer> getOptions() {
 		return options;
 	}
-	public void setOptions(String options) {
+	public void setOptions(Map<String, Integer> options) {
 		this.options = options;
 	}
 	public ArrayList<MetaDataDo> getMetaData() {
