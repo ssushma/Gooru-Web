@@ -88,6 +88,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	
 	LiPanel tempLiPanel=null;
 	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
+	
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -222,7 +223,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	/**
 	 * This inner class is used to get selected subjects grades
 	 */
-	class ClickOnSubject implements ClickHandler{
+	public class ClickOnSubject implements ClickHandler{
 		String selectedText;
 		LiPanel liPanel;
 		int subjectId;

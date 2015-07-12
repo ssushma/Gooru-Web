@@ -9,7 +9,7 @@
 
 		<div class="collectionTitleDetails">
 
-			<p>Collection Title</p>
+			<ppanel:PPanel ui:field="colltitle"></ppanel:PPanel>
 			<p>
 				<g:TextBox styleName="form-control" ui:field="collectionTitle"
 					text="{i18n.GL3367}" title="{i18n.GL3367}" />
@@ -22,8 +22,8 @@
 
 
 		<div class="collectionImageDetails">
-			<div class="collectionThumbnail">
-				<p>Collection Image</p>
+			<g:HTMLPanel ui:field="thumbnailImageContainer" styleName="collectionThumbnail">
+				<ppanel:PPanel ui:field="collimagetitle"></ppanel:PPanel>
 				<div class="thimbnailImage">
 					<g:Image ui:field="collThumbnail">
 					</g:Image>
@@ -33,7 +33,7 @@
 					</span>
 				</div>
 
-			</div>
+			</g:HTMLPanel>
 
 			<div class="learningObjective">
 				<p>Learning Objective</p>
@@ -56,7 +56,8 @@
 			<div class="unitCoverHeader">
 
 				<div class="col-md-12 col-sm-12">
-					<p class="tagcollection">What will this Collection cover?</p>
+				<ppanel:PPanel styleName="tagcollection" ui:field="tagcollectiontitle"></ppanel:PPanel>
+					
 				</div>
 
 				<div class="clearfix"></div>

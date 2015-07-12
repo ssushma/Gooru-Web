@@ -172,7 +172,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 
 	@Override
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId, String userId,String sessionId,String pathwayId) {
+	public ArrayList<UserDataDo> getUserSessionDataByUser(ClassDo classObj,String collectionId,String classId, String userId,String sessionId,String pathwayId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<UserDataDo> collectionResourcesList=new ArrayList<UserDataDo>();
 //		String dataPassing ="{%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410757700537";
@@ -180,8 +180,8 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		Map<String,String> params = new HashMap<String, String>();
 		params.put(DATA, jsonString);
 		params.put(TIME_STAMP_LOWER_CASE, TIME_STAMP_LOWER_CASE_VALUE);
-		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONDATABYUSERSESSION, collectionId);
-		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONDATABYUSERSESSION, collectionId,userId,classObj.getClassId(),classObj.getCourseId(),classObj.getUnitId(),classObj.getLessonId(),sessionId);
+		//String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		logger.info("getUserSessionDataByUser url:+--- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
