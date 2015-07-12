@@ -68,7 +68,7 @@ public class EmbedController extends MultiActionController{
 				 int resourceCount=0;
 				 int questoionResourceCount=0;
 				 for(CollectionItemDo collectionItemDo:collectionDo.getCollectionItems()){
-					 if(collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")){
+					 if(collectionItemDo.getResource() != null && collectionItemDo.getResource().getResourceFormat() != null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("Question")){
 						 questoionResourceCount++;
 					 }else{
 						 resourceCount++;
@@ -77,13 +77,14 @@ public class EmbedController extends MultiActionController{
 				 String resourcesString=resourceCount==1?"1 resource,":resourceCount+" resources,";
 				 String questoionResourceCountString=questoionResourceCount==1?"1 question":questoionResourceCount+" questions";
 				 String collectionItems=resourcesString+" "+questoionResourceCountString;
-				 htmlOutput.append(" <!DOCTYPE html>").append("<html><head>").append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />")
+				 if (collectionDo!= null){
+					 htmlOutput.append(" <!DOCTYPE html>").append("<html><head>").append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />")
 				 			.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""+cssEndPoint+"/css/embed.css\">").append("</head>")
-				 			.append("<body><div class=\"embed-container\"><div class=\"collection-image\"><a href=\""+homeEndPoint+"/#collection-play&id="+collectionDo.getGooruOid()+"\"target=\"_blank\" class=\"collectionImage\"><image onerror=\"this.src='"+homeEndPoint+"/images/collection-default-image.png'\" src="+collectionDo.getThumbnails().getUrl()+" width=\"310px\" height=\"208px\"><div class=\"button\">Study</div></a></div>")
+				 			.append("<body><div class=\"embed-container\"><div class=\"collection-image\"><a href=\""+homeEndPoint+"/#collection-play&id="+collectionDo.getGooruOid()+"\"target=\"_blank\" class=\"collectionImage\"><image onerror=\"this.src='"+homeEndPoint+"/images/collection-default-image.png'\" src="+(collectionDo.getThumbnails() != null ? collectionDo.getThumbnails().getUrl() : "") +" width=\"310px\" height=\"208px\"><div class=\"button\">Study</div></a></div>")
 				 			.append("<div class=\"metadata\">").append("<h1 class=\"title\"><a href=\""+homeEndPoint+"/#collection-play&id="+collectionDo.getGooruOid()+"\"target=\"_blank\">"+collectionDo.getTitle()+"</a></h1>")
-				 			.append("<div class=\"description\"><span class=\"label\">Description: </span>"+collectionDo.getGoals()+"</div>")
+				 			.append("<div class=\"description\"><span class=\"label\">Description: </span>"+(collectionDo.getGoals() != null ? collectionDo.getGoals() : "")+"</div>")
 				 			.append("<div class=\"resources\">"+collectionItems+"</div></div></div></div> </body></html>");
-
+				 }
 			 }
 		}
 		out.println(htmlOutput.toString());
