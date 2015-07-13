@@ -203,15 +203,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
-		callTaxonomyService(1);
 	}
-	
 	@Override
 	public void showStandardsPopup(String standardVal, String standardsDesc) {
 		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
 		addToPopupSlot(standardsPopupPresenter);
 	}
-
 	@Override
 	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
