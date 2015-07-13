@@ -34,6 +34,8 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -43,14 +45,14 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	
 	private String viewType;
 	
-	CourseInfoPresenter courseInfoPresenter;
+	private UnitInfoPresenter unitInfoPresenter;
+	
 	
 	
 	@Inject
-	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view, CourseInfoPresenter courseInfoPresenter){
+	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view){
 		super(eventBus,view);
 		getView().setUiHandlers(this);
-		this.courseInfoPresenter = courseInfoPresenter;
 	}
 	
 	
@@ -102,7 +104,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 										@Override
 										public void onSuccess(List<DomainStandardsDo> result) {
-											getView().addTaxonomyStandards(result);
+											getView().addTaxonomyStandards(result); 
 										}
 									});
 								}
@@ -315,7 +317,16 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 
 	@Override
-	public void addTaxonomyData() {
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		if("Unit".equalsIgnoreCase(viewType)){
+			unitInfoPresenter.addTaxonomy(selectedUlContainer);
+		}
+	}
+
+
+
+	public void setUnitInfoPresenterInstance(UnitInfoPresenter unitInfoPresenter) { 
+		this.unitInfoPresenter = unitInfoPresenter;
 	}
 	
 	

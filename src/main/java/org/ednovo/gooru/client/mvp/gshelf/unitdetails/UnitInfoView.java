@@ -385,4 +385,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			getUiHandlers().invokeTaxonomyPopup(UNIT);
 		}
 	}
+
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		for(int i=0;i<=selectedUlContainer.getWidgetCount();i++){
+			ulSelectedItems.add(selectedUlContainer.getWidget(i));
+		}
+		
+	}
 }
