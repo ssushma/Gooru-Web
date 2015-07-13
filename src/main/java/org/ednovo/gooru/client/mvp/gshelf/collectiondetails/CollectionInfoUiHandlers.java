@@ -60,4 +60,6 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 
 	void showStandardsPopup(String standardVal, String standardsDesc);
 
+	public void invokeTaxonomyPopup(String type);
+
 }

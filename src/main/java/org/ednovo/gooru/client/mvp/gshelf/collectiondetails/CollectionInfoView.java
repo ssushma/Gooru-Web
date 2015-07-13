@@ -26,19 +26,16 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -86,7 +83,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer;
 
 	@UiField TextBox collectionTitle;
-	@UiField Button saveCollectionBtn,uploadImageLbl;
+	@UiField Button saveCollectionBtn,uploadImageLbl,taxonomyBtn;
 	@UiField TextArea learningObjective;
 	@UiField Label lblErrorMessage, lblErrorMessageForLO,newlbl;
 	@UiField Image collThumbnail;
@@ -141,6 +138,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		centurySkillContainer.setVisible(false);
 		uploadImageLbl.setText(i18n.GL0912());
 		populateStandardValues();
+		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -491,7 +489,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 	}
 
+	private class OnClickTaxonomy implements ClickHandler{
 
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			getUiHandlers().invokeTaxonomyPopup("Collection");
+		}
+		
+	}
 
 
 

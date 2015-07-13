@@ -40,6 +40,7 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
@@ -71,6 +72,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	CenturySkillsPresenter centurySkillsPresenter;
 	
+	TaxonomyPopupPresenter taxonomyPopupPresenter;
+	
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
 	StandardsPopupPresenter standardsPopupPresenter;
@@ -96,14 +99,15 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view,ImageUploadPresenter imgUploadPresenter,StandardsPopupPresenter standardsPopupPresenter,CenturySkillsPresenter centurySkillsPresenter) {
+	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view,ImageUploadPresenter imgUploadPresenter,StandardsPopupPresenter standardsPopupPresenter,CenturySkillsPresenter centurySkillsPresenter,TaxonomyPopupPresenter taxonomyPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.standardsPopupPresenter=standardsPopupPresenter;
 		this.centurySkillsPresenter=centurySkillsPresenter;
+		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
 	}
-
+ 
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -300,5 +304,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				
 			}
 		});
+	}
+	
+	@Override
+	public void invokeTaxonomyPopup(String viewType) {
+		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
+		addToPopupSlot(taxonomyPopupPresenter);
 	}
 }
