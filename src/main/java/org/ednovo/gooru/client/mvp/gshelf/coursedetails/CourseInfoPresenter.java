@@ -80,7 +80,6 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	protected void onReveal(){
 		super.onReveal();
 	}
-
 	public TaxonomyServiceAsync getTaxonomyService() {
 		return taxonomyService;
 	}
@@ -88,7 +87,6 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
 	}
-
 	@Override
 	public void callTaxonomyService(int classifierId) {
 		getTaxonomyService().getSubjectsList(classifierId, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
@@ -121,15 +119,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", result.getGooruOid());
 				params.put("view", COURSE);
-				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				if(getView().getFirstSelectedValue()!=null){
-					selectedValues.put(getView().getFirstSelectedValue().get(0),createObj.getTaxonomyCourseIds().get(0));
-				}
-				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
-					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
-				}
-				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
-				
+
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
@@ -148,7 +138,6 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
-
 	public void setData(FolderDo folderObj) {
 		getView().setCouseData(folderObj);
 		callTaxonomyService(1);
@@ -161,15 +150,6 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			public void onSuccess(Void result) {
 				folderDo.setTitle(createObj.getTitle());
 				folderDo.setType(COURSE);
-				
-				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				selectedValues.put(getView().getFirstSelectedValue().get(0),createObj.getTaxonomyCourseIds().get(0));
-				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
-					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
-				}
-				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
-				//folderDo.setGooruOid(id);
-				
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);

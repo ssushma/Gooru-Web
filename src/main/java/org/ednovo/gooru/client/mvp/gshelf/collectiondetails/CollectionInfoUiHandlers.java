@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
@@ -61,6 +62,8 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 
 	void showStandardsPopup(String standardVal, String standardsDesc);
 
-	public void invokeTaxonomyPopup(String type);
+	public void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems); 
+	
+	public void callCourseInfoTaxonomy();
 
 }

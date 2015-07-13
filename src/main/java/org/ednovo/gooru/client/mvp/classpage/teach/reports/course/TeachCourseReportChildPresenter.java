@@ -27,7 +27,12 @@
  */
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.course;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.child.ChildPresenter;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 
 /**
  * @author Search Team
@@ -39,4 +44,14 @@ public class TeachCourseReportChildPresenter extends ChildPresenter<TeachCourseR
 		super(childView);
 	}
 
+	@Override
+	public void getCourseMasteryData(String classId, String courseId) {
+		AppClientFactory.getInjector().getClasspageService().getCourseMasteryReport(classId, courseId, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+			@Override
+			public void onSuccess(ArrayList<PlanProgressDo> result) {
+				getView().setTableData(result);
+			}
+		});
+	}
+	
 }

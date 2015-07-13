@@ -27,13 +27,17 @@
  */
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.unit;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.child.IsChildView;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 
 /**
  * @author SearchTeam
  * 
  */
 public interface IsTeachUnitReportView extends IsChildView<TeachUnitReportChildPresenter> {
-	public void setAssessmentTableData();
-	public void setCollectionTableData();
+	public void setTableData(ArrayList<PlanProgressDo> result);
+	void setAssessmentTableData(ArrayList<PlanProgressDo> result);
+	void setMetadataContent(ArrayList<PlanProgressDo> dataList);
 }
