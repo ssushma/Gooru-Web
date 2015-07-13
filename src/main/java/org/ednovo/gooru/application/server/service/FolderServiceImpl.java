@@ -674,7 +674,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			logger.info("rest point: "+ getRestEndPoint());
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri").toString());
 			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
 			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
 			jsonRepGet=jsonResponseRep1.getJsonRepresentation();

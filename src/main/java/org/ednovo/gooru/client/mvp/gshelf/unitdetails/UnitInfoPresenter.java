@@ -129,7 +129,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("view", "Course");
 				
 				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				if(getView().getFirstSelectedValue().get(0)!=null && result.getSubdomain().get(0)!=null){
+				if(getView().getFirstSelectedValue()!=null && getView().getFirstSelectedValue().size()>0 && result.getSubdomain().get(0)!=null){
 					selectedValues.put(getView().getFirstSelectedValue().get(0),result.getSubdomain().get(0).getSubdomainId()!=null?result.getSubdomain().get(0).getSubdomainId():null);
 				}
 				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
@@ -162,7 +162,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				folderDo.setQuestions(createDo.getQuestions());
 				//folderDo.setGooruOid(id);
 				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				if(getView().getFirstSelectedValue()!=null && getView().getFirstSelectedValue().get(0)!=null && folderDo.getSubdomain().get(0)!=null){
+				if(getView().getFirstSelectedValue()!=null && getView().getFirstSelectedValue().size()>0  && folderDo.getSubdomain().get(0)!=null){
 					selectedValues.put(getView().getFirstSelectedValue().get(0),folderDo.getSubdomain().get(0).getSubdomainId()!=null?folderDo.getSubdomain().get(0).getSubdomainId():null);
 				}
 				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){

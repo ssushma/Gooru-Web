@@ -140,7 +140,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					}else{
 						getView().disableAndEnableBreadCums(true);
 					}
-					System.out.println("intoi t::"+type);
 					collectionInfoPresenter.setCollectionType(type);
 					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
