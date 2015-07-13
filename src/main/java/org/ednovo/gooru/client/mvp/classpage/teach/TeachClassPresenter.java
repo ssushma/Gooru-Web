@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresent
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
-import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;

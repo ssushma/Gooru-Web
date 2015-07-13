@@ -69,7 +69,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private int count = 0;
 
 	@Override
 	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId,String pathwayId) {
@@ -187,7 +186,8 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
-				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<UserDataDo>>() {});
+				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<ArrayList<UserDataDo>>() {});
+				logger.info("collectionResourcesList--"+collectionResourcesList);
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
@@ -200,8 +200,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	@Override
 	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaDataByUserAndSession(ClassDo classObj,
 			String collectionId, String classId, String userId, String sessionId) {
-
-		logger.info(" getCollectionMetaDataByUserAndSession started--- count "+count);
 
 		JsonRepresentation jsonRep = null;
 		JsonRepresentation jsonRep2 = null;
@@ -221,7 +219,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		try {
 			
 			if(getSessionStatus(url)){
-				logger.info(" getCollectionMetaDataByUserAndSession url2:+--- "+url2);
+				logger.info("getCollectionMetaDataByUserAndSession url2:+--- "+url2);
 				JsonResponseRepresentation jsonResponseRep2 = ServiceProcessor.get(url2, getRestUsername(), getRestPassword(),true);
 				jsonRep2 = jsonResponseRep2.getJsonRepresentation();
 
@@ -230,10 +228,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				logger.info("API collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
 			}
 			
-			
-			
-			
-			logger.info("try end collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
@@ -241,38 +235,34 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		return  collectionSummaryMetaDataDoList;
 	}
 	
-	
 	public boolean getSessionStatus(String url){
 		JsonRepresentation jsonRep = null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		boolean status=false;
-
+		boolean status=true;
+		int statusCount=0;
+		String message="";
 		try {
-			if(jsonResponseRep.getStatusCode()==200){
-			if(jsonRep.getJsonObject().getJSONObject("message").getString("status").equalsIgnoreCase("completed")){
-				status= true;
-			}else{
-				if (count < 10) {
-					count++;
-					getSessionStatus(url);
-
-				} else if(count >=10){
-						count=0;
-						status=false;
-						return status;
+			do {
+				if (statusCount < 10) {
+					JsonResponseRepresentation jsonResponseRep = ServiceProcessor
+							.get(url, getRestUsername(), getRestPassword(), true);
+					jsonRep = jsonResponseRep.getJsonRepresentation();
+					message=jsonRep.getJsonObject().getJSONObject("message").getString("status");
+					statusCount++;
+				} else {
+					status = false;
 				}
-			}
-			}else{
-				return false;
-			}
+				if(!status){
+					break;
+				}
+			} while (!message.equalsIgnoreCase("completed"));
 		}catch (JSONException e) {
-				// TODO: handle exception
-			}
+			e.printStackTrace();
+		}
+		logger.info("last return--"+status);
 		return status;
-		
 	}
-
+	
+	
 
 	@Override
 	public String setHTMLtoPDF(String htmlString,String fileName,boolean isClickedOnEmail) {
@@ -304,7 +294,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}
 		return downloadUrl;
 	}
-
 
 	@Override
 	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId) {

@@ -215,4 +215,6 @@ public interface FolderService extends BaseService {
 	
 	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId)  throws GwtException;
 
+	void updateCollectionDetails(String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
+
 }

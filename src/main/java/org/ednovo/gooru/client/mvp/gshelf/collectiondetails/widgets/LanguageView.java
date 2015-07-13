@@ -1,8 +1,18 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.uc.PPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -15,8 +25,9 @@ public class LanguageView extends Composite {
 	@UiField HTMLPanel mainContainer;
 	
 	@UiField TextArea languegeObjective;
+	@UiField PPanel errorPanel;
 	
-	
+	boolean isProfanity;
 	
 	private static LanguageViewUiBinder uiBinder = GWT
 			.create(LanguageViewUiBinder.class);
@@ -30,13 +41,55 @@ public class LanguageView extends Composite {
 	public LanguageView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		mainContainer.getElement().setId("languageObjective");
+		errorPanel.setVisible(false);
+		languegeObjective.addKeyUpHandler(new KeyUpHandler() {
+			
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				// TODO Auto-generated method stub
+				isProfanity=false;
+				errorPanel.setVisible(false);
+				languegeObjective.removeStyleName("textAreaErrorMessage");
+				
+			}
+		});
+		
+		languegeObjective.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				// TODO Auto-generated method stub
+				checkProfanity(languegeObjective.getText());
+			}
+		});
+		
 	}
 	
 	public String getLanguageObjective(){
 		
-		return languegeObjective.getText();
+		if(!isProfanity){
+			return languegeObjective.getText();
+		}else{
+			return "";
+		}
+		
 	}
 	
+	
+	public void checkProfanity(String textValue){
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text",textValue);
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				isProfanity=value;
+				if(isProfanity){
+					errorPanel.setVisible(true);
+					languegeObjective.addStyleName("textAreaErrorMessage");
+				}
+			}
+		});
+	}
 	
 	
 	

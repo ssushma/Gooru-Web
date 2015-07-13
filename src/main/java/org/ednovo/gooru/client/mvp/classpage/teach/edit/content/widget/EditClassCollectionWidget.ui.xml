@@ -9,7 +9,7 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="contentTableCellInner">
 		   <g:HTMLPanel styleName="squaredOne">
-		      <g:CheckBox></g:CheckBox>
+		      <g:CheckBox ui:field="visiblityLbl"></g:CheckBox>
 		      <uc:LabelUc></uc:LabelUc>
 		   </g:HTMLPanel>
 		</g:HTMLPanel>
