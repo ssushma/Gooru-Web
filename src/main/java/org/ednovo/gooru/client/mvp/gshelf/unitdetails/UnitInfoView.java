@@ -379,7 +379,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup(UNIT);
+			getUiHandlers().invokeTaxonomyPopup(UNIT,ulSelectedItems);
 		}
 	}
 
@@ -389,12 +389,21 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		Iterator<Widget> widgets = selectedUlContainer.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
-			if(widget instanceof LiPanelWithClose){
+			if(widget instanceof LiPanelWithClose && isWidgetExists(((LiPanelWithClose) widget).getId())){
 				ulSelectedItems.add(widget);
 			}
 		}
-		
-		
-		
+	}
+
+	private boolean isWidgetExists(long id) {
+		boolean flag = true;
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == id){
+				flag = false;
+			}
+		}
+		return flag;
 	}
 }

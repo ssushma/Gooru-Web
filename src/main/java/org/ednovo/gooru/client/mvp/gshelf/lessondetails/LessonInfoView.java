@@ -319,12 +319,20 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	
 	private class OnClickTaxonomy implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			
 			getUiHandlers().invokeTaxonomyPopup("Lesson");
 		}
-		
+	}
+	
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				ulSelectedItems.add(widget);
+			}
+		}
 	}
 }
