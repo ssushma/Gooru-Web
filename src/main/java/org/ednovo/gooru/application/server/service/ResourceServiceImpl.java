@@ -324,10 +324,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setTitle(jsonRep.getJsonObject().isNull("title")?"":jsonRep.getJsonObject().getString("title"));
 				obj.setSharing(jsonRep.getJsonObject().isNull("sharing")?"":jsonRep.getJsonObject().getString("sharing"));
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
+				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
 				obj.setUser(user);
-				
+
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<CollectionItemDo>();
 				for(int i=0;i<array.length();i++){

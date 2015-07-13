@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team
@@ -49,7 +50,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit);
+	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit,FolderDo courseObj);
 
 	public void checkProfanity(String textValue, boolean isCreate, int index,
 			String collectionType);
@@ -59,5 +60,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	public void uploadCollectionImage(CreateDo createOrUpDate);
 
 	void showStandardsPopup(String standardVal, String standardsDesc);
+
+	public void invokeTaxonomyPopup(String type);
 
 }

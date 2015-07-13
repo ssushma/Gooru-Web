@@ -7,6 +7,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -115,6 +116,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	@UiHandler("k12Btn")
 	public void onClickK12Btn(ClickEvent event){
 		setButtonActiveStyle(k12Btn);
+		clearAllContainers();
 		getUiHandlers().populateK12TaxonomyData(1,"subject",0,20); 
 	}
 	
@@ -126,9 +128,11 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	@UiHandler("higherEduBtn")
 	public void onClickHigherEduBtn(ClickEvent event){
 		setButtonActiveStyle(higherEduBtn);
+		clearAllContainers();
 		getUiHandlers().getPopulateHigherEduData(2,"subject",0,20);
 	}
 	
+
 	/**
 	 * 
 	 * @param event
@@ -146,6 +150,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	@UiHandler("profLearningBtn")
 	public void onClickProfLearningBtn(ClickEvent event){
 		setButtonActiveStyle(profLearningBtn);
+		clearAllContainers();
 		getUiHandlers().populateProfLearningData(3,"domain",0,20);
 	}
 	
@@ -201,6 +206,9 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		public void onClick(ClickEvent event) {
 			setSubCouDomainActiveStyle(liPanel,previousSelectedLiPanel);
 			previousSelectedLiPanel = liPanel;
+			courseUlContainer.clear();
+			domainUlContainer.clear();
+			standardsUlContainer.clear();
 			getUiHandlers().getCoursesBasedOnSelectedSub(subId,"course",0,20);
 		}
 	}
@@ -240,6 +248,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		public void onClick(ClickEvent event) {
 			setSubCouDomainActiveStyle(liPanel,previousSelectedCourseLiPanel);
 			previousSelectedCourseLiPanel = liPanel;
+			domainUlContainer.clear();
+			standardsUlContainer.clear();
 			getUiHandlers().getDomainsBasedOnSelectedCourse(courseId,"domain",0,20);
 		}
 	}
@@ -253,7 +263,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(courseSubjectDo.getName());
 				liPanel.setTitle(courseSubjectDo.getName());
-				title.addClickHandler(new OnClickDomain(liPanel,courseSubjectDo.getDomainId(),title)); 
+				liPanel.setCodeId(courseSubjectDo.getSubdomainId());
+				title.addClickHandler(new OnClickDomain(liPanel,courseSubjectDo.getSubdomainId(),title)); 
 				liPanel.add(title);
 				domainUlContainer.add(liPanel);
 			}
@@ -268,11 +279,11 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	
 	public class OnClickDomain implements ClickHandler{
 		LiPanel liPanel;
-		int id;
+		int subDomainId;
 		Anchor title;
-		public OnClickDomain(LiPanel liPanel,int id,Anchor title) {
+		public OnClickDomain(LiPanel liPanel,int subDomainId,Anchor title) {
 			this.liPanel = liPanel;
-			this.id = id;
+			this.subDomainId = subDomainId;
 			this.title = title;
 		}
 		@Override
@@ -280,10 +291,11 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			if("Unit".equalsIgnoreCase(viewType)){
 				setStandardsActiveStyle(liPanel,previousSelectedDomainLiPanel);
 				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
-				liPanelWithClose.setId(id);
+				liPanelWithClose.setId(subDomainId);
 				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
+						removeSelectedDomainStyle(liPanelWithClose,viewType);
 						liPanelWithClose.removeFromParent();
 					}
 				});
@@ -292,8 +304,72 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				setSubCouDomainActiveStyle(liPanel,previousSelectedDomainLiPanel);
 			}
 			previousSelectedDomainLiPanel = liPanel;
-			getUiHandlers().getStdBasedOnSelectedDomain();
+			standardsUlContainer.clear();
+			getUiHandlers().getStdBasedOnSelectedDomain(subDomainId);
 		}
+	}
+	
+	
+
+	@Override
+	public void addTaxonomyStandards(List<DomainStandardsDo> taxonomyStdList) {
+		standardsUlContainer.clear();
+		
+		for(DomainStandardsDo domainStandardsDo:taxonomyStdList){
+			LiPanel liPanel=new LiPanel();
+			Anchor title=new Anchor(domainStandardsDo.getCode());
+			liPanel.setTitle(domainStandardsDo.getCode());
+			liPanel.setCodeId(domainStandardsDo.getCodeId());
+			title.addClickHandler(new OnClickStandards(liPanel,domainStandardsDo.getCodeId(),title)); 
+			liPanel.add(title);
+			standardsUlContainer.add(liPanel);
+		}
+		/*if(standardsUlContainer.getWidgetCount()>0){
+			standardsUlContainer.getWidget(0).addStyleName("active");
+			previousSelectedStdLiPanel = (LiPanel) standardsUlContainer.getWidget(0);
+		}*/
+	}
+	
+	
+
+	public class OnClickStandards implements ClickHandler{
+		LiPanel liPanel;
+		int id;
+		Anchor title;
+		public OnClickStandards(LiPanel liPanel,int id,Anchor title) {
+			this.liPanel = liPanel;
+			this.id = id;
+			this.title = title;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			setStandardsActiveStyle(liPanel,previousSelectedStdLiPanel);
+			final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
+			liPanelWithClose.setId(id);
+			liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					removeSelectedDomainStyle(liPanelWithClose, viewType); 
+					liPanelWithClose.removeFromParent();
+				}
+			});
+			addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
+			previousSelectedStdLiPanel = liPanel;
+		}
+	} 
+
+
+	public void setStandardsActiveStyle(LiPanel selectedLiPanel,LiPanel previousSelectedStdLiPanel) {
+		if(selectedLiPanel.getStyleName().contains("active")){ 
+			selectedLiPanel.removeStyleName("active");
+		}else{
+			selectedLiPanel.addStyleName("active");
+		}
+	}
+	
+	private void setSubCouDomainActiveStyle(LiPanel selectedLiPanel,LiPanel previousSelectedLiPanel) {
+		selectedLiPanel.addStyleName("active");
+		previousSelectedLiPanel.removeStyleName("active");
 	}
 	
 	public void addOrRemoveContent(LiPanel selectedLiPanel,	LiPanel previousSelectedDomainLiPanel, LiPanelWithClose liPanelWithClose) {
@@ -314,59 +390,35 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			}
 		}
 	}
-
-	@Override
-	public void addTaxonomyStandards() {
-		standardsUlContainer.clear();
-		for(int i=0;i<11;i++){
-			LiPanel liPanel=new LiPanel();
-			Anchor title=new Anchor("Standard "+i);
-			liPanel.setTitle("Standard "+i);
-			title.addClickHandler(new OnClickStandards(liPanel,i,title)); 
-			liPanel.add(title);
-			standardsUlContainer.add(liPanel);
-		}
-		standardsUlContainer.getWidget(0).addStyleName("active");
-		previousSelectedStdLiPanel = (LiPanel) standardsUlContainer.getWidget(0);
-	}
 	
-	
-
-	public class OnClickStandards implements ClickHandler{
-		LiPanel liPanel;
-		int id;
-		Anchor title;
-		public OnClickStandards(LiPanel liPanel,int id,Anchor title) {
-			this.liPanel = liPanel;
-			this.id = id;
-			this.title = title;
-		}
-		@Override
-		public void onClick(ClickEvent event) {
-			setStandardsActiveStyle(liPanel,previousSelectedStdLiPanel);
-			previousSelectedStdLiPanel = liPanel;
-		}
-	} 
-
-
-	public void setStandardsActiveStyle(LiPanel selectedLiPanel,LiPanel previousSelectedStdLiPanel) {
-		if(selectedLiPanel.getStyleName().contains("active")){ 
-			selectedLiPanel.removeStyleName("active");
+	public void removeSelectedDomainStyle(LiPanelWithClose liPanelWithClose, String type) {
+		Iterator<Widget> widgets;
+		if("Unit".equalsIgnoreCase(type)){
+			widgets = domainUlContainer.iterator();
 		}else{
-			selectedLiPanel.addStyleName("active");
+			widgets = standardsUlContainer.iterator();
 		}
-	}
-	
-	private void setSubCouDomainActiveStyle(LiPanel selectedLiPanel,LiPanel previousSelectedLiPanel) {
-		selectedLiPanel.addStyleName("active");
-		previousSelectedLiPanel.removeStyleName("active");
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel && (((LiPanel) widget).getCodeId()==liPanelWithClose.getId())){
+				widget.removeStyleName("active");
+			}
+		}
 	}
 
 	@Override
 	public void setCurrentTypeView(String viewType) {
 		this.viewType = viewType;
 		selectedUlContainer.clear();
+		clearAllContainers();
 		setButtonActiveStyle(k12Btn);
+	}
+	
+	private void clearAllContainers() {
+		subjectUlContainer.clear();
+		courseUlContainer.clear();
+		domainUlContainer.clear();
+		standardsUlContainer.clear();
 	}
 
 }

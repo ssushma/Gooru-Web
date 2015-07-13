@@ -201,4 +201,5 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	public void setTeacherImage(ClasspageItemDo classpageItemDo){
       this.classpageItemDo=classpageItemDo;
 	}
+	
 }
