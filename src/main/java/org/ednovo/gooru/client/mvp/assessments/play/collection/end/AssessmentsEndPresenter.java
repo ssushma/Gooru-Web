@@ -181,9 +181,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			collectionPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
 		}
 	}
-	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions){
-		getView().displayScoreCount(collectionScore,noOfQuestions);
-	}
 
 
 	public AnalyticsServiceAsync getAnalyticService() {
@@ -235,30 +232,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
-	public void displayScoreCountData(Integer score,Integer questionCount){
-//		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
-//			int questionCount=0;
-//			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
-//				if(collectionDo.getCollectionItems().get(i).getResource().getResourceType()!=null){
-//					String resourceTypeName=collectionDo.getCollectionItems().get(i).getResource().getResourceType().getName();
-//					if(resourceTypeName!=null&&resourceTypeName.equalsIgnoreCase("assessment-question")){
-//						questionCount++;
-//					}
-//				}
-//			}
-		if(questionCount!=null)
-		{
-			if(questionCount==0){
-				displayScoreCount(questionCount,questionCount);
-			}else{
-				displayScoreCount(score,questionCount);
-			}
-		}
-		else
-		{
-			questionCount = 0;
-			displayScoreCount(score,questionCount);
-		}
+	public void displayScoreCountData(CollectionSummaryMetaDataDo result){
+		getView().displayScoreCount(result);
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
@@ -279,7 +254,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 						getView().setSessionsData(result.get(0).getSession());
 						}
 					
-					displayScoreCountData(result.get(0).getScore(),result.get(0).getScorableQuestionCount());
+					displayScoreCountData(result.get(0));
 					getView().setCollectionMetaDataByUserAndSession(result);
 					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 				}else{
