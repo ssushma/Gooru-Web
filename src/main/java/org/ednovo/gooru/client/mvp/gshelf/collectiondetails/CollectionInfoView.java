@@ -284,7 +284,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			});
 			standardsDropListValues.add(liPanel);
 		}
-
 	}
 
 	public void setDetaultImage(String collectionType){
@@ -305,7 +304,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				setDetaultImage(courseObj.getType());
 			}
 		}
-
 		if(courseObj!=null){
             if(courseObj.getStandards()!=null && courseObj.getStandards().size()>0){
                 //Render the existing standards
@@ -326,16 +324,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         }
 		setStaticData(type);			
-
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
-
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	public void setStaticData(String type)
 	{   
@@ -429,7 +426,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	protected void setDepthOfKnlze() {
 		List<String> depthofknowledgedetails = new ArrayList<String>();
-
 		if(courseObjG.getDepthOfKnowledges()!=null){
 			if(courseObjG.getDepthOfKnowledges().size()>0){
 				for(int i=0;i<courseObjG.getDepthOfKnowledges().size();i++){
@@ -522,7 +518,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		// TODO Auto-generated method stub
 		super.setInSlot(slot, content);
 		if(slot==CollectionInfoPresenter.CENTURYSKILLS){
 			getCenturySkillContainer().clear();
@@ -531,14 +526,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 
 	private class OnClickTaxonomy implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
 			getUiHandlers().invokeTaxonomyPopup("collection");
 		}
-		
 	}
-
-
-
 }

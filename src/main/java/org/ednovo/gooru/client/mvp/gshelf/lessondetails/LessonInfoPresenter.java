@@ -197,8 +197,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	@Override
 	public void callCourseInfoTaxonomy(){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-		AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, lessonId, null, new SimpleAsyncCallback<FolderDo>() {
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, unitId, null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				if(result.getSubdomain()!=null && result.getSubdomain().size()>0){
