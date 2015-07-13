@@ -34,9 +34,8 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 	public TeachStudentReportPopupWidget() {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.getElement().getStyle().setZIndex(999999);
-		this.setWidth((Window.getClientWidth()-100)+"px");
 		this.setGlassEnabled(true);
-		this.setPopupPosition(50, Window.getScrollTop()+50);
+		this.setPopupPosition(0, Window.getScrollTop()+50);
 		this.show();
 		setData();
 	}

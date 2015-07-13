@@ -40,6 +40,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 
 import com.google.gwt.ajaxloader.client.AjaxLoader;
@@ -839,6 +840,22 @@ public class StringUtil implements ClientConstants {
 		    format = format + s +" sec";
 	    }
 	    return format;
+	}
+
+	public static String getHighlightStyle(int score) {
+		String scoreStyle = "grey";
+		if(score>0&&score<60) {
+			scoreStyle = CssTokens.RED_STYLE;
+		} else if(score>=60&&score<=69) {
+			scoreStyle = CssTokens.ORANGE_STYLE;
+		} else if(score>=70&&score<=79) {
+			scoreStyle = CssTokens.YELLOW_GREEN_STYLE;
+		} else if(score>=80&&score<=89) {
+			scoreStyle = CssTokens.LIGHT_GREEN_STYLE;
+		} else if(score>=90&&score<=100) {
+			scoreStyle = CssTokens.GREEN_STYLE;
+		}
+		return scoreStyle;
 	}
 
 }

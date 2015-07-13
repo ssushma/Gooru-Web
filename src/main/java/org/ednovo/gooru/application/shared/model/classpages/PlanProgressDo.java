@@ -44,7 +44,6 @@ public class PlanProgressDo implements Serializable{
 	private String gooruOId;
 	private String scoreStatus;
 	private String type;
-	private ArrayList<PlanProgressDo> item;
 	private int views;
 	private int scoreInPercentage;
 	private long timespent;
@@ -57,6 +56,10 @@ public class PlanProgressDo implements Serializable{
 	private String evidence;
 	private long lastAccessed;
 	private long totalStudyTime;
+	private String userName;
+	private String userUId;
+	private ArrayList<PlanProgressDo> item;
+	private ArrayList<PlanProgressDo> usageData;
 	
 	public String getTitle() {
 		return title;
@@ -81,12 +84,6 @@ public class PlanProgressDo implements Serializable{
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	public ArrayList<PlanProgressDo> getItem() {
-		return item;
-	}
-	public void setItem(ArrayList<PlanProgressDo> item) {
-		this.item = item;
 	}
 	public int getViews() {
 		return views;
@@ -159,5 +156,29 @@ public class PlanProgressDo implements Serializable{
 	}
 	public void setTotalStudyTime(long totalStudyTime) {
 		this.totalStudyTime = totalStudyTime;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserUId() {
+		return userUId;
+	}
+	public void setUserUId(String userUId) {
+		this.userUId = userUId;
+	}
+	public ArrayList<PlanProgressDo> getItem() {
+		return item;
+	}
+	public void setItem(ArrayList<PlanProgressDo> item) {
+		this.item = item;
+	}
+	public ArrayList<PlanProgressDo> getUsageData() {
+		return usageData;
+	}
+	public void setUsageData(ArrayList<PlanProgressDo> usageData) {
+		this.usageData = usageData;
 	}
 }
