@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -679,8 +680,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
 						        		Label anserlbl=new Label();
 						        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
-						        			 JSONObject authorObject = value.isObject();
+						        			 Map<String, Integer> authorObject = result.get(i).getOptions();
 						        			 if(authorObject.keySet().size()!=0){
 						        				 String userSelectedOption=authorObject.keySet().iterator().next();
 							        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
@@ -794,8 +794,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        		}
 						        		 answerspnl.setStyleName(res.css().setMarginAuto());
 						        		 data.setValue(i, 3, answerspnl.toString());
-						        	}else if(HT_RO.equalsIgnoreCase(questionType)){
-						        		VerticalPanel answerspnl=new VerticalPanel();
+						        	}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
+							        	VerticalPanel answerspnl=new VerticalPanel();
 						        		if(result.get(i).getAnswerObject()!=null) {
 						        			Label viewResponselbl=new Label(VIEWRESPONSE);
 						        			viewResponselbl.setStyleName("summaryViewResponse");
@@ -807,48 +807,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        		}
 						        		 answerspnl.setStyleName(res.css().setMarginAuto());
 						        		 data.setValue(i, 3, answerspnl.toString());
-						        	}else if(HT_HL.equalsIgnoreCase(questionType)){
-						        		VerticalPanel answerspnl=new VerticalPanel();
-						        		if(result.get(i).getAnswerObject()!=null) {
-						        			Label viewResponselbl=new Label(VIEWRESPONSE);
-						        			viewResponselbl.setStyleName("summaryViewResponse");
-						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						        			answerspnl.add(viewResponselbl);
-						        		}
-						        		 answerspnl.setStyleName(res.css().setMarginAuto());
-						        		 data.setValue(i, 3, answerspnl.toString());
-						        	}
-						        	
-						        	else if(HS_TXT.equalsIgnoreCase(questionType)){
-						        		VerticalPanel answerspnl=new VerticalPanel();
-						        		if(result.get(i).getAnswerObject()!=null) {
-						        			Label viewResponselbl=new Label(VIEWRESPONSE);
-						        			viewResponselbl.setStyleName("summaryViewResponse");
-						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						        			answerspnl.add(viewResponselbl);
-						        		}
-						        		 answerspnl.setStyleName(res.css().setMarginAuto());
-						        		 data.setValue(i, 3, answerspnl.toString());
-						        	}
-						        	else if(HS_IMG.equalsIgnoreCase(questionType)){
-						        		VerticalPanel answerspnl=new VerticalPanel();
-						        		if(result.get(i).getAnswerObject()!=null) {
-						        			Label viewResponselbl=new Label(VIEWRESPONSE);
-						        			viewResponselbl.setStyleName("summaryViewResponse");
-						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						        			answerspnl.add(viewResponselbl);
-						        		}
-						        		answerspnl.setStyleName(res.css().setMarginAuto());
-						        		data.setValue(i, 2, answerspnl.toString());
 						        	}
 						        	Image correctImg=new Image();      	            
 						        	if(isTickdisplay){
@@ -926,8 +884,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
 					        		Label anserlbl=new Label();
 					        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-					        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
-					        			 JSONObject authorObject = value.isObject();
+					        			// JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
+					        			 //JSONObject authorObject = value.isObject();
+					        			 Map<String, Integer> authorObject=result.get(i).getOptions();
+					        			 
 					        			 if(authorObject.keySet().size()!=0){
 					        				 String userSelectedOption=authorObject.keySet().iterator().next();
 						        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
@@ -1027,7 +987,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        		}
 					        		 answerspnl.setStyleName(res.css().setMarginAuto());
 					        		 data.setValue(i, 2, answerspnl.toString());
-					        	}else if(HT_RO.equalsIgnoreCase(questionType)){
+					        	}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
 					        		VerticalPanel answerspnl=new VerticalPanel();
 					        		if(result.get(i).getAnswerObject()!=null) {
 					        			Label viewResponselbl=new Label(VIEWRESPONSE);
@@ -1040,48 +1000,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        		}
 					        		 answerspnl.setStyleName(res.css().setMarginAuto());
 					        		 data.setValue(i, 2, answerspnl.toString());
-					        	}else if(HT_HL.equalsIgnoreCase(questionType)){
-					        		VerticalPanel answerspnl=new VerticalPanel();
-					        		if(result.get(i).getAnswerObject()!=null) {
-					        			Label viewResponselbl=new Label(VIEWRESPONSE);
-					        			viewResponselbl.setStyleName("summaryViewResponse");
-					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-					        			answerspnl.add(viewResponselbl);
-					        		}
-					        		 answerspnl.setStyleName(res.css().setMarginAuto());
-					        		 data.setValue(i, 2, answerspnl.toString());
-					        	}
-					        	else if(HS_TXT.equalsIgnoreCase(questionType)){
-					        		VerticalPanel answerspnl=new VerticalPanel();
-					        		if(result.get(i).getAnswerObject()!=null) {
-					        			Label viewResponselbl=new Label(VIEWRESPONSE);
-					        			viewResponselbl.setStyleName("summaryViewResponse");
-					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-					        			answerspnl.add(viewResponselbl);
-					        		}
-					        		 answerspnl.setStyleName(res.css().setMarginAuto());
-					        		 data.setValue(i, 2, answerspnl.toString());
-					        	}
-					        	else if(HS_IMG.equalsIgnoreCase(questionType)){
-					        		VerticalPanel answerspnl=new VerticalPanel();
-					        		if(result.get(i).getAnswerObject()!=null) {
-					        			Label viewResponselbl=new Label(VIEWRESPONSE);
-					        			viewResponselbl.setStyleName("summaryViewResponse");
-					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-					        			answerspnl.add(viewResponselbl);
-					        		}
-					        		answerspnl.setStyleName(res.css().setMarginAuto());
-					        		data.setValue(i, 2, answerspnl.toString());
-					        	}
+					        	}  
 					           
 					            //Set attempts
 					            Label attempts=new Label(Integer.toString(noOfAttempts));

@@ -111,4 +111,5 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void showMessageWhenDataNotFound();
 
 	public void displayWhatsNextContent(FolderWhatsNextCollectionDo result, String urlValue);
+
 }

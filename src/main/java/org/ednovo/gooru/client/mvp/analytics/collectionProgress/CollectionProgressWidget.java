@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -261,7 +262,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 				        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
 			        		  }else{
 			        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
-			        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
+			        			//  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
+			        			  
+			        			  Map<String, Integer> answerOption = collectionProgressData.get(j).getUserData().get(i).getOptions();
 			        			  String answer="";
 			        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
 			        			  if((typeOfQuestion!=null) && (typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE"))){
@@ -286,8 +289,8 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        				  }else{
 			        				  String answerText="";
 					        		  if(answerOption!=null){
-					        			  JSONValue value = JSONParser.parseStrict(answerOption);
-						        		  JSONObject optionObj = value.isObject();
+					        			  
+					        			  Map<String, Integer> optionObj =answerOption;
 						        		  Set<String> keys=optionObj.keySet();
 						        		  if(keys.iterator().hasNext())
 						        			  answer= keys.iterator().next().toString();
