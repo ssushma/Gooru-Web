@@ -2751,6 +2751,9 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 
 
+				}else{
+					//There are no previous usage data available. loading player in normal mode.
+					getCollectionDetails();
 				}
 			}
 		});
