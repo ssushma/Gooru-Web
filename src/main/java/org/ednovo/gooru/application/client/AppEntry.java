@@ -25,7 +25,6 @@
 
 package org.ednovo.gooru.application.client;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,8 +38,6 @@ import org.ednovo.gooru.client.uc.UcCBundle;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.UmbrellaException;
-import com.google.gwt.maps.client.LoadApi;
-import com.google.gwt.maps.client.LoadApi.LoadLibrary;
 import com.google.gwt.user.client.Window;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 /**
@@ -78,8 +75,8 @@ public class AppEntry implements EntryPoint {
 
 			@Override
 			public void onUncaughtException(Throwable e) {
-				Throwable unwrapped = getExceptionToDisplay(e);
-				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
+//				Throwable unwrapped = getExceptionToDisplay(e);
+//				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
 			}
 		});
 
