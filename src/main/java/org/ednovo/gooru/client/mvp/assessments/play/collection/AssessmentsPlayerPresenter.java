@@ -280,7 +280,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
     private String lastViewedResource=null;
     private String lastView=null;
-    private String lastEventType= null;
+    private String lastEventType= PlayerDataLogEvents.STOP_EVENT_TYPE;
 
     public String getLastEventType() {
 		return lastEventType;
@@ -538,8 +538,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		isPlayerRefreshed();
-//		getCollectionDetails();
-		checkPreviousSessionPlayed();
+		getCollectionDetails();
+		//checkPreviousSessionPlayed();
 	}
 
 	/**
