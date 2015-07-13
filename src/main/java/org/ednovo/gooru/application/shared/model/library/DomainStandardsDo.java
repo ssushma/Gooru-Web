@@ -15,7 +15,6 @@ public class DomainStandardsDo implements Serializable {
 	private String label;
 	private String code;
 
-
 	public DomainStandardsDo(){}
 
 	public Integer getCodeId() {

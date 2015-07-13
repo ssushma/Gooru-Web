@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.taxonomy;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
@@ -8,7 +9,7 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void getDomainsBasedOnSelectedCourse(int classification, String taxonomyType, int offset, int limit);
 
-	void getStdBasedOnSelectedDomain();
+	void getStdBasedOnSelectedDomain(int subDomainId);
 
 //	void getTaxonomySubjects();
 
@@ -16,6 +17,8 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void populateProfLearningData(int classification,String taxonomyType,int offSet,int limit);
 
-	void populateK12TaxonomyData(int classification, String taxonomyType, int offset, int limit);      
+	void populateK12TaxonomyData(int classification, String taxonomyType, int offset, int limit);
+
+	void addTaxonomyData(UlPanel selectedUlContainer);       
 
 }

@@ -210,4 +210,7 @@ public interface FolderService extends BaseService {
 	
 	
 	List<ListValuesDo> getDepthOfKnowledgesList() throws GwtException;
+	
+	List<ListValuesDo> getAudienceList() throws GwtException;
+
 }

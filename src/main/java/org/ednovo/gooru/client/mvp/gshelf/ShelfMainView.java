@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
+import org.ednovo.gooru.client.mvp.gshelf.util.EmptyCourseBuilderWidget;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -370,7 +371,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				 
 			}
 		}else{
-
+			 if(slot==ShelfMainPresenter.RIGHT_SLOT){
+				 pnlSlot.add(new EmptyCourseBuilderWidget() {
+					@Override
+					public void onClick() {
+						createCourseTemplate();
+					}
+				});
+			 }
 		}
 	}
 	/**
@@ -437,19 +445,19 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
 		}
 		//This will set the data in the right panel
-				if(selectedWidget!=null){
-					folderListDoChild.clear();
-					int childWidgetsCount=treeChildSelectedItem.getChildCount();
-					for (int i = 0; i < childWidgetsCount; i++) {
-						ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
-						folderListDoChild.add(widget.getCollectionDo());
-					}
-					if(FOLDER.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
-						getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
-					}else{
-						getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
-					}
-				}
+		if(selectedWidget!=null){
+			folderListDoChild.clear();
+			int childWidgetsCount=treeChildSelectedItem.getChildCount();
+			for (int i = 0; i < childWidgetsCount; i++) {
+				ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
+				folderListDoChild.add(widget.getCollectionDo());
+			}
+			if(FOLDER.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
+				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
+			}else{
+				getUiHandlers().setRightListData(folderListDoChild,((ShelfTreeWidget)treeChildSelectedItem.getWidget()).getCollectionDo());
+			}
+		}
 		if(selectedFolder!=null&&selectedItem!=null) { 
 			checkShelfRefreshStatus(selectedItem, selectedFolder);
 			ShelfTreeWidget selectedWidget1 = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
@@ -612,6 +620,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	@UiHandler("createNewCourse")
 	public void createNewCourseOrCollection(ClickEvent event) {
+		createCourseTemplate();
+	}
+	/**
+	 * This method is used to display create course template
+	 */
+	public void createCourseTemplate(){
 		if(FOLDER!=getViewType()&&isCreateCourse()){
 			setCreateCourse(false);
 			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");

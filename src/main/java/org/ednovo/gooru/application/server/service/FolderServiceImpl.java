@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.server.service;
 
+import org.restlet.data.Form;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -54,7 +55,6 @@ import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -674,7 +674,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			logger.info("rest point: "+ getRestEndPoint());
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri").toString());
 			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
 			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
 			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
@@ -775,5 +777,18 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		Integer statusCode = jsonResponseRep.getStatusCode();
 		return statusCode;
+	}
+
+	@Override
+	public List<ListValuesDo> getAudienceList() throws GwtException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_AUDIENCELIST,getLoggedInSessionToken());
+		getLogger().info("-- get Audience -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+
+		return listValues;
 	}
 }

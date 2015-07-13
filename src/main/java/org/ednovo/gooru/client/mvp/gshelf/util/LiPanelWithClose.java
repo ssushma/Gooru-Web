@@ -42,6 +42,7 @@ public class LiPanelWithClose extends Composite{
 	public LiPanelWithClose(String text){
 		 LiPanel panel = new LiPanel();
 		 Label titleText=new Label(text);
+		 titleText.addStyleName("inlineBlock");
 		 lnkClose=new Anchor("X");
 		 panel.add(titleText);
 		 panel.add(lnkClose);

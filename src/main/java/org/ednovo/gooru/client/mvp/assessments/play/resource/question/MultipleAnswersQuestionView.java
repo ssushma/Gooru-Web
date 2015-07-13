@@ -95,7 +95,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 		this.attemptedAnswerDo=attemptedAnswerDo;
 		renderQuestionAnswerOptions();
 		answerText.getElement().setInnerHTML(i18n.GL0665());
-		checkAnswer.setText(i18n.GL3460());
+		checkAnswer.setText(i18n.GL3460_4());
 	}
 
 	private void setQuestionTypeCaption(){

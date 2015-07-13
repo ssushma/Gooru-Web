@@ -29,6 +29,8 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
+import com.google.gwt.user.client.ui.VerticalPanel;
+
 /**
  * @author Search Team
  *
@@ -46,4 +48,8 @@ public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollection
 	 * This method is used to reset widgets
 	 */
 	public void resetWidgetPositions();
+	
+	public void loadingImage();
+	
+	public VerticalPanel getPanelCourseContainer();
 }

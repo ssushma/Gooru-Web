@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:ucp="urn:import:org.ednovo.gooru.client.uc.suggestbox.widget">
+	<g:HTMLPanel ui:field="pnlCourseGetting">
+		<div class="gettingStartedMain">
+			<panel:H1Panel ui:field="pnlH1Title"></panel:H1Panel>
+			<div class="emptyClass">
+				<div class="col-md-5 col-sm-5 ">
+					<div class="addCourse">
+						<ucp:Paragraph ui:field="pCreateFirstCourse"></ucp:Paragraph>
+						<p><g:Button ui:field="btnCreateCourse" styleName="primary btn-block">Create a course</g:Button></p>
+					</div>
+				</div>
+				<div class="col-md-7 col-sm-7 ">
+					<div class="measureStudents">
+						<ucp:Paragraph ui:field="pCreateText"></ucp:Paragraph>
+						<span><img class="img-responsive" src="images/folderTreeList.png"/></span>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+					<div class="findout">
+						<p>
+						<g:Anchor ui:field="lnkTextMyContent"></g:Anchor>
+						</p>
+					</div>
+				</div>
+			<div class="clearfix"></div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

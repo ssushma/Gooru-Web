@@ -1,37 +1,32 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui"
-	xmlns:ppanel="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:ppanel="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:standpanel="urn:import:org.ednovo.gooru.client.mvp.gshelf.collectiondetails"
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:w="urn:import:org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets">
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="collectionInfo">
-
 		<div class="collectionTitleDetails">
-
 			<ppanel:PPanel ui:field="colltitle"></ppanel:PPanel>
 			<p>
 				<g:TextBox styleName="form-control" ui:field="collectionTitle"
 					text="{i18n.GL3367}" title="{i18n.GL3367}" />
 				<g:Label ui:field="lblErrorMessage"></g:Label>
 			</p>
-
-
 		</div>
-
-
-
 		<div class="collectionImageDetails">
-			<g:HTMLPanel ui:field="thumbnailImageContainer" styleName="collectionThumbnail">
+			<g:HTMLPanel ui:field="thumbnailImageContainer"
+				styleName="collectionThumbnail">
 				<ppanel:PPanel ui:field="collimagetitle"></ppanel:PPanel>
 				<div class="thimbnailImage">
 					<g:Image ui:field="collThumbnail">
 					</g:Image>
 					<span class="thunailHover">
 						<g:Button styleName="secondary btn-block" ui:field="uploadImageLbl"></g:Button>
-
 					</span>
 				</div>
+
 
 			</g:HTMLPanel>
 
@@ -41,23 +36,14 @@
 					<g:TextArea styleName="form-control" ui:field="learningObjective" />
 					<g:Label ui:field="lblErrorMessageForLO"></g:Label>
 				</p>
-
 			</div>
-
-
 		</div>
-
-
-
-
-
 		<div class="collectionCoverBlock">
-
 			<div class="unitCoverHeader">
 
 				<div class="col-md-12 col-sm-12">
-				<ppanel:PPanel styleName="tagcollection" ui:field="tagcollectiontitle"></ppanel:PPanel>
-					
+					<ppanel:PPanel styleName="tagcollection" ui:field="tagcollectiontitle"></ppanel:PPanel>
+
 				</div>
 
 				<div class="clearfix"></div>
@@ -67,13 +53,13 @@
 				<div class="panel panel-default">
 					<div class="no-gutter">
 						<div class="col-md-4">
-							<h3>The Number System</h3>
+							<h3></h3>
 						</div>
 						<div class="col-md-8">
 							<div class="dropDownRight">
 								<div class="btn-group">
-									<button class="btn btn-primary" type="button">Select other from
-										taxonomy</button>
+									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
+										taxonomy</g:Button>
 									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
 										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
@@ -113,168 +99,23 @@
 
 				<div class="lessonCover">
 					<div class="panel panel-default">
-						<div class="panel-heading">Apply and extend previous understandings of
-							multiplication and division to devide fractions by fractions.</div>
-						<div class="panel-body">
-
-							<div class="fractionBlocks no-gutter">
-								<div class="fractionMultiBlock">
-									<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-									<div class="col-md-10 col-sm-10 frRight">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the 1500s, when an unknown
-											printer took a galley of type and scrambled it to make a type
-											specimen book. It has survived not only five centuries, but
-											also the leap into electronic typesetting, remaining
-											essentially unchanged.</p>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-								<div class="singleBlock">
-									<p>Lorem Ipsum is simply dummy text of the printing and
-										typesetting industry.</p>
-								</div>
-							</div>
-
-
-							<div class="fractionBlocks no-gutter">
-
-								<div class="fractionMultiBlock">
-									<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-									<div class="col-md-10 col-sm-10 frRight">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the 1500s, when an unknown
-											printer took a galley of type and scrambled it to make a type
-											specimen book. It has survived not only five centuries, but
-											also the leap into electronic typesetting, remaining
-											essentially unchanged.</p>
-									</div>
-									<div class="clearfix"></div>
-
-								</div>
-
-								<div class="fractionMultiBlock">
-									<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-									<div class="col-md-10 col-sm-10 frRight">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the 1500s, when an unknown
-											printer took a galley of type and scrambled it to make a type
-											specimen book. It has survived not only five centuries, but
-											also the leap into electronic typesetting, remaining
-											essentially unchanged.</p>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-
-
-								<div class="fractionMultiBlock active">
-									<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-									<div class="col-md-10 col-sm-10 frRight">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the 1500s, when an unknown
-											printer took a galley of type and scrambled it to make a type
-											specimen book. It has survived not only five centuries, but
-											also the leap into electronic typesetting, remaining
-											essentially unchanged.</p>
-									</div>
-									<div class="clearfix"></div>
-								</div>
+						<g:HTMLPanel ui:field="standardsUI" styleName="panel-body">
 
 
 
 
-								<div class="fractionMultiBlock">
-									<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-									<div class="col-md-10 col-sm-10 frRight">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the 1500s, when an unknown
-											printer took a galley of type and scrambled it to make a type
-											specimen book. It has survived not only five centuries, but
-											also the leap into electronic typesetting, remaining
-											essentially unchanged.</p>
-									</div>
-									<div class="clearfix"></div>
-								</div>
 
 
-
-								<div class="singleBlock">
-									<p>Lorem Ipsum is simply dummy text of the printing and
-										typesetting industry.</p>
-								</div>
-							</div>
-
-
-
-							<div class="fractionBlocks no-gutter">
-								<div class="fractionMultiBlock">
-									<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-									<div class="col-md-10 col-sm-10 frRight">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the 1500s, when an unknown
-											printer took a galley of type and scrambled it to make a type
-											specimen book. It has survived not only five centuries, but
-											also the leap into electronic typesetting, remaining
-											essentially unchanged.</p>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-
-								<div class="singleBlock">
-									<p>Lorem Ipsum is simply dummy text of the printing and
-										typesetting industry.</p>
-								</div>
-							</div>
-
-
-							<div class="fractionBlocks no-gutter">
-								<div class="fractionMultiBlock">
-									<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-									<div class="col-md-10 col-sm-10 frRight">
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the 1500s, when an unknown
-											printer took a galley of type and scrambled it to make a type
-											specimen book. It has survived not only five centuries, but
-											also the leap into electronic typesetting, remaining
-											essentially unchanged.</p>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-								<div class="singleBlock">
-									<p>Lorem Ipsum is simply dummy text of the printing and
-										typesetting industry.</p>
-								</div>
-							</div>
-
-
-
-
-						</div>
+						</g:HTMLPanel>
 					</div>
 
 
-					<div class="filterTags">
-						<ul>
-							<li>
-								6.NS.B.3
-								<a href="">X</a>
-							</li>
 
-						</ul>
-					</div>
 
 
 
 
 				</div>
-
 
 
 			</div>
@@ -288,32 +129,14 @@
 		</div>
 
 
-
-
-
-
-
-		<div class="tagCourseOptions">
-
-			<p>Audience &amp; Purpose</p>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="list-group">
-
-						<a class="list-group-item" href="#">All Students</a>
-						<a class="list-group-item  active" href="#">Students who need
-							Intervention and Support</a>
-						<a class="list-group-item" href="#">Advanced Learner</a>
-						<a class="list-group-item" href="#">English Learner</a>
-						<a class="list-group-item" href="#">Teachers</a>
-					</div>
-				</div>
-
-				<div class="clearfix"></div>
+		<div class="tagCoursePanelFooter">
+			<div class="filterTags">
+				<uc:UlPanel ui:field="ulSelectedItems" />
 			</div>
-
+			<g:Label styleName="col-md-8 col-sm-7 mandatoryLabelError"
+				ui:field="lblGradeErrorMsg" />
 		</div>
-
+			<w:AudienceView ui:field="audienceContainer"></w:AudienceView>
 
 
 		<g:HTMLPanel styleName="addOptions">
@@ -323,16 +146,18 @@
 			</g:Anchor>
 			<g:Anchor ui:field="languageObj" text="{i18n.GL_SPL_PLUS} {i18n.GL3378}">
 			</g:Anchor>
+			<w:DepthKnowledgeView ui:field="depthOfKnowledgeContainer"></w:DepthKnowledgeView>
+			<g:HTMLPanel ui:field="centurySkillContainer"></g:HTMLPanel>
+			<w:LanguageView ui:field="languageObjectiveContainer"></w:LanguageView>
 		</g:HTMLPanel>
-		<w:DepthKnowledgeView ui:field="depthOfKnowledgeContainer"></w:DepthKnowledgeView>
-		<w:CenturySkillsView ui:field="centurySkillContainer"></w:CenturySkillsView>
-		<w:LanguageView ui:field="languageObjectiveContainer"></w:LanguageView>
+
 		<g:HTMLPanel styleName="standardDiv" ui:field="newdok">
 			<g:Label styleName="title" ui:field="newlbl"></g:Label>
 			<g:HTMLPanel styleName="normal" ui:field="newtype"></g:HTMLPanel>
 		</g:HTMLPanel>
 		<div class="stepsButtonGroup">
-			<g:Button styleName="secondary" ui:field="saveCollectionBtn"	text="{i18n.GL3368}" />
+			<g:Button styleName="secondary" ui:field="saveCollectionBtn"
+				text="{i18n.GL3368}" />
 		</div>
 		<div class="clearfix"></div>
 	</g:HTMLPanel>

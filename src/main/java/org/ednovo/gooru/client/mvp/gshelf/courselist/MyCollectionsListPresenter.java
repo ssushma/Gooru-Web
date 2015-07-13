@@ -40,6 +40,14 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
 	private ShelfMainPresenter shelfMainPresenter;
+
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String FOLDER= "Folder";
 	
 	/**
 	 * Constructor
@@ -60,12 +68,27 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	
 	@Override
 	public void setDataInContentSlot(final String type,String folderId,boolean isInnerSlot) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
-			@Override
-			public void onSuccess(FolderListDo result) {
-				getView().setData(type,result.getSearchResult(),true,true,null);
-			}
-		});
+		getView().loadingImage();
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+		getView().getPanelCourseContainer().clear();
+		if(FOLDER.equalsIgnoreCase(view)){
+			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
+				@Override
+				public void onSuccess(FolderListDo result) {
+					getView().setData(type,result.getSearchResult(),true,true,null);
+				}
+			});
+		}else{
+			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+				@Override
+				public void onSuccess(FolderListDo result) {
+					getView().setData(type,result.getSearchResult(),true,true,null);
+				}
+			});
+		}
 	}
 
 	@Override

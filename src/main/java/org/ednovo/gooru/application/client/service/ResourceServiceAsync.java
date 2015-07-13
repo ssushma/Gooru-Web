@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.shared.exception.GwtException;
+import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -183,4 +185,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     void update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData,AsyncCallback<CollectionDo> callback);
     
     void getResourceBasedUsersDetails(String resourceId,int offset,int limit,AsyncCallback<ArrayList<ResourceCollDo>> callback);
+    
+    void getCourseDataById(String courseID,AsyncCallback<FolderDo> callback) throws GwtException,ServerDownException;
 }

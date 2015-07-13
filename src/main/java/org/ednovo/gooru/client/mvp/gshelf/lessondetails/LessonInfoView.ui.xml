@@ -21,7 +21,7 @@
 <div class="dropDownRight">
 
 	<panel:HTMLEventPanel styleName="btn-group" ui:field="btnStandardsBrowse">
-	<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
+	<g:Button styleName="btn btn-primary" text="{i18n.GL3209}" title="{i18n.GL3209}"/>
 	<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
 	<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 	<g:InlineLabel styleName="sr-only"></g:InlineLabel>
@@ -33,7 +33,7 @@
 
 
 <div class="btn-group">
-  <button class="btn btn-primary" type="button">The Number System  </button>
+  <g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">The Number System  </g:Button>
   <button aria-expanded="false" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
     <span class="caret"></span>
     <span class="sr-only">Toggle Dropdown</span>
@@ -52,94 +52,30 @@
 <div class="clearfix"></div>
 </div>
 
-<div class="lessonCover">
-<div class="panel panel-default">
-<div class="panel-heading">Apply and extend previous understandings of multiplication and division to devide fractions by fractions.</div>
-<div class="panel-body">
-<uc:UlPanel ui:field="ulMainGradePanel"/>
-<g:HTMLPanel styleName="col-md-8 col-sm-7" ui:field="pnlGradeContainer"/>
-<div class="fractionBlocks no-gutter">
-<div class="fractionMultiBlock">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-</div>
-<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
-</div>
 
+			<div class="lessonCover">
+					<div class="panel panel-default">
+						<g:HTMLPanel ui:field="standardsUI" styleName="panel-body">
 
-<div class="fractionBlocks no-gutter">
-
-<div class="fractionMultiBlock">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-
-</div>
-
-<div class="fractionMultiBlock">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-</div>
-
-
-<div class="fractionMultiBlock active">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-</div>
+									
 
 
 
 
-<div class="fractionMultiBlock">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-</div>
+						</g:HTMLPanel>
+					</div>
 
 
-
-<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
-</div>
-
-
-
-<div class="fractionBlocks no-gutter">
-<div class="fractionMultiBlock">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-</div>
-
-<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
-</div>
-
-
-<div class="fractionBlocks no-gutter">
-<div class="fractionMultiBlock">
-<div class="col-md-2 col-sm-2 frLeft">6.NS.A.1</div>
-<div class="col-md-10 col-sm-10 frRight"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p></div>
-<div class="clearfix"></div>
-</div>
-<div class="singleBlock"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
-</div>
+	
 
 
 
 
-</div>
-</div>
+				</div>
 
 
 <div class="filterTags">
 <uc:UlPanel ui:field="ulSelectedItems"/>
-</div>
-
-
-
-
 </div>
 
 

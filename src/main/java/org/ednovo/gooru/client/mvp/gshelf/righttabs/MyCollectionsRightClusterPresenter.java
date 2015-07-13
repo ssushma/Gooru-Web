@@ -39,8 +39,10 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseSharePresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
@@ -56,6 +58,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	CourseSharePresenter courseSharePresenter;
 
 	UnitInfoPresenter unitInfoPresenter; 
+	
+	AssessmentPopupWidget assessmentPopup;
 	
 
 	ShelfMainPresenter shelfMainPresenter;
@@ -124,7 +128,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
 				}else if("Unit".equalsIgnoreCase(type)){ 
-					System.out.println("unit info hitted");
 					unitInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, unitInfoPresenter);
 				}else if("Lesson".equalsIgnoreCase(type)){
@@ -137,7 +140,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					}else{
 						getView().disableAndEnableBreadCums(true);
 					}
-					System.out.println("intoi t::"+type);
 					collectionInfoPresenter.setCollectionType(type);
 					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
@@ -163,7 +165,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
-				shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
+				//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
+				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
 		}else if(index==3){
@@ -237,6 +240,31 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			}else if(type.contains(LESSON)){
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON);
+			}else if(type.toLowerCase().contains(COLLECTION.toLowerCase())){
+				setTabItems(1, COLLECTION, null);
+				setUnitTemplate(COLLECTION);
+			}else if(type.toLowerCase().contains(ASSESSMENT.toLowerCase())){
+				Window.enableScrolling(false);
+				assessmentPopup=new AssessmentPopupWidget() {
+					@Override
+					public void clickOnNoramlAssessmentClick() {
+						Window.enableScrolling(true);
+						setTabItems(1, ASSESSMENT, null);
+						setUnitTemplate(ASSESSMENT);
+						assessmentPopup.hide();
+					}
+					@Override
+					public void clickOnExternalAssessmentClick() {
+						assessmentPopup.hide();
+						Window.enableScrolling(true);
+						//This will display the external assessment info
+						setTabItems(1, ASSESSMENT_URL, null);
+						setUnitTemplate(ASSESSMENT_URL);
+					}
+				};
+				assessmentPopup.setGlassEnabled(true);
+				assessmentPopup.show();
+				assessmentPopup.center();
 			}
 		}
 	}

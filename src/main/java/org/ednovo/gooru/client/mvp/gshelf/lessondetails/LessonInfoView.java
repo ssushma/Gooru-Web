@@ -26,10 +26,8 @@ package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -37,6 +35,8 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.StandardsCodeDecView;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -57,7 +57,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -77,20 +76,21 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	interface LessonViewUiBinder extends UiBinder<Widget, LessonInfoView> {
 	}
 
-	@UiField HTMLPanel lessonInfo,pnlGradeContainer;
+	@UiField HTMLPanel lessonInfo,standardsUI;
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
-	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
+	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment,taxonomyBtn;
 	@UiField Label lblErrorMessage;
-	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
+	@UiField UlPanel ulSelectedItems;
+	
 	
 	AssessmentPopupWidget assessmentPopup;
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
-	Map<String, ArrayList<String>> selectedValues=new HashMap<String,ArrayList<String>>();
+	List<Integer> selectedValues=new ArrayList<Integer>();
 
 	final String ACTIVE="active";
 	final String COLLECTION="collection";
@@ -109,6 +109,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		lessonInfo.getElement().setId("pnlLessonInfo");
 		lessonInfo.getElement().getStyle().setOverflowY(Overflow.AUTO);
 		populateStandardValues();
+		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -125,6 +126,47 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, false);
 			}
 		});
+	}
+	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
+		standardsUI.clear();
+		for(int i=0;i<standardsList.size();i++)
+		{
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i));
+			final DomainStandardsDo domainStand = standardsList.get(i);
+			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					standardsCode.setStyleName("active");
+					
+					if(!selectedValues.contains(domainStand.getCodeId())){
+						selectedValues.add(domainStand.getCodeId());
+					}
+					
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							//This will remove the selected value when we are trying by close button
+							if(selectedValues.contains(domainStand.getCodeId())){
+								selectedValues.remove(domainStand);
+							}
+							standardsCode.removeStyleName("active");
+							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+							liPanelWithClose.removeFromParent();
+						}
+					});
+					//selectedValues.add(domainStand.getCodeId());
+					liPanelWithClose.setId(domainStand.getCodeId());
+					liPanelWithClose.setName(domainStand.getCode());
+					liPanelWithClose.setRelatedId(domainStand.getCodeId());
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			});
+			standardsUI.add(standardsCode);
+		}
+		
+
 	}
 	public void populateStandardValues(){
 		for(int i=0; i<standardsTypesArray.length; i++){
@@ -224,96 +266,34 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
 		this.courseObj=folderObj;
-		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
-		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
-			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),"course");
-				break;
-			}
-		}
-	}
-
-	@Override
-	public void setCourseList(List<CourseSubjectDo> libraryCode) {
+		ulSelectedItems.clear();
 		selectedValues.clear();
-		ulMainGradePanel.clear();
-		if (libraryCode.size()>0) {
-			for (CourseSubjectDo libraryCodeDo : libraryCode) {
-				String titleText=libraryCodeDo.getName().trim();
-				selectedValues.put(titleText, new ArrayList<String>());
-				LiPanel liPanel=new LiPanel();
-				Anchor title=new Anchor(titleText);
-				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
-				liPanel.add(title);
-				ulMainGradePanel.add(liPanel);
-			}
-		}
-	}
-	/**
-	 * This inner class is used to get selected subjects grades
-	 */
-	class ClickOnSubject implements ClickHandler{
-		String selectedText;
-		LiPanel liPanel;
-		int subjectId;
-		ClickOnSubject(String selectedText,LiPanel liPanel,int subjectId){
-			this.selectedText=selectedText;
-			this.liPanel=liPanel;
-			this.subjectId=subjectId;
-		}
-		@Override
-		public void onClick(ClickEvent event) {
-			if(liPanel.getStyleName().contains(ACTIVE)){
-				if(selectedValues.get(selectedText).size()>0){
-					getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
-				}else{
-					liPanel.removeStyleName(ACTIVE);
-				}
-			}else{
-				liPanel.addStyleName(ACTIVE);
-				getUiHandlers().callCourseBasedOnSubject(subjectId, selectedText);
-			}
-		}
-	}
-	
-	/**
-	 * This method will display the Grades according to the subject
-	 */
-	@Override
-	public void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,final String selectedText) {
-		pnlGradeContainer.clear();
-		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedText),"") {
-			@Override
-			public void setSelectedGrade(final CourseSubjectDo lessonObj, final long codeId,boolean isAdd) {
-				if(isAdd){
-					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(lessonObj.getName());
+		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
+		if(folderObj!=null){
+			if(folderObj.getStandards()!=null && folderObj.getStandards().size()>0){
+				//Render the existing standards
+				for(final CourseSubjectDo courseSubjectDo : folderObj.getStandards()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							//This will remove the selected value when we are trying by close button
-							for(Iterator<Map.Entry<String,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
-							     Map.Entry<String, ArrayList<String>> entry = it.next();
-							     if(entry.getValue().contains(lessonObj.getName())){
-							    	 entry.getValue().remove(lessonObj.getName());
-							     }
-							 }
-							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
+							removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
 							liPanelWithClose.removeFromParent();
 						}
 					});
-					selectedValues.get(selectedText).add(lessonObj.getName());
-					liPanelWithClose.setId(codeId);
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getName());
 					ulSelectedItems.add(liPanelWithClose);
-				}else{
-					if(selectedValues.get(selectedText).contains(lessonObj.getName())){
-						selectedValues.get(selectedText).remove(lessonObj.getName());
-					}
-					removeGradeWidget(ulSelectedItems,codeId);
 				}
 			}
-		};
-		pnlGradeContainer.add(courseGradeWidget);
+		}
+
+
+
 	}
+
+	
+	
 	/**
 	 * This method will remove the widget based on the codeId in the UlPanel
 	 * @param ulPanel
@@ -336,5 +316,15 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}
 			}
 		}
+	}
+	
+	private class OnClickTaxonomy implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			getUiHandlers().invokeTaxonomyPopup("Lesson");
+		}
+		
 	}
 }

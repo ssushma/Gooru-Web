@@ -135,10 +135,10 @@
 }
 .loginStatus {
 	display: inline-block;
-    background-color: #46873f;
-	border: 1px solid #386d32;
+    background-color: #d68f20;
+	border: 1px solid #c28018;
 	border-radius: 20px;
-	box-shadow: 0 0 6px #3c7335 inset;
+	box-shadow: 0 0 6px #d68f20 inset;
 	float: right;
 	line-height: 12px;
 	margin-right: 35px;
