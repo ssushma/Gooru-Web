@@ -538,7 +538,17 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 		
 	}
-
+	
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				ulSelectedItems.add(widget);
+			}
+		}
+	}
 
 
 }

@@ -393,8 +393,5 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				ulSelectedItems.add(widget);
 			}
 		}
-		
-		
-		
 	}
 }

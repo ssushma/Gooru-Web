@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPre
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -106,6 +107,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		this.standardsPopupPresenter=standardsPopupPresenter;
 		this.centurySkillsPresenter=centurySkillsPresenter;
 		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setCollectionInfoPresenterInstance(this);
 	}
  
 	@Override
@@ -309,5 +311,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void invokeTaxonomyPopup(String viewType) {
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
+	}
+
+	public void addTaxonomyData(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
 	}
 }

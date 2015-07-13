@@ -33,6 +33,8 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.uc.UlPanel;
 
@@ -45,6 +47,10 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	private String viewType;
 	
 	private UnitInfoPresenter unitInfoPresenter;
+	
+	private LessonInfoPresenter lessonInfoPresenter;
+	
+	private CollectionInfoPresenter collectionInfoPresenter;
 	
 	
 	
@@ -92,7 +98,6 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 					@Override
 					public void onSuccess(List<CourseSubjectDo> taxonomyCourseList) {
 						getView().addTaxonomyCourses(taxonomyCourseList);
-						
 						AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(taxonomyCourseList.get(0).getCourseId(),"domain", 0, 20,new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 							@Override
@@ -319,6 +324,10 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	public void addTaxonomyData(UlPanel selectedUlContainer) {
 		if("Unit".equalsIgnoreCase(viewType)){
 			unitInfoPresenter.addTaxonomy(selectedUlContainer);
+		}else if("Lesson".equalsIgnoreCase(viewType)){
+			lessonInfoPresenter.addTaxonomyData(selectedUlContainer);
+		}else{
+			collectionInfoPresenter.addTaxonomyData(selectedUlContainer); 
 		}
 	}
 
@@ -326,6 +335,16 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	public void setUnitInfoPresenterInstance(UnitInfoPresenter unitInfoPresenter) { 
 		this.unitInfoPresenter = unitInfoPresenter;
+	}
+
+
+	public void setLessonInfoPresenterInstance(LessonInfoPresenter lessonInfoPresenter) {
+		this.lessonInfoPresenter = lessonInfoPresenter;
+	}
+
+
+	public void setCollectionInfoPresenterInstance(CollectionInfoPresenter collectionInfoPresenter) {
+		this.collectionInfoPresenter = collectionInfoPresenter;
 	}
 	
 	

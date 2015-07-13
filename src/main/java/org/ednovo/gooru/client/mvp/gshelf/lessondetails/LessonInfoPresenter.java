@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -59,7 +60,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
 	TaxonomyPopupPresenter taxonomyPopupPresenter;
-
+	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
@@ -76,6 +77,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		super(eventBus,view);
 		this.standardsPopupPresenter = standardsPopupPresenter;
 		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setLessonInfoPresenterInstance(this);
 		getView().setUiHandlers(this);
 	}
 
@@ -192,6 +194,10 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void invokeTaxonomyPopup(String viewType) {
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
+	}
+
+	public void addTaxonomyData(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
 	}
 
 }
