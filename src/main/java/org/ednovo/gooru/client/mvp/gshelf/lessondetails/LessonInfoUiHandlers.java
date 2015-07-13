@@ -28,6 +28,7 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
@@ -66,6 +67,6 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 
 
 	
-	void invokeTaxonomyPopup(String type);
+	void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems);
 
 }
