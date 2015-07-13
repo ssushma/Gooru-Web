@@ -89,7 +89,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	final String ACTIVE="active";
 	
 	private static final String UNIT = "Unit";
-	int subjectId;
 	
 	LiPanel tempLiPanel=null;
 	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
@@ -335,8 +334,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		if(courseObj!=null && courseObj.getSubdomain()!=null){
 			//To set default selection if the user is already selected any subject
 			firstSelectedSubject.add(courseObj.getSubdomain().get(0).getSubdomainId());
-			this.subjectId=courseObj.getSubdomain().get(0).getSubjectId();
-			getUiHandlers().callCourseBasedOnSubject(subjectId,courseObj.getSubdomain().get(0).getCourseId());
+			getUiHandlers().callCourseBasedOnSubject(courseObj.getSubdomain().get(0).getSubjectId(),courseObj.getSubdomain().get(0).getCourseId());
 			for (final CourseSubjectDo courseSubjectDo : courseObj.getSubdomain()) {
 				if(selectedValues.containsKey(courseSubjectDo.getCourseId())){
 					selectedValues.get(courseSubjectDo.getCourseId()).add(courseSubjectDo.getName());
@@ -367,7 +365,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
 			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-				this.subjectId=entry.getKey();
 				firstSelectedSubject.add(entry.getKey());
 				if(entry.getValue()!=null)
 				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),entry.getValue());
@@ -384,5 +381,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		public void onClick(ClickEvent event) {
 			getUiHandlers().invokeTaxonomyPopup(UNIT);
 		}
+	}
+
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		for(int i=0;i<=selectedUlContainer.getWidgetCount();i++){
+			ulSelectedItems.add(selectedUlContainer.getWidget(i));
+		}
+		
 	}
 }

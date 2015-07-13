@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -793,10 +794,11 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
                  	            	 sequenceCharlbl.setStyleName(res.css().barGraphCharacter());
                  	            	 datagrap.add(sequenceCharlbl);
                  	            	 if(scoredQuestionsData.get(i-1).getOptions()!=null){
-                  	        			 JSONValue value = JSONParser.parseStrict(scoredQuestionsData.get(i-1).getOptions().toString());
-                  	        			 JSONObject authorObject = value.isObject();
+                 	            		 Map<String, Integer> authorObject = scoredQuestionsData.get(i-1).getOptions();
+                  	        			 /*JSONValue value = JSONParser.parseStrict(scoredQuestionsData.get(i-1).getOptions().toString());
+                  	        			 JSONObject authorObject = value.isObject();*/
    	               	        			 if(authorObject.keySet().size()!=0 && authorObject.get(questionSequence)!=null){
-   	               	        				attemptCount = (int)authorObject.get(questionSequence).isArray().get(0).isNumber().doubleValue();
+   	               	        				attemptCount = (int)authorObject.get(questionSequence).doubleValue();
    	               	         			 }
                     	             }
 

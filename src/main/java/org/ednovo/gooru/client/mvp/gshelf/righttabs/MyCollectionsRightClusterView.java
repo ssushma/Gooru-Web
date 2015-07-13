@@ -408,7 +408,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				if(!StringUtil.isEmpty(o2UnitId) && UNIT.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteUnitContent(o1CourseId,o2UnitId);
 				}else if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
-					
 					getUiHandlers().deleteCourseContent(o1CourseId);
 				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){ 
 					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);

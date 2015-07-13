@@ -46,7 +46,7 @@
 					<div class="filterTags">
 						<uc:UlPanel ui:field="ulSelectedItems"/>
 					</div>
-					<g:Label styleName="col-md-8 col-sm-7 mandatoryLabelError" ui:field="lblGradeErrorMsg"/>
+					<g:Label styleName="col-md-8 col-sm-7 errorMessage" ui:field="lblGradeErrorMsg"/>
 				</div>
 			<div class="tagCourseOptions">
 				<p>Audience &amp; Purpose</p>

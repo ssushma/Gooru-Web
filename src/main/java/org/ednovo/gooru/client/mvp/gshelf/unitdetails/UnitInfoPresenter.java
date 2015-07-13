@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -78,6 +79,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setUnitInfoPresenterInstance(this);
 	}
 
 	@Override
@@ -129,7 +131,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("view", "Course");
 				
 				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				if(getView().getFirstSelectedValue().get(0)!=null && result.getSubdomain().get(0)!=null){
+				if(getView().getFirstSelectedValue()!=null && getView().getFirstSelectedValue().size()>0 && result.getSubdomain().get(0)!=null){
 					selectedValues.put(getView().getFirstSelectedValue().get(0),result.getSubdomain().get(0).getSubdomainId()!=null?result.getSubdomain().get(0).getSubdomainId():null);
 				}
 				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
@@ -162,7 +164,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				folderDo.setQuestions(createDo.getQuestions());
 				//folderDo.setGooruOid(id);
 				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				if(getView().getFirstSelectedValue()!=null && getView().getFirstSelectedValue().get(0)!=null && folderDo.getSubdomain().get(0)!=null){
+				if(getView().getFirstSelectedValue()!=null && getView().getFirstSelectedValue().size()>0  && folderDo.getSubdomain().get(0)!=null){
 					selectedValues.put(getView().getFirstSelectedValue().get(0),folderDo.getSubdomain().get(0).getSubdomainId()!=null?folderDo.getSubdomain().get(0).getSubdomainId():null);
 				}
 				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
@@ -215,7 +217,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		this.myCollectionsRightClusterPresenter = myCollectionsRightClusterPresenter;
 	}
 
-	public void setData(FolderDo folderObj) {
+	public void setData(FolderDo folderObj) { 
 		getView().setCouseData(folderObj);
 	}
 
@@ -223,5 +225,9 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	public void invokeTaxonomyPopup(String viewType) {
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
+	}
+
+	public void addTaxonomy(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
 	}
 }
