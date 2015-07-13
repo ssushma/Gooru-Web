@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
@@ -38,6 +39,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -59,10 +61,9 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
 	TaxonomyPopupPresenter taxonomyPopupPresenter;
-
+	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
-	private static final String O3_LEVEL = "o3";
 
 	final String LESSON="Lesson";
 
@@ -76,6 +77,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		super(eventBus,view);
 		this.standardsPopupPresenter = standardsPopupPresenter;
 		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setLessonInfoPresenterInstance(this);
 		getView().setUiHandlers(this);
 	}
 
@@ -162,7 +164,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	public void setLessonData(FolderDo folderObj) {
 		getView().setLessonInfoData(folderObj);
-		callTaxonomyService(1);
+		//callTaxonomyService(1);
 	}
 
 	@Override
@@ -189,9 +191,26 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void invokeTaxonomyPopup(String viewType) {
+	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
+		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
-
+	@Override
+	public void callCourseInfoTaxonomy(){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, unitId, null, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				if(result.getSubdomain()!=null && result.getSubdomain().size()>0){
+					CourseSubjectDo courseSubjectObj=result.getSubdomain().get(0);
+					callTaxonomyService(courseSubjectObj.getId());
+				}
+			}
+		});
+	}
+	public void addTaxonomyData(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
+	}
 }

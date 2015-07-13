@@ -43,4 +43,15 @@ public interface CssTokens {
 	String ACTIVE = "active";
 	
 	String DISABLED="disabled";
+	
+	String GREEN_STYLE = "green";
+	
+	String LIGHT_GREEN_STYLE = "lightgreen";
+	
+	String RED_STYLE = "red";
+	
+	String YELLOW_GREEN_STYLE = "yellowgreen";
+	
+	String ORANGE_STYLE = "org";
+
 }
