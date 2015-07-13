@@ -15,8 +15,8 @@
 			</p>
 		</div>
 		<div class="stepsButtonGroup">
-			<g:Button styleName="secondary" ui:field="saveCollectionBtn"
-				text="{i18n.GL3368}" />
+			<g:Button styleName="secondary" ui:field="saveFolderBtn"
+				text="{i18n.GL3395}" />
 		</div>
 		<div class="clearfix"></div>
 	</g:HTMLPanel>
