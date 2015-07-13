@@ -68,31 +68,31 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	@Inject
 	private FolderServiceAsync folderServiceAsync;
-	
+
 	@ContentSlot public static final Type<RevealContentHandler<?>> CENTURYSKILLS = new Type<RevealContentHandler<?>>();  
 
 	CenturySkillsPresenter centurySkillsPresenter;
-	
+
 	TaxonomyPopupPresenter taxonomyPopupPresenter;
-	
+
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
-	
+
 	StandardsPopupPresenter standardsPopupPresenter;
-	
+
 	final String SUBJECT="subject";
-	
+
 	final String COURSE="Course";
-	
+
 	private String UNIT = "Unit";
-	
+
 	private String type;
-	
+
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
-	
+
 	ImageUploadPresenter imgUploadPresenter=null;
-	
+
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -108,19 +108,25 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
 		taxonomyPopupPresenter.setCollectionInfoPresenterInstance(this);
 	}
- 
+
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
-		
+
 	}
 
+	@Override
+	protected void onReset() {
+		// TODO Auto-generated method stub
+		super.onReset();
+		getCollectionDo();
+	}
 	@Override
 	protected void onReveal(){
 		super.onReveal();
 		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
-		getCollectionDo();
+
 		setDepthofKnowledgeDetails();
 		setAudienceDetails();
 		Window.enableScrolling(true);
@@ -154,7 +160,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-	
+
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
 		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
@@ -166,12 +172,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-	
+
 	@Override
 	public void setCollectionType(String templateType) {
 		getView().setCollectionType(templateType);
 	}
-	
+
 	@Override
 	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
@@ -247,13 +253,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		createOrUpDate.setDescription(createDoObj.getDescription());
 		createOrUpDate.setCollectionType(createDoObj.getCollectionType());
 		imgUploadPresenter.setCollectionData(createDoObj);
-        imgUploadPresenter.setCollectionImage(true);
-        imgUploadPresenter.setClassPageImage(false);
-        imgUploadPresenter.setUpdateQuestionImage(false);
-        imgUploadPresenter.setEditResourceImage(false);
+		imgUploadPresenter.setCollectionImage(true);
+		imgUploadPresenter.setClassPageImage(false);
+		imgUploadPresenter.setUpdateQuestionImage(false);
+		imgUploadPresenter.setEditResourceImage(false);
 	}
 
-	
+
 	public void setDepthofKnowledgeDetails(){
 		getFolderServiceAsync().getDepthOfKnowledgesList(new AsyncCallback<List<ListValuesDo>>() {
 			@Override
@@ -266,7 +272,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-	
+
 	public void setAudienceDetails(){
 		getFolderServiceAsync().getAudienceList(new AsyncCallback<List<ListValuesDo>>() {
 			@Override
@@ -279,7 +285,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-	
+
 	public void getCollectionDo(){
 		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
 		AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
@@ -289,12 +295,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 				getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
 				getView().getAudienceContainer().setCollectonDetails(result);
-				
+
 
 			}
 		});
 	}
-	
+
 	@Override
 	public void invokeTaxonomyPopup(String viewType,UlPanel ulSelectedItems) {
 		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
@@ -306,18 +312,18 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
 
 		getFolderServiceAsync().updateCollectionDetails(collectionUid, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
-			
+
 			@Override
 			public void onSuccess(Void result) {
 				// TODO Auto-generated method stub
 				AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 
 				// TODO Auto-generated method stub
-				
+
 				AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
 
 			}
