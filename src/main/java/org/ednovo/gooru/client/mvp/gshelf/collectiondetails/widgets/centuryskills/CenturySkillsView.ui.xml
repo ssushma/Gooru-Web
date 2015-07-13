@@ -21,13 +21,6 @@
 		</uc:PPanel>
 		<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.centuryContainer} {res.css.rightCourseContainer}">
 			<g:FlowPanel ui:field="centContainer">
-				<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
-					<g:Label styleName="{res.css.shelfGradeInfoTitle}"
-						ui:field="centLabel" />
-				</g:FlowPanel>
-
-				<g:Label styleName="{res.css.shelfGradeInfoBottom}"
-					ui:field="centDefaultText"></g:Label>
 				<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
 					<g:FlowPanel styleName="{res.css.shelfNameCourse}">
 						<g:FlowPanel styleName="{res.css.standardsCont}">

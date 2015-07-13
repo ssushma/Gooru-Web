@@ -27,4 +27,7 @@
 	padding-top: 3px;
   font-weight: 100;
 }
+.textAreaErrorMessage{
+	border: 1px solid #fbb03b;
+}
 

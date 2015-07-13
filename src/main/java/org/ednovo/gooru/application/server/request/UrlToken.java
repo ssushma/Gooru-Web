@@ -645,10 +645,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	GET_AUDIENCELIST("/v1/meta/audience?sessionToken={0}"),
 	
 	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
-	
+	V3_UPDATE_COLLECTION("/v3/collection/{0}"),
 	V1_GET_COURSE("/v1/course/{0}?");
-
-
 
 	private String url;
 

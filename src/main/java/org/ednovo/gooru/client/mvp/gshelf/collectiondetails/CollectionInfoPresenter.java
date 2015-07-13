@@ -286,6 +286,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			@Override
 			public void onSuccess(CollectionDo result) {
 				centurySkillsPresenter.getView().setCollectionDo(result);
+
+				getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
+				getView().getAudienceContainer().setCollectonDetails(result);
+				
+
 			}
 		});
 	}
@@ -297,6 +302,27 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
 	@Override
+	public void updateCollectionDetails(){
+		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
+
+		getFolderServiceAsync().updateCollectionDetails(collectionUid, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+
+				// TODO Auto-generated method stub
+				
+				AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
+
+			}
+		});
+	}
 	public void callCourseInfoTaxonomy(){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);

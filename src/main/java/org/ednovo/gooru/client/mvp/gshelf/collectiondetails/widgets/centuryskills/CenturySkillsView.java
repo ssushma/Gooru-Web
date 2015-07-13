@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.taskdefs.Sleep;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -53,7 +54,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
@@ -70,7 +70,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	@UiField(provided = true)
 	AppSuggestBox centurySgstBox;
 	private CollectionDo collectionDo = null;
-	@UiField Label centLabel;
+	
 	Map<Long, String> hilightSelectedValuesFromAutoSuggest=new HashMap<Long, String>();
 	Map<Long, String> selectedValuesFromAutoSuggest=new HashMap<Long, String>();
 	private SearchDo<StandardFo> centurySearchDo = new SearchDo<StandardFo>();
@@ -105,7 +105,6 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 				selectedValuesFromAutoSuggest.put(Long.parseLong(codeId), centurySgstBox.getValue());
 				hilightSelectedValuesFromAutoSuggest.put(Long.parseLong(codeId), centurySgstBox.getValue());
 				centPanel.add(create21CenturyLabel(centurySgstBox.getValue(),codeId,""));
-				reset21CenturyCount();
 				centurySgstBox.setText("");
 				centurySgstBox.getElement().setAttribute("alt","");
 				centurySgstBox.getElement().setAttribute("title","");
@@ -116,24 +115,14 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	
 	}
 	
-	private void reset21CenturyCount() {
-		if (centPanel.getWidgetCount() > 0) {
-			centLabel.setText(i18n.GL3199() + " (" + centPanel.getWidgetCount() + ")");
-			centLabel.getElement().setAttribute("alt",i18n.GL3199() + " (" + centPanel.getWidgetCount() + ")");
-			centLabel.getElement().setAttribute("title",i18n.GL3199() + " (" + centPanel.getWidgetCount() + ")");
-		} else {
-			centLabel.setText(i18n.GL3199());
-			centLabel.getElement().setAttribute("alt",i18n.GL3199());
-			centLabel.getElement().setAttribute("title",i18n.GL3199());
-		}
-	}
+	
+
 	
 	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
-				reset21CenturyCount();
 				//getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), id);
 				if(hilightSelectedValuesFromAutoSuggest.size()> 0){
 					hilightSelectedValuesFromAutoSuggest.remove(Long.parseLong(id));
@@ -142,7 +131,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		};
 		DownToolTipWidgetUc downToolTipWidgetUc=new DownToolTipWidgetUc(closeLabel, description);
 		downToolTipWidgetUc.getElement().setId(id);
-		downToolTipWidgetUc.getElement().setAttribute("desc", description);
+		downToolTipWidgetUc.getElement().setAttribute("desc", centuryCode);
 		return downToolTipWidgetUc;
 	}
 	
@@ -211,6 +200,8 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 			      Map.Entry<Long, String> entry = it.next();
 			   AppClientFactory.printInfoLogger("Key..."+entry.getKey());
 			   AppClientFactory.printInfoLogger("Value..."+entry.getValue());
+			   DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(entry.getValue(), entry.getKey()+"","");
+			   centPanel.add(downToolTipWidgetUc);
 			}
 		}
 		
@@ -258,6 +249,16 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	@Override
 	public void setCollectionDo(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
+		
+		List<StandardFo> standardFos=collectionDo.getSkills();
+	if(standardFos!=null){
+		for(StandardFo standardFo:standardFos){
+			selectedVaue.put((long)standardFo.getCodeId(), standardFo.getDescription());
+		}	
+	}
+		
+		setUpdatedCentury(selectedVaue);
+	
 	}
 	
 	@Override
@@ -266,7 +267,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		selectedValuesFromAutoSuggest.clear();
 	}
 	
-	
+	@Override
 	public Map<Long,String> getSelectedValuesFromAutoSuggest(){
 	
 		int count=centPanel.getWidgetCount();
@@ -279,8 +280,5 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		}
 		return selectedVaue;
 	}
-	
-	
-	
 	
 }
