@@ -277,6 +277,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("get coll res url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
@@ -325,10 +326,20 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setSharing(jsonRep.getJsonObject().isNull("sharing")?"":jsonRep.getJsonObject().getString("sharing"));
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
+				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>();
+
+				if(jsonRep.getJsonObject().has("depthOfKnowledge")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("depthOfKnowledge");
+					for(int i=0;i<array.length();i++){
+						checkboxSelectedDo item=new checkboxSelectedDo();
+						item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), checkboxSelectedDo.class);
+						checkboxSelectedDos.add(item);
+					}
+				}
+				obj.setDepthOfKnowledges(checkboxSelectedDos);
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
 				obj.setUser(user);
-
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<CollectionItemDo>();
 				for(int i=0;i<array.length();i++){
@@ -2195,4 +2206,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return new FolderDo();
 	}
+	
+	
+	
+	
 }

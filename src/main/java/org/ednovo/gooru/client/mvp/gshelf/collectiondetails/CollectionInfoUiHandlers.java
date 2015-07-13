@@ -63,4 +63,6 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 
 	public void invokeTaxonomyPopup(String type);
 
+	void updateCollectionDetails();
+
 }

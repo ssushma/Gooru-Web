@@ -300,7 +300,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			this.courseObjG=courseObj;
 			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
-				//collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
@@ -359,6 +359,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+		getUiHandlers().updateCollectionDetails();
 	}
 
 	@UiHandler("uploadImageLbl")

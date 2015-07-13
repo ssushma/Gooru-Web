@@ -213,4 +213,6 @@ public interface FolderService extends BaseService {
 	
 	List<ListValuesDo> getAudienceList() throws GwtException;
 
+	void updateCollectionDetails(String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
+
 }
