@@ -32,8 +32,10 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -86,10 +88,9 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 		contentName.setText("No title available");
 		contentDescription.setText("No description is available to show");
-		long timeSpentValue = planProgressDo.getTimespent();
-		timeSpent.setText(timeSpentValue+"");
+		timeSpent.setText(StringUtil.getFormattedDate(planProgressDo.getTimespent(), ""));
 		viewCount.setText(planProgressDo.getViews()+"");
-		lastSession.setText(planProgressDo.getLastAccessed()+"");
+		lastSession.setText(AnalyticsUtil.getCreatedTime(Long.toString(planProgressDo.getLastAccessed())));
 		contentImage.setHeight("120px");
 		contentImage.setWidth("172px");
 	}

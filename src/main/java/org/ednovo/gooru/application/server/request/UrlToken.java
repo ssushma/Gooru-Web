@@ -635,10 +635,18 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_STANDARDS_BY_DOMAIN("/v1/sub-domain/{0}/standards?"),
 
 	V1_GET_STUDENT_UNIT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/progress?"),
+	
+	V1_GET_MASTERY_UNIT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson?"),
+	
+	V1_GET_MASTERY_ALL_COLLECTION_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection/{4}/users?"),
+	
+	V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}/users?"),
+	
 	GET_AUDIENCELIST("/v1/meta/audience?sessionToken={0}"),
+	
 	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
+	
 	V1_GET_COURSE("/v1/course/{0}?");
-
 
 
 

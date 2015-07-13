@@ -22,20 +22,58 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.classpage.teach.reports.course;
+package org.ednovo.gooru.application.shared.model.classpages;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.application.client.child.IsChildView;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author SearchTeam
+ * @fileName : PlanProgressDo.java
  * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface IsTeachCourseReportView extends IsChildView<TeachCourseReportChildPresenter> {
-	public void setTableData(ArrayList<PlanProgressDo> result);
+@JsonInclude(Include.NON_NULL)
+public class MasterReportDo implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	private String title;
+	private String gooruOId;
+	private String type;
+	private PlanProgressDo unitUsageData;
+	private ArrayList<PlanProgressDo> lesson;
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getGooruOId() {
+		return gooruOId;
+	}
+	public void setGooruOId(String gooruOId) {
+		this.gooruOId = gooruOId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public PlanProgressDo getUnitUsageData() {
+		return unitUsageData;
+	}
+	public void setUnitUsageData(PlanProgressDo unitUsageData) {
+		this.unitUsageData = unitUsageData;
+	}
+	public ArrayList<PlanProgressDo> getLesson() {
+		return lesson;
+	}
+	public void setLesson(ArrayList<PlanProgressDo> lesson) {
+		this.lesson = lesson;
+	}
 }

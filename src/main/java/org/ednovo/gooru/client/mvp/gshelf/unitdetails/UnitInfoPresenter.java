@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -78,6 +79,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setUnitInfoPresenterInstance(this);
 	}
 
 	@Override
@@ -198,12 +200,13 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		this.myCollectionsRightClusterPresenter = myCollectionsRightClusterPresenter;
 	}
 
-	public void setData(FolderDo folderObj) {
+	public void setData(FolderDo folderObj) { 
 		getView().setCouseData(folderObj);
 	}
 
 	@Override
-	public void invokeTaxonomyPopup(String viewType) {
+	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
+		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
@@ -219,5 +222,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				}
 			}
 		});
+	}
+	public void addTaxonomy(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
 	}
 }

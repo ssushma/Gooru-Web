@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.CenturySkillsView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 
@@ -67,6 +68,8 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 	AudienceView getAudienceContainer();
 
 	void displayStandardsList(List<DomainStandardsDo> result);
+
+	void addTaxonomyData(UlPanel selectedUlContainer); 
 
 
 

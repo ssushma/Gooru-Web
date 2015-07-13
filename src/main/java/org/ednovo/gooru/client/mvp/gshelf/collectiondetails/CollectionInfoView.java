@@ -115,10 +115,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
 
-
-
 	final String COLLECTION = "collection";
-	private static final String ASSESSMENT_URL = "assessment/url";
 
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObjG;
@@ -476,7 +473,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public List<Integer> getSelectedStandardsIds(){
 		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
 		Iterator<Widget> widgets=ulSelectedItems.iterator();
-		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
 		while (widgets.hasNext()) {
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
@@ -514,8 +510,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public AudienceView getAudienceContainer() {
 		return audienceContainer;
 	}
-
-
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		super.setInSlot(slot, content);
@@ -524,11 +518,20 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			getCenturySkillContainer().add(content);
 		}
 	}
-
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			getUiHandlers().invokeTaxonomyPopup("collection");
+		}
+	}
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				ulSelectedItems.add(widget);
+			}
 		}
 	}
 }

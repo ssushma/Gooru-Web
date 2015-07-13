@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -318,6 +317,17 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		@Override
 		public void onClick(ClickEvent event) {
 			getUiHandlers().invokeTaxonomyPopup("Lesson");
+		}
+	}
+	
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				ulSelectedItems.add(widget);
+			}
 		}
 	}
 }
