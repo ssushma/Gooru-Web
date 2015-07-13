@@ -5,7 +5,7 @@
 	<ui:style src=""></ui:style>
 		<g:HTMLPanel styleName="contentTableRow">
 		   <g:HTMLPanel styleName="contentTableCell firstColumDiv">
-		      <g:HTMLPanel styleName="lessonHeading">
+		      <g:HTMLPanel styleName="lessonHeading" ui:field="lessonHeading">
 		         <uc:H4Panel ui:field="lessonCountPanel"></uc:H4Panel>
 		         <uc:PPanel ui:field="lessonPanel"></uc:PPanel>
 		      </g:HTMLPanel>
@@ -14,4 +14,5 @@
 			   <g:HTMLPanel styleName="contentTableInner" ui:field="rowContainer"></g:HTMLPanel>
 		   </g:HTMLPanel>
 		</g:HTMLPanel>
+		
 </ui:UiBinder> 

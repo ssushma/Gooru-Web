@@ -690,6 +690,9 @@ select option {
 .contentSettingsContainer .contentSettingsTable .contentTableRow {
     display: table-row;
 }
+.contentSettingsContainer .contentTables .contentTableRow {
+    display: table-row;
+}
 .contentSettingsContainer .contentSettingsTable .contentTableCell {
     display: table-cell;
     border: solid;
@@ -770,7 +773,7 @@ select option {
     border-radius: 4px 4px;
     top: 1px;
     left: 1px;
-    cursor: pointer;
+    /* cursor: pointer; */
     background: #f8fafb;
 }
 .contentSettingsContainer .contentSettingsTable .squaredOne label:after {
@@ -828,7 +831,7 @@ select option {
     border-radius: 4px 4px;
     top: 1px;
     left: 1px;
-    cursor: pointer;
+   /*  cursor: pointer; */
     background: #f8fafb;
 }
 .contentSettingsContainer .contentSettingsTableIndications .squaredOne label:after {
@@ -854,14 +857,13 @@ select option {
 /* end .squaredOne */
 
 .contentSettingsTable .contentTable .lessonHeading {
-    position: absolute;
+    position: relative;
     left: 10%;
-    right: 0;
-    top: 31%;
-    bottom: 35%;
+   	padding: 10px 0;
 }
 .contentSettingsTable .contentTable .lessonHeader {
     padding: 4px 15px;
+    width:20%;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     .contentSettingsContainer .contentSettingsTable {
@@ -1524,5 +1526,58 @@ select option {
  @media (min-width: 992px) and (max-width: 1199px) {
 }
  @media (min-width: 1200px) {
+}
+
+/** new unit dropdown css **/
+
+.selctListBox{
+	width:100%;
+	font-size:18px;
+	position:relative;
+	color:#515151;
+	
+
+}
+.selctListBox .listSelecter{
+		border:1px solid #dddddd ;
+	padding:6px 6px;
+	background:#ffffff;
+	height:42px;
+	border-radius:4px 4px;
+}
+
+.selctListBox .listSelecter:after {
+	content:"";
+	position: absolute;
+	top: 4px;
+	right: -1px;
+	bottom: 0;
+	line-height: 30px;
+	padding: 6px 7px;
+	width:23px;
+	background:url(${cdn.endpoint}/images/downarrow.png) no-repeat 0px 14px;
+	color: #515151;
+}
+
+.selctListBox .listMenu{
+	background:#ffffff;
+	border:1px solid #dddddd;
+    max-height: 235px;
+	position:absolute !important;
+	left:0;
+	right:0;
+	bottom:auto;
+	top:40px !important;
+	z-index:99;
+	overflow-y:auto;
+}
+.selctListBox .listSelecter:hover .listMenu{
+	display:block;
+}
+.selctListBox .listMenu .unitStyle{
+	padding:6px 7px;
+}
+.selctListBox .listMenu .unitStyle:hover{
+	background:#f5f5f5;
 }
 
