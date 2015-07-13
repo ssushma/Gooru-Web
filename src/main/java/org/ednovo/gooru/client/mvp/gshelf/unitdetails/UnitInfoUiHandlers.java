@@ -67,4 +67,6 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 	
 	public void getDomainsBasedOnCourseId(int courseId,int selectedId);
+	
+	public void callCourseInfoTaxonomy();
 }

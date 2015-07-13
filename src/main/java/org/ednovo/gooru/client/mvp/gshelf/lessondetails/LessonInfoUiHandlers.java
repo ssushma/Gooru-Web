@@ -64,9 +64,9 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 
 
 	void callTaxonomyService(int subdomainId);
-
-
 	
 	void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems);
+	
+	public void callCourseInfoTaxonomy();
 
 }

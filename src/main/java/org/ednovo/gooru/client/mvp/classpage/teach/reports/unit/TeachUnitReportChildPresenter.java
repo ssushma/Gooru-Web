@@ -27,16 +27,44 @@
  */
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.unit;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.child.ChildPresenter;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 
 /**
  * @author Search Team
  * 
  */
-public class TeachUnitReportChildPresenter extends ChildPresenter<TeachUnitReportChildPresenter, IsTeachUnitReportView>{
+public class TeachUnitReportChildPresenter extends ChildPresenter<TeachUnitReportChildPresenter, IsTeachUnitReportView> implements TeachUnitReportPresenterUiHandlers{
 
 	public TeachUnitReportChildPresenter(IsTeachUnitReportView childView) {
 		super(childView);
 	}
 
+	@Override
+	public void getUnitMasteryData(String classId, String courseId, String unitId, String collectionType) {
+		if(courseId!=null) {
+			AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classId, courseId, null, null, "plan", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+				@Override
+				public void onSuccess(ArrayList<PlanProgressDo> dataList) {
+					getView().setMetadataContent(dataList);
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		}
+		AppClientFactory.getInjector().getClasspageService().getUnitMasteryReport(classId, courseId, unitId, collectionType, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+			@Override
+			public void onSuccess(ArrayList<PlanProgressDo> result) {
+				getView().setTableData(result);
+			}
+		});
+	}
+	
 }

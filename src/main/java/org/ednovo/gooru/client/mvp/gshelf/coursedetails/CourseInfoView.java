@@ -87,7 +87,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	final String ACTIVE="active";
 	
 	LiPanel tempLiPanel=null;
-	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
 	
 	/**
 	 * Class constructor 
@@ -214,7 +213,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				}
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
-				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getSubjectId()));
+				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getSubjectId(),libraryCodeDo));
 				liPanel.add(title);
 				ulMainGradePanel.add(liPanel);
 			}
@@ -227,10 +226,12 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		String selectedText;
 		LiPanel liPanel;
 		int subjectId;
-		ClickOnSubject(String selectedText,LiPanel liPanel,int subjectId){
+		CourseSubjectDo courseSubjectDo;
+		ClickOnSubject(String selectedText,LiPanel liPanel,int subjectId,CourseSubjectDo courseSubjectDo){
 			this.selectedText=selectedText;
 			this.liPanel=liPanel;
 			this.subjectId=subjectId;
+			this.courseSubjectDo=courseSubjectDo;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
@@ -241,7 +242,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			}else{
 				tempLiPanel=liPanel;
 			}
-			firstSelectedSubject.add(subjectId);
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(subjectId).size()>0){
 					getUiHandlers().callCourseBasedOnSubject(subjectId, subjectId);
@@ -295,13 +295,11 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObj=courseObj;
 		ulSelectedItems.clear();
-		firstSelectedSubject.clear();
 		selectedValues.clear();
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
 			//To set default selection if the user is already selected any subject
-			firstSelectedSubject.add(courseObj.getTaxonomyCourse().get(0).getSubjectId());
 			for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()) {
 				if(selectedValues.containsKey(courseSubjectDo.getSubjectId())){
 					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
@@ -361,9 +359,5 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}
 		courseObj.setTaxonomyCourse(courseList);
 		return taxonomyCourseIds;
-	}
-	@Override
-	public List<Integer> getFirstSelectedValue(){
-		return firstSelectedSubject;
 	}
 }

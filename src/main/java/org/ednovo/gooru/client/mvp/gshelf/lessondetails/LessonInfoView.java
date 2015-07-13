@@ -287,13 +287,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}
 			}
 		}
-
-
-
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
-
-	
-	
 	/**
 	 * This method will remove the widget based on the codeId in the UlPanel
 	 * @param ulPanel

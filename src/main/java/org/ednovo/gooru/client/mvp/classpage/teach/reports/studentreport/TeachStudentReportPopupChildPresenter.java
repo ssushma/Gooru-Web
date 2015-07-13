@@ -39,4 +39,8 @@ public class TeachStudentReportPopupChildPresenter extends ChildPresenter<TeachS
 		super(childView);
 	}
 
+	public void setData() {
+		
+	}
+	
 }
