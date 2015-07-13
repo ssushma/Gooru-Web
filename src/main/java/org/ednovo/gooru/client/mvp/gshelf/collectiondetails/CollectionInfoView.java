@@ -521,7 +521,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup("collection");
+			getUiHandlers().invokeTaxonomyPopup("collection",ulSelectedItems);
 		}
 	}
 	@Override
