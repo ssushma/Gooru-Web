@@ -8,27 +8,40 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle"
 		field="res1" />
-		<!-- Centure Skill -->
-				<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.centuryContainer} {res.css.rightCourseContainer}">
-					<g:FlowPanel ui:field="centContainer">
-				<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
-						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
-							ui:field="centLabel" />
-					</g:FlowPanel>	
+		<ui:with field="i18n"
+		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<!-- Centure Skill -->
 
-					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
-						ui:field="centDefaultText"></g:Label>
-					<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
-						<g:FlowPanel styleName="{res.css.shelfNameCourse}">
-							<g:FlowPanel styleName="{res.css.standardsCont}">
+	<g:HTMLPanel styleName="21Century openHideBlocks">
+		<uc:H4Panel>
+			<g:InlineLabel text="{i18n.GL3199}"></g:InlineLabel>
+		</uc:H4Panel>
+		<uc:PPanel>
+			<g:InlineLabel text="{i18n.GL3390}"></g:InlineLabel>
+		</uc:PPanel>
+		<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.centuryContainer} {res.css.rightCourseContainer}">
+			<g:FlowPanel ui:field="centContainer">
+				<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
+					<g:Label styleName="{res.css.shelfGradeInfoTitle}"
+						ui:field="centLabel" />
+				</g:FlowPanel>
+
+				<g:Label styleName="{res.css.shelfGradeInfoBottom}"
+					ui:field="centDefaultText"></g:Label>
+				<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
+					<g:FlowPanel styleName="{res.css.shelfNameCourse}">
+						<g:FlowPanel styleName="{res.css.standardsCont}">
 							<g:Button ui:field="centbrowseBtn" styleName="secondary">Browse</g:Button>
-									<uc:AppSuggestBox ui:field="centurySgstBox"	width="176px" height="31px"/>
-									<g:Label styleName="{res.css.standardMaxHide}" ui:field="centMaxMsg"/>
-									<g:FlowPanel ui:field="centPanel" styleName="{res.css.collectionStandardsMargin}" />
-							</g:FlowPanel>
+							<uc:AppSuggestBox ui:field="centurySgstBox"
+								width="176px" height="31px" />
+							<g:Label styleName="{res.css.standardMaxHide}" ui:field="centMaxMsg" />
+							<g:FlowPanel ui:field="centPanel"
+								styleName="{res.css.collectionStandardsMargin}" />
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
-				</g:FlowPanel>
-				<!-- end -->
+			</g:FlowPanel>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+	<!-- end -->
 </ui:UiBinder> 

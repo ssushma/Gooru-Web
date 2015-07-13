@@ -365,8 +365,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			setCollectionContent(folderDo);
 		}else{
 			getView().getCollectionLabel().setVisible(false);
-			myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
-			setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+			if(listOfContent!=null && listOfContent.size()>0){
+				myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
+				setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+			}else{
+				setInSlot(RIGHT_SLOT, null,false);
+			}
 		}
 	}
 

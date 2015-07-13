@@ -33,7 +33,8 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -43,14 +44,14 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	
 	private String viewType;
 	
-	CourseInfoPresenter courseInfoPresenter;
+	private UnitInfoPresenter unitInfoPresenter;
+	
 	
 	
 	@Inject
-	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view, CourseInfoPresenter courseInfoPresenter){
+	public TaxonomyPopupPresenter(EventBus eventBus, IsTaxonomyPopupView view){
 		super(eventBus,view);
 		getView().setUiHandlers(this);
-		this.courseInfoPresenter = courseInfoPresenter;
 	}
 	
 	
@@ -97,12 +98,12 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							@Override
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
-								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")){
+								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 
 										@Override
 										public void onSuccess(List<DomainStandardsDo> result) {
-											getView().addTaxonomyStandards(result);
+											getView().addTaxonomyStandards(result); 
 										}
 									});
 								}
@@ -130,7 +131,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 						public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 							if(taxonomyDomainList.size()>0){
 								getView().addTaxonomyDomains(taxonomyDomainList);
-								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")){
+								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 										
 										@Override
@@ -157,7 +158,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
 					getView().addTaxonomyDomains(result);
-					if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")){
+					if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 						AppClientFactory.getInjector().getTaxonomyService().getStandardsList(result.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 							
 							@Override
@@ -254,7 +255,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 									public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 										if(taxonomyDomainList.size()>0){
 											getView().addTaxonomyDomains(taxonomyDomainList);
-											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")){
+											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection") || TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 												AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 													
 													@Override
@@ -315,7 +316,16 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 
 	@Override
-	public void addTaxonomyData() {
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		if("Unit".equalsIgnoreCase(viewType)){
+			unitInfoPresenter.addTaxonomy(selectedUlContainer);
+		}
+	}
+
+
+
+	public void setUnitInfoPresenterInstance(UnitInfoPresenter unitInfoPresenter) { 
+		this.unitInfoPresenter = unitInfoPresenter;
 	}
 	
 	
