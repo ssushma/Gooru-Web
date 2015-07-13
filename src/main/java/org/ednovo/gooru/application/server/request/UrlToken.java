@@ -610,6 +610,10 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
 
 	V3_DLETE_ACTIVE_USERS_CLASS("/v3/class/{0}/member/{1}?"),
+	
+	V3_GET_CLASS_COURSE_UNIT_LIST("/v3/class/{0}/course/{1}/unit?"),
+	
+	V3_GET_CLASS_COURSE_UNIT_LESSON_LIST("/v3/class/{0}/course/{1}/unit/{2}/lesson?"),
 
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
 

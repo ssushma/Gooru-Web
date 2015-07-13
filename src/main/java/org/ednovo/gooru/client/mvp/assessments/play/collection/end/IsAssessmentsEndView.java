@@ -52,7 +52,7 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 
 	public void setClasspageInsightsUrl(String classpageId, String sessionId);
 
-	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
+	public void displayScoreCount(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
 
 	public void setSessionsData(ArrayList<session> result);
 

@@ -145,13 +145,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				}
 			});
 		}
-	}
-	
-	
-	@Override
-	public void setData(CollectionDo collectionDo, FolderDo folderDo) {
-		this.collectionDo = collectionDo;
-		this.folderDo = folderDo;
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
 			privateShareFloPanel.setVisible(true);
@@ -160,6 +153,13 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		}
 		publishedPanel.setVisible(false);
 		lblPublishPending.setVisible(false);
+	}
+	
+	
+	@Override
+	public void setData(CollectionDo collectionDo, FolderDo folderDo) {
+		this.collectionDo = collectionDo;
+		this.folderDo = folderDo;
 		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
 		AppClientFactory.printInfoLogger("folderDo.getPublishStatus():"+folderDo.getPublishStatus());
 		if(collectionDo.getSharing()!=null){
