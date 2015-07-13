@@ -565,6 +565,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 					displayScoreCountData(result.get(0).getScore(),Integer.parseInt(result.get(0).getQuestionCount()));
 					getView().setCollectionMetaDataByUserAndSession(result);
 					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+				}else{
+					getView().hidePanel();
+					 getView().showMessageWhenDataNotFound();
+					collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
 				}
 				
 				
