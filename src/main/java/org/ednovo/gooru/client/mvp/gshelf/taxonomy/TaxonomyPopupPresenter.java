@@ -52,6 +52,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	
 	private CollectionInfoPresenter collectionInfoPresenter;
 	
+	private UlPanel ulSelectedItems;
+	
 	
 	
 	@Inject
@@ -103,12 +105,14 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							@Override
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
+								getView().displaySelectedTaxonomyData(ulSelectedItems);	
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 
 										@Override
 										public void onSuccess(List<DomainStandardsDo> result) {
 											getView().addTaxonomyStandards(result); 
+											getView().displaySelectedTaxonomyData(ulSelectedItems);	
 										}
 									});
 								}
@@ -260,6 +264,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 									public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 										if(taxonomyDomainList.size()>0){
 											getView().addTaxonomyDomains(taxonomyDomainList);
+											getView().displaySelectedTaxonomyData(ulSelectedItems);
 											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection") || TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 												AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 													
@@ -345,6 +350,11 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	public void setCollectionInfoPresenterInstance(CollectionInfoPresenter collectionInfoPresenter) {
 		this.collectionInfoPresenter = collectionInfoPresenter;
+	}
+
+
+	public void setSelectedUlContainer(UlPanel ulSelectedItems) {
+		this.ulSelectedItems = ulSelectedItems;
 	}
 	
 	

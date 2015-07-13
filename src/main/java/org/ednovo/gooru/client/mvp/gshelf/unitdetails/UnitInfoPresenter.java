@@ -222,7 +222,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 
 	@Override
-	public void invokeTaxonomyPopup(String viewType) {
+	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
+		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
