@@ -59,6 +59,5 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
 	
-	public List<Integer> getFirstSelectedValue();
 	void addTaxonomyData(UlPanel selectedUlContainer); 
 }

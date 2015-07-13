@@ -181,7 +181,7 @@ button.btn-disabled{
 	opacity:1;
 }
 #gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li.active a{
-		background:#87badd;
+	background:#87badd;
 	color:#333333;
 	text-decoration:none;
 }
@@ -1662,6 +1662,11 @@ padding-bottom: 10px;
 }
 #pnlLessonInfo .lessonCover .panel-body{
 	padding:0 0;
+}
+#pnlLessonInfo .lessonCover .panel-body .active{
+	background: #87badd;
+	color: #333333;
+	text-decoration: none;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks{
 

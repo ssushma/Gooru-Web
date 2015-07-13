@@ -61,6 +61,4 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 * @param result
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result);
-	
-	public List<Integer> getFirstSelectedValue();
 }
