@@ -24,19 +24,32 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.event.SetCollectionTypeVisibilityEvent;
+import org.ednovo.gooru.client.mvp.classpage.event.SetCollectionTypeVisibilityHandler;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget.EditClassCollectionWidget;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget.EditClassLessonView;
 import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
@@ -44,10 +57,12 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -79,21 +94,33 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	@UiField TextBox scoreTextBox;
 	
-	@UiField HTMLPanel unitList;
+	@UiField HTMLEventPanel unitList;
 	
 	@UiField PPanel lessonPanel,collectionTitlePanel,visiblePanel;
 	
-	@UiField HTMLPanel tableConatiner;
-	
-	EditClassLessonView editClassLessonView;
+	@UiField HTMLPanel tableConatiner,unitsPanel;
 	
 	ClasspageDo classpageDo;
 	
+	//@UiField ListBox unitListBox;
+	
 	int miniScore;
 	
-	@UiField Label errorLabel,saveLblText;
+	@UiField Label errorLabel,saveLblText,selectedLbl;
+	
+	@UiField ScrollPanel unitScrollPanel;
+	
+	String unitId;
+	
+	boolean hasClickedOnDropDwn = false;
+	
+	@UiField CheckBox hiddenBox,makeAllVisChkBox;
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	List<Long> collectionIds = new ArrayList<Long>();
+	
+	List<ClassLessonDo> classLessonDos = new ArrayList<ClassLessonDo>();
 	
 
 	private static EditClassContentViewUiBinder uiBinder = GWT.create(EditClassContentViewUiBinder.class);
@@ -106,12 +133,9 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		setWidget(uiBinder.createAndBindUi(this));
 		scoreTextBox.setMaxLength(3);
 		setId();
-		for(int i=0; i<5 ;i++){
-			editClassLessonView = new EditClassLessonView();
-			tableConatiner.add(editClassLessonView);
-		}
 		saveBtn.setEnabled(false);
 		saveBtn.addStyleName(CssTokens.DISABLED);
+		AppClientFactory.getEventBus().addHandler(SetCollectionTypeVisibilityEvent.TYPE, updateVisiblity);
 		scoreTextBox.addBlurHandler(new BlurHandler() {
 			
 			@Override
@@ -140,7 +164,51 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 			}
 		});
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
+		unitList.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				hasClickedOnDropDwn=true;
+				if (unitScrollPanel.isVisible()){
+					unitScrollPanel.setVisible(false);
+				}else{
+					unitScrollPanel.setVisible(true);
+				}
+			}
+		});
+		
+		ClickHandler rootHandler= new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!hasClickedOnDropDwn){
+					unitScrollPanel.setVisible(false);
+				}else{
+					hasClickedOnDropDwn=false;
+					
+				}
+			}
+		};
+		
+		
+		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
+		
+		makeAllVisChkBox.addClickHandler(new UpdateAllVisiblityHandler());
+		
 	}
+	
+	SetCollectionTypeVisibilityHandler updateVisiblity = new SetCollectionTypeVisibilityHandler() {
+		
+		@Override
+		public void setCollectionTypeVisibility(long collectionId) {
+			ClassLessonDo classLessonDo = new ClassLessonDo();
+			classLessonDo.setCollectionId(collectionId);
+			classLessonDo.setVisibility(true);
+			List<ClassLessonDo> classLessonDos = new ArrayList<ClassLessonDo>();
+			classLessonDos.add(classLessonDo);
+			unitId=selectedLbl.getElement().getId();
+			getUiHandlers().updateCollectionOrAssignmentVisiblity(classLessonDos,unitId);
+		}
+	};
 	
 	@UiHandler("saveBtn")
 	public void saveClass(ClickEvent event){
@@ -217,13 +285,6 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		unitPanel.setText(i18n.GL3281());
 		unitPanel.getElement().setId("unitPanelId");
 		
-		ListBox unitListBox = new ListBox();
-		
-		unitListBox.addItem("Rates & Rations", "Rates & Rations");
-		unitListBox.addItem("Rates & Rations", "Exponents");
-		
-		unitList.add(unitListBox);
-		
 		scoreContainer.getElement().setId("scoreContainerId");
 		
 		choseTxtPanel.setText(i18n.GL3409());
@@ -255,6 +316,10 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		saveLblText.getElement().setId("saveLblTxtId");
 		
 		saveLblText.setVisible(false);
+		unitScrollPanel.setVisible(false);
+		
+		hiddenBox.setEnabled(false);
+		hiddenBox.getElement().getStyle().setCursor(Cursor.DEFAULT);
 	}
 	@Override
 	public void setClassData(ClasspageDo classpageDo) {
@@ -272,5 +337,87 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	public void setUpdateClass(ClasspageDo result) {
 		saveLblText.setVisible(false);
 		saveBtn.setVisible(true);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#getUnitListView(java.util.List)
+	 */
+	@Override
+	public void getUnitListView(List<FolderDo> result) {
+		if(result.size() > 0){
+			unitId = result.get(0).getGooruOid();
+			for(int i=0;i<result.size();i++){
+				Label label = new Label();
+				
+				final String unitId = result.get(i).getGooruOid();
+				final String unitName = result.get(i).getTitle();
+				
+				label.setText(unitName);
+				label.getElement().setId(unitId);
+				label.addStyleName("unitStyle");
+				label.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						hasClickedOnDropDwn=false;
+						selectedLbl.setText(unitName);
+						selectedLbl.getElement().setId(unitId);
+						getUiHandlers().getLessonList(unitId);
+					}
+				});
+				unitsPanel.add(label);
+				/*unitListBox.addItem(unitName, unitId);*/
+			}
+			selectedLbl.setText(result.get(0).getTitle());
+			selectedLbl.getElement().setId(unitId);
+		}
+		getUiHandlers().getLessonList(unitId);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setLessonData(java.util.List)
+	 */
+	@Override
+	public void setLessonData(List<ClassLessonDo> result) {
+		tableConatiner.clear();
+		if (result.size()>0) {
+			for(int i=0; i<result.size() ;i++){
+				ClassLessonDo classLessonDo = result.get(i);
+				EditClassLessonView editClassLessonView = new EditClassLessonView(classLessonDo,i+1);
+				tableConatiner.add(editClassLessonView);
+			}
+		}else{
+			Label label = new Label();
+			label.setText("No Lessons Found");
+			label.addStyleName("errorMessage");
+			label.getElement().getStyle().setPadding(50, Unit.PX);
+			label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			
+			tableConatiner.add(label);
+		}
+	}
+	
+	private class UpdateAllVisiblityHandler implements ClickHandler{
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			int widgetCount = tableConatiner.getWidgetCount();
+			for(int i=0;i<widgetCount;i++){
+				final EditClassLessonView panelContainer = (EditClassLessonView) tableConatiner.getWidget(i);
+				int checkBoxCount = panelContainer.getRowContainer().getWidgetCount();
+				for(int k =0;k<checkBoxCount;k++){
+					ClassLessonDo classLessonDo = new ClassLessonDo();
+					final EditClassCollectionWidget checkBoxContainer = (EditClassCollectionWidget) panelContainer.getRowContainer().getWidget(k);
+					checkBoxContainer.setChecked();
+					classLessonDo.setCollectionId(checkBoxContainer.getCollectionId());
+					classLessonDo.setVisibility(true);
+					classLessonDos.add(classLessonDo);
+				}
+			}
+			getUiHandlers().updateCollectionOrAssignmentVisiblity(classLessonDos, unitId);
+		}
+		
 	}
 }

@@ -126,10 +126,16 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		String subPageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO)){
 			classInfo.setStyleName(CssTokens.ACTIVE);
+			minLiPnl.removeStyleName(CssTokens.ACTIVE);
+			settLiPanel.removeStyleName(CssTokens.ACTIVE);
 		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE)){
 			minLiPnl.setStyleName(CssTokens.ACTIVE);
+			classInfo.removeStyleName(CssTokens.ACTIVE);
+			settLiPanel.removeStyleName(CssTokens.ACTIVE);
 		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
 			settLiPanel.setStyleName(CssTokens.ACTIVE);
+			classInfo.removeStyleName(CssTokens.ACTIVE);
+			minLiPnl.removeStyleName(CssTokens.ACTIVE);
 		}
 
 	}

@@ -24,10 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget;
 
+import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -60,10 +62,8 @@ public class EditClassLessonView extends Composite {
 	
 	@UiField PPanel lessonPanel;
 	
-	@UiField HTMLPanel rowContainer;
+	@UiField HTMLPanel rowContainer,lessonHeading;
 	
-	EditClassCollectionWidget editClassCollectionWidget;
-
 	private static EditClassLessonViewUiBinder uiBinder = GWT.create(EditClassLessonViewUiBinder.class);
 
 	interface EditClassLessonViewUiBinder extends	UiBinder<Widget, EditClassLessonView> {
@@ -71,11 +71,26 @@ public class EditClassLessonView extends Composite {
 
 	public EditClassLessonView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		lessonCountPanel.setText("Lesson 1");
-		lessonPanel.setText("Intro to Fractions");
-		for(int i=0;i<5;i++){
-			editClassCollectionWidget=new EditClassCollectionWidget();
+	}
+	
+	public HTMLPanel getRowContainer() {
+		return rowContainer;
+	}
+	
+	public EditClassLessonView(ClassLessonDo lessonDo,int i){
+		initWidget(uiBinder.createAndBindUi(this));
+		lessonCountPanel.setText("Lesson "+i);
+		lessonPanel.setText(lessonDo.getTitle());
+		rowContainer.clear();
+		if(lessonDo.getItems().size()>0){
+			int top=((36*lessonDo.getItems().size())/2)-25;
+			lessonHeading.getElement().getStyle().setTop(top, Unit.PX);
+		}
+		for(int k=0;k<lessonDo.getItems().size();k++){
+			ClassLessonDo collClassLessonDo = lessonDo.getItems().get(k);
+			EditClassCollectionWidget editClassCollectionWidget=new EditClassCollectionWidget(collClassLessonDo);
 			rowContainer.add(editClassCollectionWidget);
 		}
+		
 	}
 }
