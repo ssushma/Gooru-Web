@@ -360,8 +360,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
 							Label anserlbl=new Label();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-								JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
-								JSONObject authorObject = value.isObject();
+								 Map<String, Integer> authorObject = result.get(i).getOptions();
 								if(authorObject.keySet().size()!=0){
 									String userSelectedOption=authorObject.keySet().iterator().next();
 									correctAnser=getCorrectAnswer(result.get(i).getMetaData());
@@ -605,8 +604,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
 								Label anserlbl=new Label();
 								if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-									JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
-									JSONObject authorObject = value.isObject();
+									 Map<String, Integer> authorObject = result.get(i).getOptions();
 									if(authorObject.keySet().size()!=0){
 										String userSelectedOption=authorObject.keySet().iterator().next();
 										correctAnser=getCorrectAnswer(result.get(i).getMetaData());

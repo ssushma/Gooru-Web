@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -263,6 +260,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(courseSubjectDo.getName());
 				liPanel.setTitle(courseSubjectDo.getName());
+				liPanel.setCodeId(courseSubjectDo.getSubdomainId());
 				title.addClickHandler(new OnClickDomain(liPanel,courseSubjectDo.getSubdomainId(),title)); 
 				liPanel.add(title);
 				domainUlContainer.add(liPanel);
@@ -294,6 +292,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
+						removeSelectedDomainStyle(liPanelWithClose,viewType);
 						liPanelWithClose.removeFromParent();
 					}
 				});
@@ -307,6 +306,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 	}
 	
+	
 
 	@Override
 	public void addTaxonomyStandards(List<DomainStandardsDo> taxonomyStdList) {
@@ -316,6 +316,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			LiPanel liPanel=new LiPanel();
 			Anchor title=new Anchor(domainStandardsDo.getCode());
 			liPanel.setTitle(domainStandardsDo.getCode());
+			liPanel.setCodeId(domainStandardsDo.getCodeId());
 			title.addClickHandler(new OnClickStandards(liPanel,domainStandardsDo.getCodeId(),title)); 
 			liPanel.add(title);
 			standardsUlContainer.add(liPanel);
@@ -345,6 +346,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					removeSelectedDomainStyle(liPanelWithClose, viewType); 
 					liPanelWithClose.removeFromParent();
 				}
 			});
@@ -382,6 +384,21 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			Widget widget = widgets.next();
 			if (widget instanceof LiPanelWithClose && (String.valueOf(((LiPanelWithClose) widget).getId())).equals(id)) {
 				widget.removeFromParent();
+			}
+		}
+	}
+	
+	public void removeSelectedDomainStyle(LiPanelWithClose liPanelWithClose, String type) {
+		Iterator<Widget> widgets;
+		if("Unit".equalsIgnoreCase(type)){
+			widgets = domainUlContainer.iterator();
+		}else{
+			widgets = standardsUlContainer.iterator();
+		}
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel && (((LiPanel) widget).getCodeId()==liPanelWithClose.getId())){
+				widget.removeStyleName("active");
 			}
 		}
 	}

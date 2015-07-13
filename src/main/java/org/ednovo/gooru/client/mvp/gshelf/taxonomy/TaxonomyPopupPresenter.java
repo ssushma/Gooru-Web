@@ -97,7 +97,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							@Override
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
-								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 
 										@Override
@@ -130,7 +130,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 						public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 							if(taxonomyDomainList.size()>0){
 								getView().addTaxonomyDomains(taxonomyDomainList);
-								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 										
 										@Override
@@ -157,7 +157,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
 					getView().addTaxonomyDomains(result);
-					if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+					if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 						AppClientFactory.getInjector().getTaxonomyService().getStandardsList(result.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 							
 							@Override
@@ -254,7 +254,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 									public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 										if(taxonomyDomainList.size()>0){
 											getView().addTaxonomyDomains(taxonomyDomainList);
-											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
+											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection") || TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 												AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 													
 													@Override

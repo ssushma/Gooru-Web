@@ -49,14 +49,14 @@ public abstract class EmptyCourseBuilderWidget extends Composite {
 		pnlH1Title.setText(i18n.GL1288());
 		StringUtil.setAttributes(pnlH1Title.getElement(), i18n.GL1288(), i18n.GL1288());
 		
-		pCreateFirstCourse.setText(i18n.GL3387());
-		StringUtil.setAttributes(pCreateFirstCourse.getElement(), i18n.GL3387(), i18n.GL3387());
+		pCreateFirstCourse.setText(i18n.GL3391());
+		StringUtil.setAttributes(pCreateFirstCourse.getElement(), i18n.GL3391(), i18n.GL3391());
 		
-		pCreateText.setText(i18n.GL3388());
-		StringUtil.setAttributes(pCreateText.getElement(), i18n.GL3388(), i18n.GL3388());
+		pCreateText.setText(i18n.GL3392());
+		StringUtil.setAttributes(pCreateText.getElement(), i18n.GL3392(), i18n.GL3392());
 		
-		lnkTextMyContent.setText(i18n.GL3389());
-		StringUtil.setAttributes(lnkTextMyContent.getElement(), i18n.GL3389(), i18n.GL3389());
+		lnkTextMyContent.setText(i18n.GL3393());
+		StringUtil.setAttributes(lnkTextMyContent.getElement(), i18n.GL3393(), i18n.GL3393());
 	}
 	@UiHandler("btnCreateCourse")
 	public void createCourseClick(ClickEvent e){
