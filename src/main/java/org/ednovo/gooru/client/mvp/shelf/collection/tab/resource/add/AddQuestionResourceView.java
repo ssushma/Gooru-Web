@@ -48,6 +48,7 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -874,35 +875,41 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 
 		addClickEventsForCheckBox();
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+		if(!AppClientFactory.getGooruUid().equalsIgnoreCase(ClientConstants.GOORU_ANONYMOUS)){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
-					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+				@Override
+				public void onSuccess(ProfileDo profileObj) {
+				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+							//standardContainer.setVisible(true);
+							isBrowseTooltip = true;
+							DisableStandars();
+						}else
+						{
+							//standardContainer.setVisible(true);
+							isBrowseTooltip = false;
+							enableStandards();
+							standardPreflist=new ArrayList<String>();
+							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+								standardPreflist.add(code);
+								standardPreflist.add(code.substring(0, 2));
+							 }
+
+						}
+					}else{
 						//standardContainer.setVisible(true);
 						isBrowseTooltip = true;
 						DisableStandars();
-					}else
-					{
-						//standardContainer.setVisible(true);
-						isBrowseTooltip = false;
-						enableStandards();
-						standardPreflist=new ArrayList<String>();
-						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
-							standardPreflist.add(code);
-							standardPreflist.add(code.substring(0, 2));
-						 }
-
 					}
-				}else{
-					//standardContainer.setVisible(true);
-					isBrowseTooltip = true;
-					DisableStandars();
 				}
-			}
 
-		});
+			});
+		}else{
+			//standardContainer.setVisible(true);
+			isBrowseTooltip = true;
+			DisableStandars();
+		}
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
