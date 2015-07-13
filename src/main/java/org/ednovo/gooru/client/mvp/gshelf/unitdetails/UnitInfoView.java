@@ -388,9 +388,16 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@Override
 	public void addTaxonomyData(UlPanel selectedUlContainer) {
-		for(int i=0;i<=selectedUlContainer.getWidgetCount();i++){
-			ulSelectedItems.add(selectedUlContainer.getWidget(i));
+		
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				ulSelectedItems.add(widget);
+			}
 		}
+		
+		
 		
 	}
 }
