@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -287,13 +288,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}
 			}
 		}
-
-
-
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
-
-	
-	
 	/**
 	 * This method will remove the widget based on the codeId in the UlPanel
 	 * @param ulPanel
@@ -319,12 +315,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	
 	private class OnClickTaxonomy implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			
 			getUiHandlers().invokeTaxonomyPopup("Lesson");
 		}
-		
 	}
 }

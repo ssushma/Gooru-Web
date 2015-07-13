@@ -57,6 +57,4 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 * @param index
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
-	
-	public List<Integer> getFirstSelectedValue();
 }

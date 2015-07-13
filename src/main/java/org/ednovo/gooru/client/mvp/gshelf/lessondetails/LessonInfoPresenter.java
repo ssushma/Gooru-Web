@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
@@ -162,7 +163,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	public void setLessonData(FolderDo folderObj) {
 		getView().setLessonInfoData(folderObj);
-		callTaxonomyService(1);
+		//callTaxonomyService(1);
 	}
 
 	@Override
@@ -193,5 +194,18 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
-
+	@Override
+	public void callCourseInfoTaxonomy(){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, lessonId, null, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				if(result.getSubdomain()!=null && result.getSubdomain().size()>0){
+					CourseSubjectDo courseSubjectObj=result.getSubdomain().get(0);
+					callTaxonomyService(courseSubjectObj.getId());
+				}
+			}
+		});
+	}
 }

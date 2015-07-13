@@ -212,5 +212,7 @@ public interface FolderService extends BaseService {
 	List<ListValuesDo> getDepthOfKnowledgesList() throws GwtException;
 	
 	List<ListValuesDo> getAudienceList() throws GwtException;
+	
+	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId)  throws GwtException;
 
 }

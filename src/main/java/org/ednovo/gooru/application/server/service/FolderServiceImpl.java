@@ -690,7 +690,28 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		return folderDo;
 	}
 	
-	
+
+	@Override
+	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		FolderDo folderDo = new FolderDo();
+		if(courseId!=null && unitId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA,courseId,unitId);
+		}else if(courseId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA,courseId);
+		}
+		try {
+			logger.info("getCourseDetails : "+url);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRep);
+			logger.info("folderDo obj : "+folderDo);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
 
 	@Override
 	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException {
