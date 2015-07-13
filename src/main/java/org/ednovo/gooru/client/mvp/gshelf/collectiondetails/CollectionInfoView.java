@@ -84,7 +84,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer;
 
 	@UiField TextBox collectionTitle;
-	@UiField Button saveCollectionBtn,uploadImageLbl;
+	@UiField Button saveCollectionBtn,uploadImageLbl,taxonomyBtn;
 	@UiField TextArea learningObjective;
 	@UiField Label lblErrorMessage, lblErrorMessageForLO,newlbl;
 	@UiField Image collThumbnail;
@@ -139,6 +139,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		centurySkillContainer.setVisible(false);
 		uploadImageLbl.setText(i18n.GL0912());
 		populateStandardValues();
+		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -529,7 +530,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 	}
 
+	private class OnClickTaxonomy implements ClickHandler{
 
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			getUiHandlers().invokeTaxonomyPopup("Collection");
+		}
+		
+	}
 
 
 

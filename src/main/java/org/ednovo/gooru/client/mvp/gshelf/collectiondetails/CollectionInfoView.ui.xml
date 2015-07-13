@@ -56,8 +56,8 @@
 						<div class="col-md-8">
 							<div class="dropDownRight">
 								<div class="btn-group">
-									<button class="btn btn-primary" type="button">Select other from
-										taxonomy</button>
+									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
+										taxonomy</g:Button>
 									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
 										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>

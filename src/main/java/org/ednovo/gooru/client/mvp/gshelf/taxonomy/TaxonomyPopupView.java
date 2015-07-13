@@ -263,6 +263,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(courseSubjectDo.getName());
 				liPanel.setTitle(courseSubjectDo.getName());
+				liPanel.setCodeId(courseSubjectDo.getSubdomainId());
 				title.addClickHandler(new OnClickDomain(liPanel,courseSubjectDo.getSubdomainId(),title)); 
 				liPanel.add(title);
 				domainUlContainer.add(liPanel);
@@ -294,6 +295,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
+						removeSelectedDomainStyle(liPanelWithClose,viewType);
 						liPanelWithClose.removeFromParent();
 					}
 				});
@@ -307,6 +309,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 	}
 	
+	
 
 	@Override
 	public void addTaxonomyStandards(List<DomainStandardsDo> taxonomyStdList) {
@@ -316,6 +319,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			LiPanel liPanel=new LiPanel();
 			Anchor title=new Anchor(domainStandardsDo.getCode());
 			liPanel.setTitle(domainStandardsDo.getCode());
+			liPanel.setCodeId(domainStandardsDo.getCodeId());
 			title.addClickHandler(new OnClickStandards(liPanel,domainStandardsDo.getCodeId(),title)); 
 			liPanel.add(title);
 			standardsUlContainer.add(liPanel);
@@ -345,6 +349,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					removeSelectedDomainStyle(liPanelWithClose, viewType); 
 					liPanelWithClose.removeFromParent();
 				}
 			});
@@ -382,6 +387,21 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			Widget widget = widgets.next();
 			if (widget instanceof LiPanelWithClose && (String.valueOf(((LiPanelWithClose) widget).getId())).equals(id)) {
 				widget.removeFromParent();
+			}
+		}
+	}
+	
+	public void removeSelectedDomainStyle(LiPanelWithClose liPanelWithClose, String type) {
+		Iterator<Widget> widgets;
+		if("Unit".equalsIgnoreCase(type)){
+			widgets = domainUlContainer.iterator();
+		}else{
+			widgets = standardsUlContainer.iterator();
+		}
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel && (((LiPanel) widget).getCodeId()==liPanelWithClose.getId())){
+				widget.removeStyleName("active");
 			}
 		}
 	}
