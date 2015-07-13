@@ -319,9 +319,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							lblLoadingText.setVisible(true);
 							pageNumber++;
 							isForwardScroll = true;
+							AppClientFactory.printInfoLogger("Search read data from local store---->"+pageNumber);
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
+							
+							AppClientFactory.printInfoLogger("Search Abstract View forward scroll---->");
 							if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStore.getItem((pageNumber+1)+"") == null){
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+									AppClientFactory.printInfoLogger("Search Abstract View forward scroll for resource---->");
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 								}else{
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
@@ -679,6 +683,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
+		AppClientFactory.printInfoLogger(" post search searchDo.getSearchResults()---->"+ searchDo.getSearchResults().size());
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			panelBorderBox.getElement().getStyle().clearBackgroundColor();

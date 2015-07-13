@@ -392,7 +392,7 @@ public class CollectionShareTabVc extends Composite {
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-				if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("reviewed")){
+				if(collection.getPublishStatus()!=null && collection.getPublishStatus().equalsIgnoreCase("reviewed")){
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(false);
 						publishedPanel.setVisible(true);
@@ -403,7 +403,7 @@ public class CollectionShareTabVc extends Composite {
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = false;
-				if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+				if(collection.getPublishStatus()!=null && collection.getPublishStatus().equalsIgnoreCase("pending")){
 						selectPrivateResource("pending");
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(true);
@@ -416,7 +416,7 @@ public class CollectionShareTabVc extends Composite {
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-			if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+			if(collection.getPublishStatus()!=null && collection.getPublishStatus().equalsIgnoreCase("pending")){
 					selectPrivateResource("pending");
 					rbPublic.setVisible(false);
 					lblPublishPending.setVisible(true);
@@ -748,7 +748,7 @@ public class CollectionShareTabVc extends Composite {
 								}
 								if(result.getSharing().equalsIgnoreCase(share)){
 									if(result.getPublishStatus()!=null){
-										if(result.getPublishStatus().getValue().equals("reviewed")){
+										if(result.getPublishStatus().equals("reviewed")){
 											publishedPanel.setVisible(true);
 											rbPublic.setVisible(false);
 											lblPublishPending.setVisible(false);
@@ -769,8 +769,8 @@ public class CollectionShareTabVc extends Composite {
 									lblPublishPending.setVisible(true);
 								}
 								
-								if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus().getValue()!=null){
-									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),result.getPublishStatus().getValue(),true,result));
+								if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus()!=null){
+									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),result.getPublishStatus(),true,result));
 								}else{
 									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),null,true,result));
 								}

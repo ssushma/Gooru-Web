@@ -46,6 +46,7 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
@@ -1873,5 +1874,91 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return dataList;
 	}
+
+	@Override
+	public ArrayList<PlanProgressDo> getCourseMasteryReport(String classpageId, String courseId) throws GwtException, ServerDownException {
+		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		String endPoint = getAnalyticsEndPoint();
+		partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_COURSE_PROGRESS, classpageId, courseId);
+		getLogger().info(partialUrl);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		JSONObject resourceObj;
+		try {
+			resourceObj = jsonRep.getJsonObject();
+			if(resourceObj!=null){
+				if(resourceObj.optJSONArray("content") != null){
+					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+				}
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	@Override
+	public ArrayList<PlanProgressDo> getUnitMasteryReport(String classpageId, String courseId, String unitId, String collectionType) throws GwtException, ServerDownException {
+		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_UNIT_PROGRESS, classpageId, courseId, unitId);
+		
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put("collectionType", collectionType);
+		params.put("getUsageData", "true");
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		
+		getLogger().info(url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		JSONObject resourceObj;
+		try {
+			resourceObj = jsonRep.getJsonObject();
+			if(resourceObj!=null){
+				if(resourceObj.optJSONArray("content") != null){
+					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+				}
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return dataList;
+	}
 	
+	@Override
+	public ArrayList<PlanProgressDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException {
+		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		if(collectionType.equalsIgnoreCase("assessment")) {
+			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS, classpageId, courseId, unitId, lessonId, collectionType);
+		} else {
+			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_COLLECTION_PROGRESS, classpageId, courseId, unitId, lessonId, collectionType);
+		}
+		
+		getLogger().info(partialUrl);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		JSONObject resourceObj;
+		try {
+			resourceObj = jsonRep.getJsonObject();
+			if(resourceObj!=null){
+				if(resourceObj.optJSONArray("content") != null){
+					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+				}
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return dataList;
+	}
 }

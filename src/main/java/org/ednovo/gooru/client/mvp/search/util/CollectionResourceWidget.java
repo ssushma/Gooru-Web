@@ -186,6 +186,7 @@ public class CollectionResourceWidget extends Composite {
 		usedInSearchDo = new SearchDo<CollectionSearchResultDo>();
 		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());
 		usedInSearchDo.setPageSize(1);
+		AppClientFactory.printInfoLogger("print resource based user details---->"+resourceSearchResultDo.getGooruOid());
 		AppClientFactory.getInjector().getResourceService().getResourceBasedUsersDetails(resourceSearchResultDo.getGooruOid(), 0, 1, new SimpleAsyncCallback<ArrayList<ResourceCollDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ResourceCollDo> userCollectionsList) {

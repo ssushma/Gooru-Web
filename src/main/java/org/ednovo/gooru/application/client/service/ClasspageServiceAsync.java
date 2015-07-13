@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
@@ -211,11 +212,21 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	void getClassesAssociatedWithCourse(String courseId,AsyncCallback<ArrayList<ClasspageDo>> callback) throws GwtException,ServerDownException;
 	
-	public void getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
-	
 	public void getClassUnitList(String classId,String courseId,int offset, int limit,AsyncCallback<List<FolderDo>> callback) throws GwtException,ServerDownException;
 	
 	public void getClassLessonCollectionList(String classId,String courseId,String unitId,int offset, int limit,AsyncCallback<List<ClassLessonDo>> callback) throws GwtException,ServerDownException;  
 	
 	public void updateClassLessonVisiblity(String classId,String courseId,String unitId,List<ClassLessonDo> listClassLessonDo,AsyncCallback<ClassLessonDo> callback) throws GwtException,ServerDownException;
+	
+	/** Student Reports **/
+	public void getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
+	
+	/** Mastery Reports **/
+	public void getCourseMasteryReport(String classpageId, String courseId, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
+	
+	public void getUnitMasteryReport(String classpageId, String courseId, String unitId, String collectionType, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
+	
+	public void getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String collectionType, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
+
 }
+
