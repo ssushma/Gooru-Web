@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.application.client.service.FolderService;
 import org.ednovo.gooru.application.server.ArrayListSorter;
@@ -811,5 +812,53 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
 
 		return listValues;
+	}
+	
+	@Override
+	public void updateCollectionDetails(String collectionId,Map<Integer,String> audience,Map<Integer,String> dok,Map<Long,String> centurySkills,String languageObjective){
+		
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTION, collectionId);
+		JSONObject collectionObject=new JSONObject();
+		try {
+			
+			collectionObject.put("languageObjective", languageObjective);
+			
+			List<String> auKeys=new ArrayList<String>();
+			List<String> dokKeys=new ArrayList<String>();
+			List<String> centurySkillsKeys=new ArrayList<String>();
+		
+			Set<Integer> keys=audience.keySet();
+			
+			collectionObject.put("audienceIds", getKeys(audience.keySet()));
+			collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
+			collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
+			
+			System.out.println("Url"+url);
+			System.out.println("Form"+collectionObject.toString());
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),collectionObject.toString());
+		
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+	}
+	
+	
+	public List<String> getKeys(Set<Integer> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Integer key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
+	public List<String> getKeysLong(Set<Long> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Long key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
 	}
 }

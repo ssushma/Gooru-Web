@@ -456,6 +456,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								MixpanelUtil.Click_Study_LandingPage();
 							}
 							Map<String, String> params = new HashMap<String, String>();
+							if(result.getCourseGooruOid() != null){
+								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+							}
 							params.put("id",result.getClassUid());
 							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
@@ -468,6 +471,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								MixpanelUtil.Click_Study_LandingPage();
 							}
 							Map<String, String> params = new HashMap<String, String>();
+							if(result.getCourseGooruOid() != null){
+								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+							}
 							params.put("id",result.getClassUid());
 							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
@@ -480,6 +486,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								MixpanelUtil.Click_Study_LandingPage();
 							}
 							Map<String, String> params = new HashMap<String, String>();
+							if(result.getCourseGooruOid() != null){
+								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+							}
 							params.put("id",result.getClassUid());
 							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
@@ -499,6 +508,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					else
 					{
 						Map<String, String> params = new HashMap<String, String>();
+						if(result.getCourseGooruOid() != null){
+							params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+						}
 						params.put("id",result.getClassUid());
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 						txtCode.setText("");
