@@ -136,7 +136,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
 
-		depthOfKnowledgeContainer.setVisible(true);
+		depthOfKnowledgeContainer.setVisible(false);
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
 		uploadImageLbl.setText(i18n.GL0912());

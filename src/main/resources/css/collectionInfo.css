@@ -20,5 +20,11 @@
 
  .openHideBlocks p {
   color: #515151;
+  margin: 0 0 10px;
+}
+
+.checkboxMainContainer span > label{
+	padding-top: 3px;
+  font-weight: 100;
 }
 
