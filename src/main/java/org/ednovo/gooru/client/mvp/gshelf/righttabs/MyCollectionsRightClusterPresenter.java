@@ -146,9 +146,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if(FOLDER.equalsIgnoreCase(type)){
 					//To disabel bread cums
 					getView().disableAndEnableBreadCums(false);
-					collectionInfoPresenter.setCollectionType(type);
+					/*collectionInfoPresenter.setCollectionType(type);
 					collectionInfoPresenter.setData(folderObj,type);
-					setInSlot(INNER_SLOT, collectionInfoPresenter);
+					setInSlot(INNER_SLOT, collectionInfoPresenter);*/
+					getView().setFolderInfoWidget();
+					
 				}else{
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){
@@ -240,6 +242,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			}else if(type.contains(LESSON)){
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON);
+			}else if(type.toLowerCase().contains(FOLDER.toLowerCase())){
+				setTabItems(1, FOLDER, null);
+				setUnitTemplate(FOLDER);
 			}else if(type.toLowerCase().contains(COLLECTION.toLowerCase())){
 				setTabItems(1, COLLECTION, null);
 				setUnitTemplate(COLLECTION);
