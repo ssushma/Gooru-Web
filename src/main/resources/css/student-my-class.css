@@ -1082,6 +1082,9 @@ th.headcol.whitebg {
 .tableStyle td.yellowgreen {
     background: #edf167;
 }
+.tableStyle td.org {
+    background: #fec956;
+}
 /* end .tableStyle */
 
 .dashboardBodyBlock .scrollingTable {
@@ -2187,7 +2190,8 @@ th.headcol.whitebg {
 	margin-top: 20px;
 }
 .modal-widget-1000 {
-	width: 1000px;
+	width: 98%;
+	margin: 0 auto;
 	background: #fff;
 }
 .teach-popup-student-content-margin {
@@ -2643,6 +2647,7 @@ th.headcol.whitebg {
     padding: 6px 14px;
     text-align: center;
     vertical-align: top;
+    width: 50px;
 }
 .rowContainer .progressBlockLeft {
     display: table-cell;
@@ -2681,7 +2686,7 @@ th.headcol.whitebg {
     background: #eef3f7 none repeat scroll 0 0;
     padding: 10px 10px;
     display: table-cell;
-    width: 100%;
+    width: 85%;
 }
 .rowContainer .heighlightBlockUnitReports {
     height: 104px;

@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -139,7 +136,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	 */
 	@UiHandler("addTaxonomyBtn")
 	public void onClickAddTaxonomy(ClickEvent event){
-		getUiHandlers().addTaxonomyData(); 
+		hide();
+		getUiHandlers().addTaxonomyData(selectedUlContainer); 
 	}
 	
 	
@@ -419,6 +417,34 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		courseUlContainer.clear();
 		domainUlContainer.clear();
 		standardsUlContainer.clear();
+	}
+
+	@Override
+	public void displaySelectedTaxonomyData(UlPanel ulSelectedItems) {
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				setActiveStyle(((LiPanelWithClose) widget).getId());
+				selectedUlContainer.add(widget);
+			}
+		}
+	}
+
+	private void setActiveStyle(long id) {
+		Iterator<Widget> widgets;
+		if("Unit".equalsIgnoreCase(viewType)){
+			widgets = domainUlContainer.iterator();
+		}else{
+			widgets = standardsUlContainer.iterator();
+		}
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel && ((LiPanel) widget).getCodeId() == id){
+				widget.setStyleName("active");
+			}
+		}
 	}
 
 }

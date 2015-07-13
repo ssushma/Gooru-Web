@@ -28,6 +28,7 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
@@ -61,9 +62,11 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 
 	void showUnitTemplate();
 
-	public void invokeTaxonomyPopup(String type); 
+	public void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems); 
 	
 	MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 	
 	public void getDomainsBasedOnCourseId(int courseId,int selectedId);
+	
+	public void callCourseInfoTaxonomy();
 }

@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -78,6 +79,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setUnitInfoPresenterInstance(this);
 	}
 
 	@Override
@@ -127,16 +129,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
 				params.put("o2", result.getGooruOid());
 				params.put("view", "Course");
-				
-				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				if(getView().getFirstSelectedValue().get(0)!=null && result.getSubdomain().get(0)!=null){
-					selectedValues.put(getView().getFirstSelectedValue().get(0),result.getSubdomain().get(0).getSubdomainId()!=null?result.getSubdomain().get(0).getSubdomainId():null);
-				}
-				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
-					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
-				}
-				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
-				
+
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				if(isCreateLesson){
@@ -161,14 +154,6 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				folderDo.setIdeas(createDo.getIdeas());
 				folderDo.setQuestions(createDo.getQuestions());
 				//folderDo.setGooruOid(id);
-				Map<Integer,Integer> selectedValues=new HashMap<Integer, Integer>();
-				if(getView().getFirstSelectedValue()!=null && getView().getFirstSelectedValue().get(0)!=null && folderDo.getSubdomain().get(0)!=null){
-					selectedValues.put(getView().getFirstSelectedValue().get(0),folderDo.getSubdomain().get(0).getSubdomainId()!=null?folderDo.getSubdomain().get(0).getSubdomainId():null);
-				}
-				if(myCollectionsRightClusterPresenter.getFirstSelectedData()!=null){
-					myCollectionsRightClusterPresenter.getFirstSelectedData().clear();
-				}
-				myCollectionsRightClusterPresenter.setFirstSelectedData(selectedValues);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,UNIT); 
 				if(isCreateUnit){
@@ -215,13 +200,30 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		this.myCollectionsRightClusterPresenter = myCollectionsRightClusterPresenter;
 	}
 
-	public void setData(FolderDo folderObj) {
+	public void setData(FolderDo folderObj) { 
 		getView().setCouseData(folderObj);
 	}
 
 	@Override
-	public void invokeTaxonomyPopup(String viewType) {
+	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
+		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
+	}
+	@Override
+	public void callCourseInfoTaxonomy(){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, null, null, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				if(result.getTaxonomyCourse()!=null && result.getTaxonomyCourse().size()>0){
+					CourseSubjectDo courseSubjectObj=result.getTaxonomyCourse().get(0);
+					callCourseBasedOnSubject(courseSubjectObj.getSubjectId(),courseSubjectObj.getId());
+				}
+			}
+		});
+	}
+	public void addTaxonomy(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
 	}
 }

@@ -430,8 +430,8 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
 			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
-			String id = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
+			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+			request = request.with(UrlNavigationTokens.CLASSPAGEID, id);
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
@@ -484,7 +484,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		reportPanel.setStyleName(CssTokens.ACTIVE);
 		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			reportBox.add(new TeachCourseReportChildView());
+			reportBox.add(new TeachCourseReportChildView(classpageDo));
 		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 			reportBox.add(new TeachUnitReportChildView());
 		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {

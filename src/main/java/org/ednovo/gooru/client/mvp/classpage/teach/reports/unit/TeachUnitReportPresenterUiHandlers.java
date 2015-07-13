@@ -27,5 +27,5 @@ package org.ednovo.gooru.client.mvp.classpage.teach.reports.unit;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface TeachUnitReportPresenterUiHandlers extends BaseUiHandlers{
-
+	public void getUnitMasteryData(String classId, String courseId, String unitId, String collectionType);
 }

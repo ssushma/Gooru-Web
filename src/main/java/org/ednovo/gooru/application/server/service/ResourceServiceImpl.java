@@ -337,6 +337,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					}
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos);
+				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
 				obj.setUser(user);
