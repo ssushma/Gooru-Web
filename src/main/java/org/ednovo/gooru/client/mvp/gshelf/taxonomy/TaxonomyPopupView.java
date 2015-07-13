@@ -136,8 +136,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	 */
 	@UiHandler("addTaxonomyBtn")
 	public void onClickAddTaxonomy(ClickEvent event){
-		getUiHandlers().addTaxonomyData(selectedUlContainer); 
 		hide();
+		getUiHandlers().addTaxonomyData(selectedUlContainer); 
 	}
 	
 	
@@ -417,6 +417,34 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		courseUlContainer.clear();
 		domainUlContainer.clear();
 		standardsUlContainer.clear();
+	}
+
+	@Override
+	public void displaySelectedTaxonomyData(UlPanel ulSelectedItems) {
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				setActiveStyle(((LiPanelWithClose) widget).getId());
+				selectedUlContainer.add(widget);
+			}
+		}
+	}
+
+	private void setActiveStyle(long id) {
+		Iterator<Widget> widgets;
+		if("Unit".equalsIgnoreCase(viewType)){
+			widgets = domainUlContainer.iterator();
+		}else{
+			widgets = standardsUlContainer.iterator();
+		}
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel && ((LiPanel) widget).getCodeId() == id){
+				widget.setStyleName("active");
+			}
+		}
 	}
 
 }

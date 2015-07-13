@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
@@ -42,6 +43,8 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 	void callCreateAndUpdate(boolean isCreate,boolean result,String type);
 
 	void displayStandardsList(List<DomainStandardsDo> result);
+
+	void addTaxonomyData(UlPanel selectedUlContainer); 
 	
 
 }

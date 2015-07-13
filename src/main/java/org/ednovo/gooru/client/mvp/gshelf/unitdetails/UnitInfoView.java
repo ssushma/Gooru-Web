@@ -91,7 +91,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	private static final String UNIT = "Unit";
 	
 	LiPanel tempLiPanel=null;
-	List<Integer> firstSelectedSubject = new ArrayList<Integer>();
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -138,7 +137,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 						pnlGradeDescContainer.getElement().setInnerHTML(courseSubjectDo.getDescription());
 					}
 				}
-				firstSelectedSubject.add((int)codeId);
 				if(isAdd){
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
@@ -314,8 +312,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				courseList.add(courseObj);
 			}
 		}
-		if(courseObj!=null)
-		courseObj.setSubdomain(courseList);
+		if(courseObj!=null){
+			courseObj.setSubdomain(courseList);
+		}
 		return taxonomyCourseIds;
 	}
 
@@ -328,13 +327,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
 		ulSelectedItems.clear();
-		firstSelectedSubject.clear();
 		selectedValues.clear();
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getSubdomain()!=null){
 			//To set default selection if the user is already selected any subject
-			firstSelectedSubject.add(courseObj.getSubdomain().get(0).getSubdomainId());
-			getUiHandlers().callCourseBasedOnSubject(courseObj.getSubdomain().get(0).getSubjectId(),courseObj.getSubdomain().get(0).getCourseId());
 			for (final CourseSubjectDo courseSubjectDo : courseObj.getSubdomain()) {
 				if(selectedValues.containsKey(courseSubjectDo.getCourseId())){
 					selectedValues.get(courseSubjectDo.getCourseId()).add(courseSubjectDo.getName());
@@ -363,31 +359,36 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				ulSelectedItems.add(liPanelWithClose);
 			}
 		}
-		if(getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData()!=null){
-			for (Map.Entry<Integer, Integer> entry : getUiHandlers().getMyCollectionsRightClusterPresenter().getFirstSelectedData().entrySet()) {
-				firstSelectedSubject.add(entry.getKey());
-				if(entry.getValue()!=null)
-				getUiHandlers().callCourseBasedOnSubject(entry.getKey(),entry.getValue());
-				break;
-			}
-		}
-	}
-	@Override
-	public List<Integer> getFirstSelectedValue(){
-		return firstSelectedSubject;
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup(UNIT);
+			getUiHandlers().invokeTaxonomyPopup(UNIT,ulSelectedItems);
 		}
 	}
 
 	@Override
 	public void addTaxonomyData(UlPanel selectedUlContainer) {
-		for(int i=0;i<=selectedUlContainer.getWidgetCount();i++){
-			ulSelectedItems.add(selectedUlContainer.getWidget(i));
-		}
 		
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && isWidgetExists(((LiPanelWithClose) widget).getId())){
+				ulSelectedItems.add(widget);
+			}
+		}
+	}
+
+	private boolean isWidgetExists(long id) {
+		boolean flag = true;
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == id){
+				flag = false;
+			}
+		}
+		return flag;
 	}
 }

@@ -115,10 +115,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
 
-
-
 	final String COLLECTION = "collection";
-	private static final String ASSESSMENT_URL = "assessment/url";
 
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObjG;
@@ -284,7 +281,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			});
 			standardsDropListValues.add(liPanel);
 		}
-
 	}
 
 	public void setDetaultImage(String collectionType){
@@ -305,7 +301,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				setDetaultImage(courseObj.getType());
 			}
 		}
-
 		if(courseObj!=null){
             if(courseObj.getStandards()!=null && courseObj.getStandards().size()>0){
                 //Render the existing standards
@@ -326,16 +321,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         }
 		setStaticData(type);			
-
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
-
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	public void setStaticData(String type)
 	{   
@@ -429,7 +423,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	protected void setDepthOfKnlze() {
 		List<String> depthofknowledgedetails = new ArrayList<String>();
-
 		if(courseObjG.getDepthOfKnowledges()!=null){
 			if(courseObjG.getDepthOfKnowledges().size()>0){
 				for(int i=0;i<courseObjG.getDepthOfKnowledges().size();i++){
@@ -480,7 +473,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public List<Integer> getSelectedStandardsIds(){
 		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
 		Iterator<Widget> widgets=ulSelectedItems.iterator();
-		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
 		while (widgets.hasNext()) {
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
@@ -518,27 +510,28 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public AudienceView getAudienceContainer() {
 		return audienceContainer;
 	}
-
-
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		// TODO Auto-generated method stub
 		super.setInSlot(slot, content);
 		if(slot==CollectionInfoPresenter.CENTURYSKILLS){
 			getCenturySkillContainer().clear();
 			getCenturySkillContainer().add(content);
 		}
 	}
-
 	private class OnClickTaxonomy implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup("collection");
+			getUiHandlers().invokeTaxonomyPopup("collection",ulSelectedItems);
 		}
-		
 	}
-
-
-
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				ulSelectedItems.add(widget);
+			}
+		}
+	}
 }

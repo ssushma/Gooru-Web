@@ -238,7 +238,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			protected void run(SearchDo<T> searchDo) {
 				requestSearchLoad(searchDo, this,false);
 			}
-
 			@Override
 			public void onCallSuccess(String result) {
 				getSearchAsyncCallbackLoadInStore().execute(false,result,getSearchDo());

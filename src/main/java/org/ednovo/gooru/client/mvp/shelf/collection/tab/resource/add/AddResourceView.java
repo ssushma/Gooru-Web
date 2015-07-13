@@ -343,7 +343,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		questionTabButton.setVisible(isQuestionWidget);
 		multipleAnswerTabButton.setVisible(isQuestionWidget);
 		trueOrFlaseButton.setVisible(isQuestionWidget);
-		openEndedButton.setVisible(isQuestionWidget);
+		openEndedButton.setVisible(isAssementsWidget);
 		fillInTheBlankTabButton.setVisible(isQuestionWidget);
 		hotSpotImageTabButton.setVisible(isQuestionWidget);
 		hotSpotWordTabButton.setVisible(isQuestionWidget);
@@ -972,10 +972,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 //				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
-				if(collectionDo!=null&&collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
-					hideTabButtons(false, true, true);
-				}else{
+				if(collectionDo!=null&&collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equalsIgnoreCase("assessment")){
 					hideTabButtons(false, true, false);
+				}else{
+					hideTabButtons(false, true, true);
 				}
 				setRadioButtonValues();
 				addQuestionResourceWidget.setQuestionType("MC");
@@ -1019,10 +1019,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
 				addQuestionResourceWidget.getHideRightsToolTip();
 
-				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
-					hideTabButtons(false, true, true);
-				}else{
+				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("assessment")){
 					hideTabButtons(false, true, false);
+				}else{
+					hideTabButtons(false, true, true);
 				}
 				tabViewContainer.add(addQuestionResourceWidget);
 				tabViewContainer.getElement().setId("pnlTabViewContainer");
