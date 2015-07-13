@@ -51,6 +51,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -85,6 +86,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String O3_LEVEL = "o3";
 	
 	private static final String ID = "id";
+
+	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
 	
 	HandlerRegistration handlerRegistration=null;
 	
@@ -376,19 +379,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		return params;
 	}
 	/**
-	 * This class used for to add course/unit/lesson 
-	 * @author Gooru team
-	 *
-	 *//*
-	public class CreateContentEvent implements ClickHandler{
-		Button btn;
-		public CreateContentEvent(Button btn) {
-			this.btn=btn;
-		}
-		@Override
-		public void onClick(ClickEvent event) {
-		    String type = StringUtil.isEmpty(btn.getText())?null:btn.getText();
-			getUiHandlers().addNewContent(type);
-		}
-	}*/
+	 * This is used for adding loader image
+	 * @return
+	 */
+	@Override
+	public void loadingImage(){
+		Image loadingImage =  new Image();
+		loadingImage.setUrl(LOADER_IMAGE);
+		loadingImage.getElement().setId("myCollectionsListView");
+		pnlCourseList.add(loadingImage);
+	}
 }
