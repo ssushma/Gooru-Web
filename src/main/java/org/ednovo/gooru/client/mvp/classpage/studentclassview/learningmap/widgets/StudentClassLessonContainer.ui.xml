@@ -6,11 +6,11 @@
 	   	<span:HTMLEventPanel styleName="col-md-4 col-sm-4 cursorPointer" ui:field="lessonWidget">
 		   <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
 		   <g:HTMLPanel styleName="heighlightBlockUnitReports">
-		      <g:HTMLPanel styleName="lessonDetails">
+		      <g:HTMLPanel styleName="lessonDetails col-md-10 col-sm-10 col-xs-10">
 	             <uc:H3Panel ui:field="lessonCountName"></uc:H3Panel>
 	             <uc:PPanel ui:field="lessonName"></uc:PPanel>
 		      </g:HTMLPanel>
-		      <g:HTMLPanel styleName="progressBlockLeft">
+		      <g:HTMLPanel styleName="progressBlockLeft col-md-2 col-sm-2 col-xs-2">
 				  <g:HTMLPanel ui:field="circleIcon">
 		                <span></span>
 		          </g:HTMLPanel>
