@@ -24,13 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills;
 
-import java.util.Map;
-
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -66,12 +62,9 @@ public class CenturySkillsPresenter extends PresenterWidget<IsCenturySkillsView>
 		super.onBind();
 	}
 	
-	
-
 	@Override
 	public void onReveal() {
 		super.onReveal();
-	
 	}
 	
 	@Override
@@ -85,6 +78,7 @@ public class CenturySkillsPresenter extends PresenterWidget<IsCenturySkillsView>
 		super.onHide();
 	
 	}
+	
 	@Override
 	public void setUpdatedCentury() {
 		getView().setUpdatedCentury(addCenturyPresenter.getSelectedValues());
@@ -113,22 +107,13 @@ public class CenturySkillsPresenter extends PresenterWidget<IsCenturySkillsView>
 			public void onSuccess(SearchDo<StandardFo> result) {
 				getView().setCenturySuggestions(result);
 			}
-			
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 		});
 	}
-	
 	@Override
 	public void closeCenturyPopup() {
-		
 		addCenturyPresenter.hidePopup();
-	
 	}
-	
-	
-	
-	
-	
 }

@@ -28,13 +28,13 @@
               <p>
               <!--   <button class="primary" type="submit">Publish</button> -->
                 <g:HTMLPanel ui:field="rbPublicPanel">
-			    <g:Button styleName="primary" ui:field="rbPublic">Publish</g:Button>
-			    <g:Label ui:field="lblPublishPending">pending</g:Label>
+			    <g:Button styleName="primary" ui:field="rbPublic" text="{i18n.GL1921}"/>
+			    <g:Label ui:field="lblPublishPending" text="{i18n.GL1924}"/>
 				</g:HTMLPanel>
               </p>
               <g:HTMLPanel styleName="publishPanel" ui:field="publishedPanel">
 			    <g:Image url="images/right-mark.png"></g:Image>
-			    <g:Label styleName="published" ui:field="lblPublish">Published</g:Label>
+			    <g:Label styleName="published" ui:field="lblPublish" text="{i18n.GL1942}">Published</g:Label>
 		   	</g:HTMLPanel>
             </div>
             <g:HTMLPanel ui:field="collaboratorPanel"></g:HTMLPanel>

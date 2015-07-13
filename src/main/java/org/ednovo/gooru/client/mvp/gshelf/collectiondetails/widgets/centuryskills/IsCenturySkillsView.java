@@ -54,4 +54,6 @@ public interface IsCenturySkillsView extends IsViewWithHandlers<CenturySkillsUiH
 	void setCollectionDo(CollectionDo collectionDo);
 
 	void onPostStandardUpdate(CollectionDo collectionDo);
+
+	Map<Long, String> getSelectedValuesFromAutoSuggest();
 }

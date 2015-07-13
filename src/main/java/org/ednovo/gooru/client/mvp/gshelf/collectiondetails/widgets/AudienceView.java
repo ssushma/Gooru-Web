@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,20 +20,20 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AudienceView extends Composite {
-	
+
 	@UiField HTMLPanel listGroup;
 	@UiField HTMLPanel mainContainer;
-	
-	Map<String,String> selectedAudience=new HashMap<String, String>();
-	
+	private CollectionDo collectionDo;
+	Map<Integer,String> selectedAudience=new HashMap<Integer, String>();
+
 	private static DepthKnowledgeViewUiBinder uiBinder = GWT.create(DepthKnowledgeViewUiBinder.class);
 
 	interface DepthKnowledgeViewUiBinder extends UiBinder<Widget, AudienceView> {
 	}
 
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	
+
+
 	public AudienceView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		mainContainer.getElement().setId("audeince");
@@ -43,9 +45,9 @@ public class AudienceView extends Composite {
 			anchor.getElement().setId(listValuesDo.getId()+"");
 			anchor.setText(listValuesDo.getName());
 			anchor.setStyleName("list-group-item");
-			
+
 			anchor.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					// TODO Auto-generated method stub
@@ -62,9 +64,9 @@ public class AudienceView extends Composite {
 			listGroup.add(anchor);
 		}
 	}
-	
-	
-	public Map<String,String> getSelectedValues(){
+
+
+	public Map<Integer,String> getSelectedValues(){
 		int size=listGroup.getWidgetCount();
 		for(int i=0;i<size;i++){
 			Widget widget=listGroup.getWidget(i);
@@ -72,12 +74,38 @@ public class AudienceView extends Composite {
 				Anchor anchor=(Anchor)(widget);
 				String status=anchor.getElement().getAttribute("status");
 				if(status!=null&&status.equalsIgnoreCase("selected")){
-					selectedAudience.put(anchor.getElement().getId()+"", anchor.getText());
+					selectedAudience.put(Integer.parseInt(anchor.getElement().getId()), anchor.getText());
 				}
 			}
 		}
 		return selectedAudience;
 	}
+
+	public void setCollectonDetails(CollectionDo collectionDo){
+		this.collectionDo=collectionDo;
+		setSelectedValues(); 
+	}
+
+	public void setSelectedValues(){
+		List<checkboxSelectedDo> checkboxSelectedDos=collectionDo.getAudience();
+		if(checkboxSelectedDos!=null){
+			for(checkboxSelectedDo do1:checkboxSelectedDos){
+				selectedAudience.put(do1.getId(),do1.getValue());
+			}
+		}
 	
-	
+		int size=listGroup.getWidgetCount();
+		for(int i=0;i<size;i++){
+			Widget widget=listGroup.getWidget(i);
+			if(widget instanceof Anchor ){
+				Anchor anchor=(Anchor)(widget);
+				Integer id=Integer.parseInt(anchor.getElement().getId());
+				if(selectedAudience.containsKey(id)){
+					anchor.addStyleName("active");
+					anchor.getElement().setAttribute("status","selected");
+				}
+			}
+		}
+	}
+
 }

@@ -4,12 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.taskdefs.Sleep;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -17,10 +22,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class DepthKnowledgeView extends Composite {
 	
+	private CollectionDo collectionDo;
 	
 	@UiField HTMLPanel detailsContainer,mainContainer;
 
-	Map<String,String> selectedValues=new HashMap<String, String>();
+	Map<Integer,String> selectedValues=new HashMap<Integer, String>();
 	
 	private static DepthKnowledgeViewUiBinder uiBinder = GWT.create(DepthKnowledgeViewUiBinder.class);
 
@@ -46,22 +52,62 @@ public class DepthKnowledgeView extends Composite {
 		}
 	}
 	
-	public Map<String, String> getSelectedValue(){
-	
+	public Map<Integer, String> getSelectedValue(){
+		
 		int count=detailsContainer.getWidgetCount();
 		for(int i=0;i<count;i++){
 			Widget widget=detailsContainer.getWidget(i);
 			if(widget instanceof CheckBox){
 				CheckBox checkBox=(CheckBox)widget;
 				if(checkBox.getValue()){
-					selectedValues.put(checkBox.getElement().getId(),checkBox.getText());	
+					selectedValues.put(Integer.parseInt(checkBox.getElement().getId()),checkBox.getText());	
 				}
-				
 			}
-		
 		}
 		return selectedValues;
 	}
 	
+	
+	public void setCollectionDo(CollectionDo collectionDo){
+		this.collectionDo=collectionDo;
+		setSelectedValues();
+	}
+	
+	public void setSelectedValues(){
+		AppClientFactory.printInfoLogger("id...I am in setSelectedValue..");
+	
+		int count=detailsContainer.getWidgetCount();
+		List<checkboxSelectedDo> list=collectionDo.getDepthOfKnowledges();
+		AppClientFactory.printInfoLogger(".............lIST"+list);
+		if(list!=null){
+			for(checkboxSelectedDo checkboxSelectedDoObj:list){
+				selectedValues.put(checkboxSelectedDoObj.getId(), checkboxSelectedDoObj.getName());
+			}
+		}
+		AppClientFactory.printInfoLogger("................."+selectedValues.size());
+		for (Map.Entry<Integer,String> entry : selectedValues.entrySet()){
+			 AppClientFactory.printInfoLogger("........."+entry.getKey() + "/" + entry.getValue()+"......");
+		}
+		
+		for(int i=0;i<count;i++){
+			Widget widget=detailsContainer.getWidget(i);
+			if(widget instanceof CheckBox){
+				CheckBox checkBox=(CheckBox)widget;
+				String id=checkBox.getElement().getId();
+				AppClientFactory.printInfoLogger("id....."+id);
+				
+				if(id!=null){
+					
+					Integer idInt=Integer.parseInt(id);
+					if(selectedValues.get(idInt)!=null){
+						checkBox.setValue(selectedValues.containsKey(idInt));
+					}
+
+					
+				}
+			}
+		}
+		
+	}
 	
 }
