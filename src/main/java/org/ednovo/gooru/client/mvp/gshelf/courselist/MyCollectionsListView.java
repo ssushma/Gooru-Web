@@ -389,4 +389,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		loadingImage.getElement().setId("myCollectionsListView");
 		pnlCourseList.add(loadingImage);
 	}
+	@Override
+	public VerticalPanel getPanelCourseContainer(){
+		return pnlCourseList;
+	}
 }

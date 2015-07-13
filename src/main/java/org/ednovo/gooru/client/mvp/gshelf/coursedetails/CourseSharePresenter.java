@@ -124,6 +124,7 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 
 			@Override
 			public void onSuccess(ClasspageDo result) {
+				getTeachClassesList();
 				getView().showClassesInList(null);
 			}
 			
