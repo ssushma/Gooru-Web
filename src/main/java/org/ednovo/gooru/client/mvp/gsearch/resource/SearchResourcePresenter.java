@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
@@ -156,11 +157,13 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
+		AppClientFactory.printInfoLogger("Search API call---->"+getSearchDo().getPageNum());
 		getSearchDo().setPageSize(9);
 		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
 	}
 	@Override
 	protected void requestSearchLoad(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchResultsJsonAsyncCallback,boolean isBackTotop) {
+		AppClientFactory.printInfoLogger("trigger API Call and set data in local store---->"+searchDo.getPageNum());
 		if(isBackTotop){
 			getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsBackToTop());
 		}else{
@@ -169,6 +172,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 	@Override
 	protected void requestSearchFormJson(String result,SearchDo<ResourceSearchResultDo> searchDo2) {
+		AppClientFactory.printInfoLogger("hit conver string to object for local storage---->");
 		getSearchService().descralizeResourceSearchResults(result, getSearchDo(), getSearchAsyncCallback());
 	}
 	@Override

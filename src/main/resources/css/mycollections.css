@@ -3071,7 +3071,6 @@ display: table-cell;
 	margin-left:40px;
 }
 #pnlCollectionInfo .filterTags {
-    display: inline-block;
     margin: 0 8px;
     vertical-align: middle;
 }
@@ -3088,6 +3087,8 @@ display: table-cell;
     list-style: outside none none;
     margin: 0;
     padding: 8px 10px;
+    margin-right: 3px;
+    margin-top: 10px;
 }
 #pnlCollectionInfo .filterTags ul li a {
     color: #ffffff;
@@ -3497,6 +3498,11 @@ width:100% !important;
 }
 #pnlCollectionInfo .lessonCover .panel-body{
 	padding:0 0;
+}
+#pnlCollectionInfo .lessonCover .panel-body .active{
+	background: #87badd;
+	color: #333333;
+	text-decoration: none;
 }
 #pnlCollectionInfo .lessonCover .fractionBlocks{
 
