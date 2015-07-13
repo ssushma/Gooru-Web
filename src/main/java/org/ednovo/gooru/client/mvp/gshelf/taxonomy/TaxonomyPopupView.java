@@ -136,7 +136,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	 */
 	@UiHandler("addTaxonomyBtn")
 	public void onClickAddTaxonomy(ClickEvent event){
-		getUiHandlers().addTaxonomyData(); 
+		getUiHandlers().addTaxonomyData(selectedUlContainer); 
+		hide();
 	}
 	
 	
