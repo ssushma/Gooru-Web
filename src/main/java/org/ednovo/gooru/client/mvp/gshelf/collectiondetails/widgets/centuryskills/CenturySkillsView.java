@@ -252,14 +252,15 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		this.collectionDo = collectionDo;
 		
 		List<StandardFo> standardFos=collectionDo.getSkills();
-		setSkills(standardFos);
+		//setSkills(standardFos);
 	
 	}
 	
 	@Override
 	public void setFolderDo(FolderDo folderDo){
 		List<StandardFo> standardFos=folderDo.getSkills();
-		setSkills(standardFos);
+		AppClientFactory.printInfoLogger("standardFos ..... size"+standardFos);
+		//setSkills(standardFos);
 	}
 	
 	
