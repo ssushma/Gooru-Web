@@ -114,9 +114,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to reset the widget positions with default text
 	 */
 	@Override
-	public void resetWidgetPositions(){
+	public void resetWidgetPositions(int itemSeqToAPI,int movingIndex){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
+		System.out.println("itemSeqToAPI=="+itemSeqToAPI);
+		System.out.println("movingIndex=="+movingIndex);
 		while (widgets.hasNext()){
 			Widget widget=widgets.next();
 			if(widget instanceof ContentWidgetWithMove){
@@ -200,14 +202,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
-							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence));
+							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex);
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
+								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
 							}
 						}
 					}
@@ -219,6 +224,21 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				index++;
 			}
 			setLastWidgetArrowVisiblity(false);
+		}
+	}
+	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown){
+		if(isdown){
+			int itemNewSequence=Integer.parseInt(itemSequence);
+			for (int i = selectedIndex; i < pnlCourseList.getWidgetCount(); i++){
+				pnlCourseList.getWidget(i).getElement().setAttribute("itemSequence",itemNewSequence+"");
+				itemNewSequence++;
+			}
+		}else{
+			int itemNewSequence=Integer.parseInt(itemSequence);
+			for (int i=(selectedIndex-1);i>=0;i--){
+				pnlCourseList.getWidget(i).getElement().setAttribute("itemSequence",itemNewSequence+"");
+				itemNewSequence--;
+			}
 		}
 	}
 	public void enableCreateButtons(boolean isEnabled){
