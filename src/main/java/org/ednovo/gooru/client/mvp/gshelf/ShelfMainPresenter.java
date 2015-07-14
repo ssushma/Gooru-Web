@@ -187,6 +187,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		Window.enableScrolling(true);
+		version=null;
+		type="Course";
 	}
 	
 	@Override
@@ -468,8 +470,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setUserAllLessons(String o1CourseId, String o2UnitId,String o3LessDeletedonId, String currentTypeView) {
 		getView().removeDeletedTreeWidget(o3LessDeletedonId,currentTypeView);
 	}
-	
-	
 	/**
 	 * 
 	 * @param o1CourseId
@@ -489,10 +489,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onDeleteSetBreadCrumbs(String title, String course) {
 		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
-
 	@Override
 	public void setVersion() {
 		version=null;
 	}
-
 }
