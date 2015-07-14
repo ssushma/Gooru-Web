@@ -61,7 +61,7 @@ public class SlnUnitReportView extends Composite {
 		}
 		circleIcon.addStyleName(circleType);
 		
-		int score = planProgressDo.getAvgScore();
+		int score = planProgressDo.getScoreInPercentage();
 		String scoreStyle = "";
 		if(score==0) {
 			scoreStyle = "darkGrey border-bottom-white";

@@ -190,43 +190,6 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		return PlaceTokens.STUDENT_VIEW;
 	}
 
-/*	*//**
-	 *
-	 * @function triggerClassPageNewDataLogStartStopEvent
-	 *
-	 * @created_date : 07-Dec-2014
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) : @param classpageId
-	 * @parm(s) : @param classCode
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 *//*
-	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
-		JSONObject classpageDataLog=new JSONObject();
-		String classpageEventId=GwtUUIDGenerator.uuid();
-		AppClientFactory.getPlaceManager().setClasspageEventId(classpageEventId);
-		classpageDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(classpageEventId));
-		classpageDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.CLASSPAGE_VIEW));
-		classpageDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(null));
-		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
-		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study", 0));
-		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
-		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0, 0));
-		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
-		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
-	}
-*/
 	@Override
 	public void joinStudentClass() {
 

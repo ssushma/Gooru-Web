@@ -86,7 +86,7 @@ public class SlnCourseReportView extends Composite {
 		} else if(planProgressDo.getAssessmentsAttempted()==0) {
 			avgScoreTxt = "--";
 		} else {
-			avgScoreTxt = planProgressDo.getAvgScore()+"%";
+			avgScoreTxt = planProgressDo.getScoreInPercentage()+"%";
 		}
 		
 		if(planProgressDo.getCollectionCount()==0) {
@@ -94,7 +94,7 @@ public class SlnCourseReportView extends Composite {
 		}
 		scoreValue.setText(avgScoreTxt);
 		
-		int score = planProgressDo.getAvgScore();
+		int score = planProgressDo.getScoreInPercentage();
 		String scoreStyle = "";
 		if(planProgressDo.getAssessmentCount()==0||planProgressDo.getAssessmentsAttempted()==0) {
 			scoreStyle = "darkGrey border-bottom-white";
