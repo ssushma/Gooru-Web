@@ -223,8 +223,8 @@ margin:0 0 0 -20px !important;
 	padding: 11px 9px;
 	background: #ccc;
 	border-radius: 0px 0px 3px 3px;
-	/* border-top: 1px solid #ddd;*/
 	min-height: 49px;
+	max-height: 49px;
 }
 #gooruSearchMainContainer .userDetailsResources  .user{
 	font-size:13px;
@@ -252,7 +252,7 @@ margin:0 0 0 -20px !important;
 	white-space: nowrap;
 	display: inline-block;
 	font-size: 13px;
-	padding: 6px 8px;
+	padding: 3px 8px;
 	text-align:center;
 	color:grey;
 	width:142%;
