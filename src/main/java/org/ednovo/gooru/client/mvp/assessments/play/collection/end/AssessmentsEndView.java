@@ -361,25 +361,28 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						if(questionType.equalsIgnoreCase("HS")){
 							questionType= result.get(i).getQuestionType();
 						}
-						String correctAnser = null;
 						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){
 							Label anserlbl=new Label();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 								 Map<String, Integer> authorObject = result.get(i).getOptions();
-								if(authorObject.keySet().size()!=0){
-									String userSelectedOption=authorObject.keySet().iterator().next();
-									correctAnser=getCorrectAnswer(result.get(i).getMetaData());
-									if(userSelectedOption!=null && correctAnser!=null){
-										anserlbl.setText(userSelectedOption);
-										if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
-											anserlbl.getElement().getStyle().setColor(CORRECT);
-										}else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
-											anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-										}else{
-											anserlbl.getElement().getStyle().setColor(INCORRECT);
+								 
+								 
+								 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+								 {
+									 String userSelectedOption=entry.getKey();
+									// int ansStatus=entry.getValue();
+									 if(userSelectedOption!=null){
+											anserlbl.setText(userSelectedOption);
+											if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+												anserlbl.getElement().getStyle().setColor(CORRECT);
+											}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+												anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+											}else{
+												anserlbl.getElement().getStyle().setColor(INCORRECT);
+											}
 										}
-									}
-								}
+								 }
+								 
 							}
 							anserlbl.setStyleName(STYLE_TABLE_CENTER);
 							adTable.setWidget(i, 2,anserlbl);
@@ -598,33 +601,33 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							questionTitle.setStyleName(STYLE_TXTLEFT);
 							data.setValue(i, 1, questionTitle.toString());
 							int noOfAttempts=result.get(i).getAttempts();
-
+							String scoreStatus= result.get(i).getStatus();
 
 							//Set Answer choices
 							String questionType= result.get(i).getType();
 							if(questionType.equalsIgnoreCase("HS")){
 								questionType= result.get(i).getQuestionType();
 							}
-							String correctAnser = null;
 							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){
 								Label anserlbl=new Label();
 								if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 									 Map<String, Integer> authorObject = result.get(i).getOptions();
-									if(authorObject.keySet().size()!=0){
-										String userSelectedOption=authorObject.keySet().iterator().next();
-										correctAnser=getCorrectAnswer(result.get(i).getMetaData());
-										if(userSelectedOption!=null && correctAnser!=null){
-											anserlbl.setText(userSelectedOption);
-											if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
-												anserlbl.getElement().getStyle().setColor(CORRECT);
-												isTickdisplay=true;
-											}else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
-												anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											}else{
-												anserlbl.getElement().getStyle().setColor(INCORRECT);
-											}
-										}
-									}
+									 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+									 {
+										 String userSelectedOption=entry.getKey();
+
+										 if(userSelectedOption!=null){
+											 anserlbl.setText(userSelectedOption);
+											 if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+												 anserlbl.getElement().getStyle().setColor(CORRECT);
+												 isTickdisplay=true;
+											 }else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+												 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+											 }else{
+												 anserlbl.getElement().getStyle().setColor(INCORRECT);
+											 }
+										 }
+									 }
 								}
 								anserlbl.setStyleName(STYLE_TABLE_CENTER);
 								data.setValue(i, 3, anserlbl.toString());
