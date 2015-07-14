@@ -187,6 +187,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		Window.enableScrolling(true);
+		version=null;
+		type="Course";
 	}
 	
 	@Override
@@ -487,5 +489,5 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onDeleteSetBreadCrumbs(String title, String course) {
 		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
-
+	
 }

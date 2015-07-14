@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -378,7 +379,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					}
 					params.put("id", result.getGooruOid());
 					params.put("view", "Folder");
-					
 					getView().displaySuccessPopup("My Content", result.getGooruOid(),params ,"collection",folderDo);
 				}
 			});
@@ -409,6 +409,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				if(O1_LEVEL_VALUE!=null) {
 					params.put("o1", O1_LEVEL_VALUE);
 				}
+				params.put("view", "Course");
 				params.put("id", result.getGooruOid());
 				getView().displaySuccessPopup("My Content", result.getGooruOid(),params ,"collection",folderDo);
 			}
@@ -442,6 +443,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					params.put("o1", O1_LEVEL_VALUE);
 				}
 				params.put("id", getCollectionGooruId());
+				params.put("view", "Course");
 				getView().displaySuccessPopup("My Content", getCollectionGooruId(),params ,"collection",folderDo);
 			}
 		});
@@ -472,7 +474,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}
 				params.put("id", getCollectionGooruId());
 				params.put("view", "Folder");
-				
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
 				getView().displaySuccessPopup("My Content", getCollectionGooruId(),params ,"collection",folderDo);
 			}
 		});
@@ -500,7 +502,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	public void setCollectionTitle(String collectionTitle) {
-		// TODO Auto-generated method stub
 		this.collectionTitle=collectionTitle;
 	}
 
