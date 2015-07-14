@@ -127,7 +127,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	@Override
 	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
-		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemSeqToAPI,idToMove, new SimpleAsyncCallback<Void>() {
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(null,null,null,null,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				getView().resetWidgetPositions();
