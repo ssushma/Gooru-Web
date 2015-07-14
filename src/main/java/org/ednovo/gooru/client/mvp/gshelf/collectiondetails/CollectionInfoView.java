@@ -299,7 +299,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void setCouseData(final FolderDo courseObj, String type) {
 		depthOfKnowledgeContainer.setFolderDo(courseObj);
 		audienceContainer.setFolderDetails(courseObj);
-	
+		getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
 		this.type = type;
 		ulSelectedItems.clear();
 		selectedValues.clear();

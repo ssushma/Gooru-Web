@@ -90,7 +90,10 @@ public class AudienceView extends Composite {
 	}
 	
 	public void setFolderDetails(FolderDo  folderDo){
-		setSelectedValues(folderDo.getAudience());
+		if(folderDo!=null){
+			setSelectedValues(folderDo.getAudience());
+
+		}
 	}
 
 	public void setSelectedValues(List<checkboxSelectedDo> checkboxSelectedDos){
