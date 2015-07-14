@@ -179,6 +179,9 @@
     padding: 20px;
 	margin-bottom:15px;
 }
+.classSettingsContainer .classSettingsInner p img {
+	margin-left: 5px;
+}
 
 .classSettingsContainer .classSettingsInner{
 	padding:5% 10%; 
@@ -214,6 +217,11 @@
 		  font-size:13px;
 		  color:#1076bb;
 	  }
+	  
+	  .classSettingsContainer  .thumbImageUrl{
+		width: 100%;
+		margin-bottom: 10px;
+	}
 	  
 	    .classSettingsContainer .rightWhiteBox span {
     background: #ffffff none repeat scroll 0 0;
@@ -1539,11 +1547,14 @@ select option {
 
 }
 .selctListBox .listSelecter{
-		border:1px solid #dddddd ;
+	border:1px solid #dddddd ;
 	padding:6px 6px;
 	background:#ffffff;
 	height:42px;
 	border-radius:4px 4px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .selctListBox .listSelecter:after {

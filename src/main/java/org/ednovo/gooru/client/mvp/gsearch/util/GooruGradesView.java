@@ -323,6 +323,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 * This method clear grade active style
 	 * @param filterName {@link String}
 	 */
+	@Override
 	public void clearGradesStyles(){
 		Iterator<Widget> widgets= gradeContainer.iterator();
 		while(widgets.hasNext()){
