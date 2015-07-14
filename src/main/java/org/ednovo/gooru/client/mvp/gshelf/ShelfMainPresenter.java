@@ -335,7 +335,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				getView().getCollectionLabel().setText(folderObj.getTitle());
 			}
 		}
-		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
+		getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	
@@ -421,7 +421,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setCollectionContent(FolderDo collectionDo){
 		clearSlot(RIGHT_SLOT);
-		getMyCollectionsRightClusterPresenter().setTabItems(1, collectionDo.getType(),collectionDo);
+		getMyCollectionsRightClusterPresenter().setTabItems(2, collectionDo.getType(),collectionDo);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			getView().getCollectionLabel().setVisible(true);
