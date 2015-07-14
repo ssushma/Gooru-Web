@@ -121,7 +121,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			Widget widget=widgets.next();
 			if(widget instanceof ContentWidgetWithMove){
 				ContentWidgetWithMove contentWidgetWithMove=(ContentWidgetWithMove) widget;
-				contentWidgetWithMove.getH3Panel().setText(type+" "+(index+1));
+				contentWidgetWithMove.getIndexLabel().setText((index+1)+"");
 				contentWidgetWithMove.getTextBox().setText((index+1)+"");
 				contentWidgetWithMove.getTextBox().getElement().setAttribute("index",index+"");
 				if(index==0){

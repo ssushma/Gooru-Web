@@ -382,6 +382,8 @@ public enum UrlToken {
 	V1_UPDATE_COURSE_METADATA("/v1/course/{0}?"),
 	
 	V1_GET_UNIT_METADATA("/v1/course/{0}/unit/{1}"),
+	
+	V1_GET_LESSON_METADATA("/v1/course/{0}/unit/{1}/lesson/{2}"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
 
@@ -649,7 +651,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	GET_AUDIENCELIST("/v1/meta/audience?sessionToken={0}"),
 	
 	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
+	
 	V3_UPDATE_COLLECTION("/v3/collection/{0}"),
+	
 	V1_GET_COURSE("/v1/course/{0}?");
 
 	private String url;
