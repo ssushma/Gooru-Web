@@ -63,6 +63,8 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData);
 	
+	public void deleteMyCollectionContent(String id, String folderCollection);
+
 	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected);
 
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle);
