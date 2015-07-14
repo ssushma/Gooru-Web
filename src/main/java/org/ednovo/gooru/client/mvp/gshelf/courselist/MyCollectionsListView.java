@@ -43,19 +43,16 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -67,11 +64,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
-	@UiField ScrollPanel listScrollPanel;
 	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion;
 	@UiField HTMLEventPanel createPanel;
 	
@@ -90,18 +86,20 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String O3_LEVEL = "o3";
 	
 	private static final String ID = "id";
+
+	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
+	
+	HandlerRegistration handlerRegistration=null;
 	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		Window.addResizeHandler(new ResizeHandler() {
-			@Override
-			public void onResize(ResizeEvent event) {
-				setScrollHeight();
-			}
-		});
-		btnCreate.addClickHandler(new CreateContentEvent());
-		createPanel.addClickHandler(new CreateContentEvent());
+		/*btnCreate.addClickHandler(new CreateContentEvent(btnCreate));
+		//createPanel.addClickHandler(new CreateContentEvent(createPanel.getElement().getInnerText()));
+		//lblAddNewForResource.addClickHandler(new CreateContentEvent(lblAddNewForResource));
+		//lblAddNewForQuestion.addClickHandler(new CreateContentEvent(lblAddNewForQuestion));
+		btnCreateQuestion.addClickHandler(new CreateContentEvent(btnCreateQuestion));
+		btnCreateResource.addClickHandler(new CreateContentEvent(btnCreateResource));*/
 	}
 	/**
 	 * This method is used to set id's
@@ -111,7 +109,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
-		setScrollHeight();
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
@@ -229,51 +226,32 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		btnCreateQuestion.setVisible(isEnabled);
 		pnlCreate.setVisible(isEnabled);
 	}
-	/**
-	 * This method is used to set the create text
-	 * @param typeVal
-	 */
-	public void setCreateText(){
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-		enableCreateButtons(false);
-		if(id!=null){
-			enableCreateButtons(true);
-			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());
-			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1110(), i18n.GL1110());
-			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0308());
-			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL0308(), i18n.GL0308());
-			lblAddNewForResource.setText(i18n.GL2000());
-			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2000(), i18n.GL2000());
-			lblAddNewForQuestion.setText(i18n.GL3218());
-			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3218(), i18n.GL3218());
-			
-			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
-		}else if(o3!=null){
-			enableCreateButtons(true);
-			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
-			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
-			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
-			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
-			lblAddNewForResource.setText(i18n.GL2001());
-			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
-			lblAddNewForQuestion.setText(i18n.GL3372());
-			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3372(), i18n.GL3372());
-			
-			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
-		}else if(o2!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3371());
-			lblAddNew.setText(i18n.GL0910().toLowerCase());
-		}else if(o1!=null){
-			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
-			lblAddNew.setText(i18n.GL3281().toLowerCase());
-		}
+	@UiHandler("createPanel")
+	public void clickOnCreatePanel(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createPanel.getElement().getInnerText());
 	}
 	
+	@UiHandler("lblAddNewForResource")
+	public void clickOnResource(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(lblAddNewForResource.getText());
+	}
+	
+	@UiHandler("lblAddNewForQuestion")
+	public void clickOnQuestion(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(lblAddNewForQuestion.getText());
+	}
+	@UiHandler("btnCreate")
+	public void clickOnCreate(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(btnCreate.getText());
+	}
+	@UiHandler("btnCreateQuestion")
+	public void clickOnQues(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(btnCreateQuestion.getText());
+	}
+	@UiHandler("btnCreateResource")
+	public void clickOnRes(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(btnCreateResource.getText());
+	}
 	/**
 	 * This method is used to set the create text
 	 * @param typeVal
@@ -298,6 +276,20 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
 			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
 			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3372());
+			
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+		}else if(FOLDER.equalsIgnoreCase(type)){
+			enableCreateButtons(true);
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			lblAddNewForResource.setText(i18n.GL1450());
+			lblAddNewForQuestion.setText(i18n.GL1451());
+			
+			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1450(), i18n.GL1450());
+			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL1451(), i18n.GL1451());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL1450(), i18n.GL1450());
+			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL1451(), i18n.GL1451());
 			
 			btnCreate.setVisible(false);
 			lblAddNew.setVisible(false);
@@ -347,23 +339,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * @param isVisible
 	 */
 	public void setLastWidgetArrowVisiblity(boolean isVisible){
-		ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
-		lastwidget.getDownArrow().setVisible(isVisible);
-	}
-	/**
-	 * This method will set the height and it will display the scroll
-	 */
-	public void setScrollHeight(){
-		listScrollPanel.getElement().getStyle().setHeight((Window.getClientHeight()-120), Unit.PX);
-		listScrollPanel.getElement().getStyle().setOverflowY(Overflow.AUTO);
-	}
-	/**
-	 * This method will return the scroll panel
-	 * @return
-	 */
-	@Override
-	public ScrollPanel getScrollPanel(){
-		return listScrollPanel;
+		if(pnlCourseList!=null && pnlCourseList.getWidgetCount()>0){
+			ContentWidgetWithMove lastwidget=(ContentWidgetWithMove) pnlCourseList.getWidget(pnlCourseList.getWidgetCount()-1);
+			lastwidget.getDownArrow().setVisible(isVisible);
+		}
 	}
 	/**
 	 * This method is used to update the url parameters
@@ -400,15 +379,18 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		return params;
 	}
 	/**
-	 * This class used for to add course/unit/lesson 
-	 * @author Gooru team
-	 *
+	 * This is used for adding loader image
+	 * @return
 	 */
-	public class CreateContentEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-		    String type = StringUtil.isEmpty(btnCreate.getText())?null:btnCreate.getText();
-			getUiHandlers().addNewContent(type);
-		}
+	@Override
+	public void loadingImage(){
+		Image loadingImage =  new Image();
+		loadingImage.setUrl(LOADER_IMAGE);
+		loadingImage.getElement().setId("myCollectionsListView");
+		pnlCourseList.add(loadingImage);
+	}
+	@Override
+	public VerticalPanel getPanelCourseContainer(){
+		return pnlCourseList;
 	}
 }

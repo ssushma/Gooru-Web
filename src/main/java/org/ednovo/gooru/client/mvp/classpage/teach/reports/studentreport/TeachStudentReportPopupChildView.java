@@ -24,11 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
+import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -49,29 +53,27 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 	interface TeachCourseReportChildViewUiBinder extends UiBinder<Widget, TeachStudentReportPopupChildView> {
 	}
 
-	public TeachStudentReportPopupChildView() {
+	public TeachStudentReportPopupChildView(String userName, String gooruUId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new TeachStudentReportPopupChildPresenter(this));
-		getData();
-	}
-	
-	public void getData() {
-		setTableData();
+		System.out.println("1234");
+		getPresenter().getStudentReportData(gooruUId);
 	}
 	
 	@Override
-	public void setTableData() {
+	public void setReportData(ArrayList<PlanProgressDo> dataList) {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		int size = dataList.size();
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			for(int i=0;i<4;i++) {
-				reportBodyBlock.add(new SlnCourseReportView(i+1));
+			for(int i=0;i<size;i++) {
+				reportBodyBlock.add(new SlnCourseReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-			for(int i=0;i<10;i++) {
-				reportBodyBlock.add(new SlnUnitReportView(i+1));
+			for(int i=0;i<size;i++) {
+				reportBodyBlock.add(new SlnUnitReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-			
+				//reportBodyBlock.add(child);
 		}
 	}
 }

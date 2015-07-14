@@ -51,9 +51,8 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.event.dom.client.ScrollEvent;
-import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -142,10 +141,18 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		doc.getBody().setClassName(""); 
 		addRegisteredHandler(SetFolderParentNameEvent.TYPE, this);
 		addRegisteredHandler(SetFolderMetaDataEvent.TYPE, this);
-		myCollectionsListPresenter.getScrollPanel().addScrollHandler(new ScrollHandler() {
+		Window.addWindowScrollHandler(new com.google.gwt.user.client.Window.ScrollHandler() {
 			@Override
-			public void onScroll(ScrollEvent event) {
-				getView().executeScroll(false);
+			public void onWindowScroll(ScrollEvent event) {
+				//This will check the placetoken,o1 and id values for pagination purpose
+				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				String o1=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
+				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null){
+					if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
+						getView().executeScroll(false);
+					}
+				}
 			}
 		});
 	}
@@ -340,7 +347,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				getView().getCollectionLabel().setText(folderObj.getTitle());
 			}
 		}
-		getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
+		//getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
 		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
@@ -358,8 +365,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			setCollectionContent(folderDo);
 		}else{
 			getView().getCollectionLabel().setVisible(false);
-			myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
-			setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+			if(listOfContent!=null && listOfContent.size()>0){
+				myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
+				setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
+			}else{
+				setInSlot(RIGHT_SLOT, null,false);
+			}
 		}
 	}
 
@@ -472,6 +483,19 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getView().removeDeletedTreeWidget(o3LessDeletedonId,currentTypeView);
 	}
 	
+	
+	/**
+	 * 
+	 * @param o1CourseId
+	 * @param o2UnitId
+	 * @param o3LessonId
+	 * @param deletedAssessmentCollectionId
+	 * @param currentTypeView
+	 */
+	public void setUserAllCollAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String deletedAssessmentCollectionId,String currentTypeView) {
+		getView().removeDeletedTreeWidget(deletedAssessmentCollectionId,currentTypeView);
+	}
+
 	/**
 	 * This is used to set the bread crumbs after delete.
 	 */
@@ -479,4 +503,5 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onDeleteSetBreadCrumbs(String title, String course) {
 		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
+
 }

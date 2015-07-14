@@ -52,17 +52,15 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists.ExistsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
@@ -78,7 +76,6 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -181,6 +178,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	private boolean isEdit =false;
 	
+	List<ListValuesDo> depthOfKnowledges;
 	
 	@Inject
 	QuestionTypePresenter questionTypePresenter;
@@ -345,7 +343,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		questionTabButton.setVisible(isQuestionWidget);
 		multipleAnswerTabButton.setVisible(isQuestionWidget);
 		trueOrFlaseButton.setVisible(isQuestionWidget);
-		openEndedButton.setVisible(isQuestionWidget);
+		openEndedButton.setVisible(isAssementsWidget);
 		fillInTheBlankTabButton.setVisible(isQuestionWidget);
 		hotSpotImageTabButton.setVisible(isQuestionWidget);
 		hotSpotWordTabButton.setVisible(isQuestionWidget);
@@ -552,7 +550,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public AddQuestionResourceWidget(CollectionItemDo collectionItemDo){
 			super(collectionItemDo);
 			this.collectionItemDo=collectionItemDo;
-			AppClientFactory.printInfoLogger("this.collectionItemDo.getCollectionItemId() :"+this.collectionItemDo.getCollectionItemId());
 		}
 
 		@Override
@@ -965,6 +962,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				titleLbl.getElement().setAttribute("title", i18n.GL0893());
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				addQuestionResourceWidget.getHideRightsToolTip();
+				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
 //				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 //				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
 //				openEndedButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -974,10 +972,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 //				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
-				if(collectionDo!=null&&collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
-					hideTabButtons(false, true, true);
-				}else{
+				if(collectionDo!=null&&collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equalsIgnoreCase("assessment")){
 					hideTabButtons(false, true, false);
+				}else{
+					hideTabButtons(false, true, true);
 				}
 				setRadioButtonValues();
 				addQuestionResourceWidget.setQuestionType("MC");
@@ -1018,12 +1016,13 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
+				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
 				addQuestionResourceWidget.getHideRightsToolTip();
 
-				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
-					hideTabButtons(false, true, true);
-				}else{
+				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("assessment")){
 					hideTabButtons(false, true, false);
+				}else{
+					hideTabButtons(false, true, true);
 				}
 				tabViewContainer.add(addQuestionResourceWidget);
 				tabViewContainer.getElement().setId("pnlTabViewContainer");
@@ -1505,12 +1504,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 			CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
 
-		HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
-		depthOfKnowledge.put("depthOfKnowledge", addQuestionResourceWidget.depthOfKnowledges);
-
 		collectionQuestionItemDo.setQuestionText(addQuestionResourceWidget.questionNameTextArea.getText()!=null?addQuestionResourceWidget.questionNameTextArea.getText():"");
 		collectionQuestionItemDo.setExplanation(addQuestionResourceWidget.explainationTextArea.getText()!=null?addQuestionResourceWidget.explainationTextArea.getText():"");
-		collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+		collectionQuestionItemDo.setDepthOfKnowledgeIds(addQuestionResourceWidget.depthOfKnowledgesList);
 
 
 
@@ -1577,12 +1573,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		};
 		timer1.schedule(0);
 
-		if(collectionQuestionItemDo.getDepthOfKnowledges()!=null){
+		if(collectionQuestionItemDo.getDepthOfKnowledgeIds()!=null){
 			addQuestionResourceWidget.resetDepthOfKnowledges();
-			addQuestionResourceWidget.depthOfKnowledges.clear();
+			addQuestionResourceWidget.depthOfKnowledgesList.clear();
 			int checkBoxCount=0;
-			for (checkboxSelectedDo item : collectionQuestionItemDo.getDepthOfKnowledges().get("depthOfKnowledge")) {
-				   if(item.isSelected()){
+			for (Integer item : collectionQuestionItemDo.getDepthOfKnowledgeIds()) {
+				  /* if(item.isSelected()){
 					   if(checkBoxCount==0)
 						   addQuestionResourceWidget.chkLevelRecall.setChecked(true);
 					   if(checkBoxCount==1)
@@ -1591,7 +1587,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 						   addQuestionResourceWidget.chkLevelStrategicThinking.setChecked(true);
 					   if(checkBoxCount==3)
 						   addQuestionResourceWidget.chkLevelExtendedThinking.setChecked(true);
-				   }
+				   }*/
 				   checkBoxCount++;
 				}
 
@@ -1688,6 +1684,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		hotSpotImageTabButton.getElement().getStyle().setCursor(cursorType);
 		hotSpotWordTabButton.getElement().getStyle().setCursor(cursorType);
 	}
-
-
+	@Override
+	public void setDepthOfKnowledges(List<ListValuesDo> result){
+		this.depthOfKnowledges=result;
+	}
 }

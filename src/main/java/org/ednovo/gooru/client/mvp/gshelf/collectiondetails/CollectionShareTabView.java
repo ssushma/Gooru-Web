@@ -145,13 +145,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				}
 			});
 		}
-	}
-	
-	
-	@Override
-	public void setData(CollectionDo collectionDo, FolderDo folderDo) {
-		this.collectionDo = collectionDo;
-		this.folderDo = folderDo;
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
 			privateShareFloPanel.setVisible(true);
@@ -160,29 +153,40 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		}
 		publishedPanel.setVisible(false);
 		lblPublishPending.setVisible(false);
+	}
+	
+	
+	@Override
+	public void setData(CollectionDo collectionDo, FolderDo folderDo) {
+		this.collectionDo = collectionDo;
+		this.folderDo = folderDo;
+		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
+		AppClientFactory.printInfoLogger("folderDo.getPublishStatus():"+folderDo.getPublishStatus());
 		if(collectionDo.getSharing()!=null){
 			if(collectionDo.getSharing().equals("public")) {
 				publicShareFloPanel.removeStyleName("inActive");
 				privateShareFloPanel.addStyleName("inActive");
 				linkShareFloPanel.addStyleName("inActive");
 				//isSharable = true;
-					if(folderDo.getPublishStatus()!=null && folderDo.getPublishStatus().equalsIgnoreCase("reviewed")){
+					if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("reviewed")){
 							rbPublic.setVisible(false);
 							lblPublishPending.setVisible(false);
 							publishedPanel.setVisible(true);
 					}
-			}else if(folderDo.getSharing()!=null && folderDo.getSharing().equals("private")) {
+			}else if(collectionDo.getSharing()!=null && collectionDo.getSharing().equals("private")) {
 				privateShareFloPanel.removeStyleName("inActive");
 				publicShareFloPanel.addStyleName("inActive");
 				linkShareFloPanel.addStyleName("inActive");
 				//isSharable = false;
-					if(folderDo.getPublishStatus()!=null && folderDo.getPublishStatus().equalsIgnoreCase("pending")){
+					if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("pending")){
 							//selectPrivateResource("pending");
 							rbPublic.setVisible(false);
 							lblPublishPending.setVisible(true);
 							publishedPanel.setVisible(false);
 					}else{
-						//selectPrivateResource("private");
+						rbPublic.setVisible(true);
+						lblPublishPending.setVisible(false);
+						publishedPanel.setVisible(false);
 					}
 			}else {
 				linkShareFloPanel.removeStyleName("inActive");
@@ -195,7 +199,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 						lblPublishPending.setVisible(true);
 						publishedPanel.setVisible(false);
 				}else{
-					//selectPrivateResource("shareable");
+					rbPublic.setVisible(true);
+					lblPublishPending.setVisible(false);
+					publishedPanel.setVisible(false);
 				}
 			}
 		}

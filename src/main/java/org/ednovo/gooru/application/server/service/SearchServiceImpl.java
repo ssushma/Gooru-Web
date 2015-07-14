@@ -406,7 +406,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
 		}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASS)) {
-			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.NEWCLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
 		}else {
 			if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
@@ -931,10 +931,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	}
 
 	@Override
-	public String getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchDo) throws GwtException,
-			ServerDownException {
+	public String getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchDo) throws GwtException,ServerDownException {
 		String query1=searchDo.getSearchQuery();
-
 		 query= query1;
 		 try{
 				if(searchDo.getFilters()!=null){
@@ -992,6 +990,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public SearchDo<ResourceSearchResultDo> descralizeResourceSearchResults(String response, SearchDo<ResourceSearchResultDo> searchDo)	throws GwtException, ServerDownException {
 		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
+		getLogger().info("descralizeResourceSearchResults:::::");
 		try{
 			if(response!=null && !response.trim().isEmpty()){
 				resourceSearchResultDeSerializer.deserializeJsonObject(response, searchDo,"");

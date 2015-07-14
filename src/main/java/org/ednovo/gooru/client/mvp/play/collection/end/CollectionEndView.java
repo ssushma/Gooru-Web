@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
@@ -390,7 +391,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}else{
 			scoreMainContainer.setVisible(true);
 		}
-		setCollectionImage(collectionDo.getThumbnails().getUrl());
+		setCollectionImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():"");
 
 		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();
 
@@ -1783,15 +1784,15 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 
 	@Override
-	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result) {
+	public void setSessionsData(ArrayList<session> result) {
 		sessionspnl.setVisible(true);
 		collectionMetaDataPnl.setVisible(true);
 		sessionsDropDown.clear();
 		sessionData.clear();
-		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
-			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), collectionSummaryUsersDataDo.getTimeStamp());
-			int day=collectionSummaryUsersDataDo.getFrequency();
-			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",collectionSummaryUsersDataDo.getSessionId());
+		for (session session : result) {
+			sessionData.put(session.getSessionId(), session.getEventTime());
+			int day=session.getSequence();
+			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",session.getSessionId());
 		}
 		setSessionStartTime(result.size()-1);
 	}
@@ -1821,7 +1822,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					collectionImage.setUrl("images/analytics/default-collection-image.png");
 				}
 			});
-			collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources | "+result.get(0).getNonResourceCount()+" Questions");
+			collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources | "+result.get(0).getQuestionCount()+" Questions");
 		}
 	}
 
@@ -1874,4 +1875,5 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		loadingImageLabel.setVisible(false);
 		insightsContentText.setText(i18n.GL2038());
 	}
+
 }

@@ -36,6 +36,8 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -48,6 +50,7 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  *
  */
 public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implements UnitInfoUiHandlers {
+	
 
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
@@ -56,9 +59,13 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	final String SUBJECT="subject";
 	
+	final String COURSE="course";
+	
 	final String UNIT="Unit";
 	
 	private String LESSON = "Lesson";
+	
+	TaxonomyPopupPresenter taxonomyPopupPresenter;
 	
 	private static final String O1_LEVEL = "o1";
 	
@@ -68,9 +75,11 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public UnitInfoPresenter( EventBus eventBus,IsUnitInfoView view) {
+	public UnitInfoPresenter( EventBus eventBus,IsUnitInfoView view, TaxonomyPopupPresenter taxonomyPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setUnitInfoPresenterInstance(this);
 	}
 
 	@Override
@@ -90,43 +99,37 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
 	}
-
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callCourseBasedOnSubject(int subjectId,final int selectedId) {
+		getTaxonomyService().getSubjectsList(subjectId, "course", 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().setCourseList(result);
+				getView().setCourseList(result,selectedId);
+			}
+		});
+	}
+	@Override
+	public void getDomainsBasedOnCourseId(int courseId,final int selectedId) {
+		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+			@Override
+			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
-					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
+					getView().showCourseDetailsBasedOnSubjectd(result,selectedId);
 				}
 			}
 		});
 	}
 	@Override
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
-		getTaxonomyService().getSubjectsList(subjectId, UNIT, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
-			@Override
-			public void onSuccess(List<CourseSubjectDo> result) {
-				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedText);
-				}
-			}
-		});
-	}
-
-	@Override
-	public void createAndSaveUnitDetails(CreateDo createDo,final boolean isCreateLesson) {
+	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson,final FolderDo courseObj) {
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-				params.put("o2", uri[uri.length-1]);
+				params.put("o2", result.getGooruOid());
 				params.put("view", "Course");
-				result.setGooruOid(uri[uri.length-1]);
+
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				if(isCreateLesson){
@@ -141,16 +144,18 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
+	public void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(UNIT);
+				folderDo.setIdeas(createDo.getIdeas());
+				folderDo.setQuestions(createDo.getQuestions());
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,UNIT); 
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
@@ -184,8 +189,41 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
+	
+	@Override
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter() {
+		return myCollectionsRightClusterPresenter;
+	}
 
-	public void setData(FolderDo folderObj) {
+	public void setMyCollectionsRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter = myCollectionsRightClusterPresenter;
+	}
+
+	public void setData(FolderDo folderObj) { 
 		getView().setCouseData(folderObj);
+	}
+
+	@Override
+	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
+		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
+		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
+		addToPopupSlot(taxonomyPopupPresenter);
+	}
+	@Override
+	public void callCourseInfoTaxonomy(){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, null, null, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				if(result.getTaxonomyCourse()!=null && result.getTaxonomyCourse().size()>0){
+					CourseSubjectDo courseSubjectObj=result.getTaxonomyCourse().get(0);
+					callCourseBasedOnSubject(courseSubjectObj.getSubjectId(),courseSubjectObj.getId());
+				}
+			}
+		});
+	}
+	public void addTaxonomy(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
 	}
 }

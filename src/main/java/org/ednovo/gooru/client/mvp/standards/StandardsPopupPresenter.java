@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.standards;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
@@ -79,14 +80,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	}
 
 	@Override
-	public void callStandardsBasedonTypeService(String standardVal) {
+	public void callStandardsBasedonTypeService(String standardVal, final String titleVal) {
 		getView().reset();
 		getSearchService().getFirstLevelStandards("0", standardVal, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
 
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
 				for(int i=0;i<result.size();i++) {
-					getView().SetData(result.get(i),i);
+					getView().SetData(result.get(i),i,titleVal);
 				}
 
 				

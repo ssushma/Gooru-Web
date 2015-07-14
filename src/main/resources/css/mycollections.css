@@ -181,7 +181,7 @@ button.btn-disabled{
 	opacity:1;
 }
 #gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li.active a{
-		background:#87badd;
+	background:#87badd;
 	color:#333333;
 	text-decoration:none;
 }
@@ -671,6 +671,7 @@ button.btn-disabled{
   display:none;
 }
 
+
 /* === For phones =================================== */
 @media (max-width: 767px) {
    #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+2) {
@@ -731,7 +732,11 @@ button.btn-disabled{
 	width:100%;
 	border-collapse:collapse;
 }
-
+#gShelfCousesList #myCollectionsListView {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 #gShelfCousesList .tableRow{
 	display:table-row;
 	width:100%;
@@ -1025,7 +1030,7 @@ button.btn-disabled {
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody {
 	border: 1px solid #dddddd;
-	margin-top: 0;
+	margin-top: 2%;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupBlock
@@ -1037,6 +1042,16 @@ button.btn-disabled {
 	border-right: 1px solid #dddddd;
 	margin-bottom: -500px;
 	padding-bottom: 500px;
+}
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .subHeading {
+	margin: 0;
+	color: red;
+	padding: 8px 15px;
+	margin: 0;
+	background-color: #EFEDED;
+}
+#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .pnlBackGround {
+	background-color: #EFEDED;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody ul {
@@ -1281,6 +1296,7 @@ button.btn-disabled {
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader {
 	border: 1px solid #dddddd;
 	border-bottom-width: 0;
+	border-radius: 5px;
 }
 
 #gShelfCourseInfo .courseFolderOpenIcon {
@@ -1318,6 +1334,33 @@ button.btn-disabled {
 	display: inline-block;
 	vertical-align: middle;
 }
+
+#gShelfCourseInfo .breadCrumbTitle {
+	display: inline-block;
+	width: 96px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+#gShelfCourseInfo .breadcrumbsCollectionIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -519px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#gShelfCourseInfo .breadcrumbsAssessmentIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
 #gShelfCourseInfo .filterTags ul li {
   background: #87badd none repeat scroll 0 0;
   border-radius: 4px;
@@ -1327,6 +1370,16 @@ button.btn-disabled {
   list-style: outside none none;
   margin: 0;
   padding: 8px 10px;
+  margin-left: 5px;
+}
+#gShelfCourseInfo .filterTags ul li div{
+	float: left;
+}
+#gShelfCourseInfo .filterTags ul li a{
+	color: #fff;
+	font-size: 12px;
+	padding: 0 0 0 22px;
+	float: left;
 }
 
 @media(max-width:767px){
@@ -1614,6 +1667,11 @@ padding-bottom: 10px;
 }
 #pnlLessonInfo .lessonCover .panel-body{
 	padding:0 0;
+}
+#pnlLessonInfo .lessonCover .panel-body .active{
+	background: #87badd;
+	color: #333333;
+	text-decoration: none;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks{
 
@@ -2210,6 +2268,27 @@ vertical-align:middle;
 #resourceEdit .tableMainHeader .resourceNameBlock span{
 	margin-right:8px;
 }
+#resourceEdit .tableMainHeader .resourceNameBlock span.webpageIcon{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+	float:left;
+	background:url("../images/resource-type-icons.png") no-repeat scroll 0px -220px;
+}
+#resourceEdit .tableMainHeader .resourceNameBlock span.videoIcon{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+	float:left;
+	background:url("../images/resource-type-icons.png") no-repeat scroll 0px 4px;
+}
+#resourceEdit .tableMainHeader .resourceNameBlock span.textIcon{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+	float:left;
+	background:url("../images/resource-type-icons.png") no-repeat scroll 0px -53px;
+}
 #resourceEdit .tableMainHeader .resourceNameBlock span.interactiveIcon{
 	width:25px;
 	height:25px;
@@ -2217,7 +2296,7 @@ vertical-align:middle;
 	float:left;
 	background:url("../images/resource-type-icons.png") no-repeat scroll 0 -27px;
 }
-#resourceEdit .tableMainHeader .resourceNameBlock span.questionsIcon{
+#resourceEdit .tableMainHeader .resourceNameBlock span.questionIcon{
 	width:25px;
 	height:25px;
 	vertical-align:middle;
@@ -2231,6 +2310,14 @@ vertical-align:middle;
 	float:left;
 	background:url("../images/resource-type-icons.png") no-repeat scroll -1px -251px;
 }
+#resourceEdit .tableMainHeader .resourceNameBlock span.audioIcon{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+	float:left;
+	background:url("../images/resource-type-icons.png") no-repeat scroll 0px -275px;
+}
+
 #resourceEdit .tableListOrder .topArrow {
 	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -360px;
 	width:16px;
@@ -2620,22 +2707,33 @@ padding-left: 15px !important;
 #unitinfo .unitCoverBody{
 	padding:15px 15px;
 }
-#unitinfo .unitCoverList {
+#unitinfo .unitCoverList{
 	border:1px solid #dddddd;
 	border-radius:3px 3px;
 }
-
+#unitinfo .unitCoverList .pnlGradeDescription{
+	border-left: 1px solid #ddd;
+}
+#unitinfo .unitCoverList .pnlGradeDescription .pnlGradeDescInnerContainer{
+	padding: 20px;
+	background: #f7f7f7;
+	border: 10px solid #fff;
+	height: 440px;
+	overflow-y: auto;
+}
 #unitinfo .unitCoverList ul {
     margin: 0;
     padding: 0;
 }
 #unitinfo .unitCoverList ul li {
-
     list-style: outside none none;
     margin: 0;
     padding: 0;
 }
-
+#unitinfo .unitCoverList ul li.active a{
+    background: #87badd;
+	color: #333;
+}
 #unitinfo .unitCoverList ul li a {
     color: #515151;
     display: block;
@@ -2879,6 +2977,22 @@ display: table-cell;
 	height:90px;
 	border-left:10px solid #1076bb;
 }
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage img{
+	  width: 120px;
+	height:90px;
+	border-left: 10px solid #feae29;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .thunailHover{
+	position:absolute;
+	top:25px;
+	left:5px;
+	right:5px;
+	bottom:0;
+	display:none;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage:hover .thunailHover{
+	display:block;
+}
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .thunailHover{
 	position:absolute;
 	top:25px;
@@ -2961,16 +3075,15 @@ display: table-cell;
 #pnlCollectionInfo .fractionDetailsTable .fractionBlocks .subFractions{
 	margin-left:40px;
 }
-.filterTags {
-    display: inline-block;
+#pnlCollectionInfo .filterTags {
     margin: 0 8px;
     vertical-align: middle;
 }
-.filterTags ul {
+#pnlCollectionInfo .filterTags ul {
     margin: 0;
     padding: 0;
 }
-.filterTags ul li {
+#pnlCollectionInfo .filterTags ul li {
     background: #87badd none repeat scroll 0 0;
     border-radius: 4px;
     color: #ffffff;
@@ -2979,38 +3092,31 @@ display: table-cell;
     list-style: outside none none;
     margin: 0;
     padding: 8px 10px;
+    margin-right: 3px;
+    margin-top: 10px;
 }
-.filterTags ul li a {
+#pnlCollectionInfo .filterTags ul li a {
     color: #ffffff;
     font-size: 10px;
     padding: 0 0 0 5px;
 }
-
 #pnlCollectionInfo .tagCourseOptions {
     border-bottom: 1px solid #dddddd;
     padding: 15px;
 }
-
-
 #pnlCollectionInfo .tagCourseOptions  .list-group-item{
 	padding:6px 15px;
 }
-
 #pnlCollectionInfo .tagCourseOptions .list-group-item.active, #pnlCollectionInfo .tagCourseOptions .list-group-item.active:focus, #pnlCollectionInfo .tagCourseOptions .list-group-item.active:hover {
     background-color: #c3ddee;
     border-color:transparent;
 	color:#515151;
     z-index: 2;
 }
-
-
-
-
 #pnlCollectionInfo .addOptions{
 	padding:15px 15px;
 	border-bottom:1px solid #dddddd;
 }
-
 #pnlCollectionInfo .addOptions a{
 	border:1px solid #dddddd;
 	border-radius:4px 4px;
@@ -3397,6 +3503,11 @@ width:100% !important;
 }
 #pnlCollectionInfo .lessonCover .panel-body{
 	padding:0 0;
+}
+#pnlCollectionInfo .lessonCover .panel-body .active{
+	background: #87badd;
+	color: #333333;
+	text-decoration: none;
 }
 #pnlCollectionInfo .lessonCover .fractionBlocks{
 
@@ -3928,3 +4039,187 @@ right:1px;
  @media (min-width: 1200px) {
 }
 /* === Assessment info end ================================== */
+
+/* === Course Share Start ================================== */
+
+.shareMainContainer  label.custom-select {
+	position: relative;
+	display: inline-block;
+	width: 300px;
+}
+.shareMainContainer p {
+	margin: 0 0 10px;
+}
+.shareMainContainer .custom-select select {
+	display: inline-block;
+	border: 1px solid #dddddd;
+	padding: 8px 8px 8px 4px;
+	margin: 0;
+	font: inherit;
+	font-weight: normal;
+	outline: none; /* remove focus ring from Webkit */
+	line-height: 1.2;
+	background: #ffffff;
+	width: 36%;
+	-webkit-appearance: none; /* remove the strong OSX influence from Webkit */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	height:40px;
+}
+
+    /* for Webkit's CSS-only solution */
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+.shareMainContainer  .custom-select select {
+	padding-right: 30px;
+}
+}
+
+/* Select arrow styling */
+.shareMainContainer  .custom-select:after {
+	content:"";
+	position: relative;
+	top: 0;
+	right: 80px;
+	bottom: 0;
+	font-size: 60%;
+	line-height: 30px;
+	padding: 6px 7px;
+	width:23px;
+	background: #ffffff url("${cdn.endpoint}/images/downarrow.png") no-repeat 0px 5px;
+	color: #515151;
+	pointer-events: none;
+	-webkit-border-radius: 0 6px 6px 0;
+	-moz-border-radius: 0 6px 6px 0;
+	border-radius: 0 6px 6px 0;
+	/* border:1px solid #dddddd; */
+	border-left:0px solid #dddddd;
+}
+.no-pointer-events .custom-select:after {
+	content: none;
+}
+
+.custom-select select option {color:#6666;font-weight:bold; padding:8px 10px}
+
+.shareMainContainer .selectClassBlock{
+	padding:15px 15px;
+	border-bottom:1px solid #dddddd;
+}
+
+.shareMainContainer .courseDetailsContainer{
+		padding:15px 15px;
+}
+
+.shareMainContainer .errorMsgStyle{
+	font-size: 12px;
+	height: 11px;
+	margin-top: 11px;
+	color: #fab03a;
+	font-style: italic;
+}
+.shareMainContainer .marginBottom{
+	margin-bottom: 10px;
+}
+
+.shareMainContainer  button.primary{
+	margin-left: 5px;
+}
+
+@media (max-width: 767px) {
+	.shareMainContainer  label.custom-select{
+		width:100%;
+	}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+
+/* ======== Course Share end =========== */
+
+/* ========Empty course builder css start =========== */
+#coursesGetting .gettingStartedMain h1 {
+	color: #515151;
+	font-family: "Arvo", serif;
+	font-size: 24px;
+	margin: 0;
+	padding: 30px 0;
+	text-align: center;
+}
+#coursesGetting .gettingStartedMain .emptyClass {
+	background: url("../images/GettingStarted.png") repeat;
+	border-radius: 4px;
+	box-shadow: 0 0 4px #cccccc;
+	margin: 0 auto 50px;
+	padding: 50px 20px 20px;
+	width: 660px;
+}
+#coursesGetting .gettingStartedMain .emptyClass .addCourse {
+	margin-bottom: 35px;
+	margin-right: 60px;
+}
+#coursesGetting .gettingStartedMain .emptyClass .addStudents {
+	margin-right: 60px;
+}
+#coursesGetting .gettingStartedMain .emptyClass p {
+	margin: 0 0 5px;
+}
+#coursesGetting .gettingStartedMain .findout {
+	margin: 60px 0 0;
+	text-align: right;
+}
+ @media (min-width: 240px) and (max-width: 319px) {
+#coursesGetting .gettingStartedMain .emptyClass {
+	margin-left: 10px;
+	margin-right: 10px;
+	width: auto;
+	padding: 20px 20px;
+}
+#coursesGetting .gettingStartedMain .emptyClass .addCourse {
+	margin: 0 0 30px 0;
+}
+#coursesGetting .gettingStartedMain .emptyClass .addStudents {
+	margin: 0 0 30px 0;
+}
+#coursesGetting .gettingStartedMain .findout {
+	margin: 40px 0 0;
+	text-align: center;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+#coursesGetting .gettingStartedMain .emptyClass {
+	margin-left: 10px;
+	margin-right: 10px;
+	width: auto;
+}
+#coursesGetting.gettingStartedMain .emptyClass .addCourse {
+	margin: 0 50px 30px;
+}
+#coursesGetting .gettingStartedMain .findout {
+	margin: 40px 0 0;
+	text-align: center;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+#coursesGetting .gettingStartedMain .emptyClass {
+	margin-left: 10px;
+	margin-right: 10px;
+	width: auto;
+}
+#coursesGetting .gettingStartedMain .emptyClass .addCourse {
+	margin: 0 0px 30px;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+#coursesGetting .gettingStartedMain .emptyClass {
+	margin: 0 15px 15px 30px;
+	width: auto;
+}
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+/* ========Empty course builder css end =========== */

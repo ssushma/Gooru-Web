@@ -40,6 +40,7 @@ import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUser
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
@@ -101,7 +102,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	@UiField
 	FlowPanel progressRadial,questionsTable;
-	@UiField HTMLPanel  collectionSummaryText;
+	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel;
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
 	@UiField InlineLabel collectionResourcesCount,correctStatus;
@@ -193,6 +194,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		printButton.setText(i18n.GL4007());
 		downloadButton.setText(i18n.GL4008());
 		
+		loadingImageLabel.setVisible(false);
 	}
 
 	public void resetMetadataFields(){
@@ -243,19 +245,24 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	@Override
-	public void displayScoreCount(Integer collectionScore, Integer noOfQuestions) {
-			displayScore(collectionScore,noOfQuestions);
+	public void displayScoreCount(CollectionSummaryMetaDataDo result) {
+		score.setText(result.getScore()+" %");
+		goal.setText("Goal : 90%");
+		correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
+		int scorePercentage=result.getScoreInPercentage();
+		String progressRedialStyle="blue-progress-"+scorePercentage;
+		progressRadial.addStyleName(progressRedialStyle);
 	}
 
 
 	@Override
-	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result) {
+	public void setSessionsData(ArrayList<session> result) {
 		sessionsDropDown.clear();
 		sessionData.clear();
-		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
-			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), collectionSummaryUsersDataDo.getTimeStamp());
-			int day=collectionSummaryUsersDataDo.getFrequency();
-			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Attempt",collectionSummaryUsersDataDo.getSessionId());
+		for (session session : result) {
+			sessionData.put(session.getSessionId(), session.getEventTime());
+			int day=session.getSequence();
+			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Attempt",session.getSessionId());
 		}
 		setSessionStartTime(result.size()-1);
 	}
@@ -284,7 +291,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					collectionImage.setUrl("images/default-assessment-image -160x120.png");
 				}
 			});
-			collectionResourcesCount.setText(result.get(0).getNonResourceCount()+" Questions");
+			collectionResourcesCount.setText(result.get(0).getScorableQuestionCount()+" Questions");
 		}
 	}
 
@@ -358,8 +365,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
 							Label anserlbl=new Label();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-								JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
-								JSONObject authorObject = value.isObject();
+								 Map<String, Integer> authorObject = result.get(i).getOptions();
 								if(authorObject.keySet().size()!=0){
 									String userSelectedOption=authorObject.keySet().iterator().next();
 									correctAnser=getCorrectAnswer(result.get(i).getMetaData());
@@ -566,6 +572,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 			@Override
 			public void onSuccess() {
+				
+				loadingImageLabel.setVisible(false);
 
 				try{
 					printScoredData.clear();
@@ -601,8 +609,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
 								Label anserlbl=new Label();
 								if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-									JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
-									JSONObject authorObject = value.isObject();
+									 Map<String, Integer> authorObject = result.get(i).getOptions();
 									if(authorObject.keySet().size()!=0){
 										String userSelectedOption=authorObject.keySet().iterator().next();
 										correctAnser=getCorrectAnswer(result.get(i).getMetaData());
@@ -870,6 +877,25 @@ public static native void destoryTables() /*-{
 public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
 	throw new RuntimeException("Not implemented");
 }
+
+
+
+@Override
+public void loadingIcon() {
+	loadingImageLabel.setVisible(true);
+}
+
+
+
+@Override
+public void errorMsg() {
+	Label erroeMsg=new Label();
+	erroeMsg.setStyleName(STYLE_ERROR_MSG);
+	erroeMsg.setText(i18n.GL3265());
+	questionsTable.add(erroeMsg);
+}
+
+
 
 
 }

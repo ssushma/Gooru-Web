@@ -31,20 +31,31 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.FolderServiceAsync;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.Proxy;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
  * @author Search Team
@@ -55,49 +66,69 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
 
+	@Inject
+	private FolderServiceAsync folderServiceAsync;
+
+	@ContentSlot public static final Type<RevealContentHandler<?>> CENTURYSKILLS = new Type<RevealContentHandler<?>>();  
+
+	CenturySkillsPresenter centurySkillsPresenter;
+
+	TaxonomyPopupPresenter taxonomyPopupPresenter;
+
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
-	
+
 	StandardsPopupPresenter standardsPopupPresenter;
-	
+
 	final String SUBJECT="subject";
-	
+
 	final String COURSE="Course";
-	
+
 	private String UNIT = "Unit";
-	
-	private String COLLECTION = "collection";
-	
+
 	private String type;
-	
+
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
-	
+
 	ImageUploadPresenter imgUploadPresenter=null;
-	
-	
+
 	/**
 	 * Class constructor
 	 * @param view {@link View}
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view,ImageUploadPresenter imgUploadPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+	public CollectionInfoPresenter( EventBus eventBus,IsCollectionInfoView view,ImageUploadPresenter imgUploadPresenter,StandardsPopupPresenter standardsPopupPresenter,CenturySkillsPresenter centurySkillsPresenter,TaxonomyPopupPresenter taxonomyPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.standardsPopupPresenter=standardsPopupPresenter;
+		this.centurySkillsPresenter=centurySkillsPresenter;
+		this.taxonomyPopupPresenter = taxonomyPopupPresenter;
+		taxonomyPopupPresenter.setCollectionInfoPresenterInstance(this);
 	}
 
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
+
 	}
 
 	@Override
+	protected void onReset() {
+		// TODO Auto-generated method stub
+		super.onReset();
+		getCollectionDo();
+	}
+	@Override
 	protected void onReveal(){
 		super.onReveal();
+		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
+
+		setDepthofKnowledgeDetails();
+		setAudienceDetails();
 		Window.enableScrolling(true);
 	}
 
@@ -109,18 +140,27 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		this.taxonomyService = taxonomyService;
 	}
 
+
+	public FolderServiceAsync getFolderServiceAsync() {
+		return folderServiceAsync;
+	}
+
+	public void setFolderServiceAsync(FolderServiceAsync folderServiceAsync) {
+		this.folderServiceAsync = folderServiceAsync;
+	}
+
 	@Override
-	public void callTaxonomyService() {
-		getTaxonomyService().getSubjectsList(1, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void callTaxonomyService(int subdomainId) {
+		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 			@Override
-			public void onSuccess(List<CourseSubjectDo> result) {
-			//	getView().setCourseList(result);
+			public void onSuccess(List<DomainStandardsDo> result) {
 				if(result.size()>0){
-					callCourseBasedOnSubject(result.get(0).getSubjectId(),result.get(0).getName());
+					getView().displayStandardsList(result);
 				}
 			}
 		});
 	}
+
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText) {
 		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
@@ -132,32 +172,31 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-	
+
 	@Override
 	public void setCollectionType(String templateType) {
 		getView().setCollectionType(templateType);
 	}
-	
+
 	@Override
-	public void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit) {
+	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);		
+		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);	
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {				
-				String[] uri=result.getUri().split("/");
 				Map<String, String> params= new HashMap<String, String>();
 				params.put(O1_LEVEL, o1);
 				params.put(O2_LEVEL, o2);
 				params.put(O3_LEVEL, o3);
-				params.put("id", uri[uri.length-1]);
+				params.put("id", result.getGooruOid());
 				params.put("view", "course");
-				result.setGooruOid(uri[uri.length-1]);
+
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COLLECTION); 
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
-				myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, result);
+				myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
@@ -171,15 +210,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
 	}
-	
 	@Override
-	public void showStandardsPopup(String standardVal) {
-		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal);
+	public void showStandardsPopup(String standardVal, String standardsDesc) {
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
 		addToPopupSlot(standardsPopupPresenter);
 	}
-
 	@Override
-	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit) {
+	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
@@ -187,24 +224,23 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
 				folderDo.setTitle(createDo.getTitle());
-				folderDo.setCollectionType(COLLECTION);
-				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(2, COLLECTION, folderDo);
+				folderDo.setCollectionType(createDo.getCollectionType());
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
+				myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 			}
 		});
 	}
 
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index){
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String collectionType){
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index);
+				getView().callCreateAndUpdate(isCreate,value,index,collectionType);
 			}
 		});
 	}
@@ -215,14 +251,98 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(createDoObj.getTitle());
 		createOrUpDate.setDescription(createDoObj.getDescription());
-		createOrUpDate.setCollectionType(COLLECTION);
+		createOrUpDate.setCollectionType(createDoObj.getCollectionType());
 		imgUploadPresenter.setCollectionData(createDoObj);
-        imgUploadPresenter.setCollectionImage(true);
-        imgUploadPresenter.setClassPageImage(false);
-        imgUploadPresenter.setUpdateQuestionImage(false);
-        imgUploadPresenter.setEditResourceImage(false);
-		
+		imgUploadPresenter.setCollectionImage(true);
+		imgUploadPresenter.setClassPageImage(false);
+		imgUploadPresenter.setUpdateQuestionImage(false);
+		imgUploadPresenter.setEditResourceImage(false);
 	}
 
-	
+
+	public void setDepthofKnowledgeDetails(){
+		getFolderServiceAsync().getDepthOfKnowledgesList(new AsyncCallback<List<ListValuesDo>>() {
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				AppClientFactory.printInfoLogger("Depth of Knowledge Result....."+result.size());
+				getView().getDepthOfKnowledgeContainer().init(result);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+
+	public void setAudienceDetails(){
+		getFolderServiceAsync().getAudienceList(new AsyncCallback<List<ListValuesDo>>() {
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				AppClientFactory.printInfoLogger("Audience Result....."+result.size());
+				getView().getAudienceContainer().init(result);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+
+	public void getCollectionDo(){
+		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
+		AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				centurySkillsPresenter.getView().setCollectionDo(result);
+
+				getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
+				getView().getAudienceContainer().setCollectonDetails(result);
+
+
+			}
+		});
+	}
+
+	@Override
+	public void invokeTaxonomyPopup(String viewType,UlPanel ulSelectedItems) {
+		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
+		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
+		addToPopupSlot(taxonomyPopupPresenter);
+	}
+	@Override
+	public void updateCollectionDetails(){
+		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
+
+		getFolderServiceAsync().updateCollectionDetails(collectionUid, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+				// TODO Auto-generated method stub
+
+				AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
+
+			}
+		});
+	}
+	public void callCourseInfoTaxonomy(){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, unitId, null, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				if(result.getSubdomain()!=null && result.getSubdomain().size()>0){
+					CourseSubjectDo courseSubjectObj=result.getSubdomain().get(0);
+					callTaxonomyService(courseSubjectObj.getId());
+				}
+			}
+		});
+	}
+	public void addTaxonomyData(UlPanel selectedUlContainer) { 
+		getView().addTaxonomyData(selectedUlContainer);
+	}
 }

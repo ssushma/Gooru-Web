@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStat
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 
@@ -51,9 +52,9 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 
 	public void setClasspageInsightsUrl(String classpageId, String sessionId);
 
-	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
+	public void displayScoreCount(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
 
-	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
+	public void setSessionsData(ArrayList<session> result);
 
 	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> result);
 
@@ -68,5 +69,9 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public Frame getFrame();
 	
 	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo);
+	
+	public void loadingIcon();
+	
+	public void errorMsg();
 
 }

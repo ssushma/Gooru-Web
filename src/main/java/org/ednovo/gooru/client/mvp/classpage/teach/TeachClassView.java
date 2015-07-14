@@ -24,15 +24,19 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach;
 
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -121,7 +125,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		startContainer.getElement().setId("getStartedContainer");
 
 		studentLbl.getElement().setId("studentLblId");
-		studentLbl.setText(i18n.GL3344() +"(0)");
+		
 		studentLbl.getElement().setAttribute("alt",i18n.GL3344());
 		studentLbl.getElement().setAttribute("title",i18n.GL3344());
 
@@ -156,10 +160,17 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			studentAnr.removeStyleName(CssTokens.ACTIVE);
+			classSettingsAnr.removeStyleName(CssTokens.ACTIVE);
+			htmlEventPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, token);
-			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subToken);
-			AppClientFactory.getPlaceManager().revealPlace(request);
+			Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+			params.remove(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE);
+			params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, token);
+			params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subToken);
+			/*request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, token);
+			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subToken);*/
+			AppClientFactory.getPlaceManager().revealPlace(request,params);
 		}
 
 	}
@@ -175,12 +186,30 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 			titlePanel.setText(classpageDo.getName());
 			titlePanel.getElement().setAttribute("alt",classpageDo.getName());
 			titlePanel.getElement().setAttribute("title",classpageDo.getName());
-
+			String studentCount = "("+classpageDo.getMemberCount()+")";
+			studentLbl.setText(i18n.GL3344() +" " +studentCount);
 			classCodePanel.setText(classpageDo.getClassCode());
 			classCodePanel.getElement().setAttribute("alt",classpageDo.getClassCode());
 			classCodePanel.getElement().setAttribute("title",classpageDo.getClassCode());
 
 			mainContainer.getElement().setId(classpageDo.getClassUid());
+		}
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView#setNavaigationTab()
+	 */
+	@Override
+	public void setNavaigationTab() {
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
+		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
+			classSettingsAnr.addStyleName(CssTokens.ACTIVE);
+		}else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)){
+			studentAnr.addStyleName(CssTokens.ACTIVE);
+		}else{
+			classSettingsAnr.removeStyleName(CssTokens.ACTIVE);
+			studentAnr.removeStyleName(CssTokens.ACTIVE);
 		}
 	}
 }

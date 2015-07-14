@@ -1,0 +1,33 @@
+.audiencePadding {
+	padding: 10px 0;
+}
+
+#audeince p{
+	  margin: 0 0 10px;
+}
+
+.openHideBlocks {
+  padding: 15px 0;
+}
+
+.openHideBlocks h4 {
+  font-size: 16px;
+  color: #515151;
+  margin: 0 0 5px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+ .openHideBlocks p {
+  color: #515151;
+  margin: 0 0 10px;
+}
+
+.checkboxMainContainer span > label{
+	padding-top: 3px;
+  font-weight: 100;
+}
+.textAreaErrorMessage{
+	border: 1px solid #fbb03b;
+}
+

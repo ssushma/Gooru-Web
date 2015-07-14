@@ -578,7 +578,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										emailId=AppClientFactory.getLoggedInUser().getEmailId();
 									}
 							
-							AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+							AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 								@Override
 								public void onSuccess(ClasspageDo result) {
@@ -611,7 +611,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									};
                                     success.setWidth("450px");
                                     success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getName()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                     success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                     success.center();
                                     success.show();
@@ -711,7 +711,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											}else{
 												emailId=AppClientFactory.getLoggedInUser().getEmailId();
 											}
-									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 										@Override
 										public void onSuccess(ClasspageDo result) {
@@ -744,7 +744,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											};
                                             success.setWidth("450px");
                                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getName()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                             success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                             success.center();
                                             success.show();
@@ -1211,7 +1211,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									emailId=AppClientFactory.getLoggedInUser().getEmailId();
 								}
 						
-						AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+						AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 							@Override
 							public void onSuccess(ClasspageDo result) {
@@ -1443,7 +1443,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							}else{
 								emailId=AppClientFactory.getLoggedInUser().getEmailId();
 							}
-					AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+					AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 						@Override
 						public void onSuccess(ClasspageDo result) {
@@ -1476,7 +1476,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							};
                             success.setWidth("450px");
                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-                            success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                            success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getName()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                             success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                             success.center();
                             success.show();
@@ -1588,7 +1588,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	 *
 	 */
 	public static void setPublicPagePending()
-	{
+	{	
 		btnJoinClass.setVisible(true);
 		memberContainer.setStyleName("techerStyle");
 		lineSeparation.setVisible(false);
@@ -1601,7 +1601,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 		if(!AppClientFactory.isAnonymous()){
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-			AppClientFactory.getInjector().getClasspageService().getClasspage(classpageid, new SimpleAsyncCallback<ClasspageDo>() {
+			AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageid, new SimpleAsyncCallback<ClasspageDo>() {
 				@Override
 				public void onSuccess(ClasspageDo classpageDoResp) {
 					classpageDo = classpageDoResp;
@@ -1619,7 +1619,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									}else{
 										emailId=AppClientFactory.getLoggedInUser().getEmailId();
 									}
-									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 										@Override
 										public void onSuccess(ClasspageDo result) {
 											joinPopupPublic.hide();
@@ -1650,7 +1650,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											};
 			                                success.setWidth("450px");
 			                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-			                                success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+			                                success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getName()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 			                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
 			                                success.center();
 			                                success.show();
@@ -1763,7 +1763,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public void openJoinClassEvent()
 	{
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		AppClientFactory.getInjector().getClasspageService().getClasspage(classpageid, new SimpleAsyncCallback<ClasspageDo>() {
+		AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageid, new SimpleAsyncCallback<ClasspageDo>() {
 			@Override
 			public void onSuccess(ClasspageDo classpageDoService) {
 				classpageDo = classpageDoService;
@@ -1828,7 +1828,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												emailId=AppClientFactory.getLoggedInUser().getEmailId();
 											}
 											
-											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 												@Override
 												public void onSuccess(ClasspageDo result) {
@@ -1859,7 +1859,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													};
 				                                    success.setWidth("450px");
 				                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-				                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+				                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getName()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 				                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
 				                                    success.center();
 				                                    success.show();
@@ -1960,7 +1960,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														emailId=AppClientFactory.getLoggedInUser().getEmailId();
 													}
 											
-											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClassUid(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 												@Override
 												public void onSuccess(ClasspageDo result) {
@@ -1993,7 +1993,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													};
 		                                            success.setWidth("450px");
 		                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-		                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+		                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+" "+classpageDo.getName()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 		                                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
 		                                            success.center();
 		                                            success.show();

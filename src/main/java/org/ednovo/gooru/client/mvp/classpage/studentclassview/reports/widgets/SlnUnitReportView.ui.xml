@@ -7,12 +7,14 @@
 	   <uc:HTMLEventPanel styleName="col-md-3 col-sm-3" ui:field="unitBlock">
 	      <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
 		   <g:HTMLPanel styleName="heighlightBlockUnitReports">
-		      <g:HTMLPanel styleName="lessonDetails">
+		      <g:HTMLPanel styleName="lessonDetails col-md-9 col-sm-9 col-xs-9">
 	             <span:H3Panel ui:field="lessonCountName"></span:H3Panel>
 	             <span:PPanel ui:field="lessonName"></span:PPanel>
 		      </g:HTMLPanel>
-		      <div class="progressBlockLeft">
-	            <div class="green-circle"><span></span></div>
+		      <div class="progressBlockLeft col-md-3 col-sm-3 col-xs-3">
+	            <g:HTMLPanel ui:field="circleIcon">
+	                <span></span>
+	            </g:HTMLPanel>
 	         </div>
 		   </g:HTMLPanel>
 	   </uc:HTMLEventPanel>
@@ -26,10 +28,10 @@
 	   </div>
 	   <div class="col-md-1 col-sm-1 col-xs-12">
 	      <div class="timeAndScore">
-	         <div class="avgScore org">
+	         <g:HTMLPanel styleName="avgScore" ui:field="avgScorePanel">
 	            <p>Avg Score</p>
 	            <span:H2Panel ui:field="totalScore"></span:H2Panel>
-	         </div>
+	         </g:HTMLPanel>
 	      </div>
 	   </div>
 	   <div class="clearfix"></div>

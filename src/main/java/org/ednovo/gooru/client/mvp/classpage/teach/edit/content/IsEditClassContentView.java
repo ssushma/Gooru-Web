@@ -24,7 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 
 /**
@@ -44,5 +49,13 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
 
 	void setNavigationTab();
+
+	void setClassData(ClasspageDo classpageDo);
+
+	void setUpdateClass(ClasspageDo result);
+
+	void getUnitListView(List<FolderDo> result);
+
+	void setLessonData(List<ClassLessonDo> result);
 
 }

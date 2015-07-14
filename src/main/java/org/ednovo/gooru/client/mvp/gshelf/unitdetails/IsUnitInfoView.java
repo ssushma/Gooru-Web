@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
@@ -39,12 +40,12 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	/**
 	 * This method will display the Grades according to the subject
 	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,String selectedText);
+	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,int selectedId);
 	/**
 	 * Set collection default course
 	 * @param libraryCode instance {@link CourseSubjectDo} as List
 	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
+	void setCourseList(List<CourseSubjectDo> libraryCode,int selectedId);
 	/**
 	 * To set the Updated course data
 	 * @param courseObj
@@ -57,4 +58,6 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 * @param index
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
+	
+	void addTaxonomyData(UlPanel selectedUlContainer); 
 }

@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 /**
  * @author Search Team
@@ -35,21 +37,21 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	/**
 	 * This method will call the taxonomy service method
 	 */
-	public void callTaxonomyService();
+	public void callTaxonomyService(int classifierId);
 	
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
+	public void callCourseBasedOnSubject(int subjectId,final int selectedText);
     
 	/**
 	 * To Create Course
 	 * @param courseTitle {@link String} 
 	 * @param isCreateUnit {@link boolean} 
 	 */
-	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateUnit);
+	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateUnit,FolderDo folderDo);
 	/**
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(CreateDo createDo, String id,boolean isCreateUnit);
+	public void updateCourseDetails(CreateDo createDo, String id,boolean isCreateUnit,FolderDo folderDo);
 	
 	/**
 	 * This method is used for profanity checker

@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
@@ -53,7 +55,13 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView);
 	
-	public void isAssignedToClassPage(String o1CourseId, String o2UnitId, String o3LessonId);  
+	public void isAssignedToClassPage(String o1CourseId, String o2UnitId, String o3LessonId);
+	
+	public void deleteCollectionContent(String o1CourseId, String o2UnitId,	String o3LessonId, String assessmentCollectionId);
+	
+	public void setCollectionsListOnRightCluster(String o1CourseId,String o2UnitId, String o3LessonId,String deletedAssessmentCollectionId, String currentTypeView);  
+	
+	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData);
 	
 	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected);
 

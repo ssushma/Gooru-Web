@@ -24,7 +24,18 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import java.util.List;
+
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
+import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -45,9 +56,14 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  */
 public class EditClassContentPresenter extends PresenterWidget<IsEditClassContentView> implements EditClassContentViewUiHandler {
 	
+	ClasspageDo classpageDo;
+	
+	String unitId;
+	
 	@Inject
 	public EditClassContentPresenter(EventBus eventBus,IsEditClassContentView view){
 		super(eventBus, view);
+		getView().setUiHandlers(this);
 	}
 	
 	@Override
@@ -58,7 +74,29 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 
 	@Override
 	public void onReveal() {
-		super.onReveal();
+		getUnitList();
+	}
+
+		
+	private void getUnitList() {
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
+		if(classId != null && courseId != null){
+			AppClientFactory.getInjector().getClasspageService().getClassUnitList(classId, courseId, 0, 20, new AsyncCallback<List<FolderDo>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+
+				@Override
+				public void onSuccess(List<FolderDo> result) {
+					getView().getUnitListView(result);
+				}
+			});
+					
+			
+		}
 	}
 
 	@Override
@@ -68,8 +106,76 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	
 	@Override
 	protected void onReset() {
-		super.onReset();
 		getView().setNavigationTab();
 	}
+
+	public void setClassData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
+		getView().setClassData(classpageDo);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler#updateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public void updateClass(ClasspageDo classpageDo) {
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
+		if(!classId.isEmpty()){
+			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, classpageDo, new AsyncCallback<ClasspageDo>() {
+				
+				@Override
+				public void onSuccess(ClasspageDo result) {
+					getView().setUpdateClass(result);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler#getLessonList(java.lang.String)
+	 */
+	@Override
+	public void getLessonList(String unitId) {
+		ClassDo classDo = StringUtil.getClassObj();
+		if(classDo.getClassId() != null && classDo.getCourseId() != null){
+			AppClientFactory.getInjector().getClasspageService().getClassLessonCollectionList(classDo.getClassId(), classDo.getCourseId(), unitId, 0, 20, new AsyncCallback<List<ClassLessonDo>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+
+				@Override
+				public void onSuccess(List<ClassLessonDo> result) {
+					getView().setLessonData(result);
+				}
+			});
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler#updateCollectionOrAssignmentVisiblity(org.ednovo.gooru.application.shared.model.content.ClassLessonDo)
+	 */
+	@Override
+	public void updateCollectionOrAssignmentVisiblity(List<ClassLessonDo> classLessonDo,String unitId) {
+		ClassDo classDo = StringUtil.getClassObj();
+		if(classDo.getClassId() != null && classDo.getCourseId() != null && unitId  != null){
+			AppClientFactory.getInjector().getClasspageService().updateClassLessonVisiblity(classDo.getClassId(), classDo.getCourseId(), unitId, classLessonDo, new AsyncCallback<ClassLessonDo>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+
+				@Override
+				public void onSuccess(ClassLessonDo result) {
+				}
+			});
+		}
+	} 
 
 }

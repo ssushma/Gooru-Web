@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -38,5 +38,7 @@ public interface TaxonomyServiceAsync extends BaseServiceAsync {
 	void getCourse(AsyncCallback<List<LibraryCodeDo>> callback);
 	
 	void getSubjectsList(int id,String type,int offset,int limit,AsyncCallback<List<CourseSubjectDo>> asyncCallback);
+	
+	void getStandardsList(int subDomainId,AsyncCallback<List<DomainStandardsDo>> asyncCallback);
 
 }

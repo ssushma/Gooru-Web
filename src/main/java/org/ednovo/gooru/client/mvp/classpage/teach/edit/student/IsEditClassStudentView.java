@@ -77,4 +77,6 @@ public interface IsEditClassStudentView extends IsViewWithHandlers<EditClassStud
 	public void getPendingMembersList();
 		
 	public void removePendingUserWidget(MembersViewVc membersViewVc,boolean pendingFlag);
+		
+	public void setReportDataView();
 }

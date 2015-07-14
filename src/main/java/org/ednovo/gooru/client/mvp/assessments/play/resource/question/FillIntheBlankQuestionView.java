@@ -93,9 +93,9 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 		answerText.getElement().setAttribute("alt",i18n.GL0665());
 		answerText.getElement().setAttribute("title",i18n.GL0665());
 
-		checkAnswer.setText(i18n.GL3460());
-		checkAnswer.getElement().setAttribute("alt",i18n.GL3460());
-		checkAnswer.getElement().setAttribute("title",i18n.GL3460());
+		checkAnswer.setText(i18n.GL3460_4());
+		checkAnswer.getElement().setAttribute("alt",i18n.GL3460_4());
+		checkAnswer.getElement().setAttribute("title",i18n.GL3460_4());
 
 		messageBodyText.getElement().setAttribute("title",i18n.GL0666());
 
@@ -123,9 +123,9 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 		answerText.getElement().setInnerHTML(i18n.GL0665());
 		answerText.getElement().setAttribute("alt",i18n.GL0665());
 		answerText.getElement().setAttribute("title",i18n.GL0665());
-		checkAnswer.setText(i18n.GL3460());
-		checkAnswer.getElement().setAttribute("alt",i18n.GL3460());
-		checkAnswer.getElement().setAttribute("title",i18n.GL3460());
+		checkAnswer.setText(i18n.GL3460_4());
+		checkAnswer.getElement().setAttribute("alt",i18n.GL3460_4());
+		checkAnswer.getElement().setAttribute("title",i18n.GL3460_4());
 		setId();
 	}
 	/**

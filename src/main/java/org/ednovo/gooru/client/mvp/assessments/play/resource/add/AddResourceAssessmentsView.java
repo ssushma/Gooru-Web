@@ -105,6 +105,8 @@ public class AddResourceAssessmentsView extends BaseViewWithHandlers<AddResource
 	private String collectionId=null;
 
 	private String resourceId=null;
+	
+	private String questionType=null;
 
 	private String category = null;
 
@@ -703,6 +705,7 @@ public class AddResourceAssessmentsView extends BaseViewWithHandlers<AddResource
 		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getGooruOid()!=null){
 		this.resourceId=collectionItemDo.getResource().getGooruOid();
 		this.category = collectionItemDo.getResource().getCategory();
+		this.questionType=collectionItemDo.getQuestionType();
 		}
 		changeButtonText();
 	}
@@ -736,7 +739,7 @@ public class AddResourceAssessmentsView extends BaseViewWithHandlers<AddResource
 					errorMessage.getElement().setAttribute("alt",i18n.GL0699_2());
 					errorMessage.getElement().setAttribute("title",i18n.GL0699_2());
 				}else{
-					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getCollectionType(),category);
+					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getCollectionType(),category,questionType);
 					if(flag){
 						errorMessage.setVisible(false);
 						getAddResourceToCollectionButton().getElement().getStyle().setDisplay(Display.NONE);

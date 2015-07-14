@@ -132,7 +132,6 @@
 }
 .rowContainer .progressBlock {
     padding: 12px 6px;
-    border-right: 1px solid #dddddd;
 }
 .rowContainer .progressBlock .circle-main-container {
     margin: 0 0;
@@ -1083,6 +1082,9 @@ th.headcol.whitebg {
 .tableStyle td.yellowgreen {
     background: #edf167;
 }
+.tableStyle td.org {
+    background: #fec956;
+}
 /* end .tableStyle */
 
 .dashboardBodyBlock .scrollingTable {
@@ -1570,6 +1572,12 @@ th.headcol.whitebg {
     font-size: 46px;
     margin: 15px 0;
 }
+.bannerInner .bannerCaptions h2 {
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 35px;
+	margin: 15px 0;
+}
 .bannerInner .bannerCaptions .rightWhiteBox {
     text-align: right;
     background: rgba(255, 255, 255, .5);
@@ -2049,6 +2057,9 @@ th.headcol.whitebg {
     font-weight: bold;
     margin: 15px 0 0 0;
 }
+.timeAndScore .avgScore.darkGrey {
+    background: #ddd;
+}
 .timeAndScore .avgScore.lightGreen {
     background: #a2de81;
 }
@@ -2063,6 +2074,9 @@ th.headcol.whitebg {
 }
 .timeAndScore .avgScore.red {
     background: #e08282;
+}
+.border-bottom-white {
+	border-bottom: 1px solid #fff;
 }
 .rowContainer {
     border-bottom: 1px solid #dddddd;
@@ -2176,12 +2190,19 @@ th.headcol.whitebg {
 	margin-top: 20px;
 }
 .modal-widget-1000 {
-	width: 1000px;
+	width: 98%;
+	margin: 0 auto;
 	background: #fff;
 }
 .teach-popup-student-content-margin {
 	margin: 0px 15px;
 	padding-bottom: 0px;
+}
+.margin-left-5 {
+	margin-left: 5px;
+}
+.font-style-normal {
+	font-style: normal;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     header {
@@ -2206,6 +2227,12 @@ th.headcol.whitebg {
         font-size: 35px;
         padding: 0 0 15px 0;
     }
+    .bannerInner .bannerCaptions h2 {
+		color: #ffffff;
+		font-weight: bold;
+		font-size: 30px;
+		margin: 15px 0;
+	}
     .bannerInner .bannerCaptions .rightWhiteBox {
         background: rgba(0, 0, 0, .15);
         float: none;
@@ -2311,7 +2338,13 @@ th.headcol.whitebg {
         font-size: 35px;
         padding: 0 0 15px 0;
     }
-    .bannerInner .bannerCaptions .rightWhiteBox {
+    .bannerInner .bannerCaptions h2 {
+		color: #ffffff;
+		font-weight: bold;
+		font-size: 30px;
+		margin: 15px 0;
+	}
+	.bannerInner .bannerCaptions .rightWhiteBox {
         background: rgba(0, 0, 0, .15);
         float: none;
     }
@@ -2416,7 +2449,13 @@ th.headcol.whitebg {
         font-size: 35px;
         padding: 0 0 15px 0;
     }
-    .bannerInner .bannerCaptions .rightWhiteBox {
+    .bannerInner .bannerCaptions h2 {
+		color: #ffffff;
+		font-weight: bold;
+		font-size: 30px;
+		margin: 15px 0;
+	}
+	.bannerInner .bannerCaptions .rightWhiteBox {
         background: rgba(0, 0, 0, .15);
         float: none;
     }
@@ -2608,6 +2647,7 @@ th.headcol.whitebg {
     padding: 6px 14px;
     text-align: center;
     vertical-align: top;
+    width: 50px;
 }
 .rowContainer .progressBlockLeft {
     display: table-cell;
@@ -2646,7 +2686,7 @@ th.headcol.whitebg {
     background: #eef3f7 none repeat scroll 0 0;
     padding: 10px 10px;
     display: table-cell;
-    width: 100%;
+    width: 85%;
 }
 .rowContainer .heighlightBlockUnitReports {
     height: 104px;

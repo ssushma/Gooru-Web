@@ -3387,4 +3387,7 @@ div#spnlDisclosureContentSimPanel>div:first-child {
 .tinyMCETable table {
 	width:100%;
 }
+.inlineBlock{
+	display: inline-block;
+}
 }

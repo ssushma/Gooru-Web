@@ -24,15 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.StandardsCodeDecView;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
+import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -69,23 +76,29 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	interface LessonViewUiBinder extends UiBinder<Widget, LessonInfoView> {
 	}
 
-	@UiField HTMLPanel lessonInfo;
+	@UiField HTMLPanel lessonInfo,standardsUI;
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse;
-	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment;
+	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment,taxonomyBtn;
 	@UiField Label lblErrorMessage;
+	@UiField UlPanel ulSelectedItems;
+	
+	
 	AssessmentPopupWidget assessmentPopup;
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	List<Integer> selectedValues=new ArrayList<Integer>();
 
 	final String ACTIVE="active";
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
-
+	CourseGradeWidget courseGradeWidget;
+	public FolderDo courseObj;
+	
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -96,6 +109,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		lessonInfo.getElement().setId("pnlLessonInfo");
 		lessonInfo.getElement().getStyle().setOverflowY(Overflow.AUTO);
 		populateStandardValues();
+		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -113,6 +127,47 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		});
 	}
+	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
+		standardsUI.clear();
+		for(int i=0;i<standardsList.size();i++)
+		{
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i));
+			final DomainStandardsDo domainStand = standardsList.get(i);
+			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					standardsCode.setStyleName("active");
+					
+					if(!selectedValues.contains(domainStand.getCodeId())){
+						selectedValues.add(domainStand.getCodeId());
+					}
+					
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							//This will remove the selected value when we are trying by close button
+							if(selectedValues.contains(domainStand.getCodeId())){
+								selectedValues.remove(domainStand);
+							}
+							standardsCode.removeStyleName("active");
+							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+							liPanelWithClose.removeFromParent();
+						}
+					});
+					//selectedValues.add(domainStand.getCodeId());
+					liPanelWithClose.setId(domainStand.getCodeId());
+					liPanelWithClose.setName(domainStand.getCode());
+					liPanelWithClose.setRelatedId(domainStand.getCodeId());
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			});
+			standardsUI.add(standardsCode);
+		}
+		
+
+	}
 	public void populateStandardValues(){
 		for(int i=0; i<standardsTypesArray.length; i++){
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray[i].toString().split(","));
@@ -124,10 +179,11 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						liPanel.getElement().setId("CA");
 					}else{
 						liPanel.getElement().setId(standardsDescriptionList.get(j).toString());
-					}
+					}					
 					headerDiv.setStyleName("liPanelStyle");
 				}else{
 					headerDiv.setStyleName("liPanelStylenonBold");
+					liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j).toString());
 				}
 				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j).toString());
 				liPanel.add(headerDiv);
@@ -136,7 +192,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				@Override
 				public void onClick(ClickEvent event) {
 					String standardsVal = event.getRelativeElement().getAttribute("id");
-					getUiHandlers().showStandardsPopup(standardsVal);
+					String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+					getUiHandlers().showStandardsPopup(standardsVal,standardsDesc);
 				}
 			});
 			standardsDropListValues.add(liPanel);
@@ -180,16 +237,97 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}else{
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(lessonTitle.getText());
+			createOrUpDate.setStandardIds(getSelectedStandards());
 			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 			if(id!=null){
-				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type);
+				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type,courseObj);
 			}else{
 				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
 			}
 		}
 	}
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandards(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+			}
+		}
+		return taxonomyCourseIds;
+	}
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
+		this.courseObj=folderObj;
+		ulSelectedItems.clear();
+		selectedValues.clear();
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
+		if(folderObj!=null){
+			if(folderObj.getStandards()!=null && folderObj.getStandards().size()>0){
+				//Render the existing standards
+				for(final CourseSubjectDo courseSubjectDo : folderObj.getStandards()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
+							liPanelWithClose.removeFromParent();
+						}
+					});
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getName());
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			}
+		}
+		getUiHandlers().callCourseInfoTaxonomy();
+	}
+	/**
+	 * This method will remove the widget based on the codeId in the UlPanel
+	 * @param ulPanel
+	 * @param codeId
+	 */
+	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getId()==codeId){
+					obj.removeFromParent();
+				}
+			}
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;
+				if(obj.getCodeId()==codeId){
+					obj.removeStyleName("active");
+				}
+			}
+		}
+	}
+	
+	private class OnClickTaxonomy implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			getUiHandlers().invokeTaxonomyPopup("Lesson",ulSelectedItems);
+		}
+	}
+	
+	@Override
+	public void addTaxonomyData(UlPanel selectedUlContainer) {
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				ulSelectedItems.add(widget);
+			}
+		}
 	}
 }

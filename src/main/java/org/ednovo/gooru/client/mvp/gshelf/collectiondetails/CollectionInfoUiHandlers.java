@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
@@ -35,7 +37,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	/**
 	 * This method will call the taxonomy service method
 	 */
-	public void callTaxonomyService();
+	public void callTaxonomyService(int subdomainId);
 	
 	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
     
@@ -49,13 +51,21 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit);
+	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit,FolderDo courseObj);
 
-	public void checkProfanity(String trim, boolean b, int i);
+	public void checkProfanity(String textValue, boolean isCreate, int index,
+			String collectionType);
 
 	void setCollectionType(String templateType);
 
 	public void uploadCollectionImage(CreateDo createOrUpDate);
 
-	public void showStandardsPopup(String standardsVal);
+	void showStandardsPopup(String standardVal, String standardsDesc);
+
+	public void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems); 
+	
+	public void callCourseInfoTaxonomy();
+
+	void updateCollectionDetails();
+
 }

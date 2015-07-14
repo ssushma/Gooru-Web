@@ -26,11 +26,15 @@ package org.ednovo.gooru.application.client.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
@@ -41,9 +45,9 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -61,12 +65,12 @@ public interface ClasspageService extends BaseService {
 	/** new class v3 apis started
 	 */
 	public ClasspageDo createClass(String titlinviteStudentToClasse,String grades,boolean visiblity) throws GwtException,ServerDownException;
-	
+
 	public ClasspageDo v3GetClassById(String classpageId) throws GwtException,ServerDownException;
 	
-	public ClasspageListDo  v3GetUserClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	public ClasspageListDo  v3GetUserClasses(String limit, String offSet, boolean isContainsCourse) throws GwtException, ServerDownException;
 	
-	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	public ClasspageListDo  v3GetUserStudyClasses(String limit, String offSet) throws GwtException, ServerDownException;
 	
 	public StudentsAssociatedListDo getAssociatedPendingStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)	throws GwtException, ServerDownException;
 	
@@ -76,6 +80,15 @@ public interface ClasspageService extends BaseService {
 	
 	public void removeActiveStudentFromClass(String classId,boolean visiblity,String gooruUid) throws GwtException,ServerDownException;
 	
+	public void v3StudentJoinIntoClass(String classCode) throws GwtException, ServerDownException;
+	
+	public ClasspageDo v3UpdateClass(String classId,ClasspageDo classpageDo) throws GwtException,ServerDownException;
+	
+	public List<FolderDo> getClassUnitList(String classId,String courseIdn,int offset, int limit) throws GwtException,ServerDownException;
+	
+	public List<ClassLessonDo> getClassLessonCollectionList(String classId,String courseId,String unitId,int offset, int limit) throws GwtException,ServerDownException;
+	
+	public ClassLessonDo updateClassLessonVisiblity(String classId,String courseId,String unitId,List<ClassLessonDo> listClassLessonDo) throws GwtException,ServerDownException;
 	/**
 	 * Get Classpage by Classpage id
 	 * @param String classpageID
@@ -506,4 +519,19 @@ public interface ClasspageService extends BaseService {
 	
 	public void v2ChangeAssignmentSequence(String classpageId,
 			String classpageAssignmentId, int sequence) throws GwtException, ServerDownException;
+	
+	ArrayList<ClasspageDo> getClassesAssociatedWithCourse(String courseId) throws GwtException, ServerDownException;
+	
+	/** Student Plan and Progress **/
+	public ArrayList<PlanProgressDo> getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams) throws GwtException, ServerDownException;
+
+	/** Mastery Reports **/
+	public ArrayList<PlanProgressDo> getCourseMasteryReport(String classpageId, String courseId) throws GwtException, ServerDownException;
+	
+	public ArrayList<PlanProgressDo> getUnitMasteryReport(String classpageId, String courseId, String unitId, String collectionType) throws GwtException, ServerDownException;
+
+	public ArrayList<MasterReportDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType) throws GwtException, ServerDownException;
+
+	
+
 }

@@ -831,7 +831,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 						rbPublicPanel.setVisible(true);
 						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
 							if(collectionDo!=null){
-							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
+							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equals("pending")){
 								rbPublic.setVisible(false);
 								lblPublishPending.setVisible(true);
 								publishedPanel.setVisible(false);

@@ -24,10 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.course;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
@@ -49,57 +54,65 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 
 	@UiField HTMLPanel courseTable;
 	
+	private ClasspageDo classpageDo = null;
+	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
 
 	interface TeachCourseReportChildViewUiBinder extends UiBinder<Widget, TeachCourseReportChildView> {
 	}
 
-	public TeachCourseReportChildView() {
+	public TeachCourseReportChildView(ClasspageDo classpageDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.classpageDo = classpageDo;
 		setPresenter(new TeachCourseReportChildPresenter(this));
-		getData();
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+		if(classId!=null&&courseId!=null) {
+			getPresenter().getCourseMasteryData(classId, courseId);
+		}
 	}
 	
-	public void getData() {
-		setTableData();
-	}
-
 	@Override
-	public void setTableData() {
+	public void setTableData(ArrayList<PlanProgressDo> result) {
+		ArrayList<PlanProgressDo> usageData = null;
 		final AdvancedFlexTable courseTableWidget = new AdvancedFlexTable();
 		courseTableWidget.getElement().setId("course-table-report-data-id");
 		courseTable.add(courseTableWidget);
 		courseTable.getElement().setId("courseTableID");
 		courseTable.getElement().setClassName("scrollTBL");
 		courseTableWidget.addStyleName("table table-bordered tableStyle");
+		
+		int rowCount = result.size();
+		
+		for(int rowWidgetCount=0;rowWidgetCount<rowCount;rowWidgetCount++) {
+			PlanProgressDo planDo = result.get(rowWidgetCount);
+			HTML studentName = new HTML(planDo.getUserName());
+			studentName.setStyleName("myclasses-mastery-unit-cell-style");
+			studentName.addClickHandler(new StudentCourseView(planDo.getUserName(), planDo.getUserUId()));
+			courseTableWidget.setWidget(rowWidgetCount,0,studentName);
+			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor("white");
+			usageData = planDo.getUsageData();
+			int columnCount = usageData.size();
+			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
+				int score = usageData.get(columnWidgetCount).getScoreInPercentage();
+				Label scoreLbl = new Label(score+"%");
+				courseTableWidget.setWidget(rowWidgetCount, columnWidgetCount+1,scoreLbl);
+				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+			}
+		}
+		
 		Label studentNameLbl = new Label("Student");
 		studentNameLbl.setStyleName("");
 		studentNameLbl.setWidth("100px");
-		int columnCount = 0;
 		courseTableWidget.setHeaderWidget(0, studentNameLbl);
-		columnCount++;
-		for(int headerColumnCount=1;headerColumnCount<20;headerColumnCount++) {
-			HTML unitName = new HTML("U"+headerColumnCount+"&nbsp;Unit&nbsp;Name&nbsp;"+headerColumnCount);
-			unitName.setStyleName("myclasses-mastery-unit-cell-style");
-			unitName.addClickHandler(new ClickUnitName("unitId"));
-			courseTableWidget.setHeaderWidget(headerColumnCount, unitName);
-			columnCount++;
-		}
 		
-		for(int rowWidgetCount=0;rowWidgetCount<20;rowWidgetCount++) {
-			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
-				if(columnWidgetCount==0) {
-					HTML studentName = new HTML("Student "+rowWidgetCount);
-					studentName.setStyleName("myclasses-mastery-unit-cell-style");
-					studentName.addClickHandler(new StudentCourseView("studentId"));
-					courseTableWidget.setWidget(rowWidgetCount,columnWidgetCount,studentName);
-					courseTableWidget.getWidget(rowWidgetCount,columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
-				} else {
-					Label scoreLbl = new Label("90%");
-					courseTableWidget.setWidget(rowWidgetCount, columnWidgetCount,scoreLbl);
-					courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().setClassName("lightgreen");
-				}
-			}
+		int columnCount = usageData.size();
+		
+		for(int headerColumnCount=0;headerColumnCount<columnCount;headerColumnCount++) {
+			HTML unitName = new HTML(usageData.get(headerColumnCount).getTitle());
+			unitName.setStyleName("myclasses-mastery-unit-cell-style");
+			unitName.addClickHandler(new ClickUnitName(usageData.get(headerColumnCount).getGooruOId()));
+			courseTableWidget.setHeaderWidget(headerColumnCount+1, unitName);
 		}
 	}
 	
@@ -144,15 +157,17 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	}
 	
 	public class StudentCourseView implements ClickHandler {
-		private String courseId = null;
-		public StudentCourseView(String courseId) {
-			this.courseId = courseId;
+		private String gooruUId = null;
+		private String userName = null;
+		public StudentCourseView(String userName, String gooruUId) {
+			this.userName = userName;
+			this.gooruUId = gooruUId;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget();
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,gooruUId);
 		}
-	}	
+	}
 
 }

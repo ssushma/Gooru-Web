@@ -26,10 +26,13 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
@@ -99,6 +102,10 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	
 	private static final List<String> gradeList = new ArrayList<String>();
 	
+	ClasspageDo classpageDo;
+	
+	private static final String SHORTEN_URL = "shortenUrl";
+	
 	private static EditClassSettingsViewUiBinder uiBinder = GWT.create(EditClassSettingsViewUiBinder.class);
 
 	interface EditClassSettingsViewUiBinder extends
@@ -127,10 +134,11 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
+			String grade = filterValue.replace("Grade ", "");
 			if("add".equals(addOrRemove)){
-				gradeList.add(filterValue);
+				gradeList.add(grade);
 			}else{
-				gradeList.remove(filterValue);
+				gradeList.remove(grade);
 			}
 		}
 	};
@@ -341,6 +349,48 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 						publicPanel.removeStyleName("active");
 					}
 			}
+		}
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView#setData(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public void setData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
+		getUiHandlers().generateShareLink(classpageDo.getClassUid());
+		if(classpageDo != null){
+			classTitleTextLbl.setText(classpageDo.getName());
+			classCodeTxtPanel.setText(classpageDo.getClassCode());
+			boolean visiblity = classpageDo.isVisibility();
+			if(visiblity){
+				publicPanel.addStyleName(CssTokens.ACTIVE);
+				privatePanel.removeStyleName(CssTokens.ACTIVE);
+			}else{
+				privatePanel.addStyleName("active");
+				publicPanel.removeStyleName(CssTokens.ACTIVE);
+			}
+			if(classpageDo.getGrades() != null){
+				String [] grade = classpageDo.getGrades().split(",");
+				gradeList.clear();
+				for(int i=0;i<grade.length;i++){
+					gradeList.add(grade[i]);
+				}	
+			}
+			
+			gooruGradesPresenterWidget.setGrade(classpageDo);
+		}
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView#setShortenUrl(java.util.Map)
+	 */
+	@Override
+	public void setShortenUrl(Map<String, String> shortenUrl) {
+		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
+			shareUrlTxtLbl.setText(shortenUrl.get(SHORTEN_URL));
 		}
 	}
 

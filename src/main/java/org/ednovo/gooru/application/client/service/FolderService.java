@@ -205,6 +205,16 @@ public interface FolderService extends BaseService {
 	Integer deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId)throws GwtException,ServerDownException;
 	
 	public Integer getClassesAssociatedWithCourse(String o1CourseId) throws GwtException,ServerDownException;
-
+	
+	public Integer deleteCollectionAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String assessmentCollectionId) throws GwtException,ServerDownException;
+	
+	
 	List<ListValuesDo> getDepthOfKnowledgesList() throws GwtException;
+	
+	List<ListValuesDo> getAudienceList() throws GwtException;
+	
+	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId)  throws GwtException;
+
+	void updateCollectionDetails(String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
+
 }

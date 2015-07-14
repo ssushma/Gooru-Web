@@ -181,7 +181,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		this.classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		this.classPageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		reportContainer.setVisible(false);
 		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
 		reportPanelAnr.addClickHandler(new MasteryReportPlace(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));
@@ -429,8 +429,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			reportPanel.removeStyleName(CssTokens.ACTIVE);
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
-			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
+			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
+			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+			request = request.with(UrlNavigationTokens.CLASSPAGEID, id);
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
@@ -483,7 +484,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		reportPanel.setStyleName(CssTokens.ACTIVE);
 		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			reportBox.add(new TeachCourseReportChildView());
+			reportBox.add(new TeachCourseReportChildView(classpageDo));
 		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 			reportBox.add(new TeachUnitReportChildView());
 		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
@@ -500,8 +501,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	@Override
 	public void setRoasterView() {
 		roasterPanel.setStyleName(CssTokens.ACTIVE);
-		tableContainer.clear();
-		pendingContainer.clear();
 		setReportVisiblity(false);
 	}
 
@@ -635,15 +634,18 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		if(increasePageNum){
 			pendingOffsetValue=pendingOffsetValue+pageSize;
 		}
-		if(pendingListTotalCount==0&&activeListTotalCount==0){
-			/*Label noActiveStudents = new Label(i18n.GL1527());
+		/*if(pendingListTotalCount==0&&activeListTotalCount==0){
+			Label noActiveStudents = new Label(i18n.GL1527());
 			noActiveStudents.getElement().addClassName("noActiveClassStudents");
-			pendingContainer.add(noActiveStudents);*/
+			pendingContainer.add(noActiveStudents);
+			pendindUserContainer.setVisible(false);
 			ancPendingListSeeMore.setVisible(false);
-		}else if(pendingListTotalCount==0){
+		}else */if(pendingListTotalCount==0){
 			ancPendingListSeeMore.setVisible(false);
+			pendindUserContainer.setVisible(false);
 		}else{
 			lblPendingPleaseWait.setVisible(false);
+			pendindUserContainer.setVisible(true);
 			for (int k=0; k<lstPendingMembers.size();k++){
 				if(insertTop){
 					pendingOffsetValue++;
@@ -746,6 +748,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			ancActiveListSeeMore.setVisible(false);
 			Label noActiveStudents = new Label(i18n.GL1527());
 			noActiveStudents.getElement().addClassName("noActiveClassStudents");
+			tableContainer.clear();
 			tableContainer.add(noActiveStudents);
 		}else{
 			for (int k=0; k<lstActiveMembers.size();k++){
@@ -847,6 +850,16 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else{
 			getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView#setReportDataView()
+	 */
+	@Override
+	public void setReportDataView() {
+		reportBox.setVisible(false);
+		roasterMainConatiner.setVisible(false);
+		reportContainer.setVisible(true);
 	}
 	
 	

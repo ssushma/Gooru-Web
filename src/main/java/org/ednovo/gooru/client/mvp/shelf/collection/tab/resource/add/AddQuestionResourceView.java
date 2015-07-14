@@ -40,6 +40,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
@@ -47,6 +48,7 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -111,6 +113,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
@@ -136,7 +139,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField HTMLPanel browseStantardContainer;
 
 	@UiField Anchor addQuestionImg;
-	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText,noLabelText;
+	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText,noLabelText,pnlDepthOfKnowledges;
 
 	@UiField HTMLPanel addQuestImgContainer,panelContentRights,rightsContent,errorContainer;
 	@UiField BlueButtonUc addbutton;
@@ -144,8 +147,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer,centuryPanel,depthOfKnowledgeContainer,centuryContainer;
 
 	@UiField Button cancelButton,browseStandards,browseCentury;
-	@UiField
-	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
+	@UiField CheckBox rightsChkBox;
 
 	@UiField AddQuestionAnswerChoice alphaLetterA,alphaLetterB;
 	private CopyRightPolicyVc copyRightPolicy;
@@ -162,7 +164,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
-	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
+	ArrayList<Integer> depthOfKnowledgesList= new ArrayList<Integer>();
 	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
@@ -250,6 +252,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		setHeaderAndBodyText("MC");
+		CollectionCBundle.INSTANCE.css().ensureInjected();
 		isEditResource=false;
 		questionTypeHeader.getElement().setId("lblQuestionTypeHeader");
 		questionTypeText.getElement().setId("lblQuestionTypeText");
@@ -385,10 +388,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnowledgeHeader.getElement().setId("lblDepthOfKnowledgeHeader");
 		depthOfKnoweldgeToolTip.getElement().setId("imgDepthOfKnoweldgeToolTip");
 		depthOfKnowledgeTitle.getElement().setId("lblDepthOfKnowledgeTitle");
-		chkLevelRecall.getElement().setId("chkChkLevelRecall");
-		chkLevelSkillConcept.getElement().setId("chkChkLevelSkillConcept");
-		chkLevelStrategicThinking.getElement().setId("chkChkLevelStrategicThinking");
-		chkLevelExtendedThinking.getElement().setId("chkChkLevelExtendedThinking");
 		standardContainer.getElement().setId("fpnlStandardContainer");
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
@@ -515,6 +514,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
+		CollectionCBundle.INSTANCE.css().ensureInjected();
 		isEditResource=true;
 		questionTypeHeader.getElement().setId("lblQuestionTypeHeader");
 		questionTypeText.getElement().setId("lblQuestionTypeText");
@@ -622,10 +622,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnowledgeHeader.getElement().setId("lblDepthOfKnowledgeHeader");
 		depthOfKnoweldgeToolTip.getElement().setId("imgDepthOfKnoweldgeToolTip");
 		depthOfKnowledgeTitle.getElement().setId("lblDepthOfKnowledgeTitle");
-		chkLevelRecall.getElement().setId("chkChkLevelRecall");
-		chkLevelSkillConcept.getElement().setId("chkChkLevelSkillConcept");
-		chkLevelStrategicThinking.getElement().setId("chkChkLevelStrategicThinking");
-		chkLevelExtendedThinking.getElement().setId("chkChkLevelExtendedThinking");
 		standardContainer.getElement().setId("fpnlStandardContainer");
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
@@ -868,18 +864,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnowledgeHeader.setText(i18n.GL1693());
 		depthOfKnowledgeHeader.getElement().setAttribute("alt", i18n.GL1693());
 		depthOfKnowledgeHeader.getElement().setAttribute("title", i18n.GL1693());
-		chkLevelRecall.setText(i18n.GL1645());
-		chkLevelRecall.getElement().setAttribute("alt", i18n.GL1645());
-		chkLevelRecall.getElement().setAttribute("title", i18n.GL1645());
-		chkLevelSkillConcept.setText(i18n.GL1646());
-		chkLevelSkillConcept.getElement().setAttribute("alt", i18n.GL1646());
-		chkLevelSkillConcept.getElement().setAttribute("title", i18n.GL1646());
-		chkLevelStrategicThinking.setText(i18n.GL1647());
-		chkLevelStrategicThinking.getElement().setAttribute("alt", i18n.GL1647());
-		chkLevelStrategicThinking.getElement().setAttribute("title", i18n.GL1647());
-		chkLevelExtendedThinking.setText(i18n.GL1648());
-		chkLevelExtendedThinking.getElement().setAttribute("alt", i18n.GL1648());
-		chkLevelExtendedThinking.getElement().setAttribute("title", i18n.GL1648());
 		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
 		depthOfKnoweldgeToolTip.setTitle("Question Mark");
 		depthOfKnoweldgeToolTip.getElement().setAttribute("alt", "Question Mark");
@@ -891,35 +875,41 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 
 		addClickEventsForCheckBox();
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+		if(!AppClientFactory.getGooruUid().equalsIgnoreCase(ClientConstants.GOORU_ANONYMOUS)){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
-					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+				@Override
+				public void onSuccess(ProfileDo profileObj) {
+				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+							//standardContainer.setVisible(true);
+							isBrowseTooltip = true;
+							DisableStandars();
+						}else
+						{
+							//standardContainer.setVisible(true);
+							isBrowseTooltip = false;
+							enableStandards();
+							standardPreflist=new ArrayList<String>();
+							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+								standardPreflist.add(code);
+								standardPreflist.add(code.substring(0, 2));
+							 }
+
+						}
+					}else{
 						//standardContainer.setVisible(true);
 						isBrowseTooltip = true;
 						DisableStandars();
-					}else
-					{
-						//standardContainer.setVisible(true);
-						isBrowseTooltip = false;
-						enableStandards();
-						standardPreflist=new ArrayList<String>();
-						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
-							standardPreflist.add(code);
-							standardPreflist.add(code.substring(0, 2));
-						 }
-
 					}
-				}else{
-					//standardContainer.setVisible(true);
-					isBrowseTooltip = true;
-					DisableStandars();
 				}
-			}
 
-		});
+			});
+		}else{
+			//standardContainer.setVisible(true);
+			isBrowseTooltip = true;
+			DisableStandars();
+		}
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
@@ -2133,9 +2123,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
 			taxonomySet.put("taxonomyCode", standardsDo);
 			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
-			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
-			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
-			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+			collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledgesList);
 
 			if(getQuestionType().equalsIgnoreCase("HT_HL") || getQuestionType().equalsIgnoreCase("HT_RO") ){
 				collectionQuestionItemDo.setHlType(htType);
@@ -2960,22 +2948,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			setMultipleChoiceAnswerFields();
 		}
 		if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
-			int checkBoxCount=0;
-			for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {
-				AppClientFactory.printInfoLogger("Type 37");
-			   if(item.isSelected()){
-				   if(checkBoxCount==0)
-				   chkLevelRecall.setChecked(true);
-				   if(checkBoxCount==1)
-			       chkLevelSkillConcept.setChecked(true);
-				   if(checkBoxCount==2)
-			       chkLevelStrategicThinking.setChecked(true);
-				   if(checkBoxCount==3)
-			       chkLevelExtendedThinking.setChecked(true);
-			   }
-			   checkBoxCount++;
-			}
-			AppClientFactory.printInfoLogger("Type 38");
+			setCheckedData(collectionItemDo.getResource().getDepthOfKnowledges());
 		}
 
 		if(collectionItemDo.getStandards()!=null){
@@ -3248,10 +3221,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	 correctText.setStyleName(addWebResourceStyle.addResourceFormTitleChoiceAlign());
      }
      public void addClickEventsForCheckBox(){
-    	 chkLevelRecall.addClickHandler(new AddCheckBoxClickHandler());
-    	 chkLevelSkillConcept.addClickHandler(new AddCheckBoxClickHandler());
-    	 chkLevelStrategicThinking.addClickHandler(new AddCheckBoxClickHandler());
-    	 chkLevelExtendedThinking.addClickHandler(new AddCheckBoxClickHandler());
     	 depthOfKnoweldgeToolTip.addMouseOverHandler(new MouseOverHandler() {
 
  			@Override
@@ -3286,7 +3255,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			 CheckBox checkBox = (CheckBox) event.getSource();
 		     boolean checked = checkBox.getValue();
 
-		     depthOfKnowledges.clear();
+		     depthOfKnowledgesList.clear();
 
 		     setDOKCheckBoxes();
 		}
@@ -3294,15 +3263,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 
      public void setDOKCheckBoxes(){
-    	 if(chkLevelRecall.isChecked())
-	     {
+    	/* if(chkLevelRecall.isChecked()){
 	    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
 		     depthObj.setSelected(true);
 		     depthObj.setValue(chkLevelRecall.getText());
 		     depthOfKnowledges.add(depthObj);
-	     }
-	     else
-	     {
+	     }else{
 	      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
 		     depthObj.setSelected(false);
 		     depthObj.setValue(chkLevelRecall.getText());
@@ -3352,7 +3318,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		     depthObj.setSelected(false);
 		     depthObj.setValue(chkLevelExtendedThinking.getText());
 		     depthOfKnowledges.add(depthObj);
-	     }
+	     }*/
 
      }
 
@@ -3459,10 +3425,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void setDepthOfKnowledgeContainer(){
 
          boolean isSelected=false;
-		if(chkLevelRecall.isChecked() || chkLevelSkillConcept.isChecked() || chkLevelStrategicThinking.isChecked() || chkLevelExtendedThinking.isChecked()){
+	/*	if(chkLevelRecall.isChecked() || chkLevelSkillConcept.isChecked() || chkLevelStrategicThinking.isChecked() || chkLevelExtendedThinking.isChecked()){
 			isSelected=true;
 		 }
-
+*/
 		if(isSelected){
 			addDepthOfKnowledgeLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
 			addDepthOfKnowledgeLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
@@ -3556,7 +3522,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				depthOfKnowledgeContainer.setVisible(false);
 				addDepthOfKnowledgeLabel.setVisible(true);
 				addDepthOfKnowledgeLabel.setText(i18n.GL3209_1());
-				setDepthOfKnowledgeContainer();
+				//setDepthOfKnowledgeContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconStandards")){
 				standardContainer.setVisible(false);
 				addStandardsLabel.setVisible(true);
@@ -3584,11 +3550,69 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	centuryContainer.setVisible(!addCenturyLabel.isVisible());
 	}
 	public void resetDepthOfKnowledges(){
-		chkLevelRecall.setChecked(false);
-		chkLevelSkillConcept.setChecked(false);
-		chkLevelStrategicThinking.setChecked(false);
-		chkLevelExtendedThinking.setChecked(false);
+
 	}
-
-
+	/**
+	 * This inner class is used for generate check boxes
+	 */
+	class DepthOfKnowledgePanel extends Composite{
+		HTMLPanel panel;
+		CheckBox checkbox;
+		ListValuesDo listValuesDo;
+		DepthOfKnowledgePanel(final ListValuesDo listValuesDo){
+			this.listValuesDo=listValuesDo;
+			panel=new HTMLPanel("");
+			checkbox=new CheckBox();
+			checkbox.setText(listValuesDo.getName());
+			checkbox.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					if(depthOfKnowledgesList.contains(listValuesDo.getId())){
+						depthOfKnowledgesList.remove(listValuesDo.getId());
+					}else{
+						depthOfKnowledgesList.add(listValuesDo.getId());
+					}
+				}
+			});
+			panel.setStyleName(CollectionCBundle.INSTANCE.css().checkBoxinnerContinerForQuestion());
+			checkbox.setStyleName(CollectionCBundle.INSTANCE.css().checkBoxlevels());
+			panel.add(checkbox);
+			initWidget(panel);
+		}
+		public ListValuesDo getListValuesDo(){
+			return listValuesDo;
+		}
+	}
+	/*C
+	 * This method is used to render the depth of knowledges.
+	 * @param depthOfKnowledges
+	 */
+	public void setDepthOfKnowledes(List<ListValuesDo> depthOfKnowledges){
+		depthOfKnowledgesList.clear();
+		pnlDepthOfKnowledges.clear();
+		for (final ListValuesDo listValuesDo : depthOfKnowledges) {
+			pnlDepthOfKnowledges.add(new DepthOfKnowledgePanel(listValuesDo));
+		}
+	}
+	/**
+	 * This will set the depth of knowledges when editing question
+	 * @param depthOfKnowledges
+	 */
+	public void setCheckedData(List<checkboxSelectedDo> depthOfKnowledges){
+		Iterator<Widget> widgets=pnlDepthOfKnowledges.iterator();
+		while(widgets.hasNext()){
+			Widget widget=widgets.next();
+			 if(widget instanceof DepthOfKnowledgePanel){
+				 DepthOfKnowledgePanel pnlWidget=(DepthOfKnowledgePanel) widget;
+				 for (checkboxSelectedDo checkboxSelectedDo : depthOfKnowledges) {
+					 if(pnlWidget.getListValuesDo().getId()==checkboxSelectedDo.getId()){
+						 pnlWidget.checkbox.setValue(true);
+						 depthOfKnowledgesList.add(pnlWidget.getListValuesDo().getId());
+					 }else{
+						 pnlWidget.checkbox.setValue(false);
+					 }
+				 }
+			}
+		}
+	}
 }

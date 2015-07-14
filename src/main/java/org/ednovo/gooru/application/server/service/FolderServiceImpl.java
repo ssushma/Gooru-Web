@@ -24,12 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.server.service;
 
+import org.restlet.data.Form;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.application.client.service.FolderService;
 import org.ednovo.gooru.application.server.ArrayListSorter;
@@ -54,7 +56,6 @@ import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -650,7 +651,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	
 	@Override
 	public FolderDo createCourse(CreateDo createDo,boolean addToShelf, String courseId, String unitId, String lessonId) throws GwtException {
-		JsonRepresentation jsonRep = null;
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
 		String url = null;
 		FolderDo folderDo = new FolderDo();
 		if(courseId==null && unitId==null && lessonId==null){
@@ -673,9 +674,14 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			logger.info("dataPassing: "+dataPassing);
 			
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
-
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			folderDo = deserializeCreatedFolder(jsonRep);
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			logger.info("rest point: "+ getRestEndPoint());
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRepGet);
 			logger.info("folderDo obj : "+folderDo);
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
@@ -685,7 +691,28 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		return folderDo;
 	}
 	
-	
+
+	@Override
+	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		FolderDo folderDo = new FolderDo();
+		if(courseId!=null && unitId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA,courseId,unitId);
+		}else if(courseId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA,courseId);
+		}
+		try {
+			logger.info("getCourseDetails : "+url);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRep);
+			logger.info("folderDo obj : "+folderDo);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
 
 	@Override
 	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException {
@@ -762,5 +789,76 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			getLogger().error("Exception -- ",e);
 		}
 		return associatedClassesSize;
+	}
+
+	@Override
+	public Integer deleteCollectionAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String assessmentCollectionId)	throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_LESSON_COLLECTION, o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
+		getLogger().info("Lesson Collection delete:::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		Integer statusCode = jsonResponseRep.getStatusCode();
+		return statusCode;
+	}
+
+	@Override
+	public List<ListValuesDo> getAudienceList() throws GwtException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_AUDIENCELIST,getLoggedInSessionToken());
+		getLogger().info("-- get Audience -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+
+		return listValues;
+	}
+	
+	@Override
+	public void updateCollectionDetails(String collectionId,Map<Integer,String> audience,Map<Integer,String> dok,Map<Long,String> centurySkills,String languageObjective){
+		
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTION, collectionId);
+		JSONObject collectionObject=new JSONObject();
+		try {
+			
+			collectionObject.put("languageObjective", languageObjective);
+			
+			List<String> auKeys=new ArrayList<String>();
+			List<String> dokKeys=new ArrayList<String>();
+			List<String> centurySkillsKeys=new ArrayList<String>();
+		
+			Set<Integer> keys=audience.keySet();
+			
+			collectionObject.put("audienceIds", getKeys(audience.keySet()));
+			collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
+			collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
+			
+			System.out.println("Url"+url);
+			System.out.println("Form"+collectionObject.toString());
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),collectionObject.toString());
+		
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+	}
+	
+	
+	public List<String> getKeys(Set<Integer> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Integer key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
+	public List<String> getKeysLong(Set<Long> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Long key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
 	}
 }

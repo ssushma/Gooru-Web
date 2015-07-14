@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresent
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
-import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
@@ -99,6 +98,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		getClassDetails();
 	}
 	
 	@Override
@@ -129,19 +129,14 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	@Override
 	protected void onReset() {
        super.onReset();
-       getClassDetails();
        loadNavigationPage();
+       getView().setNavaigationTab();
 	}
 	
 	public void getClassDetails(){
 		
-		classpageId = getPlaceManager().getRequestParameter("classpageid");
-		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
-		String subloadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
-		String pageSize = getPlaceManager().getRequestParameter("pageSize");
-		String pageNum = getPlaceManager().getRequestParameter("pageNum");
-		String pos = getPlaceManager().getRequestParameter("pos");
-		if(loadPage.isEmpty() || subloadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER) && classpageId != null){
+		classpageId = getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		if(classpageId != null){
 			AppClientFactory.getInjector().getClasspageService().v3GetClassById(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 
 				@Override
@@ -149,6 +144,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 					classpageDo=result;
 					getView().setClassHeaderView(classpageDo);
 					editClassStudentPresenter.setClassDetails(classpageDo);
+					editClassSettingsNavigationPresenter.setClassDetails(classpageDo);
 				}
 				
 			});

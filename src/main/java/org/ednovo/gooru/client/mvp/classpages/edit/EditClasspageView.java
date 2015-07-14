@@ -21,6 +21,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
@@ -394,11 +395,11 @@ public class EditClasspageView extends
 
 				Map<String,String> params = new HashMap<String,String>();
 				String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 				params.put("pageSize", pageSize);
-				params.put("classpageid", classpageid);
+				params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 				params.put("pageNum", pageNum);
 				params.put("pos", pos);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
@@ -585,7 +586,7 @@ public class EditClasspageView extends
 
 				offsetProgress = offsetProgress +limitProgress;
 
-				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID), offsetProgress.toString(), limitProgress.toString());
 			}
 		});
 
@@ -597,7 +598,7 @@ public class EditClasspageView extends
 				}else{
 					offsetProgress = offsetProgress - limitProgress;
 				}
-				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID), offsetProgress.toString(), limitProgress.toString());
 			}
 		});
 
@@ -605,7 +606,7 @@ public class EditClasspageView extends
 
 			@Override
 			public void callProgressAPI() {
-				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID), offsetProgress.toString(), limitProgress.toString());
 			}
 		};
 		AppClientFactory.getEventBus().addHandler(ResetProgressEvent.TYPE,reset);
@@ -759,9 +760,9 @@ public class EditClasspageView extends
 				offsetProgress = 0;
 				limitProgress = 20;
 				Map<String,String> params = new HashMap<String,String>();
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				params.put("classpageid", classpageid);
+				params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 				params.put("pageNum", "1");
 				params.put("order", sortingStringValue);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
@@ -1009,8 +1010,8 @@ public class EditClasspageView extends
 		params.put("source", "E");
 		Cookies.setCookie("pageSize", AppClientFactory.getPlaceManager()
 				.getRequestParameter("pageSize"));
-		Cookies.setCookie("classpageid", AppClientFactory.getPlaceManager()
-				.getRequestParameter("classpageid"));
+		Cookies.setCookie(UrlNavigationTokens.CLASSPAGEID, AppClientFactory.getPlaceManager()
+				.getRequestParameter(UrlNavigationTokens.CLASSPAGEID));
 		Cookies.setCookie("pageNum", AppClientFactory.getPlaceManager()
 				.getRequestParameter("pageNum"));
 		Cookies.setCookie("pos", AppClientFactory.getPlaceManager()
@@ -1331,10 +1332,10 @@ public class EditClasspageView extends
 	 */
 	public void showCollectionsAfterDeletingCollection(int pageNumber){
 		Map<String,String> params = new HashMap<String,String>();
-		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
 		params.put("order", order);
-		params.put("classpageid", classpageid);
+		params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 		params.put("pageNum", pageNumber+"");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -1737,11 +1738,11 @@ public class EditClasspageView extends
 			offsetProgress = 0;
 			limitProgress = 20;
 			Map<String,String> params = new HashMap<String,String>();
-			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
 			params.put("order", order);
-			params.put("classpageid", classpageid);
+			params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 			params.put("pageNum", pagenumber+"");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -1757,7 +1758,7 @@ public class EditClasspageView extends
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		restingPagination();
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid",classpageDo.getClasspageId());
+		params.put(UrlNavigationTokens.CLASSPAGEID,classpageDo.getClasspageId());
 		params.put("pageSize", pageSize + "");
 		if(AppClientFactory.getPlaceManager().getRequestParameter("pageNum")!=null)
 		{
@@ -1891,7 +1892,7 @@ public class EditClasspageView extends
 	 *
 	 */
 	private static String frameAnalyticsUrl() {
-		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		String analyticsId = AppClientFactory.getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId = AppClientFactory.getPlaceManager().getRequestParameter("monitorid");
 		if(analyticsId == null)
@@ -1930,7 +1931,7 @@ public class EditClasspageView extends
 	 *
 	 */
 	private static String frameReportsUrl() {
-		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 
 			String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_REPORTS,classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),AppClientFactory.getLoginSessionToken());
 
@@ -1959,7 +1960,7 @@ public class EditClasspageView extends
 	 */
 	private static String frameAnalyticsUrlForMonitor() {
 
-		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		String analyticsId = AppClientFactory.getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId = AppClientFactory.getPlaceManager().getRequestParameter("monitorid");
 		if(analyticsId == null)
@@ -2099,11 +2100,11 @@ public class EditClasspageView extends
 			if(tab!=null){
 				Map<String,String> params = new HashMap<String,String>();
 				String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 				params.put("pageSize", pageSize);
-				params.put("classpageid", classpageid);
+				params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 				params.put("pageNum", pageNum);
 				params.put("pos", pos);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
@@ -2157,11 +2158,11 @@ public class EditClasspageView extends
 			getClassListContainer().setVisible(true);
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 			params.put("pageSize", pageSize);
-			params.put("classpageid", classpageid);
+			params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
 			params.put("tab", "classList");
@@ -2217,11 +2218,11 @@ public class EditClasspageView extends
 
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 			params.put("pageSize", pageSize);
-			params.put("classpageid", classpageid);
+			params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
 			params.put("tab", "reports");

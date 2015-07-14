@@ -277,6 +277,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("get coll res url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
@@ -324,6 +325,19 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setTitle(jsonRep.getJsonObject().isNull("title")?"":jsonRep.getJsonObject().getString("title"));
 				obj.setSharing(jsonRep.getJsonObject().isNull("sharing")?"":jsonRep.getJsonObject().getString("sharing"));
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
+				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
+				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>();
+
+				if(jsonRep.getJsonObject().has("depthOfKnowledge")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("depthOfKnowledge");
+					for(int i=0;i<array.length();i++){
+						checkboxSelectedDo item=new checkboxSelectedDo();
+						item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), checkboxSelectedDo.class);
+						checkboxSelectedDos.add(item);
+					}
+				}
+				obj.setDepthOfKnowledges(checkboxSelectedDos);
+				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
 				obj.setUser(user);
@@ -2312,4 +2326,29 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return collectionDoObj;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ResourceService#getCourseDataById(java.lang.String)
+	 */
+	@Override
+	public FolderDo getCourseDataById(String courseId) throws GwtException,ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String partialUrlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSE,courseId);
+		getLogger().info("GET_COURSE_INFO get API call::::::"+partialUrlStr);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrlStr);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCourseInfo(jsonRep);
+	}
+	
+	public FolderDo deserializeCourseInfo(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), FolderDo.class);
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
+		}
+		return new FolderDo();
+	}
+	
 }

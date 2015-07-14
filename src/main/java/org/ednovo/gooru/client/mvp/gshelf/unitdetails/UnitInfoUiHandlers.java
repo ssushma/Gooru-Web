@@ -26,32 +26,31 @@ package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
  *
  */
 public interface UnitInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
 	
-	public void callCourseBasedOnSubject(int subjectId,final String selectedText);
+	public void callCourseBasedOnSubject(int subjectId,final int selectedId);
     
 	/**
 	 * To Create and Save the details of Course
 	 * @param createDo {@link String} 
 	 * @param isCreateLesson {@link boolean} 
 	 */
-	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson);
+	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson,FolderDo courseObj);
 	/**
 	 * This method is used to update the unit info details
 	 * @param createDo
 	 * @param id
 	 * @param isCreateUnit
 	 */
-	void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit);
+	void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,FolderDo courseObj);
 	/**
 	 * This method is used to check profanity checker
 	 * @param textValue
@@ -62,4 +61,12 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	void showUnitInfo();
 
 	void showUnitTemplate();
+
+	public void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems); 
+	
+	MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
+	
+	public void getDomainsBasedOnCourseId(int courseId,int selectedId);
+	
+	public void callCourseInfoTaxonomy();
 }

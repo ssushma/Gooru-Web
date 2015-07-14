@@ -42,8 +42,10 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -166,6 +168,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(folderObj!=null){
 			this.folderObj=folderObj;
 		}
+		
 		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
@@ -218,7 +221,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			if(pnlBreadCrumbMain.getWidgetCount()<4){
 				pnlBreadCrumbMain.add(new BreadcrumbItem((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
 					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
-					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type,ASSESSMENT.equalsIgnoreCase(type)?"assessment":"collection"));
+					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type,ASSESSMENT.equalsIgnoreCase(type)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon"));
 			}else{
 				getBreadCrumbs(title,type,4); 
 			}
@@ -282,7 +285,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			 InlineLabel spnIcon=new InlineLabel();
 			 spnIcon.setStyleName(imageStyle);
 			 lblTitle=new Label(title);
-			 lblTitle.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			 lblTitle.setStyleName("breadCrumbTitle"); 
 			 panel.add(spnIcon);
 			 panel.add(lblTitle);
 			 initWidget(panel);
@@ -313,12 +316,26 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setCurrentTypeView(String currentTypeView) {
 		this.currentTypeView =currentTypeView;
-		showPreviewBtn();
+		enableAndHideTabs(true);
+		enableOrHidePreviewBtn();
+		enableOrHideShareTab();
+	}
+	/**
+	 * To enable and disable the share tab based on type.
+	 */
+	private void enableOrHideShareTab() {
+		if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView) || ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
+			lnkshare.setVisible(false);
+		}else{
+			lnkshare.setVisible(true);
+		}
 	}
 	/**
 	 * Hiding preview button when type is course/unit/lesson/folder
 	 */
-	private void showPreviewBtn() {
+	private void enableOrHidePreviewBtn() {
+		if(currentTypeView!=null)
+		{
 		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(true);
 			toggleButton.setVisible(true);
@@ -327,6 +344,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			lnkPreview.setVisible(false);
 			toggleButton.setVisible(false);
 			deletePnl.setVisible(true);
+		}
+		}
+		else
+		{
+			lnkPreview.setVisible(false);
 		}
 	}
 	@Override
@@ -347,7 +369,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
+			String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+			if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+				invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+			}else{
+				getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
+			}
 		}
 	}
 	
@@ -413,19 +440,21 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param o1CourseId {@link String}
 	 * @param o2UnitId {@link String}
 	 * @param o3LessonId {@link String}
+	 * @param assessmentCollectionId 
 	 * @param deletePopup {@link DeletePopupViewVc}
 	 */
-	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId,final String o2UnitId,final String o3LessonId) {
+	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId,final String o2UnitId,final String o3LessonId, final String assessmentCollectionId) {
 		deletePopup = new DeletePopupViewVc() {
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 				if(!StringUtil.isEmpty(o2UnitId) && UNIT.equalsIgnoreCase(currentTypeView)){
 					getUiHandlers().deleteUnitContent(o1CourseId,o2UnitId);
 				}else if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
-					
 					getUiHandlers().deleteCourseContent(o1CourseId);
-				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){
+				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){ 
 					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);
+				}else{
+					getUiHandlers().deleteCollectionContent(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
 				}
 			}
 			
@@ -443,6 +472,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
 		}else if(LESSON.equalsIgnoreCase(currentTypeView)){
 			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), LESSON));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
+		}else if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COLLECTION.equalsIgnoreCase(currentTypeView)?COLLECTION:ASSESSMENT));
 			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
 		}
 		deletePopup.setDeleteValidate("delete");
@@ -553,6 +585,22 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 	}
 	
+
+	/**
+	 * On deleting the collection/assessment, reveals the my content and loads the respective right cluster.
+	 */
+	@Override
+	public void onDeleteCollectionAssessmentSuccess(String o1CourseId,String o2UnitId, String o3LessonId, String deletedAssessmentCollectionId) {
+		hideDeletePopup();
+		Map<String, String> params= new HashMap<String, String>();
+		params.put("view", COURSE);
+		params.put(O1_LEVEL, o1CourseId);
+		params.put(O2_LEVEL, o2UnitId);
+		params.put(O3_LEVEL, o3LessonId);
+		getUiHandlers().setCollectionsListOnRightCluster(o1CourseId,o2UnitId,o3LessonId,deletedAssessmentCollectionId,currentTypeView);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+	}
+	
 	/**
 	 * Invokes the delete functionality if the course is not associated with class.
 	 */
@@ -561,7 +609,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(classpageList>0){
 			new AlertContentUc("Oops", "This course is associated with the class.");
 		}else{
-			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId);
+			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,"");
 		}
 	}
 	/**
@@ -571,4 +619,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void disableAndEnableBreadCums(boolean isVisible){
 		pnlBreadCrumbMain.setVisible(isVisible);
 	}
+	@Override
+	public void setFolderInfoWidget() {
+		FolderInfoWidget folderInfoWidget = new FolderInfoWidget();
+		pnlSlotInnerContent.add(folderInfoWidget);
+	}
+	
+	
 }

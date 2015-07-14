@@ -26,18 +26,17 @@ package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
  *
  */
 public interface LessonInfoUiHandlers extends BaseUiHandlers {
-	/**
-	 * This method will call the taxonomy service method
-	 */
-	public void callTaxonomyService();
 
-	void showStandardsPopup(String standardVal);
+	void showStandardsPopup(String standardVal, String titleVal);
 	/**
 	 * This method is used to create lesson
 	 * @param createObj
@@ -59,5 +58,15 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	 * @param isCreateUnit
 	 * @param type
 	 */
-	public void updateLessonDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type);
+	public void updateLessonDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type,FolderDo folderObj);
+	
+	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
+
+
+	void callTaxonomyService(int subdomainId);
+	
+	void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems);
+	
+	public void callCourseInfoTaxonomy();
+
 }

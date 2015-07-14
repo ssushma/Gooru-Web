@@ -24,6 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports;
 
+import java.util.ArrayList;
+
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -40,6 +48,8 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 	 * @param eventBus {@link EventBus}
 	 * @param view {@link View}
 	 */
+	
+	private ClasspageDo classpageDo = null;
 	
 	@Inject
 	public StudentClassReportPresenter(EventBus eventBus, IsStudentClassReportView view) {
@@ -60,13 +70,67 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 
 	@Override
 	public void onReset() {
-		super.onReset();
-		getView().setReportData();
+		setData();
 	}
-
+	
+	public void setData() {
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
+		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			if(classGooruOid!=null) {
+				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, null, null, "progress", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+					@Override
+					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
+						getView().setMetadataContent(dataList);
+						getView().setReportData(dataList);
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
+			}
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			if(classGooruOid!=null) {
+				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, null, null, "progress", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+					@Override
+					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
+						getView().setMetadataContent(dataList);
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
+			}
+			if(classGooruOid!=null&&unitId!=null) {
+				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, unitId, null, "progress", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+					@Override
+					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
+						getView().setReportData(dataList);
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
+			}
+		}
+	}
+	
 	@Override
 	protected void onHide() {
-		super.onHide();
 		getView().onUnload();
 	}
+	
+	public ClasspageDo getClasspageDO() {
+		return classpageDo;
+	}
+
+	public void setClasspageDo(ClasspageDo classpageDo) {
+		this.classpageDo = classpageDo;
+	}
+
 }

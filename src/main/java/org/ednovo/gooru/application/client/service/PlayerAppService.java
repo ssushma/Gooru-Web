@@ -26,6 +26,7 @@ package org.ednovo.gooru.application.client.service;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.shared.exception.GwtException;
@@ -38,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.ReactionDo;
 import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
@@ -191,4 +193,10 @@ public interface PlayerAppService extends BaseService {
 	public void updateSessionActivityItem(String gooruOid, String status,String updateSessionId) throws GwtException, ServerDownException;
 
 	public void getUpdateSessionActivityItemForRatReac(int emoticRatingNumber,String gooruOid, String isRatingsReactions,String sessionId) throws GwtException, ServerDownException;
+
+	public List<UserPlayedSessionDo> getPreviousSessionDataForUser(String gooruUid,
+			String classGooruId, String lessonGooruId, String unitGooruId,
+			String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
+
+
 }

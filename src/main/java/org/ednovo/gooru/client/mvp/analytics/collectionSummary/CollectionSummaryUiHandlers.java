@@ -43,7 +43,7 @@ void setCollectionSummaryData(String collectionId,String pathwayId);
  * @param pathwayId
  * @param printUserDataDO
  */
-void loadUserSessions(String collectionId,String classId,String userId,String pathwayId,PrintUserDataDO printUserDataDO);
+void loadUserSessions(String sessionId,String collectionId,String classId,String userId,String pathwayId,PrintUserDataDO printUserDataDO);
   /**
    * This method is used to set teacher data.
  * @param collectionId

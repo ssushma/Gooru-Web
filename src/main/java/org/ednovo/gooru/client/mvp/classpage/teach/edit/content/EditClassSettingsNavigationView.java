@@ -24,13 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,6 +42,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -121,10 +126,16 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		String subPageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO)){
 			classInfo.setStyleName(CssTokens.ACTIVE);
+			minLiPnl.removeStyleName(CssTokens.ACTIVE);
+			settLiPanel.removeStyleName(CssTokens.ACTIVE);
 		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE)){
 			minLiPnl.setStyleName(CssTokens.ACTIVE);
+			classInfo.removeStyleName(CssTokens.ACTIVE);
+			settLiPanel.removeStyleName(CssTokens.ACTIVE);
 		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
 			settLiPanel.setStyleName(CssTokens.ACTIVE);
+			classInfo.removeStyleName(CssTokens.ACTIVE);
+			minLiPnl.removeStyleName(CssTokens.ACTIVE);
 		}
 
 	}
@@ -147,8 +158,10 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 			classInfo.removeStyleName(CssTokens.ACTIVE);
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
-			AppClientFactory.getPlaceManager().revealPlace(request);
+			Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+			params.remove(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE);
+			params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
+			AppClientFactory.getPlaceManager().revealPlace(request,params);
 		}
 
 	}
@@ -165,12 +178,25 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	@UiHandler("studentPreviewbtn")
 	public void navigateStudentPreview(ClickEvent event) {
 		PlaceRequest request = new PlaceRequest(PlaceTokens.STUDENT_VIEW);
-		String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_PAGE_ID,"");
+		String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
 		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,"");
 		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
 		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, cId);
 		request = request.with(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.TRUE);
 		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		AppClientFactory.getPlaceManager().revealPlace(request);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassSettingsNavigationView#setCourseData(org.ednovo.gooru.application.shared.model.folder.FolderDo)
+	 */
+	@Override
+	public void setCourseData(FolderDo result) {
+		if (result != null) {
+			titleLbl.setText(result.getTitle());
+			titleLbl.getElement().setId(result.getGooruOid());
+			titleLbl.getElement().setAttribute("alt",result.getTitle());
+			titleLbl.getElement().setAttribute("title",result.getTitle());
+		}
 	}
 }

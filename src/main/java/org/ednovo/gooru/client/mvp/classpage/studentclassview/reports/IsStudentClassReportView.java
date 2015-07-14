@@ -24,12 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 
 /**
  * @author Search Team
  *
  */
 public interface IsStudentClassReportView extends IsViewWithHandlers<StudentClassReportUiHandlers> {
-	public void setReportData();
+	public void setReportData(ArrayList<PlanProgressDo> dataList);
+	public void setMetadataContent(ArrayList<PlanProgressDo> dataList);
 }

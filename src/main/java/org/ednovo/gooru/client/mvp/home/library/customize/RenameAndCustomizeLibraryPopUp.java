@@ -10,7 +10,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.assign.AssignPopUpCBundle;
+import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;

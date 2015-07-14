@@ -704,6 +704,7 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 
 				@Override
 				public void onClickSubmit(ClickEvent event) {
+					super.hide();
 					if(!getUiHandlers().isOeAnswerSubmited()){
 						NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
 							@Override

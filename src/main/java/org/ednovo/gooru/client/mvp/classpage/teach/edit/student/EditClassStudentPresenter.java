@@ -52,6 +52,10 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	
 	ClasspageDo classpageDo;
 	
+	StudentsAssociatedListDo studentsAssociatedListDo;
+	
+	List<String> emailId;
+	
 	@Inject
 	public EditClassStudentPresenter(EventBus eventBus,IsEditClassStudentView view){
 		super(eventBus, view);
@@ -73,12 +77,19 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			public void onSuccess(ArrayList<CollaboratorsDo> result) {
 				getView().displayInvitationSuccessPopUp(result.size());
 				//If the same user email id is invited the result size will be "0" at that time we are enabling the invite button.
+				
+				CollaboratorsDo collaboratorsDo =new CollaboratorsDo();
+				for(int i=0;i<emailId.size();i++){
+					collaboratorsDo.setEmailId(emailId.get(i).toString().replaceAll("\"",""));
+					result.add(collaboratorsDo);
+				}
 				if(result.size()==0){
 					getView().createAutoSuggestBox();
 					getView().getLblPleaseWait().setVisible(false);
 					getView().getInviteButton().setEnabled(true);
 					getView().getInviteButton().getElement().removeClassName("disabled");
 					getView().getInviteButton().setVisible(true);
+					//getView().getPendingMembersList();
 				}else{
 					//Display pending members list.
 					getView().displayPendingMembersList(result, true, result.size(),false,false);
@@ -98,6 +109,11 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 		super.onReset();
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
+			/*if(classpageDo.getCourseGooruOid() != null){
+				getView().setReportDataView();
+			}else{
+				
+			}*/
 			getView().setReportView();
 		} else {
 			getView().setRoasterView();
@@ -145,6 +161,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	 */
 	@Override
 	public void addStudents(String classpageId, List<String> emailIds) {
+		this.emailId=emailIds;
 		getClasspageServiceAsync().inviteStudentToClass(classpageId, emailIds, getAddMembersAsyncCallback());
 	}
 
@@ -214,6 +231,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			@Override
 			public void onSuccess(StudentsAssociatedListDo result) {
 				//Display all members in active list.
+				studentsAssociatedListDo=result;
 				getView().displayActiveMembersList(result.getSearchResult(), false, result.getTotalHitCount(),increasePageNum);
 				if(getPendingMembers){
 					getView().getPendingMembersList();
