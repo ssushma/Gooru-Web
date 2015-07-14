@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -195,13 +196,10 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 
 	public SimpleAsyncCallback<Void> getRemoveImageAsyncCallback() {
-
 		if (removeImageAsyncCallback == null) {
 			removeImageAsyncCallback = new SimpleAsyncCallback<Void>() {
-
 				@Override
 				public void onSuccess(Void result) {
-
 //					getView().removeUpdateQuestionView();
 				}
 			};
@@ -220,7 +218,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	public SimpleAsyncCallback<CollectionItemDo> getUpdateResourceItemAsyncCallback() {
 		if (updateResourceItemAsyncCallback == null) {
 			updateResourceItemAsyncCallback = new SimpleAsyncCallback<CollectionItemDo>() {
-
 				@Override
 				public void onSuccess(CollectionItemDo result) {
 					getView().hideUpdateResourcePopup();
@@ -242,7 +239,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
 	public void getBrowseStandardsInfo(final boolean val,final boolean userResource) {
-
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
 				new SimpleAsyncCallback<ProfileDo>() {
