@@ -80,7 +80,6 @@ public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionSha
 	public void setData(final FolderDo folderDo) { 
 		this.folderDo=folderDo;
 		getShortenShareUrl();
-		System.out.println("CollectionCollaboratorsTabPresenter::"+collaboratorsTabPresenter);
 		//getView().setData(collectionDo);
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		if(collectionId!=null){

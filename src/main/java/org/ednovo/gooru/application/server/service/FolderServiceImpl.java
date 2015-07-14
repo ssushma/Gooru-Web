@@ -847,9 +847,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			collectionObject.put("audienceIds", getKeys(audience.keySet()));
 			collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
 			collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
-			
-			System.out.println("Url"+url);
-			System.out.println("Form"+collectionObject.toString());
+			getLogger().info("Url update coll details -- "+url);
+			getLogger().info("form data -- "+collectionObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),collectionObject.toString());
 		
 		} catch (Exception e) {
