@@ -2200,7 +2200,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		try{
 			getLogger().info("--- moveCollectionToMyCOllections collection URl -- "+url);
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), "");
+			JSONObject copyCollectionJsonObject=new JSONObject();
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			try{
 				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
