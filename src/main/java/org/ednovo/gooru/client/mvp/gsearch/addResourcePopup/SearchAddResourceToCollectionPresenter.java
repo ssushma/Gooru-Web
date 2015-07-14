@@ -115,7 +115,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType,CollectionResourceWidget collectionResourceWidget) {
 		this.searchResultDo =searchResultDo;
 		this.collectionResourceWidget=collectionResourceWidget;
-		Window.alert("hi--"+searchResultDo.getQuestionType());
 		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}

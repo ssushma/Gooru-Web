@@ -327,16 +327,26 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>();
-
-				if(jsonRep.getJsonObject().has("depthOfKnowledge")){
-					JSONArray array=jsonRep.getJsonObject().getJSONArray("depthOfKnowledge");
+				if(jsonRep.getJsonObject().has("audience")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("audience");
 					for(int i=0;i<array.length();i++){
 						checkboxSelectedDo item=new checkboxSelectedDo();
 						item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), checkboxSelectedDo.class);
 						checkboxSelectedDos.add(item);
 					}
 				}
-				obj.setDepthOfKnowledges(checkboxSelectedDos);
+				obj.setAudience(checkboxSelectedDos);
+				List<checkboxSelectedDo> checkboxSelectedDos1=new ArrayList<checkboxSelectedDo>();
+
+				if(jsonRep.getJsonObject().has("depthOfKnowledge")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("depthOfKnowledge");
+					for(int i=0;i<array.length();i++){
+						checkboxSelectedDo item=new checkboxSelectedDo();
+						item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), checkboxSelectedDo.class);
+						checkboxSelectedDos1.add(item);
+					}
+				}
+				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
@@ -1522,6 +1532,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 
 		getLogger().info("---- getFolderWorkspace ---  "+url);
+		getLogger().info("---- collectionType ---  "+collectionType);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeWorkspaceFolderList(jsonRep,collectionType);

@@ -66,6 +66,6 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	
 	public void callCourseInfoTaxonomy();
 
-	void updateCollectionDetails();
+	void updateCollectionDetails(String text);
 
 }

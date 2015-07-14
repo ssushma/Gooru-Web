@@ -267,6 +267,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				@Override
 				public void onSuccess(FolderListDo result) {
 					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+					AppClientFactory.printInfoLogger("clrPanel::"+clrPanel);
 					if(o1==null){
 						if(clrPanel){
 							setRightListData(result.getSearchResult(),null);
@@ -341,6 +342,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo){
 		clearSlot(RIGHT_SLOT);
+		AppClientFactory.printInfoLogger("setRightListData");
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 		if(view==null){
