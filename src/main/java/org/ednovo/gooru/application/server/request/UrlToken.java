@@ -616,8 +616,11 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
 	
-    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?");
-
+    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?"),
+	
+	COPY_V3_COLLECTION("/v3/sourceCollection/{0}?"),
+	
+	MOVE_V1_COLLECTION("/v1/targetCourse/{0}/targetUnit/{1}/targetLesson/{2}/sourceCollection/{3}?");
 
 	private String url;
 

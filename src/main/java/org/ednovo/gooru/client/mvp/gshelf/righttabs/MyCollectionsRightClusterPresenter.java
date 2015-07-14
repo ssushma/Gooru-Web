@@ -81,6 +81,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
 	private static final String FOLDER = "Folder";
+	private boolean isCopySelected= false;
+	private boolean isMoveSelected= false;
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -262,11 +264,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void getUserShelfData(String collectionId,String valuetype) {
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, valuetype);
-		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
-		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
-		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
-		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, valuetype,"");
+		showAppPopup();
 	}
 
 	/**
@@ -333,6 +332,34 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			} 
 		});
 	}
-	
-	
+	@Override
+	public boolean checkCopyOrMoveStatus(boolean copySelected,
+			boolean moveSelected) {
+		// TODO Auto-generated method stub
+		this.isCopySelected=copySelected;
+		this.isMoveSelected= moveSelected;
+		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected);
+		return false;
+	}
+	@Override
+	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
+		// TODO Auto-generated method stub
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		showAppPopup();
+	}
+	@Override
+	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle) {
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(true);
+		showAppPopup();
+	}
+	public void showAppPopup(){
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+	}
 }

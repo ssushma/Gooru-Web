@@ -55,4 +55,10 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void isAssignedToClassPage(String o1CourseId, String o2UnitId, String o3LessonId);  
 	
+	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected);
+
+	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle);
+	
+	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle);
+	
 }

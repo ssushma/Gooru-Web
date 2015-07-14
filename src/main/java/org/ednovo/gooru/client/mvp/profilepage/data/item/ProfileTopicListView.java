@@ -1542,6 +1542,7 @@ public class ProfileTopicListView extends Composite{
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
 		final String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		final String collectionTitle=collectionTitleLbl.getText();
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
 			
@@ -1556,7 +1557,7 @@ public class ProfileTopicListView extends Composite{
 					@Override
 					public	void onLoginSuccess(){
 						Window.enableScrolling(false);
-						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();
@@ -1566,7 +1567,7 @@ public class ProfileTopicListView extends Composite{
 				loginPopupUc.show();
 				loginPopupUc.setGlassEnabled(true);
 			}else{
-				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;
 				remixPresenterWidget.getView().getAppPopUp().center();
@@ -1600,12 +1601,12 @@ public class ProfileTopicListView extends Composite{
 		String colleId = AppClientFactory.getPlaceManager().getRequestParameter("collectionId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("collectionId") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
-
+		String collectionTitle=getProfileLibraryDo().getTitle();
 		if(customize!=null && customize.equals("yes")){
 			if(colleId.equals(collectionId) && isVisible ){
 				isVisible=false;
 				Window.scrollTo(0, 0);
-				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;
 				remixPresenterWidget.getView().getAppPopUp().center();

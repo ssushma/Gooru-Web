@@ -15,6 +15,7 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -58,7 +59,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage,lblError,mycollectionsLbl,mycontentLbl;
+	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage,lblError;
+	@UiField public Label mycollectionsLbl,mycontentLbl;
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
@@ -72,12 +74,19 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private static final String ASSESSMENT = "assessment";
 	String currentsearchType = "collection";
 	
+	boolean isFromMyCourse= false;
+
+	private boolean isCopySelected= false;
+	private boolean isMoveSelected= false;
+	
 	HashMap<String,String> urlparams ;
 	private static final String O1_LEVEL = "o1";
-	private static final String O2_LEVEL = "o2";
-	private static final String O3_LEVEL = "o3";
+	private static String O2_LEVEL = "o2";
+	private static String O3_LEVEL = "o3";
+	private static String ID="id";
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
+	private static final String FOLDER = "folder";
 	private String courseId=null;
 	private String unitId=null;
 	private String lessonId=null;
@@ -115,6 +124,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		remixPopupTabPnl.getElement().setId("gShelfMainContainer");
 		mycollectionsLbl.setText("My Collections");
 		mycontentLbl.setText("My Courses");
+		/*mycollectionsLbl.addStyleName("selected");
+		mycontentLbl.removeStyleName("selected");*/
 		urlparams= new HashMap<String, String>();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
@@ -130,8 +141,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			public void onClick(ClickEvent event) {
 				mycollectionsLbl.addStyleName("selected");
 				mycontentLbl.removeStyleName("selected");
-				myCollDefault.setVisible(true);
+				myCollDefault.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTreePanel.clear();
+				isFromMyCourse=false;
 				getUiHandlers().getWorkspaceData(0, 20, true, "collection");
 			}
 		});
@@ -140,8 +152,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			public void onClick(ClickEvent event) {
 				mycontentLbl.addStyleName("selected");
 				mycollectionsLbl.removeStyleName("selected");
-				myCollDefault.setVisible(false);
+				myCollDefault.getElement().getStyle().setDisplay(Display.NONE);
 				folderTreePanel.clear();
+				isFromMyCourse=true;
 				getUiHandlers().getWorkspaceData(0, 20, true, "coursebuilder");
 			}
 		});
@@ -179,6 +192,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					if(currentFolderSelectedTreeItem.getFolerLevel()==2) {
 						urlparams.put(O1_LEVEL, urlparams.get(O1_LEVEL));
 						urlparams.put(O2_LEVEL, folderTreeItemWidget.getGooruOid());
+						if(O3_LEVEL!=null){
+							urlparams.remove(O3_LEVEL);
+						}
 					}
 					if(currentFolderSelectedTreeItem.getFolerLevel()==3) {
 						urlparams.put(O1_LEVEL, urlparams.get(O1_LEVEL));
@@ -201,17 +217,17 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						parent.setSelected(false); 
 						item.setState(!item.getState(), false);
 					}else if(folderWidget instanceof CollectionTreeItem){
-			    	removePreviousSelectedItem();
-			    	highlightStyles();
-			    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
-			    	previousSelectedItem = cureentcollectionTreeItem;																			
-			    	cureentcollectionTreeItem.addStyleName("selected");
-			    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
-			    	
-			    	String style = cureentcollectionTreeItem.getStyleName();
-					if(style != null && !style.contains("parent") && !style.contains("child") && !style.contains("innerchild")){
-						urlparams.clear();
-					}
+				    	removePreviousSelectedItem();
+				    	highlightStyles();
+				    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
+				    	previousSelectedItem = cureentcollectionTreeItem;																			
+				    	cureentcollectionTreeItem.addStyleName("selected");
+				    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
+				    	
+				    	String style = cureentcollectionTreeItem.getStyleName();
+						if(style != null && !style.contains("parent") && !style.contains("child") && !style.contains("innerchild")){
+							urlparams.clear();
+						}
 			    }
 			  }
 		});
@@ -290,7 +306,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			 }
 		}
 		currentsearchType=searchType;
-		totalHitCount = folderListDo.getCount();
+		/*totalHitCount = folderListDo.getCount();*/
 		btnAddExisting.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);
 		lblEmptyErrorMessage.setVisible(false);
@@ -401,22 +417,26 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					folderContainer.addStyleName("folderLevel");
 					folderContainer.addStyleName("course");
 					folderContainer.getElement().getStyle().setBackgroundColor("white");
+					isFromMyCourse=true;
 				}else if(floderDo.getType().equalsIgnoreCase(UNIT)) {
 					folderContainer.removeStyleName("foldermenuLevel");
 					floderTreeContainer.getElement().setId("gShelfMainContainer");
 					folderContainer.addStyleName("folderLevel");
 					folderContainer.addStyleName("unit");
 					folderContainer.getElement().getStyle().setBackgroundColor("white");
+					isFromMyCourse=true;
 				}else if(floderDo.getType().equalsIgnoreCase(LESSON)) {
 					folderContainer.removeStyleName("foldermenuLevel");
 					floderTreeContainer.getElement().setId("gShelfMainContainer");
 					folderContainer.addStyleName("folderLevel");
 					folderContainer.addStyleName("lesson");
 					folderContainer.getElement().getStyle().setBackgroundColor("white");
+					isFromMyCourse=true;
 				}else if(!floderDo.getType().equals(FOLDER)) {
 					folderContainer.addStyleName(COLLECTION);
 					folderContainer.removeStyleName("folderLevel");
 					folderContainer.removeStyleName("course");
+					/*isFromMyCourse=false;*/
 				}else{
 					if(levelStyleName!=null){
 						folderContainer.addStyleName("foldermenuLevel"+levelStyleName);
@@ -518,8 +538,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-		if(isAddingInProgress){
-			isAddingInProgress=false;
 			if(currentsearchType.equalsIgnoreCase("resoruce")){
 				if(cureentcollectionTreeItem!=null){
 					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
@@ -536,13 +554,44 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					isAddingInProgress=true;
 				}
 			}else{
-				if(isTopMostSelected){
-					getUiHandlers().addCollectionToMyCollections("",currentsearchType);
+				/*AppClientFactory.printInfoLogger("isTopMostSelected::::::::::"+isTopMostSelected);
+				AppClientFactory.printInfoLogger("isFromMyCourse::::::::::"+isFromMyCourse);
+				AppClientFactory.printInfoLogger("this.isCopySelected:::::::::::"+this.isCopySelected);
+				AppClientFactory.printInfoLogger("this.isMoveSelected:::::::::::"+this.isMoveSelected);*/
+				if(isFromMyCourse){
+					if(currentFolderSelectedTreeItem!=null){
+						if(COURSE.equalsIgnoreCase(currentFolderSelectedTreeItem.getType()) || UNIT.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+							restrictionToAddResourcesData("You can add Collections only to Lesson Level");
+						}else if(LESSON.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+							if(isMoveSelected){
+								getUiHandlers().moveCollectionTOLesson("","",this.urlparams);
+							}else{
+								getUiHandlers().copyCollectionToLession("","",this.urlparams);
+							}
+						}
+					}else{
+						restrictionToAddResourcesData("Please select lesson type to add a collection");
+					}
 				}else{
-					getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getSelectedFolerTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+					String collectionId= urlparams.get(ID);
+					if(isTopMostSelected){
+						System.out.println("isTopMostSelected:::::::::");
+						if(isMoveSelected){
+							getUiHandlers().moveCollectionToMyCOllections(collectionId, null, currentsearchType,"",this.urlparams);
+						}else{
+							getUiHandlers().CopyToplevelMyCollections(collectionId, null, currentsearchType, "",null);
+						}
+					}
+					else if(FOLDER.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+						 collectionId= urlparams.get(O1_LEVEL);
+						if(isMoveSelected){
+							getUiHandlers().moveCollectionToMyCOllections(collectionId, currentFolderSelectedTreeItem.getGooruOid(), currentsearchType,"",this.urlparams);
+						}else{
+							getUiHandlers().CopyToplevelMyCollections(collectionId, currentFolderSelectedTreeItem.getGooruOid(), currentsearchType, "",this.urlparams);
+						}
+					}
 				}
 			}
-		}
 	}
 	@Override
 	public Button getAddButton(){
@@ -589,8 +638,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@Override
 	public void restrictionToAddResourcesData(String message) {
-		// TODO Auto-generated method stub
-		//displayErrorLabel.setText(message);
+		lblError.setText(message);
+		lblError.setVisible(true);
 	}
 	
 	@UiHandler("myCollDefault")
@@ -617,4 +666,35 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		urlparams.clear();
 	}
 
+	@Override
+	public void setCopyAndMoveStatus(boolean isCopySelected,
+			boolean isMoveSelected) {
+		this.isCopySelected=isCopySelected;
+		this.isMoveSelected=isMoveSelected;
+		mycollectionsLbl.addStyleName("selected");
+		mycontentLbl.removeStyleName("selected");
+		isFromMyCourse=false;
+	}
+
+	@Override
+	public Label getMycollectionsLbl() {
+		// TODO Auto-generated method stub
+		return mycollectionsLbl;
+	}
+
+	@Override
+	public Label getMycontentLbl() {
+		// TODO Auto-generated method stub
+		return mycontentLbl;
+	}
+	public boolean isFromMyCourse() {
+		return isFromMyCourse;
+	}
+
+	@Override
+	public void setFromMyCourse(boolean value) {
+		// TODO Auto-generated method stub
+		this.isFromMyCourse = value;
+	}
+	
 }

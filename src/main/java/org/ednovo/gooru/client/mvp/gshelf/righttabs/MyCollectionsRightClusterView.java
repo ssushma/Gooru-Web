@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -66,9 +67,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,toggleButton;
-	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkDelete,copyLbl,moveLbl,lnkPreview;
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,toggleButton,deletePnl;
+	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkDeleteButton;
 	@UiField HTMLEventPanel popupPanelDropDwn,copyPopupPanel;
+	@UiField Label copyLbl,moveLbl,lnkDelete;
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -94,6 +96,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	String oldO1Value=null,oldO2Value=null,oldO3Value=null;
 	
 	ArrayList<String> breadCumsSting=new ArrayList<String>();
+	private boolean isCopySelected= false;
+	private boolean isMoveSelected= false;
 	
 	
 	public MyCollectionsRightClusterView() {
@@ -102,11 +106,13 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkInfo.addClickHandler(new TabClickHandler(1,lnkInfo));
 		lnkContent.addClickHandler(new TabClickHandler(2,lnkContent));
 		lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
-		lnkDelete.addClickHandler(new DeleteContent()); 
+		lnkDeleteButton.addClickHandler(new DeleteContent());
 		lnkPreview.addClickHandler(new PreviewClickHandler());
 		popupPanelDropDwn.addClickHandler(new openDropDownFilters());
+		
 		copyLbl.addClickHandler(new onCopyClickHandler());
 		moveLbl.addClickHandler(new onMoveClickHandler());
+		lnkDelete.addClickHandler(new DeleteContentData()); 
 		
 		lnkPreview.setVisible(false);
 		toggleButton.setVisible(false);
@@ -316,9 +322,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(true);
 			toggleButton.setVisible(true);
+			deletePnl.setVisible(false);
 		}else{
 			lnkPreview.setVisible(false);
 			toggleButton.setVisible(false);
+			deletePnl.setVisible(true);
 		}
 	}
 	@Override
@@ -342,6 +350,22 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
 		}
 	}
+	
+	private class DeleteContentData implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			copyLbl.getElement().removeClassName("selected");
+			moveLbl.getElement().removeClassName("selected");
+			lnkDelete.getElement().addClassName("selected");
+			String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
+		}
+		
+	}
+	
+	
 	/**
 	 * This inner class is used to Open the respective collection/Assessment player
 	 *  when click on preview.
@@ -374,7 +398,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}else{
-					System.out.println("folderObj.getUrl()::"+folderObj.getUrl());
 					Window.open(folderObj.getUrl(), "", "");
 				}
 			}
@@ -479,15 +502,36 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		@Override
 		public void onClick(ClickEvent event) {
 			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-			getUiHandlers().getUserShelfData(collectionId,"collection");
+			getUiHandlers().EnableMyCollectionsTreeData(collectionId,folderObj.getTitle());
+			copyLbl.getElement().addClassName("selected");
+			moveLbl.getElement().removeClassName("selected");
+			lnkDelete.getElement().removeClassName("selected");
+			isCopySelected= true;
+			isMoveSelected=false;
+			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
 		}
 	}
 	private class onMoveClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-			getUiHandlers().getUserShelfData(collectionId,"collection");
+			copyLbl.getElement().removeClassName("selected");
+			moveLbl.getElement().addClassName("selected");
+			lnkDelete.getElement().removeClassName("selected");
+			isCopySelected= false;
+			isMoveSelected= true;
+			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
+			String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
+				String viewParamVal= AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+				if(viewParamVal!=null && viewParamVal.equalsIgnoreCase("folder")){
+					getUiHandlers().EnableMyCollectionsTreeData(collectionId,folderObj.getTitle());
+				}else{
+					getUiHandlers().DisableMyCollectionsTreeData(collectionId,folderObj.getTitle());
+				}
+			}
 		}
+
 	}
 		
 	@Override

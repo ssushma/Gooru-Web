@@ -183,4 +183,12 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     void update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData,AsyncCallback<CollectionDo> callback);
     
     void getResourceBasedUsersDetails(String resourceId,int offset,int limit,AsyncCallback<ArrayList<ResourceCollDo>> callback);
+    
+    void CopyToplevelMyCollections(String collectionId, String FolderId,String collectionTitle, AsyncCallback<CollectionDo> callback);
+    
+    void CopyCollectionToLesson(String courseId,String unitId,String LessonId,String CollectionId,String collectionTitle,AsyncCallback<CollectionDo> callback);
+    
+    void moveCollectionToMyCOllections(String collectionId, String FolderId,String collectionTitle,AsyncCallback<CollectionDo> callback);
+   
+    void moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId,AsyncCallback<CollectionDo> callback);
 }

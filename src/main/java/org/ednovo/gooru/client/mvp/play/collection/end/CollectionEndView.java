@@ -689,7 +689,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
 
 		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
+		final String collectionTitle = collectionDo.getTitle();
 				if(!isCustomizePopup){
 					Window.scrollTo(0, 0);
 					if(AppClientFactory.isAnonymous()){
@@ -697,7 +697,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							@Override
 							public	void onLoginSuccess(){
 								Window.enableScrolling(false);
-								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
 								remixPresenterWidget.getView().getAppPopUp().center();
@@ -709,7 +709,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						loginPopupUc.setGlassEnabled(true);
 						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
-						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();
