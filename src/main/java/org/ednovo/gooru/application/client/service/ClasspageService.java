@@ -530,7 +530,7 @@ public interface ClasspageService extends BaseService {
 	
 	public ArrayList<PlanProgressDo> getUnitMasteryReport(String classpageId, String courseId, String unitId, String collectionType) throws GwtException, ServerDownException;
 
-	public ArrayList<PlanProgressDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException;
+	public ArrayList<MasterReportDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType) throws GwtException, ServerDownException;
 
 	
 
