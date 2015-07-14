@@ -65,7 +65,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param idToMove
 	 * @param itemSeqToAPI
 	 */
-	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI);
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI,int indexmove);
 	/**
 	 * This method is used to set Data in the content slot
 	 * @param type

@@ -74,6 +74,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 	private static final String NORMAL_RADIO="hsanswer-normal";
 	private static final String SELECTED_RADIO="hsanswer-selected";
 	private static final String IMAGE_SELECTED_STYLE="hsImage";
+	private static final String MARGIN_IMAGE="hsImageAssessmentPlayer";
 
 	private static HotSpotAnswersQuestionViewUiBinder uiBinder = GWT.create(HotSpotAnswersQuestionViewUiBinder.class);
 
@@ -129,6 +130,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					addAnswerImage.setAnswerCorrect(questionAnswerDo.isIsCorrect());
 					addAnswerImage.selLbl.removeStyleName("answerMarkDeselected");
 					addAnswerImage.getElement().getStyle().setCursor(Cursor.POINTER);
+					addAnswerImage.addStyleName(MARGIN_IMAGE);
 					addAnswerImage.addDomHandler(new imageSelectEvent(addAnswerImage),ClickEvent.getType());
 
 					optionsContainer.add(addAnswerImage);
@@ -184,7 +186,6 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 		public imageSelectEvent(AddAnswerImg ansImage){
 			this.ansImage=ansImage;
-
 		}
 
 		@Override
