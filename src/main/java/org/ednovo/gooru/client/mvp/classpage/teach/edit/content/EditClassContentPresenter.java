@@ -141,10 +141,11 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	 */
 	@Override
 	public void getLessonList(String unitId) {
-		ClassDo classDo = StringUtil.getClassObj();
-		if(classDo.getClassId() != null && classDo.getCourseId() != null){
-			AppClientFactory.getInjector().getClasspageService().getClassLessonCollectionList(classDo.getClassId(), classDo.getCourseId(), unitId, 0, 20, new AsyncCallback<List<ClassLessonDo>>() {
-
+		String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_PAGE_ID, null);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
+		
+		if(classUId != null && courseId != null && unitId  != null){
+			AppClientFactory.getInjector().getClasspageService().getClassLessonCollectionList(classUId, courseId, unitId, 0, 20, new AsyncCallback<List<ClassLessonDo>>() {
 				@Override
 				public void onFailure(Throwable caught) {
 					
@@ -163,9 +164,11 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	 */
 	@Override
 	public void updateCollectionOrAssignmentVisiblity(List<ClassLessonDo> classLessonDo,String unitId) {
-		ClassDo classDo = StringUtil.getClassObj();
-		if(classDo.getClassId() != null && classDo.getCourseId() != null && unitId  != null){
-			AppClientFactory.getInjector().getClasspageService().updateClassLessonVisiblity(classDo.getClassId(), classDo.getCourseId(), unitId, classLessonDo, new AsyncCallback<ClassLessonDo>() {
+		String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_PAGE_ID, null);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
+		
+		if(classUId != null && courseId != null && unitId  != null){
+			AppClientFactory.getInjector().getClasspageService().updateClassLessonVisiblity(classUId, courseId, unitId, classLessonDo, new AsyncCallback<ClassLessonDo>() {
 
 				@Override
 				public void onFailure(Throwable caught) {

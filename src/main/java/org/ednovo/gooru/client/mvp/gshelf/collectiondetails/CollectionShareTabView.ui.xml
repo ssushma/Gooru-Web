@@ -33,8 +33,8 @@
 				</g:HTMLPanel>
               </p>
               <g:HTMLPanel styleName="publishPanel" ui:field="publishedPanel">
-			    <g:Image url="images/right-mark.png"></g:Image>
-			    <g:Label styleName="published" ui:field="lblPublish" text="{i18n.GL1942}">Published</g:Label>
+			    <g:Image url="images/right-mark.png" styleName="inlineBlock"></g:Image>
+			    <g:Label styleName="inlineBlock" ui:field="lblPublish" text="{i18n.GL1942}">Published</g:Label>
 		   	</g:HTMLPanel>
             </div>
             <g:HTMLPanel ui:field="collaboratorPanel"></g:HTMLPanel>
