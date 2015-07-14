@@ -67,7 +67,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 	
 	@Override
-	public void setDataInContentSlot(final String type,String folderId,boolean isInnerSlot) {
+	public void setDataInContentSlot(final String type,String folderId,boolean isInnerSlot,final FolderDo folderObj) {
 		getView().loadingImage();
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		getView().getPanelCourseContainer().clear();
@@ -75,7 +75,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
-					getView().setData(type,result.getSearchResult(),true,true,null);
+					getView().setData(type,result.getSearchResult(),true,true,folderObj);
 				}
 			});
 		}else{
@@ -85,7 +85,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
-					getView().setData(type,result.getSearchResult(),true,true,null);
+					getView().setData(type,result.getSearchResult(),true,true,folderObj);
 				}
 			});
 		}

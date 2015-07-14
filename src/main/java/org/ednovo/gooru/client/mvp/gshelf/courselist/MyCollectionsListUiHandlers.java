@@ -72,7 +72,7 @@ public interface MyCollectionsListUiHandlers extends BaseUiHandlers{
 	 * @param slotPanel
 	 * @param folderId
 	 */
-	public void setDataInContentSlot(String type,String folderId,boolean isInnerSlot);
+	public void setDataInContentSlot(String type,String folderId,boolean isInnerSlot,FolderDo folderObj);
 
 	ShelfMainPresenter getShelfMainPresenter();
 	/**

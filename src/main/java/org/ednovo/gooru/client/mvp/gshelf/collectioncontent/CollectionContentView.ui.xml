@@ -4,6 +4,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="pnlContentContainer">
 		<div class="resourcesButtonGroup">
+			<g:Label ui:field="lblTitle" styleName="lblTitle"/>
 			<g:Button styleName="primary" ui:field="btnAddResources" text="{i18n.GL_SPL_PLUS} {i18n.GL0174}" />
 			<g:Button styleName="primary" ui:field="btnAddQuestions" text="{i18n.GL_SPL_PLUS} {i18n.GL1042}" />
 		</div>
