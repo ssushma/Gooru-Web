@@ -266,5 +266,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public Label getDownArrow(){
 		return lblDownArrow;
 	}
+	public Label getIndexLabel(){
+		return lblIndex;
+	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 }
