@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * @author Search Team
@@ -204,4 +205,6 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	 *
 	 */
 	void hideUpdateOwnResourcePopup();
+	
+	public void getResourceListPanel();
 }

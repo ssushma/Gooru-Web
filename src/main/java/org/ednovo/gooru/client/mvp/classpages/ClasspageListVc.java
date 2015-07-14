@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
@@ -709,7 +710,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
 						{
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("classpageid", gooruOId);
+							params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
 						    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS, params);
 						}
 						else
