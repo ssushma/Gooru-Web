@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -858,5 +859,21 @@ public class StringUtil implements ClientConstants {
 		return scoreStyle;
 	}
 
+	public static List<String> getKeys(Set<Integer> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Integer key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
+	public static List<String> getKeysLong(Set<Long> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Long key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
 }
 

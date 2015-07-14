@@ -19,10 +19,13 @@ public class CreateDo implements Serializable{
 	private String questions;
 	private String collectionType;
 	private List<Integer> taxonomyCourseIds;
-	private List<Integer> audienceIds;
+	private List<String> audienceIds;
 	private List<Integer> domainIds;
 	private List<Integer> subdomainIds;
 	private List<Integer> standardIds;
+	private List<String> depthOfKnowledgeIds;
+	private List<String> skillsId;
+	private String languageObjective;
 	private String url;
 	private String goals;
 	private String sharing;
@@ -30,6 +33,12 @@ public class CreateDo implements Serializable{
 	private String mediaFilename;
 	private ThumbnailDo thumbnails;
 	
+	public String getLanguageObjective() {
+		return languageObjective;
+	}
+	public void setLanguageObjective(String languageObjective) {
+		this.languageObjective = languageObjective;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -54,12 +63,7 @@ public class CreateDo implements Serializable{
 	public void setTaxonomyCourseIds(List<Integer> taxonomyCourseIds) {
 		this.taxonomyCourseIds = taxonomyCourseIds;
 	}
-	public List<Integer> getAudienceIds() {
-		return audienceIds;
-	}
-	public void setAudienceIds(List<Integer> audienceIds) {
-		this.audienceIds = audienceIds;
-	}
+	
 	public List<Integer> getDomainIds() {
 		return domainIds;
 	}
@@ -126,4 +130,23 @@ public class CreateDo implements Serializable{
 	public void setSubdomainIds(List<Integer> subdomainIds) {
 		this.subdomainIds = subdomainIds;
 	}
+	public List<String> getAudienceIds() {
+		return audienceIds;
+	}
+	public void setAudienceIds(List<String> audienceIds) {
+		this.audienceIds = audienceIds;
+	}
+	public List<String> getDepthOfKnowledgeIds() {
+		return depthOfKnowledgeIds;
+	}
+	public void setDepthOfKnowledgeIds(List<String> depthOfKnowledgeIds) {
+		this.depthOfKnowledgeIds = depthOfKnowledgeIds;
+	}
+	public List<String> getSkillsId() {
+		return skillsId;
+	}
+	public void setSkillsId(List<String> skillsId) {
+		this.skillsId = skillsId;
+	}
+	
 }

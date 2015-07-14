@@ -353,7 +353,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
-		getUiHandlers().updateCollectionDetails();
 	}
 
 	@UiHandler("uploadImageLbl")

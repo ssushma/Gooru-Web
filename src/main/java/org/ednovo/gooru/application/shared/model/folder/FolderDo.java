@@ -54,6 +54,8 @@ public class FolderDo implements Serializable{
 	private ResourceFormatDo resourceFormat;
 	private ResourceTypeDo resourceTypeDo;
 	private List<checkboxSelectedDo> depthOfKnowledges;
+	private List<checkboxSelectedDo> instructionalMethod;
+	private List<checkboxSelectedDo> audience;
 	private String ideas;
 	private String performanceTasks;
 	private String questions;
@@ -341,4 +343,21 @@ public class FolderDo implements Serializable{
 	public void setStandards(List<CourseSubjectDo> standards) {
 		this.standards = standards;
 	}
+
+	public List<checkboxSelectedDo> getInstructionalMethod() {
+		return instructionalMethod;
+	}
+
+	public void setInstructionalMethod(List<checkboxSelectedDo> instructionalMethod) {
+		this.instructionalMethod = instructionalMethod;
+	}
+
+	public List<checkboxSelectedDo> getAudience() {
+		return audience;
+	}
+
+	public void setAudience(List<checkboxSelectedDo> audience) {
+		this.audience = audience;
+	}
+	
 }
