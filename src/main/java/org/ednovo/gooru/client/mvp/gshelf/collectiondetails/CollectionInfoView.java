@@ -289,6 +289,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
+		depthOfKnowledgeContainer.setFolderDo(courseObj);
+		audienceContainer.setFolderDetails(courseObj);
+	
 		this.type = type;
 		ulSelectedItems.clear();
 		selectedValues.clear();
@@ -328,7 +331,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
-		getUiHandlers().callCourseInfoTaxonomy();
+	
 	}
 	public void setStaticData(String type)
 	{   
@@ -352,7 +355,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
-		getUiHandlers().updateCollectionDetails();
 	}
 
 	@UiHandler("uploadImageLbl")
@@ -371,6 +373,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 */
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
+		String view= AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
@@ -386,7 +389,21 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setStandardIds(getSelectedStandardsIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+					if(view!=null)
+					{
+						if(view.equalsIgnoreCase("folder"))
+						{
+							getUiHandlers().updateCollectionDetails();
+						}
+						else
+						{
+							getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+						}
+					}
+					else
+					{
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);	
+					}
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
@@ -423,12 +440,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	protected void setDepthOfKnlze() {
 		List<String> depthofknowledgedetails = new ArrayList<String>();
-		if(courseObjG.getDepthOfKnowledges()!=null){
-			if(courseObjG.getDepthOfKnowledges().size()>0){
-				for(int i=0;i<courseObjG.getDepthOfKnowledges().size();i++){
-					if(courseObjG.getDepthOfKnowledges().get(i).isSelected())
+		if(courseObjG.getDepthOfKnowledge()!=null){
+			if(courseObjG.getDepthOfKnowledge().size()>0){
+				for(int i=0;i<courseObjG.getDepthOfKnowledge().size();i++){
+					if(courseObjG.getDepthOfKnowledge().get(i).isSelected())
 					{
-						depthofknowledgedetails.add(courseObjG.getDepthOfKnowledges().get(i).getValue());
+						depthofknowledgedetails.add(courseObjG.getDepthOfKnowledge().get(i).getValue());
 						isDepthOfKnlzeInfo = true;
 					}
 				}
@@ -534,4 +551,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		}
 	}
+	
+	@Override
+	public FolderDo getFolderDo(){
+		
+		return courseObjG;
+	}
+	
 }

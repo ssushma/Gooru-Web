@@ -382,6 +382,8 @@ public enum UrlToken {
 	V1_UPDATE_COURSE_METADATA("/v1/course/{0}?"),
 	
 	V1_GET_UNIT_METADATA("/v1/course/{0}/unit/{1}"),
+	
+	V1_GET_LESSON_METADATA("/v1/course/{0}/unit/{1}/lesson/{2}"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
 
@@ -624,7 +626,6 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 
 	GET_LAST_PLAYER_ASSESSMENT_INFO("/v1/class/{0}/assessment/sessions?"),
 
-    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?"),
 
     DELETE_LESSON_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
 
@@ -635,6 +636,14 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_STUDENT_LESSON_PLAN("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/plan?"),
 
 	V1_GET_STUDENT_COURSE_PROGRESS("/v1/class/{0}/course/{1}/progress?"),
+	
+	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
+	
+    GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?"),
+	
+	COPY_V3_COLLECTION("/v3/sourceCollection/{0}?"),
+	
+	MOVE_V1_COLLECTION("/v1/targetCourse/{0}/targetUnit/{1}/targetLesson/{2}/sourceCollection/{3}?"),
 	
 	V1_GET_STANDARDS_BY_DOMAIN("/v1/sub-domain/{0}/standards?"),
 
@@ -647,9 +656,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}/users?"),
 	
 	GET_AUDIENCELIST("/v1/meta/audience?sessionToken={0}"),
-	
-	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
+
 	V3_UPDATE_COLLECTION("/v3/collection/{0}"),
+	
 	V1_GET_COURSE("/v1/course/{0}?");
 
 	private String url;

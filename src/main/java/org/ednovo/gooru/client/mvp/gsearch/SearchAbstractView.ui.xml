@@ -121,7 +121,7 @@
 		</g:HTMLPanel>
 		<!-- Filters Section Starts from here -->
 		<div class="subFilters">
-			<g:HTMLPanel styleName="col-md-12 col-sm-7 searchFiltersContainer">
+			<g:HTMLPanel styleName="container searchFiltersContainer">
 				<g:HTMLPanel styleName="seachRightNavigation">
 					<div class="panelFilterOptions">
 					    <!-- <g:InlineLabel styleName="searchResultsBox" ui:field="searchResults"/> -->

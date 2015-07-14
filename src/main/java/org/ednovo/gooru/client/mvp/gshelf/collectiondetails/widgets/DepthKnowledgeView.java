@@ -10,6 +10,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -70,23 +71,27 @@ public class DepthKnowledgeView extends Composite {
 	
 	public void setCollectionDo(CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
-		setSelectedValues();
+		setSelectedValues(collectionDo.getDepthOfKnowledges());
 	}
 	
-	public void setSelectedValues(){
-		AppClientFactory.printInfoLogger("id...I am in setSelectedValue..");
+	public void setFolderDo(FolderDo folderDo){
+		AppClientFactory.printInfoLogger(" folder DOK");
+
+		setSelectedValues(folderDo.getDepthOfKnowledge());
+	}
+	
+	public void setSelectedValues(List<checkboxSelectedDo> list){
 		selectedValues=new HashMap<Integer, String>();
 		int count=detailsContainer.getWidgetCount();
-		List<checkboxSelectedDo> list=collectionDo.getDepthOfKnowledges();
-		AppClientFactory.printInfoLogger(".............lIST"+list);
+		AppClientFactory.printInfoLogger("List Size"+list);
 		if(list!=null){
 			for(checkboxSelectedDo checkboxSelectedDoObj:list){
 				selectedValues.put(checkboxSelectedDoObj.getId(), checkboxSelectedDoObj.getName());
 			}
 		}
-		AppClientFactory.printInfoLogger("................."+selectedValues.size());
-		for (Map.Entry<Integer,String> entry : selectedValues.entrySet()){
-			 AppClientFactory.printInfoLogger("........."+entry.getKey() + "/" + entry.getValue()+"......");
+		
+		for(Map.Entry<Integer, String> entry:selectedValues.entrySet()){
+			AppClientFactory.printInfoLogger(entry.getKey()+"........"+entry.getValue());
 		}
 		
 		for(int i=0;i<count;i++){
@@ -94,17 +99,12 @@ public class DepthKnowledgeView extends Composite {
 			if(widget instanceof CheckBox){
 				CheckBox checkBox=(CheckBox)widget;
 				String id=checkBox.getElement().getId();
-				AppClientFactory.printInfoLogger("id....."+id);
+				AppClientFactory.printInfoLogger("id..."+id);
 				if(id!=null){
 					Integer idInt=Integer.parseInt(id);
 					checkBox.setValue(selectedValues.containsKey(idInt));
-					
-
-					
 				}
 			}
 		}
-		
 	}
-	
 }

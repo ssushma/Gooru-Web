@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
@@ -60,7 +61,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	UnitInfoPresenter unitInfoPresenter; 
 	
 	AssessmentPopupWidget assessmentPopup;
-	
 
 	ShelfMainPresenter shelfMainPresenter;
 	
@@ -71,6 +71,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	CollectionContentPresenter collectionContentPresenter;
 	
 	CollectionShareTabPresenter collectionShareTabPresenter = null;
+	
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
 	
 	List<FolderDo> folderListDoChild;
 
@@ -86,6 +88,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
 	private static final String FOLDER = "Folder";
+	private boolean isCopySelected= false;
+	private boolean isMoveSelected= false;
 	
 	Map<Integer,Integer> firstSelectedData;
 	/**
@@ -94,7 +98,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 * @param view
 	 */
 	@Inject
-	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter,CollectionShareTabPresenter collectionShareTabPresenter, CourseSharePresenter courseSharePresenter) {
+	public MyCollectionsRightClusterPresenter(EventBus eventBus, IsMyCollectionsRightClusterView view,CollectionContentPresenter collectionContentPresenter,CourseInfoPresenter courseInfoPresenter,LessonInfoPresenter lessonInfoPresenter,ExternalAssessmentInfoPresenter externalAssessmentInfoPresenter,UnitInfoPresenter unitInfoPresenter,CollectionInfoPresenter collectionInfoPresenter,CollectionShareTabPresenter collectionShareTabPresenter,
+			SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CourseSharePresenter courseSharePresenter) {
 		super(eventBus, view);
 		this.courseInfoPresenter=courseInfoPresenter;
 		this.lessonInfoPresenter=lessonInfoPresenter;
@@ -103,8 +108,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionContentPresenter=collectionContentPresenter;
 		this.externalAssessmentInfoPresenter=externalAssessmentInfoPresenter;
 		this.collectionShareTabPresenter=collectionShareTabPresenter;
+		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.courseSharePresenter=courseSharePresenter;
-		
 		externalAssessmentInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -146,11 +151,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if(FOLDER.equalsIgnoreCase(type)){
 					//To disabel bread cums
 					getView().disableAndEnableBreadCums(false);
-					/*collectionInfoPresenter.setCollectionType(type);
-					collectionInfoPresenter.setData(folderObj,type);
-					setInSlot(INNER_SLOT, collectionInfoPresenter);*/
 					getView().setFolderInfoWidget();
-					
 				}else{
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){
@@ -164,10 +165,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}
 		}else if(index==2){
 			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
+				collectionContentPresenter.getView().getResourceListPanel();
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
-				//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
+				shelfMainPresenter.getMyCollectionsListPresenter().getView().loadingImage();
 				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
@@ -298,8 +300,12 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			shelfMainPresenter.setUserAllCourses(o1CourseId,currentTypeView);
 		}
 	}
-	
-	
+	@Override
+	public void getUserShelfData(String collectionId,String valuetype) {
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, valuetype,"");
+		showAppPopup();
+	}
+
 	/**
 	 * calls API to delete Unit.
 	 */
@@ -421,6 +427,36 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				getView().invokeContentDeletePopup(o1CourseId,o2UnitId,o3LessonId,result);
 			} 
 		});
+	}
+	@Override
+	public boolean checkCopyOrMoveStatus(boolean copySelected,
+			boolean moveSelected) {
+		// TODO Auto-generated method stub
+		this.isCopySelected=copySelected;
+		this.isMoveSelected= moveSelected;
+		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected);
+		return false;
+	}
+	@Override
+	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
+		// TODO Auto-generated method stub
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		showAppPopup();
+	}
+	@Override
+	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle) {
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(true);
+		showAppPopup();
+	}
+	public void showAppPopup(){
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 	}
 	public Map<Integer,Integer> getFirstSelectedData(){
 		return firstSelectedData;
