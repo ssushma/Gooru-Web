@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
+import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
@@ -228,5 +229,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType, AsyncCallback<ArrayList<MasterReportDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
 
+	public void getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType, AsyncCallback<PlanContentDo> simpleAsyncCallback) throws GwtException,ServerDownException;
+	
 }
 
