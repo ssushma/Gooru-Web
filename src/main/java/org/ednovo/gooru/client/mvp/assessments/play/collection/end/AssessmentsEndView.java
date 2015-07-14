@@ -179,7 +179,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	public void setLabelAndIds() {
-		
+
 		PrintPnl.getElement().getStyle().setHeight(Window.getClientHeight()-106, Unit.PX);
 
 		progressRadial.getElement().setId("fpnlprogressRadial");
@@ -193,7 +193,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		printButton.setHTML(html);
 		printButton.setText(i18n.GL4007());
 		downloadButton.setText(i18n.GL4008());
-		
+
 		loadingImageLabel.setVisible(false);
 	}
 
@@ -211,7 +211,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	public void setDataInsightsUrl(){
-		
+
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 	}
 
@@ -228,11 +228,11 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	}
 
 
-	
+
 	public void displayScore(Integer collectionScore, Integer noOfQuestions){
 
 		score.setText(collectionScore+" %");
-		goal.setText("Goal : 90%");
+//		goal.setText("Goal : 90%");
 		correctStatus.setText(collectionScore+"/"+noOfQuestions+" "+i18n.GL2278());
 		int scorePercentage=0;
 		if(collectionScore!=0){
@@ -246,8 +246,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	@Override
 	public void displayScoreCount(CollectionSummaryMetaDataDo result) {
-		score.setText(result.getScore()+" %");
-		goal.setText("Goal : 90%");
+		score.setText(result.getScoreInPercentage()+" %");
+		goal.setText(i18n.GL3460_5() + result.getGoal()+" %");
 		correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
 		int scorePercentage=result.getScoreInPercentage();
 		String progressRedialStyle="blue-progress-"+scorePercentage;
@@ -354,7 +354,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						adTable.setWidget(i, 1,questionTitle);
 
 						int noOfAttempts=result.get(i).getAttempts();
-						int score= result.get(i).getScore();
+						String scoreStatus= result.get(i).getStatus();
 
 						//Set Answer choices
 						String questionType= result.get(i).getType();
@@ -362,7 +362,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							questionType= result.get(i).getQuestionType();
 						}
 						String correctAnser = null;
-						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
+						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){
 							Label anserlbl=new Label();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 								 Map<String, Integer> authorObject = result.get(i).getOptions();
@@ -405,7 +405,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 									userFibOption =result.get(i).getText().split(",");
 								}
 								if(answersArry!=null && userFibOption!=null){
-									for (int k = 0; k < answersArry.length; k++) { 
+									for (int k = 0; k < answersArry.length; k++) {
 										Label answerChoice=new Label();
 										if(answersArry[k]!=null && k<userFibOption.length){
 											if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
@@ -476,7 +476,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 								viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
 								adTable.setWidget(i, 2,viewResponselbl);
 							}
-						}   
+						}
 
 						//Set attempts
 						Label attempts=new Label(i18n.GL2269());
@@ -484,11 +484,11 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						attempts.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 
 
-						if(ZERO_NUMERIC.equalsIgnoreCase(String.valueOf(score))) {
+						if(STATUS_INCORRECT.equalsIgnoreCase(scoreStatus)) {
 							adTable.setWidget(i, 3,attempts);
 							adTable.getRowFormatter().addStyleName(i, STYLE_WHITE);
-						} else if(ONE.equalsIgnoreCase(String.valueOf(score))) {
-							Image correctImg=new Image();   
+						} else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)) {
+							Image correctImg=new Image();
 							correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
 							adTable.setWidget(i, 3,correctImg);
 							adTable.getRowFormatter().addStyleName(i, STYLE_GREEN);
@@ -572,7 +572,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 			@Override
 			public void onSuccess() {
-				
+
 				loadingImageLabel.setVisible(false);
 
 				try{
@@ -606,7 +606,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 								questionType= result.get(i).getQuestionType();
 							}
 							String correctAnser = null;
-							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
+							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){
 								Label anserlbl=new Label();
 								if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 									 Map<String, Integer> authorObject = result.get(i).getOptions();
@@ -651,7 +651,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 									}
 									if(answersArry!=null && userFibOption!=null){
 										boolean isCorrect=false;
-										for (int k = 0; k < answersArry.length; k++) { 
+										for (int k = 0; k < answersArry.length; k++) {
 											Label answerChoice=new Label();
 											if(answersArry[k]!=null && k<userFibOption.length){
 												if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
@@ -738,11 +738,11 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 								data.setValue(i, 3, answerspnl.toString());
 							}
 
-							Image correctImg=new Image();      	            
+							Image correctImg=new Image();
 							if(isTickdisplay){
 								correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
-							}else{ 
-								correctImg.setUrl(urlDomain+"/images/analytics/wrong.png");				        		
+							}else{
+								correctImg.setUrl(urlDomain+"/images/analytics/wrong.png");
 							}
 							data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
 							//Set attempts
@@ -800,7 +800,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				printWidget.add(scoredQuestionHeading);
 				printWidget.add(printScoredData);
 				printScoredData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
-				
+
 				printButton.setVisible(false);
 				downloadButton.setVisible(false);
 				timer1.schedule(100);
@@ -819,7 +819,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			}
 		});
 	}
-	
+
 
 	Timer timer1=new Timer() {
 		@Override
@@ -828,7 +828,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			downloadButton.setVisible(true);
 		}
 	};
-	
+
 
 	@UiHandler("printButton")
 	public void printButtonClick(ClickEvent event){
@@ -855,7 +855,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public Frame getFrame() {
 		return downloadFile;
 	}
-	
+
 	public static native void sortAndFixed() /*-{
 	 var table =$wnd.$('#report').DataTable({
        scrollY:        "300px",
