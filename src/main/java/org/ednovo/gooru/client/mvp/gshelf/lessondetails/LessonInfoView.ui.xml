@@ -17,47 +17,61 @@
 <div class="unitCoverHeader">
 
 <div class="col-md-6 col-sm-6"><ppanel:PPanel text="{i18n.GL3320}"/></div>
-<div class="col-md-6 col-sm-6">
 <div class="dropDownRight">
 
-	<panel:HTMLEventPanel styleName="btn-group" ui:field="btnStandardsBrowse">
-	<g:Button styleName="btn btn-primary" text="{i18n.GL3209}" title="{i18n.GL3209}"/>
-	<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
-	<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
-	<g:InlineLabel styleName="sr-only"></g:InlineLabel>
-	</g:HTMLPanel>
-  	<ppanel:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"></ppanel:UlPanel>
-	</panel:HTMLEventPanel>
+	<div class="fractionDetailsTable">
+				<div class="">
+					<div class="no-gutter">
+						<div class="col-md-4">
+							<h3></h3>
+						</div>
+						<div class="col-md-12">
+							<div class="dropDownRight">
+								<div class="btn-group">
+									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
+										taxonomy</g:Button>
+									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
+									</g:HTMLPanel>
+									<ul role="menu" class="dropdown-menu">
+										<li>
+											<a href="#">My Folders</a>
+										</li>
+										<li>
+											<a href="#">My Collections</a>
+										</li>
+
+									</ul>
+								</div>
 
 
+								<panel:HTMLEventPanel styleName="btn-group"
+									ui:field="btnStandardsBrowse">
+									<g:Button styleName="btn btn-primary" text="{i18n.GL3209}"
+										title="{i18n.GL3209}" />
+									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+										<g:InlineLabel styleName="caret"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
+									</g:HTMLPanel>
+								</panel:HTMLEventPanel>
+
+								<ppanel:UlPanel styleName="dropdown-menu"
+									ui:field="standardsDropListValues"></ppanel:UlPanel>
+							</div>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+				</div>
 
 
-<div class="btn-group">
-  <g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">The Number System  </g:Button>
-  <button aria-expanded="false" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul role="menu" class="dropdown-menu pull-right">
-    <li><a href="#">My Folders</a></li>
-    <li><a href="#">My Collections</a></li>
-   
-  </ul>
-</div>
-</div>
-
-
- </div>
-
-<div class="clearfix"></div>
-</div>
-
-
-			<div class="lessonCover">
+				<div class="lessonCover">
 					<div class="panel panel-default">
 						<g:HTMLPanel ui:field="standardsUI" styleName="panel-body">
 
-									
+
 
 
 
@@ -66,12 +80,23 @@
 					</div>
 
 
-	
+
 
 
 
 
 				</div>
+
+
+			</div>
+
+
+
+
+
+
+
+		</div>
 
 
 <div class="filterTags">
@@ -81,6 +106,7 @@
 
 
 
+</div>
 </div>
 
 
