@@ -187,6 +187,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReveal() {
 		super.onReveal();
 		Window.enableScrolling(true);
+		version=null;
+		type="Course";
 	}
 	
 	@Override
@@ -333,7 +335,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				getView().getCollectionLabel().setText(folderObj.getTitle());
 			}
 		}
-		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
+		getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	
@@ -419,7 +421,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setCollectionContent(FolderDo collectionDo){
 		clearSlot(RIGHT_SLOT);
-		getMyCollectionsRightClusterPresenter().setTabItems(1, collectionDo.getType(),collectionDo);
+		getMyCollectionsRightClusterPresenter().setTabItems(2, collectionDo.getType(),collectionDo);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			getView().getCollectionLabel().setVisible(true);
@@ -468,8 +470,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setUserAllLessons(String o1CourseId, String o2UnitId,String o3LessDeletedonId, String currentTypeView) {
 		getView().removeDeletedTreeWidget(o3LessDeletedonId,currentTypeView);
 	}
-	
-	
 	/**
 	 * 
 	 * @param o1CourseId
@@ -489,10 +489,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onDeleteSetBreadCrumbs(String title, String course) {
 		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
-
 	@Override
 	public void setVersion() {
 		version=null;
 	}
-
 }

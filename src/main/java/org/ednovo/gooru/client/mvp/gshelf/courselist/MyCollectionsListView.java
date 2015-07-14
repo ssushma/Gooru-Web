@@ -117,8 +117,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public void resetWidgetPositions(int itemSeqToAPI,int movingIndex){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
-		System.out.println("itemSeqToAPI=="+itemSeqToAPI);
-		System.out.println("movingIndex=="+movingIndex);
 		while (widgets.hasNext()){
 			Widget widget=widgets.next();
 			if(widget instanceof ContentWidgetWithMove){
