@@ -5,11 +5,12 @@
 	     <g:HTMLPanel styleName="rowContainer no-gutter ">
 	        <g:HTMLPanel styleName="col-md-5 col-sm-5">
 	           <g:HTMLPanel styleName="studyBlock">
-	              <g:HTMLPanel styleName="assessmentImageContainer">
+	              <g:HTMLPanel ui:field="imageContainer">
+	                 <g:Button ui:field="playBtn" styleName="playBtn"></g:Button>
 	                 <g:Image ui:field="contentImage"></g:Image>
 	              </g:HTMLPanel>
 	              <g:HTMLPanel styleName="descriptionContainer">
-	                 <uc:H3Panel ui:field="contentName"/>
+	                 <uc:H3Panel ui:field="contentName" styleName="cursorPointer"/>
 	                 <uc:PPanel ui:field="contentDescription"/>
 	              </g:HTMLPanel>
 	           </g:HTMLPanel>
@@ -22,7 +23,7 @@
 	                 <g:HTMLPanel styleName="fraNumbers" ui:field="reportView">
 	                    <g:HTMLPanel styleName="list-group">
 	                       <g:HTMLPanel styleName="list-group-item timeSpent">
-	                          <g:HTMLPanel styleName="pull-left">Total Time Spent</g:HTMLPanel>
+	                          <g:Label styleName="pull-left" ui:field="timeSpentLbl"></g:Label>
 	                          <g:Label styleName="pull-right" ui:field="timeSpent"></g:Label>
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
@@ -32,7 +33,7 @@
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
 	                       <g:HTMLPanel styleName="list-group-item lastSession">
-	                          <g:HTMLPanel styleName="pull-left">Last Session</g:HTMLPanel>
+	                          <g:Label styleName="pull-left" ui:field="lastAccessedLbl"></g:Label>
 	                          <g:Label styleName="pull-right" ui:field="lastSession"></g:Label>
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
@@ -48,20 +49,7 @@
 	        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	     </g:HTMLPanel>
 	     <g:HTMLPanel styleName="lesson-view-data rowContainer no-gutter">
-	        <g:HTMLPanel styleName="resourceImgContainer">
-	           <a href="#">
-	              <img src="images/auto1.png"/>
-	              <g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
-	           </a>
-	           <a href="#">
-	              <img src="images/auto1.png"/>
-	              <g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
-	           </a>
-	           <a href="#">
-	              <img src="images/auto1.png"/>
-	              <g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
-	           </a>
-	        </g:HTMLPanel>
+	        <g:HTMLPanel styleName="resourceImgContainer" ui:field="resourceImgContainer"></g:HTMLPanel>
 	     </g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

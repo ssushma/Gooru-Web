@@ -827,7 +827,7 @@ public class StringUtil implements ClientConstants {
 
 		long s = different / secondsInMilli;
 
-		String format="";
+		String format="--";
     	if(d>0) {
     		h = (24*d)+h;
     	}
@@ -836,9 +836,19 @@ public class StringUtil implements ClientConstants {
 		    format = format + m + separator;
 		    format = format + s;
 	    } else {
-	    	format = format + h +" hrs ";
-		    format = format + m +" min ";
-		    format = format + s +" sec";
+	    	if(h>0) {
+		    	format = format + h +" hrs ";
+	    	}
+	    	if(m>0) {
+			    format = format + m +" min ";
+	    	}
+	    	if(s>0) {
+			    if(s<=60) {
+			    	format = "< 1min";
+			    } else {
+		    		format = format + s +" sec";
+			    }
+	    	}
 	    }
 	    return format;
 	}

@@ -58,4 +58,6 @@ public interface IsEditClassContentView extends IsViewWithHandlers<EditClassCont
 
 	void setLessonData(List<ClassLessonDo> result);
 
+	void setEmptyUnitListData();
+
 }

@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
@@ -67,5 +68,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	public void callCourseInfoTaxonomy();
 
 	void updateCollectionDetails(String text,CreateDo createDoObj);
+
+	CenturySkillsPresenter getCenturySkillsPresenters();
 
 }

@@ -122,9 +122,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		// TODO Auto-generated method stub
 		super.onReset();
 		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);
-		if(view!=null&&view.equalsIgnoreCase("Folder")){
+		
 			getCollectionDo();
-		}
+	
 	}
 	@Override
 	protected void onReveal(){
@@ -213,7 +213,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
-		centurySkillsPresenter.getView().setFolderDo(folderObj);
 		callCourseInfoTaxonomy();
 	}
 	@Override
@@ -240,6 +239,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
 				myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
+				AppClientFactory.getPlaceManager().revealCurrentPlace();
 			}
 		});
 	}
@@ -386,5 +386,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 	public void addTaxonomyData(UlPanel selectedUlContainer) { 
 		getView().addTaxonomyData(selectedUlContainer);
+	}
+	
+	@Override
+	public CenturySkillsPresenter getCenturySkillsPresenters(){
+		return centurySkillsPresenter;
 	}
 }

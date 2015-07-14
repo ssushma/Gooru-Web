@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 
 /**
@@ -37,4 +38,5 @@ public interface IsStudentClassLearningMapView extends IsViewWithHandlers<Studen
 	public void setContent(ArrayList<PlanProgressDo> dataList);
 	public void setPreviewClassMode(boolean isPreview);
 	public void setMetadataContent(ArrayList<PlanProgressDo> dataList);
+	public void setLessonContent(PlanContentDo collectionList, String status, String userId);
 }
