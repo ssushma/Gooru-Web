@@ -797,7 +797,7 @@ public class StringUtil implements ClientConstants {
 
 	public static ClassDo getClassObj(){
 		ClassDo classObj=new ClassDo();
-		String classId=AppClientFactory.getPlaceManager().getRequestParameter(CLASSID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(CLASSID):"";
+		String classId=AppClientFactory.getPlaceManager().getRequestParameter(CID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(CID):"";
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(COURSEID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(COURSEID):"";
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(UNITID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(UNITID):"";
 		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSONID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(LESSONID):"";
