@@ -69,7 +69,9 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	void displayStandardsList(List<DomainStandardsDo> result);
 
-	void addTaxonomyData(UlPanel selectedUlContainer); 
+	void addTaxonomyData(UlPanel selectedUlContainer);
+
+	FolderDo getFolderDo(); 
 
 	void setCollectionImage(String url);
 }

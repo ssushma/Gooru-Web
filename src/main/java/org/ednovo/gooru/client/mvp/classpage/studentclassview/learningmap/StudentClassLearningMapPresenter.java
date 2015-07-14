@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -143,23 +144,46 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 	
 	@Override
 	public void getLessonPlanData(String contentGooruIds) {
-		String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
-		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
-		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
-		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
-		Map<String,String> queryParams = new HashMap<String,String>();
+		final String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
+		final String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
+		final String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
+		final String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
+		final Map<String,String> queryParams = new HashMap<String,String>();
 		queryParams.put("contentGooruIds", contentGooruIds);
 		
-		AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, unitId, lessonId, "plan", queryParams, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
-			@Override
-			public void onSuccess(ArrayList<PlanProgressDo> dataList) {
-				getView().setContent(dataList);
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
-		});
+		if(classGooruOid!=null&&unitId!=null&&lessonId!=null) {
+			AppClientFactory.getInjector().getClasspageService().getClasspageCollections(classUId, classGooruOid, unitId, lessonId, "assessment", new SimpleAsyncCallback<PlanContentDo>() {
+				@Override
+				public void onSuccess(final PlanContentDo collectionList) {
+					final Map<String,PlanProgressDo> data = new HashMap<String, PlanProgressDo>();
+					AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, unitId, lessonId, "plan", queryParams, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+						@Override
+						public void onSuccess(ArrayList<PlanProgressDo> dataList) {
+							for(int i=0;i<dataList.size();i++) {
+								data.put(dataList.get(i).getGooruOId(), dataList.get(i));
+							}
+							if(collectionList.getItems()!=null&&collectionList.getItems().size()>0) {
+								ArrayList<PlanContentDo> contentList = collectionList.getItems();
+								for(int i=0;i<contentList.size();i++) {
+									contentList.get(i).setProgress(data.get(contentList.get(i).getGooruOid()));
+								}
+								collectionList.setItems(contentList);
+							}
+							getView().setLessonContent(collectionList,getClasspageDo().getStatus(),getClasspageDo().getUser().getGooruUId());
+						}
+						@Override
+						public void onFailure(Throwable caught) {
+							
+						}
+					});					
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		}
+		
 	}
 	
 	public ClasspageDo getClasspageDo() {

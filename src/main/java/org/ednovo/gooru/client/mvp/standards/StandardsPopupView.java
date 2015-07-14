@@ -54,6 +54,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -129,6 +130,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 			@Override
 			public void onClick(ClickEvent event) {
 				appPopUp.hide();
+				Window.enableScrolling(true);
 				
 			}
 		});
@@ -285,6 +287,8 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+					if(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode()!=null)
+					{
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel());
@@ -339,6 +343,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
+				}
 				}
 				}
 			}
@@ -453,6 +458,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+					if(levelOneData.get(i).getNode().get(j).getNode().get(k).getCode()!=null){
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel());
@@ -508,6 +514,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
 				}
 				}
+				}
 			}
 			}
 			}
@@ -560,6 +567,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+					if(levelOneData.get(j).getNode().get(k).getCode()!=null){
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getLabel());
@@ -616,6 +624,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 				}
 				}
 				}
+				}
 				catch(Exception ex)
 				{
 					AppClientFactory.printSevereLogger(ex.getMessage());
@@ -632,10 +641,12 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 				for(int k=0;k<levelOneData.size();k++)
 				{
-					try{
 					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+					if(levelOneData.get(k).getCode()!=null)
+					{
+					try{
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(k).getLabel());
@@ -695,6 +706,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				}
+				}
 				
 
 	}
@@ -732,6 +744,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	public void hidePopup()
 	{
 		appPopUp.hide();
+		Window.enableScrolling(true);
 	}
 	@Override
 	public void onLoad() {

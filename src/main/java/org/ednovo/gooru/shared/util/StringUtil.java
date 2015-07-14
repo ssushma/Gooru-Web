@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -826,7 +827,7 @@ public class StringUtil implements ClientConstants {
 
 		long s = different / secondsInMilli;
 
-		String format="";
+		String format="--";
     	if(d>0) {
     		h = (24*d)+h;
     	}
@@ -835,9 +836,19 @@ public class StringUtil implements ClientConstants {
 		    format = format + m + separator;
 		    format = format + s;
 	    } else {
-	    	format = format + h +" hrs ";
-		    format = format + m +" min ";
-		    format = format + s +" sec";
+	    	if(h>0) {
+		    	format = format + h +" hrs ";
+	    	}
+	    	if(m>0) {
+			    format = format + m +" min ";
+	    	}
+	    	if(s>0) {
+			    if(s<=60) {
+			    	format = "< 1min";
+			    } else {
+		    		format = format + s +" sec";
+			    }
+	    	}
 	    }
 	    return format;
 	}
@@ -858,5 +869,21 @@ public class StringUtil implements ClientConstants {
 		return scoreStyle;
 	}
 
+	public static List<String> getKeys(Set<Integer> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Integer key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
+	public static List<String> getKeysLong(Set<Long> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Long key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
 }
 

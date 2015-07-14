@@ -272,6 +272,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
 		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+		final String collectionTitle= collectionDo.getTitle();
 				if(!isCustomizePopup){
 					isCustomizePopup=true;
 					Window.scrollTo(0, 0);
@@ -280,7 +281,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 							@Override
 							public	void onLoginSuccess(){
 								Window.enableScrolling(false);
-								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
 								remixPresenterWidget.getView().getAppPopUp().center();
@@ -292,7 +293,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 						loginPopupUc.setGlassEnabled(true);
 						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
-						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();
@@ -387,8 +388,9 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
+		String collectionTitle=collectionDo.getTitle();
 		if(customize!=null && YES.equals(customize) && emailId!=null){
-			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 			remixPresenterWidget.getView().getAppPopUp().show();
 			isCustomizePopup = false;
 			remixPresenterWidget.getView().getAppPopUp().center();
