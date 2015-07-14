@@ -676,11 +676,30 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						            if(questionType.equalsIgnoreCase("HS")){
 						            	questionType= result.get(i).getQuestionType();
 						            }
-						            String correctAnser = null;
+						            String scoreStatus= result.get(i).getStatus();
 						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
 						        		Label anserlbl=new Label();
 						        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 						        			 Map<String, Integer> authorObject = result.get(i).getOptions();
+						        			 
+						        			 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+											 {
+												 String userSelectedOption=entry.getKey();
+												 int ansStatus=entry.getValue();
+												 if(userSelectedOption!=null){
+													 anserlbl.setText(userSelectedOption);
+													 if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+														 anserlbl.getElement().getStyle().setColor(CORRECT);
+														 isTickdisplay=true;
+													 }else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+														 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+													 }else{
+														 anserlbl.getElement().getStyle().setColor(INCORRECT);
+													 }
+												 }
+											 }
+						        			 
+						        			/* 
 						        			 if(authorObject.keySet().size()!=0){
 						        				 String userSelectedOption=authorObject.keySet().iterator().next();
 							        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
@@ -695,7 +714,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 							        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
 							        				 }
 							        			 }
-						        			 }
+						        			 }*/
 						        		}
 						        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
 						        		data.setValue(i, 3, anserlbl.toString());
@@ -880,28 +899,27 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					            if(questionType.equalsIgnoreCase("HS")){
 					            	questionType= result.get(i).getQuestionType();
 					            }
-					            String correctAnser = null;
+					            String scoreStatus= result.get(i).getStatus();
+
 					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
 					        		Label anserlbl=new Label();
 					        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-					        			// JSONValue value = JSONParser.parseStrict(result.get(i).getOptions().toString());
-					        			 //JSONObject authorObject = value.isObject();
 					        			 Map<String, Integer> authorObject=result.get(i).getOptions();
+					        			 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+										 {
+											 String userSelectedOption=entry.getKey();
+											 if(userSelectedOption!=null){
+													anserlbl.setText(userSelectedOption);
+													if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+														anserlbl.getElement().getStyle().setColor(CORRECT);
+													}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+														anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+													}else{
+														anserlbl.getElement().getStyle().setColor(INCORRECT);
+													}
+												}
+										 }
 					        			 
-					        			 if(authorObject.keySet().size()!=0){
-					        				 String userSelectedOption=authorObject.keySet().iterator().next();
-						        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
-						        			 if(userSelectedOption!=null && correctAnser!=null){
-						        				 anserlbl.setText(userSelectedOption);
-						        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
-						        					 anserlbl.getElement().getStyle().setColor(CORRECT);
-						        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
-						        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-						        				 }else{
-						        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
-						        				 }
-						        			 }
-					        			 }
 					        		}
 					        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
 					        		data.setValue(i, 2, anserlbl.toString());
