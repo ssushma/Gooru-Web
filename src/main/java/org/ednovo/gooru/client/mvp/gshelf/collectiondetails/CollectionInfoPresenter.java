@@ -214,9 +214,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
 		centurySkillsPresenter.getView().setFolderDo(folderObj);
+		callCourseInfoTaxonomy();
 	}
 	@Override
 	public void showStandardsPopup(String standardVal, String standardsDesc) {
+		Window.enableScrolling(false);
 		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
 		addToPopupSlot(standardsPopupPresenter);
 	}

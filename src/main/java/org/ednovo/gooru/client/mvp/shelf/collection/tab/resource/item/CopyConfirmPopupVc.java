@@ -89,6 +89,8 @@ public abstract class CopyConfirmPopupVc{
 	
 	private String resourceType;
 	
+	private String questionType;
+	
 	private static final String ASSESSMENT = "assessment";
 	private static final String QUESTION = "question";
 	
@@ -136,12 +138,13 @@ public abstract class CopyConfirmPopupVc{
 	 * default constructor of CopyConfirmPopupVc
 	 * @param resourceType 
 	 */
-	public CopyConfirmPopupVc(String resourceType) {
+	public CopyConfirmPopupVc(String resourceType,String questionType) {
 		super();
 		popupPanel=new PopupPanel();
 		popupPanel.setWidget(uiBinder.createAndBindUi(this));
 		setStaticTexts();
 		setResourceType(resourceType);
+		setQuestionType(questionType);
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		popupPanel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainerShelf());
 		popupPanel.setGlassEnabled(true);
@@ -472,7 +475,7 @@ public abstract class CopyConfirmPopupVc{
 				chooseCollectionErrorLabel.getElement().setAttribute("alt", i18n.GL0302());
 				chooseCollectionErrorLabel.getElement().setAttribute("title", i18n.GL0302());
 			}else{
-				if(!QUESTION.equals(getResourceType())&& ASSESSMENT.equals(cureentcollectionTreeItem.getCollectionType())){
+				if(!QUESTION.equals(getResourceType())&& ASSESSMENT.equals(cureentcollectionTreeItem.getCollectionType()) && !getQuestionType().equalsIgnoreCase("OE")){
 					chooseCollectionErrorLabel.setText("Oops! can copy only questions for Assessments.");
 					copyResourceBtnLbl.setEnabled(false);
 					copyResourceBtnLbl.getElement().addClassName("disabled");
@@ -519,5 +522,16 @@ public abstract class CopyConfirmPopupVc{
 	public void setResourceType(String resourceType) {
 		this.resourceType = resourceType;
 	}
+
+	public String getQuestionType() {
+		return questionType;
+	}
+
+	public void setQuestionType(String questionType) {
+		this.questionType = questionType;
+	}
+	
+	
+	
 
 }

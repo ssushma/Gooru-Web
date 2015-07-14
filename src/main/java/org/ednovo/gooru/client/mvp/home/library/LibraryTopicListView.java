@@ -1644,7 +1644,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			params.remove(ASSIGN);
 		}
 		final String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
-		String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
+		
+		final String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
@@ -1654,7 +1655,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					@Override
 					public	void onLoginSuccess(){
 						Window.enableScrolling(false);
-						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();
@@ -1664,7 +1665,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				loginPopupUc.show();
 				loginPopupUc.setGlassEnabled(true);
 			}else{
-				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;
 				remixPresenterWidget.getView().getAppPopUp().center();
@@ -1701,12 +1703,12 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
-		
+		final String collectionTitle=getConceptDo().getTitle();
 		if(customize!=null && customize.equals("yes") && emailId!=null){
 			if(colleId.equals(collectionId) && isVisible){
 				isVisible=false;
 				Window.scrollTo(0, 0);
-				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection");
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;
 				remixPresenterWidget.getView().getAppPopUp().center();
