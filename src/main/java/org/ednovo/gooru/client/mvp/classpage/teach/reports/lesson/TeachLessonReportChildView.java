@@ -25,31 +25,37 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
-import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildPresenter;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Gooru Team
@@ -63,7 +69,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	
 	@UiField SpanPanel textLbl, collectionTitle;
 	
-	@UiField Label downloadLink, previewLink;
+	@UiField Button downloadLink, previewLink;
 	
 	final AdvancedFlexTable lessonTablePanelWidget = new AdvancedFlexTable();
 	
@@ -103,13 +109,13 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	@Override
 	public void setCollectionMasterytData(ArrayList<MasterReportDo> result) {
 		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+		String title = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CONTENT_NAME, "My Content");
 		lessonTablePanel.clear();
+		collectionTitle.setText(title);
 		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
 			textLbl.setText("All Assessments");
-			collectionTitle.setText("My Assessment");
 		} else {
 			textLbl.setText("All Collections");
-			collectionTitle.setText("My Collection");
 		}
 		setDataTable(result, contentView);
 	}
@@ -437,5 +443,28 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		panel.addStyleName("green");
 		panel.addStyleName("text-center");
 		return panel;
+	}
+	
+	@UiHandler("allContentPanel")
+	public void backToUnitView(ClickEvent event) {
+		Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
+		params.put(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW);
+		params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
+		params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS, params);
+	}
+	
+	@UiHandler("previewLink")
+	public void accessPlayer(ClickEvent event) {
+		Map<String,String> params = new LinkedHashMap<String,String>();
+		String token = PlaceTokens.ASSESSMENT_PLAY;
+		String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
+		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+		if(collectionType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+			token = PlaceTokens.COLLECTION_PLAY;
+		}
+		params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
+		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 }

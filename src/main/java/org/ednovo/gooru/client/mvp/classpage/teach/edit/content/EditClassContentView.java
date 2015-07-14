@@ -53,6 +53,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -121,6 +123,12 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	List<Long> collectionIds = new ArrayList<Long>();
 	
 	List<ClassLessonDo> classLessonDos = new ArrayList<ClassLessonDo>();
+	
+	private int pageNum=1;
+	
+	private int pageSize=25;
+	
+	boolean visiblity;
 	
 
 	private static EditClassContentViewUiBinder uiBinder = GWT.create(EditClassContentViewUiBinder.class);
@@ -193,6 +201,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 		
 		makeAllVisChkBox.addClickHandler(new UpdateAllVisiblityHandler());
+		unitScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		
 	}
 	
@@ -214,6 +223,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	public void saveClass(ClickEvent event){
 		ClasspageDo classpageDo = new ClasspageDo();
 		classpageDo.setMinimumScore(miniScore);
+		classpageDo.setVisibility(visiblity);
 		saveLblText.setVisible(true);
 		saveBtn.setVisible(false);
 		saveEnabled(false);
@@ -324,6 +334,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	@Override
 	public void setClassData(ClasspageDo classpageDo) {
 		this.classpageDo=classpageDo;
+		this.visiblity=classpageDo.isVisibility();
 		if(classpageDo.getMinimumScore() >0){
 			scoreTextBox.setText(classpageDo.getMinimumScore()+"");
 		}
@@ -346,6 +357,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	public void getUnitListView(List<FolderDo> result) {
 		if(result.size() > 0){
 			unitId = result.get(0).getGooruOid();
+			unitsPanel.clear();
 			for(int i=0;i<result.size();i++){
 				Label label = new Label();
 				
@@ -419,5 +431,30 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 			getUiHandlers().updateCollectionOrAssignmentVisiblity(classLessonDos, unitId);
 		}
 		
+	}
+	
+	private class ScrollDropdownListContainer implements ScrollHandler{
+		@Override
+		public void onScroll(ScrollEvent event) {
+			if((unitScrollPanel.getVerticalScrollPosition() == unitScrollPanel.getMaximumVerticalScrollPosition())){
+					//getUiHandlers().getUnitList((pageNum*pageSize)-1, pageSize);
+				}
+			}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setEmptyUnitListData()
+	 */
+	@Override
+	public void setEmptyUnitListData() {
+		selectedLbl.setText("Unit");
+		unitScrollPanel.clear();
+		Label label = new Label();
+		label.setText("No Lessons Found");
+		label.addStyleName("errorMessage");
+		label.getElement().getStyle().setPadding(50, Unit.PX);
+		label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		tableConatiner.clear();
+		tableConatiner.add(label);
 	}
 }

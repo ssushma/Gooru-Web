@@ -252,25 +252,31 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		this.collectionDo = collectionDo;
 		
 		List<StandardFo> standardFos=collectionDo.getSkills();
-		setSkills(standardFos);
+		//setSkills(standardFos);
 	
 	}
 	
 	@Override
 	public void setFolderDo(FolderDo folderDo){
-		List<StandardFo> standardFos=folderDo.getSkills();
-		setSkills(standardFos);
+		if(folderDo!=null){
+			List<StandardFo> standardFos=folderDo.getSkills();
+			AppClientFactory.printInfoLogger("standardFos ..... size"+standardFos.size());
+			selectedVaue=new HashMap<Long, String>();
+			if(standardFos!=null){
+				for(StandardFo standardFo:standardFos){
+				//	selectedVaue.put((long)standardFo.getId(), standardFo.getLabel());
+				}	
+			}
+
+			setUpdatedCentury(selectedVaue);
+		}
+		
 	}
 	
 	
 	public void setSkills(List<StandardFo> standardFos){
-		if(standardFos!=null){
-			for(StandardFo standardFo:standardFos){
-				selectedVaue.put((long)standardFo.getCodeId(), standardFo.getDescription()!=null?standardFo.getDescription():standardFo.getLabel()!=null?standardFo.getLabel():"");
-			}	
-		}
+		
 			
-			setUpdatedCentury(selectedVaue);
 	}
 	
 	@Override

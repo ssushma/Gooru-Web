@@ -93,7 +93,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 					@Override
 					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
 						getView().setMetadataContent(dataList);
-						getView().setContent(dataList);
+						getView().setContent(dataList, getClasspageDo().getStatus(),getClasspageDo().getUser().getGooruUId());
 					}
 					@Override
 					public void onFailure(Throwable caught) {
@@ -118,7 +118,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, unitId, null, "plan", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
 					@Override
 					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
-						getView().setContent(dataList);
+						getView().setContent(dataList, getClasspageDo().getStatus(),getClasspageDo().getUser().getGooruUId());
 					}
 					@Override
 					public void onFailure(Throwable caught) {

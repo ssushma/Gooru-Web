@@ -89,7 +89,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		super.reset();
 	}
 	
-	public void getContentData(ArrayList<PlanProgressDo> dataList) {
+	public void getContentData(ArrayList<PlanProgressDo> dataList, String status, String userId) {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		String pageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
 		
@@ -114,7 +114,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 				setTextPanelsVisiblity(true,true,false,true);
 				for(int i=0;i<size;i++) {
-					learningMapContainer.add(new StudentClassLessonContainer(dataList.get(i), i+1));
+					learningMapContainer.add(new StudentClassLessonContainer(dataList.get(i), i+1, status, userId));
 				}
 			}
 		}
@@ -135,9 +135,9 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	}
 	
 	@Override
-	public void setContent(ArrayList<PlanProgressDo> dataList) {
+	public void setContent(ArrayList<PlanProgressDo> dataList, String status, String userId) {
 		setContentVisiblity(false);
-		getContentData(dataList);
+		getContentData(dataList, status, userId);
 	}
 	
 	public void navigateToPage(String id) {

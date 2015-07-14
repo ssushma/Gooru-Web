@@ -650,7 +650,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setTreeWidgetType(COURSE);
 			shelfTreeWidget.setLevel(1);
 			TreeItem treeItem = new TreeItem(shelfTreeWidget);
-			shelfFolderTree.insertItem(0, treeItem);
+			shelfFolderTree.insertItem(shelfFolderTree.getItemCount(), treeItem);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
 			getUiHandlers().setRightPanelData(getFolderDo(), COURSE,null);
@@ -718,7 +718,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setLevel(4);
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
-		treeChildSelectedItem.insertItem(0, item);
+		treeChildSelectedItem.insertItem(treeChildSelectedItem.getChildCount(), item);
 		treeChildSelectedItem.setState(true);
 		if(!COLLECTION.equalsIgnoreCase(type) && !type.contains(ASSESSMENT)){ 
 			shelfTreeWidget.setFolderOpenedStatus(true);
@@ -956,15 +956,20 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void removeDeletedTreeWidget(String deletedTreeWidgetId,String currentTypeView){
 		
 		if(COURSE.equalsIgnoreCase(currentTypeView)){
-			for (FolderDo folderDo : SHELF_COLLECTIONS) {
+			/*for (FolderDo folderDo : SHELF_COLLECTIONS) {
 				if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
 					SHELF_COLLECTIONS.remove(folderDo);
 					break;
 				}
 			}
 			organizeRootPnl.addStyleName("active");
-			getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);
+			getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);*/
+			getUiHandlers().setVersion();
+			organizeRootPnl.addStyleName("active");
 			treeChildSelectedItem.remove();
+			Map<String, String> params= new HashMap<String, String>();
+			params.put("view", "Folder");
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 		}else if(UNIT.equalsIgnoreCase(currentTypeView)){
 			ShelfTreeWidget deletedTreeParentWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 			TreeItem treeItem = treeChildSelectedItem.getParentItem();
