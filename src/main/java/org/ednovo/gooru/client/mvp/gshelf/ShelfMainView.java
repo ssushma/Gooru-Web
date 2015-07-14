@@ -650,7 +650,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setTreeWidgetType(COURSE);
 			shelfTreeWidget.setLevel(1);
 			TreeItem treeItem = new TreeItem(shelfTreeWidget);
-			shelfFolderTree.insertItem(0, treeItem);
+			shelfFolderTree.insertItem(shelfFolderTree.getItemCount(), treeItem);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
 			getUiHandlers().setRightPanelData(getFolderDo(), COURSE,null);
@@ -718,7 +718,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setLevel(4);
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
-		treeChildSelectedItem.insertItem(0, item);
+		treeChildSelectedItem.insertItem(treeChildSelectedItem.getChildCount(), item);
 		treeChildSelectedItem.setState(true);
 		if(!COLLECTION.equalsIgnoreCase(type) && !type.contains(ASSESSMENT)){ 
 			shelfTreeWidget.setFolderOpenedStatus(true);
