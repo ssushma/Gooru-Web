@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.FolderInfoWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
@@ -624,8 +625,5 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		FolderInfoWidget folderInfoWidget = new FolderInfoWidget();
 		pnlSlotInnerContent.add(folderInfoWidget);
 	}
-	@Override
-	public HTMLPanel getSlotInnerContent() {
-		return pnlSlotInnerContent;
-	}
+	
 }
