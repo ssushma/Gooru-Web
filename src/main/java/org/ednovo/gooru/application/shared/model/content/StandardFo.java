@@ -36,6 +36,7 @@ public class StandardFo implements Serializable {
 	private String code;
 	private String label;
 	private String description;
+	private Integer id;
 	public StandardFo(){}
 
 
@@ -68,4 +69,15 @@ public class StandardFo implements Serializable {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }

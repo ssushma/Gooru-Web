@@ -33,11 +33,13 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -79,6 +81,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+		setAudienceDetails();
 	}
 	public TaxonomyServiceAsync getTaxonomyService() {
 		return taxonomyService;
@@ -169,6 +172,18 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			@Override
 			public void onSuccess(Boolean value) {
 				getView().callCreateAndUpdate(isCreate,value);
+			}
+		});
+	}
+	
+	public void setAudienceDetails(){
+	AppClientFactory.getInjector().getfolderService().getAudienceList(new AsyncCallback<List<ListValuesDo>>() {
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				getView().getAudienceContainer().init(result);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
 			}
 		});
 	}

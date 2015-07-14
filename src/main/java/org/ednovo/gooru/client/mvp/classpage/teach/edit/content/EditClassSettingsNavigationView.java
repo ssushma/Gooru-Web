@@ -45,6 +45,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -73,9 +74,13 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 	@UiField InlineLabel courseLbl,titleLbl;
 
-	@UiField Button studentPreviewbtn;
+	@UiField Button studentPreviewbtn,editCourseBtn;
 
 	@UiField SimplePanel bodyView;
+	
+	@UiField HTMLPanel coursePanel;
+	
+	
 
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -119,6 +124,13 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		classInfoAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classInfo));
 		minmumScoreAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
 		settLiPanel.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
+		
+		editCourseBtn.setVisible(false);
+		editCourseBtn.setText(i18n.GL3424());
+		editCourseBtn.getElement().setId("connectCourseId");
+		editCourseBtn.getElement().setAttribute("alt",i18n.GL3424());
+		editCourseBtn.getElement().setAttribute("title",i18n.GL3424());
+		editCourseBtn.addClickHandler(new AddCourseClickhandler());
 	}
 
 	@Override
@@ -162,6 +174,11 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 			params.remove(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE);
 			params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
 			AppClientFactory.getPlaceManager().revealPlace(request,params);
+			
+		//	request = request.with(name, value);
+			
+			
+		//	AppClientFactory.getPlaceManager().revealPlace(false, request, false);
 		}
 
 	}
@@ -192,11 +209,37 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	 */
 	@Override
 	public void setCourseData(FolderDo result) {
+		coursePanelVisiblity(true);
 		if (result != null) {
 			titleLbl.setText(result.getTitle());
 			titleLbl.getElement().setId(result.getGooruOid());
 			titleLbl.getElement().setAttribute("alt",result.getTitle());
 			titleLbl.getElement().setAttribute("title",result.getTitle());
 		}
+	}
+	
+	public void coursePanelVisiblity(boolean visiblity){
+		coursePanel.setVisible(visiblity);
+		editCourseBtn.setVisible(!visiblity);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassSettingsNavigationView#setAddCourseData()
+	 */
+	@Override
+	public void setAddCourseData() { 
+		coursePanelVisiblity(false);
+	}
+	
+	private  class AddCourseClickhandler implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			getUiHandlers().addCourseToClass();
+		}
+		
 	}
 }

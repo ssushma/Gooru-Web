@@ -431,11 +431,11 @@ button.btn-disabled{
 }
 
 #gShelfMainContainer .folderLevel.publicIcon.collection {
-    background-image: url('../images/folders/panel/collection-icon-public.png');
+    background-image: url('../images/folders/panel/collection-icon-public.png') !important;
 }
 
 #gShelfMainContainer .folderLevel.assesstpublicIcon.assessment {
-    background-image: url('../images/folders/panel/assessment-icon-public.png');
+    background-image: url('../images/folders/panel/assessment-icon-public.png') !important;
 }
 /* #gShelfMainContainer .folderLevel .arrow {
     width:25px;
@@ -510,6 +510,10 @@ button.btn-disabled{
 #gShelfMainContainer .emptyHover {
     width: 21px;
     height: 20px;
+}
+#gShelfMainContainer .emptyHover:hover + .tooltipContainer  {
+	visibility:visible;
+    opacity:1;
 }
 
 
@@ -4244,3 +4248,78 @@ right:1px;
  @media (min-width: 1200px) {
 }
 /* ========Empty course builder css end =========== */
+
+/* Tooltip css */
+
+.tooltipContainer {
+	width: 150px;
+	position: absolute;
+	left:-20px;
+    top:20px;
+	z-index:9999;
+	margin-top: 0px;
+    opacity: 0;
+	visibility: hidden;
+    -webkit-transition: visibility 0.2s linear, opacity 0.2s linear;
+    -moz-transition: visibility 0.2s linear, opacity 0.2s linear;
+    -o-transition: visibility 0.2s linear, opacity 0.2s linear;
+}
+
+.tooltipContainer .arrowBorder {
+ 	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+    left:20px;
+	border-top: none;
+}
+
+.tooltipContainer .arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	top: -9px;
+    left:20px;
+	border-top: none;
+	z-index: 100;
+    display:block !important; /* to override folder level arrow */
+    background:none; /* to override folder level arrow */
+}
+
+.tooltipContent {
+	text-align:left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 10px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	position: relative;
+	top: -10px;
+	width: 130px;
+	float:left;
+    line-height:1.2em;
+    cursor:default;
+    white-space: normal;
+}
+/* //////////////////////////////////// overrides ////////////////////////////////////////*/
+
+.tooltipContainer .arrow:hover {
+    background:none; /* to override folder level arrow */
+    cursor:default; /* to override folder level arrow */
+}
+
+.folderLevel.child .tooltipContainer .arrow, .folderLevel.parent .tooltipContainer .arrow {
+    left:20px; /* to override folder level arrow */
+}
+

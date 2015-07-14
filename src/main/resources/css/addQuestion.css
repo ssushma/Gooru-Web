@@ -549,8 +549,9 @@
 	border:1px solid #0066cc;
 }
 .ansImageDimensions {
-	height: 70px;
+	height: 78px;
 	width: 80px;
+	margin: 5px 5px;
 }
 .changeImageLbl {
 	position: absolute;
@@ -1110,6 +1111,9 @@
 	margin-right: 3px;
 	line-height: 20px;
 	border: 1px solid #fff;
+}
+.hsImageAssessmentPlayer {
+	margin: 18px;
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {
