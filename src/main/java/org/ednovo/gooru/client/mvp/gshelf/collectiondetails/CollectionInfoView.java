@@ -49,6 +49,8 @@ import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.InfoUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -147,10 +149,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				}
 			}
 		});
-
 		dok.addClickHandler(new dokClickHandlers());
 		centurySkills.addClickHandler(new CenturySkillsClickHandlers());
 		languageObj.addClickHandler(new Language_ObjectiveClickHandlers());
+		collThumbnail.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
+			}
+		});
+		collThumbnail.getElement().setId("mycollectionUploadImage");
 	}	
 
 	/**
@@ -322,12 +330,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		setStaticData(type);			
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
-		collThumbnail.addErrorHandler(new ErrorHandler() {
-			@Override
-			public void onError(ErrorEvent event) {
-				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
-			}
-		});
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	public void setStaticData(String type)
@@ -533,5 +535,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				ulSelectedItems.add(widget);
 			}
 		}
+	}
+	@Override
+	public void setCollectionImage(String url) {
+		Element element=Document.get().getElementById("mycollectionUploadImage");
+		element.removeAttribute("src");
+		element.setAttribute("src", url);
 	}
 }

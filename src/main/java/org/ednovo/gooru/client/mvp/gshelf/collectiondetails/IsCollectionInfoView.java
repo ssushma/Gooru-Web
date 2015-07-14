@@ -71,7 +71,5 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	void addTaxonomyData(UlPanel selectedUlContainer); 
 
-
-
-
+	void setCollectionImage(String url);
 }
