@@ -245,8 +245,13 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	@Override
-	public void displayScoreCount(Integer collectionScore, Integer noOfQuestions) {
-			displayScore(collectionScore,noOfQuestions);
+	public void displayScoreCount(CollectionSummaryMetaDataDo result) {
+		score.setText(result.getScore()+" %");
+		goal.setText("Goal : 90%");
+		correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
+		int scorePercentage=result.getScoreInPercentage();
+		String progressRedialStyle="blue-progress-"+scorePercentage;
+		progressRadial.addStyleName(progressRedialStyle);
 	}
 
 

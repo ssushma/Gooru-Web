@@ -75,7 +75,6 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 
 	@Override
 	public void onReveal() {
-		super.onReveal();
 		getCourseData();
 	}
 
@@ -86,7 +85,6 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	
 	@Override
 	protected void onReset() {
-		super.onReset();
 		loadNavigationPage();
 		getView().setActiveStyles();
 	}

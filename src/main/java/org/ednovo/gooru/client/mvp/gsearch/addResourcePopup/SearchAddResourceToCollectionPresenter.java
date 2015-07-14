@@ -106,6 +106,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType,CollectionResourceWidget collectionResourceWidget) {
 		this.searchResultDo =searchResultDo;
 		this.collectionResourceWidget=collectionResourceWidget;
+		Window.alert("hi--"+searchResultDo.getQuestionType());
 		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}
@@ -322,7 +323,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public boolean validateIsAssessments(String collectionType) {
 		boolean flag=true;
-		if(!QUESTION.equalsIgnoreCase(searchResultDo.getCategory())&& ASSESSMENT.equals(collectionType)){
+		if(!QUESTION.equalsIgnoreCase(searchResultDo.getCategory()) && !searchResultDo.getQuestionType().equalsIgnoreCase("OE") && ASSESSMENT.equals(collectionType)){
 			flag = false;
 		}
 		return flag;

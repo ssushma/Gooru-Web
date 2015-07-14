@@ -126,7 +126,6 @@ public class ClasspageWidgetView extends Composite {
 		classTitle.getElement().setAttribute("alt",collectionDoObj.getName());
 		classTitle.getElement().setAttribute("title",collectionDoObj.getName());
 		
-		System.out.println("courseid1:"+collectionDoObj.getCourseGooruOid());
 		final String courseId = collectionDoObj.getCourseGooruOid();
 
 		assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
@@ -158,6 +157,8 @@ public class ClasspageWidgetView extends Composite {
 					params.put(UrlNavigationTokens.CLASSPAGEID, collectionDoObj.getClassUid());
 					if(collectionDoObj.getCourseGooruOid() != null){
 						params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, collectionDoObj.getCourseGooruOid());
+						params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
+						params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS);
 					}
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
 	

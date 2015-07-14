@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src=""></ui:style>
 		<g:HTMLPanel styleName="geryBackgroundBody paddingBlock">
@@ -27,14 +28,21 @@
 			   <g:HTMLPanel styleName="col-md-5 col-sm-8">
 			      <g:HTMLPanel styleName="unitLeft">
 			         <uc:PPanel ui:field="unitPanel"></uc:PPanel>
-			         <g:HTMLPanel styleName="labelStyle customs-select" ui:field="unitList">
-			           <!--  <select>
+			         <panel:HTMLEventPanel styleName="selctListBox" ui:field="unitList">
+					 <g:Label styleName="listSelecter" ui:field="selectedLbl"></g:Label>
+					 <g:ScrollPanel  styleName="listMenu" ui:field="unitScrollPanel">
+					   <g:HTMLPanel ui:field="unitsPanel"></g:HTMLPanel>
+					 </g:ScrollPanel>
+					 </panel:HTMLEventPanel>
+			        <!--  <g:HTMLPanel styleName="labelStyle customs-select" ui:field="unitList">
+			             <g:ListBox ui:field="unitListBox" ></g:ListBox>
+			            <select>
 			               <option>Rates &amp; Ratios</option>
 			               <option>Blue cheese with crackers</option>
 			               <option>Steak</option>
 			               <option>Other</option>
-			            </select> -->
-			         </g:HTMLPanel>
+			            </select>
+			         </g:HTMLPanel> -->
 			         <uc:PPanel ui:field="choseTxtPanel"></uc:PPanel>
 			         <uc:PPanel ui:field="noteTxtPanel"></uc:PPanel>
 			      </g:HTMLPanel>
@@ -43,7 +51,7 @@
 			   <g:HTMLPanel styleName="contentSettingsTableIndications">
 			      <g:HTMLPanel styleName="makeallVisible">
 			         <g:HTMLPanel styleName="squaredOne">
-			            <g:CheckBox></g:CheckBox>
+			            <g:CheckBox ui:field="makeAllVisChkBox"></g:CheckBox>
 			            <uc:LabelUc></uc:LabelUc>
 			         </g:HTMLPanel>
 			         <g:InlineLabel ui:field="markAllLbl"></g:InlineLabel>
@@ -56,7 +64,7 @@
 			      </g:HTMLPanel>
 			      <g:HTMLPanel styleName="hiddenOpt">
 			         <g:HTMLPanel styleName="squaredOne">
-			           <g:CheckBox></g:CheckBox>
+			            <g:CheckBox ui:field="hiddenBox"></g:CheckBox>
 			            <uc:LabelUc></uc:LabelUc>
 			         </g:HTMLPanel>
 			         <g:InlineLabel ui:field="hiddenLbl"></g:InlineLabel>
@@ -64,7 +72,7 @@
 			   </g:HTMLPanel>
 			   <g:HTMLPanel styleName="table-responsive">
 			   <g:HTMLPanel styleName="contentSettingsTable">
-			      <g:HTMLPanel styleName="contentTable" ui:field="tableConatiner">
+			      <g:HTMLPanel styleName="contentTable">
 			          <g:HTMLPanel styleName="contentTableRow">
 						   <g:HTMLPanel styleName="contentTableCell lessonHeader"><uc:PPanel ui:field="lessonPanel"></uc:PPanel></g:HTMLPanel>
 						   <g:HTMLPanel styleName="contentTableCell">
@@ -74,6 +82,8 @@
 						      </g:HTMLPanel>
 						   </g:HTMLPanel>
 						</g:HTMLPanel>
+			      </g:HTMLPanel>
+			      <g:HTMLPanel styleName="contentTable" ui:field="tableConatiner">
 			      </g:HTMLPanel>
 			   </g:HTMLPanel>
 			</g:HTMLPanel>

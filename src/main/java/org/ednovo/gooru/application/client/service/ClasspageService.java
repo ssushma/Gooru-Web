@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
@@ -44,6 +45,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -81,6 +83,12 @@ public interface ClasspageService extends BaseService {
 	public void v3StudentJoinIntoClass(String classCode) throws GwtException, ServerDownException;
 	
 	public ClasspageDo v3UpdateClass(String classId,ClasspageDo classpageDo) throws GwtException,ServerDownException;
+	
+	public List<FolderDo> getClassUnitList(String classId,String courseIdn,int offset, int limit) throws GwtException,ServerDownException;
+	
+	public List<ClassLessonDo> getClassLessonCollectionList(String classId,String courseId,String unitId,int offset, int limit) throws GwtException,ServerDownException;
+	
+	public ClassLessonDo updateClassLessonVisiblity(String classId,String courseId,String unitId,List<ClassLessonDo> listClassLessonDo) throws GwtException,ServerDownException;
 	/**
 	 * Get Classpage by Classpage id
 	 * @param String classpageID

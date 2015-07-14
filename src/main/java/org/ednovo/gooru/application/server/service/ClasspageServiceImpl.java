@@ -51,6 +51,7 @@ import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsSearchDo;
+import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
@@ -63,6 +64,8 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.application.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
@@ -1703,6 +1706,99 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			getLogger().error("v3UpdateClass ..:"+e.getMessage());
 		}
 		return classDo;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ClasspageService#updateClassLessonVisiblity(java.lang.String, java.lang.String, java.lang.String, org.ednovo.gooru.application.shared.model.content.ClassLessonDo)
+	 */
+	@Override
+	public ClassLessonDo updateClassLessonVisiblity(String classId,	String courseId, String unitId, List<ClassLessonDo> listClassLessonDo) throws GwtException, ServerDownException {
+		ClassLessonDo classLessonDos=null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASS_COURSE_UNIT_LESSON_LIST, classId,courseId,unitId);
+		getLogger().info("updateClassLessonVisiblity:"+url);
+		String form = "";
+		try{
+			if(listClassLessonDo != null){
+				form = ResourceFormFactory.generateStringDataForm(listClassLessonDo, null);
+			}
+			getLogger().info("updateClassLessonVisiblity form:"+form);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),form);
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			getLogger().info("updateClassLessonVisiblity payload:"+jsonRep.toString());
+			if(jsonResponseRep.getStatusCode()==200){
+				getLogger().info("###update success######");
+				//classLessonDos=classLessonDo;
+			}else{
+				classLessonDos=new ClassLessonDo();
+			}
+		}catch(Exception e){
+			getLogger().error("v3 updateClassLessonVisiblity ..:"+e.getMessage());
+		}
+		return classLessonDos;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ClasspageService#getClassUnitList(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<FolderDo> getClassUnitList(String classId, String courseId,int offset, int limit)throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASS_COURSE_UNIT_LIST, classId,courseId);
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.OFFSET, String.valueOf(offset));
+		params.put(GooruConstants.LIMIT, String.valueOf(limit));
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		logger.info("getClassUnitList service : "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeUnitListForClass(jsonRep);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ClasspageService#getClassLessonCollectionList(java.lang.String, java.lang.String, java.lang.String, int, int)
+	 */
+	@Override
+	public List<ClassLessonDo> getClassLessonCollectionList(String classId,	String courseId, String unitId, int offset, int limit)	throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASS_COURSE_UNIT_LESSON_LIST,classId,courseId,unitId);
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.OFFSET, String.valueOf(offset));
+		params.put(GooruConstants.LIMIT, String.valueOf(limit));
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		logger.info("getClassLessonCollectionList service : "+url);
+		return deserializeLessonListForClass(jsonRep);
+	}
+	
+	public List<ClassLessonDo> deserializeLessonListForClass(JsonRepresentation jsonRep) {
+		List<ClassLessonDo> listObj=new ArrayList<ClassLessonDo>();
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				listObj = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(),new TypeReference<List<ClassLessonDo>>() {});
+				return listObj;
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return listObj;
+	}
+	
+	public List<FolderDo> deserializeUnitListForClass(JsonRepresentation jsonRep) {
+		List<FolderDo> listObj=new ArrayList<FolderDo>();
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				listObj = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(),new TypeReference<List<FolderDo>>() {});
+				//listObj.setSearchResult((ArrayList<FolderDo>) JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(),new TypeReference<List<FolderDo>>() {}));
+				return listObj;
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return listObj;
 	}
 		
 	

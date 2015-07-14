@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
@@ -280,7 +281,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
     private String lastViewedResource=null;
     private String lastView=null;
-    private String lastEventType= null;
+    private String lastEventType= PlayerDataLogEvents.STOP_EVENT_TYPE;
 
     public String getLastEventType() {
 		return lastEventType;
@@ -538,8 +539,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		isPlayerRefreshed();
-//		getCollectionDetails();
-		checkPreviousSessionPlayed();
+		getCollectionDetails();
+		//checkPreviousSessionPlayed();
 	}
 
 	/**
@@ -942,7 +943,9 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void resetSummary(){
-		displayScoreCount(0,0);
+		
+		collectionEndPresenter.displayScoreCountData(new CollectionSummaryMetaDataDo());
+		
 	}
 
 	public void setClasspageInsightsUrl(boolean isHomeView){
@@ -2459,21 +2462,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
 
-	public void displayScoreCount(Integer score,Integer questionCount){
-		if(questionCount!=null)
-		{
-			if(questionCount==0){
-				collectionEndPresenter.displayScoreCount(questionCount,questionCount);
-			}else{
-				collectionEndPresenter.displayScoreCount(score,questionCount);
-			}
-		}
-		else
-		{
-			questionCount = 0;
-			collectionEndPresenter.displayScoreCount(score,questionCount);
-		}
-	}
 
 	@Override
 	public void refreshDisclosurePanelinSearch(String collectionId) {
@@ -2751,6 +2739,9 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 
 
+				}else{
+					//There are no previous usage data available. loading player in normal mode.
+					getCollectionDetails();
 				}
 			}
 		});

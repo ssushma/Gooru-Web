@@ -12,5 +12,8 @@
 			<g:InlineLabel text="{i18n.GL3389}"></g:InlineLabel>
 		</uc:PPanel>
 		<g:TextArea styleName="form-control" ui:field="languegeObjective"></g:TextArea>
+		<uc:PPanel styleName="text-right" ui:field="errorPanel">
+			<g:InlineLabel text="{i18n.GL0567}" styleName="errorMessage"></g:InlineLabel>
+		</uc:PPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
