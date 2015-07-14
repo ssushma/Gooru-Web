@@ -570,4 +570,18 @@
 	text-transform: uppercase;
 	
 }
-
+.remixPopupTabPnlStyle{
+	display:inline-block;
+	width: 49%;
+	padding: 12px;
+	font-weight: bold;
+}
+.remixPopupTabPnlStyle.selected{
+	background: #4c98cc;
+}
+.copyLblStyle{
+	padding: 10px 20px;
+}
+.copyLblStyle.selected{
+	background: #cddeea;
+}
