@@ -121,7 +121,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	protected void onReset() {
 		// TODO Auto-generated method stub
 		super.onReset();
-		getCollectionDo();
+		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);
+		if(view!=null&&view.equalsIgnoreCase("Folder")){
+			getCollectionDo();
+		}
 	}
 	@Override
 	protected void onReveal(){
@@ -210,6 +213,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
+		centurySkillsPresenter.getView().setFolderDo(folderObj);
 	}
 	@Override
 	public void showStandardsPopup(String standardVal, String standardsDesc) {
@@ -222,6 +226,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		createDo.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
+		createDo.setDepthOfKnowledgeIds(StringUtil.getKeys(getView().getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
+		createDo.setSkillIds(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
 		
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
@@ -267,6 +274,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
 				getView().getDepthOfKnowledgeContainer().init(result);
+				getView().getDepthOfKnowledgeContainer().setFolderDo(getView().getFolderDo());
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -279,6 +287,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
 				getView().getAudienceContainer().init(result);
+				getView().getAudienceContainer().setFolderDetails(getView().getFolderDo());
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -292,11 +301,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			@Override
 			public void onSuccess(CollectionDo result) {
 				centurySkillsPresenter.getView().setCollectionDo(result);
-
 				getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
 				getView().getAudienceContainer().setCollectonDetails(result);
-
-
 			}
 		});
 	}
@@ -320,7 +326,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			createDo.setTitle(text);
 			createDo.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
 			createDo.setDepthOfKnowledgeIds(StringUtil.getKeys(getView().getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
-			createDo.setSkillsId(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
+			createDo.setSkillIds(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
 			
 			getFolderServiceAsync().updateCourse(courseId, unitId, lessonId, collectionUid, createDo, new AsyncCallback<Void>() {
 				

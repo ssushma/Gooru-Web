@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 
@@ -53,9 +54,10 @@ public class FolderDo implements Serializable{
 	private List<FolderItemDo> collectionItems;
 	private ResourceFormatDo resourceFormat;
 	private ResourceTypeDo resourceTypeDo;
-	private List<checkboxSelectedDo> depthOfKnowledges;
+	private List<checkboxSelectedDo> depthOfKnowledge;
 	private List<checkboxSelectedDo> instructionalMethod;
 	private List<checkboxSelectedDo> audience;
+	private List<StandardFo> skills;
 	private String ideas;
 	private String performanceTasks;
 	private String questions;
@@ -299,12 +301,14 @@ public class FolderDo implements Serializable{
 	}
 
 
-	public List<checkboxSelectedDo> getDepthOfKnowledges() {
-		return depthOfKnowledges;
+	
+
+	public List<checkboxSelectedDo> getDepthOfKnowledge() {
+		return depthOfKnowledge;
 	}
 
-	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
-		this.depthOfKnowledges = depthOfKnowledges;
+	public void setDepthOfKnowledge(List<checkboxSelectedDo> depthOfKnowledge) {
+		this.depthOfKnowledge = depthOfKnowledge;
 	}
 
 	/**
@@ -359,5 +363,17 @@ public class FolderDo implements Serializable{
 	public void setAudience(List<checkboxSelectedDo> audience) {
 		this.audience = audience;
 	}
+
+	public List<StandardFo> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<StandardFo> skills) {
+		this.skills = skills;
+	}
+
+	
+	
+	
 	
 }

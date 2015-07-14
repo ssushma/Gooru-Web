@@ -24,7 +24,7 @@ public class CreateDo implements Serializable{
 	private List<Integer> subdomainIds;
 	private List<Integer> standardIds;
 	private List<String> depthOfKnowledgeIds;
-	private List<String> skillsId;
+	private List<String> skillIds;
 	private String languageObjective;
 	private String url;
 	private String goals;
@@ -142,11 +142,11 @@ public class CreateDo implements Serializable{
 	public void setDepthOfKnowledgeIds(List<String> depthOfKnowledgeIds) {
 		this.depthOfKnowledgeIds = depthOfKnowledgeIds;
 	}
-	public List<String> getSkillsId() {
-		return skillsId;
+	public List<String> getSkillIds() {
+		return skillIds;
 	}
-	public void setSkillsId(List<String> skillsId) {
-		this.skillsId = skillsId;
+	public void setSkillIds(List<String> skillIds) {
+		this.skillIds = skillIds;
 	}
 	
 }
