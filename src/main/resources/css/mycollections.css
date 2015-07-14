@@ -1473,7 +1473,8 @@ padding-bottom: 10px;
 	color:#515151;
 }
 #pnlLessonInfo .dropDownRight{
-	text-align:right;
+	text-align:right !important;
+	padding-right:6px;
 }
 #pnlLessonInfo .dropDownRight .btn{
 	font-size:12px;
@@ -1705,7 +1706,8 @@ padding-bottom: 10px;
 	border:1px solid #ffffff;
 }
 #pnlLessonInfo .unitCoverHeader{
-	text-align:center;
+	text-align:left;
+	padding-left:16px;
 }
 
 #pnlLessonInfo .dropDownRight{
@@ -3503,6 +3505,7 @@ width:100% !important;
 }
 #pnlCollectionInfo .lessonCover .panel-body{
 	padding:0 0;
+	border: 1px solid rgb(221, 221, 221);
 }
 #pnlCollectionInfo .lessonCover .panel-body .active{
 	background: #87badd;
@@ -3542,6 +3545,7 @@ width:100% !important;
 }
 #pnlCollectionInfo .unitCoverHeader{
 	text-align:left;
+	padding-left: 17px;
 }
 
 @media (max-width: 767px) {
