@@ -96,15 +96,7 @@ public class SuccessPopupForResource extends PopupPanel {
 				element.removeAttribute("style");
 			}
 			hide();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
-			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
-			AppClientFactory.fireEvent(new CloseCollectionPlayerEvent(true));
-			if("resource".equals(searchType)){
-				AppClientFactory.fireEvent(new SetFolderCollectionStyleEvent(params,"collection"));
-			}else{
-				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
-				AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
-			}
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, getParams()); 
 		}
 	}
 	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type,FolderDo folderDo){
