@@ -62,7 +62,6 @@ public class ClassListWidget extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			System.out.println("clickevent");
 			Map<String, String> params= new HashMap<String, String>();
 			params.put("classpageid", classId);
 			params.put("pageSize","5");

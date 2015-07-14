@@ -32,6 +32,8 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
+import com.google.gwt.user.client.ui.VerticalPanel;
+
 /**
  * @author Search Team
  *
@@ -324,5 +326,4 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 *
 	 */
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItem);
-
 }

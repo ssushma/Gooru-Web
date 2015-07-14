@@ -27,5 +27,5 @@ package org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface TeachStudentReportPopupUiHandlers extends BaseUiHandlers{
-
+	void getStudentReportData(String gooruUId);
 }

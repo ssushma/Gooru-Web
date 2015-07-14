@@ -287,8 +287,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			formData.put(PWD, decryptedPwd);
 			formData.put(MAIL_CONFORMATION, mailConfirmationUrl);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL);
-			getLogger().info("resetCredential url post::::::"+url);
-			getLogger().info("resetCredential form data ::::::"+formData.toString());
 			jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";

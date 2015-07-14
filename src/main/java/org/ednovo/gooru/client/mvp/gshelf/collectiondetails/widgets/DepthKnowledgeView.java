@@ -81,11 +81,13 @@ public class DepthKnowledgeView extends Composite {
 	public void setSelectedValues(List<checkboxSelectedDo> list){
 		selectedValues=new HashMap<Integer, String>();
 		int count=detailsContainer.getWidgetCount();
+
 		if(list!=null){
 			for(checkboxSelectedDo checkboxSelectedDoObj:list){
 				selectedValues.put(checkboxSelectedDoObj.getId(), checkboxSelectedDoObj.getName());
 			}
 		}
+
 	
 		
 		for(int i=0;i<count;i++){
@@ -96,13 +98,8 @@ public class DepthKnowledgeView extends Composite {
 				if(id!=null){
 					Integer idInt=Integer.parseInt(id);
 					checkBox.setValue(selectedValues.containsKey(idInt));
-					
-
-					
 				}
 			}
 		}
-		
 	}
-	
 }
