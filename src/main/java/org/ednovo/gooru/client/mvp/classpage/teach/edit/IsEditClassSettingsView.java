@@ -50,4 +50,6 @@ public interface IsEditClassSettingsView extends IsViewWithHandlers<EditClassSet
 
 	void setShortenUrl(Map<String, String> shortenUrl);
 
+	void setUpdateClassData();
+
 }

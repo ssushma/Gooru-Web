@@ -29,6 +29,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -59,17 +60,21 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	
 	ClasspageDo classpageDo;
 	
+	AddCourseToClassPresenter addCourseToClassPresenter;
 	
 	@Inject
-	public EditClassSettingsNavigationPresenter(EventBus eventBus,IsEditClassSettingsNavigationView view,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter){
+	public EditClassSettingsNavigationPresenter(EventBus eventBus,IsEditClassSettingsNavigationView view,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter,AddCourseToClassPresenter addCourseToClassPresenter){
 		super(eventBus, view);
+		getView().setUiHandlers(this);
 		this.editClassSettingsPresenter=editClassSettingsPresenter;
 		this.editClassContentPresenter=editClassContentPresenter;
+		this.addCourseToClassPresenter=addCourseToClassPresenter;
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
+		//getCourseData();
 		
 	}
 
@@ -122,8 +127,21 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 					
 				}
 			});
+		}else{
+			getView().setAddCourseData();
 		}
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationUiHandler#addCourseToClass()
+	 */
+	@Override
+	public void addCourseToClass() {
+		addCourseToClassPresenter.getUserShelfCourseData("", "class");
+		addCourseToClassPresenter.getView().getAppPopUp().show();
+		addCourseToClassPresenter.getView().getAppPopUp().center();
+		addCourseToClassPresenter.getView().getAppPopUp().setGlassEnabled(true);
 	}
 	
 }

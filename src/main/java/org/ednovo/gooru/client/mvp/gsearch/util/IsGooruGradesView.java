@@ -54,5 +54,26 @@ public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandl
 
 	void setGrade(String grades);
 
+	/**
+	 * @function clearGradesStyles 
+	 * 
+	 * @created_date : 14-Jul-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void clearGradesStyles();
+
 
 }
