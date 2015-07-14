@@ -412,6 +412,21 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					getUiHandlers().deleteCourseContent(o1CourseId);
 				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){ 
 					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);
+				}else if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){ 
+					if((AppClientFactory.getPlaceManager().getRequestParameter("id",null)!=null)){
+						getUiHandlers().deleteMyCollectionContent((AppClientFactory.getPlaceManager().getRequestParameter("id",null)),"folderCollection");
+					}else{
+						if(AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL)!=null){
+							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+							getUiHandlers().deleteMyCollectionContent(parentId,LESSON);
+						} else if(AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL)!=null){
+							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+							getUiHandlers().deleteMyCollectionContent(parentId,UNIT);
+						} else {
+							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+							getUiHandlers().deleteMyCollectionContent(parentId,COURSE);
+						}
+					}
 				}else{
 					getUiHandlers().deleteCollectionContent(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
 				}
@@ -423,18 +438,29 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}
 		};
 		deletePopup.setPopupTitle(i18n.GL0748());
-		if(currentTypeView.equalsIgnoreCase(COURSE)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COURSE));
-			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COURSE));
-		}else if(UNIT.equalsIgnoreCase(currentTypeView)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), UNIT));
-			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
-		}else if(LESSON.equalsIgnoreCase(currentTypeView)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), LESSON));
-			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
-		}else if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+		if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){
+			String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+			if(o1!=null || o2!=null || o3!=null){
+				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), "folder"));
+				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), "folder"));
+			}
+		}else{
+			if(currentTypeView.equalsIgnoreCase(COURSE)){
+				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COURSE));
+				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COURSE));
+			}else if(UNIT.equalsIgnoreCase(currentTypeView)){
+				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), UNIT));
+				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
+			}else if(LESSON.equalsIgnoreCase(currentTypeView)){
+				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), LESSON));
+				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
+			}
+		}
+		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
 			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COLLECTION.equalsIgnoreCase(currentTypeView)?COLLECTION:ASSESSMENT));
-			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
+			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COLLECTION));
 		}
 		deletePopup.setDeleteValidate("delete");
 		deletePopup.setPositiveButtonText(i18n.GL0190());
@@ -450,9 +476,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void onDeleteCourseSuccess(String o1CourseId) {
 		hideDeletePopup();
 		Map<String, String> params= new HashMap<String, String>();
-		params.put("view", COURSE);
-		getUiHandlers().setRightClusterContent(o1CourseId,currentTypeView);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view", null))){
+			params.put("view", "Folder");
+			getUiHandlers().setRightClusterContent(o1CourseId,COURSE);
+		}else{
+			params.put("view", COURSE);
+			getUiHandlers().setRightClusterContent(o1CourseId,currentTypeView);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		}
 		
 	}
 	
@@ -465,10 +496,18 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void onDeleteUnitSuccess(String o1CourseId, String o2DeletedUnitId) {
 		hideDeletePopup();
 		Map<String, String> params= new HashMap<String, String>();
-		params.put("view", COURSE);
-		params.put(O1_LEVEL, o1CourseId);
-		getUiHandlers().setUnitsListOnRightCluster(o1CourseId,o2DeletedUnitId,currentTypeView);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view", null))){
+			params.put("view", "Folder");
+			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1",null)); 
+			getUiHandlers().setUnitsListOnRightCluster(o1CourseId,o2DeletedUnitId,UNIT);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+			
+		}else{
+			params.put("view", COURSE);
+			params.put(O1_LEVEL, o1CourseId);
+			getUiHandlers().setUnitsListOnRightCluster(o1CourseId,o2DeletedUnitId,currentTypeView);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		}
 	}
 	
 	private void hideDeletePopup() {
@@ -488,11 +527,19 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void onDeleteLessonSuccess(String o1CourseId, String o2UnitId,String o3LessDeletedonId) {
 		hideDeletePopup();
 		Map<String, String> params= new HashMap<String, String>();
-		params.put("view", COURSE);
-		params.put(O1_LEVEL, o1CourseId);
-		params.put(O2_LEVEL, o2UnitId);
-		getUiHandlers().setLessonsListOnRightCluster(o1CourseId,o2UnitId,o3LessDeletedonId,currentTypeView);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view", null))){
+			params.put("view", COURSE);
+			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1",null));
+			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2",null));
+			getUiHandlers().setLessonsListOnRightCluster(o1CourseId,o2UnitId,o3LessDeletedonId,LESSON);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		}else{
+			params.put("view", COURSE);
+			params.put(O1_LEVEL, o1CourseId);
+			params.put(O2_LEVEL, o2UnitId);
+			getUiHandlers().setLessonsListOnRightCluster(o1CourseId,o2UnitId,o3LessDeletedonId,currentTypeView);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		}
 	}
 	
 
@@ -502,13 +549,40 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void onDeleteCollectionAssessmentSuccess(String o1CourseId,String o2UnitId, String o3LessonId, String deletedAssessmentCollectionId) {
 		hideDeletePopup();
-		Map<String, String> params= new HashMap<String, String>();
-		params.put("view", COURSE);
-		params.put(O1_LEVEL, o1CourseId);
-		params.put(O2_LEVEL, o2UnitId);
-		params.put(O3_LEVEL, o3LessonId);
-		getUiHandlers().setCollectionsListOnRightCluster(o1CourseId,o2UnitId,o3LessonId,deletedAssessmentCollectionId,currentTypeView);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view", null))){
+			Map<String, String> params = new HashMap<String, String>();
+			if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+				params.put("view", "Folder");
+				params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+				params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+				params.put("o3",AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+				getUiHandlers().setCollectionsListOnRightCluster(o1CourseId,o2UnitId,o3LessonId,deletedAssessmentCollectionId,COLLECTION);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+			}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+				params.put("view", "Folder");
+				params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+				params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+				getUiHandlers().setLessonsListOnRightCluster(o1CourseId,o2UnitId,deletedAssessmentCollectionId,LESSON);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+			}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+				params.put("view", "Folder");
+				params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1")); 
+				getUiHandlers().setUnitsListOnRightCluster(o1CourseId,deletedAssessmentCollectionId,UNIT);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+			}else{
+				params.put("view", "Folder");
+				getUiHandlers().setRightClusterContent(o1CourseId,COURSE);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+			}
+		}else{
+			Map<String, String> params= new HashMap<String, String>();
+			params.put("view", COURSE);
+			params.put(O1_LEVEL, o1CourseId);
+			params.put(O2_LEVEL, o2UnitId);
+			params.put(O3_LEVEL, o3LessonId);
+			getUiHandlers().setCollectionsListOnRightCluster(o1CourseId,o2UnitId,o3LessonId,deletedAssessmentCollectionId,currentTypeView);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		}
 	}
 	
 	/**

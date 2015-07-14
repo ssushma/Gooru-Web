@@ -350,6 +350,39 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		});
 	}
 	
+	
+	/**
+	 * calls API to delete Collection/Assessment at Mycollections level(old view).
+	 */
+	
+	@Override
+	public void deleteMyCollectionContent(final String id, final String type) {
+		if("folderCollection".equals(type)){
+			AppClientFactory.getInjector().getfolderService().deleteCollectionsFolder(id, new SimpleAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					getView().onDeleteCollectionAssessmentSuccess("","","",id);
+				}
+			});
+		}else{
+			AppClientFactory.getInjector().getResourceService().deleteCollection(id, new SimpleAsyncCallback<Void>() {
+				
+				@Override
+				public void onSuccess(Void result) {
+					if(COURSE.equalsIgnoreCase(type)){
+						getView().onDeleteCourseSuccess(id);
+					}else if(UNIT.equalsIgnoreCase(type)){
+						getView().onDeleteUnitSuccess("", id);
+					}else{
+						getView().onDeleteLessonSuccess("", "", id);
+					}
+				}
+			});
+		}
+	}
+	
+	
 	/**
 	 * Sets the right side view on delete of Unit.
 	 */
@@ -396,4 +429,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData){
 		this.firstSelectedData=firstSelectedData;
 	}
+	
+	
 }
