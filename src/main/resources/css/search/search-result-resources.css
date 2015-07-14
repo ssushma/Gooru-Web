@@ -304,9 +304,14 @@ margin:0 0 0 -20px !important;
 #gooruSearchMainContainer .resourceDropdown{
 	padding:20px;
 }
-#gooruSearchMainContainer .paddingBlock{
+#gooruSearchMainContainer  .paddingBlock{
 
 }
+
+#gooruSearchMainContainer .resourceDetails .gridToggle .resourceDropdown .paddingBlock{
+	padding: 0 0;
+}
+
 #gooruSearchMainContainer .resourceDropdown P{
 	margin-bottom:10px;
 }
