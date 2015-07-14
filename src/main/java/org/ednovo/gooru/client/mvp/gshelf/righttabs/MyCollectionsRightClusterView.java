@@ -73,7 +73,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,toggleButton,deletePnl;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkDeleteButton;
 	@UiField HTMLEventPanel popupPanelDropDwn,copyPopupPanel;
-	@UiField Label copyLbl,moveLbl,lnkDelete;
+	@UiField Label copyLbl,moveLbl,myCollDelLbl;
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -115,7 +115,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		
 		copyLbl.addClickHandler(new onCopyClickHandler());
 		moveLbl.addClickHandler(new onMoveClickHandler());
-		lnkDelete.addClickHandler(new DeleteContentData()); 
+		myCollDelLbl.addClickHandler(new DeleteContentData()); 
 		
 		lnkPreview.setVisible(false);
 		toggleButton.setVisible(false);
@@ -367,15 +367,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-			if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
-				invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
-			}else{
-				getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
-			}
+			initiateDelete();
 		}
 	}
 	
@@ -384,11 +376,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		public void onClick(ClickEvent event) {
 			copyLbl.getElement().removeClassName("selected");
 			moveLbl.getElement().removeClassName("selected");
-			lnkDelete.getElement().addClassName("selected");
-			String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-			String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
+			myCollDelLbl.getElement().addClassName("selected");
+			initiateDelete();
 		}
 		
 	}
@@ -511,6 +500,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		deletePopup.show();
 		deletePopup.center();
 	}
+	
 	/**
 	 * This method defines functionality after deleting the course.
 	 */
@@ -521,6 +511,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view", null))){
 			params.put("view", "Folder");
 			getUiHandlers().setRightClusterContent(o1CourseId,COURSE);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 		}else{
 			params.put("view", COURSE);
 			getUiHandlers().setRightClusterContent(o1CourseId,currentTypeView);
@@ -577,7 +568,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			getUiHandlers().EnableMyCollectionsTreeData(collectionId,folderObj.getTitle());
 			copyLbl.getElement().addClassName("selected");
 			moveLbl.getElement().removeClassName("selected");
-			lnkDelete.getElement().removeClassName("selected");
+			myCollDelLbl.getElement().removeClassName("selected");
 			isCopySelected= true;
 			isMoveSelected=false;
 			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
@@ -589,7 +580,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 			copyLbl.getElement().removeClassName("selected");
 			moveLbl.getElement().addClassName("selected");
-			lnkDelete.getElement().removeClassName("selected");
+			myCollDelLbl.getElement().removeClassName("selected");
 			isCopySelected= false;
 			isMoveSelected= true;
 			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
@@ -663,7 +654,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{
 				params.put("view", "Folder");
 				getUiHandlers().setRightClusterContent(o1CourseId,COURSE);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+//				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 			}
 		}else{
 			Map<String, String> params= new HashMap<String, String>();
@@ -698,6 +689,18 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void setFolderInfoWidget() {
 		FolderInfoWidget folderInfoWidget = new FolderInfoWidget();
 		pnlSlotInnerContent.add(folderInfoWidget);
+	}
+	
+	public void initiateDelete() {
+		String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+		}else{
+			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
+		}
 	}
 	
 }
