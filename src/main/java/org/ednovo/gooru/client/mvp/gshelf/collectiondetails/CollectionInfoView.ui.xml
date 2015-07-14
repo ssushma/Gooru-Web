@@ -156,7 +156,7 @@
 			<g:HTMLPanel styleName="normal" ui:field="newtype"></g:HTMLPanel>
 		</g:HTMLPanel>
 		<div class="stepsButtonGroup">
-			<g:Button styleName="secondary" ui:field="saveCollectionBtn"
+			<g:Button styleName="primary" ui:field="saveCollectionBtn"
 				text="{i18n.GL3368}" />
 		</div>
 		<div class="clearfix"></div>
