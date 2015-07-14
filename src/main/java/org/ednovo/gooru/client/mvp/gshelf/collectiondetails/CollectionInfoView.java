@@ -328,7 +328,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
-		getUiHandlers().callCourseInfoTaxonomy();
+	
 	}
 	public void setStaticData(String type)
 	{   
@@ -371,6 +371,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 */
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
+		String view= AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
@@ -386,7 +387,21 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setStandardIds(getSelectedStandardsIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+					if(view!=null)
+					{
+						if(view.equalsIgnoreCase("folder"))
+						{
+							getUiHandlers().updateCollectionDetails();
+						}
+						else
+						{
+							getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+						}
+					}
+					else
+					{
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);	
+					}
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
