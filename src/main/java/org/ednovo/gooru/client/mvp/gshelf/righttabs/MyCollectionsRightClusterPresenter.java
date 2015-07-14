@@ -61,7 +61,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	UnitInfoPresenter unitInfoPresenter; 
 	
 	AssessmentPopupWidget assessmentPopup;
-	
 
 	ShelfMainPresenter shelfMainPresenter;
 	
@@ -152,11 +151,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if(FOLDER.equalsIgnoreCase(type)){
 					//To disabel bread cums
 					getView().disableAndEnableBreadCums(false);
-					/*collectionInfoPresenter.setCollectionType(type);
-					collectionInfoPresenter.setData(folderObj,type);
-					setInSlot(INNER_SLOT, collectionInfoPresenter);*/
 					getView().setFolderInfoWidget();
-					
 				}else{
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){
@@ -170,10 +165,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}
 		}else if(index==2){
 			if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
+				collectionContentPresenter.getView().getResourceListPanel();
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
-				//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, folderListDoChild, true, true, null);
+				shelfMainPresenter.getMyCollectionsListPresenter().getView().loadingImage();
 				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}

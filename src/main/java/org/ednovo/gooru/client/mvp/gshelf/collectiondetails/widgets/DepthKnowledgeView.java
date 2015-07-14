@@ -74,17 +74,14 @@ public class DepthKnowledgeView extends Composite {
 	}
 	
 	public void setSelectedValues(){
-		AppClientFactory.printInfoLogger("id...I am in setSelectedValue..");
 		selectedValues=new HashMap<Integer, String>();
 		int count=detailsContainer.getWidgetCount();
 		List<checkboxSelectedDo> list=collectionDo.getDepthOfKnowledges();
-		AppClientFactory.printInfoLogger(".............lIST"+list);
 		if(list!=null){
 			for(checkboxSelectedDo checkboxSelectedDoObj:list){
 				selectedValues.put(checkboxSelectedDoObj.getId(), checkboxSelectedDoObj.getName());
 			}
 		}
-		AppClientFactory.printInfoLogger("................."+selectedValues.size());
 		for (Map.Entry<Integer,String> entry : selectedValues.entrySet()){
 			 AppClientFactory.printInfoLogger("........."+entry.getKey() + "/" + entry.getValue()+"......");
 		}
@@ -94,17 +91,11 @@ public class DepthKnowledgeView extends Composite {
 			if(widget instanceof CheckBox){
 				CheckBox checkBox=(CheckBox)widget;
 				String id=checkBox.getElement().getId();
-				AppClientFactory.printInfoLogger("id....."+id);
 				if(id!=null){
 					Integer idInt=Integer.parseInt(id);
 					checkBox.setValue(selectedValues.containsKey(idInt));
-					
-
-					
 				}
 			}
 		}
-		
 	}
-	
 }

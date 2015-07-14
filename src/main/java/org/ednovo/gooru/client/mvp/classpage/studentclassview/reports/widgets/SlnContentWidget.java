@@ -43,7 +43,6 @@ public class SlnContentWidget extends Composite {
 			type = planProgressDo.getType();
 		}
 		
-		System.out.println("type "+type);
 		
 		setContentIcon(type);
 		if(type.equalsIgnoreCase("assessment")) {

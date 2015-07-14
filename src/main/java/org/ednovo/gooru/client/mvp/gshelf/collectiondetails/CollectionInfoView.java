@@ -305,7 +305,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             if(courseObj.getStandards()!=null && courseObj.getStandards().size()>0){
                 //Render the existing standards
                 for(final CourseSubjectDo courseSubjectDo : courseObj.getStandards()) {
-                	System.out.println("courseSubjectDo.getCode()::"+courseSubjectDo.getCode());
                     final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
                     liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
                         @Override

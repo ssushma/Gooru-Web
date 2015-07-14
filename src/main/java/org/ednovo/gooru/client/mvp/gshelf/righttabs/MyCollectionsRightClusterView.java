@@ -624,6 +624,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		FolderInfoWidget folderInfoWidget = new FolderInfoWidget();
 		pnlSlotInnerContent.add(folderInfoWidget);
 	}
-	
-	
+	@Override
+	public HTMLPanel getSlotInnerContent() {
+		return pnlSlotInnerContent;
+	}
 }

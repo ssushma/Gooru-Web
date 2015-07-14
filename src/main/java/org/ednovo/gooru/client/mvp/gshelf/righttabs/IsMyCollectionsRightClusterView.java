@@ -72,4 +72,6 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void setFolderInfoWidget();
 	
+	public HTMLPanel getSlotInnerContent();
+	
 }

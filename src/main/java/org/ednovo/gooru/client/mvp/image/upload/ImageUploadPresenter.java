@@ -228,7 +228,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setSaveImageCollectionAsyncCallback(new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String url) {
-				System.out.println("image url::"+url);
 				if(isClassPageImage){
 					AppClientFactory.fireEvent(new UpdateClasspageImageEvent(url));
 				}else{
