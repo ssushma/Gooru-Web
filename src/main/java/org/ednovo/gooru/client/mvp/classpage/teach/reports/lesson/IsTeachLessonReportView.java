@@ -27,12 +27,15 @@
  */
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.child.IsChildView;
+import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 
 /**
  * @author SearchTeam
  * 
  */
 public interface IsTeachLessonReportView extends IsChildView<TeachLessonReportChildPresenter> {
-	public void setDataTable(String contentView);
+	void setCollectionMasterytData(ArrayList<MasterReportDo> result);
 }

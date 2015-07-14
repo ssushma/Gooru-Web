@@ -88,7 +88,7 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 			PlanProgressDo planDo = result.get(rowWidgetCount);
 			HTML studentName = new HTML(planDo.getUserName());
 			studentName.setStyleName("myclasses-mastery-unit-cell-style");
-			studentName.addClickHandler(new StudentCourseView(planDo.getUserUId()));
+			studentName.addClickHandler(new StudentCourseView(planDo.getUserName(), planDo.getUserUId()));
 			courseTableWidget.setWidget(rowWidgetCount,0,studentName);
 			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor("white");
 			usageData = planDo.getUsageData();
@@ -157,14 +157,16 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	}
 	
 	public class StudentCourseView implements ClickHandler {
-		private String courseId = null;
-		public StudentCourseView(String courseId) {
-			this.courseId = courseId;
+		private String gooruUId = null;
+		private String userName = null;
+		public StudentCourseView(String userName, String gooruUId) {
+			this.userName = userName;
+			this.gooruUId = gooruUId;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget();
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,gooruUId);
 		}
 	}
 
