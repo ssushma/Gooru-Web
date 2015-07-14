@@ -1,6 +1,5 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src=""/>
 	<g:HTMLPanel styleName="popupModalContent modal-widget-1000" ui:field="contentPanel">
 		<g:HTMLPanel styleName="popupHeader">
@@ -18,8 +17,8 @@
 			<div class="learningHeaderBlock margin-top-zero">
 				<div class="col-md-6">
 		      		<div class="student-report-details-popup-panel"> 
-		      		    <img src="http://profile-demo.s3.amazonaws.com/profile-prod/c3a96812-62a1-4318-846f-f16fdb99f8d4.png?0.39592762291431427"/> 
-		      		    Hello, JonnaP!
+		      		    <g:Image ui:field="userImage"/> 
+		      		    <span:SpanPanel ui:field="userName"></span:SpanPanel>
 		      		</div>
 				</div>
 				<div class="col-md-6">

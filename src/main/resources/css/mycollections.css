@@ -732,7 +732,7 @@ button.btn-disabled{
 	width:100%;
 	border-collapse:collapse;
 }
-#gShelfCousesList #myCollectionsListView {
+#myCollectionsListViewLoaddingImage {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -1241,6 +1241,11 @@ button.btn-disabled {
 	display: inline-block;
 	float: right;
 }
+#gShelfCourseInfo .actions .deleteButton{
+	display: inline-block;
+	float: none;
+	vertical-align: middle;
+}
 #gShelfCourseInfo .folderBlockSitemap .deleteButton a {
 	border-left: 1px solid #dddddd;
 	border-right: 1px solid #dddddd;
@@ -1468,7 +1473,8 @@ padding-bottom: 10px;
 	color:#515151;
 }
 #pnlLessonInfo .dropDownRight{
-	text-align:right;
+	text-align:right !important;
+	padding-right:6px;
 }
 #pnlLessonInfo .dropDownRight .btn{
 	font-size:12px;
@@ -1650,7 +1656,7 @@ padding-bottom: 10px;
 	border-left:1px solid #dddddd;
 }
 #pnlLessonInfo .lessonCover{
-	padding:15px 15px;
+	padding-top:15px;
 }
 #pnlLessonInfo .lessonCover .panel-heading{
 	background-color:transparent;
@@ -1682,10 +1688,12 @@ padding-bottom: 10px;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks p{
 	margin:0 0;
+	text-align:left;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks .frLeft{
 	font-size:17px;
 	color:#515151;
+	text-align:left;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks .singleBlock{
 
@@ -1700,7 +1708,8 @@ padding-bottom: 10px;
 	border:1px solid #ffffff;
 }
 #pnlLessonInfo .unitCoverHeader{
-	text-align:center;
+	text-align:left;
+	padding-left:16px;
 }
 
 #pnlLessonInfo .dropDownRight{
@@ -2967,6 +2976,14 @@ display: table-cell;
 	position:relative;
 
 }
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail{
+display: table-cell;
+  	  width: 120px;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage{
+	position:relative;
+
+}
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage img{
 	  width: 120px;
 	height:90px;
@@ -3035,7 +3052,11 @@ display: table-cell;
 }
 
 #pnlCollectionInfo .fractionDetailsTable  .dropDownRight .dropdown-menu{
-	min-width:100%;
+	left:auto;
+	right:0;
+}
+#pnlCollectionInfo .fractionDetailsTable  .dropDownRight .dropdown-menu li{
+	padding:5px 15px;
 }
 #pnlCollectionInfo .fractionDetailsTable  .dropDownRight .btn-primary {
     background-color: #87badd;
@@ -3271,15 +3292,14 @@ background: none repeat scroll 0% 0% rgb(195, 221, 238);
 {
 text-align: left;
 font-weight: bold;
-padding-left: 10px;
 font-size: 9pt;
 }
 #pnlCollectionInfo .liPanelStylenonBold
 {
 text-align: left;
-padding-left: 10px;
+
 font-size: 9pt;
-padding-bottom: 10px;
+
 }
 
 #pnlCollectionInfo .courseNameBlock{
@@ -3498,6 +3518,7 @@ width:100% !important;
 }
 #pnlCollectionInfo .lessonCover .panel-body{
 	padding:0 0;
+	border: 1px solid rgb(221, 221, 221);
 }
 #pnlCollectionInfo .lessonCover .panel-body .active{
 	background: #87badd;
@@ -3522,6 +3543,10 @@ width:100% !important;
 #pnlCollectionInfo .lessonCover .fractionBlocks .frLeft{
 	font-size:17px;
 	color:#515151;
+	word-break:break-all;
+}
+#pnlCollectionInfo .lessonCover .fractionBlocks .frRight p{
+	padding-left:15px;
 }
 #pnlCollectionInfo .lessonCover .fractionBlocks .singleBlock{
 
@@ -3537,6 +3562,7 @@ width:100% !important;
 }
 #pnlCollectionInfo .unitCoverHeader{
 	text-align:left;
+	padding-left: 17px;
 }
 
 @media (max-width: 767px) {
@@ -4111,6 +4137,9 @@ right:1px;
 	margin-top: 11px;
 	color: #fab03a;
 	font-style: italic;
+}
+.shareMainContainer .marginBottom{
+	margin-bottom: 10px;
 }
 
 .shareMainContainer  button.primary{

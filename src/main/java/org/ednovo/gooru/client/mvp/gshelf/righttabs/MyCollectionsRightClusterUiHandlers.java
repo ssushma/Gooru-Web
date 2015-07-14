@@ -41,10 +41,11 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	public void setDefaultActiveTab();
 	void setUnitTemplate(String type);
 	
-	
 	public void setRightClusterContent(String o1CourseId, String currentTypeView);
 	
 	public void deleteCourseContent(String o1CourseId);
+	
+	public void getUserShelfData(String collectionId,String valuetype);
 	
 	public void deleteUnitContent(String o1CourseId, String o2UnitId);
 	
@@ -61,5 +62,13 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	public void setCollectionsListOnRightCluster(String o1CourseId,String o2UnitId, String o3LessonId,String deletedAssessmentCollectionId, String currentTypeView);  
 	
 	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData);
+	
+	public void deleteMyCollectionContent(String id, String folderCollection);
+
+	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected);
+
+	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle);
+	
+	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle);
 	
 }

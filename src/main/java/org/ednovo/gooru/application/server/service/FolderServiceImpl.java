@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.application.client.service.FolderService;
 import org.ednovo.gooru.application.server.ArrayListSorter;
@@ -570,14 +571,33 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId) throws GwtException, ServerDownException {
-
+	public void reorderFoldersOrCollections(String courseId,String unitId,String lessonId,String collectionId,int itemToBeMovedPosSeqNumb, String collectionItemId,String type) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"");
+		try {	
+			getLogger().info("-- itemToBeMovedPosSeqNumbI - - - - "+itemToBeMovedPosSeqNumb);
+			getLogger().info("-- collectionItemId - - - - "+collectionItemId);
+		JSONObject jsonObj=new JSONObject();
+		if(type.equalsIgnoreCase("Folder")){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"");
+		}else{
+			if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTION_METADATA,courseId,unitId,lessonId,collectionItemId);
+			}else if(courseId!=null && unitId!=null && lessonId!=null && collectionId==null ){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTION_METADATA,courseId,unitId,lessonId,collectionItemId);
+			}else if(courseId!=null && unitId!=null && lessonId==null){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_LESSON_METADATA,courseId,unitId,collectionItemId);
+			}else if(courseId!=null && unitId==null){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA,courseId,collectionItemId);
+			}else if(courseId==null){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA,collectionItemId);
+			}
+			jsonObj.put("position",itemToBeMovedPosSeqNumb);
+		}
 		getLogger().info("-- Folder Re-order API - - - - "+url);
-		try {
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
+		getLogger().info("-- payload Re-order API - - - - "+jsonObj.toString());
+		
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObj.toString());
 		}catch (Exception e) {
 			logger.error("Exception::", e);
 		}
@@ -811,5 +831,52 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
 
 		return listValues;
+	}
+	
+	@Override
+	public void updateCollectionDetails(String collectionId,Map<Integer,String> audience,Map<Integer,String> dok,Map<Long,String> centurySkills,String languageObjective){
+		
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTION, collectionId);
+		JSONObject collectionObject=new JSONObject();
+		try {
+			
+			collectionObject.put("languageObjective", languageObjective);
+			
+			List<String> auKeys=new ArrayList<String>();
+			List<String> dokKeys=new ArrayList<String>();
+			List<String> centurySkillsKeys=new ArrayList<String>();
+		
+			Set<Integer> keys=audience.keySet();
+			
+			collectionObject.put("audienceIds", getKeys(audience.keySet()));
+			collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
+			collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
+			getLogger().info("Url update coll details -- "+url);
+			getLogger().info("form data -- "+collectionObject.toString());
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),collectionObject.toString());
+		
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+	}
+	
+	
+	public List<String> getKeys(Set<Integer> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Integer key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
+	public List<String> getKeysLong(Set<Long> keys){
+		List<String> keyString=new ArrayList<String>();		
+	
+		for(Long key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
 	}
 }

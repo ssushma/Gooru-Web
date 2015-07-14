@@ -65,6 +65,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -98,6 +99,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	ConfirmationPopupVc deleteConfirmationPopupVc = null;
 
 	private HandlerRegistration handlerRegistration=null;
+	
+	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -560,6 +563,13 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		public void closeBrowseStandardsPopup() {
 			getUiHandlers().closeBrowseStandardsPopup();
 		}
-
+	}
+	@Override
+	public void getResourceListPanel(){
+		pnlReosurceList.clear();
+		Image loadingImage =  new Image();
+		loadingImage.setUrl(LOADER_IMAGE);
+		loadingImage.getElement().setId("myCollectionsListViewLoaddingImage");
+		pnlReosurceList.add(loadingImage);
 	}
 }

@@ -29,8 +29,6 @@ import java.util.HashMap;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
-
 /**
  * @author Search Team
  *
@@ -71,5 +69,7 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId, Integer classpageList);
 	
 	public void disableAndEnableBreadCums(boolean isVisible);
+	
+	public void setFolderInfoWidget();
 	
 }

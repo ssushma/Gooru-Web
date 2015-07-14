@@ -79,7 +79,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 
 	void getCollectionResources(String parentId,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
 	
-	void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId, AsyncCallback<Void> simpleAsyncCallback);
+	void reorderFoldersOrCollections(String courseId,String unitId,String lessonId,String collectionId,int itemToBeMovedPosSeqNumb, String collectionItemId,String type, AsyncCallback<Void> simpleAsyncCallback);
 	
 	void getTocFolders(String folderId,boolean fromPPP, AsyncCallback<FolderTocDo> callback);
 	
@@ -100,7 +100,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void getDepthOfKnowledgesList(AsyncCallback<List<ListValuesDo>> callback);
 	
 	void getAudienceList(AsyncCallback<List<ListValuesDo>> callback);
-	
+	void updateCollectionDetails(String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective,AsyncCallback<Void> asyncCallback);
 	void  getCourseDetails(String courseId, String unitId, String lessonId,AsyncCallback<FolderDo> callback);
 
 }

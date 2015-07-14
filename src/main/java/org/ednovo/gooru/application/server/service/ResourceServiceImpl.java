@@ -277,6 +277,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("get coll res url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
@@ -325,11 +326,32 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setSharing(jsonRep.getJsonObject().isNull("sharing")?"":jsonRep.getJsonObject().getString("sharing"));
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
+				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>();
+				if(jsonRep.getJsonObject().has("audience")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("audience");
+					for(int i=0;i<array.length();i++){
+						checkboxSelectedDo item=new checkboxSelectedDo();
+						item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), checkboxSelectedDo.class);
+						checkboxSelectedDos.add(item);
+					}
+				}
+				obj.setAudience(checkboxSelectedDos);
+				List<checkboxSelectedDo> checkboxSelectedDos1=new ArrayList<checkboxSelectedDo>();
+
+				if(jsonRep.getJsonObject().has("depthOfKnowledge")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("depthOfKnowledge");
+					for(int i=0;i<array.length();i++){
+						checkboxSelectedDo item=new checkboxSelectedDo();
+						item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), checkboxSelectedDo.class);
+						checkboxSelectedDos1.add(item);
+					}
+				}
+				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
 				obj.setUser(user);
-
+				if(!jsonRep.getJsonObject().isNull("collectionItems")){
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<CollectionItemDo>();
 				for(int i=0;i<array.length();i++){
@@ -342,6 +364,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					collectionItems.add(item);
 				}
 				obj.setCollectionItems(collectionItems);
+				}
 				return obj;
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
@@ -797,7 +820,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return deserializeCollectionItem(jsonResponseRepget);
 	}
-
+	
 	@Override
 	public ResourceMetaInfoDo getResourceMetaInfo(String url) throws GwtException {
 
@@ -1509,6 +1532,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 
 		getLogger().info("---- getFolderWorkspace ---  "+url);
+		getLogger().info("---- collectionType ---  "+collectionType);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeWorkspaceFolderList(jsonRep,collectionType);
@@ -2172,6 +2196,148 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return resourceModelList;
 	}
+	@Override
+	public CollectionDo moveCollectionToMyCOllections(String collectionId, String folderId,String collectionTitle) {
+		String url="";
+		CollectionDo collectionDoObj=new CollectionDo();
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		if(folderId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_V3_COLLECTION, collectionId);
+		}else{
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_V3_COLLECTION, collectionId);
+			Map<String, String> params = new LinkedHashMap<String, String>();
+			params.put("folderId", folderId);
+			url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		}
+		try{
+			getLogger().info("--- moveCollectionToMyCOllections collection URl -- "+url);
+			JSONObject copyCollectionJsonObject=new JSONObject();
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			try{
+				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
+				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
+				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+					if(jsonResponseRepresentation1.getStatusCode()==200){
+						/*collectionDoObj = deserializeCollection(jsonResponseRepget);*/
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}else{
+						collectionDoObj=new CollectionDo();
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}
+			}catch(Exception e){
+				logger.error("Exception-------"+e);
+			}
+		}catch(Exception ex){
+			logger.error("Exception::", ex);
+		}
+		return collectionDoObj;
+	}
+	
+	@Override
+	public CollectionDo moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId) {
+		CollectionDo collectionDoObj=new CollectionDo();
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.MOVE_V1_COLLECTION, courseId,unitId,LessonId,CollectionId);
+		try{
+			getLogger().info("--- moveCollectionTOLesson CopyCollectionToLesson URl -- "+url);
+			getLogger().info("-- moveCollectionTOLesson CopyCollectionToLesson payload (Put method) -- ");
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), "");
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			try{
+				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
+				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
+				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+					if(jsonResponseRepresentation1.getStatusCode()==200){
+						/*collectionDoObj = deserializeCollection(jsonResponseRepget);*/
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}else{
+						collectionDoObj=new CollectionDo();
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}
+			}catch(Exception e){
+				logger.error("Exception-------"+e);
+			}
+		}catch(Exception ex){
+			logger.error("Exception::", ex);
+		}
+		return collectionDoObj;
+	}
+	@Override
+	public CollectionDo CopyToplevelMyCollections(String collectionId, String folderId,String collectionTitle) {
+		String url="";
+		CollectionDo collectionDoObj=new CollectionDo();
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		if(folderId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_V3_COLLECTION, collectionId);
+		}else{
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_V3_COLLECTION, collectionId);
+			Map<String, String> params = new LinkedHashMap<String, String>();
+			params.put("folderId", folderId);
+			url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		}
+		try{
+			JSONObject copyCollectionJsonObject=new JSONObject();
+			copyCollectionJsonObject.put("title", collectionTitle);
+			getLogger().info("--- Copy collection URl -- "+url);
+			getLogger().info("-- Copy coll payload (Put method) -- "+copyCollectionJsonObject.toString());
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			try{
+				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
+				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
+				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+					if(jsonResponseRepresentation1.getStatusCode()==200){
+						collectionDoObj = deserializeCollection(jsonResponseRepget);
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}else{
+						collectionDoObj=new CollectionDo();
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}
+			}catch(Exception e){
+				logger.error("Exception-------"+e);
+			}
+		}catch(Exception ex){
+			logger.error("Exception::", ex);
+		}
+		return collectionDoObj;
+	}
+	
+	@Override
+	public CollectionDo CopyCollectionToLesson(String courseId,String unitId,String LessonId,String CollectionId,String collecctionTitle) {
+		CollectionDo collectionDoObj=new CollectionDo();
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.MOVE_V1_COLLECTION, courseId,unitId,LessonId,CollectionId);
+		try{
+			JSONObject copyCollectionJsonObject=new JSONObject();
+			copyCollectionJsonObject.put("title", collecctionTitle);
+			getLogger().info("--- Copy CopyCollectionToLesson URl -- "+url);
+			getLogger().info("-- Copy CopyCollectionToLesson payload (Post method) -- "+copyCollectionJsonObject.toString());
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			try{
+				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
+				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
+				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+					if(jsonResponseRepresentation1.getStatusCode()==200){
+						collectionDoObj = deserializeCollection(jsonResponseRepget);
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}else{
+						collectionDoObj=new CollectionDo();
+						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					}
+			}catch(Exception e){
+				logger.error("Exception-------"+e);
+			}
+		}catch(Exception ex){
+			logger.error("Exception::", ex);
+		}
+		return collectionDoObj;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.application.client.service.ResourceService#getCourseDataById(java.lang.String)
@@ -2196,4 +2362,5 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return new FolderDo();
 	}
+	
 }

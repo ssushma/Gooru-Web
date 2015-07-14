@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -105,7 +106,14 @@ public abstract class ContentWidgetWithMove extends Composite {
 		lblIndex.setText(indexVal+"");
 		txtMoveTextBox.setText(indexVal+"");
 		txtMoveTextBox.getElement().setAttribute("index",index+"");
-		txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
+		
+		//For old reorder we need to pass the collection item id, for coruse and other reorder we need to pass the gooruOid.
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+		if(FOLDER.equalsIgnoreCase(view)){
+			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
+		}else{
+			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getGooruOid()+"");
+		}
 		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
 		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
 		//This blur handler reset the previous value when the text box value is empty.
@@ -265,6 +273,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 	}
 	public Label getDownArrow(){
 		return lblDownArrow;
+	}
+	public Label getIndexLabel(){
+		return lblIndex;
 	}
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 }

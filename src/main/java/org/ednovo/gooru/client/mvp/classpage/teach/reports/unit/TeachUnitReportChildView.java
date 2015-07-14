@@ -154,7 +154,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 				Anchor studentName = new Anchor(userList.get(rowWidgetCount).getUserName()); //
 				studentName.setStyleName("");
 				studentName.setWidth("100px");
-				studentName.addClickHandler(new StudentUnitView(userList.get(rowWidgetCount).getGooruOId()));
+				studentName.addClickHandler(new StudentUnitView(userList.get(rowWidgetCount).getUserName(), userList.get(rowWidgetCount).getUserUId()));
 				assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,studentName);
 				assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 				
@@ -182,7 +182,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						Label scoreLblTitle = new Label(A_STRING+columnWidgetCount);
 						scoreLblTitle.setWidth("80px");
 						scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
-						scoreLblTitle.addClickHandler(new CollectionAssessmentView("contentId",UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT));
+						scoreLblTitle.addClickHandler(new CollectionAssessmentView(collectionList.get(collectionWidgetCount).getGooruOId(),contentView));
 						assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,scoreLblTitle);
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
@@ -208,13 +208,15 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 			int colSpan = 0;
 			for(int headerColumnCount=0;headerColumnCount<lessonSize;headerColumnCount++) {
 				PlanProgressDo lessonDo = userList.get(0).getUsageData().get(headerColumnCount);
-				HTML unitName = new HTML("L"+(headerColumnCount+1)+"&nbsp;"+lessonDo.getTitle());
-				unitName.setStyleName("");
-				assessmentTableWidget.setWidget(0, headerColumnCount+1,unitName);
-				assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
-				assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
-				colSpan = colSpan + lessonDo.getUsageData().size();
-				assessmentTableWidget.getFlexCellFormatter().setColSpan(0, (headerColumnCount+1), colSpan);
+				if(lessonDo.getUsageData().size()>0) {
+					HTML unitName = new HTML("L"+(headerColumnCount+1)+"&nbsp;"+lessonDo.getTitle());
+					unitName.setStyleName("");
+					assessmentTableWidget.setWidget(0, headerColumnCount+1,unitName);
+					assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
+					assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
+					colSpan = colSpan + lessonDo.getUsageData().size();
+					assessmentTableWidget.getFlexCellFormatter().setColSpan(0, (headerColumnCount+1), colSpan);
+				}
 			}
 		}
 	}
@@ -372,19 +374,22 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW);
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, contentId);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, contentType);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, contentId);
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 	}
 
 	public class StudentUnitView implements ClickHandler {
-		private String courseId = null;
-		public StudentUnitView(String courseId) {
-			this.courseId = courseId;
+		private String userName = null;
+		private String userUid = null;
+		public StudentUnitView(String userName, String userUid) {
+			this.userName = userName;
+			this.userUid = userUid;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget();
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,userUid);
 		}
 	}
 }

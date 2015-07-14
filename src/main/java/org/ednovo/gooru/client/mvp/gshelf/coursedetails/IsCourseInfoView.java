@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 
 /**
  * @author Search Team
@@ -61,4 +62,5 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 * @param result
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result);
+	AudienceView getAudienceContainer();
 }

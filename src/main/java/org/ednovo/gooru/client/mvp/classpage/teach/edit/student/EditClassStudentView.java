@@ -431,7 +431,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
 			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
 			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
 			request = request.with(UrlNavigationTokens.CLASSPAGEID, id);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, courseId);
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);

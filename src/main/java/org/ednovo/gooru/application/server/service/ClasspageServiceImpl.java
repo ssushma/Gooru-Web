@@ -47,6 +47,7 @@ import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
+import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
@@ -1826,7 +1827,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
-		String userId = getLoggedInUserUid();
+		String userId = null;
+		if(queryParams!=null&&queryParams.get("userUid")!=null) {
+			userId = queryParams.get("userUid");
+		} else {
+			userId = getLoggedInUserUid();
+		}
+		
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		
 		String endPoint = getAnalyticsEndPoint();
@@ -1870,7 +1877,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				}
 			}
 		}catch (JSONException e) {
-			e.printStackTrace();
+			logger.error("Exception::", e);
 		}
 		return dataList;
 	}
@@ -1896,7 +1903,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				}
 			}
 		}catch (JSONException e) {
-			e.printStackTrace();
+			logger.error("Exception::", e);
 		}
 		return dataList;
 	}
@@ -1927,21 +1934,21 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				}
 			}
 		}catch (JSONException e) {
-			e.printStackTrace();
+			logger.error("Exception::", e);
 		}
 		return dataList;
 	}
 	
 	@Override
-	public ArrayList<PlanProgressDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException {
-		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+	public ArrayList<MasterReportDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType) throws GwtException, ServerDownException {
+		ArrayList<MasterReportDo> dataList = new ArrayList<MasterReportDo>();
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
 		if(collectionType.equalsIgnoreCase("assessment")) {
-			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS, classpageId, courseId, unitId, lessonId, collectionType);
+			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS, classpageId, courseId, unitId, lessonId, assessmentId);
 		} else {
-			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_COLLECTION_PROGRESS, classpageId, courseId, unitId, lessonId, collectionType);
+			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_COLLECTION_PROGRESS, classpageId, courseId, unitId, lessonId, assessmentId);
 		}
 		
 		getLogger().info(partialUrl);
@@ -1953,12 +1960,33 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
-					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<MasterReportDo>>(){});
 				}
 			}
 		}catch (JSONException e) {
-			e.printStackTrace();
+			logger.error("Exception::", e);
 		}
 		return dataList;
+	}
+
+	@Override
+	public PlanContentDo getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException {
+		PlanContentDo collectionList = new PlanContentDo();
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASS_COLLECTIONS, classpageId, courseId, unitId, lessonId);
+		
+		getLogger().info(partialUrl);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				collectionList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<PlanContentDo>(){});			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return collectionList;
 	}
 }

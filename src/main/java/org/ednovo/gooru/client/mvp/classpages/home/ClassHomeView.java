@@ -313,7 +313,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
-		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASS)){
 			params.put("tab","classList");
 		}
 		AppClientFactory.getPlaceManager().revealPlace(token, params);

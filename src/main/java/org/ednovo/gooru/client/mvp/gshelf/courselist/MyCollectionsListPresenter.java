@@ -103,11 +103,15 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
-		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemSeqToAPI,idToMove, new SimpleAsyncCallback<Void>() {
+	public void reorderWidgetPositions(String idToMove,final int itemSeqToAPI,final int movingIndex) {
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2", null);
+		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o3", null);
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(courseId,unitId,lessonId,null,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getView().resetWidgetPositions();
+				getView().resetWidgetPositions(itemSeqToAPI,movingIndex);
 			}
 		});
 	}

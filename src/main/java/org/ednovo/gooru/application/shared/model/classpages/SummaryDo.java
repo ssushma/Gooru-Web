@@ -22,10 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport;
+package org.ednovo.gooru.application.shared.model.classpages;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import java.io.Serializable;
 
-public interface TeachStudentReportPopupUiHandlers extends BaseUiHandlers{
-	void getStudentReportData(String gooruUId);
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+/**
+ * @fileName : AssessmentSummaryStatusDo.java
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
+ */
+@JsonInclude(Include.NON_NULL)
+public class SummaryDo implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	private int collectionCount;
+	private int assessmentCount;
+	
+	public int getCollectionCount() {
+		return collectionCount;
+	}
+	public void setCollectionCount(int collectionCount) {
+		this.collectionCount = collectionCount;
+	}
+	public int getAssessmentCount() {
+		return assessmentCount;
+	}
+	public void setAssessmentCount(int assessmentCount) {
+		this.assessmentCount = assessmentCount;
+	}
 }

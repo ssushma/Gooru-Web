@@ -45,6 +45,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.gwtplatform.mvp.client.PopupView;
@@ -60,4 +61,8 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	void restrictionToAddResourcesData(String message);
 	public void clearUrlParams();
     PopupPanel getAppPopUp();
+	public void setCopyAndMoveStatus(boolean isCopySelected,boolean isMoveSelected);
+	public Label getMycollectionsLbl();
+	public Label getMycontentLbl();
+	public void setFromMyCourse(boolean value);
 }

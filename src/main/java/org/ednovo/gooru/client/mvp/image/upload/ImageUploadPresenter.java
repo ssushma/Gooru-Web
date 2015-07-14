@@ -180,10 +180,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
 				}
-
-
 				else if(isProfileImage||isPublicProfileImage||isUdateProfileImage){
-
 					saveUserProfileImage(filename);
 				}else if(isuserOwnResourceImage){
 					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
@@ -234,7 +231,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setSaveImageCollectionAsyncCallback(new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String url) {
-				System.out.println("image url::"+url);
 				if(isClassPageImage){
 					AppClientFactory.fireEvent(new UpdateClasspageImageEvent(url));
 				}else{
@@ -243,16 +239,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					}else{
 						MixpanelUtil.AddImageFromMyComputer();
 					}
-					ThumbnailDo thumbnailObj = new ThumbnailDo();
-					thumbnailObj.setUrl(url);
-
-					
-					FolderDo folderDo = new FolderDo();
-					folderDo.setTitle(createDoObj.getTitle());
-					folderDo.setCollectionType(createDoObj.getCollectionType());
-					folderDo.setThumbnails(thumbnailObj);
-					
-					getShelfView().setCouseData(folderDo,createDoObj.getCollectionType());
+					getShelfView().setCollectionImage(url);
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
