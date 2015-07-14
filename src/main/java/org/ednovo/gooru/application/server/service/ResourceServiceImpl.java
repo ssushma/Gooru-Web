@@ -1520,6 +1520,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 
 		getLogger().info("---- getFolderWorkspace ---  "+url);
+		getLogger().info("---- collectionType ---  "+collectionType);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeWorkspaceFolderList(jsonRep,collectionType);
