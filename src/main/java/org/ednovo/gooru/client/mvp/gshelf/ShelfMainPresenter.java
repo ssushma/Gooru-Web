@@ -52,7 +52,6 @@ import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -141,20 +140,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		doc.getBody().setClassName(""); 
 		addRegisteredHandler(SetFolderParentNameEvent.TYPE, this);
 		addRegisteredHandler(SetFolderMetaDataEvent.TYPE, this);
-		Window.addWindowScrollHandler(new com.google.gwt.user.client.Window.ScrollHandler() {
-			@Override
-			public void onWindowScroll(ScrollEvent event) {
-				//This will check the placetoken,o1 and id values for pagination purpose
-				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				String o1=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
-				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null){
-					if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
-						getView().executeScroll(false);
-					}
-				}
-			}
-		});
 	}
 	
 	@Override
@@ -212,10 +197,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			getView().setNoDataForAnonymousUser(true);
 		}else{
 			if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
+				Window.scrollTo(0,0);
 				callWorkspaceApi();
 				version = AppClientFactory.getLoggedInUser().getToken();
 			}
-			
 		}
 	}
 	/**
@@ -347,7 +332,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				getView().getCollectionLabel().setText(folderObj.getTitle());
 			}
 		}
-		//getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
 		getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}

@@ -24,20 +24,31 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildPresenter;
+import org.ednovo.gooru.client.uc.SpanPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -48,7 +59,29 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 
 	@UiField HTMLPanel lessonTablePanel;
 	
+	@UiField HTMLEventPanel allContentPanel;
+	
+	@UiField SpanPanel textLbl, collectionTitle;
+	
+	@UiField Label downloadLink, previewLink;
+	
 	final AdvancedFlexTable lessonTablePanelWidget = new AdvancedFlexTable();
+	
+	private static final String QUESTION = "assessment-question";
+	
+	private static final String RESOURCE = "resource";
+
+	private final String GREEN = "#BCD1B9 !important";
+	
+	private final String RED = "#EAB4B3 !important";
+	
+	private final String ORANGE = "#FFE7C2 !important";
+	
+	private final String WHITE = "#FFF";
+
+	private static final String VIEWRESPONSE = "View Answer";
+
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
 
@@ -57,13 +90,28 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 
 	public TeachLessonReportChildView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		getData();
+		setPresenter(new TeachLessonReportChildPresenter(this));
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
+		String assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
+		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+		getPresenter().getLessonMasteryData(classId, courseId, unitId, lessonId, assessmentId, collectionType);
 	}
 	
-	public void getData() {
+	@Override
+	public void setCollectionMasterytData(ArrayList<MasterReportDo> result) {
 		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
 		lessonTablePanel.clear();
-		setDataTable(contentView);
+		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
+			textLbl.setText("All Assessments");
+			collectionTitle.setText("My Assessment");
+		} else {
+			textLbl.setText("All Collections");
+			collectionTitle.setText("My Collection");
+		}
+		setDataTable(result, contentView);
 	}
 	
 	public static native void sortAndFixed() /*-{
@@ -87,11 +135,168 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	@Override
 	public void onLoad() {
 		super.onLoad();
+		//sortAndFixed();
+	}
+	
+	public void setDataTable(ArrayList<MasterReportDo> collectionProgressData, String contentView) {
+		try{
+			lessonTablePanel.clear();
+			final AdvancedFlexTable adTable=new AdvancedFlexTable();
+			adTable.getElement().setId("example");
+			lessonTablePanel.add(adTable);
+			// create headers and put them in the thead tag
+			Label title=new Label(i18n.GL1932());
+			adTable.setHeaderWidget(0, title);
+			adTable.setHeaderWidget(1, new Label(i18n.GL2288()));
+			
+			int questionColumnIndex=0,resourceColumnIndex=0;
+			int noOfQuestions=0;
+
+			MasterReportDo defaultUserDataForUsers=null;
+			int rowCount=0;
+			for (MasterReportDo collectionProgressDataDo : collectionProgressData) {
+				defaultUserDataForUsers=collectionProgressDataDo;
+				rowCount=rowCount+1;
+				if(collectionProgressDataDo.getType()!=null && collectionProgressDataDo.getType().equalsIgnoreCase(QUESTION)){
+					HTML questionPnl=new HTML(collectionProgressDataDo.getSequence()+":&nbsp;Question");
+					adTable.setHeaderWidget(rowCount+1,questionPnl);
+					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
+						 noOfQuestions++;
+					 }
+					 questionColumnIndex++;
+				}else{
+					 HTML resourcePnl=new HTML("Resource&nbsp;"+collectionProgressDataDo.getSequence());
+					 adTable.setHeaderWidget(rowCount+1,resourcePnl);
+					 resourceColumnIndex++;
+				}
+			}
+			if(defaultUserDataForUsers!=null){
+				int sizeNames=defaultUserDataForUsers.getUsageData().size();
+		        int columnsSize=collectionProgressData.size();
+		        for(int i=0;i<sizeNames;i++) {
+		        	  int score=0,position=0;
+		        	  for(int j=0;j<columnsSize;j++) {
+		        		  	  String color=WHITE;
+		        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
+			        		  if(collectionProgressData.get(j).getType()!=null && !collectionProgressData.get(j).getType().equalsIgnoreCase(QUESTION)){
+/*			        			  int reaction=collectionProgressData.get(j).getUsageData().get(i).getReaction();
+			        			  Label reactionlbl=new Label();
+					        		 if(reaction == 0){
+					        			 reactionlbl.setText("--");
+					        		 }else{
+					        			  String customClass=res.css().reaction_redneedhelp();
+						        		  if (reaction==1) {
+											  customClass = res.css().reaction_redneedhelp();
+										  } else if (reaction==2) {
+											  customClass = res.css().reaction_reddontunderstand();
+										  } else if (reaction==3) {
+											  customClass =res.css().reaction_mean1();
+										  } else if (reaction==4) {
+											  customClass = res.css().reaction_understand1();
+										  }else if (reaction>4) {
+											  customClass = res.css().reaction_explain1();
+										  }
+						        		  reactionlbl.addStyleName(customClass);
+					        		 }
+				        		  mainDataVpnl.add(reactionlbl);
+				        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
+*/			        		  }else{
+			        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
+			        			//  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
+			        			  
+			        			  Map<String, Integer> answerOption = collectionProgressData.get(j).getUsageData().get(i).getOptions();
+			        			  String answer="";
+			        			  int attemptCount=collectionProgressData.get(j).getUsageData().get(i).getAttempts();
+			        			  if((typeOfQuestion!=null) && (typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE"))){
+			        				  Label viewResponselbl=new Label();
+					        		  mainDataVpnl.add(viewResponselbl);
+			        				  String answerText="--";
+			        				  if(answerOption!=null){
+						        		  answerText=VIEWRESPONSE;
+						        		 // viewResponselbl.getElement().getParentElement().addClassName(res.css().viewResponseInCollectionProgress());
+			        				  }else{
+			        					  answerText="--";
+			        					  viewResponselbl.getElement().getParentElement().getStyle().setBackgroundColor(WHITE);
+			        				  }
+			        				  viewResponselbl.setText(answerText);
+			        				  //viewResponselbl.addClickHandler(new ClickOnTableCell());
+			        				  viewResponselbl.getElement().setAttribute("questionCount", (j+1)+"");
+			        				  viewResponselbl.getElement().setAttribute("questionType", typeOfQuestion);
+			        				  viewResponselbl.getElement().setAttribute("question", AnalyticsUtil.html2text(collectionProgressData.get(j).getTitle()!=null?collectionProgressData.get(j).getTitle():""));
+				        				if(collectionProgressData.get(j).getUsageData()!=null && collectionProgressData.get(j).getUsageData().get(i) != null && collectionProgressData.get(j).getUsageData().get(i).getText() != null){
+				        					  viewResponselbl.getElement().setAttribute("questionAnswer",  AnalyticsUtil.html2text(collectionProgressData.get(j).getUsageData().get(i).getText()));
+				        				  }
+			        				  }else{
+			        				  String answerText="";
+					        		  if(answerOption!=null){
+					        			  
+					        			  Map<String, Integer> optionObj =answerOption;
+						        		  Set<String> keys=optionObj.keySet();
+						        		  if(keys.iterator().hasNext())
+						        			  answer= keys.iterator().next().toString();
+						        		  	  answer=answer!=null?answer:"";
+						        		  if(typeOfQuestion.equalsIgnoreCase("TF")){
+				        					  if(answer.equalsIgnoreCase("A")){
+				        						  answerText="true";
+				        					  }else if(answer.equalsIgnoreCase("B")){
+				        						  answerText="false";
+				        					  }else{
+				        						  answerText="--";
+				        					  }
+				        				  }else{
+				        					  answerText=answer;
+				        				  }
+					        		  }else{
+					        			  answerText="--";
+					        		  }
+			        				  Label answerlbl=new Label(answerText);
+					        		  mainDataVpnl.add(answerlbl);
+					        		  //answerlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
+			        			  }
+			        			  if(answerOption!=null && collectionProgressData.get(j).getMetaData()!=null){
+			        					int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
+			        					 if(scoreValue>=1){
+			        						 if(attemptCount>1){
+						        				  color=ORANGE;
+						        			  }else if(attemptCount==1){
+						        				  score++;
+						        				  color=GREEN;
+						        			  }else{
+						        				  color=WHITE;
+						        			  }
+			        					 }else{
+			        						 color=RED;
+			        					 }
+			        			  }
+			        		  }
+			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUsageData().get(i).getTimespent()));
+			        		  mainDataVpnl.add(timeStamplbl);
+			        		 // timeStamplbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
+			        		 // mainDataVpnl.addStyleName(res.css().mainDataVpnl());
+			        		  adTable.setWidget(i, position+2,mainDataVpnl);
+			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color: "+color);
+			        		  position++;
+		        	   }
+		        	  adTable.setHTML(i, 0,defaultUserDataForUsers.getUsageData().get(i).getUserName());
+		        	  VerticalPanel scoreWidget=new VerticalPanel();
+		        	  Label noOfQuestionAttened=new Label(score+"/"+noOfQuestions);
+		        	  int percent=0;
+		        	  if(noOfQuestions!=0){
+		        		  percent=((score*100)/noOfQuestions);
+		        	  }
+		        	  Label percentage=new Label("("+percent+"%)");
+		        	  scoreWidget.add(noOfQuestionAttened);
+		        	  scoreWidget.add(percentage);
+		        	  adTable.setHTML(i, 1,scoreWidget.toString());
+		        }
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		sortAndFixed();
 	}
 	
-	@Override
-	public void setDataTable(String contentView) {
+	public void setData1Table(ArrayList<PlanProgressDo> result, String contentView) {
 		boolean isAssessment = false;
 		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
 			isAssessment = true;
@@ -164,6 +369,51 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		}
 	}
 	
+	private String getTimeSpent(Long commentCreatedTime) {
+		String createdTime = null;
+		double seconds = (double) ((double)commentCreatedTime / 1000) % 60 ;
+		int minutes = (int) ((commentCreatedTime / (1000*60)) % 60);
+		int hours   = (int) ((commentCreatedTime / (1000*60*60)) % 24);
+		int days = (int) (commentCreatedTime / (1000*60*60*24));
+		if(days!=0){
+			createdTime=days+":";
+		}
+		if(hours!=0){
+			if(createdTime!=null){
+				createdTime=createdTime+hours+":";
+			}else{
+				createdTime=hours+":";
+			}
+		}
+		if(minutes!=0){
+			if(createdTime!=null){
+				createdTime=createdTime+minutes+":";
+			}else{
+				createdTime=minutes+":";
+			}
+		}
+		if(seconds!=0){
+			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
+			String formattedTime="";
+			if(secondsInMille > 0 && secondsInMille<1){
+				formattedTime="<1";
+			}else if( Math.round(secondsInMille)>=1 &&  Math.round(secondsInMille)<10){
+				formattedTime="0"+((int) Math.round(secondsInMille))+"";
+			}else{
+				formattedTime=((int) Math.round(secondsInMille))+"";
+			}
+			if(createdTime!=null){
+				createdTime=createdTime+formattedTime+"";
+			}else{
+				createdTime="00"+":"+formattedTime+"";
+			}
+		}
+		return createdTime;
+	}
+	public static native String roundToTwo(double number) /*-{
+		return ""+(Math.round(number + "e+2")  + "e-2");
+	}-*/;
+
 	private HTMLPanel getCollectionResourceData(String timeSpent) {
 		final HTMLPanel panel = new HTMLPanel("");
 		panel.add(new Label("--"));

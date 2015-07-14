@@ -384,9 +384,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	@Override
 	public void loadingImage(){
+		pnlCourseList.clear();
 		Image loadingImage =  new Image();
 		loadingImage.setUrl(LOADER_IMAGE);
-		loadingImage.getElement().setId("myCollectionsListView");
+		loadingImage.getElement().setId("myCollectionsListViewLoaddingImage");
 		pnlCourseList.add(loadingImage);
 	}
 	@Override
