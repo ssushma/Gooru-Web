@@ -10,12 +10,14 @@
 				<g:HTMLPanel styleName="classSettingsInner">
 					<uc:PPanel ui:field="classTitleLbl"></uc:PPanel>
 					<p><g:TextBox styleName="form-control" ui:field="classTitleTextLbl"></g:TextBox></p>
+					<p><g:Label styleName="errorMessage" ui:field="errorLbl"></g:Label></p>
 					<uc:PPanel ui:field="gradePanel"></uc:PPanel>
 					<g:HTMLPanel styleName="gradesContainer" ui:field="gradeWidget">
 					    <g:HTMLPanel styleName="grade" ui:field="gradeBlock"></g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="uploadImage">
 						<uc:PPanel ui:field="bannerImagePanel"></uc:PPanel>
+						<g:Image styleName="thumbImageUrl" ui:field="classImage"></g:Image>
 						<g:Button styleName="btn btn-default btn-file" ui:field="uploadImagePanel"></g:Button>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
@@ -49,6 +51,7 @@
 	<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	<g:HTMLPanel styleName="actionButtons">
 		<g:Button styleName="primary" ui:field="saveBtn"></g:Button>
+		<g:Label ui:field="saveLbl"></g:Label>
 	</g:HTMLPanel>
 	</g:HTMLPanel>
 </g:HTMLPanel>

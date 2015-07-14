@@ -101,19 +101,18 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 
 	@Override
 	public void onReveal() {
-		super.onReveal();
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
+			getView().setReportView();
+		} else {
+			getView().setRoasterView();
+		}
 	}
 
 	@Override
 	public void onReset() {
-		super.onReset();
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
-			/*if(classpageDo.getCourseGooruOid() != null){
-				getView().setReportDataView();
-			}else{
-				
-			}*/
 			getView().setReportView();
 		} else {
 			getView().setRoasterView();

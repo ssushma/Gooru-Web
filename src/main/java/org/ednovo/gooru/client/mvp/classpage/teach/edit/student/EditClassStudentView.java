@@ -500,7 +500,8 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 
 	@Override
 	public void setRoasterView() {
-		roasterPanel.setStyleName(CssTokens.ACTIVE);
+		roasterPanel.addStyleName(CssTokens.ACTIVE);
+		reportPanel.removeStyleName(CssTokens.ACTIVE);
 		setReportVisiblity(false);
 	}
 

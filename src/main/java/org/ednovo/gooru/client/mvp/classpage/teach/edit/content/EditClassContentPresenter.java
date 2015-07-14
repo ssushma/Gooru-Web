@@ -60,6 +60,10 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	
 	String unitId;
 	
+	int offset=0;
+	
+	int limit=25;
+	
 	@Inject
 	public EditClassContentPresenter(EventBus eventBus,IsEditClassContentView view){
 		super(eventBus, view);
@@ -74,15 +78,20 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 
 	@Override
 	public void onReveal() {
-		getUnitList();
+		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW);
+		if(loadPage != null && loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
+			getUnitList(offset,limit);
+		}
+		
 	}
 
-		
-	private void getUnitList() {
+	
+	/*@Override
+	private void getUnitList(int offset,int limit) {
 		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
 		if(classId != null && courseId != null){
-			AppClientFactory.getInjector().getClasspageService().getClassUnitList(classId, courseId, 0, 20, new AsyncCallback<List<FolderDo>>() {
+			AppClientFactory.getInjector().getClasspageService().getClassUnitList(classId, courseId, offset, limit, new AsyncCallback<List<FolderDo>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -97,7 +106,7 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 					
 			
 		}
-	}
+	}*/
 
 	@Override
 	protected void onHide() {
@@ -155,6 +164,8 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 					getView().setLessonData(result);
 				}
 			});
+		}else{
+			
 		}
 	}
 
@@ -175,6 +186,31 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 				public void onSuccess(ClassLessonDo result) {
 				}
 			});
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler#getUnitList(int, int)
+	 */
+	@Override
+	public void getUnitList(int offset, int limit) {
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
+		if(classId != null && courseId != null){
+			AppClientFactory.getInjector().getClasspageService().getClassUnitList(classId, courseId, offset, limit, new AsyncCallback<List<FolderDo>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+
+				@Override
+				public void onSuccess(List<FolderDo> result) {
+					getView().getUnitListView(result);
+				}
+			});
+		}else{
+			getView().setEmptyUnitListData();
 		}
 	} 
 
