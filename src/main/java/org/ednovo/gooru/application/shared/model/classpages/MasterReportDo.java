@@ -27,10 +27,12 @@ package org.ednovo.gooru.application.shared.model.classpages;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @fileName : PlanProgressDo.java
+ * @fileName : MasterReportDo.java
  * 
  * @Author :Gooru Team
  * 
@@ -42,10 +44,10 @@ public class MasterReportDo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String title;
 	private String gooruOId;
+	private int sequence;
 	private String type;
-	private PlanProgressDo unitUsageData;
-	private ArrayList<PlanProgressDo> lesson;
-	
+	private ArrayList<MasterAssessmentDo> usageData;
+	private ArrayList<MetaDataDo> metaData;
 	public String getTitle() {
 		return title;
 	}
@@ -58,22 +60,28 @@ public class MasterReportDo implements Serializable{
 	public void setGooruOId(String gooruOId) {
 		this.gooruOId = gooruOId;
 	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public PlanProgressDo getUnitUsageData() {
-		return unitUsageData;
+	public ArrayList<MasterAssessmentDo> getUsageData() {
+		return usageData;
 	}
-	public void setUnitUsageData(PlanProgressDo unitUsageData) {
-		this.unitUsageData = unitUsageData;
+	public void setUsageData(ArrayList<MasterAssessmentDo> usageData) {
+		this.usageData = usageData;
 	}
-	public ArrayList<PlanProgressDo> getLesson() {
-		return lesson;
+	public ArrayList<MetaDataDo> getMetaData() {
+		return metaData;
 	}
-	public void setLesson(ArrayList<PlanProgressDo> lesson) {
-		this.lesson = lesson;
+	public void setMetaData(ArrayList<MetaDataDo> metaData) {
+		this.metaData = metaData;
 	}
 }

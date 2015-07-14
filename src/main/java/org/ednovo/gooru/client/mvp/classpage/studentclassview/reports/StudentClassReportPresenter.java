@@ -25,8 +25,6 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;

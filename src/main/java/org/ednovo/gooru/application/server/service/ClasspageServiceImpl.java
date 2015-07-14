@@ -1730,7 +1730,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
-		String userId = getLoggedInUserUid();
+		String userId = null;
+		if(queryParams!=null&&queryParams.get("userUid")!=null) {
+			userId = queryParams.get("userUid");
+		} else {
+			userId = getLoggedInUserUid();
+		}
+		
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		
 		String endPoint = getAnalyticsEndPoint();
@@ -1837,15 +1843,15 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	}
 	
 	@Override
-	public ArrayList<PlanProgressDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException {
-		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+	public ArrayList<MasterReportDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType) throws GwtException, ServerDownException {
+		ArrayList<MasterReportDo> dataList = new ArrayList<MasterReportDo>();
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
 		if(collectionType.equalsIgnoreCase("assessment")) {
-			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS, classpageId, courseId, unitId, lessonId, collectionType);
+			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS, classpageId, courseId, unitId, lessonId, assessmentId);
 		} else {
-			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_COLLECTION_PROGRESS, classpageId, courseId, unitId, lessonId, collectionType);
+			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_COLLECTION_PROGRESS, classpageId, courseId, unitId, lessonId, assessmentId);
 		}
 		
 		getLogger().info(partialUrl);
@@ -1857,7 +1863,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
-					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<MasterReportDo>>(){});
 				}
 			}
 		}catch (JSONException e) {
