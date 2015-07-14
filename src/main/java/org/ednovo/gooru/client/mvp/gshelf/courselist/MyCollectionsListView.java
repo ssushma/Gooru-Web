@@ -281,18 +281,36 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			lblAddNew.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(type)){
 			enableCreateButtons(true);
-			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
+			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+			if(o3!=null){
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+				btnCreate.setVisible(false);
+				lblAddNew.setVisible(false);
+				lblAddNewForResource.setText(i18n.GL1451());
+				lblAddNewForQuestion.setText(i18n.GL3024());
+			}else if(o2!=null || o1!=null){
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreate.setVisible(true);
+				lblAddNew.setVisible(false);
+				btnCreate.setText(i18n.GL3024());
+				lblAddNewForResource.setText(i18n.GL1450());
+				lblAddNewForQuestion.setText(i18n.GL1451());
+			}
+			/*btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			lblAddNewForResource.setText(i18n.GL1450());
-			lblAddNewForQuestion.setText(i18n.GL1451());
+			lblAddNewForQuestion.setText(i18n.GL1451());*/
 			
 			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1450(), i18n.GL1450());
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL1451(), i18n.GL1451());
 			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL1450(), i18n.GL1450());
 			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL1451(), i18n.GL1451());
 			
-			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
+			
 		}else{
 			enableCreateButtons(true);
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1110());
