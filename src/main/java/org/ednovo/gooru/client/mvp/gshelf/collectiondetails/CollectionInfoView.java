@@ -389,21 +389,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setStandardIds(getSelectedStandardsIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					if(view!=null)
-					{
-						if(view.equalsIgnoreCase("folder"))
-						{
-							getUiHandlers().updateCollectionDetails();
-						}
-						else
-						{
-							getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
-						}
-					}
-					else
-					{
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);	
-					}
+					
+						getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
