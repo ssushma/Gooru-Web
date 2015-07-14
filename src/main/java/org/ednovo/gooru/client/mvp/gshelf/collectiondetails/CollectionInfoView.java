@@ -289,6 +289,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
+		depthOfKnowledgeContainer.setFolderDo(courseObj);
+		audienceContainer.setFolderDetails(courseObj);
+	
 		this.type = type;
 		ulSelectedItems.clear();
 		selectedValues.clear();
@@ -352,7 +355,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
-		getUiHandlers().updateCollectionDetails();
 	}
 
 	@UiHandler("uploadImageLbl")
@@ -438,12 +440,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	protected void setDepthOfKnlze() {
 		List<String> depthofknowledgedetails = new ArrayList<String>();
-		if(courseObjG.getDepthOfKnowledges()!=null){
-			if(courseObjG.getDepthOfKnowledges().size()>0){
-				for(int i=0;i<courseObjG.getDepthOfKnowledges().size();i++){
-					if(courseObjG.getDepthOfKnowledges().get(i).isSelected())
+		if(courseObjG.getDepthOfKnowledge()!=null){
+			if(courseObjG.getDepthOfKnowledge().size()>0){
+				for(int i=0;i<courseObjG.getDepthOfKnowledge().size();i++){
+					if(courseObjG.getDepthOfKnowledge().get(i).isSelected())
 					{
-						depthofknowledgedetails.add(courseObjG.getDepthOfKnowledges().get(i).getValue());
+						depthofknowledgedetails.add(courseObjG.getDepthOfKnowledge().get(i).getValue());
 						isDepthOfKnlzeInfo = true;
 					}
 				}
@@ -549,4 +551,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		}
 	}
+	
+	@Override
+	public FolderDo getFolderDo(){
+		
+		return courseObjG;
+	}
+	
 }
