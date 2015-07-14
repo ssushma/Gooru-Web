@@ -13,6 +13,10 @@
 		<div class="clearfix"></div>
 		</div>
 		<g:Label ui:field="addingTextLbl" styleName="remixMenuTitle"/>
+		<g:HTMLPanel ui:field="remixPopupTabPnl">
+			<g:Label ui:field="mycollectionsLbl" styleName="remixPopupTabPnlStyle"></g:Label>
+			<g:Label ui:field="mycontentLbl" styleName="remixPopupTabPnlStyle"></g:Label>
+		</g:HTMLPanel>
 
 		<g:Label ui:field="myCollDefault" styleName="foldermenuHeader" text="{i18n.GL1752}" title="{i18n.GL1752}"/>
 		<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListContainerScrollPanel">
