@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -68,6 +70,7 @@ public class AudienceView extends Composite {
 
 	public Map<Integer,String> getSelectedValues(){
 		int size=listGroup.getWidgetCount();
+		selectedAudience=new HashMap<Integer, String>();
 		for(int i=0;i<size;i++){
 			Widget widget=listGroup.getWidget(i);
 			if(widget instanceof Anchor ){
@@ -83,11 +86,17 @@ public class AudienceView extends Composite {
 
 	public void setCollectonDetails(CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
-		setSelectedValues(); 
+		setSelectedValues(collectionDo.getAudience()); 
+	}
+	
+	public void setFolderDetails(FolderDo  folderDo){
+		setSelectedValues(folderDo.getAudience());
 	}
 
-	public void setSelectedValues(){
-		List<checkboxSelectedDo> checkboxSelectedDos=collectionDo.getAudience();
+	public void setSelectedValues(List<checkboxSelectedDo> checkboxSelectedDos){
+		AppClientFactory.printInfoLogger("audience list"+ checkboxSelectedDos);
+		resetAllSelection();
+		selectedAudience=new HashMap<Integer, String>();
 		if(checkboxSelectedDos!=null){
 			for(checkboxSelectedDo do1:checkboxSelectedDos){
 				selectedAudience.put(do1.getId(),do1.getValue());
@@ -104,6 +113,19 @@ public class AudienceView extends Composite {
 					anchor.addStyleName("active");
 					anchor.getElement().setAttribute("status","selected");
 				}
+			}
+		}
+	}
+	
+	public void resetAllSelection(){
+		
+		int size=listGroup.getWidgetCount();
+		for(int i=0;i<size;i++){
+			Widget widget=listGroup.getWidget(i);
+			if(widget instanceof Anchor ){
+				Anchor anchor=(Anchor)(widget);
+				anchor.removeStyleName("active");
+				anchor.getElement().setAttribute("status","");
 			}
 		}
 	}

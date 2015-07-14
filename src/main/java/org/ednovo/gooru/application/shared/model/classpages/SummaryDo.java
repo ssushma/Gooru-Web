@@ -22,21 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap;
+package org.ednovo.gooru.application.shared.model.classpages;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
- *
+ * @fileName : AssessmentSummaryStatusDo.java
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface IsStudentClassLearningMapView extends IsViewWithHandlers<StudentClassLearningMapUiHandlers> {
-	public void setContent(ArrayList<PlanProgressDo> dataList);
-	public void setPreviewClassMode(boolean isPreview);
-	public void setMetadataContent(ArrayList<PlanProgressDo> dataList);
-	public void setLessonContent(PlanContentDo collectionList, String status, String userId);
+@JsonInclude(Include.NON_NULL)
+public class SummaryDo implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	private int collectionCount;
+	private int assessmentCount;
+	
+	public int getCollectionCount() {
+		return collectionCount;
+	}
+	public void setCollectionCount(int collectionCount) {
+		this.collectionCount = collectionCount;
+	}
+	public int getAssessmentCount() {
+		return assessmentCount;
+	}
+	public void setAssessmentCount(int assessmentCount) {
+		this.assessmentCount = assessmentCount;
+	}
 }
