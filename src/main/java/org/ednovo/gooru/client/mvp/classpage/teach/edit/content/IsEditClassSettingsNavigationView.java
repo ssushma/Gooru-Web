@@ -48,4 +48,6 @@ public interface IsEditClassSettingsNavigationView extends IsViewWithHandlers<Ed
 
 	void setCourseData(FolderDo result);
 
+	void setAddCourseData();
+
 }

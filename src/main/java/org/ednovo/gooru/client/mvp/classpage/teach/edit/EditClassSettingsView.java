@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,9 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.classpage.event.setClassImageEvent;
+import org.ednovo.gooru.client.mvp.classpage.event.setClassImageHandler;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
@@ -43,8 +47,12 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -80,7 +88,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	
 	@UiField HTMLEventPanel publicPanel,privatePanel;
 	
-	@UiField Label anyonwwithLink,privateLbl,privateLblTxt,anyonwwithLinkTxt;
+	@UiField Label anyonwwithLink,privateLbl,privateLblTxt,anyonwwithLinkTxt,errorLbl,saveLbl;
 	
 	@UiField PPanel classTitleLbl,gradePanel,bannerImagePanel,classCodePanel,sharePanel,visiblityPanel;
 	
@@ -89,6 +97,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	@UiField TextBox classTitleTextLbl,shareUrlTxtLbl;
 	
 	@UiField Button saveBtn,uploadImagePanel;
+	
+	@UiField Image classImage;
 	
 	GooruGradesPresenter gooruGradesPresenterWidget = AppClientFactory.getInjector().getGooruGradePresenter();
 	
@@ -104,6 +114,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	
 	ClasspageDo classpageDo;
 	
+	boolean sharing;
+	
 	private static final String SHORTEN_URL = "shortenUrl";
 	
 	private static EditClassSettingsViewUiBinder uiBinder = GWT.create(EditClassSettingsViewUiBinder.class);
@@ -115,7 +127,10 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	
 	public EditClassSettingsView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
+		
+		
+		
+		
 		setIds();
 		
 		uploadImagePanel.addClickHandler(new ClickHandler() {
@@ -129,12 +144,47 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		publicPanel.addClickHandler(new SharingVisiblityClickHandler(publicPanel));
 		privatePanel.addClickHandler(new SharingVisiblityClickHandler(privatePanel));
 		
+		classTitleTextLbl.setMaxLength(50);
+		//shareUrlTxtLbl.setReadOnly(true);
+		
+		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
+		
+		classTitleTextLbl.addBlurHandler(new BlurHandler() {
+
+			@Override
+			public void onBlur(BlurEvent event) {
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", classTitleTextLbl.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean value) {
+						boolean isHavingBadWords = value;
+						if (value){
+							classTitleTextLbl.getElement().getStyle().setBorderColor("orange");
+							errorLbl.setText(i18n.GL0554());
+							errorLbl.setVisible(true);
+							setSaveEnabled(false);
+						}else{
+							classTitleTextLbl.getElement().getStyle().clearBackgroundColor();
+							classTitleTextLbl.getElement().getStyle().setBorderColor("#ccc");
+							errorLbl.setVisible(false);
+							setSaveEnabled(true);
+						}
+					}
+				});
+			}
+		});
+		classTitleTextLbl.addKeyUpHandler(new TitleKeyUpHandler());
+		saveBtn.addClickHandler(new UpdateClassDataHandler());
+		AppClientFactory.getEventBus().addHandler(setClassImageEvent.TYPE, imageHandler);
 	}
 	
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
 		public void updateFilters(String filterValue, String addOrRemove) {
 			String grade = filterValue.replace("Grade ", "");
+			setSaveEnabled(true);
 			if("add".equals(addOrRemove)){
 				gradeList.add(grade);
 			}else{
@@ -143,10 +193,20 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		}
 	};
 	
+	setClassImageHandler imageHandler = new setClassImageHandler() {
+		
+		@Override
+		public void setImage(String fileName) {
+			classImage.setUrl(fileName);
+			uploadImagePanel.setText(i18n.GL0138());
+		}
+	};
+	
 	public void setIds(){
 		
 		gradeWidget.getElement().setId("gooruSearchMainContainer");
 		gooruGradesPresenterWidget.getView().getGradeHeader().setVisible(false);
+		gradeBlock.clear();
 		gradeBlock.add(gooruGradesPresenterWidget.getWidget());
 		
 		
@@ -214,11 +274,22 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
 		saveBtn.getElement().setAttribute("title",i18n.GL0141());
 		
-		classCodeTxtPanel.setText("XYZRS");
+		saveBtn.addStyleName(CssTokens.DISABLED);
+		saveBtn.setEnabled(false);
+		
+		saveLbl.setText(i18n.GL3426());
+		saveLbl.getElement().setId("saveLblId");
+		saveLbl.getElement().setAttribute("alt",i18n.GL3426());
+		saveLbl.getElement().setAttribute("title",i18n.GL3426());
+		
+		
+		classImage.getElement().setId("thumbnailImage");
 		
 		
 		classCodePanel.add(image);
 		sharePanel.add(shareImage);
+		errorLbl.setVisible(false);
+		saveLbl.setVisible(false);
 		
 	}
 	
@@ -340,6 +411,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		@Override
 		public void onClick(ClickEvent event) {
 				String id = eventPanel.getElement().getId();
+				setSaveEnabled(true);
 				if(!eventPanel.getStyleName().contains("active")){
 					if(id.equalsIgnoreCase("panelPublic")){
 						publicPanel.addStyleName("active");
@@ -358,29 +430,41 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	 */
 	@Override
 	public void setData(ClasspageDo classpageDo) {
-		this.classpageDo=classpageDo;
-		getUiHandlers().generateShareLink(classpageDo.getClassUid());
-		if(classpageDo != null){
-			classTitleTextLbl.setText(classpageDo.getName());
-			classCodeTxtPanel.setText(classpageDo.getClassCode());
-			boolean visiblity = classpageDo.isVisibility();
-			if(visiblity){
-				publicPanel.addStyleName(CssTokens.ACTIVE);
-				privatePanel.removeStyleName(CssTokens.ACTIVE);
-			}else{
-				privatePanel.addStyleName("active");
-				publicPanel.removeStyleName(CssTokens.ACTIVE);
+		//this.classpageDo=classpageDo;
+			getUiHandlers().generateShareLink(classpageDo.getClassUid());
+			if(classpageDo != null){
+				classTitleTextLbl.setText(classpageDo.getName());
+				classCodeTxtPanel.setText(classpageDo.getClassCode());
+				boolean visiblity = classpageDo.isVisibility();
+				if(visiblity){
+					publicPanel.addStyleName(CssTokens.ACTIVE);
+					privatePanel.removeStyleName(CssTokens.ACTIVE);
+				}else{
+					privatePanel.addStyleName("active");
+					publicPanel.removeStyleName(CssTokens.ACTIVE);
+				}
+				if(classpageDo.getGrades() != null){
+					String [] grade = classpageDo.getGrades().split(",");
+					gradeList.clear();
+					for(int i=0;i<grade.length;i++){
+						gradeList.add(grade[i]);
+					}
+					gooruGradesPresenterWidget.setGrade(classpageDo);
+				}else{
+					gooruGradesPresenterWidget.getView().clearGradesStyles();
+				}
+				if(classpageDo.getThumbnails() != null){
+					if(classpageDo.getThumbnails().getUrl() != null){
+						classImage.setUrl(classpageDo.getThumbnails().getUrl());
+						uploadImagePanel.setText(i18n.GL0138());
+					}
+				}else{
+					uploadImagePanel.setText(i18n.GL3402());
+					classImage.setUrl("");
+				}
+				
 			}
-			if(classpageDo.getGrades() != null){
-				String [] grade = classpageDo.getGrades().split(",");
-				gradeList.clear();
-				for(int i=0;i<grade.length;i++){
-					gradeList.add(grade[i]);
-				}	
-			}
-			
-			gooruGradesPresenterWidget.setGrade(classpageDo);
-		}
+		
 	}
 
 
@@ -392,6 +476,118 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
 			shareUrlTxtLbl.setText(shortenUrl.get(SHORTEN_URL));
 		}
+	}
+	
+	private class TitleKeyUpHandler implements KeyUpHandler {
+
+		public void onKeyUp(KeyUpEvent event) {
+			classTitleTextLbl.getElement().getStyle().clearBackgroundColor();
+			classTitleTextLbl.getElement().getStyle().setBorderColor("#ccc");
+			errorLbl.setVisible(false);
+			setSaveEnabled(true);
+			if (classTitleTextLbl.getText().length() >= 50) {
+				errorLbl.setText(i18n.GL0143());
+				errorLbl.setVisible(true);
+				setSaveEnabled(false);
+			}
+		}
+	}
+	
+	public void setSaveEnabled(boolean isEnabled){
+		saveBtn.setEnabled(isEnabled);
+		if(isEnabled){
+			saveBtn.removeStyleName(CssTokens.DISABLED);
+		}else{
+			saveBtn.addStyleName(CssTokens.DISABLED);
+		}
+	}
+	
+	public boolean validateFields(){
+		boolean isValid=true;
+		String title = classTitleTextLbl.getText().trim();
+		if (title==null || title.equalsIgnoreCase("")){
+			errorLbl.setVisible(true);
+			errorLbl.setText(i18n.GL0746());
+			setSaveEnabled(false);
+			return false;
+		}
+
+		if(publicPanel.getStyleName().contains("active")){
+			sharing=true;
+		}else if(privatePanel.getStyleName().contains("active")){
+			sharing=false;
+		}else{
+			setSaveEnabled(false);
+			return false;
+		}
+
+		return isValid;
+	}
+	
+	private class UpdateClassDataHandler implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			if (validateFields()){
+				final String title = classTitleTextLbl.getText().trim();
+				final String grade = join(gradeList, ",");
+				final boolean privacy = sharing;
+				
+				
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", title);
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean value) {
+						boolean isHavingBadWords = value;
+						if (isHavingBadWords){
+							classTitleTextLbl.getElement().getStyle().setBorderColor("orange");
+							setSaveEnabled(false);
+						}else{
+							classTitleTextLbl.getElement().getStyle().clearBackgroundColor();
+							classTitleTextLbl.getElement().getStyle().setBorderColor("#ccc");
+							saveLbl.setVisible(true);
+							setSaveEnabled(true);
+							saveBtn.setVisible(false);
+							classpageDo.setName(title);
+							classpageDo.setGrades(grade);
+							classpageDo.setVisibility(privacy);
+							getUiHandlers().updateClass(classpageDo);
+						}
+					}
+				});
+			}
+		}
+		
+	}
+	
+	private String join(List<?> list,String separator){
+		StringBuilder builder =null;
+		if(list != null){
+			builder = new StringBuilder();
+			for(Object value:list){
+				if(builder.length() > 0){
+					builder.append(separator);
+				}
+				builder.append(value);
+			}
+		}
+		return builder.toString();
+  }
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView#setUpdateClassData()
+	 */
+	@Override
+	public void setUpdateClassData() {
+		saveBtn.setVisible(true);
+		setSaveEnabled(false);
+		saveLbl.setVisible(false);
 	}
 
 }

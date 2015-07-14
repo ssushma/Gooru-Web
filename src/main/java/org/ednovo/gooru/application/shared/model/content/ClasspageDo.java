@@ -68,6 +68,7 @@ public class ClasspageDo implements Serializable{
 	private String courseGooruOid;
 	private String mediaFilename;
 	private int minimumScore=0;
+	private ThumbnailDo thumbnails;
 
 	public ClasspageDo(){}
 
@@ -374,6 +375,20 @@ public class ClasspageDo implements Serializable{
 	 */
 	public void setMinimumScore(int minimumScore) {
 		this.minimumScore = minimumScore;
+	}
+
+	/** 
+	 * This method is to get the thumbnails
+	 */
+	public ThumbnailDo getThumbnails() {
+		return thumbnails;
+	}
+
+	/** 
+	 * This method is to set the thumbnails
+	 */
+	public void setThumbnails(ThumbnailDo thumbnails) {
+		this.thumbnails = thumbnails;
 	}
 
 	
