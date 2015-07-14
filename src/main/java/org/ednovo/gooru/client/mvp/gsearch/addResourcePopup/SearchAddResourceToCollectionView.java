@@ -554,10 +554,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					isAddingInProgress=true;
 				}
 			}else{
-				/*AppClientFactory.printInfoLogger("isTopMostSelected::::::::::"+isTopMostSelected);
+				AppClientFactory.printInfoLogger("isTopMostSelected::::::::::"+isTopMostSelected);
 				AppClientFactory.printInfoLogger("isFromMyCourse::::::::::"+isFromMyCourse);
 				AppClientFactory.printInfoLogger("this.isCopySelected:::::::::::"+this.isCopySelected);
-				AppClientFactory.printInfoLogger("this.isMoveSelected:::::::::::"+this.isMoveSelected);*/
+				AppClientFactory.printInfoLogger("this.isMoveSelected:::::::::::"+this.isMoveSelected);
 				if(isFromMyCourse){
 					if(currentFolderSelectedTreeItem!=null){
 						if(COURSE.equalsIgnoreCase(currentFolderSelectedTreeItem.getType()) || UNIT.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
