@@ -919,6 +919,14 @@ button.btn-disabled{
 	border-bottom:1px solid #ddd;
 	height: 48px;
 }
+#gShelfCourseInfo .courseCreateContainer .lblTitle{
+	float: left;
+	display: inline-block;
+	padding: 9px;
+	font-size: 20px;
+	margin-left: 8px;
+	color: #222;
+}
 #gShelfCourseInfo .courseCreateContainer .createButton{
 	margin-top: 1%;
 	float: right;
@@ -1985,7 +1993,14 @@ padding-left:7px;
 	text-align:right;
 	border-bottom:1px solid #dddddd;
 }
-
+#resourceEdit .resourcesButtonGroup .lblTitle{
+	float: left;
+	display: inline-block;
+	padding: 9px;
+	font-size: 20px;
+	margin-left: 8px;
+	color: #222;
+}
 #resourceEdit .breadcrumbMain a{
 	padding:16px 5px 16px 20px;
 	display:inline-block;

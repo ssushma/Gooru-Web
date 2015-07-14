@@ -86,6 +86,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@UiField Button btnAddResources, btnAddQuestions;
 	@UiField Anchor ancAddResource, ancAddQuestion;
 	@UiField InlineLabel lblSpanOr;
+	@UiField Label lblTitle;
 
 	CollectionContentPresenter collectionContentPresenter;
 	CollectionDo listOfContent=null;
@@ -133,20 +134,17 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
-		
-		if(folderDo.getType().equalsIgnoreCase("assessment"))
-		{
+		if(folderDo.getType().equalsIgnoreCase("assessment")){
 			btnAddResources.setVisible(false);		
 			lblSpanOr.setVisible(false);
 			ancAddResource.setVisible(false);
-		}
-		else
-		{
+			lblTitle.setText(i18n.GL3007()+": "+folderDo.getTitle());
+		}else{
 			btnAddResources.setVisible(true);
 			lblSpanOr.setVisible(true);
 			ancAddResource.setVisible(true);
+			lblTitle.setText(i18n.GL0645()+": "+folderDo.getTitle());
 		}
-		
 		if(listOfContent.getCollectionItems()!=null && listOfContent.getCollectionItems().size()>0){
 			index=0;
 			for (CollectionItemDo collectionItem : listOfContent.getCollectionItems()) {
@@ -164,14 +162,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	public void setDisplayResourceItem(CollectionItemDo collectionItem,RefreshType type, int index){
 		int tmpIndex = index;
 		Window.enableScrolling(true);
-
 		if (tmpIndex ==-1){
 			index = listOfContent != null && listOfContent.getCollectionItems() != null ? listOfContent.getCollectionItems().size() : 0;
 		}
 		if (index == 0){
 			pnlReosurceList.clear();
 		}
-
 		if (type.equals(RefreshType.INSERT)){
 			ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem) {
 				@Override
