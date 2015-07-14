@@ -490,4 +490,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getMyCollectionsRightClusterPresenter().getView().setOnDeleteBreadCrumbs(title,course);
 	}
 
+	@Override
+	public void setVersion() {
+		version=null;
+	}
+
 }

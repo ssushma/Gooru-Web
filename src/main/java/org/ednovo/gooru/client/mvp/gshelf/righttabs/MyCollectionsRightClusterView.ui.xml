@@ -36,7 +36,7 @@
 							<hpanel:HTMLEventPanel styleName="dropdown-menu" ui:field="copyPopupPanel">
 								<g:Label ui:field="copyLbl" styleName="copyLblStyle"/>
 								<g:Label ui:field="moveLbl" styleName="copyLblStyle"/>
-								<g:Label ui:field="lnkDelete" text="Delete" styleName="copyLblStyle"></g:Label>
+								<g:Label ui:field="myCollDelLbl" text="Delete" styleName="copyLblStyle"></g:Label>
 							</hpanel:HTMLEventPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
