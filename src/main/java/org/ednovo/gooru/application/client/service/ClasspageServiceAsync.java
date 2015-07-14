@@ -226,7 +226,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void getUnitMasteryReport(String classpageId, String courseId, String unitId, String collectionType, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
-	public void getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String collectionType, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
+	public void getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType, AsyncCallback<ArrayList<MasterReportDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
 
 }
 
