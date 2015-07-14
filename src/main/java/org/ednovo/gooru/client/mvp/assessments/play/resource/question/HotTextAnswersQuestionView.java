@@ -154,7 +154,15 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			if(collectionItemDo.getResource().getType()==8){
 
 				if(attemptedAnswerDo!=null){
-					HTML ansHtml=new HTML(URL.decodeQueryString(attemptedAnswerDo.getAnswersText()));
+					String ansWithStyle=URL.decodeQueryString(attemptedAnswerDo.getAnswersText());
+					if(ansWithStyle.contains(STYLE_CORRECT)){
+						ansWithStyle=ansWithStyle.replace(STYLE_CORRECT, "");
+					}
+					if(ansWithStyle.contains(STYLE_INCORRECT)){
+						ansWithStyle=ansWithStyle.replace(STYLE_INCORRECT, "");
+					}
+					
+					HTML ansHtml=new HTML(ansWithStyle);
 					ansHtml.addClickHandler(new ClickHandler() {
 
 						@Override
@@ -167,42 +175,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 					optionsContainerFpnl.add(ansHtml);
 
-					/*String text=removeHtmlTags(attemptedAnswerDo.getAnswersText());
-					String[] temp;
-					String delimiter;
-					if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-						temp = text.split(SPACE);
-						delimiter=SPACE;
-					}else {
-						temp = text.split("\\.");
-						delimiter=DOT;
-					}
-					for(int k=0;k<temp.length;k++){
-						final InlineLabel lbl=new InlineLabel(temp[k]+delimiter);
-						if(lbl.getText().startsWith(START_CORRECT_DELIMITER) && (lbl.getText().endsWith(END_CORRECT_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(DOT+END_CORRECT_DELIMITER+SPACE) || lbl.getText().trim().endsWith(END_CORRECT_DELIMITER+DOT))){
-							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
-							lbl.setText(lblText);
-							lbl.getElement().setId(STYLE_CORRECT);
-							lbl.addStyleName(STYLE_HIGHLIGHT);
-						}
-						else if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT))){
-							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
-							lbl.setText(lblText);
-							lbl.getElement().setId(STYLE_INCORRECT);
-							lbl.addStyleName(STYLE_HIGHLIGHT);
-						}
-
-						lbl.addStyleName("htPlayerAns");
-						lbl.addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								optionsContainerFpnl.clear();
-								setRenderAnswers(answersSet);
-								enableCheckAnswerButton();
-							}
-						});
-						optionsContainerFpnl.add(lbl);
-					}*/
 
 
 				}else{
@@ -374,9 +346,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer, Boolean>();
 			List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 			int j=0;
-
-			//String answerText="";
-			//AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
 				Element el=(Element) widget.getElement().getLastChild();
@@ -444,8 +413,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			String answerText="";
 			HTML ansText=new HTML();
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
-
-				InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
+				
+				InlineLabel lbl=new InlineLabel();
+				lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
 				answerIds.add(i+1);
 				if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
 
@@ -453,31 +423,13 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						lbl.addStyleName(STYLE_CORRECT);
 						answerOptionResult.put(1, true);
 						answerAttemptDo.setStatus("1");
-						if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-							//answerText=answerText+START_CORRECT_DELIMITER+lbl.getText().trim()+END_CORRECT_DELIMITER+SPACE;
-						}else{
-							//String inLblTxt=lbl.getText()+END_CORRECT_DELIMITER+DOT;
-							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
-								//inLblTxt=lbl.getText().replace(DOT, END_CORRECT_DELIMITER+DOT);
-							}
-							//answerText=answerText+START_CORRECT_DELIMITER+inLblTxt;
-						}
 
 					}else {
 						lbl.addStyleName(STYLE_INCORRECT);
 						answerOptionResult.put(0, true);
 						answerAttemptDo.setStatus("0");
 						HTHLChoiceStatus=false;
-						if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-							//answerText=answerText+START_DELIMITER+lbl.getText().trim()+END_DELIMITER+SPACE;
-						}else{
-
-							/*String inLblTxt=lbl.getText()+END_DELIMITER+DOT;
-							if(lbl.getText().trim().lastIndexOf(DOT) ==lbl.getText().trim().length()-1){
-								inLblTxt=lbl.getText().replace(DOT, END_DELIMITER+DOT);
-							}
-							answerText=answerText+START_DELIMITER+inLblTxt;*/
-						}
+						
 					}
 				}else {
 					//answerText=answerText+lbl.getText();
@@ -485,8 +437,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				answerText=answerText+lbl.toString();
 				ansText.setHTML(lbl.toString());
 			}
-			//userAttemptedValueList.add("["+answerText+"]");
-			//answerAttemptDo.setText("\""+answerText);
 			ansText.setHTML(answerText);
 			userAttemptedValueList.add(URL.encodeQueryString(ansText.toString()));
 			answerAttemptDo.setText(URL.encodeQueryString(ansText.toString()));
