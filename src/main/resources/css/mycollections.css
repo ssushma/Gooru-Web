@@ -4112,6 +4112,9 @@ right:1px;
 	color: #fab03a;
 	font-style: italic;
 }
+.shareMainContainer .marginBottom{
+	margin-bottom: 10px;
+}
 
 .shareMainContainer  button.primary{
 	margin-left: 5px;
