@@ -571,14 +571,27 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId) throws GwtException, ServerDownException {
-
+	public void reorderFoldersOrCollections(String courseId,String unitId,String lessonId,String collectionId,int itemToBeMovedPosSeqNumb, String collectionItemId,String type) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"");
+		try {	
+		JSONObject jsonObj=new JSONObject();
+		if(type.equalsIgnoreCase("Folder")){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"");
+		}else{
+			if(courseId!=null && unitId!=null && lessonId==null){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_LESSON_METADATA,courseId,unitId,lessonId);
+			}else if(courseId!=null && unitId==null){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA,courseId,unitId);
+			}else if(courseId==null){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA,courseId);
+			}
+			jsonObj.put("position",itemToBeMovedPosSeqNumb);
+		}
 		getLogger().info("-- Folder Re-order API - - - - "+url);
-		try {
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
+		getLogger().info("-- payload Re-order API - - - - "+jsonObj.toString());
+		
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObj.toString());
 		}catch (Exception e) {
 			logger.error("Exception::", e);
 		}
@@ -834,9 +847,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			collectionObject.put("audienceIds", getKeys(audience.keySet()));
 			collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
 			collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
-			
-			System.out.println("Url"+url);
-			System.out.println("Form"+collectionObject.toString());
+			getLogger().info("Url update coll details -- "+url);
+			getLogger().info("form data -- "+collectionObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),collectionObject.toString());
 		
 		} catch (Exception e) {

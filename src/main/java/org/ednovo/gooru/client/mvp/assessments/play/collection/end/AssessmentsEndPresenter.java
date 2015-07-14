@@ -430,7 +430,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		});
 	}
 	public void setSessionId(String sessionId){
-		System.out.println("set sessionId--"+sessionId);
 		this.sessionId=sessionId;
 	}
 	

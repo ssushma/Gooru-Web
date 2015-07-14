@@ -793,39 +793,39 @@ public class StringUtil implements ClientConstants {
 	        return original;
 	    return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
-	
-	
+
+
 	public static ClassDo getClassObj(){
 		ClassDo classObj=new ClassDo();
-		String classId=AppClientFactory.getPlaceManager().getRequestParameter("class")!=null?AppClientFactory.getPlaceManager().getRequestParameter("class"):"";
-		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("course")!=null?AppClientFactory.getPlaceManager().getRequestParameter("course"):"";
-		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unit")!=null?AppClientFactory.getPlaceManager().getRequestParameter("unit"):"";
-		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("lesson")!=null?AppClientFactory.getPlaceManager().getRequestParameter("lesson"):"";
-		
+		String classId=AppClientFactory.getPlaceManager().getRequestParameter(CID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(CID):"";
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(COURSEID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(COURSEID):"";
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(UNITID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(UNITID):"";
+		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSONID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(LESSONID):"";
+
 		classObj.setClassId(classId);
 		classObj.setCourseId(courseId);
 		classObj.setLessonId(lessonId);
 		classObj.setUnitId(unitId);
 		return classObj;
 	}
-	
+
 	public static String getFormattedDate(long different, String separator) {
 		long secondsInMilli = 1000;
 		long minutesInMilli = secondsInMilli * 60;
 		long hoursInMilli = minutesInMilli * 60;
 		long daysInMilli = hoursInMilli * 24;
-		
+
 		long d = different / daysInMilli;
 		different = different % daysInMilli;
-		
+
 		long h = different / hoursInMilli;
 		different = different % hoursInMilli;
-		
+
 		long m = different / minutesInMilli;
 		different = different % minutesInMilli;
-		
+
 		long s = different / secondsInMilli;
-	    
+
 		String format="";
     	if(d>0) {
     		h = (24*d)+h;
@@ -834,7 +834,7 @@ public class StringUtil implements ClientConstants {
 	    	format = format + h + separator;
 		    format = format + m + separator;
 		    format = format + s;
-	    } else {    	
+	    } else {
 	    	format = format + h +" hrs ";
 		    format = format + m +" min ";
 		    format = format + s +" sec";

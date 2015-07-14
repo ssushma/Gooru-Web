@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Unit;
@@ -175,6 +176,20 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		//organizelbl.setText(i18n.GL3285());
 		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
 		lnkMyFoldersAndCollecctions.addClickHandler(new DropDownClickEvent(1));
+		Window.addWindowScrollHandler(new com.google.gwt.user.client.Window.ScrollHandler() {
+			@Override
+			public void onWindowScroll(com.google.gwt.user.client.Window.ScrollEvent event) {
+				//This will check the placetoken,o1 and id values for pagination purpose
+				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				String o1=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
+				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null){
+					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+						executeScroll(false);
+					}
+				}
+			}
+		});
 	}
 
 	/**

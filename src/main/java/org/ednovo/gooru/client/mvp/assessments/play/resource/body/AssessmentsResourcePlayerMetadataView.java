@@ -698,7 +698,6 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 	@Override
 	public void navigateToNextResource(final PlaceRequest resourceRequest) {
 		String view  = resourceRequest.getParameter("view", null);
-		System.out.println("navigateToNextResource View : "+view);
 		if (view != null && view.equalsIgnoreCase("end")){
 			SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
 

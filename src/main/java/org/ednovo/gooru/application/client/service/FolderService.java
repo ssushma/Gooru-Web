@@ -169,7 +169,7 @@ public interface FolderService extends BaseService {
 	
 	public FolderListDo getCollectionResources(String parentId,String sharingType, String collectionType) throws GwtException, ServerDownException;
 	
-	public void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId) throws GwtException, ServerDownException;
+	public void reorderFoldersOrCollections(String courseId,String unitId,String lessonId,String collectionId,int itemToBeMovedPosSeqNumb, String collectionItemId,String type) throws GwtException, ServerDownException;
 	
 	/**
 	 * This method is used to get the sub folders and collections based on the folder id
