@@ -73,7 +73,5 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	FolderDo getFolderDo(); 
 
-
-
-
+	void setCollectionImage(String url);
 }
