@@ -205,16 +205,9 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			public void onSuccess(ClasspageDo result) {
 				classpageDo = result;
 				getView().setCourseData(classpageDo);
-				//setCheckClassVisiblity(classpageDo);
+				setCheckClassVisiblity(classpageDo);
 				studentClassLearningMapPresenter.setClasspageDo(classpageDo);
 				studentClassReportPresenter.setClasspageDo(classpageDo);
-				if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("not-invited")) {
-				//error popup
-				} else if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("pending")) {
-					joinStudentClass();
-				} else if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("active")) {
-				//nothing to write
-				}
 			}
 
 			@Override
