@@ -1591,10 +1591,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		uploadProfileImage.setUrl(imageUrl+"?p="+randomNumber);
 		uploadProfilImageButton.setText(i18n.GL0800());
 		try{
+			if(v2userDo!=null)
+			{
 			uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
 			uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
 			uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
 			uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
+			}
 		}catch(Exception exception){
 			AppClientFactory.printSevereLogger(exception.getMessage());
 		}

@@ -260,7 +260,6 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	public void setFolderDo(FolderDo folderDo){
 		if(folderDo!=null){
 			List<StandardFo> standardFos=folderDo.getSkills();
-			AppClientFactory.printInfoLogger("standardFos ..... size"+standardFos.size());
 			selectedVaue=new HashMap<Long, String>();
 			if(standardFos!=null){
 				for(StandardFo standardFo:standardFos){

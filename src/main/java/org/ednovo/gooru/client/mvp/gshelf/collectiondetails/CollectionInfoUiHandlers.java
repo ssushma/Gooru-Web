@@ -67,7 +67,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	
 	public void callCourseInfoTaxonomy();
 
-	void updateCollectionDetails(String text);
+	void updateCollectionDetails(String text,CreateDo createDoObj);
 
 	CenturySkillsPresenter getCenturySkillsPresenters();
 

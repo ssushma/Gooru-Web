@@ -834,7 +834,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 	
 	@Override
-	public void updateCollectionDetails(String collectionId,Map<Integer,String> audience,Map<Integer,String> dok,Map<Long,String> centurySkills,String languageObjective){
+	public void updateCollectionDetails(CreateDo createDoObj,String collectionId, Map<Integer,String> audience,Map<Integer,String> dok,Map<Long,String> centurySkills,String languageObjective){
 		
 		JsonRepresentation jsonRep = null;
 		String url = null;
@@ -851,6 +851,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			Set<Integer> keys=audience.keySet();
 			
 			collectionObject.put("audienceIds", getKeys(audience.keySet()));
+			collectionObject.put("title", createDoObj.getTitle());
 			collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
 			collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
 			getLogger().info("Url update coll details -- "+url);
