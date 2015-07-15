@@ -177,7 +177,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			if(COURSE.equalsIgnoreCase(folderObj.getType())){
 				courseSharePresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, courseSharePresenter);
-			}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+			}else if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
 				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
