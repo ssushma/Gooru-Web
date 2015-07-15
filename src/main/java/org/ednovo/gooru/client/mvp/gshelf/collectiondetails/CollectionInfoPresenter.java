@@ -306,14 +306,16 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void getCollectionDo(){
 		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
-		AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
-			@Override
-			public void onSuccess(CollectionDo result) {
-				centurySkillsPresenter.getView().setCollectionDo(result);
-				getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
-				getView().getAudienceContainer().setCollectonDetails(result);
-			}
-		});
+		if(collectionUid!=null){
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
+				@Override
+				public void onSuccess(CollectionDo result) {
+					centurySkillsPresenter.getView().setCollectionDo(result);
+					getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
+					getView().getAudienceContainer().setCollectonDetails(result);
+				}
+			});
+		}
 	}
 
 	@Override

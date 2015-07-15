@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class PlanProgressDo implements Serializable{
+public class PlanProgressDo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String title;
@@ -46,7 +46,7 @@ public class PlanProgressDo implements Serializable{
 	private String type;
 	private int views;
 	private int scoreInPercentage;
-	private int sequence;
+	private Integer sequence;
 	private long timespent;
 	private int collectionCount;
 	private int assessmentCount;
@@ -175,10 +175,10 @@ public class PlanProgressDo implements Serializable{
 	public void setUsageData(ArrayList<PlanProgressDo> usageData) {
 		this.usageData = usageData;
 	}
-	public int getSequence() {
+	public Integer getSequence() {
 		return sequence;
 	}
-	public void setSequence(int sequence) {
+	public void setSequence(Integer sequence) {
 		this.sequence = sequence;
 	}
 }

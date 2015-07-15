@@ -1903,20 +1903,21 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 							} else {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
+										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
 									}
 								}
+								Collections.sort(dataList, new ArrayListSorter("sequence", true));
 							}
 						} else if (type.equalsIgnoreCase("progress")) {
 							if(unitId!=null) {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
+										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
 									}
 								}
+								Collections.sort(dataList, new ArrayListSorter("sequence", true));
 							}
 						}
-						Collections.sort(dataList, new ArrayListSorter("sequence", false));
 					}
 				}
 			}
@@ -1944,6 +1945,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+					if(dataList!=null&dataList.size()>1) {
+						for(int unitCount=0;unitCount<dataList.size();unitCount++) {
+							if(dataList.get(unitCount).getUsageData()!=null&&dataList.get(unitCount).getUsageData().size()>0) {
+								Collections.sort(dataList.get(unitCount).getUsageData(), new ArrayListSorter("sequence", true));
+							}
+						}
+						Collections.sort(dataList, new ArrayListSorter("userName", true));
+					}
 				}
 			}
 		}catch (JSONException e) {
@@ -1975,6 +1984,23 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+					if(dataList!=null&dataList.size()>0) {
+						for(int unitCount=0;unitCount<dataList.size();unitCount++) {
+							if(dataList.get(unitCount).getUsageData()!=null&&dataList.get(unitCount).getUsageData().size()>0) {
+								Collections.sort(dataList.get(unitCount).getUsageData(), new ArrayListSorter("sequence", true));
+								for(int lessonCount=0;lessonCount<dataList.get(unitCount).getUsageData().size();lessonCount++) {
+									if(dataList.get(unitCount).getUsageData().get(lessonCount).getUsageData()!=null&&dataList.get(unitCount).getUsageData().get(lessonCount).getUsageData().size()>0) {
+										Collections.sort(dataList.get(unitCount).getUsageData().get(lessonCount).getUsageData(), new ArrayListSorter("sequence", true));
+									} else {
+										dataList.get(unitCount).getUsageData().get(lessonCount).setUsageData(new ArrayList<PlanProgressDo>());
+									}
+								}
+							} else {
+								dataList.get(unitCount).setUsageData(new ArrayList<PlanProgressDo>());
+							}
+						}
+						Collections.sort(dataList, new ArrayListSorter("userName", true));
+					}
 				}
 			}
 		}catch (JSONException e) {
@@ -2005,6 +2031,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<MasterReportDo>>(){});
+					if(dataList!=null&dataList.size()>0) {
+						Collections.sort(dataList, new ArrayListSorter("sequence", true));
+					}
 				}
 			}
 		}catch (JSONException e) {
@@ -2027,7 +2056,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
-				collectionList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<PlanContentDo>(){});			}
+				collectionList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<PlanContentDo>(){});			
+			}
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}
