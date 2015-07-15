@@ -75,7 +75,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	
 	String type;
 	
-	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment";
+	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment",ASSESSMENT_URL="Assessment/url";
 	
 	private static final String VIEW= "view";
 
@@ -409,7 +409,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
-		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,o3);
