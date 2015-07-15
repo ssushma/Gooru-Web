@@ -127,10 +127,10 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler#updateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
 	@Override
-	public void updateClass(ClasspageDo classpageDo) {
+	public void updateClass(String	 score) {
 		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
 		if(!classId.isEmpty()){
-			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, classpageDo, new AsyncCallback<ClasspageDo>() {
+			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, null,null,null,null,score,null, new AsyncCallback<ClasspageDo>() {
 				
 				@Override
 				public void onSuccess(ClasspageDo result) {

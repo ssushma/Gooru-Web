@@ -1592,3 +1592,139 @@ select option {
 	background:#f5f5f5;
 }
 
+
+/** new empty class css**/
+
+
+#getStartedContainer .gettingStartedMain h1 {
+    color: #515151;
+    margin: 0;
+    padding: 30px 0;
+	font-size:24px;
+    text-align: center;
+	font-family:"Arvo",serif;
+}
+
+#getStartedContainer .gettingStartedMain .emptyClass{
+	width:660px;
+	padding:50px 50px 20px 50px;
+	border-radius:4px 4px;
+	margin:0 auto 50px auto;
+	background:url(${cdn.endpoint}/images/GettingStarted.png) no-repeat center center;
+	box-shadow:0 0 4px #cccccc;
+}
+#getStartedContainer .gettingStartedMain .emptyClass p{
+	margin:0 0 5px 0;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .addCourse{
+	margin-right:60px;
+	margin-bottom:35px;
+}
+
+#getStartedContainer .gettingStartedMain .emptyClass .addStudents{
+	margin-right:60px;
+
+}
+
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents{
+text-align:left;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents p{
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span{
+
+	display:block;
+	margin-left:50px;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span .img-responsive{
+	display:inline-block;
+	
+}
+
+#getStartedContainer .gettingStartedMain .findout{
+	margin:60px 0 0 0;
+	text-align:right;
+}
+#getStartedContainer .gettingStartedMain .findout a:hover, #getStartedContainer .gettingStartedMain .findout a:focus{
+	text-decoration:none;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+	 #getStartedContainer .gettingStartedMain .emptyClass{
+		margin-left: 10px;
+    margin-right: 10px;
+    width: auto;
+	padding:20px 20px;
+	}
+	#getStartedContainer .gettingStartedMain .emptyClass .addCourse {
+    margin: 0 0 30px 0;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .addStudents {
+     margin: 0 0 30px 0;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents {
+    text-align: center;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span {
+    margin-left:0;
+}
+#getStartedContainer .gettingStartedMain .findout {
+    margin: 40px 0 0;
+    text-align: center;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 #getStartedContainer .gettingStartedMain .emptyClass{
+		margin-left: 10px;
+    margin-right: 10px;
+    width: auto;
+	}
+	#getStartedContainer .gettingStartedMain .emptyClass .addCourse {
+    margin: 0 50px 30px;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .addStudents {
+    margin: 0 50px 30px;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents {
+    text-align: center;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span {
+    margin-left:0;
+}
+#getStartedContainer .gettingStartedMain .findout {
+    margin: 40px 0 0;
+    text-align: center;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	  #getStartedContainer .gettingStartedMain .emptyClass{
+		margin-left: 10px;
+    margin-right: 10px;
+    width: auto;
+	}
+		#getStartedContainer .gettingStartedMain .emptyClass .addCourse {
+    margin: 0 0px 30px;
+
+}
+	#getStartedContainer .gettingStartedMain .emptyClass .addStudents {
+    margin: 0 0px 60px;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents {
+    text-align: center;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span {
+ 
+    margin-left: 0;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}

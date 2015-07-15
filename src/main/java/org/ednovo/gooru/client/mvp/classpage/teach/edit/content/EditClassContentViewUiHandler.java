@@ -47,7 +47,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
  */
 public interface EditClassContentViewUiHandler extends BaseUiHandlers{
 
-	void updateClass(ClasspageDo classpageDo);
+	void updateClass(String score);
 
 	void getLessonList(String unitId);
 

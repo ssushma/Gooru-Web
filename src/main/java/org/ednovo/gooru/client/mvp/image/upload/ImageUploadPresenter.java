@@ -158,8 +158,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					saveImageCollection(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
 
 				}else if(isClassPageImage){
-					//saveImageCollection(getClasspageId(), filename);
-					System.out.println("fileNameWithoutRepository:"+fileNameWithoutRepository);
 					saveImageClass(getClasspageId(), filename);
 				}
 				else if(isQuestionImage){
@@ -341,7 +339,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		AppClientFactory.printInfoLogger("fileName:"+fileName);
 		AppClientFactory.printInfoLogger("classId:"+gooruOid);
 		classpageDo.setMediaFilename(fileName);
-		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, classpageDo, new AsyncCallback<ClasspageDo>() {
+		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, null,null,fileName,null,null,null, new AsyncCallback<ClasspageDo>() {
 			
 			@Override
 			public void onSuccess(ClasspageDo result) {
