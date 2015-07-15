@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseSharePresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -122,11 +123,14 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		clearSlot(INNER_SLOT);
 		if(folderObj==null){
 			selectedWidgetsTitleType = null;
+			
 		}
+
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		getView().setBreadCrumbSlot(folderObj,type,selectedWidgetsTitleType);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
+		getView().enableAndHideTabs(!StringUtil.isEmpty(folderObj==null?"":folderObj.getGooruOid())); 
 		if(index==1 || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 				//For displaying template and data
 				//getView().enableAndHideTabs(true);
