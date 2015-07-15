@@ -334,7 +334,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				getView().getCollectionLabel().setText(folderObj.getTitle());
 			}
 		}
-		getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
+		if(folderObj.getGooruOid()==null){
+			//when creating the default course we are opening the info tab
+			getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
+		}else{
+			//when displaying the existing data at that time we are opening the content tab.
+			getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
+		}
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	

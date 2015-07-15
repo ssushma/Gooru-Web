@@ -345,7 +345,10 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
 
 
-				if(result.size()!=0){
+				if(result.size() > 0){
+					
+					AppClientFactory.printInfoLogger("questiondatatable--"+result.size());
+					
 					for(int i=0;i<result.size();i++) {
 						Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 						questionTitle.setStyleName(STYLE_TABLE_CENTER);
@@ -361,6 +364,9 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						if(questionType.equalsIgnoreCase("HS")){
 							questionType= result.get(i).getQuestionType();
 						}
+						
+						AppClientFactory.printInfoLogger("questiondatatable-questionType-"+questionType);
+						
 						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
 							Label anserlbl=new Label();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
@@ -506,9 +512,12 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					}
 					sortAndFixed();
 					adTable.addStyleName("table table-bordered reportTableStyle");
+					AppClientFactory.printInfoLogger("adTable--"+adTable);
 					questionsTable.add(adTable);
+					AppClientFactory.printInfoLogger("questionsTable--"+questionsTable.getWidgetCount());
 
-				}else if(result.size()==0){
+				}else {
+					AppClientFactory.printInfoLogger("questionsTable-erroeMsg-"+questionsTable.getWidgetCount());
 					Label erroeMsg=new Label();
 					erroeMsg.setStyleName(STYLE_ERROR_MSG);
 					erroeMsg.setText(i18n.GL3265());

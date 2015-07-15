@@ -299,6 +299,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		ulSelectedItems.clear();
 		selectedValues.clear();
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
+		
+		audienceContainer.setFolderDetails(courseObj);
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
 			//To set default selection if the user is already selected any subject
@@ -367,6 +369,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		return audienceContainer;
 	}
 	
-	
-	
+	@Override
+	public FolderDo getCourseDetails(){
+		return courseObj;
+	}
 }
