@@ -46,6 +46,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
@@ -231,5 +232,6 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 
 	public void getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType, AsyncCallback<PlanContentDo> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
+	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId, AsyncCallback<List<UserPlayedSessionDo>> callback) throws GwtException,ServerDownException;
 }
 
