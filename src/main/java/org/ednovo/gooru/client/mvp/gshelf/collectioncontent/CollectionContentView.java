@@ -134,7 +134,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
-		if(folderDo.getType().equalsIgnoreCase("assessment")){
+		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
 			lblSpanOr.setVisible(false);
 			ancAddResource.setVisible(false);
