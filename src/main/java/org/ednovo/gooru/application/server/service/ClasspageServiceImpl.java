@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -37,6 +38,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.ednovo.gooru.application.client.service.ClasspageService;
+import org.ednovo.gooru.application.server.ArrayListSorter;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.application.server.form.ResourceFormFactory;
@@ -65,6 +67,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
@@ -1893,6 +1896,28 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
+					if(dataList!=null&&dataList.size()>1) {
+						if(type.equalsIgnoreCase("plan")) {
+							if(unitId!=null&&lessonId!=null) {
+								
+							} else {
+								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
+									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
+										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
+									}
+								}
+							}
+						} else if (type.equalsIgnoreCase("progress")) {
+							if(unitId!=null) {
+								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
+									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
+										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
+									}
+								}
+							}
+						}
+						Collections.sort(dataList, new ArrayListSorter("sequence", false));
+					}
 				}
 			}
 		}catch (JSONException e) {
@@ -2008,4 +2033,40 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return collectionList;
 	}
+	
+	@Override
+	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId){
+		List<UserPlayedSessionDo> userPlayedSessions = null;
+
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_LAST_PLAYER_ASSESSMENT_INFO, assessmentId);
+
+		url = AddQueryParameter.constructQueryParams(url, "classGooruId", classGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "userUid", gooruUid);
+		url = AddQueryParameter.constructQueryParams(url, "lessonGooruId", lessonGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "unitGooruId", unitGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "courseGooruId", courseGooruId);
+		url = AddQueryParameter.constructQueryParams(url, "fetchOpenSession", "false");
+
+		getLogger().info("getContentPlayAllSessions - url: "+url);
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+
+		JSONObject resourceObj;
+		try {
+			resourceObj = jsonRep.getJsonObject();
+			if(resourceObj!=null){
+				if(resourceObj.getJSONArray("content") != null && resourceObj.optJSONArray("content") != null){
+					userPlayedSessions = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<UserPlayedSessionDo>>() {});
+				}
+				Collections.sort(userPlayedSessions, new ArrayListSorter("sequence", false));
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return userPlayedSessions;
+	}
+
 }

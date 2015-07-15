@@ -77,6 +77,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	private SearchDo<StandardFo> centurySearchDo = new SearchDo<StandardFo>();
 	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	private Map<Long,String> selectedVaue=new HashMap<Long, String>();
+	private Map<Long,String> selectedValuesFromContainer=new HashMap<Long, String>();
 
 	private AppMultiWordSuggestOracle centurySuggestOracle;
 	private HandlerRegistration handlerRegistration=null;
@@ -259,23 +260,18 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		if(folderDo!=null){
 			List<StandardFo> standardFos=folderDo.getSkills();
 			selectedVaue=new HashMap<Long, String>();
+			hilightSelectedValuesFromAutoSuggest=new HashMap<Long, String>();
 			if(standardFos!=null){
 				for(StandardFo standardFo:standardFos){
 					selectedVaue.put((long)standardFo.getId(), standardFo.getLabel());
+					hilightSelectedValuesFromAutoSuggest.put((long)standardFo.getId(), standardFo.getLabel());
 				}	
 			}
-
 			setUpdatedCentury(selectedVaue);
 		}
 		
 	}
-	
-	
-	public void setSkills(List<StandardFo> standardFos){
-		
-			
-	}
-	
+
 	@Override
 	public void onPostStandardUpdate(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
@@ -287,16 +283,16 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	
 	@Override
 	public Map<Long,String> getSelectedValuesFromAutoSuggest(){
-	
+		selectedValuesFromContainer=new HashMap<Long, String>();
 		int count=centPanel.getWidgetCount();
 		for(int i=0;i<count;i++){
 			Widget widget=centPanel.getWidget(i);
 			if(widget instanceof DownToolTipWidgetUc){
 				DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)widget; 
-				selectedVaue.put(Long.parseLong(downToolTipWidgetUc.getElement().getId()), downToolTipWidgetUc.getElement().getAttribute("desc"));
+				selectedValuesFromContainer.put(Long.parseLong(downToolTipWidgetUc.getElement().getId()), downToolTipWidgetUc.getElement().getAttribute("desc"));
 			}
 		}
-		return selectedVaue;
+		return selectedValuesFromContainer;
 	}
 	
 }

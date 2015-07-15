@@ -22,46 +22,23 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
+public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUiHandlers{
 
-/**
- * @author Search Team
- *
- */
-public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandlers> {
+	public void getSessionsDataByUser(String collectionId, String classId, String userId);
+
+	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId,PrintUserDataDO printData);
+
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData);
+
+	public void clearslot();
+
+	public void setHtmltopdf(String string, String collectionTitle,boolean isClickedOnEmail);
 	
-	/**
-	 * This method will display the Grades according to the subject
-	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,int selectedId);
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link CourseSubjectDo} as List
-	 */
-	void setCourseList(List<CourseSubjectDo> libraryCode);
-	/**
-	 * To set the Updated course data
-	 * @param courseObj
-	 */
-	void setCouseData(FolderDo courseObj);
-	/**
-	 * To get the course title 
-	 * @return {@link String}
-	 */
-	String getCourseTitle();
-	/**
-	 * This method is used for calling create and update api
-	 * @param isCreate
-	 * @param result
-	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result);
-	AudienceView getAudienceContainer();
-	FolderDo getCourseDetails();
+	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId);
+
 }
