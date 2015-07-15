@@ -89,6 +89,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 	protected void onBind() {
 		super.onBind();
 //		gooruGradesPresenter.setGradePanel(getView().getPanelGrades());
+		gooruGradesPresenter.setPageType("home");
 		setInSlot(GRADES, gooruGradesPresenter);
 	}
 

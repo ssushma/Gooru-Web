@@ -33,11 +33,11 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -83,7 +84,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
  *
- * @fileName : ViewMorePeopleView.java
+ * @fileName : PreSearchView.java
  *
  * @description :
  *
@@ -588,25 +589,27 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 */
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
-		public void updateFilters(String filterValue, String addOrRemove) {
-			filterValue = filterValue.replaceAll("Grade", "").replaceAll(" " , "");
-			int value = 0;
-			if (filterValue.equalsIgnoreCase("k")){
-				value = 0;
-			}else if (filterValue.equalsIgnoreCase("pre-k")){
-				value =-1;
-			}else if (filterValue.equalsIgnoreCase("HigherEd")){
-				value =13;
-			}else{
-				value = Integer.parseInt(filterValue);
-			}
+		public void updateFilters(String filterValue, String addOrRemove, String page) {
+			if ("home".equalsIgnoreCase(page)){
+				filterValue = filterValue.replaceAll("Grade", "").replaceAll(" " , "");
+				int value = 0;
+				if (filterValue.equalsIgnoreCase("k")){
+					value = 0;
+				}else if (filterValue.equalsIgnoreCase("pre-k")){
+					value =-1;
+				}else if (filterValue.equalsIgnoreCase("HigherEd")){
+					value =13;
+				}else{
+					value = Integer.parseInt(filterValue);
+				}
 
-			if("add".equals(addOrRemove)){
-				selectedGrades.put(value, value);
-			}else{
-				selectedGrades.remove(value);
+				if("add".equals(addOrRemove)){
+					selectedGrades.put(value, value);
+				}else{
+					selectedGrades.remove(value);
+				}
+				displaySelectedGrades(addOrRemove);
 			}
-			displaySelectedGrades(addOrRemove);
 		}
 	};
 
@@ -985,18 +988,17 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 					AppClientFactory
 							.getInjector()
 							.getClasspageService()
-							.v2getClasspageByCode(classCodeTxtBox.getText().trim(),
-									new SimpleAsyncCallback<CollectionDo>() {
+							.v3GetClassById(classCodeTxtBox.getText().trim(),
+									new SimpleAsyncCallback<ClasspageDo>() {
 										@Override
-										public void onSuccess(CollectionDo result) {
+										public void onSuccess(ClasspageDo result) {
 											setButtonStatus("");
-											if (result.getGooruOid() == null) {
+											if (result.getClassUid() == null) {
 												Window.enableScrolling(false);
 												AppClientFactory
 														.fireEvent(new SetHeaderZIndexEvent(
 																98, false));
-												alertMessageUc = new AlertMessageUc(
-														i18n.GL0061(), new Label(i18n.GL0244()));
+												alertMessageUc = new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
 												ClickHandler alertHandler = new ClickHandler() {
 
 													@Override
@@ -1008,8 +1010,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 														alertHandler,
 														ClickEvent.getType());
 
-												alertMessageUc.okButton
-														.addClickHandler(new ClickHandler() {
+												alertMessageUc.okButton.addClickHandler(new ClickHandler() {
 
 															@Override
 															public void onClick(
@@ -1017,118 +1018,66 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 																isValid = false;
 															}
 														});
-											} else if (result
-													.getCreator()
-													.getGooruUId()
-													.equalsIgnoreCase(
-															AppClientFactory
-																	.getGooruUid())) {
-												if (AppClientFactory
-														.getCurrentPlaceToken().equals(
-																PlaceTokens.HOME)) {
-													MixpanelUtil
-															.Click_Study_LandingPage();
+											} else if (result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())) {
+												if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+													MixpanelUtil.Click_Study_LandingPage();
 												}
 
 												Map<String, String> params = new HashMap<String, String>();
-												params.put("id", result.getGooruOid());
-												params.put("pageSize", "10");
-												params.put("pageNum", "0");
-												params.put("pos", "1");
-												AppClientFactory.getPlaceManager()
-														.revealPlace(
-																PlaceTokens.STUDENT,
-																params);
+												if(result.getCourseGooruOid() != null){
+													params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+												}
+												params.put("id", result.getClassUid());
+												AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 												classCodeTxtBox.setText("");
 												if (alertMessageUc != null)
 													alertMessageUc.hide();
-											} else if (result.getSharing()
-													.equalsIgnoreCase("private")) {
+											} else if (!result.isVisibility()) {
 
-												if (result
-														.getCreator()
-														.getGooruUId()
-														.equalsIgnoreCase(
-																AppClientFactory
-																		.getGooruUid())) {
-													if (AppClientFactory
-															.getCurrentPlaceToken()
-															.equals(PlaceTokens.HOME)) {
-														MixpanelUtil
-																.Click_Study_LandingPage();
+												if (result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())) {
+													if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+														MixpanelUtil.Click_Study_LandingPage();
 													}
 
 													Map<String, String> params = new HashMap<String, String>();
-													params.put("id",
-															result.getGooruOid());
-													params.put("pageSize", "10");
-													params.put("pageNum", "0");
-													params.put("pos", "1");
-													AppClientFactory
-															.getPlaceManager()
-															.revealPlace(
-																	PlaceTokens.STUDENT,
-																	params);
+													params.put("id",result.getClassUid());
+													AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 													classCodeTxtBox.setText("");
 													if (alertMessageUc != null)
 														alertMessageUc.hide();
+													//StudentAssignmentView.setPrivatePage();
 
-													StudentAssignmentView
-															.setPrivatePage();
-
-												} else if (result.getStatus()
-														.equalsIgnoreCase("active")) {
-													if (AppClientFactory
-															.getCurrentPlaceToken()
-															.equals(PlaceTokens.HOME)) {
-														MixpanelUtil
-																.Click_Study_LandingPage();
+												} else if (result.getStatus().equalsIgnoreCase("active")) {
+													if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+														MixpanelUtil.Click_Study_LandingPage();
 													}
 
 													Map<String, String> params = new HashMap<String, String>();
-													params.put("id",
-															result.getGooruOid());
-													params.put("pageSize", "10");
-													params.put("pageNum", "0");
-													params.put("pos", "1");
-													AppClientFactory
-															.getPlaceManager()
-															.revealPlace(
-																	PlaceTokens.STUDENT,
-																	params);
+													if(result.getCourseGooruOid() != null){
+														params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+													}
+													params.put("id",result.getClassUid());
+													AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 													classCodeTxtBox.setText("");
 													if (alertMessageUc != null)
 														alertMessageUc.hide();
+													//StudentAssignmentView.setPrivatePageActive();
 
-													StudentAssignmentView
-															.setPrivatePageActive();
-
-												} else if (result.getStatus()
-														.equalsIgnoreCase("pending")) {
-													if (AppClientFactory
-															.getCurrentPlaceToken()
-															.equals(PlaceTokens.HOME)) {
-														MixpanelUtil
-																.Click_Study_LandingPage();
+												} else if (result.getStatus().equalsIgnoreCase("pending")) {
+													if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+														MixpanelUtil.Click_Study_LandingPage();
 													}
 
 													Map<String, String> params = new HashMap<String, String>();
-													params.put("id",
-															result.getGooruOid());
-													params.put("pageSize", "10");
-													params.put("pageNum", "0");
-													params.put("pos", "1");
-													AppClientFactory
-															.getPlaceManager()
-															.revealPlace(
-																	PlaceTokens.STUDENT,
-																	params);
+													if(result.getCourseGooruOid() != null){
+														params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+													}
+													params.put("id",result.getClassUid());
+													AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 													classCodeTxtBox.setText("");
 													if (alertMessageUc != null)
 														alertMessageUc.hide();
-
-													StudentAssignmentView
-															.setPrivatePagePending();
+													//StudentAssignmentView.setPrivatePagePending();
 
 												} else {
 													if (AppClientFactory.isAnonymous()) {
@@ -1142,43 +1091,27 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 											} else {
 												toClear = true;
-												if (AppClientFactory
-														.getCurrentPlaceToken().equals(
-																PlaceTokens.HOME)) {
-													MixpanelUtil
-															.Click_Study_LandingPage();
+												if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+													MixpanelUtil.Click_Study_LandingPage();
 												}
 
 												Map<String, String> params = new HashMap<String, String>();
-												params.put("id", result.getGooruOid());
-												params.put("pageSize", "10");
-												params.put("pageNum", "0");
-												params.put("pos", "1");
-												AppClientFactory.getPlaceManager()
-														.revealPlace(
-																PlaceTokens.STUDENT,
-																params);
+												if(result.getCourseGooruOid() != null){
+													params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+												}
+												params.put("id", result.getClassUid());
+												AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 												classCodeTxtBox.setText("");
 												if (alertMessageUc != null)
 													alertMessageUc.hide();
 
-												if (result
-														.getCreator()
-														.getGooruUId()
-														.equalsIgnoreCase(
-																AppClientFactory
-																		.getGooruUid())) {
-													StudentAssignmentView
-															.setPublicPage();
-												} else if (result.getStatus()
-														.equalsIgnoreCase("active")) {
-													StudentAssignmentView
-															.setPublicPageActive();
+												/*if (result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())) {
+													StudentAssignmentView.setPublicPage();
+												} else if (result.getStatus().equalsIgnoreCase("active")) {
+													StudentAssignmentView.setPublicPageActive();
 												} else {
-													StudentAssignmentView
-															.setPublicPagePending();
-												}
-
+													StudentAssignmentView.setPublicPagePending();
+												}*/
 											}
 											setButtonStatus("");
 										}
