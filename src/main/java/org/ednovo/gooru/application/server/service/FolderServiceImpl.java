@@ -306,9 +306,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
-		logger.info("courseId : "+courseId);
-		logger.info("unitId : "+courseId);
-		logger.info("lessonId : "+courseId);
 		if(courseId!=null && unitId==null){
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNITS_BY_COURSEID, courseId);
 		}else if(courseId!=null && unitId!=null && lessonId==null){
