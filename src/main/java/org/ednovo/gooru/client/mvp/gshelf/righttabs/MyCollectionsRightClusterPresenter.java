@@ -125,7 +125,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			selectedWidgetsTitleType = null;
 			
 		}
-		
+
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		getView().setBreadCrumbSlot(folderObj,type,selectedWidgetsTitleType);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
@@ -143,7 +144,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else if(ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(type)){
-					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){ 
 						getView().disableAndEnableBreadCums(false);
 					}else{
@@ -157,7 +157,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					getView().disableAndEnableBreadCums(false);
 					getView().setFolderInfoWidget(folderObj, this);
 				}else{
-					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){
 						getView().disableAndEnableBreadCums(false);
 					}else{
@@ -168,8 +167,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
-			System.out.println("folderObj>>>:"+folderObj.getType());
-			 if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
+			
+			if(view!=null && FOLDER.equalsIgnoreCase(view)){
+				getView().disableAndEnableBreadCums(false);
+			}else{
+				getView().disableAndEnableBreadCums(true);
+			}
+			 if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.getView().getResourceListPanel();
 				collectionContentPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionContentPresenter);
