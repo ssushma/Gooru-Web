@@ -266,7 +266,11 @@ public class ShelfTreeWidget extends FocusPanel {
 				try {
 					titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
 				} catch (Exception e){
+<<<<<<< HEAD
 				//	AppClientFactory.printSevereLogger(e.getMessage());
+=======
+					AppClientFactory.printSevereLogger(e.toString());
+>>>>>>> 2b6bcecef8cfc3ac33221ec97b0f9cd8b853d92a
 				}
 			}
 		}

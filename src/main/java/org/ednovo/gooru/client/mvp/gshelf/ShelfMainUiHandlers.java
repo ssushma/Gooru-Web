@@ -125,4 +125,6 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	void onDeleteSetBreadCrumbs(String title, String course);
 	
 	void setVersion();
+	
+	void SetDefaultTypeAndVersion();
 }

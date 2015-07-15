@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 public interface ExternalAssessmentInfoUiHandlers extends BaseUiHandlers {
 	/**
@@ -21,5 +22,5 @@ public interface ExternalAssessmentInfoUiHandlers extends BaseUiHandlers {
 	 * To update the course details
 	 * @param courseTitle {@link String} 
 	 */
-	void updateAssessmentDetails(CreateDo createOrUpDate, String id,boolean isCreateAssessment);
+	void updateAssessmentDetails(CreateDo createOrUpDate, String id,boolean isCreateAssessment,FolderDo folderObj);
 }
