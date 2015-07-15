@@ -195,6 +195,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(result.getTitle()!=null){
 			titleLbl.setHTML(result.getTitle());	
 		}
+		collectionDo.setGooruOid(result.getGooruOid());
 		collectionDo.setTitle(StringUtil.isEmpty(result.getTitle())?"":result.getTitle());
 		collectionDo.setUrl(StringUtil.isEmpty(result.getUrl())?"":result.getUrl());
 		collectionDo.setGoals(StringUtil.isEmpty(result.getGoals())?"":result.getGoals());
