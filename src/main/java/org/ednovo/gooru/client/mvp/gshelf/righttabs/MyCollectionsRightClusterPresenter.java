@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseSharePresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -122,10 +123,14 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		clearSlot(INNER_SLOT);
 		if(folderObj==null){
 			selectedWidgetsTitleType = null;
+			
 		}
+
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		getView().setBreadCrumbSlot(folderObj,type,selectedWidgetsTitleType);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
+		getView().enableAndHideTabs(!StringUtil.isEmpty(folderObj==null?"":folderObj.getGooruOid())); 
 		if(index==1 || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 				//For displaying template and data
 				//getView().enableAndHideTabs(true);
@@ -139,7 +144,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					lessonInfoPresenter.setLessonData(folderObj); 
 					setInSlot(INNER_SLOT, lessonInfoPresenter);
 				}else if(ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(type)){
-					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){ 
 						getView().disableAndEnableBreadCums(false);
 					}else{
@@ -153,7 +157,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					getView().disableAndEnableBreadCums(false);
 					getView().setFolderInfoWidget(folderObj, this);
 				}else{
-					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){
 						getView().disableAndEnableBreadCums(false);
 					}else{
@@ -164,6 +167,12 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
+			
+			if(view!=null && FOLDER.equalsIgnoreCase(view)){
+				getView().disableAndEnableBreadCums(false);
+			}else{
+				getView().disableAndEnableBreadCums(true);
+			}
 			 if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.getView().getResourceListPanel();
 				collectionContentPresenter.setData(folderObj);

@@ -349,7 +349,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 		if(result.size() > 0){
 
-			AppClientFactory.printInfoLogger("questiondatatable--"+result.size());
 
 			for(int i=0;i<result.size();i++) {
 				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -367,22 +366,17 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					questionType= result.get(i).getQuestionType();
 				}
 
-				AppClientFactory.printInfoLogger("questiondatatable-questionType-"+questionType);
 
 				if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : MC");
 					Label anserlbl=new Label();
 					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 						 Map<String, Integer> authorObject = result.get(i).getOptions();
-						 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 1");
 
 						 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
 						 {
-							 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 2");
 							 String userSelectedOption=entry.getKey();
 							// int ansStatus=entry.getValue();
 							 if(userSelectedOption!=null){
-								 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 3");
 									anserlbl.setText(userSelectedOption);
 									if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
 										anserlbl.getElement().getStyle().setColor(CORRECT);
@@ -391,24 +385,18 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 									}else{
 										anserlbl.getElement().getStyle().setColor(INCORRECT);
 									}
-									AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 4");
 								}
 						 }
-						 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 5");
 					}
 					anserlbl.setStyleName(STYLE_TABLE_CENTER);
 					adTable.setWidget(i, 2,anserlbl);
 				}else if (FIB.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 1");
 					VerticalPanel answerspnl=new VerticalPanel();
 					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 2");
 						String answerTextFormat = "";
 						String[] answersArry = null;
 						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 3");
 						for (MetaDataDo metaDataDo : questionList) {
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 4");
 							String answerText = "";
 							if((metaDataDo.getAnswer_text() != null)) {
 								answerText = metaDataDo.getAnswer_text();
@@ -417,7 +405,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							if(questionList.size()  != metaDataDo.getSequence()){
 								answerTextFormat += ",";
 							}
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 5");
 						}
 						String[] userFibOption = null;
 						if(result.get(i).getText() != null) {
@@ -425,9 +412,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							userFibOption =result.get(i).getText().split(",");
 						}
 						if(answersArry!=null && userFibOption!=null){
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 6");
 							for (int k = 0; k < answersArry.length; k++) {
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 7");
 								Label answerChoice=new Label();
 								if(answersArry[k]!=null && k<userFibOption.length){
 									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
@@ -442,36 +427,29 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 									}
 									answerChoice.setStyleName(STYLE_TABLE_CENTER);
 									answerspnl.add(answerChoice);
-									AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 8");
 								}
 							}
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 9");
 						}
 					}
 					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
 					adTable.setWidget(i, 2,answerspnl);
 					//data.setValue(i, 2, answerspnl.toString());
 				}else  if(MA.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 1");
 					VerticalPanel answerspnl=new VerticalPanel();
 					if(result.get(i).getAnswerObject()!=null) {
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 2");
 						JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
 						JSONObject answerObject = value.isObject();
 						Set<String> keys=answerObject.keySet();
 						Iterator<String> itr = keys.iterator();
 						while(itr.hasNext()) {
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 3");
 							answerspnl.clear();
 							JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 							for(int j=0;j<attemptsObj.size();j++){
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 4");
 								Label answerChoice=new Label();
 								String showMessage = null;
 								boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 								String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
 								String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 5");
 								if(skip == false)
 								{
 									if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
@@ -488,20 +466,15 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 									}
 								}
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 6");
 								answerChoice.setStyleName(STYLE_TABLE_CENTER);
 								answerspnl.add(answerChoice);
 							}
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 7");
 						}
 					}
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 8");
 					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
 					adTable.setWidget(i, 2,answerspnl);
 				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 1");
 					if(result.get(i).getAnswerObject()!=null) {
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 2");
 						Label viewResponselbl=new Label(VIEWRESPONSE);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
@@ -510,14 +483,12 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 3");
 				}
 
 				//Set attempts
 				Label attempts=new Label(i18n.GL2269());
 				attempts.setStyleName(STYLE_TABLE_CENTER);
 				attempts.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-				AppClientFactory.printInfoLogger("questiondatatable-questionType");
 
 				if(STATUS_INCORRECT.equalsIgnoreCase(scoreStatus)) {
 					adTable.setWidget(i, 3,attempts);
@@ -538,19 +509,15 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			}
 			sortAndFixed();
 			adTable.addStyleName("table table-bordered reportTableStyle");
-			AppClientFactory.printInfoLogger("adTable--"+adTable);
-			questionsTable.add(adTable);
-			AppClientFactory.printInfoLogger("questionsTable--"+questionsTable.getWidgetCount());
+			questionsTable.getElement().setInnerHTML(""+adTable);
 
 		}else {
-			AppClientFactory.printInfoLogger("questionsTable-erroeMsg-"+questionsTable.getWidgetCount());
 			Label erroeMsg=new Label();
 			erroeMsg.setStyleName(STYLE_ERROR_MSG);
 			erroeMsg.setText(i18n.GL3265());
 			questionsTable.add(erroeMsg);
 		}
 
-		AppClientFactory.printInfoLogger("End...");
 
 	}
 
