@@ -52,5 +52,7 @@ public interface EditClassContentViewUiHandler extends BaseUiHandlers{
 	void getLessonList(String unitId);
 
 	void updateCollectionOrAssignmentVisiblity(List<ClassLessonDo> classLessonDo,String unitId);
+	
+	void getUnitList(int offset,int limit);
 
 }

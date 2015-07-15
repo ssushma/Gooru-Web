@@ -52,6 +52,8 @@ public interface EditClassSettingsNavigationUiHandler extends BaseUiHandlers{
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> CLASS_CONETENT_TAB = new Type<RevealContentHandler<?>>();
+
+	void addCourseToClass();
 	
 	
 

@@ -170,14 +170,14 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
 				shelfMainPresenter.getMyCollectionsListPresenter().getView().loadingImage();
-				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true);
+				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true,folderObj);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
 		}else if(index==3){
 			if(COURSE.equalsIgnoreCase(folderObj.getType())){
 				courseSharePresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, courseSharePresenter);
-			}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+			}else if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
 				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
