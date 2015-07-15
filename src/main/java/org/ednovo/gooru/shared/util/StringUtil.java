@@ -39,6 +39,8 @@ import java.util.Set;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.client.CssTokens;
@@ -885,5 +887,32 @@ public class StringUtil implements ClientConstants {
 		}
 		return keyString;
 	}
+
+	public static List<checkboxSelectedDo> getCheckBoxSelectedDo(Map<Integer,String> detailsMap){
+		List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>(); 
+		if(detailsMap!=null){
+			
+			for(Map.Entry<Integer, String> entry:detailsMap.entrySet()){
+				checkboxSelectedDo checkboxSelectedDo=new checkboxSelectedDo();
+				checkboxSelectedDo.setId(entry.getKey());
+				checkboxSelectedDo.setName(entry.getValue());
+				checkboxSelectedDos.add(checkboxSelectedDo);
+			}
+		}
+		return checkboxSelectedDos;
+	}
+	
+	
+public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
+	List<StandardFo> standardFos=new ArrayList<StandardFo>();
+	if(detailsMap!=null){
+		for(Map.Entry<Long, String> entry:detailsMap.entrySet()){
+			StandardFo fo=new StandardFo();
+			fo.setId(Integer.parseInt(entry.getKey()+""));
+			fo.setLabel(entry.getValue());
+		}
+	}
+	return standardFos;
+}
 }
 
