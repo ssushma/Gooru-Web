@@ -78,10 +78,10 @@ public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> imp
 	}
 
 	public String getPageType() {
-		return pageType;
+		return getView().getPageType();
 	}
 
 	public void setPageType(String pageType) {
-		this.pageType = pageType;
+		getView().setPageType(pageType);
 	}
 }
