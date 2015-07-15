@@ -324,7 +324,11 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {
-						if(!StringUtil.checkNull(result)){
+						
+						AppClientFactory.printInfoLogger("getUserSessionDataByUser client result"+result);
+						
+						if(result!=null){
+							AppClientFactory.printInfoLogger("getUserSessionDataByUser client not nullresult"+result);
 							setIndividualData(result);
 						}else{
 							getView().errorMsg();
@@ -347,6 +351,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 			
 			@Override
 			public void onSuccess() {
+				
+				AppClientFactory.printInfoLogger("setIndividualData result"+result);
 				getView().loadingIcon();
 				collectionProgressCount=0;
 				Collections.sort(result,new Comparator<UserDataDo>() {
@@ -357,15 +363,19 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		        	}
 		        });
 				for (UserDataDo userDataDo : result) {
+					AppClientFactory.printInfoLogger("setIndividualData result"+result);
 					
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
+							AppClientFactory.printInfoLogger("userDataDo.getResourceFormat()--"+userDataDo.getResourceFormat());
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
 							}
 							questionRowIndex.add(collectionProgressCount);
 						}
+						AppClientFactory.printInfoLogger("questionRowIndex--"+questionRowIndex);
 						collectionProgressCount++;
 				}
+				AppClientFactory.printInfoLogger("questionsData--"+questionsData.size());
 				getView().setQuestionsData(questionsData);
 				getView().setQuestionsPrintData(questionsData);
 		
