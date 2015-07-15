@@ -45,7 +45,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -88,8 +87,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String ID = "id";
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
-	
-	HandlerRegistration handlerRegistration=null;
 	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -143,6 +140,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	@Override
 	public void setData(String type,List<FolderDo> listOfContent,boolean clrPanel,boolean isInnerSlot,FolderDo folderDo) {
+		System.out.println("listOfContent data::"+listOfContent.size());
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
@@ -223,7 +221,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
-				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
+				widgetMove.getTitleContainer().addClickHandler(new ClickOnTitleContainer(folderObj,true));
+				//widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;
@@ -360,16 +359,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	class ClickOnTitleContainer implements ClickHandler{
 		FolderDo folderObj;
-		ClickOnTitleContainer(FolderDo folderObj){
+		boolean isClicked;
+		ClickOnTitleContainer(FolderDo folderObj,boolean isClicked){
 			this.folderObj=folderObj;
+			this.isClicked=isClicked;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			event.preventDefault();
-			event.stopPropagation();
-			Map<String,String> params = new HashMap<String,String>();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
-			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+			if(isClicked){
+				isClicked=false;
+				Map<String,String> params = new HashMap<String,String>();
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
+				getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+			}
 		}
 	}
 	@Override
