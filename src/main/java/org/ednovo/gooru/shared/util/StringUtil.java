@@ -910,6 +910,7 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 			StandardFo fo=new StandardFo();
 			fo.setId(Integer.parseInt(entry.getKey()+""));
 			fo.setLabel(entry.getValue());
+			standardFos.add(fo);
 		}
 	}
 	return standardFos;
