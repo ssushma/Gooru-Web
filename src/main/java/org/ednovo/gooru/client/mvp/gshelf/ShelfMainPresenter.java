@@ -98,7 +98,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	boolean isApiCalled=false;
 	
-	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback;
+	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback = null;
 	
 	private static final String CALLBACK = "callback";
 	
