@@ -117,6 +117,9 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 					}
 				});
 			}
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			getView().setMetadataContent(null);
+			getView().setReportData(new ArrayList<PlanProgressDo>());
 		}
 	}
 	
