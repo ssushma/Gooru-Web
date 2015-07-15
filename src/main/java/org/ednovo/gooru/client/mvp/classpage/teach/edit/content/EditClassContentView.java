@@ -222,13 +222,12 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	@UiHandler("saveBtn")
 	public void saveClass(ClickEvent event){
 		ClasspageDo classpageDo = new ClasspageDo();
-		classpageDo.setMinimumScore(miniScore);
-		classpageDo.setVisibility(visiblity);
+		String score = Long.toString(miniScore);
 		saveLblText.setVisible(true);
 		saveBtn.setVisible(false);
 		saveEnabled(false);
 		saveBtn.addStyleName(CssTokens.DISABLED);
-		getUiHandlers().updateClass(classpageDo);
+		getUiHandlers().updateClass(score);
 	}
 	
 	private class NumbersOnly implements KeyPressHandler{
@@ -337,6 +336,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		this.visiblity=classpageDo.isVisibility();
 		if(classpageDo.getMinimumScore() >0){
 			scoreTextBox.setText(classpageDo.getMinimumScore()+"");
+		}else{
+			scoreTextBox.setText("");
 		}
 		
 	}

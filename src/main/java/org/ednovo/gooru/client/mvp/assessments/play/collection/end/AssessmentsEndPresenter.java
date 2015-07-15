@@ -326,12 +326,14 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 					public void onSuccess(ArrayList<UserDataDo> result) {
 						if(!StringUtil.checkNull(result)){
 							setIndividualData(result);
+						}else{
+							getView().errorMsg();
 						}
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						
+						getView().errorMsg();
 					}
 				});
 			}
