@@ -112,7 +112,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 	}
 
 	@Override
-	public void updateAssessmentDetails(final CreateDo createOrUpDate, String id,boolean isCreateAssessment) {
+	public void updateAssessmentDetails(final CreateDo createOrUpDate, String id,boolean isCreateAssessment,final FolderDo folderObj) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
@@ -120,12 +120,12 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createOrUpDate, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				FolderDo folderDo = new FolderDo();
-				folderDo.setTitle(createOrUpDate.getTitle());
-				folderDo.setCollectionType(ASSESSMENTURL);
+				folderObj.setTitle(createOrUpDate.getTitle());
+				folderObj.setCollectionType(ASSESSMENTURL);
+				
 				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, folderDo);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+				myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, folderObj);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,true);
 			}
 		});
 	}

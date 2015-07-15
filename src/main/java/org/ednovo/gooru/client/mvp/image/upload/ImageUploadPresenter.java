@@ -28,14 +28,11 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.MediaUploadServiceAsync;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.classpage.event.setClassImageEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEvent;
-import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEvent;
@@ -449,6 +446,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setCollectionImage(boolean isCollectionImage) {
+		getView().setAspectRatio(1.0f);
 		this.isCollectionImage = isCollectionImage;
 	}
 	

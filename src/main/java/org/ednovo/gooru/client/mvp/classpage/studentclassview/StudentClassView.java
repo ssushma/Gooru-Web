@@ -209,13 +209,16 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@UiHandler("teachViewBtn")
 	public void clickTeachViewBtn(ClickEvent event) {
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
+		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, "");
 		PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
-		request.with(UrlNavigationTokens.CLASSPAGEID, classpageId);
-		request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
-		request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO);
+		request = request.with(UrlNavigationTokens.CLASSPAGEID, classpageId);
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
+		request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS);
+		request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, cId);
 		AppClientFactory.getPlaceManager().revealPlace(request);
 	}
-
+	
 	public static void setPublicPagePending() {
 		if(!AppClientFactory.isAnonymous()){
 			

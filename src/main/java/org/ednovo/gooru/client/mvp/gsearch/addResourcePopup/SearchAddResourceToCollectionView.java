@@ -111,6 +111,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		super(eventBus);
 		appPopUp=new PopupPanel();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+		btnAddNew.setVisible(false);
 		appPopUp.setGlassEnabled(true);
 		appPopUp.getElement().getStyle().setZIndex(999999);
 		floderTreeContainer.clear();

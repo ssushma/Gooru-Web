@@ -95,7 +95,11 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 			int columnCount = usageData.size();
 			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
 				int score = usageData.get(columnWidgetCount).getScoreInPercentage();
-				Label scoreLbl = new Label(score+"%");
+				String scoreStr = "--";
+				if(score>0) {
+					scoreStr = score+"%";
+				}
+				Label scoreLbl = new Label(scoreStr);
 				courseTableWidget.setWidget(rowWidgetCount, columnWidgetCount+1,scoreLbl);
 				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
 			}
