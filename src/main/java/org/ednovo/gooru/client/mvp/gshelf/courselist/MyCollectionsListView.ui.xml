@@ -13,7 +13,7 @@
 			<g:Button styleName="primary createButton" ui:field="btnCreateResource" />
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="listScrollPanel" styleName="coursesList">
-			<g:HTMLPanel>
+			<g:HTMLPanel ui:field="pnlMainButtonsContainer">
 				<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList" />
 				<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
 					<event:HTMLEventPanel ui:field="createPanel">

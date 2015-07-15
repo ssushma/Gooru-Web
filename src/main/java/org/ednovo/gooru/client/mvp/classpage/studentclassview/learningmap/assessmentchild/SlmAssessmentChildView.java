@@ -80,6 +80,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	
 	@UiField Button playBtn;
 	
+	@UiField HTMLEventPanel viewReport;
+	
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
 	private final String DEFAULT_ASSESSMENT_IMAGE = "../images/default-assessment-image -160x120.png";
@@ -100,6 +102,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(planContentDo);
+		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
 		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
 		playBtn.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
 	}
@@ -161,6 +164,27 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 	}
 	
+	public class IndividualReportView implements ClickHandler {
+		private String type = "collection";
+		private String gooruOid = null;
+		
+		public IndividualReportView(String gooruOid, String type) {
+			if(type!=null) {
+				this.type = type;
+			}
+			this.gooruOid = gooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,type);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, gooruOid);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB,UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}
+	}
+
 	public class PlayClassContent implements ClickHandler {
 
 		private String type = "collection";

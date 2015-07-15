@@ -70,6 +70,6 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void disableAndEnableBreadCums(boolean isVisible);
 	
-	public void setFolderInfoWidget(FolderDo folderObj);
+	public void setFolderInfoWidget(FolderDo folderObj, MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter);
 	
 }
