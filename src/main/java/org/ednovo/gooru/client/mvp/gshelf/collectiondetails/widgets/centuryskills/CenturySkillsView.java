@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -251,14 +252,31 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		this.collectionDo = collectionDo;
 		
 		List<StandardFo> standardFos=collectionDo.getSkills();
-	if(standardFos!=null){
-		for(StandardFo standardFo:standardFos){
-			selectedVaue.put((long)standardFo.getCodeId(), standardFo.getDescription());
-		}	
-	}
-		
-		setUpdatedCentury(selectedVaue);
+		//setSkills(standardFos);
 	
+	}
+	
+	@Override
+	public void setFolderDo(FolderDo folderDo){
+		if(folderDo!=null){
+			List<StandardFo> standardFos=folderDo.getSkills();
+			AppClientFactory.printInfoLogger("standardFos ..... size"+standardFos.size());
+			selectedVaue=new HashMap<Long, String>();
+			if(standardFos!=null){
+				for(StandardFo standardFo:standardFos){
+				//	selectedVaue.put((long)standardFo.getId(), standardFo.getLabel());
+				}	
+			}
+
+			setUpdatedCentury(selectedVaue);
+		}
+		
+	}
+	
+	
+	public void setSkills(List<StandardFo> standardFos){
+		
+			
 	}
 	
 	@Override
@@ -266,6 +284,9 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		this.collectionDo = collectionDo;
 		selectedValuesFromAutoSuggest.clear();
 	}
+	
+
+	
 	
 	@Override
 	public Map<Long,String> getSelectedValuesFromAutoSuggest(){

@@ -86,4 +86,5 @@ public interface UrlNavigationTokens{
 	String TRUE = "true";
 	String FALSE = "false";
 	String CLASSPAGEID="classpageId";
+	String CONTENT_NAME = "content-name";
 }

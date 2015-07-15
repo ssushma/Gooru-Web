@@ -48,7 +48,6 @@ public class PlanProgressDo implements Serializable{
 	private int scoreInPercentage;
 	private long timespent;
 	private int collectionCount;
-	private int avgScore;
 	private int assessmentCount;
 	private int collectionsViewed;
 	private int assessmentsAttempted;
@@ -108,12 +107,6 @@ public class PlanProgressDo implements Serializable{
 	}
 	public void setCollectionCount(int collectionCount) {
 		this.collectionCount = collectionCount;
-	}
-	public int getAvgScore() {
-		return avgScore;
-	}
-	public void setAvgScore(int avgScore) {
-		this.avgScore = avgScore;
 	}
 	public int getAssessmentCount() {
 		return assessmentCount;

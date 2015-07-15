@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -105,7 +106,6 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 
 	
 	public void setClassData(ClasspageDo classpageDo) {
-		this.classpageDo=classpageDo;
 		getView().setData(classpageDo);
 	}
 
@@ -117,7 +117,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		try{
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
-			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareUrlGenerationAsyncCallback());
+			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classUid, params, getShareUrlGenerationAsyncCallback());
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger(e.getMessage());
 		}
@@ -135,6 +135,28 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	 */
 	public void setShareUrlGenerationAsyncCallback(SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback) {
 		this.shareUrlGenerationAsyncCallback = shareUrlGenerationAsyncCallback;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsViewUiHandler#updateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public void updateClass(ClasspageDo classpageDo) {
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		if(classId != null){
+			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, classpageDo, new AsyncCallback<ClasspageDo>() {
+				
+				@Override
+				public void onSuccess(ClasspageDo result) {
+					getView().setUpdateClassData();
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		}
 	}
 	
 }

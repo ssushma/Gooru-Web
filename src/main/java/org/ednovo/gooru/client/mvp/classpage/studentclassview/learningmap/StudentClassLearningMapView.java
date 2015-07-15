@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild.SlmAssessmentChildView;
@@ -88,7 +89,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		super.reset();
 	}
 	
-	public void getContentData(ArrayList<PlanProgressDo> dataList) {
+	public void getContentData(ArrayList<PlanProgressDo> dataList, String status, String userId) {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		String pageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB, UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
 		
@@ -113,12 +114,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 				setTextPanelsVisiblity(true,true,false,true);
 				for(int i=0;i<size;i++) {
-					learningMapContainer.add(new StudentClassLessonContainer(dataList.get(i), i+1));
-				}
-			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				setTextPanelsVisiblity(true,true,true,true);
-				for(int i=0;i<size;i++) {
-					learningMapContainer.add(new SlmAssessmentChildView(dataList.get(i)));
+					learningMapContainer.add(new StudentClassLessonContainer(dataList.get(i), i+1, status, userId));
 				}
 			}
 		}
@@ -139,9 +135,9 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	}
 	
 	@Override
-	public void setContent(ArrayList<PlanProgressDo> dataList) {
+	public void setContent(ArrayList<PlanProgressDo> dataList, String status, String userId) {
 		setContentVisiblity(false);
-		getContentData(dataList);
+		getContentData(dataList, status, userId);
 	}
 	
 	public void navigateToPage(String id) {
@@ -280,6 +276,26 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			previousName = titleTxt+" "+(matchedCount);
 		}
 		setNavLinksData(allTxt, previousName, name, nextName);
+	}
+
+	@Override
+	public void setLessonContent(PlanContentDo collectionList, String status, String userId) {
+		learningMapContainer.clear();
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+			setPreviewClassMode(true);
+			containerData.addStyleName("margin-top-20");
+		} else {
+			containerData.removeStyleName("margin-top-20");
+		}
+		
+		int size = collectionList.getItems().size();
+		setScoreMapVisiblity(true);
+		setTextPanelsVisiblity(true,true,true,true);
+		for(int i=0;i<size;i++) {
+			learningMapContainer.add(new SlmAssessmentChildView(collectionList.getItems().get(i), status, userId));
+		}
+		setContentVisiblity(true);
 	}
 
 

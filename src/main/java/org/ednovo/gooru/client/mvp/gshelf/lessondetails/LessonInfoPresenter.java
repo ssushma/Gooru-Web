@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -101,6 +102,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	@Override
 	public void showStandardsPopup(String standardVal, String titleVal) {
+		Window.enableScrolling(false);
 		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,titleVal);
 		addToPopupSlot(standardsPopupPresenter);
 	}

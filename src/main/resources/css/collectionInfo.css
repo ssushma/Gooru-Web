@@ -11,6 +11,7 @@
 }
 
 .openHideBlocks h4 {
+  clear:both; 	
   font-size: 16px;
   color: #515151;
   margin: 0 0 5px 0;

@@ -182,7 +182,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						Label scoreLblTitle = new Label(A_STRING+columnWidgetCount);
 						scoreLblTitle.setWidth("80px");
 						scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
-						scoreLblTitle.addClickHandler(new CollectionAssessmentView(collectionList.get(collectionWidgetCount).getGooruOId(),contentView));
+						scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,collectionList.get(collectionWidgetCount).getTitle()));
 						assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,scoreLblTitle);
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
@@ -362,19 +362,22 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	}
 	
 	public class CollectionAssessmentView implements ClickHandler {
-		private String contentId = null, contentType = null;
-		public CollectionAssessmentView(String contentId, String contentType) {
+		private String contentId = null, contentType = null, lessonId = null, title = null;
+		public CollectionAssessmentView(String lessonId, String contentId, String contentType, String title) {
+			this.lessonId = lessonId;
 			this.contentId = contentId;
 			this.contentType = contentType;
+			this.title = title;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW);
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, contentId);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, lessonId);
 			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, contentType);
 			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, contentId);
+			request = request.with(UrlNavigationTokens.CONTENT_NAME, title);
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 	}

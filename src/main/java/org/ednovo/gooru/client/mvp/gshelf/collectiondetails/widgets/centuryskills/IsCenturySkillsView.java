@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 
 import com.google.gwt.user.client.ui.Button;
@@ -56,4 +57,6 @@ public interface IsCenturySkillsView extends IsViewWithHandlers<CenturySkillsUiH
 	void onPostStandardUpdate(CollectionDo collectionDo);
 
 	Map<Long, String> getSelectedValuesFromAutoSuggest();
+
+	void setFolderDo(FolderDo folderDo);
 }
