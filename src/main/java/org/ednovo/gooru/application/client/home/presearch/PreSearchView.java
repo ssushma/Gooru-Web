@@ -83,7 +83,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
  *
- * @fileName : ViewMorePeopleView.java
+ * @fileName : PreSearchView.java
  *
  * @description :
  *
@@ -588,25 +588,27 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 */
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
-		public void updateFilters(String filterValue, String addOrRemove) {
-			filterValue = filterValue.replaceAll("Grade", "").replaceAll(" " , "");
-			int value = 0;
-			if (filterValue.equalsIgnoreCase("k")){
-				value = 0;
-			}else if (filterValue.equalsIgnoreCase("pre-k")){
-				value =-1;
-			}else if (filterValue.equalsIgnoreCase("HigherEd")){
-				value =13;
-			}else{
-				value = Integer.parseInt(filterValue);
-			}
+		public void updateFilters(String filterValue, String addOrRemove, String page) {
+			if ("home".equalsIgnoreCase(page)){
+				filterValue = filterValue.replaceAll("Grade", "").replaceAll(" " , "");
+				int value = 0;
+				if (filterValue.equalsIgnoreCase("k")){
+					value = 0;
+				}else if (filterValue.equalsIgnoreCase("pre-k")){
+					value =-1;
+				}else if (filterValue.equalsIgnoreCase("HigherEd")){
+					value =13;
+				}else{
+					value = Integer.parseInt(filterValue);
+				}
 
-			if("add".equals(addOrRemove)){
-				selectedGrades.put(value, value);
-			}else{
-				selectedGrades.remove(value);
+				if("add".equals(addOrRemove)){
+					selectedGrades.put(value, value);
+				}else{
+					selectedGrades.remove(value);
+				}
+				displaySelectedGrades(addOrRemove);
 			}
-			displaySelectedGrades(addOrRemove);
 		}
 	};
 
