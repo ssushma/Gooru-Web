@@ -15,6 +15,10 @@
 	box-shadow:0 0 6px rgba(0, 0, 0, 0.05);
 }
 
+#gShelfMainContainer .addCourse div{
+display:inline-block;
+}
+
 #gShelfMainContainer .equifier{
 	overflow:hidden;
 }
@@ -1470,7 +1474,6 @@ padding-left: 10px;
 font-size: 9pt;
 padding-bottom: 10px;
 }
-
 #pnlLessonInfo .courseNameBlock{
 	border-bottom:1px solid #dddddd;
 	padding:15px 15px 15px 15px;
@@ -1694,7 +1697,6 @@ padding-bottom: 10px;
 #pnlLessonInfo .lessonCover .fractionBlocks .fractionMultiBlock{
 	padding:10px 10px;
 }
-
 #pnlLessonInfo .lessonCover .fractionBlocks .fractionMultiBlock.active{
 	background:#c3ddee;
 }
