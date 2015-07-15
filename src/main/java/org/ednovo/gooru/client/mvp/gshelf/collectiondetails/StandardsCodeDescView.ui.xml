@@ -11,6 +11,12 @@
 									</g:HTMLPanel>
 									<div class="clearfix"></div>
 								</panel:HTMLEventPanel>
+								<panel:HTMLEventPanel ui:field="widgetContainerDesc" styleName="fractionMultiBlock">
+									<g:HTMLPanel styleName="col-md-11 col-sm-11 frRight">
+									<ppanel:PPanel ui:field="standardDescMain"></ppanel:PPanel>
+									</g:HTMLPanel>
+									<div class="clearfix"></div>
+								</panel:HTMLEventPanel>
 							</div>
           </g:HTMLPanel>
 </ui:UiBinder>
