@@ -282,6 +282,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		//panelActions.getElement().setId("pnlActions");
 		//panelCode.getElement().setId("pnlCode");
 		
+		sharTxtBox.setEnabled(false);
+		sharTxtBox.getElement().getStyle().setBackgroundColor("#FFF");
+		
 		createAutoSuggestBox();
 		
 		
@@ -649,6 +652,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else{
 			lblPendingPleaseWait.setVisible(false);
 			pendindUserContainer.setVisible(true);
+			pendingContainer.clear();
 			for (int k=0; k<lstPendingMembers.size();k++){
 				if(insertTop){
 					pendingOffsetValue++;
@@ -754,6 +758,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			tableContainer.clear();
 			tableContainer.add(noActiveStudents);
 		}else{
+			tableContainer.clear();
 			for (int k=0; k<lstActiveMembers.size();k++){
 				insertActiveUserAfterDeletion(lstActiveMembers.get(k),isNew,totalCount,k);
 				if((pageSize*activeListPageNum)<activeListTotalCount){
