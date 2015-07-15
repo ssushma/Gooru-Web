@@ -72,7 +72,7 @@ import com.google.gwt.visualization.client.Color;
 /**
  * @fileName : EditClassSettingsView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -81,59 +81,59 @@ import com.google.gwt.visualization.client.Color;
  *
  * @Author tumbalam
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSettingsViewUiHandler> implements IsEditClassSettingsView {
-	
+
 	@UiField HTMLPanel gradeWidget,gradeBlock;
-	
+
 	@UiField HTMLEventPanel publicPanel,privatePanel;
-	
+
 	@UiField Label anyonwwithLink,privateLbl,privateLblTxt,anyonwwithLinkTxt,errorLbl,saveLbl;
-	
+
 	@UiField PPanel classTitleLbl,gradePanel,bannerImagePanel,classCodePanel,sharePanel,visiblityPanel;
-	
+
 	@UiField SpanPanel classCodeTxtPanel;
-	
+
 	@UiField TextBox classTitleTextLbl,shareUrlTxtLbl;
-	
+
 	@UiField Button saveBtn,uploadImagePanel;
-	
+
 	@UiField Image classImage;
-	
+
 	GooruGradesPresenter gooruGradesPresenterWidget = AppClientFactory.getInjector().getGooruGradePresenter();
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String QUESTIONIMAGE = "images/question.png";
-	
+
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
-	
+
 	private PopupPanel toolTipPopupPanelNew1 = new PopupPanel();
-	
+
 	private static final List<String> gradeList = new ArrayList<String>();
-	
+
 	ClasspageDo classpageDo;
-	
+
 	boolean sharing;
-	
+
 	private static final String SHORTEN_URL = "shortenUrl";
-	
+
 	private static EditClassSettingsViewUiBinder uiBinder = GWT.create(EditClassSettingsViewUiBinder.class);
 
 	interface EditClassSettingsViewUiBinder extends
 			UiBinder<Widget, EditClassSettingsView> {
 	}
 
-	
+
 	public EditClassSettingsView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		
-		
-		
-		
+
+
+
+
 		setIds();
-		
+
 		uploadImagePanel.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -144,12 +144,12 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		});
 		publicPanel.addClickHandler(new SharingVisiblityClickHandler(publicPanel));
 		privatePanel.addClickHandler(new SharingVisiblityClickHandler(privatePanel));
-		
+
 		classTitleTextLbl.setMaxLength(50);
 		//shareUrlTxtLbl.setReadOnly(true);
-		
+
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
-		
+
 		classTitleTextLbl.addBlurHandler(new BlurHandler() {
 
 			@Override
@@ -180,129 +180,133 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		saveBtn.addClickHandler(new UpdateClassDataHandler());
 		AppClientFactory.getEventBus().addHandler(setClassImageEvent.TYPE, imageHandler);
 	}
-	
+
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
-		public void updateFilters(String filterValue, String addOrRemove) {
-			String grade = filterValue.replace("Grade ", "");
-			setSaveEnabled(true);
-			if("add".equals(addOrRemove)){
-				if(!gradeList.contains(grade)){
-					gradeList.add(grade);
+		public void updateFilters(String filterValue, String addOrRemove, String page) {
+			if ("editclass".equalsIgnoreCase(page)){
+				String grade = filterValue.replace("Grade ", "");
+				setSaveEnabled(true);
+				if("add".equals(addOrRemove)){
+					if(!gradeList.contains(grade)){
+						gradeList.add(grade);
+					}
+				}else{
+					gradeList.remove(grade);
+
 				}
-			}else{
-				gradeList.remove(grade);
 			}
 		}
 	};
-	
+
 	setClassImageHandler imageHandler = new setClassImageHandler() {
-		
+
 		@Override
 		public void setImage(String fileName) {
 			classImage.setUrl(fileName);
 			uploadImagePanel.setText(i18n.GL0138());
 		}
 	};
-	
+
 	public void setIds(){
-		
+
 		gradeWidget.getElement().setId("gooruSearchMainContainer");
 		gooruGradesPresenterWidget.getView().getGradeHeader().setVisible(false);
 		gradeBlock.clear();
+		gooruGradesPresenterWidget.setPageType("editclass");
 		gradeBlock.add(gooruGradesPresenterWidget.getWidget());
-		
-		
-		
+
+
+
 		publicPanel.getElement().setId("panelPublic");
 		publicPanel.getElement().setAttribute("alt","public");
 		publicPanel.getElement().setAttribute("title","public");
-		
+
 		privatePanel.getElement().setId("panelPrivate");
 		publicPanel.getElement().setAttribute("alt","public");
 		publicPanel.getElement().setAttribute("title","public");
-		
+
 		anyonwwithLink.getElement().setInnerText(i18n.GL3338());
 		anyonwwithLinkTxt.getElement().setInnerText(i18n.GL3339());
 		privateLbl.getElement().setInnerText(i18n.GL3340());
 		privateLblTxt.getElement().setInnerText(i18n.GL3341());
-		
+
 		classTitleLbl.setText(i18n.GL3401());
 		classTitleLbl.getElement().setId("classTitleLblId");
 		classTitleLbl.getElement().setAttribute("alt",i18n.GL3401());
 		classTitleLbl.getElement().setAttribute("title",i18n.GL3401());
-		
+
 		gradePanel.setText(i18n.GL0325());
 		gradePanel.getElement().setId("classGradeLblId");
 		gradePanel.getElement().setAttribute("alt",i18n.GL0325());
 		gradePanel.getElement().setAttribute("title",i18n.GL0325());
-		
-		
+
+
 		bannerImagePanel.setText(i18n.GL3402());
 		bannerImagePanel.getElement().setId("baneerImageLblId");
 		bannerImagePanel.getElement().setAttribute("alt",i18n.GL3402());
 		bannerImagePanel.getElement().setAttribute("title",i18n.GL3402());
-		
+
 		uploadImagePanel.setText(i18n.GL0912());
 		uploadImagePanel.getElement().setId("uploadImageLblId");
 		uploadImagePanel.getElement().setAttribute("alt",i18n.GL0912());
 		uploadImagePanel.getElement().setAttribute("title",i18n.GL0912());
-		
-		
+
+
 		classCodePanel.setText(i18n.GL1592());
 		classCodePanel.getElement().setId("classCodeLblId");
 		classCodePanel.getElement().setAttribute("alt",i18n.GL1592());
 		classCodePanel.getElement().setAttribute("title",i18n.GL1592());
-		
-		
-		
+
+
+
 		sharePanel.setText(i18n.GL1594());
 		sharePanel.getElement().setId("sharePanelId");
 		sharePanel.getElement().setAttribute("alt",i18n.GL1594());
-		
+
 		visiblityPanel.setText(i18n.GL3342());
 		visiblityPanel.getElement().setId("sharePanelId");
 		visiblityPanel.getElement().setAttribute("alt",i18n.GL3342());
-		
+
 		Image image = new Image(QUESTIONIMAGE);
 		image.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
 		image.addMouseOutHandler(new MouseOutHideToolTip1());
-		
+
 		Image shareImage = new Image(QUESTIONIMAGE);
 		shareImage.addMouseOverHandler(new MouseOverShowClassCodeToolTip2());
 		shareImage.addMouseOutHandler(new MouseOutHideToolTip2());
-		
+
 		saveBtn.setText(i18n.GL0141());
 		saveBtn.getElement().setId("saveBtnId");
 		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
 		saveBtn.getElement().setAttribute("title",i18n.GL0141());
-		
+
 		saveBtn.addStyleName(CssTokens.DISABLED);
 		saveBtn.setEnabled(false);
-		
+
 		saveLbl.setText(i18n.GL3426());
 		saveLbl.getElement().setId("saveLblId");
 		saveLbl.getElement().setAttribute("alt",i18n.GL3426());
 		saveLbl.getElement().setAttribute("title",i18n.GL3426());
-		
-		
+
+
 		classImage.getElement().setId("thumbnailImage");
 		shareUrlTxtLbl.setEnabled(false);
 		shareUrlTxtLbl.getElement().getStyle().setBackgroundColor("#FFF");
-		
-		
+
+
 		classCodePanel.add(image);
 		sharePanel.add(shareImage);
 		errorLbl.setVisible(false);
 		saveLbl.setVisible(false);
-		
+
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : EditClassSettingsView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -313,7 +317,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	 *
 	 * @Reviewer:
 	 */
-	
+
 	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
 
 		@Override
@@ -327,12 +331,12 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		}
 
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : EditClassSettingsView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -343,7 +347,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	 *
 	 * @Reviewer:
 	 */
-	
+
 	public class MouseOutHideToolTip1 implements MouseOutHandler{
 
 		@Override
@@ -352,10 +356,10 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClassSettingsView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -380,10 +384,10 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : EditClassSettingsView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -401,11 +405,11 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 			toolTipPopupPanelNew1.hide();
 		}
 	}
-	
+
 	private class SharingVisiblityClickHandler implements ClickHandler{
-		   
+
 		 HTMLEventPanel eventPanel;
-		 
+
 		 public SharingVisiblityClickHandler(HTMLEventPanel eventPanel){
 			 this.eventPanel=eventPanel;
 		 }
@@ -468,9 +472,9 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 					uploadImagePanel.setText(i18n.GL3402());
 					classImage.setUrl("");
 				}
-				
+
 			}
-		
+
 	}
 
 
@@ -483,7 +487,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 			shareUrlTxtLbl.setText(shortenUrl.get(SHORTEN_URL));
 		}
 	}
-	
+
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -498,7 +502,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 			}
 		}
 	}
-	
+
 	public void setSaveEnabled(boolean isEnabled){
 		saveBtn.setEnabled(isEnabled);
 		if(isEnabled){
@@ -507,7 +511,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 			saveBtn.addStyleName(CssTokens.DISABLED);
 		}
 	}
-	
+
 	public boolean validateFields(){
 		boolean isValid=true;
 		String title = classTitleTextLbl.getText().trim();
@@ -529,7 +533,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 		return isValid;
 	}
-	
+
 	private class UpdateClassDataHandler implements ClickHandler{
 
 		/* (non-Javadoc)
@@ -541,8 +545,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 				final String title = classTitleTextLbl.getText().trim();
 				final String grade = join(gradeList, ",");
 				final boolean privacy = sharing;
-				
-				
+
+
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", title);
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -570,9 +574,9 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 				});
 			}
 		}
-		
+
 	}
-	
+
 	private String join(List<?> list,String separator){
 		StringBuilder builder =null;
 		if(list != null){
