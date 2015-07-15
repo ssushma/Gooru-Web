@@ -326,207 +326,232 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	@Override
 	public void setQuestionsData(final ArrayList<UserDataDo> result) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-
-			@Override
-			public void onSuccess() {
-
-				questionsTable.clear();
-				destoryTables();
-
-				AdvancedFlexTable adTable=new AdvancedFlexTable();
-				adTable.getElement().setId("report");
-
-				adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
-				adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
-				adTable.setHeaderWidget(2, new Label(i18n.GL0315()));
-				adTable.setHeaderWidget(3, new Label(i18n.GL2288()));
-				adTable.setHeaderWidget(4, new Label(i18n.GL2084()));
-				adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
+//		GWT.runAsync(new SimpleRunAsyncCallback() {
+//
+//			@Override
+//			public void onSuccess() {}
+//		});
 
 
-				if(result.size() > 0){
-					
-					AppClientFactory.printInfoLogger("questiondatatable--"+result.size());
-					
-					for(int i=0;i<result.size();i++) {
-						Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
-						questionTitle.setStyleName(STYLE_TABLE_CENTER);
-						questionTitle.setStyleName(STYLE_TXTLEFT);
-						adTable.setWidget(i, 0,new Label(String.valueOf(i+1)));
-						adTable.setWidget(i, 1,questionTitle);
+		questionsTable.clear();
+		destoryTables();
 
-						int noOfAttempts=result.get(i).getAttempts();
-						String scoreStatus= result.get(i).getStatus();
+		AdvancedFlexTable adTable=new AdvancedFlexTable();
+		adTable.getElement().setId("report");
 
-						//Set Answer choices
-						String questionType= result.get(i).getType();
-						if(questionType.equalsIgnoreCase("HS")){
-							questionType= result.get(i).getQuestionType();
-						}
-						
-						AppClientFactory.printInfoLogger("questiondatatable-questionType-"+questionType);
-						
-						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
-							Label anserlbl=new Label();
-							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-								 Map<String, Integer> authorObject = result.get(i).getOptions();
-								 
-								 
-								 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
-								 {
-									 String userSelectedOption=entry.getKey();
-									// int ansStatus=entry.getValue();
-									 if(userSelectedOption!=null){
-											anserlbl.setText(userSelectedOption);
-											if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
-												anserlbl.getElement().getStyle().setColor(CORRECT);
-											}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
-												anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											}else{
-												anserlbl.getElement().getStyle().setColor(INCORRECT);
-											}
-										}
-								 }
-								 
-							}
-							anserlbl.setStyleName(STYLE_TABLE_CENTER);
-							adTable.setWidget(i, 2,anserlbl);
-						}else if (FIB.equalsIgnoreCase(questionType)){
-							VerticalPanel answerspnl=new VerticalPanel();
-							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-								String answerTextFormat = "";
-								String[] answersArry = null;
-								ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
-								for (MetaDataDo metaDataDo : questionList) {
-									String answerText = "";
-									if((metaDataDo.getAnswer_text() != null)) {
-										answerText = metaDataDo.getAnswer_text();
-									}
-									answerTextFormat += '[' + answerText +']';
-									if(questionList.size()  != metaDataDo.getSequence()){
-										answerTextFormat += ",";
-									}
-								}
-								String[] userFibOption = null;
-								if(result.get(i).getText() != null) {
-									answersArry=answerTextFormat.split(",");
-									userFibOption =result.get(i).getText().split(",");
-								}
-								if(answersArry!=null && userFibOption!=null){
-									for (int k = 0; k < answersArry.length; k++) {
-										Label answerChoice=new Label();
-										if(answersArry[k]!=null && k<userFibOption.length){
-											if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-												answerChoice.setText(userFibOption[k]);
-												answerChoice.getElement().getStyle().setColor(CORRECT);
-											}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-												answerChoice.setText(userFibOption[k]);
-												answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											}else{
-												answerChoice.setText(userFibOption[k]);
-												answerChoice.getElement().getStyle().setColor(INCORRECT);
-											}
-											answerChoice.setStyleName(STYLE_TABLE_CENTER);
-											answerspnl.add(answerChoice);
-										}
-									}
-								}
-							}
-							answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-							adTable.setWidget(i, 2,answerspnl);
-							//data.setValue(i, 2, answerspnl.toString());
-						}else  if(MA.equalsIgnoreCase(questionType)){
-							VerticalPanel answerspnl=new VerticalPanel();
-							if(result.get(i).getAnswerObject()!=null) {
-								JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
-								JSONObject answerObject = value.isObject();
-								Set<String> keys=answerObject.keySet();
-								Iterator<String> itr = keys.iterator();
-								while(itr.hasNext()) {
-									answerspnl.clear();
-									JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-									for(int j=0;j<attemptsObj.size();j++){
-										Label answerChoice=new Label();
-										String showMessage = null;
-										boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
-										String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-										String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-										if(skip == false)
-										{
-											if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
-												showMessage = i18n.GL_GRR_NO();
-											} else if(ONE.equalsIgnoreCase(matext)) {
-												showMessage = i18n.GL_GRR_YES();
-											}
-											answerChoice.setText(showMessage);
-											if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
-												answerChoice.getElement().getStyle().setColor(INCORRECT);
-											} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
-												answerChoice.getElement().getStyle().setColor(CORRECT);
-											} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-												answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											}
-										}
-										answerChoice.setStyleName(STYLE_TABLE_CENTER);
-										answerspnl.add(answerChoice);
-									}
-								}
-							}
-							answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-							adTable.setWidget(i, 2,answerspnl);
-						}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-							if(result.get(i).getAnswerObject()!=null) {
-								Label viewResponselbl=new Label(VIEWRESPONSE);
-								viewResponselbl.setStyleName("summaryViewResponse");
-								viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-								viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-								viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-								viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-								adTable.setWidget(i, 2,viewResponselbl);
-							}
-						}
-
-						//Set attempts
-						Label attempts=new Label(i18n.GL2269());
-						attempts.setStyleName(STYLE_TABLE_CENTER);
-						attempts.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+		adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
+		adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
+		adTable.setHeaderWidget(2, new Label(i18n.GL0315()));
+		adTable.setHeaderWidget(3, new Label(i18n.GL2288()));
+		adTable.setHeaderWidget(4, new Label(i18n.GL2084()));
+		adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
 
 
-						if(STATUS_INCORRECT.equalsIgnoreCase(scoreStatus)) {
-							adTable.setWidget(i, 3,attempts);
-							adTable.getRowFormatter().addStyleName(i, STYLE_WHITE);
-						} else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)) {
-							Image correctImg=new Image();
-							correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
-							adTable.setWidget(i, 3,correctImg);
-							adTable.getRowFormatter().addStyleName(i, STYLE_GREEN);
-						}
+		if(result.size() > 0){
 
-						//Set time spent
-						adTable.setWidget(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
+			AppClientFactory.printInfoLogger("questiondatatable--"+result.size());
 
-						//Set reactions
-						int reaction=result.get(i).getReaction();
-						adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
-					}
-					sortAndFixed();
-					adTable.addStyleName("table table-bordered reportTableStyle");
-					AppClientFactory.printInfoLogger("adTable--"+adTable);
-					questionsTable.add(adTable);
-					AppClientFactory.printInfoLogger("questionsTable--"+questionsTable.getWidgetCount());
+			for(int i=0;i<result.size();i++) {
+				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+				questionTitle.setStyleName(STYLE_TABLE_CENTER);
+				questionTitle.setStyleName(STYLE_TXTLEFT);
+				adTable.setWidget(i, 0,new Label(String.valueOf(i+1)));
+				adTable.setWidget(i, 1,questionTitle);
 
-				}else {
-					AppClientFactory.printInfoLogger("questionsTable-erroeMsg-"+questionsTable.getWidgetCount());
-					Label erroeMsg=new Label();
-					erroeMsg.setStyleName(STYLE_ERROR_MSG);
-					erroeMsg.setText(i18n.GL3265());
-					questionsTable.add(erroeMsg);
+				int noOfAttempts=result.get(i).getAttempts();
+				String scoreStatus= result.get(i).getStatus();
+
+				//Set Answer choices
+				String questionType= result.get(i).getType();
+				if(questionType.equalsIgnoreCase("HS")){
+					questionType= result.get(i).getQuestionType();
 				}
 
+				AppClientFactory.printInfoLogger("questiondatatable-questionType-"+questionType);
 
+				if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
+					AppClientFactory.printInfoLogger("questiondatatable-questionType : MC");
+					Label anserlbl=new Label();
+					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+						 Map<String, Integer> authorObject = result.get(i).getOptions();
+						 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 1");
+
+						 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+						 {
+							 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 2");
+							 String userSelectedOption=entry.getKey();
+							// int ansStatus=entry.getValue();
+							 if(userSelectedOption!=null){
+								 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 3");
+									anserlbl.setText(userSelectedOption);
+									if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+										anserlbl.getElement().getStyle().setColor(CORRECT);
+									}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+										anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+									}else{
+										anserlbl.getElement().getStyle().setColor(INCORRECT);
+									}
+									AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 4");
+								}
+						 }
+						 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 5");
+					}
+					anserlbl.setStyleName(STYLE_TABLE_CENTER);
+					adTable.setWidget(i, 2,anserlbl);
+				}else if (FIB.equalsIgnoreCase(questionType)){
+					AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 1");
+					VerticalPanel answerspnl=new VerticalPanel();
+					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+						AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 2");
+						String answerTextFormat = "";
+						String[] answersArry = null;
+						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
+						AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 3");
+						for (MetaDataDo metaDataDo : questionList) {
+							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 4");
+							String answerText = "";
+							if((metaDataDo.getAnswer_text() != null)) {
+								answerText = metaDataDo.getAnswer_text();
+							}
+							answerTextFormat += '[' + answerText +']';
+							if(questionList.size()  != metaDataDo.getSequence()){
+								answerTextFormat += ",";
+							}
+							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 5");
+						}
+						String[] userFibOption = null;
+						if(result.get(i).getText() != null) {
+							answersArry=answerTextFormat.split(",");
+							userFibOption =result.get(i).getText().split(",");
+						}
+						if(answersArry!=null && userFibOption!=null){
+							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 6");
+							for (int k = 0; k < answersArry.length; k++) {
+								AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 7");
+								Label answerChoice=new Label();
+								if(answersArry[k]!=null && k<userFibOption.length){
+									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
+										answerChoice.setText(userFibOption[k]);
+										answerChoice.getElement().getStyle().setColor(CORRECT);
+									}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
+										answerChoice.setText(userFibOption[k]);
+										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+									}else{
+										answerChoice.setText(userFibOption[k]);
+										answerChoice.getElement().getStyle().setColor(INCORRECT);
+									}
+									answerChoice.setStyleName(STYLE_TABLE_CENTER);
+									answerspnl.add(answerChoice);
+									AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 8");
+								}
+							}
+							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 9");
+						}
+					}
+					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
+					adTable.setWidget(i, 2,answerspnl);
+					//data.setValue(i, 2, answerspnl.toString());
+				}else  if(MA.equalsIgnoreCase(questionType)){
+					AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 1");
+					VerticalPanel answerspnl=new VerticalPanel();
+					if(result.get(i).getAnswerObject()!=null) {
+						AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 2");
+						JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+						JSONObject answerObject = value.isObject();
+						Set<String> keys=answerObject.keySet();
+						Iterator<String> itr = keys.iterator();
+						while(itr.hasNext()) {
+							AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 3");
+							answerspnl.clear();
+							JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+							for(int j=0;j<attemptsObj.size();j++){
+								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 4");
+								Label answerChoice=new Label();
+								String showMessage = null;
+								boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+								String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+								String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 5");
+								if(skip == false)
+								{
+									if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
+										showMessage = i18n.GL_GRR_NO();
+									} else if(ONE.equalsIgnoreCase(matext)) {
+										showMessage = i18n.GL_GRR_YES();
+									}
+									answerChoice.setText(showMessage);
+									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+										answerChoice.getElement().getStyle().setColor(INCORRECT);
+									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+										answerChoice.getElement().getStyle().setColor(CORRECT);
+									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+									}
+								}
+								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 6");
+								answerChoice.setStyleName(STYLE_TABLE_CENTER);
+								answerspnl.add(answerChoice);
+							}
+							AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 7");
+						}
+					}
+					AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 8");
+					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
+					adTable.setWidget(i, 2,answerspnl);
+				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
+					AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 1");
+					if(result.get(i).getAnswerObject()!=null) {
+						AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 2");
+						Label viewResponselbl=new Label(VIEWRESPONSE);
+						viewResponselbl.setStyleName("summaryViewResponse");
+						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						adTable.setWidget(i, 2,viewResponselbl);
+					}
+					AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 3");
+				}
+
+				//Set attempts
+				Label attempts=new Label(i18n.GL2269());
+				attempts.setStyleName(STYLE_TABLE_CENTER);
+				attempts.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+				AppClientFactory.printInfoLogger("questiondatatable-questionType");
+
+				if(STATUS_INCORRECT.equalsIgnoreCase(scoreStatus)) {
+					adTable.setWidget(i, 3,attempts);
+					adTable.getRowFormatter().addStyleName(i, STYLE_WHITE);
+				} else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)) {
+					Image correctImg=new Image();
+					correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
+					adTable.setWidget(i, 3,correctImg);
+					adTable.getRowFormatter().addStyleName(i, STYLE_GREEN);
+				}
+
+				//Set time spent
+				adTable.setWidget(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
+
+				//Set reactions
+				int reaction=result.get(i).getReaction();
+				adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 			}
-		});
+			sortAndFixed();
+			adTable.addStyleName("table table-bordered reportTableStyle");
+			AppClientFactory.printInfoLogger("adTable--"+adTable);
+			questionsTable.add(adTable);
+			AppClientFactory.printInfoLogger("questionsTable--"+questionsTable.getWidgetCount());
+
+		}else {
+			AppClientFactory.printInfoLogger("questionsTable-erroeMsg-"+questionsTable.getWidgetCount());
+			Label erroeMsg=new Label();
+			erroeMsg.setStyleName(STYLE_ERROR_MSG);
+			erroeMsg.setText(i18n.GL3265());
+			questionsTable.add(erroeMsg);
+		}
+
+		AppClientFactory.printInfoLogger("End...");
+
 	}
 
 

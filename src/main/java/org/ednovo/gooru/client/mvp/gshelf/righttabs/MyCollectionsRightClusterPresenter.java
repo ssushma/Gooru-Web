@@ -151,7 +151,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}else if(FOLDER.equalsIgnoreCase(type)){
 					//To disabel bread cums
 					getView().disableAndEnableBreadCums(false);
-					getView().setFolderInfoWidget(folderObj);
+					getView().setFolderInfoWidget(folderObj, this);
 				}else{
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && FOLDER.equalsIgnoreCase(view)){
