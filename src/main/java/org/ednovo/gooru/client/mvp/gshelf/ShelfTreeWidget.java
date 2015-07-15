@@ -384,7 +384,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			{
 				if(collectionDo.getType()!=null)
 				{
-					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON) && !collectionDo.getType().equals(ASSESSMENT_URL)) {
+					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON)) {
 						if (event.getSource().equals(titleFocPanel)) {
 							MixpanelUtil.Expand_CollectionPanel();
 							if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
