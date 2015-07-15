@@ -86,6 +86,7 @@ public class CollectionSearchWidget extends Composite {
 	public static final String YUMA_COUNTY_SS = "YumaCountySS";
 	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
 	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
+	String collectionType;
 
 	CollectionSearchResultDo collectionSearchResultDo = null;
 
@@ -120,7 +121,7 @@ public class CollectionSearchWidget extends Composite {
 			 collectionCreatorDetails(collectionSearchResultDo);
 		}
 		remixCountLbl.setText(collectionSearchResultDo.getScollectionRemixCount()+"");
-		final String collectionType=StringUtil.isEmpty(collectionSearchResultDo.getCollectionType())?null:collectionSearchResultDo.getCollectionType();
+		collectionType=StringUtil.isEmpty(collectionSearchResultDo.getCollectionType())?null:collectionSearchResultDo.getCollectionType();
 		StringUtil.setDefaultImages(collectionType, imgCollection, "high");
 		if(!StringUtil.isEmpty(collectionSearchResultDo.getUrl())){
 			imgCollection.setUrl(StringUtil.formThumbnailName(collectionSearchResultDo.getUrl(), "-160x120."));
@@ -159,7 +160,11 @@ public class CollectionSearchWidget extends Composite {
 							Map<String, String> params = new HashMap<String, String>();
 							params.put("id", collectionSearchResultDo.getGooruOid());
 							params.put("rid",collectionItemSearchResultDo.getCollectionItemId());
-							PlaceRequest placeRequest=placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+							String placeToken = PlaceTokens.COLLECTION_PLAY;
+							if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+								placeToken = PlaceTokens.ASSESSMENT_PLAY;
+							}
+							PlaceRequest placeRequest = AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
 							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 						}
 					});
@@ -279,7 +284,11 @@ public class CollectionSearchWidget extends Composite {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", gooruOid);
 					Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					String placeToken = PlaceTokens.COLLECTION_PLAY;
+					if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+						placeToken = PlaceTokens.ASSESSMENT_PLAY;
+					}
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}
 			});

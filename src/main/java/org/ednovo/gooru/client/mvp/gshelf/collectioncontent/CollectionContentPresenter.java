@@ -69,8 +69,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	private boolean isQuestionResource=false;
 	private boolean isUserOwnResource = false;
 
-
-
 	AddResourcePresenter addResourcePresenter=null;
 	ImageUploadPresenter imgUploadPresenter=null;
 	AddStandardsPresenter addStandardsPresenter = null;
