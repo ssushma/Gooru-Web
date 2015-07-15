@@ -310,7 +310,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);
-					treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+					treeChildSelectedItem.setState(true, false);
 					String type=shelfTreeWidget.getCollectionDo().getType();
 					if(FOLDER.equalsIgnoreCase(type)){
 						getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),type,shelfTreeWidget.getFolderOpenedStatus());
@@ -338,7 +338,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			TreeItem parent = treeChildSelectedItem.getParentItem();
 			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 			if(parent != null)parent.setSelected(false);
-			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+			treeChildSelectedItem.setState(true, false);
 
 			/*if(!"Collection".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType()) && !"Assessment".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType())){
 				shelfTreeWidget.setFolderOpenedStatus(true);
@@ -452,13 +452,15 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				} 
 			}
 		}
-		if(treeChildSelectedItem.getState()) {
+		treeChildSelectedItem.setState(true);
+		selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
+		/*if(treeChildSelectedItem.getState()) {
 			treeChildSelectedItem.setState(false);
 			selectedWidget.setOpenStyle(false, treeChildSelectedItem.getChildCount());
 		} else {
 			treeChildSelectedItem.setState(true);
 			selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
-		}
+		}*/
 		//This will set the data in the right panel
 		if(selectedWidget!=null){
 			folderListDoChild.clear();

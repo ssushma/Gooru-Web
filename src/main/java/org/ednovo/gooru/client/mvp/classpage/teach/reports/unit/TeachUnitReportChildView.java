@@ -193,12 +193,19 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
 					} else {
 						int score = collectionList.get(collectionWidgetCount).getScoreInPercentage();
-						contentLabel.setText(score+"%");
+						String scoreStr = "--";
+						if(score>0) {
+							scoreStr = score+"%";
+						}
+						contentLabel.setText(scoreStr);
 						contentLabel.setWidth("80px");
 						assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
-						assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+						if(score>0&&score<=100) {
+							assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+						} else {
+							assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
+						}
 					}
-					assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 					columnWidgetCount++;
 				}
 			}

@@ -186,7 +186,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				createOrUpDate.setIsLoginRequired(isLoginRequired);
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate);
+					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate,folderObj);
 				}else{
 					getUiHandlers().createAndSaveAssessmentDetails(createOrUpDate,isCreate);
 				}
