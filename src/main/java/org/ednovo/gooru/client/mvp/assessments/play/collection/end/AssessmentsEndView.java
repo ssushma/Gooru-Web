@@ -500,7 +500,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			}
 			sortAndFixed();
 			adTable.addStyleName("table table-bordered reportTableStyle");
-			questionsTable.add(adTable);
+//			questionsTable.add(adTable);
+			questionsTable.getElement().setInnerHTML(""+adTable);
 
 		}else {
 			Label erroeMsg=new Label();
