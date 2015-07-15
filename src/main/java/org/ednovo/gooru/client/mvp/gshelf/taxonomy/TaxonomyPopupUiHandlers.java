@@ -1,6 +1,9 @@
 package org.ednovo.gooru.client.mvp.gshelf.taxonomy;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
@@ -19,6 +22,8 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void populateK12TaxonomyData(int classification, String taxonomyType, int offset, int limit);
 
-	void addTaxonomyData(UlPanel selectedUlContainer);       
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray); 
+
+//	void addTaxonomyData(UlPanel selectedUlContainer);       
 
 }
