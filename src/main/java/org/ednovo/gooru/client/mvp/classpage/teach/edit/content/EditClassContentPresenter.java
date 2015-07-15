@@ -78,10 +78,10 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 
 	@Override
 	public void onReveal() {
-		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW);
+		/*String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW);
 		if(loadPage != null && loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
 			getUnitList(offset,limit);
-		}
+		}*/
 		
 	}
 

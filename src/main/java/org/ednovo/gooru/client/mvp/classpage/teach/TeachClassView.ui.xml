@@ -9,11 +9,12 @@
 		<g:HTMLPanel styleName="standardBlueBand">
 			<g:HTMLPanel styleName="container" ui:field="mainContainer">
 				<g:HTMLPanel styleName="no-gutter">
-					<g:HTMLPanel styleName="col-md-6 col-sm-5">
+					<g:HTMLPanel styleName="col-md-5 col-sm-5">
 					<uc:H2Panel ui:field="titlePanel"></uc:H2Panel>
 					</g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-6 col-sm-7 topBlueRight">
-						<g:HTMLPanel styleName="settingsMenu">
+					<g:HTMLPanel styleName="col-md-7 col-sm-7 topBlueRight">
+						 <g:HTMLPanel styleName="settingsMenu">
+						  <g:Button styleName="primary" ui:field="studentPreviewbtn"></g:Button>
 						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="studentAnr"><img src="images/Classpage/studentsIco.png"/><g:InlineLabel ui:field="studentLbl"/></panel:HTMLEventPanel>
 						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="classSettingsAnr"><img src="images/Classpage/classSettingsIco.png"/><g:InlineLabel ui:field="settingsLbl"/></panel:HTMLEventPanel>
 						 </g:HTMLPanel>

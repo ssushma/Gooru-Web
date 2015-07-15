@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.event.UpdateClassTitleEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -141,7 +142,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsViewUiHandler#updateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
 	@Override
-	public void updateClass(String title,String grade,String sharing) {
+	public void updateClass(final String title,String grade,String sharing) {
 		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classId != null){
 			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, title,grade,null,sharing,null,null, new AsyncCallback<ClasspageDo>() {
@@ -149,6 +150,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 				@Override
 				public void onSuccess(ClasspageDo result) {
 					getView().setUpdateClassData();
+					AppClientFactory.getEventBus().fireEvent(new UpdateClassTitleEvent(title));
 				}
 				
 				@Override

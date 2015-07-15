@@ -106,6 +106,9 @@
 	margin:15px 0;
 	font-size:24px;
 	font-weight:bold;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .standardBlueBand .rightWhiteBox, .standardBlueBand .settingsMenu{
