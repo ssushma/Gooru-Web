@@ -194,7 +194,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				privateShareFloPanel.addStyleName("inActive");
 				publicShareFloPanel.addStyleName("inActive");
 				//isSharable = true;
-				if(folderDo.getPublishStatus()!=null && folderDo.getPublishStatus().equalsIgnoreCase("pending")){
+				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("pending")){
 						//selectPrivateResource("pending");
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(true);
