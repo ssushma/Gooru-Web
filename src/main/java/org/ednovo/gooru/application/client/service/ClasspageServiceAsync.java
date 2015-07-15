@@ -46,6 +46,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
@@ -209,7 +210,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v3StudentJoinIntoClass(String classCode,AsyncCallback<Void> callback) throws GwtException,ServerDownException;
 	
-	public void v3UpdateClass(String classId,ClasspageDo classpageDo,AsyncCallback<ClasspageDo> callback) throws GwtException,ServerDownException;
+	public void v3UpdateClass(String classId,String title,String grade,String fileName,String sharing,String score,String courseId,AsyncCallback<ClasspageDo> callback) throws GwtException,ServerDownException;
 	
 	void getClassesAssociatedWithCourse(String courseId,AsyncCallback<ArrayList<ClasspageDo>> callback) throws GwtException,ServerDownException;
 	
@@ -231,5 +232,6 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 
 	public void getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType, AsyncCallback<PlanContentDo> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
+	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId, AsyncCallback<List<UserPlayedSessionDo>> callback) throws GwtException,ServerDownException;
 }
 

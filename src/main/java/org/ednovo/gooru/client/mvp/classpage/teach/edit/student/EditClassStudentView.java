@@ -282,6 +282,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		//panelActions.getElement().setId("pnlActions");
 		//panelCode.getElement().setId("pnlCode");
 		
+		sharTxtBox.setEnabled(false);
+		sharTxtBox.getElement().getStyle().setBackgroundColor("#FFF");
+		
 		createAutoSuggestBox();
 		
 		
@@ -484,6 +487,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		reportBox.clear();
 		setReportVisiblity(true);
 		reportPanel.setStyleName(CssTokens.ACTIVE);
+		roasterPanel.removeStyleName(CssTokens.ACTIVE);
 		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			reportBox.add(new TeachCourseReportChildView(classpageDo));
@@ -649,6 +653,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else{
 			lblPendingPleaseWait.setVisible(false);
 			pendindUserContainer.setVisible(true);
+			pendingContainer.clear();
 			for (int k=0; k<lstPendingMembers.size();k++){
 				if(insertTop){
 					pendingOffsetValue++;
@@ -754,6 +759,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			tableContainer.clear();
 			tableContainer.add(noActiveStudents);
 		}else{
+			tableContainer.clear();
 			for (int k=0; k<lstActiveMembers.size();k++){
 				insertActiveUserAfterDeletion(lstActiveMembers.get(k),isNew,totalCount,k);
 				if((pageSize*activeListPageNum)<activeListTotalCount){

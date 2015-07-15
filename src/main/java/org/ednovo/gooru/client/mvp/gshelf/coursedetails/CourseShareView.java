@@ -102,10 +102,10 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		if(courseId!=null){
 			if(classListBox.getSelectedIndex()!=0 && !StringUtil.isEmpty(classListBox.getValue(classListBox.getSelectedIndex()))){
 				errorMsgLbl.setVisible(false);
-				ClasspageDo classpageObj= new ClasspageDo();
-				classpageObj.setCourseGooruOid(courseId);
+			/*	ClasspageDo classpageObj= new ClasspageDo();
+				classpageObj.setCourseGooruOid(courseId);*/
 				//classpageObj.setTitle(title)(courseId);
-				getUiHandlers().assign2ClassPage(classListBox.getValue(classListBox.getSelectedIndex()),classpageObj);
+				getUiHandlers().assign2ClassPage(classListBox.getValue(classListBox.getSelectedIndex()),courseId);
 			}else{
 				errorMsgLbl.setVisible(true);
 				errorMsgLbl.setText("Please select the class");

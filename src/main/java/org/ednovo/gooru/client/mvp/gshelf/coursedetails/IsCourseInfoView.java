@@ -63,4 +63,5 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result);
 	AudienceView getAudienceContainer();
+	FolderDo getCourseDetails();
 }

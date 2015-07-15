@@ -46,6 +46,7 @@ public class PlanProgressDo implements Serializable{
 	private String type;
 	private int views;
 	private int scoreInPercentage;
+	private int sequence;
 	private long timespent;
 	private int collectionCount;
 	private int assessmentCount;
@@ -173,5 +174,11 @@ public class PlanProgressDo implements Serializable{
 	}
 	public void setUsageData(ArrayList<PlanProgressDo> usageData) {
 		this.usageData = usageData;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
 	}
 }

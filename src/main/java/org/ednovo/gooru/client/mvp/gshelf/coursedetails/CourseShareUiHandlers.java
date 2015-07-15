@@ -33,6 +33,6 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
  */
 public interface CourseShareUiHandlers extends BaseUiHandlers {
 
-	void assign2ClassPage(String value, ClasspageDo classpageObj);
+	void assign2ClassPage(String value, String courseId);
 	
 }

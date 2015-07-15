@@ -386,9 +386,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
-	//	depthOfKnowledgeContainer.setFolderDo(courseObj);
-	//	audienceContainer.setFolderDetails(courseObj);
-	//	getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
+		resetDOK_Century_Lang();
+		depthOfKnowledgeContainer.setFolderDo(courseObj);
+		audienceContainer.setFolderDetails(courseObj);
+		getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
+		languageObjectiveContainer.setLanguageObjective(courseObj);
 		this.type = type;
 		ulSelectedItems.clear();
 		selectedValues.clear();
@@ -645,4 +647,19 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public FolderDo getFolderDo(){
 		return courseObjG;
 	}
+
+	public void resetDOK_Century_Lang(){
+		languageObj.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3378());
+		languageObjectiveContainer.setVisible(false);
+		isLanguageObjectInfo=false;
+		centurySkills.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3377());
+		centurySkillContainer.setVisible(false);
+		isCenturySkillsInfo=false;
+		dok.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3376());
+		depthOfKnowledgeContainer.setVisible(false);
+		isDepthOfKnlzeInfo=false;
+
+	}
+
 }
+
