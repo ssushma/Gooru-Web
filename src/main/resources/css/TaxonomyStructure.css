@@ -70,6 +70,24 @@
 	border-radius:4px 4px;
 
 }
+#taxonomyStructureSelectionPopup  .listGroup  ul li div{
+	color:#515151;
+	display:block;
+	line-height: 16px;
+
+}
+#taxonomyStructureSelectionPopup  .listGroup ul li.active div
+{
+	
+	background: none repeat scroll 0% 0% rgb(207, 227, 241);
+	
+}
+#taxonomyStructureSelectionPopup  .listGroup ul li.active a
+{
+	
+	background: none repeat scroll 0% 0% rgb(207, 227, 241);
+	
+}
 #taxonomyStructureSelectionPopup  .standarFooterContainer{
 	background:#ffffff;
 	border-radius:0 0 4px 4px; 
@@ -88,6 +106,26 @@
 	padding:6px 10px;
 	display:block;
 	line-height: 16px;
+}
+#taxonomyStructureSelectionPopup  .listGroup ul li .standardDiv{
+	color:#515151;
+	padding:6px 10px;
+	display:block;
+	line-height: 16px;
+}
+#taxonomyStructureSelectionPopup  .listGroup ul li .standardDivSub{
+	color:#515151;
+	padding:6px 10px;
+	display:block;
+	line-height: 16px;
+	padding-left:31px;
+}
+#taxonomyStructureSelectionPopup  .listGroup ul li .standardDivSubSub{
+	color:#515151;
+	padding:6px 10px;
+	display:block;
+	line-height: 16px;
+	padding-left:50px;
 }
 
 #taxonomyStructureSelectionPopup  .listGroup ul li a:hover{

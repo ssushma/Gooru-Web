@@ -306,9 +306,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
-		logger.info("courseId : "+courseId);
-		logger.info("unitId : "+courseId);
-		logger.info("lessonId : "+courseId);
 		if(courseId!=null && unitId==null){
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNITS_BY_COURSEID, courseId);
 		}else if(courseId!=null && unitId!=null && lessonId==null){
@@ -491,6 +488,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_FOLDER_METADATA, folderId);
+		logger.info("updateFolder : "+url);
 		JSONObject folderObject=new JSONObject();
 		try {
 			folderObject.put(TITLE, title);
@@ -512,6 +510,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				}
 				folderObject.put(PERFORMANCE_TASKS, performance);
 			}
+			logger.info("folderObject : "+folderObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
 		} catch (Exception e) {
 			logger.error("Exception::", e);

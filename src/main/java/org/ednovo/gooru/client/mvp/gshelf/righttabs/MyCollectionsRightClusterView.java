@@ -706,10 +706,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		pnlBreadCrumbMain.setVisible(isVisible);
 	}
 	@Override
-	public void setFolderInfoWidget(FolderDo folderObj) {
+	public void setFolderInfoWidget(FolderDo folderObj,MyCollectionsRightClusterPresenter rightPresenter) {
 		FolderInfoWidget folderInfoWidget = new FolderInfoWidget();
 		pnlSlotInnerContent.add(folderInfoWidget);
-		folderInfoWidget.setData(folderObj);
+		folderInfoWidget.setData(folderObj,rightPresenter);
 	}
 	
 	public void initiateDelete() {

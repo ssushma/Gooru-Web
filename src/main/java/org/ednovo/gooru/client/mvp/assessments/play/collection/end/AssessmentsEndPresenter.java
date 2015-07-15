@@ -79,18 +79,18 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	PrintUserDataDO printData=new PrintUserDataDO();
 
 	String classpageId=null;
-	
+
 	ClasspageItemDo classpageItemDo=null;
-	
+
 	String sessionId=null;
-	
-	
+
+
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 
 	int count=0;
-	
+
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 	private int collectionProgressCount=1;
@@ -138,7 +138,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
 		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,printData);
 	}
-	
+
 	public void clearslot(){
 		getView().resetCollectionMetaData();
 	}
@@ -193,15 +193,15 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	@Override
 	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-		
+
 		ClassDo classObj=new ClassDo();
 		classObj.setAssessmentId(collectionId);
 		classObj.setClassId(classId);
 		classObj.setSessionId(sessionId);
-		
+
 		getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId,printData);
 
-		
+
 		/*this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 
 			@Override
@@ -223,11 +223,11 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		});*/
 
 	}
-	
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
+
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		this.classpageItemDo=classpageItemDo;
 	}
-	
+
 
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
@@ -240,50 +240,26 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				
+
 				if(result!=null && result.size()!=0){
-					
+
 					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
-						
-						int sessionSize=result.get(0).getSession().size();	
-							
+
+						int sessionSize=result.get(0).getSession().size();
+
 						int day=result.get(0).getSession().get(sessionSize-1).getSequence();
 						printData.setUserName(null);
 						printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
 						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
 						getView().setSessionsData(result.get(0).getSession());
 						}
-					
+
 					displayScoreCountData(result.get(0));
 					getView().setCollectionMetaDataByUserAndSession(result);
 					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 				}else{
 					getView().errorMsg();
 				}
-				
-				
-				
-				/*if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
-								count = 0;
-								displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
-								getView().setCollectionMetaDataByUserAndSession(result);
-								setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
-							} else {
-								Timer timer = new Timer() {
-								    public void run() {
-								          if (count < 10) {
-								        	  getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId, printData);
-								        	  count++;
-								          } else {
-								        	  	if (count >= 10) {
-												   displayScoreCount(0,0);
-								        	  	}
-								          }
-								        }
-								      };
-								      // Execute the timer to expire 2 seconds in the future
-								     // timer.schedule(2000);
-							}*/
 			}
 
 			@Override
@@ -294,93 +270,63 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	}
 
-	
-	/*analytics*/
-	
-	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO) {
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
-			@Override
-			public void onSuccess() {
-				
-				getView().loadingIcon();
 
-				//getView().enableAndDisableEmailButton(isSummary);
-				/*analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
-					
-					@Override
-					public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-						if(!StringUtil.checkNull(result)){
-							//getView().setIndividualCollectionMetaData(result,printUserDataDO);
-						}
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-					
-					}
-				});*/
-				analyticService.getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
-					
-					@Override
-					public void onSuccess(ArrayList<UserDataDo> result) {
-						
-						AppClientFactory.printInfoLogger("getUserSessionDataByUser client result"+result);
-						
-						if(result!=null){
-							AppClientFactory.printInfoLogger("getUserSessionDataByUser client not nullresult"+result);
-							setIndividualData(result);
-						}else{
-							getView().errorMsg();
-						}
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						getView().errorMsg();
-					}
-				});
-			}
-		});
-	}
-	
-	
-	public void setIndividualData(final ArrayList<UserDataDo> result) {
-		
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+	/*analytics*/
+
+	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO) {
+
+		getView().loadingIcon();
+
+		analyticService.getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+
 			@Override
-			public void onSuccess() {
-				
-				AppClientFactory.printInfoLogger("setIndividualData result"+result);
-				getView().loadingIcon();
-				collectionProgressCount=0;
-				Collections.sort(result,new Comparator<UserDataDo>() {
-		        	public int compare(UserDataDo o1, UserDataDo o2) {
-		        		 Integer obj1 = new Integer(o1.getItemSequence());
-						 Integer obj2 = new Integer(o2.getItemSequence());
-		        	     return obj1.compareTo(obj2);
-		        	}
-		        });
-				for (UserDataDo userDataDo : result) {
-					AppClientFactory.printInfoLogger("setIndividualData result"+result);
-					
-						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
-							AppClientFactory.printInfoLogger("userDataDo.getResourceFormat()--"+userDataDo.getResourceFormat());
-							if(!OE.equalsIgnoreCase(userDataDo.getType())){
-								questionsData.add(userDataDo);
-							}
-							questionRowIndex.add(collectionProgressCount);
-						}
-						AppClientFactory.printInfoLogger("questionRowIndex--"+questionRowIndex);
-						collectionProgressCount++;
+			public void onSuccess(ArrayList<UserDataDo> result) {
+				AppClientFactory.printInfoLogger("getUserSessionDataByUser client result"+result);
+				if(result!=null){
+					AppClientFactory.printInfoLogger("getUserSessionDataByUser client not nullresult"+result);
+					setIndividualData(result);
+				}else{
+					getView().errorMsg();
 				}
-				AppClientFactory.printInfoLogger("questionsData--"+questionsData.size());
-				getView().setQuestionsData(questionsData);
-				getView().setQuestionsPrintData(questionsData);
-		
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				getView().errorMsg();
 			}
 		});
+
+	}
+
+
+	public void setIndividualData(final ArrayList<UserDataDo> result) {
+
+		AppClientFactory.printInfoLogger("setIndividualData result"+result);
+		getView().loadingIcon();
+		collectionProgressCount=0;
+		Collections.sort(result,new Comparator<UserDataDo>() {
+        	public int compare(UserDataDo o1, UserDataDo o2) {
+        		 Integer obj1 = new Integer(o1.getItemSequence());
+				 Integer obj2 = new Integer(o2.getItemSequence());
+        	     return obj1.compareTo(obj2);
+        	}
+        });
+		for (UserDataDo userDataDo : result) {
+				if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
+					AppClientFactory.printInfoLogger("userDataDo.getResourceFormat()--"+userDataDo.getResourceFormat());
+					if(!OE.equalsIgnoreCase(userDataDo.getType())){
+						questionsData.add(userDataDo);
+					}
+					questionRowIndex.add(collectionProgressCount);
+				}
+				AppClientFactory.printInfoLogger("questionRowIndex--"+questionRowIndex);
+				collectionProgressCount++;
+		}
+		AppClientFactory.printInfoLogger("questionsData--"+questionsData.size());
+		getView().setQuestionsData(questionsData);
+		getView().setQuestionsPrintData(questionsData);
+
+
 	}
 
 	@Override
@@ -413,21 +359,21 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 
 	public void getAssessmentSummaryDetails(){
-		
+
 		String classId=AppClientFactory.getPlaceManager().getRequestParameter("class");
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("course");
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unit");
 		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSON);
 		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter("assessment");
-		
+
 		ClassDo classObj=new ClassDo();
 		classObj.setClassId(classId);
 		classObj.setCourseId(courseId);
 		classObj.setLessonId(lessonId);
 		classObj.setUnitId(unitId);
 		classObj.setAssessmentId(assessmentId);
-		
-		
+
+
 		this.analyticService.getAssessmentSummary(classObj, new AsyncCallback<AssessmentSummaryStatusDo>() {
 
 			@Override
@@ -444,6 +390,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	public void setSessionId(String sessionId){
 		this.sessionId=sessionId;
 	}
-	
+
 
 }

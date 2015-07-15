@@ -1903,20 +1903,21 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 							} else {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
+										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
 									}
 								}
+								Collections.sort(dataList, new ArrayListSorter("sequence", true));
 							}
 						} else if (type.equalsIgnoreCase("progress")) {
 							if(unitId!=null) {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
+										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
 									}
 								}
+								Collections.sort(dataList, new ArrayListSorter("sequence", true));
 							}
 						}
-						Collections.sort(dataList, new ArrayListSorter("sequence", false));
 					}
 				}
 			}
