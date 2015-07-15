@@ -443,6 +443,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		shelfMainPresenter.SetDefaultTypeAndVersion();
 		showAppPopup();
 	}
 	@Override
@@ -450,6 +451,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(true);
+		shelfMainPresenter.SetDefaultTypeAndVersion();
 		showAppPopup();
 	}
 	public void showAppPopup(){

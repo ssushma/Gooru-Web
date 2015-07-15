@@ -493,4 +493,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setVersion() {
 		version=null;
 	}
+
+	@Override
+	public void SetDefaultTypeAndVersion() {
+		version=null;
+		type="Course";
+	}
 }
