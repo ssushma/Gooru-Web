@@ -216,13 +216,14 @@ public abstract class NewClassPopupView extends AppPopUp {
 		panelPleaseWait.setVisible(false);
 		panelLoading.setText(i18n.GL0122());
 		panelControls.setVisible(true);
-		
+
 		classpageTitleTxt.setFocus(true);
 		panelLoading.getElement().setId("pnlLoading");
 		panelControls.getElement().setId("pnlControls");
 		gradeWidget.getElement().setId("gooruSearchMainContainer");
 
 		popupHeader.getElement().setId("create-class-popup");
+		gooruGradesPresenterWidget.setPageType("newclass");
 		gooruGradesPresenterWidget.getView().getGradeHeader().setVisible(false);
 		gradeBlock.add(gooruGradesPresenterWidget.getWidget());
 
@@ -236,12 +237,14 @@ public abstract class NewClassPopupView extends AppPopUp {
 
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
-		public void updateFilters(String filterValue, String addOrRemove) {
-			String grade = filterValue.replace("Grade ", "");
-			if("add".equals(addOrRemove)){
-				gradeList.add(grade);
-			}else{
-				gradeList.remove(grade);
+		public void updateFilters(String filterValue, String addOrRemove, String page) {
+			if ("newclass".equalsIgnoreCase(page)){
+				String grade = filterValue.replace("Grade ", "");
+				if("add".equals(addOrRemove)){
+					gradeList.add(grade);
+				}else{
+					gradeList.remove(grade);
+				}
 			}
 		}
 	};

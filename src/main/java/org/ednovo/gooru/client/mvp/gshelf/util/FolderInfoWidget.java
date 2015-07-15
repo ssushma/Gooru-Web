@@ -77,6 +77,7 @@ public class FolderInfoWidget extends Composite {
 							lblErrorMessage.setVisible(false);
 							String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 							String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+							String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 							if(o2==null){
 								createFolder(o1);
 							}else{

@@ -202,7 +202,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		standardsUI.clear();
 		for(int i=0;i<standardsList.size();i++)
 		{
-			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(),standardsList.get(i).getLabel());
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(),standardsList.get(i).getLabel(),true);
 			final DomainStandardsDo domainStand = standardsList.get(i);
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 
@@ -244,7 +244,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		//	standardsUI.clear();
 			for(int i=0;i<standardsList.size();i++)
 			{
-				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
@@ -287,7 +287,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			//standardsUI.clear();
 			for(int i=0;i<standardsList.size();i++)
 			{
-				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
