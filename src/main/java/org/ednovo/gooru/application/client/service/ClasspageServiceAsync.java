@@ -220,6 +220,8 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void updateClassLessonVisiblity(String classId,String courseId,String unitId,List<ClassLessonDo> listClassLessonDo,AsyncCallback<ClassLessonDo> callback) throws GwtException,ServerDownException;
 	
+	public void v3GetAllClass(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
+	
 	/** Student Reports **/
 	public void getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
