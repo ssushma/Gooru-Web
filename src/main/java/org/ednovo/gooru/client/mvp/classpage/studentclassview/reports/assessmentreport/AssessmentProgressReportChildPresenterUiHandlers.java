@@ -22,35 +22,23 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.application.server.serializer;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 
-/**
- * @author Search Team
- * 
- */
-public class JsonDeserializer extends JsonProcessor {
+public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUiHandlers{
 
-	public static <T> T deserialize(String json, Class<T> clazz) {
-		try {
-			return getMapper().readValue(json, clazz);
-		} catch (Exception e) {
-			return null;
-		}
-	}
+	public void getSessionsDataByUser(String collectionId, String classId, String userId);
 
-	public static <T> T deserialize(String json, TypeReference<T> type) {
-		try {
-			return getMapper().readValue(json, type);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId,PrintUserDataDO printData);
+
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData);
+
+	public void clearslot();
+
+	public void setHtmltopdf(String string, String collectionTitle,boolean isClickedOnEmail);
 	
+	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId);
 
 }

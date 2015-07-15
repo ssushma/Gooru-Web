@@ -86,6 +86,8 @@ public class StringUtil implements ClientConstants {
  	 private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 
  	 public static Map<String, String> categoryMap =null;
+ 	 
+ 	 private static boolean isEnableTabs;
 
 	private final static byte[] key = CRYPTO_KEY.getBytes();
 
@@ -910,9 +912,25 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 			StandardFo fo=new StandardFo();
 			fo.setId(Integer.parseInt(entry.getKey()+""));
 			fo.setLabel(entry.getValue());
+			standardFos.add(fo);
 		}
 	}
 	return standardFos;
 }
+
+/**
+ * @return the isEnableTabs
+ */
+public static boolean isEnableTabs() {
+	return isEnableTabs;
+}
+
+/**
+ * @param isEnableTabs the isEnableTabs to set
+ */
+public static void setEnableTabs(boolean isTabEnable) {
+	isEnableTabs = isTabEnable;
+}
+
 }
 

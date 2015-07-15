@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.assessments.play.collection.end;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,18 +31,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.EmailPopup;
@@ -94,14 +93,15 @@ import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
-import com.google.inject.Inject;
 
-public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHandlers> implements IsAssessmentsEndView,ClientConstants{
-	@UiField
-	static FlowPanel PrintPnl;
+/**
+ * @author Gooru Team
+ *
+ */
+public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
-	@UiField
-	FlowPanel progressRadial,questionsTable;
+	@UiField static FlowPanel PrintPnl;
+	@UiField FlowPanel progressRadial,questionsTable;
 	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel;
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
@@ -113,28 +113,31 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	@UiField HTMLPanel printWidget;
 	@UiField Button printButton,downloadButton;
 	@UiField Frame downloadFile;
-
+	
 	HTMLPanel printScoredData=new HTMLPanel("");
+	
 	EmailPopup emailPopup=null;
-
+	
 	Map<String, Long> sessionData=new HashMap<String, Long>();
+	
 	PrintUserDataDO printData=new PrintUserDataDO();
+	
 	String urlDomain = "";
+	
 	String style="";
 
 	private CollectionDo collectionDo=null;
-
-
-	private static AssessmentsPlayerMetadataViewUiBinder uiBinder = GWT.create(AssessmentsPlayerMetadataViewUiBinder.class);
-
-	interface AssessmentsPlayerMetadataViewUiBinder extends UiBinder<Widget, AssessmentsEndView> {
-	}
-
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@Inject
-	public AssessmentsEndView(){
-		setWidget(uiBinder.createAndBindUi(this));
+	private static AssessmentProgressReportChildViewUiBinder uiBinder = GWT.create(AssessmentProgressReportChildViewUiBinder.class);
+
+	interface AssessmentProgressReportChildViewUiBinder extends UiBinder<Widget, AssessmentProgressReportChildView> {
+	}
+
+	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId) {
+		initWidget(uiBinder.createAndBindUi(this));
+		setPresenter(new AssessmentProgressReportChildPresenter(this));
 		setLabelAndIds();
 		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
 		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/main-styles.min.css'>";
@@ -142,9 +145,13 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
-
 		StringUtil.loadVisualizationLibraries();
+		System.out.println("assessment Id "+assessmentId);
+		System.out.println("class Id "+classId);
+		System.out.println("user Id "+userId);
+		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
+	
 	public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -154,7 +161,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				classpageId="";
 			}
 			setSessionStartTime(selectedIndex);
-			getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
+			getPresenter().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
 		}
 	}
 
@@ -207,36 +214,15 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			String libraryName) {
 
 	}
-
-
-
-	public void setDataInsightsUrl(){
-
-			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-	}
-
-	public void setClasspageInsightsUrl(String classpageId, String sessionId){
-		if(sessionId==null) {
-			sessionId = "";
-		}
-			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-	}
-
-	public void setDataInsightsSummaryUrl(String sessionId){
-			sessionId=sessionId!=null?sessionId:"";
-			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-	}
-
-
-
+	
 	public void displayScore(Integer collectionScore, Integer noOfQuestions){
 
 		score.setText(collectionScore+" %");
-//		goal.setText("Goal : 90%");
+		//		goal.setText("Goal : 90%");
 		correctStatus.setText(collectionScore+"/"+noOfQuestions+" "+i18n.GL2278());
 		int scorePercentage=0;
 		if(collectionScore!=0){
-			 scorePercentage=(collectionScore/noOfQuestions)*100;
+			scorePercentage=(collectionScore/noOfQuestions)*100;
 		}
 		String progressRedialStyle="blue-progress-"+scorePercentage;
 
@@ -256,10 +242,10 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	@Override
-	public void setSessionsData(ArrayList<session> result) {
+	public void setSessionsData(List<UserPlayedSessionDo> result) {
 		sessionsDropDown.clear();
 		sessionData.clear();
-		for (session session : result) {
+		for (UserPlayedSessionDo session : result) {
 			sessionData.put(session.getSessionId(), session.getEventTime());
 			int day=session.getSequence();
 			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Attempt",session.getSessionId());
@@ -326,232 +312,198 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	@Override
 	public void setQuestionsData(final ArrayList<UserDataDo> result) {
-//		GWT.runAsync(new SimpleRunAsyncCallback() {
-//
-//			@Override
-//			public void onSuccess() {}
-//		});
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+
+				questionsTable.clear();
+				destoryTables();
+
+				AdvancedFlexTable adTable=new AdvancedFlexTable();
+				adTable.getElement().setId("report");
+
+				adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
+				adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
+				adTable.setHeaderWidget(2, new Label(i18n.GL0315()));
+				adTable.setHeaderWidget(3, new Label(i18n.GL2288()));
+				adTable.setHeaderWidget(4, new Label(i18n.GL2084()));
+				adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
 
 
-		questionsTable.clear();
-		destoryTables();
+				if(result.size()!=0){
+					for(int i=0;i<result.size();i++) {
+						Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+						questionTitle.setStyleName(STYLE_TABLE_CENTER);
+						questionTitle.setStyleName(STYLE_TXTLEFT);
+						adTable.setWidget(i, 0,new Label(String.valueOf(i+1)));
+						adTable.setWidget(i, 1,questionTitle);
 
-		AdvancedFlexTable adTable=new AdvancedFlexTable();
-		adTable.getElement().setId("report");
+						int noOfAttempts=result.get(i).getAttempts();
+						String scoreStatus= result.get(i).getStatus();
 
-		adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
-		adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
-		adTable.setHeaderWidget(2, new Label(i18n.GL0315()));
-		adTable.setHeaderWidget(3, new Label(i18n.GL2288()));
-		adTable.setHeaderWidget(4, new Label(i18n.GL2084()));
-		adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
-
-
-		if(result.size() > 0){
-
-			AppClientFactory.printInfoLogger("questiondatatable--"+result.size());
-
-			for(int i=0;i<result.size();i++) {
-				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
-				questionTitle.setStyleName(STYLE_TABLE_CENTER);
-				questionTitle.setStyleName(STYLE_TXTLEFT);
-				adTable.setWidget(i, 0,new Label(String.valueOf(i+1)));
-				adTable.setWidget(i, 1,questionTitle);
-
-				int noOfAttempts=result.get(i).getAttempts();
-				String scoreStatus= result.get(i).getStatus();
-
-				//Set Answer choices
-				String questionType= result.get(i).getType();
-				if(questionType.equalsIgnoreCase("HS")){
-					questionType= result.get(i).getQuestionType();
-				}
-
-				AppClientFactory.printInfoLogger("questiondatatable-questionType-"+questionType);
-
-				if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : MC");
-					Label anserlbl=new Label();
-					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						 Map<String, Integer> authorObject = result.get(i).getOptions();
-						 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 1");
-
-						 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
-						 {
-							 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 2");
-							 String userSelectedOption=entry.getKey();
-							// int ansStatus=entry.getValue();
-							 if(userSelectedOption!=null){
-								 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 3");
-									anserlbl.setText(userSelectedOption);
-									if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
-										anserlbl.getElement().getStyle().setColor(CORRECT);
-									}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
-										anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-									}else{
-										anserlbl.getElement().getStyle().setColor(INCORRECT);
-									}
-									AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 4");
-								}
-						 }
-						 AppClientFactory.printInfoLogger("questiondatatable-questionType : MC - 5");
-					}
-					anserlbl.setStyleName(STYLE_TABLE_CENTER);
-					adTable.setWidget(i, 2,anserlbl);
-				}else if (FIB.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 1");
-					VerticalPanel answerspnl=new VerticalPanel();
-					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 2");
-						String answerTextFormat = "";
-						String[] answersArry = null;
-						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 3");
-						for (MetaDataDo metaDataDo : questionList) {
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 4");
-							String answerText = "";
-							if((metaDataDo.getAnswer_text() != null)) {
-								answerText = metaDataDo.getAnswer_text();
-							}
-							answerTextFormat += '[' + answerText +']';
-							if(questionList.size()  != metaDataDo.getSequence()){
-								answerTextFormat += ",";
-							}
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 5");
+						//Set Answer choices
+						String questionType= result.get(i).getType();
+						if(questionType.equalsIgnoreCase("HS")){
+							questionType= result.get(i).getQuestionType();
 						}
-						String[] userFibOption = null;
-						if(result.get(i).getText() != null) {
-							answersArry=answerTextFormat.split(",");
-							userFibOption =result.get(i).getText().split(",");
-						}
-						if(answersArry!=null && userFibOption!=null){
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 6");
-							for (int k = 0; k < answersArry.length; k++) {
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 7");
-								Label answerChoice=new Label();
-								if(answersArry[k]!=null && k<userFibOption.length){
-									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-										answerChoice.setText(userFibOption[k]);
-										answerChoice.getElement().getStyle().setColor(CORRECT);
-									}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-										answerChoice.setText(userFibOption[k]);
-										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-									}else{
-										answerChoice.setText(userFibOption[k]);
-										answerChoice.getElement().getStyle().setColor(INCORRECT);
-									}
-									answerChoice.setStyleName(STYLE_TABLE_CENTER);
-									answerspnl.add(answerChoice);
-									AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 8");
-								}
-							}
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : FIB - 9");
-						}
-					}
-					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-					adTable.setWidget(i, 2,answerspnl);
-					//data.setValue(i, 2, answerspnl.toString());
-				}else  if(MA.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 1");
-					VerticalPanel answerspnl=new VerticalPanel();
-					if(result.get(i).getAnswerObject()!=null) {
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 2");
-						JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
-						JSONObject answerObject = value.isObject();
-						Set<String> keys=answerObject.keySet();
-						Iterator<String> itr = keys.iterator();
-						while(itr.hasNext()) {
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 3");
-							answerspnl.clear();
-							JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-							for(int j=0;j<attemptsObj.size();j++){
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 4");
-								Label answerChoice=new Label();
-								String showMessage = null;
-								boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
-								String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-								String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 5");
-								if(skip == false)
+						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){
+							Label anserlbl=new Label();
+							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+								Map<String, Integer> authorObject = result.get(i).getOptions();
+
+
+								for (Map.Entry<String, Integer> entry : authorObject.entrySet())
 								{
-									if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
-										showMessage = i18n.GL_GRR_NO();
-									} else if(ONE.equalsIgnoreCase(matext)) {
-										showMessage = i18n.GL_GRR_YES();
-									}
-									answerChoice.setText(showMessage);
-									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
-										answerChoice.getElement().getStyle().setColor(INCORRECT);
-									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
-										answerChoice.getElement().getStyle().setColor(CORRECT);
-									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+									String userSelectedOption=entry.getKey();
+									// int ansStatus=entry.getValue();
+									if(userSelectedOption!=null){
+										anserlbl.setText(userSelectedOption);
+										if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+											anserlbl.getElement().getStyle().setColor(CORRECT);
+										}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+											anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+										}else{
+											anserlbl.getElement().getStyle().setColor(INCORRECT);
+										}
 									}
 								}
-								AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 6");
-								answerChoice.setStyleName(STYLE_TABLE_CENTER);
-								answerspnl.add(answerChoice);
+
 							}
-							AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 7");
+							anserlbl.setStyleName(STYLE_TABLE_CENTER);
+							adTable.setWidget(i, 2,anserlbl);
+						}else if (FIB.equalsIgnoreCase(questionType)){
+							VerticalPanel answerspnl=new VerticalPanel();
+							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+								String answerTextFormat = "";
+								String[] answersArry = null;
+								ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
+								for (MetaDataDo metaDataDo : questionList) {
+									String answerText = "";
+									if((metaDataDo.getAnswer_text() != null)) {
+										answerText = metaDataDo.getAnswer_text();
+									}
+									answerTextFormat += '[' + answerText +']';
+									if(questionList.size()  != metaDataDo.getSequence()){
+										answerTextFormat += ",";
+									}
+								}
+								String[] userFibOption = null;
+								if(result.get(i).getText() != null) {
+									answersArry=answerTextFormat.split(",");
+									userFibOption =result.get(i).getText().split(",");
+								}
+								if(answersArry!=null && userFibOption!=null){
+									for (int k = 0; k < answersArry.length; k++) {
+										Label answerChoice=new Label();
+										if(answersArry[k]!=null && k<userFibOption.length){
+											if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
+												answerChoice.setText(userFibOption[k]);
+												answerChoice.getElement().getStyle().setColor(CORRECT);
+											}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
+												answerChoice.setText(userFibOption[k]);
+												answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+											}else{
+												answerChoice.setText(userFibOption[k]);
+												answerChoice.getElement().getStyle().setColor(INCORRECT);
+											}
+											answerChoice.setStyleName(STYLE_TABLE_CENTER);
+											answerspnl.add(answerChoice);
+										}
+									}
+								}
+							}
+							answerspnl.setStyleName(STYLE_MARGIN_AUTO);
+							adTable.setWidget(i, 2,answerspnl);
+							//data.setValue(i, 2, answerspnl.toString());
+						}else  if(MA.equalsIgnoreCase(questionType)){
+							VerticalPanel answerspnl=new VerticalPanel();
+							if(result.get(i).getAnswerObject()!=null) {
+								JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+								JSONObject answerObject = value.isObject();
+								Set<String> keys=answerObject.keySet();
+								Iterator<String> itr = keys.iterator();
+								while(itr.hasNext()) {
+									answerspnl.clear();
+									JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+									for(int j=0;j<attemptsObj.size();j++){
+										Label answerChoice=new Label();
+										String showMessage = null;
+										boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+										String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+										String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+										if(skip == false)
+										{
+											if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
+												showMessage = i18n.GL_GRR_NO();
+											} else if(ONE.equalsIgnoreCase(matext)) {
+												showMessage = i18n.GL_GRR_YES();
+											}
+											answerChoice.setText(showMessage);
+											if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+												answerChoice.getElement().getStyle().setColor(INCORRECT);
+											} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+												answerChoice.getElement().getStyle().setColor(CORRECT);
+											} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+												answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+											}
+										}
+										answerChoice.setStyleName(STYLE_TABLE_CENTER);
+										answerspnl.add(answerChoice);
+									}
+								}
+							}
+							answerspnl.setStyleName(STYLE_MARGIN_AUTO);
+							adTable.setWidget(i, 2,answerspnl);
+						}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
+							if(result.get(i).getAnswerObject()!=null) {
+								Label viewResponselbl=new Label(VIEWRESPONSE);
+								viewResponselbl.setStyleName("summaryViewResponse");
+								viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+								viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+								viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+								viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+								adTable.setWidget(i, 2,viewResponselbl);
+							}
 						}
+
+						//Set attempts
+						Label attempts=new Label(i18n.GL2269());
+						attempts.setStyleName(STYLE_TABLE_CENTER);
+						attempts.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+
+
+						if(STATUS_INCORRECT.equalsIgnoreCase(scoreStatus)) {
+							adTable.setWidget(i, 3,attempts);
+							adTable.getRowFormatter().addStyleName(i, STYLE_WHITE);
+						} else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)) {
+							Image correctImg=new Image();
+							correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
+							adTable.setWidget(i, 3,correctImg);
+							adTable.getRowFormatter().addStyleName(i, STYLE_GREEN);
+						}
+
+						//Set time spent
+						adTable.setWidget(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
+
+						//Set reactions
+						int reaction=result.get(i).getReaction();
+						adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 					}
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : MA - 8");
-					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-					adTable.setWidget(i, 2,answerspnl);
-				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 1");
-					if(result.get(i).getAnswerObject()!=null) {
-						AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 2");
-						Label viewResponselbl=new Label(VIEWRESPONSE);
-						viewResponselbl.setStyleName("summaryViewResponse");
-						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						adTable.setWidget(i, 2,viewResponselbl);
-					}
-					AppClientFactory.printInfoLogger("questiondatatable-questionType : HT_RO - 3");
+					sortAndFixed();
+					adTable.addStyleName("table table-bordered reportTableStyle");
+					questionsTable.add(adTable);
+
+				}else if(result.size()==0){
+					Label erroeMsg=new Label();
+					erroeMsg.setStyleName(STYLE_ERROR_MSG);
+					erroeMsg.setText(i18n.GL3265());
+					questionsTable.add(erroeMsg);
 				}
 
-				//Set attempts
-				Label attempts=new Label(i18n.GL2269());
-				attempts.setStyleName(STYLE_TABLE_CENTER);
-				attempts.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-				AppClientFactory.printInfoLogger("questiondatatable-questionType");
 
-				if(STATUS_INCORRECT.equalsIgnoreCase(scoreStatus)) {
-					adTable.setWidget(i, 3,attempts);
-					adTable.getRowFormatter().addStyleName(i, STYLE_WHITE);
-				} else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)) {
-					Image correctImg=new Image();
-					correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
-					adTable.setWidget(i, 3,correctImg);
-					adTable.getRowFormatter().addStyleName(i, STYLE_GREEN);
-				}
-
-				//Set time spent
-				adTable.setWidget(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
-
-				//Set reactions
-				int reaction=result.get(i).getReaction();
-				adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 			}
-			sortAndFixed();
-			adTable.addStyleName("table table-bordered reportTableStyle");
-			AppClientFactory.printInfoLogger("adTable--"+adTable);
-			questionsTable.add(adTable);
-			AppClientFactory.printInfoLogger("questionsTable--"+questionsTable.getWidgetCount());
-
-		}else {
-			AppClientFactory.printInfoLogger("questionsTable-erroeMsg-"+questionsTable.getWidgetCount());
-			Label erroeMsg=new Label();
-			erroeMsg.setStyleName(STYLE_ERROR_MSG);
-			erroeMsg.setText(i18n.GL3265());
-			questionsTable.add(erroeMsg);
-		}
-
-		AppClientFactory.printInfoLogger("End...");
-
+		});
 	}
 
 
@@ -642,26 +594,26 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							if(questionType.equalsIgnoreCase("HS")){
 								questionType= result.get(i).getQuestionType();
 							}
-							if(questionType.equalsIgnoreCase(MC) || questionType.equalsIgnoreCase(TF) || questionType.equalsIgnoreCase(TSLASHF)){
+							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){
 								Label anserlbl=new Label();
 								if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-									 Map<String, Integer> authorObject = result.get(i).getOptions();
-									 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
-									 {
-										 String userSelectedOption=entry.getKey();
+									Map<String, Integer> authorObject = result.get(i).getOptions();
+									for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+									{
+										String userSelectedOption=entry.getKey();
 
-										 if(userSelectedOption!=null){
-											 anserlbl.setText(userSelectedOption);
-											 if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
-												 anserlbl.getElement().getStyle().setColor(CORRECT);
-												 isTickdisplay=true;
-											 }else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
-												 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											 }else{
-												 anserlbl.getElement().getStyle().setColor(INCORRECT);
-											 }
-										 }
-									 }
+										if(userSelectedOption!=null){
+											anserlbl.setText(userSelectedOption);
+											if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+												anserlbl.getElement().getStyle().setColor(CORRECT);
+												isTickdisplay=true;
+											}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+												anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+											}else{
+												anserlbl.getElement().getStyle().setColor(INCORRECT);
+											}
+										}
+									}
 								}
 								anserlbl.setStyleName(STYLE_TABLE_CENTER);
 								data.setValue(i, 3, anserlbl.toString());
@@ -816,10 +768,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	public void setPrintIndividualSummayData(final boolean isClickedOnSave, final boolean isClickedOnEmail){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-
 			@Override
 			public void onSuccess() {
-
 				printWidget.clear();
 				Label collectionSummaryText=new Label();
 				collectionSummaryText.setText(i18n.GL4006());
@@ -846,17 +796,15 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				//printWidget.add(collectionOverViewWidget);
 				//printWidget.add(printResourceData);
 				if(isClickedOnSave){
-					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
+					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 					printWidget.clear();
 				}else{
 					Print.it(style,PrintPnl);
 					printWidget.clear();
 				}
-
 			}
 		});
 	}
-
 
 	Timer timer1=new Timer() {
 		@Override
@@ -876,18 +824,14 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public void downlaodButtonClick(ClickEvent event){
 		setPrintIndividualSummayData(true,false);
 	}
-
-
-
+	
 	@Override
 	public void setPdfForEmail(String path) {
 		if(emailPopup!=null){
 			emailPopup.setEmailData(collectionTitle.getText(),path);
 		}
 	}
-
-
-
+	
 	@Override
 	public Frame getFrame() {
 		return downloadFile;
@@ -901,38 +845,28 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
        paging:         false,
        bFilter:false,
        bInfo: false
-   });
-}-*/;
-public static native void destoryTables() /*-{
-	var table = $wnd.$('#report').DataTable();
-  	table.destroy();
-}-*/;
+   	});
+	}-*/;
+		public static native void destoryTables() /*-{
+		var table = $wnd.$('#report').DataTable();
+	  	table.destroy();
+	}-*/;
 
+	@Override
+	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
+		throw new RuntimeException("Not implemented");
+	}
 
+	@Override
+	public void loadingIcon() {
+		loadingImageLabel.setVisible(true);
+	}
 
-@Override
-public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
-	throw new RuntimeException("Not implemented");
-}
-
-
-
-@Override
-public void loadingIcon() {
-	loadingImageLabel.setVisible(true);
-}
-
-
-
-@Override
-public void errorMsg() {
-	Label erroeMsg=new Label();
-	erroeMsg.setStyleName(STYLE_ERROR_MSG);
-	erroeMsg.setText(i18n.GL3265());
-	questionsTable.add(erroeMsg);
-}
-
-
-
-
+	@Override
+	public void errorMsg() {
+		Label erroeMsg=new Label();
+		erroeMsg.setStyleName(STYLE_ERROR_MSG);
+		erroeMsg.setText(i18n.GL3265());
+		questionsTable.add(erroeMsg);
+	}
 }

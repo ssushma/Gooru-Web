@@ -45,7 +45,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -64,7 +63,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
@@ -75,7 +74,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	
 	String type;
 	
-	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment";
+	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment",ASSESSMENT_URL="Assessment/url";
 	
 	private static final String VIEW= "view";
 
@@ -88,8 +87,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String ID = "id";
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
-	
-	HandlerRegistration handlerRegistration=null;
 	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -223,13 +220,15 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
-				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
+				widgetMove.getTitleContainer().addClickHandler(new ClickOnTitleContainer(folderObj,true));
+				//widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;
 			}
 			setLastWidgetArrowVisiblity(false);
 		}
+		pnlMainButtonsContainer.setVisible(true);
 	}
 	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown){
 		if(isdown){
@@ -359,14 +358,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	class ClickOnTitleContainer implements ClickHandler{
 		FolderDo folderObj;
-		ClickOnTitleContainer(FolderDo folderObj){
+		boolean isClicked;
+		ClickOnTitleContainer(FolderDo folderObj,boolean isClicked){
 			this.folderObj=folderObj;
+			this.isClicked=isClicked;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			Map<String,String> params = new HashMap<String,String>();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
-			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+			if(isClicked){
+				isClicked=false;
+				Map<String,String> params = new HashMap<String,String>();
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
+				getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+			}
 		}
 	}
 	@Override
@@ -414,7 +418,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
-		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,o3);
@@ -428,6 +432,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	@Override
 	public void loadingImage(){
+		pnlMainButtonsContainer.setVisible(false);
 		pnlCourseList.clear();
 		lblTitle.setText("");
 		Image loadingImage =  new Image();
