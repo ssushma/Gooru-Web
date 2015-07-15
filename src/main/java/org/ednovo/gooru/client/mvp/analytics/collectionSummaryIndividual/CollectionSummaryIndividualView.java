@@ -677,7 +677,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						            	questionType= result.get(i).getQuestionType();
 						            }
 						            String scoreStatus= result.get(i).getStatus();
-						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
+						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF) || questionType.equalsIgnoreCase(TSLASHF)){ 
 						        		Label anserlbl=new Label();
 						        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 						        			 Map<String, Integer> authorObject = result.get(i).getOptions();
@@ -901,7 +901,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					            }
 					            String scoreStatus= result.get(i).getStatus();
 
-					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
+					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){ 
 					        		Label anserlbl=new Label();
 					        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 					        			 Map<String, Integer> authorObject=result.get(i).getOptions();

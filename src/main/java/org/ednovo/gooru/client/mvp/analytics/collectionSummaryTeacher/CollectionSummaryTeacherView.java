@@ -778,7 +778,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
             	  String getQuestionType=scoredQuestionsData.get(i-1).getType();
-                  if(MC.equalsIgnoreCase(getQuestionType) || TF.equalsIgnoreCase(getQuestionType)){
+                  if(MC.equalsIgnoreCase(getQuestionType) || TF.equalsIgnoreCase(getQuestionType) || TSLASHF.equalsIgnoreCase(getQuestionType)){
                  		if((scoredQuestionsData.get(i-1).getMetaData() !=null) && (scoredQuestionsData.get(i-1).getMetaData().size() != 0)) {
                  			int metaDataSize=scoredQuestionsData.get(i-1).getMetaData().size();
                  			int totalcount=scoredQuestionsData.get(i-1).getAttempts();

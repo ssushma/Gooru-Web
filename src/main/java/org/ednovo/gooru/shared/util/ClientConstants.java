@@ -188,6 +188,7 @@ public interface ClientConstants {
 	String MA = "MA";
 	String FIB = "FIB";
 	String TF = "TF";
+	String TSLASHF = "T/F";
 	String HT_RO = "HT_RO";
 	String HT_HL = "HT_HL";
 	String HS_TXT = "HS_TXT";

@@ -361,7 +361,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						if(questionType.equalsIgnoreCase("HS")){
 							questionType= result.get(i).getQuestionType();
 						}
-						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){
+						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
 							Label anserlbl=new Label();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 								 Map<String, Integer> authorObject = result.get(i).getOptions();
@@ -608,7 +608,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							if(questionType.equalsIgnoreCase("HS")){
 								questionType= result.get(i).getQuestionType();
 							}
-							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){
+							if(questionType.equalsIgnoreCase(MC) || questionType.equalsIgnoreCase(TF) || questionType.equalsIgnoreCase(TSLASHF)){
 								Label anserlbl=new Label();
 								if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 									 Map<String, Integer> authorObject = result.get(i).getOptions();
