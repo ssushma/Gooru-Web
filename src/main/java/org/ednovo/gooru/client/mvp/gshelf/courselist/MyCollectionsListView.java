@@ -64,7 +64,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
@@ -75,7 +75,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	
 	String type;
 	
-	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment";
+	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment",ASSESSMENT_URL="Assessment/url";
 	
 	private static final String VIEW= "view";
 
@@ -230,6 +230,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}
 			setLastWidgetArrowVisiblity(false);
 		}
+		pnlMainButtonsContainer.setVisible(true);
 	}
 	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown){
 		if(isdown){
@@ -364,6 +365,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			event.preventDefault();
+			event.stopPropagation();
 			Map<String,String> params = new HashMap<String,String>();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
@@ -414,7 +417,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
-		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,o3);
@@ -428,6 +431,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	@Override
 	public void loadingImage(){
+		pnlMainButtonsContainer.setVisible(false);
 		pnlCourseList.clear();
 		lblTitle.setText("");
 		Image loadingImage =  new Image();
