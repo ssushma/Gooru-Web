@@ -329,7 +329,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 		loadingImageLabel.setVisible(false);
 		questionsTable.clear();
-		destoryTables();
+//		destoryTables();
 
 		AdvancedFlexTable adTable=new AdvancedFlexTable();
 		adTable.getElement().setId("report");
@@ -502,6 +502,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			adTable.addStyleName("table table-bordered reportTableStyle");
 //			questionsTable.add(adTable);
 			questionsTable.getElement().setInnerHTML(""+adTable);
+
 
 		}else {
 			Label erroeMsg=new Label();
