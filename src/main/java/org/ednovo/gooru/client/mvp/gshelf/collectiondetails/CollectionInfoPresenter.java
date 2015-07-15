@@ -230,12 +230,16 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		createDo.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
 		createDo.setDepthOfKnowledgeIds(StringUtil.getKeys(getView().getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 		createDo.setSkillIds(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
-		
+		createDo.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setCollectionType(createDo.getCollectionType());
+				folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
+				folderDo.setDepthOfKnowledge(StringUtil.getCheckBoxSelectedDo(getView().getDepthOfKnowledgeContainer().getSelectedValue()));
+				folderDo.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
+				folderDo.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
 				myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);

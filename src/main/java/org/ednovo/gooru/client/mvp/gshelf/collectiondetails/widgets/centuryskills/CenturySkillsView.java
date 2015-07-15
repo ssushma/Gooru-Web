@@ -199,8 +199,6 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		if(size>0){
 			for(Iterator<Map.Entry<Long, String>> it = selectedValues.entrySet().iterator(); it.hasNext(); ) {
 			      Map.Entry<Long, String> entry = it.next();
-			   AppClientFactory.printInfoLogger("Key..."+entry.getKey());
-			   AppClientFactory.printInfoLogger("Value..."+entry.getValue());
 			   DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(entry.getValue(), entry.getKey()+"","");
 			   centPanel.add(downToolTipWidgetUc);
 			}
@@ -263,7 +261,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 			selectedVaue=new HashMap<Long, String>();
 			if(standardFos!=null){
 				for(StandardFo standardFo:standardFos){
-				//	selectedVaue.put((long)standardFo.getId(), standardFo.getLabel());
+					selectedVaue.put((long)standardFo.getId(), standardFo.getLabel());
 				}	
 			}
 
