@@ -32,7 +32,6 @@ public class CreateDo implements Serializable{
 	private String isLoginRequired;
 	private String mediaFilename;
 	private ThumbnailDo thumbnails;
-	
 	public String getLanguageObjective() {
 		return languageObjective;
 	}

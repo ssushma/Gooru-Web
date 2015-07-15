@@ -155,6 +155,9 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(collectionDo!=null){
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
+			if(ASSESSMENT_URL.equalsIgnoreCase(collectionDo.getType())){
+				showAssessmentUrlInfo(collectionDo);
+			}
 		}else{
 			setData(type,nextLevel);
 		}
@@ -195,6 +198,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(result.getTitle()!=null){
 			titleLbl.setHTML(result.getTitle());	
 		}
+		collectionDo.setGooruOid(result.getGooruOid());
 		collectionDo.setTitle(StringUtil.isEmpty(result.getTitle())?"":result.getTitle());
 		collectionDo.setUrl(StringUtil.isEmpty(result.getUrl())?"":result.getUrl());
 		collectionDo.setGoals(StringUtil.isEmpty(result.getGoals())?"":result.getGoals());
@@ -266,7 +270,6 @@ public class ShelfTreeWidget extends FocusPanel {
 				try {
 					titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
 				} catch (Exception e){
-					AppClientFactory.printSevereLogger(e.toString());
 				}
 			}
 		}

@@ -310,12 +310,12 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
-		params.put("pageNum", "0");
+		/*params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
 		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASS)){
 			params.put("tab","classList");
-		}
+		}*/
 		AppClientFactory.getPlaceManager().revealPlace(token, params);
 	}
 	/**

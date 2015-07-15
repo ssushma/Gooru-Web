@@ -210,7 +210,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v3StudentJoinIntoClass(String classCode,AsyncCallback<Void> callback) throws GwtException,ServerDownException;
 	
-	public void v3UpdateClass(String classId,ClasspageDo classpageDo,AsyncCallback<ClasspageDo> callback) throws GwtException,ServerDownException;
+	public void v3UpdateClass(String classId,String title,String grade,String fileName,String sharing,String score,String courseId,AsyncCallback<ClasspageDo> callback) throws GwtException,ServerDownException;
 	
 	void getClassesAssociatedWithCourse(String courseId,AsyncCallback<ArrayList<ClasspageDo>> callback) throws GwtException,ServerDownException;
 	

@@ -68,17 +68,17 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditClassSettingsNavigationUiHandler> implements IsEditClassSettingsNavigationView{
 
-	@UiField LiPanel classInfo,minLiPnl,settLiPanel;
+	@UiField LiPanel classInfo,minLiPnl/*,settLiPanel*/;
 
-	@UiField Anchor classInfoAnr,minmumScoreAnr,contentSettingsAnr;
+	@UiField Anchor classInfoAnr,minmumScoreAnr/*,contentSettingsAnr*/;
 
 	@UiField InlineLabel courseLbl,titleLbl;
 
-	@UiField Button studentPreviewbtn,editCourseBtn;
+	@UiField Button /*studentPreviewbtn,*/editCourseBtn;
 
 	@UiField SimplePanel bodyView;
 	
-	@UiField HTMLPanel coursePanel;
+	@UiField HTMLPanel coursePanel,previewBtn;
 	
 	
 
@@ -101,10 +101,10 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		minmumScoreAnr.getElement().setAttribute("alt",i18n.GL3403());
 		minmumScoreAnr.getElement().setAttribute("title",i18n.GL3403());
 
-		contentSettingsAnr.setText(i18n.GL3404());
+		/*contentSettingsAnr.setText(i18n.GL3404());
 		contentSettingsAnr.getElement().setId("contentSettingAnrId");
 		contentSettingsAnr.getElement().setAttribute("alt",i18n.GL3404());
-		contentSettingsAnr.getElement().setAttribute("title",i18n.GL3404());
+		contentSettingsAnr.getElement().setAttribute("title",i18n.GL3404());*/
 
 		classInfoAnr.setText(i18n.GL3420());
 		classInfoAnr.getElement().setId("contentSettingAnrId");
@@ -116,16 +116,16 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
 		courseLbl.getElement().setAttribute("title",i18n.GL0326());
 
-		studentPreviewbtn.setText(i18n.GL3406());
+		/*studentPreviewbtn.setText(i18n.GL3406());
 		studentPreviewbtn.getElement().setId("previwBtnId");
 		studentPreviewbtn.getElement().setAttribute("alt",i18n.GL3406());
-		studentPreviewbtn.getElement().setAttribute("title",i18n.GL3406());
+		studentPreviewbtn.getElement().setAttribute("title",i18n.GL3406());*/
 
 		classInfoAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classInfo));
 		minmumScoreAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
-		settLiPanel.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
+		//settLiPanel.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
 		
-		editCourseBtn.setVisible(false);
+		previewBtn.setVisible(false);
 		editCourseBtn.setText(i18n.GL3424());
 		editCourseBtn.getElement().setId("connectCourseId");
 		editCourseBtn.getElement().setAttribute("alt",i18n.GL3424());
@@ -139,13 +139,13 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO)){
 			classInfo.setStyleName(CssTokens.ACTIVE);
 			minLiPnl.removeStyleName(CssTokens.ACTIVE);
-			settLiPanel.removeStyleName(CssTokens.ACTIVE);
+			//settLiPanel.removeStyleName(CssTokens.ACTIVE);
 		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE)){
 			minLiPnl.setStyleName(CssTokens.ACTIVE);
 			classInfo.removeStyleName(CssTokens.ACTIVE);
-			settLiPanel.removeStyleName(CssTokens.ACTIVE);
+			//settLiPanel.removeStyleName(CssTokens.ACTIVE);
 		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
-			settLiPanel.setStyleName(CssTokens.ACTIVE);
+			//settLiPanel.setStyleName(CssTokens.ACTIVE);
 			classInfo.removeStyleName(CssTokens.ACTIVE);
 			minLiPnl.removeStyleName(CssTokens.ACTIVE);
 		}
@@ -166,7 +166,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		@Override
 		public void onClick(ClickEvent event) {
 			minLiPnl.removeStyleName(CssTokens.ACTIVE);
-			settLiPanel.removeStyleName(CssTokens.ACTIVE);
+			//settLiPanel.removeStyleName(CssTokens.ACTIVE);
 			classInfo.removeStyleName(CssTokens.ACTIVE);
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
@@ -192,7 +192,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 	}
 
-	@UiHandler("studentPreviewbtn")
+	/*@UiHandler("studentPreviewbtn")
 	public void navigateStudentPreview(ClickEvent event) {
 		PlaceRequest request = new PlaceRequest(PlaceTokens.STUDENT_VIEW);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
@@ -202,7 +202,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		request = request.with(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.TRUE);
 		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		AppClientFactory.getPlaceManager().revealPlace(request);
-	}
+	}*/
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassSettingsNavigationView#setCourseData(org.ednovo.gooru.application.shared.model.folder.FolderDo)
@@ -220,7 +220,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	
 	public void coursePanelVisiblity(boolean visiblity){
 		coursePanel.setVisible(visiblity);
-		editCourseBtn.setVisible(!visiblity);
+		previewBtn.setVisible(!visiblity);
 	}
 
 	/* (non-Javadoc)

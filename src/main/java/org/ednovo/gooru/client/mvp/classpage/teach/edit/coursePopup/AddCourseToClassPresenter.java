@@ -161,18 +161,16 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassUiHandlers#connectCourseToClass(java.lang.String, org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
 	@Override
-	public void connectCourseToClass(final String classId, ClasspageDo classpageDo) {
-		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, classpageDo, new AsyncCallback<ClasspageDo>() {
+	public void connectCourseToClass(final String classId, final String courseId) {
+		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId,null,null,null,null,null,courseId, new AsyncCallback<ClasspageDo>() {
 			
 			@Override
 			public void onSuccess(ClasspageDo result) {
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put(UrlNavigationTokens.CLASSPAGEID, classId);
-				if(result != null){
-					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
-					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
-					params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS);
-				}
+				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, courseId);
+				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
+				params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE);
 				getView().displaySuccessPopup("Class", classId, params);
 			}
 			

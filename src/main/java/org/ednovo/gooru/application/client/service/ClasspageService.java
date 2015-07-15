@@ -84,7 +84,7 @@ public interface ClasspageService extends BaseService {
 	
 	public void v3StudentJoinIntoClass(String classCode) throws GwtException, ServerDownException;
 	
-	public ClasspageDo v3UpdateClass(String classId,ClasspageDo classpageDo) throws GwtException,ServerDownException;
+	public ClasspageDo v3UpdateClass(String classId,String title,String grade,String fileName,String sharing,String score,String courseId) throws GwtException,ServerDownException;
 	
 	public List<FolderDo> getClassUnitList(String classId,String courseIdn,int offset, int limit) throws GwtException,ServerDownException;
 	
