@@ -226,7 +226,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			if(pnlBreadCrumbMain.getWidgetCount()<4){
 				pnlBreadCrumbMain.add(new BreadcrumbItem((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
 					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
-					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type,ASSESSMENT.equalsIgnoreCase(type)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon"));
+					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type,type.contains(ASSESSMENT)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon"));
 			}else{
 				getBreadCrumbs(title,type,4); 
 			}
