@@ -50,6 +50,7 @@ public interface UrlNavigationTokens{
 	String STUDENT_CLASSPAGE_COURSE_VIEW = "course-view";
 	String STUDENT_CLASSPAGE_UNIT_VIEW = "unit-view";
 	String STUDENT_CLASSPAGE_LESSON_VIEW = "lesson-view";
+	String STUDENT_CLASSPAGE_LESSON_NAME = "lesson-name";
 	String STUDENT_CLASSPAGE_COURSE_REPORT_VIEW = "course-report-view";
 	String STUDENT_CLASSPAGE_ASSESSMENT_REPORT_VIEW = "assessment-report-view";
 	//Student Class page unique ids

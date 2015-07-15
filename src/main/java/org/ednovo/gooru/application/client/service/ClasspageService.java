@@ -46,6 +46,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
@@ -83,7 +84,7 @@ public interface ClasspageService extends BaseService {
 	
 	public void v3StudentJoinIntoClass(String classCode) throws GwtException, ServerDownException;
 	
-	public ClasspageDo v3UpdateClass(String classId,ClasspageDo classpageDo) throws GwtException,ServerDownException;
+	public ClasspageDo v3UpdateClass(String classId,String title,String grade,String fileName,String sharing,String score,String courseId) throws GwtException,ServerDownException;
 	
 	public List<FolderDo> getClassUnitList(String classId,String courseIdn,int offset, int limit) throws GwtException,ServerDownException;
 	
@@ -535,5 +536,6 @@ public interface ClasspageService extends BaseService {
 
 	public PlanContentDo getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException;
 
+	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
 
 }

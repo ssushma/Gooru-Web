@@ -60,5 +60,5 @@ public interface AddCourseToClassUiHandlers extends BaseUiHandlers, EventHandler
 	public Button getAddButton();
 	public void hidePopup();
 		
-	public void connectCourseToClass(String classId, ClasspageDo classpageDo);
+	public void connectCourseToClass(String classId, String courseId);
 }

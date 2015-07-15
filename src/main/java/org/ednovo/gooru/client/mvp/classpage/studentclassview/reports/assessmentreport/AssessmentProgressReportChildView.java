@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.assessments.play.collection.end;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,18 +31,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.EmailPopup;
@@ -94,14 +93,15 @@ import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
-import com.google.inject.Inject;
 
-public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHandlers> implements IsAssessmentsEndView,ClientConstants{
-	@UiField
-	static FlowPanel PrintPnl;
+/**
+ * @author Gooru Team
+ *
+ */
+public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
-	@UiField
-	FlowPanel progressRadial,questionsTable;
+	@UiField static FlowPanel PrintPnl;
+	@UiField FlowPanel progressRadial,questionsTable;
 	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel;
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
@@ -113,28 +113,31 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	@UiField HTMLPanel printWidget;
 	@UiField Button printButton,downloadButton;
 	@UiField Frame downloadFile;
-
+	
 	HTMLPanel printScoredData=new HTMLPanel("");
+	
 	EmailPopup emailPopup=null;
-
+	
 	Map<String, Long> sessionData=new HashMap<String, Long>();
+	
 	PrintUserDataDO printData=new PrintUserDataDO();
+	
 	String urlDomain = "";
+	
 	String style="";
 
 	private CollectionDo collectionDo=null;
-
-
-	private static AssessmentsPlayerMetadataViewUiBinder uiBinder = GWT.create(AssessmentsPlayerMetadataViewUiBinder.class);
-
-	interface AssessmentsPlayerMetadataViewUiBinder extends UiBinder<Widget, AssessmentsEndView> {
-	}
-
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@Inject
-	public AssessmentsEndView(){
-		setWidget(uiBinder.createAndBindUi(this));
+	private static AssessmentProgressReportChildViewUiBinder uiBinder = GWT.create(AssessmentProgressReportChildViewUiBinder.class);
+
+	interface AssessmentProgressReportChildViewUiBinder extends UiBinder<Widget, AssessmentProgressReportChildView> {
+	}
+
+	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId) {
+		initWidget(uiBinder.createAndBindUi(this));
+		setPresenter(new AssessmentProgressReportChildPresenter(this));
 		setLabelAndIds();
 		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
 		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/main-styles.min.css'>";
@@ -142,9 +145,13 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
-
 		StringUtil.loadVisualizationLibraries();
+		System.out.println("assessment Id "+assessmentId);
+		System.out.println("class Id "+classId);
+		System.out.println("user Id "+userId);
+		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
+	
 	public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -154,7 +161,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				classpageId="";
 			}
 			setSessionStartTime(selectedIndex);
-			getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
+			getPresenter().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
 		}
 	}
 
@@ -207,36 +214,15 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			String libraryName) {
 
 	}
-
-
-
-	public void setDataInsightsUrl(){
-
-			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-	}
-
-	public void setClasspageInsightsUrl(String classpageId, String sessionId){
-		if(sessionId==null) {
-			sessionId = "";
-		}
-			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-	}
-
-	public void setDataInsightsSummaryUrl(String sessionId){
-			sessionId=sessionId!=null?sessionId:"";
-			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-	}
-
-
-
+	
 	public void displayScore(Integer collectionScore, Integer noOfQuestions){
 
 		score.setText(collectionScore+" %");
-//		goal.setText("Goal : 90%");
+		//		goal.setText("Goal : 90%");
 		correctStatus.setText(collectionScore+"/"+noOfQuestions+" "+i18n.GL2278());
 		int scorePercentage=0;
 		if(collectionScore!=0){
-			 scorePercentage=(collectionScore/noOfQuestions)*100;
+			scorePercentage=(collectionScore/noOfQuestions)*100;
 		}
 		String progressRedialStyle="blue-progress-"+scorePercentage;
 
@@ -256,10 +242,10 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	@Override
-	public void setSessionsData(ArrayList<session> result) {
+	public void setSessionsData(List<UserPlayedSessionDo> result) {
 		sessionsDropDown.clear();
 		sessionData.clear();
-		for (session session : result) {
+		for (UserPlayedSessionDo session : result) {
 			sessionData.put(session.getSessionId(), session.getEventTime());
 			int day=session.getSequence();
 			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Attempt",session.getSessionId());
@@ -345,10 +331,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
 
 
-				if(result.size() > 0){
-					
-					AppClientFactory.printInfoLogger("questiondatatable--"+result.size());
-					
+				if(result.size()!=0){
 					for(int i=0;i<result.size();i++) {
 						Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 						questionTitle.setStyleName(STYLE_TABLE_CENTER);
@@ -364,31 +347,28 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						if(questionType.equalsIgnoreCase("HS")){
 							questionType= result.get(i).getQuestionType();
 						}
-						
-						AppClientFactory.printInfoLogger("questiondatatable-questionType-"+questionType);
-						
-						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
+						if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){
 							Label anserlbl=new Label();
 							if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-								 Map<String, Integer> authorObject = result.get(i).getOptions();
-								 
-								 
-								 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
-								 {
-									 String userSelectedOption=entry.getKey();
+								Map<String, Integer> authorObject = result.get(i).getOptions();
+
+
+								for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+								{
+									String userSelectedOption=entry.getKey();
 									// int ansStatus=entry.getValue();
-									 if(userSelectedOption!=null){
-											anserlbl.setText(userSelectedOption);
-											if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
-												anserlbl.getElement().getStyle().setColor(CORRECT);
-											}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
-												anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											}else{
-												anserlbl.getElement().getStyle().setColor(INCORRECT);
-											}
+									if(userSelectedOption!=null){
+										anserlbl.setText(userSelectedOption);
+										if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+											anserlbl.getElement().getStyle().setColor(CORRECT);
+										}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+											anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+										}else{
+											anserlbl.getElement().getStyle().setColor(INCORRECT);
 										}
-								 }
-								 
+									}
+								}
+
 							}
 							anserlbl.setStyleName(STYLE_TABLE_CENTER);
 							adTable.setWidget(i, 2,anserlbl);
@@ -512,12 +492,9 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					}
 					sortAndFixed();
 					adTable.addStyleName("table table-bordered reportTableStyle");
-					AppClientFactory.printInfoLogger("adTable--"+adTable);
 					questionsTable.add(adTable);
-					AppClientFactory.printInfoLogger("questionsTable--"+questionsTable.getWidgetCount());
 
-				}else {
-					AppClientFactory.printInfoLogger("questionsTable-erroeMsg-"+questionsTable.getWidgetCount());
+				}else if(result.size()==0){
 					Label erroeMsg=new Label();
 					erroeMsg.setStyleName(STYLE_ERROR_MSG);
 					erroeMsg.setText(i18n.GL3265());
@@ -617,26 +594,26 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							if(questionType.equalsIgnoreCase("HS")){
 								questionType= result.get(i).getQuestionType();
 							}
-							if(questionType.equalsIgnoreCase(MC) || questionType.equalsIgnoreCase(TF) || questionType.equalsIgnoreCase(TSLASHF)){
+							if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){
 								Label anserlbl=new Label();
 								if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-									 Map<String, Integer> authorObject = result.get(i).getOptions();
-									 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
-									 {
-										 String userSelectedOption=entry.getKey();
+									Map<String, Integer> authorObject = result.get(i).getOptions();
+									for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+									{
+										String userSelectedOption=entry.getKey();
 
-										 if(userSelectedOption!=null){
-											 anserlbl.setText(userSelectedOption);
-											 if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
-												 anserlbl.getElement().getStyle().setColor(CORRECT);
-												 isTickdisplay=true;
-											 }else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
-												 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											 }else{
-												 anserlbl.getElement().getStyle().setColor(INCORRECT);
-											 }
-										 }
-									 }
+										if(userSelectedOption!=null){
+											anserlbl.setText(userSelectedOption);
+											if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+												anserlbl.getElement().getStyle().setColor(CORRECT);
+												isTickdisplay=true;
+											}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+												anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+											}else{
+												anserlbl.getElement().getStyle().setColor(INCORRECT);
+											}
+										}
+									}
 								}
 								anserlbl.setStyleName(STYLE_TABLE_CENTER);
 								data.setValue(i, 3, anserlbl.toString());
@@ -791,10 +768,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	public void setPrintIndividualSummayData(final boolean isClickedOnSave, final boolean isClickedOnEmail){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-
 			@Override
 			public void onSuccess() {
-
 				printWidget.clear();
 				Label collectionSummaryText=new Label();
 				collectionSummaryText.setText(i18n.GL4006());
@@ -821,17 +796,15 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				//printWidget.add(collectionOverViewWidget);
 				//printWidget.add(printResourceData);
 				if(isClickedOnSave){
-					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
+					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 					printWidget.clear();
 				}else{
 					Print.it(style,PrintPnl);
 					printWidget.clear();
 				}
-
 			}
 		});
 	}
-
 
 	Timer timer1=new Timer() {
 		@Override
@@ -851,18 +824,14 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public void downlaodButtonClick(ClickEvent event){
 		setPrintIndividualSummayData(true,false);
 	}
-
-
-
+	
 	@Override
 	public void setPdfForEmail(String path) {
 		if(emailPopup!=null){
 			emailPopup.setEmailData(collectionTitle.getText(),path);
 		}
 	}
-
-
-
+	
 	@Override
 	public Frame getFrame() {
 		return downloadFile;
@@ -876,38 +845,28 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
        paging:         false,
        bFilter:false,
        bInfo: false
-   });
-}-*/;
-public static native void destoryTables() /*-{
-	var table = $wnd.$('#report').DataTable();
-  	table.destroy();
-}-*/;
+   	});
+	}-*/;
+		public static native void destoryTables() /*-{
+		var table = $wnd.$('#report').DataTable();
+	  	table.destroy();
+	}-*/;
 
+	@Override
+	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
+		throw new RuntimeException("Not implemented");
+	}
 
+	@Override
+	public void loadingIcon() {
+		loadingImageLabel.setVisible(true);
+	}
 
-@Override
-public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
-	throw new RuntimeException("Not implemented");
-}
-
-
-
-@Override
-public void loadingIcon() {
-	loadingImageLabel.setVisible(true);
-}
-
-
-
-@Override
-public void errorMsg() {
-	Label erroeMsg=new Label();
-	erroeMsg.setStyleName(STYLE_ERROR_MSG);
-	erroeMsg.setText(i18n.GL3265());
-	questionsTable.add(erroeMsg);
-}
-
-
-
-
+	@Override
+	public void errorMsg() {
+		Label erroeMsg=new Label();
+		erroeMsg.setStyleName(STYLE_ERROR_MSG);
+		erroeMsg.setText(i18n.GL3265());
+		questionsTable.add(erroeMsg);
+	}
 }

@@ -155,6 +155,9 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(collectionDo!=null){
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
+			if(ASSESSMENT_URL.equalsIgnoreCase(collectionDo.getType())){
+				showAssessmentUrlInfo(collectionDo);
+			}
 		}else{
 			setData(type,nextLevel);
 		}
@@ -195,6 +198,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(result.getTitle()!=null){
 			titleLbl.setHTML(result.getTitle());	
 		}
+		collectionDo.setGooruOid(result.getGooruOid());
 		collectionDo.setTitle(StringUtil.isEmpty(result.getTitle())?"":result.getTitle());
 		collectionDo.setUrl(StringUtil.isEmpty(result.getUrl())?"":result.getUrl());
 		collectionDo.setGoals(StringUtil.isEmpty(result.getGoals())?"":result.getGoals());
@@ -380,7 +384,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			{
 				if(collectionDo.getType()!=null)
 				{
-					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON) && !collectionDo.getType().equals(ASSESSMENT_URL)) {
+					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON)) {
 						if (event.getSource().equals(titleFocPanel)) {
 							MixpanelUtil.Expand_CollectionPanel();
 							if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {

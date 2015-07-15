@@ -72,7 +72,7 @@ public class FolderDo implements Serializable{
 	private List<CourseSubjectDo> taxonomyCourse;
 	private List<CourseSubjectDo> subdomain;
 	private List<CourseSubjectDo> standards;
-	
+	private String languageObjective;
 	public FolderDo(){}
 	
 	public CourseSummaryDo getSummary() {
@@ -370,6 +370,14 @@ public class FolderDo implements Serializable{
 
 	public void setSkills(List<StandardFo> skills) {
 		this.skills = skills;
+	}
+
+	public String getLanguageObjective() {
+		return languageObjective;
+	}
+
+	public void setLanguageObjective(String languageObjective) {
+		this.languageObjective = languageObjective;
 	}
 
 	

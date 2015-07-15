@@ -32,6 +32,8 @@ public class FolderInfoWidget extends Composite {
 	@UiField Label lblErrorMessage;
 	@UiField HTMLPanel folderInfo,titleDetailsPnl;
 	@UiField Button saveFolderBtn;
+	
+	FolderDo folderObj;
 
 	private static FolderInfoWidgetUiBinder uiBinder = GWT
 			.create(FolderInfoWidgetUiBinder.class);
@@ -98,6 +100,10 @@ public class FolderInfoWidget extends Composite {
 			public void onSuccess(FolderDo result) {
 			}
 		});
+	}
+
+	public void setData(FolderDo folderObj) {
+		this.folderObj=folderObj;
 	}
 
 }

@@ -161,10 +161,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				lblAddNew.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				pnlAddContainer.setVisible(true);
 			}
+			setCreateText(type);
 		}else{
 			if(COURSE.equalsIgnoreCase(type)){
+				enableCreateButtons(false);
 				h2Title.setText(i18n.GL1180());
+				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
+				enableCreateButtons(true);
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 				if(folderDo!=null){
@@ -193,7 +197,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			setLastWidgetArrowVisiblity(true);
 		}
 		//setCreateText();
-		setCreateText(type);
+		
 		if(listOfContent!=null && listOfContent.size()>0){
 			for (FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
@@ -279,7 +283,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * @param typeVal
 	 */
 	public void setCreateText(String type){
-		if(COURSE.equalsIgnoreCase(type)){
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		if(COURSE.equalsIgnoreCase(type) && courseId!=null){
 			enableCreateButtons(false);
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
 			lblAddNew.setText(i18n.GL3281());
