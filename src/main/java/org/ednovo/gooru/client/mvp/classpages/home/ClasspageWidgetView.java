@@ -158,7 +158,7 @@ public class ClasspageWidgetView extends Composite {
 					if(collectionDoObj.getCourseGooruOid() != null){
 						params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, collectionDoObj.getCourseGooruOid());
 						params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
-						params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS);
+						params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE);
 					}
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
 	
