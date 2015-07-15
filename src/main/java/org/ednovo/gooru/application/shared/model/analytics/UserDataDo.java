@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -32,16 +32,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
  * @fileName : UserDataDo.java
- * 
+ *
  * @Author :Gooru Team
- * 
+ *
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
 public class UserDataDo implements Serializable{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -74,13 +74,14 @@ public class UserDataDo implements Serializable{
 	private String lastName;
 	private String emailId;
 	private String profileImageUrl;
+	private String gooruOId;
 
-	
+
 	//This are add for getting the resource data in the teacher summary
 	private String category;
 	private String resourceFormat;
 	private String title;
-	
+
 	public int getReaction() {
 		return reaction;
 	}
@@ -195,7 +196,7 @@ public class UserDataDo implements Serializable{
 	public void setAnswerObject(String answerObject) {
 		this.answerObject = answerObject;
 	}
-	
+
 	public Map<String, Integer> getOptions() {
 		return options;
 	}
@@ -273,5 +274,11 @@ public class UserDataDo implements Serializable{
 	}
 	public void setResourceFormat(String resourceFormat) {
 		this.resourceFormat = resourceFormat;
+	}
+	public String getGooruOId() {
+		return gooruOId;
+	}
+	public void setGooruOId(String gooruOId) {
+		this.gooruOId = gooruOId;
 	}
 }
