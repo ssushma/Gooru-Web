@@ -69,8 +69,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	private boolean isQuestionResource=false;
 	private boolean isUserOwnResource = false;
 
-
-
 	AddResourcePresenter addResourcePresenter=null;
 	ImageUploadPresenter imgUploadPresenter=null;
 	AddStandardsPresenter addStandardsPresenter = null;
@@ -115,9 +113,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
 	public void setData(final FolderDo folderDo) {
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		if(collectionId!=null){
-			AppClientFactory.getInjector().getResourceService().getCollection(collectionId,true, new SimpleAsyncCallback<CollectionDo>() {
+		if(folderDo!=null){
+			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),true, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					getView().setData(result,folderDo, RefreshType.INSERT);
@@ -128,7 +125,11 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(null,null,null,null,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2", null);
+		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o3", null);
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(courseId,unitId,lessonId,collectionId,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				getView().resetWidgetPositions();

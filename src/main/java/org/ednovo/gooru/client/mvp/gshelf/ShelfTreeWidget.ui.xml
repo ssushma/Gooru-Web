@@ -9,13 +9,13 @@
 				<g:HTML styleName="title" ui:field="titleLbl" />
 				<g:HTMLPanel styleName="emptyHoverContainer">
                     <g:HTMLPanel styleName="emptyHover" ui:field="panelToolTip"></g:HTMLPanel>
-                   <!--  <g:HTMLPanel styleName="tooltipContainer}">
+                    <g:HTMLPanel styleName="tooltipContainer">
                         <g:HTMLPanel styleName="arrowBorder"></g:HTMLPanel>
                         <g:HTMLPanel styleName="arrow"></g:HTMLPanel>
                         <g:HTMLPanel styleName="tooltipContent">
                         	<g:HTML ui:field="htmlToolTipContent"/>
                         </g:HTMLPanel>
-                    </g:HTMLPanel> -->
+                    </g:HTMLPanel> 
                 </g:HTMLPanel>
 				<!-- <g:HTMLPanel styleName="myShelfEditButtonContainer">
 					<g:Button ui:field="myShelfEditButton" styleName="secondary"></g:Button>

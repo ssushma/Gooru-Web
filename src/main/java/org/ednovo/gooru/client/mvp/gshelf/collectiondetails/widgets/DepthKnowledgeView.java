@@ -76,8 +76,10 @@ public class DepthKnowledgeView extends Composite {
 	
 	public void setFolderDo(FolderDo folderDo){
 		AppClientFactory.printInfoLogger(" folder DOK");
+		if(folderDo!=null){
+			setSelectedValues(folderDo.getDepthOfKnowledge());
 
-		setSelectedValues(folderDo.getDepthOfKnowledge());
+		}
 	}
 	
 	public void setSelectedValues(List<checkboxSelectedDo> list){

@@ -68,7 +68,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
-	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion;
+	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion,lblTitle;
 	@UiField HTMLEventPanel createPanel;
 	
 	int index=0;
@@ -117,8 +117,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public void resetWidgetPositions(int itemSeqToAPI,int movingIndex){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
-		System.out.println("itemSeqToAPI=="+itemSeqToAPI);
-		System.out.println("movingIndex=="+movingIndex);
 		while (widgets.hasNext()){
 			Widget widget=widgets.next();
 			if(widget instanceof ContentWidgetWithMove){
@@ -148,9 +146,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
+		lblTitle.setVisible(false);
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
+			lblTitle.setVisible(true);
+			lblTitle.setText(StringUtil.capitalizeFirstLetter(folderDo.getType())+": "+folderDo.getTitle());
 			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
 			if(view!=null && (view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
 				btnCreate.setVisible(false);
@@ -423,6 +424,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@Override
 	public void loadingImage(){
 		pnlCourseList.clear();
+		lblTitle.setText("");
 		Image loadingImage =  new Image();
 		loadingImage.setUrl(LOADER_IMAGE);
 		loadingImage.getElement().setId("myCollectionsListViewLoaddingImage");

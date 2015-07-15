@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionConfirmationPopup;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionShareAlertPopup;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -439,6 +440,8 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(false);
 						publishedPanel.setVisible(true);
+						AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
+						
 					}else{
 						publishedPanel.setVisible(false);
 						rbPublic.setVisible(false);

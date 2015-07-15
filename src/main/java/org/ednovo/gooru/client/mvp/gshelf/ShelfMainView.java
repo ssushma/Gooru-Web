@@ -310,7 +310,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);
-					treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+					treeChildSelectedItem.setState(true, false);
 					String type=shelfTreeWidget.getCollectionDo().getType();
 					if(FOLDER.equalsIgnoreCase(type)){
 						getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),type,shelfTreeWidget.getFolderOpenedStatus());
@@ -338,7 +338,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			TreeItem parent = treeChildSelectedItem.getParentItem();
 			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 			if(parent != null)parent.setSelected(false);
-			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+			treeChildSelectedItem.setState(true, false);
 
 			/*if(!"Collection".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType()) && !"Assessment".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType())){
 				shelfTreeWidget.setFolderOpenedStatus(true);
@@ -452,13 +452,15 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				} 
 			}
 		}
-		if(treeChildSelectedItem.getState()) {
+		treeChildSelectedItem.setState(true);
+		selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
+		/*if(treeChildSelectedItem.getState()) {
 			treeChildSelectedItem.setState(false);
 			selectedWidget.setOpenStyle(false, treeChildSelectedItem.getChildCount());
 		} else {
 			treeChildSelectedItem.setState(true);
 			selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
-		}
+		}*/
 		//This will set the data in the right panel
 		if(selectedWidget!=null){
 			folderListDoChild.clear();
@@ -650,7 +652,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setTreeWidgetType(COURSE);
 			shelfTreeWidget.setLevel(1);
 			TreeItem treeItem = new TreeItem(shelfTreeWidget);
-			shelfFolderTree.insertItem(0, treeItem);
+			shelfFolderTree.insertItem(shelfFolderTree.getItemCount(), treeItem);
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
 			getUiHandlers().setRightPanelData(getFolderDo(), COURSE,null);
@@ -718,7 +720,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setLevel(4);
 		}
 		TreeItem item = new TreeItem(shelfTreeWidget);
-		treeChildSelectedItem.insertItem(0, item);
+		treeChildSelectedItem.insertItem(treeChildSelectedItem.getChildCount(), item);
 		treeChildSelectedItem.setState(true);
 		if(!COLLECTION.equalsIgnoreCase(type) && !type.contains(ASSESSMENT)){ 
 			shelfTreeWidget.setFolderOpenedStatus(true);

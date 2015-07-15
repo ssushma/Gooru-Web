@@ -213,7 +213,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
-		centurySkillsPresenter.getView().setFolderDo(folderObj);
 		callCourseInfoTaxonomy();
 	}
 	@Override
@@ -266,9 +265,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		createOrUpDate.setCollectionType(createDoObj.getCollectionType());
 		imgUploadPresenter.setCollectionData(createDoObj);
 		imgUploadPresenter.setCollectionImage(true);
+		imgUploadPresenter.setProfileImage(false);
+		imgUploadPresenter.setEditResourceImage(false);
+/*		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setClassPageImage(false);
 		imgUploadPresenter.setUpdateQuestionImage(false);
-		imgUploadPresenter.setEditResourceImage(false);
+		imgUploadPresenter.setEditResourceImage(false);*/
 	}
 
 
@@ -317,7 +319,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
 	@Override
-	public void updateCollectionDetails(String text){
+	public void updateCollectionDetails(String text,CreateDo createObj){
 		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
 		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view", null);
 		
@@ -348,7 +350,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			
 		}else{
 			
-			getFolderServiceAsync().updateCollectionDetails(collectionUid, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
+			getFolderServiceAsync().updateCollectionDetails(createObj,collectionUid, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
 
 				@Override
 				public void onSuccess(Void result) {
@@ -384,5 +386,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 	public void addTaxonomyData(UlPanel selectedUlContainer) { 
 		getView().addTaxonomyData(selectedUlContainer);
+	}
+	
+	@Override
+	public CenturySkillsPresenter getCenturySkillsPresenters(){
+		return centurySkillsPresenter;
 	}
 }
