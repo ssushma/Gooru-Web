@@ -34,13 +34,13 @@ public class StudentClassLessonContainer extends Composite {
 			UiBinder<Widget, StudentClassLessonContainer> {
 	}
 
-	public StudentClassLessonContainer(PlanProgressDo planProgressDo, int count) {
+	public StudentClassLessonContainer(PlanProgressDo planProgressDo, int count, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setCircleContainerItems(planProgressDo, count);
+		setCircleContainerItems(planProgressDo, count, status, userId);
 		lessonWidget.addClickHandler(new LessonPageRedirection(planProgressDo.getGooruOId()));
 	}
 	
-	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count) {
+	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count, String status, String userId) {
 		numericOrder.setText(count+"");
 		lessonCountName.setText(planProgressDo.getTitle());
 		lessonName.setText("Lesson");
@@ -69,14 +69,14 @@ public class StudentClassLessonContainer extends Composite {
 			}
 			if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
 				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
-					styleName = styleName + "emptyselected";
+					styleName = styleName + "cursorPointer";
 				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
-					styleName = styleName + "blueselected";
+					styleName = styleName + "blueselected cursorPointer";
 				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
-					styleName = styleName + "selected";
+					styleName = styleName + "selected cursorPointer";
 				}
 			}
-			lessonContainer.add(new StudentClassContentWidget(planDo, styleName));
+			lessonContainer.add(new StudentClassContentWidget(planDo, styleName, planProgressDo.getGooruOId(), status, userId));
 		}
 	}
 	

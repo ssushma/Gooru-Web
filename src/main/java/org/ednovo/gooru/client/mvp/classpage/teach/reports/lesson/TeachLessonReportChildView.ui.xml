@@ -7,7 +7,8 @@
 		   <div class="row">
 		      <div class="classProgressIndications teachReportUnitNavigationView no-gutter">
 		         <div class="col-md-4 col-sm-4">
-		            <panel:HTMLEventPanel ui:field="allContentPanel" styleName="studentCourseReportProgressHeader">
+		            <panel:HTMLEventPanel ui:field="allContentPanel" styleName="studentCourseReportProgressHeader cursorPointer">
+		               <span:SpanPanel styleName="left-arrow" ui:field="headerLeftArrow"></span:SpanPanel>
 		               <span:SpanPanel ui:field="textLbl"></span:SpanPanel>
 		            </panel:HTMLEventPanel>
 		         </div>
@@ -17,9 +18,9 @@
 		            </panel:HTMLEventPanel>
 		         </div>
 		         <div class="col-md-4 col-sm-4">
-		            <g:HTMLPanel styleName="contentStatus pull-right">
-		               <g:Label ui:field="downloadLink">Download Report</g:Label>
-		               <g:Label ui:field="previewLink">Preview Assessment</g:Label>
+		            <g:HTMLPanel styleName="download-button-container">
+		               <g:Button styleName="secondary downloadIcon" ui:field="downloadLink">Download Report</g:Button>
+		               <g:Button styleName="primary" ui:field="previewLink">Preview Assessment</g:Button>
 		            </g:HTMLPanel>
 		         </div>
 		         <div class="clearfix"></div>

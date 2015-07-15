@@ -286,9 +286,8 @@
 }
 .LearningMapContainer .lessonDescription .divcontainer {
     display: table-cell;
-    padding: 11px 10px;
+    margin: 11px 10px;
     position: relative;
-    width: 95px;
     float: left;
 }
 .LearningMapContainer .lessonDescription .divcontainer.blueBorder img {
@@ -1833,6 +1832,18 @@ th.headcol.whitebg {
     font-size: 22px;
     color: #515151;
     padding: 14px 15px;
+    display: table;
+}
+.classProgressIndications .studentCourseReportProgressHeader span {
+	  display: table-cell;
+	  vertical-align: middle;
+}
+.classProgressIndications .studentCourseReportProgressHeader span.left-arrow {
+	  background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+	  width: 18px;
+	  height: 25px;
+	  display: table-cell;
+	  vertical-align: middle;
 }
 .classProgressIndications .scoreStatus {
     float: right;
@@ -1870,6 +1881,11 @@ th.headcol.whitebg {
 	margin: 0px !important;
 	background: #ffffff !important;
 	border-bottom: 1px solid #ddd;
+}
+
+.teachReportUnitNavigationView .download-button-container {
+	margin: 11px;
+	text-align: right;
 }
 
 .classProgressIndications .contentStatus {
@@ -2657,7 +2673,7 @@ th.headcol.whitebg {
     display: block;
 }
 .classProgressIndications .topBackLinkBox a span.left-arrow {
-    background: url("../images/gooru-sprite.png") no-repeat -320px -326px;
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
     height: 25px;
     width: 25px;
 }
@@ -2677,7 +2693,7 @@ th.headcol.whitebg {
     display: block;
 }
 .studentUnitReportViewContainer .headerBackLinkBox a span.left-arrow {
-    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -320px -326px;
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -320px -326px;
     height: 25px;
     width: 25px;
 }
@@ -2689,7 +2705,7 @@ th.headcol.whitebg {
     float: right;
 }
 .studentUnitReportViewContainer .headerNextLinkBox a span.next-arrow {
-    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -339px -326px;
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -339px -326px;
     height: 25px;
     width: 25px;
 }
@@ -2777,14 +2793,14 @@ th.headcol.whitebg {
     position: relative;
 }
 .rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollLeftArrow {
-    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -320px -326px;
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -320px -326px;
     height: 25px;
     width: 25px;
     left: -2%;
     top: 45%;
 }
 .rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollRightArrow {
-    background: rgba(0, 0, 0, 0) url("../images/gooru-sprite.png") no-repeat scroll -339px -326px;
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -339px -326px;
     height: 25px;
     width: 25px;
     right: -2%;

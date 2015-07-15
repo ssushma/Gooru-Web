@@ -33,8 +33,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 
@@ -74,13 +72,15 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	ClasspageDo classpageDo;
 	
+	boolean isReveal = false;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.EDIT_CLASS)
 	public interface IsTeachClassProxy extends ProxyPlace<TeachClassPresenter> {
 	}
 
 	@Inject
-	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassPresenter editClassPresenter,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter,EditClassStudentPresenter editClassStudentPresenter,EditClassSettingsNavigationPresenter editClassSettingsNavigationPresenter){
+	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassPresenter editClassPresenter,EditClassStudentPresenter editClassStudentPresenter,EditClassSettingsNavigationPresenter editClassSettingsNavigationPresenter){
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.editClassPresenter=editClassPresenter;
@@ -97,7 +97,6 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	@Override
 	protected void onReveal() {
-		super.onReveal();
 		getClassDetails();
 	}
 	
@@ -105,30 +104,10 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
-		/*setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
-
-			@Override
-			public void onSuccess(CollectionDo collectionDo) {
-				try{
-					if (collectionDo.getMeta().getPermissions().toString().contains("edit")){
-						isApiCalled = true;
-						getView().setData(collectionDo);
-					}else{
-						isApiCalled = false;
-						ErrorPopup error = new ErrorPopup(i18n.GL0341());
-						error.center();
-						error.show();
-					}
-				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
-				}
-			}
-		});*/
 	}
 	
 	@Override
 	protected void onReset() {
-       super.onReset();
        loadNavigationPage();
        getView().setNavaigationTab();
 	}
@@ -142,9 +121,9 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 				@Override
 				public void onSuccess(ClasspageDo result) {
 					classpageDo=result;
-					getView().setClassHeaderView(classpageDo);
-					editClassStudentPresenter.setClassDetails(classpageDo);
-					editClassSettingsNavigationPresenter.setClassDetails(classpageDo);
+					getView().setClassHeaderView(result);
+					editClassStudentPresenter.setClassDetails(result);
+					editClassSettingsNavigationPresenter.setClassDetails(result); 
 				}
 				
 			});
