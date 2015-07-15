@@ -359,6 +359,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			event.preventDefault();
 			Map<String,String> params = new HashMap<String,String>();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
