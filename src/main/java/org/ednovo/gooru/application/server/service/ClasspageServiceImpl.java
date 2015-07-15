@@ -1660,6 +1660,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		return deserializeClasspageList(jsonRep);
 	}
 	
+	@Override
+	public ClasspageListDo v3GetAllClass(String limit, String offSet) throws GwtException {
+
+		JsonRepresentation jsonRep = null;
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.TEACH_STUDY);
+		Map<String,String> params = new HashMap<String, String>();
+		params.put(GooruConstants.LIMIT, limit);
+		params.put(GooruConstants.OFFSET, offSet);
+		String url=	AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("TEACH_STUDY API URL:::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
+	
 	
 	@Override
 	public ArrayList<ClasspageDo> getClassesAssociatedWithCourse(String o1CourseId) throws GwtException, ServerDownException {

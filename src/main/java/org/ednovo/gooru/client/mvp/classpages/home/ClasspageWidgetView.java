@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
@@ -48,6 +49,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 /**
  *
@@ -68,7 +70,9 @@ public class ClasspageWidgetView extends Composite {
 
 	@UiField Image classImage,imgUserProfile;
 
-	@UiField HTMLPanel classTitle,assignmentsCount,ownerName,assignmentsCounter;
+	@UiField InlineLabel assignmentsCount,ownerName,assignmentsCounter,dividerLbl;
+	
+	@UiField H4Panel classTitle;
 
 	@UiField HTMLEventPanel classpageContainer;
 
@@ -89,7 +93,7 @@ public class ClasspageWidgetView extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 
-		classImage.setWidth("422"+Unit.PX);
+		classImage.setWidth("100%");
 		classImage.setHeight("77"+Unit.PX);
 		classImage.getElement().setId("imgClassImage");
 		classpageContainer.getElement().setId("pnlClasspageContainer");
@@ -127,8 +131,11 @@ public class ClasspageWidgetView extends Composite {
 		classTitle.getElement().setAttribute("title",collectionDoObj.getName());
 		
 		final String courseId = collectionDoObj.getCourseGooruOid();
+		
+		isVisible(false);
+		dividerLbl.addStyleName("dividerStyle");
 
-		assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
+		//assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
 
 		try{
 		if(pageMode.equalsIgnoreCase("Teach")){
@@ -216,5 +223,120 @@ public class ClasspageWidgetView extends Composite {
 			e.printStackTrace();
 		}
 		
+	}
+	
+public void setArchedClassPageImage(final CollectionDo collectionDoObj,String pageMode) {
+		
+
+		classTitle.getElement().setInnerHTML(collectionDoObj.getTitle());
+		classTitle.getElement().setAttribute("alt",collectionDoObj.getTitle());
+		classTitle.getElement().setAttribute("title",collectionDoObj.getTitle());
+		
+		//assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
+		isVisible(true);
+		dividerLbl.removeStyleName("dividerStyle");
+		if(pageMode.equalsIgnoreCase("Teach"))
+		{
+		if(collectionDoObj.getMemberCount() == 1)
+		{
+			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1932());
+		}
+		else
+		{
+			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1931());
+		}
+		if(collectionDoObj.getItemCount() == 1)
+		{
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+		}
+		else
+		{
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
+		}
+		
+		imgUserProfile.setVisible(false);
+		assignmentsCounter.setVisible(true);
+		ownerName.setVisible(false);
+		classpageContainer.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Map<String, String> params=new HashMap<String, String>();
+				params.put("pageSize", "5");
+				params.put("classpageid", collectionDoObj.getGooruOid());
+				params.put("pageNum", "0");
+				params.put("pos", "1");
+				
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE,params);
+				
+			}
+		});
+		}
+		else
+		{
+		if(collectionDoObj.getItemCount() == 1)
+		{
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+		}
+		else
+		{
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());	
+		}
+		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUserName()+"'s"+" "+"class");
+		imgUserProfile.setVisible(true);
+		assignmentsCounter.setVisible(false);
+		ownerName.setVisible(true);
+		if(collectionDoObj.getUser().getProfileImageUrl() != null)
+		{
+		imgUserProfile.setUrl(collectionDoObj.getUser().getProfileImageUrl());
+		imgUserProfile.addErrorHandler(new ErrorHandler() {
+				
+				@Override
+				public void onError(ErrorEvent event) {
+					imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
+					
+				}
+			});
+		}
+		else
+		{
+			imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
+		}
+		classpageContainer.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Map<String, String> params=new HashMap<String, String>();
+				params.put("pageSize", "5");
+				params.put("id", collectionDoObj.getGooruOid());
+				params.put("pageNum", "0");
+				params.put("pos", "1");
+
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+				
+			}
+		});
+		}
+		classImage.setUrl(collectionDoObj.getThumbnailUrl());
+		
+		classImage.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				classImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
+				
+			}
+		});
+		
+		
+		
+		
+	}
+
+	public void isVisible(boolean isVisible){
+		assignmentsCount.setVisible(isVisible);
+		ownerName.setVisible(isVisible);
+		assignmentsCounter.setVisible(isVisible);
+		dividerLbl.setVisible(isVisible);
 	}
 }
