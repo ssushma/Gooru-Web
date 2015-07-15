@@ -155,6 +155,9 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(collectionDo!=null){
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
+			if(ASSESSMENT_URL.equalsIgnoreCase(collectionDo.getType())){
+				showAssessmentUrlInfo(collectionDo);
+			}
 		}else{
 			setData(type,nextLevel);
 		}
