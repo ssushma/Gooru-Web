@@ -170,7 +170,7 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 				params.put(UrlNavigationTokens.CLASSPAGEID, classId);
 				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, courseId);
 				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
-				params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS);
+				params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE);
 				getView().displaySuccessPopup("Class", classId, params);
 			}
 			

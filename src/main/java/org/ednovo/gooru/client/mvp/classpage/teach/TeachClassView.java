@@ -26,12 +26,15 @@ package org.ednovo.gooru.client.mvp.classpage.teach;
 
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.event.UpdateClassTitleEvent;
+import org.ednovo.gooru.client.mvp.classpage.event.UpdateClassTitleHandler;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.SpanPanel;
@@ -43,7 +46,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -81,6 +86,8 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	@UiField HTMLEventPanel classSettingsAnr,studentAnr;
 
 	@UiField SpanPanel classCodePanel;
+	
+	@UiField Button studentPreviewbtn;
 
 	String classPageId;
 
@@ -99,7 +106,16 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		setIds();
 		classSettingsAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS,UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classSettingsAnr));
 		studentAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTES,UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,studentAnr));
+		AppClientFactory.getEventBus().addHandler(UpdateClassTitleEvent.TYPE, updatehandler);
 	}
+	
+	UpdateClassTitleHandler updatehandler = new UpdateClassTitleHandler() {
+		
+		@Override
+		public void updateTitle(String title) {
+			titlePanel.setText(title);
+		}
+	};
 
 
 	/**
@@ -136,6 +152,11 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 
 		titlePanel.getElement().setId("titleId");
 		classCodePanel.getElement().setId("classCodePanelId");
+		
+		studentPreviewbtn.setText(i18n.GL3406());
+		studentPreviewbtn.getElement().setId("previwBtnId");
+		studentPreviewbtn.getElement().setAttribute("alt",i18n.GL3406());
+		studentPreviewbtn.getElement().setAttribute("title",i18n.GL3406());
 	}
 
 	@Override
@@ -213,5 +234,17 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 			classSettingsAnr.removeStyleName(CssTokens.ACTIVE);
 			studentAnr.removeStyleName(CssTokens.ACTIVE);
 		}
+	}
+	
+	@UiHandler("studentPreviewbtn")
+	public void navigateStudentPreview(ClickEvent event) {
+		PlaceRequest request = new PlaceRequest(PlaceTokens.STUDENT_VIEW);
+		String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
+		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,"");
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, cId);
+		request = request.with(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.TRUE);
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		AppClientFactory.getPlaceManager().revealPlace(request);
 	}
 }
