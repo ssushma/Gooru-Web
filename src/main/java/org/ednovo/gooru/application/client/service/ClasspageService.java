@@ -91,6 +91,10 @@ public interface ClasspageService extends BaseService {
 	public List<ClassLessonDo> getClassLessonCollectionList(String classId,String courseId,String unitId,int offset, int limit) throws GwtException,ServerDownException;
 	
 	public ClassLessonDo updateClassLessonVisiblity(String classId,String courseId,String unitId,List<ClassLessonDo> listClassLessonDo) throws GwtException,ServerDownException;
+	
+	ClasspageListDo v3GetAllClass(String limit, String offSet) throws GwtException, ServerDownException;
+	
+	
 	/**
 	 * Get Classpage by Classpage id
 	 * @param String classpageID
