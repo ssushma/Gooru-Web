@@ -66,6 +66,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.visualization.client.Color;
 
 
 /**
@@ -186,7 +187,9 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 			String grade = filterValue.replace("Grade ", "");
 			setSaveEnabled(true);
 			if("add".equals(addOrRemove)){
-				gradeList.add(grade);
+				if(!gradeList.contains(grade)){
+					gradeList.add(grade);
+				}
 			}else{
 				gradeList.remove(grade);
 			}
@@ -284,6 +287,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		
 		
 		classImage.getElement().setId("thumbnailImage");
+		shareUrlTxtLbl.setEnabled(false);
+		shareUrlTxtLbl.getElement().getStyle().setBackgroundColor("#FFF");
 		
 		
 		classCodePanel.add(image);
@@ -430,7 +435,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	 */
 	@Override
 	public void setData(ClasspageDo classpageDo) {
-		//this.classpageDo=classpageDo;
+			this.classpageDo=classpageDo;
 			getUiHandlers().generateShareLink(classpageDo.getClassUid());
 			if(classpageDo != null){
 				classTitleTextLbl.setText(classpageDo.getName());
@@ -449,6 +454,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 					for(int i=0;i<grade.length;i++){
 						gradeList.add(grade[i]);
 					}
+					gooruGradesPresenterWidget.getView().clearGradesStyles();
 					gooruGradesPresenterWidget.setGrade(classpageDo);
 				}else{
 					gooruGradesPresenterWidget.getView().clearGradesStyles();
@@ -550,13 +556,15 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 						}else{
 							classTitleTextLbl.getElement().getStyle().clearBackgroundColor();
 							classTitleTextLbl.getElement().getStyle().setBorderColor("#ccc");
-							saveLbl.setVisible(true);
-							setSaveEnabled(true);
-							saveBtn.setVisible(false);
-							classpageDo.setName(title);
-							classpageDo.setGrades(grade);
-							classpageDo.setVisibility(privacy);
-							getUiHandlers().updateClass(classpageDo);
+							try{
+								saveLbl.setVisible(true);
+								setSaveEnabled(true);
+								saveBtn.setVisible(false);
+								String sharing = Boolean.toString(privacy);
+								getUiHandlers().updateClass(title,grade,sharing);
+							}catch(Exception e){
+								AppClientFactory.printInfoLogger("e...."+e.getMessage());
+							}
 						}
 					}
 				});
