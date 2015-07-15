@@ -155,9 +155,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(collectionDo!=null){
 			setData(collectionDo,nextLevel);
 			this.folderDo=collectionDo;
-			if(ASSESSMENT_URL.equalsIgnoreCase(collectionDo.getType())){
-				showAssessmentUrlInfo(collectionDo);
-			}
 		}else{
 			setData(type,nextLevel);
 		}
@@ -184,6 +181,9 @@ public class ShelfTreeWidget extends FocusPanel {
 		AppClientFactory.getEventBus().addHandler(CollectionAssignShareEvent.TYPE, handler);
 
 		//AppClientFactory.getEventBus().addHandler(UpdateShelfFolderNameEvent.TYPE,updateShelfFolderName);
+		/*if(ASSESSMENT_URL.equalsIgnoreCase(collectionDo.getCollectionType())){
+			showAssessmentUrlInfo(collectionDo);
+		}*/
 	}
 	
 	/**
@@ -263,11 +263,10 @@ public class ShelfTreeWidget extends FocusPanel {
 				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 				titleFocPanel.addStyleName("collectionChild");
 				htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
-				/*try {
+				try {
 					titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
 				} catch (Exception e){
-					AppClientFactory.printSevereLogger(e.toString());
-				}*/
+				}
 			}
 		}
 		}
@@ -381,7 +380,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			{
 				if(collectionDo.getType()!=null)
 				{
-					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON)) {
+					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON) && !collectionDo.getType().equals(ASSESSMENT_URL)) {
 						if (event.getSource().equals(titleFocPanel)) {
 							MixpanelUtil.Expand_CollectionPanel();
 							if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
