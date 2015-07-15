@@ -64,7 +64,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
@@ -226,6 +226,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}
 			setLastWidgetArrowVisiblity(false);
 		}
+		pnlMainButtonsContainer.setVisible(true);
 	}
 	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown){
 		if(isdown){
@@ -360,6 +361,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		@Override
 		public void onClick(ClickEvent event) {
 			event.preventDefault();
+			event.stopPropagation();
 			Map<String,String> params = new HashMap<String,String>();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
@@ -424,6 +426,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	@Override
 	public void loadingImage(){
+		pnlMainButtonsContainer.setVisible(false);
 		pnlCourseList.clear();
 		lblTitle.setText("");
 		Image loadingImage =  new Image();
