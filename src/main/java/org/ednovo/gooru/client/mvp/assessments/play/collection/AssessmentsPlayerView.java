@@ -593,11 +593,11 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
 		String rid = AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-		if (rid != null && view == null){
+//		if (rid != null && view == null){
 			getUiHandlers().setLastEventType(PlayerDataLogEvents.PAUSE_EVENT_TYPE);
-		}else{
+//		}else{
 			getUiHandlers().setLastEventType(PlayerDataLogEvents.STOP_EVENT_TYPE);
-		}
+//		}
 
 		hide();
 		getUiHandlers().resetCollectionPlayer();
