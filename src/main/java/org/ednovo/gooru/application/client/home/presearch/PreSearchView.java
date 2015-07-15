@@ -38,7 +38,6 @@ import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
@@ -55,6 +54,7 @@ import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -111,7 +111,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 	@UiField Button  btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
 	@UiField Anchor ancLogin, lblSampleReports,btnLearnAboutApproach;
-	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup;
+	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup, flexTable;
 	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
 	@UiField Label lblErrorMessage;
@@ -170,6 +170,17 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		classCodeTxtBox.getElement().setId("txtClassCode");
 		classCodeTxtBox.setPlaceholder(i18n.GL1762_1());
 
+
+		AdvancedFlexTable table = new AdvancedFlexTable();
+
+		// create headers and put them in the thead tag
+		table.setHeaderWidget(0,new Label("First Name"));
+		table.setHeaderWidget(1,new Label("Surname"));
+
+		// enable verticall scrolling
+		table.enableVerticalScrolling(true);
+
+		flexTable.add(table);
 	}
 
 
