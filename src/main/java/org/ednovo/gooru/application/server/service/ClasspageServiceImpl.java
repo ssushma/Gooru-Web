@@ -1684,22 +1684,41 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3UpdateClass(java.lang.String, org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
 	@Override
-	public ClasspageDo v3UpdateClass(String classId, ClasspageDo classpageDo) throws GwtException, ServerDownException {
+	public ClasspageDo v3UpdateClass(String classId, String title,String grade,String fileName,String sharing,String minimumScore,String courseId) throws GwtException, ServerDownException {
 		ClasspageDo classDo=null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASSPAGE_BY_ID, classId);
 		getLogger().info("v3UpdateClass:"+url);
-		String form = "";
+		//String form = "";
+		JSONObject jsonObject = new JSONObject();
 		try{
-			if(classpageDo != null){
-				form = ResourceFormFactory.generateStringDataForm(classpageDo, null);
+			if(title != null){
+				jsonObject.put("name", title);
 			}
-			getLogger().info("form:"+form);
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),form);
+			if(grade != null){
+				jsonObject.put("grades", grade);
+			}
+			if(minimumScore != null){
+				long score = Long.valueOf(minimumScore);
+				jsonObject.put("minimumScore",score);
+			}
+			if(sharing !=null){
+				boolean visiblity = Boolean.valueOf(sharing);
+				jsonObject.put("visibility",visiblity);
+			}
+			if(courseId != null){
+				jsonObject.put("courseGooruOid",courseId);
+			}
+			if(fileName != null){
+				jsonObject.put("mediaFilename",fileName);
+			}
+			getLogger().info("jsonObject.toString():"+jsonObject.toString());
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),jsonObject.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			getLogger().info("payload:"+jsonRep.toString());
 			if(jsonResponseRep.getStatusCode()==200){
-				classDo=classpageDo;
+				ClasspageDo classpageDo = new ClasspageDo();
+				
 			}else{
 				classDo=new ClasspageDo();
 			}

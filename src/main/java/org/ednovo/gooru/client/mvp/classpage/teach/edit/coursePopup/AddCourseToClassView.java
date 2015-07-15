@@ -279,9 +279,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
 		if(classId != null && currectCourseSelectedTreeItem.getGooruOid() != null){
-			ClasspageDo classpageDo = new ClasspageDo();
-			classpageDo.setCourseGooruOid(currectCourseSelectedTreeItem.getGooruOid());
-			getUiHandlers().connectCourseToClass(classId,classpageDo);
+			getUiHandlers().connectCourseToClass(classId,currectCourseSelectedTreeItem.getGooruOid());
 		}
 	}
 	@Override
