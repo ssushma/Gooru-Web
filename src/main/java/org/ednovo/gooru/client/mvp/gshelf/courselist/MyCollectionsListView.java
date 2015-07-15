@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -370,6 +371,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				Map<String,String> params = new HashMap<String,String>();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 				getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+				getUiHandlers().getMyCollectionsRightClusterPresenter().updateBreadCrumbsTitle(folderObj, folderObj.getType());
 			}
 		}
 	}
