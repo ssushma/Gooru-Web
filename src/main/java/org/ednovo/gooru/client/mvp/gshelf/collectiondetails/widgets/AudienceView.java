@@ -102,14 +102,16 @@ public class AudienceView extends Composite {
 		selectedAudience=new HashMap<Integer, String>();
 		if(checkboxSelectedDos!=null){
 			for(checkboxSelectedDo do1:checkboxSelectedDos){
-				selectedAudience.put(do1.getId(),do1.getValue());
+				selectedAudience.put(do1.getId(),do1.getName());
 			}
 		}
 	
 		int size=listGroup.getWidgetCount();
+
 		for(int i=0;i<size;i++){
 			Widget widget=listGroup.getWidget(i);
 			if(widget instanceof Anchor ){
+
 				Anchor anchor=(Anchor)(widget);
 				Integer id=Integer.parseInt(anchor.getElement().getId());
 				if(selectedAudience.containsKey(id)){
