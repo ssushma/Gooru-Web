@@ -172,7 +172,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		setIdForFields();
 		setTreeStucture();
 		setCreateCourse(true);
-		StringUtil.setEnableTabs(true);
 		//setDefaultOrganizePanel();
 		//organizelbl.setText(i18n.GL3285());
 		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
@@ -645,7 +644,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void createCourseTemplate(){
 		if(FOLDER!=getViewType()&&isCreateCourse()){
 			setCreateCourse(false);
-			StringUtil.setEnableTabs(false);
 			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 			organizeRootPnl.removeStyleName("active");
@@ -935,7 +933,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 		}
 		setCreateCourse(isEnable);
-		StringUtil.setEnableTabs(isEnable);
 	}
 
 	/**
@@ -950,7 +947,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	public void setCreateCourse(boolean isCreateCourse) {
 		this.isCreateCourse = isCreateCourse;
-		StringUtil.setEnableTabs(isCreateCourse);
 	}
 	@Override
 	public Label getCollectionLabel(){

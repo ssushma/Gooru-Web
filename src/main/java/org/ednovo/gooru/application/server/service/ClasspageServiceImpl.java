@@ -1896,28 +1896,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
-					if(dataList!=null&&dataList.size()>1) {
-						if(type.equalsIgnoreCase("plan")) {
-							if(unitId!=null&&lessonId!=null) {
-								
-							} else {
-								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
-									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
-									}
-								}
-							}
-						} else if (type.equalsIgnoreCase("progress")) {
-							if(unitId!=null) {
-								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
-									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", false));
-									}
-								}
-							}
-						}
-						Collections.sort(dataList, new ArrayListSorter("sequence", false));
-					}
 				}
 			}
 		}catch (JSONException e) {
@@ -2060,7 +2038,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				if(resourceObj.getJSONArray("content") != null && resourceObj.optJSONArray("content") != null){
 					userPlayedSessions = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<UserPlayedSessionDo>>() {});
 				}
-				Collections.sort(userPlayedSessions, new ArrayListSorter("sequence", false));
 			}
 		}catch (JSONException e) {
 			e.printStackTrace();
