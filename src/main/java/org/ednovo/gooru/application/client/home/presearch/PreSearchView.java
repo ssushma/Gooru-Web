@@ -180,7 +180,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		// enable verticall scrolling
 		table.enableVerticalScrolling(true);
 
-		flexTable.add(table);
+//		flexTable.add(table);
 	}
 
 
