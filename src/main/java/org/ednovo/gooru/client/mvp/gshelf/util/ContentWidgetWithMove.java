@@ -196,34 +196,42 @@ public abstract class ContentWidgetWithMove extends Composite {
 	 */
 	public void enableAndDisableCount(String typeVal){
 		lblImage.setStyleName("courseImage");
+		hideAllCounts();
 		if(UNIT.equalsIgnoreCase(typeVal)){
-			spnUnitsCount.setVisible(false);
+			spnLessonsCount.setVisible(true);
 			lblImage.setStyleName("unitImage");
 		}else if(LESSON.equalsIgnoreCase(typeVal)){
 			lblImage.setStyleName("lessonImage");
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
+			spnCollectionsCount.setVisible(true);
+			spnAssessmentsCount.setVisible(true);
+			//spnUnitsCount.setVisible(false);
+			//spnLessonsCount.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(typeVal)){
 			lblImage.setStyleName("folderImage");
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
+			//spnUnitsCount.setVisible(false);
+			//spnLessonsCount.setVisible(false);
 			pnlArrows.setVisible(true);
 			//pnlMoveToEdit.setVisible(true);
 		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal) || ASSESSMENT.equalsIgnoreCase(typeVal)){
 			if(COLLECTION.equalsIgnoreCase(typeVal)){
 				lblImage.setStyleName("collectionImage");
+				spnResourcesCount.setVisible(true);
 			}else{
 				lblImage.setStyleName("assessmentImage");
+				spnResourcesCount.setVisible(false);
 			}
-			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
-			spnCollectionsCount.setVisible(false);
-			spnAssessmentsCount.setVisible(false);
 			pnlArrows.setVisible(true);
 			//pnlMoveToEdit.setVisible(true);
 		}
+	}
+	public void hideAllCounts(){
+		spnUnitsCount.setVisible(false);
+		spnLessonsCount.setVisible(false);
+		spnCollectionsCount.setVisible(false);
+		spnAssessmentsCount.setVisible(false);
+		spnResourcesCount.setVisible(false);
+		spnQuestionsCount.setVisible(false);
 	}
 	/**
 	 * This inner class will handle the click event on the Arrows
