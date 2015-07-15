@@ -24,12 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.analytics;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : UserDataDo.java
  * 
@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class UserDataDo implements Serializable{
+public class UserDataDo implements IsSerializable{
 
 	/**
 	 * 
