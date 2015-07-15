@@ -119,8 +119,8 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 	 * To assign course to particular class.
 	 */
 	@Override
-	public void assign2ClassPage(String value, final ClasspageDo classpageDo) {
-		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(value, classpageDo, new SimpleAsyncCallback<ClasspageDo>() {
+	public void assign2ClassPage(String value, String courseId) {
+		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(value, null,null,null,null,null,courseId, new SimpleAsyncCallback<ClasspageDo>() {
 
 			@Override
 			public void onSuccess(ClasspageDo result) {

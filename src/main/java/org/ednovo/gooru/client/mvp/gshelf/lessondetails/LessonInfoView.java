@@ -36,6 +36,8 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.StandardsCodeDecView;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -46,7 +48,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -138,7 +140,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		standardsUI.clear();
 		for(int i=0;i<standardsList.size();i++)
 		{
-			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i));
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
 			final DomainStandardsDo domainStand = standardsList.get(i);
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 				
@@ -171,7 +173,92 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}
 			});
 			standardsUI.add(standardsCode);
+			displaySubStandardsList(standardsList.get(i).getNode());
 		}
+	}
+		
+		public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
+		//	standardsUI.clear();
+			for(int i=0;i<standardsList.size();i++)
+			{
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final SubDomainStandardsDo domainStand = standardsList.get(i);
+				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
+				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						standardsCode.addStyleName("active");
+						
+						if(!selectedValues.contains(domainStand.getCodeId())){
+							selectedValues.add(domainStand.getCodeId());
+						}
+						
+						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								//This will remove the selected value when we are trying by close button
+								if(selectedValues.contains(domainStand.getCodeId())){
+									selectedValues.remove(domainStand);
+								}
+								standardsCode.removeStyleName("active");
+								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+								liPanelWithClose.removeFromParent();
+							}
+						});
+						//selectedValues.add(domainStand.getCodeId());
+						liPanelWithClose.setId(domainStand.getCodeId());
+						liPanelWithClose.setName(domainStand.getCode());
+						liPanelWithClose.setRelatedId(domainStand.getCodeId());
+						ulSelectedItems.add(liPanelWithClose);
+					}
+				});
+				standardsUI.add(standardsCode);
+				displaySubSubStandardsList(standardsList.get(i).getNode());
+			}
+		
+
+	}
+	public void displaySubSubStandardsList(final List<SubSubDomainStandardsDo> standardsList){
+			//standardsUI.clear();
+			for(int i=0;i<standardsList.size();i++)
+			{
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
+				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
+				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						standardsCode.addStyleName("active");
+						
+						if(!selectedValues.contains(domainStand.getCodeId())){
+							selectedValues.add(domainStand.getCodeId());
+						}
+						
+						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								//This will remove the selected value when we are trying by close button
+								if(selectedValues.contains(domainStand.getCodeId())){
+									selectedValues.remove(domainStand);
+								}
+								standardsCode.removeStyleName("active");
+								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+								liPanelWithClose.removeFromParent();
+							}
+						});
+						//selectedValues.add(domainStand.getCodeId());
+						liPanelWithClose.setId(domainStand.getCodeId());
+						liPanelWithClose.setName(domainStand.getCode());
+						liPanelWithClose.setRelatedId(domainStand.getCodeId());
+						ulSelectedItems.add(liPanelWithClose);
+					}
+				});
+				standardsUI.add(standardsCode);
+			}
 		
 
 	}

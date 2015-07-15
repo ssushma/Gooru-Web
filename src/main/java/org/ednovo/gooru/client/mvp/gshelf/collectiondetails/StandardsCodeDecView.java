@@ -64,10 +64,10 @@ public class StandardsCodeDecView extends Composite{
 	 * @param eventBus {@link EventBus}
 	 */
 	@Inject
-	public StandardsCodeDecView(DomainStandardsDo standardsDo) {
+	public StandardsCodeDecView(String codeVal, String labelVal) {
 		initWidget(uiBinder.createAndBindUi(this));
-		standardCode.setText(standardsDo.getCode());
-		standardDesc.setText(standardsDo.getLabel());
+		standardCode.setText(codeVal);
+		standardDesc.setText(labelVal);
 	}
 
 	public HTMLEventPanel getWidgetContainer() {

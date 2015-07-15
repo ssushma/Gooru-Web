@@ -2,22 +2,20 @@ package org.ednovo.gooru.application.shared.model.library;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
-public class DomainStandardsDo implements Serializable {
+public class SubSubDomainStandardsDo implements Serializable {
 
 	private static final long serialVersionUID = 2411080367742513414L;
 	private Integer codeId;
 	private String label;
 	private String code;
-	private List<SubDomainStandardsDo> node;
 
-	public DomainStandardsDo(){}
+	public SubSubDomainStandardsDo(){}
 
 	public Integer getCodeId() {
 		return codeId;
@@ -42,14 +40,6 @@ public class DomainStandardsDo implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public List<SubDomainStandardsDo> getNode() {
-		return node;
-	}
-
-	public void setNode(List<SubDomainStandardsDo> node) {
-		this.node = node;
 	}
 
 

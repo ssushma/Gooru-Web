@@ -36,6 +36,8 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
@@ -51,6 +53,7 @@ import org.ednovo.gooru.shared.util.InfoUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -199,7 +202,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		standardsUI.clear();
 		for(int i=0;i<standardsList.size();i++)
 		{
-			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i));
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(),standardsList.get(i).getLabel());
 			final DomainStandardsDo domainStand = standardsList.get(i);
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 
@@ -232,8 +235,94 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				}
 			});
 			standardsUI.add(standardsCode);
+			displaySubStandardsList(standardsList.get(i).getNode());
 		}
 
+
+	}
+	public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
+		//	standardsUI.clear();
+			for(int i=0;i<standardsList.size();i++)
+			{
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final SubDomainStandardsDo domainStand = standardsList.get(i);
+				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
+				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						standardsCode.addStyleName("active");
+						
+						if(!selectedValues.contains(domainStand.getCodeId())){
+							selectedValues.add(domainStand.getCodeId());
+						}
+						
+						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								//This will remove the selected value when we are trying by close button
+								if(selectedValues.contains(domainStand.getCodeId())){
+									selectedValues.remove(domainStand);
+								}
+								standardsCode.removeStyleName("active");
+								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+								liPanelWithClose.removeFromParent();
+							}
+						});
+						//selectedValues.add(domainStand.getCodeId());
+						liPanelWithClose.setId(domainStand.getCodeId());
+						liPanelWithClose.setName(domainStand.getCode());
+						liPanelWithClose.setRelatedId(domainStand.getCodeId());
+						ulSelectedItems.add(liPanelWithClose);
+					}
+				});
+				standardsUI.add(standardsCode);
+				displaySubSubStandardsList(standardsList.get(i).getNode());
+			}
+		
+
+	}
+	public void displaySubSubStandardsList(final List<SubSubDomainStandardsDo> standardsList){
+			//standardsUI.clear();
+			for(int i=0;i<standardsList.size();i++)
+			{
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
+				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
+				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						standardsCode.addStyleName("active");
+						
+						if(!selectedValues.contains(domainStand.getCodeId())){
+							selectedValues.add(domainStand.getCodeId());
+						}
+						
+						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								//This will remove the selected value when we are trying by close button
+								if(selectedValues.contains(domainStand.getCodeId())){
+									selectedValues.remove(domainStand);
+								}
+								standardsCode.removeStyleName("active");
+								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+								liPanelWithClose.removeFromParent();
+							}
+						});
+						//selectedValues.add(domainStand.getCodeId());
+						liPanelWithClose.setId(domainStand.getCodeId());
+						liPanelWithClose.setName(domainStand.getCode());
+						liPanelWithClose.setRelatedId(domainStand.getCodeId());
+						ulSelectedItems.add(liPanelWithClose);
+					}
+				});
+				standardsUI.add(standardsCode);
+			}
+		
 
 	}
 	/**
@@ -297,9 +386,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
-	//	depthOfKnowledgeContainer.setFolderDo(courseObj);
-	//	audienceContainer.setFolderDetails(courseObj);
-	//	getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
+		resetDOK_Century_Lang();
+		depthOfKnowledgeContainer.setFolderDo(courseObj);
+		audienceContainer.setFolderDetails(courseObj);
+		getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
+		languageObjectiveContainer.setLanguageObjective(courseObj);
 		this.type = type;
 		ulSelectedItems.clear();
 		selectedValues.clear();
@@ -556,4 +647,19 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public FolderDo getFolderDo(){
 		return courseObjG;
 	}
+
+	public void resetDOK_Century_Lang(){
+		languageObj.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3378());
+		languageObjectiveContainer.setVisible(false);
+		isLanguageObjectInfo=false;
+		centurySkills.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3377());
+		centurySkillContainer.setVisible(false);
+		isCenturySkillsInfo=false;
+		dok.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3376());
+		depthOfKnowledgeContainer.setVisible(false);
+		isDepthOfKnlzeInfo=false;
+
+	}
+
 }
+
