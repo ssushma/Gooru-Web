@@ -324,12 +324,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		enableAndHideTabs(true);
 		enableOrHidePreviewBtn();
 		enableOrHideShareTab();
-		enableTabs(StringUtil.isEnableTabs());
+		enableTabs();
 	}
 	
-	private void enableTabs(boolean isEnableTabs) {
-		lnkContent.setVisible(isEnableTabs);
-		lnkshare.setVisible(isEnableTabs);
+	private void enableTabs() {
+		if(!StringUtil.isEmpty(folderObj.getGooruOid())){
+			enableAndHideTabs(true);
+		}else{
+			enableAndHideTabs(false);
+		}
+		
 	}
 	/**
 	 * To enable and disable the share tab based on type.

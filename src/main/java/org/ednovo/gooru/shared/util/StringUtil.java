@@ -87,7 +87,7 @@ public class StringUtil implements ClientConstants {
 
  	 public static Map<String, String> categoryMap =null;
  	 
- 	 private static boolean isEnableTabs;
+ 	 
 
 	private final static byte[] key = CRYPTO_KEY.getBytes();
 
@@ -918,19 +918,6 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 	return standardFos;
 }
 
-/**
- * @return the isEnableTabs
- */
-public static boolean isEnableTabs() {
-	return isEnableTabs;
-}
-
-/**
- * @param isEnableTabs the isEnableTabs to set
- */
-public static void setEnableTabs(boolean isTabEnable) {
-	isEnableTabs = isTabEnable;
-}
 
 }
 

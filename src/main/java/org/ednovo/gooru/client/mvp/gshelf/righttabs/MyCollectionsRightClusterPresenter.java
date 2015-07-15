@@ -197,6 +197,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		//setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 		shelfMainPresenter.createNewUnitItem(type);
 		folderListDoChild=null;
+		getView().enableAndHideTabs(false);
 	}
 
 	/**
