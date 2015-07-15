@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -99,6 +100,7 @@ public class ClasspageWidgetView extends Composite {
 		classImage.setHeight("77"+Unit.PX);
 		classImage.getElement().setId("imgClassImage");
 		classpageContainer.getElement().setId("pnlClasspageContainer");
+		classpageContainer.getElement().getStyle().setCursor(Cursor.POINTER);
 		classTitle.getElement().setId("pnlClassTitle");
 		imgUserProfile.getElement().setId("imgUserProfile");
 		ownerName.getElement().setId("pnlOwnerName");
