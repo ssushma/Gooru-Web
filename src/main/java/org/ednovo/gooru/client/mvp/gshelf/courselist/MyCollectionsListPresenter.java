@@ -80,14 +80,16 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 			});
 		}else{
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
-				@Override
-				public void onSuccess(FolderListDo result) {
-					getView().setData(type,result.getSearchResult(),true,true,folderObj);
-				}
-			});
+			if(o1!=null){
+				String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+				String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+				AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+					@Override
+					public void onSuccess(FolderListDo result) {
+						getView().setData(type,result.getSearchResult(),true,true,folderObj);
+					}
+				});
+			}
 		}
 	}
 
