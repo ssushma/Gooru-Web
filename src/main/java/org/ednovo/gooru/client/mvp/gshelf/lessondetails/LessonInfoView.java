@@ -140,7 +140,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		standardsUI.clear();
 		for(int i=0;i<standardsList.size();i++)
 		{
-			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),true);
 			final DomainStandardsDo domainStand = standardsList.get(i);
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 				
@@ -181,7 +181,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		//	standardsUI.clear();
 			for(int i=0;i<standardsList.size();i++)
 			{
-				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
@@ -224,7 +224,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			//standardsUI.clear();
 			for(int i=0;i<standardsList.size();i++)
 			{
-				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel());
+				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
@@ -368,6 +368,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				//Render the existing standards
 				for(final CourseSubjectDo courseSubjectDo : folderObj.getStandards()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+					System.out.println("courseSubjectDo.getId()::"+courseSubjectDo.getId());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
