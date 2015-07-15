@@ -75,6 +75,8 @@ public class ClasspageWidgetView extends Composite {
 	@UiField H4Panel classTitle;
 
 	@UiField HTMLEventPanel classpageContainer;
+	
+	@UiField HTMLPanel blockFooter;
 
 	private String DEFAULT_CLASSPAGE_IMAGE = "images/Classpage/default-classpage.png";
 
@@ -133,7 +135,7 @@ public class ClasspageWidgetView extends Composite {
 		final String courseId = collectionDoObj.getCourseGooruOid();
 		
 		isVisible(false);
-		dividerLbl.addStyleName("dividerStyle");
+		blockFooter.addStyleName("dividerStyle");
 
 		//assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
 
@@ -234,7 +236,7 @@ public void setArchedClassPageImage(final CollectionDo collectionDoObj,String pa
 		
 		//assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
 		isVisible(true);
-		dividerLbl.removeStyleName("dividerStyle");
+		blockFooter.removeStyleName("dividerStyle");
 		if(pageMode.equalsIgnoreCase("Teach"))
 		{
 		if(collectionDoObj.getMemberCount() == 1)
