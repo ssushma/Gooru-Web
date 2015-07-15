@@ -1060,11 +1060,11 @@ button.btn-disabled {
 	padding-bottom: 500px;
 }
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .subHeading {
-	margin: 0;
-	color: red;
+	color: #515151;
 	padding: 8px 15px;
+	display: inline-block;
 	margin: 0;
-	background-color: #EFEDED;
+	font-weight: bold;
 }
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .pnlBackGround {
 	background-color: #EFEDED;
