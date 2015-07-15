@@ -172,6 +172,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		setIdForFields();
 		setTreeStucture();
 		setCreateCourse(true);
+		StringUtil.setEnableTabs(true);
 		//setDefaultOrganizePanel();
 		//organizelbl.setText(i18n.GL3285());
 		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
@@ -310,7 +311,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					TreeItem parent = treeChildSelectedItem.getParentItem();
 					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 					if(parent != null)parent.setSelected(false);
-					treeChildSelectedItem.setState(true, false);
+					treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
 					String type=shelfTreeWidget.getCollectionDo().getType();
 					if(FOLDER.equalsIgnoreCase(type)){
 						getUiHandlers().getChildFolderItems(shelfTreeWidget.getCollectionDo().getGooruOid(),type,shelfTreeWidget.getFolderOpenedStatus());
@@ -338,7 +339,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			TreeItem parent = treeChildSelectedItem.getParentItem();
 			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
 			if(parent != null)parent.setSelected(false);
-			treeChildSelectedItem.setState(true, false);
+			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
 
 			/*if(!"Collection".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType()) && !"Assessment".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getCollectionType())){
 				shelfTreeWidget.setFolderOpenedStatus(true);
@@ -452,15 +453,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				} 
 			}
 		}
-		treeChildSelectedItem.setState(true);
-		selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
-		/*if(treeChildSelectedItem.getState()) {
+		
+		if(treeChildSelectedItem.getState()) {
 			treeChildSelectedItem.setState(false);
 			selectedWidget.setOpenStyle(false, treeChildSelectedItem.getChildCount());
 		} else {
 			treeChildSelectedItem.setState(true);
 			selectedWidget.setOpenStyle(true, treeChildSelectedItem.getChildCount());
-		}*/
+		}
 		//This will set the data in the right panel
 		if(selectedWidget!=null){
 			folderListDoChild.clear();
@@ -645,6 +645,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void createCourseTemplate(){
 		if(FOLDER!=getViewType()&&isCreateCourse()){
 			setCreateCourse(false);
+			StringUtil.setEnableTabs(false);
 			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 			organizeRootPnl.removeStyleName("active");
@@ -934,6 +935,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 		}
 		setCreateCourse(isEnable);
+		StringUtil.setEnableTabs(isEnable);
 	}
 
 	/**
@@ -948,6 +950,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	public void setCreateCourse(boolean isCreateCourse) {
 		this.isCreateCourse = isCreateCourse;
+		StringUtil.setEnableTabs(isCreateCourse);
 	}
 	@Override
 	public Label getCollectionLabel(){

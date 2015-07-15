@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -66,8 +67,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField TextBox txtMoveTextBox;
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount,spnResourcesCount,spnQuestionsCount;
-	@UiField HTMLPanel pnlTitleContainer,pnlArrows,pnlMoveToEdit;
+	@UiField HTMLPanel pnlArrows,pnlMoveToEdit;
 	@UiField Paragraph pTitle;
+	@UiField HTMLEventPanel pnlTitleContainer;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url",ASSESSMENT="Assessment";
 	
@@ -265,7 +267,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public TextBox getTextBox(){
 		return txtMoveTextBox;
 	}
-	public HTMLPanel getTitleContainer(){
+	public HTMLEventPanel getTitleContainer(){
 		return pnlTitleContainer;
 	}
 	public Label getTopArrow(){
