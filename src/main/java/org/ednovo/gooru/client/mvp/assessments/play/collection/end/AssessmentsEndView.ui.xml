@@ -107,14 +107,14 @@
 							<g:FlowPanel styleName="clearfix"></g:FlowPanel>
 
 						</g:FlowPanel>
-						
+
 							<g:HTMLPanel styleName="loadingImageMainDiv" ui:field="loadingImageLabel">
 							<g:Label styleName="loadingImageForSummary" />
 						</g:HTMLPanel>
 
-						<g:FlowPanel ui:field="questionsTable" styleName="questionsTable">
+						<g:HTMLPanel ui:field="questionsTable" styleName="questionsTable">
 
-						</g:FlowPanel>
+						</g:HTMLPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
 			</g:FlowPanel>
