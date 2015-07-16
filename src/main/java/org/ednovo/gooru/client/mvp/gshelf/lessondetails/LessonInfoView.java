@@ -148,8 +148,25 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			{
 				flgLevelOne = true;
 			}
+
 			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),flgLevelOne);
 			final DomainStandardsDo domainStand = standardsList.get(i);
+			if(domainStand.getTypeId()!=null)
+			{
+				if(domainStand.getTypeId().equals(1))
+				{
+					
+				}
+				else if(domainStand.getTypeId().equals(2))
+				{
+					standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);	
+				}
+				else
+				{
+					standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);		
+				}
+				
+			}
 			standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
 			
 			if(selValues.contains(standardsList.get(i).getCodeId().toString()))
