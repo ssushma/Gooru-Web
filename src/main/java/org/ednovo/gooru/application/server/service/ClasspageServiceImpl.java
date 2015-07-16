@@ -1914,9 +1914,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
 					if(dataList!=null&&dataList.size()>1) {
 						if(type.equalsIgnoreCase("plan")) {
-							if(unitId!=null&&lessonId!=null) {
-								
-							} else {
+							if(!(unitId!=null&&lessonId!=null)) {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
 										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
@@ -1925,7 +1923,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 								Collections.sort(dataList, new ArrayListSorter("sequence", true));
 							}
 						} else if (type.equalsIgnoreCase("progress")) {
-							if(unitId!=null) {
+							if(!(unitId!=null&&lessonId!=null)) {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
 										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));

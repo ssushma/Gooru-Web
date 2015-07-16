@@ -84,6 +84,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	Map<Integer, ArrayList<String>> selectedValues=new HashMap<Integer,ArrayList<String>>();
 	
+	List<LiPanelWithClose> unitLiPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
+	
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
@@ -340,7 +342,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				}
 				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
 				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-					@Override
+					@Override 
 					public void onClick(ClickEvent event) {
 						for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
 						     Map.Entry<Integer, ArrayList<String>> entry = it.next();
@@ -364,21 +366,16 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup(UNIT,ulSelectedItems);
+			unitLiPanelWithCloseArray.clear();
+			for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+				unitLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+			}
+//			getUiHandlers().invokeTaxonomyPopup(UNIT,ulSelectedItems);
+			getUiHandlers().invokeTaxonomyPopup(UNIT,unitLiPanelWithCloseArray);
+			
 		}
 	}
 
-	@Override
-	public void addTaxonomyData(UlPanel selectedUlContainer) {
-		
-		Iterator<Widget> widgets = selectedUlContainer.iterator();
-		while(widgets.hasNext()){
-			Widget widget = widgets.next();
-			if(widget instanceof LiPanelWithClose && isWidgetExists(((LiPanelWithClose) widget).getId())){
-				ulSelectedItems.add(widget);
-			}
-		}
-	}
 
 	private boolean isWidgetExists(long id) {
 		boolean flag = true;
@@ -390,5 +387,14 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			}
 		}
 		return flag;
+	}
+
+	@Override
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
+		for(int i=0;i<liPanelWithCloseArray.size();i++){
+			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
+				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+			}
+		}
 	}
 }

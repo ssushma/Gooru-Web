@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
@@ -52,7 +53,9 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	
 	private CollectionInfoPresenter collectionInfoPresenter;
 	
-	private UlPanel ulSelectedItems;
+//	private UlPanel ulSelectedItems;
+	
+	List<LiPanelWithClose> liPanelWithCloseArrayData;
 	
 	
 	
@@ -106,7 +109,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
 								if("Unit".equalsIgnoreCase("Unit")){
-									getView().displaySelectedTaxonomyData(ulSelectedItems);	
+//									getView().displaySelectedTaxonomyData(ulSelectedItems);	
+									getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 								}
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
@@ -114,7 +118,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 										@Override
 										public void onSuccess(List<DomainStandardsDo> result) {
 											getView().addTaxonomyStandards(result); 
-											getView().displaySelectedTaxonomyData(ulSelectedItems);	
+//											getView().displaySelectedTaxonomyData(ulSelectedItems);	
+											getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 										}
 									});
 								}
@@ -267,7 +272,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 										if(taxonomyDomainList.size()>0){
 											getView().addTaxonomyDomains(taxonomyDomainList);
 											if("Unit".equalsIgnoreCase("Unit")){
-												getView().displaySelectedTaxonomyData(ulSelectedItems);	
+//												getView().displaySelectedTaxonomyData(ulSelectedItems);	
+												getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 											}
 											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection") || TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 												AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
@@ -276,7 +282,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 													public void onSuccess(List<DomainStandardsDo> result) {
 														if(result.size()>0){
 															getView().addTaxonomyStandards(result);
-															getView().displaySelectedTaxonomyData(ulSelectedItems);
+//															getView().displaySelectedTaxonomyData(ulSelectedItems);
+															getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 														}
 													}
 												});
@@ -331,13 +338,15 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 
 	@Override
-	public void addTaxonomyData(UlPanel selectedUlContainer) {
+	public void addTaxonomyData(/*UlPanel selectedUlContainer*/List<LiPanelWithClose> liPanelWithCloseArray) {
 		if("Unit".equalsIgnoreCase(viewType)){
-			unitInfoPresenter.addTaxonomy(selectedUlContainer);
+			unitInfoPresenter.addTaxonomy(liPanelWithCloseArray);
 		}else if("Lesson".equalsIgnoreCase(viewType)){
-			lessonInfoPresenter.addTaxonomyData(selectedUlContainer);
+//			lessonInfoPresenter.addTaxonomyData(selectedUlContainer);
+			lessonInfoPresenter.addTaxonomyData(liPanelWithCloseArray);
 		}else{
-			collectionInfoPresenter.addTaxonomyData(selectedUlContainer); 
+//			collectionInfoPresenter.addTaxonomyData(selectedUlContainer);
+			collectionInfoPresenter.addTaxonomyData(liPanelWithCloseArray);
 		}
 	}
 
@@ -358,8 +367,14 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	}
 
 
-	public void setSelectedUlContainer(UlPanel ulSelectedItems) {
+	/*public void setSelectedUlContainer(UlPanel ulSelectedItems) {
 		this.ulSelectedItems = ulSelectedItems;
+	}*/
+
+
+
+	public void setSelectedUlContainer(List<LiPanelWithClose> liPanelWithCloseArrayData) {
+		this.liPanelWithCloseArrayData = liPanelWithCloseArrayData;
 	}
 	
 	

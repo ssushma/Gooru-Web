@@ -63,6 +63,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	
 	List<Button> buttonsList = new ArrayList<Button>();
 	
+	List<LiPanelWithClose> liPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
+	
 	private String viewType;
 	
 	@Inject
@@ -141,7 +143,12 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	@UiHandler("addTaxonomyBtn")
 	public void onClickAddTaxonomy(ClickEvent event){
 		hide();
-		getUiHandlers().addTaxonomyData(selectedUlContainer); 
+//		getUiHandlers().addTaxonomyData(selectedUlContainer); 
+		liPanelWithCloseArray.clear();
+		for(int i=0;i<selectedUlContainer.getWidgetCount();i++){
+			liPanelWithCloseArray.add((LiPanelWithClose) selectedUlContainer.getWidget(i));
+		}
+		getUiHandlers().addTaxonomyData(liPanelWithCloseArray); 
 	}
 	
 	
@@ -492,7 +499,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		standardsUlContainer.clear();
 	}
 
-	@Override
+	/*@Override
 	public void displaySelectedTaxonomyData(UlPanel ulSelectedItems) {
 		Iterator<Widget> widgets = ulSelectedItems.iterator();
 		
@@ -503,7 +510,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				selectedUlContainer.add(widget);
 			}
 		}
-	}
+	}*/
 
 	private void setActiveStyle(long id) {
 		Iterator<Widget> widgets;
@@ -518,6 +525,25 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				widget.setStyleName("active");
 			}
 		}
+	}
+
+	@Override
+	public void displaySelectedTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArrayData) {
+		
+		for(int i=0;i<liPanelWithCloseArrayData.size();i++){
+			setActiveStyle(liPanelWithCloseArrayData.get(i).getId()); 
+			selectedUlContainer.add(liPanelWithCloseArrayData.get(i));
+		}
+		
+//		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		
+		/*while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				setActiveStyle(((LiPanelWithClose) widget).getId());
+				selectedUlContainer.add(widget);
+			}
+		}*/
 	}
 
 }

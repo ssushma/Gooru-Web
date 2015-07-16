@@ -7,7 +7,6 @@
 	        <g:HTMLPanel styleName="col-md-5 col-sm-5">
 	           <g:HTMLPanel styleName="studyBlock">
 	              <g:HTMLPanel ui:field="imageContainer">
-	                 <g:Button ui:field="playBtn" styleName="playBtn"></g:Button>
 	                 <g:Image ui:field="contentImage"></g:Image>
 	              </g:HTMLPanel>
 	              <g:HTMLPanel styleName="descriptionContainer">

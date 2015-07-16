@@ -393,7 +393,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				Map<String,String> params = new HashMap<String,String>();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 				getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
-				getUiHandlers().getMyCollectionsRightClusterPresenter().updateBreadCrumbsTitle(folderObj, folderObj.getType());
 			}
 		}
 	}

@@ -633,7 +633,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setActiveStyle(false);
 		}
 		getUiHandlers().setRightListData(SHELF_COLLECTIONS,null);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(VIEW, getViewType());
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 	}
 	/**
 	 * To create couse template and adding to the root tree
@@ -788,7 +790,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
    	 * @return viewType
    	 */
    	public String getViewType(){
-		return AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+   		String view =AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		return view==null?COURSE:view;
    	}
     /**
      * Highlight the Tree based on id's when reveal the page.
@@ -801,6 +804,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget(); 
+
 		if(shelfTreeWidget==null || organizeRootPnl.getStyleName().contains("active")) {
 			if(id!=null) {
 				gooruOid = id;
@@ -839,13 +843,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				 checkFolderItemStyle(item, gooruOid);
 			}
 		}
+		
 	}
 	
 	private void checkFolderItemStyle(TreeItem item, String gooruOid) {
+		
 		ShelfTreeWidget updatedItem = (ShelfTreeWidget) item.getWidget();
 		if(gooruOid!=null){
 			if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
 				treeChildSelectedItem = item;
+				getUiHandlers().setBreadCrumbs(updatedItem.getUrlParams());
 				//updatedItem.setActiveStyle(true);
 				setFolderActiveStatus();
 				return;
