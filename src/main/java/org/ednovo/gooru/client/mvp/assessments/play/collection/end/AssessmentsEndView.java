@@ -494,6 +494,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						viewResponselbl.addClickHandler(new SummaryPopupClick());
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				}
