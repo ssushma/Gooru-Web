@@ -14,10 +14,20 @@
 
 					<g:FlowPanel styleName="headerLinksContainer">
 
-						<g:FlowPanel styleName="col-md-6 col-xs-8 col-sm-6">
+						<g:FlowPanel styleName="col-md-6 col-xs-8 col-sm-6 titleContainer">
 
 							<g:FlowPanel styleName="headerBackLinkBox">
 								<g:HTMLPanel ui:field="collectionSummaryText"></g:HTMLPanel>
+							</g:FlowPanel>
+						</g:FlowPanel>
+						<g:FlowPanel styleName="col-md-6 col-sm-6">
+							<g:FlowPanel styleName="printOptions">
+
+								<g:Button ui:field="printButton" styleName="secondary printIcon">
+								</g:Button>
+								<g:Button ui:field="downloadButton " styleName="secondary downloadIcon">
+								</g:Button>
+
 							</g:FlowPanel>
 						</g:FlowPanel>
 
@@ -81,32 +91,19 @@
 
 						</g:FlowPanel>
 
-						<g:FlowPanel styleName="optionsBlock no-gutter">
+						<!-- <g:FlowPanel styleName="optionsBlock no-gutter">
 
 							<g:FlowPanel styleName="col-md-6 col-sm-6">
 								<g:FlowPanel styleName="optionMenu">
 									<g:FlowPanel styleName="btn-group">
 										<g:Button styleName="btn btn-default active" text="{i18n.GL2282}"></g:Button>
-										<!-- <button class="btn btn-default" type="button">Open-Ended Questions</button> -->
+										<button class="btn btn-default" type="button">Open-Ended Questions</button>
 									</g:FlowPanel>
 								</g:FlowPanel>
 							</g:FlowPanel>
-
-
-							<g:FlowPanel styleName="col-md-6 col-sm-6">
-								<g:FlowPanel styleName="printOptions">
-
-									<g:Button ui:field="printButton" styleName="secondary printIcon">
-									</g:Button>
-									<g:Button ui:field="downloadButton " styleName="secondary downloadIcon">
-									</g:Button>
-
-								</g:FlowPanel>
-							</g:FlowPanel>
-
 							<g:FlowPanel styleName="clearfix"></g:FlowPanel>
 
-						</g:FlowPanel>
+						</g:FlowPanel> -->
 
 							<g:HTMLPanel styleName="loadingImageMainDiv" ui:field="loadingImageLabel">
 							<g:Label styleName="loadingImageForSummary" />
