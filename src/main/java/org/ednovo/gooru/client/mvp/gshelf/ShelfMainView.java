@@ -826,6 +826,15 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			organizeRootPnl.removeStyleName("active");
 		} else {
 			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
+			if(treeChildSelectedItem.getParentItem()!=null){
+				ShelfTreeWidget parentTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+				parentTreeWidget.getTitleFocPanel().addStyleName("open");
+				if(treeChildSelectedItem.getParentItem().getParentItem()!=null){
+					ShelfTreeWidget parent = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
+					parent.getTitleFocPanel().addStyleName("open");
+				}
+			}
+			shelfTreeWidget.getTitleFocPanel().addStyleName("open");
 			if(treeChildSelectedItem.getState()==false){
 				treeChildSelectedItem.setState(true);
 			}
