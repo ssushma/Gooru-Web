@@ -321,7 +321,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				destoryTables();
 
 				AdvancedFlexTable adTable=new AdvancedFlexTable();
-				adTable.getElement().setId("report");
+				adTable.getElement().setId("student-myclasses-assessment-summary-report");
 
 				adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
 				adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
@@ -490,7 +490,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						int reaction=result.get(i).getReaction();
 						adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 					}
-					sortAndFixed();
+					//sortAndFixed();
 					adTable.addStyleName("table table-bordered reportTableStyle");
 					questionsTable.add(adTable);
 
@@ -838,7 +838,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	public static native void sortAndFixed() /*-{
-	 var table =$wnd.$('#report').DataTable({
+	 var table =$wnd.$('#student-myclasses-assessment-summary-report').DataTable({
        scrollY:        "300px",
        scrollX:        true,
        scrollCollapse: true,
@@ -848,7 +848,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
    	});
 	}-*/;
 		public static native void destoryTables() /*-{
-		var table = $wnd.$('#report').DataTable();
+		var table = $wnd.$('#student-myclasses-assessment-summary-report').DataTable();
 	  	table.destroy();
 	}-*/;
 
