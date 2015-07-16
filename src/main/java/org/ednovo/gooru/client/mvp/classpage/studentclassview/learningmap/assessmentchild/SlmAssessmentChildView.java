@@ -131,6 +131,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			}
 		});
 		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment/url"))) {
+			imageContainer.setStyleName("assessmentImageContainer");
 			reportView.clear();
 			reportView.add(new SlmExternalAssessmentForm(planContentDo.getProgress()));
 		} else if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
@@ -243,6 +244,9 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	private void setResourceData(ArrayList<PlanContentDo> resourceList) {
 		int size = resourceList.size();
 		if(size>0) {
+			if(size>10) {
+				size = 10;
+			}
 			for(int i=0;i<size;i++) {
 				try {
 					final PlanContentDo resourceDo = resourceList.get(i);
