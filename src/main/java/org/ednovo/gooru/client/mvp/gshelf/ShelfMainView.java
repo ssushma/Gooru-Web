@@ -708,13 +708,21 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			//shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setLevel(nextLevel);
 		}else if(COLLECTION.equalsIgnoreCase(type)){
-			shelfTreeWidget = new ShelfTreeWidget(null, 4,type);
+			if(getViewType().equalsIgnoreCase(FOLDER)){
+				shelfTreeWidget = new ShelfTreeWidget(null,nextLevel,type);
+			}else{
+				shelfTreeWidget = new ShelfTreeWidget(null, 4,type);
+			}
 			shelfTreeWidget.setTreeWidgetType(COLLECTION);
 			shelfTreeWidget.getTitleLbl().setText(i18n.GL3367());
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setLevel(4);
 		}else if(ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
-			shelfTreeWidget = new ShelfTreeWidget(null, 4, type);
+			if(getViewType().equalsIgnoreCase(FOLDER)){
+				shelfTreeWidget = new ShelfTreeWidget(null,nextLevel,type);
+			}else{
+				shelfTreeWidget = new ShelfTreeWidget(null, 4,type);
+			}
 			shelfTreeWidget.setTreeWidgetType(ASSESSMENT.equalsIgnoreCase(type)?ASSESSMENT:ASSESSMENT_URL);
 			shelfTreeWidget.getTitleLbl().setText(ASSESSMENT.equalsIgnoreCase(type)?"UntitledAssessment":"UntitledExternalAssessment");
 			shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
@@ -869,6 +877,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		shelfTreeWidget.updateData(courseDo);
 		String type = shelfTreeWidget.getTreeWidgetType();
+		//updateUrlParams(type);
 		if(COURSE.equalsIgnoreCase(type)){
 			HashMap<String,String> urlParams = new HashMap<String,String>();
 			urlParams.put(COURSE, courseDo.getTitle()); 
@@ -902,25 +911,55 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 			shelfTreeWidget.setUrlParams(urlParams);
 		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
-			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getParentItem().getWidget();
-			HashMap<String,String> urlParams = new HashMap<String,String>();
-			urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
-			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
+			if(getViewType().equalsIgnoreCase(FOLDER)){
+				shelfTreeWidget.setUrlParams(getTreeParentIds(courseDo));
+			}else{
+				ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getParentItem().getWidget();
+				HashMap<String,String> urlParams = new HashMap<String,String>();
+				urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
+				urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 
-			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
-			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
-			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
+				ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
+				urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
+				urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
 
-			ShelfTreeWidget lessonShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
-			urlParams.put(LESSON, lessonShelfTreeWidget.getUrlParams().get(LESSON));
-			urlParams.put(O3_LEVEL,unitShelfTreeWidget.getUrlParams().get(O3_LEVEL));
-			
-			urlParams.put("id",courseDo.getGooruOid());
-			urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:ASSESSMENT_URL.equalsIgnoreCase(type)?
-					       ASSESSMENT_URL:ASSESSMENT,courseDo.getTitle());
-			
-			shelfTreeWidget.setUrlParams(urlParams);
+				ShelfTreeWidget lessonShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+				urlParams.put(LESSON, lessonShelfTreeWidget.getUrlParams().get(LESSON));
+				urlParams.put(O3_LEVEL,unitShelfTreeWidget.getUrlParams().get(O3_LEVEL));
+				
+				urlParams.put("id",courseDo.getGooruOid());
+				urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:ASSESSMENT_URL.equalsIgnoreCase(type)?
+						       ASSESSMENT_URL:ASSESSMENT,courseDo.getTitle());
+				shelfTreeWidget.setUrlParams(urlParams);
+			}
 		}
+	}
+
+	private HashMap<String,String> getTreeParentIds(FolderDo courseDo) {
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+		ShelfTreeWidget parentShelfTreeWidget = null;
+		HashMap<String,String> urlParams = new HashMap<String,String>();
+		if(o3!=null){
+			parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getParentItem().getWidget();
+			urlParams.put(O1_LEVEL,parentShelfTreeWidget.getUrlParams().get(O1_LEVEL));
+			urlParams.put(O2_LEVEL,parentShelfTreeWidget.getUrlParams().get(O2_LEVEL));
+			urlParams.put(O3_LEVEL,parentShelfTreeWidget.getUrlParams().get(O3_LEVEL));
+			urlParams.put("id",courseDo.getGooruOid());
+		}else if(o2!=null){
+			parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
+			urlParams.put(O1_LEVEL,parentShelfTreeWidget.getUrlParams().get(O1_LEVEL));
+			urlParams.put(O2_LEVEL,parentShelfTreeWidget.getUrlParams().get(O2_LEVEL));
+			urlParams.put("id",courseDo.getGooruOid());
+		}else if(o1!=null){
+			parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			urlParams.put(O1_LEVEL,parentShelfTreeWidget.getUrlParams().get(O1_LEVEL));
+			urlParams.put("id",courseDo.getGooruOid());
+		}else{
+			urlParams.put("id",courseDo.getGooruOid());
+		}
+		return urlParams;
 	}
 
 	/**
