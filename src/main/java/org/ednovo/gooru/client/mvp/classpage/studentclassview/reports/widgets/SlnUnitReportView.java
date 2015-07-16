@@ -80,24 +80,24 @@ public class SlnUnitReportView extends Composite {
 		totalScore.setText(score+"");
 		
 		dataList = planProgressDo.getItem();
-		int size = dataList.size();
 		
-		if(dataList!=null&&size>0) {
+		if(dataList!=null&&dataList.size()>0) {
+			int size = dataList.size();
 			start = 0;
-			if(size < 3) {
+			if(size < 4) {
 				end = size;
 			} else {
-				end = 2;
+				end = 3;
 			}
-			setData(start,end);
 		}
+		setData(start,end);
 	}
 	
 	private void setData(int startPoint, int endPoint) {
 		slnContentPanel.clear();
 		for(int z=startPoint;z<endPoint;z++) {
 			String lastItem = "";
-			if(z==(dataList.size()-1)) {
+			if(z==(endPoint-1)) {
 				lastItem = "lastItem";
 			}
 			slnContentPanel.add(new SlnContentWidget(dataList.get(z),lastItem));
@@ -107,7 +107,7 @@ public class SlnUnitReportView extends Composite {
 	
 	private void setArrows() {
 		boolean leftArrowVisibile = false, rightArrowVisible = false;
-		if(end>2) {
+		if(end>3) {
 			leftArrowVisibile = true;
 		}
 		if(end<dataList.size()) {
@@ -123,7 +123,7 @@ public class SlnUnitReportView extends Composite {
 	
 	@UiHandler("leftArrow")
 	public void clickLeftArrow(ClickEvent event) {
-		end = start - 1;
+		end = start;
 		if(start-3<0) {
 			start = 0;
 		} else {
@@ -134,13 +134,13 @@ public class SlnUnitReportView extends Composite {
 	
 	@UiHandler("rightArrow")
 	public void clickRightArrow(ClickEvent event) {
-		start = end + 1;
-		if((dataList.size()-1)-end > 3) {
+		start = end;
+		if((dataList.size())-end > 3) {
 			end = end + 3;
 		} else {
-			end = (dataList.size()-1);
+			end = (dataList.size());
 		}
-		setData(start, end);		
+		setData(start, end);
 	}
 
 }
