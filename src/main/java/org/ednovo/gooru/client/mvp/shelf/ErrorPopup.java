@@ -123,7 +123,7 @@ public class ErrorPopup extends PopupPanel{
 				if (result.getSearchResults().size()>0){
 					String gooruOId = result.getSearchResults().get(0).getGooruOid();
 					Map<String, String> params = new HashMap<String, String>();
-					params.put("classpageid", gooruOId);
+					params.put("classpageId", gooruOId);
 					params.put("pageNum", "0");
 					params.put("pageSize", "10");
 					params.put("pos", "1");
