@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
@@ -59,5 +60,5 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
 	
-	void addTaxonomyData(UlPanel selectedUlContainer); 
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray); 
 }

@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.uc.UlPanel;
 
@@ -194,7 +195,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	@Override
 	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
-		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
+//		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
@@ -210,9 +211,14 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 					callTaxonomyService(courseSubjectObj.getId());
 				}
 			}
-		});
+		}); 
 	}
-	public void addTaxonomyData(UlPanel selectedUlContainer) { 
+	/*public void addTaxonomyData(UlPanel selectedUlContainer) { 
 		getView().addTaxonomyData(selectedUlContainer);
+	}*/
+
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray);
+		
 	}
 }

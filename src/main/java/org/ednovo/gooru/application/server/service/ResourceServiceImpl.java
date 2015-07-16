@@ -1535,6 +1535,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("---- collectionType ---  "+collectionType);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("---- jsonRep ---  "+jsonRep);
+		getLogger().info("---- deserialise ---  "+deserializeWorkspaceFolderList(jsonRep,collectionType));
 		return deserializeWorkspaceFolderList(jsonRep,collectionType);
 	}
 

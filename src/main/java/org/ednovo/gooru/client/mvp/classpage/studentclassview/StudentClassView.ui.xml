@@ -34,7 +34,7 @@
 				             <g:Image ui:field="studentImage"></g:Image><span:SpanPanel ui:field="studentMessage" styleName="margin-left-5"></span:SpanPanel>
 				         </div>
 				      </div>
-				      <div class="col-md-7 col-sm-7 col-md-7-reset">
+				      <g:HTMLPanel styleName="col-md-7 col-sm-7 col-md-7-reset" ui:field="planProgressBar">
 				         <div class="planProgress">
 				            <div class="planView">
 				               <ul>
@@ -57,7 +57,7 @@
 				               <img src="../images/Classpage/student/progressIcon.png"/> Progress View
 				            </div>
 				         </div>
-				      </div>
+				      </g:HTMLPanel>
 				      <div class="clearfix"></div>
 				   </g:HTMLPanel>
 				   <g:HTMLPanel styleName="whiteBand" ui:field="previewClassMetadataPanel">

@@ -218,7 +218,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			typeVal=type;
 		}
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
 	}
 	public ShelfServiceAsync getShelfService() {
@@ -326,20 +326,18 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightPanelData(FolderDo folderObj,String clickedItemType,List<FolderDo> folderListDoChild){
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
-		if(folderObj!=null){
+		if(folderObj!=null && folderObj.getGooruOid()!=null){
 			if(!FOLDER.equalsIgnoreCase(folderObj.getType())){
 				getView().getCollectionLabel().setVisible(false);
 			}else{
 				getView().getCollectionLabel().setVisible(true);
 				getView().getCollectionLabel().setText(folderObj.getTitle());
 			}
-		}
-		if(folderObj.getGooruOid()==null){
-			//when creating the default course we are opening the info tab
-			getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
-		}else{
 			//when displaying the existing data at that time we are opening the content tab.
 			getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
+		}else{
+			//when creating the default course we are opening the info tab
+			getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		}
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
@@ -372,7 +370,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private void setPaginatedChilds(String courseId,String unitId,String lessonId,String typeVal, boolean isDataCalled) {
 		getChildFolderItemsForCourse(courseId,unitId,lessonId,typeVal,isDataCalled);
 	}
-
+	@Override
+	public void refreshUserShelfCollections() {
+		ShelfListView.setPageNumber(1);
+		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
+	}
 	@Override
 	public void setFolderParentName(String folderName) {
 		

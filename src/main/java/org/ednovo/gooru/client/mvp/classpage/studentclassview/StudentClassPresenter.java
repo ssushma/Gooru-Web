@@ -198,7 +198,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 
 	}
 
-	private void getClasspageDetails() {
+	@Override
+	public void getClasspageDetails() {
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
 			@Override
@@ -208,8 +209,13 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 				setCheckClassVisiblity(classpageDo);
 				studentClassLearningMapPresenter.setClasspageDo(classpageDo);
 				studentClassReportPresenter.setClasspageDo(classpageDo);
+				if(result.getCourseGooruOid()==null) {
+					getView().setProgressBarVisibility(false);
+				} else {
+					getView().setProgressBarVisibility(true);
+				}
 			}
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 

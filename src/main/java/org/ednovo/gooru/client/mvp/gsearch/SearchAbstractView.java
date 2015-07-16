@@ -287,7 +287,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						publisherSgstBox.hideSuggestionList();
 						aggregatorSgstBox.hideSuggestionList();
 					}
-					
+
 					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top
 					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
 						if(!isBackToTopClicked && pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
@@ -321,7 +321,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							isForwardScroll = true;
 							AppClientFactory.printInfoLogger("Search read data from local store---->"+pageNumber);
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
-							
+
 							AppClientFactory.printInfoLogger("Search Abstract View forward scroll---->");
 							if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStore.getItem((pageNumber+1)+"") == null){
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
@@ -710,7 +710,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				isApiInProgressBack=true;
 			}else{
 				HTMLPanel widgetsContainer=new HTMLPanel("");
-				widgetsContainer.getElement().setId(pageNumber+"");			
+				widgetsContainer.getElement().setId(pageNumber+"");
 				searchResultPanel.add(widgetsContainer);
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
@@ -1066,6 +1066,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		}
+		getUiHandlers().getGooruGradesPresenter().setPageType("search");
 		getUiHandlers().getGooruGradesPresenter().getView().showGradesFilter();
 	}
 	/**
@@ -1802,13 +1803,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
-		public void updateFilters(String filterValue, String addOrRemove) {
-			if("add".equals(addOrRemove)){
-				pnlAddFilters.add(createTagsLabel(filterValue, "gradePanel"));
-			}else{
-				removeFilter(filterValue);
+		public void updateFilters(String filterValue, String addOrRemove, String page) {
+			if ("search".equalsIgnoreCase(page)){
+				if("add".equals(addOrRemove)){
+					pnlAddFilters.add(createTagsLabel(filterValue, "gradePanel"));
+				}else{
+					removeFilter(filterValue);
+				}
+				callSearch();
 			}
-			callSearch();
 		}
 	};
 

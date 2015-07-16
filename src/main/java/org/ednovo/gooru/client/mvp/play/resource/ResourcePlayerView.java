@@ -199,6 +199,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 				setTabPlaceRequest(tabView,headerView.isShareButtonEnabled(),isShareButtonActive);
 			}
 			else if(tabView.equalsIgnoreCase("add")){
+				Window.alert("test Hi");
 				setTabPlaceRequest(tabView,headerView.isAddButtonEnabled(),isAddButtonActive);
 			}
 			else if(tabView.equalsIgnoreCase("flag")){

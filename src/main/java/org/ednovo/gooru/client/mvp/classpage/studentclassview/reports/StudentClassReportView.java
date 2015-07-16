@@ -57,7 +57,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class StudentClassReportView extends BaseViewWithHandlers<StudentClassReportUiHandlers> implements IsStudentClassReportView {
 	
 	@UiField LoadingUc cropImageLoading;
-	@UiField SpanPanel textLbl, currentContentName, previousContentName, nextContentName;
+	@UiField SpanPanel textLbl, currentContentName, previousContentName, nextContentName, headerLeftArrow;
 	@UiField HTMLPanel topContainer, reportBodyBlock, learningMapContainer, headerLinksContainer, legendContainer;
 	@UiField HTMLEventPanel previousContentPanel, currentContentPanel, nextContentPanel, allContentPanel;
 	
@@ -106,22 +106,31 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 		int size = dataList.size();
 		
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			headerLeftArrow.setVisible(false);
+			allContentPanel.removeStyleName("cursorPointer");
 			for(int i=0;i<size;i++) {
 				reportBodyBlock.add(new SlnCourseReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			headerLeftArrow.setVisible(true);
+			allContentPanel.addStyleName("cursorPointer");
 			for(int i=0;i<size;i++) {
 				reportBodyBlock.add(new SlnUnitReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId));
+			headerLeftArrow.setVisible(true);
+			allContentPanel.addStyleName("cursorPointer");
+			reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId));
 		}
 		setContentVisibility(true);
 	}
 	
 	@UiHandler("allContentPanel")
 	public void ClickAllContentPanel(ClickEvent event) {
-		navigateToPage(allContentStr);
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		if(!pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			navigateToPage(allContentStr);
+		}
 	}
 	@UiHandler("previousContentPanel")
 	public void ClickPreviousContentPanel(ClickEvent event) {

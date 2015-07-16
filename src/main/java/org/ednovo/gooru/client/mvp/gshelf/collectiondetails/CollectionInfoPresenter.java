@@ -42,6 +42,7 @@ import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -306,19 +307,21 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void getCollectionDo(){
 		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
-		AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
-			@Override
-			public void onSuccess(CollectionDo result) {
-				centurySkillsPresenter.getView().setCollectionDo(result);
-				getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
-				getView().getAudienceContainer().setCollectonDetails(result);
-			}
-		});
+		if(collectionUid!=null){
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
+				@Override
+				public void onSuccess(CollectionDo result) {
+					centurySkillsPresenter.getView().setCollectionDo(result);
+					getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
+					getView().getAudienceContainer().setCollectonDetails(result);
+				}
+			});
+		}
 	}
 
 	@Override
 	public void invokeTaxonomyPopup(String viewType,UlPanel ulSelectedItems) {
-		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
+//		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
@@ -388,12 +391,16 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-	public void addTaxonomyData(UlPanel selectedUlContainer) { 
+	/*public void addTaxonomyData(UlPanel selectedUlContainer) { 
 		getView().addTaxonomyData(selectedUlContainer);
-	}
+	}*/
 	
-	@Override
+	@Override 
 	public CenturySkillsPresenter getCenturySkillsPresenters(){
 		return centurySkillsPresenter;
+	}
+
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray);
 	}
 }

@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -66,9 +67,11 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	void displayStandardsList(List<DomainStandardsDo> result);
 
-	void addTaxonomyData(UlPanel selectedUlContainer);
+//	void addTaxonomyData(UlPanel selectedUlContainer);
 
 	FolderDo getFolderDo(); 
 
 	void setCollectionImage(String url);
+
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray);
 }

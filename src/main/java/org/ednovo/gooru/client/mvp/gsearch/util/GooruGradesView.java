@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -55,36 +55,37 @@ import com.google.inject.Inject;
 public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers> implements IsGooruGradesView {
 
 	private static GooruGradesViewUiBinder uiBinder = GWT.create(GooruGradesViewUiBinder.class);
-	
-	
+
+	private String pageType = null;
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiTemplate("GooruGradesView.ui.xml")
 	interface GooruGradesViewUiBinder extends UiBinder<Widget, GooruGradesView> {
 	}
-	
+
 	@UiField UlPanel elementryPanel,middlePanel,higherPanel;
-	
+
 	@UiField HTMLPanel gradeContainer;
-	
+
 	@UiField LiPanel preKLiPnl,higherLiPnl;
-	
+
 	@UiField Label gradeHeader;
-	
+
 	public static final String GRADE_FLT = "flt.grade";
-	
+
 	public static final String ADD = "add";
-	
+
 	public static final String REMOVE = "remove";
-	
+
 	HTMLPanel gradePanelWidget;
-	
+
 	String[] elementaryGrades = new String[]{i18n.GL2076(),i18n.GL3071(),i18n.GL3072(),i18n.GL3073(),i18n.GL3074(),i18n.GL3075(),i18n.GL3076()};
 	String[] middleGrades = new String[]{i18n.GL0167(),i18n.GL3077(),i18n.GL3078(),i18n.GL3079()};
 	String[] higherGrades = new String[]{i18n.GL0168(),i18n.GL3080(),i18n.GL3081(),i18n.GL3082(),i18n.GL3083()};
 	String backgroundColor="rgb(16, 118, 187)";
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 * @param eventBus {@link EventBus}
 	 */
 	@Inject
@@ -98,7 +99,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		higherLiPnl.addClickHandler(new ClickOnGradeLiPnl(higherLiPnl,i18n.GL3084()));
 		setStyleForGradeLevel();
 	}
-	
+
 	/**
 	 * To render the grade values.
 	 * @param ulPanel {@link UlPanel}
@@ -124,7 +125,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 							lblGrade.getElement().getStyle().setBackgroundColor("#1076bb");
 							selectAllGrades(stringArray,ADD);
 						}
-						
+
 					}else{
 						boolean value=checkSelectedGrades(stringArray, lblGrade.getElement().getInnerText());
 						if(value){
@@ -133,13 +134,13 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 							}else{
 								gradePanel.getParent().getElement().getFirstChildElement().getFirstChildElement().getStyle().setBackgroundColor(backgroundColor);
 							}
-							
+
 						}
 						if(lblGrade.getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
 							lblGrade.getElement().getStyle().clearBackgroundColor();
-							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), REMOVE));
+							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), REMOVE, getPageType()));
 						}else{
-							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), ADD));
+							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), ADD, getPageType()));
 							lblGrade.getElement().getStyle().setBackgroundColor("#1076bb");
 						}
 					}
@@ -148,7 +149,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			});
 		}
 	}
-	
+
 	/**
 	 * Pre-Selected grades showing in search page
 	 */
@@ -169,7 +170,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			}
 		}
 	}
-	
+
 	/**
 	 * This method will update the filter style
 	 * @param filterName {@link String}
@@ -214,13 +215,13 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		for(int i=1; i<gradeArray.length; i++){
 			if(grades!=null && !grades.contains(gradeArray[i])){
 				updateFilterStyle(gradeArray[i],addOrRemove);
-				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove));
+				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}else if(addOrRemove.equals(REMOVE)){
 				updateFilterStyle(gradeArray[i],addOrRemove);
-				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove));
+				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}else if(grades==null){
 				updateFilterStyle(gradeArray[i],addOrRemove);
-				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove));
+				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}
 		}
 
@@ -254,7 +255,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		String gradeText;
 
 		public ClickOnGradeLiPnl(LiPanel liPanel, String gradeText) {
-			this.liPanel=liPanel;	
+			this.liPanel=liPanel;
 			this.gradeText=gradeText;
 		}
 
@@ -263,9 +264,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			if(liPanel.getWidget(0).getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
 				liPanel.getWidget(0).getElement().getStyle().clearBackgroundColor();
 				gradeText = gradeText.equals("12gte")?i18n.GL3084():gradeText;
-				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, REMOVE));
+				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, REMOVE,getPageType()));
 			}else{
-				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, ADD));
+				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, ADD,getPageType()));
 				liPanel.getWidget(0).getElement().getStyle().setBackgroundColor("#1076bb");
 			}
 			gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
@@ -296,7 +297,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	/**
 	 * update the grade level style
 	 * @param gradePanel {@link UlPanel}
-	 * @param value 
+	 * @param value
 	 */
 	private void updateGradeLevelStyle(UlPanel gradePanel, boolean value){
 		if(value){
@@ -304,7 +305,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		}else{
 			gradePanel.getElement().getFirstChildElement().getFirstChildElement().getStyle().clearBackgroundColor();
 		}
-		
+
 	}
 	/**
 	 * To set style for Elementary/middle/higher when refresh the page.
@@ -318,7 +319,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		updateGradeLevelStyle(middlePanel,isMiddleLevel);
 		updateGradeLevelStyle(higherPanel,isHigherLevel);
 	}
-	
+
 	/**
 	 * This method clear grade active style
 	 * @param filterName {@link String}
@@ -339,7 +340,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			}
 		}
 	}
-	
+
 	@Override
 	public Label getGradeHeader(){
 		return gradeHeader;
@@ -367,5 +368,13 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			    }
 			}
 		}
+	}
+	@Override
+	public String getPageType() {
+		return pageType;
+	}
+	@Override
+	public void setPageType(String pageType) {
+		this.pageType = pageType;
 	}
 }

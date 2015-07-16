@@ -179,7 +179,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						if(isCollection) {
 							A_STRING = "C";
 						}
-						Label scoreLblTitle = new Label(A_STRING+columnWidgetCount);
+						Label scoreLblTitle = new Label(A_STRING+(collectionWidgetCount+1));
 						scoreLblTitle.setWidth("80px");
 						scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
 						scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,collectionList.get(collectionWidgetCount).getTitle()));
@@ -212,8 +212,9 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		}
 		if(userList!=null&&userList.size()>0&&userList.get(0)!=null) {
 			int lessonSize = userList.get(0).getUsageData().size();
-			int colSpan = 0;
+			
 			for(int headerColumnCount=0;headerColumnCount<lessonSize;headerColumnCount++) {
+				int colSpan = 0;
 				PlanProgressDo lessonDo = userList.get(0).getUsageData().get(headerColumnCount);
 				if(lessonDo.getUsageData().size()>0) {
 					HTML unitName = new HTML("L"+(headerColumnCount+1)+"&nbsp;"+lessonDo.getTitle());

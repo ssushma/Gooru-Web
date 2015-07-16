@@ -45,20 +45,18 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
+import org.ednovo.gooru.client.uc.SpanPanel;
 
-import com.google.gwt.ajaxloader.client.AjaxLoader;
-import com.google.gwt.ajaxloader.client.AjaxLoader.AjaxLoaderOptions;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.visualization.client.visualizations.PieChart;
-import com.google.gwt.visualization.client.visualizations.Table;
 import com.googlecode.gwt.crypto.client.TripleDesCipher;
 
 
@@ -87,7 +85,7 @@ public class StringUtil implements ClientConstants {
 
  	 public static Map<String, String> categoryMap =null;
  	 
- 	 private static boolean isEnableTabs;
+ 	 
 
 	private final static byte[] key = CRYPTO_KEY.getBytes();
 
@@ -918,19 +916,13 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 	return standardFos;
 }
 
-/**
- * @return the isEnableTabs
- */
-public static boolean isEnableTabs() {
-	return isEnableTabs;
-}
+	public static SpanPanel getStudentPlanErrorLbl(String errorStr, String style) {
+		SpanPanel errorLbl = new SpanPanel();
+		errorLbl.setText(errorStr);
+		errorLbl.setStyleName(style);
+		return errorLbl;	
+	}
 
-/**
- * @param isEnableTabs the isEnableTabs to set
- */
-public static void setEnableTabs(boolean isTabEnable) {
-	isEnableTabs = isTabEnable;
-}
 
 }
 
