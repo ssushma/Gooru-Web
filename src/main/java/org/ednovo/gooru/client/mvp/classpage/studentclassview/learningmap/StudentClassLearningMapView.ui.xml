@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc"
-    xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+    xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:emptyPanel="urn:import:org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets">
 	<ui:style src="" />
 	<g:HTMLPanel styleName="container">
 	   <span:LoadingUc ui:field="cropImageLoading"/>
@@ -61,5 +61,6 @@
 			</g:HTMLPanel>
 	    	<g:HTMLPanel styleName="learningBodyBlock" ui:field="learningMapContainer"/>
 	   </g:HTMLPanel>
+	   <emptyPanel:StudentEmptyClassContainer ui:field="emptyContainer"/>
 	</g:HTMLPanel>
 </ui:UiBinder>

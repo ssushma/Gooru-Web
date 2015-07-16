@@ -78,6 +78,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 	
 	@Override
 	public void onReset() {
+		getView().setContentVisiblity(false);
 		setData();
 	}
 	
@@ -87,7 +88,10 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
-		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+		
+		if(classGooruOid==null) {
+			getView().setContent(new ArrayList<PlanProgressDo>(), "","");
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			if(classGooruOid!=null) {
 				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, null, null, "plan", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
 					@Override
@@ -97,7 +101,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 					}
 					@Override
 					public void onFailure(Throwable caught) {
-						
+						getView().setContentVisiblity(true);
 					}
 				});
 			}
@@ -110,7 +114,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 					}
 					@Override
 					public void onFailure(Throwable caught) {
-						
+						getView().setContentVisiblity(true);
 					}
 				});
 			}
@@ -122,7 +126,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 					}
 					@Override
 					public void onFailure(Throwable caught) {
-						
+						getView().setContentVisiblity(true);
 					}
 				});
 			}
@@ -135,7 +139,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 					}
 					@Override
 					public void onFailure(Throwable caught) {
-						
+						getView().setContentVisiblity(true);
 					}
 				});
 			}
@@ -173,13 +177,13 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 						}
 						@Override
 						public void onFailure(Throwable caught) {
-							
+							getView().setContentVisiblity(true);
 						}
 					});					
 				}
 				@Override
 				public void onFailure(Throwable caught) {
-					
+					getView().setContentVisiblity(true);
 				}
 			});
 		}
@@ -192,6 +196,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 
 	public void setClasspageDo(ClasspageDo classpageDo) {
 		this.classpageDo = classpageDo;
+		getView().setEmptyContainerText(classpageDo.getUser().getUsername());
 	}
 
 }

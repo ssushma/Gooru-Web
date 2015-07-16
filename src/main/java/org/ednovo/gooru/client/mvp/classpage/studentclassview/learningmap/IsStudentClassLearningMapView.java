@@ -39,4 +39,7 @@ public interface IsStudentClassLearningMapView extends IsViewWithHandlers<Studen
 	public void setMetadataContent(ArrayList<PlanProgressDo> dataList);
 	public void setLessonContent(PlanContentDo collectionList, String status, String userId);
 	public void setContent(ArrayList<PlanProgressDo> dataList, String status, String userId);
+	public void setContentVisiblity(boolean isVisible);
+	public void setEmptyContainerVisiblity(boolean isVisible);
+	public void setEmptyContainerText(String userName);
 }

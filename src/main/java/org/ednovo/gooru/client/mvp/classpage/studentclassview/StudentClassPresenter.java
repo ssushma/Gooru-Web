@@ -208,8 +208,13 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 				setCheckClassVisiblity(classpageDo);
 				studentClassLearningMapPresenter.setClasspageDo(classpageDo);
 				studentClassReportPresenter.setClasspageDo(classpageDo);
+				if(result.getCourseGooruOid()==null) {
+					getView().setProgressBarVisibility(false);
+				} else {
+					getView().setProgressBarVisibility(true);
+				}
 			}
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 
