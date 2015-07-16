@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMeta
 import org.ednovo.gooru.application.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -92,7 +93,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 				getView().getLoadCollections().clear();
 
 				getView().resetData();
-				final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 				try {
 					if(classpageId!=null && !classpageId.isEmpty()){
 						AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {

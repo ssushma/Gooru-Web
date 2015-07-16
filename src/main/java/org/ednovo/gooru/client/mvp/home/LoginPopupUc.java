@@ -771,12 +771,13 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	}
 	public void openClasspage() {
-
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("view", "myclass");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 	}
 	private void OpenClasspageEdit(String gooruOId) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", gooruOId);
+		params.put("classpageId", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");

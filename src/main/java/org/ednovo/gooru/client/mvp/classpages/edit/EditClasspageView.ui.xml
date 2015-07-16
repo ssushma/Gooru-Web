@@ -154,8 +154,8 @@
 				</g:FlowPanel>
 
 				<g:HTMLPanel styleName="classpageTopLine">
-					<!-- <g:Button ui:field="btnDeleteClasspage"
-						styleName="secondary classpageDeleteButton"></g:Button> -->
+					 <g:Button ui:field="btnDeleteClasspage"
+						styleName="secondary classpageDeleteButton"></g:Button> 
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:FlowPanel ui:field="classListContainer">
