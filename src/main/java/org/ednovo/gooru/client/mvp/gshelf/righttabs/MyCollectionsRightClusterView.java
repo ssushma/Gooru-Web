@@ -44,6 +44,9 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 
@@ -51,7 +54,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -122,6 +128,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		copyPopupPanel.getElement().setAttribute("style", "min-width: 50px;");
 		copyLbl.setText("copy");
 		moveLbl.setText("move");
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
 		
 	}
 	public void setIds(){
@@ -701,6 +713,23 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else{
 			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
 		}
+	}
+	
+	public void hideDropDown(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		copyPopupPanel.setVisible(false);
+        	}
+    	}
+     }
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return copyPopupPanel.getElement().isOrHasChild(Element.as(target))||copyPopupPanel.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
 	}
 	
 }

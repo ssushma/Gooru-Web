@@ -2209,29 +2209,22 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			params.put("folderId", folderId);
 			url=AddQueryParameter.constructQueryParams(partialUrl, params);
 		}
-		try{
 			getLogger().info("--- moveCollectionToMyCOllections collection URl -- "+url);
 			JSONObject copyCollectionJsonObject=new JSONObject();
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
+			logger.info("status code moveCollectionToMyCOllections:::::"+jsonResponseRep.getStatusCode());
 			try{
-				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
-				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
-				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
-				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
-					if(jsonResponseRepresentation1.getStatusCode()==200){
-						/*collectionDoObj = deserializeCollection(jsonResponseRepget);*/
-						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+					if(jsonResponseRep.getStatusCode()==200){
+						collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 					}else{
 						collectionDoObj=new CollectionDo();
-						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+						collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 					}
-			}catch(Exception e){
-				logger.error("Exception-------"+e);
 			}
-		}catch(Exception ex){
-			logger.error("Exception::", ex);
-		}
+			catch(Exception e){
+				logger.info("Exception:::::::"+e);
+			}
 		return collectionDoObj;
 	}
 	
@@ -2245,17 +2238,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			getLogger().info("-- moveCollectionTOLesson CopyCollectionToLesson payload (Put method) -- ");
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), "");
 			jsonRep = jsonResponseRep.getJsonRepresentation();
+			logger.info("status code moveCollectionTOLesson:::::"+jsonResponseRep.getStatusCode());
 			try{
-				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
-				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
-				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
-				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
-					if(jsonResponseRepresentation1.getStatusCode()==200){
+					if(jsonResponseRep.getStatusCode()==200){
 						/*collectionDoObj = deserializeCollection(jsonResponseRepget);*/
-						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+						collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 					}else{
 						collectionDoObj=new CollectionDo();
-						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
+						collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 					}
 			}catch(Exception e){
 				logger.error("Exception-------"+e);
@@ -2361,6 +2351,46 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		}
 		return new FolderDo();
+	}
+
+	@Override
+	public CollectionItemDo addCollectionItem(String collectionId,String resourceId) throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		CollectionItemDo collectionItemDo= new CollectionItemDo();
+		String url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		getLogger().info("addCollectionItem post API call::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		logger.info("jsonRep:::::::"+jsonResponseRep.getStatusCode());
+		try{
+			if(jsonResponseRep.getStatusCode()==200){
+					logger.info("addCollectionItem collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri").toString());
+					String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+					JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
+					jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+					logger.info("jsonResponseRepget response here:::::::"+jsonResponseRepget.getJsonObject().toString());
+						if(jsonResponseRepget!=null && jsonResponseRepresentation1.getStatusCode()==200){
+							logger.info("jsonResponseRepget response here11111:::::::"+jsonResponseRepget.getJsonObject().toString());
+							collectionItemDo = JsonDeserializer.deserialize(jsonResponseRepget.getJsonObject().toString(),CollectionItemDo.class);
+							ResourceDo resoruce=new ResourceDo();
+							resoruce=JsonDeserializer.deserialize(jsonResponseRepget.getJsonObject().toString(), ResourceDo.class);
+							collectionItemDo.setQuestionInfo(resoruce);
+							collectionItemDo.setResource(resoruce);
+							collectionItemDo.setStatusCode(jsonResponseRepget.getStatusCode());
+							logger.info("jsonResponseRepget response here2222:::::::"+collectionItemDo.getResource().getGooruOid());
+						}else{
+							
+						}
+				}else{
+					collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
+					ResourceDo resoruce=new ResourceDo();
+					collectionItemDo.setQuestionInfo(resoruce);
+					collectionItemDo.setResource(resoruce);
+				}
+		}catch(Exception e){
+			logger.error("Exception-------"+e);
+		}
+		return collectionItemDo;
 	}
 	
 }
