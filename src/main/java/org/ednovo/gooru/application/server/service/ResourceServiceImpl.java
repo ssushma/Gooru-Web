@@ -1524,7 +1524,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
 		}
 		params.put(GooruConstants.LIMIT,limitSize);
-		//params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 
 		if(isExcludeAssessment){
 			params.put(GooruConstants.EXCLUDE_TYPE, "assessment/url");
