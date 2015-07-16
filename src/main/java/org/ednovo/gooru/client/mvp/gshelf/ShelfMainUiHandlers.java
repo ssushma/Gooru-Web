@@ -127,4 +127,6 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	void setVersion();
 	
 	void SetDefaultTypeAndVersion();
+	
+	void refreshUserShelfCollections();
 }
