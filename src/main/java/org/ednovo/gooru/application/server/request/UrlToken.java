@@ -637,7 +637,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 
 	V1_GET_STUDENT_UNIT_PLAN("/v1/class/{0}/course/{1}/unit/{2}/plan?"),
 
-	V1_GET_STUDENT_LESSON_PLAN("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/plan?"),
+	V1_GET_STUDENT_LESSON_PLAN("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/usage?"),
 
 	V1_GET_STUDENT_COURSE_PROGRESS("/v1/class/{0}/course/{1}/progress?"),
 	
