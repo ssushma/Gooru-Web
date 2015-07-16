@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.SlmExternalAssessmentForm;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
@@ -52,7 +53,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -130,7 +130,10 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 				setDefaultThumbnail(collectionType);
 			}
 		});
-		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment/url"))) {
+			reportView.clear();
+			reportView.add(new SlmExternalAssessmentForm(planContentDo.getProgress()));
+		} else if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
 			imageContainer.setStyleName("assessmentImageContainer");
 			timeSpentLbl.setText("Score");
 			lastAccessedLbl.setText("Last Attempted");
