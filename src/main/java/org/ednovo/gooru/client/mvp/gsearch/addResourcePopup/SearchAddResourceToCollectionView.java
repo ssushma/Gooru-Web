@@ -145,7 +145,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				myCollDefault.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTreePanel.clear();
 				isFromMyCourse=false;
-				getUiHandlers().getWorkspaceData(0, 20, true, "collection");
+				String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(nameToken)){
+					getUiHandlers().getWorkspaceData(0, 20, true, "resource");
+				}else{
+					getUiHandlers().getWorkspaceData(0, 20, true, "collection");
+				}
 			}
 		});
 		mycontentLbl.addClickHandler(new ClickHandler() {
@@ -293,21 +298,25 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					 if(!floderDo.getType().equals("collection")){
+					 if(!floderDo.getType().equals("collection") && !floderDo.getType().equals("scollection") && !floderDo.getType().equals("assessment")){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("collection")){
+					 }else if(floderDo.getType().equals("collection") || ("scollection").equals(floderDo.getType()) || ("assessment").equals(floderDo.getType())){
+						 if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)
+									|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )){
 						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
+						 }
 					 }
 				 }
 			 }
 		}
 		currentsearchType=searchType;
-		/*totalHitCount = folderListDo.getCount();*/
+		
+		totalHitCount = folderListDo.getCount();
 		btnAddExisting.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);
 		lblEmptyErrorMessage.setVisible(false);
@@ -330,14 +339,15 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					 if(!floderDo.getType().equals("collection")){
+					 if(!floderDo.getType().equals("collection") && !floderDo.getType().equals("scollection") && !floderDo.getType().equals("assessment")){
 						 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(folderLevel+"",floderDo.getTitle(),floderDo.getGooruOid(),floderDo);
 						 innerFolderTreeItem.setFolerLevel(folderLevel+1);
 						 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("collection")){
-						 if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
+					 }else if(floderDo.getType().equals("collection") || ("scollection").equals(floderDo.getType()) || ("assessment").equals(floderDo.getType())){
+						 if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)
+									|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )){
 							 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 							 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 							 item.addItem(folderItem);
@@ -539,17 +549,21 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-			if(currentsearchType.equalsIgnoreCase("resoruce")){
+			if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)
+					|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )){
 				if(cureentcollectionTreeItem!=null){
-					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
+					getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams,isFromMyCourse);
+					/*boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
 					if(flag){
 						lblError.setVisible(false);
-						getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams);
+						AppClientFactory.printInfoLogger("tree item id:::::"+cureentcollectionTreeItem.getGooruOid());
+						AppClientFactory.printInfoLogger("tree item name:::::"+cureentcollectionTreeItem.getCollectionName());
+						//getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams);
 					}else{
 						lblError.setVisible(true);
 						lblError.setText("Oops! can copy only questions for Assessments.");
 						isAddingInProgress=true;
-					}
+					}*/
 				}else{
 					lblError.setVisible(true);
 					isAddingInProgress=true;
@@ -576,7 +590,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				}else{
 					String collectionId= urlparams.get(ID);
 					if(isTopMostSelected){
-						System.out.println("isTopMostSelected:::::::::");
 						if(isMoveSelected){
 							getUiHandlers().moveCollectionToMyCOllections(collectionId, null, currentsearchType,"",this.urlparams);
 						}else{
@@ -614,7 +627,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void setDefaultPanelVisibility(Boolean blnVal){
 		myCollDefault.setVisible(blnVal);
-		btnAddNew.setVisible(!blnVal);
+		/*btnAddNew.setVisible(!blnVal);*/
 		pageNum=1;
 	}
 

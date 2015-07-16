@@ -42,8 +42,11 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.ShowResourceTabWidgetEvent;
@@ -101,7 +104,10 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
     private AddResourceAssessmentsPresenter addResourceCollectionPresnter;
 
     private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
-
+    
+     SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
+     
+     ShelfMainPresenter shelfMainPresenter;
 
     private CollectionItemDo collectionItemDo;
 
@@ -301,7 +307,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 	@Inject
 	public AssessmentsResourcePlayerPresenter(AssessmentsResourcePlayerMetadataPresenter resoruceMetadataPresenter,AssessmentsResourceSharePresenter resourceSharePresenter,
 			AssessmentsResourceInfoPresenter resourceInfoPresenter,EventBus eventBus, CollectionFormInPlayPresenter collectionFormInPlayPresenter,
-			IsAssessmentsResourcePlayerView view, IsAssessmentsResourcePlayerProxy proxy,AddResourceAssessmentsPresenter addResourceCollectionPresnter,AssessmentsResourceFlagPresenter resourceFlagPresenter) {
+			SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,IsAssessmentsResourcePlayerView view, IsAssessmentsResourcePlayerProxy proxy,AddResourceAssessmentsPresenter addResourceCollectionPresnter,AssessmentsResourceFlagPresenter resourceFlagPresenter,ShelfMainPresenter shelfMainPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.resoruceMetadataPresenter=resoruceMetadataPresenter;
@@ -311,6 +317,8 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 		addResourceCollectionPresnter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
+		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
+		this.shelfMainPresenter = shelfMainPresenter;
 		resourceFlagPresenter.setResourcePlayerPresenter(this);
 		resourceSharePresenter.setResourcePlayerPresenter(this);
 		addResourceCollectionPresnter.getAddCollectionViewButton().setVisible(false);
@@ -523,20 +531,30 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			clearSlot(TAB_PRESENTER_SLOT);
 			showLoginPopupWidget(i18n.GL0590().toUpperCase());
 		}else{
+			String resourcePlayId =AppClientFactory.getPlaceManager().getRequestParameter("id");
+			ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
+			resourceSearchResultDo.setGooruOid(resourcePlayId);
+			shelfMainPresenter.SetDefaultTypeAndVersion();
+			searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "resource", null);
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+			/*
 			if(collectionItemDo!=null){
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
 			}
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
-			/*if(BrowserAgent.isDevice()){
+			if(BrowserAgent.isDevice()){
 				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
 			}else{
 				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
-			}*/
+			}
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().clearPosition();
-		}
+		*/}
 	}
 	public void setResourceInfoView(String resourceId){
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
