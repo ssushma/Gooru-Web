@@ -628,7 +628,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setActiveStyle(false);
 		}
 		getUiHandlers().setRightListData(SHELF_COLLECTIONS,null);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(VIEW, getViewType());
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 	}
 	/**
 	 * To create couse template and adding to the root tree
@@ -783,7 +785,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
    	 * @return viewType
    	 */
    	public String getViewType(){
-		return AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
+   		String view =AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		return view==null?COURSE:view;
    	}
     /**
      * Highlight the Tree based on id's when reveal the page.

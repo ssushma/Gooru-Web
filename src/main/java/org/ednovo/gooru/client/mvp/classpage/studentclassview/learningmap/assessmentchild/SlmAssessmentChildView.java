@@ -78,8 +78,6 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	
 	@UiField Image contentImage;
 	
-	@UiField Button playBtn;
-	
 	@UiField HTMLEventPanel viewReport;
 	
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
@@ -104,7 +102,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		setData(planContentDo);
 		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
 		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
-		playBtn.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+		contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
 	}
 	
 	public void setData(final PlanContentDo planContentDo) {
@@ -130,16 +128,12 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			}
 		});
 		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
-			playBtn.addStyleName("previewPlayerAssessmentBtn");
 			imageContainer.setStyleName("assessmentImageContainer");
-			playBtn.setText("Take Assessment");
 			timeSpentLbl.setText("Score");
 			lastAccessedLbl.setText("Last Attempted");
 			timeSpent.setText(planContentDo.getProgress().getScoreInPercentage()+"%");
 		} else {
-			playBtn.addStyleName("previewPlayerStudyBtn");
 			imageContainer.setStyleName("collectionImageContainer");
-			playBtn.setText("Study");
 			timeSpentLbl.setText("Total Time Spent");
 			lastAccessedLbl.setText("Last Viewed");
 			timeSpent.setText(StringUtil.getFormattedDate(planContentDo.getProgress().getTimespent(), ""));
