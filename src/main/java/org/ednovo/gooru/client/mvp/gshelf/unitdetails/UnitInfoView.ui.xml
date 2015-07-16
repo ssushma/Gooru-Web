@@ -76,7 +76,7 @@
 <div class="unitCoverBody">
 <div class="unitCoverList no-gutter">
 	<div class="col-md-3 col-sm-3">
-		<div class="unitCoverListLeft">
+		<div class="unitCoverListLeft containerHeight">
 		<uc:UlPanel ui:field="ulMainGradePanel"/>
 		</div>
 	</div>
