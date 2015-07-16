@@ -201,12 +201,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
+							String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
 							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex);
+							if(FOLDER.equalsIgnoreCase(view)){
+								moveId=moveGooruOId;
+							}
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);

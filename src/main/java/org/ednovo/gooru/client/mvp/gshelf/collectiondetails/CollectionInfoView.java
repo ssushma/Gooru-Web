@@ -424,6 +424,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		setStaticData(type);			
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -471,7 +472,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 */
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
-		String view= AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
@@ -487,8 +487,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setStandardIds(getSelectedStandardsIds());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					
-						getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
@@ -502,7 +501,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		@Override
 		public void onClick(ClickEvent event) {
 			setSelectedDepathOfKnowledge();
-
 		}
 	}
 	private class CenturySkillsClickHandlers implements ClickHandler{
@@ -519,8 +517,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		@Override
 		public void onClick(ClickEvent event) {
 			setSelectedLanguageObjective();
-
-
 		}
 	}
 	protected void setDepthOfKnlze() {
