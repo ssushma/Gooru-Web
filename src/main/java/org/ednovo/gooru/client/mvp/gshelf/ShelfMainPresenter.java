@@ -218,7 +218,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			typeVal=type;
 		}
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
 	}
 	public ShelfServiceAsync getShelfService() {
@@ -267,7 +267,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				@Override
 				public void onSuccess(FolderListDo result) {
 					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-					AppClientFactory.printInfoLogger("clrPanel::"+clrPanel);
 					if(o1==null){
 						if(clrPanel){
 							setRightListData(result.getSearchResult(),null);
@@ -327,22 +326,25 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightPanelData(FolderDo folderObj,String clickedItemType,List<FolderDo> folderListDoChild){
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
-		if(folderObj!=null){
+		if(folderObj!=null && folderObj.getGooruOid()!=null){
 			if(!FOLDER.equalsIgnoreCase(folderObj.getType())){
 				getView().getCollectionLabel().setVisible(false);
 			}else{
 				getView().getCollectionLabel().setVisible(true);
 				getView().getCollectionLabel().setText(folderObj.getTitle());
 			}
+			//when displaying the existing data at that time we are opening the content tab.
+			getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
+		}else{
+			//when creating the default course we are opening the info tab
+			getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);
 		}
-		getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter());
 	}
 	
 	@Override
 	public void setRightListData(List<FolderDo> listOfContent,FolderDo folderDo){
 		clearSlot(RIGHT_SLOT);
-		AppClientFactory.printInfoLogger("setRightListData");
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		String id=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 		if(view==null){
@@ -368,7 +370,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private void setPaginatedChilds(String courseId,String unitId,String lessonId,String typeVal, boolean isDataCalled) {
 		getChildFolderItemsForCourse(courseId,unitId,lessonId,typeVal,isDataCalled);
 	}
-
+	@Override
+	public void refreshUserShelfCollections() {
+		ShelfListView.setPageNumber(1);
+		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
+	}
 	@Override
 	public void setFolderParentName(String folderName) {
 		

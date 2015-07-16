@@ -446,6 +446,10 @@ public class AppClientFactory implements ClientConstants {
 	public static void setClientLoggersEnabled(String isClientLoggersEnabled) {
 		AppClientFactory.isClientLoggersEnabled = isClientLoggersEnabled;
 	}
+	
+	public static Logger getClientLogger(){
+		return clientLogger;
+	}
 }
 
 

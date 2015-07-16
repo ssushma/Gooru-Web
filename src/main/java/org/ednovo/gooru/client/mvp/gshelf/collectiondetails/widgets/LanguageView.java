@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.uc.PPanel;
 
@@ -50,18 +51,13 @@ public class LanguageView extends Composite {
 				isProfanity=false;
 				errorPanel.setVisible(false);
 				languegeObjective.removeStyleName("textAreaErrorMessage");
+				checkProfanity(languegeObjective.getText());
+
 				
 			}
 		});
 		
-		languegeObjective.addBlurHandler(new BlurHandler() {
-			
-			@Override
-			public void onBlur(BlurEvent event) {
-				// TODO Auto-generated method stub
-				checkProfanity(languegeObjective.getText());
-			}
-		});
+	
 		
 	}
 	
@@ -92,5 +88,14 @@ public class LanguageView extends Composite {
 	}
 	
 	
+	public void setLanguageObjective(FolderDo folderDo){
+		
+		if(folderDo!=null){
+			isProfanity=false;
+			errorPanel.setVisible(false);
+			languegeObjective.removeStyleName("textAreaErrorMessage");
+			languegeObjective.setText(folderDo.getLanguageObjective());
+		}
+	}
 	
 }

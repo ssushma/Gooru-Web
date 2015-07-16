@@ -30,6 +30,8 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -71,13 +73,13 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandlers> implements IsStudentClassView ,ClickHandler{
 	
-	@UiField SpanPanel classCodeSpan, studentMessage;
+	@UiField SpanPanel classCodeSpan, studentMessage, onoffSwitchBtn;
 	@UiField EmPanel teacherOwnership;
 	@UiField H2Panel courseName;
 	@UiField SimplePanel learningMapContainer;
 	@UiField Image classImage, teacherImage, studentImage;
 	@UiField SimpleCheckBox switchCheckBox;
-	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel;
+	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar, planProgressPanel;
 	@UiField Button joinClassBtn, teachViewBtn;
 	@UiField Label studentViewLbl;
 	
@@ -122,9 +124,10 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 		this.classpageDo=classpageDo;
 		switchCheckBox.getElement().setId("myonoffswitch");
 		switchCheckBox.getElement().setAttribute("name", "onoffswitch");
-		String thumbnail = classpageDo.getThumbnailUrl();
-		if(thumbnail==null) {
-			thumbnail = DEFAULT_CLASSPAGE_IMAGE;
+		
+		String thumbnail = DEFAULT_CLASSPAGE_IMAGE;
+		if(classpageDo!=null&&classpageDo.getThumbnails()!=null&&classpageDo.getThumbnails().getUrl()!=null) {
+			thumbnail = classpageDo.getThumbnails().getUrl();
 		}
 		classImage.setUrl(thumbnail);
 		classImage.addErrorHandler(new ErrorHandler() {
@@ -153,6 +156,16 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 				studentImage.setUrl(DEFAULT_USER_IMAGE);
 			}
 		});
+		
+		
+		OpenJoinClassPopupHandler openJoinClassPopupHandler=new OpenJoinClassPopupHandler() {
+					
+					@Override
+					public void openJoinClassPopup() {
+						getUiHandlers().getClasspageDetails();
+					}
+		};
+		AppClientFactory.getEventBus().addHandler(OpenJoinClassPopupEvent.TYPE,openJoinClassPopupHandler);
 	}
 	
 	@Override
@@ -209,13 +222,16 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@UiHandler("teachViewBtn")
 	public void clickTeachViewBtn(ClickEvent event) {
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
+		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, "");
 		PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
-		request.with(UrlNavigationTokens.CLASSPAGEID, classpageId);
-		request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
-		request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO);
+		request = request.with(UrlNavigationTokens.CLASSPAGEID, classpageId);
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
+		request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS);
+		request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, cId);
 		AppClientFactory.getPlaceManager().revealPlace(request);
 	}
-
+	
 	public static void setPublicPagePending() {
 		if(!AppClientFactory.isAnonymous()){
 			
@@ -283,5 +299,15 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
         success.setPositiveButtonText(i18n.GL0190());
         success.center();
         success.show();
+	}
+
+	@Override
+	public void setProgressBarVisibility(boolean isVisible) {
+		planProgressBar.setVisible(isVisible);
+	}
+
+	@Override
+	public void disableSwitchBtn(boolean isDisable) {
+		planProgressPanel.setVisible(!isDisable);
 	}
 }

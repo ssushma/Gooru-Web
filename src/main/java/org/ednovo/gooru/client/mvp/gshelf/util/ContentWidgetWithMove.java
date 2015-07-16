@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -66,8 +67,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField TextBox txtMoveTextBox;
 	@UiField H3Panel h3CourseTitle;
 	@UiField InlineLabel spnUnitsCount,spnLessonsCount,spnCollectionsCount,spnAssessmentsCount,spnResourcesCount,spnQuestionsCount;
-	@UiField HTMLPanel pnlTitleContainer,pnlArrows,pnlMoveToEdit;
+	@UiField HTMLPanel pnlArrows,pnlMoveToEdit;
 	@UiField Paragraph pTitle;
+	@UiField HTMLEventPanel pnlTitleContainer;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url",ASSESSMENT="Assessment";
 	
@@ -111,6 +113,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
+			txtMoveTextBox.getElement().setAttribute("moveGooruOId",folderObj.getGooruOid()+"");
 		}else{
 			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getGooruOid()+"");
 		}
@@ -194,34 +197,42 @@ public abstract class ContentWidgetWithMove extends Composite {
 	 */
 	public void enableAndDisableCount(String typeVal){
 		lblImage.setStyleName("courseImage");
+		hideAllCounts();
 		if(UNIT.equalsIgnoreCase(typeVal)){
-			spnUnitsCount.setVisible(false);
+			spnLessonsCount.setVisible(true);
 			lblImage.setStyleName("unitImage");
 		}else if(LESSON.equalsIgnoreCase(typeVal)){
 			lblImage.setStyleName("lessonImage");
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
+			spnCollectionsCount.setVisible(true);
+			spnAssessmentsCount.setVisible(true);
+			//spnUnitsCount.setVisible(false);
+			//spnLessonsCount.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(typeVal)){
 			lblImage.setStyleName("folderImage");
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
+			//spnUnitsCount.setVisible(false);
+			//spnLessonsCount.setVisible(false);
 			pnlArrows.setVisible(true);
 			//pnlMoveToEdit.setVisible(true);
 		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal) || ASSESSMENT.equalsIgnoreCase(typeVal)){
 			if(COLLECTION.equalsIgnoreCase(typeVal)){
 				lblImage.setStyleName("collectionImage");
+				spnResourcesCount.setVisible(true);
 			}else{
 				lblImage.setStyleName("assessmentImage");
+				spnResourcesCount.setVisible(false);
 			}
-			spnResourcesCount.setVisible(true);
 			spnQuestionsCount.setVisible(true);
-			spnUnitsCount.setVisible(false);
-			spnLessonsCount.setVisible(false);
-			spnCollectionsCount.setVisible(false);
-			spnAssessmentsCount.setVisible(false);
 			pnlArrows.setVisible(true);
 			//pnlMoveToEdit.setVisible(true);
 		}
+	}
+	public void hideAllCounts(){
+		spnUnitsCount.setVisible(false);
+		spnLessonsCount.setVisible(false);
+		spnCollectionsCount.setVisible(false);
+		spnAssessmentsCount.setVisible(false);
+		spnResourcesCount.setVisible(false);
+		spnQuestionsCount.setVisible(false);
 	}
 	/**
 	 * This inner class will handle the click event on the Arrows
@@ -239,18 +250,19 @@ public abstract class ContentWidgetWithMove extends Composite {
 					String movingPosition=txtMoveTextBox.getText().toString().trim();
 					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index").trim();
 					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
+					String moveGooruOId=txtMoveTextBox.getElement().getAttribute("moveGooruOId");
 					if(!movingPosition.isEmpty()){
 						int movingValue=Integer.parseInt(movingPosition);
 						int currentWidgetValue=Integer.parseInt(currentWidgetPosition);
 						//This one will execute when user enter a number in text field and click on either up and down arrow.
 						if(movingValue!=(currentWidgetValue+1)){
-							moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId);
+							moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId,moveGooruOId);
 						}else if(movingValue==(currentWidgetValue+1)){
 							//This one will execute when user directly clicks on either up and down arrow.
 							if(isDownArrow){
-								moveWidgetPosition((movingValue+1)+"",currentWidgetPosition,isDownArrow,moveId);
+								moveWidgetPosition((movingValue+1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId);
 							}else{
-								moveWidgetPosition((movingValue-1)+"",currentWidgetPosition,isDownArrow,moveId);
+								moveWidgetPosition((movingValue-1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId);
 							}
 						}
 					}
@@ -265,7 +277,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public TextBox getTextBox(){
 		return txtMoveTextBox;
 	}
-	public HTMLPanel getTitleContainer(){
+	public HTMLEventPanel getTitleContainer(){
 		return pnlTitleContainer;
 	}
 	public Label getTopArrow(){
@@ -277,5 +289,5 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public Label getIndexLabel(){
 		return lblIndex;
 	}
-	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
+	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId,String moveGooruOId);
 }

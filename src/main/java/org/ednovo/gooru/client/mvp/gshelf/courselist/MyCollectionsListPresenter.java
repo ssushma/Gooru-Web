@@ -69,8 +69,8 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	@Override
 	public void setDataInContentSlot(final String type,String folderId,boolean isInnerSlot,final FolderDo folderObj) {
 		getView().loadingImage();
-		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		getView().getPanelCourseContainer().clear();
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
@@ -80,14 +80,16 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 			});
 		}else{
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
-				@Override
-				public void onSuccess(FolderListDo result) {
-					getView().setData(type,result.getSearchResult(),true,true,folderObj);
-				}
-			});
+			if(o1!=null){
+				String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+				String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+				AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+					@Override
+					public void onSuccess(FolderListDo result) {
+						getView().setData(type,result.getSearchResult(),true,true,folderObj);
+					}
+				});
+			}
 		}
 	}
 
@@ -112,7 +114,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(courseId,unitId,lessonId,collectionId,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getView().resetWidgetPositions(itemSeqToAPI,movingIndex);
+
 			}
 		});
 	}

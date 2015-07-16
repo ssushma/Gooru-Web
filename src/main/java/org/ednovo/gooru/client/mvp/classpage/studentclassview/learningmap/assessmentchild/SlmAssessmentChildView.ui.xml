@@ -1,12 +1,12 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" 
+    xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
 	<g:HTMLPanel styleName="fractionsDetailsContainer">
 	     <g:HTMLPanel styleName="rowContainer no-gutter ">
 	        <g:HTMLPanel styleName="col-md-5 col-sm-5">
 	           <g:HTMLPanel styleName="studyBlock">
 	              <g:HTMLPanel ui:field="imageContainer">
-	                 <g:Button ui:field="playBtn" styleName="playBtn"></g:Button>
 	                 <g:Image ui:field="contentImage"></g:Image>
 	              </g:HTMLPanel>
 	              <g:HTMLPanel styleName="descriptionContainer">
@@ -37,9 +37,9 @@
 	                          <g:Label styleName="pull-right" ui:field="lastSession"></g:Label>
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
-	                       <g:HTMLPanel styleName="list-group-item viewLink">
+	                       <panel:HTMLEventPanel styleName="list-group-item viewLink" ui:field="viewReport">
 	                          <g:Anchor ui:field="reportUrl">View Report</g:Anchor>
-	                       </g:HTMLPanel>
+	                       </panel:HTMLEventPanel>
 	                    </g:HTMLPanel>
 	                 </g:HTMLPanel>
 	              </g:HTMLPanel>

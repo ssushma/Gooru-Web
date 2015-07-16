@@ -45,7 +45,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -64,7 +63,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
@@ -75,7 +74,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	
 	String type;
 	
-	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment";
+	final String COURSE="COURSE",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENT="Assessment",ASSESSMENT_URL="Assessment/url";
 	
 	private static final String VIEW= "view";
 
@@ -88,8 +87,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String ID = "id";
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
-	
-	HandlerRegistration handlerRegistration=null;
 	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -114,7 +111,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to reset the widget positions with default text
 	 */
 	@Override
-	public void resetWidgetPositions(int itemSeqToAPI,int movingIndex){
+	public void resetWidgetPositions(){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
 		while (widgets.hasNext()){
@@ -127,8 +124,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				if(index==0){
 					//If this is the first widget we are hiding the up arrow
 					contentWidgetWithMove.getTopArrow().setVisible(false);
+					contentWidgetWithMove.getDownArrow().setVisible(true);
 				}else if(index==(pnlCourseList.getWidgetCount()-1)){
 					//If this the last widget hiding the down arrow
+					contentWidgetWithMove.getTopArrow().setVisible(true);
 					contentWidgetWithMove.getDownArrow().setVisible(false);
 				}else{
 					contentWidgetWithMove.getTopArrow().setVisible(true);
@@ -161,10 +160,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				lblAddNew.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				pnlAddContainer.setVisible(true);
 			}
+			setCreateText(type);
 		}else{
 			if(COURSE.equalsIgnoreCase(type)){
+				enableCreateButtons(false);
 				h2Title.setText(i18n.GL1180());
+				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
+				enableCreateButtons(true);
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 				if(folderDo!=null){
@@ -193,39 +196,65 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			setLastWidgetArrowVisiblity(true);
 		}
 		//setCreateText();
-		setCreateText(type);
+		
 		if(listOfContent!=null && listOfContent.size()>0){
-			for (FolderDo folderObj : listOfContent) {
+			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
+							String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
 							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex);
+							if(FOLDER.equalsIgnoreCase(view)){
+								moveId=moveGooruOId;
+							}
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
 						}
 					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
-				widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
+				widgetMove.getTitleContainer().addClickHandler(new ClickOnTitleContainer(folderObj,true));
+				//widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;
 			}
 			setLastWidgetArrowVisiblity(false);
 		}
+		pnlMainButtonsContainer.setVisible(true);
+	}
+	public HashMap<String,String> updatePrams(){
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+		HashMap<String,String> params = new HashMap<String,String>();
+		if(o3!=null&&id==null) {
+			params.put("o3",o3);
+			params.put("o2",o2);
+			params.put("o1",o1);
+		} else if(o2!=null&&id==null) {
+			params.put("o2",o2);
+			params.put("o1",o1);
+		} else if(o1!=null&&id==null) {
+			params.put("o1",o1);
+		}
+		return params;
 	}
 	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown){
 		if(isdown){
@@ -241,6 +270,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				itemNewSequence--;
 			}
 		}
+		resetWidgetPositions();
 	}
 	public void enableCreateButtons(boolean isEnabled){
 		btnCreateResource.setVisible(isEnabled);
@@ -278,7 +308,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * @param typeVal
 	 */
 	public void setCreateText(String type){
-		if(COURSE.equalsIgnoreCase(type)){
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		if(COURSE.equalsIgnoreCase(type) && courseId!=null){
 			enableCreateButtons(false);
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());
 			lblAddNew.setText(i18n.GL3281());
@@ -305,7 +336,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			if(o3!=null){
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+			lblAddNewForResource.setText(i18n.GL1451());
+			lblAddNewForQuestion.setText(i18n.GL3024());
+			/*if(o3!=null){
 				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 				btnCreate.setVisible(false);
@@ -313,14 +350,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				lblAddNewForResource.setText(i18n.GL1451());
 				lblAddNewForQuestion.setText(i18n.GL3024());
 			}else if(o2!=null || o1!=null){
-				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
-				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
-				btnCreate.setVisible(true);
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+				btnCreate.setVisible(false);
 				lblAddNew.setVisible(false);
-				btnCreate.setText(i18n.GL3024());
-				lblAddNewForResource.setText(i18n.GL1450());
-				lblAddNewForQuestion.setText(i18n.GL1451());
-			}
+				//btnCreate.setText(i18n.GL3024());
+				lblAddNewForResource.setText(i18n.GL1451());
+				lblAddNewForQuestion.setText(i18n.GL3024());
+			}*/
 			/*btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			lblAddNewForResource.setText(i18n.GL1450());
@@ -354,14 +391,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	class ClickOnTitleContainer implements ClickHandler{
 		FolderDo folderObj;
-		ClickOnTitleContainer(FolderDo folderObj){
+		boolean isClicked;
+		ClickOnTitleContainer(FolderDo folderObj,boolean isClicked){
 			this.folderObj=folderObj;
+			this.isClicked=isClicked;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			Map<String,String> params = new HashMap<String,String>();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
-			getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+			if(isClicked){
+				isClicked=false;
+				Map<String,String> params = new HashMap<String,String>();
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
+				getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
+			}
 		}
 	}
 	@Override
@@ -409,7 +451,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,folderObj.getGooruOid());
-		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType())){
+		}else if(COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL,o1);
 			params.put(O2_LEVEL,o2);
 			params.put(O3_LEVEL,o3);
@@ -423,6 +465,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	@Override
 	public void loadingImage(){
+		pnlMainButtonsContainer.setVisible(false);
 		pnlCourseList.clear();
 		lblTitle.setText("");
 		Image loadingImage =  new Image();

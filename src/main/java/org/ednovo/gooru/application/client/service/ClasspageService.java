@@ -46,6 +46,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
@@ -83,13 +84,17 @@ public interface ClasspageService extends BaseService {
 	
 	public void v3StudentJoinIntoClass(String classCode) throws GwtException, ServerDownException;
 	
-	public ClasspageDo v3UpdateClass(String classId,ClasspageDo classpageDo) throws GwtException,ServerDownException;
+	public ClasspageDo v3UpdateClass(String classId,String title,String grade,String fileName,String sharing,String score,String courseId) throws GwtException,ServerDownException;
 	
 	public List<FolderDo> getClassUnitList(String classId,String courseIdn,int offset, int limit) throws GwtException,ServerDownException;
 	
 	public List<ClassLessonDo> getClassLessonCollectionList(String classId,String courseId,String unitId,int offset, int limit) throws GwtException,ServerDownException;
 	
 	public ClassLessonDo updateClassLessonVisiblity(String classId,String courseId,String unitId,List<ClassLessonDo> listClassLessonDo) throws GwtException,ServerDownException;
+	
+	ClasspageListDo v3GetAllClass(String limit, String offSet) throws GwtException, ServerDownException;
+	
+	
 	/**
 	 * Get Classpage by Classpage id
 	 * @param String classpageID
@@ -535,5 +540,6 @@ public interface ClasspageService extends BaseService {
 
 	public PlanContentDo getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException;
 
+	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
 
 }

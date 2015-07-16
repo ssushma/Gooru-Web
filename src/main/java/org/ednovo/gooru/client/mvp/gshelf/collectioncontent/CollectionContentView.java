@@ -134,7 +134,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
-		if(folderDo.getType().equalsIgnoreCase("assessment")){
+		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
 			lblSpanOr.setVisible(false);
 			ancAddResource.setVisible(false);
@@ -154,7 +154,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			setLastWidgetArrowVisiblity(false);
 		}else{
 			pnlReosurceList.clear();
-			pnlReosurceList.add(new Label(i18n.GL0854()));
 		}
 	}
 
@@ -163,7 +162,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		int tmpIndex = index;
 		Window.enableScrolling(true);
 		if (tmpIndex ==-1){
-			index = listOfContent != null && listOfContent.getCollectionItems() != null ? listOfContent.getCollectionItems().size() : 0;
+			index = pnlReosurceList.getWidgetCount()>0 ? pnlReosurceList.getWidgetCount() : 0;
 		}
 		if (index == 0){
 			pnlReosurceList.clear();
@@ -206,22 +205,17 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					} else if(resourceType.equals("resource/url") || resourceType.equals("video/youtube")
 							|| resourceType.equals("vimeo/video")){
 						editResoruce = new EditResourcePopupVc(collectionItem) {
-
 						@Override
 						public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
 							getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
 						}
-
 						@Override
 						public void resourceImageUpload() {
 							getUiHandlers().imageEditResourceUpload();
 						}
-
 						@Override
-						public void onSelection(
-								SelectionEvent<Suggestion> event) {
+						public void onSelection(SelectionEvent<Suggestion> event) {
 							super.onSelection(event);
-
 						}
 
 						@Override
@@ -267,17 +261,17 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							}
 						};
 					}
-
 				}
 			};
 			widgetMove.setPresenter(collectionContentPresenter);
 			widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
 			pnlReosurceList.insert(widgetMove, index);
+			index++;
 		}else{
 			AppClientFactory.printInfoLogger("collectionItem.getItemSequence() : "+collectionItem.getItemSequence());
 			pnlReosurceList.remove(collectionItem.getItemSequence() - 1);
-			listOfContent.getCollectionItems().remove(collectionItem.getItemSequence()-1);
-			listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
+			//listOfContent.getCollectionItems().remove(collectionItem.getItemSequence()-1);
+			//listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
 			setDisplayResourceItem(collectionItem, RefreshType.INSERT, (collectionItem.getItemSequence()-1));
 		}
 		if (tmpIndex ==-1){

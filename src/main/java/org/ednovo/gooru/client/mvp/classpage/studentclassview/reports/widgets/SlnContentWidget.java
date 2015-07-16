@@ -22,7 +22,7 @@ public class SlnContentWidget extends Composite {
 	@UiField EmPanel timeSpent;
 	@UiField Image contentImageStyle;
 	
-	private static final String ASSESSMENT_RADIAL = "org-progress-";
+	private static final String ASSESSMENT_RADIAL = "-progress-";
 	
 	private static SlnContentWidgetUiBinder uiBinder = GWT
 			.create(SlnContentWidgetUiBinder.class);
@@ -43,13 +43,12 @@ public class SlnContentWidget extends Composite {
 			type = planProgressDo.getType();
 		}
 		
-		
 		setContentIcon(type);
-		if(type.equalsIgnoreCase("assessment")) {
+		if(type.equalsIgnoreCase("assessment")||type.equalsIgnoreCase("assessment/url")) {
 			int scoreLbl = planProgressDo.getScoreInPercentage();
 			assessmentViews.setText(planProgressDo.getViews()+"");
 			score.setText(scoreLbl+"%");
-			assessmentRadial.addStyleName(ASSESSMENT_RADIAL+scoreLbl);
+			assessmentRadial.addStyleName(StringUtil.getHighlightStyle(scoreLbl)+ASSESSMENT_RADIAL+scoreLbl);
 			collectionCountData.setVisible(false);
 			collectionRadial.setVisible(false);
 		} else if(type.equalsIgnoreCase("collection")){
@@ -68,7 +67,7 @@ public class SlnContentWidget extends Composite {
 	}
 	
 	private void setContentIcon(String icon) {
-		if(icon.equalsIgnoreCase("assessment")) {
+		if(icon.equalsIgnoreCase("assessment")||icon.equalsIgnoreCase("assessment/url")) {
 			contentImageStyle.setUrl("../images/folders/panel/assessment-smal.png");
 		} else {
 			contentImageStyle.setUrl("../images/folders/panel/collection-icon-small.png");

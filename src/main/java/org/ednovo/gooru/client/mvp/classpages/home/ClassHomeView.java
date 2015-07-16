@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassView;
@@ -46,6 +47,8 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.uc.H3Panel;
+import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
@@ -59,11 +62,13 @@ import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  *
  * @fileName : ClassHomeView.java
@@ -86,15 +91,21 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField Button btnCreateClass,btnEnter, disabledBtn,seeMorebtnJoined,seeMorebtnOwner;
+	@UiField Button btnCreateClass,btnEnter,disabledBtn,seeMorebtnJoined,seeMorebtnOwner;
 
-	@UiField Label lblCreateAClass;
+	/*@UiField Label lblCreateAClass;*/
 
-	@UiField HTMLPanel joinedClassesContainer,ownerClassesContainer,joinedContainerTitle,teachContainerTitle;
+	@UiField HTMLPanel joinedClassesContainer,ownerClassesContainer;
 
 	@UiField TextBoxWithPlaceholder txtCode;
+	
+	@UiField Anchor myClassesAnr,archivedAnr;
+	
+	@UiField H3Panel joinedContainerTitle,teachContainerTitle;
 
 	AlertMessageUc alertMessageUc;
+	
+	@UiField LoadingUc studyLoading,teachLoading;
 
 	private NewClassPopupView newPopup = null;
 
@@ -107,6 +118,10 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 	private Integer pageInitialLimitOwner = 10;
 	private Integer offsetLimitOwner = 0;
+	
+	
+	@UiField HTMLPanel notesPanel,createClassPanel,classCodePanel;
+	
 
 	interface ClassCodeViewUiBinder extends UiBinder<Widget, ClassHomeView> {
 
@@ -119,6 +134,8 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		setWidget(uiBinder.createAndBindUi(this));
 
 		setText();
+		myClassesAnr.addClickHandler(new TeachClassTabNavigationHandler(myClassesAnr));
+		archivedAnr.addClickHandler(new TeachClassTabNavigationHandler(archivedAnr));
 
 
 	}
@@ -133,70 +150,155 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		pageInitialLimitJoined = 10;
 		offsetLimitOwner = 0;
 		offsetLimitJoined = 0;
+		
+		
+		String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
+		
+		
+		
+		if(view.equalsIgnoreCase("myclass")){
+			isSetVisiblity(false);
+			studyLoading.setVisible(true);
+			teachLoading.setVisible(true);
+			myClassesAnr.addStyleName(CssTokens.ACTIVE);
+			archivedAnr.removeStyleName(CssTokens.ACTIVE);
+			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
+					new SimpleAsyncCallback<ClasspageListDo >() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+							try{
+							teachLoading.setVisible(false);
+							if(result.getTotalHitCount()>pageInitialLimitOwner)
+							{
+								seeMorebtnOwner.setVisible(true);
+							}
+							else
+							{
+								seeMorebtnOwner.setVisible(false);
+							}
 
-		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
-				new SimpleAsyncCallback<ClasspageListDo >() {
-					@Override
-					public void onSuccess(ClasspageListDo result) {
-						try{
-						if(result.getTotalHitCount()>pageInitialLimitOwner)
-						{
-							seeMorebtnOwner.setVisible(true);
+							if(result.getSearchResult().size()>0)
+							{
+								ownerClassesContainer.getElement().setInnerHTML("");
+							for(int i = 0; i<result.getSearchResult().size();i++)
+							{
+								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
+								ownerClassesContainer.add(classpageWidget);
+							}
+							}
+							else
+							{
+								ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
+							}
+							}catch(Exception e){
+								e.printStackTrace();
+							}
 						}
-						else
-						{
-							seeMorebtnOwner.setVisible(false);
-						}
+					});
 
-						if(result.getSearchResult().size()>0)
-						{
-							ownerClassesContainer.getElement().setInnerHTML("");
-						for(int i = 0; i<result.getSearchResult().size();i++)
-						{
-							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-							classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
-							ownerClassesContainer.add(classpageWidget);
-						}
-						}
-						else
-						{
-							ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
-						}
-						}catch(Exception e){
-							e.printStackTrace();
-						}
-					}
-				});
+			AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
+					new SimpleAsyncCallback<ClasspageListDo >() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+							studyLoading.setVisible(false);
+							if(result.getTotalHitCount()>pageInitialLimitJoined)
+							{
+								seeMorebtnJoined.setVisible(true);
+							}
+							else
+							{
+								seeMorebtnJoined.setVisible(false);
+							}
+							if(result.getSearchResult().size()>0)
+							{
+							joinedClassesContainer.getElement().setInnerHTML("");
+							for(int i = 0; i<result.getSearchResult().size();i++)
+							{
+								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
+								joinedClassesContainer.add(classpageWidget);
+							}
+							}
+							else
+							{
+								joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
+							}
 
-		AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
-				new SimpleAsyncCallback<ClasspageListDo >() {
-					@Override
-					public void onSuccess(ClasspageListDo result) {
-						if(result.getTotalHitCount()>pageInitialLimitJoined)
-						{
-							seeMorebtnJoined.setVisible(true);
 						}
-						else
-						{
-							seeMorebtnJoined.setVisible(false);
-						}
-						if(result.getSearchResult().size()>0)
-						{
-						joinedClassesContainer.getElement().setInnerHTML("");
-						for(int i = 0; i<result.getSearchResult().size();i++)
-						{
-							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-							classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
-							joinedClassesContainer.add(classpageWidget);
-						}
-						}
-						else
-						{
-							joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
-						}
+					});
+		}else if(view.equalsIgnoreCase("oldclass")){
+			studyLoading.setVisible(true);
+			teachLoading.setVisible(true);
+			myClassesAnr.removeStyleName(CssTokens.ACTIVE);
+			archivedAnr.addStyleName(CssTokens.ACTIVE);
+			isSetVisiblity(true);
+			AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+					new SimpleAsyncCallback<ClasspageListDo >() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+							teachLoading.setVisible(false);
+							if(result.getTotalHitCount()>pageInitialLimitOwner)
+							{
+								seeMorebtnOwner.setVisible(true);
+							}
+							else
+							{
+								seeMorebtnOwner.setVisible(false);
+							}
 
-					}
-				});
+							if(result.getSearchResults().size()>0)
+							{
+								ownerClassesContainer.getElement().setInnerHTML("");
+							for(int i = 0; i<result.getSearchResults().size();i++) 
+							{
+								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+								classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Teach");
+								ownerClassesContainer.add(classpageWidget);
+							}
+							}
+							else
+							{
+								ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
+							}
+							
+						}
+					});
+			
+			AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+					new SimpleAsyncCallback<ClasspageListDo >() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+							studyLoading.setVisible(false);
+							if(result.getTotalHitCount()>pageInitialLimitJoined)
+							{
+								seeMorebtnJoined.setVisible(true);
+							}
+							else
+							{
+								seeMorebtnJoined.setVisible(false);
+							}
+							if(result.getSearchResults().size()>0)
+							{
+							joinedClassesContainer.getElement().setInnerHTML("");
+							for(int i = 0; i<result.getSearchResults().size();i++) 
+							{
+								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+								classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Study");
+								joinedClassesContainer.add(classpageWidget);
+							}
+							}
+							else
+							{
+								joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
+							}
+							
+						}
+					});
+			
+		}
+		
+		
 	}
 	private void setCreateClassVisibility() {
 
@@ -258,6 +360,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		seeMorebtnOwner.getElement().setId("btnSeeMoreOwner");
 		seeMorebtnOwner.getElement().setAttribute("alt",i18n.GL0508());
 		seeMorebtnOwner.getElement().setAttribute("title",i18n.GL0508());
+		
+		studyLoading.getElement().setId("studyLoadingId");
+		studyLoading.getElement().setAttribute("alt","Loading");
+		studyLoading.getElement().setAttribute("title","Loading");
+		
+		teachLoading.getElement().setId("studyLoadingId");
+		teachLoading.getElement().setAttribute("alt","Loading");
+		teachLoading.getElement().setAttribute("title","Loading");
+		
+		studyLoading.setVisible(false);
+		teachLoading.setVisible(false);
+		
 
 		txtCode.addFocusHandler(new FocusHandler() {
 
@@ -282,7 +396,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		seeMorebtnJoined.addClickHandler(new OnClickSeeMoreJoined());
 		seeMorebtnOwner.addClickHandler(new OnClickSeeMoreOwner());
 		joinedClassesContainer.getElement().setId("pnljJoinedClassesContainer");
-		lblCreateAClass.getElement().setId("lblCreateAClass");
+		//lblCreateAClass.getElement().setId("lblCreateAClass");
 		ownerClassesContainer.getElement().setId("pnlOwnerClassesContainer");
 	}
 
@@ -310,12 +424,12 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
-		params.put("pageNum", "0");
+		/*params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
 		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASS)){
 			params.put("tab","classList");
-		}
+		}*/
 		AppClientFactory.getPlaceManager().revealPlace(token, params);
 	}
 	/**
@@ -444,6 +558,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id",result.getClassUid());
+						if(result.getCourseGooruOid() != null){
+							params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+						}
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 						txtCode.setText("");
 						if(alertMessageUc!=null)
@@ -544,23 +661,54 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			offsetLimitJoined = pageInitialLimitJoined;
-			AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
-					new SimpleAsyncCallback<ClasspageListDo >() {
-						@Override
-						public void onSuccess(ClasspageListDo result) {
-							pageInitialLimitJoined = pageInitialLimitJoined + 10;
-							if(result.getTotalHitCount()>pageInitialLimitJoined){
-								seeMorebtnJoined.setVisible(true);
-							}else{
-								seeMorebtnJoined.setVisible(false);
+			String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
+			if(view.equalsIgnoreCase("myclass")){
+				AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitJoined = pageInitialLimitJoined + 10;
+								if(result.getTotalHitCount()>pageInitialLimitJoined){
+									seeMorebtnJoined.setVisible(true);
+								}else{
+									seeMorebtnJoined.setVisible(false);
+								}
+								for(int i = 0; i<result.getSearchResult().size();i++) {
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
+									joinedClassesContainer.add(classpageWidget);
+								}
 							}
-							for(int i = 0; i<result.getSearchResult().size();i++) {
-								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
-								joinedClassesContainer.add(classpageWidget);
+						});
+			}else if(view.equalsIgnoreCase("oldclass")){
+				offsetLimitJoined = pageInitialLimitJoined;
+				AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitJoined = pageInitialLimitJoined + 10;
+								if(result.getTotalHitCount()>pageInitialLimitJoined)
+								{
+									seeMorebtnJoined.setVisible(true);
+								}
+								else
+								{
+									seeMorebtnJoined.setVisible(false);
+								}
+
+
+								for(int i = 0; i<result.getSearchResults().size();i++) 
+								{
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Study");
+									joinedClassesContainer.add(classpageWidget);
+								}
+
+								
 							}
-						}
-					});
+						});
+			}
+			
 		}
 
 	}
@@ -583,31 +731,62 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 		@Override
 		public void onClick(ClickEvent event) {
-			offsetLimitOwner = pageInitialLimitOwner;
-			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
-					new SimpleAsyncCallback<ClasspageListDo >() {
-						@Override
-						public void onSuccess(ClasspageListDo result) {
-							pageInitialLimitOwner = pageInitialLimitOwner + 10;
-							if(result.getTotalHitCount()>pageInitialLimitOwner)
-							{
-								seeMorebtnOwner.setVisible(true);
-							}
-							else
-							{
-								seeMorebtnOwner.setVisible(false);
-							}
+			String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
+			if(view.equalsIgnoreCase("myclass")){
+				offsetLimitOwner = pageInitialLimitOwner;
+				AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitOwner = pageInitialLimitOwner + 10;
+								if(result.getTotalHitCount()>pageInitialLimitOwner)
+								{
+									seeMorebtnOwner.setVisible(true);
+								}
+								else
+								{
+									seeMorebtnOwner.setVisible(false);
+								}
 
-							for(int i = 0; i<result.getSearchResult().size();i++)
-							{
-								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
-								ownerClassesContainer.add(classpageWidget);
+								for(int i = 0; i<result.getSearchResult().size();i++)
+								{
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
+									ownerClassesContainer.add(classpageWidget);
+								}
+
+
 							}
+						});
+			}else if(view.equalsIgnoreCase("oldclass")){
+				offsetLimitOwner = pageInitialLimitOwner;
+				AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitOwner = pageInitialLimitOwner + 10;
+								if(result.getTotalHitCount()>pageInitialLimitOwner)
+								{
+									seeMorebtnOwner.setVisible(true);
+								}
+								else
+								{
+									seeMorebtnOwner.setVisible(false);
+								}
 
 
-						}
-					});
+								for(int i = 0; i<result.getSearchResults().size();i++) 
+								{
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Teach");
+									ownerClassesContainer.add(classpageWidget);
+								}
+
+								
+							}
+				 });
+			}
+			
 		}
 
 	}
@@ -633,5 +812,39 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	public void setEnterLblVisbility(boolean isVisible) {
 		btnEnter.setVisible(!isVisible);
 		disabledBtn.setVisible(isVisible);
+	}
+	
+	private class TeachClassTabNavigationHandler implements ClickHandler{
+
+		
+		Anchor headerAnr;
+		
+		public TeachClassTabNavigationHandler(Anchor headerAnr){
+			this.headerAnr=headerAnr;
+		}
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			if(headerAnr.equals(myClassesAnr)){
+				AppClientFactory.printInfoLogger("clicked on headerAnr");
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("view", "myclass");
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
+			}else if(headerAnr.equals(archivedAnr)){
+				AppClientFactory.printInfoLogger("clicked on archivedAnr");
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("view", "oldclass");
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
+			}
+		}
+		
+	}
+	
+	public void isSetVisiblity(boolean isVisible){
+		notesPanel.setVisible(isVisible);
+		classCodePanel.setVisible(!isVisible);
+		createClassPanel.setVisible(!isVisible);
 	}
 }

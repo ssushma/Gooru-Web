@@ -6,9 +6,10 @@
 	   	<span:LoadingUc ui:field="cropImageLoading"/>
 		<g:HTMLPanel styleName="container" ui:field="topContainer">
 		   <div class="row">
-		      <div class="classProgressIndications no-gutter">
+		      <g:HTMLPanel styleName="classProgressIndications no-gutter" ui:field="legendContainer">
 		         <div class="col-md-6 col-sm-6">
 		            <panel:HTMLEventPanel ui:field="allContentPanel" styleName="studentCourseReportProgressHeader">
+		               <span:SpanPanel styleName="left-arrow" ui:field="headerLeftArrow"></span:SpanPanel>
 		               <span:SpanPanel ui:field="textLbl"></span:SpanPanel>
 		            </panel:HTMLEventPanel>
 		         </div>
@@ -22,7 +23,7 @@
 		            </div>
 		         </div>
 		         <div class="clearfix"></div>
-		      </div>
+		      </g:HTMLPanel>
 		   </div>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="LearningMapContainer" ui:field="learningMapContainer">

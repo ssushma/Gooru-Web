@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport.AssessmentProgressReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
 import org.ednovo.gooru.client.uc.LoadingUc;
@@ -56,8 +57,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class StudentClassReportView extends BaseViewWithHandlers<StudentClassReportUiHandlers> implements IsStudentClassReportView {
 	
 	@UiField LoadingUc cropImageLoading;
-	@UiField SpanPanel textLbl, currentContentName, previousContentName, nextContentName;
-	@UiField HTMLPanel topContainer, reportBodyBlock, learningMapContainer, headerLinksContainer;
+	@UiField SpanPanel textLbl, currentContentName, previousContentName, nextContentName, headerLeftArrow;
+	@UiField HTMLPanel topContainer, reportBodyBlock, learningMapContainer, headerLinksContainer, legendContainer;
 	@UiField HTMLEventPanel previousContentPanel, currentContentPanel, nextContentPanel, allContentPanel;
 	
 	String allContentStr = null, previousContentStr = null, nextContentStr = null;
@@ -93,28 +94,43 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 	public void setReportData(ArrayList<PlanProgressDo> dataList) {
 		headerLinksContainer.setVisible(false);
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
+		String aId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
+		
 		setContentVisibility(false);
 		reportBodyBlock.clear();
 		
 		int size = dataList.size();
 		
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			headerLeftArrow.setVisible(false);
+			allContentPanel.removeStyleName("cursorPointer");
 			for(int i=0;i<size;i++) {
 				reportBodyBlock.add(new SlnCourseReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			headerLeftArrow.setVisible(true);
+			allContentPanel.addStyleName("cursorPointer");
 			for(int i=0;i<size;i++) {
 				reportBodyBlock.add(new SlnUnitReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				//reportBodyBlock.add(child);
+			headerLeftArrow.setVisible(true);
+			allContentPanel.addStyleName("cursorPointer");
+			reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId));
 		}
 		setContentVisibility(true);
 	}
 	
 	@UiHandler("allContentPanel")
 	public void ClickAllContentPanel(ClickEvent event) {
-		navigateToPage(allContentStr);
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		if(!pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			navigateToPage(allContentStr);
+		}
 	}
 	@UiHandler("previousContentPanel")
 	public void ClickPreviousContentPanel(ClickEvent event) {
@@ -138,8 +154,9 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
 				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
 			} else if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW);
-				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
+				params.remove(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT);
+				params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID);
+				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB,UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM);
 			}
 		} else {
 			if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
@@ -200,36 +217,48 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 	}
 	
 	private void setLinksData(String id, ArrayList<PlanProgressDo> dataList, String allTxt, String titleTxt) {
-		int size = dataList.size();
-		int matchedCount = 0;
-		String name = null, previousName = null, nextName = null;
-		for(int i=0;i<size;i++) {
-			PlanProgressDo planProgressDo = dataList.get(i);
-			if(planProgressDo.getGooruOId().equalsIgnoreCase(id)) {
-				matchedCount = i;
-				break;
+		if(dataList!=null) {
+			currentContentPanel.setVisible(true);
+			nextContentPanel.setVisible(true);
+			legendContainer.setVisible(true);
+			int size = dataList.size();
+			int matchedCount = 0;
+			String name = null, previousName = null, nextName = null;
+			for(int i=0;i<size;i++) {
+				PlanProgressDo planProgressDo = dataList.get(i);
+				if(planProgressDo.getGooruOId().equalsIgnoreCase(id)) {
+					matchedCount = i;
+					break;
+				}
 			}
+			if(matchedCount==0&&size==1) {
+				previousContentStr = null;
+				nextContentStr = null;
+			} else if(matchedCount==0&&size>1) {
+				previousContentStr = null;
+				nextContentStr = dataList.get(matchedCount+1).getGooruOId();
+				name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
+				nextName = titleTxt+" "+(matchedCount+2);
+			} else if(matchedCount==size-1) {
+				nextContentStr = null;
+				previousContentStr = dataList.get(matchedCount-1).getGooruOId();
+				name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
+				previousName = titleTxt+" "+(matchedCount);
+			} else if(matchedCount<size-1) {
+				previousContentStr = dataList.get(matchedCount-1).getGooruOId();
+				nextContentStr = dataList.get(matchedCount+1).getGooruOId();
+				name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
+				nextName = titleTxt+" "+(matchedCount+2);
+				previousName = titleTxt+" "+(matchedCount);
+			}
+			setNavLinksData(allTxt, previousName, name, nextName);
+		} else {
+			currentContentPanel.setVisible(false);
+			nextContentPanel.setVisible(false);
+			legendContainer.setVisible(false);
+			String lessonName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_NAME,"Back to Lesson");
+			previousContentStr = "ALL";
+			previousContentName.setText(lessonName);
 		}
-		if(matchedCount==0&&size==1) {
-			previousContentStr = null;
-			nextContentStr = null;
-		} else if(matchedCount==0&&size>1) {
-			previousContentStr = null;
-			nextContentStr = dataList.get(matchedCount+1).getGooruOId();
-			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
-			nextName = titleTxt+" "+(matchedCount+2);
-		} else if(matchedCount==size-1) {
-			nextContentStr = null;
-			previousContentStr = dataList.get(matchedCount-1).getGooruOId();
-			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
-			previousName = titleTxt+" "+(matchedCount);
-		} else if(matchedCount<size-1) {
-			previousContentStr = dataList.get(matchedCount-1).getGooruOId();
-			nextContentStr = dataList.get(matchedCount+1).getGooruOId();
-			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
-			nextName = titleTxt+" "+(matchedCount+2);
-			previousName = titleTxt+" "+(matchedCount);
-		}
-		setNavLinksData(allTxt, previousName, name, nextName);
 	}
 }

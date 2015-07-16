@@ -588,3 +588,6 @@
 .copyLblStyle.selected{
 	background: #cddeea;
 }
+.copyLblStyle:hover{
+	background: #cddeea;
+}

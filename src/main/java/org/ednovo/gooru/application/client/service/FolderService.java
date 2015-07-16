@@ -37,7 +37,6 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/folderService")
@@ -207,7 +206,12 @@ public interface FolderService extends BaseService {
 	public Integer getClassesAssociatedWithCourse(String o1CourseId) throws GwtException,ServerDownException;
 	
 	public Integer deleteCollectionAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String assessmentCollectionId) throws GwtException,ServerDownException;
-	
+	/**
+	 * Create Collection in mycollections
+	 * @return serialized created {@link FolderDo}
+	 * @throws GwtException
+	 */
+	public FolderDo createCollection(CreateDo createDo,String parentId,boolean addToShelf) throws GwtException, ServerDownException;
 	
 	List<ListValuesDo> getDepthOfKnowledgesList() throws GwtException;
 	
@@ -215,6 +219,6 @@ public interface FolderService extends BaseService {
 	
 	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId)  throws GwtException;
 
-	void updateCollectionDetails(String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
+	void updateCollectionDetails(CreateDo createDoObj,String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
 
 }

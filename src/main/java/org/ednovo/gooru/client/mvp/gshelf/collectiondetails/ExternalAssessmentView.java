@@ -186,7 +186,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				createOrUpDate.setIsLoginRequired(isLoginRequired);
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate);
+					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate,folderObj);
 				}else{
 					getUiHandlers().createAndSaveAssessmentDetails(createOrUpDate,isCreate);
 				}
@@ -214,9 +214,9 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		}else{
 			txtAssessmentTitle.setText("UntitledExternalAssessment");
 			txtAssessmentURL.setText("Paste URL here");
+			txaAssessmentDescription.setText("");
 			pnlSharable.addStyleName(SELECTEDSTYLE);
 			lblRequiresNo.addStyleName(SELECTEDSTYLE);
 		}
-		
 	}
 }

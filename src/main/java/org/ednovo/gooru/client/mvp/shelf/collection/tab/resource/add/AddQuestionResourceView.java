@@ -167,6 +167,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	ArrayList<Integer> depthOfKnowledgesList= new ArrayList<Integer>();
 	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
+	List<Integer> centurySkills=new ArrayList<Integer>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	private String htType=i18n.GL3219_1();
 
@@ -687,8 +688,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 							CodeDo codeObjStandard=new CodeDo();
 							codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 							codeObjStandard.setCode(entry.getValue());
-							standardsDo.add(codeObjStandard);
-							centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+						/*	standardsDo.add(codeObjStandard);
+*/							centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 						 }
 					}
 					hideCenturyPopup();
@@ -724,7 +725,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 			}
 		};
-		return new DownToolTipWidgetUc(closeLabel, description);
+		DownToolTipWidgetUc downToolTipWidgetUc=new DownToolTipWidgetUc(closeLabel, description);
+		downToolTipWidgetUc.getElement().setId(id);
+		return downToolTipWidgetUc;
 	}
 	/**
 	 * This method will hide the century popup
@@ -815,7 +818,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 							@Override
 							public void onSuccess(SearchDo<StandardFo> result) {
 								setCenturySuggestions(result);
-
 							}
 
 							@Override
@@ -2122,9 +2124,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setDescription(questionText);
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
 			taxonomySet.put("taxonomyCode", standardsDo);
-			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+			ArrayList<Integer> standards=new ArrayList<Integer>();
+			for(CodeDo codeDo:standardsDo){
+				standards.add(codeDo.getCodeId());
+			}
+			collectionQuestionItemDo.setStandardIds(standards);
+			//collectionQuestionItemDo.setTaxonomySet(taxonomySet);
 			collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledgesList);
-
+			collectionQuestionItemDo.setSkillIds(getSelectedCenturySkills());
 			if(getQuestionType().equalsIgnoreCase("HT_HL") || getQuestionType().equalsIgnoreCase("HT_RO") ){
 				collectionQuestionItemDo.setHlType(htType);
 				collectionQuestionItemDo.setSingleCorrectAnswer(true);
@@ -2748,6 +2755,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 		List<QuestionAnswerDo> questionAnswerDoList = new ArrayList<QuestionAnswerDo>();
 
+		AppClientFactory.printInfoLogger(".........Depth of knowledge........."+collectionItemDo.getDepthOfKnowledge());
+
+		AppClientFactory.printInfoLogger(".........Skills........."+collectionItemDo.getSkills());
 		try{
 			/**
 			 *  If type = 4 from API, treated as FIB.
@@ -2755,6 +2765,20 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 			String explanation = collectionItemDo.getResource().getExplanation() != null ? collectionItemDo.getResource().getExplanation() : collectionItemDo.getQuestionInfo().getExplanation();
 			AppClientFactory.printInfoLogger("Type 1");
+			if(collectionItemDo.getDepthOfKnowledge()!=null){
+				setCheckedData(collectionItemDo.getDepthOfKnowledge());
+			}
+			if(collectionItemDo.getSkills()!= null && collectionItemDo.getSkills().size()>0){
+				centuryPanel.clear();
+				for (StandardFo standardObj : collectionItemDo.getSkills()) {
+					 CodeDo codeObj=new CodeDo();
+					 codeObj.setCodeId(standardObj.getId());
+					 codeObj.setCode(standardObj.getLabel());
+					 standardsDo.add(codeObj);
+					 centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
+					 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
+				}
+			}
 			if(type==4){
 				AppClientFactory.printInfoLogger("Type 2");
 				 while(it.hasNext()){
@@ -2947,9 +2971,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			AppClientFactory.printInfoLogger("Type 36");
 			setMultipleChoiceAnswerFields();
 		}
-		if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
-			setCheckedData(collectionItemDo.getResource().getDepthOfKnowledges());
-		}
+		
 
 		if(collectionItemDo.getStandards()!=null){
 			AppClientFactory.printInfoLogger("Type 39");
@@ -2979,18 +3001,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				 standardsPanel.add(createStandardLabel(code, codeID,label));
 			}
 		}
-		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
-			centuryPanel.clear();
-			AppClientFactory.printInfoLogger("Type 41");
-			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
-				 CodeDo codeObj=new CodeDo();
-				 codeObj.setCodeId(standardObj.getCodeId());
-				 codeObj.setCode(standardObj.getLabel());
-				 standardsDo.add(codeObj);
-				 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
-				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
-			}
-		}
+		
 		setExplanationContainer();
 		setDepthOfKnowledgeContainer();
 		setHintsContainer();
@@ -3599,20 +3610,41 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 * @param depthOfKnowledges
 	 */
 	public void setCheckedData(List<checkboxSelectedDo> depthOfKnowledges){
+		
 		Iterator<Widget> widgets=pnlDepthOfKnowledges.iterator();
+		Map<Integer,String> depthOfKnowledgeMap=new HashMap<Integer, String>();
+		 for (checkboxSelectedDo checkboxSelectedDo : depthOfKnowledges) {
+			 depthOfKnowledgeMap.put(checkboxSelectedDo.getId(), checkboxSelectedDo.getName());
+		 }
 		while(widgets.hasNext()){
 			Widget widget=widgets.next();
 			 if(widget instanceof DepthOfKnowledgePanel){
 				 DepthOfKnowledgePanel pnlWidget=(DepthOfKnowledgePanel) widget;
-				 for (checkboxSelectedDo checkboxSelectedDo : depthOfKnowledges) {
+				 if(depthOfKnowledgeMap.containsKey(pnlWidget.getListValuesDo().getId())){
+					 pnlWidget.checkbox.setValue(true);
+				 }
+				 /*for (checkboxSelectedDo checkboxSelectedDo : depthOfKnowledges) {
+					 AppClientFactory.printInfoLogger(pnlWidget.getListValuesDo().getId()+".................."+checkboxSelectedDo.getId()+".................");
 					 if(pnlWidget.getListValuesDo().getId()==checkboxSelectedDo.getId()){
 						 pnlWidget.checkbox.setValue(true);
 						 depthOfKnowledgesList.add(pnlWidget.getListValuesDo().getId());
 					 }else{
+						 
 						 pnlWidget.checkbox.setValue(false);
 					 }
-				 }
+				 }*/
 			}
 		}
+	}
+	
+	public List<Integer> getSelectedCenturySkills(){
+		List<Integer> selectedValues=new ArrayList<Integer>();
+		int size=centuryPanel.getWidgetCount();
+		for(int i=0;i<size;i++){
+			DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)centuryPanel.getWidget(i);
+			selectedValues.add(Integer.parseInt(downToolTipWidgetUc.getElement().getId()));
+		}
+		
+		return selectedValues;
 	}
 }

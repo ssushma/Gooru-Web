@@ -24,13 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -54,8 +51,8 @@ public class StandardsCodeDecView extends Composite{
 
 
 	@UiField Label standardCode;
-	@UiField PPanel standardDesc;
-	@UiField HTMLEventPanel widgetContainer;
+	@UiField PPanel standardDesc,standardDescMain;
+	@UiField HTMLEventPanel widgetContainer,widgetContainerDesc;
      
 	
 	
@@ -64,10 +61,21 @@ public class StandardsCodeDecView extends Composite{
 	 * @param eventBus {@link EventBus}
 	 */
 	@Inject
-	public StandardsCodeDecView(DomainStandardsDo standardsDo) {
+	public StandardsCodeDecView(String codeVal, String labelVal, Boolean boolFlag) {
 		initWidget(uiBinder.createAndBindUi(this));
-		standardCode.setText(standardsDo.getCode());
-		standardDesc.setText(standardsDo.getLabel());
+		standardCode.setText(codeVal);
+		standardDesc.setText(labelVal);
+		standardDescMain.setText(labelVal);
+		if(boolFlag)
+		{
+			widgetContainerDesc.setVisible(true);
+			widgetContainer.setVisible(false);
+		}
+		else
+		{
+			widgetContainerDesc.setVisible(false);
+			widgetContainer.setVisible(true);
+		}
 	}
 
 	public HTMLEventPanel getWidgetContainer() {

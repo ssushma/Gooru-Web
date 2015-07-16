@@ -2,6 +2,7 @@ package org.ednovo.gooru.application.shared.model.library;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
@@ -14,6 +15,7 @@ public class DomainStandardsDo implements Serializable {
 	private Integer codeId;
 	private String label;
 	private String code;
+	private List<SubDomainStandardsDo> node;
 
 	public DomainStandardsDo(){}
 
@@ -40,6 +42,14 @@ public class DomainStandardsDo implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public List<SubDomainStandardsDo> getNode() {
+		return node;
+	}
+
+	public void setNode(List<SubDomainStandardsDo> node) {
+		this.node = node;
 	}
 
 

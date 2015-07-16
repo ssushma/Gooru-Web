@@ -1007,7 +1007,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				if (!jsonRep.getJsonObject().isNull("depthOfKnowledges")){
 					List<checkboxSelectedDo> depthOfKnowledges = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("depthOfKnowledges").toString(), new TypeReference<ArrayList<checkboxSelectedDo>>() {
 					});
-					resourceDo.setDepthOfKnowledges(depthOfKnowledges);
+					resourceDo.setDepthOfKnowledge(depthOfKnowledges);
 				}
 				if (!jsonRep.getJsonObject().isNull("educationalUse")){
 					ArrayList<checkboxSelectedDo> educationalUse = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("educationalUse").toString(), new TypeReference<ArrayList<checkboxSelectedDo>>() {
@@ -1535,6 +1535,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("---- collectionType ---  "+collectionType);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("---- jsonRep ---  "+jsonRep);
+		getLogger().info("---- deserialise ---  "+deserializeWorkspaceFolderList(jsonRep,collectionType));
 		return deserializeWorkspaceFolderList(jsonRep,collectionType);
 	}
 
@@ -2055,13 +2057,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException {
 		CollectionItemDo collItemDo = collectionItemDo;
 		JsonRepresentation jsonRep = null;
-
-
 		CollectionItemDo collectionItemDoNew=new CollectionItemDo();
 
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId());
-
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo, "question"));
 
 

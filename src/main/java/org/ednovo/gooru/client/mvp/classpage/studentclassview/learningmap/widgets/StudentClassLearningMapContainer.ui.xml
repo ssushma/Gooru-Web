@@ -14,7 +14,7 @@
 		</uc:HTMLEventPanel>
         <g:HTMLPanel styleName="col-md-9 col-sm-9">
            <g:HTMLPanel styleName="progressBlock">
-              <g:HTMLPanel styleName="circle-main-container" ui:field="circleContainer"/>
+              <g:HTMLPanel styleName="circle-main-container line-height-70" ui:field="circleContainer"/>
            </g:HTMLPanel>
         </g:HTMLPanel>
         <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>

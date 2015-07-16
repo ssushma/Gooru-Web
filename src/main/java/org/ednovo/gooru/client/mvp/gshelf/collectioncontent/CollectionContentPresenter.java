@@ -45,7 +45,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -94,8 +93,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		this.addStandardsPresenter = addStandardsPresenter;
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
 			@Override
-			public void insertCollectionItemInAddResource(
-					CollectionItemDo collectionItem, RefreshType refreshType) {
+			public void insertCollectionItemInAddResource(CollectionItemDo collectionItem, RefreshType refreshType) {
 				getView().setDisplayResourceItem(collectionItem, refreshType, -1);
 			}
 		});
@@ -113,9 +111,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
 	public void setData(final FolderDo folderDo) {
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		if(collectionId!=null){
-			AppClientFactory.getInjector().getResourceService().getCollection(collectionId,true, new SimpleAsyncCallback<CollectionDo>() {
+		if(folderDo!=null){
+			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),true, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					getView().setData(result,folderDo, RefreshType.INSERT);
@@ -319,8 +316,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hideUpdateOwnResourcePopup();
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-
 				getView().updateCollectionItem(result);
 			}
 		});
@@ -329,9 +324,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
 
-
 	}
-
 	@Override
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {
 		 addResourcePresenter.setCollectionItemDo(collectionItemDo);

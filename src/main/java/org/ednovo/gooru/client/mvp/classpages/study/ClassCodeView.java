@@ -33,9 +33,12 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.application.shared.model.content.AttachToDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
@@ -99,7 +102,9 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	
 	AlertMessageUc alertMessageUc;
 	
-	private NewClasspagePopupView newPopup = null;
+	//private NewClasspagePopupView newPopup = null;
+	
+	private NewClassPopupView newPopup = null;
 	
 	private boolean isValid=true;
 	
@@ -353,14 +358,18 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	 */
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
+		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
+		AppClientFactory.getPlaceManager().revealPlace(token, params);
+		
+		/*Map<String, String> params = new HashMap<String, String>();
 		params.put("id", gooruOId);
-		params.put("classpageid", gooruOId);
+		params.put("classpageId", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
 		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			params.put("tab","classList");
-		}
+		}*/
 		AppClientFactory.getPlaceManager().revealPlace(
 				token, params);
 	}
@@ -385,10 +394,10 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		public void onClick(ClickEvent event) {
 			MixpanelUtil.ClickOnNewClassPage();
 
-			newPopup = new NewClasspagePopupView() {
+			newPopup = new NewClassPopupView()  {
 
 				@Override
-				public void createNewClasspage(String title) {
+				public void createNewClasspage(String title, String grade, boolean sharing) {
 
 					MixpanelUtil.Create_NewClasspage();
 					CollectionDo collectionDo = new CollectionDo();
@@ -397,44 +406,16 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 					AppClientFactory
 							.getInjector()
 							.getClasspageService()
-							.createClassPage(collectionDo.getTitle(),
-									new SimpleAsyncCallback<CollectionDo>() {
+							.createClass(title,grade,sharing,new SimpleAsyncCallback<ClasspageDo>()
+									 {
 
 										@Override
-										public void onSuccess(CollectionDo result) {
-											final String classpageId = result
-													.getGooruOid();
-											AssignmentDo assignmentDo = new AssignmentDo();
-											assignmentDo
-													.setClasspageId(classpageId);
-
-											TaskDo taskDo = new TaskDo();
-											taskDo.setTitle(i18n.GL0121());
-											taskDo.setTypeName("assignment");
-											assignmentDo.setTask(taskDo);
-
-											AttachToDo attachToDo = new AttachToDo();
-											attachToDo.setId(classpageId);
-											attachToDo.setType("classpage");
-
-											assignmentDo.setAttachTo(attachToDo);
-
-											AppClientFactory
-													.getInjector()
-													.getClasspageService()
-													.v2CreateAssignment(
-															assignmentDo,
-															new SimpleAsyncCallback<AssignmentDo>() {
-
-																@Override
-																public void onSuccess(
-																		AssignmentDo result) {
-																	// Assig to
-																	// classpage.
-																	OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASSPAGE);
-																	newPopup.ClosePopup();
-																}
-															});
+										public void onSuccess(ClasspageDo result) {
+											String[] uri=result.getUri().split("/");
+											final String classpageId =  uri[uri.length-1];
+											String title = result.getName();
+											OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
+											newPopup.ClosePopup();
 										}
 									});
 				}
@@ -486,7 +467,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 			}
 			
 			MixpanelUtil.ClickOnStudyNow();
-			AppClientFactory.getInjector().getClasspageService().v2getClasspageByCode(txtCode.getText().trim(), new SimpleAsyncCallback<CollectionDo>(){
+			AppClientFactory.getInjector().getClasspageService().v3GetClassById(txtCode.getText().trim(), new SimpleAsyncCallback<ClasspageDo>(){
 
 //				@Override
 //				public void onFailure(Throwable caught) {
@@ -494,9 +475,9 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 //				}
 				
 				@Override
-				public void onSuccess(CollectionDo result) {
+				public void onSuccess(ClasspageDo result) {
 					 setEnterLblVisbility(false);
-					 if(result.getGooruOid()==null){
+					 if(result.getClassUid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
@@ -517,40 +498,37 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 								isValid=false;
 							}
 						});
-					}else if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+					}else if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 					{
 						
 						Map<String, String> params = new HashMap<String, String>();
-						params.put("id",result.getGooruOid());
-						params.put("pageSize", "10");
-						params.put("pageNum", "0");
-						params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+						params.put("id",result.getClassUid());
+						if(result.getCourseGooruOid() != null){
+							params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+						}
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 						txtCode.setText("");
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 					}				 
-					 else if(result.getSharing().equalsIgnoreCase("private")){
+					 else if(!result.isVisibility()){
 					
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 						{
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 								MixpanelUtil.Click_Study_LandingPage();
 							}
 							
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
-							params.put("pageSize", "10");
-							params.put("pageNum", "0");
-							params.put("pos", "1");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							params.put("id",result.getClassUid());
+							if(result.getCourseGooruOid() != null){
+								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+							}
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
 
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
-							
-							StudentAssignmentView.setPrivatePage();
-
 						}
 						else if(result.getStatus().equalsIgnoreCase("active"))
 						{
@@ -559,11 +537,11 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 							}
 							
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
-							params.put("pageSize", "10");
-							params.put("pageNum", "0");
-							params.put("pos", "1");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							if(result.getCourseGooruOid() != null){
+								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+							}
+							params.put("id",result.getClassUid());
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
@@ -578,17 +556,15 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 							}
 							
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getGooruOid());
-							params.put("pageSize", "10");
-							params.put("pageNum", "0");
-							params.put("pos", "1");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							if(result.getCourseGooruOid() != null){
+								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+							}
+							params.put("id",result.getClassUid());
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 							
-							StudentAssignmentView.setPrivatePagePending();
-
 						}
 						else 
 						{
@@ -603,23 +579,14 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 					else
 					{	
 						Map<String, String> params = new HashMap<String, String>();
-						params.put("id",result.getGooruOid());
-						params.put("pageSize", "10");
-						params.put("pageNum", "0");
-						params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+						if(result.getCourseGooruOid() != null){
+							params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+						}
+						params.put("id",result.getClassUid());
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 						txtCode.setText("");
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
-						
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
-							StudentAssignmentView.setPublicPage();
-						}else if(result.getStatus().equalsIgnoreCase("active")){
-							StudentAssignmentView.setPublicPageActive();
-						}else {
-							StudentAssignmentView.setPublicPagePending();
-						}	
-						
 					}
 					setEnterLblVisbility(false);
 			}

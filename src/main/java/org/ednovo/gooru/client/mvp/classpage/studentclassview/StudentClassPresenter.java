@@ -36,6 +36,9 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter.IsStudentClassProxy;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport.AssessmentProgressReportChildView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -178,6 +181,15 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		} else {
 			getView().setPreviewClassMode(true);
 		}
+		
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			getView().disableSwitchBtn(false);
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			getView().disableSwitchBtn(false);
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			getView().disableSwitchBtn(true);
+		}
 	}
 
 	@Override
@@ -198,25 +210,24 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 
 	}
 
-	private void getClasspageDetails() {
+	@Override
+	public void getClasspageDetails() {
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
 			@Override
 			public void onSuccess(ClasspageDo result) {
 				classpageDo = result;
 				getView().setCourseData(classpageDo);
-				//setCheckClassVisiblity(classpageDo);
+				setCheckClassVisiblity(classpageDo);
 				studentClassLearningMapPresenter.setClasspageDo(classpageDo);
 				studentClassReportPresenter.setClasspageDo(classpageDo);
-				if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("not-invited")) {
-				//error popup
-				} else if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("pending")) {
-					joinStudentClass();
-				} else if(result.getStatus()!=null&&result.getStatus().equalsIgnoreCase("active")) {
-				//nothing to write
+				if(result.getCourseGooruOid()==null) {
+					getView().setProgressBarVisibility(false);
+				} else {
+					getView().setProgressBarVisibility(true);
 				}
 			}
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 

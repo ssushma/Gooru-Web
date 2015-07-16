@@ -28,14 +28,11 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.MediaUploadServiceAsync;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.classpage.event.setClassImageEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEvent;
-import org.ednovo.gooru.client.mvp.gshelf.IsShelfMainView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.IsCollectionInfoView;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEvent;
@@ -158,8 +155,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					saveImageCollection(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
 
 				}else if(isClassPageImage){
-					//saveImageCollection(getClasspageId(), filename);
-					System.out.println("fileNameWithoutRepository:"+fileNameWithoutRepository);
 					saveImageClass(getClasspageId(), filename);
 				}
 				else if(isQuestionImage){
@@ -341,7 +336,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		AppClientFactory.printInfoLogger("fileName:"+fileName);
 		AppClientFactory.printInfoLogger("classId:"+gooruOid);
 		classpageDo.setMediaFilename(fileName);
-		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, classpageDo, new AsyncCallback<ClasspageDo>() {
+		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, null,null,fileName,null,null,null, new AsyncCallback<ClasspageDo>() {
 			
 			@Override
 			public void onSuccess(ClasspageDo result) {
@@ -449,6 +444,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setCollectionImage(boolean isCollectionImage) {
+		getView().setAspectRatio(1.0f);
 		this.isCollectionImage = isCollectionImage;
 	}
 	

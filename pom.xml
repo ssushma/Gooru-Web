@@ -583,7 +583,6 @@
 							<cssSourceExcludes>
 								<cssSourceExclude>*.min.css</cssSourceExclude>
 								<cssSourceExclude>embed.css</cssSourceExclude>
-								<cssSourceExclude>font-awesome.css</cssSourceExclude>
 							</cssSourceExcludes>
 							<cssFinalFile>main-styles.css</cssFinalFile>
 							<!-- JS Minify -->

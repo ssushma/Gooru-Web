@@ -7,6 +7,7 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -32,6 +33,10 @@ public class FolderInfoWidget extends Composite {
 	@UiField Label lblErrorMessage;
 	@UiField HTMLPanel folderInfo,titleDetailsPnl;
 	@UiField Button saveFolderBtn;
+	
+	FolderDo folderObj;
+	private static final String FOLDER = "Folder";
+	MyCollectionsRightClusterPresenter rightPresenter;
 
 	private static FolderInfoWidgetUiBinder uiBinder = GWT
 			.create(FolderInfoWidgetUiBinder.class);
@@ -72,9 +77,28 @@ public class FolderInfoWidget extends Composite {
 							lblErrorMessage.setVisible(false);
 							String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 							String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-							if(o2==null){
+							String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+							String gooruOid=folderObj.getGooruOid();
+						    if(o3!=null){
+						       updateFolder(o3);
+						    }else if(o2!=null){
+						    	 updateFolder(o2);
+						    }else if(o1!=null){
+						    	updateFolder(o1);
+						    }
+							/*if(o1!=null){
+								updateFolder(o1);
+							}else if(o2!=null)*/
+							
+							/*if(o2==null){
 								createFolder(o1);
-							}
+							}else if(gooruOid==o2){
+								updateFolder(o2);
+							}else if(o2!=null && o3==null){
+								createFolder(o2);
+							}else if(gooruOid==o3){
+								updateFolder(o3);
+							}*/
 						}
 					}
 				});
@@ -90,12 +114,45 @@ public class FolderInfoWidget extends Composite {
 		
 		
 	}
-
+	/**
+	 * To Create folder 
+	 */
 	protected void createFolder(String parentId) {
 		AppClientFactory.getInjector().getfolderService().createFolder(folderTitleTxtBox.getText().trim(), parentId, false, new SimpleAsyncCallback<FolderDo>() {
 
 			@Override
-			public void onSuccess(FolderDo result) {
+			public void onSuccess(FolderDo folderDo) {
+				Map<String, String> params= new HashMap<String, String>();
+				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+				params.put("o2", folderDo.getGooruOid());
+				params.put("view", "Folder");
+				rightPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+				rightPresenter.setTabItems(2, FOLDER, folderDo);
+			}
+		});
+	}
+
+	public void setData(FolderDo folderObj, MyCollectionsRightClusterPresenter rightPresenter) {
+		this.folderObj=folderObj;
+		this.rightPresenter=rightPresenter;
+		if(folderObj!=null){
+			folderTitleTxtBox.setText(folderObj.getTitle());
+		}
+		
+	}
+	/**
+	 * To update the folder details.
+	 * @param folderId 
+	 */
+	protected void updateFolder(String folderId) {
+		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, folderTitleTxtBox.getText().trim(), null, null, null, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				folderObj.setTitle(folderTitleTxtBox.getText());
+				folderObj.setType("folder");
+				rightPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false);
+				rightPresenter.setTabItems(2, FOLDER, folderObj);
 			}
 		});
 	}

@@ -106,6 +106,9 @@
 	margin:15px 0;
 	font-size:24px;
 	font-weight:bold;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .standardBlueBand .rightWhiteBox, .standardBlueBand .settingsMenu{
@@ -1160,6 +1163,9 @@ select option {
 .rosterContainer .inviteBox {
     position: relative;
 }
+.rosterContainer .inviteBox .token-input-input-token-gooru .gwt-SuggestBox{
+    height: 27px;
+}
 .rosterContainer .inviteBox .form-control {
     font-size: 12px;
     width: 90%;
@@ -1324,6 +1330,7 @@ select option {
 }
 .rosterContainer .classSettingsInner p{
 	margin-bottom: 5px;
+	font-weight: bold;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     .studentsMenuBlock .studentsLeftMenu {
@@ -1592,3 +1599,361 @@ select option {
 	background:#f5f5f5;
 }
 
+
+/** new empty class css**/
+
+
+#getStartedContainer .gettingStartedMain h1 {
+    color: #515151;
+    margin: 0;
+    padding: 30px 0;
+	font-size:24px;
+    text-align: center;
+	font-family:"Arvo",serif;
+}
+
+#getStartedContainer .gettingStartedMain .emptyClass{
+	width:660px;
+	padding:50px 50px 20px 50px;
+	border-radius:4px 4px;
+	margin:0 auto 50px auto;
+	background:url(${cdn.endpoint}/images/GettingStarted.png) no-repeat center center;
+	box-shadow:0 0 4px #cccccc;
+}
+#getStartedContainer .gettingStartedMain .emptyClass p{
+	margin:0 0 5px 0;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .addCourse{
+	margin-right:60px;
+	margin-bottom:35px;
+}
+
+#getStartedContainer .gettingStartedMain .emptyClass .addStudents{
+	margin-right:60px;
+
+}
+
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents{
+text-align:left;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents p{
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span{
+
+	display:block;
+	margin-left:50px;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span .img-responsive{
+	display:inline-block;
+	
+}
+
+#getStartedContainer .gettingStartedMain .findout{
+	margin:60px 0 0 0;
+	text-align:right;
+}
+#getStartedContainer .gettingStartedMain .findout a:hover, #getStartedContainer .gettingStartedMain .findout a:focus{
+	text-decoration:none;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+	 #getStartedContainer .gettingStartedMain .emptyClass{
+		margin-left: 10px;
+    margin-right: 10px;
+    width: auto;
+	padding:20px 20px;
+	}
+	#getStartedContainer .gettingStartedMain .emptyClass .addCourse {
+    margin: 0 0 30px 0;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .addStudents {
+     margin: 0 0 30px 0;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents {
+    text-align: center;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span {
+    margin-left:0;
+}
+#getStartedContainer .gettingStartedMain .findout {
+    margin: 40px 0 0;
+    text-align: center;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 #getStartedContainer .gettingStartedMain .emptyClass{
+		margin-left: 10px;
+    margin-right: 10px;
+    width: auto;
+	}
+	#getStartedContainer .gettingStartedMain .emptyClass .addCourse {
+    margin: 0 50px 30px;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .addStudents {
+    margin: 0 50px 30px;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents {
+    text-align: center;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span {
+    margin-left:0;
+}
+#getStartedContainer .gettingStartedMain .findout {
+    margin: 40px 0 0;
+    text-align: center;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	  #getStartedContainer .gettingStartedMain .emptyClass{
+		margin-left: 10px;
+    margin-right: 10px;
+    width: auto;
+	}
+		#getStartedContainer .gettingStartedMain .emptyClass .addCourse {
+    margin: 0 0px 30px;
+
+}
+	#getStartedContainer .gettingStartedMain .emptyClass .addStudents {
+    margin: 0 0px 60px;
+
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents {
+    text-align: center;
+}
+#getStartedContainer .gettingStartedMain .emptyClass .measureStudents span {
+ 
+    margin-left: 0;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+
+
+/** new myclasses home landing page css**/
+
+.myClassesLanding .classBlocks .classBlockInner {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(81, 81, 81, 0.3);
+    border-radius: 0 0 5px 5px;
+    margin-bottom: 30px;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockBody {
+    height: 77px;
+   /*  background: url(../images/default-classpage.png) no-repeat center center; */
+    background-size: cover;
+    position: relative;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockBody.scienceGrade {
+    background: url(../images/science-grade.png) no-repeat center center;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockBody:before {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockBody h4 {
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 999;
+    position: absolute;
+    margin: 30px 0;
+    display: inline-block;
+    width: 100%;
+    top:0;
+    left: 0;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockFooter {
+    text-align: center;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockFooter img {
+    border-radius: 50px;
+    box-shadow: 0 0 0 2px #87badd;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockFooter span {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px;
+    font-weight: bold;
+}
+.myClassesLanding .classBlocks .classBlockInner .blockFooter span.devider {
+    border-right: 1px solid #999999;
+    font-size: 16px;
+    font-weight: normal;
+    height: 30px;
+    min-height:30px;
+    margin-bottom: 5px;
+    margin-left: 8px;
+    margin-top: 5px;
+}
+.myClassesLanding .myClassesHeader h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+.myClassesLanding .myClassesTabs {
+    margin-top: 25px;
+    background: #ffffff;
+    border-radius: 4px 4px;
+}
+.myClassesLanding .myClassesTabs a {
+    display: table-cell;
+    padding: 12px 30px;
+    font-size: 16px;
+    color: #515151;
+}
+.myClassesLanding .myClassesTabs a:hover,
+.myClassesLanding .myClassesTabs a:focus {
+    text-decoration: none;
+    background: #e5f1f8;
+    color: #0074c6;
+}
+.myClassesLanding .myClassesTabs a.active {
+    text-decoration: none;
+    background: #e5f1f8;
+    color: #0074c6;
+}
+.myClassesLanding .myClassesAlert {
+    margin-top: 15px;
+    background: #ffffff;
+    border-radius: 4px 4px;
+    padding: 13px 13px;
+}
+.myClassesLanding .myClassesAlert .alertIcon {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50px;
+}
+.myClassesLanding .myClassesAlert .alertText {
+    display: table-cell;
+    vertical-align: middle;
+}
+.myClassesLanding .myClassesAlert .alertText p {
+    color: #515151;
+    margin: 0 0;
+}
+.myClassesLanding .myClassesHeader{
+	margin:50px 0 0 0;
+}
+.myClassesLanding .classcodeBox .form-control {
+    border-radius: 0;
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 15px;
+    width: auto;
+}
+.myClassesLanding .classcodeBox {
+    text-align: right;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+    .myClassesLanding .myClassesTabs a {
+        display: table-cell;
+        width: 1%;
+    }
+    .myClassesLanding .myClassesHeader h3 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockBody {
+        height: 40px;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockBody img{
+        height: 40px !important;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockBody h4 {
+        margin: 11px 0;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockFooter img {
+        width: 20px;
+        height: 20px;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockFooter span.devider {
+        height: 20px;
+    }
+    .classcodeBox {
+	    text-align: center;
+	}
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .myClassesLanding .myClassesTabs a {
+        display: table-cell;
+        width: 1%;
+    }
+    .myClassesLanding .myClassesHeader h3 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockBody {
+        height: 40px;
+    }
+     .myClassesLanding .classBlocks .classBlockInner .blockBody img{
+        height: 40px !important;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockBody h4 {
+        margin: 11px 0;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockFooter img {
+        width: 20px;
+        height: 20px;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockFooter span.devider {
+        height: 20px;
+    }
+    .classcodeBox {
+	    text-align: center;
+	}
+}
+@media (min-width: 480px) and (max-width: 767px) {
+	 .classcodeBox {
+    text-align: center;
+}
+}
+/*
+@media only screen and (max-width: 767px){
+	
+	
+}*/
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .myClassesLanding .myClassesHeader {
+        margin: 26px 0 0 0;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .classcodeBox {
+    text-align: center;
+} .blockBody {
+        height: 40px;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockBody h4 {
+        margin: 11px 0;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockFooter img {
+        width: 20px;
+        height: 20px;
+    }
+    .myClassesLanding .classBlocks .classBlockInner .blockFooter span.devider {
+        height: 30px;
+    }
+}
+
+.dividerStyle{
+	min-height: 42px;
+	line-height: 42px;
+}

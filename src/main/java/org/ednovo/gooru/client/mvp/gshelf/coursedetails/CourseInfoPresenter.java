@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -92,7 +93,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 	@Override
 	public void callTaxonomyService(int classifierId) {
-		getTaxonomyService().getSubjectsList(classifierId, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(classifierId, SUBJECT, 0, 30, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				getView().setCourseList(result);
@@ -104,7 +105,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final int selectedId) {
-		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 10, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 30, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
@@ -148,11 +149,13 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
+		createObj.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
 		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				folderDo.setTitle(createObj.getTitle());
 				folderDo.setType(COURSE);
+				folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
@@ -177,10 +180,11 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 	
 	public void setAudienceDetails(){
-	AppClientFactory.getInjector().getfolderService().getAudienceList(new AsyncCallback<List<ListValuesDo>>() {
+		AppClientFactory.getInjector().getfolderService().getAudienceList(new AsyncCallback<List<ListValuesDo>>() {
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
 				getView().getAudienceContainer().init(result);
+				getView().getAudienceContainer().setFolderDetails(getView().getCourseDetails());
 			}
 			@Override
 			public void onFailure(Throwable caught) {

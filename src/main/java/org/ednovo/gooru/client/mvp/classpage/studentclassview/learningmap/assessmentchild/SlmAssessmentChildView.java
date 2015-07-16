@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.SlmExternalAssessmentForm;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
@@ -52,7 +53,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -78,7 +78,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	
 	@UiField Image contentImage;
 	
-	@UiField Button playBtn;
+	@UiField HTMLEventPanel viewReport;
 	
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
@@ -100,8 +100,12 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(planContentDo);
-		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
-		playBtn.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+		
+		if(!(planContentDo.getCollectionType()!=null&&planContentDo.getCollectionType().equalsIgnoreCase("assessment/url"))) {
+			viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
+			contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+			contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+		}
 	}
 	
 	public void setData(final PlanContentDo planContentDo) {
@@ -126,17 +130,16 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 				setDefaultThumbnail(collectionType);
 			}
 		});
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
-			playBtn.addStyleName("previewPlayerAssessmentBtn");
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment/url"))) {
+			reportView.clear();
+			reportView.add(new SlmExternalAssessmentForm(planContentDo.getProgress()));
+		} else if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
 			imageContainer.setStyleName("assessmentImageContainer");
-			playBtn.setText("Take Assessment");
 			timeSpentLbl.setText("Score");
 			lastAccessedLbl.setText("Last Attempted");
 			timeSpent.setText(planContentDo.getProgress().getScoreInPercentage()+"%");
 		} else {
-			playBtn.addStyleName("previewPlayerStudyBtn");
 			imageContainer.setStyleName("collectionImageContainer");
-			playBtn.setText("Study");
 			timeSpentLbl.setText("Total Time Spent");
 			lastAccessedLbl.setText("Last Viewed");
 			timeSpent.setText(StringUtil.getFormattedDate(planContentDo.getProgress().getTimespent(), ""));
@@ -150,17 +153,42 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			lastAccessed = AnalyticsUtil.getCreatedTime(Long.toString(planContentDo.getProgress().getLastAccessed()));
 		}
 		lastSession.setText(lastAccessed);
-		setResourceData(planContentDo.getItems());
+		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment/url")) {
+			resourceImgContainer.setVisible(false);
+		} else {
+			setResourceData(planContentDo.getItems());
+		}
 	}
 	
 	private void setDefaultThumbnail(String collectionType) {
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
 			contentImage.setUrl(DEFAULT_ASSESSMENT_IMAGE);
 		} else {
 			contentImage.setUrl(DEFAULT_COLLECTION_IMAGE);
 		}
 	}
 	
+	public class IndividualReportView implements ClickHandler {
+		private String type = "collection";
+		private String gooruOid = null;
+		
+		public IndividualReportView(String gooruOid, String type) {
+			if(type!=null) {
+				this.type = type;
+			}
+			this.gooruOid = gooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,type);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, gooruOid);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_TAB,UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}
+	}
+
 	public class PlayClassContent implements ClickHandler {
 
 		private String type = "collection";
@@ -186,7 +214,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			Map<String,String> params = new LinkedHashMap<String,String>();
 
 			String token = PlaceTokens.ASSESSMENT_PLAY;
-
+			
 			if(type.equalsIgnoreCase("assessment")) {
 				token = PlaceTokens.ASSESSMENT_PLAY;
 				if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
@@ -205,7 +233,10 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			params.put("lessonId", lessonId);
 			
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
-			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			if(!type.equalsIgnoreCase("assessment/url")) {
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
+			
 		}
 	}
 
