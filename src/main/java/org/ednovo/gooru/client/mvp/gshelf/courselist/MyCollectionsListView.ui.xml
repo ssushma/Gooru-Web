@@ -7,7 +7,7 @@
 	<g:HTMLPanel ui:field="courseListContainer">
 		<g:HTMLPanel styleName="courseHeader" ui:field="pnlH2TitleContainer">
 			<panel:H2Panel styleName="inlineBlock" ui:field="h2Title" />
-			<g:HTMLPanel styleName="inlineBlock">
+			<g:HTMLPanel styleName="inlineBlock" ui:field="collectionLevelPnl">
 			    <g:Button styleName="primary createButton" ui:field="createCollectionBtn" text="{i18n.GL1451}" title="{i18n.GL1451}" />
 			    <g:Button styleName="primary createButton" ui:field="createAssessmentBtn" text="{i18n.GL3024}" title="{i18n.GL3024}"  />
 			</g:HTMLPanel>

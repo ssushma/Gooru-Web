@@ -298,7 +298,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				courseList.add(courseObj);
 			}
 		}
-		courseObjG.setStandards(courseList);
+		if(courseObjG!=null){
+			courseObjG.setStandards(courseList);
+		}
+		
 		return taxonomyCourseIds;
 	}
 		

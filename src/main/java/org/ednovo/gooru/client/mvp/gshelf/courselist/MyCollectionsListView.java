@@ -63,7 +63,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
@@ -149,6 +149,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
+			collectionLevelPnl.setVisible(false);
 			lblTitle.setVisible(true);
 			lblTitle.setText(StringUtil.capitalizeFirstLetter(folderDo.getType())+": "+folderDo.getTitle());
 			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
@@ -162,13 +163,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}
 			setCreateText(type);
 		}else{
-			System.out.println("type::"+type);
 			if(COURSE.equalsIgnoreCase(type)){
 				enableCreateButtons(false);
 				h2Title.setText(i18n.GL1180());
 				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				enableCreateButtons(true);
+				collectionLevelPnl.setVisible(true);
 				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 				btnCreate.setVisible(false);
@@ -304,11 +305,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	@UiHandler("createCollectionBtn")
 	public void clickOnCollection(ClickEvent clickEvent){
-		getUiHandlers().addNewContent(createCollectionBtn.getText());
+		//getUiHandlers().addNewContent(createCollectionBtn.getText());
 	}
 	@UiHandler("createAssessmentBtn")
 	public void clickOnAssessment(ClickEvent clickEvent){
-		getUiHandlers().addNewContent(createCollectionBtn.getText());
+		//getUiHandlers().addNewContent(createCollectionBtn.getText());
 	}
 	/**
 	 * This method is used to set the create text
