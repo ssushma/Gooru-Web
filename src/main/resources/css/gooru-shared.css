@@ -576,6 +576,9 @@
 	padding: 12px;
 	font-weight: bold;
 }
+.remixPopupTabPnlStyle:hover{
+	background: #4c98cc;
+}
 .remixPopupTabPnlStyle.selected{
 	background: #4c98cc;
 }

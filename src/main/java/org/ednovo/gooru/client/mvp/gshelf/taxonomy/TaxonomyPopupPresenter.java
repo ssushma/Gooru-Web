@@ -108,7 +108,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							@Override
 							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
 								getView().addTaxonomyDomains(taxonomyDomainList);
-								if("Unit".equalsIgnoreCase("Unit")){
+								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Unit")){
 //									getView().displaySelectedTaxonomyData(ulSelectedItems);	
 									getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 								}

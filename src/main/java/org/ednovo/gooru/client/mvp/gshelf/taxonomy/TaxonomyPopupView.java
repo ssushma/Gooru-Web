@@ -16,6 +16,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -327,12 +328,15 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		
 		for(DomainStandardsDo domainStandardsDo:taxonomyStdList){
 			LiPanel liPanel=new LiPanel();
+
 			HTMLEventPanel htmlPanel = new HTMLEventPanel("");
 			Anchor title=new Anchor(domainStandardsDo.getCode());
 			Label lblStandardDesc = new Label();
 			lblStandardDesc.setText(domainStandardsDo.getLabel());			
 			Label lblStandardcode = new Label();
 			lblStandardcode.setText(domainStandardsDo.getCode());
+			
+
 
 			liPanel.setCodeId(domainStandardsDo.getCodeId());
 			if(!domainStandardsDo.getCode().contains("Math"))
@@ -347,6 +351,34 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			htmlPanel.add(lblStandardDesc);	
 			htmlPanel.setStyleName("standardDiv");
 			}
+			
+			
+			if(domainStandardsDo.getTypeId()!=null)
+			{
+				if(domainStandardsDo.getTypeId().equals(1))
+				{
+					
+				}
+				else if(domainStandardsDo.getTypeId().equals(2))
+				{
+					htmlPanel.setStyleName("standardDivSub");	
+				}
+				else if(domainStandardsDo.getTypeId().equals(3))
+				{
+					htmlPanel.setStyleName("standardDivSubSub");	
+				}
+				else
+				{
+					htmlPanel.setStyleName("standardDiv");
+				}
+				
+			}
+			else
+			{
+				htmlPanel.setStyleName("standardDiv");
+			}
+			
+			
 			liPanel.add(htmlPanel);
 			standardsUlContainer.add(liPanel);
 			displaysubTaxonomyStandards(domainStandardsDo.getNode());
