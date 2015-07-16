@@ -8,6 +8,8 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -17,19 +19,25 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class StudentClassLearningMapCircle extends Composite {
-
+	
 	@UiField HTMLEventPanel circleField;
 	@UiField SpanPanel spanTxt;
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
+	
+	private String unitId = null, lessonId = null;
 	
 	private static StudentClassLearningMapCircleUiBinder uiBinder = GWT.create(StudentClassLearningMapCircleUiBinder.class);
 	
 	interface StudentClassLearningMapCircleUiBinder extends UiBinder<Widget, StudentClassLearningMapCircle> {}
 
-	public StudentClassLearningMapCircle(PlanProgressDo planProgressDo) {
+	public StudentClassLearningMapCircle(PlanProgressDo planProgressDo, String unitId) {
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		this.unitId = unitId;
+		this.lessonId = planProgressDo.getGooruOId();
 		
 		String circleType = "";
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
@@ -46,6 +54,7 @@ public class StudentClassLearningMapCircle extends Composite {
 		String lessonName = planProgressDo.getTitle();
 		circleField.addMouseOverHandler(new MouseOverShowClassCodeToolTip(lessonName));
 		circleField.addMouseOutHandler(new MouseOutHideToolTip());
+		circleField.addClickHandler(new LessonViewNavigation());
 		if(!circleType.isEmpty()) {
 			circleField.setStyleName(circleType);
 		}
@@ -71,6 +80,17 @@ public class StudentClassLearningMapCircle extends Composite {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
+		}
+	}
+	
+	public class LessonViewNavigation implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, unitId);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, lessonId);
+			AppClientFactory.getPlaceManager().revealPlace(request);			
 		}
 	}
 }

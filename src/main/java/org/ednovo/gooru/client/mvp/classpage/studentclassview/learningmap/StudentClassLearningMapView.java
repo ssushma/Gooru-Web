@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild.SlmAssessmentChildView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapContainer;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLessonContainer;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentEmptyClassContainer;
 import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -64,6 +65,8 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	
 	@UiField LoadingUc cropImageLoading;
 	
+	@UiField StudentEmptyClassContainer emptyContainer;
+	
 	String allContentStr = null, previousContentStr = null, nextContentStr = null;
 	
 	private static final String ALL = "all";
@@ -82,6 +85,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	private void setDebugIds() {
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
+		setEmptyContainerVisiblity(false);
 	}
 	
 	@Override
@@ -103,22 +107,31 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		}
 		
 		int size = dataList.size();
-		
-		if(pageView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
-			setScoreMapVisiblity(true);
-			if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-				setTextPanelsVisiblity(false,true,false,false);
+		setScoreMapVisiblity(true);
+		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			setTextPanelsVisiblity(false,true,false,false);
+			if(size>0) {
 				for(int i=0;i<size;i++) {
 					learningMapContainer.add(new StudentClassLearningMapContainer(dataList.get(i), i));
 				}
-			} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-				setTextPanelsVisiblity(true,true,false,true);
+				setContentVisiblity(true);
+			} else {
+				setEmptyContainerVisiblity(true);
+			}
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			setTextPanelsVisiblity(true,true,false,true);
+			if(size>0) {
 				for(int i=0;i<size;i++) {
 					learningMapContainer.add(new StudentClassLessonContainer(dataList.get(i), i+1, status, userId));
 				}
+				setContentVisiblity(true);
+			} else {
+				containerData.setVisible(true);
+				setEmptyContainerVisiblity(true);
 			}
+		} else {
+			setEmptyContainerVisiblity(true);
 		}
-		setContentVisiblity(true);
 	}
 	
 	@UiHandler("allContentPanel")
@@ -136,7 +149,6 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	
 	@Override
 	public void setContent(ArrayList<PlanProgressDo> dataList, String status, String userId) {
-		setContentVisiblity(false);
 		getContentData(dataList, status, userId);
 	}
 	
@@ -171,11 +183,13 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW, params);
 	}
 	
-	private void setContentVisiblity(boolean isVisible) {
+	@Override
+	public void setContentVisiblity(boolean isVisible) {
 		containerData.setVisible(isVisible);
 		cropImageLoading.setVisible(!isVisible);
+		emptyContainer.setVisible(false);
 	}
-
+	
 	private void setScoreMapVisiblity(boolean isVisible) {
 		learnMapScore.setVisible(isVisible);
 	}
@@ -290,13 +304,28 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		}
 		
 		int size = collectionList.getItems().size();
-		setScoreMapVisiblity(true);
-		setTextPanelsVisiblity(true,true,true,true);
-		for(int i=0;i<size;i++) {
-			learningMapContainer.add(new SlmAssessmentChildView(collectionList.getItems().get(i), status, userId));
+		setTextPanelsVisiblity(true,true,false,true);
+		if(size>0) {
+			setScoreMapVisiblity(true);
+			for(int i=0;i<size;i++) {
+				learningMapContainer.add(new SlmAssessmentChildView(collectionList.getItems().get(i), status, userId));
+			}
+			setContentVisiblity(true);
+		} else {
+			containerData.setVisible(true);
+			setEmptyContainerVisiblity(true);
 		}
-		setContentVisiblity(true);
+		
 	}
 
-
+	@Override
+	public void setEmptyContainerVisiblity(boolean isVisible) {
+		cropImageLoading.setVisible(!isVisible);
+		emptyContainer.setVisible(isVisible);
+	}
+	
+	@Override
+	public void setEmptyContainerText(String userName) {
+		emptyContainer.setUserName(userName);
+	}
 }
