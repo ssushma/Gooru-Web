@@ -163,11 +163,9 @@ public class PlayerDataLogEvents {
 	public static final String SEARCHTERM="searchTerm";
 	public static final String RATE="rate";
 	public static final String PREVIOUS_RATE="previousRate";
-
-
-
-
-
+	public static final String EVIDENCE="evidence";
+	public static final String SCORE_IN_PERCENTAGE="scoreInPercentage";
+	
 	public static void collectionStartStopEvent(JSONObject collectionDataLogEventMap){
 		AppClientFactory.printInfoLogger("--- "+collectionDataLogEventMap.get("eventName")+" event data --->> \n"+collectionDataLogEventMap.toString()+"\n");
 		AppClientFactory.printInfoLogger("--- All data is sent to trigger et.data push --- \n");

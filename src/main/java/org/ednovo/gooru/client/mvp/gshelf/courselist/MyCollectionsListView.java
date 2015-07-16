@@ -201,12 +201,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
+							String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
 							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex);
+							if(FOLDER.equalsIgnoreCase(view)){
+								moveId=moveGooruOId;
+							}
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
@@ -332,7 +336,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			if(o3!=null){
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+			lblAddNewForResource.setText(i18n.GL1451());
+			lblAddNewForQuestion.setText(i18n.GL3024());
+			/*if(o3!=null){
 				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 				btnCreate.setVisible(false);
@@ -340,14 +350,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				lblAddNewForResource.setText(i18n.GL1451());
 				lblAddNewForQuestion.setText(i18n.GL3024());
 			}else if(o2!=null || o1!=null){
-				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
-				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
-				btnCreate.setVisible(true);
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+				btnCreate.setVisible(false);
 				lblAddNew.setVisible(false);
-				btnCreate.setText(i18n.GL3024());
-				lblAddNewForResource.setText(i18n.GL1450());
-				lblAddNewForQuestion.setText(i18n.GL1451());
-			}
+				//btnCreate.setText(i18n.GL3024());
+				lblAddNewForResource.setText(i18n.GL1451());
+				lblAddNewForQuestion.setText(i18n.GL3024());
+			}*/
 			/*btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			lblAddNewForResource.setText(i18n.GL1450());

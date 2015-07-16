@@ -86,6 +86,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	final String COURSE="Course";
 
 	private String UNIT = "Unit";
+	
+	private String VIEW ="view";
+	
+	private static final String FOLDER = "Folder";
 
 	private String type;
 
@@ -188,24 +192,58 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);	
-		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
-			@Override
-			public void onSuccess(FolderDo result) {				
-				Map<String, String> params= new HashMap<String, String>();
+		String parentId = null;
+		if(getViewType().equalsIgnoreCase(FOLDER)){
+			final Map<String, String> params= new HashMap<String, String>();
+			if(o3!=null){
 				params.put(O1_LEVEL, o1);
 				params.put(O2_LEVEL, o2);
 				params.put(O3_LEVEL, o3);
-				params.put("id", result.getGooruOid());
-				params.put("view", "course");
-
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
-				myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				parentId=o3;
+			}else if(o2!=null){
+				params.put(O1_LEVEL, o1);
+				params.put(O2_LEVEL, o2);
+				parentId=o2;
+			}else if(o1!=null){
+				parentId=o1;
+				params.put(O1_LEVEL, o1);
 			}
-		});
+			AppClientFactory.getInjector().getfolderService().createCollection(createObj, parentId, false, new SimpleAsyncCallback<FolderDo>() {
+
+				@Override
+				public void onSuccess(FolderDo result) {
+					params.put("id", result.getGooruOid());
+					params.put("view", FOLDER);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
+					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				}
+			});
+		}else{
+			AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
+				@Override
+				public void onSuccess(FolderDo result) {				
+					Map<String, String> params= new HashMap<String, String>();
+					params.put(O1_LEVEL, o1);
+					params.put(O2_LEVEL, o2);
+					params.put(O3_LEVEL, o3);
+					params.put("id", result.getGooruOid());
+					params.put("view", "course");
+
+					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
+					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				}
+			});
+		}
+		
+		
 	}
+
+	/*private void createCollectionInFolder() {
+		AppClientFactory.getInjector().getfolderService().createCollectionInParent(data, courseCodeId, folderId, simpleAsyncCallback)
+	}*/
 
 	public void setMyCollectionRightClusterPresenter(
 			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
@@ -232,21 +270,41 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		createDo.setDepthOfKnowledgeIds(StringUtil.getKeys(getView().getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 		createDo.setSkillIds(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
 		createDo.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
-		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				folderDo.setTitle(createDo.getTitle());
-				folderDo.setCollectionType(createDo.getCollectionType());
-				folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
-				folderDo.setDepthOfKnowledge(StringUtil.getCheckBoxSelectedDo(getView().getDepthOfKnowledgeContainer().getSelectedValue()));
-				folderDo.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
-				folderDo.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
-				myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
-				AppClientFactory.getPlaceManager().revealCurrentPlace();
-			}
-		});
+		folderDo.setTitle(createDo.getTitle());
+		folderDo.setCollectionType(createDo.getCollectionType());
+		folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
+		folderDo.setDepthOfKnowledge(StringUtil.getCheckBoxSelectedDo(getView().getDepthOfKnowledgeContainer().getSelectedValue()));
+		folderDo.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
+		folderDo.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
+		if(getViewType().equalsIgnoreCase(FOLDER)){
+			getFolderServiceAsync().updateCollectionDetails(createDo,id, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
+					
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
+					AppClientFactory.getPlaceManager().revealCurrentPlace();
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					AppClientFactory.printInfoLogger("I am In updateCollectionDetails Failure ");
+				}
+			});
+		}else{
+			AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
+					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
+					AppClientFactory.getPlaceManager().revealCurrentPlace();
+				}
+			});
+		}
+		
+		
+		
 	}
 
 	@Override
@@ -370,7 +428,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 					// TODO Auto-generated method stub
 
-					AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
+					AppClientFactory.printInfoLogger("I am In updateCollectionDetails Failure ");
 
 				}
 			});
@@ -403,4 +461,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
 		getView().addTaxonomyData(liPanelWithCloseArray);
 	}
+ 	/**
+   	 * @return viewType
+   	 */
+   	public String getViewType(){
+   		String view =AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		return view==null?COURSE:view;
+   	}
 }

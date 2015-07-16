@@ -66,7 +66,7 @@ public class StudentClassLessonContainer extends Composite {
 			for(int i=0;i<size;i++) {
 				PlanProgressDo planDo = dataList.get(i);
 				String styleName = "blueBorder ";
-				if(planDo.getType()!=null&&planDo.getType().equalsIgnoreCase("assessment")) {
+				if(planDo.getType()!=null&&(planDo.getType().equalsIgnoreCase("assessment")||planDo.getType().equalsIgnoreCase("assessment/url"))) {
 					styleName = "orgBorder ";
 				}
 				if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {

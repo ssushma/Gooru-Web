@@ -204,7 +204,7 @@
     vertical-align: middle;
 }
 .LearningMapContainer .topBackLinkBox div span.left-arrow {
-    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
     width: 18px;
     height: 25px;
 }
@@ -213,7 +213,7 @@
     text-decoration: none;
 }
 .LearningMapContainer .headerBackLinkBox div {
-    font-size: 20px;
+    font-size: 18px;
     color: #515151;
 }
 .LearningMapContainer .headerBackLinkBox div span {
@@ -221,7 +221,7 @@
     vertical-align: middle;
 }
 .LearningMapContainer .headerBackLinkBox div span.left-arrow {
-    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
     width: 18px;
     height: 25px;
 }
@@ -233,7 +233,7 @@
     text-align: right;
 }
 .LearningMapContainer .headerNextLinkBox div {
-    font-size: 20px;
+    font-size: 18px;
     color: #515151;
 }
 .LearningMapContainer .headerNextLinkBox div span {
@@ -1205,6 +1205,15 @@ th.headcol.whitebg {
 	color:#a5cba1;
 	padding:0 0 !important;
 }
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .percentLbl{
+	color: #85B9DF;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .textBoxPadding{
+	margin-bottom: 5px;
+}
 .lesson-view-data .resourceImgContainer{
 	padding:5px 18px;
 	border-spacing:10px;
@@ -1361,6 +1370,18 @@ th.headcol.whitebg {
 	text-align:center;
 	margin: 0 0 10px;
 }
+.student-view-popup-modal .student-report-details-popup-panel img {
+	margin-top: 0px;
+}
+.student-view-popup-modal .student-report-details-popup-panel .rowContainer:last-child {
+    border-bottom: 1px solid #ddd;
+}
+.student-view-popup-modal .learningHeaderBlock .scoreStatus {
+    margin-right: 0px;
+}
+.student-view-popup-modal .statusScrollContainer {
+	
+}
 @media (min-width: 240px) and (max-width: 319px) {
     .learningHeaderBlock .indicationBox div {
         margin: 5px 0;
@@ -1390,6 +1411,9 @@ th.headcol.whitebg {
     }
     .bannerImg {
         display: none;
+    }
+    .student-view-popup-modal .learningHeaderBlock .scoreStatus {
+		margin-bottom: 15px;    
     }
 }
 @media (min-width: 320px) and (max-width: 479px) {
@@ -1439,6 +1463,9 @@ th.headcol.whitebg {
     .bannerImg {
         display: none;
     }
+    .student-view-popup-modal .learningHeaderBlock .scoreStatus {
+		margin-bottom: 15px;    
+    }
 }
 @media (min-width: 480px) and (max-width: 767px) {
     .student-blueBand .col-md-6-reset {
@@ -1463,6 +1490,9 @@ th.headcol.whitebg {
     }
     .bannerImg {
         display: none;
+    }
+    .student-view-popup-modal .learningHeaderBlock .scoreStatus {
+		margin-bottom: 15px;    
     }
 }
 @media (max-width: 767px) {
@@ -1890,7 +1920,7 @@ th.headcol.whitebg {
     margin-top: 20px;
 }
 .classProgressIndications .studentCourseReportProgressHeader {
-    font-size: 22px;
+    font-size: 18px;
     color: #515151;
     padding: 14px 15px;
     display: table;
@@ -1900,7 +1930,7 @@ th.headcol.whitebg {
 	  vertical-align: middle;
 }
 .classProgressIndications .studentCourseReportProgressHeader span.left-arrow {
-	  background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+	  background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
 	  width: 18px;
 	  height: 25px;
 	  display: table-cell;
@@ -1981,6 +2011,7 @@ th.headcol.whitebg {
     vertical-align: middle;
     text-align: center;
     color: #515151;
+    width: 45%;
 }
 .wrapCirclesViews h3 {
     margin: 0 0;
@@ -2163,6 +2194,9 @@ th.headcol.whitebg {
 }
 .padding-top-5 {
 	padding-top: 5px;
+}
+.padding-top-10 {
+	padding-top: 10px;
 }
 .margin-top-20 {
 	margin-top: 20px;
@@ -2559,7 +2593,7 @@ th.headcol.whitebg {
     display: block;
 }
 .classProgressIndications .topBackLinkBox a span.left-arrow {
-    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
     height: 25px;
     width: 25px;
 }
@@ -2579,7 +2613,7 @@ th.headcol.whitebg {
     display: block;
 }
 .studentUnitReportViewContainer .headerBackLinkBox a span.left-arrow {
-    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -320px -326px;
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -332px -326px;
     height: 25px;
     width: 25px;
 }
@@ -2679,18 +2713,18 @@ th.headcol.whitebg {
     position: relative;
 }
 .rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollLeftArrow {
-    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -320px -326px;
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -324px -326px;
     height: 25px;
     width: 25px;
     left: -2%;
-    top: 45%;
+    top: 38%;
 }
 .rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollRightArrow {
-    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -339px -326px;
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -349px -326px;
     height: 25px;
     width: 25px;
     right: -2%;
-    top: 45%;
+    top: 38%;
 }
 .rowContainer .statusScrollContainer .statusScrollscrollInnerBlock div.itemList {
     float: left;
