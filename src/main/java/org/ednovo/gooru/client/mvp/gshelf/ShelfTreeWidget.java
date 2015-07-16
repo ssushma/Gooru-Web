@@ -288,7 +288,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else if(!type.equalsIgnoreCase(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
-		if(type.equalsIgnoreCase(FOLDER)){
+		if(type.equalsIgnoreCase(COLLECTION) || type.contains(ASSESSMENT)){
 			String style=nextLevel==2?"parent":"child";
 			titleFocPanel.addStyleName(style);
 		}
