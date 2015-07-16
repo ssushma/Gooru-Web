@@ -312,5 +312,8 @@
 					</div>
 				</div>
 		</footer>
+		<g:HTMLPanel ui:field="flexTable">
+
+		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
