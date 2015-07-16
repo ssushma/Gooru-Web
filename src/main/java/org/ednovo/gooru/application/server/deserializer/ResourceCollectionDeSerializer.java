@@ -414,7 +414,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			logger.error("Exception::", e2);
 		}
 
-		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
+		resourceDo.setDepthOfKnowledge(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
 		UserDo ownerDo = new UserDo();
 			try {
 				JSONObject createrObject = new JSONObject(getJsonString(recordJsonObject, CREATOR));

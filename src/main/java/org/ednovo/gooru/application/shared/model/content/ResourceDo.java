@@ -239,7 +239,7 @@ public class ResourceDo extends ContentDo {
 
 	private ArrayList<checkboxSelectedDo> momentsOfLearning;
 	private ArrayList<checkboxSelectedDo> educationalUse;
-	private List<checkboxSelectedDo> depthOfKnowledges;
+	private List<checkboxSelectedDo> depthOfKnowledge;
 
 	/**
 	 * This method is to get the encodedUrl
@@ -535,11 +535,11 @@ public class ResourceDo extends ContentDo {
 	public void setEducationalUse(ArrayList<checkboxSelectedDo> educationalUse) {
 		this.educationalUse = educationalUse;
 	}
-	public List<checkboxSelectedDo> getDepthOfKnowledges() {
-		return depthOfKnowledges;
+	public List<checkboxSelectedDo> getDepthOfKnowledge() {
+		return depthOfKnowledge;
 	}
-	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
-		this.depthOfKnowledges = depthOfKnowledges;
+	public void setDepthOfKnowledge(List<checkboxSelectedDo> depthOfKnowledge) {
+		this.depthOfKnowledge = depthOfKnowledge;
 	}
 
 	public UserDo getUser() {

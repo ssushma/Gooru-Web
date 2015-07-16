@@ -441,7 +441,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 	}
 	
-	@Override
+	/*@Override
 	public void addTaxonomyData(UlPanel selectedUlContainer) {
 		Iterator<Widget> widgets = selectedUlContainer.iterator();
 		while(widgets.hasNext()){
@@ -449,6 +449,13 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			if(widget instanceof LiPanelWithClose){
 				ulSelectedItems.add(widget);
 			}
+		}
+	}*/
+	
+	@Override
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
+		for(int i=0;i<liPanelWithCloseArray.size();i++){
+			ulSelectedItems.add(liPanelWithCloseArray.get(i));
 		}
 	}
 }

@@ -8,6 +8,7 @@ import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -61,22 +62,26 @@ public class StudentClassLessonContainer extends Composite {
 			circleIcon.setStyleName(circleIconStyle);
 		}
 		
-		for(int i=0;i<size;i++) {
-			PlanProgressDo planDo = dataList.get(i);
-			String styleName = "blueBorder ";
-			if(planDo.getType()!=null&&planDo.getType().equalsIgnoreCase("assessment")) {
-				styleName = "orgBorder ";
-			}
-			if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
-					styleName = styleName + "cursorPointer";
-				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
-					styleName = styleName + "blueselected cursorPointer";
-				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
-					styleName = styleName + "selected cursorPointer";
+		if(size>0) {
+			for(int i=0;i<size;i++) {
+				PlanProgressDo planDo = dataList.get(i);
+				String styleName = "blueBorder ";
+				if(planDo.getType()!=null&&(planDo.getType().equalsIgnoreCase("assessment")||planDo.getType().equalsIgnoreCase("assessment/url"))) {
+					styleName = "orgBorder ";
 				}
+				if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+					if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
+						styleName = styleName + "cursorPointer";
+					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
+						styleName = styleName + "blueselected cursorPointer";
+					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
+						styleName = styleName + "selected cursorPointer";
+					}
+				}
+				lessonContainer.add(new StudentClassContentWidget(planDo, styleName, planProgressDo.getGooruOId(), status, userId));
 			}
-			lessonContainer.add(new StudentClassContentWidget(planDo, styleName, planProgressDo.getGooruOId(), status, userId));
+		} else {
+			lessonContainer.add(StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any assessments or collections yet!", "error-lbl-student-course-plan"));
 		}
 	}
 	

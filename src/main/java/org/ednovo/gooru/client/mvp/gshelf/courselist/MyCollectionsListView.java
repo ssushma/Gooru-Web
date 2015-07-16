@@ -35,7 +35,6 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
-import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -112,7 +111,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 * This method is used to reset the widget positions with default text
 	 */
 	@Override
-	public void resetWidgetPositions(int itemSeqToAPI,int movingIndex){
+	public void resetWidgetPositions(){
 		Iterator<Widget> widgets=pnlCourseList.iterator();
 		int index=0;
 		while (widgets.hasNext()){
@@ -125,8 +124,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				if(index==0){
 					//If this is the first widget we are hiding the up arrow
 					contentWidgetWithMove.getTopArrow().setVisible(false);
+					contentWidgetWithMove.getDownArrow().setVisible(true);
 				}else if(index==(pnlCourseList.getWidgetCount()-1)){
 					//If this the last widget hiding the down arrow
+					contentWidgetWithMove.getTopArrow().setVisible(true);
 					contentWidgetWithMove.getDownArrow().setVisible(false);
 				}else{
 					contentWidgetWithMove.getTopArrow().setVisible(true);
@@ -197,25 +198,31 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		//setCreateText();
 		
 		if(listOfContent!=null && listOfContent.size()>0){
-			for (FolderDo folderObj : listOfContent) {
+			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
+							String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
 							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex);
+							if(FOLDER.equalsIgnoreCase(view)){
+								moveId=moveGooruOId;
+							}
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
 						}
 					}
@@ -231,6 +238,24 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		pnlMainButtonsContainer.setVisible(true);
 	}
+	public HashMap<String,String> updatePrams(){
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+		HashMap<String,String> params = new HashMap<String,String>();
+		if(o3!=null&&id==null) {
+			params.put("o3",o3);
+			params.put("o2",o2);
+			params.put("o1",o1);
+		} else if(o2!=null&&id==null) {
+			params.put("o2",o2);
+			params.put("o1",o1);
+		} else if(o1!=null&&id==null) {
+			params.put("o1",o1);
+		}
+		return params;
+	}
 	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown){
 		if(isdown){
 			int itemNewSequence=Integer.parseInt(itemSequence);
@@ -245,6 +270,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				itemNewSequence--;
 			}
 		}
+		resetWidgetPositions();
 	}
 	public void enableCreateButtons(boolean isEnabled){
 		btnCreateResource.setVisible(isEnabled);
@@ -371,7 +397,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				Map<String,String> params = new HashMap<String,String>();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, updateParameters(params,folderObj));
 				getUiHandlers().getShelfMainPresenter().updateLeftShelfPanelActiveStyle();
-				getUiHandlers().getMyCollectionsRightClusterPresenter().updateBreadCrumbsTitle(folderObj, folderObj.getType());
 			}
 		}
 	}

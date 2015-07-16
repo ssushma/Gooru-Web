@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
@@ -204,12 +205,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		getView().setCouseData(folderObj);
 	}
 
-	@Override
+	/*@Override
 	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
 		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
-	}
+	}*/ 
 	@Override
 	public void callCourseInfoTaxonomy(){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
@@ -223,7 +224,16 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 			}
 		});
 	}
-	public void addTaxonomy(UlPanel selectedUlContainer) { 
-		getView().addTaxonomyData(selectedUlContainer);
+
+	public void addTaxonomy(List<LiPanelWithClose> liPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray);
+	}
+
+	@Override
+	public void invokeTaxonomyPopup(String viewType, List<LiPanelWithClose> unitLiPanelWithCloseArray) {
+//		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
+		taxonomyPopupPresenter.setSelectedUlContainer(unitLiPanelWithCloseArray);
+		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
+		addToPopupSlot(taxonomyPopupPresenter);
 	}
 }

@@ -59,7 +59,9 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private Integer statusCode;
 	private ResourceDo questionInfo;
 	private String parentGooruOid;
+	
 
+	
 	private List<Map<String, String>> standards;
 
 	private RatingDo rating;
@@ -67,6 +69,9 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	public CollectionItemDo(){
 		
 	}
+	
+	
+	
 	public String getParentGooruOid() {
 		return parentGooruOid;
 	}

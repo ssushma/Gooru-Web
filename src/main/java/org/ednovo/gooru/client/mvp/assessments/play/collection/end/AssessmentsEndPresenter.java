@@ -308,6 +308,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
         	     return obj1.compareTo(obj2);
         	}
         });
+		questionRowIndex.clear();
+		questionsData.clear();
 		for (UserDataDo userDataDo : result) {
 				if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 					if(!OE.equalsIgnoreCase(userDataDo.getType())){

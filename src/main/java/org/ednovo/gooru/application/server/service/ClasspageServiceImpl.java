@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.ClasspageService;
 import org.ednovo.gooru.application.server.ArrayListSorter;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
@@ -761,6 +762,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode);
+		getLogger().info("v2getClasspageByCode:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonRep!=null && jsonRep.getSize()!=1){
@@ -935,6 +937,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			try {
 				if(jsonRep.getText()!=null){
 					if(jsonRep.getText().trim() != null && !jsonRep.getText().trim().equals("null")&&!jsonRep.getText().trim().equals("")){
+						getLogger().info("ifffffff");
 						classPageDo=deserializeClassPage(jsonRep.getJsonObject());
 					}
 					else {
@@ -1187,6 +1190,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		ClasspageDo classpageDo=new ClasspageDo();
 			try {
 				if(classpageJsonObject!=null){
+					getLogger().info("classpageJsonObject.getString(GOORUOID):"+classpageJsonObject.getString(GOORUOID));
 					classpageDo.setClasspageId(classpageJsonObject.getString(GOORUOID));
 					classpageDo.setClasspageCode(classpageJsonObject.getString(CLASSPAGECODE));
 					classpageDo.setTitle(classpageJsonObject.getString(TITLE));
@@ -1198,7 +1202,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					{
 					classpageDo.setItemCount("0");
 					}
-					classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL)!=null?classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
+					if(classpageJsonObject.has(THUMBNAIL) && classpageJsonObject.getJSONObject(THUMBNAIL) != null){
+							if(classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL) != null){
+								classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL));
+							}
+					}
 					ArrayList<String> permissionList=new ArrayList<String>();
 					if(!classpageJsonObject.isNull(CREATOR)){
 						if(!classpageJsonObject.getJSONObject(CREATOR).isNull(UID)){
@@ -1231,6 +1239,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					classpageDo.setPermissions(permissionList);
 				}
 			} catch (JSONException e) {
+				logger.error("error.....:"+e.getMessage());
 				classpageDo=new ClasspageDo();
 			}
 		return classpageDo;
@@ -1914,9 +1923,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
 					if(dataList!=null&&dataList.size()>1) {
 						if(type.equalsIgnoreCase("plan")) {
-							if(unitId!=null&&lessonId!=null) {
-								
-							} else {
+							if(!(unitId!=null&&lessonId!=null)) {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
 										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
@@ -1925,7 +1932,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 								Collections.sort(dataList, new ArrayListSorter("sequence", true));
 							}
 						} else if (type.equalsIgnoreCase("progress")) {
-							if(unitId!=null) {
+							if(!(unitId!=null&&lessonId!=null)) {
 								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
 										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));

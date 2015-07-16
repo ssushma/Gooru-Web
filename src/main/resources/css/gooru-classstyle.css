@@ -1771,6 +1771,7 @@ text-align:left;
     display: inline-block;
     width: 100%;
     top:0;
+    left: 0;
 }
 .myClassesLanding .classBlocks .classBlockInner .blockFooter {
     text-align: center;
