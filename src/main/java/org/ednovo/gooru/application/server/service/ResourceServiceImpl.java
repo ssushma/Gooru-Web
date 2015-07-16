@@ -2375,7 +2375,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 							resoruce=JsonDeserializer.deserialize(jsonResponseRepget.getJsonObject().toString(), ResourceDo.class);
 							collectionItemDo.setQuestionInfo(resoruce);
 							collectionItemDo.setResource(resoruce);
-							collectionItemDo.setStatusCode(jsonResponseRepget.getStatusCode());
+							collectionItemDo.setStatusCode(jsonResponseRepresentation1.getStatusCode());
 							logger.info("jsonResponseRepget response here2222:::::::"+collectionItemDo.getResource().getGooruOid());
 						}else{
 							
