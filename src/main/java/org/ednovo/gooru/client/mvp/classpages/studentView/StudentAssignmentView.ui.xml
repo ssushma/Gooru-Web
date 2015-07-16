@@ -27,15 +27,14 @@
 				<g:Label styleName="{StudentStyle.usernameCssName}" ui:field="lblUserName" />
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{StudentStyle.classpageCodeShareInput}">
-				<g:Button styleName="primary {StudentStyle.classpageHoverButton}" ui:field="btnJoinClass"></g:Button>
+				<!-- <g:Button styleName="primary {StudentStyle.classpageHoverButton}" ui:field="btnJoinClass"></g:Button> -->
 			</g:HTMLPanel>
-			<g:Label ui:field="lblWebHelp" styleName="{StudentStyle.classpageCodeHelp}"></g:Label>
+			<!-- <g:Label ui:field="lblWebHelp" styleName="{StudentStyle.classpageCodeHelp}"></g:Label> -->
 			<g:HTMLPanel styleName="{StudentStyle.studentWithdrawBtn}">
-				<g:Button styleName="secondary {StudentStyle.studentWithdrawStyle}" ui:field="btnWithDraw"></g:Button>
+				<!-- <g:Button styleName="secondary {StudentStyle.studentWithdrawStyle}" ui:field="btnWithDraw"></g:Button> -->
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="memberContainer" styleName="{StudentStyle.classpageCodeShareInputForImage}">
 			    <g:Label styleName="{StudentStyle.classMemberStyle}" ui:field="LblMember"></g:Label>
-			    <g:HTMLPanel styleName="{StudentStyle.lineSeaparation}" ui:field="lineSeparation"></g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="containerProgress containerProgressWidth" ui:field="panelProgressContainer">
@@ -58,11 +57,11 @@
 				<g:FlowPanel styleName="{style.css.assignmentPath}" ui:field="panelAssignmentProgress" />
 			</g:HTMLPanel>
 		</g:HTMLPanel> -->
-		<g:FlowPanel styleName="dropdowncontainerStudent">
+		<!-- <g:FlowPanel styleName="dropdowncontainerStudent">
 					<g:Label styleName="dropdownPlaceHolderStudent" ui:field="dropdownPlaceHolder"></g:Label>
 					<g:FlowPanel styleName="dropdownListContainerScrollPanelStudent" ui:field="dropDownListContainer">
 					</g:FlowPanel>
-		</g:FlowPanel>
+		</g:FlowPanel> -->
 	    <g:FlowPanel styleName="{StudentStyle.paginationContainer}">
 				<g:FlowPanel styleName="{StudentStyle.searchResultContainer}"
 					ui:field="paginationFocPanel"></g:FlowPanel>

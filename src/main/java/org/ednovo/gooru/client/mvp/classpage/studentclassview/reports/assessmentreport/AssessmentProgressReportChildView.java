@@ -146,9 +146,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 		StringUtil.loadVisualizationLibraries();
-		System.out.println("assessment Id "+assessmentId);
-		System.out.println("class Id "+classId);
-		System.out.println("user Id "+userId);
 		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
 	
