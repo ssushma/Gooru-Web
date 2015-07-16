@@ -13,16 +13,16 @@
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel ui:field="popupContent">
+		<g:HTMLPanel ui:field="popupContent" styleName="student-view-popup-modal">
 			<div class="learningHeaderBlock margin-top-zero">
-				<div class="col-md-6">
+				<div class="col-md-6 col-sm-6">
 		      		<div class="student-report-details-popup-panel"> 
 		      		    <g:Image ui:field="userImage"/> 
 		      		    <span:SpanPanel ui:field="userName"></span:SpanPanel>
 		      		</div>
 				</div>
-				<div class="col-md-6">
-				   <div class="scoreStatus padding-top-5">
+				<div class="col-md-6 col-sm-6">
+				   <div class="scoreStatus padding-top-10">
 				      <div class="red">Below 60%</div>
 				      <div class="org">60%- 69%</div>
 				      <div class="yellowgreen">70%- 79%</div>

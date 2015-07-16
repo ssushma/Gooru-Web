@@ -42,4 +42,7 @@ public interface AssessmentsEndUiHandlers extends BaseUiHandlers {
 	public void clearslot();
 
 	public void setHtmltopdf(String string, String collectionTitle,boolean isClickedOnEmail);
+
+	void getCollectionScoreForSession(String collectionId, String classId,
+			String userId, String sessionId, PrintUserDataDO printData);
 }

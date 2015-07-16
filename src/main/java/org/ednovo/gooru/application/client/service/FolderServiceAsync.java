@@ -27,7 +27,6 @@ package org.ednovo.gooru.application.client.service;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
@@ -98,6 +97,8 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void deleteCollectionAssessment(String o1CourseId, String o2UnitId,String o3LessonId, String assessmentCollectionId,AsyncCallback<Integer> callback); 
 	
 	void getDepthOfKnowledgesList(AsyncCallback<List<ListValuesDo>> callback);
+	
+	void createCollection(CreateDo createDo,String parentId,boolean addToShelf, AsyncCallback<FolderDo> callback);
 	
 	void getAudienceList(AsyncCallback<List<ListValuesDo>> callback);
 	void updateCollectionDetails(CreateDo createDoObj,String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective,AsyncCallback<Void> asyncCallback);

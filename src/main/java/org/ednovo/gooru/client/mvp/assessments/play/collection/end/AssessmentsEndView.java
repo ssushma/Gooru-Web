@@ -156,6 +156,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				classpageId="";
 			}
 			setSessionStartTime(selectedIndex);
+			getUiHandlers().getCollectionScoreForSession(collectionDo.getGooruOid(), classpageId, AppClientFactory.getLoggedInUser().getGooruUId(), sessionsDropDown.getValue(selectedIndex), null);
 			getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
 		}
 	}
@@ -241,7 +242,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			 scorePercentage=(collectionScore/noOfQuestions)*100;
 		}
 		String progressRedialStyle="blue-progress-"+scorePercentage;
-
+		progressRadial.setStyleName("progress-radial");
 		progressRadial.addStyleName(progressRedialStyle);
 	}
 
@@ -253,6 +254,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
 		int scorePercentage=result.getScoreInPercentage();
 		String progressRedialStyle="blue-progress-"+scorePercentage;
+		progressRadial.setStyleName("progress-radial");
 		progressRadial.addStyleName(progressRedialStyle);
 	}
 
@@ -411,14 +413,17 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
 						for (MetaDataDo metaDataDo : questionList) {
 							String answerText = "";
+							AppClientFactory.printInfoLogger("metaDataDo.getAnswer_text() : "+metaDataDo.getAnswer_text());
 							if((metaDataDo.getAnswer_text() != null)) {
 								answerText = metaDataDo.getAnswer_text();
 							}
+							AppClientFactory.printInfoLogger("answerText : "+answerText);
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
 								answerTextFormat += ",";
 							}
 						}
+						AppClientFactory.printInfoLogger("answerTextFormat : "+answerTextFormat.toString());
 						String[] userFibOption = null;
 						if(result.get(i).getText() != null) {
 							answersArry=answerTextFormat.split(",");
@@ -428,6 +433,9 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							for (int k = 0; k < answersArry.length; k++) {
 								Label answerChoice=new Label();
 								if(answersArry[k]!=null && k<userFibOption.length){
+									AppClientFactory.printInfoLogger("answersArry[k].toLowerCase().trim() : "+answersArry[k].toLowerCase().trim());
+									AppClientFactory.printInfoLogger("userFibOption[k].toLowerCase().trim() : "+userFibOption[k].toLowerCase().trim());
+									AppClientFactory.printInfoLogger("noOfAttempts : "+noOfAttempts);
 									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
 										answerChoice.setText(userFibOption[k]);
 										answerChoice.getElement().getStyle().setColor(CORRECT);

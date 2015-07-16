@@ -364,6 +364,8 @@ public enum UrlToken {
 	V1_CREATE_LESSON("/v1/course/{0}/unit/{1}/lesson?"),
 
 	V1_CREATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection?"),
+	
+	V3_CREATE_COLLECTION("/v3/collection?"),
 
 	V1_UPDATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
 
@@ -387,7 +389,7 @@ public enum UrlToken {
 	
 	V1_GET_COLLECTION_METADATA("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}"),
 	
-	V3_UPDATE_COLLECTONITEM_METADATA("/v3/{0}/item/{1}"),
+	V3_UPDATE_COLLECTONITEM_METADATA("/v3/collection/{0}/item/{1}"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
 
