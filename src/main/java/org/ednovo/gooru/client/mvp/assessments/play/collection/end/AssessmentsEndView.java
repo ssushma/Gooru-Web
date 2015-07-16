@@ -251,7 +251,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public void displayScoreCount(CollectionSummaryMetaDataDo result) {
 		score.setText(result.getScoreInPercentage()+" %");
 		goal.setText(i18n.GL3460_5() + result.getGoal()+" %");
-		correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
+		correctStatus.setText(result.getScore()+"/"+result.getSelectedSessionScorableQuestionCount()+" "+i18n.GL2278());
 		int scorePercentage=result.getScoreInPercentage();
 		String progressRedialStyle="blue-progress-"+scorePercentage;
 		progressRadial.setStyleName("progress-radial");
