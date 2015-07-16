@@ -67,6 +67,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	
 	private String viewType;
 	
+	
 	@Inject
 	public TaxonomyPopupView(EventBus eventbus){
 		super(eventbus);
@@ -109,7 +110,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	 */
 	@UiHandler("closeBtn")
 	public void onColseButtonClicked(ClickEvent event){
-		hide();
+		appPopUp.hide();
+		
 	}
 	
 	/**
@@ -142,16 +144,19 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	 */
 	@UiHandler("addTaxonomyBtn")
 	public void onClickAddTaxonomy(ClickEvent event){
-		hide();
-//		getUiHandlers().addTaxonomyData(selectedUlContainer); 
+		passTaxonomyData(); 
+		appPopUp.hide();
+	}
+	
+	
+	private void passTaxonomyData() {
 		liPanelWithCloseArray.clear();
 		for(int i=0;i<selectedUlContainer.getWidgetCount();i++){
 			liPanelWithCloseArray.add((LiPanelWithClose) selectedUlContainer.getWidget(i));
 		}
-		getUiHandlers().addTaxonomyData(liPanelWithCloseArray); 
+		getUiHandlers().addTaxonomyData(liPanelWithCloseArray);
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param event
@@ -533,18 +538,11 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		
 		for(int i=0;i<liPanelWithCloseArrayData.size();i++){
 			setActiveStyle(liPanelWithCloseArrayData.get(i).getId()); 
-			selectedUlContainer.add(liPanelWithCloseArrayData.get(i));
+			LiPanelWithClose closeLiPanel = new LiPanelWithClose(liPanelWithCloseArrayData.get(i).getName());
+			closeLiPanel.setId(liPanelWithCloseArrayData.get(i).getId());
+			selectedUlContainer.add(closeLiPanel);
+//			selectedUlContainer.add(liPanelWithCloseArrayData.get(i));
 		}
-		
-//		Iterator<Widget> widgets = ulSelectedItems.iterator();
-		
-		/*while(widgets.hasNext()){
-			Widget widget = widgets.next();
-			if(widget instanceof LiPanelWithClose){
-				setActiveStyle(((LiPanelWithClose) widget).getId());
-				selectedUlContainer.add(widget);
-			}
-		}*/
 	}
 
 }
