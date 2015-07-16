@@ -470,7 +470,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 						    	AppClientFactory.fireEvent(new SetLoginStatusEvent(true));
 						    }
 
-						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
+						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT_VIEW)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
 						    	AppClientFactory.fireEvent(new SetMarkButtonEvent());
 						    }
@@ -578,7 +578,12 @@ public abstract class LoginPopupUc extends PopupPanel{
 	    	{
 	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 	    	}
-	    }/*else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SETTINGS)){
+	    }
+	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT_VIEW))
+	    {
+	    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	    }
+		/*else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SETTINGS)){
 	    	if(AppClientFactory.getPlaceManager().getRequestParameter("newMailId")!=null){
 	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 	    	}

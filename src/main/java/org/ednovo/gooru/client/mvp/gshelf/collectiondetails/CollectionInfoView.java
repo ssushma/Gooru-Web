@@ -626,7 +626,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			getUiHandlers().invokeTaxonomyPopup("collection",ulSelectedItems);
 		}
 	}
-	@Override
+	
+	/*@Override
 	public void addTaxonomyData(UlPanel selectedUlContainer) {
 		Iterator<Widget> widgets = selectedUlContainer.iterator();
 		while(widgets.hasNext()){
@@ -635,7 +636,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				ulSelectedItems.add(widget);
 			}
 		}
-	}
+	}*/
+	
 	@Override
 	public void setCollectionImage(String url) {
 		Element element=Document.get().getElementById("mycollectionUploadImage");
@@ -659,6 +661,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		depthOfKnowledgeContainer.setVisible(false);
 		isDepthOfKnlzeInfo=false;
 
+	}
+	@Override
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
+		for(int i=0;i<liPanelWithCloseArray.size();i++){
+			ulSelectedItems.add(liPanelWithCloseArray.get(i));
+		}
 	}
 
 }
