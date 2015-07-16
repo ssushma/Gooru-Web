@@ -47,7 +47,7 @@ public interface IsMyCollectionsListView extends IsViewWithHandlers<MyCollection
 	/**
 	 * This method is used to reset widgets
 	 */
-	public void resetWidgetPositions(int itemSeqToAPI,int movingIndex);
+	public void resetWidgetPositions();
 	
 	public void loadingImage();
 	

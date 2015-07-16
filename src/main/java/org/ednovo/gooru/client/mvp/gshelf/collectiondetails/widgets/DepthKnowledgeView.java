@@ -8,6 +8,7 @@ import org.apache.tools.ant.taskdefs.Sleep;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -84,6 +85,8 @@ public class DepthKnowledgeView extends Composite {
 	
 	public void setSelectedValues(List<checkboxSelectedDo> list){
 		selectedValues=new HashMap<Integer, String>();
+		CollectionItemDo collectionItemDo=new CollectionItemDo();
+		
 		int count=detailsContainer.getWidgetCount();
 		if(list!=null){
 			for(checkboxSelectedDo checkboxSelectedDoObj:list){

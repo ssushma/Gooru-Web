@@ -33,7 +33,6 @@ import org.ednovo.gooru.application.client.child.ChildPresenter;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.UrlNavigationTokens;
 
 /**
  * @author Search Team

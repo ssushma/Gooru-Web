@@ -590,7 +590,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 		public void createQuestionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo) {
+			AppClientFactory.printInfoLogger("I am in createQuestionResource");
 			if(getQuestionEditMode()){
+				AppClientFactory.printInfoLogger("Edit Mode");
+
 				String thumbnailUrl=null;
 				if(addQuestionResourceWidget.addQuestImgContainer.getWidgetCount()>0){
 					AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestionResourceWidget.addQuestImgContainer.getWidget(0);
@@ -598,6 +601,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				getUiHandlers().v2UpdateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
 			}else{
+				AppClientFactory.printInfoLogger("Create Mode");
 				getUiHandlers().addQeustionResource(mediaFileName,collectionQuestionItemDo);
 			}
 
@@ -1017,6 +1021,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
 				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
+				//addQuestionResourceWidget.setCheckedData(collectionItemDo.getDepthOfKnowledges());
+				
 				addQuestionResourceWidget.getHideRightsToolTip();
 
 				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("assessment")){

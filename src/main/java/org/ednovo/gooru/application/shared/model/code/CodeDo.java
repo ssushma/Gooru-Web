@@ -33,10 +33,20 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class CodeDo implements Serializable {
 	private static final long serialVersionUID = 1849886397443409797L;
 	private Integer codeId;
+	private Integer id;
 	private String code;
 	private Short depth;
 	private String label;
 	public CodeDo(){}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public Integer getCodeId() {
 		return codeId;
 	}

@@ -329,10 +329,11 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 		loadingImageLabel.setVisible(false);
 		questionsTable.clear();
-//		destoryTables();
+		destoryTables();
 
-		AdvancedFlexTable adTable=new AdvancedFlexTable();
-		adTable.getElement().setId("report");
+		final AdvancedFlexTable adTable=new AdvancedFlexTable();
+		adTable.getElement().setId("report-student-assessment-report");
+		questionsTable.add(adTable);
 
 		adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
 		adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
@@ -500,8 +501,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			}
 			sortAndFixed();
 			adTable.addStyleName("table table-bordered reportTableStyle");
-//			questionsTable.add(adTable);
-			questionsTable.getElement().setInnerHTML(""+adTable);
+
+//			questionsTable.getElement().setInnerHTML(""+adTable);
 
 
 		}else {
@@ -845,7 +846,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	}
 
 	public static native void sortAndFixed() /*-{
-	 var table =$wnd.$('#report').DataTable({
+	 var table =$wnd.$('#report-student-assessment-report').DataTable({
        scrollY:        "300px",
        scrollX:        true,
        scrollCollapse: true,
@@ -855,7 +856,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
    });
 }-*/;
 public static native void destoryTables() /*-{
-	var table = $wnd.$('#report').DataTable();
+	var table = $wnd.$('#report-student-assessment-report').DataTable();
   	table.destroy();
 }-*/;
 

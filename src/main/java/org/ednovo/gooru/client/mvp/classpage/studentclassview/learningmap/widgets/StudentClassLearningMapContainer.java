@@ -8,6 +8,7 @@ import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,8 +48,12 @@ public class StudentClassLearningMapContainer extends Composite {
 		unitName.setText("Unit");
 		int size = planProgressDo.getItem().size();
 		ArrayList<PlanProgressDo> dataList = planProgressDo.getItem();
-		for(int i=0;i<size;i++) {
-			circleContainer.add(new StudentClassLearningMapCircle(dataList.get(i)));
+		if(size>0) {
+			for(int i=0;i<size;i++) {
+				circleContainer.add(new StudentClassLearningMapCircle(dataList.get(i), dataList.get(i).getGooruOId()));
+			}
+		} else {
+			circleContainer.add(StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any lessons yet!", "error-lbl-student-course-plan"));
 		}
 	}
 	
