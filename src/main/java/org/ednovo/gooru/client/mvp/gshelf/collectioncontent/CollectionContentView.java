@@ -170,12 +170,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		if (type.equals(RefreshType.INSERT)){
 			ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem) {
 				@Override
-				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow, String moveId) {
+				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow, String moveId,String moveGooruOid) {
 					int movingIndex= Integer.parseInt(movingPosition);
 					if(pnlReosurceList.getWidgetCount()>=movingIndex){
 						//Based on the position it will insert the widget in the vertical panel
 						String itemSequence=pnlReosurceList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
-						getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence));
+						getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),moveGooruOid);
 						if(!isDownArrow){
 							movingIndex= (movingIndex-1);
 							int currentIndex= Integer.parseInt(currentWidgetPosition);
@@ -306,8 +306,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				if(index==0){
 					//If this is the first widget we are hiding the up arrow
 					contentWidgetWithMove.getTopArrow().setVisible(false);
+					contentWidgetWithMove.getDownArrow().setVisible(true);
 				}else if(index==(pnlReosurceList.getWidgetCount()-1)){
 					//If this the last widget hiding the down arrow
+					contentWidgetWithMove.getTopArrow().setVisible(true);
 					contentWidgetWithMove.getDownArrow().setVisible(false);
 				}else{
 					contentWidgetWithMove.getTopArrow().setVisible(true);
