@@ -2353,10 +2353,11 @@ vertical-align:middle;
 	height:10px;
 	display:inline-block;
 	margin-bottom:-3px;
+	cursor: pointer;
 }
 #resourceEdit .tableListOrder{
-margin:8px 0 12px 45px;
-display:inline-block;
+	margin:8px 0 12px 45px;
+	display:inline-block;
     text-align: center;
     width: 26px;
 }
@@ -2372,6 +2373,7 @@ display:inline-block;
 	width:16px;
 	height:10px;
 	display:inline-block;
+	cursor: pointer;
 }
 #resourceEdit .tableListTags span{
 	margin-left:10px;
