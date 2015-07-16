@@ -100,9 +100,12 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(planContentDo);
-		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
-		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
-		contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+		
+		if(!(planContentDo.getCollectionType()!=null&&planContentDo.getCollectionType().equalsIgnoreCase("assessment/url"))) {
+			viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
+			contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+			contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+		}
 	}
 	
 	public void setData(final PlanContentDo planContentDo) {
@@ -127,7 +130,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 				setDefaultThumbnail(collectionType);
 			}
 		});
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
 			imageContainer.setStyleName("assessmentImageContainer");
 			timeSpentLbl.setText("Score");
 			lastAccessedLbl.setText("Last Attempted");
@@ -147,11 +150,15 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			lastAccessed = AnalyticsUtil.getCreatedTime(Long.toString(planContentDo.getProgress().getLastAccessed()));
 		}
 		lastSession.setText(lastAccessed);
-		setResourceData(planContentDo.getItems());
+		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment/url")) {
+			resourceImgContainer.setVisible(false);
+		} else {
+			setResourceData(planContentDo.getItems());
+		}
 	}
 	
 	private void setDefaultThumbnail(String collectionType) {
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
 			contentImage.setUrl(DEFAULT_ASSESSMENT_IMAGE);
 		} else {
 			contentImage.setUrl(DEFAULT_COLLECTION_IMAGE);
@@ -204,7 +211,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			Map<String,String> params = new LinkedHashMap<String,String>();
 
 			String token = PlaceTokens.ASSESSMENT_PLAY;
-
+			
 			if(type.equalsIgnoreCase("assessment")) {
 				token = PlaceTokens.ASSESSMENT_PLAY;
 				if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
@@ -223,7 +230,10 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			params.put("lessonId", lessonId);
 			
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
-			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			if(!type.equalsIgnoreCase("assessment/url")) {
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
+			
 		}
 	}
 
