@@ -1205,6 +1205,15 @@ th.headcol.whitebg {
 	color:#a5cba1;
 	padding:0 0 !important;
 }
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .percentLbl{
+	color: #85B9DF;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .textBoxPadding{
+	margin-bottom: 5px;
+}
 .lesson-view-data .resourceImgContainer{
 	padding:5px 18px;
 	border-spacing:10px;
@@ -1981,6 +1990,7 @@ th.headcol.whitebg {
     vertical-align: middle;
     text-align: center;
     color: #515151;
+    width: 45%;
 }
 .wrapCirclesViews h3 {
     margin: 0 0;
