@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
@@ -44,7 +45,9 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void displayStandardsList(List<DomainStandardsDo> result);
 
-	void addTaxonomyData(UlPanel selectedUlContainer); 
+//	void addTaxonomyData(UlPanel selectedUlContainer);
+
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray); 
 	
 
 }
