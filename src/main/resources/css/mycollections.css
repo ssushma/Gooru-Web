@@ -2712,6 +2712,13 @@ vertical-align:middle;
 	border-bottom:1px solid #dddddd;
 	padding:15px 15px 15px 15px;
 }
+
+#unitinfo .containerHeight{
+	height: 424px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
 #unitinfo .questionsBlock{
 	
 	padding:15px 0;
