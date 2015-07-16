@@ -426,7 +426,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				courseList.add(courseObj);
 			}
 		}
-		courseObj.setStandards(courseList);
+		if(courseObj!=null){
+			courseObj.setStandards(courseList);
+		}
 		return taxonomyCourseIds;
 	}
 	
