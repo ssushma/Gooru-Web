@@ -270,8 +270,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}else{
 			AppClientFactory.printInfoLogger("collectionItem.getItemSequence() : "+collectionItem.getItemSequence());
 			pnlReosurceList.remove(collectionItem.getItemSequence() - 1);
-			listOfContent.getCollectionItems().remove(collectionItem.getItemSequence()-1);
-			listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
+			//listOfContent.getCollectionItems().remove(collectionItem.getItemSequence()-1);
+			//listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
 			setDisplayResourceItem(collectionItem, RefreshType.INSERT, (collectionItem.getItemSequence()-1));
 		}
 		if (tmpIndex ==-1){
