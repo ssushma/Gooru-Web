@@ -113,10 +113,10 @@ public abstract class ContentWidgetWithMove extends Composite {
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
-			txtMoveTextBox.getElement().setAttribute("moveGooruOId",folderObj.getGooruOid()+"");
 		}else{
-			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getGooruOid()+"");
+			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
 		}
+		txtMoveTextBox.getElement().setAttribute("moveGooruOId",folderObj.getGooruOid()+"");
 		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
 		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
 		//This blur handler reset the previous value when the text box value is empty.
