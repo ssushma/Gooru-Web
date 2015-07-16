@@ -799,6 +799,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget(); 
+
 		if(shelfTreeWidget==null || organizeRootPnl.getStyleName().contains("active")) {
 			if(id!=null) {
 				gooruOid = id;
@@ -837,13 +838,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				 checkFolderItemStyle(item, gooruOid);
 			}
 		}
+		
 	}
 	
 	private void checkFolderItemStyle(TreeItem item, String gooruOid) {
+		
 		ShelfTreeWidget updatedItem = (ShelfTreeWidget) item.getWidget();
 		if(gooruOid!=null){
 			if(gooruOid.equalsIgnoreCase(updatedItem.getCollectionDo().getGooruOid())) {
 				treeChildSelectedItem = item;
+				getUiHandlers().setBreadCrumbs(updatedItem.getUrlParams());
 				//updatedItem.setActiveStyle(true);
 				setFolderActiveStatus();
 				return;
