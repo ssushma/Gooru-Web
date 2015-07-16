@@ -9,6 +9,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -101,7 +102,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				@Override
 				public void onSuccess() {
 
-					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 					String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
 					if(!StringUtil.isEmpty(classpageId)&& !StringUtil.isEmpty(selectedCollectionId)){
 						getUiHandlers().checkCollectionStaus(classpageId, selectedCollectionId);
@@ -272,7 +273,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 								getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId,selectedCollectionTitle);
 							}
 						}else{
-							String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+							String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 							getUiHandlers().exportOEPathway(classpageId, "",AnalyticsUtil.getTimeZone());
 						}
 

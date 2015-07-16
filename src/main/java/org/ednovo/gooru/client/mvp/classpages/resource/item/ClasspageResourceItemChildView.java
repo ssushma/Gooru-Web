@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
@@ -233,7 +234,7 @@ public class ClasspageResourceItemChildView extends
 	public void OnClickOpenClasspage(ClickEvent event){
 		MixpanelUtil.Click_Open_Teachpage();
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", collectionDo.getGooruOid());
+		params.put(UrlNavigationTokens.CLASSPAGEID, collectionDo.getGooruOid());
 		params.put("pageSize", "10");
 		params.put("pageNum", "0");
 		params.put("pos", "1");

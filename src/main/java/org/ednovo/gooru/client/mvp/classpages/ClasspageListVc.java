@@ -423,8 +423,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 													if (alertMessageUc != null)
 														alertMessageUc.hide();
 
-													StudentAssignmentView
-															.setPrivatePagePending();
+													//StudentAssignmentView.setPrivatePagePending();
 
 												} else {
 													if (AppClientFactory.isAnonymous()) {
@@ -464,15 +463,15 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 														.equalsIgnoreCase(
 																AppClientFactory
 																		.getGooruUid())) {
-													StudentAssignmentView
-															.setPublicPage();
+													/*StudentAssignmentView
+															.setPublicPage();*/
 												} else if (result.getStatus()
 														.equalsIgnoreCase("active")) {
-													StudentAssignmentView
-															.setPublicPageActive();
+													/*StudentAssignmentView
+															.setPublicPageActive();*/
 												} else {
-													StudentAssignmentView
-															.setPublicPagePending();
+												/*	StudentAssignmentView
+															.setPublicPagePending();*/
 												}
 
 											}

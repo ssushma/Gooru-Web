@@ -364,7 +364,7 @@ public class StudyNowToolTip extends PopupPanel {
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 							
-							StudentAssignmentView.setPrivatePagePending();
+							//StudentAssignmentView.setPrivatePagePending();
 
 						}
 						else 
@@ -397,7 +397,7 @@ public class StudyNowToolTip extends PopupPanel {
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 						
-							if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+							/*if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 							{
 								StudentAssignmentView.setPublicPage();
 							}
@@ -408,7 +408,7 @@ public class StudyNowToolTip extends PopupPanel {
 							else 
 							{
 								StudentAssignmentView.setPublicPagePending();
-							}	
+							}	*/
 						
 				}
 					 setEnterLblVisbility(false);
