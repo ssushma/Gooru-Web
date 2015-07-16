@@ -73,13 +73,13 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandlers> implements IsStudentClassView ,ClickHandler{
 	
-	@UiField SpanPanel classCodeSpan, studentMessage;
+	@UiField SpanPanel classCodeSpan, studentMessage, onoffSwitchBtn;
 	@UiField EmPanel teacherOwnership;
 	@UiField H2Panel courseName;
 	@UiField SimplePanel learningMapContainer;
 	@UiField Image classImage, teacherImage, studentImage;
 	@UiField SimpleCheckBox switchCheckBox;
-	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel;
+	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar, planProgressPanel;
 	@UiField Button joinClassBtn, teachViewBtn;
 	@UiField Label studentViewLbl;
 	
@@ -124,9 +124,10 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 		this.classpageDo=classpageDo;
 		switchCheckBox.getElement().setId("myonoffswitch");
 		switchCheckBox.getElement().setAttribute("name", "onoffswitch");
-		String thumbnail = classpageDo.getThumbnailUrl();
-		if(thumbnail==null) {
-			thumbnail = DEFAULT_CLASSPAGE_IMAGE;
+		
+		String thumbnail = DEFAULT_CLASSPAGE_IMAGE;
+		if(classpageDo!=null&&classpageDo.getThumbnails()!=null&&classpageDo.getThumbnails().getUrl()!=null) {
+			thumbnail = classpageDo.getThumbnails().getUrl();
 		}
 		classImage.setUrl(thumbnail);
 		classImage.addErrorHandler(new ErrorHandler() {
@@ -298,5 +299,15 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
         success.setPositiveButtonText(i18n.GL0190());
         success.center();
         success.show();
+	}
+
+	@Override
+	public void setProgressBarVisibility(boolean isVisible) {
+		planProgressBar.setVisible(isVisible);
+	}
+
+	@Override
+	public void disableSwitchBtn(boolean isDisable) {
+		planProgressPanel.setVisible(!isDisable);
 	}
 }

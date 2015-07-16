@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
@@ -79,4 +80,6 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	Label getCollectionLabel();
 
 	void removeDeletedTreeWidget(String deletedTreeWidgetId, String currentTypeView);  
+	
+	void reorderShelfItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);
 }

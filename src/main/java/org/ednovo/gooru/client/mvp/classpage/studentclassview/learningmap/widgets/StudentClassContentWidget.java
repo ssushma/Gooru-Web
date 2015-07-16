@@ -59,7 +59,7 @@ public class StudentClassContentWidget extends Composite {
 		imagePanel.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
-				if(planDo.getType()!=null&&planDo.getType().equalsIgnoreCase("assessment")) {
+				if(planDo.getType()!=null&&(planDo.getType().equalsIgnoreCase("assessment")||planDo.getType().equalsIgnoreCase("assessment/url"))) {
 					imagePanel.setUrl(DEFAULT_ASSESSMENT_IMAGE);
 				} else {
 					imagePanel.setUrl(DEFAULT_COLLECTION_IMAGE);
@@ -134,7 +134,9 @@ public class StudentClassContentWidget extends Composite {
 			params.put("lessonId", lessonId);
 			
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
-			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			if(!type.equalsIgnoreCase("assessment/url")) {
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
 		}
 	}
 
