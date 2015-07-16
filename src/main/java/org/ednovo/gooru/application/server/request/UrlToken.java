@@ -667,7 +667,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_GET_COURSE("/v1/course/{0}?"),
 	
-	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?");
+	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?"),
+	
+	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?");
 
 	private String url;
 
