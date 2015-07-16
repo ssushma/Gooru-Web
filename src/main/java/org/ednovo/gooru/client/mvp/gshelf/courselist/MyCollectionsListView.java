@@ -207,25 +207,21 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
-							String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
-							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex);
-							if(FOLDER.equalsIgnoreCase(view)){
-								moveId=moveGooruOId;
-							}
+							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex,moveGooruOId);
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
 						}
 					}
