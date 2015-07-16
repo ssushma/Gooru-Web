@@ -399,7 +399,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			searchRequest = AppClientFactory.getPlaceManager().getPreviousRequest();
 			if (searchRequest != null) {
 				String query = searchRequest.getParameter("query", null);
-				String classpageId=searchRequest.getParameter("classpageid", null);
+				String classpageId=searchRequest.getParameter("classpageId", null);
 				visible = searchRequest != null && query != null;
 				boolean 	isVisible = searchRequest != null && classpageId != null;
 				if (visible) {

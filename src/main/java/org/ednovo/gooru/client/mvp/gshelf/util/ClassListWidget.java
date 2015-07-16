@@ -63,7 +63,7 @@ public class ClassListWidget extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			Map<String, String> params= new HashMap<String, String>();
-			params.put("classpageid", classId);
+			params.put("classpageId", classId);
 			params.put("pageSize","5");
 			params.put("pageNum", "0");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);

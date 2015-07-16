@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
@@ -223,9 +224,9 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	 */
 	public void showCollectionsAfterAddingNewCollections(){
 		Map<String,String> params = new HashMap<String,String>();
-		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 		params.put("order", "asce");
-		params.put("classpageid", classpageid);
+		params.put(UrlNavigationTokens.CLASSPAGEID, classpageid);
 		params.put("pageNum", 1+"");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);

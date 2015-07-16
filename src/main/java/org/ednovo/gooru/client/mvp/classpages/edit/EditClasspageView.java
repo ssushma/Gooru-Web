@@ -19,6 +19,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -183,6 +184,8 @@ public class EditClasspageView extends
 	@UiField HTMLEventPanel panelPrevious,panelNext;
 
 	@UiField SimpleCheckBox changeProgressSummary;
+	
+	@UiField Button btnDeleteClasspage;
 
 	NewClasspagePopupView newPopup = null;
 	private  ClasspageDo classpageDo =null;
@@ -302,6 +305,7 @@ public class EditClasspageView extends
 		frameDiv.setVisible(false);
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
 		classListTab.setEnabled(false);
+		classListTab.getElement().getStyle().setCursor(Cursor.DEFAULT); 
 		//classListTab.addClickHandler(new ClassListTabClicked());
 		shareTabContainerPanel.clear();
 		shareTabContainerPanel.setVisible(false);
@@ -417,6 +421,9 @@ public class EditClasspageView extends
 		btnAssignCollection.getElement().setId("btnAssignCollection");
 		btnAssignCollection.getElement().setAttribute("alt",i18n.GL2115());
 		btnAssignCollection.getElement().setAttribute("title",i18n.GL2115());
+		
+		btnAssignCollection.addStyleName(CssTokens.DISABLED);
+		btnAssignCollection.setEnabled(false);
 
 		lblStartAssign.setText(i18n.GL2116());
 		lblStartAssign.getElement().setId("lblStartAssign");
@@ -468,6 +475,9 @@ public class EditClasspageView extends
 		btnReadytoStart.getElement().setId("btnReadytoStart");
 		btnReadytoStart.getElement().setAttribute("alt",i18n.GL2115());
 		btnReadytoStart.getElement().setAttribute("title",i18n.GL2115());
+		
+		btnReadytoStart.setEnabled(false);
+		btnReadytoStart.addStyleName(CssTokens.DISABLED);
 
 		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
@@ -502,7 +512,9 @@ public class EditClasspageView extends
 		
 		headerAssignments.getElement().setInnerHTML(i18n.GL1972());
 
-
+		btnDeleteClasspage.setText(i18n.GL0145());
+		btnDeleteClasspage.getElement().setAttribute("alt",i18n.GL0145());
+		btnDeleteClasspage.getElement().setAttribute("title",i18n.GL0145());
 
 		backArrowButton.getElement().setId("backArrowButton");
 
@@ -510,8 +522,8 @@ public class EditClasspageView extends
 		btnClasspageSave.getElement().setId("btnClasspageSave");
 		btnClasspageCancel.getElement().setId("btnClasspageCancel");
 
-		btnAssignCollection.addClickHandler(new addAssignmentHandler());
-		btnReadytoStart.addClickHandler(new addAssignmentHandler());
+		//btnAssignCollection.addClickHandler(new addAssignmentHandler());
+		//btnReadytoStart.addClickHandler(new addAssignmentHandler());
 
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -582,7 +594,7 @@ public class EditClasspageView extends
 		frameDiv.getElement().setId("pnlFrameDiv");
 		frameUrl.getElement().setId("ifFrameUrl");
 		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(10, Unit.PX);
-
+		btnDeleteClasspage.getElement().setId("btnDeleteClasspage");
 		frameUrl.setVisible(false);
 
 		StringUtil.loadVisualizationLibraries();
@@ -836,7 +848,7 @@ public class EditClasspageView extends
 	}
 
 
-	/*@UiHandler("btnDeleteClasspage")
+	@UiHandler("btnDeleteClasspage")
 	public void OnClickDeleteClasspage(ClickEvent event){
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
@@ -883,7 +895,7 @@ public class EditClasspageView extends
 		delete.setPixelSize(450, 352);
 		delete.show();
 		delete.center();
-	}*/
+	}
 
 	@UiHandler("btnStudentView")
 	public void OnClickStudentView(ClickEvent event){
@@ -907,8 +919,7 @@ public class EditClasspageView extends
 		Cookies.setCookie("pos", AppClientFactory.getPlaceManager()
 				.getRequestParameter("pos"));
 
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,
-				params);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,	params);
 
 	}
 	/**
@@ -971,7 +982,6 @@ public class EditClasspageView extends
 
 		imgClasspageImage.setAltText(classpageDo.getTitle());
 		imgClasspageImage.setTitle(classpageDo.getTitle());
-		System.out.println("classpageDo.getThumbnailUrl().isEmpty():"+classpageDo.getThumbnailUrl());
 		if(classpageDo.getThumbnailUrl() != null){
 			imgClasspageImage.setUrl(classpageDo.getThumbnailUrl().isEmpty() ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		}else{
@@ -1009,6 +1019,7 @@ public class EditClasspageView extends
 		this.classlistPresenter = classlistPresenter;
 		classpageItemsList.clear();
 		classpageItemsList.addAll(classpageItemsList1);
+		AppClientFactory.printInfoLogger("tab:"+tab);
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
 			panelAssignmentPath.setVisible(false);
 			headerAssignments.setVisible(false);
@@ -1031,6 +1042,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 		}
 		else if(tab!=null && tab.equalsIgnoreCase("reports")){
+			AppClientFactory.printInfoLogger("reports");
 			reportsTab.addStyleName("selected");
 			assignmentsTab.getElement().setClassName("");
 			classListTab.getElement().setClassName("");
@@ -1075,6 +1087,7 @@ public class EditClasspageView extends
 			paginationFocPanel1.setVisible(false);
 			changeProgressSummary.setValue(false);
 			sequenceNumberLabel.setText(i18n.GL2228());
+			AppClientFactory.printInfoLogger("analyticsId:"+analyticsId);
 			getUiHandlers().setCollectionProgressData(SUMMARY,analyticsId,collectionTitleUc.getText());
 
 		}

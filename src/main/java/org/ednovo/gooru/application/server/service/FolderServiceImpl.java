@@ -53,6 +53,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -717,6 +718,46 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return folderDo;
 	}
+	
+	
+	@Override
+	public FolderDo createCollection(CreateDo createDo,String parentId,boolean addToShelf) throws GwtException {
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
+		String url = null;
+		FolderDo folderDo = new FolderDo();
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_CREATE_COLLECTION);
+		if(!StringUtil.isEmpty(parentId)){
+			url=AddQueryParameter.constructQueryParams(url, "folderId", parentId);
+		}
+		
+		JSONObject collectionObject=new JSONObject();
+		try {
+			collectionObject.put(TITLE, createDo.getTitle());
+			if(addToShelf) {
+				collectionObject.put(ADD_TO_SHELF, addToShelf);
+			}
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDo, null);
+			logger.info("createCollection : "+url);
+			logger.info("dataPassing: "+dataPassing);
+			
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			logger.info("rest point: "+ getRestEndPoint());
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRepGet);
+			logger.info("folderDo obj : "+folderDo);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
+	
 	
 
 	@Override

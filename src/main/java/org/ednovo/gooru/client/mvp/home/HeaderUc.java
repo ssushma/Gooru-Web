@@ -2117,7 +2117,7 @@ public class HeaderUc extends Composite
 		params.put("pageSize", "10");
 		params.put("pos", "1");
 		if (gooruUid.equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
-			params.put("classpageid", gooruOId);
+			params.put("classpageId", gooruOId);
 			AppClientFactory.getPlaceManager().revealPlace(
 					PlaceTokens.EDIT_CLASSPAGE, params);
 		} else {
