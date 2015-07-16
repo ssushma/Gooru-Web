@@ -41,4 +41,6 @@ public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUi
 	
 	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId);
 
+	public void getCollectionScoreForSession(String collectionId, String classId, String userId, String sessionId, PrintUserDataDO printData);
+
 }
