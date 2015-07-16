@@ -324,10 +324,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public void setCouseData(FolderDo courseObj) {
 		if(courseObj!=null){
 			this.courseObj=courseObj;
+			unitTitle.setText(courseObj.getTitle()==null?i18n.GL3364():courseObj.getTitle());
 			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
 			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		}else{
+			unitTitle.setText(i18n.GL3364());
+			txaBigIdeas.setText("");
+			txaEssentialQuestions.setText("");
 		}
-		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
+		
 		ulSelectedItems.clear();
 		selectedValues.clear();
 		//This will push the previous selected values to map
