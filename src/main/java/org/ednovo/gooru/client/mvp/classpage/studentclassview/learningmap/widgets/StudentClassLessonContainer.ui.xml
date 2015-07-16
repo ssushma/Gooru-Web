@@ -10,7 +10,7 @@
 	             <uc:H3Panel ui:field="lessonCountName"></uc:H3Panel>
 	             <uc:PPanel ui:field="lessonName"></uc:PPanel>
 		      </g:HTMLPanel>
-		      <g:HTMLPanel styleName="progressBlockLeft col-md-2 col-sm-2 col-xs-2">
+		      <g:HTMLPanel styleName="progressBlockLeft col-md-2 col-sm-2 col-xs-2 line-height-70">
 				  <g:HTMLPanel ui:field="circleIcon">
 		                <span></span>
 		          </g:HTMLPanel>

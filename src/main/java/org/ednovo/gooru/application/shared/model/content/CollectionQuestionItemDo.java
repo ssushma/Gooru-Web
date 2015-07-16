@@ -61,7 +61,8 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse;
 	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
 	private List<Integer>  depthOfKnowledgeIds;
-	
+	private List<Integer> skillIds;
+	private List<Integer> standardIds;
 	private ArrayList<String> mediaFiles;
 
 	
@@ -71,6 +72,27 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,Boolean> moreOptions;
 
 	public CollectionQuestionItemDo(){}
+
+	
+	public List<Integer> getSkillIds() {
+		return skillIds;
+	}
+
+
+	public void setSkillIds(List<Integer> skillIds) {
+		this.skillIds = skillIds;
+	}
+
+
+	public List<Integer> getStandardIds() {
+		return standardIds;
+	}
+
+
+	public void setStandardIds(List<Integer> standardIds) {
+		this.standardIds = standardIds;
+	}
+
 
 	public String getSharing() {
 		return sharing;
