@@ -114,7 +114,7 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(courseId,unitId,lessonId,collectionId,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getView().resetWidgetPositions(itemSeqToAPI,movingIndex);
+
 			}
 		});
 	}

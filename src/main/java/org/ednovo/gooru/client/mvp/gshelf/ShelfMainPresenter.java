@@ -218,7 +218,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			typeVal=type;
 		}
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
 	}
 	public ShelfServiceAsync getShelfService() {
@@ -370,7 +370,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	private void setPaginatedChilds(String courseId,String unitId,String lessonId,String typeVal, boolean isDataCalled) {
 		getChildFolderItemsForCourse(courseId,unitId,lessonId,typeVal,isDataCalled);
 	}
-
+	@Override
+	public void refreshUserShelfCollections() {
+		ShelfListView.setPageNumber(1);
+		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
+	}
 	@Override
 	public void setFolderParentName(String folderName) {
 		

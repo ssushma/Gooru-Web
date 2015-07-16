@@ -11,7 +11,7 @@
 	             <span:H3Panel ui:field="lessonCountName"></span:H3Panel>
 	             <span:PPanel ui:field="lessonName"></span:PPanel>
 		      </g:HTMLPanel>
-		      <div class="progressBlockLeft col-md-3 col-sm-3 col-xs-3">
+		      <div class="progressBlockLeft col-md-3 col-sm-3 col-xs-3 line-height-70">
 	            <g:HTMLPanel ui:field="circleIcon">
 	                <span></span>
 	            </g:HTMLPanel>
@@ -20,10 +20,10 @@
 	   </uc:HTMLEventPanel>
 	   <div class="col-md-8 col-sm-8 col-xs-8 statusScrollContainer">
 	      <div class="statusScrollscrollInnerBlock no-gutter">
-	         <uc:HTMLEventPanel styleName="scrollLeftArrow cursorArrows" ui:field="leftArrow"></uc:HTMLEventPanel>
+	         <uc:HTMLEventPanel styleName="scrollLeftArrow cursorArrows cursorPointer" ui:field="leftArrow"></uc:HTMLEventPanel>
 	         <g:HTMLPanel ui:field="slnContentPanel"></g:HTMLPanel>
 	         <div class="clearfix"></div>
-	         <uc:HTMLEventPanel styleName="scrollRightArrow cursorArrows" ui:field="rightArrow"></uc:HTMLEventPanel>
+	         <uc:HTMLEventPanel styleName="scrollRightArrow cursorArrows cursorPointer" ui:field="rightArrow"></uc:HTMLEventPanel>
 	      </div>
 	   </div>
 	   <div class="col-md-1 col-sm-1 col-xs-12">

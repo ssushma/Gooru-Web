@@ -39,8 +39,11 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 
+import gwtupload.client.PreloadedImage.OnErrorPreloadedImageHandler;
+
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
@@ -291,6 +294,12 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
     				 */
                     isCollResourceTabView.insertData(result);
                     MixpanelUtil.AddQuestion();
+            }
+            @Override
+            public void onFailure(Throwable caught) {
+            	// TODO Auto-generated method stub
+            	super.onFailure(caught);
+            	AppClientFactory.getClientLogger().log(Level.SEVERE, caught.getMessage(), caught);
             }
 		});
 		setRemoveQuestionImageAsyncCallback(new SimpleAsyncCallback<Void>(){

@@ -34,8 +34,8 @@
 				             <g:Image ui:field="studentImage"></g:Image><span:SpanPanel ui:field="studentMessage" styleName="margin-left-5"></span:SpanPanel>
 				         </div>
 				      </div>
-				      <div class="col-md-7 col-sm-7 col-md-7-reset">
-				         <div class="planProgress">
+				      <g:HTMLPanel styleName="col-md-7 col-sm-7 col-md-7-reset" ui:field="planProgressBar">
+				         <g:HTMLPanel styleName="planProgress" ui:field="planProgressPanel">
 				            <div class="planView">
 				               <ul>
 				                  <li class="green"></li>
@@ -45,19 +45,20 @@
 				               Plan View
 				            </div>
 				            <g:HTMLPanel styleName="Switch">
-				               <g:HTMLPanel styleName="onoffswitch">
+				               <g:HTMLPanel styleName="onoffswitch" ui:field="onoffSwitch">
 				                  <g:SimpleCheckBox ui:field="switchCheckBox" styleName="onoffswitch-checkbox"></g:SimpleCheckBox>
 				                  <label class="onoffswitch-label" for="myonoffswitch">
 					                  <span class="onoffswitch-inner"></span>
-					                  <span class="onoffswitch-switch"></span>
+					                  <span:SpanPanel ui:field="onoffSwitchBtn" styleName="onoffswitch-switch"></span:SpanPanel>
+					                  <span class=""></span>
 				                  </label>
 				               </g:HTMLPanel>
 				            </g:HTMLPanel>
 				            <div class="progressView">
 				               <img src="../images/Classpage/student/progressIcon.png"/> Progress View
 				            </div>
-				         </div>
-				      </div>
+				         </g:HTMLPanel>
+				      </g:HTMLPanel>
 				      <div class="clearfix"></div>
 				   </g:HTMLPanel>
 				   <g:HTMLPanel styleName="whiteBand" ui:field="previewClassMetadataPanel">

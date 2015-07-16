@@ -214,9 +214,9 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		}else{
 			txtAssessmentTitle.setText("UntitledExternalAssessment");
 			txtAssessmentURL.setText("Paste URL here");
+			txaAssessmentDescription.setText("");
 			pnlSharable.addStyleName(SELECTEDSTYLE);
 			lblRequiresNo.addStyleName(SELECTEDSTYLE);
 		}
-		
 	}
 }

@@ -196,7 +196,6 @@
 }
 .LearningMapContainer .topBackLinkBox div {
     font-size: 20px;
-    font-weight: bold;
     color: #515151;
     margin-top: 8px;
 }
@@ -215,7 +214,6 @@
 }
 .LearningMapContainer .headerBackLinkBox div {
     font-size: 20px;
-    font-weight: bold;
     color: #515151;
 }
 .LearningMapContainer .headerBackLinkBox div span {
@@ -236,7 +234,6 @@
 }
 .LearningMapContainer .headerNextLinkBox div {
     font-size: 20px;
-    font-weight: bold;
     color: #515151;
 }
 .LearningMapContainer .headerNextLinkBox div span {
@@ -1208,6 +1205,15 @@ th.headcol.whitebg {
 	color:#a5cba1;
 	padding:0 0 !important;
 }
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .percentLbl{
+	color: #85B9DF;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .textBoxPadding{
+	margin-bottom: 5px;
+}
 .lesson-view-data .resourceImgContainer{
 	padding:5px 18px;
 	border-spacing:10px;
@@ -1299,6 +1305,70 @@ th.headcol.whitebg {
 	background: url(images/preview-arrow.png) 134px center no-repeat, -moz-linear-gradient(top, #fbb03b, #fbb03b);
 	background: url(images/preview-arrow.png) 134px center no-repeat, -ms-linear-gradient(top, #fbb03b, #fbb03b);
 	background: url(images/preview-arrow.png) 134px center no-repeat, -o-linear-gradient(top, #fbb03b, #fbb03b);
+}
+
+.line-height-70 {
+	line-height: 70px;
+}
+.line-height-81 {
+	line-height: 81px;
+}
+.error-lbl-student-course-plan {
+	text-align: center;
+	display: block;
+}
+.emptyStudentClass{
+	background:#fafafa;
+	margin-top:15px;
+	padding:20px 20px;
+	margin: 15px -15px 0px -15px;
+}
+.emptyStudentClass .planViewProgress{
+	margin:50px 0 30px 0;
+	display:inline-block;
+	width:100%;
+	text-align:center;
+}
+.emptyStudentClass  .planViewProgress ul::before {
+   background: #dddddd;
+    content: "";
+    height: 2px;
+    position: absolute;
+    top: 16px;
+    width: 100%;
+}
+.emptyStudentClass  .planViewProgress ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.emptyStudentClass  .planViewProgress ul li.green {
+    background: #a5cba1;
+}
+.emptyStudentClass  .planViewProgress ul li.blue {
+    background: #85b9df;
+}
+.emptyStudentClass  .planViewProgress ul li {
+    background: #d1cfcf;
+    border-radius: 50%;
+    display: inline-block;
+    height: 33px;
+    list-style: outside none none;
+    margin: 0 10px 0 0;
+    padding: 0;
+    position: relative;
+    width: 33px;
+    z-index: 999;
+}
+.emptyStudentClass  .planViewProgress ul li:last-child{
+	margin:0 0;
+}
+.emptyStudentClass .emptyStudentClassIndication p{
+	font-size:18px;
+	color:#515151;
+	text-align:center;
+	margin: 0 0 10px;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     .learningHeaderBlock .indicationBox div {
@@ -1920,6 +1990,7 @@ th.headcol.whitebg {
     vertical-align: middle;
     text-align: center;
     color: #515151;
+    width: 45%;
 }
 .wrapCirclesViews h3 {
     margin: 0 0;
@@ -1929,169 +2000,6 @@ th.headcol.whitebg {
     display: inline-block;
     width: 75px;
     line-height: 11px;
-}
-/* -------------------------------------
- * Bar container
- * ------------------------------------- */
-
-.progress-radial {
-    float: left;
-    margin-right: 15px;
-    position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #dddddd;
-}
-/* -------------------------------------
- * Optional centered circle w/text
- * ------------------------------------- */
-
-.progress-radial .overlay {
-    background-color: #fafafa;
-    border-radius: 50%;
-    font-size: 16px;
-    height: 68px;
-    line-height: 68px;
-    margin-left: 6px;
-    margin-top: 6px;
-    position: absolute;
-    text-align: center;
-    width: 68px;
-}
-/* -------------------------------------
- * Mixin for progress-% class Blue
- * ------------------------------------- */
-
-.blue-progress-0 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-5 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-10 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-15 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-20 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-25 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-30 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-35 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-40 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-45 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-50 {
-    background-image: linear-gradient(-90deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-55 {
-    background-image: linear-gradient(-72deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-60 {
-    background-image: linear-gradient(-54deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-65 {
-    background-image: linear-gradient(-36deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-70 {
-    background-image: linear-gradient(-18deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-75 {
-    background-image: linear-gradient(0deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-80 {
-    background-image: linear-gradient(18deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-85 {
-    background-image: linear-gradient(36deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-90 {
-    background-image: linear-gradient(54deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-95 {
-    background-image: linear-gradient(72deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-.blue-progress-100 {
-    background-image: linear-gradient(90deg, #85b9df 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #85b9df 50%, #dddddd 50%, #dddddd);
-}
-/* -------------------------------------
- * Mixin for progress-% class Org
- * ------------------------------------- */
-
-.org-progress-0 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(90deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-5 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-10 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-15 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-20 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-25 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-30 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-35 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-40 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-45 {
-    background-image: linear-gradient(90deg, #dddddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-50 {
-    background-image: linear-gradient(-90deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-55 {
-    background-image: linear-gradient(-72deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-60 {
-    background-image: linear-gradient(-54deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-65 {
-    background-image: linear-gradient(-36deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-70 {
-    background-image: linear-gradient(-18deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-75 {
-    background-image: linear-gradient(0deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-80 {
-    background-image: linear-gradient(18deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-85 {
-    background-image: linear-gradient(36deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-90 {
-    background-image: linear-gradient(54deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-95 {
-    background-image: linear-gradient(72deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
-}
-.org-progress-100 {
-    background-image: linear-gradient(90deg, #fec956 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, #fec956 50%, #dddddd 50%, #dddddd);
 }
 .rowContainer .progressBlock,
 .rowContainer .timeAndScore .avgScore,
@@ -2565,18 +2473,6 @@ th.headcol.whitebg {
     }
     .rowContainer .heighlightBlock {
         padding: 15px 10px;
-    }
-    .progress-radial .overlay {
-        height: 55px;
-        line-height: 55px;
-        margin-left: 5px;
-        margin-top: 5px;
-        width: 55px;
-    }
-    .progress-radial {
-        height: 65px;
-        margin-right: 15px;
-        width: 65px;
     }
     .timeAndScore {
         border-top: 1px solid #dddddd;
