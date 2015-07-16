@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -138,17 +139,28 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
 		standardsUI.clear();
+		final String selValues = getSelectedStandards().toString();
 		for(int i=0;i<standardsList.size();i++)
 		{
-			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),true);
+			Boolean flgLevelOne = false;
+			if(standardsList.get(i).getCode().contains("Math"))
+			{
+				flgLevelOne = true;
+			}
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),flgLevelOne);
 			final DomainStandardsDo domainStand = standardsList.get(i);
+			
+			if(selValues.contains(standardsList.get(i).getCodeId().toString()))
+			{
+				standardsCode.getWidgetContainer().addStyleName("active");
+			}
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 				
 				@Override
 				public void onClick(ClickEvent event) {
 					standardsCode.setStyleName("active");
 					
-					if(!selectedValues.contains(domainStand.getCodeId())){
+					if(!selValues.contains(domainStand.getCodeId().toString())){
 						selectedValues.add(domainStand.getCodeId());
 					}
 					
@@ -157,8 +169,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						@Override
 						public void onClick(ClickEvent event) {
 							//This will remove the selected value when we are trying by close button
-							if(selectedValues.contains(domainStand.getCodeId())){
-								selectedValues.remove(domainStand);
+							if(selValues.contains(domainStand.getCodeId().toString())){
+								selectedValues.remove(domainStand.getCodeId());
 							}
 							standardsCode.removeStyleName("active");
 							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
@@ -347,16 +359,25 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public List<Integer> getSelectedStandards(){
 		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
 		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
 		while (widgets.hasNext()) {
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
 				LiPanelWithClose obj=(LiPanelWithClose) widget;
 				Integer intVal = (int)obj.getId();
 				taxonomyCourseIds.add(intVal);
+				CourseSubjectDo courseObj=new CourseSubjectDo();
+				selectedValues.add((int)obj.getId());
+				courseObj.setId((int)obj.getId());
+				courseObj.setCode(obj.getName());
+				courseObj.setSubjectId(obj.getRelatedId());
+				courseList.add(courseObj);
 			}
 		}
+		courseObj.setStandards(courseList);
 		return taxonomyCourseIds;
 	}
+	
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
 		this.courseObj=folderObj;
@@ -368,16 +389,21 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				//Render the existing standards
 				for(final CourseSubjectDo courseSubjectDo : folderObj.getStandards()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
-					System.out.println("courseSubjectDo.getId()::"+courseSubjectDo.getId());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
+							System.out.println("selectedValues::"+selectedValues);
+							for(int i=0;i<selectedValues.size();i++) {							     
+							     if((selectedValues.get(i)).equals(courseSubjectDo.getId())){
+							    	 selectedValues.remove(courseSubjectDo.getId());
+							     }
+							 }
+							removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
 							liPanelWithClose.removeFromParent();
 						}
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
-					liPanelWithClose.setName(courseSubjectDo.getName());
+					liPanelWithClose.setName(courseSubjectDo.getCode());
 					ulSelectedItems.add(liPanelWithClose);
 				}
 			}
@@ -389,7 +415,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	 * @param ulPanel
 	 * @param codeId
 	 */
-	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+	public void removeGradeWidget(UlPanel ulPanel,Integer codeId){
 		Iterator<Widget> widgets=ulPanel.iterator();
 		while (widgets.hasNext()) {
 			Widget widget=widgets.next();
