@@ -171,6 +171,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		};
 		pnlGradeContainer.add(courseGradeWidget);
 	}
+	
+	
+
 	/**
 	 * This method will remove the widget based on the codeId in the UlPanel
 	 * @param ulPanel
@@ -375,7 +378,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
 				unitLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
 			}
-//			getUiHandlers().invokeTaxonomyPopup(UNIT,ulSelectedItems);
 			getUiHandlers().invokeTaxonomyPopup(UNIT,unitLiPanelWithCloseArray);
 			
 		}
@@ -393,6 +395,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		return flag;
 	}
+	
 
 	@Override
 	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {

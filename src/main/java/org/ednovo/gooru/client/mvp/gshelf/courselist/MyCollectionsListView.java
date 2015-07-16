@@ -66,7 +66,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
-	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
+	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
 	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion,lblTitle;
 	@UiField HTMLEventPanel createPanel;
 	
@@ -162,12 +162,15 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}
 			setCreateText(type);
 		}else{
+			System.out.println("type::"+type);
 			if(COURSE.equalsIgnoreCase(type)){
 				enableCreateButtons(false);
 				h2Title.setText(i18n.GL1180());
 				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				enableCreateButtons(true);
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 				if(folderDo!=null){
@@ -298,6 +301,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiHandler("btnCreateResource")
 	public void clickOnRes(ClickEvent clickEvent){
 		getUiHandlers().addNewContent(btnCreateResource.getText());
+	}
+	@UiHandler("createCollectionBtn")
+	public void clickOnCollection(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createCollectionBtn.getText());
+	}
+	@UiHandler("createAssessmentBtn")
+	public void clickOnAssessment(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createCollectionBtn.getText());
 	}
 	/**
 	 * This method is used to set the create text

@@ -102,7 +102,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final int selectedId) {
-		getTaxonomyService().getSubjectsList(subjectId, "course", 0,30, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(subjectId, "course", 0,0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				getView().setCourseList(result,selectedId);
@@ -233,7 +233,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	public void invokeTaxonomyPopup(String viewType, List<LiPanelWithClose> unitLiPanelWithCloseArray) {
 //		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.setSelectedUlContainer(unitLiPanelWithCloseArray);
-		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
+		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 0);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
 }
