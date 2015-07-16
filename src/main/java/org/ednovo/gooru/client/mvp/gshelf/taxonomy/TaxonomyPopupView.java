@@ -301,6 +301,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				setStandardsActiveStyle(liPanel,previousSelectedDomainLiPanel);
 				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
 				liPanelWithClose.setId(subDomainId);
+				liPanelWithClose.setName(title.getText());
 				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
