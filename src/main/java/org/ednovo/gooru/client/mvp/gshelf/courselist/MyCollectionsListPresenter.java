@@ -105,12 +105,18 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void reorderWidgetPositions(String idToMove,final int itemSeqToAPI,final int movingIndex) {
+	public void reorderWidgetPositions(String idToMove,final int itemSeqToAPI,final int movingIndex,String collectionGooruOid) {
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2", null);
 		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o3", null);
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String collectionId=null;
+		if("Folder".equalsIgnoreCase(view) || (courseId!=null && unitId!=null && lessonId!=null)){
+			collectionId=collectionGooruOid;
+		}else{
+			//If not from mycollection we need to use the gooruoid for course ,units and lessons
+			idToMove=collectionGooruOid;
+		}
 		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(courseId,unitId,lessonId,collectionId,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
