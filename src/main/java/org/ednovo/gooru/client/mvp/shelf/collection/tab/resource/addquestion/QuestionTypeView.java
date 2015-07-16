@@ -2080,9 +2080,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 			timer.schedule(0);
 
-			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
+			if(collectionItemDo.getResource().getDepthOfKnowledge()!=null){
 				int checkBoxCount=0;
-				for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {
+				for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledge()) {
 					   if(item.isSelected()){
 						   if(checkBoxCount==0)
 						   chkLevelRecall.setChecked(true);

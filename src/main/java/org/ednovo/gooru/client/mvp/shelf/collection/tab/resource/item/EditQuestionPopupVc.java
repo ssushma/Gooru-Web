@@ -978,8 +978,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 
 			if (!isSaveButtonClicked) {
 				isSaveButtonClicked = true;
-				updateQuestionResource(collectionItemDo.getResource()
-						.getGooruOid(), collectionQuestionItemDo);
+				updateQuestionResource(collectionItemDo.getResource().getGooruOid(), collectionQuestionItemDo);
 			}
 			panelPleaseWait.setVisible(true);
 			panelControls.setVisible(false);

@@ -1009,12 +1009,12 @@ public class SearchInfoWidget extends Composite {
 
 			if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 				depthofknowledgedetails = new ArrayList<String>();
-				if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
-					if(collectionItemDo.getResource().getDepthOfKnowledges().size()>0){
-						for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledges().size();i++){
-							if(collectionItemDo.getResource().getDepthOfKnowledges().get(i).isSelected())
+				if(collectionItemDo.getResource().getDepthOfKnowledge()!=null){
+					if(collectionItemDo.getResource().getDepthOfKnowledge().size()>0){
+						for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledge().size();i++){
+							if(collectionItemDo.getResource().getDepthOfKnowledge().get(i).isSelected())
 							{
-								depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledges().get(i).getValue());
+								depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledge().get(i).getValue());
 							}
 						}
 						if(depthofknowledgedetails.size()>0){

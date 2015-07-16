@@ -74,6 +74,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private List<checkboxSelectedDo> audience;
 	private List<checkboxSelectedDo> learningSkills;
 	private CollectionSettingsDo settings;
+	private List<StandardFo> skills;
 	private String gooruOid;
 	private String publishStatus;
 	private String name;
@@ -81,6 +82,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String courseGooruOid;
 	
 	private String type;
+
 	public CollectionDo(){}
 	public String getStringTypeValue() {
 		return type;
@@ -443,8 +445,11 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	public void setPublishStatus(String publishStatus) {
 		this.publishStatus = publishStatus;
 	}
-
+	public List<StandardFo> getSkills() {
+		return skills;
+	}
+	public void setSkills(List<StandardFo> skills) {
+		this.skills = skills;
+	}
 	
-
-
 }
