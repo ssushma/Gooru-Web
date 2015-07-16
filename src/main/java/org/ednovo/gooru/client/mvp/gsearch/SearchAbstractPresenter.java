@@ -107,7 +107,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	private SearchAsyncCallback<SearchDo<String>> sourceSuggestionAsyncCallback;
 
 	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
-	
+
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackFirstLoad;
 
 	private SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallbackLoadInStore;
@@ -244,6 +244,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			}
 		});
 		gooruGradesPresenter.setGradePanel(getView().getGradePanel());
+		gooruGradesPresenter.setPageType("search");
 		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
 
 		if (getViewToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
@@ -267,7 +268,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 					getView().setAggregatorSuggestions(result);
 				}
 			});
-			
+
 		}
 	}
 
@@ -597,7 +598,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			}
 		});
 	}
-	
+
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
 		return standardSuggestionAsyncCallback;
 	}
@@ -619,7 +620,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchAsyncCallback<SearchDo<String>> getAggregatorSuggestionAsyncCallback() {
 		return aggregatorSuggestionAsyncCallback;
 	}
-	
+
 	public void setAggregatorSuggestionAsyncCallback(
 			SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback) {
 		this.aggregatorSuggestionAsyncCallback = aggregatorSuggestionAsyncCallback;

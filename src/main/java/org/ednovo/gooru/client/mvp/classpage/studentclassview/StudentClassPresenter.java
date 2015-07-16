@@ -198,7 +198,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 
 	}
 
-	private void getClasspageDetails() {
+	@Override
+	public void getClasspageDetails() {
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
 			@Override

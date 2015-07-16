@@ -30,6 +30,8 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -154,6 +156,16 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 				studentImage.setUrl(DEFAULT_USER_IMAGE);
 			}
 		});
+		
+		
+		OpenJoinClassPopupHandler openJoinClassPopupHandler=new OpenJoinClassPopupHandler() {
+					
+					@Override
+					public void openJoinClassPopup() {
+						getUiHandlers().getClasspageDetails();
+					}
+		};
+		AppClientFactory.getEventBus().addHandler(OpenJoinClassPopupEvent.TYPE,openJoinClassPopupHandler);
 	}
 	
 	@Override
