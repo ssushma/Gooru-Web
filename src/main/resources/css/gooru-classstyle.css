@@ -1163,6 +1163,9 @@ select option {
 .rosterContainer .inviteBox {
     position: relative;
 }
+.rosterContainer .inviteBox .token-input-input-token-gooru .gwt-SuggestBox{
+    height: 27px;
+}
 .rosterContainer .inviteBox .form-control {
     font-size: 12px;
     width: 90%;
@@ -1327,6 +1330,7 @@ select option {
 }
 .rosterContainer .classSettingsInner p{
 	margin-bottom: 5px;
+	font-weight: bold;
 }
 @media (min-width: 240px) and (max-width: 319px) {
     .studentsMenuBlock .studentsLeftMenu {

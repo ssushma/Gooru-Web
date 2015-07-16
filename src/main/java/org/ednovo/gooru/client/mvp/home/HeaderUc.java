@@ -1131,6 +1131,7 @@ public class HeaderUc extends Composite
 					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					if (userDo != null && !userDo.getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
+						AppClientFactory.printInfoLogger("ifffffffff");
 						AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
 											@Override
 											public void onSuccess(ClasspageListDo result) {
@@ -1139,11 +1140,14 @@ public class HeaderUc extends Composite
 												// ? true : false;
 												//if(result!=null){
 												if (result != null && result.getSearchResults() != null) {
+													AppClientFactory.printInfoLogger("iside ifffffffff");
 													if (result.getSearchResults().size() > 0) {
+														AppClientFactory.printInfoLogger("iside ifffffffff"+result.getSearchResults().size());
 														Map<String, String> params = new HashMap<String, String>();
 														params.put("view", "myclass");
 														AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 													} else {
+														AppClientFactory.printInfoLogger("elsennnnnnnnnnn");
 														AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 													}
 												} else {
@@ -1155,6 +1159,7 @@ public class HeaderUc extends Composite
 											}
 					 });
 					} else {
+						AppClientFactory.printInfoLogger("elssssssssssss");
 						name = "teach";
 						Window.enableScrolling(true);
 						// onLinkPopupClicked(null);
@@ -2112,7 +2117,7 @@ public class HeaderUc extends Composite
 		params.put("pageSize", "10");
 		params.put("pos", "1");
 		if (gooruUid.equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
-			params.put("classpageid", gooruOId);
+			params.put("classpageId", gooruOId);
 			AppClientFactory.getPlaceManager().revealPlace(
 					PlaceTokens.EDIT_CLASSPAGE, params);
 		} else {

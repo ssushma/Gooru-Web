@@ -848,6 +848,7 @@ button.btn-disabled{
 	height:10px;
 	display:inline-block;
 	margin-bottom:-3px;
+	cursor: pointer;
 }
 #gShelfCousesList .tableListOrder{
 	text-align:center;
@@ -871,6 +872,7 @@ button.btn-disabled{
 	width:16px;
 	height:10px;
 	display:inline-block;
+	cursor: pointer;
 }
 #gShelfCousesList .tableListTags span{
 	margin-left:10px;

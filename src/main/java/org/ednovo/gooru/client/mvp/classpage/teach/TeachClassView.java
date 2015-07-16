@@ -102,6 +102,7 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 
 
 	public TeachClassView() {
+		AppClientFactory.printInfoLogger("Teach Class View");
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
 		classSettingsAnr.addClickHandler(new TeacherClassNavigationHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS,UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classSettingsAnr));
@@ -238,13 +239,19 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 	
 	@UiHandler("studentPreviewbtn")
 	public void navigateStudentPreview(ClickEvent event) {
-		PlaceRequest request = new PlaceRequest(PlaceTokens.STUDENT_VIEW);
-		String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
-		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,"");
-		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
-		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, cId);
-		request = request.with(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.TRUE);
-		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		AppClientFactory.getPlaceManager().revealPlace(request);
+		System.out.println("clicked on student preview");
+		try{
+			PlaceRequest request = new PlaceRequest(PlaceTokens.STUDENT_VIEW);
+			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,"");
+			String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,"");
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, cId);
+			request = request.with(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.TRUE);
+			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+			AppClientFactory.getPlaceManager().revealPlace(request);
+		}catch(Exception e){
+			AppClientFactory.printInfoLogger("eeee:"+e.getMessage());
+		}
+		
 	}
 }

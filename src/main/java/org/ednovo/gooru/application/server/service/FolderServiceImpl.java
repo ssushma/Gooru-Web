@@ -53,6 +53,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -579,20 +580,26 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		try {	
 			getLogger().info("-- itemToBeMovedPosSeqNumbI - - - - "+itemToBeMovedPosSeqNumb);
 			getLogger().info("-- collectionItemId - - - - "+collectionItemId);
+			getLogger().info("-- collectionId - - - - "+collectionId);
 		JSONObject jsonObj=new JSONObject();
 		if(type!=null && type.equalsIgnoreCase("Folder")){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA,collectionId,collectionItemId);
 			//url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"");
 		}else{
-			if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+			/*if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+				//Reorder resources
 				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA,collectionId,collectionItemId);
-			}else if(courseId!=null && unitId!=null && lessonId!=null && collectionId==null ){
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTION_METADATA,courseId,unitId,lessonId,collectionItemId);
+			}else*/ if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+				//Reorder collections
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA,collectionId,collectionItemId);
 			}else if(courseId!=null && unitId!=null && lessonId==null){
+				//Reorder lessons
 				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_LESSON_METADATA,courseId,unitId,collectionItemId);
 			}else if(courseId!=null && unitId==null){
+				//Reorder units
 				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA,courseId,collectionItemId);
 			}else if(courseId==null){
+				//Reorder courses
 				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA,collectionItemId);
 			}
 		}
@@ -711,6 +718,46 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return folderDo;
 	}
+	
+	
+	@Override
+	public FolderDo createCollection(CreateDo createDo,String parentId,boolean addToShelf) throws GwtException {
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
+		String url = null;
+		FolderDo folderDo = new FolderDo();
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_CREATE_COLLECTION);
+		if(!StringUtil.isEmpty(parentId)){
+			url=AddQueryParameter.constructQueryParams(url, "folderId", parentId);
+		}
+		
+		JSONObject collectionObject=new JSONObject();
+		try {
+			collectionObject.put(TITLE, createDo.getTitle());
+			if(addToShelf) {
+				collectionObject.put(ADD_TO_SHELF, addToShelf);
+			}
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDo, null);
+			logger.info("createCollection : "+url);
+			logger.info("dataPassing: "+dataPassing);
+			
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			logger.info("rest point: "+ getRestEndPoint());
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri").toString());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRepGet);
+			logger.info("folderDo obj : "+folderDo);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
+	
 	
 
 	@Override

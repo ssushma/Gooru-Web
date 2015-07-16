@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -59,7 +60,7 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 		this.collectionId=collectionId;
 		getView().getFrame().setUrl("");
 		getView().getLoadingImage().setVisible(true);
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
 
 		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
 

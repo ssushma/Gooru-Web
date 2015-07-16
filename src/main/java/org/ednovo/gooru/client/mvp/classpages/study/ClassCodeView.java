@@ -358,14 +358,18 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	 */
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
+		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
+		AppClientFactory.getPlaceManager().revealPlace(token, params);
+		
+		/*Map<String, String> params = new HashMap<String, String>();
 		params.put("id", gooruOId);
-		params.put("classpageid", gooruOId);
+		params.put("classpageId", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
 		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			params.put("tab","classList");
-		}
+		}*/
 		AppClientFactory.getPlaceManager().revealPlace(
 				token, params);
 	}

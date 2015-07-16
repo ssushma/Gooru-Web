@@ -15,6 +15,7 @@ public class DomainStandardsDo implements Serializable {
 	private Integer codeId;
 	private String label;
 	private String code;
+	private Integer typeId;
 	private List<SubDomainStandardsDo> node;
 
 	public DomainStandardsDo(){}
@@ -50,6 +51,14 @@ public class DomainStandardsDo implements Serializable {
 
 	public void setNode(List<SubDomainStandardsDo> node) {
 		this.node = node;
+	}
+
+	public Integer getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(Integer typeId) {
+		this.typeId = typeId;
 	}
 
 
