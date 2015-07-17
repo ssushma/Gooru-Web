@@ -14,16 +14,24 @@ public interface IsTaxonomyPopupView extends PopupView, IsViewWithHandlers<Taxon
 
 	void addTaxonomySubjects(List<CourseSubjectDo> result); 
 
-	void addTaxonomyCourses(List<CourseSubjectDo> taxonomyCourseList); 
-
-	void addTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList);
-
 	void addTaxonomyStandards(List<DomainStandardsDo> taxonomyStdList); 
 
 	void setCurrentTypeView(String viewType);
 
 //	void displaySelectedTaxonomyData(UlPanel ulSelectedItems);
 
-	void displaySelectedTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArrayData);   
+	void displaySelectedTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArrayData);
+
+	void addTaxonomyCourses(List<CourseSubjectDo> taxonomyCourseList,
+			Integer subjectId);
+
+	void appendTaxonomyCourses(List<CourseSubjectDo> taxonomyCourseList,
+			Integer subjectId);
+
+	void addTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList,
+			Integer courseId);
+
+	void appendTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList,
+			Integer courseId);   
  
 }
