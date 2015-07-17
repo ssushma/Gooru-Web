@@ -549,4 +549,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		this.collectionTitle=collectionTitle;
 	}
 
+	@Override
+	public void enableAddButton() {
+		getView().enableAddButton();
+	}
+
 }
