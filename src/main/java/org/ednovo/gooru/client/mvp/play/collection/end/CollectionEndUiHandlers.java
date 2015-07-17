@@ -52,4 +52,6 @@ public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginS
 	public void setCollectionSummaryBasedOnClasspageIdSessionId();
 	
 	public void clearslot();
+	
+	public void setDefaultTypeAndVersion();
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style src=""/>
+	<g:HTMLPanel>
+		<uc:PPanel ui:field="scoreLbl"></uc:PPanel>
+		<g:HTMLPanel styleName="textBoxPadding">
+			<g:HTMLPanel styleName="col-md-10">
+				<g:TextBox styleName="pull-left form-control" ui:field="scoreTextBox"></g:TextBox>
+			</g:HTMLPanel>
+			<g:Label styleName="pull-right col-md-2 percentLbl">%</g:Label>
+			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		</g:HTMLPanel>
+		<uc:PPanel ui:field="evidenceLbl"></uc:PPanel>
+		<g:TextArea styleName="form-control textBoxPadding" ui:field="evidence"></g:TextArea>
+		<panel:HTMLEventPanel styleName="list-group-item viewLink" ui:field="submit">
+			<g:Anchor ui:field="submitTxt">Submit</g:Anchor>
+			<g:Anchor ui:field="inProgressTxt">Saving...</g:Anchor>
+	    </panel:HTMLEventPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>

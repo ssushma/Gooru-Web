@@ -848,6 +848,7 @@ button.btn-disabled{
 	height:10px;
 	display:inline-block;
 	margin-bottom:-3px;
+	cursor: pointer;
 }
 #gShelfCousesList .tableListOrder{
 	text-align:center;
@@ -871,6 +872,7 @@ button.btn-disabled{
 	width:16px;
 	height:10px;
 	display:inline-block;
+	cursor: pointer;
 }
 #gShelfCousesList .tableListTags span{
 	margin-left:10px;
@@ -1547,6 +1549,13 @@ padding-bottom: 10px;
 #pnlLessonInfo .unitCoverListRight ul li:first-child{
 	font-style:normal;
 }
+
+#pnlLessonInfo .fractionDetailsTable .dropDownRight .dropdown-menu{
+	left:auto;
+	right:0;
+}
+
+
 @media (max-width: 767px) {
 	
 #pnlLessonInfo .unitCoverListLeft, #info .unitCoverListMiddle, #info .unitCoverListRight{
@@ -2351,10 +2360,11 @@ vertical-align:middle;
 	height:10px;
 	display:inline-block;
 	margin-bottom:-3px;
+	cursor: pointer;
 }
 #resourceEdit .tableListOrder{
-margin:8px 0 12px 45px;
-display:inline-block;
+	margin:8px 0 12px 45px;
+	display:inline-block;
     text-align: center;
     width: 26px;
 }
@@ -2370,6 +2380,7 @@ display:inline-block;
 	width:16px;
 	height:10px;
 	display:inline-block;
+	cursor: pointer;
 }
 #resourceEdit .tableListTags span{
 	margin-left:10px;
@@ -2708,6 +2719,13 @@ display:inline-block;
 	border-bottom:1px solid #dddddd;
 	padding:15px 15px 15px 15px;
 }
+
+#unitinfo .containerHeight{
+	height: 424px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
 #unitinfo .questionsBlock{
 	
 	padding:15px 0;

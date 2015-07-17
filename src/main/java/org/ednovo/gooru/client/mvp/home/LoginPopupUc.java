@@ -581,7 +581,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 	    }
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT_VIEW))
 	    {
-	    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	    	//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 	    }
 		/*else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SETTINGS)){
 	    	if(AppClientFactory.getPlaceManager().getRequestParameter("newMailId")!=null){
@@ -771,12 +771,13 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	}
 	public void openClasspage() {
-
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("view", "myclass");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 	}
 	private void OpenClasspageEdit(String gooruOId) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", gooruOId);
+		params.put("classpageId", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");

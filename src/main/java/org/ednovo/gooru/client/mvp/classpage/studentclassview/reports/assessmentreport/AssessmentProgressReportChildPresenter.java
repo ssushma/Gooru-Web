@@ -39,7 +39,6 @@ import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStat
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -133,7 +132,6 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		System.out.println("1");
 		AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
@@ -212,6 +210,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		        	     return obj1.compareTo(obj2);
 		        	}
 		        });
+				questionRowIndex.clear();
+				questionsData.clear();
 				for (UserDataDo userDataDo : result) {
 					
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
@@ -296,9 +296,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		AppClientFactory.getInjector().getClasspageService().getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, new SimpleAsyncCallback<List<UserPlayedSessionDo>>() {
 			@Override
 			public void onSuccess(List<UserPlayedSessionDo> result) {
-				System.out.println("!");
 				if(result!=null&&result.size()>0) {
-					System.out.println(result.get(0).getSessionId());
 					setSessionId(result.get(0).getSessionId());
 					getSessionsDataByUser(assessmentId, classGooruId, gooruUid);
 					getView().setSessionsData(result);
@@ -306,4 +304,24 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			}
 		});
 	}
+
+	@Override
+	public void getCollectionScoreForSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
+		AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+			@Override
+			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+
+				if(result!=null && result.size()!=0){
+					displayScoreCountData(result.get(0));
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+			}
+		});
+
+	}
+
 }

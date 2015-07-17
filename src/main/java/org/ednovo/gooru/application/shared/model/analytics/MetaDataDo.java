@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,34 +26,35 @@ package org.ednovo.gooru.application.shared.model.analytics;
 
 import java.io.Serializable;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
  * @fileName : MetaDataDo.java
- * 
+ *
  * @Author :Gooru Team
- * 
+ *
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
 public class MetaDataDo implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private String collection_gooru_oid;
+	private String collectionGooruOId;
 	private String result;
-	private String question_type;
+	private String questionType;
 	private int sequence;
-	private long answer_id;
-	private String type_name;
-	private int is_correct;
-	private long question_id;
+	private long answerId;
+	private String type;
+	private int isCorrect;
+	private long questionId;
 	private String endTime;
-	private String question_gooru_oid;
-	private String answer_text;
-	public String getCollection_gooru_oid() {
-		return collection_gooru_oid;
+	private String answerText;
+	public String getCollectionGooruOId() {
+		return collectionGooruOId;
 	}
-	public void setCollection_gooru_oid(String collection_gooru_oid) {
-		this.collection_gooru_oid = collection_gooru_oid;
+	public void setCollectionGooruOId(String collectionGooruOId) {
+		this.collectionGooruOId = collectionGooruOId;
 	}
 	public String getResult() {
 		return result;
@@ -61,11 +62,11 @@ public class MetaDataDo implements Serializable{
 	public void setResult(String result) {
 		this.result = result;
 	}
-	public String getQuestion_type() {
-		return question_type;
+	public String getQuestionType() {
+		return questionType;
 	}
-	public void setQuestion_type(String question_type) {
-		this.question_type = question_type;
+	public void setQuestionType(String questionType) {
+		this.questionType = questionType;
 	}
 	public int getSequence() {
 		return sequence;
@@ -73,29 +74,29 @@ public class MetaDataDo implements Serializable{
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
 	}
-	public long getAnswer_id() {
-		return answer_id;
+	public long getAnswerId() {
+		return answerId;
 	}
-	public void setAnswer_id(long answer_id) {
-		this.answer_id = answer_id;
+	public void setAnswerId(long answerId) {
+		this.answerId = answerId;
 	}
-	public String getType_name() {
-		return type_name;
+	public String getType() {
+		return type;
 	}
-	public void setType_name(String type_name) {
-		this.type_name = type_name;
+	public void setType(String type) {
+		this.type = type;
 	}
-	public int getIs_correct() {
-		return is_correct;
+	public int getIsCorrect() {
+		return isCorrect;
 	}
-	public void setIs_correct(int is_correct) {
-		this.is_correct = is_correct;
+	public void setIsCorrect(int isCorrect) {
+		this.isCorrect = isCorrect;
 	}
-	public long getQuestion_id() {
-		return question_id;
+	public long getQuestionId() {
+		return questionId;
 	}
-	public void setQuestion_id(long question_id) {
-		this.question_id = question_id;
+	public void setQuestionId(long questionId) {
+		this.questionId = questionId;
 	}
 	public String getEndTime() {
 		return endTime;
@@ -103,16 +104,11 @@ public class MetaDataDo implements Serializable{
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	public String getQuestion_gooru_oid() {
-		return question_gooru_oid;
+	public String getAnswerText() {
+		return answerText;
 	}
-	public void setQuestion_gooru_oid(String question_gooru_oid) {
-		this.question_gooru_oid = question_gooru_oid;
+	public void setAnswerText(String answerText) {
+		this.answerText = answerText;
 	}
-	public String getAnswer_text() {
-		return answer_text;
-	}
-	public void setAnswer_text(String answer_text) {
-		this.answer_text = answer_text;
-	}
+
 }

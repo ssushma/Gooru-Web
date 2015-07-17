@@ -48,9 +48,9 @@
    <div class="container">
       <div class="row">
           <g:HTMLPanel styleName="myClassesLanding">
-	   <div class="col-md-12 col-sm-12">
+	   <g:HTMLPanel styleName="col-md-12 col-sm-12" ui:field="mainPanel">
 	      <div class="myClassesTabs"><g:Anchor ui:field="myClassesAnr">My Classes</g:Anchor><g:Anchor ui:field="archivedAnr">Archived</g:Anchor> </div>
-	   </div>
+	   </g:HTMLPanel>
 	   <div class="clearfix"></div>
 	   <div class="col-md-12 col-sm-12">
 	      <g:HTMLPanel styleName="myClassesAlert" ui:field="notesPanel">
@@ -73,6 +73,7 @@
 	      <div class="clearfix"></div>
 	   </div>
 	   <div class="classBlocks">
+	        <txt:LoadingUc ui:field="studyLoading"/>
 	       <g:HTMLPanel ui:field="joinedClassesContainer"></g:HTMLPanel>
 	       <g:Button styleName="secondary" ui:field="seeMorebtnJoined"></g:Button>
 	      <div class="clearfix"></div>
@@ -87,6 +88,7 @@
 	      <div class="clearfix"></div>
 	   </div>
 	   <div class="classBlocks">
+	       <txt:LoadingUc ui:field="teachLoading"/>
 	       <g:HTMLPanel ui:field="ownerClassesContainer"></g:HTMLPanel>
 	       <g:Button styleName="secondary" ui:field="seeMorebtnOwner"></g:Button>
 	      <div class="clearfix"></div>

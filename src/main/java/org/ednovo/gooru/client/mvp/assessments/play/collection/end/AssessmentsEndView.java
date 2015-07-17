@@ -36,7 +36,6 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
@@ -101,6 +100,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	static FlowPanel PrintPnl;
 
 	@UiField
+
 	FlowPanel progressRadial;
 	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel, questionsTable;
 	@UiField ListBox sessionsDropDown;
@@ -132,6 +132,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
+	public boolean isTableToDestroy=false;
+
 	@Inject
 	public AssessmentsEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -148,12 +150,14 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
+			isTableToDestroy = true;
 			int selectedIndex=sessionsDropDown.getSelectedIndex();
-			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 			if(classpageId==null){
 				classpageId="";
 			}
 			setSessionStartTime(selectedIndex);
+			getUiHandlers().getCollectionScoreForSession(collectionDo.getGooruOid(), classpageId, AppClientFactory.getLoggedInUser().getGooruUId(), sessionsDropDown.getValue(selectedIndex), null);
 			getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
 		}
 	}
@@ -239,7 +243,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			 scorePercentage=(collectionScore/noOfQuestions)*100;
 		}
 		String progressRedialStyle="blue-progress-"+scorePercentage;
-
+		progressRadial.setStyleName("progress-radial");
 		progressRadial.addStyleName(progressRedialStyle);
 	}
 
@@ -248,9 +252,10 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public void displayScoreCount(CollectionSummaryMetaDataDo result) {
 		score.setText(result.getScoreInPercentage()+" %");
 		goal.setText(i18n.GL3460_5() + result.getGoal()+" %");
-		correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
+		correctStatus.setText(result.getScore()+"/"+result.getSelectedSessionScorableQuestionCount()+" "+i18n.GL2278());
 		int scorePercentage=result.getScoreInPercentage();
 		String progressRedialStyle="blue-progress-"+scorePercentage;
+		progressRadial.setStyleName("progress-radial");
 		progressRadial.addStyleName(progressRedialStyle);
 	}
 
@@ -328,22 +333,39 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public void setQuestionsData(final ArrayList<UserDataDo> result) {
 
 		loadingImageLabel.setVisible(false);
+		questionsTable.setVisible(true);
 		questionsTable.clear();
-		destoryTables();
-
-		final AdvancedFlexTable adTable=new AdvancedFlexTable();
-		adTable.getElement().setId("report-student-assessment-report");
-		questionsTable.add(adTable);
-
-		adTable.setHeaderWidget(0, new Label(i18n.GL3259()));
-		adTable.setHeaderWidget(1, new Label(i18n.GL0308()));
-		adTable.setHeaderWidget(2, new Label(i18n.GL0315()));
-		adTable.setHeaderWidget(3, new Label(i18n.GL2288()));
-		adTable.setHeaderWidget(4, new Label(i18n.GL2084()));
-		adTable.setHeaderWidget(5, new Label(i18n.GL3271()));
-
+		if (isTableToDestroy){
+			isTableToDestroy = false;
+			destoryTables();
+		}
 
 		if(result.size() > 0){
+			final AdvancedFlexTable adTable=new AdvancedFlexTable();
+			adTable.removeAllRows();
+			adTable.getElement().setId("report-student-assessment-report");
+			questionsTable.add(adTable);
+
+			Label heading1 = new Label(i18n.GL3259());
+			Label heading2 = new Label(i18n.GL0308());
+			Label heading3 = new Label(i18n.GL0315());
+			Label heading4 = new Label(i18n.GL2288());
+			Label heading5 = new Label(i18n.GL2084());
+			Label heading6 = new Label(i18n.GL3271());
+
+			heading1.addStyleName("headingLabel");
+			heading2.addStyleName("headingLabel");
+			heading3.addStyleName("headingLabel");
+			heading4.addStyleName("headingLabel");
+			heading5.addStyleName("headingLabel");
+			heading6.addStyleName("headingLabel");
+
+			adTable.setHeaderWidget(0, heading1);
+			adTable.setHeaderWidget(1, heading2);
+			adTable.setHeaderWidget(2, heading3);
+			adTable.setHeaderWidget(3, heading4);
+			adTable.setHeaderWidget(4, heading5);
+			adTable.setHeaderWidget(5, heading6);
 			for(int i=0;i<result.size();i++) {
 				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
@@ -388,10 +410,12 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						String answerTextFormat = "";
 						String[] answersArry = null;
 						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
+
 						for (MetaDataDo metaDataDo : questionList) {
+
 							String answerText = "";
-							if((metaDataDo.getAnswer_text() != null)) {
-								answerText = metaDataDo.getAnswer_text();
+							if((metaDataDo.getAnswerText() != null)) {
+								answerText = metaDataDo.getAnswerText();
 							}
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
@@ -473,6 +497,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						viewResponselbl.addClickHandler(new SummaryPopupClick());
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				}
@@ -499,12 +524,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				int reaction=result.get(i).getReaction();
 				adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 			}
-			sortAndFixed();
+//			sortAndFixed();
 			adTable.addStyleName("table table-bordered reportTableStyle");
-
-//			questionsTable.getElement().setInnerHTML(""+adTable);
-
-
 		}else {
 			Label erroeMsg=new Label();
 			erroeMsg.setStyleName(STYLE_ERROR_MSG);
@@ -534,7 +555,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	 */
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {
-			if(metaDataDo.getIs_correct()==1){
+			if(metaDataDo.getIsCorrect()==1){
 				return AnalyticsUtil.getCharForNumber(metaDataDo.getSequence()-1);
 			}
 		}
@@ -628,8 +649,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
 							for (MetaDataDo metaDataDo : questionList) {
 								String answerText = "";
-								if((metaDataDo.getAnswer_text() != null)) {
-									answerText = metaDataDo.getAnswer_text();
+								if((metaDataDo.getAnswerText() != null)) {
+									answerText = metaDataDo.getAnswerText();
 								}
 								answerTextFormat += '[' + answerText +']';
 								if(questionList.size()  != metaDataDo.getSequence()){
@@ -846,45 +867,56 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	}
 
 	public static native void sortAndFixed() /*-{
-	 var table =$wnd.$('#report-student-assessment-report').DataTable({
-       scrollY:        "300px",
-       scrollX:        true,
-       scrollCollapse: true,
-       paging:         false,
-       bFilter:false,
-       bInfo: false
-   });
-}-*/;
-public static native void destoryTables() /*-{
-	var table = $wnd.$('#report-student-assessment-report').DataTable();
-  	table.destroy();
-}-*/;
+		 var table =$wnd.$('#report-student-assessment-report').DataTable({
+	       scrollY:        "300px",
+	       scrollX:        true,
+	       scrollCollapse: true,
+	       paging:         false,
+	       bFilter:false,
+	       bInfo: false
+	   });
+	}-*/;
+	public static native void destoryTables() /*-{
+		var table = $wnd.$('#report-student-assessment-report').DataTable();
+	  	table.destroy();
+	}-*/;
 
 
 
-@Override
-public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
-	throw new RuntimeException("Not implemented");
-}
+	@Override
+	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
+		throw new RuntimeException("Not implemented");
+	}
 
 
 
-@Override
-public void loadingIcon() {
-	loadingImageLabel.setVisible(true);
-}
+	@Override
+	public void loadingIcon() {
+		loadingImageLabel.setVisible(true);
+		questionsTable.setVisible(false);
+	}
 
 
 
-@Override
-public void errorMsg() {
-	Label erroeMsg=new Label();
-	erroeMsg.setStyleName(STYLE_ERROR_MSG);
-	erroeMsg.setText(i18n.GL3265());
-	questionsTable.add(erroeMsg);
-}
+	@Override
+	public void errorMsg() {
+		Label erroeMsg=new Label();
+		erroeMsg.setStyleName(STYLE_ERROR_MSG);
+		erroeMsg.setText(i18n.GL3265());
+		questionsTable.clear();
+		questionsTable.add(erroeMsg);
+	}
+
+
+	@Override
+	public HTMLPanel getQuestionsTable() {
+		return questionsTable;
+	}
 
 
 
+	public void setQuestionsTable(HTMLPanel questionsTable) {
+		this.questionsTable = questionsTable;
+	}
 
 }

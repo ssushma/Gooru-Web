@@ -49,7 +49,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 * @param idToMove
 	 * @param itemSeqToAPI
 	 */
-	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) ;
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI,String moveGooruOid) ;
 	/**
 	 * This method is used to update narration.
 	 * @param collectionItemId

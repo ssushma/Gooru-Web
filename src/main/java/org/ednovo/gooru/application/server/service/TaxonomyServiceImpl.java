@@ -88,7 +88,7 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 		}else if(type.equalsIgnoreCase("course")){
 			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COURSES_BY_SUBJECTID,classificationId,String.valueOf(offset),limit+"");
 		}else if(type.equalsIgnoreCase("domain")){
-			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,classificationId); 
+			url= UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_DOMAIN_BY_SUBJECTID,classificationId,String.valueOf(offset),limit+""); 
 		}
 		logger.info("url::"+url);
 		if(url!=null){

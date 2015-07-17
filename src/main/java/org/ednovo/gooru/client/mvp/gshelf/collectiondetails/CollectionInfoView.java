@@ -109,6 +109,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	List<Integer> selectedValues=new ArrayList<Integer>();
+	
+	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
 
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
@@ -200,27 +202,59 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
 		standardsUI.clear();
+		final String selValues = getSelectedStandards().toString();
 		for(int i=0;i<standardsList.size();i++)
 		{
-			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(),standardsList.get(i).getLabel(),true);
+			Boolean flgLevelOne = false;
+			if(standardsList.get(i).getCode().contains("Math"))
+			{
+				flgLevelOne = true;
+			}
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),flgLevelOne);
 			final DomainStandardsDo domainStand = standardsList.get(i);
+			if(domainStand.getTypeId()!=null)
+			{
+				if(domainStand.getTypeId().equals(1))
+				{
+					
+				}
+				else if(domainStand.getTypeId().equals(2))
+				{
+					standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);	
+				}
+				else
+				{
+					standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);		
+				}
+				
+			}
+			standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+			
+			if(selValues.contains(standardsList.get(i).getCodeId().toString()))
+			{
+				standardsCode.getWidgetContainer().addStyleName("active");
+			}
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-
+				
 				@Override
 				public void onClick(ClickEvent event) {
-					standardsCode.setStyleName("active");
-
-					if(!selectedValues.contains(domainStand.getCodeId())){
+					if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
+					{
+					
+					standardsCode.getWidgetContainer().addStyleName("active");
+					standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+					
+					if(!selValues.contains(domainStand.getCodeId().toString())){
 						selectedValues.add(domainStand.getCodeId());
 					}
-
+					
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
 							//This will remove the selected value when we are trying by close button
-							if(selectedValues.contains(domainStand.getCodeId())){
-								selectedValues.remove(domainStand);
+							if(selValues.contains(domainStand.getCodeId().toString())){
+								selectedValues.remove(domainStand.getCodeId());
 							}
 							standardsCode.removeStyleName("active");
 							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
@@ -232,26 +266,64 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					liPanelWithClose.setName(domainStand.getCode());
 					liPanelWithClose.setRelatedId(domainStand.getCodeId());
 					ulSelectedItems.add(liPanelWithClose);
+					}
+					else
+					{
+						standardsCode.getWidgetContainer().removeStyleName("active");
+						removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+					}
 				}
 			});
 			standardsUI.add(standardsCode);
 			displaySubStandardsList(standardsList.get(i).getNode());
 		}
-
-
 	}
-	public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandards(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				Integer intVal = (int)obj.getId();
+				taxonomyCourseIds.add(intVal);
+				CourseSubjectDo courseObj=new CourseSubjectDo();
+				selectedValues.add((int)obj.getId());
+				courseObj.setId((int)obj.getId());
+				courseObj.setCode(obj.getName());
+				courseObj.setSubjectId(obj.getRelatedId());
+				courseList.add(courseObj);
+			}
+		}
+		if(courseObjG!=null){
+			courseObjG.setStandards(courseList);
+		}
+		
+		return taxonomyCourseIds;
+	}
+		
+		public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
 		//	standardsUI.clear();
 			for(int i=0;i<standardsList.size();i++)
 			{
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
+				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						standardsCode.addStyleName("active");
+						if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
+						{
+						
+						standardsCode.getWidgetContainer().addStyleName("active");
+						
 						
 						if(!selectedValues.contains(domainStand.getCodeId())){
 							selectedValues.add(domainStand.getCodeId());
@@ -275,6 +347,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 						liPanelWithClose.setName(domainStand.getCode());
 						liPanelWithClose.setRelatedId(domainStand.getCodeId());
 						ulSelectedItems.add(liPanelWithClose);
+						}
+						else
+						{
+							standardsCode.getWidgetContainer().removeStyleName("active");
+							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+						}
 					}
 				});
 				standardsUI.add(standardsCode);
@@ -290,11 +368,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
+				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						standardsCode.addStyleName("active");
+						if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
+						{
+						
+						standardsCode.getWidgetContainer().addStyleName("active");
+						
 						
 						if(!selectedValues.contains(domainStand.getCodeId())){
 							selectedValues.add(domainStand.getCodeId());
@@ -318,6 +401,13 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 						liPanelWithClose.setName(domainStand.getCode());
 						liPanelWithClose.setRelatedId(domainStand.getCodeId());
 						ulSelectedItems.add(liPanelWithClose);
+						}
+						else
+						{
+							standardsCode.getWidgetContainer().removeStyleName("active");
+							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+						}
+						
 					}
 				});
 				standardsUI.add(standardsCode);
@@ -406,24 +496,35 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		if(courseObj!=null){
             if(courseObj.getStandards()!=null && courseObj.getStandards().size()>0){
                 //Render the existing standards
-                for(final CourseSubjectDo courseSubjectDo : courseObj.getStandards()) {
-                    final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
-                    liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-                        @Override
-                        public void onClick(ClickEvent event) {
-                            removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
-                            liPanelWithClose.removeFromParent();
-                        }
-                    });
-                    liPanelWithClose.setId(courseSubjectDo.getId());
-                    liPanelWithClose.setName(courseSubjectDo.getName());
-                    ulSelectedItems.add(liPanelWithClose);
-                }
+            	for(final CourseSubjectDo courseSubjectDo : courseObj.getStandards()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							for(int i=0;i<selectedValues.size();i++) {							     
+							     if((selectedValues.get(i)).equals(courseSubjectDo.getId())){
+							    	 selectedValues.remove(courseSubjectDo.getId());
+							    	 Element element = Document.get().getElementById(courseSubjectDo.getId().toString());
+							    	 if(element!=null){
+							 			element.removeClassName("active");
+							 		}
+							    	 
+							     }
+							 }
+							removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
+							liPanelWithClose.removeFromParent();
+						}
+					});
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getCode());
+					ulSelectedItems.add(liPanelWithClose);
+				}
             }
         }
 		setStaticData(type);			
 		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
 			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -471,7 +572,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 */
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
-		String view= AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
@@ -484,11 +584,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setTitle(collectionTitle.getText());
 				createOrUpDate.setDescription(learningObjective.getText());
 				createOrUpDate.setCollectionType(collectionType);
-				createOrUpDate.setStandardIds(getSelectedStandardsIds());
+				createOrUpDate.setStandardIds(getSelectedStandards());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
-					
-						getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
@@ -502,7 +601,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		@Override
 		public void onClick(ClickEvent event) {
 			setSelectedDepathOfKnowledge();
-
 		}
 	}
 	private class CenturySkillsClickHandlers implements ClickHandler{
@@ -519,8 +617,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		@Override
 		public void onClick(ClickEvent event) {
 			setSelectedLanguageObjective();
-
-
 		}
 	}
 	protected void setDepthOfKnlze() {
@@ -620,10 +716,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			getCenturySkillContainer().add(content);
 		}
 	}
+	
+	
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup("collection",ulSelectedItems);
+			collectionLiPanelWithCloseArray.clear();
+			for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+				collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+			}
+			getUiHandlers().invokeTaxonomyPopup("collection",collectionLiPanelWithCloseArray);
 		}
 	}
 	
@@ -662,12 +764,55 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		isDepthOfKnlzeInfo=false;
 
 	}
+	
+	/**
+	 * Adds the selected domains from the taxonomy popup into collection info view.
+	 */
 	@Override
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray,List<LiPanelWithClose> removedLiPanelWithCloseArray) { 
 		for(int i=0;i<liPanelWithCloseArray.size();i++){
-			ulSelectedItems.add(liPanelWithCloseArray.get(i));
+			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
+				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+			}
+			
+			if(i<removedLiPanelWithCloseArray.size()){
+				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
+			}
 		}
+		
 	}
 
+	/**
+	 * Checks the selected widgets in info view got from taxonomy popup.
+	 * @param id
+	 * @return
+	 */
+	private boolean isWidgetExists(long id) {
+		boolean flag = true;
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == id){
+				flag = false;
+			}
+		}
+		return flag; 
+	}
+	
+
+	/**
+	 * Removes the widget, which has been removed from taxonomy popup from info view 
+	 * @param removeWidgetId
+	 */
+	private void removeFromUlSelectedItemsContainer(long removeWidgetId) {
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == removeWidgetId){
+				widget.removeFromParent();
+			}
+		}
+	}
+	
 }
 

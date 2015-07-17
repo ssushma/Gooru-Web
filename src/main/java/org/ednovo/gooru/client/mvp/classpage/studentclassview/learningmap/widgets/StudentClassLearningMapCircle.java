@@ -44,7 +44,7 @@ public class StudentClassLearningMapCircle extends Composite {
 		if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
 			if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
 				
-			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
+			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
 				circleType = "blue-circle";
 			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
 				circleType = "green-circle";

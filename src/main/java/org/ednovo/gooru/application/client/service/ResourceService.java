@@ -424,4 +424,6 @@ public interface ResourceService extends BaseService {
 	public CollectionDo moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId) throws GwtException, ServerDownException;
 	
 	public FolderDo getCourseDataById(String courseId) throws GwtException,ServerDownException;
+	
+	public CollectionItemDo addCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
 }

@@ -229,17 +229,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 */
 	private void setDebugIds() {
 
-		//StringUtil.setAttributes(btnStudentSignUp.getElement(), "btnStudentSignUp", i18n.GL0186(), i18n.GL0186());
 		StringUtil.setAttributes(btnLearnAboutApproach.getElement(), "btnLearnAboutApproach", i18n.GL3315(), i18n.GL3315());
-
-//		btnGradesCaret.getElement().setAttribute("aria-expanded", "false");
-//		btnGradesCaret.getElement().setAttribute("data-toggle", "dropdown");
-
-//		btnSubjectCaret.getElement().setAttribute("aria-expanded", "false");
-//		btnSubjectCaret.getElement().setAttribute("data-toggle", "dropdown");
-
+		setDefaults();
 		panelGrades.setVisible(false);
-
 		StringUtil.setAttributes(buttonGroup.getElement(), "gooruSearchMainContainer", "", "");
 	}
 
@@ -675,11 +667,11 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    }
 	    if ("add".equalsIgnoreCase(addOrRemove)){
 	    	if (selectedGrades.size() > 1){
-	    		btnGrades.getElement().addClassName("ellipsis");
+//	    		btnGrades.getElement().addClassName("ellipsis");
 	    	}
 	    }else{
 	    	if (selectedGrades.size() <= 2){
-	    		btnGrades.getElement().removeClassName("ellipsis");
+//	    		btnGrades.getElement().removeClassName("ellipsis");
 	    	}
 	    }
 	}
@@ -800,10 +792,10 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	    	btnSubjects.setText(i18n.GL3291());
 	    }
 	    if ("add".equalsIgnoreCase(action)){
-	    	btnSubjects.getElement().addClassName("ellipsis");
+//	    	btnSubjects.getElement().addClassName("ellipsis");
 	    }else{
 	    	if (selectedSubjects.size() <= 2){
-	    		btnSubjects.getElement().removeClassName("ellipsis");
+//	    		btnSubjects.getElement().removeClassName("ellipsis");
 	    	}
 	    }
 	}
@@ -903,6 +895,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		lblErrorMessage.setVisible(false);
 		btnGrades.setText(i18n.GL3289());
 		btnSubjects.setText(i18n.GL3291());
+		StringUtil.setAttributes(btnSubjects.getElement(), "btnSubjects", i18n.GL3291(), i18n.GL3291());
+		StringUtil.setAttributes(btnGrades.getElement(), "btnGrades", i18n.GL3289(), i18n.GL3289());
 	}
 
 	private void parseSelectedGrades(String selected){
@@ -948,7 +942,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	}
 	/**
 	 *
-	 * @fileName : ClasspageListVc.java
+	 * @fileName :
 	 *
 	 * @description :
 	 *

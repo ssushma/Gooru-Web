@@ -53,6 +53,7 @@ public class PlanContentDo implements Serializable{
 	private String parentGooruOid;
 	private int itemSequence;
 	private String sharing;
+	private String url;
 	private SummaryDo summary;
 	private ThumbnailDo thumbnail;
 	private ResourceFormatDo resourceFormat;
@@ -149,5 +150,11 @@ public class PlanContentDo implements Serializable{
 	}
 	public void setProgress(PlanProgressDo progress) {
 		this.progress = progress;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

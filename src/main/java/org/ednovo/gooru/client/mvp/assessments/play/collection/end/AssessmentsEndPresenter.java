@@ -82,7 +82,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	ClasspageItemDo classpageItemDo=null;
 
-	String sessionId=null;
+	public String sessionId=null;
 
 
 
@@ -200,28 +200,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		classObj.setSessionId(sessionId);
 
 		getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId,printData);
-
-
-		/*this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
-
-			@Override
-			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
-				if(result.size()!=0){
-					int day=result.get(result.size()-1).getFrequency();
-					printData.setUserName(null);
-					printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
-					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId(),printData);
-					getView().setSessionsData(result);
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});*/
-
 	}
 
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
@@ -237,28 +215,52 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
+
+		if (sessionId != null){
+			this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				@Override
+				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+
+					if(result!=null && result.size()!=0){
+
+						if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
+
+							int sessionSize=result.get(0).getSession().size();
+
+							int day=result.get(0).getSession().get(sessionSize-1).getSequence();
+							printData.setUserName(null);
+							printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
+							printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
+							getView().setSessionsData(result.get(0).getSession());
+						}
+
+						displayScoreCountData(result.get(0));
+						getView().setCollectionMetaDataByUserAndSession(result);
+						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+					}else{
+						getView().errorMsg();
+					}
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+					getView().errorMsg();
+				}
+			});
+		}else{
+			getView().errorMsg();
+		}
+
+	}
+
+	@Override
+	public void getCollectionScoreForSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 
 				if(result!=null && result.size()!=0){
-
-					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
-
-						int sessionSize=result.get(0).getSession().size();
-
-						int day=result.get(0).getSession().get(sessionSize-1).getSequence();
-						printData.setUserName(null);
-						printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
-						getView().setSessionsData(result.get(0).getSession());
-						}
-
 					displayScoreCountData(result.get(0));
-					getView().setCollectionMetaDataByUserAndSession(result);
-					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
-				}else{
-					getView().errorMsg();
 				}
 			}
 
@@ -269,6 +271,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		});
 
 	}
+
 
 
 	/*analytics*/
@@ -308,6 +311,8 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
         	     return obj1.compareTo(obj2);
         	}
         });
+		questionRowIndex.clear();
+		questionsData.clear();
 		for (UserDataDo userDataDo : result) {
 				if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 					if(!OE.equalsIgnoreCase(userDataDo.getType())){
@@ -385,5 +390,9 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		this.sessionId=sessionId;
 	}
 
+	@Override
+	protected void onReset() {
+		getView().getQuestionsTable().clear();
+	}
 
 }

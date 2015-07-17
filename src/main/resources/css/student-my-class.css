@@ -204,7 +204,7 @@
     vertical-align: middle;
 }
 .LearningMapContainer .topBackLinkBox div span.left-arrow {
-    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
     width: 18px;
     height: 25px;
 }
@@ -213,7 +213,7 @@
     text-decoration: none;
 }
 .LearningMapContainer .headerBackLinkBox div {
-    font-size: 20px;
+    font-size: 18px;
     color: #515151;
 }
 .LearningMapContainer .headerBackLinkBox div span {
@@ -221,7 +221,7 @@
     vertical-align: middle;
 }
 .LearningMapContainer .headerBackLinkBox div span.left-arrow {
-    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
     width: 18px;
     height: 25px;
 }
@@ -233,7 +233,7 @@
     text-align: right;
 }
 .LearningMapContainer .headerNextLinkBox div {
-    font-size: 20px;
+    font-size: 18px;
     color: #515151;
 }
 .LearningMapContainer .headerNextLinkBox div span {
@@ -286,6 +286,10 @@
     padding: 11px 10px;
     position: relative;
     float: left;
+}
+.LearningMapContainer .lessonDescription.divTable {
+	margin: 13px 0;
+	display: table;
 }
 .LearningMapContainer .lessonDescription .divcontainer.blueBorder img {
     border-left: 5px solid #0074be;
@@ -469,13 +473,6 @@ label.custom-select {
 	text-align: center;
 }
 
-/* for Webkit's CSS-only solution */
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .custom-select select {
-        padding-right: 30px;
-    }
-}
 /* Since we removed the default focus styles, we have to add our own */
 
 .custom-select select:focus {}
@@ -1205,6 +1202,15 @@ th.headcol.whitebg {
 	color:#a5cba1;
 	padding:0 0 !important;
 }
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .percentLbl{
+	color: #85B9DF;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .textBoxPadding{
+	margin-bottom: 5px;
+}
 .lesson-view-data .resourceImgContainer{
 	padding:5px 18px;
 	border-spacing:10px;
@@ -1350,7 +1356,7 @@ th.headcol.whitebg {
     padding: 0;
     position: relative;
     width: 33px;
-    z-index: 999;
+    z-index: 9;
 }
 .emptyStudentClass  .planViewProgress ul li:last-child{
 	margin:0 0;
@@ -1360,6 +1366,739 @@ th.headcol.whitebg {
 	color:#515151;
 	text-align:center;
 	margin: 0 0 10px;
+}
+.student-view-popup-modal .student-report-details-popup-panel img {
+	margin-top: 0px;
+}
+.student-view-popup-modal .student-report-details-popup-panel .rowContainer:last-child {
+    border-bottom: 1px solid #ddd;
+}
+.student-view-popup-modal .learningHeaderBlock .scoreStatus {
+    margin-right: 0px;
+}
+.student-view-popup-modal .statusScrollContainer {
+	
+}
+.bannerInner {
+    position: relative;
+}
+.bannerInner .bannerCaptions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 25%;
+}
+.bannerInner .bannerCaptions h1 {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 46px;
+    margin: 15px 0;
+}
+.bannerInner .bannerCaptions h2 {
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 35px;
+	margin: 15px 0;
+}
+.bannerInner .bannerCaptions .rightWhiteBox {
+    text-align: right;
+    background: rgba(255, 255, 255, .5);
+    padding: 15px 15px;
+    display: inline-block;
+    float: right;
+    border-radius: 4px 4px;
+}
+.bannerInner .bannerCaptions .rightWhiteBox span {
+    background: rgba(255, 255, 255, .9);
+    color: #515151;
+    font-size: 26px;
+    font-weight: normal;
+    border-radius: 4px 4px;
+    -webkit-border-radius: 4px 4px;
+    -moz-border-radius: 4px 4px;
+    padding: 6px 12px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.bannerInner .bannerCaptions .studentDetailsRight {
+    text-align: right;
+    margin: 0 15px 0 0;
+    display: inline-block;
+    color: #ffffff;
+    font-weight: bold;
+    vertical-align: middle;
+}
+.bannerInner .bannerCaptions .studentDetailsRight img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50% 50%;
+    border: 3px solid #85b9df;
+}
+.whiteBand {
+    background: #ffffff;
+    padding: 0 0;
+    height: 50px;
+}
+.whiteBand .studentDetailsLeft {
+    color: #515151;
+    font-size: 26px;
+    margin: 5px 0;
+}
+.whiteBand .studentDetailsLeft img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50% 50%;
+    border: 5px solid #85b9df;
+    margin-top: -8px;
+}
+.planProgress {
+    border-radius: 4px 4px;
+    margin: 5px 0px;
+    padding: 5px 5px;
+    text-align: right;
+}
+.planProgress .Switch {
+    margin: 0 6px;
+}
+.planProgress .planView,
+.planProgress .Switch,
+.planProgress .progressView {
+    display: inline-block;
+    vertical-align: middle;
+}
+.planProgress .planView,
+.planProgress .progressView {
+    font-size: 18px;
+    color: #515151;
+    line-height: 18px;
+}
+.planProgress .planView ul {
+    margin: 0 0;
+    padding: 0 0;
+    position: relative;
+    display: inline-block;
+}
+.planProgress .planView ul:before {
+    content: "";
+    position: absolute;
+    top: 9px;
+    height: 2px;
+    background: #dddddd;
+    width: 35px;
+}
+.planProgress .planView ul li {
+    margin: 0 0;
+    padding: 0 0;
+    display: inline-block;
+    list-style: none;
+    height: 10px;
+    width: 10px;
+    border-radius: 50% 50%;
+    background: #85b9df;
+    position: relative;
+}
+.planProgress .planView ul li.green {
+    background: #a2de81;
+}
+.onoffswitch {
+    position: relative;
+    width: 75px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s;
+    -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+    display: block;
+    float: left;
+    width: 50%;
+    height: 26px;
+    padding: 0;
+    line-height: 30px;
+    font-size: 14px;
+    color: white;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-weight: bold;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "";
+    padding-left: 10px;
+    background-color: #D8D8D8;
+    color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "";
+    padding-right: 10px;
+    background-color: #EEEEEE;
+    color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block;
+    width: 30px;
+    height: 30px;
+    /*		margin: -2.5px;*/
+    
+    background: #4897CE;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 43px;
+    -moz-transition: all 0.3s ease-in 0s;
+    -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+.Switch label {
+    margin-bottom: 0;
+}
+.classProgressIndications {
+    background: #ffffff;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+.classProgressIndications .studentCourseReportProgressHeader {
+    font-size: 18px;
+    color: #515151;
+    padding: 14px 15px;
+    display: table;
+}
+.classProgressIndications .studentCourseReportProgressHeader span {
+	  display: table-cell;
+	  vertical-align: middle;
+}
+.classProgressIndications .studentCourseReportProgressHeader span.left-arrow {
+	  background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
+	  width: 18px;
+	  height: 25px;
+	  display: table-cell;
+	  vertical-align: middle;
+}
+.classProgressIndications .scoreStatus {
+    float: right;
+    text-align: right;
+}
+.classProgressIndications .scoreStatus div.red {
+    background: #e08282 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.org {
+    background: #fec956 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.yellowgreen {
+    background: #edf167 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.lightgreen {
+    background: #a2de81 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div.green {
+    background: #3fc380 none repeat scroll 0 0;
+    color: #ffffff;
+}
+.classProgressIndications .scoreStatus div {
+    display: table-cell;
+    font-weight: bold;
+    padding: 13px 15px;
+    text-align: center;
+    width: 62px;
+}
+
+.teachReportUnitNavigationView {
+	margin: 0px !important;
+	background: #ffffff !important;
+	border-bottom: 1px solid #ddd;
+}
+
+.teachReportUnitNavigationView .download-button-container {
+	margin: 11px;
+	text-align: right;
+}
+
+.classProgressIndications .contentStatus {
+	border: 1px solid #4897ce;
+	border-radius: 4px;
+	margin: 5px;
+}
+
+.classProgressIndications .contentStatus div{
+	display: table-cell;
+	padding: 10px 15px;
+	text-align: center;
+	color: #4897ce;
+	cursor: pointer;
+}
+
+.classProgressIndications .contentStatus div.activeDiv {
+	background: #e7f1f9;
+}
+
+.courseReportsBodyBlock {
+    background: #fafafa;
+    border-radius: 0 0 6px 6px;
+}
+.wrapCircles {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40%;
+}
+.wrapCirclesViews {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    color: #515151;
+    width: 45%;
+}
+.wrapCirclesViews h3 {
+    margin: 0 0;
+    font-weight: bold;
+}
+.wrapCirclesViews small {
+    display: inline-block;
+    width: 75px;
+    line-height: 11px;
+}
+.rowContainer .progressBlock,
+.rowContainer .timeAndScore .avgScore,
+.rowContainer .timeAndScore .totalStudy,
+.rowContainer .heighlightBlock {
+    min-height: 90px;
+}
+.timeAndScore {
+    display: block;
+    text-align: right;
+    border-left: 1px solid #dddddd;
+}
+.timeAndScore p {
+    margin: 0 0;
+}
+.timeAndScore h3,
+.timeAndScore h2 {
+    margin: 0 0;
+}
+.timeAndScore .totalStudy,
+.timeAndScore .avgScore {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+.timeAndScore .totalStudy {
+    padding: 25px 5px;
+    min-width: 135px;
+    color: #515151;
+    text-align: center;
+}
+.timeAndScore .totalStudy h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0 0 0;
+}
+.timeAndScore .avgScore {
+    padding: 21px 15px;
+    color: #ffffff;
+    width: 105px;
+}
+.timeAndScore .avgScore h2 {
+    font-weight: bold;
+    margin: 15px 0 0 0;
+}
+.timeAndScore .avgScore.darkGrey {
+    background: #ddd;
+}
+.timeAndScore .avgScore.lightGreen {
+    background: #a2de81;
+}
+.timeAndScore .avgScore.darkGreen {
+    background: #3fc380;
+}
+.timeAndScore .avgScore.yellowGreen {
+    background: #edf167;
+}
+.timeAndScore .avgScore.org {
+    background: #fec956;
+}
+.timeAndScore .avgScore.red {
+    background: #e08282;
+}
+.border-bottom-white {
+	border-bottom: 1px solid #fff;
+}
+.rowContainer {
+    border-bottom: 1px solid #dddddd;
+}
+.rowContainer:last-child {
+    border-bottom: none;
+}
+.rowContainer .heighlightBlock {
+    padding: 30px 10px;
+    background: #eef3f7;
+}
+.rowContainer .heighlightBlock h3 {
+    margin: 0 0;
+    padding-bottom: 5px;
+    font-size: 22px;
+    color: #515151;
+    font-weight: bold;
+}
+.rowContainer .heighlightBlock p {
+    font-weight: bold;
+    font-size: 12px;
+    color: #515151;
+    margin: 0 0;
+}
+
+.rowContainer .progressBlock ul {
+    margin: 0 0;
+    padding: 0 0;
+    display: block;
+}
+.rowContainer .progressBlock ul li {
+    margin: 0 8px 0 0;
+    padding: 0 0;
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+.rowContainer .progressBlock ul li span {
+    width: 45px;
+    height: 45px;
+    border-radius: 50% 50%;
+    background: #dddddd;
+    display: block;
+}
+.rowContainer .viewReport {
+    text-align: center;
+}
+.rowContainer .viewReport a {
+    color: #0074cb;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 19px 0;
+    vertical-align: middle;
+    line-height: 15px;
+}
+.rowContainer .viewReport a:hover,
+.rowContainer .viewReport a:focus {
+    text-decoration: none;
+}
+.rowContainer .progressBlock ul li.greenCircle span {
+    background: #a5cba1 url(../images/checkMark-big.png) no-repeat 10px 12px;
+}
+.rowContainer .progressBlock ul li.blueCircle span {
+    background: #85b9df;
+}
+.rowContainer .progressBlock ul li.greyCircle span {
+    background: #d1cfcf;
+}
+.myclasses-assessment-small-icon{
+	background:url("${cdn.endpoint}/images/folderIcon-sprite.png") no-repeat scroll 5px -36px rgba(0, 0, 0, 0);
+}
+.myclasses-collection-small-icon{
+	background:url("${cdn.endpoint}/images/folderIcon-sprite.png") no-repeat scroll 5px 9px rgba(0, 0, 0, 0);
+}
+
+.myclasses-mastery-unit-cell-style {
+	width: 100px;
+	color: #4897ce;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.myclasses-mastery-collection-cell-style {
+	color: #4897ce;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.student-report-details-popup-panel {
+    color: #515151;
+    font-size: 26px;
+    margin: 5px 0;
+}
+.student-report-details-popup-panel img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50% 50%;
+    border: 5px solid #85b9df;
+    margin-top: -8px;
+}
+.margin-top-zero {
+	margin-top: 0px;
+}
+.padding-top-5 {
+	padding-top: 5px;
+}
+.padding-top-10 {
+	padding-top: 10px;
+}
+.margin-top-20 {
+	margin-top: 20px;
+}
+.modal-widget-1000 {
+	width: 98%;
+	margin: 0 auto;
+	background: #fff;
+}
+.teach-popup-student-content-margin {
+	margin: 0px 15px;
+	padding-bottom: 0px;
+}
+.margin-left-5 {
+	margin-left: 5px;
+}
+.font-style-normal {
+	font-style: normal;
+}
+
+.classProgressIndications .topBackLinkBox {
+    padding:15px 15px;
+}
+.classProgressIndications .topBackLinkBox a {
+    color: #515151;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+.classProgressIndications .topBackLinkBox a span.left-arrow {
+    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -332px -326px;
+    height: 25px;
+    width: 25px;
+}
+.classProgressIndications .topBackLinkBox a span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.studentUnitReportViewContainer .headerLinksContainer {
+    background: #fafafa none repeat scroll 0 0;
+    border-bottom: 1px solid #dddddd;
+    padding: 8px 0;
+}
+.studentUnitReportViewContainer .headerBackLinkBox a {
+    color: #515151;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+.studentUnitReportViewContainer .headerBackLinkBox a span.left-arrow {
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -332px -326px;
+    height: 25px;
+    width: 25px;
+}
+.studentUnitReportViewContainer .headerBackLinkBox a span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.studentUnitReportViewContainer .headerNextLinkBox {
+    float: right;
+}
+.studentUnitReportViewContainer .headerNextLinkBox a span.next-arrow {
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -339px -326px;
+    height: 25px;
+    width: 25px;
+}
+.studentUnitReportViewContainer .headerNextLinkBox a {
+    color: #515151;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+.studentUnitReportViewContainer .headerNextLinkBox a span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.rowContainer .numaricOrder {
+    color: #515151;
+    display: table-cell;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 6px 14px;
+    text-align: center;
+    vertical-align: top;
+    width: 50px;
+}
+.rowContainer .progressBlockLeft {
+    display: table-cell;
+    padding: 6px 0;
+    vertical-align: middle;
+}
+.rowContainer .lessonDetails {
+    display: table-cell;
+    vertical-align: middle;
+}
+.rowContainer .progressBlockLeft div {
+    display: inline-block;
+    margin: 0 0;
+    padding: 0;
+    vertical-align: middle;
+}
+.rowContainer .progressBlockLeft div span {
+    background: #dddddd;
+    border-radius: 50%;
+    display: block;
+    height: 42px;
+    width: 42px;
+}
+.rowContainer .heighlightBlockUnitReports h3 {
+    color: #515151;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+.rowContainer .progressBlockLeft div.greenCircle span {
+    background: #a5cba1 url("../images/whiteCheckMark.png") no-repeat 11px 13px;
+}
+.rowContainer .heighlightBlockUnitReports {
+    background: #eef3f7 none repeat scroll 0 0;
+    padding: 10px 10px;
+    display: table-cell;
+    width: 85%;
+}
+.rowContainer .heighlightBlockUnitReports {
+    height: 104px;
+}
+.wrapCirclesViews .viewsDetails {
+    font-size: 14px;
+}
+.wrapCirclesViews .viewsDetails.marginTop {
+    margin-top: 10px;
+}
+.wrapCirclesViews .viewsDetails span {
+    font-weight: bold;
+}
+.statusScrollContainer {
+    width: 64.400% !important;
+}
+.rowContainer .statusScrollContainer .progressReportBlock {
+    padding: 12px 0;
+    text-align: center;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock {
+    margin-left: 25px;
+    margin-right: 25px;
+    position: relative;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollLeftArrow {
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -324px -326px;
+    height: 25px;
+    width: 25px;
+    left: -2%;
+    top: 38%;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollRightArrow {
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -349px -326px;
+    height: 25px;
+    width: 25px;
+    right: -2%;
+    top: 38%;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock div.itemList {
+    float: left;
+    width: 33.3333%;
+    border-right: 1px solid #dddddd;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock div.itemList.lastItem {
+    border-right: none;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .wrapCircles {
+    width: auto;
+}
+.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .cursorArrows {
+    position: absolute;
+}
+.progress-radial .overlay {
+    line-height: 25px;
+}
+.progress-radial .overlay span {
+    display: block;
+    font-weight: bold;
+    line-height: 18px;
+    margin: 18px 0;
+}
+.progress-radial .overlay span small {
+    display: block;
+    font-size: 9px;
+    font-weight: normal;
+}
+div.dotted.round {
+    width: 4.5vw;
+    height: 4.5vw;
+    gborder: solid 3px;
+    border-radius: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    /*Demo, debug: show me edges */
+}
+div.dotted.round span {
+    display: block;
+    margin: 17px 0 5px 13px;
+    position: relative;
+    font-weight: normal;
+}
+div.dotted.round span em {
+    font-style: normal;
+    font-weight: bold;
+}
+svg.dotted.round {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: 100%;
+    width: 100%;
+    stroke: #dddddd;
+    stroke-width: 12px;
+    stroke-dasharray: 0.25, 30;
+    stroke-dashoffset: 8;
+    stroke-linecap: round;
+    fill: none;
+    overflow: visible;
+}
+/* for Webkit's CSS-only solution */
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .custom-select select {
+        padding-right: 30px;
+    }
 }
 @media (min-width: 240px) and (max-width: 319px) {
     .learningHeaderBlock .indicationBox div {
@@ -1390,6 +2129,9 @@ th.headcol.whitebg {
     }
     .bannerImg {
         display: none;
+    }
+    .student-view-popup-modal .learningHeaderBlock .scoreStatus {
+		margin-bottom: 15px;    
     }
 }
 @media (min-width: 320px) and (max-width: 479px) {
@@ -1439,6 +2181,9 @@ th.headcol.whitebg {
     .bannerImg {
         display: none;
     }
+    .student-view-popup-modal .learningHeaderBlock .scoreStatus {
+		margin-bottom: 15px;    
+    }
 }
 @media (min-width: 480px) and (max-width: 767px) {
     .student-blueBand .col-md-6-reset {
@@ -1463,6 +2208,9 @@ th.headcol.whitebg {
     }
     .bannerImg {
         display: none;
+    }
+    .student-view-popup-modal .learningHeaderBlock .scoreStatus {
+		margin-bottom: 15px;    
     }
 }
 @media (max-width: 767px) {
@@ -1677,511 +2425,6 @@ th.headcol.whitebg {
 @media (min-width: 992px) and (max-width: 1199px) {}
 @media (min-width: 1200px) {}
 
-@charset "utf-8";
-/* CSS Document */
-
-.bannerInner {
-    position: relative;
-}
-.bannerInner .bannerCaptions {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: auto;
-    bottom: 25%;
-}
-.bannerInner .bannerCaptions h1 {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 46px;
-    margin: 15px 0;
-}
-.bannerInner .bannerCaptions h2 {
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 35px;
-	margin: 15px 0;
-}
-.bannerInner .bannerCaptions .rightWhiteBox {
-    text-align: right;
-    background: rgba(255, 255, 255, .5);
-    padding: 15px 15px;
-    display: inline-block;
-    float: right;
-    border-radius: 4px 4px;
-}
-.bannerInner .bannerCaptions .rightWhiteBox span {
-    background: rgba(255, 255, 255, .9);
-    color: #515151;
-    font-size: 26px;
-    font-weight: normal;
-    border-radius: 4px 4px;
-    -webkit-border-radius: 4px 4px;
-    -moz-border-radius: 4px 4px;
-    padding: 6px 12px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.bannerInner .bannerCaptions .studentDetailsRight {
-    text-align: right;
-    margin: 0 15px 0 0;
-    display: inline-block;
-    color: #ffffff;
-    font-weight: bold;
-    vertical-align: middle;
-}
-.bannerInner .bannerCaptions .studentDetailsRight img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50% 50%;
-    border: 3px solid #85b9df;
-}
-.whiteBand {
-    background: #ffffff;
-    padding: 0 0;
-    height: 50px;
-}
-.whiteBand .studentDetailsLeft {
-    color: #515151;
-    font-size: 26px;
-    margin: 5px 0;
-}
-.whiteBand .studentDetailsLeft img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50% 50%;
-    border: 5px solid #85b9df;
-    margin-top: -8px;
-}
-.planProgress {
-    border-radius: 4px 4px;
-    margin: 5px 0px;
-    padding: 5px 5px;
-    text-align: right;
-}
-.planProgress .Switch {
-    margin: 0 6px;
-}
-.planProgress .planView,
-.planProgress .Switch,
-.planProgress .progressView {
-    display: inline-block;
-    vertical-align: middle;
-}
-.planProgress .planView,
-.planProgress .progressView {
-    font-size: 18px;
-    color: #515151;
-    line-height: 18px;
-}
-.planProgress .planView ul {
-    margin: 0 0;
-    padding: 0 0;
-    position: relative;
-    display: inline-block;
-}
-.planProgress .planView ul:before {
-    content: "";
-    position: absolute;
-    top: 9px;
-    height: 2px;
-    background: #dddddd;
-    width: 35px;
-}
-.planProgress .planView ul li {
-    margin: 0 0;
-    padding: 0 0;
-    display: inline-block;
-    list-style: none;
-    height: 10px;
-    width: 10px;
-    border-radius: 50% 50%;
-    background: #85b9df;
-    position: relative;
-}
-.planProgress .planView ul li.green {
-    background: #a2de81;
-}
-.onoffswitch {
-    position: relative;
-    width: 75px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-.onoffswitch-checkbox {
-    display: none;
-}
-.onoffswitch-label {
-    display: block;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 20px;
-}
-.onoffswitch-inner {
-    display: block;
-    width: 200%;
-    margin-left: -100%;
-    -moz-transition: margin 0.3s ease-in 0s;
-    -webkit-transition: margin 0.3s ease-in 0s;
-    -o-transition: margin 0.3s ease-in 0s;
-    transition: margin 0.3s ease-in 0s;
-}
-.onoffswitch-inner:before,
-.onoffswitch-inner:after {
-    display: block;
-    float: left;
-    width: 50%;
-    height: 26px;
-    padding: 0;
-    line-height: 30px;
-    font-size: 14px;
-    color: white;
-    font-family: Trebuchet, Arial, sans-serif;
-    font-weight: bold;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.onoffswitch-inner:before {
-    content: "";
-    padding-left: 10px;
-    background-color: #D8D8D8;
-    color: #FFFFFF;
-}
-.onoffswitch-inner:after {
-    content: "";
-    padding-right: 10px;
-    background-color: #EEEEEE;
-    color: #999999;
-    text-align: right;
-}
-.onoffswitch-switch {
-    display: block;
-    width: 30px;
-    height: 30px;
-    /*		margin: -2.5px;*/
-    
-    background: #4897CE;
-    border: 2px solid transparent;
-    border-radius: 20px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 43px;
-    -moz-transition: all 0.3s ease-in 0s;
-    -webkit-transition: all 0.3s ease-in 0s;
-    -o-transition: all 0.3s ease-in 0s;
-    transition: all 0.3s ease-in 0s;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px;
-}
-.Switch label {
-    margin-bottom: 0;
-}
-.classProgressIndications {
-    background: #ffffff;
-    margin-bottom: 15px;
-    margin-top: 20px;
-}
-.classProgressIndications .studentCourseReportProgressHeader {
-    font-size: 22px;
-    color: #515151;
-    padding: 14px 15px;
-    display: table;
-}
-.classProgressIndications .studentCourseReportProgressHeader span {
-	  display: table-cell;
-	  vertical-align: middle;
-}
-.classProgressIndications .studentCourseReportProgressHeader span.left-arrow {
-	  background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
-	  width: 18px;
-	  height: 25px;
-	  display: table-cell;
-	  vertical-align: middle;
-}
-.classProgressIndications .scoreStatus {
-    float: right;
-    text-align: right;
-}
-.classProgressIndications .scoreStatus div.red {
-    background: #e08282 none repeat scroll 0 0;
-    color: #ffffff;
-}
-.classProgressIndications .scoreStatus div.org {
-    background: #fec956 none repeat scroll 0 0;
-    color: #ffffff;
-}
-.classProgressIndications .scoreStatus div.yellowgreen {
-    background: #edf167 none repeat scroll 0 0;
-    color: #ffffff;
-}
-.classProgressIndications .scoreStatus div.lightgreen {
-    background: #a2de81 none repeat scroll 0 0;
-    color: #ffffff;
-}
-.classProgressIndications .scoreStatus div.green {
-    background: #3fc380 none repeat scroll 0 0;
-    color: #ffffff;
-}
-.classProgressIndications .scoreStatus div {
-    display: table-cell;
-    font-weight: bold;
-    padding: 13px 15px;
-    text-align: center;
-    width: 62px;
-}
-
-.teachReportUnitNavigationView {
-	margin: 0px !important;
-	background: #ffffff !important;
-	border-bottom: 1px solid #ddd;
-}
-
-.teachReportUnitNavigationView .download-button-container {
-	margin: 11px;
-	text-align: right;
-}
-
-.classProgressIndications .contentStatus {
-	border: 1px solid #4897ce;
-	border-radius: 4px;
-	margin: 5px;
-}
-
-.classProgressIndications .contentStatus div{
-	display: table-cell;
-	padding: 10px 15px;
-	text-align: center;
-	color: #4897ce;
-	cursor: pointer;
-}
-
-.classProgressIndications .contentStatus div.activeDiv {
-	background: #e7f1f9;
-}
-
-.courseReportsBodyBlock {
-    background: #fafafa;
-    border-radius: 0 0 6px 6px;
-}
-.wrapCircles {
-    display: inline-block;
-    vertical-align: middle;
-    width: 40%;
-}
-.wrapCirclesViews {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    color: #515151;
-}
-.wrapCirclesViews h3 {
-    margin: 0 0;
-    font-weight: bold;
-}
-.wrapCirclesViews small {
-    display: inline-block;
-    width: 75px;
-    line-height: 11px;
-}
-.rowContainer .progressBlock,
-.rowContainer .timeAndScore .avgScore,
-.rowContainer .timeAndScore .totalStudy,
-.rowContainer .heighlightBlock {
-    min-height: 90px;
-}
-.timeAndScore {
-    display: block;
-    text-align: right;
-    border-left: 1px solid #dddddd;
-}
-.timeAndScore p {
-    margin: 0 0;
-}
-.timeAndScore h3,
-.timeAndScore h2 {
-    margin: 0 0;
-}
-.timeAndScore .totalStudy,
-.timeAndScore .avgScore {
-    display: inline-block;
-    text-align: center;
-    vertical-align: top;
-}
-.timeAndScore .totalStudy {
-    padding: 25px 5px;
-    min-width: 135px;
-    color: #515151;
-    text-align: center;
-}
-.timeAndScore .totalStudy h3 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 15px 0 0 0;
-}
-.timeAndScore .avgScore {
-    padding: 21px 15px;
-    color: #ffffff;
-    width: 105px;
-}
-.timeAndScore .avgScore h2 {
-    font-weight: bold;
-    margin: 15px 0 0 0;
-}
-.timeAndScore .avgScore.darkGrey {
-    background: #ddd;
-}
-.timeAndScore .avgScore.lightGreen {
-    background: #a2de81;
-}
-.timeAndScore .avgScore.darkGreen {
-    background: #3fc380;
-}
-.timeAndScore .avgScore.yellowGreen {
-    background: #edf167;
-}
-.timeAndScore .avgScore.org {
-    background: #fec956;
-}
-.timeAndScore .avgScore.red {
-    background: #e08282;
-}
-.border-bottom-white {
-	border-bottom: 1px solid #fff;
-}
-.rowContainer {
-    border-bottom: 1px solid #dddddd;
-}
-.rowContainer:last-child {
-    border-bottom: none;
-}
-.rowContainer .heighlightBlock {
-    padding: 30px 10px;
-    background: #eef3f7;
-}
-.rowContainer .heighlightBlock h3 {
-    margin: 0 0;
-    padding-bottom: 5px;
-    font-size: 22px;
-    color: #515151;
-    font-weight: bold;
-}
-.rowContainer .heighlightBlock p {
-    font-weight: bold;
-    font-size: 12px;
-    color: #515151;
-    margin: 0 0;
-}
-
-.rowContainer .progressBlock ul {
-    margin: 0 0;
-    padding: 0 0;
-    display: block;
-}
-.rowContainer .progressBlock ul li {
-    margin: 0 8px 0 0;
-    padding: 0 0;
-    list-style: none;
-    display: inline-block;
-    vertical-align: middle;
-}
-.rowContainer .progressBlock ul li span {
-    width: 45px;
-    height: 45px;
-    border-radius: 50% 50%;
-    background: #dddddd;
-    display: block;
-}
-.rowContainer .viewReport {
-    text-align: center;
-}
-.rowContainer .viewReport a {
-    color: #0074cb;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: bold;
-    margin: 19px 0;
-    vertical-align: middle;
-    line-height: 15px;
-}
-.rowContainer .viewReport a:hover,
-.rowContainer .viewReport a:focus {
-    text-decoration: none;
-}
-.rowContainer .progressBlock ul li.greenCircle span {
-    background: #a5cba1 url(../images/checkMark-big.png) no-repeat 10px 12px;
-}
-.rowContainer .progressBlock ul li.blueCircle span {
-    background: #85b9df;
-}
-.rowContainer .progressBlock ul li.greyCircle span {
-    background: #d1cfcf;
-}
-.myclasses-assessment-small-icon{
-	background:url("${cdn.endpoint}/images/folderIcon-sprite.png") no-repeat scroll 5px -36px rgba(0, 0, 0, 0);
-}
-.myclasses-collection-small-icon{
-	background:url("${cdn.endpoint}/images/folderIcon-sprite.png") no-repeat scroll 5px 9px rgba(0, 0, 0, 0);
-}
-
-.myclasses-mastery-unit-cell-style {
-	width: 100px;
-	color: #4897ce;
-	font-weight: bold;
-	text-decoration: underline;
-	cursor: pointer;
-}
-
-.myclasses-mastery-collection-cell-style {
-	color: #4897ce;
-	font-weight: bold;
-	text-decoration: underline;
-	cursor: pointer;
-}
-
-.student-report-details-popup-panel {
-    color: #515151;
-    font-size: 26px;
-    margin: 5px 0;
-}
-.student-report-details-popup-panel img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50% 50%;
-    border: 5px solid #85b9df;
-    margin-top: -8px;
-}
-.margin-top-zero {
-	margin-top: 0px;
-}
-.padding-top-5 {
-	padding-top: 5px;
-}
-.margin-top-20 {
-	margin-top: 20px;
-}
-.modal-widget-1000 {
-	width: 98%;
-	margin: 0 auto;
-	background: #fff;
-}
-.teach-popup-student-content-margin {
-	margin: 0px 15px;
-	padding-bottom: 0px;
-}
-.margin-left-5 {
-	margin-left: 5px;
-}
-.font-style-normal {
-	font-style: normal;
-}
 @media (min-width: 240px) and (max-width: 319px) {
     header {
         position: relative;
@@ -2488,10 +2731,6 @@ th.headcol.whitebg {
         padding: 10px 15px;
     }
 }
-/*@media (max-width: 767px) {
-	
-
-}*/
 
 @media (min-width: 768px) and (max-width: 991px) {
     .timeAndScore .avgScore {
@@ -2546,216 +2785,8 @@ th.headcol.whitebg {
         display: table-cell !important;
     }
 }
-@media (min-width: 1200px) {} @charset "utf-8";
-/* CSS Document */
+@media (min-width: 1200px) {}
 
-.classProgressIndications .topBackLinkBox {
-    padding:15px 15px;
-}
-.classProgressIndications .topBackLinkBox a {
-    color: #515151;
-    font-size: 20px;
-    font-weight: bold;
-    display: block;
-}
-.classProgressIndications .topBackLinkBox a span.left-arrow {
-    background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat -320px -326px;
-    height: 25px;
-    width: 25px;
-}
-.classProgressIndications .topBackLinkBox a span {
-    display: table-cell;
-    vertical-align: middle;
-}
-.studentUnitReportViewContainer .headerLinksContainer {
-    background: #fafafa none repeat scroll 0 0;
-    border-bottom: 1px solid #dddddd;
-    padding: 8px 0;
-}
-.studentUnitReportViewContainer .headerBackLinkBox a {
-    color: #515151;
-    font-size: 20px;
-    font-weight: bold;
-    display: block;
-}
-.studentUnitReportViewContainer .headerBackLinkBox a span.left-arrow {
-    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -320px -326px;
-    height: 25px;
-    width: 25px;
-}
-.studentUnitReportViewContainer .headerBackLinkBox a span {
-    display: table-cell;
-    vertical-align: middle;
-}
-.studentUnitReportViewContainer .headerNextLinkBox {
-    float: right;
-}
-.studentUnitReportViewContainer .headerNextLinkBox a span.next-arrow {
-    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -339px -326px;
-    height: 25px;
-    width: 25px;
-}
-.studentUnitReportViewContainer .headerNextLinkBox a {
-    color: #515151;
-    font-size: 20px;
-    font-weight: bold;
-    display: block;
-}
-.studentUnitReportViewContainer .headerNextLinkBox a span {
-    display: table-cell;
-    vertical-align: middle;
-}
-.rowContainer .numaricOrder {
-    color: #515151;
-    display: table-cell;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 6px 14px;
-    text-align: center;
-    vertical-align: top;
-    width: 50px;
-}
-.rowContainer .progressBlockLeft {
-    display: table-cell;
-    padding: 6px 0;
-    vertical-align: middle;
-}
-.rowContainer .lessonDetails {
-    display: table-cell;
-    vertical-align: middle;
-}
-.rowContainer .progressBlockLeft div {
-    display: inline-block;
-    margin: 0 0;
-    padding: 0;
-    vertical-align: middle;
-}
-.rowContainer .progressBlockLeft div span {
-    background: #dddddd;
-    border-radius: 50%;
-    display: block;
-    height: 42px;
-    width: 42px;
-}
-.rowContainer .heighlightBlockUnitReports h3 {
-    color: #515151;
-    font-size: 17px;
-    font-weight: bold;
-    margin: 0;
-    padding-bottom: 5px;
-    padding-right: 5px;
-}
-.rowContainer .progressBlockLeft div.greenCircle span {
-    background: #a5cba1 url("../images/whiteCheckMark.png") no-repeat 11px 13px;
-}
-.rowContainer .heighlightBlockUnitReports {
-    background: #eef3f7 none repeat scroll 0 0;
-    padding: 10px 10px;
-    display: table-cell;
-    width: 85%;
-}
-.rowContainer .heighlightBlockUnitReports {
-    height: 104px;
-}
-.wrapCirclesViews .viewsDetails {
-    font-size: 14px;
-}
-.wrapCirclesViews .viewsDetails.marginTop {
-    margin-top: 10px;
-}
-.wrapCirclesViews .viewsDetails span {
-    font-weight: bold;
-}
-.statusScrollContainer {
-    width: 64.400% !important;
-}
-.rowContainer .statusScrollContainer .progressReportBlock {
-    padding: 12px 0;
-    text-align: center;
-}
-.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock {
-    margin-left: 25px;
-    margin-right: 25px;
-    position: relative;
-}
-.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollLeftArrow {
-    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -320px -326px;
-    height: 25px;
-    width: 25px;
-    left: -2%;
-    top: 45%;
-}
-.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .scrollRightArrow {
-    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -339px -326px;
-    height: 25px;
-    width: 25px;
-    right: -2%;
-    top: 45%;
-}
-.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock div.itemList {
-    float: left;
-    width: 33.3333%;
-    border-right: 1px solid #dddddd;
-}
-.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock div.itemList.lastItem {
-    border-right: none;
-}
-.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .wrapCircles {
-    width: auto;
-}
-.rowContainer .statusScrollContainer .statusScrollscrollInnerBlock .cursorArrows {
-    position: absolute;
-}
-.progress-radial .overlay {
-    line-height: 25px;
-}
-.progress-radial .overlay span {
-    display: block;
-    font-weight: bold;
-    line-height: 18px;
-    margin: 18px 0;
-}
-.progress-radial .overlay span small {
-    display: block;
-    font-size: 9px;
-    font-weight: normal;
-}
-div.dotted.round {
-    width: 4.5vw;
-    height: 4.5vw;
-    gborder: solid 3px;
-    border-radius: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 13px;
-    /*Demo, debug: show me edges */
-}
-div.dotted.round span {
-    display: block;
-    margin: 17px 0 5px 13px;
-    position: relative;
-    font-weight: normal;
-}
-div.dotted.round span em {
-    font-style: normal;
-    font-weight: bold;
-}
-svg.dotted.round {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    height: 100%;
-    width: 100%;
-    stroke: #dddddd;
-    stroke-width: 12px;
-    stroke-dasharray: 0.25, 30;
-    stroke-dashoffset: 8;
-    stroke-linecap: round;
-    fill: none;
-    overflow: visible;
-}
 @media (min-width: 240px) and (max-width: 319px) {
     .statusScrollContainer {
         width: 100% !important;
@@ -2831,9 +2862,5 @@ svg.dotted.round {
         margin-right: 0;
     }
 }
-/*@media (max-width: 767px) {
-	
-
-}*/
 
 @media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}

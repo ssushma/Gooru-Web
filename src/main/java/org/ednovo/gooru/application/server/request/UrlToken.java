@@ -364,6 +364,8 @@ public enum UrlToken {
 	V1_CREATE_LESSON("/v1/course/{0}/unit/{1}/lesson?"),
 
 	V1_CREATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection?"),
+	
+	V3_CREATE_COLLECTION("/v3/collection?"),
 
 	V1_UPDATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
 
@@ -387,7 +389,7 @@ public enum UrlToken {
 	
 	V1_GET_COLLECTION_METADATA("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}"),
 	
-	V3_UPDATE_COLLECTONITEM_METADATA("/v3/{0}/item/{1}"),
+	V3_UPDATE_COLLECTONITEM_METADATA("/v3/collection/{0}/item/{1}"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
 
@@ -515,14 +517,14 @@ public enum UrlToken {
 
 	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?"),
 
-	V1_GETCOLLECTIONMETADATA("/v1/class/session/{0}/collection/{1}/status?"),
+	V1_GETCOLLECTIONMETADATA("/v1/collection/{1}/session/{0}/status?"),
 
 	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?"),
 
-	V1_GETSESSIONSDATABYUSER("/v1/class/{0}/user/{1}/collection?classGooruId={2}&courseGooruId={3}&unitGooruId={4}&lessonGooruId={5}&sessionId={6}"),
+	V1_GETSESSIONSDATABYUSER("/v1/collection/{0}/user/{1}?classGooruId={2}&courseGooruId={3}&unitGooruId={4}&lessonGooruId={5}&sessionId={6}"),
 
-	V1_GETSESSIONDATABYUSERSESSION("/v1/class/{0}/user/{1}/resources?classGooruId={2}&courseGooruId={3}&unitGooruId={4}&lessonGooruId={5}&sessionId={6}"),
-	
+	V1_GETSESSIONDATABYUSERSESSION("/v1/collection/{0}/user/{1}/resources?classGooruId={2}&courseGooruId={3}&unitGooruId={4}&lessonGooruId={5}&sessionId={6}"),
+
 	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?"),
 
 	V1_EXPORTSUMMARYATHWAY("/v1/classpage/{0}/summary/export.xls?sessionToken={1}"),// don't remove session token
@@ -591,7 +593,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 
 	V1_GET_COURSES_BY_SUBJECTID("/v1/subject/{0}/taxonomycourse?offset={1}&limit={2}"),
 
-	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?"),
+	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?offset={1}&limit={2}"),
 
 	V1_GET_USER_COURSES_LIST("/v2/user/{0}/course?"),
 
@@ -606,6 +608,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_LISTTEACHCLASSES("/v3/class/teach?"),
 
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
+	
+	V3_GET_TEACHANDSTUDY("/v3/class/has-teach-study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
 
@@ -628,7 +632,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
 
 
-	GET_LAST_PLAYER_ASSESSMENT_INFO("/v1/class/{0}/assessment/sessions?"),
+	GET_LAST_PLAYER_ASSESSMENT_INFO("/v1/assessment/{0}/sessions?"),
 
 
     DELETE_LESSON_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
@@ -637,7 +641,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 
 	V1_GET_STUDENT_UNIT_PLAN("/v1/class/{0}/course/{1}/unit/{2}/plan?"),
 
-	V1_GET_STUDENT_LESSON_PLAN("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/plan?"),
+	V1_GET_STUDENT_LESSON_PLAN("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/usage?"),
 
 	V1_GET_STUDENT_COURSE_PROGRESS("/v1/class/{0}/course/{1}/progress?"),
 	
@@ -666,7 +670,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_COURSE("/v1/course/{0}?"),
 	V1_GET_MOMENT_OF_LEARERNING("/v1/meta/moments_of_learning"),
 	V1_GET_EDUCATIONAL_USE("v1/meta/educational_use"),
-	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?");
+	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?"),
+	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?");
 
 	private String url;
 

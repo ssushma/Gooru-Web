@@ -80,6 +80,8 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String name;
 	private String classUid;
 	private String courseGooruOid;
+	private boolean isCollaborator;
+	private List<String> permissions;
 	
 	private String type;
 
@@ -451,5 +453,31 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	public void setSkills(List<StandardFo> skills) {
 		this.skills = skills;
 	}
-	
+	/** 
+	 * This method is to get the isCollaborator
+	 */
+	public boolean isIsCollaborator() {
+		return isCollaborator;
+	}
+
+	/** 
+	 * This method is to set the isCollaborator
+	 */
+	public void setCollaborator(boolean isCollaborator) {
+		this.isCollaborator = isCollaborator;
+	}
+
+	/** 
+	 * This method is to get the permissions
+	 */
+	public List<String> getPermissions() {
+		return permissions;
+	}
+
+	/** 
+	 * This method is to set the permissions
+	 */
+	public void setPermissions(List<String> permissions) {
+		this.permissions = permissions;
+	}
 }

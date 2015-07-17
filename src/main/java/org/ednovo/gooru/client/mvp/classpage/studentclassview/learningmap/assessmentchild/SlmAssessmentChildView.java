@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.SlmExternalAssessmentForm;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
@@ -51,8 +52,8 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -92,6 +93,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 	
+	private PlanContentDo planContentDo = null;
+	
 	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
 
 	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
@@ -99,6 +102,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.planContentDo = planContentDo;
+		
 		setData(planContentDo);
 		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
 		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
@@ -127,7 +132,11 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 				setDefaultThumbnail(collectionType);
 			}
 		});
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment/url"))) {
+			imageContainer.setStyleName("assessmentImageContainer");
+			reportView.clear();
+			reportView.add(new SlmExternalAssessmentForm(planContentDo.getProgress()));
+		} else if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
 			imageContainer.setStyleName("assessmentImageContainer");
 			timeSpentLbl.setText("Score");
 			lastAccessedLbl.setText("Last Attempted");
@@ -147,11 +156,15 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			lastAccessed = AnalyticsUtil.getCreatedTime(Long.toString(planContentDo.getProgress().getLastAccessed()));
 		}
 		lastSession.setText(lastAccessed);
-		setResourceData(planContentDo.getItems());
+		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment/url")) {
+			resourceImgContainer.setVisible(false);
+		} else {
+			setResourceData(planContentDo.getItems());
+		}
 	}
 	
 	private void setDefaultThumbnail(String collectionType) {
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
 			contentImage.setUrl(DEFAULT_ASSESSMENT_IMAGE);
 		} else {
 			contentImage.setUrl(DEFAULT_COLLECTION_IMAGE);
@@ -204,18 +217,17 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			Map<String,String> params = new LinkedHashMap<String,String>();
 
 			String token = PlaceTokens.ASSESSMENT_PLAY;
-
+			
 			if(type.equalsIgnoreCase("assessment")) {
 				token = PlaceTokens.ASSESSMENT_PLAY;
-				if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
-					
-				} else if(status!=null&&status.equalsIgnoreCase("active")) {
-					params.put("isStudent", "true");	// This should be changed based on; whether user has joined or not.
-				}
 			} else if(type.equalsIgnoreCase("collection")) {
 				token = PlaceTokens.COLLECTION_PLAY;
 			}
-			
+			if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
+				
+			} else if(status!=null&&status.equalsIgnoreCase("active")) {
+				params.put("isStudent", "true");	// This should be changed based on; whether user has joined or not.
+			}
 			params.put("id", gooruOid);
 			params.put("cid", classUId);
 			params.put("courseId", courseGooruOid);
@@ -223,13 +235,23 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			params.put("lessonId", lessonId);
 			
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
-			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			if(!type.equalsIgnoreCase("assessment/url")) {
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			} else {
+				if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
+					System.out.println("externalUrl "+planContentDo.getUrl());
+					Window.open(planContentDo.getUrl(), "_blank", "");
+				}
+			}
 		}
 	}
-
+	
 	private void setResourceData(ArrayList<PlanContentDo> resourceList) {
 		int size = resourceList.size();
 		if(size>0) {
+			if(size>10) {
+				size = 10;
+			}
 			for(int i=0;i<size;i++) {
 				try {
 					final PlanContentDo resourceDo = resourceList.get(i);

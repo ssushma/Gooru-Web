@@ -48,10 +48,12 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.H3Panel;
+import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -103,6 +105,8 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	@UiField H3Panel joinedContainerTitle,teachContainerTitle;
 
 	AlertMessageUc alertMessageUc;
+	
+	@UiField LoadingUc studyLoading,teachLoading;
 
 	private NewClassPopupView newPopup = null;
 
@@ -117,7 +121,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private Integer offsetLimitOwner = 0;
 	
 	
-	@UiField HTMLPanel notesPanel,createClassPanel,classCodePanel;
+	@UiField HTMLPanel notesPanel,createClassPanel,classCodePanel,mainPanel;
+	
+	
 	
 
 	interface ClassCodeViewUiBinder extends UiBinder<Widget, ClassHomeView> {
@@ -142,21 +148,24 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	public void callServiceRequestsToBindData() {
 		ownerClassesContainer.clear();
 		joinedClassesContainer.clear();
+		joinedClassesContainer.getElement().setInnerHTML("");
+		ownerClassesContainer.getElement().setInnerHTML("");
 		txtCode.setText("");
 		pageInitialLimitOwner = 10;
 		pageInitialLimitJoined = 10;
 		offsetLimitOwner = 0;
 		offsetLimitJoined = 0;
 		
-		System.out.println("######callServiceRequestsToBindData########");
+		getUiHandlers().getV1TeachStudy("10", "0");
 		
-		String view = AppClientFactory.getPlaceManager().getRequestParameter("view");
-		
-		System.out.println("@@@@@view:"+view);
+		String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
 		
 		
-		if(view.equalsIgnoreCase("myclass")){
+		
+		if(view.equalsIgnoreCase("myclass") || view.isEmpty()){
 			isSetVisiblity(false);
+			studyLoading.setVisible(true);
+			teachLoading.setVisible(true);
 			myClassesAnr.addStyleName(CssTokens.ACTIVE);
 			archivedAnr.removeStyleName(CssTokens.ACTIVE);
 			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
@@ -164,6 +173,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						@Override
 						public void onSuccess(ClasspageListDo result) {
 							try{
+							teachLoading.setVisible(false);
 							if(result.getTotalHitCount()>pageInitialLimitOwner)
 							{
 								seeMorebtnOwner.setVisible(true);
@@ -186,6 +196,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
+								ownerClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 							}catch(Exception e){
 								e.printStackTrace();
@@ -197,6 +208,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
+							studyLoading.setVisible(false);
 							if(result.getTotalHitCount()>pageInitialLimitJoined)
 							{
 								seeMorebtnJoined.setVisible(true);
@@ -218,12 +230,14 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
+								joinedClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 
 						}
 					});
 		}else if(view.equalsIgnoreCase("oldclass")){
-			
+			studyLoading.setVisible(true);
+			teachLoading.setVisible(true);
 			myClassesAnr.removeStyleName(CssTokens.ACTIVE);
 			archivedAnr.addStyleName(CssTokens.ACTIVE);
 			isSetVisiblity(true);
@@ -231,6 +245,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
+							teachLoading.setVisible(false);
 							if(result.getTotalHitCount()>pageInitialLimitOwner)
 							{
 								seeMorebtnOwner.setVisible(true);
@@ -253,6 +268,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
+								ownerClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 							
 						}
@@ -262,6 +278,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
+							studyLoading.setVisible(false);
 							if(result.getTotalHitCount()>pageInitialLimitJoined)
 							{
 								seeMorebtnJoined.setVisible(true);
@@ -283,6 +300,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
+								joinedClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 							
 						}
@@ -352,6 +370,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		seeMorebtnOwner.getElement().setId("btnSeeMoreOwner");
 		seeMorebtnOwner.getElement().setAttribute("alt",i18n.GL0508());
 		seeMorebtnOwner.getElement().setAttribute("title",i18n.GL0508());
+		
+		studyLoading.getElement().setId("studyLoadingId");
+		studyLoading.getElement().setAttribute("alt","Loading");
+		studyLoading.getElement().setAttribute("title","Loading");
+		
+		teachLoading.getElement().setId("studyLoadingId");
+		teachLoading.getElement().setAttribute("alt","Loading");
+		teachLoading.getElement().setAttribute("title","Loading");
+		
+		studyLoading.setVisible(false);
+		teachLoading.setVisible(false);
+		
 
 		txtCode.addFocusHandler(new FocusHandler() {
 
@@ -641,23 +671,54 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			offsetLimitJoined = pageInitialLimitJoined;
-			AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
-					new SimpleAsyncCallback<ClasspageListDo >() {
-						@Override
-						public void onSuccess(ClasspageListDo result) {
-							pageInitialLimitJoined = pageInitialLimitJoined + 10;
-							if(result.getTotalHitCount()>pageInitialLimitJoined){
-								seeMorebtnJoined.setVisible(true);
-							}else{
-								seeMorebtnJoined.setVisible(false);
+			String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
+			if(view.equalsIgnoreCase("myclass")){
+				AppClientFactory.getInjector().getClasspageService().v3GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitJoined = pageInitialLimitJoined + 10;
+								if(result.getTotalHitCount()>pageInitialLimitJoined){
+									seeMorebtnJoined.setVisible(true);
+								}else{
+									seeMorebtnJoined.setVisible(false);
+								}
+								for(int i = 0; i<result.getSearchResult().size();i++) {
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
+									joinedClassesContainer.add(classpageWidget);
+								}
 							}
-							for(int i = 0; i<result.getSearchResult().size();i++) {
-								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Study");
-								joinedClassesContainer.add(classpageWidget);
+						});
+			}else if(view.equalsIgnoreCase("oldclass")){
+				offsetLimitJoined = pageInitialLimitJoined;
+				AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitJoined = pageInitialLimitJoined + 10;
+								if(result.getTotalHitCount()>pageInitialLimitJoined)
+								{
+									seeMorebtnJoined.setVisible(true);
+								}
+								else
+								{
+									seeMorebtnJoined.setVisible(false);
+								}
+
+
+								for(int i = 0; i<result.getSearchResults().size();i++) 
+								{
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Study");
+									joinedClassesContainer.add(classpageWidget);
+								}
+
+								
 							}
-						}
-					});
+						});
+			}
+			
 		}
 
 	}
@@ -680,31 +741,62 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 		@Override
 		public void onClick(ClickEvent event) {
-			offsetLimitOwner = pageInitialLimitOwner;
-			AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
-					new SimpleAsyncCallback<ClasspageListDo >() {
-						@Override
-						public void onSuccess(ClasspageListDo result) {
-							pageInitialLimitOwner = pageInitialLimitOwner + 10;
-							if(result.getTotalHitCount()>pageInitialLimitOwner)
-							{
-								seeMorebtnOwner.setVisible(true);
-							}
-							else
-							{
-								seeMorebtnOwner.setVisible(false);
-							}
+			String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
+			if(view.equalsIgnoreCase("myclass")){
+				offsetLimitOwner = pageInitialLimitOwner;
+				AppClientFactory.getInjector().getClasspageService().v3GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(), false,
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitOwner = pageInitialLimitOwner + 10;
+								if(result.getTotalHitCount()>pageInitialLimitOwner)
+								{
+									seeMorebtnOwner.setVisible(true);
+								}
+								else
+								{
+									seeMorebtnOwner.setVisible(false);
+								}
 
-							for(int i = 0; i<result.getSearchResult().size();i++)
-							{
-								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
-								classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
-								ownerClassesContainer.add(classpageWidget);
+								for(int i = 0; i<result.getSearchResult().size();i++)
+								{
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setClassPageImage(result.getSearchResult().get(i),"Teach");
+									ownerClassesContainer.add(classpageWidget);
+								}
+
+
 							}
+						});
+			}else if(view.equalsIgnoreCase("oldclass")){
+				offsetLimitOwner = pageInitialLimitOwner;
+				AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+						new SimpleAsyncCallback<ClasspageListDo >() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								pageInitialLimitOwner = pageInitialLimitOwner + 10;
+								if(result.getTotalHitCount()>pageInitialLimitOwner)
+								{
+									seeMorebtnOwner.setVisible(true);
+								}
+								else
+								{
+									seeMorebtnOwner.setVisible(false);
+								}
 
 
-						}
-					});
+								for(int i = 0; i<result.getSearchResults().size();i++) 
+								{
+									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+									classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Teach");
+									ownerClassesContainer.add(classpageWidget);
+								}
+
+								
+							}
+				 });
+			}
+			
 		}
 
 	}
@@ -764,5 +856,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		notesPanel.setVisible(isVisible);
 		classCodePanel.setVisible(!isVisible);
 		createClassPanel.setVisible(!isVisible);
+	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpages.home.IsClassHomeView#setClassVisiblityData(org.ednovo.gooru.application.shared.model.content.ClasspageListDo)
+	 */
+	@Override
+	public void setClassVisiblityData(ClasspageListDo result) {
+		if(result != null && result.getSearchResults() != null){
+			if(result.getSearchResults().size() > 0){
+				mainPanel.setVisible(true);
+			}else{
+				mainPanel.setVisible(false);
+			}
+		}
 	}
 }

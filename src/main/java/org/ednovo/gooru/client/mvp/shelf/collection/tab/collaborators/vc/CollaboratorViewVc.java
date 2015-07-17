@@ -403,7 +403,7 @@ public abstract class CollaboratorViewVc extends Composite {
 		if (classpageTitles.size()>0){
 			StringBuffer sb = new StringBuffer();
 			String anchString = "<a href=\"{0}\" target=\"_blank\">{1}</a>";
-			String classpageUrl = "#teach&pageSize=10&classpageid={0}&pageNum=0&pos=1";
+			String classpageUrl = "#teach&pageSize=10&classpageId={0}&pageNum=0&pos=1";
 			int count = classpageTitles.size() >= defaultCollabCount ? defaultCollabCount : classpageTitles.size(); 
 			for (int i=0; i<count;i++){
 				String url = StringUtil.generateMessage(classpageUrl, classpageTitles.get(i).getClasspageId());

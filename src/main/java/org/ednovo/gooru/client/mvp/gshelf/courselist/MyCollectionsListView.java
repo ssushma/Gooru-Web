@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -63,10 +64,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
-	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
+	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
 	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion,lblTitle;
 	@UiField HTMLEventPanel createPanel;
 	
@@ -91,12 +92,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		/*btnCreate.addClickHandler(new CreateContentEvent(btnCreate));
-		//createPanel.addClickHandler(new CreateContentEvent(createPanel.getElement().getInnerText()));
-		//lblAddNewForResource.addClickHandler(new CreateContentEvent(lblAddNewForResource));
-		//lblAddNewForQuestion.addClickHandler(new CreateContentEvent(lblAddNewForQuestion));
-		btnCreateQuestion.addClickHandler(new CreateContentEvent(btnCreateQuestion));
-		btnCreateResource.addClickHandler(new CreateContentEvent(btnCreateResource));*/
+		collectionLevelPnl.getElement().getStyle().setFloat(Float.RIGHT);
+		
 	}
 	/**
 	 * This method is used to set id's
@@ -106,6 +103,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
+		createCollectionBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL1451());
+		createAssessmentBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL3024());
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
@@ -146,6 +145,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
 		lblTitle.setVisible(false);
+		collectionLevelPnl.setVisible(false);
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
@@ -168,6 +168,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				enableCreateButtons(true);
+				collectionLevelPnl.setVisible(true);
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 				if(folderDo!=null){
@@ -201,24 +204,24 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
-							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex);
+							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex,moveGooruOId);
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
 						}
 					}
@@ -299,6 +302,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public void clickOnRes(ClickEvent clickEvent){
 		getUiHandlers().addNewContent(btnCreateResource.getText());
 	}
+	@UiHandler("createCollectionBtn")
+	public void clickOnCollection(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createCollectionBtn.getText());
+	}
+	@UiHandler("createAssessmentBtn")
+	public void clickOnAssessment(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createAssessmentBtn.getText());
+	}
 	/**
 	 * This method is used to set the create text
 	 * @param typeVal
@@ -332,7 +343,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			if(o3!=null){
+			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+			btnCreate.setVisible(false);
+			lblAddNew.setVisible(false);
+			lblAddNewForResource.setText(i18n.GL1451());
+			lblAddNewForQuestion.setText(i18n.GL3024());
+			/*if(o3!=null){
 				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 				btnCreate.setVisible(false);
@@ -340,14 +357,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				lblAddNewForResource.setText(i18n.GL1451());
 				lblAddNewForQuestion.setText(i18n.GL3024());
 			}else if(o2!=null || o1!=null){
-				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
-				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
-				btnCreate.setVisible(true);
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
+				btnCreate.setVisible(false);
 				lblAddNew.setVisible(false);
-				btnCreate.setText(i18n.GL3024());
-				lblAddNewForResource.setText(i18n.GL1450());
-				lblAddNewForQuestion.setText(i18n.GL1451());
-			}
+				//btnCreate.setText(i18n.GL3024());
+				lblAddNewForResource.setText(i18n.GL1451());
+				lblAddNewForQuestion.setText(i18n.GL3024());
+			}*/
 			/*btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1450());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			lblAddNewForResource.setText(i18n.GL1450());

@@ -17,7 +17,7 @@
         <g:HTMLPanel styleName="{StudyStyle.h4}" ui:field="assignmentsCount"></g:HTMLPanel>   
         </g:HTMLPanel> 
       </gg:HTMLEventPanel> -->
-		<gg:HTMLEventPanel styleName="col-md-6 col-sm-6" ui:field="classpageContainer">
+		<gg:HTMLEventPanel styleName="col-md-6 col-sm-6"  ui:field="classpageContainer">
 		   <g:HTMLPanel styleName="classBlockInner">
 		      <g:HTMLPanel styleName="blockBody">
 		         <g:Image ui:field="classImage" />

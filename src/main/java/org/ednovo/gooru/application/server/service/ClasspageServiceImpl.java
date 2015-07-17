@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.ClasspageService;
 import org.ednovo.gooru.application.server.ArrayListSorter;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
@@ -761,6 +762,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode);
+		getLogger().info("v2getClasspageByCode:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonRep!=null && jsonRep.getSize()!=1){
@@ -935,6 +937,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			try {
 				if(jsonRep.getText()!=null){
 					if(jsonRep.getText().trim() != null && !jsonRep.getText().trim().equals("null")&&!jsonRep.getText().trim().equals("")){
+						getLogger().info("ifffffff");
 						classPageDo=deserializeClassPage(jsonRep.getJsonObject());
 					}
 					else {
@@ -1187,6 +1190,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		ClasspageDo classpageDo=new ClasspageDo();
 			try {
 				if(classpageJsonObject!=null){
+					getLogger().info("classpageJsonObject.getString(GOORUOID):"+classpageJsonObject.getString(GOORUOID));
 					classpageDo.setClasspageId(classpageJsonObject.getString(GOORUOID));
 					classpageDo.setClasspageCode(classpageJsonObject.getString(CLASSPAGECODE));
 					classpageDo.setTitle(classpageJsonObject.getString(TITLE));
@@ -1198,7 +1202,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					{
 					classpageDo.setItemCount("0");
 					}
-					classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL)!=null?classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
+					if(classpageJsonObject.has(THUMBNAIL) && classpageJsonObject.getJSONObject(THUMBNAIL) != null){
+							if(classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL) != null){
+								classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL));
+							}
+					}
 					ArrayList<String> permissionList=new ArrayList<String>();
 					if(!classpageJsonObject.isNull(CREATOR)){
 						if(!classpageJsonObject.getJSONObject(CREATOR).isNull(UID)){
@@ -1231,6 +1239,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					classpageDo.setPermissions(permissionList);
 				}
 			} catch (JSONException e) {
+				logger.error("error.....:"+e.getMessage());
 				classpageDo=new ClasspageDo();
 			}
 		return classpageDo;
@@ -1676,6 +1685,27 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		return deserializeClasspageList(jsonRep);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3GetAllClass()
+	 */
+	@Override
+	public Boolean v3GetAllClass() throws GwtException, ServerDownException {
+		boolean hasTeachStudy = false;
+		JsonRepresentation jsonRep = null;
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_TEACHANDSTUDY);
+		getLogger().info("V3 TEACH_STUDY API URL:::::"+partialUrl);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if (jsonResponseRep.getStatusCode()==200){
+			try{
+				hasTeachStudy = Boolean.parseBoolean(jsonRep.getText().trim());
+			}catch(Exception e){
+				hasTeachStudy=false;
+			}
+		}
+		return hasTeachStudy;
+	}
+	
 	
 	@Override
 	public ArrayList<ClasspageDo> getClassesAssociatedWithCourse(String o1CourseId) throws GwtException, ServerDownException {
@@ -2112,5 +2142,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 
 		return userPlayedSessions;
 	}
+
+	
 
 }

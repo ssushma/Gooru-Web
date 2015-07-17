@@ -73,13 +73,13 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandlers> implements IsStudentClassView ,ClickHandler{
 	
-	@UiField SpanPanel classCodeSpan, studentMessage;
+	@UiField SpanPanel classCodeSpan, studentMessage, onoffSwitchBtn;
 	@UiField EmPanel teacherOwnership;
 	@UiField H2Panel courseName;
 	@UiField SimplePanel learningMapContainer;
 	@UiField Image classImage, teacherImage, studentImage;
 	@UiField SimpleCheckBox switchCheckBox;
-	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar;
+	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar, planProgressPanel;
 	@UiField Button joinClassBtn, teachViewBtn;
 	@UiField Label studentViewLbl;
 	
@@ -304,5 +304,10 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@Override
 	public void setProgressBarVisibility(boolean isVisible) {
 		planProgressBar.setVisible(isVisible);
+	}
+
+	@Override
+	public void disableSwitchBtn(boolean isDisable) {
+		planProgressPanel.setVisible(!isDisable);
 	}
 }

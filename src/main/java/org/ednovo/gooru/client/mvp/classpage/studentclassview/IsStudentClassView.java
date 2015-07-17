@@ -73,4 +73,6 @@ public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHan
 	
 	void setProgressBarVisibility(boolean isVisible);
 	
+	void disableSwitchBtn(boolean isDisable);
+	
 }

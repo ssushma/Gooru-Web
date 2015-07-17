@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpages.home;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 /**
  *
  * @fileName : IsClassHomeView.java
@@ -61,6 +62,27 @@ public interface IsClassHomeView extends IsViewWithHandlers<ClassHomeUiHandlers>
 	 *
 	 */
 	void callServiceRequestsToBindData();
+
+	/**
+	 * @function setClassVisiblityData 
+	 * 
+	 * @created_date : 17-Jul-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setClassVisiblityData(ClasspageListDo result);
 
 
 //	public Label getErrorLbl();

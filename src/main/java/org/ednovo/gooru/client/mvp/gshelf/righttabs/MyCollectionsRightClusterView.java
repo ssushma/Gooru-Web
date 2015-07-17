@@ -36,25 +36,23 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.FolderInfoWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
-
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
-
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -126,6 +124,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		copyPopupPanel.getElement().setAttribute("style", "min-width: 50px;");
 		copyLbl.setText("copy");
 		moveLbl.setText("move");
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
 		
 	}
 	public void setIds(){
@@ -363,6 +367,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void enableAndHideTabs(boolean isVisible){
 		lnkContent.setVisible(isVisible);
 		lnkshare.setVisible(isVisible);
+		toggleButton.setVisible(isVisible);
 	}
 	/**
 	 * 
@@ -716,11 +721,29 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 	}
 	
+
+	public void hideDropDown(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		copyPopupPanel.setVisible(false);
+        	}
+    	}
+     }
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return copyPopupPanel.getElement().isOrHasChild(Element.as(target))||copyPopupPanel.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
+	
+
 	public void removeActiveStyle() {
 		copyLbl.getElement().removeClassName("selected");
 		moveLbl.getElement().removeClassName("selected");
 		myCollDelLbl.getElement().removeClassName("selected");
 	}
-	
-	
+
 }

@@ -171,6 +171,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		};
 		pnlGradeContainer.add(courseGradeWidget);
 	}
+	
+	
+
 	/**
 	 * This method will remove the widget based on the codeId in the UlPanel
 	 * @param ulPanel
@@ -324,10 +327,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public void setCouseData(FolderDo courseObj) {
 		if(courseObj!=null){
 			this.courseObj=courseObj;
+			unitTitle.setText(courseObj.getTitle()==null?i18n.GL3364():courseObj.getTitle());
 			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
 			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
+		}else{
+			unitTitle.setText(i18n.GL3364());
+			txaBigIdeas.setText("");
+			txaEssentialQuestions.setText("");
 		}
-		unitTitle.setText(courseObj==null?i18n.GL3364():courseObj.getTitle());
+		
 		ulSelectedItems.clear();
 		selectedValues.clear();
 		//This will push the previous selected values to map
@@ -363,6 +371,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
+	
+	
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -370,13 +380,32 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
 				unitLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
 			}
-//			getUiHandlers().invokeTaxonomyPopup(UNIT,ulSelectedItems);
 			getUiHandlers().invokeTaxonomyPopup(UNIT,unitLiPanelWithCloseArray);
 			
 		}
 	}
 
-
+	
+	/**
+	 * Adds the selected domains from the taxonomy popup into unit info view.
+	 */
+	@Override
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray,List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		for(int i=0;i<liPanelWithCloseArray.size();i++){
+			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
+				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+			}
+			if(i<removedLiPanelWithCloseArray.size()){
+				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
+			}
+		}
+	}
+	
+	/**
+	 * Checks the selected widgets in info view got from taxonomy popup.
+	 * @param id
+	 * @return
+	 */
 	private boolean isWidgetExists(long id) {
 		boolean flag = true;
 		Iterator<Widget> widgets = ulSelectedItems.iterator();
@@ -386,14 +415,19 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				flag = false;
 			}
 		}
-		return flag;
+		return flag; 
 	}
 
-	@Override
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
-		for(int i=0;i<liPanelWithCloseArray.size();i++){
-			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
-				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+	/**
+	 * Removes the widget, which has been removed from taxonomy popup from info view 
+	 * @param removeWidgetId
+	 */
+	private void removeFromUlSelectedItemsContainer(long removeWidgetId) {
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == removeWidgetId){
+				widget.removeFromParent();
 			}
 		}
 	}

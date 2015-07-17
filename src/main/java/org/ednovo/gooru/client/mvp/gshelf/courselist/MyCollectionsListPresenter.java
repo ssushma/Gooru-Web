@@ -80,16 +80,14 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 			});
 		}else{
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			if(o1!=null){
-				String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-				String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-				AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
-					@Override
-					public void onSuccess(FolderListDo result) {
-						getView().setData(type,result.getSearchResult(),true,true,folderObj);
-					}
-				});
-			}
+			String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,o1, o2, o3, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+				@Override
+				public void onSuccess(FolderListDo result) {
+					getView().setData(type,result.getSearchResult(),true,true,folderObj);
+				}
+			});
 		}
 	}
 
@@ -105,12 +103,18 @@ public class MyCollectionsListPresenter extends PresenterWidget<IsMyCollectionsL
 	}
 
 	@Override
-	public void reorderWidgetPositions(String idToMove,final int itemSeqToAPI,final int movingIndex) {
+	public void reorderWidgetPositions(String idToMove,final int itemSeqToAPI,final int movingIndex,String collectionGooruOid) {
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2", null);
 		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o3", null);
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String collectionId=null;
+		if("Folder".equalsIgnoreCase(view) || (courseId!=null && unitId!=null && lessonId!=null)){
+			collectionId=collectionGooruOid;
+		}else{
+			//If not from mycollection we need to use the gooruoid for course ,units and lessons
+			idToMove=collectionGooruOid;
+		}
 		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(courseId,unitId,lessonId,collectionId,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {

@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -91,6 +92,8 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter = null;
 	
+	ShelfMainPresenter shelfMainPresenter;
+	
 	ViewMorePeoplePresenter viewmorePeoplePresenter = null;
 	
 	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
@@ -106,7 +109,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Inject
-	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
+	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,ShelfMainPresenter shelfMainPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter);
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
@@ -115,6 +118,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.viewmorePeoplePresenter = viewmorePeoplePresenter;
+		this.shelfMainPresenter = shelfMainPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -196,6 +200,8 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 	@Override
 	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo,CollectionResourceWidget collectionResourceWidget) {
+		shelfMainPresenter.SetDefaultTypeAndVersion();
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"resoruce",collectionResourceWidget);
 		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid(),collectionResourceWidget));
 		addToPopupSlot(searchAddResourceToCollectionPresenter);

@@ -28,6 +28,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -188,6 +189,21 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	public void gotoStudentsView(String tbvalue) {
 		this.getclasspageServiceAsync().v2getClasspageByCode(tbvalue, getcollectionAsyncCallback());
 
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpages.home.ClassHomeUiHandlers#getV1TeachStudy(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void getV1TeachStudy(String limit, String offset) {
+		AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+
+			@Override
+			public void onSuccess(ClasspageListDo result) {
+				getView().setClassVisiblityData(result);
+			}
+			
+		});
 	}
 
 }

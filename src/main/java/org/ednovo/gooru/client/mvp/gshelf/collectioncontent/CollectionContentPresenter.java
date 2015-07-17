@@ -122,13 +122,9 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		}
 	}
 	@Override
-	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI) {
+	public void reorderWidgetPositions(String idToMove,int itemSeqToAPI,String moveGooruOid) {
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
-		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2", null);
-		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o3", null);
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(courseId,unitId,lessonId,collectionId,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections("","","",moveGooruOid,itemSeqToAPI,idToMove,view,new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				getView().resetWidgetPositions();

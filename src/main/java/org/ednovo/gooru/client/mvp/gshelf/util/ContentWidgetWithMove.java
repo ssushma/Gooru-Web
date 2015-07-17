@@ -114,8 +114,9 @@ public abstract class ContentWidgetWithMove extends Composite {
 		if(FOLDER.equalsIgnoreCase(view)){
 			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
 		}else{
-			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getGooruOid()+"");
+			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
 		}
+		txtMoveTextBox.getElement().setAttribute("moveGooruOId",folderObj.getGooruOid()+"");
 		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
 		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
 		//This blur handler reset the previous value when the text box value is empty.
@@ -249,18 +250,19 @@ public abstract class ContentWidgetWithMove extends Composite {
 					String movingPosition=txtMoveTextBox.getText().toString().trim();
 					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index").trim();
 					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
+					String moveGooruOId=txtMoveTextBox.getElement().getAttribute("moveGooruOId");
 					if(!movingPosition.isEmpty()){
 						int movingValue=Integer.parseInt(movingPosition);
 						int currentWidgetValue=Integer.parseInt(currentWidgetPosition);
 						//This one will execute when user enter a number in text field and click on either up and down arrow.
 						if(movingValue!=(currentWidgetValue+1)){
-							moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId);
+							moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId,moveGooruOId);
 						}else if(movingValue==(currentWidgetValue+1)){
 							//This one will execute when user directly clicks on either up and down arrow.
 							if(isDownArrow){
-								moveWidgetPosition((movingValue+1)+"",currentWidgetPosition,isDownArrow,moveId);
+								moveWidgetPosition((movingValue+1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId);
 							}else{
-								moveWidgetPosition((movingValue-1)+"",currentWidgetPosition,isDownArrow,moveId);
+								moveWidgetPosition((movingValue-1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId);
 							}
 						}
 					}
@@ -287,5 +289,5 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public Label getIndexLabel(){
 		return lblIndex;
 	}
-	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
+	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId,String moveGooruOId);
 }
