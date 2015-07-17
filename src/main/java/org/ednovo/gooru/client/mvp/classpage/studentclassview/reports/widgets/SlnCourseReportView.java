@@ -73,7 +73,7 @@ public class SlnCourseReportView extends Composite {
 		scoreRadial.setStyleName(SCORE_RADIAL_PERCENT_LABEL+scorePercent);
 		
 		String timeSpentData = "--";
-		if(planProgressDo.getTimespent()>0) {
+		if(planProgressDo.getTimeSpent()>0) {
 			timeSpentData = StringUtil.getFormattedDate(planProgressDo.getTotalStudyTime(), "");
 		}
 		studyTimeValue.setText(timeSpentData);

@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
@@ -263,7 +262,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			        					 }
 			        			  }
 			        		  }
-			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUsageData().get(i).getTimespent()));
+			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
 			        		  mainDataVpnl.add(timeStamplbl);
 			        		  adTable.setWidget(i, position+2,mainDataVpnl);
 			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color: "+color);

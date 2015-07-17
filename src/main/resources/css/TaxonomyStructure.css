@@ -115,12 +115,13 @@ height:auto;
 	display:block;
 	line-height: 16px;
 }
+
 #taxonomyStructureSelectionPopup  .listGroup ul li .standardDivSub{
 	color:#515151;
 	padding:6px 10px;
 	display:block;
 	line-height: 16px;
-	padding-left:10px;
+	padding-left:30px;
 }
 
 
@@ -129,7 +130,7 @@ height:auto;
 	padding:6px 10px;
 	display:block;
 	line-height: 16px;
-	padding-left:40px;
+	padding-left:60px;
 }
 
 #taxonomyStructureSelectionPopup  .listGroup ul li .standardDivSub:hover{

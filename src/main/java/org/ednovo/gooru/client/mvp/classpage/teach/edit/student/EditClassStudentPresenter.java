@@ -46,6 +46,9 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 
 	private SimpleAsyncCallback<ArrayList<CollaboratorsDo>> addMembersAsyncCallback;
 	
+	private int pageSize = 20;
+	
+	private int  activeListPageNum=0;
 	
 	@Inject
 	private ClasspageServiceAsync classpageServiceAsync;
@@ -56,11 +59,16 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	
 	List<String> emailId;
 	
+	String classId;
+	
 	@Inject
 	public EditClassStudentPresenter(EventBus eventBus,IsEditClassStudentView view){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 	}
+	
+	
 	
 	@Override
 	public void onBind() {
@@ -92,7 +100,8 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 					//getView().getPendingMembersList();
 				}else{
 					//Display pending members list.
-					getView().displayPendingMembersList(result, true, result.size(),false,false);
+					
+					getView().displayPendingMembersList(result, true, result.size(),false,true);
 				}
 			}
 		});
@@ -101,22 +110,27 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 
 	@Override
 	public void onReveal() {
+		
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
 			getView().setReportView();
 		} else {
 			getView().setRoasterView();
+			if(classId != null){
+				generateShareLink(classId);
+				getActiveMembersListByCollectionId(classId,pageSize*activeListPageNum, pageSize, "active",true,true,false);
+			}
 		}
 	}
 
 	@Override
 	public void onReset() {
-		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
+		/*String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
 			getView().setReportView();
 		} else {
 			getView().setRoasterView();
-		}
+		}*/
 	}
 
 	@Override
@@ -224,14 +238,14 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentViewUiHandler#getActiveMembersListByCollectionId(java.lang.String, int, int, java.lang.String, boolean, boolean)
 	 */
 	@Override
-	public void getActiveMembersListByCollectionId(String classCode,int offSet, int pageSize, String statusType,final boolean increasePageNum, final boolean getPendingMembers) {
+	public void getActiveMembersListByCollectionId(String classCode,int offSet, int pageSize, String statusType,final boolean increasePageNum, final boolean getPendingMembers,final boolean isNew) {
 		
 		getClasspageServiceAsync().getActiveAssociatedStudentInClassListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
 			@Override
 			public void onSuccess(StudentsAssociatedListDo result) {
 				//Display all members in active list.
 				studentsAssociatedListDo=result;
-				getView().displayActiveMembersList(result.getSearchResult(), false, result.getTotalHitCount(),increasePageNum);
+				getView().displayActiveMembersList(result.getSearchResult(), isNew, result.getTotalHitCount(),increasePageNum);
 				if(getPendingMembers){
 					getView().getPendingMembersList();
 				}
@@ -240,14 +254,14 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	}
 	
 	@Override
-	public void getMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum) {
+	public void getMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum,final boolean isNew) {
 		
 		getClasspageServiceAsync().getAssociatedPendingStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
 
 			@Override
 			public void onSuccess(StudentsAssociatedListDo result) {
 				//Display all members in pending list.
-				getView().displayPendingMembersList(result.getSearchResult(), false, result.getTotalHitCount(),increasePageNum,false);
+				getView().displayPendingMembersList(result.getSearchResult(),isNew, result.getTotalHitCount(),increasePageNum,false);
 
 			}
 		});

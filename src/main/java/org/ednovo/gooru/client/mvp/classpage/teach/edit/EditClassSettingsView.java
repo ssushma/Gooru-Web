@@ -204,6 +204,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		@Override
 		public void setImage(String fileName) {
 			classImage.setUrl(fileName);
+			classImage.setVisible(true);
 			uploadImagePanel.setText(i18n.GL0138());
 		}
 	};
@@ -291,6 +292,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 
 		classImage.getElement().setId("thumbnailImage");
+		classImage.setVisible(false);
 		shareUrlTxtLbl.setEnabled(false);
 		shareUrlTxtLbl.getElement().getStyle().setBackgroundColor("#FFF");
 
@@ -465,11 +467,13 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 				}
 				if(classpageDo.getThumbnails() != null){
 					if(classpageDo.getThumbnails().getUrl() != null){
+						classImage.setVisible(true);
 						classImage.setUrl(classpageDo.getThumbnails().getUrl());
 						uploadImagePanel.setText(i18n.GL0138());
 					}
 				}else{
 					uploadImagePanel.setText(i18n.GL3402());
+					classImage.setVisible(false);
 					classImage.setUrl("");
 				}
 

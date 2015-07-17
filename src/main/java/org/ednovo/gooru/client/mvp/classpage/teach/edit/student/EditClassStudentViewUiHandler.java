@@ -50,9 +50,9 @@ public interface EditClassStudentViewUiHandler extends BaseUiHandlers {
 
 	void addStudents(String classpageId, List<String> lstEmailID);
 	
-	void getActiveMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum,boolean getPendingMembers);
+	void getActiveMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum,boolean getPendingMembers,boolean isNew);
 	
-	void getMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum);
+	void getMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum,boolean isNew);
 		
 	void removePendingUserFromCalss(ClasspageDo classpageDo, String emailId,int pendingOffSet, boolean pendingFlag, MembersViewVc membersViewVc);
 

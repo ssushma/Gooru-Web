@@ -50,6 +50,8 @@ import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -62,7 +64,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -85,7 +90,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField HTMLPanel lessonInfo,standardsUI;
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
-	@UiField HTMLEventPanel btnStandardsBrowse;
+	@UiField HTMLEventPanel btnStandardsBrowse, taxonomyToggleBtn;
 	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment,taxonomyBtn;
 	@UiField Label lblErrorMessage;
 	@UiField UlPanel ulSelectedItems;
@@ -123,6 +128,12 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		});
 		populateStandardValues();
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
+		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -140,6 +151,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		});
 	}
+	
+	
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
 		standardsUI.clear();
 		final String selValues = getSelectedStandards().toString();
@@ -223,7 +236,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
 		//	standardsUI.clear();
 			final String selValues = getSelectedStandards().toString();
-			System.out.println("getselevalues at sub level::"+selValues);
+			
 			for(int i=0;i<standardsList.size();i++)
 			{
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
@@ -254,7 +267,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 							@Override
 							public void onClick(ClickEvent event) {
 								//This will remove the selected value when we are trying by close button
-								System.out.println("selectedValues::+"+selValues.contains(domainStand.getCodeId().toString()));
 								if(selValues.contains(domainStand.getCodeId().toString())){
 									selectedValues.remove(domainStand.getCodeId());
 								}
@@ -567,5 +579,22 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 	}
 	
+	protected void hideDropDown(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		standardsDropListValues.getElement().removeAttribute("style");
+        	}
+    	}
+	}
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
 	
 }

@@ -813,45 +813,47 @@ public class StringUtil implements ClientConstants {
 	}
 
 	public static String getFormattedDate(long different, String separator) {
+		String format="";
 		long secondsInMilli = 1000;
-		long minutesInMilli = secondsInMilli * 60;
-		long hoursInMilli = minutesInMilli * 60;
-		long daysInMilli = hoursInMilli * 24;
+		if(different==0) {
+			format="--";
+		} else if((different/1000)>60) {
+			long minutesInMilli = secondsInMilli * 60;
+			long hoursInMilli = minutesInMilli * 60;
+			long daysInMilli = hoursInMilli * 24;
 
-		long d = different / daysInMilli;
-		different = different % daysInMilli;
+			long d = different / daysInMilli;
+			different = different % daysInMilli;
 
-		long h = different / hoursInMilli;
-		different = different % hoursInMilli;
+			long h = different / hoursInMilli;
+			different = different % hoursInMilli;
 
-		long m = different / minutesInMilli;
-		different = different % minutesInMilli;
+			long m = different / minutesInMilli;
+			different = different % minutesInMilli;
 
-		long s = different / secondsInMilli;
+			long s = different / secondsInMilli;
 
-		String format="--";
-    	if(d>0) {
-    		h = (24*d)+h;
-    	}
-	    if(separator!=null&&separator.equalsIgnoreCase(":")) {
-	    	format = format + h + separator;
-		    format = format + m + separator;
-		    format = format + s;
-	    } else {
-	    	if(h>0) {
-		    	format = format + h +" hrs ";
+	    	if(d>0) {
+	    		h = (24*d)+h;
 	    	}
-	    	if(m>0) {
-			    format = format + m +" min ";
-	    	}
-	    	if(s>0) {
-			    if(s<=60) {
-			    	format = "< 1min";
-			    } else {
-		    		format = format + s +" sec";
-			    }
-	    	}
-	    }
+		    if(separator!=null&&separator.equalsIgnoreCase(":")) {
+		    	format = format + h + separator;
+			    format = format + m + separator;
+			    format = format + s;
+		    } else {
+		    	if(h>0) {
+			    	format = format + h +" hrs ";
+		    	}
+		    	if(m>0) {
+				    format = format + m +" min ";
+		    	}
+		    	if(s>0) {
+			    	format = format + s +" sec";
+		    	}
+		    }
+		} else if((different/1000)<60) {
+	    	format = "< 1min";
+		}
 	    return format;
 	}
 

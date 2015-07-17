@@ -53,6 +53,8 @@ import org.ednovo.gooru.shared.util.InfoUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -63,6 +65,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -94,7 +99,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField Label lblErrorMessage, lblErrorMessageForLO,newlbl;
 	@UiField Image collThumbnail;
 	@UiField Anchor dok,centurySkills,languageObj;
-	@UiField HTMLEventPanel btnStandardsBrowse;
+	@UiField HTMLEventPanel btnStandardsBrowse,taxonomyToggleBtn;
 	@UiField UlPanel standardsDropListValues;
 	@UiField DepthKnowledgeView depthOfKnowledgeContainer;
 	@UiField LanguageView languageObjectiveContainer;
@@ -144,6 +149,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		uploadImageLbl.setText(i18n.GL0912());
 		populateStandardValues();
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
+		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -154,6 +160,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				}
 			}
 		});
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
 		dok.addClickHandler(new dokClickHandlers());
 		centurySkills.addClickHandler(new CenturySkillsClickHandlers());
 		languageObj.addClickHandler(new Language_ObjectiveClickHandlers());
@@ -812,6 +823,24 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				widget.removeFromParent();
 			}
 		}
+	}
+	
+	protected void hideDropDown(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		standardsDropListValues.getElement().removeAttribute("style");
+        	}
+    	}
+	}
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
 	}
 	
 }
