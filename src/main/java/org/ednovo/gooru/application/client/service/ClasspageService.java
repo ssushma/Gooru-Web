@@ -94,6 +94,8 @@ public interface ClasspageService extends BaseService {
 	
 	ClasspageListDo v3GetAllClass(String limit, String offSet) throws GwtException, ServerDownException;
 	
+	public Boolean v3GetAllClass() throws GwtException, ServerDownException;
+	
 	
 	/**
 	 * Get Classpage by Classpage id

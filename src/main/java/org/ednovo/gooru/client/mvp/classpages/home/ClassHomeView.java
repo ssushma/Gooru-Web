@@ -53,6 +53,7 @@ import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -120,7 +121,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private Integer offsetLimitOwner = 0;
 	
 	
-	@UiField HTMLPanel notesPanel,createClassPanel,classCodePanel;
+	@UiField HTMLPanel notesPanel,createClassPanel,classCodePanel,mainPanel;
+	
+	
 	
 
 	interface ClassCodeViewUiBinder extends UiBinder<Widget, ClassHomeView> {
@@ -145,18 +148,21 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	public void callServiceRequestsToBindData() {
 		ownerClassesContainer.clear();
 		joinedClassesContainer.clear();
+		joinedClassesContainer.getElement().setInnerHTML("");
+		ownerClassesContainer.getElement().setInnerHTML("");
 		txtCode.setText("");
 		pageInitialLimitOwner = 10;
 		pageInitialLimitJoined = 10;
 		offsetLimitOwner = 0;
 		offsetLimitJoined = 0;
 		
+		getUiHandlers().getV1TeachStudy("10", "0");
 		
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view","");
 		
 		
 		
-		if(view.equalsIgnoreCase("myclass")){
+		if(view.equalsIgnoreCase("myclass") || view.isEmpty()){
 			isSetVisiblity(false);
 			studyLoading.setVisible(true);
 			teachLoading.setVisible(true);
@@ -190,6 +196,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
+								ownerClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 							}catch(Exception e){
 								e.printStackTrace();
@@ -223,6 +230,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
+								joinedClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 
 						}
@@ -260,6 +268,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
+								ownerClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 							
 						}
@@ -291,6 +300,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							else
 							{
 								joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
+								joinedClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 							
 						}
@@ -846,5 +856,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		notesPanel.setVisible(isVisible);
 		classCodePanel.setVisible(!isVisible);
 		createClassPanel.setVisible(!isVisible);
+	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpages.home.IsClassHomeView#setClassVisiblityData(org.ednovo.gooru.application.shared.model.content.ClasspageListDo)
+	 */
+	@Override
+	public void setClassVisiblityData(ClasspageListDo result) {
+		if(result != null && result.getSearchResults() != null){
+			if(result.getSearchResults().size() > 0){
+				mainPanel.setVisible(true);
+			}else{
+				mainPanel.setVisible(false);
+			}
+		}
 	}
 }

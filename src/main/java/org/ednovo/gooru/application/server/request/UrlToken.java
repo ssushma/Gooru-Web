@@ -593,7 +593,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 
 	V1_GET_COURSES_BY_SUBJECTID("/v1/subject/{0}/taxonomycourse?offset={1}&limit={2}"),
 
-	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?"),
+	V1_GET_DOMAIN_BY_SUBJECTID("/v1/taxonomycourse/{0}/domain?offset={1}&limit={2}"),
 
 	V1_GET_USER_COURSES_LIST("/v2/user/{0}/course?"),
 
@@ -608,6 +608,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_LISTTEACHCLASSES("/v3/class/teach?"),
 
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
+	
+	V3_GET_TEACHANDSTUDY("/v3/class/has-teach-study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
 

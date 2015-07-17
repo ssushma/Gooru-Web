@@ -78,7 +78,7 @@ public class StudyPlayerFooterView extends Composite implements ClientConstants{
 		shareButton.addMouseOverHandler(new ShareButtonMouseOver());
 		shareButton.addMouseOutHandler(new ShareButtonMouseOut());
 
-		addButton.setVisible(false);
+		/*addButton.setVisible(false);*/
 	}
 	/**
 	 * @return the resourceAnimationContainer

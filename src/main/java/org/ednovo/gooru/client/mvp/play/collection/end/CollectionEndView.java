@@ -401,12 +401,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentssection.setVisible(true);
 		commentssection.getElement().getStyle().setOpacity(1);
 		setReplyLink();
-		if (collectionDo.getMeta() !=null)
+		if (collectionDo!=null)
 		{
-			if(collectionDo.getMeta().getPermissions() != null)
+			if(collectionDo.getPermissions() != null)
 			{
 
-			if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
+			if (StringUtil.toString(collectionDo.getPermissions()).contains(ClientConstants.EDIT) || collectionDo.isIsCollaborator()){
 				switchContainer.setVisible(true);
 				if(collectionDo.getSettings() != null)
 				{
@@ -697,6 +697,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							@Override
 							public	void onLoginSuccess(){
 								Window.enableScrolling(false);
+								getUiHandlers().setDefaultTypeAndVersion();
+								remixPresenterWidget.DisableMyCollectionsPanelData(false);
 								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
@@ -709,6 +711,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						loginPopupUc.setGlassEnabled(true);
 						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
+						getUiHandlers().setDefaultTypeAndVersion();
+						remixPresenterWidget.DisableMyCollectionsPanelData(false);
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;

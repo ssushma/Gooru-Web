@@ -47,7 +47,7 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 //	void addTaxonomyData(UlPanel selectedUlContainer);
 
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray); 
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray); 
 	
 
 }

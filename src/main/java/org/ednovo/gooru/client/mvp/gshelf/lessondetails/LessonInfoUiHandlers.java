@@ -24,10 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
@@ -65,8 +68,10 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 
 	void callTaxonomyService(int subdomainId);
 	
-	void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems);
+//	void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems);
 	
 	public void callCourseInfoTaxonomy();
+	
+	void invokeTaxonomyPopup(String type,List<LiPanelWithClose> lessonLiPanelWithCloseArray);
 
 }

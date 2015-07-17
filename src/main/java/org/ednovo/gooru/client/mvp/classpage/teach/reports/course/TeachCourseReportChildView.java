@@ -36,6 +36,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -91,6 +92,7 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 			studentName.addClickHandler(new StudentCourseView(planDo.getUserName(), planDo.getUserUId()));
 			courseTableWidget.setWidget(rowWidgetCount,0,studentName);
 			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor("white");
+			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
 			usageData = planDo.getUsageData();
 			int columnCount = usageData.size();
 			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
@@ -102,12 +104,13 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 				Label scoreLbl = new Label(scoreStr);
 				courseTableWidget.setWidget(rowWidgetCount, columnWidgetCount+1,scoreLbl);
 				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
 			}
 		}
 		
 		Label studentNameLbl = new Label("Student");
 		studentNameLbl.setStyleName("");
-		studentNameLbl.setWidth("100px");
+		studentNameLbl.setWidth("150px");
 		courseTableWidget.setHeaderWidget(0, studentNameLbl);
 		
 		int columnCount = usageData.size();
@@ -115,6 +118,7 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 		for(int headerColumnCount=0;headerColumnCount<columnCount;headerColumnCount++) {
 			HTML unitName = new HTML(usageData.get(headerColumnCount).getTitle());
 			unitName.setStyleName("myclasses-mastery-unit-cell-style");
+			unitName.setWidth("150px");
 			unitName.addClickHandler(new ClickUnitName(usageData.get(headerColumnCount).getGooruOId()));
 			courseTableWidget.setHeaderWidget(headerColumnCount+1, unitName);
 		}
