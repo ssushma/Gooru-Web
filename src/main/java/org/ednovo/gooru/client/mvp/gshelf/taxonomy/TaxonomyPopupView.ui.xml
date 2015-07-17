@@ -58,9 +58,9 @@
 							</uc:UlPanel></g:ScrollPanel>
 						</div>
 						
-						<div class="col-md-4 col-sm-4 listGroupLast">
+						<div class="col-md-4 col-sm-4 border-right listGroupLast">
 							<g:Label styleName="optinHeader" text="Standards"></g:Label>
-							<uc:UlPanel styleName="list-unstyled containerHeight" ui:field="standardsUlContainer">
+							<uc:UlPanel styleName="list-unstyled scrollCourseContainer containerHeight" ui:field="standardsUlContainer">
 							</uc:UlPanel>
 						</div>
 						<div class="clearfix"></div>

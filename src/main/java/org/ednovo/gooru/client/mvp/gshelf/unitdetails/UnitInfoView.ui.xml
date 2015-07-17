@@ -77,10 +77,12 @@
 <div class="unitCoverList no-gutter">
 	<div class="col-md-3 col-sm-3">
 		<div class="unitCoverListLeft containerHeight">
+
 		<uc:UlPanel ui:field="ulMainGradePanel"/>
 		</div>
 	</div>
-	<g:HTMLPanel styleName="col-md-4 col-sm-4" ui:field="pnlGradeContainer"/>
+	<g:ScrollPanel ui:field="scrollCoursediv" styleName="col-md-4 col-sm-4 scrollCourseContainer">
+	<g:HTMLPanel ui:field="pnlGradeContainer"/></g:ScrollPanel>
 	<div class="col-md-5 col-sm-5 pnlGradeDescription">
 		<g:HTMLPanel ui:field="pnlGradeDescContainer" styleName="pnlGradeDescInnerContainer"/>
 	</div>
