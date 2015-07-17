@@ -608,6 +608,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_LISTTEACHCLASSES("/v3/class/teach?"),
 
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
+	
+	V3_GET_TEACHANDSTUDY("/v3/class/has-teach-study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
 
