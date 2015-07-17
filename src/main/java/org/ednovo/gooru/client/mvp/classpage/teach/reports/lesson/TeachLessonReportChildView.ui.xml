@@ -20,7 +20,7 @@
 		         <div class="col-md-4 col-sm-4">
 		            <g:HTMLPanel styleName="download-button-container">
 		               <g:Button styleName="secondary downloadIcon" ui:field="downloadLink">Download Report</g:Button>
-		               <g:Button styleName="primary" ui:field="previewLink">Preview Assessment</g:Button>
+		               <g:Button styleName="primary" ui:field="previewLink"></g:Button>
 		            </g:HTMLPanel>
 		         </div>
 		         <div class="clearfix"></div>
