@@ -147,7 +147,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		StringUtil.loadVisualizationLibraries();
 		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
-	
+
 	public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -209,7 +209,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			String libraryName) {
 
 	}
-	
+
 	public void displayScore(Integer collectionScore, Integer noOfQuestions){
 
 		score.setText(collectionScore+" %");
@@ -391,9 +391,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
 						for (MetaDataDo metaDataDo : questionList) {
 							String answerText = "";
-							AppClientFactory.printInfoLogger("metaDataDo.getAnswer_text() : "+metaDataDo.getAnswer_text());
-							if((metaDataDo.getAnswer_text() != null)) {
-								answerText = metaDataDo.getAnswer_text();
+							if((metaDataDo.getAnswerText() != null)) {
+								answerText = metaDataDo.getAnswerText();
 							}
 							AppClientFactory.printInfoLogger("answerText : "+answerText);
 							answerTextFormat += '[' + answerText +']';
@@ -538,7 +537,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	 */
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {
-			if(metaDataDo.getIs_correct()==1){
+			if(metaDataDo.getIsCorrect()==1){
 				return AnalyticsUtil.getCharForNumber(metaDataDo.getSequence()-1);
 			}
 		}
@@ -632,8 +631,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 							ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
 							for (MetaDataDo metaDataDo : questionList) {
 								String answerText = "";
-								if((metaDataDo.getAnswer_text() != null)) {
-									answerText = metaDataDo.getAnswer_text();
+								if((metaDataDo.getAnswerText() != null)) {
+									answerText = metaDataDo.getAnswerText();
 								}
 								answerTextFormat += '[' + answerText +']';
 								if(questionList.size()  != metaDataDo.getSequence()){
@@ -863,24 +862,24 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		var table = $wnd.$('#student-myclasses-assessment-summary-report').DataTable();
 	  	table.destroy();
 	}-*/;
-	
-	
-	
+
+
+
 	@Override
 	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
 		throw new RuntimeException("Not implemented");
 	}
-	
-	
-	
+
+
+
 	@Override
 	public void loadingIcon() {
 		loadingImageLabel.setVisible(true);
 		questionsTable.setVisible(false);
 	}
-	
-	
-	
+
+
+
 	@Override
 	public void errorMsg() {
 		Label erroeMsg=new Label();
@@ -888,8 +887,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		erroeMsg.setText(i18n.GL3265());
 		questionsTable.add(erroeMsg);
 	}
-	
-	
-	
-	
+
+
+
+
 }
