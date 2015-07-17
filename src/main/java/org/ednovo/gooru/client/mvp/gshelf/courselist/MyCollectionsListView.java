@@ -93,12 +93,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
 		collectionLevelPnl.getElement().getStyle().setFloat(Float.RIGHT);
-		/*btnCreate.addClickHandler(new CreateContentEvent(btnCreate));
-		//createPanel.addClickHandler(new CreateContentEvent(createPanel.getElement().getInnerText()));
-		//lblAddNewForResource.addClickHandler(new CreateContentEvent(lblAddNewForResource));
-		//lblAddNewForQuestion.addClickHandler(new CreateContentEvent(lblAddNewForQuestion));
-		btnCreateQuestion.addClickHandler(new CreateContentEvent(btnCreateQuestion));
-		btnCreateResource.addClickHandler(new CreateContentEvent(btnCreateResource));*/
+		
 	}
 	/**
 	 * This method is used to set id's
@@ -108,6 +103,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
+		createCollectionBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL1451());
+		createAssessmentBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL3024());
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
