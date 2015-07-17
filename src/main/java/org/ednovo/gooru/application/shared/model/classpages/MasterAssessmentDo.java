@@ -54,7 +54,7 @@ public class MasterAssessmentDo implements Serializable{
 	private int score;
 	private int totalAttemptUserCount;
 	private String type;
-	private long timespent;
+	private long timeSpent;
 	private int totalInCorrectCount;
 	private int totalCorrectCount;
 	private int skip;
@@ -134,11 +134,11 @@ public class MasterAssessmentDo implements Serializable{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public long getTimespent() {
-		return timespent;
+	public long getTimeSpent() {
+		return timeSpent;
 	}
-	public void setTimespent(long timespent) {
-		this.timespent = timespent;
+	public void setTimeSpent(long timeSpent) {
+		this.timeSpent = timeSpent;
 	}
 	public int getTotalInCorrectCount() {
 		return totalInCorrectCount;
