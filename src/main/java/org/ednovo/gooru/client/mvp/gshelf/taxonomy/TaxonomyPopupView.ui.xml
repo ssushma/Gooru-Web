@@ -46,14 +46,16 @@
 						
 						<div class="col-md-2 col-sm-2 border-right">
 							<g:Label styleName="optinHeader" text="Course"></g:Label>
+							<g:ScrollPanel ui:field="scrollDiv" styleName="scrollCourseContainer">
 							<uc:UlPanel styleName="list-unstyled containerHeight" ui:field="courseUlContainer">
-							</uc:UlPanel>
+							</uc:UlPanel></g:ScrollPanel>
 						</div>
 						
 						<div class="col-md-3 col-sm-3 border-right domainColumn">
 							<g:Label styleName="optinHeader" text="Domain"></g:Label>
+							<g:ScrollPanel ui:field="scrollDivDomain" styleName="scrollCourseContainer">
 							<uc:UlPanel styleName="list-unstyled containerHeight" ui:field="domainUlContainer">
-							</uc:UlPanel>
+							</uc:UlPanel></g:ScrollPanel>
 						</div>
 						
 						<div class="col-md-4 col-sm-4 listGroupLast">

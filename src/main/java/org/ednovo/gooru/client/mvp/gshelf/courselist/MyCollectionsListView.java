@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -63,10 +64,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate;
+	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
-	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion;
+	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
 	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion,lblTitle;
 	@UiField HTMLEventPanel createPanel;
 	
@@ -91,6 +92,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
+		collectionLevelPnl.getElement().getStyle().setFloat(Float.RIGHT);
 		/*btnCreate.addClickHandler(new CreateContentEvent(btnCreate));
 		//createPanel.addClickHandler(new CreateContentEvent(createPanel.getElement().getInnerText()));
 		//lblAddNewForResource.addClickHandler(new CreateContentEvent(lblAddNewForResource));
@@ -146,6 +148,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
 		lblTitle.setVisible(false);
+		collectionLevelPnl.setVisible(false);
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
@@ -168,6 +171,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				enableCreateButtons(true);
+				collectionLevelPnl.setVisible(true);
+				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
+				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 				if(folderDo!=null){
@@ -298,6 +304,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiHandler("btnCreateResource")
 	public void clickOnRes(ClickEvent clickEvent){
 		getUiHandlers().addNewContent(btnCreateResource.getText());
+	}
+	@UiHandler("createCollectionBtn")
+	public void clickOnCollection(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createCollectionBtn.getText());
+	}
+	@UiHandler("createAssessmentBtn")
+	public void clickOnAssessment(ClickEvent clickEvent){
+		getUiHandlers().addNewContent(createAssessmentBtn.getText());
 	}
 	/**
 	 * This method is used to set the create text
