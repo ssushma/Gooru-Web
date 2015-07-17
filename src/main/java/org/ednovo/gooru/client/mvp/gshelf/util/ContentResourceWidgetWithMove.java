@@ -621,10 +621,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				collectionItem.setStop(stop);
 				String displayTxt=startMin+":"+statrSec+" - "+stopMin+":"+stopSec;
 				fromLblDisplayText.setText(displayTxt);
-				//lblUpdateTextMessage.setVisible(true);
-				//actionVerPanel.setVisible(false);
+				lblUpdateTextMessage.setVisible(true);
+				actionVerPanel.setVisible(false);
 				updateVideoTime(collectionItem,start,stop);
-				enableOrDisableTimeEdit(true);
+				//enableOrDisableTimeEdit(true);
 		}	
 		
 		}else if(isPdf){
@@ -881,6 +881,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		actionVerPanel.setVisible(false);
 		lblUpdateTextMessage.setVisible(false);
 		enableOrDisableTimeEdit(true);
+		checkYoutubeResourceOrNot(itemDo,true);
 		}
 	
 	

@@ -92,6 +92,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
+	
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
 			@Override
 			public void insertCollectionItemInAddResource(CollectionItemDo collectionItem, RefreshType refreshType) {
@@ -151,6 +152,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 				// TODO Auto-generated method stub
 				collectionItemDo.setStart(result.getStart());
 				collectionItemDo.setStop(result.getStop());
+				getView().setCollectionDetails(collectionItemDo);
 			}
 			
 			@Override
