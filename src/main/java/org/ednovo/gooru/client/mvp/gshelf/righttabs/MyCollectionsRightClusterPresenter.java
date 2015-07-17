@@ -130,6 +130,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		getView().enableAndHideTabs(!StringUtil.isEmpty(folderObj==null?"":folderObj.getGooruOid())); 
+		
+		if(view!=null && FOLDER.equalsIgnoreCase(view)){
+			getView().disableAndEnableBreadCums(false);
+		}else{
+			getView().disableAndEnableBreadCums(true);
+		}
+		
 		if(index==1 || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 				//For displaying template and data
 				//getView().enableAndHideTabs(true);
