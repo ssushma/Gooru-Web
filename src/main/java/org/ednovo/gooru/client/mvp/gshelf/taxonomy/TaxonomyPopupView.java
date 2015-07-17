@@ -128,6 +128,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		courseUlContainer.clear();
 		domainUlContainer.clear();
 		standardsUlContainer.clear();
+		removedLiPanelWithCloseArray.clear();
 	}
 	
 	/**
@@ -273,7 +274,6 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	
 	@Override
 	public void appendTaxonomyCourses(List<CourseSubjectDo> taxonomyCourseList,final Integer subjectId) {
-		
 
 		if(taxonomyCourseList.size()>0){
 			for(CourseSubjectDo courseSubjectDo:taxonomyCourseList){
@@ -308,6 +308,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				liPanel.add(title);
 				domainUlContainer.add(liPanel);
 			}
+			highlightSelectedWidgets();
 		}
 		if(domainUlContainer.getWidgetCount()>0){
 			if(!"Unit".equalsIgnoreCase(viewType)){
@@ -333,6 +334,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			});
 		}
 	}
+	
+	
 	@Override
 	public void appendTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList,Integer courseId) {
 		
@@ -347,6 +350,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				liPanel.add(title);
 				domainUlContainer.add(liPanel);
 			}
+			highlightSelectedWidgets();
 		}
 		if(domainUlContainer.getWidgetCount()>0){
 			if(!"Unit".equalsIgnoreCase(viewType)){
@@ -403,6 +407,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			standardsUlContainer.add(liPanel);
 			displaysubTaxonomyStandards(domainStandardsDo.getNode());
 		}
+		highlightSelectedWidgets();
 		/*if(standardsUlContainer.getWidgetCount()>0){
 			standardsUlContainer.getWidget(0).addStyleName("active");
 			previousSelectedStdLiPanel = (LiPanel) standardsUlContainer.getWidget(0);
@@ -624,6 +629,21 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			}
 		}
 	}*/
+	
+	private void highlightSelectedWidgets() {
+		/*for(int i=0;i<selectedUlContainer.getWidgetCount();i++){
+			setActiveStyle(selectedUlContainer.getWidget(i).g
+		}*/
+		Iterator<Widget> widgets = selectedUlContainer.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				setActiveStyle(((LiPanelWithClose) widget).getId());
+			}
+		}
+
+	}
+
 
 	private void setActiveStyle(long id) {
 		Iterator<Widget> widgets;
