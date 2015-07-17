@@ -539,8 +539,9 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		panelEditMode.setVisible(false);
 		panelViewMode.setVisible(false);
 		lblCollectionCreator.setVisible(false);
+		AppClientFactory.printInfoLogger("collectionDo.isIsCollaborator()::"+collectionDo.isIsCollaborator());
 		// If Collaborator display only view of all collaborators.
-		if (collectionDo.getMeta() !=null && collectionDo.getMeta().isIsCollaborator()){
+		if (collectionDo!=null && collectionDo.isIsCollaborator()){
 			panelViewMode.setVisible(true);
 			lblCollectionCreator.setVisible(true);
 			panelCreator.clear();
@@ -556,7 +557,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			//Call Get collaborators API. This method will callback displayViewCollaboratorsByList.
 			getUiHandlers().getCollaboratosListByCollectionId(collectionDo.getGooruOid(), "view");
 			
-		}else if (collectionDo.getMeta() !=null && !collectionDo.getMeta().isIsCollaborator()){
+		}else if (collectionDo!=null && !collectionDo.isIsCollaborator()){
 		// else if owner then display edit mode and list of all collaborators.
 			panelEditMode.setVisible(true);
 			//Call Get collaborators API. This method will callback displayActiveCollaboratorsByList & displayPendingCollaboratorsByList.
