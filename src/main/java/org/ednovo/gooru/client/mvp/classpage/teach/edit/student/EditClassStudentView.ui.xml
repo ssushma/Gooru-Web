@@ -36,6 +36,7 @@
 	         <g:HTMLPanel styleName="col-md-5 col-sm-6">
 	            <uc:PPanel ui:field="shareLnkPanel"></uc:PPanel>
 	            <g:TextBox ui:field="sharTxtBox" styleName="form-control"></g:TextBox>
+	            <g:TextBox ui:field="fullTxtBox" styleName="form-control"></g:TextBox>
 	         </g:HTMLPanel>
 	         <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	      </g:HTMLPanel>
@@ -66,7 +67,7 @@
 			     <!--  <g:Image ui:field="pendingImage"></g:Image> -->
 			   </g:HTMLPanel>
 			  <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			  <g:VerticalPanel styleName="tableDiv" ui:field="pendingContainer"></g:VerticalPanel>
+			   <g:HTMLPanel styleName="table-responsive"><g:VerticalPanel styleName="tableDiv" ui:field="pendingContainer"></g:VerticalPanel></g:HTMLPanel>
 			  <g:Anchor ui:field="ancPendingListSeeMore" styleName="seeMoreActive"/>
 			  <g:Label ui:field="lblPendingPleaseWait" styleName="systemMessage pleaseWait"/>
 		 </g:HTMLPanel>
@@ -80,7 +81,7 @@
 			      </g:HTMLPanel>
 			   </g:HTMLPanel>
 			  <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			  <g:VerticalPanel styleName="tableDiv" ui:field="tableContainer"></g:VerticalPanel>
+			  <g:HTMLPanel styleName="table-responsive"><g:VerticalPanel styleName="tableDiv" ui:field="tableContainer"></g:VerticalPanel></g:HTMLPanel>
 			  <g:Anchor ui:field="ancActiveListSeeMore" styleName="seeMoreActive"/>
 			  <g:Label ui:field="lblActivePleaseWait" styleName="pleaseWait"/>
 		 </g:HTMLPanel>
