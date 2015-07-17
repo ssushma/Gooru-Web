@@ -262,6 +262,11 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 						};
 					}
 				}
+				@Override
+				public void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop) {
+					// TODO Auto-generated method stub
+					getUiHandlers().updateCollectionItem(collectionItemDo, "", start, stop);
+				}
 			};
 			widgetMove.setPresenter(collectionContentPresenter);
 			widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
