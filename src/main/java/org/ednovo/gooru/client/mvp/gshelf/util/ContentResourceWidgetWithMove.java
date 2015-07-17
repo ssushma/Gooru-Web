@@ -871,7 +871,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					
 		}
     }
-	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId,String moveGooruOid);
 
 	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);
