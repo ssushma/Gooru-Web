@@ -54,7 +54,7 @@ public class StudentClassLessonContainer extends Composite {
 			String circleIconStyle = "";
 			if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
 				
-			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
+			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
 				circleIconStyle = "blue-circle";
 			} else if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
 				circleIconStyle = "green-circle";
@@ -72,7 +72,7 @@ public class StudentClassLessonContainer extends Composite {
 				if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
 					if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
 						styleName = styleName + "cursorPointer";
-					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotYetMet")) {
+					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
 						styleName = styleName + "blueselected cursorPointer";
 					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
 						styleName = styleName + "selected cursorPointer";

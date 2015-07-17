@@ -52,6 +52,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -92,6 +93,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 	
+	private PlanContentDo planContentDo = null;
+	
 	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
 
 	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
@@ -99,13 +102,12 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setData(planContentDo);
+		this.planContentDo = planContentDo;
 		
-		if(!(planContentDo.getCollectionType()!=null&&planContentDo.getCollectionType().equalsIgnoreCase("assessment/url"))) {
-			viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
-			contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
-			contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
-		}
+		setData(planContentDo);
+		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
+		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
+		contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
 	}
 	
 	public void setData(final PlanContentDo planContentDo) {
@@ -131,6 +133,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			}
 		});
 		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment/url"))) {
+			imageContainer.setStyleName("assessmentImageContainer");
 			reportView.clear();
 			reportView.add(new SlmExternalAssessmentForm(planContentDo.getProgress()));
 		} else if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
@@ -217,15 +220,14 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			
 			if(type.equalsIgnoreCase("assessment")) {
 				token = PlaceTokens.ASSESSMENT_PLAY;
-				if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
-					
-				} else if(status!=null&&status.equalsIgnoreCase("active")) {
-					params.put("isStudent", "true");	// This should be changed based on; whether user has joined or not.
-				}
 			} else if(type.equalsIgnoreCase("collection")) {
 				token = PlaceTokens.COLLECTION_PLAY;
 			}
-			
+			if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
+				
+			} else if(status!=null&&status.equalsIgnoreCase("active")) {
+				params.put("isStudent", "true");	// This should be changed based on; whether user has joined or not.
+			}
 			params.put("id", gooruOid);
 			params.put("cid", classUId);
 			params.put("courseId", courseGooruOid);
@@ -235,14 +237,21 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
 			if(!type.equalsIgnoreCase("assessment/url")) {
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			} else {
+				if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
+					System.out.println("externalUrl "+planContentDo.getUrl());
+					Window.open(planContentDo.getUrl(), "_blank", "");
+				}
 			}
-			
 		}
 	}
-
+	
 	private void setResourceData(ArrayList<PlanContentDo> resourceList) {
 		int size = resourceList.size();
 		if(size>0) {
+			if(size>10) {
+				size = 10;
+			}
 			for(int i=0;i<size;i++) {
 				try {
 					final PlanContentDo resourceDo = resourceList.get(i);

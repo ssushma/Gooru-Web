@@ -1685,6 +1685,27 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		return deserializeClasspageList(jsonRep);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3GetAllClass()
+	 */
+	@Override
+	public Boolean v3GetAllClass() throws GwtException, ServerDownException {
+		boolean hasTeachStudy = false;
+		JsonRepresentation jsonRep = null;
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_TEACHANDSTUDY);
+		getLogger().info("V3 TEACH_STUDY API URL:::::"+partialUrl);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if (jsonResponseRep.getStatusCode()==200){
+			try{
+				hasTeachStudy = Boolean.parseBoolean(jsonRep.getText().trim());
+			}catch(Exception e){
+				hasTeachStudy=false;
+			}
+		}
+		return hasTeachStudy;
+	}
+	
 	
 	@Override
 	public ArrayList<ClasspageDo> getClassesAssociatedWithCourse(String o1CourseId) throws GwtException, ServerDownException {
@@ -2121,5 +2142,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 
 		return userPlayedSessions;
 	}
+
+	
 
 }

@@ -252,7 +252,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
-		callCourseInfoTaxonomy();
+		if(!getViewType().equalsIgnoreCase(FOLDER)){
+			callCourseInfoTaxonomy();
+		}
 	}
 	@Override
 	public void showStandardsPopup(String standardVal, String standardsDesc) {
@@ -458,8 +460,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		return centurySkillsPresenter;
 	}
 
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
-		getView().addTaxonomyData(liPanelWithCloseArray);
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 	}
  	/**
    	 * @return viewType

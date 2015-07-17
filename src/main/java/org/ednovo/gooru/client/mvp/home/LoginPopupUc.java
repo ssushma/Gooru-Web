@@ -581,7 +581,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 	    }
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT_VIEW))
 	    {
-	    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	    	//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 	    }
 		/*else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SETTINGS)){
 	    	if(AppClientFactory.getPlaceManager().getRequestParameter("newMailId")!=null){

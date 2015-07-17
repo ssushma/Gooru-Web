@@ -59,9 +59,11 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	
 	final String SUBJECT="subject";
 	
-	final String COURSE="COURSE";
+	final String COURSE="Course";
 	
 	private String UNIT = "UNIT";
+	
+	Map<String, String> params= new HashMap<String, String>();
 	
 	/**
 	 * Class constructor
@@ -93,7 +95,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 	@Override
 	public void callTaxonomyService(int classifierId) {
-		getTaxonomyService().getSubjectsList(classifierId, SUBJECT, 0, 30, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(classifierId, SUBJECT, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				getView().setCourseList(result);
@@ -105,7 +107,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 	@Override
 	public void callCourseBasedOnSubject(int subjectId,final int selectedId) {
-		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 30, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+		getTaxonomyService().getSubjectsList(subjectId, COURSE, 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
@@ -120,13 +122,12 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", result.getGooruOid());
 				params.put("view", COURSE);
-
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, result);
 					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
@@ -134,7 +135,6 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}

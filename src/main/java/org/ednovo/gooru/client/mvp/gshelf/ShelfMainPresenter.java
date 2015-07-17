@@ -326,13 +326,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void setRightPanelData(FolderDo folderObj,String clickedItemType,List<FolderDo> folderListDoChild){
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
+		if(!FOLDER.equalsIgnoreCase(getView().getViewType())){
+			getView().getCollectionLabel().setVisible(false);
+		}else{
+			getView().getCollectionLabel().setVisible(true);
+			getView().getCollectionLabel().setText(folderObj.getTitle());
+		}
 		if(folderObj!=null && folderObj.getGooruOid()!=null){
-			if(!FOLDER.equalsIgnoreCase(folderObj.getType())){
-				getView().getCollectionLabel().setVisible(false);
-			}else{
-				getView().getCollectionLabel().setVisible(true);
-				getView().getCollectionLabel().setText(folderObj.getTitle());
-			}
 			//when displaying the existing data at that time we are opening the content tab.
 			getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
 		}else{
