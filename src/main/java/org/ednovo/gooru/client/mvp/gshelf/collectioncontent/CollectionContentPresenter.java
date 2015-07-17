@@ -145,7 +145,20 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void updateVideoTimeUpdate(final CollectionItemDo collectionItemDo){
 		
-		
+		AppClientFactory.getInjector().getResourceService().updateTimeMetadata(collectionItemDo.getCollectionItemId(),collectionItemDo.getStart(), collectionItemDo.getStop(), new AsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				// TODO Auto-generated method stub
+				collectionItemDo.setStart(result.getStart());
+				collectionItemDo.setStop(result.getStop());
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 	}
 	
@@ -328,7 +341,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
 	public void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
-
+		
 	}
 	@Override
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {

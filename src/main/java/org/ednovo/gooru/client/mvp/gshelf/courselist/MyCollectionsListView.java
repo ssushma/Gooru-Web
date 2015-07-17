@@ -44,11 +44,15 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -105,6 +109,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
 		createCollectionBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL1451());
 		createAssessmentBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL3024());
+		courseListContainer.getElement().setAttribute("style","min-height:"+Window.getClientHeight()+"px");
+		Window.addResizeHandler(new ResizeHandler() {
+			@Override
+			public void onResize(ResizeEvent event) {
+				courseListContainer.getElement().setAttribute("style","min-height:"+Window.getClientHeight()+"px");
+			}
+		});
 	}
 	/**
 	 * This method is used to reset the widget positions with default text
@@ -204,11 +215,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId,String moveParentGooruOid) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
+							String tempGooruOid=moveGooruOId;
+							String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+							String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+							String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+							String view = AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+							if((o1!=null && o2!=null && o3!=null) || "Folder".equalsIgnoreCase(view)){
+								moveGooruOId=moveParentGooruOid;
+							}
 							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex,moveGooruOId);
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
@@ -216,12 +235,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(tempGooruOid,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(tempGooruOid,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
 						}
 					}
