@@ -803,7 +803,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
                     	             }
 
                  	            	 Label progressBarlbl=new Label("");
-                 	            	 if(metaData.getIs_correct()==1){
+                 	            	 if(metaData.getIsCorrect()==1){
                  	            		tickmarklbl.addStyleName(res.css().tickMarkImg());
                  	            		progressBarlbl.addStyleName(res.css().assignment_quesiton_ans_bar());
                  	            	 }else{

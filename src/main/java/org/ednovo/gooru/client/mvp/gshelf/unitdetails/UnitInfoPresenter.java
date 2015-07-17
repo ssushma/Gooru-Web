@@ -237,13 +237,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 
-	public void addTaxonomy(List<LiPanelWithClose> liPanelWithCloseArray) {
-		getView().addTaxonomyData(liPanelWithCloseArray);
+	public void addTaxonomy(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray, removedLiPanelWithCloseArray);
 	}
 
 	@Override
 	public void invokeTaxonomyPopup(String viewType, List<LiPanelWithClose> unitLiPanelWithCloseArray) {
-//		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.setSelectedUlContainer(unitLiPanelWithCloseArray);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 0);
 		addToPopupSlot(taxonomyPopupPresenter);

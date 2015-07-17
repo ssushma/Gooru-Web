@@ -504,5 +504,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void SetDefaultTypeAndVersion() {
 		version=null;
 		type="Course";
+		ShelfMainView.pageNumber=1;
 	}
 }

@@ -82,7 +82,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	ClasspageItemDo classpageItemDo=null;
 
-	String sessionId=null;
+	public String sessionId=null;
 
 
 
@@ -215,36 +215,41 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
-			@Override
-			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 
-				if(result!=null && result.size()!=0){
+		if (sessionId != null){
+			this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				@Override
+				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 
-					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
+					if(result!=null && result.size()!=0){
 
-						int sessionSize=result.get(0).getSession().size();
+						if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
 
-						int day=result.get(0).getSession().get(sessionSize-1).getSequence();
-						printData.setUserName(null);
-						printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
-						getView().setSessionsData(result.get(0).getSession());
+							int sessionSize=result.get(0).getSession().size();
+
+							int day=result.get(0).getSession().get(sessionSize-1).getSequence();
+							printData.setUserName(null);
+							printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
+							printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
+							getView().setSessionsData(result.get(0).getSession());
+						}
+
+						displayScoreCountData(result.get(0));
+						getView().setCollectionMetaDataByUserAndSession(result);
+						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+					}else{
+						getView().errorMsg();
 					}
+				}
 
-					displayScoreCountData(result.get(0));
-					getView().setCollectionMetaDataByUserAndSession(result);
-					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
-				}else{
+				@Override
+				public void onFailure(Throwable caught) {
 					getView().errorMsg();
 				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});
+			});
+		}else{
+			getView().errorMsg();
+		}
 
 	}
 

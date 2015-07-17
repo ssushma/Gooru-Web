@@ -224,12 +224,12 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		switchContainer.setVisible(true);
 		commentssection.setVisible(true);
 		commentssection.getElement().getStyle().setOpacity(1);
-		if (collectionDo.getMeta() !=null)
+		if (collectionDo!=null)
 		{
 			
-			if(collectionDo.getMeta().getPermissions() != null)
+			if(collectionDo.getPermissions() != null)
 			{				
-			if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
+			if (StringUtil.toString(collectionDo.getPermissions()).contains(ClientConstants.EDIT) || collectionDo.isIsCollaborator()){
 				switchContainer.setVisible(true);
 				if(collectionDo.getSettings() != null)
 				{					

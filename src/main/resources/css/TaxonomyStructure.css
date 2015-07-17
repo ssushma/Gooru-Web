@@ -120,14 +120,34 @@ height:auto;
 	padding:6px 10px;
 	display:block;
 	line-height: 16px;
-	padding-left:31px;
+	padding-left:10px;
 }
+
+
 #taxonomyStructureSelectionPopup  .listGroup ul li .standardDivSubSub{
 	color:#515151;
 	padding:6px 10px;
 	display:block;
 	line-height: 16px;
-	padding-left:50px;
+	padding-left:40px;
+}
+
+#taxonomyStructureSelectionPopup  .listGroup ul li .standardDivSub:hover{
+	color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	opacity:1;
+	cursor: pointer;
+
+}
+
+#taxonomyStructureSelectionPopup  .listGroup ul li .standardDivSubSub:hover{
+	color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	opacity:1;
+	cursor: pointer;
+
 }
 
 #taxonomyStructureSelectionPopup  .listGroup ul li a:hover{

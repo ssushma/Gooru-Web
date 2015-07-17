@@ -483,6 +483,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData){
 		this.firstSelectedData=firstSelectedData;
 	}
+	@Override
+	public void enableAddButton() {
+		searchAddResourceToCollectionPresenter.enableAddButton();
+	}
 	
 	
 }

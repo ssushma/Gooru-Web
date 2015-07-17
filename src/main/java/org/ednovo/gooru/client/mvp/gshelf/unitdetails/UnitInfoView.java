@@ -446,6 +446,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
+	
+	
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -458,7 +460,27 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 	}
 
-
+	
+	/**
+	 * Adds the selected domains from the taxonomy popup into unit info view.
+	 */
+	@Override
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray,List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		for(int i=0;i<liPanelWithCloseArray.size();i++){
+			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
+				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+			}
+			if(i<removedLiPanelWithCloseArray.size()){
+				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
+			}
+		}
+	}
+	
+	/**
+	 * Checks the selected widgets in info view got from taxonomy popup.
+	 * @param id
+	 * @return
+	 */
 	private boolean isWidgetExists(long id) {
 		boolean flag = true;
 		Iterator<Widget> widgets = ulSelectedItems.iterator();
@@ -468,15 +490,19 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				flag = false;
 			}
 		}
-		return flag;
+		return flag; 
 	}
-	
 
-	@Override
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
-		for(int i=0;i<liPanelWithCloseArray.size();i++){
-			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
-				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+	/**
+	 * Removes the widget, which has been removed from taxonomy popup from info view 
+	 * @param removeWidgetId
+	 */
+	private void removeFromUlSelectedItemsContainer(long removeWidgetId) {
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == removeWidgetId){
+				widget.removeFromParent();
 			}
 		}
 	}

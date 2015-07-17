@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -44,6 +45,7 @@ import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -77,16 +79,18 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	
 	private static final String RESOURCE = "resource";
 
-	private final String GREEN = "#BCD1B9 !important";
+	private final String GREEN = "#3FC380 !important";
 	
 	private final String RED = "#EAB4B3 !important";
 	
-	private final String ORANGE = "#FFE7C2 !important";
+	private final String ORANGE = "#FEC956 !important";
 	
 	private final String WHITE = "#FFF";
 
 	private static final String VIEWRESPONSE = "View Answer";
 
+	String classId = null, courseId = null, unitId = null, lessonId = null, assessmentId = null, collectionType = null;
+	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
@@ -97,12 +101,18 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	public TeachLessonReportChildView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new TeachLessonReportChildPresenter(this));
-		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
-		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
-		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
-		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
-		String assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
-		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+		classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+		courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+		unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+		lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
+		assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
+		collectionType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+		
+		if(collectionType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+			previewLink.setText("Preview Collection");
+		} else {
+			previewLink.setText("Preview Assessment");
+		}
 		getPresenter().getLessonMasteryData(classId, courseId, unitId, lessonId, assessmentId, collectionType);
 	}
 	
@@ -185,28 +195,8 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		        		  	  String color=WHITE;
 		        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
 			        		  if(collectionProgressData.get(j).getType()!=null && !collectionProgressData.get(j).getType().equalsIgnoreCase(QUESTION)){
-/*			        			  int reaction=collectionProgressData.get(j).getUsageData().get(i).getReaction();
-			        			  Label reactionlbl=new Label();
-					        		 if(reaction == 0){
-					        			 reactionlbl.setText("--");
-					        		 }else{
-					        			  String customClass=res.css().reaction_redneedhelp();
-						        		  if (reaction==1) {
-											  customClass = res.css().reaction_redneedhelp();
-										  } else if (reaction==2) {
-											  customClass = res.css().reaction_reddontunderstand();
-										  } else if (reaction==3) {
-											  customClass =res.css().reaction_mean1();
-										  } else if (reaction==4) {
-											  customClass = res.css().reaction_understand1();
-										  }else if (reaction>4) {
-											  customClass = res.css().reaction_explain1();
-										  }
-						        		  reactionlbl.addStyleName(customClass);
-					        		 }
-				        		  mainDataVpnl.add(reactionlbl);
-				        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
-*/			        		  }else{
+			        			  
+			        		  }else{
 			        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
 			        			//  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
 			        			  
@@ -235,12 +225,11 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			        				  }else{
 			        				  String answerText="";
 					        		  if(answerOption!=null){
-					        			  
-					        			  Map<String, Integer> optionObj =answerOption;
-						        		  Set<String> keys=optionObj.keySet();
-						        		  if(keys.iterator().hasNext())
-						        			  answer= keys.iterator().next().toString();
-						        		  	  answer=answer!=null?answer:"";
+					        			  	for (Map.Entry<String, Integer> entry : answerOption.entrySet()) {
+					        			  		if(entry.getValue()==1) {
+					        			  			answer = entry.getKey();
+					        			  		}
+					        				}
 						        		  if(typeOfQuestion.equalsIgnoreCase("TF")){
 				        					  if(answer.equalsIgnoreCase("A")){
 				        						  answerText="true";
@@ -257,7 +246,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 					        		  }
 			        				  Label answerlbl=new Label(answerText);
 					        		  mainDataVpnl.add(answerlbl);
-					        		  //answerlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
 			        			  }
 			        			  if(answerOption!=null && collectionProgressData.get(j).getMetaData()!=null){
 			        					int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
@@ -271,19 +259,20 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 						        				  color=WHITE;
 						        			  }
 			        					 }else{
-			        						 color=RED;
+			        						 color=ORANGE;
 			        					 }
 			        			  }
 			        		  }
 			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUsageData().get(i).getTimespent()));
 			        		  mainDataVpnl.add(timeStamplbl);
-			        		 // timeStamplbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
-			        		 // mainDataVpnl.addStyleName(res.css().mainDataVpnl());
 			        		  adTable.setWidget(i, position+2,mainDataVpnl);
 			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color: "+color);
 			        		  position++;
 		        	   }
-		        	  adTable.setHTML(i, 0,defaultUserDataForUsers.getUsageData().get(i).getUserName());
+		        	  HTML studentName = new HTML(defaultUserDataForUsers.getUsageData().get(i).getUserName());
+		        	  adTable.setWidget(i, 0,studentName);
+		        	  studentName.addClickHandler(new StudentPlaySummary(defaultUserDataForUsers.getUsageData().get(i).getUserName(), defaultUserDataForUsers.getUsageData().get(i).getUserUId()));
+		        	  studentName.setStyleName("myclasses-mastery-unit-cell-style");
 		        	  VerticalPanel scoreWidget=new VerticalPanel();
 		        	  Label noOfQuestionAttened=new Label(score+"/"+noOfQuestions);
 		        	  int percent=0;
@@ -300,79 +289,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			e.printStackTrace();
 		}
 		sortAndFixed();
-	}
-	
-	public void setData1Table(ArrayList<PlanProgressDo> result, String contentView) {
-		boolean isAssessment = false;
-		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
-			isAssessment = true;
-		}
-		
-		lessonTablePanelWidget.getElement().setId("collection-table-report-data-id");
-		lessonTablePanel.add(lessonTablePanelWidget);
-		lessonTablePanel.getElement().setId("lessonTablePanelID");
-		lessonTablePanel.getElement().setClassName("scrollTBL");
-		lessonTablePanelWidget.addStyleName("table table-bordered tableStyle");
-		Label studentNameLbl = new Label("Student");
-		studentNameLbl.setStyleName("text-center");
-		studentNameLbl.setWidth("100px");
-		int columnCount = 0;
-		lessonTablePanelWidget.setHeaderWidget(0, studentNameLbl);
-		columnCount++;
-		
-		Label scoreLbl = new Label("Score");
-		scoreLbl.setStyleName("text-center");
-		scoreLbl.setWidth("75px");
-		lessonTablePanelWidget.setHeaderWidget(1, scoreLbl);
-		columnCount++;
-		
-		for(int headerColumnCount=2;headerColumnCount<20;headerColumnCount++) {
-			String headerTitle = "";
-			if(isAssessment) {
-				headerTitle = headerColumnCount+": &nbsp;Question";
-			} else {
-				headerTitle = headerColumnCount+": &nbsp;Resource";
-			}
-			HTML resourceName = new HTML(headerTitle);
-			resourceName.setStyleName("text-center");
-			resourceName.setWidth("75px");
-			lessonTablePanelWidget.setHeaderWidget(headerColumnCount, resourceName);
-			columnCount++;
-		}
-		
-		for(int rowWidgetCount=0;rowWidgetCount<20;rowWidgetCount++) {
-			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
-				if(columnWidgetCount==0) {
-					Anchor studentName = new Anchor("Student "+rowWidgetCount);
-					studentName.setStyleName("text-center");
-					//studentName.addClickHandler(new ClickUnitName("studentId"));
-					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
-				} else if(columnWidgetCount==1) {
-					final HTMLPanel scoreWidget = new HTMLPanel("");
-					scoreWidget.add(new Label("8/10"));
-					scoreWidget.add(new Label("80%"));
-					scoreWidget.setStyleName("text-center");
-					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, scoreWidget);
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
-				} else {
-					if(isAssessment) {
-						if(columnWidgetCount%2==1) {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("B"));
-						} else {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("View Answer"));
-						}
-					} else {
-						if(columnWidgetCount%2==1) {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionResourceData("03:14"));
-						} else {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionQuestionData("A","04:15"));
-						}
-					}
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().setClassName("lightgreen");
-				}
-			}
-		}
 	}
 	
 	private String getTimeSpent(Long commentCreatedTime) {
@@ -467,4 +383,93 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
+	
+	public class StudentPlaySummary implements ClickHandler {
+		String userId = null, userName = null;
+		
+		public StudentPlaySummary(String userName, String userId) {
+			this.userId = userId;
+			this.userName = userName;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,userId);
+		}
+	}
+	
+	
+	public void setData1Table(ArrayList<PlanProgressDo> result, String contentView) {
+		boolean isAssessment = false;
+		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
+			isAssessment = true;
+		}
+		
+		lessonTablePanelWidget.getElement().setId("collection-table-report-data-id");
+		lessonTablePanel.add(lessonTablePanelWidget);
+		lessonTablePanel.getElement().setId("lessonTablePanelID");
+		lessonTablePanel.getElement().setClassName("scrollTBL");
+		lessonTablePanelWidget.addStyleName("table table-bordered tableStyle");
+		Label studentNameLbl = new Label("Student");
+		studentNameLbl.setStyleName("text-center");
+		studentNameLbl.setWidth("100px");
+		int columnCount = 0;
+		lessonTablePanelWidget.setHeaderWidget(0, studentNameLbl);
+		columnCount++;
+		
+		Label scoreLbl = new Label("Score");
+		scoreLbl.setStyleName("text-center");
+		scoreLbl.setWidth("75px");
+		lessonTablePanelWidget.setHeaderWidget(1, scoreLbl);
+		columnCount++;
+		
+		for(int headerColumnCount=2;headerColumnCount<20;headerColumnCount++) {
+			String headerTitle = "";
+			if(isAssessment) {
+				headerTitle = headerColumnCount+": &nbsp;Question";
+			} else {
+				headerTitle = headerColumnCount+": &nbsp;Resource";
+			}
+			HTML resourceName = new HTML(headerTitle);
+			resourceName.setStyleName("text-center");
+			resourceName.setWidth("75px");
+			lessonTablePanelWidget.setHeaderWidget(headerColumnCount, resourceName);
+			columnCount++;
+		}
+		
+		for(int rowWidgetCount=0;rowWidgetCount<20;rowWidgetCount++) {
+			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
+				if(columnWidgetCount==0) {
+					Anchor studentName = new Anchor("Student "+rowWidgetCount);
+					studentName.setStyleName("text-center");
+					//studentName.addClickHandler(new StudentPlaySummary("studentId"));
+					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
+					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
+				} else if(columnWidgetCount==1) {
+					final HTMLPanel scoreWidget = new HTMLPanel("");
+					scoreWidget.add(new Label("8/10"));
+					scoreWidget.add(new Label("80%"));
+					scoreWidget.setStyleName("text-center");
+					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, scoreWidget);
+					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
+				} else {
+					if(isAssessment) {
+						if(columnWidgetCount%2==1) {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("B"));
+						} else {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("View Answer"));
+						}
+					} else {
+						if(columnWidgetCount%2==1) {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionResourceData("03:14"));
+						} else {
+							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionQuestionData("A","04:15"));
+						}
+					}
+					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().setClassName("lightgreen");
+				}
+			}
+		}
+	}
+
 }
