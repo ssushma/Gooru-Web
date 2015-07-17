@@ -114,7 +114,7 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	
 	public void getCourseData(){
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
-		if(courseId != null){
+		if(courseId != null && !courseId.isEmpty()){
 			AppClientFactory.getInjector().getResourceService().getCourseDataById(courseId, new AsyncCallback<FolderDo>() {
 				
 				@Override
