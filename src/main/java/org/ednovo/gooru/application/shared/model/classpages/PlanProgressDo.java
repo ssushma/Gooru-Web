@@ -47,7 +47,7 @@ public class PlanProgressDo implements Serializable {
 	private int views;
 	private int scoreInPercentage;
 	private Integer sequence;
-	private long timespent;
+	private long timeSpent;
 	private int collectionCount;
 	private int assessmentCount;
 	private int collectionsViewed;
@@ -58,6 +58,7 @@ public class PlanProgressDo implements Serializable {
 	private long totalStudyTime;
 	private String userName;
 	private String userUId;
+	private String url;
 	private ArrayList<PlanProgressDo> item;
 	private ArrayList<PlanProgressDo> usageData;
 	
@@ -97,11 +98,11 @@ public class PlanProgressDo implements Serializable {
 	public void setScoreInPercentage(int scoreInPercentage) {
 		this.scoreInPercentage = scoreInPercentage;
 	}
-	public long getTimespent() {
-		return timespent;
+	public long getTimeSpent() {
+		return timeSpent;
 	}
-	public void setTimespent(long timespent) {
-		this.timespent = timespent;
+	public void setTimeSpent(long timeSpent) {
+		this.timeSpent = timeSpent;
 	}
 	public int getCollectionCount() {
 		return collectionCount;
@@ -180,5 +181,11 @@ public class PlanProgressDo implements Serializable {
 	}
 	public void setSequence(Integer sequence) {
 		this.sequence = sequence;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

@@ -21,6 +21,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -50,7 +51,7 @@ public class StudentClassContentWidget extends Composite {
 		if(!contentStyle.isEmpty()) {
 			contentPanel.addStyleName(contentStyle);
 		}
-		contentPanel.addClickHandler(new PlayClassContent(lessonId, planDo.getGooruOId(), planDo.getType(), status, userId));
+		contentPanel.addClickHandler(new PlayClassContent(lessonId, planDo.getGooruOId(), planDo.getType(), status, userId, planDo.getUrl()));
 		
 		String url = "";
 		imagePanel.setUrl(url);
@@ -98,8 +99,9 @@ public class StudentClassContentWidget extends Composite {
 		private String status = null;
 		private String userId = null;
 		private String lessonId = null;
+		private String url = null;
 		
-		public PlayClassContent(String lessonId, String gooruOid, String type, String status, String userId) {
+		public PlayClassContent(String lessonId, String gooruOid, String type, String status, String userId, String url) {
 			if(type!=null) {
 				this.type = type;
 			}
@@ -107,6 +109,7 @@ public class StudentClassContentWidget extends Composite {
 			this.status = status;
 			this.userId = userId;
 			this.lessonId = lessonId;
+			this.url = url;
 		}
 		
 		@Override
@@ -118,15 +121,14 @@ public class StudentClassContentWidget extends Composite {
 			String token = PlaceTokens.ASSESSMENT_PLAY;
 			if(type.equalsIgnoreCase("assessment")) {
 				token = PlaceTokens.ASSESSMENT_PLAY;
-				if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
-					
-				} else if(status!=null&&status.equalsIgnoreCase("active")) {
-					params.put("isStudent", "true");
-				}
 			} else if(type.equalsIgnoreCase("collection")) {
 				token = PlaceTokens.COLLECTION_PLAY;
 			}
-			
+			if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
+				
+			} else if(status!=null&&status.equalsIgnoreCase("active")) {
+				params.put("isStudent", "true");
+			}
 			params.put("id", gooruOid);
 			params.put("cid", classUId);
 			params.put("courseId", courseGooruOid);
@@ -136,6 +138,10 @@ public class StudentClassContentWidget extends Composite {
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
 			if(!type.equalsIgnoreCase("assessment/url")) {
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			} else {
+				if(url!=null&&!url.isEmpty()) {
+					Window.open(url, "_blank", "");
+				}
 			}
 		}
 	}
