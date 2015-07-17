@@ -236,7 +236,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
 		//	standardsUI.clear();
 			final String selValues = getSelectedStandards().toString();
-			System.out.println("getselevalues at sub level::"+selValues);
+			
 			for(int i=0;i<standardsList.size();i++)
 			{
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
@@ -267,7 +267,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 							@Override
 							public void onClick(ClickEvent event) {
 								//This will remove the selected value when we are trying by close button
-								System.out.println("selectedValues::+"+selValues.contains(domainStand.getCodeId().toString()));
 								if(selValues.contains(domainStand.getCodeId().toString())){
 									selectedValues.remove(domainStand.getCodeId());
 								}

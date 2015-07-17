@@ -386,8 +386,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				htmlPanel.add(lblStandardDesc);	
 				htmlPanel.setStyleName("standardDiv");
 			}
-			
-			if(domainStandardsDo.getTypeId()!=null){
+			if(domainStandardsDo.getTypeId()!=null && !(domainStandardsDo.getCode().contains("ELA"))){
 				if(domainStandardsDo.getTypeId().equals(1)){
 				}
 				else if(domainStandardsDo.getTypeId().equals(2)){
