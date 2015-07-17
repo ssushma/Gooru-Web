@@ -194,8 +194,8 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void invokeTaxonomyPopup(String viewType, UlPanel ulSelectedItems) {
-//		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
+	public void invokeTaxonomyPopup(String viewType,  List<LiPanelWithClose> lessonLiPanelWithCloseArray) {
+		taxonomyPopupPresenter.setSelectedUlContainer(lessonLiPanelWithCloseArray);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
@@ -213,12 +213,10 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			}
 		}); 
 	}
-	/*public void addTaxonomyData(UlPanel selectedUlContainer) { 
-		getView().addTaxonomyData(selectedUlContainer);
-	}*/
 
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
-		getView().addTaxonomyData(liPanelWithCloseArray);
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 		
 	}
+
 }

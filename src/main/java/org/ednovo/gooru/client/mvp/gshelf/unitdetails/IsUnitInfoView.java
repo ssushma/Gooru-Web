@@ -60,5 +60,5 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
 	
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray); 
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray); 
 }

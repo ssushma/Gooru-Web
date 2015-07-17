@@ -118,7 +118,6 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 										@Override
 										public void onSuccess(List<DomainStandardsDo> result) {
 											getView().addTaxonomyStandards(result); 
-//											getView().displaySelectedTaxonomyData(ulSelectedItems);	
 											getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 										}
 									});
@@ -338,15 +337,13 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 
 	@Override
-	public void addTaxonomyData(/*UlPanel selectedUlContainer*/List<LiPanelWithClose> liPanelWithCloseArray) {
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray,  List<LiPanelWithClose> removedLiPanelWithCloseArray) {
 		if("Unit".equalsIgnoreCase(viewType)){
-			unitInfoPresenter.addTaxonomy(liPanelWithCloseArray);
+			unitInfoPresenter.addTaxonomy(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 		}else if("Lesson".equalsIgnoreCase(viewType)){
-//			lessonInfoPresenter.addTaxonomyData(selectedUlContainer);
-			lessonInfoPresenter.addTaxonomyData(liPanelWithCloseArray);
+			lessonInfoPresenter.addTaxonomyData(liPanelWithCloseArray, removedLiPanelWithCloseArray);
 		}else{
-//			collectionInfoPresenter.addTaxonomyData(selectedUlContainer);
-			collectionInfoPresenter.addTaxonomyData(liPanelWithCloseArray);
+			collectionInfoPresenter.addTaxonomyData(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 		}
 	}
 

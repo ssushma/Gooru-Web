@@ -105,6 +105,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	
+	List<LiPanelWithClose> lessonLiPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
+	
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -495,25 +497,61 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup("Lesson",ulSelectedItems);
+			lessonLiPanelWithCloseArray.clear();
+			for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+				lessonLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+			}
+			getUiHandlers().invokeTaxonomyPopup("Lesson",lessonLiPanelWithCloseArray);
 		}
 	}
 	
-	/*@Override
-	public void addTaxonomyData(UlPanel selectedUlContainer) {
-		Iterator<Widget> widgets = selectedUlContainer.iterator();
-		while(widgets.hasNext()){
-			Widget widget = widgets.next();
-			if(widget instanceof LiPanelWithClose){
-				ulSelectedItems.add(widget);
+
+	/**
+	 * Adds the selected domains from the taxonomy popup into lesson info view.
+	 */
+	@Override
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray,List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		for(int i=0;i<liPanelWithCloseArray.size();i++){
+			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
+				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+			}
+			
+			if(i<removedLiPanelWithCloseArray.size()){ 
+				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
 			}
 		}
-	}*/
+	}
 	
-	@Override
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
-		for(int i=0;i<liPanelWithCloseArray.size();i++){
-			ulSelectedItems.add(liPanelWithCloseArray.get(i));
+	/**
+	 * Checks the selected widgets in info view got from taxonomy popup.
+	 * @param id
+	 * @return
+	 */
+	private boolean isWidgetExists(long id) {
+		boolean flag = true;
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == id){
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	/**
+	 * Removes the widget, which has been removed from taxonomy popup from info view 
+	 * @param removeWidgetId
+	 */
+	private void removeFromUlSelectedItemsContainer(long removeWidgetId) {
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == removeWidgetId){
+				widget.removeFromParent();
+			}
 		}
 	}
+	
+	
 }

@@ -22,7 +22,7 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void populateK12TaxonomyData(int classification, String taxonomyType, int offset, int limit);
 
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray); 
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);  
 
 //	void addTaxonomyData(UlPanel selectedUlContainer);       
 
