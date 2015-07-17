@@ -41,7 +41,6 @@ import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
-import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoView.OnClickTaxonomy;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
