@@ -103,7 +103,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField InlineLabel classCodeTxtPanel,courseHeaderLbl,courseTitleLbl;
 	
-	@UiField TextBox sharTxtBox/*,inviteTxtBox*/;
+	@UiField TextBox sharTxtBox,fullTxtBox/*,inviteTxtBox*/;
 	
 	@UiField Button inviteBtn;
 	
@@ -146,6 +146,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	List<CollaboratorsDo> liCollaboratorsDos;
 	
 	private static final String SHORTEN_URL = "shortenUrl";
+	
+	private static final String RAWURL="rawUrl";
+	
+	private static final String DECODERAWURL="decodeRawUrl";
 	
 	ClasspageDo classpageDo;
 	
@@ -282,8 +286,12 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		//panelActions.getElement().setId("pnlActions");
 		//panelCode.getElement().setId("pnlCode");
 		
-		sharTxtBox.setEnabled(false);
+		sharTxtBox.setReadOnly(true);
 		sharTxtBox.getElement().getStyle().setBackgroundColor("#FFF");
+		
+		fullTxtBox.setReadOnly(true);
+		fullTxtBox.getElement().setAttribute("style", "margin:10px 0px;background-color: #FFF");
+		
 		
 		createAutoSuggestBox();
 		
@@ -516,16 +524,21 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	 */
 	@Override
 	public void setClassView(ClasspageDo classpageDo) {
+		AppClientFactory.printInfoLogger("Edit Class Set Class View");
 		this.classpageDo=classpageDo;
 		classCodeTxtPanel.setText(classpageDo.getClassCode());
-		getUiHandlers().generateShareLink(classpageDo.getClassUid());
-		
 		activeListPageNum=0;
 		activeListTotalCount=0;
 		pendingListPageNum=0;
 		pendingListTotalCount=0;
 		pendingOffsetValue=0;
-		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  pageSize*activeListPageNum, pageSize, "active",true,true);	//this will callback displayActiveMembersList method ....
+		
+		String subPageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
+		AppClientFactory.printInfoLogger("subPageView:"+subPageView);
+		
+		
+		//getUiHandlers().generateShareLink(classpageDo.getClassUid());
+		//getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),pageSize*activeListPageNum, pageSize, "active",true,true,false);	//this will callback displayActiveMembersList method ....
 
 		
 		
@@ -539,6 +552,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
 			sharTxtBox.setText(shortenUrl.get(SHORTEN_URL));
 		}
+		if(shortenUrl != null && shortenUrl.containsKey(DECODERAWURL)){
+			fullTxtBox.setText(shortenUrl.get(DECODERAWURL));
+		}
+		
 	}
 	
 	@UiHandler("inviteBtn")
@@ -633,9 +650,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@Override
 	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount,boolean increasePageNum,boolean insertTop) {
+		System.out.println("displayPendingMembersList:");
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
-		if(!insertTop){
+		if(!insertTop || isNew){
 			this.pendingListTotalCount=totalCount;
 		}
 		if(increasePageNum){
@@ -653,7 +671,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else{
 			lblPendingPleaseWait.setVisible(false);
 			pendindUserContainer.setVisible(true);
-			pendingContainer.clear();
+			System.out.println("InNew:"+isNew);
+			if(!isNew){
+				pendingContainer.clear();
+			}
 			for (int k=0; k<lstPendingMembers.size();k++){
 				if(insertTop){
 					pendingOffsetValue++;
@@ -670,6 +691,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			}
 		}
 	}
+	
 	
 	@Override
 	 public void insertPendingUserAfterDeletion(final CollaboratorsDo lstPendingMembers, boolean isNew, int totalCount, int intPos,boolean insertAtTop){
@@ -733,14 +755,14 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public void onClickPendingListSeeMore(ClickEvent event){
 		lblPendingPleaseWait.setVisible(true);
 		ancPendingListSeeMore.setVisible(false);
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffsetValue, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
+		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffsetValue, pageSize, "pending",true,true);	//this will callback displayPendingMembersList method ....
 	}
 	@UiHandler("ancActiveListSeeMore")
 	public void onClickActiveListSeeMore(ClickEvent event){
 		lblActivePleaseWait.setVisible(true);
 		ancActiveListSeeMore.setVisible(false);
 		int offset=(pageSize*activeListPageNum);
-		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  offset, pageSize, "active",true,false);	//this will callback displayActiveMembersList method ....
+		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  offset, pageSize, "active",true,false,true);	//this will callback displayActiveMembersList method ....
 	}
 	
 	@Override
@@ -759,7 +781,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			tableContainer.clear();
 			tableContainer.add(noActiveStudents);
 		}else{
-			tableContainer.clear();
+			if(!isNew){
+				tableContainer.clear();
+			}
 			for (int k=0; k<lstActiveMembers.size();k++){
 				insertActiveUserAfterDeletion(lstActiveMembers.get(k),isNew,totalCount,k);
 				if((pageSize*activeListPageNum)<activeListTotalCount){
@@ -844,7 +868,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	}
 	
 	public void getPendingMembersList(){
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(), 0, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
+		getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(), 0, pageSize, "pending",true,false);	//this will callback displayPendingMembersList method ....
 	}
 
 	/* (non-Javadoc)
@@ -855,9 +879,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		AppClientFactory.printInfoLogger("remove pending user widget");
 		membersViewVc.removeFromParent();
 		if(isPendingList){
-			getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(), pendingOffsetValue-1, 1, "pending",false);
+			//getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(),0,pendingOffsetValue, "pending",false);
 		}else{
-			getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
+			//getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
 		}
 	}
 

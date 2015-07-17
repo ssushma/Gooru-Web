@@ -75,7 +75,9 @@
 	   <div class="classBlocks">
 	        <txt:LoadingUc ui:field="studyLoading"/>
 	       <g:HTMLPanel ui:field="joinedClassesContainer"></g:HTMLPanel>
-	       <g:Button styleName="secondary" ui:field="seeMorebtnJoined"></g:Button>
+	       <div class="col-md-12">
+	        	<g:Button styleName="secondary" ui:field="seeMorebtnJoined"></g:Button>
+	       </div>
 	      <div class="clearfix"></div>
 	   </div>
 	   <div class="myClassesHeader">
@@ -90,7 +92,9 @@
 	   <div class="classBlocks">
 	       <txt:LoadingUc ui:field="teachLoading"/>
 	       <g:HTMLPanel ui:field="ownerClassesContainer"></g:HTMLPanel>
-	       <g:Button styleName="secondary" ui:field="seeMorebtnOwner"></g:Button>
+	       <div class="col-md-12">
+	           <g:Button styleName="secondary" ui:field="seeMorebtnOwner"></g:Button>
+	       </div>
 	      <div class="clearfix"></div>
 	   </div>
 	   <sg:FooterUc />

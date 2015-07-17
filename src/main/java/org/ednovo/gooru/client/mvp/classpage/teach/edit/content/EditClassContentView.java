@@ -247,6 +247,9 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
                     && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
                 ((TextBox) event.getSource()).cancelKey();
             }
+			if(event.getNativeEvent().getKeyCode() == 46){
+				((TextBox) event.getSource()).cancelKey();
+			}
 			saveEnabled(true);
 			saveBtn.removeStyleName(CssTokens.DISABLED);
 			errorLabel.setVisible(false);
