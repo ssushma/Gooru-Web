@@ -84,6 +84,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
+	private static final String O3_LEVEL = "o3";
 	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
@@ -123,14 +124,19 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		clearSlot(INNER_SLOT);
 		if(folderObj==null){
 			selectedWidgetsTitleType = null;
-			
 		}
-
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		getView().setBreadCrumbSlot(folderObj,type,selectedWidgetsTitleType);
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		getView().enableAndHideTabs(!StringUtil.isEmpty(folderObj==null?"":folderObj.getGooruOid())); 
+		
+		if(view!=null && FOLDER.equalsIgnoreCase(view)){
+			getView().disableAndEnableBreadCums(false);
+		}else{
+			getView().disableAndEnableBreadCums(true);
+		}
+		
 		if(index==1 || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 				//For displaying template and data
 				//getView().enableAndHideTabs(true);
@@ -167,7 +173,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
-			
 			if(view!=null && FOLDER.equalsIgnoreCase(view)){
 				getView().disableAndEnableBreadCums(false);
 			}else{
@@ -252,6 +257,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setUnitTemplate(UNIT);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
 			}else if(type.contains(LESSON)){
+				System.out.println("in lesson right cluster");
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON);
 			}else if(type.toLowerCase().contains(FOLDER.toLowerCase())){

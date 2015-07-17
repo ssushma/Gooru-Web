@@ -278,7 +278,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	}
 	
 	public void setData(String type,int nextLevel) {
-		String viewType=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(type.equalsIgnoreCase(COURSE)){
 			titleFocPanel.addStyleName("course");
 		}else if(type.equalsIgnoreCase(UNIT)) {
@@ -288,8 +287,8 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else if(!type.equalsIgnoreCase(FOLDER)) {
 			titleFocPanel.addStyleName(COLLECTION);
 		}
-		if(type.equalsIgnoreCase(COLLECTION) || type.contains(ASSESSMENT)){
-			String style=nextLevel==2?"parent":"child";
+		if(nextLevel!=1 && (type.equalsIgnoreCase(COLLECTION) || type.contains(ASSESSMENT))){
+			String style = nextLevel==2?"parent":"child";
 			titleFocPanel.addStyleName(style);
 		}
 		if(nextLevel == 1) {

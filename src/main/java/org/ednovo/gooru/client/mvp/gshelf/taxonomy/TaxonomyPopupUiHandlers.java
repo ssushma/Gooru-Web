@@ -24,6 +24,10 @@ public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);  
 
+	void getCoursespaginatedData(Integer subjectId, int offSetVal);
+
+	void getDomainspaginatedData(Integer subjectId, int offSetVal); 
+
 //	void addTaxonomyData(UlPanel selectedUlContainer);       
 
 }

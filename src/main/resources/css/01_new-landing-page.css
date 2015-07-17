@@ -813,6 +813,10 @@ footer ul li a {
 	min-width: 350px !important;
 }
 
+#btnSubjects .ellipsis{
+	width: 100px;
+}
+
 .ellipsis{
 	width: 90px;
 	white-space: nowrap;

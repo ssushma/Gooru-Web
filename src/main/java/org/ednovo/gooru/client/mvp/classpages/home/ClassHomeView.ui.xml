@@ -48,9 +48,9 @@
    <div class="container">
       <div class="row">
           <g:HTMLPanel styleName="myClassesLanding">
-	   <div class="col-md-12 col-sm-12">
+	   <g:HTMLPanel styleName="col-md-12 col-sm-12" ui:field="mainPanel">
 	      <div class="myClassesTabs"><g:Anchor ui:field="myClassesAnr">My Classes</g:Anchor><g:Anchor ui:field="archivedAnr">Archived</g:Anchor> </div>
-	   </div>
+	   </g:HTMLPanel>
 	   <div class="clearfix"></div>
 	   <div class="col-md-12 col-sm-12">
 	      <g:HTMLPanel styleName="myClassesAlert" ui:field="notesPanel">

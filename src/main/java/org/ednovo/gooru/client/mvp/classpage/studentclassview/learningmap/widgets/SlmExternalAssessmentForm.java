@@ -2,24 +2,26 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widge
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
@@ -66,12 +68,6 @@ public class SlmExternalAssessmentForm extends Composite {
 		setButtonVisibility(true);
 		scoreLbl.setText("Score");
 		evidenceLbl.setText("Evidence");
-		scoreTextBox.addBlurHandler(new BlurHandler() {
-			@Override
-			public void onBlur(BlurEvent event) {
-				validateScoreEvidence();
-			}
-		});
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
 		submit.addClickHandler(new SaveData());
 	}
@@ -124,34 +120,89 @@ public class SlmExternalAssessmentForm extends Composite {
 		}
 		if(isScore==true&&isEvidence==true) {
 			logDataEvent();
+		} else {
+			setButtonVisibility(true);
 		}
-		setButtonVisibility(true);
 	}
 	
 	private void logDataEvent() {
-		try
-		{
-			JSONObject collectionDataLog=new JSONObject();
-			collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
-			collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_PLAY));
-			collectionDataLog.put(PlayerDataLogEvents.CONTENTGOORUID, new JSONString(planProgressDo.getGooruOId()));
-			collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(GwtUUIDGenerator.uuid()));
-			collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(0L));
-			collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(0L));
-			collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
-			collectionDataLog.put(PlayerDataLogEvents.EVIDENCE, new JSONString(evidence.getText()));
-			collectionDataLog.put(PlayerDataLogEvents.TYPE, new JSONString(PlayerDataLogEvents.STOP_EVENT_TYPE));
-			collectionDataLog.put(PlayerDataLogEvents.COLLECTIONTYPE, new JSONString("assessment/url"));
-			collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
-			collectionDataLog.put(PlayerDataLogEvents.VIEWSCOUNT,new JSONNumber(1));
-			collectionDataLog.put(PlayerDataLogEvents.SCORE_IN_PERCENTAGE,new JSONNumber(Integer.parseInt(scoreTextBox.getText())));
-			System.out.println(collectionDataLog.toString());
-			PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
-		}
-		catch(Exception ex)
-		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
-		}
+			try
+			{
+				JSONObject collectionDataLog=new JSONObject();
+				collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+				collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_PLAY));
+				collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(GwtUUIDGenerator.uuid()));
+				collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
+				collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
+				collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+				
+				String gooruOid= planProgressDo.getGooruOId();
+				
+				String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID,null);
+				String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+				String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+				String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
+
+				JSONObject contextMap=new JSONObject();
+				try{
+					contextMap.put(PlayerDataLogEvents.CONTENTGOORUID, new JSONString(gooruOid));
+					contextMap.put(PlayerDataLogEvents.PARENTGOORUID, new JSONString(""));
+					contextMap.put(PlayerDataLogEvents.CLASSGOORUID, new JSONString(classpageId));
+					contextMap.put(PlayerDataLogEvents.PARENTEVENTID, new JSONString(""));
+					contextMap.put(PlayerDataLogEvents.TYPE, new JSONString(PlayerDataLogEvents.STOP_EVENT_TYPE));
+					contextMap.put(PlayerDataLogEvents.RESOURCETYPE, new JSONString(""));
+					contextMap.put(PlayerDataLogEvents.CLIENTSOURCE, new JSONString("web"));
+					contextMap.put(PlayerDataLogEvents.PATH, new JSONString("student-view&u-id="+unitId+"&id="+classpageId+"&c-id="+courseId+"&l-id="+lessonId+"&page-view=lesson-view"));
+					contextMap.put(PlayerDataLogEvents.PAGELOCATION, new JSONString("student-view"));
+					contextMap.put(PlayerDataLogEvents.COURSEID, new JSONString(courseId));
+					contextMap.put(PlayerDataLogEvents.UNITID, new JSONString(unitId));
+					contextMap.put(PlayerDataLogEvents.LESSONID, new JSONString(lessonId));
+					contextMap.put(PlayerDataLogEvents.COLLECTIONTYPE, new JSONString("assessment/url"));
+					contextMap.put(PlayerDataLogEvents.TOTALQUESTIONSCOUNT, new JSONNumber(0));
+					contextMap.put(PlayerDataLogEvents.MODE, new JSONString(PlayerDataLogEvents.STUDY));
+					contextMap.put(PlayerDataLogEvents.EVIDENCE, new JSONString(evidence.getText()));
+					contextMap.put(PlayerDataLogEvents.ISSTUDENT, JSONBoolean.getInstance(true));
+				}catch(Exception e){
+					 e.printStackTrace();
+				}
+				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, new JSONString(contextMap.toString()));
+				
+				JSONObject versionMap=new JSONObject();
+				try{
+					versionMap.put(PlayerDataLogEvents.LOGAPI, new JSONString("0.1"));
+				}catch(Exception e){
+					 AppClientFactory.printSevereLogger(e.getMessage());
+				}
+				collectionDataLog.put(PlayerDataLogEvents.VERSION, new JSONString(versionMap.toString()));
+				
+				JSONObject metricsMap=new JSONObject();
+				try{
+					metricsMap.put(PlayerDataLogEvents.TOTALTIMESPENTINMS, new JSONNumber(0));
+					metricsMap.put(PlayerDataLogEvents.SCORE,new JSONNumber(0));
+					metricsMap.put(PlayerDataLogEvents.VIEWSCOUNT, new JSONNumber(1));
+					String scoreStr = scoreTextBox.getText();
+					scoreStr = scoreStr.replace(".","");
+					metricsMap.put(PlayerDataLogEvents.SCORE_IN_PERCENTAGE,new JSONNumber(Integer.parseInt(scoreStr)));
+				}catch(Exception e){
+					 AppClientFactory.printSevereLogger(e.getMessage());
+				}
+				
+				collectionDataLog.put(PlayerDataLogEvents.METRICS, new JSONString(metricsMap.toString()));
+				JSONObject playLoad=new JSONObject();
+				collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(playLoad.toString()));
+				PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				 Timer t = new Timer() {
+				      @Override
+				      public void run() {
+				    	  setButtonVisibility(true);
+				    	  submitTxt.setText("Saved. Resubmit.");
+				      }
+				 };
+				 t.schedule(2000);
+			}
 	}
 	
 	public void setButtonVisibility(boolean isVisible) {
