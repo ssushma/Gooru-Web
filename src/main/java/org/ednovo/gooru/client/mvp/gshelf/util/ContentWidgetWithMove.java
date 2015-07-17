@@ -116,7 +116,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 		}else{
 			txtMoveTextBox.getElement().setAttribute("moveId",folderObj.getCollectionItemId()+"");
 		}
-		txtMoveTextBox.getElement().setAttribute("moveGooruOId",folderObj.getGooruOid()+"");
+		txtMoveTextBox.getElement().setAttribute("moveGooruOId",folderObj.getParentGooruOid()+"");
 		txtMoveTextBox.addKeyPressHandler(new HasNumbersOnly()); 
 		txtMoveTextBox.addKeyUpHandler(new ReorderText()); 
 		//This blur handler reset the previous value when the text box value is empty.
