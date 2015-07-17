@@ -74,4 +74,7 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	public void callCourseInfoTaxonomy();
 
 	public void invokeTaxonomyPopup(String unit,List<LiPanelWithClose> unitLiPanelWithCloseArray);
+
+	void getPaginatedDomainsBasedOnCourseId(int courseId, int selectedId,
+			int offSetVal);
 }
