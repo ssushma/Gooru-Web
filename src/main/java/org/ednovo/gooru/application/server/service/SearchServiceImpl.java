@@ -115,6 +115,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String CLASSPAGE = "classpage";
 
 	private static final String SHORTEN_URL = "shortenUrl";
+	
+	private static final String FULL_URL = "fullUrl";
 
 	private static final String FLT_CODE_ID = "flt.codeId";
 
@@ -436,6 +438,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			shortenUrl.put(SHORTEN_URL, shortenUrl.get(SHORTEN_URL).replaceAll(HTTP, HTTPS));
+			shortenUrl.put(RAWURL, shortenUrl.get(RAWURL).replaceAll(HTTP, HTTPS));
+			shortenUrl.put(DECODERAWURL, shortenUrl.get(DECODERAWURL).replaceAll(HTTP, HTTPS));
 		}
 		return shortenUrl;
 	}
