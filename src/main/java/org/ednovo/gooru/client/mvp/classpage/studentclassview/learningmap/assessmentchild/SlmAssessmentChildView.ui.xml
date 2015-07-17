@@ -7,7 +7,7 @@
 	        <g:HTMLPanel styleName="col-md-5 col-sm-5">
 	           <g:HTMLPanel styleName="studyBlock">
 	              <g:HTMLPanel ui:field="imageContainer">
-	                 <g:Image ui:field="contentImage"></g:Image>
+	                 <g:Image ui:field="contentImage" styleName="cursorPointer"></g:Image>
 	              </g:HTMLPanel>
 	              <g:HTMLPanel styleName="descriptionContainer">
 	                 <uc:H3Panel ui:field="contentName" styleName="cursorPointer"/>
