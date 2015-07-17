@@ -872,46 +872,55 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	}
 
 	public static native void sortAndFixed() /*-{
-	 var table =$wnd.$('#report-student-assessment-report').DataTable({
-       scrollY:        "300px",
-       scrollX:        true,
-       scrollCollapse: true,
-       paging:         false,
-       bFilter:false,
-       bInfo: false
-   });
-}-*/;
-public static native void destoryTables() /*-{
-	var table = $wnd.$('#report-student-assessment-report').DataTable();
-  	table.destroy();
-}-*/;
+		 var table =$wnd.$('#report-student-assessment-report').DataTable({
+	       scrollY:        "300px",
+	       scrollX:        true,
+	       scrollCollapse: true,
+	       paging:         false,
+	       bFilter:false,
+	       bInfo: false
+	   });
+	}-*/;
+	public static native void destoryTables() /*-{
+		var table = $wnd.$('#report-student-assessment-report').DataTable();
+	  	table.destroy();
+	}-*/;
 
 
 
-@Override
-public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
-	throw new RuntimeException("Not implemented");
-}
+	@Override
+	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo) {
+		throw new RuntimeException("Not implemented");
+	}
 
 
 
-@Override
-public void loadingIcon() {
-	loadingImageLabel.setVisible(true);
-	questionsTable.setVisible(false);
-}
+	@Override
+	public void loadingIcon() {
+		loadingImageLabel.setVisible(true);
+		questionsTable.setVisible(false);
+	}
 
 
 
-@Override
-public void errorMsg() {
-	Label erroeMsg=new Label();
-	erroeMsg.setStyleName(STYLE_ERROR_MSG);
-	erroeMsg.setText(i18n.GL3265());
-	questionsTable.add(erroeMsg);
-}
+	@Override
+	public void errorMsg() {
+		Label erroeMsg=new Label();
+		erroeMsg.setStyleName(STYLE_ERROR_MSG);
+		erroeMsg.setText(i18n.GL3265());
+		questionsTable.add(erroeMsg);
+	}
+
+
+	@Override
+	public HTMLPanel getQuestionsTable() {
+		return questionsTable;
+	}
 
 
 
+	public void setQuestionsTable(HTMLPanel questionsTable) {
+		this.questionsTable = questionsTable;
+	}
 
 }
