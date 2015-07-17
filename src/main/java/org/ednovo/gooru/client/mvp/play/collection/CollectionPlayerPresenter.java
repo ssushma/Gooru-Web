@@ -1213,6 +1213,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(resourceId));
 		//setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);
 		
+		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
 		shelfMainPresenter.SetDefaultTypeAndVersion();
@@ -1222,7 +1223,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
-		//new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 	}
 	public void setAddCollectionView(String collectionId){
 		addCollectionPresenter.setCollectionDo(collectionDo);
