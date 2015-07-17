@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 public interface IsAssessmentsEndView extends IsViewWithHandlers<AssessmentsEndUiHandlers>{
@@ -67,11 +68,14 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void setPdfForEmail(String result);
 
 	public Frame getFrame();
-	
+
 	public void displaySummaryMetadata(AssessmentSummaryStatusDo assessmentSummaryStatusDo);
-	
+
 	public void loadingIcon();
-	
+
 	public void errorMsg();
+
+
+	HTMLPanel getQuestionsTable();
 
 }
