@@ -1304,6 +1304,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("response:::::"+jsonResponseRep.getStatusCode());
 		return deserializeCollectionItem(jsonRep);
 	}
+	
+	
+
 
 	@Override
 	public void createContentReport(String assocGooruOid, String targetValue, String typesvalue1,
@@ -2390,6 +2393,33 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			logger.error("Exception-------"+e);
 		}
 		return collectionItemDo;
+	}
+
+	@Override
+	public CollectionItemDo updateTimeMetadata(String collectionItemId,
+			String start, String stop) throws GwtException, ServerDownException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_COLLLECTION_ITEM_METADATA, collectionItemId);
+		getLogger().info("updateNarrationMetadata url put call:::::"+url);
+		JSONObject collectionItemObject = new JSONObject();
+		JSONObject collectionMetadata=new JSONObject();
+		try {
+			if(stop!=null){
+				collectionMetadata.put("stop", stop);
+			}
+			if(start!=null){
+				collectionMetadata.put("start", start);
+			}
+			collectionItemObject.put("collectionItem", collectionMetadata);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		getLogger().info("data url put call:::::"+collectionItemObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), collectionItemObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("response:::::"+jsonResponseRep.getStatusCode());
+		return deserializeCollectionItem(jsonRep);
 	}
 	
 }

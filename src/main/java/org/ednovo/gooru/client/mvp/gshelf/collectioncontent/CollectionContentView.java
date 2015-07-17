@@ -190,6 +190,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				public void updateNarration(CollectionItemDo collectionItem,String narration) {
 					getUiHandlers().updateNarrationItem(collectionItem, narration);
 				}
+				
 				@Override
 				public void editResource(final CollectionItemDo collectionItem) {
 					String resourceType="";
@@ -265,7 +266,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				@Override
 				public void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop) {
 					// TODO Auto-generated method stub
-					getUiHandlers().updateCollectionItem(collectionItemDo, "", start, stop);
+					getUiHandlers().updateVideoTimeUpdate(collectionItemDo);
 				}
 			};
 			widgetMove.setPresenter(collectionContentPresenter);
@@ -568,5 +569,9 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		loadingImage.setUrl(LOADER_IMAGE);
 		loadingImage.getElement().setId("myCollectionsListViewLoaddingImage");
 		pnlReosurceList.add(loadingImage);
+	}
+
+	public void setCollectionDetails(CollectionItemDo collectionItemDo){
+		
 	}
 }
