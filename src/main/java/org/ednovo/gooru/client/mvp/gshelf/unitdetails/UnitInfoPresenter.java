@@ -113,7 +113,6 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	}
 	@Override
 	public void getDomainsBasedOnCourseId(final int courseId,final int selectedId) {
-		System.out.println("iam here");
 		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
