@@ -596,7 +596,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			narrationTxtArea.setText(narrationText);
 			StringUtil.setAttributes(narrationTxtArea.getElement(), narrationText, narrationText);
 		}
-		
 		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 		resourceNarrationHtml.setHTML(ADD_NARRATION_FOR_YOUR_VIEWERS);
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
@@ -620,8 +619,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				AppClientFactory.printInfoLogger("...id............"+collectionItem.getCollectionItemId());
 				collectionItem.setStart(start);
 				collectionItem.setStop(stop);
+				String displayTxt=startMin+":"+statrSec+" - "+stopMin+":"+stopSec;
+				fromLblDisplayText.setText(displayTxt);
+				//lblUpdateTextMessage.setVisible(true);
+				//actionVerPanel.setVisible(false);
 				updateVideoTime(collectionItem,start,stop);
-			}	
+				enableOrDisableTimeEdit(true);
+		}	
 		
 		}else if(isPdf){
 			updatePdfStartPage();
@@ -871,6 +875,15 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					
 		}
     }
+	
+	public void setCollectionDetails(CollectionItemDo itemDo){
+		this.collectionItem=itemDo;
+		actionVerPanel.setVisible(false);
+		lblUpdateTextMessage.setVisible(false);
+		enableOrDisableTimeEdit(true);
+		}
+	
+	
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId,String moveGooruOid);
 
 	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);

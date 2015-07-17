@@ -54,8 +54,8 @@ public class SlnContentWidget extends Composite {
 		} else if(type.equalsIgnoreCase("collection")){
 			collectionViews.setText(planProgressDo.getViews()+"");
 			String timeSpentData = "--";
-			if(planProgressDo.getTimespent()>0) {
-				timeSpentData = StringUtil.getFormattedDate(planProgressDo.getTimespent(), "");
+			if(planProgressDo.getTimeSpent()>0) {
+				timeSpentData = StringUtil.getFormattedDate(planProgressDo.getTimeSpent(), "");
 			}
 			timeSpent.setText(timeSpentData);
 			assessmentCountData.setVisible(false);
