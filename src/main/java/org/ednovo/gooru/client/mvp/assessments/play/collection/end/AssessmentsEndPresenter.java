@@ -385,5 +385,9 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		this.sessionId=sessionId;
 	}
 
+	@Override
+	protected void onReset() {
+		getView().getQuestionsTable().clear();
+	}
 
 }

@@ -26,10 +26,12 @@
 }
 
 #taxonomyStructureSelectionPopup .containerHeight{
+
+height:auto;
+}
+#taxonomyStructureSelectionPopup .scrollCourseContainer{
 	height: 424px;
 	overflow-y: auto;
-	overflow-x: hidden;
-
 }
 
 #taxonomyStructureSelectionPopup  .standerdTxt{

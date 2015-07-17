@@ -16,7 +16,7 @@
 								        <span class="blocksSearch grade">
 											<tbp:PPanel text="{i18n.GL3288}"></tbp:PPanel>
 											<g:HTMLPanel styleName="btn-group" ui:field="panelGradeGroup">
-												<g:Button ui:field="btnGrades" styleName="btn btn-primary" text="{i18n.GL3289}"></g:Button>
+												<g:Button ui:field="btnGrades" styleName="btn btn-primary ellipsis" text="{i18n.GL3289}"></g:Button>
 												<g:Button
 													styleName="btn btn-primary dropdown-toggle" ui:field="btnGradesCaret">
 													<span class="caret"></span>
@@ -29,7 +29,7 @@
 								        <span class="blocksSearch subjectContainer">
 											<tbp:PPanel text="{i18n.GL3290}"></tbp:PPanel>
 											<g:HTMLPanel styleName="btn-group subject" ui:field="panelSubjectGroup">
-												<g:Button ui:field="btnSubjects" styleName="btn btn-primary" text="{i18n.GL3291}"></g:Button>
+												<g:Button ui:field="btnSubjects" styleName="btn btn-primary ellipsis" text="{i18n.GL3291}"></g:Button>
 												<g:Button ui:field="btnSubjectCaret"
 													styleName="btn btn-primary dropdown-toggle">
 													<span class="caret"></span>
