@@ -44,11 +44,15 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -105,6 +109,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
 		createCollectionBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL1451());
 		createAssessmentBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL3024());
+		courseListContainer.getElement().setAttribute("style","min-height:"+Window.getClientHeight()+"px");
+		Window.addResizeHandler(new ResizeHandler() {
+			@Override
+			public void onResize(ResizeEvent event) {
+				courseListContainer.getElement().setAttribute("style","min-height:"+Window.getClientHeight()+"px");
+			}
+		});
 	}
 	/**
 	 * This method is used to reset the widget positions with default text

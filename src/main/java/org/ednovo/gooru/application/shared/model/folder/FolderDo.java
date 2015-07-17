@@ -73,6 +73,8 @@ public class FolderDo implements Serializable{
 	private List<CourseSubjectDo> subdomain;
 	private List<CourseSubjectDo> standards;
 	private String languageObjective;
+	private String parentGooruOid;
+	
 	public FolderDo(){}
 	
 	public CourseSummaryDo getSummary() {
@@ -380,8 +382,11 @@ public class FolderDo implements Serializable{
 		this.languageObjective = languageObjective;
 	}
 
-	
-	
-	
-	
+	public String getParentGooruOid() {
+		return parentGooruOid;
+	}
+
+	public void setParentGooruOid(String parentGooruOid) {
+		this.parentGooruOid = parentGooruOid;
+	}
 }
