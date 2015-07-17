@@ -70,5 +70,6 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle);
 	
 	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle);
+	public void enableAddButton();
 	
 }

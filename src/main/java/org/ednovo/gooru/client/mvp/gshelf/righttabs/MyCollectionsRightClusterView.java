@@ -589,6 +589,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			isCopySelected= true;
 			isMoveSelected=false;
 			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
+			getUiHandlers().enableAddButton();
 		}
 	}
 	private class onMoveClickHandler implements ClickHandler{
@@ -600,6 +601,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			myCollDelLbl.getElement().removeClassName("selected");
 			isCopySelected= false;
 			isMoveSelected= true;
+			getUiHandlers().enableAddButton();
 			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
 			String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
