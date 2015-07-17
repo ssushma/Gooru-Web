@@ -656,7 +656,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			organizeRootPnl.removeStyleName("active");
 			shelfTreeWidget = new ShelfTreeWidget(null, 1,COURSE);
 			shelfTreeWidget.setTreeWidgetType(COURSE);
-		
 			
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
@@ -670,7 +669,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.getTitleLbl().setText(i18n.GL3367());
 			shelfTreeWidget.getTitleFocPanel().addStyleName("collection");
 			shelfTreeWidget.setCollectionOpenedStatus(true);
-			getUiHandlers().setRightPanelData(getFolderDo(COLLECTION,i18n.GL3367()), COLLECTION,null);
+			getUiHandlers().setRightPanelData(getFolderDo(COLLECTION,i18n.GL3367()),COLLECTION,null);
 		}else if(ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
 			shelfTreeWidget = new ShelfTreeWidget(null, 1,type);
 			shelfTreeWidget.setTreeWidgetType(ASSESSMENT.equalsIgnoreCase(type)?ASSESSMENT:ASSESSMENT_URL);
@@ -700,8 +699,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void createNewItem(String type) {
 		String o2=null,id=null,o3=null;
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		if(getViewType().equalsIgnoreCase(FOLDER) && o1==null){
-			if(type.equalsIgnoreCase(COLLECTION)||type.toLowerCase().contains(ASSESSMENT.toLowerCase())){
+		if(null==o1){
+			if(type.equalsIgnoreCase(COURSE)||type.equalsIgnoreCase(COLLECTION)||type.toLowerCase().contains(ASSESSMENT.toLowerCase())){
 				createTopLevelTemplate(type);
 			}
 		}else{
