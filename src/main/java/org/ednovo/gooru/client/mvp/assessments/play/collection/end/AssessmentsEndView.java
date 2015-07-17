@@ -100,6 +100,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	static FlowPanel PrintPnl;
 
 	@UiField
+	
 	FlowPanel progressRadial;
 	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel, questionsTable;
 	@UiField ListBox sessionsDropDown;
