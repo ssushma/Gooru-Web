@@ -281,6 +281,9 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 							@Override
 							public	void onLoginSuccess(){
 								Window.enableScrolling(false);
+								
+								getUiHandlers().setDefultVersionAndType();
+								remixPresenterWidget.DisableMyCollectionsPanelData(false);
 								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
@@ -293,6 +296,9 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 						loginPopupUc.setGlassEnabled(true);
 						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
+						
+						getUiHandlers().setDefultVersionAndType();
+						remixPresenterWidget.DisableMyCollectionsPanelData(false);
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
@@ -390,6 +396,9 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
 		String collectionTitle=collectionDo.getTitle();
 		if(customize!=null && YES.equals(customize) && emailId!=null){
+			
+			getUiHandlers().setDefultVersionAndType();
+			remixPresenterWidget.DisableMyCollectionsPanelData(false);
 			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 			remixPresenterWidget.getView().getAppPopUp().show();
 			isCustomizePopup = false;

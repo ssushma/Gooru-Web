@@ -29,4 +29,5 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 public interface AssessmentsHomeMetadataUiHandlers extends BaseUiHandlers{
 	public void resetCollectionActivityEventId();
 	public void triggerCollectionShareDataEvent(String collectionId,String itemType,String shareType,boolean confirmStatus);
+	public void setDefultVersionAndType();
 }

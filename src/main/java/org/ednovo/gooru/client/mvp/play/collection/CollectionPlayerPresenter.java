@@ -1214,8 +1214,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);
 		
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
-		resourceSearchResultDo.setGooruOid(resourceId);
+		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
 		shelfMainPresenter.SetDefaultTypeAndVersion();
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "resource", null);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
