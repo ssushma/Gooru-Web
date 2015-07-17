@@ -125,11 +125,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		copyLbl.setText("copy");
 		moveLbl.setText("move");
 		
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	/*	Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hideDropDown(event);
 	          }
-	    });
+	    });*/
 		
 	}
 	public void setIds(){
