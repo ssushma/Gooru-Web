@@ -215,11 +215,19 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
 					@Override
-					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId) {
+					public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow,String moveId,String moveGooruOId,String moveParentGooruOid) {
 						int movingIndex= Integer.parseInt(movingPosition);
 						if(pnlCourseList.getWidgetCount()>=movingIndex){
 							//Based on the position it will insert the widget in the vertical panel
 							String itemSequence=pnlCourseList.getWidget(movingIndex-1).getElement().getAttribute("itemSequence");
+							String tempGooruOid=moveGooruOId;
+							String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+							String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+							String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+							String view = AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+							if((o1!=null && o2!=null && o3!=null) || "Folder".equalsIgnoreCase(view)){
+								moveGooruOId=moveParentGooruOid;
+							}
 							getUiHandlers().reorderWidgetPositions(moveId, Integer.parseInt(itemSequence),movingIndex,moveGooruOId);
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
@@ -227,12 +235,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(tempGooruOid,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
-								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(moveGooruOId,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
+								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(tempGooruOid,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
 						}
 					}
