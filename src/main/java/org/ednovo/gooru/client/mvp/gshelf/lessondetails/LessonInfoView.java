@@ -453,7 +453,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 							    	 if(element!=null){
 							 			element.removeClassName("active");
 							 		}
-							    	 
 							     }
 							 }
 							removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
