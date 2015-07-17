@@ -82,4 +82,6 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	void removeDeletedTreeWidget(String deletedTreeWidgetId, String currentTypeView);  
 	
 	void reorderShelfItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);
+
+	String getViewType();
 }
