@@ -460,8 +460,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		return centurySkillsPresenter;
 	}
 
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
-		getView().addTaxonomyData(liPanelWithCloseArray);
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 	}
  	/**
    	 * @return viewType

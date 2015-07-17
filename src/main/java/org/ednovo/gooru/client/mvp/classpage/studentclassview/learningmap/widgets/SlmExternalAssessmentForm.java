@@ -7,21 +7,21 @@ import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.util.DataLogEvents;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
@@ -120,8 +120,9 @@ public class SlmExternalAssessmentForm extends Composite {
 		}
 		if(isScore==true&&isEvidence==true) {
 			logDataEvent();
+		} else {
+			setButtonVisibility(true);
 		}
-		setButtonVisibility(true);
 	}
 	
 	private void logDataEvent() {
@@ -130,28 +131,10 @@ public class SlmExternalAssessmentForm extends Composite {
 				JSONObject collectionDataLog=new JSONObject();
 				collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 				collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_PLAY));
-				
-				JSONObject sessionObject=new JSONObject();
-				try{
-					sessionObject.put(PlayerDataLogEvents.APIKEY, new JSONString(AppClientFactory.getLoggedInUser().getSettings().getApiKeyPoint()));
-					sessionObject.put(PlayerDataLogEvents.ORGANIZATIONUID, new JSONString(""));
-					sessionObject.put(PlayerDataLogEvents.SESSIONTOKEN, new JSONString(AppClientFactory.getLoggedInUser().getToken()));
-					sessionObject.put(PlayerDataLogEvents.SESSIONID, new JSONString(GwtUUIDGenerator.uuid()));
-				}catch(Exception e){
-					 AppClientFactory.printSevereLogger(e.getMessage());
-				}
-				collectionDataLog.put(PlayerDataLogEvents.SESSION, sessionObject);
-				
+				collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(GwtUUIDGenerator.uuid()));
 				collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 				collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-				
-				JSONObject userObject=new JSONObject();
-				try{
-					userObject.put(PlayerDataLogEvents.GOORUUID, new JSONString(AppClientFactory.getLoggedInUser().getGooruUId()));
-				}catch(Exception e){
-					 AppClientFactory.printSevereLogger(e.getMessage());
-				}
-				collectionDataLog.put(PlayerDataLogEvents.USER, userObject);
+				collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 				
 				String gooruOid= planProgressDo.getGooruOId();
 				
@@ -159,7 +142,7 @@ public class SlmExternalAssessmentForm extends Composite {
 				String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
 				String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
 				String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
-				
+
 				JSONObject contextMap=new JSONObject();
 				try{
 					contextMap.put(PlayerDataLogEvents.CONTENTGOORUID, new JSONString(gooruOid));
@@ -178,10 +161,11 @@ public class SlmExternalAssessmentForm extends Composite {
 					contextMap.put(PlayerDataLogEvents.TOTALQUESTIONSCOUNT, new JSONNumber(0));
 					contextMap.put(PlayerDataLogEvents.MODE, new JSONString(PlayerDataLogEvents.STUDY));
 					contextMap.put(PlayerDataLogEvents.EVIDENCE, new JSONString(evidence.getText()));
+					contextMap.put(PlayerDataLogEvents.ISSTUDENT, JSONBoolean.getInstance(true));
 				}catch(Exception e){
 					 e.printStackTrace();
 				}
-				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, contextMap);
+				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, new JSONString(contextMap.toString()));
 				
 				JSONObject versionMap=new JSONObject();
 				try{
@@ -189,7 +173,7 @@ public class SlmExternalAssessmentForm extends Composite {
 				}catch(Exception e){
 					 AppClientFactory.printSevereLogger(e.getMessage());
 				}
-				collectionDataLog.put(PlayerDataLogEvents.VERSION,versionMap);
+				collectionDataLog.put(PlayerDataLogEvents.VERSION, new JSONString(versionMap.toString()));
 				
 				JSONObject metricsMap=new JSONObject();
 				try{
@@ -203,13 +187,21 @@ public class SlmExternalAssessmentForm extends Composite {
 					 AppClientFactory.printSevereLogger(e.getMessage());
 				}
 				
-				collectionDataLog.put(PlayerDataLogEvents.METRICS,metricsMap);
+				collectionDataLog.put(PlayerDataLogEvents.METRICS, new JSONString(metricsMap.toString()));
 				JSONObject playLoad=new JSONObject();
 				collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(playLoad.toString()));
-				System.out.println(collectionDataLog.toString());
 				PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 			} catch(Exception ex) {
 				ex.printStackTrace();
+			} finally {
+				 Timer t = new Timer() {
+				      @Override
+				      public void run() {
+				    	  setButtonVisibility(true);
+				    	  submitTxt.setText("Saved. Resubmit.");
+				      }
+				 };
+				 t.schedule(2000);
 			}
 	}
 	

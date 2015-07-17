@@ -15,7 +15,7 @@
 		<g:TextArea styleName="form-control textBoxPadding" ui:field="evidence"></g:TextArea>
 		<panel:HTMLEventPanel styleName="list-group-item viewLink" ui:field="submit">
 			<g:Anchor ui:field="submitTxt">Submit</g:Anchor>
-			<g:Anchor ui:field="inProgressTxt">Saving</g:Anchor>
+			<g:Anchor ui:field="inProgressTxt">Saving...</g:Anchor>
 	    </panel:HTMLEventPanel>
     </g:HTMLPanel>
 </ui:UiBinder>
