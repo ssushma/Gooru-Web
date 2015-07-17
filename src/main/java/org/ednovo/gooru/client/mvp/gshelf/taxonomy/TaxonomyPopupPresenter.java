@@ -109,7 +109,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 								getView().addTaxonomyDomains(taxonomyDomainList,taxonomyCourseList.get(0).getCourseId());
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Unit")){
 //									getView().displaySelectedTaxonomyData(ulSelectedItems);	
-									getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
+									getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData); 
 								}
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
@@ -117,7 +117,6 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 										@Override
 										public void onSuccess(List<DomainStandardsDo> result) {
 											getView().addTaxonomyStandards(result); 
-//											getView().displaySelectedTaxonomyData(ulSelectedItems);	
 											getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 										}
 									});
@@ -212,8 +211,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	
 	@Override
-	public void getStdBasedOnSelectedDomain(int subDomainId) { 
-		if("Lesson".equalsIgnoreCase(viewType)){
+	public void getStdBasedOnSelectedDomain(int subDomainId) {
+		if("Lesson".equalsIgnoreCase(viewType)||"assessment".equalsIgnoreCase(viewType)||"Collection".equalsIgnoreCase(viewType)){
 			AppClientFactory.getInjector().getTaxonomyService().getStandardsList(subDomainId, new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 
 				@Override
@@ -358,15 +357,13 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 
 	@Override
-	public void addTaxonomyData(/*UlPanel selectedUlContainer*/List<LiPanelWithClose> liPanelWithCloseArray) {
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray,  List<LiPanelWithClose> removedLiPanelWithCloseArray) {
 		if("Unit".equalsIgnoreCase(viewType)){
-			unitInfoPresenter.addTaxonomy(liPanelWithCloseArray);
+			unitInfoPresenter.addTaxonomy(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 		}else if("Lesson".equalsIgnoreCase(viewType)){
-//			lessonInfoPresenter.addTaxonomyData(selectedUlContainer);
-			lessonInfoPresenter.addTaxonomyData(liPanelWithCloseArray);
+			lessonInfoPresenter.addTaxonomyData(liPanelWithCloseArray, removedLiPanelWithCloseArray);
 		}else{
-//			collectionInfoPresenter.addTaxonomyData(selectedUlContainer);
-			collectionInfoPresenter.addTaxonomyData(liPanelWithCloseArray);
+			collectionInfoPresenter.addTaxonomyData(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 		}
 	}
 

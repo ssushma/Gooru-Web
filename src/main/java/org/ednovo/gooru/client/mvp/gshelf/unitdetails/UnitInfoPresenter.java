@@ -70,6 +70,8 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	
 	private static final String O1_LEVEL = "o1";
 	
+	Map<String, String> params= new HashMap<String, String>();
+	
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -110,12 +112,23 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void getDomainsBasedOnCourseId(int courseId,final int selectedId) {
-		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 0, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+	public void getDomainsBasedOnCourseId(final int courseId,final int selectedId) {
+		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
 				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedId);
+					getView().showCourseDetailsBasedOnSubjectd(result,selectedId,courseId);
+				}
+			}
+		});
+	}
+	@Override
+	public void getPaginatedDomainsBasedOnCourseId(int courseId,final int selectedId, int offSetVal) {
+		getTaxonomyService().getSubjectsList(courseId,"domain", offSetVal, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
+			@Override
+			public void onSuccess(List<CourseSubjectDo> result) {
+				if(result.size()>0){
+					getView().appendDoamins(result,selectedId);
 				}
 			}
 		});
@@ -126,13 +139,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				Map<String, String> params= new HashMap<String, String>();
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
 				params.put("o2", result.getGooruOid());
 				params.put("view", "Course");
-
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				if(isCreateLesson){
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
@@ -140,7 +152,6 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
@@ -225,13 +236,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 
-	public void addTaxonomy(List<LiPanelWithClose> liPanelWithCloseArray) {
-		getView().addTaxonomyData(liPanelWithCloseArray);
+	public void addTaxonomy(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		getView().addTaxonomyData(liPanelWithCloseArray, removedLiPanelWithCloseArray);
 	}
 
 	@Override
 	public void invokeTaxonomyPopup(String viewType, List<LiPanelWithClose> unitLiPanelWithCloseArray) {
-//		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
 		taxonomyPopupPresenter.setSelectedUlContainer(unitLiPanelWithCloseArray);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 0);
 		addToPopupSlot(taxonomyPopupPresenter);

@@ -100,7 +100,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	static FlowPanel PrintPnl;
 
 	@UiField
-	
+
 	FlowPanel progressRadial;
 	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel, questionsTable;
 	@UiField ListBox sessionsDropDown;
@@ -335,7 +335,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		loadingImageLabel.setVisible(false);
 		questionsTable.setVisible(true);
 		questionsTable.clear();
-		AppClientFactory.printInfoLogger("isTableToDestroy :"+isTableToDestroy);
 		if (isTableToDestroy){
 			isTableToDestroy = false;
 			destoryTables();
@@ -367,7 +366,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			adTable.setHeaderWidget(3, heading4);
 			adTable.setHeaderWidget(4, heading5);
 			adTable.setHeaderWidget(5, heading6);
-			AppClientFactory.printInfoLogger("result.size() : "+result.size());
 			for(int i=0;i<result.size();i++) {
 				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
@@ -412,19 +410,18 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						String answerTextFormat = "";
 						String[] answersArry = null;
 						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
+
 						for (MetaDataDo metaDataDo : questionList) {
+
 							String answerText = "";
-							AppClientFactory.printInfoLogger("metaDataDo.getAnswer_text() : "+metaDataDo.getAnswer_text());
-							if((metaDataDo.getAnswer_text() != null)) {
-								answerText = metaDataDo.getAnswer_text();
+							if((metaDataDo.getAnswerText() != null)) {
+								answerText = metaDataDo.getAnswerText();
 							}
-							AppClientFactory.printInfoLogger("answerText : "+answerText);
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
 								answerTextFormat += ",";
 							}
 						}
-						AppClientFactory.printInfoLogger("answerTextFormat : "+answerTextFormat.toString());
 						String[] userFibOption = null;
 						if(result.get(i).getText() != null) {
 							answersArry=answerTextFormat.split(",");
@@ -434,9 +431,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							for (int k = 0; k < answersArry.length; k++) {
 								Label answerChoice=new Label();
 								if(answersArry[k]!=null && k<userFibOption.length){
-									AppClientFactory.printInfoLogger("answersArry[k].toLowerCase().trim() : "+answersArry[k].toLowerCase().trim());
-									AppClientFactory.printInfoLogger("userFibOption[k].toLowerCase().trim() : "+userFibOption[k].toLowerCase().trim());
-									AppClientFactory.printInfoLogger("noOfAttempts : "+noOfAttempts);
 									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
 										answerChoice.setText(userFibOption[k]);
 										answerChoice.getElement().getStyle().setColor(CORRECT);
@@ -561,7 +555,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	 */
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {
-			if(metaDataDo.getIs_correct()==1){
+			if(metaDataDo.getIsCorrect()==1){
 				return AnalyticsUtil.getCharForNumber(metaDataDo.getSequence()-1);
 			}
 		}
@@ -655,8 +649,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
 							for (MetaDataDo metaDataDo : questionList) {
 								String answerText = "";
-								if((metaDataDo.getAnswer_text() != null)) {
-									answerText = metaDataDo.getAnswer_text();
+								if((metaDataDo.getAnswerText() != null)) {
+									answerText = metaDataDo.getAnswerText();
 								}
 								answerTextFormat += '[' + answerText +']';
 								if(questionList.size()  != metaDataDo.getSequence()){
@@ -909,6 +903,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		Label erroeMsg=new Label();
 		erroeMsg.setStyleName(STYLE_ERROR_MSG);
 		erroeMsg.setText(i18n.GL3265());
+		questionsTable.clear();
 		questionsTable.add(erroeMsg);
 	}
 

@@ -84,6 +84,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
+	private static final String O3_LEVEL = "o3";
 	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
@@ -172,6 +173,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
 		}else if(index==2){
+			if(view!=null && FOLDER.equalsIgnoreCase(view)){
+				getView().disableAndEnableBreadCums(false);
+			}else{
+				getView().disableAndEnableBreadCums(true);
+			}
 			 if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || COLLECTION.equalsIgnoreCase(folderObj.getType()) || ASSESSMENT.equalsIgnoreCase(folderObj.getType())){
 				collectionContentPresenter.getView().getResourceListPanel();
 				collectionContentPresenter.setData(folderObj);
@@ -251,6 +257,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setUnitTemplate(UNIT);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
 			}else if(type.contains(LESSON)){
+				System.out.println("in lesson right cluster");
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON);
 			}else if(type.toLowerCase().contains(FOLDER.toLowerCase())){
@@ -475,6 +482,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setFirstSelectedData(Map<Integer,Integer> firstSelectedData){
 		this.firstSelectedData=firstSelectedData;
+	}
+	@Override
+	public void enableAddButton() {
+		searchAddResourceToCollectionPresenter.enableAddButton();
 	}
 	
 	

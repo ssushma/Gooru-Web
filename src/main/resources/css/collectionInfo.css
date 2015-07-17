@@ -32,3 +32,20 @@
 	border: 1px solid #fbb03b;
 }
 
+.videostart div,.videostart input[type=text],.videostart span{
+	display:inline-block;
+}
+.videostart span{
+	margin-left:0px;
+	margin-right:0px;
+	
+}
+
+.videostart input[type=text]{
+	width:23px;
+}
+
+.videostartHeader{
+	font-wieght:bold;
+	margin-right:6px;
+}

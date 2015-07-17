@@ -41,7 +41,8 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	/**
 	 * This method will display the Grades according to the subject
 	 */
-	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,int selectedId);
+	void showCourseDetailsBasedOnSubjectd(List<CourseSubjectDo> libraryCodeDo,
+			int selectedId, int resultscourseId); 
 	/**
 	 * Set collection default course
 	 * @param libraryCode instance {@link CourseSubjectDo} as List
@@ -60,5 +61,9 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 */
 	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
 	
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray); 
+
+	void appendDoamins(List<CourseSubjectDo> libraryCodeDo, int selectedId);
+
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray); 
+
 }

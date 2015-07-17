@@ -24,10 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
@@ -63,7 +66,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 
 	void showStandardsPopup(String standardVal, String standardsDesc);
 
-	public void invokeTaxonomyPopup(String type, UlPanel ulSelectedItems); 
+	public void invokeTaxonomyPopup(String type, List<LiPanelWithClose> collectionLiPanelWithCloseArray); 
 	
 	public void callCourseInfoTaxonomy();
 

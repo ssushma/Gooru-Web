@@ -105,6 +105,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	
+	List<LiPanelWithClose> lessonLiPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
+	
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -151,7 +153,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 
 			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),flgLevelOne);
 			final DomainStandardsDo domainStand = standardsList.get(i);
-			if(domainStand.getTypeId()!=null)
+			if(domainStand.getTypeId()!=null && !(standardsList.get(i).getCode().contains("ELA")))
 			{
 				if(domainStand.getTypeId().equals(1))
 				{
@@ -220,12 +222,19 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		
 		public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
 		//	standardsUI.clear();
+			final String selValues = getSelectedStandards().toString();
+			System.out.println("getselevalues at sub level::"+selValues);
 			for(int i=0;i<standardsList.size();i++)
 			{
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
 				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+				
+				if(selValues.contains(standardsList.get(i).getCodeId().toString()))
+				{
+					standardsCode.getWidgetContainer().addStyleName("active");
+				}
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 					
 					@Override
@@ -236,7 +245,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						standardsCode.getWidgetContainer().addStyleName("active");
 						
 						
-						if(!selectedValues.contains(domainStand.getCodeId())){
+						if(!selValues.contains(domainStand.getCodeId().toString())){
 							selectedValues.add(domainStand.getCodeId());
 						}
 						
@@ -245,8 +254,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 							@Override
 							public void onClick(ClickEvent event) {
 								//This will remove the selected value when we are trying by close button
-								if(selectedValues.contains(domainStand.getCodeId())){
-									selectedValues.remove(domainStand);
+								System.out.println("selectedValues::+"+selValues.contains(domainStand.getCodeId().toString()));
+								if(selValues.contains(domainStand.getCodeId().toString())){
+									selectedValues.remove(domainStand.getCodeId());
 								}
 								standardsCode.removeStyleName("active");
 								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
@@ -274,12 +284,18 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	public void displaySubSubStandardsList(final List<SubSubDomainStandardsDo> standardsList){
 			//standardsUI.clear();
+		final String selValues = getSelectedStandards().toString();
 			for(int i=0;i<standardsList.size();i++)
 			{
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
 				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+				
+				if(selValues.contains(standardsList.get(i).getCodeId().toString()))
+				{
+					standardsCode.getWidgetContainer().addStyleName("active");
+				}
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 					
 					@Override
@@ -289,8 +305,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						
 						standardsCode.getWidgetContainer().addStyleName("active");
 						
-						
-						if(!selectedValues.contains(domainStand.getCodeId())){
+						if(!selValues.contains(domainStand.getCodeId().toString())){
 							selectedValues.add(domainStand.getCodeId());
 						}
 						
@@ -299,8 +314,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 							@Override
 							public void onClick(ClickEvent event) {
 								//This will remove the selected value when we are trying by close button
-								if(selectedValues.contains(domainStand.getCodeId())){
-									selectedValues.remove(domainStand);
+								if(selValues.contains(domainStand.getCodeId().toString())){
+									selectedValues.remove(domainStand.getCodeId());
 								}
 								standardsCode.removeStyleName("active");
 								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
@@ -443,6 +458,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				//Render the existing standards
 				for(final CourseSubjectDo courseSubjectDo : folderObj.getStandards()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
@@ -453,7 +469,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 							    	 if(element!=null){
 							 			element.removeClassName("active");
 							 		}
-							    	 
 							     }
 							 }
 							removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
@@ -464,6 +479,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					liPanelWithClose.setName(courseSubjectDo.getCode());
 					ulSelectedItems.add(liPanelWithClose);
 				}
+	
 			}
 		}
 		getUiHandlers().callCourseInfoTaxonomy();
@@ -495,25 +511,61 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup("Lesson",ulSelectedItems);
+			lessonLiPanelWithCloseArray.clear();
+			for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+				lessonLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+			}
+			getUiHandlers().invokeTaxonomyPopup("Lesson",lessonLiPanelWithCloseArray);
 		}
 	}
 	
-	/*@Override
-	public void addTaxonomyData(UlPanel selectedUlContainer) {
-		Iterator<Widget> widgets = selectedUlContainer.iterator();
-		while(widgets.hasNext()){
-			Widget widget = widgets.next();
-			if(widget instanceof LiPanelWithClose){
-				ulSelectedItems.add(widget);
+
+	/**
+	 * Adds the selected domains from the taxonomy popup into lesson info view.
+	 */
+	@Override
+	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray,List<LiPanelWithClose> removedLiPanelWithCloseArray) {
+		for(int i=0;i<liPanelWithCloseArray.size();i++){
+			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
+				ulSelectedItems.add(liPanelWithCloseArray.get(i));
+			}
+			
+			if(i<removedLiPanelWithCloseArray.size()){ 
+				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
 			}
 		}
-	}*/
+	}
 	
-	@Override
-	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray) {
-		for(int i=0;i<liPanelWithCloseArray.size();i++){
-			ulSelectedItems.add(liPanelWithCloseArray.get(i));
+	/**
+	 * Checks the selected widgets in info view got from taxonomy popup.
+	 * @param id
+	 * @return
+	 */
+	private boolean isWidgetExists(long id) {
+		boolean flag = true;
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == id){
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	/**
+	 * Removes the widget, which has been removed from taxonomy popup from info view 
+	 * @param removeWidgetId
+	 */
+	private void removeFromUlSelectedItemsContainer(long removeWidgetId) {
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanelWithClose && ((LiPanelWithClose) widget).getId() == removeWidgetId){
+				widget.removeFromParent();
+			}
 		}
 	}
+	
+	
 }
