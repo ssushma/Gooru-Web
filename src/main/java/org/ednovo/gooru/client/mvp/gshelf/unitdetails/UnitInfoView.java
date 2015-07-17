@@ -137,13 +137,11 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@Override
 	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final int selectedId,int resultscourseId) {
 		pnlGradeContainer.clear();
-		System.out.println("iam here11");
 		domainPaginationCourseId = resultscourseId;
 
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"domain") {
 			@Override
 			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
-				System.out.println("iam here22");
 				for(CourseSubjectDo courseSubjectDo : libraryCodeDo) {
 					if(courseSubjectDo.getSubdomainId()==codeId){
 						pnlGradeDescContainer.getElement().setInnerHTML(courseSubjectDo.getDescription());
@@ -182,7 +180,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			}
 		};
 		pnlGradeContainer.add(courseGradeWidget);
-		System.out.println("libraryCodeDo.size()::"+libraryCodeDo.size());
 		if(libraryCodeDo.size()>=20){
 			domainPagination = 20;
 			scrollCoursediv.addScrollHandler(new ScrollHandler() {
