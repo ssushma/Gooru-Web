@@ -66,7 +66,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
-
+	Map<String, String> params= new HashMap<String, String>();
 	final String LESSON="Lesson";
 
 	/**
@@ -115,13 +115,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				Map<String, String> params= new HashMap<String, String>();
-				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-				params.put("o2", AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+				params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+				params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
 				params.put("o3",result.getGooruOid());
 				params.put("view", "Course");
-
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				if(isCreateCollOrAssessment && creationType!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);
@@ -129,7 +128,6 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 			}
 		});
 	}
@@ -140,6 +138,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				System.out.println("update lesson details");
 				folderObj.setTitle(createDo.getTitle());
 				folderObj.setType(LESSON);
 				//folderDo.setGooruOid(id);
