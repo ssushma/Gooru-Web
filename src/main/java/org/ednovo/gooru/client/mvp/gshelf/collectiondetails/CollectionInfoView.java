@@ -109,6 +109,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	List<Integer> selectedValues=new ArrayList<Integer>();
+	
+	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
 
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
@@ -714,10 +716,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			getCenturySkillContainer().add(content);
 		}
 	}
+	
+	
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().invokeTaxonomyPopup("collection",ulSelectedItems);
+			collectionLiPanelWithCloseArray.clear();
+			for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+				collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+			}
+			getUiHandlers().invokeTaxonomyPopup("collection",collectionLiPanelWithCloseArray);
 		}
 	}
 	

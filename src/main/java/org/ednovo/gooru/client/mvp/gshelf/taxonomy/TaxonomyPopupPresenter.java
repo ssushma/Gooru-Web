@@ -109,7 +109,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 								getView().addTaxonomyDomains(taxonomyDomainList,taxonomyCourseList.get(0).getCourseId());
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Unit")){
 //									getView().displaySelectedTaxonomyData(ulSelectedItems);	
-									getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
+									getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData); 
 								}
 								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("collection")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
@@ -211,8 +211,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	
 	@Override
-	public void getStdBasedOnSelectedDomain(int subDomainId) { 
-		if("Lesson".equalsIgnoreCase(viewType)){
+	public void getStdBasedOnSelectedDomain(int subDomainId) {
+		if("Lesson".equalsIgnoreCase(viewType)||"assessment".equalsIgnoreCase(viewType)||"Collection".equalsIgnoreCase(viewType)){
 			AppClientFactory.getInjector().getTaxonomyService().getStandardsList(subDomainId, new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 
 				@Override
