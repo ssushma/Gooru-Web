@@ -1524,6 +1524,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			}else{
 				sessionId = Cookies.getCookie("sessionId") != null ? Cookies.getCookie("sessionId") : GwtUUIDGenerator.uuid();
 				AssessmentsPlayerPresenter.this.sessionId=sessionId;
+				collectionEndPresenter.setSessionId(sessionId);
 				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
 				escalateToTriggerEvents(sessionId);
 			}
