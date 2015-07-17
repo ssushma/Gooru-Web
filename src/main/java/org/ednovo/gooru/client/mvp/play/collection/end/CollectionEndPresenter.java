@@ -48,6 +48,7 @@ import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
@@ -88,6 +89,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	private PreviewEndPresenter previewEndPresenter;
 	
+	ShelfMainPresenter shelfMainPresenter;
+	
 	private CollectionHomeMetadataPresenter collectionHomeMetadataPresenter;
 	
 	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
@@ -122,13 +125,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
-			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
+			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter,ShelfMainPresenter shelfMainPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
 		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
+		this.shelfMainPresenter= shelfMainPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
 	}
 	
@@ -636,6 +640,12 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	public void setSessionId(String sessionId){
 		this.sessionId=sessionId;
+	}
+
+	@Override
+	public void setDefaultTypeAndVersion() {
+		// TODO Auto-generated method stub
+		shelfMainPresenter.SetDefaultTypeAndVersion();
 	}
 	
 }

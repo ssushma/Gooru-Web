@@ -1557,6 +1557,7 @@ public class ProfileTopicListView extends Composite{
 					@Override
 					public	void onLoginSuccess(){
 						Window.enableScrolling(false);
+						remixPresenterWidget.DisableMyCollectionsPanelData(false);
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
@@ -1567,6 +1568,7 @@ public class ProfileTopicListView extends Composite{
 				loginPopupUc.show();
 				loginPopupUc.setGlassEnabled(true);
 			}else{
+				remixPresenterWidget.DisableMyCollectionsPanelData(false);
 				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;
@@ -1606,6 +1608,7 @@ public class ProfileTopicListView extends Composite{
 			if(colleId.equals(collectionId) && isVisible ){
 				isVisible=false;
 				Window.scrollTo(0, 0);
+				remixPresenterWidget.DisableMyCollectionsPanelData(false);
 				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;

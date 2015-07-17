@@ -813,7 +813,7 @@ footer ul li a {
 	min-width: 350px !important;
 }
 
-#btnSubjects .ellipsis{
+#btnSubjects.ellipsis{
 	width: 100px;
 }
 

@@ -45,7 +45,6 @@ import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
-import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
@@ -380,8 +379,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void invokeTaxonomyPopup(String viewType,UlPanel ulSelectedItems) {
-//		taxonomyPopupPresenter.setSelectedUlContainer(ulSelectedItems);
+	public void invokeTaxonomyPopup(String viewType,List<LiPanelWithClose> collectionLiPanelWithCloseArray) { 
+		taxonomyPopupPresenter.setSelectedUlContainer(collectionLiPanelWithCloseArray);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}

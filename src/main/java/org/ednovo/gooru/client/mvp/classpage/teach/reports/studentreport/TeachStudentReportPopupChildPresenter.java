@@ -56,8 +56,6 @@ public class TeachStudentReportPopupChildPresenter extends ChildPresenter<TeachS
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
 		Map<String,String> queryParams = new HashMap<String, String>();
 		queryParams.put("userUid", gooruUId);
-		System.out.println("classUId "+classUId);
-		System.out.println("classGooruOid "+classGooruOid);
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			if(classGooruOid!=null) {
 				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, null, null, "progress", queryParams, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
@@ -84,6 +82,8 @@ public class TeachStudentReportPopupChildPresenter extends ChildPresenter<TeachS
 					}
 				});
 			}
+		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			getView().setReportData(null);
 		}
 	}
 }

@@ -37,7 +37,6 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
@@ -698,6 +697,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							@Override
 							public	void onLoginSuccess(){
 								Window.enableScrolling(false);
+								getUiHandlers().setDefaultTypeAndVersion();
+								remixPresenterWidget.DisableMyCollectionsPanelData(false);
 								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
@@ -710,6 +711,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						loginPopupUc.setGlassEnabled(true);
 						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
+						getUiHandlers().setDefaultTypeAndVersion();
+						remixPresenterWidget.DisableMyCollectionsPanelData(false);
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;

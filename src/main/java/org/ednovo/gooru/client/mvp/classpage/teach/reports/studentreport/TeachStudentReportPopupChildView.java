@@ -30,9 +30,9 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport.AssessmentProgressReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
-import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -48,6 +48,8 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 
 	@UiField HTMLPanel reportBodyBlock;
 	
+	private String userId = null;
+	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
 
 	interface TeachCourseReportChildViewUiBinder extends UiBinder<Widget, TeachStudentReportPopupChildView> {
@@ -55,15 +57,19 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 
 	public TeachStudentReportPopupChildView(String userName, String gooruUId) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.userId = gooruUId;
 		setPresenter(new TeachStudentReportPopupChildPresenter(this));
-		System.out.println("1234");
 		getPresenter().getStudentReportData(gooruUId);
 	}
 	
 	@Override
 	public void setReportData(ArrayList<PlanProgressDo> dataList) {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		int size = dataList.size();
+		int size = 0;
+		
+		if(dataList!=null) {
+			size = dataList.size();
+		}
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			for(int i=0;i<size;i++) {
 				reportBodyBlock.add(new SlnCourseReportView(dataList.get(i),i+1));
@@ -73,7 +79,17 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 				reportBodyBlock.add(new SlnUnitReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-				//reportBodyBlock.add(child);
+			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
+			String assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
+			System.out.println("classId "+classId);
+			System.out.println("courseId "+courseId);
+			System.out.println("unitId "+unitId);
+			System.out.println("lessonId "+lessonId);
+			System.out.println("assessmentId "+assessmentId);
+			reportBodyBlock.add(new AssessmentProgressReportChildView(assessmentId, classId, userId, courseId, unitId, lessonId));
 		}
 	}
 }
