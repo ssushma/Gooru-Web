@@ -531,6 +531,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			clearSlot(TAB_PRESENTER_SLOT);
 			showLoginPopupWidget(i18n.GL0590().toUpperCase());
 		}else{
+			searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 			String resourcePlayId =AppClientFactory.getPlaceManager().getRequestParameter("id");
 			ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 			resourceSearchResultDo.setGooruOid(resourcePlayId);
