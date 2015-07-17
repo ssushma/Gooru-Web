@@ -21,6 +21,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.bramosystems.oss.player.core.event.client.PlayerStateEvent.State;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -71,10 +72,11 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	//All Ui fields
 	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
 				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl,lblStartPage,lblEndPage,lblEditSartPageText,lblError;
-	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon,pnlEditContainer;
+	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon,pnlEditContainer,timeEditContainer;
 	@UiField FlowPanel actionVerPanel,narrationConatainer,pnlPdfEdiContainer;
 	@UiField TextBox txtMoveTextBox,startpdfPageNumber,stoppdfPageNumber;
 	@UiField TextArea narrationTxtArea;
+	@UiField TextBox startMinTxt,startSecTxt,stopMinTxt,stopSecTxt;
 	@UiField UlPanel ulGradePanel;
 	@UiField Anchor updateResourceBtn,editInfoLbl,editVideoTimeLbl,editStartPageLbl,copyResource,confirmDeleteLbl,addTages;
 	@UiField HTML resourceNarrationHtml;
@@ -123,6 +125,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlPdfEdiContainer.setVisible(false);
 		lblEditSartPageText.setVisible(false);
 		startStopTimeDisplayText.setVisible(false);
+		timeEditContainer.setVisible(false);
+	//	startMinTxt.addKeyUpHandler(new NumbersOnly());
 
 		ulGradePanel.setStyleName("dropdown-menu");
 		ulGradePanel.setVisible(false);
@@ -393,6 +397,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					}
 					String displayTime=checkLengthOfSting(startMm)+":"+checkLengthOfSting(startSec)
 							+" "+i18n.GL_GRR_Hyphen()+" "+checkLengthOfSting(endMm)+":"+checkLengthOfSting(endSec);
+					
+					setYoutubeTime(startMm,startSec,checkLengthOfSting(endMm),checkLengthOfSting(endSec));
+
 					fromLblDisplayText.setText(displayTime);
 					StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
 			}else{
@@ -405,12 +412,14 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 								totalVideoLength = Integer.parseInt(youtubeInfo);
 								String displayTime=START_MINUTE	+ ":"+ START_SEC+i18n.GL_GRR_Hyphen()
 										+checkForTwoDigits(totalVideoLength/60)+ ":"+ checkForTwoDigits(totalVideoLength%60);
+								setYoutubeTime(START_MINUTE,START_SEC,checkForTwoDigits(totalVideoLength/60),checkForTwoDigits(totalVideoLength%60));
 								fromLblDisplayText.setText(displayTime);
 								StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
 							}else{
 								String displayTime=START_MINUTE+":"+ START_SEC
 												+" "+i18n.GL_GRR_Hyphen()+" "
 												+ START_MINUTE+":"+ END_MINUTE+":"+END_SEC;
+								setYoutubeTime(START_MINUTE,START_SEC,END_MINUTE,END_SEC);
 								fromLblDisplayText.setText(displayTime);
 								StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
 							}
@@ -536,6 +545,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiHandler("btnCancel")
 	public void onclickcancelNarrationBtn(ClickEvent event){
 		resetNarrationDetails();
+		enableOrDisableTimeEdit(true);
 	}
 	/**
 	 * This method is used to reset the narration details on click of cancel and mouse out of this widget.
@@ -568,11 +578,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlEditContainer.setVisible(isValue);
 		pnlArrows.setVisible(isValue);
 		pnlNarration.setVisible(isValue);
-
+	
 		narrationConatainer.setVisible(!isValue);
 		resourceNarrationHtml.setVisible(!isValue);
 		actionVerPanel.setVisible(!isValue);
 	}
+	
+
 	/**
 	 * Update the collection item meta data
 	 */
@@ -582,6 +594,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			narrationTxtArea.setText(narrationText);
 			StringUtil.setAttributes(narrationTxtArea.getElement(), narrationText, narrationText);
 		}
+		
 		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 		resourceNarrationHtml.setHTML(ADD_NARRATION_FOR_YOUR_VIEWERS);
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
@@ -595,7 +608,19 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiHandler("btnUpdate")
 	public void onclickOfnarrationUpdate(ClickEvent event){
 		if(youtube){
-
+			if(timeEditContainer.isVisible()){
+				String startMin=!startMinTxt.getText().trim().equalsIgnoreCase("")?startMinTxt.getText():"00";
+				String statrSec=!startSecTxt.getText().trim().equalsIgnoreCase("")?startSecTxt.getText():"00";
+				String start="00"+":"+startMin+":"+statrSec;
+				String stopMin=!stopMinTxt.getText().trim().equalsIgnoreCase("")?stopMinTxt.getText():"00";
+				String stopSec=!stopSecTxt.getText().trim().equalsIgnoreCase("")?stopSecTxt.getText():"00";
+				String stop="00"+":"+stopMin+":"+stopSec;
+				AppClientFactory.printInfoLogger("...id............"+collectionItem.getCollectionItemId());
+				collectionItem.setStart(start);
+				collectionItem.setStop(stop);
+				updateVideoTime(collectionItem,start,stop);
+			}	
+		
 		}else if(isPdf){
 			updatePdfStartPage();
 		}else{
@@ -610,19 +635,17 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					if (value){
 						narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
 						narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
-
 						narrationTxtArea.getElement().getStyle().setBorderColor("orange");
 						narrationAlertMessageLbl.setText(i18n.GL0554());
 						StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
-
 						narrationAlertMessageLbl.setVisible(true);
 						actionVerPanel.setVisible(true);
 						lblUpdateTextMessage.setVisible(true);
 						MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+					
 					}else{
 						String narration = null;
 						MixpanelUtil.Organize_Click_Edit_Narration_Update();
-
 						if (resourceNarrationHtml.getHTML().length() > 0) {
 							narration = trim(narrationTxtArea.getText());
 							collectionItem.setNarration(narration);
@@ -808,12 +831,51 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	       return result;
 	   }
 	}
+	@UiHandler("editVideoTimeLbl")
+	public void editVideoTimeLblClickEvent(ClickEvent clickEvent){
+		enableOrDisableTimeEdit(false);
+	}
+	public void enableOrDisableTimeEdit(boolean value){
+		pnlEditContainer.setVisible(value);
+		pnlYoutubeContainer.setVisible(value);
+		pnlTimeIcon.setVisible(value);
+		pnlArrows.setVisible(value);
+		editVideoTimeLbl.setVisible(value);
+		timeEditContainer.setVisible(!value);
+		actionVerPanel.setVisible(!value);
+	}
+	
+	public void setYoutubeTime(String startMin,String startSec,String endMin,String endSec){
+		startMinTxt.setText(startMin);
+		startSecTxt.setText(startSec);
+		stopMinTxt.setText(endMin);
+		stopSecTxt.setText(endSec);
+	}
+	public class NumbersOnly implements KeyPressHandler {
+	      
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			  if (!Character.isDigit(event.getCharCode()) 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+	                ((TextBox) event.getSource()).cancelKey();
+	            }
+					
+		}
+    }
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId);
 
 	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);
 
 	public abstract void editResource(CollectionItemDo collectionItem);
-
+	
+	public abstract void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop);
+	
 	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter=collectionContentPresenter;
 	}

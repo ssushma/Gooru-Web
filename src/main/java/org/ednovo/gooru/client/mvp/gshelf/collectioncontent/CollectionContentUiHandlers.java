@@ -326,4 +326,5 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 *
 	 */
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItem);
+	void updateVideoTimeUpdate(CollectionItemDo collectionItemDo);
 }
