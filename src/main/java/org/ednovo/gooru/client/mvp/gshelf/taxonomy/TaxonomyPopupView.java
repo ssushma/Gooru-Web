@@ -16,9 +16,10 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -30,6 +31,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -47,6 +49,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	private PopupPanel appPopUp;
 	
 	@UiField HTMLPanel taxonomyMainContainer;
+	@UiField ScrollPanel scrollDiv,scrollDivDomain;
 	
 	@UiField Image closeBtn;
 	
@@ -65,6 +68,9 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	List<Button> buttonsList = new ArrayList<Button>();
 	
 	List<LiPanelWithClose> liPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
+	
+	int coursePagination,domainPagination = 0;
+	int coursePaginationSubjectId,domainPaginationCourseId = 0;
 	
 	private String viewType;
 	
@@ -225,9 +231,10 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 
 
 	@Override
-	public void addTaxonomyCourses(List<CourseSubjectDo> taxonomyCourseList) {
+	public void addTaxonomyCourses(List<CourseSubjectDo> taxonomyCourseList,Integer subjectId) {
 		courseUlContainer.clear();
-		
+		coursePaginationSubjectId = subjectId;
+
 		if(taxonomyCourseList.size()>0){
 			for(CourseSubjectDo courseSubjectDo:taxonomyCourseList){
 				LiPanel liPanel=new LiPanel();
@@ -237,11 +244,52 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				liPanel.add(title);
 				courseUlContainer.add(liPanel);
 			}
+			
 		}
 		if(courseUlContainer.getWidgetCount()>0){
 			courseUlContainer.getWidget(0).addStyleName("active");
 			previousSelectedCourseLiPanel = (LiPanel) courseUlContainer.getWidget(0);
 		}
+		
+		if(taxonomyCourseList.size()>=20){
+			coursePagination = 20;
+			scrollDiv.addScrollHandler(new ScrollHandler() {
+					
+					@Override
+					public void onScroll(ScrollEvent event) {						
+						if(coursePagination<=60)
+						{
+						getUiHandlers().getCoursespaginatedData(coursePaginationSubjectId,coursePagination);
+						}
+						coursePagination = coursePagination+20;
+						
+						
+					}
+			});
+		}
+	}
+	
+	@Override
+	public void appendTaxonomyCourses(List<CourseSubjectDo> taxonomyCourseList,final Integer subjectId) {
+		
+
+		if(taxonomyCourseList.size()>0){
+			for(CourseSubjectDo courseSubjectDo:taxonomyCourseList){
+				LiPanel liPanel=new LiPanel();
+				Anchor title=new Anchor(courseSubjectDo.getName());
+				liPanel.setTitle(title.getText().trim());
+				title.addClickHandler(new OnClickCourses(liPanel,courseSubjectDo.getCourseId(),title));
+				liPanel.add(title);
+				courseUlContainer.add(liPanel);
+			}
+			
+		}
+		if(courseUlContainer.getWidgetCount()>0){
+			courseUlContainer.getWidget(0).addStyleName("active");
+			previousSelectedCourseLiPanel = (LiPanel) courseUlContainer.getWidget(0);
+		}
+		
+
 	}
 	
 	
@@ -266,8 +314,9 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 
 
 	@Override
-	public void addTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList) {
+	public void addTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList,Integer courseId) {
 		domainUlContainer.clear();
+		domainPaginationCourseId = courseId;
 		if(taxonomyDomainList.size()>0){
 			for(CourseSubjectDo courseSubjectDo:taxonomyDomainList){
 				LiPanel liPanel=new LiPanel();
@@ -285,6 +334,47 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				previousSelectedDomainLiPanel = (LiPanel) domainUlContainer.getWidget(0);
 			}
 		}
+		
+		if(taxonomyDomainList.size()>=20){
+			domainPagination = 20;
+			scrollDivDomain.addScrollHandler(new ScrollHandler() {
+					
+					@Override
+					public void onScroll(ScrollEvent event) {						
+						if(domainPagination<=60)
+						{
+						getUiHandlers().getCoursespaginatedData(domainPaginationCourseId,domainPagination);
+						}
+						domainPagination = domainPagination+20;
+						
+						
+					}
+			});
+		}
+	}
+	@Override
+	public void appendTaxonomyDomains(List<CourseSubjectDo> taxonomyDomainList,Integer courseId) {
+		
+		
+		if(taxonomyDomainList.size()>0){
+			for(CourseSubjectDo courseSubjectDo:taxonomyDomainList){
+				LiPanel liPanel=new LiPanel();
+				Anchor title=new Anchor(courseSubjectDo.getName());
+				liPanel.setTitle(courseSubjectDo.getName());
+				liPanel.setCodeId(courseSubjectDo.getSubdomainId());
+				title.addClickHandler(new OnClickDomain(liPanel,courseSubjectDo.getSubdomainId(),title)); 
+				liPanel.add(title);
+				domainUlContainer.add(liPanel);
+			}
+		}
+		if(domainUlContainer.getWidgetCount()>0){
+			if(!"Unit".equalsIgnoreCase(viewType)){
+				domainUlContainer.getWidget(0).addStyleName("active");
+				previousSelectedDomainLiPanel = (LiPanel) domainUlContainer.getWidget(0);
+			}
+		}
+		
+
 	}
 	
 	public class OnClickDomain implements ClickHandler{
