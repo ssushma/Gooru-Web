@@ -47,6 +47,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.add.AddAssessmentsPresenter;
@@ -68,6 +69,8 @@ import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsRes
 import org.ednovo.gooru.client.mvp.assessments.play.resource.flag.AssessmentsResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.narration.AssessmentsResourceNarrationPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
@@ -125,6 +128,10 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
     private SimpleAsyncCallback<CollectionDo> collectionDetailsAsync;
 
     private AssessmentsPlayerMetadataPresenter metadataPresenter;
+    
+    ShelfMainPresenter shelfMainPresenter;
+    
+    SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 
     private AssessmentsResourcePlayerMetadataPresenter resoruceMetadataPresenter;
 
@@ -440,7 +447,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			AssessmentsResourceInfoPresenter resourceInfoPresenter,AssessmentsResourceNarrationPresenter resourceNarrationPresenter,
 			EventBus eventBus,IsAssessmentsPlayerView view, IsAssessmentsPlayerProxy proxy, AddResourceAssessmentsPresenter addResourcePresenter,
      		AddAssessmentsPresenter addCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,AssessmentsFlagPresenter collectionFlagPresenter,
-     		AssessmentsResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter,AssessmentsEndPresenter collectionEndPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
+     		AssessmentsResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter,AssessmentsEndPresenter collectionEndPresenter,AddResourceContainerPresenter addResourceContainerPresenter,ShelfMainPresenter shelfMainPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.metadataPresenter=metadataPresenter;
@@ -457,6 +464,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		this.signUpViewPresenter=signUpViewPresenter;
 		this.collectionEndPresenter=collectionEndPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
+		this.shelfMainPresenter=shelfMainPresenter;
+		this.searchAddResourceToCollectionPresenter= searchAddResourceToCollectionPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
 
 		getView().setFullScreenButton(resoruceMetadataPresenter.getFullScreenButton());
@@ -1241,8 +1250,18 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	public void setAddResourcesView(String collectionId,String resourceId){
 		addResourceContainerPresenter.setplayerStyle();
 		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(resourceId));
-		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);
+		/*setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);*/
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
+		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
+		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
+		
+		shelfMainPresenter.SetDefaultTypeAndVersion();
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "resource", null);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 	}
 	public void setAddCollectionView(String collectionId){
 		addCollectionPresenter.setCollectionDo(collectionDo);

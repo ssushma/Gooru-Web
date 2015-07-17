@@ -145,10 +145,15 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				myCollDefault.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTreePanel.clear();
 				isFromMyCourse=false;
-				String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(PlaceTokens.SEARCH_RESOURCE.equalsIgnoreCase(nameToken)){
+				String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+				if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+					|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+					|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null)){
+					myCollDefault.setVisible(false);
 					getUiHandlers().getWorkspaceData(0, 20, true, "resource");
 				}else{
+					myCollDefault.setVisible(true);
 					getUiHandlers().getWorkspaceData(0, 20, true, "collection");
 				}
 			}
@@ -303,8 +308,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(floderDo.getType().equals("collection") || ("scollection").equals(floderDo.getType()) || ("assessment").equals(floderDo.getType())){
-						 if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)
-									|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )){
+						String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+						String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+						if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+							|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+							|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null)){
 						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 						 folderTreePanel.addItem(folderItem);
@@ -346,8 +354,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(floderDo.getType().equals("collection") || ("scollection").equals(floderDo.getType()) || ("assessment").equals(floderDo.getType())){
-						 if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)
-									|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )){
+						 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+						 String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+						 if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+									|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+									|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null)){
 							 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 							 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 							 item.addItem(folderItem);
@@ -549,10 +560,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
-			if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)
-					|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )){
+		String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+		 String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+					|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+					|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null)){
 				if(cureentcollectionTreeItem!=null){
 					getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams,isFromMyCourse);
+					//boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
 					/*boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
 					if(flag){
 						lblError.setVisible(false);
