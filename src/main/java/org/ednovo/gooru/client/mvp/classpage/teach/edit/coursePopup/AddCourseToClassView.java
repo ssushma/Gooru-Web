@@ -282,6 +282,13 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			getUiHandlers().connectCourseToClass(classId,currectCourseSelectedTreeItem.getGooruOid());
 		}
 	}
+	@UiHandler("btnAddNew")
+	public void createNewCourse(ClickEvent event){
+		AppClientFactory.printInfoLogger("clicked in create new course");
+		AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.MYCONTENT);
+		hide();
+	}
+	
 	@Override
 	public Anchor getAddButton(){
 		return btnAddNew;

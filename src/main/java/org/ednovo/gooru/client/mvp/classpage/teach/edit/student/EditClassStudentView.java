@@ -253,12 +253,14 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		ancPendingListSeeMore.getElement().setId("lnkPendingListSeeMore");
 		ancPendingListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
 		ancPendingListSeeMore.getElement().setAttribute("title",i18n.GL0508().toLowerCase());
+		ancPendingListSeeMore.setVisible(false);
 
 
 		ancActiveListSeeMore.setText(i18n.GL0508().toLowerCase());
 		ancActiveListSeeMore.getElement().setId("lnkActiveListSeeMore");
 		ancActiveListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
 		ancActiveListSeeMore.getElement().setAttribute("title",i18n.GL0508().toLowerCase());
+		ancActiveListSeeMore.setVisible(false);
 		
 		lblPendingPleaseWait.setVisible(false);
 		lblActivePleaseWait.setVisible(false);
