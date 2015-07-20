@@ -507,8 +507,4 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		type="Course";
 		ShelfMainView.pageNumber=1;
 	}
-	@Override
-	public void addNewContent(String type) {
-		getMyCollectionsRightClusterPresenter().addNewContent(type);
-	}
 }
