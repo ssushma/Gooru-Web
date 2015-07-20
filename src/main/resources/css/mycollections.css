@@ -14,10 +14,131 @@
 	background:#ffffff;
 	box-shadow:0 0 6px rgba(0, 0, 0, 0.05);
 }
-
-#gShelfMainContainer .addCourse div{
-display:inline-block;
+#gShelfMainContainer .floderLeftContainer .myCousesTabMenu{
+	background:#ffffff;
 }
+#gShelfMainContainer .floderLeftContainer .myCousesTabMenu a{
+	color:#999999;
+	font-weight:bold;
+	display:table-cell;
+	width:1%;
+	overflow:hidden;
+	padding:15px 15px;
+	text-align:center;
+	border-right:1px solid #dddddd;
+	position:relative;
+	background: white;
+	box-shadow: none;
+}
+#gShelfMainContainer .floderLeftContainer .myCousesTabMenu a:hover, .floderLeftContainer .myCousesTabMenu a:focus{
+	text-decoration:none;
+	color:#4e9746;
+	opacity:1;
+}
+#gShelfMainContainer .floderLeftContainer .myCousesTabMenu a.mycollectionMenu:hover, .floderLeftContainer .myCousesTabMenu a.mycollectionMenu:focus{
+	text-decoration:none;
+	color:#1076bb;
+	opacity:1;
+}
+#gShelfMainContainer .floderLeftContainer .myCousesTabMenu #mycourseslnk.active {
+  color: #4e9746;
+  border-bottom: 8px solid #4e9746;
+}
+#gShelfMainContainer .floderLeftContainer .myCousesTabMenu a.mycollectionMenu.active {
+  color: #1076bb;
+  border-bottom: 8px solid #1076bb;
+}
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader.createCollectionColor {
+  background: #87badd;
+}
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader.createassessmentColor {
+  background: #fdc876;
+}
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader.createCollectionColor span.plus {
+  background: #87badd;
+}
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader.createassessmentColor span.plus {
+  background: #fdc876;
+}
+
+#gShelfMainContainer .floderLeftContainer .myCousesTabMenu a.active:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #4e9746;
+  height: 8px;
+}
+
+
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader{
+    background: #a6cba2;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0;
+
+}
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader span {
+    float: left;
+    padding: 17px 20px;
+}
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader span.plus {
+    float: right;
+    height: 52px;
+    width: 52px;
+}	
+
+#gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader span.plus {
+    background: #a6cba2;
+    color: #ffffff;
+    display: block;
+    font-size: 33px;
+    font-weight: normal;
+    line-height: 52px;
+    padding: 0;
+    text-align: center;
+	cursor:pointer;
+}
+
+
+#gShelfMainContainer .floderRightContainer .coursesPrimaryHeader{
+	padding:0 0;
+	border-bottom:1px solid #dddddd;
+}
+#gShelfMainContainer .floderRightContainer .coursesPrimaryHeader h3{
+	padding:16px 0;
+	font-size:20px;
+	font-weight:bold;
+	color:#515151;
+	margin:0 0;
+}
+#gShelfMainContainer .floatRightBlock, .textRightBlock{
+	text-align:right;
+}
+#gShelfMainContainer .floderRightContainer .coursesPrimaryHeader .createCourseButton{
+	margin:12px 0;
+}
+
+#gShelfMainContainer button.success {
+	background:#7ab075;
+	border:none;
+  border-radius: 4px 4px;
+  color: #ffffff;
+  display: inline-block;
+  font-family: Arial,sans-serif;
+  padding: 7px 9px 7px 9px;
+}
+#gShelfMainContainer button.success:hover {
+  background:#65a15f;
+  color: #ffffff;
+  cursor: pointer;
+}
+#gShelfMainContainer .createCourseButton button.success {
+	padding: 8px 12px;
+}
+
 
 #gShelfMainContainer .equifier{
 	overflow:hidden;
@@ -57,7 +178,7 @@ display:inline-block;
 #gShelfMainContainer .collectionScrlPanel {
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
-	min-height:530px;	
+	min-height:430px;	
 	background: none repeat scroll 0% 0% rgb(240, 240, 240);
 }
 #gShelfMainContainer .collectionScrlPanel > div{

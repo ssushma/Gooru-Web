@@ -62,6 +62,8 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void createCollectionItem(String collectionId, String resourceId, AsyncCallback<CollectionItemDo> callback);
 	
+	void createNewCollectionItem(String collectionId, String resourceId,String resourceType,AsyncCallback<CollectionItemDo> callback);
+	
 	void copyCollectionItem(String collectionId, String resourceId, AsyncCallback<CollectionItemDo> callback);
 	
 	void deleteCollectionItem(String collectionItemId, AsyncCallback<Void> callback);
