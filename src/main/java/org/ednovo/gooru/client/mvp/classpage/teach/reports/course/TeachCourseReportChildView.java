@@ -42,6 +42,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
@@ -58,7 +59,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class TeachCourseReportChildView extends ChildView<TeachCourseReportChildPresenter> implements IsTeachCourseReportView {
 
-	@UiField HTMLPanel courseTable, reportContainer, noDataPanel;
+	@UiField HTMLPanel courseTable, reportContainer, noDataPanel, reportPanel;
 	
 	@UiField Anchor studentAnr;
 	
@@ -157,7 +158,7 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 			PlanProgressDo planDo = result.get(rowWidgetCount);
 			HTML studentName = new HTML(planDo.getUserName());
 			studentName.setStyleName("myclasses-mastery-unit-cell-style");
-			studentName.addClickHandler(new StudentCourseView(planDo.getUserName(), planDo.getUserUId()));
+			studentName.addClickHandler(new StudentCourseView("Course View", planDo.getUserName(), planDo.getUserUId()));
 			courseTableWidget.setWidget(rowWidgetCount,0,studentName);
 			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor(color);
 			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
@@ -219,6 +220,7 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	public void onLoad() {
 		super.onLoad();
 		//sortAndFixed();
+		reportPanel.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-100)+"px");
 	}
 	
 	public class ClickUnitName implements ClickHandler {
@@ -240,14 +242,17 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	public class StudentCourseView implements ClickHandler {
 		private String gooruUId = null;
 		private String userName = null;
-		public StudentCourseView(String userName, String gooruUId) {
+		private String courseName = null;
+		
+		public StudentCourseView(String courseName, String userName, String gooruUId) {
+			this.courseName = courseName;
 			this.userName = userName;
 			this.gooruUId = gooruUId;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,gooruUId);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(courseName, userName,gooruUId);
 		}
 	}
 

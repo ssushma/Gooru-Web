@@ -44,7 +44,7 @@ public class MasterReportDo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String title;
 	private String gooruOId;
-	private int sequence;
+	private Integer sequence;
 	private String type;
 	private ArrayList<MasterAssessmentDo> usageData;
 	private ArrayList<MetaDataDo> metaData;
@@ -60,10 +60,10 @@ public class MasterReportDo implements Serializable{
 	public void setGooruOId(String gooruOId) {
 		this.gooruOId = gooruOId;
 	}
-	public int getSequence() {
+	public Integer getSequence() {
 		return sequence;
 	}
-	public void setSequence(int sequence) {
+	public void setSequence(Integer sequence) {
 		this.sequence = sequence;
 	}
 	public String getType() {
