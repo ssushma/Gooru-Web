@@ -371,6 +371,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkContent.setVisible(isVisible);
 		lnkshare.setVisible(isVisible);
 		toggleButton.setVisible(isVisible);
+		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
+			lnkPreview.setVisible(isVisible);
+		}
 	}
 	/**
 	 * 
