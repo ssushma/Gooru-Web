@@ -218,7 +218,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			typeVal=type;
 		}
-		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace(0, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
 	}
 	public ShelfServiceAsync getShelfService() {
