@@ -148,7 +148,6 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 
 	@Override
 	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
-		createObj.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
 		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {

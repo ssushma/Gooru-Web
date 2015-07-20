@@ -650,7 +650,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@Override
 	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount,boolean increasePageNum,boolean insertTop) {
-		System.out.println("displayPendingMembersList:");
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
 		if(!insertTop || isNew){
@@ -671,7 +670,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else{
 			lblPendingPleaseWait.setVisible(false);
 			pendindUserContainer.setVisible(true);
-			System.out.println("InNew:"+isNew);
 			if(!isNew){
 				pendingContainer.clear();
 			}
@@ -776,9 +774,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		this.activeListTotalCount=totalCount;
 		if(activeListTotalCount==0){
 			ancActiveListSeeMore.setVisible(false);
+			tableContainer.clear();
 			Label noActiveStudents = new Label(i18n.GL1527());
 			noActiveStudents.getElement().addClassName("noActiveClassStudents");
-			tableContainer.clear();
 			tableContainer.add(noActiveStudents);
 		}else{
 			if(!isNew){

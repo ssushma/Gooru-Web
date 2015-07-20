@@ -5,7 +5,8 @@
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src="" />
 	<g:HTMLPanel ui:field="mainContainer">
-         <g:HTMLPanel>
+	 	<span:LoadingUc ui:field="cropImageLoading"/>
+	    <g:HTMLPanel ui:field="classpageMainContainer">
             <g:HTMLPanel styleName="bannerInner">
                <g:HTMLPanel styleName="container">
 				<div class="row">

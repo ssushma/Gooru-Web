@@ -428,6 +428,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			for(int i=0;i<folderListDo.size();i++) {
 				shelfTreeWidget = new ShelfTreeWidget(folderListDo.get(i), nextLevel,folderListDo.get(i).getType());
 				shelfTreeWidget.setWidgetPositions(nextLevel, i, selectedWidget.getUrlParams());
+				shelfTreeWidget.setTreeWidgetType(folderListDo.get(i).getType());
 				TreeItem item = new TreeItem(shelfTreeWidget);
 				treeChildSelectedItem.addItem(item);
 				correctStyle(item);
@@ -542,6 +543,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				if(!getShelffCollection(floderDo.getGooruOid())){
 					ShelfTreeWidget shelfTreeWidget = new ShelfTreeWidget(floderDo, 1,floderDo.getType());
 					shelfTreeWidget.setWidgetPositions(1, collectionCount, null);
+					shelfTreeWidget.setTreeWidgetType(floderDo.getType());
 					TreeItem folderItem=new TreeItem(shelfTreeWidget);
 					shelfFolderTree.addItem(folderItem);
 					//When page is refreshed, the folderItem previously selected will be highlighted.
@@ -965,6 +967,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			shelfTreeWidget.setUrlParams(urlParams);
 		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
 			if(getViewType().equalsIgnoreCase(FOLDER)){
+				getCollectionLabel().setText(courseDo.getTitle());
 				shelfTreeWidget.setUrlParams(getTreeParentIds(courseDo));
 			}else{
 				ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getParentItem().getWidget();

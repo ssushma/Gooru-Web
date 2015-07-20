@@ -358,9 +358,15 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 
 	@Override
 	public boolean validateIsAssessments(String collectionType) {
-		boolean flag=true;
-		if(!QUESTION.equalsIgnoreCase(searchResultDo.getCategory()) && !searchResultDo.getQuestionType().equalsIgnoreCase("OE") && ASSESSMENT.equals(collectionType)){
-			flag = false;
+		boolean flag=false;
+		if(ASSESSMENT.equalsIgnoreCase(collectionType)){
+			if(QUESTION.equalsIgnoreCase(searchResultDo.getCategory()) && (searchResultDo.getQuestionType()!=null && !(searchResultDo.getQuestionType().equalsIgnoreCase("OE")))){
+				flag=true;
+			}else{
+				flag=false;
+			}
+		}else{
+			flag=true;
 		}
 		return flag;
 	}
