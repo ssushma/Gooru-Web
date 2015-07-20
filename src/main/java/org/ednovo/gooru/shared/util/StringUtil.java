@@ -753,8 +753,8 @@ public class StringUtil implements ClientConstants {
 	 *
 	 */
 	public static void loadVisualizationLibraries(){
-		boolean status = getScriptStatus();
-		AppClientFactory.printInfoLogger("status : "+status);
+//		boolean status = getScriptStatus();
+//		AppClientFactory.printInfoLogger("status : "+status);
 //		if (!status){
 //			Runnable onLoad = new Runnable() {
 //	            @Override
@@ -775,22 +775,6 @@ public class StringUtil implements ClientConstants {
 //		}
 	}
 
-	public static native boolean getScriptStatus() /*-{
-		var scripts = document.getElementsByTagName("script")
-		var isAva = false;
-//		console.log("scripts.length :"+scripts.length);
-		for (var i = 0; i < scripts.length; ++i) {
-
-			isAva = scripts[i].getAttribute('src') === "http://www.google.com/uds/?file=visualization&v=1&packages=piechart&async=2";
-//			console.log("isAva :"+isAva);
-//			console.log("scripts[i].getAttribute('src') :"+scripts[i].getAttribute('src'))
-		    if( isAva ){
-				isAva = true;
-				break;
-		    }
-		}
-		return isAva;
-	}-*/;
 	public static String capitalizeFirstLetter(String original){
 	    if(original.length() == 0)
 	        return original;
