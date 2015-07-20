@@ -112,6 +112,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionShareTabPresenter=collectionShareTabPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.courseSharePresenter=courseSharePresenter;
+		
+		collectionContentPresenter.setMyCollectionRightClusterPresenter(this);
 		externalAssessmentInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -184,7 +186,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
 				shelfMainPresenter.getMyCollectionsListPresenter().getView().loadingImage();
-				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true,folderObj);
+				shelfMainPresenter.getMyCollectionsListPresenter().setData(type, getFolderListDoChild(), true, true, folderObj);
+				//shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true,folderObj);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
 		}else if(index==3){
