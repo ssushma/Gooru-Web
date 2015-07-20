@@ -363,7 +363,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void updateWidgetCount(CollectionItemDo collectionItem){
 		myCollectionsRightClusterPresenter.getShelfMainPresenter().updateWidgetsCount(collectionItem);
-		//return myCollectionsRightClusterPresenter.getShelfMainPresenter();
 	}
 }
 

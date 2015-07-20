@@ -55,7 +55,7 @@ public class DepthKnowledgeView extends Composite {
 	}
 	
 	public Map<Integer, String> getSelectedValue(){
-		
+		selectedValues=new HashMap<Integer, String>();
 		int count=detailsContainer.getWidgetCount();
 		for(int i=0;i<count;i++){
 			Widget widget=detailsContainer.getWidget(i);
@@ -79,7 +79,7 @@ public class DepthKnowledgeView extends Composite {
 	
 	public void setFolderDo(FolderDo folderDo){
 		AppClientFactory.printInfoLogger(" folder DOK");
-		reset();
+	//	reset();
 		if(folderDo!=null){
 			setSelectedValues(folderDo.getDepthOfKnowledge());
 
@@ -99,9 +99,7 @@ public class DepthKnowledgeView extends Composite {
 		}
 	}
 	public void setSelectedValues(List<checkboxSelectedDo> list){
-		
 		selectedValues=new HashMap<Integer, String>();
-		CollectionItemDo collectionItemDo=new CollectionItemDo();
 		int count=detailsContainer.getWidgetCount();
 		if(list!=null){
 			for(checkboxSelectedDo checkboxSelectedDoObj:list){

@@ -96,7 +96,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class AssignPopupVc extends PopupPanel {
 
 	@UiField
-	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer,assignPopupContent;
+	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer,assignPopupContent,contentBorderPanel;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -221,6 +221,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		ftmPanel = new HTMLPanel("");
 
 		htmlLoginPanel.setVisible(false);
+		contentBorderPanel.setVisible(false);
 
 		loadingImageLabel.setVisible(true);
 		popupContentAssign.setVisible(false);
@@ -234,7 +235,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 					if (AppClientFactory.isAnonymous()) {
 						hideContainers();
 					} else {
-						loadListContainers();
+						//loadListContainers();
 					}
 				}
 				loadingImageLabel.setVisible(false);
@@ -260,9 +261,11 @@ public abstract class AssignPopupVc extends PopupPanel {
 	public void hideContainers() {
 		htmlEvenPanelContainer.setVisible(false);
 		htmlLoginPanel.setVisible(true);
+		contentBorderPanel.setVisible(true);
 	}
 
 	public void loadListContainers() {
+		AppClientFactory.printInfoLogger("###loadListContainers###");
 		AssignCollectionView assignWidget = new AssignCollectionView(
 				collectionDoGlobal) {
 			@Override
@@ -423,6 +426,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		htmlLoginPanel.getElement().setId("epnlHtmlLoginPanel");
 		signUpStyles.getElement().setId("pnlSignUpStyles");
 		htmlEvenPanelContainer.getElement().setId("epnlHtmlEvenPanelContainer");
+		contentBorderPanel.getElement().setId("epnlcontentBorderPanelId");
+		contentBorderPanel.setVisible(false);
 	}
 
 	@UiHandler("swithUrlLbl")
@@ -745,7 +750,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 							AppClientFactory.setUserflag(true);
 							AppClientFactory.resetPlace();
 
-							loadListContainers();
+							//loadListContainers();
 							MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
 						}else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 							loginButton.setVisible(true);
@@ -880,7 +885,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		@Override
 		public void setLoginStatusHandler(boolean isLoggedIn) {
 			if(isLoggedIn) {
-				loadListContainers();
+				//loadListContainers();
 			}
 		}
 	};

@@ -58,6 +58,7 @@
 				<g:Label styleName="col-md-8 col-sm-7 errorMessage"
 					ui:field="lblGradeErrorMsg" />
 			</div>
+			<div styleName="clearfix"></div>
 			<div class="tagCourseOptions">
 				<w:AudienceView ui:field="audienceContainer"></w:AudienceView>
 				<div class="clearfix"></div>

@@ -31,5 +31,7 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  *
  */
 public interface CollectionShareTabUiHandlers extends BaseUiHandlers {
+
+	void disableCollabaratorOptions(boolean b);
 	
 }
