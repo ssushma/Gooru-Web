@@ -64,7 +64,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class TeachLessonReportChildView extends ChildView<TeachLessonReportChildPresenter> implements IsTeachLessonReportView {
 
-	@UiField HTMLPanel lessonTablePanel;
+	@UiField HTMLPanel lessonTablePanel, dashboardContainer;
 	
 	@UiField HTMLEventPanel allContentPanel;
 	
@@ -151,6 +151,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	public void onLoad() {
 		super.onLoad();
 		//sortAndFixed();
+		dashboardContainer.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-120)+"px");
 	}
 	
 	public void setDataTable(ArrayList<MasterReportDo> collectionProgressData, String contentView) {
@@ -180,9 +181,9 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 					 }
 					 questionColumnIndex++;
 				}else{
-					 HTML resourcePnl=new HTML("Resource&nbsp;"+collectionProgressDataDo.getSequence());
-					 adTable.setHeaderWidget(rowCount+1,resourcePnl);
-					 resourceColumnIndex++;
+						HTML resourcePnl=new HTML(collectionProgressDataDo.getSequence()+":&nbsp;Resource");
+						adTable.setHeaderWidget(rowCount+1,resourcePnl);
+						resourceColumnIndex++;
 				}
 			}
 			if(defaultUserDataForUsers!=null){
@@ -393,7 +394,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,userId);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(collectionTitle.getText(),userName,userId);
 		}
 	}
 	
