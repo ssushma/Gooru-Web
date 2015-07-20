@@ -269,9 +269,13 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			}
 			getUiHandlers().getLessonPlanData(contentGooruIds);
 		}
+		System.out.println("matchedCount "+matchedCount);
+		System.out.println("size "+size);
+		
 		if(matchedCount==0&&size==1) {
 			previousContentStr = null;
 			nextContentStr = null;
+			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
 		} else if(matchedCount==0&&size>1) {
 			previousContentStr = null;
 			nextContentStr = dataList.get(matchedCount+1).getGooruOId();
