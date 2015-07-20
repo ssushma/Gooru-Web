@@ -93,11 +93,11 @@ public class CenturySkillsPresenter extends PresenterWidget<IsCenturySkillsView>
 			addCenturyPresenter.setAddResourceData(getView().getSelectedCenturyValuesThroughAutosuggest());
 		}
 		String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-		if(collectionUid!=null){
+		/*if(collectionUid!=null){*/
 			addCenturyPresenter.setCollectionIdFromCollectionInfo(collectionUid,getView().getSelectedCenturyValuesThroughAutosuggest());
 			addToPopupSlot(addCenturyPresenter);
 			getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
-		}
+	/*	}*/
 	}
 	
 	@Override
