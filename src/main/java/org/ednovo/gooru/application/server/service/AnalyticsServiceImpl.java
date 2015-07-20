@@ -26,6 +26,7 @@ package org.ednovo.gooru.application.server.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.TimerTask;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsService;
+import org.ednovo.gooru.application.server.ArrayListSorter;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
@@ -196,6 +198,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			logger.error("getUserSessionDataByUser 200statuscode"+jsonResponseRep.getStatusCode());
 			try {
 				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<ArrayList<UserDataDo>>() {});
+				Collections.sort(collectionResourcesList, new ArrayListSorter("sequence", true));
 				logger.info("collectionResourcesList--"+collectionResourcesList);
 			} catch (JSONException e) {
 				logger.error("Exception::", e);

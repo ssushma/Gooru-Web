@@ -285,7 +285,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        data.addRows(rowCount);
 
 				        for(int i=0;i<result.size();i++) {
-				        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
+				        	data.setCell(rowVal, 0,result.get(i).getSequence(), null, getPropertiesCell());
 				            //set Format
 				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 				              String categoryStyle="";
@@ -394,7 +394,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        data.addRows(rowCount);
 
 			        for(int i=0;i<result.size();i++) {
-			        		data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+			        		data.setCell(rowVal, 0, result.get(i).getSequence(), null, getPropertiesCell());
 				            //set Format
 				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 				              String categoryStyle="";
@@ -507,7 +507,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        data.addColumn(ColumnType.STRING, i18n.GL3262());
 			        data.addRows(result.size());
 			        for(int i=0;i<result.size();i++) {
-			        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+			        	data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
 
 			            //Set Question Title
 			            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -575,7 +575,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        data.addColumn(ColumnType.STRING, i18n.GL3262());
 		        data.addRows(result.size());
 		        for(int i=0;i<result.size();i++) {
-		        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+		        	data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
 
 		            //Set Question Title
 		            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -662,7 +662,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        if(result.size()!=0){
 						        for(int i=0;i<result.size();i++) {
 						        	isTickdisplay=false;
-						            data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+						            data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
 
 						            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 						            questionTitle.setStyleName(res.css().alignCenterAndBackground());
@@ -886,8 +886,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        data.addRows(result.size());
 		      if(result.size()!=0){
 					        for(int i=0;i<result.size();i++) {
-					            data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-
+					            data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
 					            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 					            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 					            questionTitle.setStyleName(res.css().alignLeft());
