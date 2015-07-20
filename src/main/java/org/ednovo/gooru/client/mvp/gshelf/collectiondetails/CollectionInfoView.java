@@ -617,9 +617,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 				createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
 				createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
-				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}

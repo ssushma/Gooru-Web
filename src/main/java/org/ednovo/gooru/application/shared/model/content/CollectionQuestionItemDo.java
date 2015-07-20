@@ -25,7 +25,6 @@
 package org.ednovo.gooru.application.shared.model.content;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,9 +34,10 @@ import org.ednovo.gooru.application.shared.model.code.CodeDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class CollectionQuestionItemDo implements Serializable {
+public class CollectionQuestionItemDo implements IsSerializable {
 
 	/**
 	 *

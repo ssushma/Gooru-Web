@@ -37,7 +37,7 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
-	<sg:FooterUc />
+	<!-- <sg:FooterUc /> -->
   </g:HTMLPanel>
 </ui:UiBinder> 
 

@@ -82,6 +82,8 @@ public class UserDataDo implements IsSerializable{
 	private String resourceFormat;
 	private String title;
 
+	private Integer sequence;
+
 	public int getReaction() {
 		return reaction;
 	}
@@ -280,5 +282,11 @@ public class UserDataDo implements IsSerializable{
 	}
 	public void setGooruOId(String gooruOId) {
 		this.gooruOId = gooruOId;
+	}
+	public Integer getSequence() {
+		return sequence;
+	}
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 }

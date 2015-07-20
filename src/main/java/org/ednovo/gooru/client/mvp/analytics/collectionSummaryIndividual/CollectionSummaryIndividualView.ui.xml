@@ -17,7 +17,7 @@
 			<g:Label ui:field="userInfo" text="{i18n.GL3343}"></g:Label>
 			<g:HTMLPanel ui:field="individualOpenendedData"  styleName="{unitStyle.css.individualScore}" />
 			<g:HTMLPanel ui:field="individualResourceBreakdownDatapnl">
-				 <g:HTMLPanel styleName="{unitStyle.css.collectionOverViewpnl}">
+				 <g:HTMLPanel styleName="{unitStyle.css.collectionOverViewpnl}" ui:field="panelOverview">
 				 	   <g:Label styleName="{unitStyle.css.collectionOverviewText}" text="{i18n.GL2274}" title="{i18n.GL2274}" ui:field="lblCollectionOverview"></g:Label>
 
 					 	<div class="{unitStyle.css.collectionTimeSpentDetails} {unitStyle.css.no_gutter}">
