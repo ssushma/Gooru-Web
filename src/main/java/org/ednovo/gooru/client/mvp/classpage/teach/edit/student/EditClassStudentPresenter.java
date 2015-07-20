@@ -65,7 +65,6 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	public EditClassStudentPresenter(EventBus eventBus,IsEditClassStudentView view){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		this.classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 	}
 	
 	
@@ -116,6 +115,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			getView().setReportView();
 		} else {
 			getView().setRoasterView();
+			classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 			if(classId != null){
 				generateShareLink(classId);
 				getActiveMembersListByCollectionId(classId,pageSize*activeListPageNum, pageSize, "active",true,true,false);
