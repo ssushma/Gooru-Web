@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -84,4 +85,6 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	void reorderShelfItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);
 
 	String getViewType();
+
+	void updateWidgetsCount(CollectionItemDo collectionItem);
 }

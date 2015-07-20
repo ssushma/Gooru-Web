@@ -424,9 +424,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(lessonTitle.getText());
 			createOrUpDate.setStandardIds(getSelectedStandards());
-			String id= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
-			if(id!=null){
-				getUiHandlers().updateLessonDetails(createOrUpDate,id,isCreate,type,courseObj);
+			if(courseObj!=null && courseObj.getGooruOid()!=null){
+				getUiHandlers().updateLessonDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,type,courseObj);
 			}else{
 				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
 			}
@@ -598,5 +597,4 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 		return false;
 	}
-	
 }

@@ -134,7 +134,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	protected void onReveal(){
 		super.onReveal();
 		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
-
 		setDepthofKnowledgeDetails();
 		setAudienceDetails();
 		Window.enableScrolling(true);
@@ -208,7 +207,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				params.put(O1_LEVEL, o1);
 			}
 			AppClientFactory.getInjector().getfolderService().createCollection(createObj, parentId, false, new SimpleAsyncCallback<FolderDo>() {
-
 				@Override
 				public void onSuccess(FolderDo result) {
 					params.put("id", result.getGooruOid());
@@ -236,8 +234,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				}
 			});
 		}
-		
-		
 	}
 
 	/*private void createCollectionInFolder() {
@@ -303,9 +299,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				}
 			});
 		}
-		
-		
-		
 	}
 
 	@Override
