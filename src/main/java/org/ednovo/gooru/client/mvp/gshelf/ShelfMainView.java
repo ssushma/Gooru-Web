@@ -1083,7 +1083,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			//organizeRootPnl.addStyleName("active");
 			treeChildSelectedItem.remove();
 			Map<String, String> params= new HashMap<String, String>();
-			params.put("view", "Folder");
+			params.put("view", "Course");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
 		}else if(UNIT.equalsIgnoreCase(currentTypeView)){
 			ShelfTreeWidget deletedTreeParentWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();

@@ -103,6 +103,7 @@ public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionSha
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put(ClientConstants.TYPE, AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
 		params.put(ClientConstants.SHARETYPE, ClientConstants.SHARE);
+		params.put("collectionType", folderDo.getType());
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderDo.getGooruOid(),params, new SimpleAsyncCallback<Map<String,String>>() {
 			@Override
 			public void onSuccess(final Map<String, String> collectionShare) {
