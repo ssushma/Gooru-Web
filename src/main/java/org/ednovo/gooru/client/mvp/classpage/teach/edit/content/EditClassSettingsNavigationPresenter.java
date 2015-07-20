@@ -58,8 +58,6 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	
 	EditClassContentPresenter editClassContentPresenter;
 	
-	ClasspageDo classpageDo;
-	
 	AddCourseToClassPresenter addCourseToClassPresenter;
 	
 	@Inject
@@ -107,7 +105,6 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	}
 
 	public void setClassDetails(ClasspageDo classpageDo) {
-		this.classpageDo=classpageDo;
 		editClassSettingsPresenter.setClassData(classpageDo);
 		editClassContentPresenter.setClassData(classpageDo);
 	}

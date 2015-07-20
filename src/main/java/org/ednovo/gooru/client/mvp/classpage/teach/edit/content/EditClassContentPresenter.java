@@ -56,10 +56,6 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  */
 public class EditClassContentPresenter extends PresenterWidget<IsEditClassContentView> implements EditClassContentViewUiHandler {
 	
-	ClasspageDo classpageDo;
-	
-	String unitId;
-	
 	int offset=0;
 	
 	int limit=25;
@@ -119,7 +115,6 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	}
 
 	public void setClassData(ClasspageDo classpageDo) {
-		this.classpageDo=classpageDo;
 		getView().setClassData(classpageDo);
 	}
 

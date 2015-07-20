@@ -56,9 +56,9 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	}
 	
 	@UiField HTMLPanel floderTreeContainer;
-	@UiField Anchor cancelResourcePopupBtnLbl;
+	@UiField Anchor cancelResourcePopupBtnLbl,btnAddNew;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
-	@UiField Button btnAddNew,btnAddExisting;
+	@UiField Button btnAddExisting;
 	@UiField Label addtocollHeaderText,addingTextLbl,lblEmptyErrorMessage,lblError;
 	
 	String classId;
@@ -229,7 +229,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 				if(folderDo.getType().equalsIgnoreCase("course")){
 					folderContainer.removeStyleName("foldermenuLevel");
 					floderTreeContainer.getElement().setId("gShelfMainContainer");
-					folderContainer.addStyleName("folderLevel");
+					folderContainer.addStyleName("courseLevel");
 					folderContainer.addStyleName("course");
 					folderContainer.getElement().getStyle().setBackgroundColor("white");
 				}
@@ -283,7 +283,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		}
 	}
 	@Override
-	public Button getAddButton(){
+	public Anchor getAddButton(){
 		return btnAddNew;
 	}
 	@Override

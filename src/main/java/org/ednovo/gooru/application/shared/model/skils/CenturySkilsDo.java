@@ -24,11 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.skils;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : CenturySkilsDo.java
  * 
@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class CenturySkilsDo implements Serializable{
+public class CenturySkilsDo implements IsSerializable{
 	/**
 	 */
 	private static final long serialVersionUID = 1L;
