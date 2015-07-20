@@ -188,14 +188,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		logger.info("getUserSessionDataByUser url:+--- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		logger.error("getUserSessionDataByUser statuscode::"+jsonResponseRep.getStatusCode());
+		logger.info("getUserSessionDataByUser statuscode::"+jsonResponseRep.getStatusCode());
 		try{
-		logger.error("jsonres--"+jsonRep.getJsonObject());
+		logger.info("jsonres--"+jsonRep.getJsonObject());
 		}catch(Exception e){
 		e.printStackTrace();
 		}
 		if(jsonResponseRep.getStatusCode()==200){
-			logger.error("getUserSessionDataByUser 200statuscode"+jsonResponseRep.getStatusCode());
+			logger.info("getUserSessionDataByUser 200statuscode"+jsonResponseRep.getStatusCode());
 			try {
 				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<ArrayList<UserDataDo>>() {});
 				Collections.sort(collectionResourcesList, new ArrayListSorter("sequence", true));
@@ -206,7 +206,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}else{
 			logger.error("Exception::");
 		}
-		logger.error("reult obj--"+collectionResourcesList.size());
+		logger.info("reult obj--"+collectionResourcesList.size());
 		return collectionResourcesList;
 	}
 
