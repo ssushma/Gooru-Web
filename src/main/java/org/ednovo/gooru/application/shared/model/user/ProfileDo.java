@@ -24,14 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 import org.ednovo.gooru.application.shared.model.code.ProfileCodeDo;
 
-public class ProfileDo implements Serializable {
+public class ProfileDo implements IsSerializable {
 
 
 	/**
