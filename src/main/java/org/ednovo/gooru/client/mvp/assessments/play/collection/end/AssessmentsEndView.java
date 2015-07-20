@@ -344,6 +344,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			final AdvancedFlexTable adTable=new AdvancedFlexTable();
 			adTable.removeAllRows();
 			adTable.getElement().setId("report-student-assessment-report");
+			adTable.addStyleName("table table-bordered reportTableStyle");
 			questionsTable.add(adTable);
 
 			Label heading1 = new Label(i18n.GL3259());
@@ -525,7 +526,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 			}
 //			sortAndFixed();
-			adTable.addStyleName("table table-bordered reportTableStyle");
+
 		}else {
 			Label erroeMsg=new Label();
 			erroeMsg.setStyleName(STYLE_ERROR_MSG);
