@@ -132,5 +132,4 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	void refreshUserShelfCollections();
 	
 	void updateWidgetsCount(CollectionItemDo collectionItem);
-	void addNewContent(String string);
 }
