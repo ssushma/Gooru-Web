@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -110,6 +112,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	private String clickType;
 	String title,description,category,thumbnailUrl;
 
+	Map<String, ContentResourceWidgetWithMove> moveWidgets=new HashMap<String, ContentResourceWidgetWithMove>();
 	private static final String MESSAGE_HEADER = i18n.GL0748();
 	private static final String MESSAGE_CONTENT = i18n.GL0891();
 
@@ -271,6 +274,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			};
 			widgetMove.setPresenter(collectionContentPresenter);
 			widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
+			moveWidgets.put(collectionItem.getCollectionItemId(), widgetMove);
 			pnlReosurceList.insert(widgetMove, index);
 			index++;
 		}else{
@@ -571,7 +575,11 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		pnlReosurceList.add(loadingImage);
 	}
 
+	@Override
 	public void setCollectionDetails(CollectionItemDo collectionItemDo){
-		
+		ContentResourceWidgetWithMove contentResourceWidgetWithMove=moveWidgets.get(collectionItemDo.getCollectionItemId());
+		if(contentResourceWidgetWithMove!=null){
+			contentResourceWidgetWithMove.setCollectionDetails(collectionItemDo);
+		}
 	}
 }

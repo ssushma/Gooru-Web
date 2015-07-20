@@ -207,4 +207,5 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	void hideUpdateOwnResourcePopup();
 	
 	public void getResourceListPanel();
+	void setCollectionDetails(CollectionItemDo collectionItemDo);
 }

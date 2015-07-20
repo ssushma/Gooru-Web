@@ -208,6 +208,12 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		}
 		
 	}
+	
+	public void showPublishBtn(){
+		rbPublic.setVisible(true);
+		lblPublishPending.setVisible(false);
+		publishedPanel.setVisible(false);
+	}
 
 	@Override
 	public void setCollectionShareData(Map<String, String> shareUrlsList){
@@ -426,10 +432,12 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
+					showPublishBtn();
 				}else if (share.equalsIgnoreCase("anyonewithlink")) {
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
+					showPublishBtn();
 				}else {
 					publicShareFloPanel.removeStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
