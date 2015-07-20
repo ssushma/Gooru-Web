@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.InfoUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -500,16 +501,18 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
+		this.courseObjG=courseObj;
+		standardsUI.clear();
 		resetDOK_Century_Lang();
 		depthOfKnowledgeContainer.setFolderDo(courseObj);
 		audienceContainer.setFolderDetails(courseObj);
 		getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
 		languageObjectiveContainer.setLanguageObjective(courseObj);
 		this.type = type;
+		
 		ulSelectedItems.clear();
 		selectedValues.clear();
 		if(courseObj!=null){
-			this.courseObjG=courseObj;
 			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
@@ -555,6 +558,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	public void setStaticData(String type)
 	{   
@@ -609,6 +613,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setDescription(learningObjective.getText());
 				createOrUpDate.setCollectionType(collectionType);
 				createOrUpDate.setStandardIds(getSelectedStandards());
+				createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+				createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
+				createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
+				createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);

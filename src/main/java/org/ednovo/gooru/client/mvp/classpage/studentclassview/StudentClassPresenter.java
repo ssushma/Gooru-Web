@@ -127,6 +127,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			initParam();
 		}
 	}
+	
 	private void initParam() {
 		getView().clearAll();
 	}
@@ -212,6 +213,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 
 	@Override
 	public void getClasspageDetails() {
+		getView().setEmptyContainerVisiblity(false);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
 			@Override

@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.EmPanel;
 import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.SpanPanel;
 
 import com.google.gwt.core.client.GWT;
@@ -79,9 +80,10 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@UiField SimplePanel learningMapContainer;
 	@UiField Image classImage, teacherImage, studentImage;
 	@UiField SimpleCheckBox switchCheckBox;
-	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar, planProgressPanel;
+	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar, planProgressPanel, classpageMainContainer;
 	@UiField Button joinClassBtn, teachViewBtn;
 	@UiField Label studentViewLbl;
+	@UiField LoadingUc cropImageLoading;
 	
 	ClasspageDo classpageDo;
 	
@@ -107,6 +109,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	public StudentClassView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		switchCheckBox.addClickHandler(new ClasspageTabNavigator());
+		setDebugIds();
 	}
 
 	@Override
@@ -117,6 +120,18 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@Override
 	public void clearAll() {
 		
+	}
+	
+	private void setDebugIds() {
+		cropImageLoading.setLoadingText(i18n.GL1234());
+		cropImageLoading.getElement().setId("loadingUcCropImageLoadingInClasspage");
+		setEmptyContainerVisiblity(false);
+	}
+	
+	@Override
+	public void setEmptyContainerVisiblity(boolean isVisible) {
+		cropImageLoading.setVisible(!isVisible);
+		classpageMainContainer.setVisible(isVisible);
 	}
 	
 	@Override
@@ -166,6 +181,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 					}
 		};
 		AppClientFactory.getEventBus().addHandler(OpenJoinClassPopupEvent.TYPE,openJoinClassPopupHandler);
+		setEmptyContainerVisiblity(true);
 	}
 	
 	@Override
