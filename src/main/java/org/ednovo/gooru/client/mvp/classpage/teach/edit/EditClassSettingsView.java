@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.event.setClassImageEvent;
 import org.ednovo.gooru.client.mvp.classpage.event.setClassImageHandler;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
@@ -112,8 +113,6 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	private PopupPanel toolTipPopupPanelNew1 = new PopupPanel();
 
 	private static final List<String> gradeList = new ArrayList<String>();
-
-	ClasspageDo classpageDo;
 
 	boolean sharing;
 
@@ -441,8 +440,6 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	 */
 	@Override
 	public void setData(ClasspageDo classpageDo) {
-			this.classpageDo=classpageDo;
-			getUiHandlers().generateShareLink(classpageDo.getClassUid());
 			if(classpageDo != null){
 				classTitleTextLbl.setText(classpageDo.getName());
 				classCodeTxtPanel.setText(classpageDo.getClassCode());
@@ -478,7 +475,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 				}
 
 			}
-
+			getUiHandlers().generateShareLink(classpageDo.getClassUid());
 	}
 
 

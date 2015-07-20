@@ -118,6 +118,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
+		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
 
 	}
 
@@ -133,7 +134,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	@Override
 	protected void onReveal(){
 		super.onReveal();
-		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
 		setDepthofKnowledgeDetails();
 		setAudienceDetails();
 		Window.enableScrolling(true);
@@ -234,6 +234,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				}
 			});
 		}
+		Window.scrollTo(0, 0);
 	}
 
 	/*private void createCollectionInFolder() {
@@ -247,11 +248,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	public void setData(FolderDo folderObj, String type) {
 		getView().setCouseData(folderObj,type);
-		if(folderObj!=null){
-			AppClientFactory.printInfoLogger("......setData.......AU......"+folderObj.getAudience());
-			AppClientFactory.printInfoLogger("......setData.......DOK......"+folderObj.getDepthOfKnowledge());
-			AppClientFactory.printInfoLogger("......setData........skills....."+folderObj.getSkills());
-		}
 		if(!getViewType().equalsIgnoreCase(FOLDER)){
 			callCourseInfoTaxonomy();
 		}
@@ -299,6 +295,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				}
 			});
 		}
+		Window.scrollTo(0, 0);
 	}
 
 	@Override

@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
@@ -85,6 +84,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	
 	Map<Integer, ArrayList<String>> selectedValues=new HashMap<Integer,ArrayList<String>>();
 	
+	List<Button> buttonsList = new ArrayList<Button>();
+	
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
@@ -108,11 +109,18 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, false);
 			}
 		});
+		addAllTaxonomyButtons();
 		btnK12.addClickHandler(new CallTaxonomy(1));
 		btnHigherEducation.addClickHandler(new CallTaxonomy(2));
 		btnProfessionalLearning.addClickHandler(new CallTaxonomy(3));
 	}
 	
+	private void addAllTaxonomyButtons() {
+		buttonsList.add(btnK12);
+		buttonsList.add(btnHigherEducation);
+		buttonsList.add(btnProfessionalLearning);
+	}
+
 	class CallTaxonomy implements ClickHandler{
 		int selectedIndex;
 		CallTaxonomy(int selectedIndex){
@@ -120,13 +128,12 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			removeGradeButtonStyleName();
 			if(selectedIndex==1){
-				btnK12.addStyleName(ACTIVE);
+				setButtonActiveStyle(btnK12);
 			}else if(selectedIndex==2){
-				btnHigherEducation.addStyleName(ACTIVE);
+				setButtonActiveStyle(btnHigherEducation);
 			}else{
-				btnProfessionalLearning.addStyleName(ACTIVE);
+				setButtonActiveStyle(btnProfessionalLearning);
 			}
 			getUiHandlers().callTaxonomyService(selectedIndex);
 		}
@@ -134,11 +141,11 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	/**
 	 * To remove hilight styles
 	 */
-	void removeGradeButtonStyleName() {
+	/*void removeGradeButtonStyleName() {
 		btnK12.removeStyleName(ACTIVE);
 		btnHigherEducation.removeStyleName(ACTIVE);
 		btnHigherEducation.removeStyleName(ACTIVE);
-	}
+	}*/
 	/**
 	 * This method will display the Grades according to the subject
 	 */
@@ -206,8 +213,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public void setCourseList(List<CourseSubjectDo> libraryCode) {
 		ulMainGradePanel.clear();
-		removeGradeButtonStyleName();
-		btnK12.addStyleName(ACTIVE);
+		
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
@@ -299,6 +305,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		this.courseObj=courseObj;
 		ulSelectedItems.clear();
 		selectedValues.clear();
+		setButtonActiveStyle(btnK12);
 		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
 		
 		audienceContainer.setFolderDetails(courseObj);
@@ -375,5 +382,15 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public FolderDo getCourseDetails(){
 		return courseObj;
+	}
+	
+	private void setButtonActiveStyle(Button activeButton) { 
+		for(Button button:buttonsList){
+			if(button==activeButton){
+				button.addStyleName(ACTIVE);
+			}else{
+				button.removeStyleName(ACTIVE);
+			}
+		}
 	}
 }
