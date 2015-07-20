@@ -265,15 +265,14 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
-		if(resourceSearchResultDo.getRatings().getCount()!=0){
+		if(resourceSearchResultDo.getRatings()!=null && resourceSearchResultDo.getRatings().getCount()!=0){
 			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
 			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		}
-		
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
-		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
-        String description = resourceSearchResultDo.getDescription();
+		String category = resourceSearchResultDo.getNewResourceFormat().getValue() != null ? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
+		String description = resourceSearchResultDo.getDescription();
         String title = "";
         String resourceTitle;
         if (resourceSearchResultDo.getResourceTitle().contains("class")){
@@ -281,9 +280,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
         }else{
         	title = StringUtil.truncateText(resourceSearchResultDo.getResourceTitle(), 38);
         }
+        
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
-		
-		
 		if(resourceSearchResultDo.getAggregator()!=null){
 			 String aggregatorData = "";
 			for (String aggregator: resourceSearchResultDo.getAggregator()) {
@@ -315,9 +313,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				publisherData=publisherData.substring(0, publisherData.length()-1);
 			}
 		}
-		
 		renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
-		
         renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
@@ -335,7 +331,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		if (lblResourceTitle.getText().length()>38){
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
-		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
 		
 		if(setVisibility)
