@@ -747,8 +747,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			getCenturySkillContainer().add(content);
 		}
 	}
-	
-	
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -810,7 +808,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
 			}
 		}
-		
 	}
 
 	/**
@@ -863,4 +860,3 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		return false;
 	}
 }
-

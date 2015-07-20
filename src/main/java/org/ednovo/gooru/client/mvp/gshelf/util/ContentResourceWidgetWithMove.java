@@ -21,7 +21,6 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.bramosystems.oss.player.core.event.client.PlayerStateEvent.State;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -109,6 +108,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	CollectionContentPresenter collectionContentPresenter;
 
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
+	
 	AddTagesPopupView popup;
 
 	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
@@ -161,7 +161,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		startSecTxt.addKeyPressHandler(new NumbersOnly());
 		stopMinTxt.addKeyPressHandler(new NumbersOnly());
 		stopSecTxt.addKeyPressHandler(new NumbersOnly());
-		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hidePopup(event);
@@ -200,12 +199,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 		spnResourceType.setStyleName(collectionItem.getResource().getResourceFormat() != null ? collectionItem.getResource().getResourceFormat().getValue()+"Icon" : "webpageIcon");
 
-		String resourceType;
-		if(collectionItem.getResource().getResourceType().getResourceType()!=null){
-			resourceType=collectionItem.getResource().getResourceType().getResourceType();
-		}else{
-			resourceType=collectionItem.getResource().getResourceType().getName();
-		}
+		String resourceType = collectionItem.getResource().getResourceType().getName();
 		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
 		checkYoutubeResourceOrNot(collectionItem,youtube);
 		enableEditInfoButton();
