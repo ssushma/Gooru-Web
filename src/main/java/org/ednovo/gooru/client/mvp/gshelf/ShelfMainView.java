@@ -501,7 +501,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	            element.getStyle().setMarginLeft(0, Unit.PX);
 	         }
 	      }
- }
+	 }
 	/** 
 	 * This method is to get the childPageNumber
 	 */
