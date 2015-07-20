@@ -59,10 +59,6 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	
 	private ImageUploadPresenter imageUploadPresenter;
 	
-	String classpageId="";
-	
-	ClasspageDo classpageDo;
-	
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 
 	@Inject
@@ -70,7 +66,6 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.imageUploadPresenter=imageUploadPresenter;
-		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 	}
 	
 	@Override
@@ -98,6 +93,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	
 	@Override
 	public void showImageUploadWidget() {
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setClassPageImage(true);
 		imageUploadPresenter.setEditResourceImage(false);
