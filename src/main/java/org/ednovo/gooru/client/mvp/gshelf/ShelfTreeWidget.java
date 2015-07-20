@@ -444,6 +444,12 @@ public class ShelfTreeWidget extends FocusPanel {
 	public FolderDo getCollectionDo() {
 		return collectionDo;
 	}
+	/**
+	 * @return folderDo
+	 */
+	public FolderDo getFolderDo() {
+		return folderDo;
+	}
 
 	public void glowTitle() {
 		new FontWeightEffect(titleLbl.getElement(), FontWeight.BOLD, FontWeight.NORMAL, 5000);

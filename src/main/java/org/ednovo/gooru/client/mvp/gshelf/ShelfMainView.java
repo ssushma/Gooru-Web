@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.gshelf.util.EmptyCourseBuilderWidget;
@@ -471,7 +472,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			int childWidgetsCount=treeChildSelectedItem.getChildCount();
 			for (int i = 0; i < childWidgetsCount; i++) {
 				ShelfTreeWidget widget = (ShelfTreeWidget)treeChildSelectedItem.getChild(i).getWidget();
-				folderListDoChild.add(widget.getCollectionDo());
+				//If it is a template the object will be null so excluding that
+				if(widget.getCollectionDo()!=null){
+					folderListDoChild.add(widget.getCollectionDo());
+				}
 			}
 			if(FOLDER.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || COURSE.equalsIgnoreCase(selectedWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())|| LESSON.equalsIgnoreCase(selectedWidget.getCollectionDo().getType())){
 				getUiHandlers().setRightPanelData(selectedWidget.getCollectionDo(), selectedWidget.getCollectionDo().getType(),folderListDoChild);
@@ -953,6 +957,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 
 			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			unitShelfTreeWidget.getCollectionDo().getSummary().setLessonCount(unitShelfTreeWidget.getCollectionDo().getSummary().getLessonCount()+1);
 			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
 			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
 
@@ -977,15 +982,28 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				ShelfTreeWidget lessonShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 				urlParams.put(LESSON, lessonShelfTreeWidget.getUrlParams().get(LESSON));
 				urlParams.put(O3_LEVEL,unitShelfTreeWidget.getUrlParams().get(O3_LEVEL));
-				
+
+				if(COLLECTION.equalsIgnoreCase(type)){
+					lessonShelfTreeWidget.getCollectionDo().getSummary().setCollectionCount(lessonShelfTreeWidget.getCollectionDo().getSummary().getCollectionCount()+1);
+				}else{
+					lessonShelfTreeWidget.getCollectionDo().getSummary().setAssessmentCount(lessonShelfTreeWidget.getCollectionDo().getSummary().getAssessmentCount()+1);
+				}
 				urlParams.put("id",courseDo.getGooruOid());
-				urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:ASSESSMENT_URL.equalsIgnoreCase(type)?
-						       ASSESSMENT_URL:ASSESSMENT,courseDo.getTitle());
+				urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:ASSESSMENT_URL.equalsIgnoreCase(type)?ASSESSMENT_URL:ASSESSMENT,courseDo.getTitle());
 				shelfTreeWidget.setUrlParams(urlParams);
 			}
 		}
 	}
-
+	@Override
+	public void updateWidgetsCount(CollectionItemDo collectionItem) {
+		ShelfTreeWidget collectionShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+		String type=collectionItem.getResource().getResourceFormat().getDisplayName();
+		if("Question".equalsIgnoreCase(type)){
+			collectionShelfTreeWidget.getCollectionDo().getSummary().setQuestionCount(collectionShelfTreeWidget.getCollectionDo().getSummary().getQuestionCount()+1);
+		}else{
+			collectionShelfTreeWidget.getCollectionDo().getSummary().setResourceCount(collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()+1);
+		}
+	}
 	private HashMap<String,String> getTreeParentIds(FolderDo courseDo) {
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);

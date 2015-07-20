@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -41,8 +42,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -53,9 +58,21 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class TeachCourseReportChildView extends ChildView<TeachCourseReportChildPresenter> implements IsTeachCourseReportView {
 
-	@UiField HTMLPanel courseTable;
+	@UiField HTMLPanel courseTable, reportContainer, noDataPanel;
 	
-	private ClasspageDo classpageDo = null;
+	@UiField Anchor studentAnr;
+	
+	@UiField Label notePanel;
+	
+	@UiField Image studentImage;
+
+	@UiField Button connectCourseBtn,addStudentBtn;
+	
+	@UiField InlineLabel courseHeaderLbl, courseTitleLbl;
+	
+	private static final String STUDENTIMAGE = "images/Classpage/studentsIco.png";
+
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
 
@@ -64,13 +81,60 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 
 	public TeachCourseReportChildView(ClasspageDo classpageDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.classpageDo = classpageDo;
 		setPresenter(new TeachCourseReportChildPresenter(this));
+		setIds();
 		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
 		if(classId!=null&&courseId!=null) {
 			getPresenter().getCourseMasteryData(classId, courseId);
 		}
+		//setMetaData(classpageDo);
+	}
+	
+	private void setIds() {
+		reportContainer.setVisible(false);
+		noDataPanel.setVisible(false);
+		studentImage.setUrl(STUDENTIMAGE);
+		notePanel.setText(i18n.GL3422());
+		notePanel.getElement().setId("notePanelId");
+		connectCourseBtn.setText(i18n.GL3424());
+		connectCourseBtn.getElement().setId("connectCourseBtnId");
+		addStudentBtn.setText(i18n.GL3423());
+		addStudentBtn.getElement().setId("addStudentBtnId");
+		courseHeaderLbl.setText(i18n.GL0574());
+		courseHeaderLbl.getElement().setId("courseHeaderLblId");
+
+	}
+	
+	private void setMetaData(ClasspageDo classpageDo) {
+		String memberCountStr = classpageDo.getMemberCount();
+		int memberCount = 0;
+		if(memberCountStr!=null) {
+			memberCount = Integer.parseInt(memberCountStr);
+		}
+		if(memberCount>0&&classpageDo.getCourseGooruOid()!=null) {
+			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+			if(classId!=null&&courseId!=null) {
+				getPresenter().getCourseMasteryData(classId, courseId);
+			}
+		} else {
+			if(memberCount==0&&classpageDo.getCourseGooruOid()==null) {
+				setVisibility(false, true, true, false, false);
+			} else if(memberCount>0&&classpageDo.getCourseGooruOid()==null){
+				setVisibility(true, false, true, false, false);
+			} else if(memberCount==0&&classpageDo.getCourseGooruOid()!=null){
+				setVisibility(false, true, false, true, true);
+			}
+		}
+	}
+	
+	private void setVisibility(boolean isStudentAnrVisible, boolean isAddStudentBtnVisible, boolean isConnectCourseBtnVisible, boolean isCourseHeaderLblVisible, boolean isCourseTitleLblVisible) {
+		studentAnr.setVisible(isStudentAnrVisible);
+		addStudentBtn.setVisible(isAddStudentBtnVisible);
+		connectCourseBtn.setVisible(isConnectCourseBtnVisible);
+		courseHeaderLbl.setVisible(isCourseHeaderLblVisible);
+		courseTitleLbl.setVisible(isCourseTitleLblVisible);
 	}
 	
 	@Override

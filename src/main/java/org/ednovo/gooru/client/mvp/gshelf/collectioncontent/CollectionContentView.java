@@ -436,7 +436,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}else{
 			editQuestionPopupWidget.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 		}
-
 	}
 
 	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl, CollectionItemDo collectionItemDo, List<String> tagList) {
@@ -445,8 +444,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			 file.put("filename", new JSONString(originalFilename));
 			 file.put("mediaFilename", new JSONString(mediaFileName));
 		 }
-
-
 		JSONObject attach = new JSONObject();
         attach.put("title", new JSONString(editedTitle));
         attach.put("description", new JSONString(editedDescription));

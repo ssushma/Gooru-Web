@@ -120,6 +120,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public LessonInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		lessonInfo.getElement().setId("pnlLessonInfo");
+		lessonInfo.getElement().setAttribute("style", "min-height:"+Window.getClientHeight()+"px");
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
@@ -464,6 +465,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		this.courseObj=folderObj;
 		ulSelectedItems.clear();
 		selectedValues.clear();
+		standardsUI.clear();
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
 		if(folderObj!=null){
 			if(folderObj.getStandards()!=null && folderObj.getStandards().size()>0){
@@ -596,5 +598,4 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 		return false;
 	}
-	
 }

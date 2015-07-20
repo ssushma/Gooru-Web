@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -276,14 +277,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, result);
 		}else{
 			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
 			createOrUpDate.setTitle(courseTitle.getText());
 			List<Integer> taxonomyList=getSelectedCourseIds();
 			if(taxonomyList.size()>0){
 				lblGradeErrorMsg.setVisible(false);
 				createOrUpDate.setTaxonomyCourseIds(taxonomyList);
-				String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObj);
+				if(courseObj!=null && courseObj.getGooruOid()!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj);
 				}
@@ -361,7 +362,9 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				courseList.add(courseObj);
 			}
 		}
-		courseObj.setTaxonomyCourse(courseList);
+		if(courseObj!=null){
+			courseObj.setTaxonomyCourse(courseList);
+		}
 		return taxonomyCourseIds;
 	}
 	@Override
