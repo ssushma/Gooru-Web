@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 
@@ -57,7 +58,7 @@ public interface AddCourseToClassUiHandlers extends BaseUiHandlers, EventHandler
 	 * @param parentId
 	 */
 	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel,String searchType);
-	public Button getAddButton();
+	public Anchor getAddButton();
 	public void hidePopup();
 		
 	public void connectCourseToClass(String classId, String courseId);
