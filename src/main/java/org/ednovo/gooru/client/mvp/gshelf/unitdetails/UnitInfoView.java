@@ -358,9 +358,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				createOrUpDate.setIdeas(txaBigIdeas.getText());
 				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
 				createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
-				String id= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-				if(id!=null){
-					getUiHandlers().updateUnitDetails(createOrUpDate,id,isCreate,courseObj);
+				if(courseObj!=null && courseObj.getGooruOid()!=null){
+					getUiHandlers().updateUnitDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
 				}else{
 					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate,courseObj);
 				}
