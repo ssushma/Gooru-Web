@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.FolderInfoWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.uc.DeleteContentPopup;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -82,6 +83,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	FolderDo folderObj;
 	
 	DeletePopupViewVc deletePopup = null;
+	
+	DeleteContentPopup deleteContentPopup = null;
 	
 	final String ACTIVE="active";
 	private static final String O1_LEVEL = "o1";
@@ -450,7 +453,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param deletePopup {@link DeletePopupViewVc}
 	 */
 	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId,final String o2UnitId,final String o3LessonId, final String assessmentCollectionId) {
-		deletePopup = new DeletePopupViewVc() {
+		/*deletePopup = new DeletePopupViewVc() {
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 				if(!StringUtil.isEmpty(o2UnitId) && UNIT.equalsIgnoreCase(currentTypeView)){
@@ -514,7 +517,78 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		deletePopup.setNegitiveButtonText(i18n.GL0142());
 		deletePopup.setPleaseWaitText(i18n.GL0339());
 		deletePopup.show();
-		deletePopup.center();
+		deletePopup.center();*/
+		
+		deleteContentPopup = new DeleteContentPopup() {
+			
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				if(!StringUtil.isEmpty(o2UnitId) && UNIT.equalsIgnoreCase(currentTypeView)){
+					getUiHandlers().deleteUnitContent(o1CourseId,o2UnitId);
+				}else if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
+					getUiHandlers().deleteCourseContent(o1CourseId);
+				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){ 
+					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);
+				}else if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){ 
+					if((AppClientFactory.getPlaceManager().getRequestParameter("id",null)!=null)){
+						getUiHandlers().deleteMyCollectionContent((AppClientFactory.getPlaceManager().getRequestParameter("id",null)),"folderCollection");
+					}else{
+						if(AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL)!=null){
+							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+							getUiHandlers().deleteMyCollectionContent(parentId,LESSON);
+						} else if(AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL)!=null){
+							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+							getUiHandlers().deleteMyCollectionContent(parentId,UNIT);
+						} else {
+							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+							getUiHandlers().deleteMyCollectionContent(parentId,COURSE);
+						}
+					}
+				}else{
+					getUiHandlers().deleteCollectionContent(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
+				}
+			}
+			
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				hide();
+			}
+		};
+		deleteContentPopup.setPopupTitle(i18n.GL0748());
+		deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL3456(),folderObj.getTitle()));
+		/*if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){
+			String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+			if(o1!=null || o2!=null || o3!=null){
+				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ",folderObj.getTitle()));
+//				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), "folder"));
+			}
+		}else{
+			if(currentTypeView.equalsIgnoreCase(COURSE)){
+				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
+//				deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COURSE));
+			}else if(UNIT.equalsIgnoreCase(currentTypeView)){
+				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
+//				deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
+			}else if(LESSON.equalsIgnoreCase(currentTypeView)){
+				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
+//				deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
+			}
+		}
+		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+			deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
+//			deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COLLECTION));
+		}*/
+		deleteContentPopup.setDeleteValidate("delete");
+		deleteContentPopup.setPositiveButtonText("Delete Forever");
+		deleteContentPopup.setNegitiveButtonText(i18n.GL0142());
+		deleteContentPopup.setPleaseWaitText(i18n.GL0339());
+		deleteContentPopup.show();
+		deleteContentPopup.center();
+		
+		
+		
 	}
 	
 	/**
@@ -560,8 +634,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	
 	private void hideDeletePopup() {
-		if(deletePopup!=null){
-			deletePopup.hide();
+		if(deleteContentPopup!=null){
+			deleteContentPopup.hide();
 		}
 	}
 	private class openDropDownFilters implements ClickHandler{
@@ -716,11 +790,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+		invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+		/*if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
 			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
 		}else{
 			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId);
-		}
+		}*/
 	}
 	
 
