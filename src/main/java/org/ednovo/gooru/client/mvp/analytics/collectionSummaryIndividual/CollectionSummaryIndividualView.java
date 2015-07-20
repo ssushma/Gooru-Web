@@ -68,7 +68,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
+	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData, panelOverview;
 	@UiField ListBox filterDropDown;
 	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl,userInfo;
 	@UiField Frame downloadFile;
@@ -122,6 +122,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			@Override
 			public void onSuccess() {
 				userInfo.setVisible(false);
+				panelOverview.setVisible(false);
 				StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 				StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
 				StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
