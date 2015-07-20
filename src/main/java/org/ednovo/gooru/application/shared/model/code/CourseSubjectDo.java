@@ -24,16 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.code;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * This Model class is used for subject,course and domain auto deserialization
  * @author Gooru-Team
  */
 @JsonInclude(Include.NON_NULL)
-public class CourseSubjectDo implements Serializable {
+public class CourseSubjectDo implements IsSerializable {
 	
 	private static final long serialVersionUID = 1L;
 
