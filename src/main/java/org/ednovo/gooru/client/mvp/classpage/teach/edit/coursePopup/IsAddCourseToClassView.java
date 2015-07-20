@@ -44,6 +44,7 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -51,7 +52,7 @@ import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsAddCourseToClassView extends PopupView, IsViewWithHandlers<AddCourseToClassUiHandlers>{
 	public void displayNoCollectionsMsg(String searchType);
-	public Button getAddButton();
+	public Anchor getAddButton();
 	public void hidePopup();
 	void setDefaultPanelVisibility(Boolean blnVal);
 	public void displaySuccessPopup(String title,String selectedGooruOid,HashMap<String, String> params);

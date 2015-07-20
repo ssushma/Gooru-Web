@@ -61,6 +61,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -69,6 +70,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -143,7 +145,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public CollectionInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
-
+		collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
 		depthOfKnowledgeContainer.setVisible(false);
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
@@ -549,8 +551,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         }
 		setStaticData(type);			
-		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
-			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?"":
+			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?"":courseObj.getTitle());
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -581,7 +583,17 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+		if(validateInputs()){
+			lblErrorMessage.setVisible(false);
+			collectionTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+		
+		}else{
+			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
+			lblErrorMessage.setVisible(true);
+			collectionTitle.addStyleName("textAreaErrorMessage");
+			lblErrorMessage.setText("Please Enter Collection Title");
+		}
 	}
 
 	@UiHandler("uploadImageLbl")
@@ -600,7 +612,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 */
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
-		if(result && index==0){
+		String title=collectionTitle.getText().trim();
+		if((result && index==0)||(title.equalsIgnoreCase("")&&index==0)){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
@@ -620,6 +633,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG);
 				}else{
+					
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
 			}
@@ -747,6 +761,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			getCenturySkillContainer().add(content);
 		}
 	}
+	
+	
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -808,6 +824,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
 			}
 		}
+		
 	}
 
 	/**
@@ -859,4 +876,22 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 		return false;
 	}
+	
+	public boolean validateInputs(){
+		String collectionTitleStr=collectionTitle.getText().trim();
+		if(collectionTitleStr.equalsIgnoreCase("")){
+			return false;
+		}else{
+			return true;
+		}
+		
+		
+	}
+	
+	@UiHandler("collectionTitle")
+	public void collectionTitleKeyUphandler(KeyUpEvent event){
+		collectionTitle.addStyleName("textAreaErrorMessage");
+		lblErrorMessage.setVisible(false);
+	}
 }
+

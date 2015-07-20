@@ -26,6 +26,7 @@ package org.ednovo.gooru.application.server.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.TimerTask;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsService;
+import org.ednovo.gooru.application.server.ArrayListSorter;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
@@ -186,16 +188,17 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		logger.info("getUserSessionDataByUser url:+--- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		logger.error("getUserSessionDataByUser statuscode::"+jsonResponseRep.getStatusCode());
+		logger.info("getUserSessionDataByUser statuscode::"+jsonResponseRep.getStatusCode());
 		try{
-		logger.error("jsonres--"+jsonRep.getJsonObject());
+		logger.info("jsonres--"+jsonRep.getJsonObject());
 		}catch(Exception e){
 		e.printStackTrace();
 		}
 		if(jsonResponseRep.getStatusCode()==200){
-			logger.error("getUserSessionDataByUser 200statuscode"+jsonResponseRep.getStatusCode());
+			logger.info("getUserSessionDataByUser 200statuscode"+jsonResponseRep.getStatusCode());
 			try {
 				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<ArrayList<UserDataDo>>() {});
+				Collections.sort(collectionResourcesList, new ArrayListSorter("sequence", true));
 				logger.info("collectionResourcesList--"+collectionResourcesList);
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
@@ -203,7 +206,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}else{
 			logger.error("Exception::");
 		}
-		logger.error("reult obj--"+collectionResourcesList.size());
+		logger.info("reult obj--"+collectionResourcesList.size());
 		return collectionResourcesList;
 	}
 

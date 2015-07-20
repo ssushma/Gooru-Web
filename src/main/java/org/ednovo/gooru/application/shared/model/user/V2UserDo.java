@@ -27,12 +27,11 @@
  */
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
-
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  *
@@ -50,7 +49,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class V2UserDo extends ResponseStatusDo implements Serializable {
+public class V2UserDo extends ResponseStatusDo implements IsSerializable {
 
 	/**
 	 *

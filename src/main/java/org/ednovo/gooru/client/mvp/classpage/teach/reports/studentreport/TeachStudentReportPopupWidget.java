@@ -40,16 +40,16 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 			UiBinder<Widget, TeachStudentReportPopupWidget> {
 	}
 	
-	public TeachStudentReportPopupWidget(String userNameLbl, String gooruUId) {
+	public TeachStudentReportPopupWidget(String contentName, String userNameLbl, String gooruUId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassEnabled(true);
 		this.setPopupPosition(0, Window.getScrollTop()+50);
 		this.show();
-		setData(userNameLbl,gooruUId);
+		setData(contentName, userNameLbl,gooruUId);
 	}
 
-	public void setData(String userNameLbl,String gooruUId) {
+	public void setData(String contentName, String userNameLbl,String gooruUId) {
 		panel.clear();
 		userName.setText("Hello, "+userNameLbl+"!");
 		userImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl()+gooruUId+".png");
@@ -59,20 +59,18 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 				userImage.setUrl(DEFAULT_USER_IMAGE);
 			}
 		});
-		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			popupTitle.setText("Course View");
-		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-			popupTitle.setText("Unit View");
-		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-			popupTitle.setText("Assessment View");
-		}
+		popupTitle.setText(contentName);
 		panel.add(new TeachStudentReportPopupChildView(userNameLbl,gooruUId));
 	}
 	
 	@UiHandler("closeButton")
 	public void CloseButton(ClickEvent event) {
 		this.hide();
+	}
+
+	@Override
+	protected void onLoad() {
+		contentPanel.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-100)+"px");
 	}
 	
 }

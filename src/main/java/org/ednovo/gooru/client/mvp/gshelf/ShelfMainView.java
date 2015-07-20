@@ -90,13 +90,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer;
 	
-	@UiField HTMLEventPanel organizeRootPnl,createNewCourse;
-	
-	@UiField Button btnSelectedText;
+	@UiField HTMLEventPanel createNewCourse,createNewCollection,createNewAssessment;
 	
 	@UiField Anchor lnkMyCourses,lnkMyFoldersAndCollecctions;
 	
-	@UiField Label organizelbl,lblCollectionTitle;
+	@UiField Label lblCollectionTitle;
 	
 	@UiField static ScrollPanel collectionListScrollpanel;
 	
@@ -179,6 +177,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		setCreateCourse(true);
 		//setDefaultOrganizePanel();
 		//organizelbl.setText(i18n.GL3285());
+		lnkMyCourses.getElement().setId("mycourseslnk");
+		lnkMyFoldersAndCollecctions.getElement().setId("mycollectionslnk");
 		lnkMyCourses.addClickHandler(new DropDownClickEvent(0));
 		lnkMyFoldersAndCollecctions.addClickHandler(new DropDownClickEvent(1));
 		Window.addWindowScrollHandler(new com.google.gwt.user.client.Window.ScrollHandler() {
@@ -208,14 +208,22 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			Anchor selected=(Anchor) event.getSource();
-			btnSelectedText.setText(selected.getText());
+			//btnSelectedText.setText(selected.getText());
 			if(selectedIndex==0){
 				enableDisableCourseButton(true);
-				organizelbl.setText(i18n.GL3335());
+				lnkMyCourses.addStyleName("active");
+				lnkMyFoldersAndCollecctions.removeStyleName("active");
+				createNewCourse.setVisible(true);
+				createNewCollection.setVisible(false);
+				createNewAssessment.setVisible(false);
 				getUiHandlers().setListPresenterBasedOnType(COURSE);
 			}else if(selectedIndex==1){
 				enableDisableCourseButton(false);
-			    organizelbl.setText(i18n.GL0180());
+				lnkMyFoldersAndCollecctions.addStyleName("active");
+				lnkMyCourses.removeStyleName("active");
+				createNewCourse.setVisible(false);
+				createNewCollection.setVisible(true);
+				createNewAssessment.setVisible(true);
 				getUiHandlers().setListPresenterBasedOnType(FOLDER);
 			}
 		}
@@ -228,27 +236,35 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void setDefaultOrganizePanel(String tabView) {
 		if(treeChildSelectedItem!=null){
 			if(getFolderLevel()==0) {
-				organizeRootPnl.addStyleName("active");
+			//	organizeRootPnl.addStyleName("active");
 			} else {
-				organizeRootPnl.removeStyleName("active");
+				//organizeRootPnl.removeStyleName("active");
 			}
 			ShelfTreeWidget treeItemShelfTree = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 			if(treeItemShelfTree!=null){
-				if(organizeRootPnl.getStyleName().contains("active")) {
+			/*	if(organizeRootPnl.getStyleName().contains("active")) {
 					treeItemShelfTree.setActiveStyle(false);
 				} else {
 					treeItemShelfTree.setActiveStyle(true);
-				}
+				}*/
 			}
 		}
 		if(tabView==null || tabView.equals(COURSE)){
 			enableDisableCourseButton(true);
-			organizelbl.setText(i18n.GL3335());
-			btnSelectedText.setText(i18n.GL3335());
+			lnkMyCourses.addStyleName("active");
+			lnkMyFoldersAndCollecctions.removeStyleName("active");
+			createNewCourse.setVisible(true);
+			createNewCollection.setVisible(false);
+			createNewAssessment.setVisible(false);
+			//btnSelectedText.setText(i18n.GL3335());
 		}else if(tabView.equals(FOLDER)){
 			enableDisableCourseButton(false);
-			organizelbl.setText(i18n.GL0180());
-			btnSelectedText.setText(i18n.GL0180());
+			lnkMyFoldersAndCollecctions.addStyleName("active");
+			lnkMyCourses.removeStyleName("active");
+			createNewCourse.setVisible(false);
+			createNewCollection.setVisible(true);
+			createNewAssessment.setVisible(true);
+			//btnSelectedText.setText(i18n.GL0180());
 		}
 		collectionListScrollpanel.getElement().getStyle().setMarginRight(0, Unit.PX);
 		collectionListScrollpanel.getElement().getStyle().setWidth(235, Unit.PX);
@@ -260,12 +276,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	private void setIdForFields() {
 		gShelfMainContainer.getElement().setId("gShelfMainContainer");
-		btnSelectedText.getElement().setId("btnSelectedText");
+		//btnSelectedText.getElement().setId("btnSelectedText");
 		lnkMyCourses.getElement().setId("lnkMyCourses");
 		lnkMyFoldersAndCollecctions.getElement().setId("lnkMyFoldersAndCollecctions");
 		StringUtil.setAttributes(createNewCourse.getElement(), "createNew", "createNew", "createNew");
-		StringUtil.setAttributes(organizeRootPnl.getElement(), "organizeRootPnl", "", "");
-		StringUtil.setAttributes(organizelbl.getElement(), "organizelbl", "", "");
 		StringUtil.setAttributes(collectionListScrollpanel.getElement(), "FoldersListScrollpanel", "", "");
 	}
 	private void setTreeStucture() {
@@ -273,7 +287,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		shelfFolderTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
-				organizeRootPnl.removeStyleName("active");
+				//organizeRootPnl.removeStyleName("active");
 				ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) event.getSelectedItem().getWidget();
 					
 				treeChildSelectedItem = event.getSelectedItem();
@@ -285,7 +299,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					getUiHandlers().setBreadCrumbs(null);
 					getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(), widgetType, null);
 				}
-				
+				collectionListScrollpanel.getElement().setScrollTop(shelfTreeWidget.getAbsoluteTop()+shelfTreeWidget.getOffsetHeight());
 			}
 		});
 		floderTreeContainer.add(shelfFolderTree);
@@ -629,19 +643,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}
 	}
-	
-	@UiHandler("organizeRootPnl")
-	public void clickOnOrganizeRootPnl(ClickEvent event) {
-		organizeRootPnl.addStyleName("active");
-		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
-		if(shelfTreeWidget!=null&&shelfTreeWidget.getLevel()!=0) {
-			shelfTreeWidget.setActiveStyle(false);
-		}
-		getUiHandlers().setRightListData(SHELF_COLLECTIONS,null);
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(VIEW, getViewType());
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
-	}
+
 	/**
 	 * To create couse template and adding to the root tree
 	 * @param event
@@ -657,9 +659,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		ShelfTreeWidget shelfTreeWidget=null;
 		if(FOLDER!=getViewType() && isCreateCourse() && type.equalsIgnoreCase(COURSE)){
 			setCreateCourse(false);
-			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
-			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
-			organizeRootPnl.removeStyleName("active");
+			//createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
+			//createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
+			//organizeRootPnl.removeStyleName("active");
 			shelfTreeWidget = new ShelfTreeWidget(null, 1,COURSE);
 			shelfTreeWidget.setTreeWidgetType(COURSE);
 			
@@ -696,6 +698,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(VIEW, getViewType());
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		collectionListScrollpanel.scrollToBottom();
 		
 	}
 	/**
@@ -847,7 +850,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget(); 
 
-		if(shelfTreeWidget==null || organizeRootPnl.getStyleName().contains("active")) {
+		if(shelfTreeWidget==null || lnkMyCourses.getStyleName().contains("active")) {
 			if(id!=null) {
 				gooruOid = id;
 			} else {
@@ -857,7 +860,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				TreeItem item = shelfFolderTree.getItem(i);
 				checkFolderItemStyle(item, gooruOid);
 			}
-			organizeRootPnl.removeStyleName("active");
+		//	organizeRootPnl.removeStyleName("active");
 		} else {
 			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
 			if(treeChildSelectedItem.getParentItem()!=null){
@@ -872,7 +875,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			if(treeChildSelectedItem.getState()==false){
 				treeChildSelectedItem.setState(true);
 			}
-			if(organizeRootPnl.getStyleName().contains("active")) {
+			if(lnkMyCourses.getStyleName().contains("active")) {
 				gooruOid = o1;
 			} else if(shelfTreeWidget.getLevel()==1) {
 				if(id==null){
@@ -1037,11 +1040,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@Override
 	public void enableDisableCourseButton(boolean isEnable) {
 		if(isEnable){
-			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#4d99cd");
+			//createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#4d99cd");
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.POINTER);
 		}else{
-			createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
-			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
+			//createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#dddddd");
+			//createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.DEFAULT);
 		}
 		setCreateCourse(isEnable);
 	}
@@ -1077,7 +1080,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			organizeRootPnl.addStyleName("active");
 			getUiHandlers().setRightListData(SHELF_COLLECTIONS, null);*/
 			getUiHandlers().setVersion();
-			organizeRootPnl.addStyleName("active");
+			//organizeRootPnl.addStyleName("active");
 			treeChildSelectedItem.remove();
 			Map<String, String> params= new HashMap<String, String>();
 			params.put("view", "Folder");
@@ -1195,6 +1198,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			 }
 		 }
 		 return null;
+	}
+	@UiHandler("createNewCollection")
+	public void clickOnCollection(ClickEvent clickEvent){
+		getUiHandlers().addNewContent("collection");
+	}
+	@UiHandler("createNewAssessment")
+	public void clickOnAssessment(ClickEvent clickEvent){
+		getUiHandlers().addNewContent("assessment");
 	}
 	/**
 	 * This method is used to get pageNumber
