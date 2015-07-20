@@ -27,20 +27,20 @@
  */
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * @author Search Team
  * 
  */
 @JsonInclude(Include.NON_NULL)
-public class UserDo extends ResponseStatusDo implements Serializable {
+public class UserDo extends ResponseStatusDo implements IsSerializable {
 
 	/**
 	 * 

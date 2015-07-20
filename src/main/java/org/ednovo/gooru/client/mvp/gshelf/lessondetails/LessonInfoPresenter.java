@@ -128,6 +128,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}
@@ -150,6 +151,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, folderObj);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}
