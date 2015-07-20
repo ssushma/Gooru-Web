@@ -257,6 +257,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	
 	@Override
 	public void setFolderDo(FolderDo folderDo){
+		centPanel.clear();
 		if(folderDo!=null){
 			List<StandardFo> standardFos=folderDo.getSkills();
 			selectedVaue=new HashMap<Long, String>();
@@ -277,9 +278,6 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		this.collectionDo = collectionDo;
 		selectedValuesFromAutoSuggest.clear();
 	}
-	
-
-	
 	
 	@Override
 	public Map<Long,String> getSelectedValuesFromAutoSuggest(){
