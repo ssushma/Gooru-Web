@@ -30,10 +30,10 @@
 								<div class="btn-group">
 									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
 										taxonomy</g:Button>
-									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="taxonomyToggleBtn">
 										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
-									</g:HTMLPanel>
+									</panel:HTMLEventPanel>
 									<ul role="menu" class="dropdown-menu">
 										<li>
 											<a href="#">My Folders</a>

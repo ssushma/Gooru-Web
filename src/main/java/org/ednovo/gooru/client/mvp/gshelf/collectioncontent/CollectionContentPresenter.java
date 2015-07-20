@@ -92,6 +92,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
+	
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
 			@Override
 			public void insertCollectionItemInAddResource(CollectionItemDo collectionItem, RefreshType refreshType) {
@@ -145,7 +146,21 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void updateVideoTimeUpdate(final CollectionItemDo collectionItemDo){
 		
-		
+		AppClientFactory.getInjector().getResourceService().updateTimeMetadata(collectionItemDo.getCollectionItemId(),collectionItemDo.getStart(), collectionItemDo.getStop(), new AsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				// TODO Auto-generated method stub
+				collectionItemDo.setStart(result.getStart());
+				collectionItemDo.setStop(result.getStop());
+				getView().setCollectionDetails(collectionItemDo);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 	}
 	
@@ -328,7 +343,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
 	public void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
-
+		
 	}
 	@Override
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {

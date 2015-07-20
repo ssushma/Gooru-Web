@@ -86,12 +86,16 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 		int rowCount = result.size();
 		
 		for(int rowWidgetCount=0;rowWidgetCount<rowCount;rowWidgetCount++) {
+			String color = "#fff";
+			if(rowWidgetCount%2==1) {
+				color = "#f8fafb";
+			}
 			PlanProgressDo planDo = result.get(rowWidgetCount);
 			HTML studentName = new HTML(planDo.getUserName());
 			studentName.setStyleName("myclasses-mastery-unit-cell-style");
 			studentName.addClickHandler(new StudentCourseView(planDo.getUserName(), planDo.getUserUId()));
 			courseTableWidget.setWidget(rowWidgetCount,0,studentName);
-			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor("white");
+			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor(color);
 			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
 			usageData = planDo.getUsageData();
 			int columnCount = usageData.size();
@@ -103,7 +107,12 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 				}
 				Label scoreLbl = new Label(scoreStr);
 				courseTableWidget.setWidget(rowWidgetCount, columnWidgetCount+1,scoreLbl);
-				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+				String highlightStyle = StringUtil.getHighlightStyle(score);
+				if(highlightStyle!=null&&highlightStyle.equalsIgnoreCase("grey")) {
+					courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setBackgroundColor(color);
+				} else {
+					courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(highlightStyle);
+				}
 				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
 			}
 		}

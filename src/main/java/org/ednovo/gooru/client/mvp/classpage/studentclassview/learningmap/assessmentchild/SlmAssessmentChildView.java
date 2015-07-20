@@ -145,7 +145,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			imageContainer.setStyleName("collectionImageContainer");
 			timeSpentLbl.setText("Total Time Spent");
 			lastAccessedLbl.setText("Last Viewed");
-			timeSpent.setText(StringUtil.getFormattedDate(planContentDo.getProgress().getTimespent(), ""));
+			timeSpent.setText(StringUtil.getFormattedDate(planContentDo.getProgress().getTimeSpent(), ""));
 		}
 		contentName.setText(planContentDo.getTitle());
 		contentDescription.setText(planContentDo.getDescription());
@@ -239,7 +239,6 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 			} else {
 				if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
-					System.out.println("externalUrl "+planContentDo.getUrl());
 					Window.open(planContentDo.getUrl(), "_blank", "");
 				}
 			}

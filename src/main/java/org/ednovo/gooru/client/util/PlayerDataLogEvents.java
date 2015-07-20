@@ -472,7 +472,6 @@ public class PlayerDataLogEvents {
 	}
 	public static native void triggerDataLogCall(JSONObject eventJsonObject) /*-{
 		$wnd._et.data.push(eventJsonObject);
-		$wnd._et.triggerCall();
  	}-*/;
 
 	public static void collectionPlayStartEvent(String eventId,String eventName,

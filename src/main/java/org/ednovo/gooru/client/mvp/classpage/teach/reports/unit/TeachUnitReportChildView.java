@@ -189,8 +189,9 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 					}
 					final Label contentLabel = new Label("");
 					if(isCollection) {
-						contentLabel.setText(StringUtil.getFormattedDate(collectionList.get(collectionWidgetCount).getTimespent(), ""));
+						contentLabel.setText(StringUtil.getFormattedDate(collectionList.get(collectionWidgetCount).getTimeSpent(), ""));
 						assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
+						assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 					} else {
 						int score = collectionList.get(collectionWidgetCount).getScoreInPercentage();
 						String scoreStr = "--";
