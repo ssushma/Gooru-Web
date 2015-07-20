@@ -1,11 +1,11 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
-	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src="" />
 	<g:HTMLPanel ui:field="mainContainer">
-         <g:HTMLPanel>
+	 	<span:LoadingUc ui:field="cropImageLoading"/>
+	    <g:HTMLPanel ui:field="classpageMainContainer">
             <g:HTMLPanel styleName="bannerInner">
                <g:HTMLPanel styleName="container">
 				<div class="row">
@@ -82,6 +82,5 @@
             </g:HTMLPanel>
             <g:SimplePanel styleName="LearningMapContainer" ui:field="learningMapContainer"/>
          </g:HTMLPanel>
-		<sg:FooterUc />
 	</g:HTMLPanel>
 </ui:UiBinder>

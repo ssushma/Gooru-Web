@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemD
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -49,7 +50,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
@@ -72,6 +72,9 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	AddResourcePresenter addResourcePresenter=null;
 	ImageUploadPresenter imgUploadPresenter=null;
 	AddStandardsPresenter addStandardsPresenter = null;
+	
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
+	
 	private SimpleAsyncCallback<Void> removeImageAsyncCallback;
 
 	private SimpleAsyncCallback<CollectionItemDo> updateResourceItemAsyncCallback;
@@ -97,6 +100,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void insertCollectionItemInAddResource(CollectionItemDo collectionItem, RefreshType refreshType) {
 				getView().setDisplayResourceItem(collectionItem, refreshType, -1);
+				updateWidgetCount(collectionItem);
 			}
 		});
 	}
@@ -350,6 +354,16 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		 addResourcePresenter.setCollectionItemDo(collectionItemDo);
 		 addResourcePresenter.setCollectionDoAndType(null, "QuestionEdit");
 		 addToPopupSlot(addResourcePresenter);
+	}
+
+	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
+	}
+	
+	@Override
+	public void updateWidgetCount(CollectionItemDo collectionItem){
+		myCollectionsRightClusterPresenter.getShelfMainPresenter().updateWidgetsCount(collectionItem);
+		//return myCollectionsRightClusterPresenter.getShelfMainPresenter();
 	}
 }
 

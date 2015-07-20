@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
@@ -50,6 +51,8 @@ public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionSha
 	FolderDo folderDo;
 	
 	CollectionCollaboratorsTabPresenter collaboratorsTabPresenter;
+	
+	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -88,7 +91,7 @@ public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionSha
 				public void onSuccess(CollectionDo collectionDo) {
 					CollectionShareTabPresenter.this.collectionDo=collectionDo;
 					collaboratorsTabPresenter.setData(collectionDo);
-					getView().setData(collectionDo,folderDo);
+					getView().setCollectionData(collectionDo,folderDo);
 					
 				}
 			});
@@ -116,5 +119,15 @@ public class CollectionShareTabPresenter extends PresenterWidget<IsCollectionSha
 				
 			}
 		});
+	}
+
+	public void setMyCollectionRightClusterPresenter(
+			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+		this.myCollectionsRightClusterPresenter= myCollectionsRightClusterPresenter;
+	}
+
+	@Override
+	public void disableCollabaratorOptions(boolean isHide) {
+		myCollectionsRightClusterPresenter.disableCollabaratorOptions(isHide);
 	}
 }

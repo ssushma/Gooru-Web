@@ -169,8 +169,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	private int pendingListPageNum=0;
 	
-	String classPageId;
-	
 	private static EditClassStudentViewUiBinder uiBinder = GWT.create(EditClassStudentViewUiBinder.class);
 	
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
@@ -185,7 +183,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		this.classPageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		reportContainer.setVisible(false);
 		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
 		reportPanelAnr.addClickHandler(new MasteryReportPlace(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));
@@ -288,9 +285,11 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		
 		sharTxtBox.setReadOnly(true);
 		sharTxtBox.getElement().getStyle().setBackgroundColor("#FFF");
+		StringUtil.setAttributes(sharTxtBox, true);
 		
 		fullTxtBox.setReadOnly(true);
 		fullTxtBox.getElement().setAttribute("style", "margin:10px 0px;background-color: #FFF");
+		StringUtil.setAttributes(fullTxtBox, true);
 		
 		
 		createAutoSuggestBox();
@@ -650,7 +649,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@Override
 	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount,boolean increasePageNum,boolean insertTop) {
-		System.out.println("displayPendingMembersList:");
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
 		if(!insertTop || isNew){
@@ -671,7 +669,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else{
 			lblPendingPleaseWait.setVisible(false);
 			pendindUserContainer.setVisible(true);
-			System.out.println("InNew:"+isNew);
 			if(!isNew){
 				pendingContainer.clear();
 			}
@@ -776,9 +773,9 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		this.activeListTotalCount=totalCount;
 		if(activeListTotalCount==0){
 			ancActiveListSeeMore.setVisible(false);
+			tableContainer.clear();
 			Label noActiveStudents = new Label(i18n.GL1527());
 			noActiveStudents.getElement().addClassName("noActiveClassStudents");
-			tableContainer.clear();
 			tableContainer.add(noActiveStudents);
 		}else{
 			if(!isNew){
@@ -894,9 +891,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		roasterMainConatiner.setVisible(false);
 		reportContainer.setVisible(true);
 	}
-	
-	
-	
+
 	
 
 }

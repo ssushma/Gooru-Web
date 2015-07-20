@@ -87,9 +87,13 @@ public class LanguageView extends Composite {
 		});
 	}
 	
+	public void reset(){
+		languegeObjective.setText("");
+	
+	}
 	
 	public void setLanguageObjective(FolderDo folderDo){
-		
+		reset();
 		if(folderDo!=null){
 			isProfanity=false;
 			errorPanel.setVisible(false);

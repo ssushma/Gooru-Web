@@ -23,7 +23,7 @@
 .htmlpanlProgress {
 	overflow: hidden;
 	width: 100%;
-	margin: 2%;
+	/* margin: 2%; */
 	clear:both;
 	/* border-right: 1px solid #eee;
 	border-left: 1px solid #eee; */
@@ -76,7 +76,7 @@
 .left_container {
 	width: 100%;
 	float: left;
-	margin-left: 28px; 
+	margin-left: 28px;
 }
 
 .collection_teacher_img {

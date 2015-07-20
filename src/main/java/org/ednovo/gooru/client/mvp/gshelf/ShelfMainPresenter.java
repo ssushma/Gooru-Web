@@ -35,11 +35,11 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
-import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
@@ -92,8 +92,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	SignUpPresenter signUpViewPresenter;
 	
-	CollectionContentPresenter collectionContentPresenter;
-	
 	private String version = null;
 	
 	boolean isApiCalled=false;
@@ -126,12 +124,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,CollectionContentPresenter collectionContentPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
+	public ShelfMainPresenter(SignUpPresenter signUpViewPresenter,MyCollectionsListPresenter myCollectionsListPresenter,IsShelfMainView view, IsShelfMainProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.myCollectionsListPresenter=myCollectionsListPresenter;
-		this.collectionContentPresenter=collectionContentPresenter;
 		
 		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
@@ -218,7 +215,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			typeVal=type;
 		}
-		getResourceService().getFolderWorkspace((ShelfMainView.getpageNumber()-1)*20, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace(0, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
 	}
 	public ShelfServiceAsync getShelfService() {
@@ -242,7 +239,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		//getView().updateResoureCount(resourceCount);
 		
 	}
-	
+	@Override
+	public void updateWidgetsCount(CollectionItemDo collectionItem){
+		getView().updateWidgetsCount(collectionItem);
+	}
 	public void getUserSheldId(){
 		if(!AppClientFactory.isAnonymous()){
 			String userUid=AppClientFactory.getLoggedInUser().getGooruUId();
@@ -334,6 +334,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 		if(folderObj!=null && folderObj.getGooruOid()!=null){
 			//when displaying the existing data at that time we are opening the content tab.
+			getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
 			getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
 		}else{
 			//when creating the default course we are opening the info tab

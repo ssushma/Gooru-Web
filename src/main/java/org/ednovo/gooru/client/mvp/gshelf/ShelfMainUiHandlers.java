@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
@@ -129,4 +130,6 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	void SetDefaultTypeAndVersion();
 	
 	void refreshUserShelfCollections();
+	
+	void updateWidgetsCount(CollectionItemDo collectionItem);
 }

@@ -146,23 +146,32 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				}
 			});
 		}
-		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-		if(view!=null && FOLDER.equalsIgnoreCase(view)){
-			privateShareFloPanel.setVisible(true);
-		}else{
-			privateShareFloPanel.setVisible(false);
-		}
+		
 		publishedPanel.setVisible(false);
 		lblPublishPending.setVisible(false);
 	}
 	
 	
 	@Override
-	public void setData(CollectionDo collectionDo, FolderDo folderDo) {
+	public void setCollectionData(CollectionDo collectionDo, FolderDo folderDo) {
 		this.collectionDo = collectionDo;
 		this.folderDo = folderDo;
 		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
-		AppClientFactory.printInfoLogger("folderDo.getPublishStatus():"+folderDo.getPublishStatus());
+		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+		AppClientFactory.printInfoLogger("view:"+view);
+		if(view!=null && FOLDER.equalsIgnoreCase(view)){
+			privateShareFloPanel.setVisible(true);
+		}else{
+			privateShareFloPanel.setVisible(false);
+		}
+		AppClientFactory.printInfoLogger("iscollaborator:"+collectionDo.isIsCollaborator());
+		if (AppClientFactory.isContentAdmin() || collectionDo
+				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
+						.getGooruUId())){
+		    getUiHandlers().disableCollabaratorOptions(true);
+		}else if(collectionDo.isIsCollaborator()){
+			 getUiHandlers().disableCollabaratorOptions(false);
+		}
 		if(collectionDo.getSharing()!=null){
 			if(collectionDo.getSharing().equals("public")) {
 				publicShareFloPanel.removeStyleName("inActive");
@@ -207,6 +216,12 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			}
 		}
 		
+	}
+	
+	public void showPublishBtn(){
+		rbPublic.setVisible(true);
+		lblPublishPending.setVisible(false);
+		publishedPanel.setVisible(false);
 	}
 
 	@Override
@@ -426,10 +441,12 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
+					showPublishBtn();
 				}else if (share.equalsIgnoreCase("anyonewithlink")) {
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
+					showPublishBtn();
 				}else {
 					publicShareFloPanel.removeStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");

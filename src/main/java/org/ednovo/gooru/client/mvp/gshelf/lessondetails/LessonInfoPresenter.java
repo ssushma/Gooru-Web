@@ -128,6 +128,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}
@@ -138,7 +139,6 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				System.out.println("update lesson details");
 				folderObj.setTitle(createDo.getTitle());
 				folderObj.setType(LESSON);
 				//folderDo.setGooruOid(id);
@@ -151,6 +151,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, folderObj);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}
