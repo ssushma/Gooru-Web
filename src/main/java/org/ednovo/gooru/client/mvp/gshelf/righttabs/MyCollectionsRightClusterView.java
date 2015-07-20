@@ -369,7 +369,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void enableAndHideTabs(boolean isVisible){
 		lnkContent.setVisible(isVisible);
-		lnkshare.setVisible(isVisible);
+		if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
+			lnkshare.setVisible(isVisible);
+		}
 		toggleButton.setVisible(isVisible);
 		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);

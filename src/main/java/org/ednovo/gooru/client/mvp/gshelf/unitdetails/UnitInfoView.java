@@ -80,7 +80,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 
 	@UiField HTMLPanel unitInfo,pnlGradeContainer,pnlGradeDescContainer;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
-	@UiField Button saveUnitBtn,nextCreateLessonBtn,taxonomyBtn;
+	@UiField Button saveUnitBtn,nextCreateLessonBtn,taxonomyBtn,taxonomyToggleBtn;
 	@UiField TextBox unitTitle;
 	@UiField ScrollPanel scrollCoursediv;
 	@UiField Label lblErrorMessage,lblErrorMessageForBig,lblErrorMessageForEssential;
@@ -110,7 +110,9 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
 		taxonomyBtn.getElement().setId("taxonomyBtn");
+		taxonomyToggleBtn.getElement().setId("taxonomyToggleBtn");
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
+		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		unitTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
