@@ -285,7 +285,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					getUiHandlers().setBreadCrumbs(null);
 					getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(), widgetType, null);
 				}
-				
+				collectionListScrollpanel.getElement().setScrollTop(shelfTreeWidget.getAbsoluteTop()+shelfTreeWidget.getOffsetHeight());
 			}
 		});
 		floderTreeContainer.add(shelfFolderTree);
@@ -696,6 +696,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(VIEW, getViewType());
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
+		collectionListScrollpanel.scrollToBottom();
 		
 	}
 	/**
