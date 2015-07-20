@@ -464,6 +464,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		this.courseObj=folderObj;
 		ulSelectedItems.clear();
 		selectedValues.clear();
+		standardsUI.clear();
 		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
 		if(folderObj!=null){
 			if(folderObj.getStandards()!=null && folderObj.getStandards().size()>0){

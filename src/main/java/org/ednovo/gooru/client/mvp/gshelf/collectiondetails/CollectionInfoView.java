@@ -221,9 +221,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			{
 				flgLevelOne = true;
 			}
+
 			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),flgLevelOne);
 			final DomainStandardsDo domainStand = standardsList.get(i);
-			if(domainStand.getTypeId()!=null)
+			if(domainStand.getTypeId()!=null && !(standardsList.get(i).getCode().contains("ELA")))
 			{
 				if(domainStand.getTypeId().equals(1))
 				{
@@ -318,14 +319,21 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		return taxonomyCourseIds;
 	}
 		
-		public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
+	public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
 		//	standardsUI.clear();
+			final String selValues = getSelectedStandards().toString();
+			
 			for(int i=0;i<standardsList.size();i++)
 			{
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
 				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+				
+				if(selValues.contains(standardsList.get(i).getCodeId().toString()))
+				{
+					standardsCode.getWidgetContainer().addStyleName("active");
+				}
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 					
 					@Override
@@ -336,7 +344,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 						standardsCode.getWidgetContainer().addStyleName("active");
 						
 						
-						if(!selectedValues.contains(domainStand.getCodeId())){
+						if(!selValues.contains(domainStand.getCodeId().toString())){
 							selectedValues.add(domainStand.getCodeId());
 						}
 						
@@ -345,8 +353,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 							@Override
 							public void onClick(ClickEvent event) {
 								//This will remove the selected value when we are trying by close button
-								if(selectedValues.contains(domainStand.getCodeId())){
-									selectedValues.remove(domainStand);
+								if(selValues.contains(domainStand.getCodeId().toString())){
+									selectedValues.remove(domainStand.getCodeId());
 								}
 								standardsCode.removeStyleName("active");
 								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
@@ -374,12 +382,18 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	public void displaySubSubStandardsList(final List<SubSubDomainStandardsDo> standardsList){
 			//standardsUI.clear();
+		final String selValues = getSelectedStandards().toString();
 			for(int i=0;i<standardsList.size();i++)
 			{
 				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
 				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
 				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
 				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+				
+				if(selValues.contains(standardsList.get(i).getCodeId().toString()))
+				{
+					standardsCode.getWidgetContainer().addStyleName("active");
+				}
 				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
 					
 					@Override
@@ -389,8 +403,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 						
 						standardsCode.getWidgetContainer().addStyleName("active");
 						
-						
-						if(!selectedValues.contains(domainStand.getCodeId())){
+						if(!selValues.contains(domainStand.getCodeId().toString())){
 							selectedValues.add(domainStand.getCodeId());
 						}
 						
@@ -399,8 +412,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 							@Override
 							public void onClick(ClickEvent event) {
 								//This will remove the selected value when we are trying by close button
-								if(selectedValues.contains(domainStand.getCodeId())){
-									selectedValues.remove(domainStand);
+								if(selValues.contains(domainStand.getCodeId().toString())){
+									selectedValues.remove(domainStand.getCodeId());
 								}
 								standardsCode.removeStyleName("active");
 								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
