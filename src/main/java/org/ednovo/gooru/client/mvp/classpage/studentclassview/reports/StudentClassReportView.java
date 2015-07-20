@@ -234,6 +234,7 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 			if(matchedCount==0&&size==1) {
 				previousContentStr = null;
 				nextContentStr = null;
+				name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
 			} else if(matchedCount==0&&size>1) {
 				previousContentStr = null;
 				nextContentStr = dataList.get(matchedCount+1).getGooruOId();

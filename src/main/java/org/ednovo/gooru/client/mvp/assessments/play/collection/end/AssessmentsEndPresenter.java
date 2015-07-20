@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
@@ -87,7 +88,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
 
 	int count=0;
 
@@ -222,7 +222,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 
 					if(result!=null && result.size()!=0){
-
+						count=0;
 						if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
 
 							int sessionSize=result.get(0).getSession().size();
@@ -238,7 +238,21 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 						getView().setCollectionMetaDataByUserAndSession(result);
 						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 					}else{
-						getView().errorMsg();
+						Timer timer = new Timer() {
+
+							@Override
+							public void run() {
+								if (count < 10){
+									getSessionsDataByUser(collectionId, classId, userId);
+									count++;
+								}else{
+									if (count >= 10){
+										getView().errorMsg();
+									}
+								}
+							}
+						};
+						timer.schedule(100);
 					}
 				}
 

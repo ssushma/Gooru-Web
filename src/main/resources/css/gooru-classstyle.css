@@ -968,6 +968,12 @@ select option {
 	color:#9999a6;
 	font-weight:bold;
 }
+
+.classReportMenuBlock .classMenuLeft ul li div{
+	display: block;
+	padding: 24px 24px;
+	font-size: 15px;
+}
 .classReportMenuBlock .classTitle{
 	color: #515151;
 	font-weight: bold;

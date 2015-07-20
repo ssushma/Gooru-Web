@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
 
@@ -50,11 +50,12 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class AssessmentProgressReportChildPresenter extends ChildPresenter<AssessmentProgressReportChildPresenter, IsAssessmentProgressReportView> implements AssessmentProgressReportChildPresenterUiHandlers,ClientConstants{
 
@@ -65,18 +66,18 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	PrintUserDataDO printData=new PrintUserDataDO();
 
 	String classpageId=null;
-	
+
 	ClasspageItemDo classpageItemDo=null;
-	
+
 	String sessionId=null;
-	
-	
+
+
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 
 	int count=0;
-	
+
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 	private int collectionProgressCount=1;
@@ -94,7 +95,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
 		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,printData);
 	}
-	
+
 	public void clearslot(){
 		getView().resetCollectionMetaData();
 	}
@@ -110,19 +111,19 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	@Override
 	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-		
+
 		ClassDo classObj=new ClassDo();
 		classObj.setAssessmentId(collectionId);
 		classObj.setClassId(classId);
 		classObj.setSessionId(sessionId);
-		
+
 		getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId,printData);
 	}
-	
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
+
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		this.classpageItemDo=classpageItemDo;
 	}
-	
+
 
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
@@ -132,50 +133,68 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
-			@Override
-			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				
-				if(result!=null && result.size()!=0){
-					
-					if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
-						
-						int sessionSize=result.get(0).getSession().size();	
-							
-						int day=result.get(0).getSession().get(sessionSize-1).getSequence();
-						printData.setUserName(null);
-						printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-						printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
-						
+
+		if (sessionId != null){
+			AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+				@Override
+				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+
+					if(result!=null && result.size()!=0){
+						count=0;
+						if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
+
+							int sessionSize=result.get(0).getSession().size();
+
+							int day=result.get(0).getSession().get(sessionSize-1).getSequence();
+							printData.setUserName(null);
+							printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
+							printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
 						}
-					
-					displayScoreCountData(result.get(0));
-					getView().setCollectionMetaDataByUserAndSession(result);
-					setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
-				}else{
+
+						displayScoreCountData(result.get(0));
+						getView().setCollectionMetaDataByUserAndSession(result);
+						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+					}else{
+						Timer timer = new Timer() {
+
+							@Override
+							public void run() {
+								if (count < 10){
+									getSessionsDataByUser(collectionId, classId, userId);
+									count++;
+								}else{
+									if (count >= 10){
+										getView().errorMsg();
+									}
+								}
+							}
+						};
+						timer.schedule(100);
+					}
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
 					getView().errorMsg();
 				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});
+			});
+		}else{
+			getView().errorMsg();
+		}
 
 	}
 
-	
+
 	/*analytics*/
-	
+
 	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				getView().loadingIcon();
 				AppClientFactory.getInjector().getAnalyticsService().getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
-					
+
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {
 						if(!StringUtil.checkNull(result)){
@@ -184,7 +203,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 							getView().errorMsg();
 						}
 					}
-					
+
 					@Override
 					public void onFailure(Throwable caught) {
 						getView().errorMsg();
@@ -193,12 +212,12 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			}
 		});
 	}
-	
-	
+
+
 	public void setIndividualData(final ArrayList<UserDataDo> result) {
-		
+
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				getView().loadingIcon();
@@ -213,7 +232,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				questionRowIndex.clear();
 				questionsData.clear();
 				for (UserDataDo userDataDo : result) {
-					
+
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
@@ -224,7 +243,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				}
 				getView().setQuestionsData(questionsData);
 				getView().setQuestionsPrintData(questionsData);
-		
+
 			}
 		});
 	}
@@ -259,21 +278,21 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 
 	public void getAssessmentSummaryDetails(){
-		
+
 		String classId=AppClientFactory.getPlaceManager().getRequestParameter("class");
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("course");
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unit");
 		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSON);
 		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter("assessment");
-		
+
 		ClassDo classObj=new ClassDo();
 		classObj.setClassId(classId);
 		classObj.setCourseId(courseId);
 		classObj.setLessonId(lessonId);
 		classObj.setUnitId(unitId);
 		classObj.setAssessmentId(assessmentId);
-		
-		
+
+
 		AppClientFactory.getInjector().getAnalyticsService().getAssessmentSummary(classObj, new AsyncCallback<AssessmentSummaryStatusDo>() {
 
 			@Override

@@ -84,8 +84,8 @@ public class StringUtil implements ClientConstants {
  	 private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 
  	 public static Map<String, String> categoryMap =null;
- 	 
- 	 
+
+
 
 	private final static byte[] key = CRYPTO_KEY.getBytes();
 
@@ -753,8 +753,8 @@ public class StringUtil implements ClientConstants {
 	 *
 	 */
 	public static void loadVisualizationLibraries(){
-		boolean status = getScriptStatus();
-		AppClientFactory.printInfoLogger("status : "+status);
+//		boolean status = getScriptStatus();
+//		AppClientFactory.printInfoLogger("status : "+status);
 //		if (!status){
 //			Runnable onLoad = new Runnable() {
 //	            @Override
@@ -775,22 +775,6 @@ public class StringUtil implements ClientConstants {
 //		}
 	}
 
-	public static native boolean getScriptStatus() /*-{
-		var scripts = document.getElementsByTagName("script")
-		var isAva = false;
-		console.log("scripts.length :"+scripts.length);
-		for (var i = 0; i < scripts.length; ++i) {
-
-			isAva = scripts[i].getAttribute('src') === "http://www.google.com/uds/?file=visualization&v=1&packages=piechart&async=2";
-			console.log("isAva :"+isAva);
-			console.log("scripts[i].getAttribute('src') :"+scripts[i].getAttribute('src'))
-		    if( isAva ){
-				isAva = true;
-				break;
-		    }
-		}
-		return isAva;
-	}-*/;
 	public static String capitalizeFirstLetter(String original){
 	    if(original.length() == 0)
 	        return original;
@@ -874,16 +858,16 @@ public class StringUtil implements ClientConstants {
 	}
 
 	public static List<String> getKeys(Set<Integer> keys){
-		List<String> keyString=new ArrayList<String>();		
-	
+		List<String> keyString=new ArrayList<String>();
+
 		for(Integer key:keys){
 			keyString.add(key+"");
 		}
 		return keyString;
 	}
 	public static List<String> getKeysLong(Set<Long> keys){
-		List<String> keyString=new ArrayList<String>();		
-	
+		List<String> keyString=new ArrayList<String>();
+
 		for(Long key:keys){
 			keyString.add(key+"");
 		}
@@ -891,9 +875,9 @@ public class StringUtil implements ClientConstants {
 	}
 
 	public static List<checkboxSelectedDo> getCheckBoxSelectedDo(Map<Integer,String> detailsMap){
-		List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>(); 
+		List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>();
 		if(detailsMap!=null){
-			
+
 			for(Map.Entry<Integer, String> entry:detailsMap.entrySet()){
 				checkboxSelectedDo checkboxSelectedDo=new checkboxSelectedDo();
 				checkboxSelectedDo.setId(entry.getKey());
@@ -903,8 +887,8 @@ public class StringUtil implements ClientConstants {
 		}
 		return checkboxSelectedDos;
 	}
-	
-	
+
+
 public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 	List<StandardFo> standardFos=new ArrayList<StandardFo>();
 	if(detailsMap!=null){
@@ -922,7 +906,7 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		SpanPanel errorLbl = new SpanPanel();
 		errorLbl.setText(errorStr);
 		errorLbl.setStyleName(style);
-		return errorLbl;	
+		return errorLbl;
 	}
 
 

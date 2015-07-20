@@ -29,7 +29,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsService;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
@@ -45,7 +48,6 @@ import org.ednovo.gooru.application.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
-import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.AnalyticsServiceConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
@@ -145,9 +147,9 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 //		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}";
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, classObj.getAssessmentId());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonString);
-		
+
 		String newurl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER,classObj.getSessionId(), classObj.getAssessmentId());
-		
+
 		logger.info("getSessionsDataByUser --newurl:+------ "+newurl);
 		logger.info("getSessionsDataByUser --url:+------ "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
@@ -188,7 +190,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		try{
 		logger.error("jsonres--"+jsonRep.getJsonObject());
 		}catch(Exception e){
-		e.printStackTrace();	
+		e.printStackTrace();
 		}
 		if(jsonResponseRep.getStatusCode()==200){
 			logger.error("getUserSessionDataByUser 200statuscode"+jsonResponseRep.getStatusCode());
@@ -204,6 +206,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		logger.error("reult obj--"+collectionResourcesList.size());
 		return collectionResourcesList;
 	}
+
 
 
 	@Override
@@ -226,7 +229,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 
 		try {
-			
+
 			if(getSessionStatus(url)){
 				logger.info("getCollectionMetaDataByUserAndSession url2:+--- "+url2);
 				JsonResponseRepresentation jsonResponseRep2 = ServiceProcessor.get(url2, getRestUsername(), getRestPassword(),true);
@@ -236,42 +239,33 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 				logger.info("API collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
 			}
-			
+
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
 		logger.info("end collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
 		return  collectionSummaryMetaDataDoList;
 	}
-	
-	public boolean getSessionStatus(String url){
-		JsonRepresentation jsonRep = null;
-		boolean status=true;
-		int statusCount=0;
-		String message="";
+
+	public boolean getSessionStatus(final String url) {
+
+		boolean status = true;
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(), true);
+		JsonRepresentation jsonSessionStatusRep = jsonResponseRep.getJsonRepresentation();
+		String messageSessionStatus=null;
 		try {
-			do {
-				if (statusCount < 10) {
-					JsonResponseRepresentation jsonResponseRep = ServiceProcessor
-							.get(url, getRestUsername(), getRestPassword(), true);
-					jsonRep = jsonResponseRep.getJsonRepresentation();
-					message=jsonRep.getJsonObject().getJSONObject("message").getString("status");
-					statusCount++;
-				} else {
-					status = false;
-				}
-				if(!status){
-					break;
-				}
-			} while (!message.equalsIgnoreCase("completed"));
-		}catch (JSONException e) {
-			e.printStackTrace();
+			messageSessionStatus = jsonSessionStatusRep.getJsonObject()
+					.getJSONObject("message").getString("status");
+		} catch (JSONException e) {
+			AppClientFactory
+					.printSevereLogger("Error while getting status from JSON object");
 		}
-		logger.info("last return--"+status);
+		AppClientFactory.printInfoLogger("message : " + messageSessionStatus);
+		status = messageSessionStatus != null && "completed".equalsIgnoreCase(messageSessionStatus) ? true : false;
+		logger.info("last return--" + status);
 		return status;
+
 	}
-	
-	
 
 	@Override
 	public String setHTMLtoPDF(String htmlString,String fileName,boolean isClickedOnEmail) {
@@ -1049,7 +1043,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		logger.info("exportProgress url:+"+url);
 		return url;
 	}
-	
+
 
 	@Override
 	public AssessmentSummaryStatusDo getAssessmentSummary(ClassDo classObj){
@@ -1059,7 +1053,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeAssessmentSummary(jsonRep);
 	}
-	
+
 	public AssessmentSummaryStatusDo deserializeAssessmentSummary(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {

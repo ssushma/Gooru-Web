@@ -29,6 +29,7 @@ package org.ednovo.gooru.application.server.service;
 
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.server.request.UrlToken;
 
 /**
@@ -60,7 +61,11 @@ public class UrlGenerator {
 	public static String generateUrl(String url, String... params) {
 		if (params != null) {
 			for (int index = 0; index < params.length; index++) {
-				url = url.replace("{" + index + "}", params[index]);
+				if (params[index] != null){
+					url = url.replace("{" + index + "}", params[index]);
+				}else{
+					AppClientFactory.printSevereLogger("Error in generating URL for : "+index+";  params : "+params.toString());
+				}
 			}
 		}
 		return  url;

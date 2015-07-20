@@ -157,7 +157,11 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 		InlineLabel caret = new InlineLabel();
 		caret.setStyleName("caret");
-
+		startMinTxt.addKeyPressHandler(new NumbersOnly());
+		startSecTxt.addKeyPressHandler(new NumbersOnly());
+		stopMinTxt.addKeyPressHandler(new NumbersOnly());
+		stopSecTxt.addKeyPressHandler(new NumbersOnly());
+		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hidePopup(event);
@@ -308,6 +312,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		}
 	}
+	
+	
 	/**
 	 * This inner class will handle the click event on the Arrows
 	 */
