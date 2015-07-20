@@ -716,6 +716,8 @@ button.btn-disabled{
 #gShelfCousesList{
 	padding-bottom:50px;
 	min-height:450px;
+	height: auto;
+	overflow-y:auto;
 }
 #gShelfCousesList .courseHeader{
 	padding:20px 15px;
