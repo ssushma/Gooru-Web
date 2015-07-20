@@ -199,6 +199,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
 		}
+		Window.scrollTo(0, 0);
 	}
 	//This method is not using present
 	@Override
