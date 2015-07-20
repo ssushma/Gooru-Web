@@ -138,8 +138,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			}
 		});
 	}
-	public void setMyCollectionRightClusterPresenter(
-			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 	public void setData(FolderDo folderObj) {

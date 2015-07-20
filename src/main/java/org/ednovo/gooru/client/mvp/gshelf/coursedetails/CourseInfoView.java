@@ -281,9 +281,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			if(taxonomyList.size()>0){
 				lblGradeErrorMsg.setVisible(false);
 				createOrUpDate.setTaxonomyCourseIds(taxonomyList);
-				String id= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObj);
+				if(courseObj!=null && courseObj.getGooruOid()!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj);
 				}
@@ -361,7 +360,9 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				courseList.add(courseObj);
 			}
 		}
-		courseObj.setTaxonomyCourse(courseList);
+		if(courseObj!=null){
+			courseObj.setTaxonomyCourse(courseList);
+		}
 		return taxonomyCourseIds;
 	}
 	@Override

@@ -842,6 +842,5 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 		return false;
 	}
-	
 }
 

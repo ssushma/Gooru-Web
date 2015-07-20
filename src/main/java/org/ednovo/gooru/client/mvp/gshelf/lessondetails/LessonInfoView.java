@@ -596,5 +596,4 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 		return false;
 	}
-	
 }

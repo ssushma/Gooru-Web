@@ -208,7 +208,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				params.put(O1_LEVEL, o1);
 			}
 			AppClientFactory.getInjector().getfolderService().createCollection(createObj, parentId, false, new SimpleAsyncCallback<FolderDo>() {
-
 				@Override
 				public void onSuccess(FolderDo result) {
 					params.put("id", result.getGooruOid());
@@ -231,13 +230,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				}
 			});
 		}
-		
-		
 	}
 
 	/*private void createCollectionInFolder() {
@@ -303,9 +301,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				}
 			});
 		}
-		
-		
-		
 	}
 
 	@Override
@@ -398,44 +393,28 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			createDo.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
 			createDo.setDepthOfKnowledgeIds(StringUtil.getKeys(getView().getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 			createDo.setSkillIds(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
-			
 			getFolderServiceAsync().updateCourse(courseId, unitId, lessonId, collectionUid, createDo, new AsyncCallback<Void>() {
 				
 				@Override
 				public void onSuccess(Void result) {
-					// TODO Auto-generated method stub
 					AppClientFactory.printInfoLogger("I am in updateCourse UpdateCollection Success");
 				}
-				
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
 				}
 			});
-			
 		}else{
-			
 			getFolderServiceAsync().updateCollectionDetails(createObj,collectionUid, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
-
 				@Override
 				public void onSuccess(Void result) {
-					// TODO Auto-generated method stub
 					AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
 				}
-
 				@Override
 				public void onFailure(Throwable caught) {
-
-					// TODO Auto-generated method stub
-
 					AppClientFactory.printInfoLogger("I am In updateCollectionDetails Failure ");
-
 				}
 			});
-			
 		}
-		
 	}
 	public void callCourseInfoTaxonomy(){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
