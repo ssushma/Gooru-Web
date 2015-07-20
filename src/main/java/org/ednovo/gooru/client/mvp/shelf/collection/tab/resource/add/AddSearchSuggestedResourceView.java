@@ -216,7 +216,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	public void updateViews(String count, String contentId, String whatToUpdate){
 		if (resourceSearchResultDo.getGooruOid()!=null && resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
 			metaDataFloPanel.clear();
-			String category = (resourceSearchResultDo.getResourceFormat()!=null && resourceSearchResultDo.getResourceFormat().getValue() != null)? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
+			String category = (resourceSearchResultDo.getNewResourceFormat()!=null && resourceSearchResultDo.getNewResourceFormat().getValue() != null)? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 			
 			if(resourceSearchResultDo.getAggregator()!=null){
@@ -436,13 +436,10 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	}
 	public abstract void closePopup();
 	private class AddClickHandler implements ClickHandler {
-
 		@Override
 		public void onClick(ClickEvent event) {
 		addResourceBtnPanel.setVisible(false);
-		
-		AppClientFactory.getInjector().getResourceService().createCollectionItem(collectionId, resourceSearchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
-
+		AppClientFactory.getInjector().getResourceService().createNewCollectionItem(collectionId, resourceSearchResultDo.getGooruOid(),resourceSearchResultDo.getNewResourceFormat().getValue(), new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				Window.enableScrolling(true);
@@ -451,14 +448,11 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 			}
 		});
-		}
-		
+	  }
 	}
-	
 	public static void renderMetaData(FlowPanel flowPanel, String data) {
 		renderMetaData(flowPanel, data, null, -1);
 	}
-	
 	public static void renderMetaData(FlowPanel flowPanel, List<String> datas, int wrapLength) {
 		if (datas == null) {
 			return;
