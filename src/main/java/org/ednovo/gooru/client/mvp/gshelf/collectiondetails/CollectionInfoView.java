@@ -500,6 +500,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
+		standardsUI.clear();
 		resetDOK_Century_Lang();
 		depthOfKnowledgeContainer.setFolderDo(courseObj);
 		audienceContainer.setFolderDetails(courseObj);
@@ -555,6 +556,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	public void setStaticData(String type)
 	{   

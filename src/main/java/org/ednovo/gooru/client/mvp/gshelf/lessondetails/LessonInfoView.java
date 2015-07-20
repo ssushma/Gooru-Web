@@ -120,6 +120,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public LessonInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		lessonInfo.getElement().setId("pnlLessonInfo");
+		lessonInfo.getElement().setAttribute("style", "min-height:"+Window.getClientHeight()+"px");
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
