@@ -126,7 +126,6 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			    }
 			  }
 		});
-		this.classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 	}
 
 	private void removePreviousSelectedItem() {
@@ -278,6 +277,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
+		classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classId != null && currectCourseSelectedTreeItem.getGooruOid() != null){
 			getUiHandlers().connectCourseToClass(classId,currectCourseSelectedTreeItem.getGooruOid());
 		}

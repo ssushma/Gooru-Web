@@ -581,19 +581,15 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
 					|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null)){
 				if(cureentcollectionTreeItem!=null){
-					getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams,isFromMyCourse);
-					//boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
-					/*boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
+					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
 					if(flag){
 						lblError.setVisible(false);
-						AppClientFactory.printInfoLogger("tree item id:::::"+cureentcollectionTreeItem.getGooruOid());
-						AppClientFactory.printInfoLogger("tree item name:::::"+cureentcollectionTreeItem.getCollectionName());
-						//getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams);
+						getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams,isFromMyCourse);
 					}else{
 						lblError.setVisible(true);
 						lblError.setText("Oops! can copy only questions for Assessments.");
 						isAddingInProgress=true;
-					}*/
+					}
 				}else{
 					lblError.setVisible(true);
 					isAddingInProgress=true;
