@@ -120,7 +120,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if (!collectionDo.getMeta().isIsCollaborator()){
+				if (!collectionDo.isIsCollaborator()){
 					btnRemoveCollab.setVisible(true);
 					panelCollaborators.getElement().getStyle().setBackgroundColor("#F0F0F0");
 				}
@@ -132,7 +132,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				if (!collectionDo.getMeta().isIsCollaborator()){
+				if (!collectionDo.isIsCollaborator()){
 					btnRemoveCollab.setVisible(false);
 					panelCollaborators.getElement().getStyle().clearBackgroundColor();
 				}
@@ -203,7 +203,6 @@ public abstract class CollaboratorViewVc extends Composite {
 		btnRemoveCollab.getElement().setAttribute("alt",i18n.GL0237());
 		btnRemoveCollab.getElement().setAttribute("title",i18n.GL0237());
 		btnRemoveCollab.setVisible(false);
-		
 		if (collaboratorsDo!=null && collaboratorsDo.getStatus().equalsIgnoreCase("pending")){
 			panelCollaboratorsListContainer.getElement().setId(collaboratorsDo !=null && collaboratorsDo.getEmailId() !=null ? collaboratorsDo.getEmailId() : "divListPendingCollaborators");
 		}else{
@@ -248,7 +247,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			btnRemoveCollab.getElement().setAttribute("username", (collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : lblEmailId.getText());
 		}
 		
-		if (collectionDo.getMeta() !=null &&  collectionDo.getMeta().isIsCollaborator()){
+		if (collectionDo!=null &&  collectionDo.isIsCollaborator()){
 			btnRemoveCollab.setVisible(false);
 		}else{
 			lblUserName.getElement().getStyle().setDisplay(lblUserName.getText() !=null && !lblUserName.getText().equalsIgnoreCase("") ? Display.INLINE_BLOCK : Display.NONE);
@@ -383,9 +382,9 @@ public abstract class CollaboratorViewVc extends Composite {
 						Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
 						if (map.size()>1){
 							map.remove("id");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, map);
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, map);
 						}else{
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 						}
 						AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(collectionId)); 
 					}
