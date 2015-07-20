@@ -228,7 +228,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					params.put(O3_LEVEL, o3);
 					params.put("id", result.getGooruOid());
 					params.put("view", "course");
-
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
