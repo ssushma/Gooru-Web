@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -152,6 +153,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}
@@ -175,6 +177,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, folderDo);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}

@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPre
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -135,6 +136,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}
@@ -160,6 +162,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
 				}else{
+					Window.scrollTo(0, 0);
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, folderDo);
 				}
 			}
