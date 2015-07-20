@@ -112,6 +112,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionShareTabPresenter=collectionShareTabPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.courseSharePresenter=courseSharePresenter;
+		collectionShareTabPresenter.setMyCollectionRightClusterPresenter(this);
 		externalAssessmentInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -486,6 +487,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void enableAddButton() {
 		searchAddResourceToCollectionPresenter.enableAddButton();
+	}
+	public void disableCollabaratorOptions(boolean isHide) {
+		getView().disableCollabaratorOptions(isHide);
 	}
 	
 	

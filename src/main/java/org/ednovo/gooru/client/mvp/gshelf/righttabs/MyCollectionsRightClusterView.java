@@ -122,8 +122,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkPreview.setVisible(false);
 		toggleButton.setVisible(false);
 		copyPopupPanel.getElement().setAttribute("style", "min-width: 50px;");
-		copyLbl.setText("copy");
-		moveLbl.setText("move");
+		copyLbl.setText(i18n.GL0827());
+		moveLbl.setText(i18n.GL1261());
 		
 	/*	Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
@@ -746,6 +746,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		copyLbl.getElement().removeClassName("selected");
 		moveLbl.getElement().removeClassName("selected");
 		myCollDelLbl.getElement().removeClassName("selected");
+	}
+	
+	@Override
+	public void disableCollabaratorOptions(boolean hide){
+		moveLbl.setVisible(hide);
+		myCollDelLbl.setVisible(hide);
 	}
 
 }
