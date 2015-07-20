@@ -18,7 +18,7 @@
 			       <g:HTMLPanel styleName="indicationBox" ui:field="learnMapScore">
 			          <g:HTMLPanel ui:field="colorPanel">
 				          <g:HTMLPanel><span:SpanPanel styleName="green-circle"></span:SpanPanel><g:Label>Score Met</g:Label></g:HTMLPanel>
-				          <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label>Score Not Yet Met</g:Label></g:HTMLPanel>
+				          <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label>Score Not Met</g:Label></g:HTMLPanel>
 				          <g:HTMLPanel><span:SpanPanel styleName="grey-circle"></span:SpanPanel><g:Label>Not Attempted</g:Label></g:HTMLPanel>
 			          </g:HTMLPanel>
 			       </g:HTMLPanel>
