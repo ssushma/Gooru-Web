@@ -590,4 +590,9 @@
 }
 .copyLblStyle:hover{
 	background: #cddeea;
+	cursor: pointer;
+}
+
+#gooruSearchMainContainer .btn-group:hover .dropdown-menu {
+	display: block;
 }
