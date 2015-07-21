@@ -631,6 +631,7 @@ button.btn-disabled{
 #gShelfMainContainer .emptyHover:hover + .tooltipContainer  {
 	visibility:visible;
     opacity:1;
+    display:block;
 }
 
 
@@ -1002,6 +1003,9 @@ button.btn-disabled{
 	position:relative;
 	cursor:pointer;
 }
+#gShelfCousesList .addCourse .courseTextAdd{
+	display:inline-block;
+}
 #gShelfCousesList .addCourse .pnlCreate{
 	display: inline-block;
 }
@@ -1040,6 +1044,7 @@ button.btn-disabled{
 	border-bottom:1px solid #ddd;
 	height: 48px;
 }
+
 #gShelfCourseInfo .courseCreateContainer .lblTitle{
 	float: left;
 	display: inline-block;
@@ -1365,7 +1370,7 @@ button.btn-disabled {
 #gShelfMainContainer .lblCollectionTitle {
 	height: 56px;
 	text-align: left;
-	background: #f0f0f0;
+	background: #ffffff;
 	box-shadow: 0 0 6px rgba(0,0,0,0.05);
 	/* vertical-align: middle; */
 	margin: 0;
@@ -1459,7 +1464,7 @@ button.btn-disabled {
 	background: url("../images/gooru-sprite.png") no-repeat scroll -278px
 		-449px;
 	width: 36px;
-	height: 24px;
+	height: 28px;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -1490,7 +1495,23 @@ button.btn-disabled {
 	vertical-align: middle;
 }
 
+.breadcrumbsCollectionIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -519px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 #gShelfCourseInfo .breadcrumbsAssessmentIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.breadcrumbsAssessmentIcon {
 	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
 	width: 36px;
 	height: 24px;
@@ -2809,7 +2830,7 @@ vertical-align:middle;
 .courseFolderCloseIcon{
 	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -449px;
 	width:36px;
-	height:24px;
+	height:28px;
 	display:inline-block;
 	vertical-align:middle;
 }
@@ -4411,10 +4432,10 @@ right:1px;
 
 /* Tooltip css */
 
-.tooltipContainer {
+#gShelfMainContainer .tooltipContainer {
 	width: 150px;
 	position: absolute;
-	left:-20px;
+	left:-33px;
     top:20px;
 	z-index:9999;
 	margin-top: 0px;
@@ -4425,32 +4446,32 @@ right:1px;
     -o-transition: visibility 0.2s linear, opacity 0.2s linear;
 }
 
-.tooltipContainer .arrowBorder {
+#gShelfMainContainer .tooltipContainer .arrowBorder {
  	width: 0px;
 	height: 0px;
 	border: 10px solid;
 	border-color: transparent transparent #DDD transparent;
 	position: relative;
 	top: 0px;
-    left:20px;
+    left:-31px;
 	border-top: none;
 }
 
-.tooltipContainer .arrow {
+#gShelfMainContainer .tooltipContainer .arrow {
 	width: 0px;
 	height: 0px;
 	border: 10px solid;
 	border-color: transparent transparent white transparent;
 	position: relative;
 	top: -9px;
-    left:20px;
+    left:-31px;
 	border-top: none;
 	z-index: 100;
     display:block !important; /* to override folder level arrow */
     background:none; /* to override folder level arrow */
 }
 
-.tooltipContent {
+#gShelfMainContainer .tooltipContent {
 	text-align:left;
 	color: #515151;
 	font-size: 12px;
@@ -4474,12 +4495,12 @@ right:1px;
 }
 /* //////////////////////////////////// overrides ////////////////////////////////////////*/
 
-.tooltipContainer .arrow:hover {
+#gShelfMainContainer .tooltipContainer .arrow:hover {
     background:none; /* to override folder level arrow */
     cursor:default; /* to override folder level arrow */
 }
 
-.folderLevel.child .tooltipContainer .arrow, .folderLevel.parent .tooltipContainer .arrow {
+#gShelfMainContainer .folderLevel.child .tooltipContainer .arrow, .folderLevel.parent .tooltipContainer .arrow {
     left:20px; /* to override folder level arrow */
 }
 

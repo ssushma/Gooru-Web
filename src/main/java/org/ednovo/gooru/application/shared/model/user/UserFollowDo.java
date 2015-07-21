@@ -1,6 +1,6 @@
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class UserFollowDo implements Serializable{
+public class UserFollowDo implements IsSerializable{
 	private static final long serialVersionUID = 6752607500919973286L;
 	private String gooruUid;
 	private String username;

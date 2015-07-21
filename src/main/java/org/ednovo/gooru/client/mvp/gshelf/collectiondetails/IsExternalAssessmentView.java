@@ -11,5 +11,6 @@ public interface IsExternalAssessmentView extends IsViewWithHandlers<ExternalAss
 	 * @param folderObj
 	 */
 	void setData(FolderDo folderObj);
+	void resetBtns();
 
 }

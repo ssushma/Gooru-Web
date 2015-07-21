@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.library;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
@@ -33,9 +32,10 @@ import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class PartnerFolderDo implements Serializable{
+public class PartnerFolderDo implements IsSerializable{
 
 	private static final long serialVersionUID = -3298220423508874309L;
 

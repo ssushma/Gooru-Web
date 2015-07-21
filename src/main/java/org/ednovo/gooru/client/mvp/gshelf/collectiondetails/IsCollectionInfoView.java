@@ -74,4 +74,6 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 	void setCollectionImage(String url);
 
 	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
+
+	void resetBtns();
 }

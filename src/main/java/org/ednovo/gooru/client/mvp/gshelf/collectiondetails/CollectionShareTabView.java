@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -149,7 +150,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				}
 			});
 		}
-		
+		collaboratorPanel.getElement().getStyle().setPadding(15, Unit.PX);
 		publishedPanel.setVisible(false);
 		lblPublishPending.setVisible(false);
 	}
@@ -162,8 +163,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		AppClientFactory.printInfoLogger("view:"+view);
+		// Hiding private functionality in 1.6
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
-			privateShareFloPanel.setVisible(true);
+			privateShareFloPanel.setVisible(false);
 		}else{
 			privateShareFloPanel.setVisible(false);
 		}

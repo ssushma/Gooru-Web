@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.drive;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class GoogleDriveItemDo implements Serializable {
+public class GoogleDriveItemDo implements IsSerializable {
 	
 	private String title;
 	private String description;

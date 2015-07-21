@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.search;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,8 +38,9 @@ import org.ednovo.gooru.application.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.application.shared.model.content.SearchResultsTagsDo;
 import org.ednovo.gooru.application.shared.model.content.TagDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class ResourceSearchResultDo extends ResourceDo implements Serializable {
+public class ResourceSearchResultDo extends ResourceDo implements IsSerializable {
 
 	/**
 	 *

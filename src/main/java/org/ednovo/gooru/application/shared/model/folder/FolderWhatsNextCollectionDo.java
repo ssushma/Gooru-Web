@@ -24,15 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.folder;
 
-import java.io.Serializable;
-
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class FolderWhatsNextCollectionDo implements Serializable{
+public class FolderWhatsNextCollectionDo implements IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 	private ThumbnailDo thumbnails;
