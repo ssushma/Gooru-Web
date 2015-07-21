@@ -123,7 +123,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		this.searchResultDo =collectionsearchResultDo;
 		this.collectionSearchWidget=collectionSearchWidget;
 		this.collectionTitle=collectionsearchResultDo.getTitle();
-		getView().setDefaultPanelVisibility(true);
+		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}
 
@@ -383,27 +383,21 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	@Override
-	public void CopyToplevelMyCollections(String collectionId, String folderId,String searchType,String collectionTitle,HashMap<String, String> urlparams) {
-			if(urlparams!=null){
-				this.urlParameters=urlparams;
-				O1_LEVEL_VALUE = urlparams.get("o1");
-				O2_LEVEL_VALUE = urlparams.get("o2");
-				O3_LEVEL_VALUE = urlparams.get("o3");
-			}
+	public void CopyToplevelMyCollections(String collectionId, String folderId,String searchType,String collectionTitle,final HashMap<String, String> urlparams) {
 			AppClientFactory.getInjector().getResourceService().CopyToplevelMyCollections(getCollectionGooruId(), folderId, this.collectionTitle, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					if(result.getStatusCode()==200){
 						FolderDo folderDo=getFolderDo(result);
 						HashMap<String,String> params = new HashMap<String,String>();
-						if(O3_LEVEL_VALUE!=null) {
-							params.put("o3", O3_LEVEL_VALUE);
+						if(urlparams!=null && urlparams.get("o3")!=null) {
+							params.put("o3", urlparams.get("o3"));
 						}
-						if(O2_LEVEL_VALUE!=null) {
-							params.put("o2", O2_LEVEL_VALUE);
+						if(urlparams!=null && urlparams.get("o2")!=null) {
+							params.put("o2", urlparams.get("o2"));
 						}
-						if(O1_LEVEL_VALUE!=null) {
-							params.put("o1", O1_LEVEL_VALUE);
+						if(urlparams!=null && urlparams.get("o1")!=null) {
+							params.put("o1", urlparams.get("o1"));
 						}
 						params.put("id", result.getGooruOid());
 						params.put("view", "Folder");
@@ -424,15 +418,12 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	@Override
-	public void copyCollectionToLession(String collectionId,String collectionTitle, HashMap<String, String> urlparams) {
+	public void copyCollectionToLession(String collectionId,String collectionTitle, final HashMap<String, String> urlparams) {
 		if(urlparams!=null){
 			this.urlParameters=urlparams;
 			courseId=urlparams.get("o1");
 			unitId=urlparams.get("o2");
 			lessonId=urlparams.get("o3");
-			O1_LEVEL_VALUE = urlparams.get("o1");
-			O2_LEVEL_VALUE = urlparams.get("o2");
-			O3_LEVEL_VALUE = urlparams.get("o3");
 		}
 		AppClientFactory.getInjector().getResourceService().CopyCollectionToLesson(courseId, unitId, lessonId, getCollectionGooruId(),this.collectionTitle, new org.ednovo.gooru.application.client.SimpleAsyncCallback<CollectionDo>() {
 			@Override
@@ -440,14 +431,14 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				if(result.getStatusCode()==200){
 					FolderDo folderDo=getFolderDo(result);
 					HashMap<String,String> params = new HashMap<String,String>();
-					if(O3_LEVEL_VALUE!=null) {
-						params.put("o3", O3_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o3")!=null) {
+						params.put("o3", urlparams.get("o3"));
 					}
-					if(O2_LEVEL_VALUE!=null) {
-						params.put("o2", O2_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o2")!=null) {
+						params.put("o2", urlparams.get("o2"));
 					}
-					if(O1_LEVEL_VALUE!=null) {
-						params.put("o1", O1_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o1")!=null) {
+						params.put("o1", urlparams.get("o1"));
 					}
 					params.put("view", "Course");
 					params.put("id", result.getGooruOid());
@@ -468,15 +459,12 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	@Override
-	public void moveCollectionTOLesson(String collectionId,String collectionTitle, HashMap<String, String> urlparams) {
+	public void moveCollectionTOLesson(String collectionId,String collectionTitle, final HashMap<String, String> urlparams) {
 		if(urlparams!=null){
 			this.urlParameters=urlparams;
 			courseId=urlparams.get("o1");
 			unitId=urlparams.get("o2");
 			lessonId=urlparams.get("o3");
-			O1_LEVEL_VALUE = urlparams.get("o1");
-			O2_LEVEL_VALUE = urlparams.get("o2");
-			O3_LEVEL_VALUE = urlparams.get("o3");
 		}
 		AppClientFactory.getInjector().getResourceService().moveCollectionTOLesson(courseId, unitId, lessonId, getCollectionGooruId(), new org.ednovo.gooru.application.client.SimpleAsyncCallback<CollectionDo>() {
 			@Override
@@ -484,14 +472,14 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				if(result.getStatusCode()==200){
 					FolderDo folderDo=getFolderDo(result);
 					HashMap<String,String> params = new HashMap<String,String>();
-					if(O3_LEVEL_VALUE!=null) {
-						params.put("o3", O3_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o3")!=null) {
+						params.put("o3", urlparams.get("o3"));
 					}
-					if(O2_LEVEL_VALUE!=null) {
-						params.put("o2", O2_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o2")!=null) {
+						params.put("o2", urlparams.get("o2"));
 					}
-					if(O1_LEVEL_VALUE!=null) {
-						params.put("o1", O1_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o1")!=null) {
+						params.put("o1", urlparams.get("o1"));
 					}
 					params.put("id", getCollectionGooruId());
 					params.put("view", "Course");
@@ -513,27 +501,21 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public void moveCollectionToMyCOllections(String gooruOid, String folderId,
 			String searchType, String collectionTitle,
-			HashMap<String, String> urlparams) {
-		if(urlparams!=null){
-			this.urlParameters=urlparams;
-			O1_LEVEL_VALUE = urlparams.get("o1");
-			O2_LEVEL_VALUE = urlparams.get("o2");
-			O3_LEVEL_VALUE = urlparams.get("o3");
-		}
+			final HashMap<String, String> urlparams) {
 		AppClientFactory.getInjector().getResourceService().moveCollectionToMyCOllections(getCollectionGooruId(), folderId, this.collectionTitle, new SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
 				if(result.getStatusCode()==200){
 					FolderDo folderDo=getFolderDo(result);
 					HashMap<String,String> params = new HashMap<String,String>();
-					if(O3_LEVEL_VALUE!=null) {
-						params.put("o3", O3_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o3")!=null) {
+						params.put("o3", urlparams.get("o3"));
 					}
-					if(O2_LEVEL_VALUE!=null) {
-						params.put("o2", O2_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o2")!=null) {
+						params.put("o2", urlparams.get("o2"));
 					}
-					if(O1_LEVEL_VALUE!=null) {
-						params.put("o1", O1_LEVEL_VALUE);
+					if(urlparams!=null && urlparams.get("o1")!=null) {
+						params.put("o1", urlparams.get("o1"));
 					}
 					params.put("id", getCollectionGooruId());
 					params.put("view", "Folder");
@@ -565,15 +547,17 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			getView().getMycollectionsLbl().removeStyleName("selected");
 			getView().getMycontentLbl().addStyleName("selected");
 			getView().setFromMyCourse(true);
+			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}else{
 			getView().getMycollectionsLbl().getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 			getView().getMycontentLbl().getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			getView().getMycontentLbl().removeStyleName("selected");
-			getView().getMycollectionsLbl().addStyleName("selected");
-			getView().setFromMyCourse(false);
+			getView().getMycontentLbl().addStyleName("selected");
+			getView().getMycollectionsLbl().removeStyleName("selected");
+			getView().setFromMyCourse(true);
+			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-
+	
 	public void setCollectionTitle(String collectionTitle) {
 		this.collectionTitle=collectionTitle;
 	}
