@@ -275,7 +275,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			getFolderServiceAsync().updateCollectionDetails(createDo,id, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
 				}
@@ -288,7 +288,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();

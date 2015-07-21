@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
@@ -87,8 +86,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	Map<Integer, ArrayList<String>> selectedValues=new HashMap<Integer,ArrayList<String>>();
 
-	List<Button> buttonsList = new ArrayList<Button>();
-
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
@@ -106,6 +103,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
 		lblErrorMessage.setText("");
+		lblErrorMessage.setVisible(false);
 		courseTitle.getElement().setPropertyString("placeholder", i18n.GL3347());
 		courseTitle.addBlurHandler(new BlurHandler() {
 			@Override
@@ -113,18 +111,10 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, false);
 			}
 		});
-		addAllTaxonomyButtons();
 		btnK12.addClickHandler(new CallTaxonomy(1));
 		btnHigherEducation.addClickHandler(new CallTaxonomy(2));
 		btnProfessionalLearning.addClickHandler(new CallTaxonomy(3));
 	}
-
-	private void addAllTaxonomyButtons() {
-		buttonsList.add(btnK12);
-		buttonsList.add(btnHigherEducation);
-		buttonsList.add(btnProfessionalLearning);
-	}
-
 	class CallTaxonomy implements ClickHandler{
 		int selectedIndex;
 		CallTaxonomy(int selectedIndex){
@@ -132,12 +122,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			removeGradeButtonStyleName();
 			if(selectedIndex==1){
-				setButtonActiveStyle(btnK12);
+				btnK12.addStyleName(ACTIVE);
 			}else if(selectedIndex==2){
-				setButtonActiveStyle(btnHigherEducation);
+				btnHigherEducation.addStyleName(ACTIVE);
 			}else{
-				setButtonActiveStyle(btnProfessionalLearning);
+				btnProfessionalLearning.addStyleName(ACTIVE);
 			}
 			getUiHandlers().callTaxonomyService(selectedIndex);
 		}
@@ -145,11 +136,11 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	/**
 	 * To remove hilight styles
 	 */
-	/*void removeGradeButtonStyleName() {
+	void removeGradeButtonStyleName() {
 		btnK12.removeStyleName(ACTIVE);
 		btnHigherEducation.removeStyleName(ACTIVE);
-		btnHigherEducation.removeStyleName(ACTIVE);
-	}*/
+		btnProfessionalLearning.removeStyleName(ACTIVE);
+	}
 	/**
 	 * This method will display the Grades according to the subject
 	 */
@@ -217,7 +208,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public void setCourseList(List<CourseSubjectDo> libraryCode) {
 		ulMainGradePanel.clear();
-
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
@@ -270,13 +260,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		if(validateInputs()){
-			lblErrorMessage.setVisible(true);
+			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(courseTitle.getText().trim(),false);	
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
-			courseTitle.addStyleName("textAreaErrorMessage");
+			courseTitle.setStyleName("textAreaErrorMessage");
+			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");
 		}
 
@@ -285,13 +276,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
 		if(validateInputs()){
-			lblErrorMessage.setVisible(true);
+			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(courseTitle.getText().trim(),true);
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
-			courseTitle.addStyleName("textAreaErrorMessage");
+			courseTitle.setStyleName("textAreaErrorMessage");
+			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");	
 		}
 	}
@@ -328,9 +320,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		this.courseObj=courseObj;
 		ulSelectedItems.clear();
 		selectedValues.clear();
-		setButtonActiveStyle(btnK12);
+		btnK12.addStyleName(ACTIVE);
 		courseTitle.setText(courseObj==null?"":!courseObj.getTitle().equalsIgnoreCase(i18n.GL3347())?courseObj.getTitle():"");
-
 		audienceContainer.setFolderDetails(courseObj);
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
@@ -407,16 +398,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		return courseObj;
 	}
 
-	private void setButtonActiveStyle(Button activeButton) { 
-		for(Button button:buttonsList){
-			if(button==activeButton){
-				button.addStyleName(ACTIVE);
-			}else{
-				button.removeStyleName(ACTIVE);
-			}
-		}
-	}
-
 	public boolean validateInputs(){
 		String collectionTitleStr=courseTitle.getText().trim();
 		if(collectionTitleStr.equalsIgnoreCase("")||collectionTitleStr.equalsIgnoreCase(i18n.GL3347())){
@@ -424,8 +405,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		}else{
 			return true;
 		}
-
-
 	}
 
 	@UiHandler("courseTitle")

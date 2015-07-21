@@ -128,9 +128,9 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
     private SimpleAsyncCallback<CollectionDo> collectionDetailsAsync;
 
     private AssessmentsPlayerMetadataPresenter metadataPresenter;
-    
+
     ShelfMainPresenter shelfMainPresenter;
-    
+
     SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 
     private AssessmentsResourcePlayerMetadataPresenter resoruceMetadataPresenter;
@@ -918,11 +918,19 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		clearSlot(COLLECTION_PLAYER_NAVIGATION_SLOT);
 		stopResourceDataLog();
 		resetAnswerLists();
-		stopCollectionDataLog();
-		setClassCollectionDataInsightsUrl(false);
-		updateSession(sessionId);
-		setUserAttemptedQuestionTypeAndStatus(false,0);
-		setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
+		Timer timer = new Timer() {
+
+			@Override
+			public void run() {
+				AppClientFactory.printInfoLogger("APP - restarted after 1500 milliseconds : "+System.currentTimeMillis());
+				stopCollectionDataLog();
+				setClassCollectionDataInsightsUrl(false);
+				setUserAttemptedQuestionTypeAndStatus(false,0);
+				setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
+			}
+		};
+		AppClientFactory.printInfoLogger("APP - stoped for 1500 milliseconds : "+System.currentTimeMillis());
+		timer.schedule(1500);
 	}
 	public void clearDashBoardIframe(){
 		metadataPresenter.clearDashBoardIframe();
@@ -952,9 +960,9 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void resetSummary(){
-		
+
 		collectionEndPresenter.displayScoreCountData(new CollectionSummaryMetaDataDo());
-		
+
 	}
 
 	public void setClasspageInsightsUrl(boolean isHomeView){
@@ -1254,7 +1262,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
-		
+
 		shelfMainPresenter.SetDefaultTypeAndVersion();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
@@ -1423,11 +1431,13 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 	public void stopCollectionDataLogs(){
 		if(this.collectionDo!=null){
+			AppClientFactory.printInfoLogger("stopCollectionDataLogs");
 			stopResourceDataLogFromHomePage();
 		}
 	}
 
 	public void startResourceInsightDataLog(){
+		AppClientFactory.printInfoLogger("startResourceInsightDataLog");
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
 		if(GooruConstants.TRUE.equals(isItem_Refreshed)){
@@ -1457,7 +1467,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * Triggers the collection.resource.stop event
 	 */
 	public void stopResourceInsightDataLog(){
-
+		AppClientFactory.printInfoLogger("stopResourceInsightDataLog");
 		stopHintOrExplanationEvent();
 		Long resourceEndTime=PlayerDataLogEvents.getUnixTime();
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, collectionDataLogEventId,resourceActivityResourceId,collectionDo.getGooruOid(), PlayerDataLogEvents.STOP_EVENT_TYPE, resourceStartTime,
@@ -1592,14 +1602,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		});
 	}
 
-	public void updateSession(String sessionTrackerId){
-		if(sessionTrackerId!=null){
-			this.playerAppService.updateSessionInCollection(sessionTrackerId, new SimpleAsyncCallback<String>() {
-				@Override
-				public void onSuccess(String sessionItemId) {}
-			});
-		}
-	}
+
 
 	public void setUserAttemptResult(String collectionItemId,AttemptedAnswersDo attemptAnswersDo){
 		attemptAnswersMap.put(collectionItemId, attemptAnswersDo);
@@ -1669,6 +1672,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void startExplanationDataLogEvent(){
+		AppClientFactory.printInfoLogger("startExplanationDataLogEvent");
 		stopHintOrExplanationEvent();
 		isExplanationUsed=true;
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
@@ -1688,6 +1692,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void saveOeQuestionAnswerDataLogEvent(){
+		AppClientFactory.printInfoLogger("saveOeQuestionAnswerDataLogEvent");
 		stopHintOrExplanationEvent();
 		hintOrExplanationEventName=null;
 		String submitEventId=GwtUUIDGenerator.uuid();
@@ -1698,6 +1703,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void stopHintOrExplanationEvent(){
+		AppClientFactory.printInfoLogger("stopHintOrExplanationEvent");
 		if(hintOrExplanationEventName!=null){
 			Long endTime=PlayerDataLogEvents.getUnixTime();
 			Long spendTime=endTime-hintOrExplanationStartTime;
@@ -1990,6 +1996,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			resourceInfoPresenter.resetResourceInfo();
 			collectionPlayerTocPresenter.clearNavigationPanel();
 			setOpenEndedAnswerSubmited(true);
+			collectionEndPresenter.getView().getFrame().setUrl("");
 		}
 }
 	 private Timer sessionTimeoutResponseTimer = new Timer() {
@@ -2118,6 +2125,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param score
 	 */
 	public void triggerCollectionNewDataLogStartStopEvent(Long collectionStartTime,Long collectionEndTime,String eventType,Integer score){
+		AppClientFactory.printInfoLogger("triggerCollectionNewDataLogStartStopEvent");
 		try
 		{
 			JSONObject collectionDataLog=new JSONObject();
@@ -2180,6 +2188,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
+		AppClientFactory.printInfoLogger("triggerCollectionItemNewDataLogStartStopEvent");
 		try
 		{
 		JSONObject collectionDataLog=new JSONObject();
@@ -2219,6 +2228,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 	}
 	public void triggerSaveOeAnswerTextDataEvent(String eventId,String resourceId,Long oeStartTime,Long oeEndTime,int score){
+		AppClientFactory.printInfoLogger("triggerSaveOeAnswerTextDataEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(eventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_RESOURCE_SAVE));
@@ -2243,6 +2253,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerReactiontDataLogEvent(String resourceId,Long reactionStartTime,Long reactionEndTime,String reactionType,String eventName){
+		AppClientFactory.printInfoLogger("triggerReactiontDataLogEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
@@ -2269,6 +2280,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerItemLoadDataLogEvent(Long startTime,String itemType,String collectionId){
+		AppClientFactory.printInfoLogger("triggerItemLoadDataLogEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_LOAD));
@@ -2306,6 +2318,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 
 	public void triggerItemFlagDataLogEvent(Long startTime,String itemType,String flagText,ArrayList<String> contentReportList,String itemGooruOid,String collectionItemId){
+		AppClientFactory.printInfoLogger("triggerItemFlagDataLogEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_FLAG));
@@ -2352,6 +2365,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerShareDatalogEvent(String resourceGooruOid,String collectionItemId, String itemType,String shareType, boolean confirmStatus){
+		AppClientFactory.printInfoLogger("triggerShareDatalogEvent");
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
@@ -2367,6 +2381,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void triggerCollectionShareDataEvent( String collectionId, String itemType, String shareType, boolean confirmStatus){
+		AppClientFactory.printInfoLogger("triggerCollectionShareDataEvent 3");
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
@@ -2398,6 +2413,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param commentText  specifies the user commented text.
 	 */
 	public void triggerCommentDataLogEvent(String commentId,String eventName,String commentText){
+		AppClientFactory.printInfoLogger("triggerCommentDataLogEvent");
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
@@ -2428,6 +2444,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param previousRate specifies user previous given star rating for collection item.
 	 */
 	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
+		AppClientFactory.printInfoLogger("triggerRatingDataLogEvent");
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
 			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
@@ -2446,6 +2463,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param reviewText specifies user review text.
 	 */
 	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
+		AppClientFactory.printInfoLogger("triggerReviewDataLogEvent");
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
 			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
