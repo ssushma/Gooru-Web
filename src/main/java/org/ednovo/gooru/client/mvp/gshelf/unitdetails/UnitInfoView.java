@@ -336,7 +336,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0,courseId);
-
 		}else{
 			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
