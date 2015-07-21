@@ -116,7 +116,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
 		lnkDeleteButton.addClickHandler(new DeleteContent());
 		lnkPreview.addClickHandler(new PreviewClickHandler());
-		popupPanelDropDwn.addClickHandler(new openDropDownFilters());
+//		popupPanelDropDwn.addClickHandler(new openDropDownFilters());
 		
 		copyLbl.addClickHandler(new onCopyClickHandler());
 		moveLbl.addClickHandler(new onMoveClickHandler());
@@ -369,7 +369,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void enableAndHideTabs(boolean isVisible){
 		lnkContent.setVisible(isVisible);
-		lnkshare.setVisible(isVisible);
+		if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
+			lnkshare.setVisible(isVisible);
+		}
 		toggleButton.setVisible(isVisible);
 		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
@@ -386,19 +388,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		@Override
 		public void onClick(ClickEvent event) {
 			initiateDelete();
-			copyPopupPanel.setVisible(false);
 		}
 	}
 	
 	private class DeleteContentData implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			copyLbl.getElement().removeClassName("selected");
+			/*copyLbl.getElement().removeClassName("selected");
 			moveLbl.getElement().removeClassName("selected");
-			myCollDelLbl.getElement().addClassName("selected");
+			myCollDelLbl.getElement().addClassName("selected");*/
 			initiateDelete();
-			copyPopupPanel.setVisible(false);
-			
 			
 		}
 		
@@ -660,9 +659,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		public void onClick(ClickEvent event) {
 			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 			getUiHandlers().EnableMyCollectionsTreeData(collectionId,folderObj.getTitle());
-			copyLbl.getElement().addClassName("selected");
+			/*copyLbl.getElement().addClassName("selected");
 			moveLbl.getElement().removeClassName("selected");
-			myCollDelLbl.getElement().removeClassName("selected");
+			myCollDelLbl.getElement().removeClassName("selected");*/
 			isCopySelected= true;
 			isMoveSelected=false;
 			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
@@ -673,9 +672,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		@Override
 		public void onClick(ClickEvent event) {
 			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-			copyLbl.getElement().removeClassName("selected");
+			/*copyLbl.getElement().removeClassName("selected");
 			moveLbl.getElement().addClassName("selected");
-			myCollDelLbl.getElement().removeClassName("selected");
+			myCollDelLbl.getElement().removeClassName("selected");*/
 			isCopySelected= false;
 			isMoveSelected= true;
 			getUiHandlers().enableAddButton();

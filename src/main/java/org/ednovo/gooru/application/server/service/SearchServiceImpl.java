@@ -111,6 +111,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String TYPE = "type";
 
 	private static final String SHARETYPE="shareType";
+	
+	private static final String COLLECTION_TYPE="collectionType";
 
 	private static final String CLASSPAGE = "classpage";
 
@@ -412,6 +414,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}else {
 			if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
+			}else if(params.get(COLLECTION_TYPE).equalsIgnoreCase("assessment")){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.ASSESSMENT_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 			}else{
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 			}
