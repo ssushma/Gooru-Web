@@ -922,14 +922,14 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 			@Override
 			public void run() {
-				AppClientFactory.printInfoLogger("restarted after 1000 milliseconds : "+System.currentTimeMillis());
+				AppClientFactory.printInfoLogger("APP - restarted after 1500 milliseconds : "+System.currentTimeMillis());
 				stopCollectionDataLog();
 				setClassCollectionDataInsightsUrl(false);
 				setUserAttemptedQuestionTypeAndStatus(false,0);
 				setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
 			}
 		};
-		AppClientFactory.printInfoLogger("stoped for 1000 milliseconds : "+System.currentTimeMillis());
+		AppClientFactory.printInfoLogger("APP - stoped for 1500 milliseconds : "+System.currentTimeMillis());
 		timer.schedule(1500);
 	}
 	public void clearDashBoardIframe(){
