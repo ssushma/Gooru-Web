@@ -606,10 +606,17 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		Iterator<Widget> widgets = shelfFolderTree.iterator();
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
+			try
+			{
 			if(((ShelfTreeWidget) widget).getCollectionDo()!=null){
 			if (widget instanceof ShelfTreeWidget && ((ShelfTreeWidget) widget).getCollectionDo().getGooruOid().equals(collectionId)) {
 				flag = true;
 			}
+			}
+			}
+			catch(Exception ex)
+			{
+				
 			}
 		}
 		return flag;
