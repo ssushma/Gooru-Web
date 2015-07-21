@@ -198,8 +198,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
+			Window.scrollTo(0, 0);
 		}
-		Window.scrollTo(0, 0);
+		
 	}
 	//This method is not using present
 	@Override
@@ -460,7 +461,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
 		// TODO Auto-generated method stub
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		shelfMainPresenter.SetDefaultTypeAndVersion();

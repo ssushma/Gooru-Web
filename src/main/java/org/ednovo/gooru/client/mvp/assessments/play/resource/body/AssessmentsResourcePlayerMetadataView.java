@@ -703,34 +703,14 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 
 				@Override
 				public void onClickSubmit(ClickEvent event) {
+					AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
 					super.hide();
-					if(!getUiHandlers().isOeAnswerSubmited()){
-						NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
-							@Override
-							public void navigateToNextResource() {
-								super.hide();
-								AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
-							}
-						};
-					}else{
-						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
-					}
 				}
 			};
 			submit.show();
 			submit.center();
 		}else{
-			if(!getUiHandlers().isOeAnswerSubmited()){
-				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
-					@Override
-					public void navigateToNextResource() {
-						super.hide();
-						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
-					}
-				};
-			}else{
-				AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
-			}
+			AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
 		}
 
 	}

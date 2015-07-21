@@ -1218,7 +1218,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
 		shelfMainPresenter.SetDefaultTypeAndVersion();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
-		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "resource", null);
+		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);

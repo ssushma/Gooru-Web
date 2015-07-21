@@ -276,7 +276,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 								
 								getUiHandlers().setDefaultTypeAndVersion();
 								remixPresenterWidget.DisableMyCollectionsPanelData(false);
-								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
 								remixPresenterWidget.getView().getAppPopUp().center();
@@ -291,7 +291,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 						
 						getUiHandlers().setDefaultTypeAndVersion();
 						remixPresenterWidget.DisableMyCollectionsPanelData(false);
-						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();
@@ -389,7 +389,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		if(customize!=null && YES.equals(customize) && emailId!=null){
 			getUiHandlers().setDefaultTypeAndVersion();
 			remixPresenterWidget.DisableMyCollectionsPanelData(false);
-			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 			remixPresenterWidget.getView().getAppPopUp().show();
 			isCustomizePopup = false;
 			remixPresenterWidget.getView().getAppPopUp().center();
