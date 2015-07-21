@@ -414,8 +414,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			HTML ansText=new HTML();
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
 				
-				InlineLabel lbl=new InlineLabel();
-				lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
+				InlineLabel	oldLbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
+				
+				InlineLabel lbl=new InlineLabel(oldLbl.getText());
+				lbl.addStyleName(oldLbl.getStyleName());
+				lbl.getElement().setId(oldLbl.getElement().getId());
 				answerIds.add(i+1);
 				if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
 

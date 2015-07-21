@@ -262,9 +262,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		saveCourseBtn.addStyleName("disabled");
 		saveCourseBtn.setEnabled(false);
 		if(validateInputs()){
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+			createOrUpDate.setTitle(courseTitle.getText());
+			
 			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(courseTitle.getText().trim(),false);	
+			getUiHandlers().checkProfanity(courseTitle.getText().trim(),false,createOrUpDate);	
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -281,9 +285,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		nextUnitBtn.addStyleName("disabled");
 		nextUnitBtn.setEnabled(false);
 		if(validateInputs()){
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+			createOrUpDate.setTitle(courseTitle.getText());
+			
 			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(courseTitle.getText().trim(),true);
+			getUiHandlers().checkProfanity(courseTitle.getText().trim(),true,createOrUpDate);
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -299,13 +307,11 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,CreateDo createOrUpDate){
 		if(result){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, result);
 		}else{
-			CreateDo createOrUpDate=new CreateDo();
-			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
-			createOrUpDate.setTitle(courseTitle.getText());
+			
 			List<Integer> taxonomyList=getSelectedCourseIds();
 			if(taxonomyList.size()>0){
 				lblGradeErrorMsg.setVisible(false);

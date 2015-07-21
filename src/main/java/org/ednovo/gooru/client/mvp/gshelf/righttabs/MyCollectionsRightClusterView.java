@@ -123,7 +123,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		
 		lnkPreview.setVisible(false);
 		toggleButton.setVisible(false);
-		copyPopupPanel.getElement().setAttribute("style", "min-width: 50px;");
 		copyLbl.setText(i18n.GL0827());
 		moveLbl.setText(i18n.GL1261());
 		
