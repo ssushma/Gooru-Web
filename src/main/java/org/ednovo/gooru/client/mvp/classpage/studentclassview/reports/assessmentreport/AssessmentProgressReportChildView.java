@@ -321,7 +321,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		if(result.size() > 0){
 			final AdvancedFlexTable adTable=new AdvancedFlexTable();
 			adTable.removeAllRows();
-			adTable.getElement().setId("student-myclasses-assessment-summary-report");
+			adTable.getElement().setId("report-student-assessment-report");
+			adTable.addStyleName("table table-bordered reportTableStyle");
 			questionsTable.add(adTable);
 
 			Label heading1 = new Label(i18n.GL3259());
@@ -507,7 +508,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 			}
 //			sortAndFixed();
-			adTable.addStyleName("table table-bordered reportTableStyle");
 		}else {
 			Label erroeMsg=new Label();
 			erroeMsg.setStyleName(STYLE_ERROR_MSG);

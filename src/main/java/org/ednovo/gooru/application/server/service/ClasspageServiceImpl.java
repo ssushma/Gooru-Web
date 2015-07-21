@@ -1943,26 +1943,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				if(resourceObj.optJSONArray("content") != null){
 					getLogger().info(resourceObj.getJSONArray("content").toString());
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
-					if(dataList!=null&&dataList.size()>1) {
-						if(type.equalsIgnoreCase("plan")) {
-							if(!(unitId!=null&&lessonId!=null)) {
-								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
-									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
-									}
-								}
-								Collections.sort(dataList, new ArrayListSorter("sequence", true));
-							}
-						} else if (type.equalsIgnoreCase("progress")) {
-							if(!(unitId!=null&&lessonId!=null)) {
-								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
-									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
-									}
-								}
-								Collections.sort(dataList, new ArrayListSorter("sequence", true));
+					if(dataList!=null&&dataList.size()>0) {
+						for(int unitCount=0;unitCount<dataList.size();unitCount++) {
+							if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>0) {
+								Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
 							}
 						}
+						Collections.sort(dataList, new ArrayListSorter("sequence", true));
 					}
 				}
 			}
