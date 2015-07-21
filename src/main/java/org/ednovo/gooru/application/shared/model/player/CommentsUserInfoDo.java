@@ -1,9 +1,9 @@
 package org.ednovo.gooru.application.shared.model.player;
 
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class CommentsUserInfoDo implements Serializable {
+public class CommentsUserInfoDo implements IsSerializable {
 
 	private static final long serialVersionUID = 8598215298047619076L;
 	private String createdOn;

@@ -24,13 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class ProfileV2Do implements Serializable{
+public class ProfileV2Do implements IsSerializable{
 	private static final long serialVersionUID = -2570709586812060758L;
 	private String aboutMe;
 	private String subject;

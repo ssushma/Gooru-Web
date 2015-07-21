@@ -26,13 +26,12 @@
 
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class SearchRatingsDo implements Serializable {
+public class SearchRatingsDo implements IsSerializable {
 
 	/**
 	 * 

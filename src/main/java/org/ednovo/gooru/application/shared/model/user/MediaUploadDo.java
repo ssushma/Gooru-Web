@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class MediaUploadDo implements Serializable {
+public class MediaUploadDo implements IsSerializable {
 
 	/**
 	 * 

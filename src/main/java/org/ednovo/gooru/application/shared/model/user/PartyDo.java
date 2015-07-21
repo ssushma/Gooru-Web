@@ -26,7 +26,7 @@
 package org.ednovo.gooru.application.shared.model.user;
 
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 
 @JsonInclude(Include.NON_NULL)
-public class PartyDo implements Serializable {
+public class PartyDo implements IsSerializable {
 
 	/**
 	 *
