@@ -1003,6 +1003,9 @@ button.btn-disabled{
 	position:relative;
 	cursor:pointer;
 }
+#gShelfCousesList .addCourse .courseTextAdd{
+	display:inline-block;
+}
 #gShelfCousesList .addCourse .pnlCreate{
 	display: inline-block;
 }
@@ -1041,6 +1044,7 @@ button.btn-disabled{
 	border-bottom:1px solid #ddd;
 	height: 48px;
 }
+
 #gShelfCourseInfo .courseCreateContainer .lblTitle{
 	float: left;
 	display: inline-block;
