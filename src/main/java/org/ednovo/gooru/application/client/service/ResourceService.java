@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
@@ -437,5 +438,6 @@ public interface ResourceService extends BaseService {
 	
 	public CollectionItemDo addCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
 	public CollectionItemDo updateTimeMetadata(String collectionItemId, String start, String stop)  throws GwtException, ServerDownException;
-
+	public List<ListValuesDo> getEducationalUseList() throws GwtException;
+	public List<ListValuesDo> getMomentOfLearning()throws GwtException ;
 }

@@ -669,7 +669,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_GET_COURSE("/v1/course/{0}?"),
 	V1_GET_MOMENT_OF_LEARERNING("/v1/meta/moments_of_learning"),
-	V1_GET_EDUCATIONAL_USE("v1/meta/educational_use"),
+	V1_GET_EDUCATIONAL_USE("/v1/meta/educational_use"),
 	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?"),
 	V3_ADDQUESTION_COLLECTION("/v3/collection/{0}/question/{1}?"),
 	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?");
