@@ -108,7 +108,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	CollectionContentPresenter collectionContentPresenter;
 
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
-	
+
 	AddTagesPopupView popup;
 
 	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
@@ -306,8 +306,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * This inner class will handle the click event on the Arrows
 	 */
@@ -399,7 +399,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					}
 					String displayTime=checkLengthOfSting(startMm)+":"+checkLengthOfSting(startSec)
 							+" "+i18n.GL_GRR_Hyphen()+" "+checkLengthOfSting(endMm)+":"+checkLengthOfSting(endSec);
-					
+
 					setYoutubeTime(startMm,startSec,checkLengthOfSting(endMm),checkLengthOfSting(endSec));
 
 					fromLblDisplayText.setText(displayTime);
@@ -580,12 +580,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlEditContainer.setVisible(isValue);
 		pnlArrows.setVisible(isValue);
 		pnlNarration.setVisible(isValue);
-	
+
 		narrationConatainer.setVisible(!isValue);
 		resourceNarrationHtml.setVisible(!isValue);
 		actionVerPanel.setVisible(!isValue);
 	}
-	
+
 
 	/**
 	 * Update the collection item meta data
@@ -625,53 +625,84 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				actionVerPanel.setVisible(false);
 				updateVideoTime(collectionItem,start,stop);
 				//enableOrDisableTimeEdit(true);
-		}	
-		
+			}else{
+				updateNarration();
+			}
+
 		}else if(isPdf){
 			updatePdfStartPage();
 		}else{
-			lblUpdateTextMessage.setVisible(true);
-			actionVerPanel.setVisible(false);
-			Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text", narrationTxtArea.getText());
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-				@Override
-				public void onSuccess(Boolean value) {
-					isHavingBadWords = value;
-					if (value){
-						narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
-						narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
-						narrationTxtArea.getElement().getStyle().setBorderColor("orange");
-						narrationAlertMessageLbl.setText(i18n.GL0554());
-						StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
-						narrationAlertMessageLbl.setVisible(true);
-						actionVerPanel.setVisible(true);
-						lblUpdateTextMessage.setVisible(true);
-						MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-					
-					}else{
-						String narration = null;
-						MixpanelUtil.Organize_Click_Edit_Narration_Update();
-						if (resourceNarrationHtml.getHTML().length() > 0) {
-							narration = trim(narrationTxtArea.getText());
-							collectionItem.setNarration(narration);
-							pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
-						}
-						try{
-							updateNarration(collectionItem, narration);
-							enableDisableNarration(true);
-							//getPresenter().updateNarrationItem(collectionItem.getCollectionItemId(), narration);
-						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
-						}
-						lblUpdateTextMessage.setVisible(false);
-						lblCharLimit.setVisible(false);
-						resourceNarrationHtml.getElement().getStyle().clearWidth();
-					}
-				}
-			});
+			updateNarration();
 		}
 	}
+
+	/**
+	 *
+	 * @function updateNarration
+	 *
+	 * @created_date : 21-Jul-2015
+	 *
+	 * @description : This method is responsible to update the Resource narration.
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	private void updateNarration(){
+
+		lblUpdateTextMessage.setVisible(true);
+		actionVerPanel.setVisible(false);
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", narrationTxtArea.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				isHavingBadWords = value;
+				if (value){
+					narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
+					narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
+					narrationTxtArea.getElement().getStyle().setBorderColor("orange");
+					narrationAlertMessageLbl.setText(i18n.GL0554());
+					StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
+					narrationAlertMessageLbl.setVisible(true);
+					actionVerPanel.setVisible(true);
+					lblUpdateTextMessage.setVisible(true);
+					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+
+
+				}else{
+
+					String narration = null;
+					MixpanelUtil.Organize_Click_Edit_Narration_Update();
+					if (resourceNarrationHtml.getHTML().length() > 0) {
+						narration = trim(narrationTxtArea.getText());
+						collectionItem.setNarration(narration);
+						pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+					}
+					try{
+						updateNarration(collectionItem, narration);
+						enableDisableNarration(true);
+						//getPresenter().updateNarrationItem(collectionItem.getCollectionItemId(), narration);
+					}catch(Exception e){
+						AppClientFactory.printSevereLogger(e.getMessage());
+					}
+					lblUpdateTextMessage.setVisible(false);
+					lblCharLimit.setVisible(false);
+					resourceNarrationHtml.getElement().getStyle().clearWidth();
+					enableOrDisableTimeEdit(true);
+				}
+			}
+		});
+
+	}
+
 	/**
 	 * This method is used to update the pdf start and end page
 	 */
@@ -850,7 +881,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		timeEditContainer.setVisible(!value);
 		actionVerPanel.setVisible(!value);
 	}
-	
+
 	public void setYoutubeTime(String startMin,String startSec,String endMin,String endSec){
 		startMinTxt.setText(startMin);
 		startSecTxt.setText(startSec);
@@ -858,12 +889,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		stopSecTxt.setText(endSec);
 	}
 	public class NumbersOnly implements KeyPressHandler {
-	      
+
 		@Override
 
 		public void onKeyPress(KeyPressEvent event) {
-			  if (!Character.isDigit(event.getCharCode()) 
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+			  if (!Character.isDigit(event.getCharCode())
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB
 	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
 	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
 	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
@@ -872,10 +903,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
 	                ((TextBox) event.getSource()).cancelKey();
 	            }
-					
+
 		}
     }
-	
+
 	public void setCollectionDetails(CollectionItemDo itemDo){
 		this.collectionItem=itemDo;
 		actionVerPanel.setVisible(false);
@@ -883,16 +914,16 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		enableOrDisableTimeEdit(true);
 		checkYoutubeResourceOrNot(itemDo,true);
 		}
-	
-	
+
+
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId,String moveGooruOid);
 
 	public abstract void updateNarration(CollectionItemDo collectionItem,String narration);
 
 	public abstract void editResource(CollectionItemDo collectionItem);
-	
+
 	public abstract void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop);
-	
+
 	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter=collectionContentPresenter;
 	}

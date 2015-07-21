@@ -67,6 +67,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -89,6 +90,8 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
@@ -563,21 +566,23 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onLoad(){
 			super.onLoad();
-			AppClientFactory.printInfoLogger("10");
 			setEditQuestionImage();
-			AppClientFactory.printInfoLogger("11");
-			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			
+			DeferredCommand.addCommand(new Command() {
+
+				//Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				@Override
 				public void execute() {
-					AppClientFactory.printInfoLogger("12");
+
+					AppClientFactory.printInfoLogger("onload exe");
 					if(collectionItemDo!=null){
 						int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 						if(type==10 || type==11){
 							getUiHandlers().setHSEditData();
-							AppClientFactory.printInfoLogger("13");
 						}
+
 						showEditQuestionResourceView();
-						AppClientFactory.printInfoLogger("14");
+
 					}
 				}
 			});
@@ -937,12 +942,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	@Override
 	public void setPopup(String clickType) {
-		AppClientFactory.printInfoLogger("1");
 		titleLbl.getElement().setId("lblTitleLbl");
 		addResourceCloseButton.getElement().setId("lblAddResourceCloseButton");
 		addResourceTabContainer.getElement().setId("pnlAddResourceTabContainer");
 		if(clickType.equalsIgnoreCase("Url")){
-			AppClientFactory.printInfoLogger("2");
 			tabViewContainer.clear();
 			Window.enableScrolling(false);
 			titleLbl.getElement().setAttribute("alt", i18n.GL0886());
@@ -955,7 +958,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			deselectSelectedButton();
 			urlTabButton.setStyleName(res.css().buttonSelected());
 		} else if(clickType.equalsIgnoreCase("Question")){
-			AppClientFactory.printInfoLogger("3");
 			try{
 				Window.enableScrolling(false);
 				isEdit=true;
@@ -1002,7 +1004,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
-			AppClientFactory.printInfoLogger("4");
 			try{
 				Window.enableScrolling(false);
 				isEdit=false;
@@ -1011,7 +1012,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				titleLbl.setText(i18n.GL0304());
 				titleLbl.getElement().setAttribute("alt", i18n.GL0304());
 				titleLbl.getElement().setAttribute("title", i18n.GL0304());
-				AppClientFactory.printInfoLogger("this.collectionItemDo.getCollectionItemId() 1 :"+this.collectionItemDo.getCollectionItemId());
 				int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 				if(type==10){
 					getUiHandlers().addSelectedQuestionType("HS_TXT",getAddResourceMetadata());
@@ -1066,7 +1066,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
-			AppClientFactory.printInfoLogger("5");
 			Window.enableScrolling(true);
 			titleLbl.setText(i18n.GL0886());
 			titleLbl.getElement().setAttribute("alt", i18n.GL0886());
