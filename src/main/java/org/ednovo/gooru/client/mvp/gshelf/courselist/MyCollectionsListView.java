@@ -159,8 +159,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
-			lblTitle.setVisible(true);
-			lblTitle.setText(StringUtil.capitalizeFirstLetter(folderDo.getType())+": "+folderDo.getTitle());
+			//lblTitle.setVisible(true);
+			//lblTitle.setText(StringUtil.capitalizeFirstLetter(folderDo.getType())+": "+folderDo.getTitle());
 			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
 			if(view!=null && (view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
 				btnCreate.setVisible(false);

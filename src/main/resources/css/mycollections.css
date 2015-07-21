@@ -1052,6 +1052,11 @@ button.btn-disabled{
 	font-size: 20px;
 	margin-left: 8px;
 	color: #222;
+	text-overflow: ellipsis;
+	width: 80%;
+	white-space: nowrap;
+	vertical-align: middle;
+	overflow: hidden;
 }
 
 #gShelfCourseInfo .scrollCourseContainer{
@@ -1376,6 +1381,14 @@ button.btn-disabled {
 	margin: 0;
 	padding: 11px;
 	font-size: 22px;
+}
+#gShelfMainContainer .lblCollectionSubTitle {
+	display: inline-block;
+	text-overflow: ellipsis;
+	width: 80%;
+	white-space: nowrap;
+	vertical-align: middle;
+	overflow: hidden;
 }
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;

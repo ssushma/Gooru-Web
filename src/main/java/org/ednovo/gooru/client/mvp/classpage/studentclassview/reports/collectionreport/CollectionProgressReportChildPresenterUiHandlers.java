@@ -22,18 +22,18 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.collectionreport;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 
-public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUiHandlers{
+public interface CollectionProgressReportChildPresenterUiHandlers extends BaseUiHandlers{
 
 	public void getSessionsDataByUser(String collectionId, String classId, String userId);
 
 	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId,PrintUserDataDO printData);
 
-	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData, String type);
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData);
 
 	public void clearslot();
 

@@ -64,8 +64,8 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -606,10 +606,17 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		Iterator<Widget> widgets = shelfFolderTree.iterator();
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
+			try
+			{
 			if(((ShelfTreeWidget) widget).getCollectionDo()!=null){
 			if (widget instanceof ShelfTreeWidget && ((ShelfTreeWidget) widget).getCollectionDo().getGooruOid().equals(collectionId)) {
 				flag = true;
 			}
+			}
+			}
+			catch(Exception ex)
+			{
+				
 			}
 		}
 		return flag;
@@ -990,9 +997,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(COURSE, courseDo.getTitle()); 
 			urlParams.put(O1_LEVEL,courseDo.getGooruOid());
 			shelfTreeWidget.setUrlParams(urlParams);
-
 		}else if(UNIT.equalsIgnoreCase(type)){
-
 			ShelfTreeWidget parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 			HashMap<String,String> urlParams = new HashMap<String,String>();
 			urlParams.put(COURSE,parentShelfTreeWidget.getUrlParams().get(COURSE));
@@ -1001,9 +1006,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O1_LEVEL,parentShelfTreeWidget.getUrlParams().get("o1"));
 			urlParams.put(O2_LEVEL,courseDo.getGooruOid());
 			shelfTreeWidget.setUrlParams(urlParams);
-
 		}else if(LESSON.equalsIgnoreCase(type)){
-
 			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
 			HashMap<String,String> urlParams = new HashMap<String,String>();
 			urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));

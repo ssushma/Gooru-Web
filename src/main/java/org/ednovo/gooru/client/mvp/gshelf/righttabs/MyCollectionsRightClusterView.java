@@ -53,7 +53,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -559,40 +558,17 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}
 		};
 		deleteContentPopup.setPopupTitle(i18n.GL0748());
-		deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL3456(),folderObj.getTitle()));
-		/*if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){
-			String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-			String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			if(o1!=null || o2!=null || o3!=null){
-				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ",folderObj.getTitle()));
-//				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), "folder"));
-			}
-		}else{
-			if(currentTypeView.equalsIgnoreCase(COURSE)){
-				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
-//				deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COURSE));
-			}else if(UNIT.equalsIgnoreCase(currentTypeView)){
-				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
-//				deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
-			}else if(LESSON.equalsIgnoreCase(currentTypeView)){
-				deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
-//				deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
-			}
+		String title=folderObj.getTitle().trim();
+		if(title.length()>50){
+			title=title.substring(0, 50)+"...";
 		}
-		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
-			deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL0558()," ", folderObj.getTitle()));
-//			deleteContentPopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COLLECTION));
-		}*/
+		deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL3456(),title));
 		deleteContentPopup.setDeleteValidate("delete");
 		deleteContentPopup.setPositiveButtonText("Delete Forever");
 		deleteContentPopup.setNegitiveButtonText(i18n.GL0142());
 		deleteContentPopup.setPleaseWaitText(i18n.GL0339());
 		deleteContentPopup.show();
 		deleteContentPopup.center();
-		
-		
-		
 	}
 	
 	/**

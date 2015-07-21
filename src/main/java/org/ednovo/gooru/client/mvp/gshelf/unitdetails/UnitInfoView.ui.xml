@@ -9,7 +9,7 @@
 
 <p>Unit Name</p>
 <p>
-<g:TextBox styleName="form-control" ui:field="unitTitle"/>
+<g:TextBox styleName="form-control" ui:field="unitTitle" maxLength="50"/>
 <g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
 </p>
 
