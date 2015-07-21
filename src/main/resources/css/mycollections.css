@@ -62,16 +62,6 @@
   background: #fdc876;
 }
 
-#gShelfMainContainer .floderLeftContainer .myCousesTabMenu a.active:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #4e9746;
-  height: 8px;
-}
-
 
 #gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader{
     background: #a6cba2;
