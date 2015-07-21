@@ -39,7 +39,7 @@ public interface IsCourseShareView extends IsViewWithHandlers<CourseShareUiHandl
 
 	void setClassesList(List<CollectionDo> searchResult);
 
-	void showClassesInList(ArrayList<ClasspageDo> result);
+	void showClassesInList(ArrayList<ClasspageDo> result, String courseId);
 
 	void clearSharePlanes();
 

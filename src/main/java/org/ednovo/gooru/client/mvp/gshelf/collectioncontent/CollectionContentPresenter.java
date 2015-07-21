@@ -364,5 +364,10 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	public void updateWidgetCount(CollectionItemDo collectionItem){
 		myCollectionsRightClusterPresenter.getShelfMainPresenter().updateWidgetsCount(collectionItem);
 	}
+
+	@Override
+	public void disableCollabaratorOptions(boolean isHide) {
+		myCollectionsRightClusterPresenter.disableCollabaratorOptions(isHide);
+	}
 }
 

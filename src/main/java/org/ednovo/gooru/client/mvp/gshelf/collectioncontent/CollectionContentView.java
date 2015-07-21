@@ -137,6 +137,13 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
+		if (AppClientFactory.isContentAdmin() || listOfContent
+				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
+						.getGooruUId())){
+		    getUiHandlers().disableCollabaratorOptions(true);
+		}else if(listOfContent.isIsCollaborator()){
+			 getUiHandlers().disableCollabaratorOptions(false);
+		}
 		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
 			lblSpanOr.setVisible(false);
