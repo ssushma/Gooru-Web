@@ -59,8 +59,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,myCollDefault,addingTextLbl,lblEmptyErrorMessage,lblError;
-	@UiField public Label mycollectionsLbl,mycontentLbl;
+	@UiField Label addtocollHeaderText,addingTextLbl,lblEmptyErrorMessage,lblError;
+	@UiField public Label mycollectionsLbl,mycontentLbl,myCollDefault;
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
@@ -137,11 +137,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			addingTextLbl.setText(i18n.GL3213());
 		}		
 		myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
+		myCollDefault.setVisible(false);
 		btnAddExisting.setEnabled(true);
 		btnAddExisting.setStyleName("primary");
 		mycollectionsLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				urlparams.clear();
 				mycollectionsLbl.addStyleName("selected");
 				mycontentLbl.removeStyleName("selected");
 				myCollDefault.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -165,6 +167,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		mycontentLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				urlparams.clear();
 				mycontentLbl.addStyleName("selected");
 				mycollectionsLbl.removeStyleName("selected");
 				btnAddExisting.setEnabled(true);
@@ -187,7 +190,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			    if(folderWidget instanceof FolderTreeItem){
 					folderTreeItemWidget = (FolderTreeItem) folderWidget;
 					String foldertypevalue=	folderTreeItemWidget.getType();
-					System.out.println("typevalue here--------"+foldertypevalue);
 					if(foldertypevalue.equalsIgnoreCase(COURSE) || foldertypevalue.equalsIgnoreCase(UNIT)){
 						btnAddExisting.setEnabled(false);
 						btnAddExisting.setStyleName("secondary");
@@ -338,8 +340,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			 }
 		}
 		currentsearchType=searchType;
-		
-		totalHitCount = folderListDo.getCount();
+		if(folderListDo.getCount()!=null){
+			totalHitCount = folderListDo.getCount();
+		}
 		btnAddExisting.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);
 		lblEmptyErrorMessage.setVisible(false);
@@ -616,8 +619,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				}else{
 					String collectionId= urlparams.get(ID);
 					if(isTopMostSelected){
+						this.urlparams.clear();
 						if(isMoveSelected){
-							getUiHandlers().moveCollectionToMyCOllections(collectionId, null, currentsearchType,"",this.urlparams);
+							getUiHandlers().moveCollectionToMyCOllections(collectionId, null, currentsearchType,"",null);
 						}else{
 							getUiHandlers().CopyToplevelMyCollections(collectionId, null, currentsearchType, "",null);
 						}
@@ -684,12 +688,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	
 	@UiHandler("myCollDefault")
 	public void clickOnMyCollection(ClickEvent clickEvent){
+		urlparams.clear();
 		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
 			myCollDefault.getElement().getStyle().clearBackgroundColor();
 		}else{
 			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 			isTopMostSelected=true;
-			urlparams.clear();
 			removePreviousSelectedItem();
 		}
 		
@@ -711,9 +715,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			boolean isMoveSelected) {
 		this.isCopySelected=isCopySelected;
 		this.isMoveSelected=isMoveSelected;
-		mycollectionsLbl.addStyleName("selected");
-		mycontentLbl.removeStyleName("selected");
-		isFromMyCourse=false;
+		mycollectionsLbl.removeStyleName("selected");
+		mycontentLbl.addStyleName("selected");
+		isFromMyCourse=true;
 	}
 
 	@Override
@@ -741,6 +745,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void enableAddButton() {
 		btnAddExisting.setEnabled(true);
 		btnAddExisting.setStyleName("primary");
+	}
+
+	@Override
+	public Label getMycollectionsDefaultLbl() {
+		return myCollDefault;
 	}
 	
 }

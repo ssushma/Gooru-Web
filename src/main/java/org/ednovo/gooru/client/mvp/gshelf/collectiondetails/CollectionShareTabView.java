@@ -103,6 +103,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	
 	private static final String FOLDER="Folder";
 	private static final String VIEW="view";
+	private static final String PRIVATE="private";
+	private static final String SHARABLE="anyonewithlink";
+	private static final String PUBLIC="public";
 	
 	private static String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
 
@@ -173,7 +176,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			 getUiHandlers().disableCollabaratorOptions(false);
 		}
 		if(collectionDo.getSharing()!=null){
-			if(collectionDo.getSharing().equals("public")) {
+			if(collectionDo.getSharing().equals(PUBLIC)) {
 				publicShareFloPanel.removeStyleName("inActive");
 				privateShareFloPanel.addStyleName("inActive");
 				linkShareFloPanel.addStyleName("inActive");
@@ -183,7 +186,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 							lblPublishPending.setVisible(false);
 							publishedPanel.setVisible(true);
 					}
-			}else if(collectionDo.getSharing()!=null && collectionDo.getSharing().equals("private")) {
+			}else if(collectionDo.getSharing()!=null && collectionDo.getSharing().equals(PRIVATE)) {
 				privateShareFloPanel.removeStyleName("inActive");
 				publicShareFloPanel.addStyleName("inActive");
 				linkShareFloPanel.addStyleName("inActive");
@@ -355,8 +358,8 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 										privateShareFloPanel.removeStyleName("inActive");
 										publicShareFloPanel.addStyleName("inActive");
 										linkShareFloPanel.addStyleName("inActive");
-										updateShare("private");
-									//	selectPrivateResource("private");
+										updateShare(PRIVATE);
+									//	selectPrivateResource(PRIVATE);
 							}
 						});
 						 
@@ -366,24 +369,24 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 						collectionShareAlertPopup = new CollectionShareAlertPopup() {
 							@Override
 							public void setPublicFromAlert() {
-								if(collectionDo.getSharing().equalsIgnoreCase("public")){
+								if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
 									privateShareFloPanel.removeStyleName("inActive");
 									publicShareFloPanel.addStyleName("inActive");
 									linkShareFloPanel.addStyleName("inActive");
-									updateShare("private");
-									//selectPrivateResource("private");
+									updateShare(PRIVATE);
+									//selectPrivateResource(PRIVATE);
 								}
 								
 							}
 						};
-						if(collectionDo.getSharing().equalsIgnoreCase("public")){
+						if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
 							 collectionShareAlertPopup.confirmPopup();
 						}else{
 							privateShareFloPanel.removeStyleName("inActive");
 							publicShareFloPanel.addStyleName("inActive");
 							linkShareFloPanel.addStyleName("inActive");
-							updateShare("private");
-							//selectPrivateResource("private");
+							updateShare(PRIVATE);
+							//selectPrivateResource(PRIVATE);
 						}
 					}
 				}
@@ -405,21 +408,21 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				collectionShareAlertPopup = new CollectionShareAlertPopup() {
 					@Override
 					public void setPublicFromAlert() {
-						if(collectionDo.getSharing().equalsIgnoreCase("public")){
+						if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
 							linkShareFloPanel.removeStyleName("inActive");
 							privateShareFloPanel.addStyleName("inActive");
 							publicShareFloPanel.addStyleName("inActive");
-							updateShare("anyonewithlink");
+							updateShare(SHARABLE);
 						}
 					}
 				};
-				if(collectionDo.getSharing().equalsIgnoreCase("public")){
+				if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
 					 collectionShareAlertPopup.confirmPopup();
 				}else{
 					linkShareFloPanel.removeStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					publicShareFloPanel.addStyleName("inActive");
-					updateShare("anyonewithlink");
+					updateShare(SHARABLE);
 				}
 				
 			}
@@ -437,26 +440,36 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			@Override
 			public void onSuccess(Void result) {
 				// TODO Auto-generated method stub
-				if (share.equalsIgnoreCase("private")) {
+				System.out.println("collectionDo.getSharing()::"+collectionDo.getSharing());
+				if (share.equalsIgnoreCase(PRIVATE)) {
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
 					showPublishBtn();
-				}else if (share.equalsIgnoreCase("anyonewithlink")) {
+				}else if (share.equalsIgnoreCase(SHARABLE)) {
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
 					showPublishBtn();
-				}else {
-					publicShareFloPanel.removeStyleName("inActive");
-					privateShareFloPanel.addStyleName("inActive");
-					linkShareFloPanel.addStyleName("inActive");
+				}else { 
+					if(PRIVATE.equalsIgnoreCase(collectionDo.getSharing())){
+						publicShareFloPanel.addStyleName("inActive");
+						privateShareFloPanel.addStyleName("inActive");
+						linkShareFloPanel.removeStyleName("inActive");
+					}else if(SHARABLE.equalsIgnoreCase(collectionDo.getSharing())){
+						publicShareFloPanel.addStyleName("inActive");
+						privateShareFloPanel.addStyleName("inActive");
+						linkShareFloPanel.removeStyleName("inActive");
+					}
 				}
-				if("public".equalsIgnoreCase(share)){
+				if(PUBLIC.equalsIgnoreCase(share)){
 					if(AppClientFactory.isContentAdmin()){
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(false);
 						publishedPanel.setVisible(true);
+						publicShareFloPanel.removeStyleName("inActive");
+						privateShareFloPanel.addStyleName("inActive");
+						linkShareFloPanel.addStyleName("inActive");
 						AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
 						
 					}else{
@@ -499,7 +512,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 									AppClientFactory.fireEvent(new PublishButtonHideEvent());
 								}
 								this.hide();
-								updateShare("public");
+								updateShare(PUBLIC);
 								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
 									Window.enableScrolling(false);
 								}else{

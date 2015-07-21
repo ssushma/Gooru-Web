@@ -181,7 +181,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			this.folderObj=folderObj;
 		}
 		
-		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
+		/*if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
 			}
@@ -203,7 +203,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else{
 			String title=folderObj!=null?folderObj.getTitle():"";
 			setBreadCrumbs(title,type);
-		}
+		}*/
 	}
 	
 	
@@ -369,7 +369,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void enableAndHideTabs(boolean isVisible){
 		lnkContent.setVisible(isVisible);
-		lnkshare.setVisible(isVisible);
+		if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
+			lnkshare.setVisible(isVisible);
+		}
 		toggleButton.setVisible(isVisible);
 		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
@@ -692,7 +694,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		
 	@Override
 	public void setOnDeleteBreadCrumbs(String title, String type) {
-		setBreadCrumbs(title,type);
+		/**
+		 * Removed as design got changed.
+		 */
+		/*setBreadCrumbs(title,type);*/
 	}
 	
 	/**
