@@ -192,10 +192,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					String foldertypevalue=	folderTreeItemWidget.getType();
 					if(foldertypevalue.equalsIgnoreCase(COURSE) || foldertypevalue.equalsIgnoreCase(UNIT)){
 						btnAddExisting.setEnabled(false);
-						btnAddExisting.setStyleName("secondary");
+						btnAddExisting.getElement().addClassName("disabled");
 					}else{
 						btnAddExisting.setEnabled(true);
-						btnAddExisting.setStyleName("primary");
+						btnAddExisting.getElement().removeClassName("disabled");
 					}
 					if (folderTreeItemWidget.isOpen()) {
 						folderTreeItemWidget.removeStyleName("open");
@@ -745,6 +745,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void enableAddButton() {
 		btnAddExisting.setEnabled(true);
 		btnAddExisting.setStyleName("primary");
+		btnAddExisting.getElement().removeClassName("disabled");
 	}
 
 	@Override
