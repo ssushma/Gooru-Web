@@ -496,5 +496,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().disableCollabaratorOptions(isHide);
 	}
 	
+	/**
+	 * This handles the display of respective view title and respective type icon.
+	 */
+	@Override
+	public void setViewTitleWthicon(String title, String type) {
+		shelfMainPresenter.setTileIcon(title,type);
+	}
+	
 	
 }

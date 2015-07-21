@@ -294,6 +294,7 @@
 #gooruSearchMainContainer .resourcesInside {
 	padding:8px 8px;
 	min-height: 8.9547em;
+	height: 8.9547em;
 }
 #gooruSearchMainContainer .resourcesInside p {
 	margin-left: 2.5%;

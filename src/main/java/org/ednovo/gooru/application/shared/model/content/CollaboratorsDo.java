@@ -4,8 +4,7 @@
 */
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
-
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -22,7 +21,7 @@ import java.io.Serializable;
  *
  * @Reviewer:
  */
-public class CollaboratorsDo implements Serializable{
+public class CollaboratorsDo implements IsSerializable{
 		/**
 	 * 
 	 */

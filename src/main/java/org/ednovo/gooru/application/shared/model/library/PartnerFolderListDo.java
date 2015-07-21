@@ -24,14 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.library;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class PartnerFolderListDo implements Serializable
+public class PartnerFolderListDo implements IsSerializable
 {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<PartnerFolderDo> searchResult;

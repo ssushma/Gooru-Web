@@ -27,11 +27,9 @@ package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
-import org.ednovo.gooru.client.uc.UlPanel;
 
 /**
  * @author Search Team
@@ -41,13 +39,15 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void setLessonInfoData(FolderDo folderObj); 
 	
-	void callCreateAndUpdate(boolean isCreate,boolean result,String type);
+	void callCreateAndUpdate(boolean isCreate,boolean result,String type,String courseId,String unitId);
 
 	void displayStandardsList(List<DomainStandardsDo> result);
 
 //	void addTaxonomyData(UlPanel selectedUlContainer);
 
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray); 
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
+
+	void resetBtns(); 
 	
 
 }

@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -149,7 +150,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				}
 			});
 		}
-		
+		collaboratorPanel.getElement().getStyle().setPadding(15, Unit.PX);
 		publishedPanel.setVisible(false);
 		lblPublishPending.setVisible(false);
 	}
