@@ -132,16 +132,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		getView().enableAndHideTabs(!StringUtil.isEmpty(folderObj==null?"":folderObj.getGooruOid())); 
-		
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
 			getView().disableAndEnableBreadCums(false);
 		}else{
 			getView().disableAndEnableBreadCums(true);
 		}
-		
 		if(index==1 || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 				//For displaying template and data
-				//getView().enableAndHideTabs(true);
 				if(COURSE.equalsIgnoreCase(type)){
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
@@ -161,7 +158,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else if(FOLDER.equalsIgnoreCase(type)){
-					//To disabel bread cums
+					//To disable bread cums
 					getView().disableAndEnableBreadCums(false);
 					getView().setFolderInfoWidget(folderObj, this);
 				}else{
@@ -171,6 +168,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 						getView().disableAndEnableBreadCums(true);
 					}
 					getView().enableAndHideTabs(false);
+					getView().getPreviewLink().setVisible(true);
 					externalAssessmentInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
@@ -200,7 +198,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			}
 			Window.scrollTo(0, 0);
 		}
-		
 	}
 	//This method is not using present
 	@Override

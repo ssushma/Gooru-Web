@@ -186,9 +186,9 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getUrl().trim(),isCreate,1,createOrUpDate);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),isCreate,2,createOrUpDate);
+				if(createOrUpDate.getGoals()!=null)
+				getUiHandlers().checkProfanity(createOrUpDate.getGoals().trim(),isCreate,2,createOrUpDate);
 			}else if(index==2){
-				
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
 					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate,folderObj);

@@ -215,16 +215,19 @@ public abstract class ContentWidgetWithMove extends Composite {
 			pnlArrows.setVisible(true);
 			//pnlMoveToEdit.setVisible(true);
 		}else if(COLLECTION.equalsIgnoreCase(typeVal) || ASSESSMENTURL.equalsIgnoreCase(typeVal) || ASSESSMENT.equalsIgnoreCase(typeVal)){
+			spnQuestionsCount.setVisible(true);
 			if(COLLECTION.equalsIgnoreCase(typeVal)){
 				lblImage.setStyleName("collectionImage");
 				spnResourcesCount.setVisible(true);
+			}else if(ASSESSMENT.equalsIgnoreCase(typeVal)){
+				lblImage.setStyleName("assessmentImage");
+				spnResourcesCount.setVisible(false);
 			}else{
 				lblImage.setStyleName("assessmentImage");
 				spnResourcesCount.setVisible(false);
+				spnQuestionsCount.setVisible(false);
 			}
-			spnQuestionsCount.setVisible(true);
 			pnlArrows.setVisible(true);
-			//pnlMoveToEdit.setVisible(true);
 		}
 	}
 	public void hideAllCounts(){

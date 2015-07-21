@@ -373,7 +373,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			lnkshare.setVisible(isVisible);
 		}
 		toggleButton.setVisible(isVisible);
-		if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
+		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
 		}
 	}
@@ -410,7 +410,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 *
 	 */
 	private class PreviewClickHandler implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
 			String placeToken,folderId;
@@ -423,7 +422,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{	
 				folderId="";
 			}
-			 
 			String type = folderObj==null?null:StringUtil.isEmpty(folderObj.getType())?null:folderObj.getType();
 			HashMap<String,String> params = new HashMap<String,String>();
 			params.put("id", folderObj.getGooruOid());
@@ -439,11 +437,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					Window.open(folderObj.getUrl(), "", "");
 				}
 			}
-			
 		}
-		
 	}
-	
 	/**
 	 * Invokes the delete course popup.
 	 * 
@@ -807,5 +802,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		moveLbl.setVisible(hide);
 		myCollDelLbl.setVisible(hide);
 	}
-
+	@Override
+	public Anchor getPreviewLink(){
+		return lnkPreview;
+	}
 }

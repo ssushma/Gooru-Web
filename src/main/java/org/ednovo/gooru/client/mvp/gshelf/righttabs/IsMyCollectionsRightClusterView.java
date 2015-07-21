@@ -29,6 +29,8 @@ import java.util.HashMap;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
+import com.google.gwt.user.client.ui.Anchor;
+
 /**
  * @author Search Team
  *
@@ -72,5 +74,5 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void setFolderInfoWidget(FolderDo folderObj, MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter);
 	public void disableCollabaratorOptions(boolean isHide);
-	
+	public Anchor getPreviewLink();
 }
