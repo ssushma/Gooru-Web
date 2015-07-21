@@ -836,6 +836,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_TITLES, collectionId);
+		logger.info("getCollectionClasspageAssoc:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasses(jsonRep);
@@ -1330,6 +1331,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		JsonRepresentation jsonRep = null;
 		ArrayList<ClassPageCollectionDo> lstClasspageTitle=new  ArrayList<ClassPageCollectionDo>();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_CLASSPAGES_BY_USER_ID,collectionId, collabUId);
+		logger.info("getClasspagesListByCollectionId:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
