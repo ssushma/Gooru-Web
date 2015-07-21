@@ -1003,6 +1003,9 @@ button.btn-disabled{
 	position:relative;
 	cursor:pointer;
 }
+#gShelfCousesList .addCourse .courseTextAdd{
+	display:inline-block;
+}
 #gShelfCousesList .addCourse .pnlCreate{
 	display: inline-block;
 }
@@ -1041,6 +1044,7 @@ button.btn-disabled{
 	border-bottom:1px solid #ddd;
 	height: 48px;
 }
+
 #gShelfCourseInfo .courseCreateContainer .lblTitle{
 	float: left;
 	display: inline-block;
@@ -1366,7 +1370,7 @@ button.btn-disabled {
 #gShelfMainContainer .lblCollectionTitle {
 	height: 56px;
 	text-align: left;
-	background: #f0f0f0;
+	background: #ffffff;
 	box-shadow: 0 0 6px rgba(0,0,0,0.05);
 	/* vertical-align: middle; */
 	margin: 0;
@@ -1460,7 +1464,7 @@ button.btn-disabled {
 	background: url("../images/gooru-sprite.png") no-repeat scroll -278px
 		-449px;
 	width: 36px;
-	height: 24px;
+	height: 28px;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -1491,7 +1495,23 @@ button.btn-disabled {
 	vertical-align: middle;
 }
 
+.breadcrumbsCollectionIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -519px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 #gShelfCourseInfo .breadcrumbsAssessmentIcon {
+	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
+	width: 36px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.breadcrumbsAssessmentIcon {
 	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
 	width: 36px;
 	height: 24px;
@@ -2810,7 +2830,7 @@ vertical-align:middle;
 .courseFolderCloseIcon{
 	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -449px;
 	width:36px;
-	height:24px;
+	height:28px;
 	display:inline-block;
 	vertical-align:middle;
 }

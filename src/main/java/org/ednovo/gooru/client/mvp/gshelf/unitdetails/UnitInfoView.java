@@ -334,7 +334,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("saveUnitBtn")
 	public void clickOnSaveUnitBtn(ClickEvent saveCourseEvent){
-		AppClientFactory.printInfoLogger("I am In Save Button Unit");
+		saveUnitBtn.addStyleName("disabled");
+		saveUnitBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
@@ -345,11 +346,14 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			lblErrorMessage.setVisible(true);
 			unitTitle.setStyleName("textAreaErrorMessage");
 			unitTitle.addStyleName("form-control");
+			resetBtns();
 		}
 	}
 	
 	@UiHandler("nextCreateLessonBtn")
 	public void clickOnNextLessonBtn(ClickEvent saveCourseEvent){
+		nextCreateLessonBtn.addStyleName("disabled");
+		nextCreateLessonBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
@@ -359,6 +363,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			lblErrorMessage.setVisible(true);
 			unitTitle.setStyleName("textAreaErrorMessage");
 			unitTitle.addStyleName("form-control");
+			resetBtns();
 		}
 	}
 	/**
@@ -546,6 +551,17 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public void collectionTitleKeyUphandler(KeyUpEvent event){
 		unitTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
+	}
+	
+	/**
+	 * Adds the selected domains from the taxonomy popup into unit info view.
+	 */
+	@Override
+	public void resetBtns() {
+		nextCreateLessonBtn.removeStyleName("disabled");
+		nextCreateLessonBtn.setEnabled(true);
+		saveUnitBtn.removeStyleName("disabled");
+		saveUnitBtn.setEnabled(true);
 	}
 
 }
