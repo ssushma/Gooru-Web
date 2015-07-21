@@ -259,7 +259,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void getEditPageHeight(PopupPanel editQuestionPopupPanel,boolean isHeightClear) {
 		
 	}
-	
 	public SimpleAsyncCallback<FolderListDo> getUserCollectionAsyncCallback(boolean clearShelfPanel) {
 		clrPanel=clearShelfPanel;
 		if (userCollectionAsyncCallback == null) {
