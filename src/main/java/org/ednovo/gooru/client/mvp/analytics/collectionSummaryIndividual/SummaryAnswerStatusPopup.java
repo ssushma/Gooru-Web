@@ -130,7 +130,28 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 					  }
 		       ansFlowPnl.add(answerChoice);
 		         }
+		}else if(OE.equalsIgnoreCase(questionType)){
+			 for(int j=0;j<attemptsObj.size();j++){
+		        	HTML answerChoice=new HTML();
+		        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
+		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+		        	String OeAnswer =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+		         if(skip == false)
+					  {
+						answerChoice.setHTML(OeAnswer);
+						if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+							answerChoice.addStyleName(HS_INCORRECT);
+						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+							answerChoice.addStyleName(HS_CORRECT);
+						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+							answerChoice.addStyleName(HS_ONMULTIPULEATTEMPTS);
+						}
+					  }
+		         ansFlowPnl.add(answerChoice);
+		        }
 		}
+		
 		
 	}
 	
