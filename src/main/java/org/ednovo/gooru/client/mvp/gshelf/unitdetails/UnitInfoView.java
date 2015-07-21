@@ -99,8 +99,11 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	final String ACTIVE="active";
 	
 	private static final String UNIT = "Unit";
+	private static final String O1_LEVEL = "o1";
 	
 	LiPanel tempLiPanel=null;
+	
+	boolean isCreateLessonClicked=true;
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -182,25 +185,19 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 					}
 					removeGradeWidget(ulSelectedItems,codeId);
 				}
-
-				
 			}
 		};
 		pnlGradeContainer.add(courseGradeWidget);
 		if(libraryCodeDo.size()>=20){
 			domainPagination = 20;
 			scrollCoursediv.addScrollHandler(new ScrollHandler() {
-					
-					@Override
-					public void onScroll(ScrollEvent event) {						
-						if(domainPagination<=80)
-						{
-						getUiHandlers().getPaginatedDomainsBasedOnCourseId(domainPaginationCourseId, selectedId, domainPagination);
-						}
-						domainPagination = domainPagination+20;
-						
-						
+				@Override
+				public void onScroll(ScrollEvent event) {						
+					if(domainPagination<=80){
+					 getUiHandlers().getPaginatedDomainsBasedOnCourseId(domainPaginationCourseId, selectedId, domainPagination);
 					}
+					domainPagination = domainPagination+20;
+				}
 			});
 		}
 	}
@@ -250,8 +247,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		};
 		pnlGradeContainer.add(courseGradeWidget1);
 	}
-	
-	
 
 	/**
 	 * This method will remove the widget based on the codeId in the UlPanel
@@ -334,13 +329,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("saveUnitBtn")
 	public void clickOnSaveUnitBtn(ClickEvent saveCourseEvent){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		saveUnitBtn.addStyleName("disabled");
 		saveUnitBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0);
-
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0,courseId);
 		}else{
 			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -352,12 +347,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("nextCreateLessonBtn")
 	public void clickOnNextLessonBtn(ClickEvent saveCourseEvent){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		nextCreateLessonBtn.addStyleName("disabled");
 		nextCreateLessonBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0);
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0,courseId);
 		}else{
 			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -372,18 +368,21 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result,int index){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,int index,String courseId){
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, result);
+			isCreateLessonClicked=true;
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaBigIdeas, lblErrorMessageForBig, result);
+			isCreateLessonClicked=true;
 		}else if(result && index==2){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
+			isCreateLessonClicked=true;
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1);
+				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1,courseId);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2);
+				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2,courseId);
 			}else if(index==2){
 				CreateDo createOrUpDate=new CreateDo();
 				createOrUpDate.setTitle(unitTitle.getText());
@@ -393,7 +392,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				if(courseObj!=null && courseObj.getGooruOid()!=null){
 					getUiHandlers().updateUnitDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
 				}else{
-					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate,courseObj);
+					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate,courseObj,courseId);
 				}
 			}
 		}
@@ -475,7 +474,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	
-	
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -484,10 +482,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				unitLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
 			}
 			getUiHandlers().invokeTaxonomyPopup(UNIT,unitLiPanelWithCloseArray);
-			
 		}
 	}
-
 	
 	/**
 	 * Adds the selected domains from the taxonomy popup into unit info view.
@@ -535,7 +531,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 	}
 
-
 	public boolean validateInputs(){
 		String collectionTitleStr=unitTitle.getText().trim();
 		if(collectionTitleStr.equalsIgnoreCase("")||collectionTitleStr.equalsIgnoreCase(i18n.GL3364())){
@@ -543,19 +538,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}else{
 			return true;
 		}
-		
-		
 	}
-	
 	@UiHandler("unitTitle")
 	public void collectionTitleKeyUphandler(KeyUpEvent event){
 		unitTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
 	}
-	
-	/**
-	 * Adds the selected domains from the taxonomy popup into unit info view.
-	 */
 	@Override
 	public void resetBtns() {
 		nextCreateLessonBtn.removeStyleName("disabled");
@@ -563,5 +551,4 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		saveUnitBtn.removeStyleName("disabled");
 		saveUnitBtn.setEnabled(true);
 	}
-
 }
