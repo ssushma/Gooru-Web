@@ -675,13 +675,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					actionVerPanel.setVisible(true);
 					lblUpdateTextMessage.setVisible(true);
 					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-					if (youtube){
-						timeEditContainer.setVisible(true);
-					}else{
-						timeEditContainer.setVisible(false);
-					}
+
 
 				}else{
+
 					String narration = null;
 					MixpanelUtil.Organize_Click_Edit_Narration_Update();
 					if (resourceNarrationHtml.getHTML().length() > 0) {
@@ -699,6 +696,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					lblUpdateTextMessage.setVisible(false);
 					lblCharLimit.setVisible(false);
 					resourceNarrationHtml.getElement().getStyle().clearWidth();
+					enableOrDisableTimeEdit(true);
 				}
 			}
 		});
