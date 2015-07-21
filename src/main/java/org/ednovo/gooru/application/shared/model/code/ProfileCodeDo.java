@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.code;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class ProfileCodeDo implements Serializable {
+public class ProfileCodeDo implements IsSerializable {
 	
 	private static final long serialVersionUID = 1849886397443409797L;
 	public ProfileCodeDo(){}

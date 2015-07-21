@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.featured;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 
-public class FeaturedContentDo implements Serializable {
+public class FeaturedContentDo implements IsSerializable {
 	private static final long serialVersionUID = -8046999602373721761L;
 	private String contentTitle;
 	private String url;
