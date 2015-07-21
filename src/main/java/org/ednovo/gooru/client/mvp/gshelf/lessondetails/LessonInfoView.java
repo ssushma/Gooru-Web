@@ -391,6 +391,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("saveLessonBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		saveLessonBtn.addStyleName("disabled");
+		saveLessonBtn.setEnabled(false);
 		if (validateInputs()) {
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
@@ -401,11 +403,14 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			lessonTitle.setStyleName("textAreaErrorMessage");
 			lessonTitle.addStyleName("form-control");	
 			lblErrorMessage.setVisible(true);
+			resetBtns();
 
 		}
 	}
 	@UiHandler("btnSaveAndCreateCollection")
 	public void clickOnSaveAndCreateCollection(ClickEvent saveCourseEvent){
+		btnSaveAndCreateCollection.addStyleName("disabled");
+		btnSaveAndCreateCollection.setEnabled(false);
 		if (validateInputs()) {
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
@@ -415,6 +420,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			lessonTitle.setStyleName("textAreaErrorMessage");
 			lessonTitle.addStyleName("form-control");	
 			lblErrorMessage.setVisible(true);
+			resetBtns();
 		}
 
 	}
@@ -449,6 +455,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			lessonTitle.setStyleName("textAreaErrorMessage");
 			lessonTitle.addStyleName("form-control");	
 			lblErrorMessage.setVisible(true);
+			resetBtns();
 		}
 		
 	}
@@ -648,5 +655,17 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public void collectionTitleKeyUphandler(KeyUpEvent event){
 		lessonTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
+	}
+	/**
+	 * Adds the selected domains from the taxonomy popup into unit info view.
+	 */
+	@Override
+	public void resetBtns() {
+		saveLessonBtn.removeStyleName("disabled");
+		saveLessonBtn.setEnabled(true);
+		btnSaveAndCreateCollection.removeStyleName("disabled");
+		btnSaveAndCreateCollection.setEnabled(true);
+		btnSaveAndCreateAssessment.removeStyleName("disabled");
+		btnSaveAndCreateAssessment.setEnabled(true);
 	}
 }
