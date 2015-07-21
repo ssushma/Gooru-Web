@@ -90,26 +90,14 @@ public class AudienceView extends Composite {
 	}
 	
 	public void setFolderDetails(FolderDo  folderDo){
-		reset();
+		resetAllSelection();
 		if(folderDo!=null){
 			setSelectedValues(folderDo.getAudience());
 
 		}
 	}
 
-	public void reset(){
-		int size=listGroup.getWidgetCount();
-
-		for(int i=0;i<size;i++){
-			Widget widget=listGroup.getWidget(i);
-			if(widget instanceof Anchor ){
-				Anchor anchor=(Anchor)(widget);
-				anchor.removeStyleName("active");
-				anchor.getElement().setAttribute("status","");
-				
-			}
-		}
-	}
+	
 	public void setSelectedValues(List<checkboxSelectedDo> checkboxSelectedDos){
 		AppClientFactory.printInfoLogger("audience list"+ checkboxSelectedDos);
 		resetAllSelection();
