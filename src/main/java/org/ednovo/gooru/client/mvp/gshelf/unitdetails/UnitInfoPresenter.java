@@ -38,7 +38,6 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
-import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -68,8 +67,6 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 	private String LESSON = "Lesson";
 	
 	TaxonomyPopupPresenter taxonomyPopupPresenter;
-	
-	private static final String O1_LEVEL = "o1";
 	
 	Map<String, String> params= new HashMap<String, String>();
 	
@@ -135,12 +132,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson,final FolderDo courseObj) {
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
+	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson,final FolderDo courseObj,final String courseId) {
+		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, courseId,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+				getView().setIsClicked(true);
+				params.put("o1",courseId);
 				params.put("o2", result.getGooruOid());
 				params.put("view", "Course");
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
@@ -163,6 +160,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				getView().setIsClicked(true);
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(UNIT);
 				folderDo.setIdeas(createDo.getIdeas());
@@ -182,13 +180,13 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index){
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String courseId){
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index);
+				getView().callCreateAndUpdate(isCreate,value,index,courseId);
 			}
 		});
 	}
