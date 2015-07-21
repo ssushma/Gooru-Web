@@ -1996,6 +1996,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			resourceInfoPresenter.resetResourceInfo();
 			collectionPlayerTocPresenter.clearNavigationPanel();
 			setOpenEndedAnswerSubmited(true);
+			collectionEndPresenter.getView().getFrame().setUrl("");
 		}
 }
 	 private Timer sessionTimeoutResponseTimer = new Timer() {
