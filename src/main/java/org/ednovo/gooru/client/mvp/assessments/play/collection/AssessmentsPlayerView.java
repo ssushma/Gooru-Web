@@ -173,26 +173,17 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-/*		  headerView.getParent().getElement().setAttribute("style", "position:relative;");
-			  headerView.getElement().setAttribute("style", "position:relative;");
-			  navigationContainer.getElement().setAttribute("style", "margin-top:0px;");*/
 			 ipadSectiondiv.setVisible(true);
 			 androidSectiondiv.setVisible(false);
 
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-/*			  headerView.getParent().getElement().setAttribute("style", "position:relative;");
-			  headerView.getElement().setAttribute("style", "position:relative;");
-			  navigationContainer.getElement().setAttribute("style", "margin-top:0px;");*/
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
 		  }
 		  else
 		  {
-			 // headerView.getParent().getElement().setAttribute("style", "position:fixed;");
-			  //headerView.getElement().setAttribute("style", "position:fixed;");
-			  //navigationContainer.getElement().setAttribute("style", "margin-top:50px;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
 
@@ -227,10 +218,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	public void onIpadCloseClick(ClickEvent clickEvent){
 		 ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
-		 // headerView.getElement().setAttribute("style", "position:fixed;");
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		 // CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
-		 // navigationContainer.getElement().setAttribute("style", "margin-top:50px;");
 		  AssessmentsResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
 	}
 
@@ -238,10 +226,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	public void onAndriodCloseClick(ClickEvent clickEvent){
 		 ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
-		 // headerView.getElement().setAttribute("style", "position:fixed;");
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		 // navigationContainer.getElement().setAttribute("style", "margin-top:50px;");
-		 // CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
 		  AssessmentsResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
 	}
 
@@ -304,8 +289,6 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	public void setFullScreenButton(Button fullScreenButton){
 		footerView.setFullScreenButton(fullScreenButton);
 		footerView.getFullScreenButton().addClickHandler(new FullScreenPlayerEvent("fullScreen"));
-/*		headerView.getFullScreenPlayer().setVisible(false);
-		headerView.getFullScreenPlayer().addClickHandler(new FullScreenPlayerEvent("fullScreen"));*/
 	}
 
 	@Override
@@ -517,7 +500,6 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 	 */
 	@Override
 	public void setFullScreenMode(){
-		//menuButton.setVisible(false);
 		menuButton.getElement().setAttribute("style", "display:none !important;");
 		pnlFullScreenNarration.setVisible(true);
 		headerView.setVisible(false);
