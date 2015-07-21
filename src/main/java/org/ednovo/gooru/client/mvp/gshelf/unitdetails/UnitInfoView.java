@@ -47,6 +47,7 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -54,6 +55,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -109,10 +111,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		unitInfo.getElement().setId("pnlCourseInfo");
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
+		lblErrorMessage.setText("Please Enter Valid UnitName");
+		lblErrorMessage.setVisible(false);
 		taxonomyBtn.getElement().setId("taxonomyBtn");
 		taxonomyToggleBtn.getElement().setId("taxonomyToggleBtn");
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
+		unitTitle.getElement().setPropertyString("placeholder", i18n.GL3364());
 		unitTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -329,12 +334,32 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("saveUnitBtn")
 	public void clickOnSaveUnitBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0);
+		AppClientFactory.printInfoLogger("I am In Save Button Unit");
+		if(validateInputs()){
+			lblErrorMessage.setVisible(false);
+			unitTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0);
+
+		}else{
+			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
+			lblErrorMessage.setVisible(true);
+			unitTitle.setStyleName("textAreaErrorMessage");
+			unitTitle.addStyleName("form-control");
+		}
 	}
 	
 	@UiHandler("nextCreateLessonBtn")
 	public void clickOnNextLessonBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0);
+		if(validateInputs()){
+			lblErrorMessage.setVisible(false);
+			unitTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0);
+		}else{
+			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
+			lblErrorMessage.setVisible(true);
+			unitTitle.setStyleName("textAreaErrorMessage");
+			unitTitle.addStyleName("form-control");
+		}
 	}
 	/**
 	 * This method is used to call create and update API
@@ -400,11 +425,11 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public void setCouseData(FolderDo courseObj) {
 		if(courseObj!=null){
 			this.courseObj=courseObj;
-			unitTitle.setText(courseObj.getTitle()==null?i18n.GL3364():courseObj.getTitle());
+			unitTitle.setText(courseObj.getTitle()==null?"":!courseObj.getTitle().equalsIgnoreCase(i18n.GL3364())?courseObj.getTitle():"");
 			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
 			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
 		}else{
-			unitTitle.setText(i18n.GL3364());
+			unitTitle.setText("");
 			txaBigIdeas.setText("");
 			txaEssentialQuestions.setText("");
 		}
@@ -504,4 +529,23 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			}
 		}
 	}
+
+
+	public boolean validateInputs(){
+		String collectionTitleStr=unitTitle.getText().trim();
+		if(collectionTitleStr.equalsIgnoreCase("")||collectionTitleStr.equalsIgnoreCase(i18n.GL3364())){
+			return false;
+		}else{
+			return true;
+		}
+		
+		
+	}
+	
+	@UiHandler("unitTitle")
+	public void collectionTitleKeyUphandler(KeyUpEvent event){
+		unitTitle.removeStyleName("textAreaErrorMessage");
+		lblErrorMessage.setVisible(false);
+	}
+
 }

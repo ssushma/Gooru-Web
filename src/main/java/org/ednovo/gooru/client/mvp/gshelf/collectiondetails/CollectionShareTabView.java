@@ -162,8 +162,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		AppClientFactory.printInfoLogger("view:"+view);
+		// Hiding private functionality in 1.6
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
-			privateShareFloPanel.setVisible(true);
+			privateShareFloPanel.setVisible(false);
 		}else{
 			privateShareFloPanel.setVisible(false);
 		}

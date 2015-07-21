@@ -29,7 +29,7 @@
   font-weight: 100;
 }
 .textAreaErrorMessage{
-	border: 1px solid #fbb03b;
+	border: 1px solid #fbb03b !important;
 }
 
 .videostart div,.videostart input[type=text],.videostart span{

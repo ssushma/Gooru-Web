@@ -631,6 +631,7 @@ button.btn-disabled{
 #gShelfMainContainer .emptyHover:hover + .tooltipContainer  {
 	visibility:visible;
     opacity:1;
+    display:block;
 }
 
 
@@ -4411,10 +4412,10 @@ right:1px;
 
 /* Tooltip css */
 
-.tooltipContainer {
+#gShelfMainContainer .tooltipContainer {
 	width: 150px;
 	position: absolute;
-	left:-20px;
+	left:-33px;
     top:20px;
 	z-index:9999;
 	margin-top: 0px;
@@ -4425,32 +4426,32 @@ right:1px;
     -o-transition: visibility 0.2s linear, opacity 0.2s linear;
 }
 
-.tooltipContainer .arrowBorder {
+#gShelfMainContainer .tooltipContainer .arrowBorder {
  	width: 0px;
 	height: 0px;
 	border: 10px solid;
 	border-color: transparent transparent #DDD transparent;
 	position: relative;
 	top: 0px;
-    left:20px;
+    left:-31px;
 	border-top: none;
 }
 
-.tooltipContainer .arrow {
+#gShelfMainContainer .tooltipContainer .arrow {
 	width: 0px;
 	height: 0px;
 	border: 10px solid;
 	border-color: transparent transparent white transparent;
 	position: relative;
 	top: -9px;
-    left:20px;
+    left:-31px;
 	border-top: none;
 	z-index: 100;
     display:block !important; /* to override folder level arrow */
     background:none; /* to override folder level arrow */
 }
 
-.tooltipContent {
+#gShelfMainContainer .tooltipContent {
 	text-align:left;
 	color: #515151;
 	font-size: 12px;
@@ -4474,12 +4475,12 @@ right:1px;
 }
 /* //////////////////////////////////// overrides ////////////////////////////////////////*/
 
-.tooltipContainer .arrow:hover {
+#gShelfMainContainer .tooltipContainer .arrow:hover {
     background:none; /* to override folder level arrow */
     cursor:default; /* to override folder level arrow */
 }
 
-.folderLevel.child .tooltipContainer .arrow, .folderLevel.parent .tooltipContainer .arrow {
+#gShelfMainContainer .folderLevel.child .tooltipContainer .arrow, .folderLevel.parent .tooltipContainer .arrow {
     left:20px; /* to override folder level arrow */
 }
 
