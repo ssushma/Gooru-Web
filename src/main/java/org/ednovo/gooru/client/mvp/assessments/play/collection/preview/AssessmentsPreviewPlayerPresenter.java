@@ -1085,6 +1085,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
 				startPlayerActivityEvent(collectionActivityEventId, "", PlayerConstants.COLLECTION_EVENT_NAME, collectionDo.getGooruOid(), collectionDo.getGooruOid(), PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid(), getUserAgent());
+				AppClientFactory.printInfoLogger("Assessments Preview Presenter sessionIdCreationCount : "+sessionIdCreationCount);
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
