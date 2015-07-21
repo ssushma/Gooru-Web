@@ -60,20 +60,21 @@ public class SlnCourseReportView extends Composite {
 		unitCountName.setText(planProgressDo.getTitle());
 		unitName.setText("Unit");
 		collectionStudyCount.setText(planProgressDo.getCollectionsViewed()+" of "+planProgressDo.getCollectionCount());
-		double timeRadialPercent = 0;
+		int timeRadialPercent = 0;
+		
 		if(planProgressDo.getCollectionCount()>0) {
-			timeRadialPercent = (planProgressDo.getCollectionsViewed() / planProgressDo.getCollectionCount()) * 100;
+			timeRadialPercent = (int)(((double)planProgressDo.getCollectionsViewed() / (double)planProgressDo.getCollectionCount()) * 100);
 		}
 		timeRadial.setStyleName(TIME_RADIAL_PERCENT_LABEL+timeRadialPercent);
 		assessmentStudyCount.setText(planProgressDo.getAssessmentsAttempted()+" of "+planProgressDo.getAssessmentCount());
-		double scorePercent = 0;
+		int scorePercent = 0;
 		if(planProgressDo.getAssessmentCount()>0) {
-			scorePercent = (planProgressDo.getAssessmentsAttempted() / planProgressDo.getAssessmentCount()) * 100;
+			scorePercent = (int)(((double)planProgressDo.getAssessmentsAttempted() / (double)planProgressDo.getAssessmentCount()) * 100);
 		}
 		scoreRadial.setStyleName(SCORE_RADIAL_PERCENT_LABEL+scorePercent);
 		
 		String timeSpentData = "--";
-		if(planProgressDo.getTimeSpent()>0) {
+		if(planProgressDo.getTotalStudyTime()>0) {
 			timeSpentData = StringUtil.getFormattedDate(planProgressDo.getTotalStudyTime(), "");
 		}
 		studyTimeValue.setText(timeSpentData);
