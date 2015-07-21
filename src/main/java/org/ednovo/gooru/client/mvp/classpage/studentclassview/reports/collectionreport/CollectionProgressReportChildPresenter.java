@@ -25,7 +25,7 @@
 /**
  *
  */
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.collectionreport;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,7 +45,6 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -58,7 +57,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * @author Search Team
  *
  */
-public class AssessmentProgressReportChildPresenter extends ChildPresenter<AssessmentProgressReportChildPresenter, IsAssessmentProgressReportView> implements AssessmentProgressReportChildPresenterUiHandlers,ClientConstants{
+public class CollectionProgressReportChildPresenter extends ChildPresenter<CollectionProgressReportChildPresenter, IsCollectionProgressReportView> implements CollectionProgressReportChildPresenterUiHandlers,ClientConstants{
 
 	private CollectionDo collectionDo=null;
 
@@ -78,8 +77,9 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
+	private int collectionProgressCount=1;
 
-	public AssessmentProgressReportChildPresenter(IsAssessmentProgressReportView childView) {
+	public CollectionProgressReportChildPresenter(IsCollectionProgressReportView childView) {
 		super(childView);
 	}
 
@@ -89,8 +89,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		getView().setCollectionMetadata(collectionDo);
 	}
 
-	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData,String type){
-		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,printData,type);
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
+		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,printData);
 	}
 
 	public void clearslot(){
@@ -154,7 +154,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 						displayScoreCountData(result.get(0));
 						getView().setCollectionMetaDataByUserAndSession(result);
-						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData,null);
+						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 					}else{
 						Timer timer = new Timer() {
 
@@ -188,7 +188,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	/*analytics*/
 
-	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO, final String type) {
+	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 
 			@Override
@@ -204,7 +204,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {
 						if(!StringUtil.checkNull(result)){
-							setIndividualData(result,type);
+							setIndividualData(result);
 						} else {
 							getView().errorMsg();
 						}
@@ -218,14 +218,16 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			}
 		});
 	}
-	
-	public void setIndividualData(final ArrayList<UserDataDo> result, final String type) {
+
+
+	public void setIndividualData(final ArrayList<UserDataDo> result) {
 
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 
 			@Override
 			public void onSuccess() {
 				getView().loadingIcon();
+				collectionProgressCount=0;
 				Collections.sort(result,new Comparator<UserDataDo>() {
 		        	public int compare(UserDataDo o1, UserDataDo o2) {
 		        		 Integer obj1 = new Integer(o1.getItemSequence());
@@ -235,51 +237,19 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		        });
 				questionRowIndex.clear();
 				questionsData.clear();
-				boolean isCollection = false;
-				String isContentType=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-				if(isContentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
-					isCollection = true;
-				}
-
 				for (UserDataDo userDataDo : result) {
-					if(isCollection) {
-						if(type!=null&&type.equalsIgnoreCase(QUESTION)) {
-							if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
-								if(!OE.equalsIgnoreCase(userDataDo.getType())){
-									questionsData.add(userDataDo);
-								}
-							}
-						} else if(type!=null&&type.equalsIgnoreCase(OE)) {
-							if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
-								if(OE.equalsIgnoreCase(userDataDo.getType())){
-									questionsData.add(userDataDo);
-								}
-							}
-						} else {
-							questionsData.add(userDataDo);
-						}
-					} else {
+
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
 							}
+							questionRowIndex.add(collectionProgressCount);
 						}
-					}
+						collectionProgressCount++;
 				}
-				if(isCollection) {
-					if(type!=null&&type.equalsIgnoreCase(QUESTION)) {
-						getView().setQuestionsData(questionsData,QUESTION);
-						getView().setQuestionsPrintData(questionsData);
-					} else if(type!=null&&type.equalsIgnoreCase(OE)) {
-						getView().setQuestionsData(questionsData,OE);
-						getView().setQuestionsPrintData(questionsData);
-					} else {
-						getView().setResourcesData(questionsData);
-					}
-				} else {
-					getView().setQuestionsData(questionsData,QUESTION);
-					getView().setQuestionsPrintData(questionsData);
-				}
+				getView().setQuestionsData(questionsData);
+				getView().setQuestionsPrintData(questionsData);
+
 			}
 		});
 	}
@@ -382,4 +352,5 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		});
 
 	}
+
 }

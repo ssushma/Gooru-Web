@@ -6,7 +6,7 @@
 <div class="courseNameBlock">
 
 <p>Lesson Name</p>
-<p><g:TextBox styleName="form-control" ui:field="lessonTitle" />
+<p><g:TextBox styleName="form-control" ui:field="lessonTitle" maxLength="50" />
 <g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
 </p>
 

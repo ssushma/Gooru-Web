@@ -58,8 +58,9 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	 * This method is used to check profanity checker
 	 * @param textValue
 	 * @param isCreate
+	 * @param createOrUpDate 
 	 */
-	void checkProfanity(String textValue,final boolean isCreate,int index,String courseId);
+	void checkProfanity(String textValue,final boolean isCreate,int index,String courseId, CreateDo createOrUpDate);
 
 	void showUnitInfo();
 

@@ -56,7 +56,8 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	/**
 	 * This method is used for profanity checker
 	 * @param textValue
-	 * @param index
+	 * @param createOrUpDate 
+	 * @param index 
 	 */
-	public void checkProfanity(String textValue,boolean isCreate);
+	public void checkProfanity(String textValue,boolean isCreate, CreateDo createOrUpDate);
 }

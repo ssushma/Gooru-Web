@@ -10,6 +10,31 @@
 	position: fixed;
 	width:235px;
 }
+#gooruSearchMainContainer .copyPopupPanel:before {
+	  position: absolute;
+	  top: 0;
+	  left:0;
+	  display: inline-block;
+	  border-right: 0;
+	  border-bottom: 0;
+	  border-left: 0;
+	  border-bottom-color:0;
+	  content: '';
+}
+#gooruSearchMainContainer .copyPopupPanel {
+	 min-width: 50px !important;
+	margin-top: -6px !important;
+}
+#gooruSearchMainContainer .copyPopupPanel:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 0;
+	content: '';
+}
 
 #gShelfMainContainer .floderRightContainer{
 	background:#ffffff;
@@ -1376,6 +1401,14 @@ button.btn-disabled {
 	margin: 0;
 	padding: 11px;
 	font-size: 22px;
+}
+#gShelfMainContainer .lblCollectionSubTitle {
+	display: inline-block;
+	text-overflow: ellipsis;
+	width: 80%;
+	white-space: nowrap;
+	vertical-align: middle;
+	overflow: hidden;
 }
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;

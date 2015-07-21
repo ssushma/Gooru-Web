@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 
@@ -60,8 +61,9 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 * This method is used for calling create and update api
 	 * @param isCreate
 	 * @param result
+	 * @param createOrUpDate 
 	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result);
+	void callCreateAndUpdate(boolean isCreate,boolean result, CreateDo createOrUpDate);
 	AudienceView getAudienceContainer();
 	FolderDo getCourseDetails();
 	void resetBtns();

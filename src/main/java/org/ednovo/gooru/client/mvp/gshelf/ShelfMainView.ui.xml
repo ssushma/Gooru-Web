@@ -86,7 +86,7 @@
 					<div class="col-md-9 col-sm-9">
 					    <g:HTMLPanel ui:field="titleIconContainer" styleName="lblCollectionTitle">
 						    <g:InlineLabel ui:field="imgIconLbl"></g:InlineLabel> 
-							<g:Label ui:field="lblCollectionTitle" styleName="inlineBlock"/>
+							<g:Label ui:field="lblCollectionTitle" styleName="lblCollectionSubTitle"/>
 					    </g:HTMLPanel>
 						<g:HTMLPanel styleName="floderRightContainer" ui:field="pnlSlot" />
 						<div class="clearfix"></div>

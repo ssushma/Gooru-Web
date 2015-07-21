@@ -25,7 +25,7 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.collectionreport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ import com.google.gwt.user.client.ui.Frame;
  * @author Gooru Team
  * 
  */
-public interface IsAssessmentProgressReportView extends IsChildView<AssessmentProgressReportChildPresenter> {
+public interface IsCollectionProgressReportView extends IsChildView<CollectionProgressReportChildPresenter> {
 	
 	public void setCollectionMetadata(CollectionDo collectionDo);
 
@@ -60,10 +60,8 @@ public interface IsAssessmentProgressReportView extends IsChildView<AssessmentPr
 
 	public void resetCollectionMetaData();
 
-	public void setQuestionsData(ArrayList<UserDataDo> questionsData, String contentType);
+	public void setQuestionsData(ArrayList<UserDataDo> questionsData);
 
-	public void setResourcesData(ArrayList<UserDataDo> questionsData);
-	
 	public void setQuestionsPrintData(ArrayList<UserDataDo> questionsData);
 
 	public void setPdfForEmail(String result);
