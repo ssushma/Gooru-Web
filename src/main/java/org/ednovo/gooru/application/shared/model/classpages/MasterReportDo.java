@@ -24,13 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.classpages;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : MasterReportDo.java
  * 
@@ -39,7 +39,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class MasterReportDo implements Serializable{
+public class MasterReportDo implements IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 	private String title;

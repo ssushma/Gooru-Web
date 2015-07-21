@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class CountryDo implements Serializable {
+public class CountryDo implements IsSerializable {
 
 	private static final long serialVersionUID = 5884693288921720922L;
 	private String countryId;

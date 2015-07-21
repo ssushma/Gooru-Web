@@ -24,16 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class ResoruceCollectionDo implements Serializable{
+public class ResoruceCollectionDo implements IsSerializable{
 
 	/**
 	 *

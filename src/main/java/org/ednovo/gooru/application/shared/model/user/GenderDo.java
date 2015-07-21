@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class GenderDo implements Serializable {
+public class GenderDo implements IsSerializable {
 
 	private static final long serialVersionUID = -3767593742558515070L;
 	private String genderId;

@@ -24,14 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.drive;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class GoogleDriveDo implements Serializable{
+public class GoogleDriveDo implements IsSerializable{
 
 	private static final long serialVersionUID = -3298220423508874309L;
 

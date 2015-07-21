@@ -24,11 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.analytics;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : CollectionSummaryMetaDataDo.java
  *
@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class CollectionSummaryMetaDataDo implements Serializable{
+public class CollectionSummaryMetaDataDo implements IsSerializable{
 
 	/**
 	 *
