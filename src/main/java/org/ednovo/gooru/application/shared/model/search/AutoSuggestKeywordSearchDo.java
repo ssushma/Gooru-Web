@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.search;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class AutoSuggestKeywordSearchDo implements Serializable {
+public class AutoSuggestKeywordSearchDo implements IsSerializable {
 
 	/**
 	 * 

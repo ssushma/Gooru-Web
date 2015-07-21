@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.search;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class OrganizationDo implements Serializable {
+public class OrganizationDo implements IsSerializable {
 
 	/**
 	 * OrganizationDo

@@ -592,6 +592,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		saveCollectionBtn.addStyleName("disabled");
+		saveCollectionBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			collectionTitle.removeStyleName("textAreaErrorMessage");
@@ -602,6 +604,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			lblErrorMessage.setVisible(true);
 			collectionTitle.addStyleName("textAreaErrorMessage");
 			lblErrorMessage.setText("Please Enter Collection Title");
+			resetBtns();
 		}
 	}
 
@@ -901,6 +904,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void collectionTitleKeyUphandler(KeyUpEvent event){
 		collectionTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
+	}
+	@Override
+	public void resetBtns() {
+		saveCollectionBtn.removeStyleName("disabled");
+		saveCollectionBtn.setEnabled(true);
+
 	}
 }
 

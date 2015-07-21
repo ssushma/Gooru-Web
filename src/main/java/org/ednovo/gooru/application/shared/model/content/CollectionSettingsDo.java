@@ -24,12 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 @JsonInclude(Include.NON_NULL)
-public class CollectionSettingsDo implements Serializable {
+public class CollectionSettingsDo implements IsSerializable {
 	private static final long serialVersionUID = 1L;
 	String comment;
 	//added this for 1.3 toc requirement to check assessment is logged in or not

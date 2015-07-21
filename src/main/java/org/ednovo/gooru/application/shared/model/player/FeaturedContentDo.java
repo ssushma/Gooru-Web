@@ -1,6 +1,6 @@
 package org.ednovo.gooru.application.shared.model.player;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
 * @fileName : FeaturedContentDo.java
 *
@@ -14,7 +14,7 @@ import java.io.Serializable;
 * 
 * @Reviewer: Gooru Team.
 */
-public class FeaturedContentDo implements Serializable {
+public class FeaturedContentDo implements IsSerializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String collectionThumbnailUrl;

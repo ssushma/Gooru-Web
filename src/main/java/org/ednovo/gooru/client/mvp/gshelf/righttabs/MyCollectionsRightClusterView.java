@@ -181,7 +181,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			this.folderObj=folderObj;
 		}
 		
-		/*if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
+		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
 			}
@@ -203,7 +203,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else{
 			String title=folderObj!=null?folderObj.getTitle():"";
 			setBreadCrumbs(title,type);
-		}*/
+		}
 	}
 	
 	
@@ -213,8 +213,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param type
 	 */
 	public void setBreadCrumbs(String title, String type) {
+		
+		getUiHandlers().setViewTitleWthicon(title,type);
 
-		if(COURSE.equalsIgnoreCase(type)){
+		/*if(COURSE.equalsIgnoreCase(type)){
 			pnlBreadCrumbMain.clear();
 			pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3347():title, type,"courseFolderCloseIcon"));
 		}else if(UNIT.equalsIgnoreCase(type)){
@@ -237,7 +239,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{
 				getBreadCrumbs(title,type,4); 
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -694,10 +696,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		
 	@Override
 	public void setOnDeleteBreadCrumbs(String title, String type) {
-		/**
-		 * Removed as design got changed.
-		 */
-		/*setBreadCrumbs(title,type);*/
+		setBreadCrumbs(title,type);
 	}
 	
 	/**

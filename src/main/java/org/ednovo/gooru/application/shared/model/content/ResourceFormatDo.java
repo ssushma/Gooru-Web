@@ -1,12 +1,11 @@
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class ResourceFormatDo implements Serializable {
+public class ResourceFormatDo implements IsSerializable {
 	private static final long serialVersionUID = -6275994990965281074L;
 
 	private String value;

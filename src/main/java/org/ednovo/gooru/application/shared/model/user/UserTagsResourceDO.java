@@ -1,6 +1,6 @@
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class UserTagsResourceDO implements Serializable{
+public class UserTagsResourceDO implements IsSerializable{
 	private static final long serialVersionUID = 6752607500919973286L;
 	public UserTagsResourceDO(){}
 	private String gooruOid;

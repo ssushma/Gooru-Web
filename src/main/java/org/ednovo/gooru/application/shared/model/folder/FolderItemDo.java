@@ -24,16 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.folder;
 
-import java.io.Serializable;
-
 import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class FolderItemDo implements Serializable{
+public class FolderItemDo implements IsSerializable{
 
 	private static final long serialVersionUID = -3298220423508874309L;
 
