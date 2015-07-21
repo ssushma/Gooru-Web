@@ -330,6 +330,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	@UiHandler("saveUnitBtn")
 	public void clickOnSaveUnitBtn(ClickEvent saveCourseEvent){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		saveUnitBtn.addStyleName("disabled");
+		saveUnitBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
@@ -340,14 +342,16 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			lblErrorMessage.setVisible(true);
 			unitTitle.setStyleName("textAreaErrorMessage");
 			unitTitle.addStyleName("form-control");
+			resetBtns();
 		}
 	}
 	
 	@UiHandler("nextCreateLessonBtn")
 	public void clickOnNextLessonBtn(ClickEvent saveCourseEvent){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		if(validateInputs() && isCreateLessonClicked){
-			isCreateLessonClicked=false;
+		nextCreateLessonBtn.addStyleName("disabled");
+		nextCreateLessonBtn.setEnabled(false);
+		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0,courseId);
@@ -356,7 +360,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			lblErrorMessage.setVisible(true);
 			unitTitle.setStyleName("textAreaErrorMessage");
 			unitTitle.addStyleName("form-control");
-			isCreateLessonClicked=true;
+			resetBtns();
 		}
 	}
 	/**
@@ -536,13 +540,16 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			return true;
 		}
 	}
-	@Override
-	public void setIsClicked(boolean isClicked){
-		this.isCreateLessonClicked=isClicked;
-	}
 	@UiHandler("unitTitle")
 	public void collectionTitleKeyUphandler(KeyUpEvent event){
 		unitTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
+	}
+	@Override
+	public void resetBtns() {
+		nextCreateLessonBtn.removeStyleName("disabled");
+		nextCreateLessonBtn.setEnabled(true);
+		saveUnitBtn.removeStyleName("disabled");
+		saveUnitBtn.setEnabled(true);
 	}
 }

@@ -1,14 +1,13 @@
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
-
 import org.ednovo.gooru.application.shared.model.user.CreatorDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class StarRatingsDo implements Serializable {
+public class StarRatingsDo implements IsSerializable {
 
 	private static final long serialVersionUID = 1L;
 	private String assocGooruOid;

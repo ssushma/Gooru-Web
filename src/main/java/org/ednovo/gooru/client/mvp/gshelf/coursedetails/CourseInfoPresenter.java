@@ -123,6 +123,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
+				getView().resetBtns();
 				params.put("o1", result.getGooruOid());
 				params.put("view", COURSE);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
@@ -153,6 +154,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				getView().resetBtns();
 				folderDo.setTitle(createObj.getTitle());
 				folderDo.setType(COURSE);
 				folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
@@ -175,6 +177,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
+				getView().resetBtns();
 				getView().callCreateAndUpdate(isCreate,value);
 			}
 		});

@@ -39,6 +39,8 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.gshelf.util.EmptyCourseBuilderWidget;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderHandler;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -62,6 +64,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -88,7 +91,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer;
+	@UiField HTMLPanel floderTreeContainer,gShelfMainContainer,pnlSlot,pnlNoDataContainer,pnlMainContainer,titleIconContainer;
 	
 	@UiField HTMLEventPanel organizeRootPnl;
 	
@@ -97,6 +100,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@UiField Anchor lnkMyCourses,lnkMyFoldersAndCollecctions;
 	
 	@UiField Label organizelbl,lblCollectionTitle;
+	
+	@UiField InlineLabel imgIconLbl;
 	
 	@UiField static ScrollPanel collectionListScrollpanel;
 	
@@ -198,6 +203,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				}
 			}
 		});
+		
+		AppClientFactory.getEventBus().addHandler(RemoveMovedCollectionFolderEvent.TYPE,deleteCollaborator);
 	}
 
 	/**
@@ -801,6 +808,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
 				shelfTreeWidget.setLevel(4);
 			}
+
+//			shelfTreeWidget.setWidgetPositions(nextLevel, 1, selectedWidget.getUrlParams());
 			TreeItem item = new TreeItem(shelfTreeWidget);
 			treeChildSelectedItem.insertItem(treeChildSelectedItem.getChildCount(), item);
 			treeChildSelectedItem.setState(true);
@@ -809,6 +818,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}else{
 				shelfTreeWidget.setCollectionOpenedStatus(true);
 			}
+			
 			correctStyle(item);
 			treeChildSelectedItem=item;
 			setFolderActiveStatus();
@@ -831,7 +841,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiHandler("collectionListScrollpanel")
 	public void onScroll(ScrollEvent event){
-		//executeScroll(true);
+		executeScroll(true);
 	}
 
 	@Override
@@ -1106,10 +1116,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public Label getCollectionLabel(){
 		return lblCollectionTitle;
 	}
+	 
+	
 
 	@Override
 	public void removeDeletedTreeWidget(String deletedTreeWidgetId,String currentTypeView){
-		
 		if(COURSE.equalsIgnoreCase(currentTypeView)){
 			/*for (FolderDo folderDo : SHELF_COLLECTIONS) {
 				if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
@@ -1255,10 +1266,70 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public void clickOnAssessment(ClickEvent clickEvent){
 		getUiHandlers().addNewContent("assessment");
 	}
+
+	@Override
+	public InlineLabel getImgInlineLbl() {
+		return imgIconLbl;
+	}
+
+	@Override
+	public void setViewTitleWthIcon(String title, String type) {
+		if(COURSE.equalsIgnoreCase(type)){
+			setTitleWithIcon(StringUtil.isEmpty(title)?i18n.GL3347():title,"courseFolderCloseIcon");
+		}else if(UNIT.equalsIgnoreCase(type)){
+			setTitleWithIcon(StringUtil.isEmpty(title)?i18n.GL3364():title, "unitFolderCloseIcon");
+		}else if(LESSON.equalsIgnoreCase(type)){
+			setTitleWithIcon(StringUtil.isEmpty(title)?i18n.GL3365():title,"lessonFolderCloseIcon");
+		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
+			setTitleWithIcon((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
+					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
+					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type.contains(ASSESSMENT)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon");
+		}
+	}
+
+	
+	private void setTitleWithIcon(String title, String iconStyle) {
+		getTitleIconContainer().setVisible(true);
+		if(FOLDER.equalsIgnoreCase(getViewType())){
+			getImgInlineLbl().setVisible(false);
+		}else{
+			getImgInlineLbl().setStyleName(iconStyle);
+			getCollectionLabel().setText(title);
+			getImgInlineLbl().setVisible(true);
+			getCollectionLabel().setVisible(true);
+		}
+	}
+
+	@Override
+	public HTMLPanel getTitleIconContainer() {
+		return titleIconContainer;
+	}
 	public Image loadingImage(){
 		Image loadingImage =  new Image();
 		loadingImage.setUrl(LOADER_IMAGE);
 		loadingImage.getElement().setId("myCollectionsListViewLoaddingImage");
 		return loadingImage;
 	}
+	
+	RemoveMovedCollectionFolderHandler deleteCollaborator = new RemoveMovedCollectionFolderHandler() {
+		
+		@Override
+		public void removeMovedCollectionFromShelf(String sourceId) {
+			ShelfTreeWidget collectionShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+			String type = collectionShelfTreeWidget.getCollectionDo().getType();
+			String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+			String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+			String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+			String id = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+			if(o3!=null){
+				removeDeletedTreeWidget(sourceId, type);
+			}else if(o2!=null){
+				removeDeletedTreeWidget(sourceId, LESSON);
+			}else if(o1!=null){
+				removeDeletedTreeWidget(sourceId, UNIT);
+			}else{
+				removeDeletedTreeWidget(sourceId, COURSE);
+			}
+		}
+	};
 }

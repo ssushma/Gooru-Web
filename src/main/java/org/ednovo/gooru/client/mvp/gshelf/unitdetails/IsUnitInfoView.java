@@ -64,7 +64,7 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 
 	void appendDoamins(List<CourseSubjectDo> libraryCodeDo, int selectedId);
 
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray); 
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
 	
-	void setIsClicked(boolean isClicked);
+	void resetBtns(); 
 }

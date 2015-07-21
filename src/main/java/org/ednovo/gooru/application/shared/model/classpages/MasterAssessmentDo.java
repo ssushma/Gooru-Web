@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.classpages;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -32,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : UserDataDo.java
  * 
@@ -40,7 +40,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class MasterAssessmentDo implements Serializable{
+public class MasterAssessmentDo implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	
