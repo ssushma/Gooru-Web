@@ -71,7 +71,7 @@ public class AppEntry implements EntryPoint {
 		/**
 		 * Capturing all uncaught exception on client side.
 		 */
-		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+/*		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 
 			@Override
 			public void onUncaughtException(Throwable e) {
@@ -79,7 +79,7 @@ public class AppEntry implements EntryPoint {
 //				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
 			}
 		});
-
+*/
 
 		try {
 			DelayedBindRegistry.bind(appInjector);
