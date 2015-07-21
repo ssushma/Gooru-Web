@@ -32,7 +32,9 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.UIObject;
 
 /**
  * @author Search Team
@@ -87,4 +89,10 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	String getViewType();
 
 	void updateWidgetsCount(CollectionItemDo collectionItem);
+
+	InlineLabel getImgInlineLbl();
+
+	void setViewTitleWthIcon(String title, String type);
+
+	HTMLPanel getTitleIconContainer(); 
 }
