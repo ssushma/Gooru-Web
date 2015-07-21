@@ -588,6 +588,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				floderTreeContainer.add(shelfFolderTree);
 			}
 		}
+		lnkMyCourses.setEnabled(true);
+		lnkMyCourses.removeStyleName("disabled");
+		lnkMyFoldersAndCollecctions.setEnabled(true);
+		lnkMyFoldersAndCollecctions.removeStyleName("disabled");
 	}
 	
 	private boolean getShelffCollection(String collectionId) {
@@ -827,11 +831,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiHandler("collectionListScrollpanel")
 	public void onScroll(ScrollEvent event){
-		executeScroll(true);
+		//executeScroll(true);
 	}
 
 	@Override
 	public void executeScroll(boolean isLeftScroll){
+		lnkMyCourses.setEnabled(false);
+		lnkMyCourses.addStyleName("disabled");
+		lnkMyFoldersAndCollecctions.setEnabled(false);
+		lnkMyFoldersAndCollecctions.addStyleName("disabled");
+		
 		if(isLeftScroll){
 			if(collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
 				pageNumber = pageNumber + 1;
