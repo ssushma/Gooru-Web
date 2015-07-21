@@ -108,6 +108,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 
@@ -391,6 +393,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("saveLessonBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		saveLessonBtn.addStyleName("disabled");
 		saveLessonBtn.setEnabled(false);
 		if (validateInputs()) {
@@ -400,7 +404,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null,createOrUpDate);
+			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null,createOrUpDate,courseId,unitId);
 
 		}else{
 			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
@@ -413,6 +417,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("btnSaveAndCreateCollection")
 	public void clickOnSaveAndCreateCollection(ClickEvent saveCourseEvent){
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		btnSaveAndCreateCollection.addStyleName("disabled");
 		btnSaveAndCreateCollection.setEnabled(false);
 		if (validateInputs()) {
@@ -422,7 +428,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate);
+			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate,courseId,unitId);
+
 		}else{
 			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
 			lessonTitle.setStyleName("textAreaErrorMessage");
@@ -435,7 +442,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
 		Window.enableScrolling(false);
-		
+		final String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		final String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		if(validateInputs()){
 			final CreateDo createOrUpDate=new CreateDo(); 
 			createOrUpDate.setTitle(lessonTitle.getText());
@@ -446,14 +454,14 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					assessmentPopup.hide();
 					Window.enableScrolling(true);
 					//This will display the normal assessment info
-					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT,createOrUpDate);
+					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT,createOrUpDate,courseId,unitId);
 				}
 				@Override
 				public void clickOnExternalAssessmentClick() {
 					assessmentPopup.hide();
 					Window.enableScrolling(true);
 					//This will display the external assessment info
-					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL,createOrUpDate);
+					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL,createOrUpDate,courseId,unitId);
 				}
 			};
 			assessmentPopup.setGlassEnabled(true);
@@ -469,14 +477,15 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		
 	}
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result,String type,CreateDo createOrUpDate){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,String type,CreateDo createOrUpDate,String courseId,String unitId){
+
 		if(result){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, result);
 		}else{
 			if(courseObj!=null && courseObj.getGooruOid()!=null){
 				getUiHandlers().updateLessonDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,type,courseObj);
 			}else{
-				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
+				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type,courseId,unitId);
 			}
 		}
 	}

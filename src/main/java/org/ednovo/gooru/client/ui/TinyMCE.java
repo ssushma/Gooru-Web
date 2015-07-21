@@ -48,7 +48,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiConstructor;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
@@ -176,14 +178,24 @@ public class TinyMCE extends Composite{
      */
     protected void onLoad() {
         super.onLoad();
-        Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+
+        DeferredCommand.addCommand(new Command() {
+            public void execute() {
+                    setWidth("100%");
+                    setTextAreaToTinyMCE(id);
+                    focusMCE(id);
+                    setMarkAsBlankLabel();
+            }
+    });
+
+      /*  Scheduler.get().scheduleDeferred(new ScheduledCommand(){
 			@Override
 			public void execute() {
 				setWidth("100%");
                 setTextAreaToTinyMCE(id);
                 setMarkAsBlankLabel();
 			}
-        });
+        });*/
     }
 
 
@@ -375,8 +387,6 @@ public class TinyMCE extends Composite{
 		    theme_advanced_toolbar_align : "left",
 		    theme_advanced_statusbar_location : "none",
 		    plugins : 'asciimath,asciisvg,table,inlinepopups,fillintheblank',
-		    AScgiloc : 'http://www.imathas.com/editordemo/php/svgimg.php',			      //change me
-		  	ASdloc : 'http://www.imathas.com/editordemo/jscripts/tiny_mce/plugins/asciisvg/js/d.svg',  //change me
 		  	     setup : function (ed) {
 		  	     	ed.onKeyPress.add(function(ed, event) {
       				var content=this.getContent({format : 'raw'});
@@ -421,10 +431,7 @@ public class TinyMCE extends Composite{
 								event.returnValue = false; // disable Enter Key
 				  	     	}
       				});
-				},
-
-
-		    content_css : "css/content.css"
+				}
 		});
 	}-*/;
 
@@ -504,7 +511,7 @@ public class TinyMCE extends Composite{
 		}
 		return noHTMLString.length();
 	}
-	
+
 	public void clearErrorMessage(String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");

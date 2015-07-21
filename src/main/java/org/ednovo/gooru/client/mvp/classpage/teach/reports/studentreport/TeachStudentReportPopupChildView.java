@@ -84,11 +84,6 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
 			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
 			String assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
-			System.out.println("classId "+classId);
-			System.out.println("courseId "+courseId);
-			System.out.println("unitId "+unitId);
-			System.out.println("lessonId "+lessonId);
-			System.out.println("assessmentId "+assessmentId);
 			reportBodyBlock.add(new AssessmentProgressReportChildView(assessmentId, classId, userId, courseId, unitId, lessonId));
 		}
 	}

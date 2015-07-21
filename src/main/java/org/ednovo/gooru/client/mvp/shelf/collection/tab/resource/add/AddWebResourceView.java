@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
@@ -57,7 +58,9 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -97,6 +100,7 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -134,6 +138,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiField
 	Label mandatoryCategoryLbl;
+	
+	@UiField UlPanel educationalUseOptionsContainer,momentofLearningContainer;
 		
 	@UiField
 	HTMLEventPanel eHearderIconCentury,refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
@@ -157,7 +163,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
-		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
+		generateFromUrlPanel,defaultText,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
 		defaultMomentsOfLearningText,mediaDropdownArrowConatainer;
 
 	
@@ -176,7 +182,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLPanel centuryBrowseContainer,resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel,educationalContainer;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel,resourceEducationalLabel,resourcemomentsOfLearningLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords,educationalDropDownLbl;
+	Label resoureDropDownLbl, resourceCategoryLabel,resourcemomentsOfLearningLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
+	@UiField 
+	Anchor resourceEducationalLabel;
 	
 	@UiField
 	CheckBox rightsChkBox;
@@ -297,6 +305,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
+		setEducationUse();
+		setMomentOfLeaning();
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -430,10 +440,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			public void showAndHideContainers() {
 			}
 		};
+		
 		advancedSetupContainer.add(addSetupAdvancedView);
 		generateFromUrlBtn.setText(i18n.GL3092());
 		disableGenerateBtn();
 		refreshLbl.setVisible(false);
+		resourceEducationalLabel.getElement().setAttribute("data-toggle", "dropdown");
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		urlTitle.getElement().setInnerHTML(i18n.GL0915());
@@ -736,9 +748,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		audio.getElement().setId("pnlAudio");
 		refreshLbl.getElement().setId("epnlRefreshLbl");
 		refreshLbl.getElement().getStyle().setWidth(70, Unit.PX);
-		educationalpanel.getElement().setId("pnlEducationalpanel");
-		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
-		mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
+		
+/*		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
+*/		mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
 		activityPanel.getElement().setId("epnlActivityPanel");
 		handoutPanel.getElement().setId("epnlHandoutPanel");
 		homeworkPanel.getElement().setId("epnlHomeworkPanel");
@@ -2310,7 +2322,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		mandatoryEducationalLbl.setVisible(false);
 		setAdvancedOptionsStyles();
 	}
-	
+	/*
 	@UiHandler("educationalDropDownLbl")
 	public void educationalDropDownClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
@@ -2321,8 +2333,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			educationalUsePanel.setVisible(false);
 			educationalDropDownLblOpen = false;
 		}
-	}
-	@UiHandler("educatioNalUseDropContainer")
+	}*/
+/*	@UiHandler("educatioNalUseDropContainer")
 	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
 		if (educationalDropDownLblOpen1 == false) {
@@ -2332,7 +2344,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			educationalUsePanel.setVisible(false);
 			educationalDropDownLblOpen1 = false;
 		}
-	}
+	}*/
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
 	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
@@ -3317,4 +3329,92 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		centuryPopup.center();
 		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
+	
+	public void setEducationUse(){
+		AppClientFactory.getInjector().getResourceService().getEducationalUseList(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				setData(result,"education");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public void setData(List<ListValuesDo> listValuesDos,String type){
+	
+		for(ListValuesDo listValuesDo:listValuesDos){
+			LiPanel liPanel=new LiPanel();
+			Anchor anchor=new Anchor();
+			anchor.setStyleName("educationUseText");
+			anchor.setText(listValuesDo.getName());
+			anchor.getElement().setId(listValuesDo.getId()+"");
+			liPanel.add(anchor);
+			if(type.equalsIgnoreCase("education")){
+				
+				educationalUseOptionsContainer.add(liPanel);
+				liPanel.addDomHandler(new EducationClickHandler(liPanel, anchor), ClickEvent.getType());
+			}else if(type.equalsIgnoreCase("mLearning")){
+				momentofLearningContainer.add(liPanel);
+			}
+			
+		}
+	}
+	public void setMomentOfLeaning(){
+		AppClientFactory.getInjector().getResourceService().getMomentOfLearning(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				setData(result, "mLearning");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public class EducationClickHandler implements ClickHandler{
+		Anchor anchor;
+		LiPanel liPanel;
+		public EducationClickHandler(LiPanel liPanel,Anchor anchor) {
+			// TODO Auto-generated constructor stub
+			this.anchor=anchor;
+			this.liPanel=liPanel;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			liPanel.setStyleName("active");
+			resourceEducationalLabel.setText(anchor.getText());
+			resourceEducationalLabel.getElement().setAttribute("alt", anchor.getText());
+			resourceEducationalLabel.getElement().setAttribute("title", anchor.getText());
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+			mandatoryEducationalLbl.setVisible(false);
+			setAdvancedOptionsStyles();
+		}
+		
+	}
+	
+	public void resetSelection(HTMLPanel htmlPanel){
+		int count=htmlPanel.getWidgetCount();
+		for(int i=0;i<count;i++){
+			LiPanel liPanel=(LiPanel)educationalContainer.getWidget(i);
+			liPanel.removeStyleName("active");
+		}
+	}
+
 }
+

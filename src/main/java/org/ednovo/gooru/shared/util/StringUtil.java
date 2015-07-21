@@ -908,7 +908,34 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		errorLbl.setStyleName(style);
 		return errorLbl;
 	}
-
-
+	
+	public static String getResourceFormatImage(String resourceCategory) {
+		String categoryStyle="";
+		if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory)){
+			resourceCategory = WEBPAGE;
+			categoryStyle="category_new_type_webpage";
+		} else if(SLIDE.equalsIgnoreCase(resourceCategory) || IMAGE.equalsIgnoreCase(resourceCategory)){
+			resourceCategory = IMAGE;
+			categoryStyle="category_new_type_image";
+		} else if(HANDOUT.equalsIgnoreCase(resourceCategory) || LESSON.equalsIgnoreCase(resourceCategory) || TEXTBOOK.equalsIgnoreCase(resourceCategory)|| TEXT.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = TEXT;
+			categoryStyle="category_new_type_text";
+		}  else if(EXAM.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = WEBPAGE;
+			categoryStyle="category_new_type_webpage";
+		} else if(VIDEO.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = VIDEO;
+			categoryStyle="category_new_type_video";
+		} else if(INTERACTIVE.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = INTERACTIVE;
+			categoryStyle="category_new_type_interactive";
+		}else if(AUDIO.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = AUDIO;
+			categoryStyle="category_new_type_audio";
+		} else{
+			categoryStyle="category_new_type_other";
+		}
+		return categoryStyle;
+	}
+	
 }
-

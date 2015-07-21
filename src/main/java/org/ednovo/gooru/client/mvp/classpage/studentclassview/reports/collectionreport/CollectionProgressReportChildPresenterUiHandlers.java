@@ -22,33 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
+package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.collectionreport;
 
-import java.util.List;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
-import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+public interface CollectionProgressReportChildPresenterUiHandlers extends BaseUiHandlers{
 
-/**
- * @author Search Team
- *
- */
-public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandlers> {
+	public void getSessionsDataByUser(String collectionId, String classId, String userId);
 
-	void setLessonInfoData(FolderDo folderObj); 
+	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId,PrintUserDataDO printData);
+
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData);
+
+	public void clearslot();
+
+	public void setHtmltopdf(String string, String collectionTitle,boolean isClickedOnEmail);
 	
-	void callCreateAndUpdate(boolean isCreate,boolean result,String type, CreateDo createOrUpDate,String courseId,String unitId); 
+	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId);
 
-	void displayStandardsList(List<DomainStandardsDo> result);
-
-//	void addTaxonomyData(UlPanel selectedUlContainer);
-
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
-
-	void resetBtns(); 
-	
+	public void getCollectionScoreForSession(String collectionId, String classId, String userId, String sessionId, PrintUserDataDO printData);
 
 }
