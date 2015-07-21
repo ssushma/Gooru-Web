@@ -61,8 +61,8 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -93,8 +93,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@UiField HTMLEventPanel organizeRootPnl;
 	
 	@UiField HTMLEventPanel createNewCourse,createNewCollection,createNewAssessment;
-	
-	
 	
 	@UiField Anchor lnkMyCourses,lnkMyFoldersAndCollecctions;
 	
@@ -149,6 +147,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 	
+	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";  
+	
 	List<FolderDo> folderListDoChild=new ArrayList<FolderDo>();
 
 	private static ShelfMainViewUiBinder uiBinder = GWT
@@ -191,7 +191,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				String o1=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
 				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null){
+				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null && shelfFolderTree.getItemCount()>=20){
 					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
 						executeScroll(false);
 					}
@@ -210,8 +210,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			Anchor selected=(Anchor) event.getSource();
-			//btnSelectedText.setText(selected.getText());
+			shelfFolderTree.clear();
+			shelfFolderTree.add(loadingImage());
+			pnlSlot.clear();
+			pnlSlot.add(loadingImage());
 			if(selectedIndex==0){
 				enableDisableCourseButton(true);
 				organizelbl.setText(i18n.GL3335());
@@ -586,6 +588,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				floderTreeContainer.add(shelfFolderTree);
 			}
 		}
+		lnkMyCourses.setEnabled(true);
+		lnkMyCourses.removeStyleName("disabled");
+		lnkMyFoldersAndCollecctions.setEnabled(true);
+		lnkMyFoldersAndCollecctions.removeStyleName("disabled");
 	}
 	
 	private boolean getShelffCollection(String collectionId) {
@@ -825,11 +831,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiHandler("collectionListScrollpanel")
 	public void onScroll(ScrollEvent event){
-		executeScroll(true);
+		//executeScroll(true);
 	}
 
 	@Override
 	public void executeScroll(boolean isLeftScroll){
+		lnkMyCourses.setEnabled(false);
+		lnkMyCourses.addStyleName("disabled");
+		lnkMyFoldersAndCollecctions.setEnabled(false);
+		lnkMyFoldersAndCollecctions.addStyleName("disabled");
+		
 		if(isLeftScroll){
 			if(collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
 				pageNumber = pageNumber + 1;
@@ -1243,5 +1254,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@UiHandler("createNewAssessment")
 	public void clickOnAssessment(ClickEvent clickEvent){
 		getUiHandlers().addNewContent("assessment");
+	}
+	public Image loadingImage(){
+		Image loadingImage =  new Image();
+		loadingImage.setUrl(LOADER_IMAGE);
+		loadingImage.getElement().setId("myCollectionsListViewLoaddingImage");
+		return loadingImage;
 	}
 }
