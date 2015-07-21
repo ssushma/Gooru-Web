@@ -61,7 +61,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -93,8 +92,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@UiField HTMLEventPanel organizeRootPnl;
 	
 	@UiField HTMLEventPanel createNewCourse,createNewCollection,createNewAssessment;
-	
-	
 	
 	@UiField Anchor lnkMyCourses,lnkMyFoldersAndCollecctions;
 	
@@ -191,7 +188,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				String o1=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
 				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null){
+				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null && shelfFolderTree.getItemCount()>=20){
 					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
 						executeScroll(false);
 					}
