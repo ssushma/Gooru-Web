@@ -164,6 +164,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
 		headerView.getBtnSubmitAllAnswers().addClickHandler(new ShowPopUp());
+		headerView.getBtnSubmitAllAnswers().setVisible(false);
 		menuButton.addClickHandler(new ShowAuthorContainerEvent());
 		menuButton.addTouchStartHandler(new ShowAuthorContainerTouchEvent());
 		setAutoHideOnNavigationEventEnabled(true);
@@ -781,7 +782,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 					appPopUp.addStyleName("scrollStudyContainer");
 				}
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
-				headerView.getBtnSubmitAllAnswers().setVisible(isHidePlayerButtons);
+				headerView.getBtnSubmitAllAnswers().setVisible(false);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
 			}
