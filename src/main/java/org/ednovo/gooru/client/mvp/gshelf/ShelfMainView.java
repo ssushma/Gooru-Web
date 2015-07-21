@@ -39,6 +39,8 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.gshelf.util.EmptyCourseBuilderWidget;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderHandler;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -201,6 +203,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				}
 			}
 		});
+		
+		AppClientFactory.getEventBus().addHandler(RemoveMovedCollectionFolderEvent.TYPE,deleteCollaborator);
 	}
 
 	/**
@@ -1119,7 +1123,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	@Override
 	public void removeDeletedTreeWidget(String deletedTreeWidgetId,String currentTypeView){
-		
 		if(COURSE.equalsIgnoreCase(currentTypeView)){
 			/*for (FolderDo folderDo : SHELF_COLLECTIONS) {
 				if(folderDo.getGooruOid().equalsIgnoreCase(deletedTreeWidgetId)){
@@ -1309,4 +1312,26 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		loadingImage.getElement().setId("myCollectionsListViewLoaddingImage");
 		return loadingImage;
 	}
+	
+	RemoveMovedCollectionFolderHandler deleteCollaborator = new RemoveMovedCollectionFolderHandler() {
+		
+		@Override
+		public void removeMovedCollectionFromShelf(String sourceId) {
+			ShelfTreeWidget collectionShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+			String type = collectionShelfTreeWidget.getCollectionDo().getType();
+			String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+			String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+			String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+			String id = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+			if(o3!=null){
+				removeDeletedTreeWidget(sourceId, type);
+			}else if(o2!=null){
+				removeDeletedTreeWidget(sourceId, LESSON);
+			}else if(o1!=null){
+				removeDeletedTreeWidget(sourceId, UNIT);
+			}else{
+				removeDeletedTreeWidget(sourceId, COURSE);
+			}
+		}
+	};
 }

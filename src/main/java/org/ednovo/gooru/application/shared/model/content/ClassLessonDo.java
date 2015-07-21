@@ -25,11 +25,11 @@
 
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 
 /**
@@ -47,7 +47,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer: 
  */
 @JsonInclude(Include.NON_NULL)
-public class ClassLessonDo implements Serializable {
+public class ClassLessonDo implements IsSerializable {
 
 	/**
 	 * 

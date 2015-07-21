@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.classpages;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
@@ -33,6 +32,7 @@ import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : MasterReportDo.java
  * 
@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class PlanContentDo implements Serializable{
+public class PlanContentDo implements IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 	private String title;

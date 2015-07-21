@@ -1,12 +1,12 @@
 package org.ednovo.gooru.application.shared.model.player;
 
-import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class CommentsDo implements Serializable
+public class CommentsDo implements IsSerializable
 {
 	
 	private static final long serialVersionUID = 1L;

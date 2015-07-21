@@ -24,14 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.search;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class ResourceInfoObjectDo implements Serializable {
+public class ResourceInfoObjectDo implements IsSerializable {
 
 	/**
 	 *

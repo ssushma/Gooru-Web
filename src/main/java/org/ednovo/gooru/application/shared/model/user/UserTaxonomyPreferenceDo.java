@@ -25,14 +25,14 @@
 package org.ednovo.gooru.application.shared.model.user;
 
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class UserTaxonomyPreferenceDo implements Serializable {
+public class UserTaxonomyPreferenceDo implements IsSerializable {
 
 	private static final long serialVersionUID = 8598215298047619076L;
 	private List<String> codeId;

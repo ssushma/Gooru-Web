@@ -27,8 +27,8 @@
 */
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
 import java.util.List;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 
 /**
@@ -45,7 +45,7 @@ import java.util.List;
  *
  * @Reviewer: 
  */
-public class PermissionsDO implements Serializable{
+public class PermissionsDO implements IsSerializable{
 	
 	/**
 	 * 
