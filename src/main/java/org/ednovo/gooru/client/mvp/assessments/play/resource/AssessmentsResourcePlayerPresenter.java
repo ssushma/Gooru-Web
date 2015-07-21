@@ -536,7 +536,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 			resourceSearchResultDo.setGooruOid(resourcePlayId);
 			shelfMainPresenter.SetDefaultTypeAndVersion();
-			searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "resource", null);
+			searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
