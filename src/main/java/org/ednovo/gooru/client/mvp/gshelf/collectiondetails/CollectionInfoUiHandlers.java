@@ -58,7 +58,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit,FolderDo courseObj);
 
 	public void checkProfanity(String textValue, boolean isCreate, int index,
-			String collectionType);
+			String collectionType, CreateDo createOrUpDate); 
 
 	void setCollectionType(String templateType);
 

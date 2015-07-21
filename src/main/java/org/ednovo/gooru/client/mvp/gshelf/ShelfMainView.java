@@ -818,7 +818,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				shelfTreeWidget.setLevel(4);
 			}
 
-//			shelfTreeWidget.setWidgetPositions(nextLevel, 1, selectedWidget.getUrlParams());
+			shelfTreeWidget.setWidgetPositions(nextLevel, 1, selectedWidget.getUrlParams());
 			TreeItem item = new TreeItem(shelfTreeWidget);
 			treeChildSelectedItem.insertItem(treeChildSelectedItem.getChildCount(), item);
 			treeChildSelectedItem.setState(true);

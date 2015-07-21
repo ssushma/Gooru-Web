@@ -170,20 +170,21 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void checkProfanity(String textValue, final boolean isCreate,final String type,final String courseId,final String unitId) {
+	public void checkProfanity(String textValue, final boolean isCreate,final String type,final CreateDo createOrUpDate,final String courseId,final String unitId) {
+
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
 				getView().resetBtns();
-				getView().callCreateAndUpdate(isCreate,value,type,courseId,unitId);
+				getView().callCreateAndUpdate(isCreate,value,type,createOrUpDate,courseId,unitId);
 			}
 		});
 	}
 	@Override
 	public void callTaxonomyService(int subdomainId) {
-		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() { 
 			@Override
 			public void onSuccess(List<DomainStandardsDo> result) {
 				if(result.size()>0){

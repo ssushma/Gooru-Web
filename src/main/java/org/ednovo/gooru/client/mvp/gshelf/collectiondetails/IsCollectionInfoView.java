@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
@@ -52,7 +53,7 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 	void setCouseData(FolderDo courseObj, String type); 
 
 	void callCreateAndUpdate(boolean isCreate, Boolean result, int index,
-			String collectionType);
+			String collectionType, CreateDo createOrUpDate); 
 
 	void setCollectionType(String collectionType);
 
